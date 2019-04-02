@@ -56,3 +56,23 @@ sub toBase35 {
 	#print "\n";
 	my $output = join "", @base[@convert];
 }
+
+sub fromBase35 {
+	my $input = shift; # APX
+
+	# create a hash converting a base35 alphanumeric character to a base10 value
+	my %hash;
+	my @base = split "", $BASE;
+	for my $i (0..@base-1) {
+		$hash{$base[$i]} = $i;
+	}
+
+	my @based = split "", $input; #  (A, P, X)
+	my $max = @based - 1;
+	my $output;
+	while ($max >= 0) {
+		$output += ( @base ** $max ) * $hash{@based[@based - $max - 1]};
+		$max--;
+	}
+	return $output;
+}
