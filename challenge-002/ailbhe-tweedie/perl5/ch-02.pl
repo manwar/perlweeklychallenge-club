@@ -16,6 +16,8 @@ use Data::Dump;
 
 my $BASE = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXY";
 
+# TODO: add command-line switch to pick between converting TO and FROM
+
 while (<>) {
 	chomp;
 	# TODO: find out how to stream input, instead of saving it to an array first
