@@ -7,27 +7,43 @@
 #
 # Prerequisites: cpan install Scalar::Util::Numeric
 #
-# Usage: echo {0.999} | ./ch-02.pl
+# Usage:
+# > echo {0.999} | ./ch-02.pl to
+#
+# Test with:
+# >  echo {0..99} | ./ch-02.pl to | awk '{print $3}' | ./ch-02.pl from
 
 use strict;
 use warnings;
 use Scalar::Util::Numeric qw(isint);
 use Data::Dump;
 
+use v5.10;
+
 my $BASE = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXY";
 
-# TODO: add command-line switch to pick between converting TO and FROM
+exit 1 unless @ARGV == 1;
+my $switch = $ARGV[0];
 
-while (<>) {
+while (<STDIN>) {
 	chomp;
 	# TODO: find out how to stream input, instead of saving it to an array first
 	my @input = split;
 	for my $i (@input) {
-		next unless isint $i;
-		my $output = toBase35($i);
+		my $output;
+		if ($switch eq "to") {
+			$output = toBase35($i);
+		} elsif ($switch eq "from") {
+			$output = fromBase35($i);
+		} else {
+			say "Please specify to/from";
+			exit 2;
+		}
+		# `pretty' print output
 		printf "%-4s\t==>\t%-4s\n", $i, $output;
 	}
 }
+exit 0;
 
 sub toBase35 {
 	my $input = shift;
