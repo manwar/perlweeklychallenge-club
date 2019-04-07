@@ -11,8 +11,8 @@ use Getopt::Long;
 use Pod::Usage;
 
 use constant {
-    BASE_FOR_BASE35  => 35,
-    EXIT_STATUS_OK   => 0,
+    BASE_FOR_BASE35 => 35,
+    EXIT_STATUS_OK  => 0,
 };
 
 # Omitting declaration outside the map block with dirty but
@@ -30,8 +30,8 @@ GetOptions(
 
 sub dec_to_base35 ( $opt_name, $decimal_value ) {
 
-    my $base35_number   = '';
-    my $quotient        = $decimal_value;
+    my $base35_number = '';
+    my $quotient      = $decimal_value;
 
     while ( $quotient >= BASE_FOR_BASE35 ) {
 
