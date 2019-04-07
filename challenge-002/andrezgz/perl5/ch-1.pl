@@ -32,10 +32,13 @@
 # 01.    -> 1.
 # 01.0   -> 1.0
 # 010.0  -> 10.0
+# 00.1   -> 0.1
+
+# + All the above with a comma instead of a dot
 
 use strict;
 
 my $number = @ARGV[0];
 
-$number =~ s/^0+([1-9][0-9]*(:?[.,]\d*)?)$/$1/;
+$number =~ s/^0+([1-9]*[0-9]+(:?[.,]\d*)?)$/$1/;
 print $number;
