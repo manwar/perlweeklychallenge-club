@@ -1,5 +1,5 @@
 # Perl Weekly Challenge 002
-By Jaime; @tortsnare on Twitter.
+By Jaime; [@tortsnare on Twitter](https://twitter.com/tortsnare).
 
 Straightforward solutions in Perl 5 that use no imports.
 The user selects a conversion and feeds in numbers, in a UNIX-like approach.
