@@ -6,4 +6,4 @@
 # the integers. So it's just a neat example on how to do unicode-aware
 # number matching.
 
-put S:r/^[ <:Nd> & <:Numeric_Value(0)> ]* <before <:Nd>+$>// for lines
+put S:r/^[ <:Nd> & <:Numeric_Value(0)> ]* <before <:Nd>+$>// for @*ARGS
