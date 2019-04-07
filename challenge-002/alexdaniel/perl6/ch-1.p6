@@ -1,5 +1,5 @@
 # Supports any unicode digits, so ႐႐၄၂ will be trimmed to ၄၂.
-# Zero and positive numbers are not trimmed because the task
+# Zero and negative numbers are not trimmed because the task
 # specifically asks for positive numbers. However, it is not specified
 # what a “number” is, and same goes for formatting requirements (e.g.
 # “.5“ vs “0.5”), therefore I decided to keep it simple and just do
