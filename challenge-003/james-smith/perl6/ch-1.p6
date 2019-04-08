@@ -5,12 +5,13 @@ my @hammings = lazy gather {
   my $last = 0;
   while 1 {
     my $lowest;
-    for 2,3,5 -> $n {
-      for (@hammings) {
-        next if $_*$n <= $last;
-        $lowest = $_*$n unless $lowest && $lowest < $_*$n;
-        last;
-      }
+    my $n = 5; my @other = (3,2);
+    for (@hammings) {
+      next if $_*$n <= $last;
+      $lowest = $_*$n unless $lowest && $lowest < $_*$n;
+      last unless @other;
+      $n = shift @other;
+      redo;
     }
     take $lowest;
     $last = $lowest;

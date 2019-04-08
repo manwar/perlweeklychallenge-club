@@ -4,9 +4,9 @@ use feature ':5.10';
 my @line = ();
 
 sub next_line {
-  $line[$_] = $line[$_-1]+$line[$_] foreach reverse 1..@line;
-  $line[0]=1;
+  $line[$_-1] += $line[$_] for 1..@line;
+  unshift @line,1;
   return \@line;
 }
 
-say "@{next_line()}" foreach 1..shift;
+say "@{next_line()}" for 1..shift;
