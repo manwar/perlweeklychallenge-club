@@ -1,40 +1,40 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "series" : [
+      {
+         "name" : "Champions",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Gustavo Chaves",
+               "drilldown" : "Gustavo Chaves",
+               "y" : 1
+            },
+            {
+               "name" : "Dr James A. Smith",
+               "drilldown" : "Dr James A. Smith",
+               "y" : 4
+            },
+            {
+               "drilldown" : "Khalid",
+               "name" : "Khalid",
+               "y" : 1
+            }
+         ]
       }
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
+   ],
    "drilldown" : {
       "series" : [
          {
+            "name" : "Gustavo Chaves",
+            "id" : "Gustavo Chaves",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ],
-            "id" : "Gustavo Chaves",
-            "name" : "Gustavo Chaves"
+            ]
          },
          {
-            "id" : "Dr James A. Smith",
             "name" : "Dr James A. Smith",
             "data" : [
                [
@@ -45,19 +45,43 @@
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Dr James A. Smith"
          },
          {
+            "name" : "Khalid",
+            "id" : "Khalid",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ],
-            "name" : "Khalid",
-            "id" : "Khalid"
+            ]
          }
       ]
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2019-04-08 14:33:38 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - CURRENT"
@@ -65,33 +89,9 @@
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-04-08 14:13:28 GMT"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Gustavo Chaves",
-               "y" : 1,
-               "drilldown" : "Gustavo Chaves"
-            },
-            {
-               "drilldown" : "Dr James A. Smith",
-               "name" : "Dr James A. Smith",
-               "y" : 4
-            },
-            {
-               "drilldown" : "Khalid",
-               "y" : 1,
-               "name" : "Khalid"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Champions"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
-   ],
-   "xAxis" : {
-      "type" : "category"
    }
 }
