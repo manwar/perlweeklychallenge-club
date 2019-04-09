@@ -1,9 +1,74 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - CURRENT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "xAxis" : {
       "type" : "category"
    },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-04-09 10:15:06 GMT"
+   "legend" : {
+      "enabled" : 0
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "Gustavo Chaves",
+               "drilldown" : "Gustavo Chaves",
+               "y" : 1
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Dr James A. Smith",
+               "name" : "Dr James A. Smith"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Khalid",
+               "name" : "Khalid"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Lars Balker",
+               "name" : "Lars Balker"
+            },
+            {
+               "name" : "Chenyf",
+               "drilldown" : "Chenyf",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Sergio Iglesias",
+               "y" : 2,
+               "name" : "Sergio Iglesias"
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 2
+            }
+         ],
+         "name" : "Champions",
+         "colorByPoint" : 1
+      }
+   ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "drilldown" : {
       "series" : [
@@ -14,10 +79,11 @@
                   1
                ]
             ],
-            "name" : "Gustavo Chaves",
-            "id" : "Gustavo Chaves"
+            "id" : "Gustavo Chaves",
+            "name" : "Gustavo Chaves"
          },
          {
+            "name" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
@@ -28,100 +94,64 @@
                   2
                ]
             ],
-            "id" : "Dr James A. Smith",
-            "name" : "Dr James A. Smith"
+            "id" : "Dr James A. Smith"
          },
          {
+            "name" : "Khalid",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Khalid",
-            "name" : "Khalid"
+            "id" : "Khalid"
          },
          {
-            "name" : "Lars Balker",
             "id" : "Lars Balker",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Lars Balker"
          },
          {
+            "id" : "Chenyf",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
             ],
+            "name" : "Chenyf"
+         },
+         {
+            "id" : "Sergio Iglesias",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Sergio Iglesias"
+         },
+         {
+            "name" : "Simon Proctor",
             "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2019-04-09 13:34:30 GMT"
    },
    "chart" : {
       "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - CURRENT"
-   },
-   "series" : [
-      {
-         "name" : "Champions",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 1,
-               "name" : "Gustavo Chaves",
-               "drilldown" : "Gustavo Chaves"
-            },
-            {
-               "y" : 4,
-               "drilldown" : "Dr James A. Smith",
-               "name" : "Dr James A. Smith"
-            },
-            {
-               "drilldown" : "Khalid",
-               "name" : "Khalid",
-               "y" : 2
-            },
-            {
-               "name" : "Lars Balker",
-               "drilldown" : "Lars Balker",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            }
-         ]
-      }
-   ],
-   "tooltip" : {
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
    }
 }
