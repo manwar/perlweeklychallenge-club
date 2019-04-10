@@ -3,8 +3,8 @@ use v6;
 
 subset PositiveInt of Int where { $^n >= 0}
 
-sub MAIN(PositiveInt $number = 5) {
-    say get-hamming-sequence()[0..$number-1];
+sub MAIN(PositiveInt $amount = 5) {
+    say get-hamming-sequence()[0..$amount-1];
 }
 
 sub get-hamming-sequence() {
