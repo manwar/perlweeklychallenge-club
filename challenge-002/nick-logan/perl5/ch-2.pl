@@ -1,3 +1,5 @@
+# WARNING: this polyglot breaks best practices of both Perl 5 and Perl 6 in order to run on both
+
 my @ARGV = do { sub eval { chomp &EVAL(@_) }; eval( ("0" and q|@*ARGS| or q|@ARGV|) ) };
 my ($state, $result, $dict, $base35) = (1, "", {}, @ARGV[0]);
 $dict{$_} = $_ for "1".."9";
