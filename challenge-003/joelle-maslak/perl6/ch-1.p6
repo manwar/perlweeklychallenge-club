@@ -2,8 +2,10 @@
 
 use v6;
 
-my @hamming = (1..∞).grep: { divisors($^num).grep( *.is-prime ).Set ⊆ (2,3,5).Set };
-say "Hamming numbers [0..4]: " ~ @hamming[^5].join(", ");
+sub MAIN(Int:D $count where * ≥ 0) {
+    my @hamming = (1..∞).grep: { divisors($^num).grep( *.is-prime ).Set ⊆ (2,3,5).Set };
+    say "Hamming numbers [0..{$count-1}]: " ~ @hamming[^$count].join(", ");
+}
 
 sub divisors(Int:D $i -->Array[Int:D]) {
     if ($i == 0) { return 0; }
