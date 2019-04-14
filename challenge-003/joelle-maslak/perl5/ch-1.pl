@@ -23,7 +23,7 @@ while ( scalar(@hamming) < $count ) {
     $i++;
 }
 
-say "Hamming numbers [0.." . ($count-1) . "]: " . join( ", ", @hamming );
+say "Hamming numbers [0.." . ( $count - 1 ) . "]: " . join( ", ", @hamming );
 
 sub ishamming($i) {
     my @primes      = primedivisors($i);
