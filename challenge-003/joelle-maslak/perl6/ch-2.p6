@@ -16,7 +16,7 @@ sub MAIN(Int:D $rows where $rows ≥ 3) {
         }
         @rows.push: @row;
 
-        say ("  " x $rows - $i) ~ @row.map( { $^a.fmt("%3d") } ).join(" ");
+        say ("  " x $rows - $i - 1) ~ @row.map( { $^a.fmt("%3d") } ).join(" ");
     }
 }
 
