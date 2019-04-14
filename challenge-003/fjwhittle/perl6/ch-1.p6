@@ -2,12 +2,13 @@
 
 use v6;
 
-subset Count of Int where * > 0;
+subset Count of Int where * >= 0;
 
 #| Script to generate 5-smooth numbers
 unit sub MAIN(
   Count :n(:$count) = 20, #= How many 5-smooth numbers to generate.
-  *@print #= specific indices to show.
+  Bool :$timing = False, #= Display timing information with output.
+  *@print #= Specific indices to show.
 );
 
 # Use a lazy list to generate 5-smooth numbers
@@ -28,8 +29,21 @@ my $smooth5 = gather {
   }
 }
 
-$smooth5.[^$count].say;
+if $timing {
+  # This needs to be a discrete block.
+  {
+    Promise.in(1 / 100).then: &?BLOCK;
+    $*ERR.printf(Q:b'\r%6.2fs', (now - INIT now));
+  }
+}
 
-for @print -> $n {
-  ($n.fmt('%7d') ~ ': ' ~ @smooth5[$n-1]).say;
+$smooth5.[^$count].say if $count;
+
+for @print.grep(* ~~ Int).sort -> $n {
+  if $timing {
+    my $result = $smooth5[$n-1];
+    (Q:b'\r%6.2fs %*d: %d').sprintf((now - INIT now), @print.max.chars, $n, $result).say;
+  } else {
+    sprintf('%*d: %d', @print.max.chars, $n, $smooth5[$n-1]).say;
+  }
 }
