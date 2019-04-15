@@ -1,51 +1,30 @@
 {
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 004"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2019-04-15 20:37:27 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
+      "text" : "[Champions: 7] Last updated at 2019-04-15 21:35:41 GMT"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Abigail",
-            "name" : "Abigail",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Abigail",
+            "id" : "Abigail"
          },
          {
             "id" : "Francis Whittle",
+            "name" : "Francis Whittle",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ],
-            "name" : "Francis Whittle"
+            ]
          },
          {
-            "id" : "Dr James A. Smith",
-            "name" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
@@ -53,33 +32,45 @@
                ],
                [
                   "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Dr James A. Smith",
+            "name" : "Dr James A. Smith"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Jo Christian Oterhals",
+            "name" : "Jo Christian Oterhals"
+         },
+         {
+            "name" : "John Barrett",
+            "id" : "John Barrett",
+            "data" : [
+               [
+                  "Perl 5",
                   2
                ]
             ]
          },
          {
-            "name" : "Jo Christian Oterhals",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ],
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "id" : "Jo Christian Oterhals"
-         },
-         {
+            "id" : "Kivanc Yazan",
             "name" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ],
-            "id" : "Kivanc Yazan"
+            ]
          },
          {
             "id" : "Maxim Kolodyazhny",
@@ -93,28 +84,57 @@
          }
       ]
    },
+   "tooltip" : {
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 004"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "name" : "Champions",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Abigail",
                "drilldown" : "Abigail",
+               "name" : "Abigail",
                "y" : 2
             },
             {
-               "y" : 1,
                "drilldown" : "Francis Whittle",
-               "name" : "Francis Whittle"
+               "name" : "Francis Whittle",
+               "y" : 1
             },
             {
-               "y" : 4,
+               "name" : "Dr James A. Smith",
                "drilldown" : "Dr James A. Smith",
-               "name" : "Dr James A. Smith"
+               "y" : 4
             },
             {
                "drilldown" : "Jo Christian Oterhals",
                "name" : "Jo Christian Oterhals",
                "y" : 3
+            },
+            {
+               "y" : 2,
+               "drilldown" : "John Barrett",
+               "name" : "John Barrett"
             },
             {
                "y" : 1,
@@ -126,21 +146,16 @@
                "drilldown" : "Maxim Kolodyazhny",
                "name" : "Maxim Kolodyazhny"
             }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Champions"
+         ]
       }
    ],
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
-   },
-   "xAxis" : {
-      "type" : "category"
    }
 }
