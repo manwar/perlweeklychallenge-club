@@ -24,17 +24,32 @@ The first part collects together the counts of the letters and the second loops 
 
 The loop is destructive of the counts array so we pass a copy into the function rather than the usual pass by reference.. This effectively clones the counts array so we don't have to do this explicitly
 
+For 2a see notes about perl 6 (this is non-destructive...)
 ```
 perl perl5/ch-2.pl back < /usr/share/dict/british-english-insane
+perl perl5/ch-2a.pl back < /usr/share/dict/british-english-insane
 ```
 
 ## Perl 6
 
-Similar code to perl 5 - just fixing syntactic sugar. Perl6 though passes by reference (which you have to do explicitly in Perl 5) so you need to clone the counts array before passing it to checkword.
+Because Perl 6 can't pass by value - I've rewritten this to be non-destructive (the checkword function counts up and compares to the main count)... need to check for performance....
 
 The other change is split - you don't use the empty regex "//" to perform the split - rather the empty string (something frowned upon in Perl5) and to remove the rogue white-space split adds you need to include the additional flag `:skip-empty`
 
+I haven't golfed this one entirely - but have used "golf" techniques along the way to make the code in someways more readable using grep rather than if for instance!
 ```
 perl6 perl6/ch-2.p6 back < /usr/share/dict/british-english-insane
 ```
+
+## Timings
+
+Yet again perl5 out performs perl 6 - perhaps I need to know how to optimize perl 6 code...
+
+```
+  perl5    ch-2.pl        1.9 seconds
+  perl5    ch-2a.pl       1.3 seconds
+  perl6    ch-2.p6       27.1 seconds
+```
+
+This time by what looks like a factor of 20.... need a Perl 6 expert to suggest why....
 

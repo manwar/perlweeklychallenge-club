@@ -1,27 +1,28 @@
 use strict;
 
-## Read in letters from command line... and store in %c...
+## Read in letters from command line... and store in %counts...
 ## We split each argument so words can be passed in rather
 ## than individual letters if required...
+## To avoid the additional non-letter characters we have to 
+## use the :skip-empty flag...
 
 my %counts;
-for @*ARGS -> $w {
-  %counts{lc $_}++ for split '',$w, :skip-empty;
+for @*ARGS {
+  %counts{lc $_}++ for split '',$_, :skip-empty;
 }
 
-for $*IN.lines() -> $word {
-  my %copy = %counts.clone;
-  say $word if checkword(lc($word),%copy);
-}
+## Re-write as a one-liner by using `for grep` rather than `for {if}`...
 
-## Check the word to see if it can be made up from letters
-## use passing a hash by value to clone the counts so we
-## don't destroy it through each loop {the method is
-## destructive!}
+say $_ for grep { checkword(lc $_) }, $*IN.lines();
 
-sub checkword($word,%copy_counts) {
-  for (split '',$word, :skip-empty) -> $letter {
-    return if --%copy_counts{$letter} < 0;
+## Rewritten this to make it non destructive - we count up rather than
+## down needs another check to avoid comparing to undef...
+## So this is probably a nicer way of doing it....
+
+sub checkword($word) {
+  my %tmp_counts;
+  for (split '',$word, :skip-empty) {
+    return unless %counts{$_} && %tmp_counts{$_}++ < %counts{$_};
   }
   return 1;
 }
