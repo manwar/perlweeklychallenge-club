@@ -1,57 +1,16 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Francis Whittle",
-               "drilldown" : "Francis Whittle",
-               "y" : 1
-            },
-            {
-               "name" : "Dr James A. Smith",
-               "drilldown" : "Dr James A. Smith",
-               "y" : 4
-            },
-            {
-               "drilldown" : "Kivanc Yazan",
-               "name" : "Kivanc Yazan",
-               "y" : 1
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Maxim Kolodyazhny",
-               "name" : "Maxim Kolodyazhny"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Champions"
-      }
-   ],
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-04-15 14:42:47 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "drilldown" : {
       "series" : [
+         {
+            "name" : "Abigail",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Abigail"
+         },
          {
             "id" : "Francis Whittle",
             "data" : [
@@ -64,6 +23,7 @@
          },
          {
             "name" : "Dr James A. Smith",
+            "id" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
@@ -73,40 +33,95 @@
                   "Perl 6",
                   2
                ]
-            ],
-            "id" : "Dr James A. Smith"
-         },
-         {
-            "id" : "Kivanc Yazan",
-            "name" : "Kivanc Yazan",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
             ]
          },
          {
+            "id" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "name" : "Maxim Kolodyazhny",
-            "id" : "Maxim Kolodyazhny"
+            "name" : "Kivanc Yazan"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Maxim Kolodyazhny",
+            "name" : "Maxim Kolodyazhny"
          }
       ]
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 004"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-04-15 16:39:07 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "legend" : {
       "enabled" : 0
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 004"
+   "xAxis" : {
+      "type" : "category"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Champions",
+         "data" : [
+            {
+               "drilldown" : "Abigail",
+               "y" : 2,
+               "name" : "Abigail"
+            },
+            {
+               "drilldown" : "Francis Whittle",
+               "name" : "Francis Whittle",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Dr James A. Smith",
+               "y" : 4,
+               "name" : "Dr James A. Smith"
+            },
+            {
+               "drilldown" : "Kivanc Yazan",
+               "name" : "Kivanc Yazan",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Maxim Kolodyazhny",
+               "name" : "Maxim Kolodyazhny",
+               "y" : 1
+            }
+         ]
+      }
+   ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
    }
 }
