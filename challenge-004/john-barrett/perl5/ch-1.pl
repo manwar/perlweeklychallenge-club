@@ -1,1 +1,1 @@
-printf'%.0'.((stat'ch-1.pl')[7]-1).'f',pi;
+printf'%.0'.((stat$0)[7]-1).'f',pi;
