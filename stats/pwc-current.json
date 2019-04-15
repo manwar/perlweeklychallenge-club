@@ -1,66 +1,69 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 004"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-04-15 13:45:21 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
    "series" : [
       {
          "data" : [
             {
-               "y" : 4,
+               "name" : "Francis Whittle",
+               "drilldown" : "Francis Whittle",
+               "y" : 1
+            },
+            {
+               "name" : "Dr James A. Smith",
                "drilldown" : "Dr James A. Smith",
-               "name" : "Dr James A. Smith"
+               "y" : 4
             },
             {
-               "y" : 1,
+               "drilldown" : "Kivanc Yazan",
                "name" : "Kivanc Yazan",
-               "drilldown" : "Kivanc Yazan"
+               "y" : 1
             },
             {
                "y" : 1,
-               "name" : "Maxim Kolodyazhny",
-               "drilldown" : "Maxim Kolodyazhny"
+               "drilldown" : "Maxim Kolodyazhny",
+               "name" : "Maxim Kolodyazhny"
             }
          ],
-         "name" : "Champions",
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "Champions"
       }
    ],
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         }
+         },
+         "borderWidth" : 0
       }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2019-04-15 14:42:47 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Francis Whittle",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "name" : "Francis Whittle"
+         },
+         {
             "name" : "Dr James A. Smith",
-            "id" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
@@ -70,11 +73,12 @@
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Dr James A. Smith"
          },
          {
-            "name" : "Kivanc Yazan",
             "id" : "Kivanc Yazan",
+            "name" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
@@ -83,15 +87,26 @@
             ]
          },
          {
-            "id" : "Maxim Kolodyazhny",
-            "name" : "Maxim Kolodyazhny",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ]
+            ],
+            "name" : "Maxim Kolodyazhny",
+            "id" : "Maxim Kolodyazhny"
          }
       ]
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 004"
    }
 }
