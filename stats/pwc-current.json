@@ -1,4 +1,78 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2019-04-16 10:56:20 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 004"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Abigail",
+               "drilldown" : "Abigail"
+            },
+            {
+               "name" : "Francis Whittle",
+               "y" : 1,
+               "drilldown" : "Francis Whittle"
+            },
+            {
+               "drilldown" : "Dr James A. Smith",
+               "y" : 4,
+               "name" : "Dr James A. Smith"
+            },
+            {
+               "drilldown" : "Jo Christian Oterhals",
+               "name" : "Jo Christian Oterhals",
+               "y" : 4
+            },
+            {
+               "drilldown" : "John Barrett",
+               "name" : "John Barrett",
+               "y" : 2
+            },
+            {
+               "name" : "Kivanc Yazan",
+               "y" : 1,
+               "drilldown" : "Kivanc Yazan"
+            },
+            {
+               "y" : 2,
+               "name" : "Matt Latusek",
+               "drilldown" : "Matt Latusek"
+            },
+            {
+               "drilldown" : "Maxim Kolodyazhny",
+               "y" : 1,
+               "name" : "Maxim Kolodyazhny"
+            }
+         ],
+         "name" : "Champions"
+      }
+   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
@@ -7,26 +81,27 @@
    "drilldown" : {
       "series" : [
          {
+            "name" : "Abigail",
+            "id" : "Abigail",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Abigail",
-            "name" : "Abigail"
+            ]
          },
          {
+            "name" : "Francis Whittle",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "name" : "Francis Whittle",
             "id" : "Francis Whittle"
          },
          {
+            "name" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
@@ -37,8 +112,7 @@
                   2
                ]
             ],
-            "id" : "Dr James A. Smith",
-            "name" : "Dr James A. Smith"
+            "id" : "Dr James A. Smith"
          },
          {
             "name" : "Jo Christian Oterhals",
@@ -46,7 +120,7 @@
             "data" : [
                [
                   "Perl 5",
-                  1
+                  2
                ],
                [
                   "Perl 6",
@@ -55,8 +129,8 @@
             ]
          },
          {
-            "id" : "John Barrett",
             "name" : "John Barrett",
+            "id" : "John Barrett",
             "data" : [
                [
                   "Perl 5",
@@ -65,24 +139,24 @@
             ]
          },
          {
-            "name" : "Kivanc Yazan",
-            "id" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ]
+            ],
+            "id" : "Kivanc Yazan",
+            "name" : "Kivanc Yazan"
          },
          {
             "name" : "Matt Latusek",
-            "id" : "Matt Latusek",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "id" : "Matt Latusek"
          },
          {
             "data" : [
@@ -95,80 +169,6 @@
             "name" : "Maxim Kolodyazhny"
          }
       ]
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 004"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "series" : [
-      {
-         "name" : "Champions",
-         "data" : [
-            {
-               "name" : "Abigail",
-               "drilldown" : "Abigail",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Francis Whittle",
-               "y" : 1,
-               "name" : "Francis Whittle"
-            },
-            {
-               "y" : 4,
-               "drilldown" : "Dr James A. Smith",
-               "name" : "Dr James A. Smith"
-            },
-            {
-               "name" : "Jo Christian Oterhals",
-               "drilldown" : "Jo Christian Oterhals",
-               "y" : 3
-            },
-            {
-               "name" : "John Barrett",
-               "y" : 2,
-               "drilldown" : "John Barrett"
-            },
-            {
-               "name" : "Kivanc Yazan",
-               "y" : 1,
-               "drilldown" : "Kivanc Yazan"
-            },
-            {
-               "drilldown" : "Matt Latusek",
-               "y" : 2,
-               "name" : "Matt Latusek"
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Maxim Kolodyazhny",
-               "name" : "Maxim Kolodyazhny"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2019-04-15 22:57:47 GMT"
    },
    "legend" : {
       "enabled" : 0
