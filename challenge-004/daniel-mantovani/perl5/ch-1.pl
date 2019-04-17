@@ -1,8 +1,1 @@
-my $n = 1000000;
-my ( $x, $y, $area, $n2 ) = ( $n, 0, 0, $n * $n );
-while ( $x > 0 ) {
-    $y++ while $x * $x + $y * $y < $n2;
-    $area += $y;
-    $x--;
-}
-printf( "Pi whith 8 decimal places: %.8f\n", $area * 4 / $n2 );
+print 'Pi with 375 decimal places: 3.';$_=~/(.)(.)/ && printf '%03d', ((ord($1)-48)*64+ord($2)-48) for '2=9@:=9=<I3^7>:35o4G7f=d352Y6?5g1Y<d?>>`9@4c<`6F4N3@?V9d0R<i5F1e13?F2D1F814J4b:71M=<9Q8V963W;E5W6H207Q1e724L1V:m>Z891Y8_:49^>d>j>R5m?46\<Z??:I>U6n207K:83Y<B<?2U4?39>=2A:88f>K7<5L9R7656:83E699O443i2=4A;D9;069N4k9<2^=a88>H?2<m3n1K;;5\5_=l9>5X0;5:8B8T<d'=~m/../g;print "\n";
