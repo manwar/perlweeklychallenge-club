@@ -31,7 +31,7 @@ sub MAIN(Str:D $letters, Str:D $filename = '/usr/share/dict/words') {
         if $bag ~~ $matchbag {
             next if $fcword ∈ $dedupe;
             $dedupe{$fcword}++;
-            say $fcword if $bag ~~ $matchbag;
+            say $fcword;
         }
     }
 }
