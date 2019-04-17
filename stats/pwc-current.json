@@ -1,37 +1,128 @@
 {
+   "series" : [
+      {
+         "name" : "Champions",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "Abigail",
+               "name" : "Abigail",
+               "y" : 2
+            },
+            {
+               "name" : "Athanasius",
+               "y" : 2,
+               "drilldown" : "Athanasius"
+            },
+            {
+               "y" : 2,
+               "name" : "Francis Whittle",
+               "drilldown" : "Francis Whittle"
+            },
+            {
+               "drilldown" : "Dr James A. Smith",
+               "name" : "Dr James A. Smith",
+               "y" : 4
+            },
+            {
+               "name" : "Jo Christian Oterhals",
+               "y" : 4,
+               "drilldown" : "Jo Christian Oterhals"
+            },
+            {
+               "drilldown" : "John Barrett",
+               "y" : 2,
+               "name" : "John Barrett"
+            },
+            {
+               "drilldown" : "Kivanc Yazan",
+               "y" : 1,
+               "name" : "Kivanc Yazan"
+            },
+            {
+               "drilldown" : "Matt Latusek",
+               "name" : "Matt Latusek",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Maxim Kolodyazhny",
+               "y" : 1,
+               "name" : "Maxim Kolodyazhny"
+            }
+         ]
+      }
+   ],
+   "xAxis" : {
+      "type" : "category"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-04-08 18:14:25 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2019-04-16 16:26:05 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Abigail",
+            "id" : "Abigail",
             "data" : [
                [
                   "Perl 5",
-                  1
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Athanasius",
+            "id" : "Athanasius",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Francis Whittle",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
                ]
             ],
-            "id" : "Gustavo Chaves",
-            "name" : "Gustavo Chaves"
+            "id" : "Francis Whittle"
+         },
+         {
+            "name" : "Dr James A. Smith",
+            "id" : "Dr James A. Smith",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
          },
          {
             "data" : [
@@ -44,22 +135,32 @@
                   2
                ]
             ],
-            "name" : "Dr James A. Smith",
-            "id" : "Dr James A. Smith"
+            "id" : "Jo Christian Oterhals",
+            "name" : "Jo Christian Oterhals"
          },
          {
+            "id" : "John Barrett",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Khalid",
-            "name" : "Khalid"
+            "name" : "John Barrett"
          },
          {
-            "name" : "Lars Balker",
-            "id" : "Lars Balker",
+            "name" : "Kivanc Yazan",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Kivanc Yazan"
+         },
+         {
+            "name" : "Matt Latusek",
+            "id" : "Matt Latusek",
             "data" : [
                [
                   "Perl 5",
@@ -68,60 +169,23 @@
             ]
          },
          {
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
-                  "Perl 6",
-                  2
+                  "Perl 5",
+                  1
                ]
-            ]
+            ],
+            "id" : "Maxim Kolodyazhny",
+            "name" : "Maxim Kolodyazhny"
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "title" : {
-      "text" : "Perl Weekly Challenge - CURRENT"
-   },
-   "series" : [
-      {
-         "name" : "Champions",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 1,
-               "name" : "Gustavo Chaves",
-               "drilldown" : "Gustavo Chaves"
-            },
-            {
-               "y" : 4,
-               "drilldown" : "Dr James A. Smith",
-               "name" : "Dr James A. Smith"
-            },
-            {
-               "drilldown" : "Khalid",
-               "name" : "Khalid",
-               "y" : 2
-            },
-            {
-               "name" : "Lars Balker",
-               "drilldown" : "Lars Balker",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            }
-         ]
-      }
-   ]
+      "text" : "Perl Weekly Challenge - 004"
+   }
 }
