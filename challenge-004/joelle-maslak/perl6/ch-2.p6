@@ -16,7 +16,7 @@ use v6;
 #
 #   perl6 ch-2.p6 eat /usr/share/dict/words
 #
-# With my Unix dictionary (English), it returns ate, eat, eta, and tea.
+# With my Unix dictionary (English), it returns a, e, t, at, ate, eat, eta, and tea.
 #
 
 sub MAIN(Str:D $letters, Str:D $filename = '/usr/share/dict/words') {
@@ -28,7 +28,7 @@ sub MAIN(Str:D $letters, Str:D $filename = '/usr/share/dict/words') {
 
         my $bag = Bag.new($fcword.comb);
 
-        if $bag ~~ $matchbag {
+        if $bag ⊆ $matchbag {
             next if $fcword ∈ $dedupe;
             $dedupe{$fcword}++;
             say $fcword;

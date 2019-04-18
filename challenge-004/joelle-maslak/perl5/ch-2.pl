@@ -26,10 +26,10 @@ if ( @ARGV < 1 or @ARGV > 2 )      { die("Provide letters to use and (optionally
 #
 #   perl ch-2.pl eat /usr/share/dict/words
 #
-# With my Unix dictionary (English), it returns ate, eat, eta, and tea.
+# With my Unix dictionary (English), it returns a, e, t, at, ate, eat, eta, and tea.
 #
 
-my $match = join '', sort split('', fc($ARGV[0]));  # A sotrted string of chars
+my $match = fc($ARGV[0]);
 my %dedupe;
 
 my $filename = $ARGV[1] // '/usr/share/dict/words';
@@ -40,10 +40,20 @@ while (my $word = <$fh>) {
 
     my $wordmatch = join '', sort split('', $word);
 
-    if ($match eq $wordmatch) {
+    if (partialmatch($match, $wordmatch)) {
         next if exists $dedupe{$word};
         $dedupe{$word} = 1;
         say $word;
     }
+}
+
+sub partialmatch($chars, $word) {
+    my @chars = sort split '', $chars;
+    my @word  = sort split '', $word;
+
+    for my $c (@chars) {
+        shift(@word) if ($word[0] // ' ') eq $c;
+    }
+    return ! @word;
 }
 
