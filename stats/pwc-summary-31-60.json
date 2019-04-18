@@ -1,8 +1,6 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-04-18 13:40:37 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -38,9 +36,11 @@
          "Prajith P"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
    "chart" : {
       "type" : "column"
@@ -48,17 +48,9 @@
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-04-18 09:20:02 GMT"
-   },
    "series" : [
       {
+         "name" : "Perl 5",
          "data" : [
             6,
             8,
@@ -90,11 +82,9 @@
             3,
             4,
             2
-         ],
-         "name" : "Perl 5"
+         ]
       },
       {
-         "name" : "Perl 6",
          "data" : [
             6,
             8,
@@ -126,7 +116,17 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Perl 6"
       }
-   ]
+   ],
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   }
 }
