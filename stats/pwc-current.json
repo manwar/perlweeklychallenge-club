@@ -1,61 +1,89 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 14] Last updated at 2019-04-18 08:59:16 GMT"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "legend" : {
       "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 004"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Abigail",
+            "id" : "Abigail",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Abigail",
-            "name" : "Abigail"
+            ]
          },
          {
-            "name" : "Adam Russell",
             "id" : "Adam Russell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Adam Russell"
          },
          {
+            "name" : "Arne Sommer",
             "id" : "Arne Sommer",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ],
-            "name" : "Arne Sommer"
+            ]
          },
          {
-            "name" : "Athanasius",
-            "id" : "Athanasius",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "id" : "Athanasius",
+            "name" : "Athanasius"
          },
          {
+            "name" : "Francis Whittle",
             "id" : "Francis Whittle",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ],
-            "name" : "Francis Whittle"
+            ]
          },
          {
-            "id" : "Dr James A. Smith",
+            "name" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
@@ -66,11 +94,10 @@
                   2
                ]
             ],
-            "name" : "Dr James A. Smith"
+            "id" : "Dr James A. Smith"
          },
          {
             "name" : "Jo Christian Oterhals",
-            "id" : "Jo Christian Oterhals",
             "data" : [
                [
                   "Perl 5",
@@ -80,7 +107,8 @@
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Jo Christian Oterhals"
          },
          {
             "id" : "Joelle Maslak",
@@ -93,24 +121,24 @@
             "name" : "Joelle Maslak"
          },
          {
-            "name" : "John Barrett",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "John Barrett"
+            "id" : "John Barrett",
+            "name" : "John Barrett"
          },
          {
+            "name" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "id" : "Kivanc Yazan",
-            "name" : "Kivanc Yazan"
+            "id" : "Kivanc Yazan"
          },
          {
             "name" : "Matt Latusek",
@@ -123,48 +151,62 @@
             ]
          },
          {
+            "name" : "Maxim Kolodyazhny",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "id" : "Maxim Kolodyazhny",
-            "name" : "Maxim Kolodyazhny"
+            "id" : "Maxim Kolodyazhny"
          },
          {
-            "name" : "Robert Gratza",
-            "id" : "Robert Gratza",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Neil Bowers",
+            "name" : "Neil Bowers"
+         },
+         {
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Robert Gratza",
+            "name" : "Robert Gratza"
          }
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
                "name" : "Abigail",
-               "y" : 2,
-               "drilldown" : "Abigail"
+               "drilldown" : "Abigail",
+               "y" : 2
             },
             {
+               "name" : "Adam Russell",
                "drilldown" : "Adam Russell",
-               "y" : 2,
-               "name" : "Adam Russell"
+               "y" : 2
             },
             {
-               "y" : 2,
                "drilldown" : "Arne Sommer",
-               "name" : "Arne Sommer"
+               "name" : "Arne Sommer",
+               "y" : 2
             },
             {
-               "drilldown" : "Athanasius",
                "y" : 2,
+               "drilldown" : "Athanasius",
                "name" : "Athanasius"
             },
             {
@@ -173,79 +215,52 @@
                "y" : 2
             },
             {
-               "name" : "Dr James A. Smith",
+               "y" : 4,
                "drilldown" : "Dr James A. Smith",
-               "y" : 4
+               "name" : "Dr James A. Smith"
             },
             {
                "y" : 4,
-               "drilldown" : "Jo Christian Oterhals",
-               "name" : "Jo Christian Oterhals"
+               "name" : "Jo Christian Oterhals",
+               "drilldown" : "Jo Christian Oterhals"
             },
             {
-               "y" : 2,
                "drilldown" : "Joelle Maslak",
-               "name" : "Joelle Maslak"
+               "name" : "Joelle Maslak",
+               "y" : 2
             },
             {
-               "drilldown" : "John Barrett",
                "y" : 2,
+               "drilldown" : "John Barrett",
                "name" : "John Barrett"
             },
             {
                "drilldown" : "Kivanc Yazan",
-               "y" : 1,
-               "name" : "Kivanc Yazan"
+               "name" : "Kivanc Yazan",
+               "y" : 1
             },
             {
-               "y" : 2,
+               "name" : "Matt Latusek",
                "drilldown" : "Matt Latusek",
-               "name" : "Matt Latusek"
+               "y" : 2
             },
             {
-               "name" : "Maxim Kolodyazhny",
                "y" : 1,
+               "name" : "Maxim Kolodyazhny",
                "drilldown" : "Maxim Kolodyazhny"
             },
             {
+               "y" : 1,
+               "drilldown" : "Neil Bowers",
+               "name" : "Neil Bowers"
+            },
+            {
                "drilldown" : "Robert Gratza",
-               "y" : 2,
-               "name" : "Robert Gratza"
+               "name" : "Robert Gratza",
+               "y" : 2
             }
          ],
-         "colorByPoint" : 1,
          "name" : "Champions"
       }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 004"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 13] Last updated at 2019-04-17 18:36:48 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   }
+   ]
 }
