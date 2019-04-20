@@ -15,5 +15,5 @@ BEGIN {
 my $t = $letters;
 
 while ( /\w/g ) {
-    $t =~ s/$&//i or $_='';
+    $t =~ s/$&//i or $_ = '';
 }
