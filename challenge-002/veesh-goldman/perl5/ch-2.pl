@@ -8,12 +8,12 @@ while (my ($index, $element) = each @to_table) {
 
 sub convert_to {
     my $x = shift;  my $pow = 1; my @ret;
-    while ($x > 0) {
+    do {
         my $digit = $x % 35;
         unshift @ret, $to_table[$digit];
         $x -= $digit;
         $x /= 35;
-    }
+    } while $x > 0;
     return join '', @ret
 }
 
