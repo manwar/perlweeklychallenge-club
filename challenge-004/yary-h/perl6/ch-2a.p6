@@ -5,7 +5,7 @@
 my %letters = bag <n n a a a b p e p l>;
 
 my %counter = %letters;
-goto NextWord unless %counter{$_}-- for .comb;
+goto NextWord unless %counter{$_}-- for .fc.comb;
 .say;
 
 NextWord:

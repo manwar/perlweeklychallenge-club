@@ -7,7 +7,7 @@ my %letters = bag <n n a a a b p e p l>;
 WORD:
 for $*ARGFILES.words -> $word {
     my %counter = %letters;
-    next WORD unless %counter{$_}-- for $word.comb;
+    next WORD unless %counter{$_}-- for $word.fc.comb;
     say $word;
 }
 
