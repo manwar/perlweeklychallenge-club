@@ -14,12 +14,11 @@
 
 use strict;
 use warnings;
-use Function::Parameters;
 use Data::Dumper;
 
-die "Usage: wordbag letters < wordlist\n" unless @ARGV;
+die "Usage: ch-2pl letters < wordlist\n" unless @ARGV;
 
-my %letterbag;		# letter -> number of frequrrences
+my %letterbag;		# letter -> frequency of that letter
 map { $letterbag{$_}++ } map { split(//,lc($_)) } @ARGV;
 
 
@@ -28,9 +27,11 @@ map { $letterbag{$_}++ } map { split(//,lc($_)) } @ARGV;
 #	Return 1 iff every letter in $word is present in %letterbag,
 #	and not present more times in $word than in %letterbag.
 #
-fun word_ok( $word, %letterbag )
+sub word_ok
 {
-	# build a bag of the letters in the word
+	my( $word, %letterbag ) = @_;
+
+	# build a bag of the letters in the word, lowercased
 	my %bag2;
 	map { $bag2{$_}++ } split( //, lc($word) );
 
