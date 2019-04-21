@@ -2,15 +2,6 @@
 
 # run as "ch-2a.p6 words.txt"
 
-my %letters = bag <n n a a a b p e p l>;
-
-my %counter = %letters;
-goto NextWord unless %counter{$_}-- for .fc.comb;
-.say;
-
-NextWord:
-# goto not yet implemented
-# I'd like to "next" up to the -n next line.
-
-
+my %counter = bag <n n a a a b p e p l>;
+.say if all(.fc.comb.map: { %counter{$_}-- })
 
