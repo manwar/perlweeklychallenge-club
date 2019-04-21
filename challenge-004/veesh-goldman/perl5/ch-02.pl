@@ -21,7 +21,7 @@ while (<>) {
   #copy the string to check for letters
   my $string = $_;
   #remove any letter in our list from the word
-  $string =~ s/$_// for split //, $list;
+  $string =~ s/$_//i for split //, $list;
   #if there's no word left, then print our original word
   CORE::say unless $string;
 }
