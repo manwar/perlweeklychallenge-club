@@ -41,3 +41,106 @@ Let us assume you want to subtmit solutions for **Challenge 002** and your Githu
 13. Now go to your fork repository in GitHub web portal **https://github.com/joe-blog/perlweeklychallenge-club**
 
 14. You should see a button to submit **Pull Request**.
+
+## How to add new solution when you already have a fork?
+
+Let us assume you already have a fork. If this is the first time you are using the same fork for submitting subsequent challenges solution. I also assume your GitHub user name is **joe-blog**.
+
+1. Checkout out the **master** branch first.
+   ```
+   $ git checkout master
+   ```
+   
+2. Check if you have setup **upstream**.
+   ```
+   $ git remote -v
+   ```
+   
+   You should see something similar:
+   ```
+   origin  https://github.com/joe-blog/perlweeklychallenge-club (fetch)
+   origin  https://github.com/joe-blog/perlweeklychallenge-club (push)
+   upstream        https://github.com/manwar/perlweeklychallenge-club (fetch)
+   upstream        https://github.com/manwar/perlweeklychallenge-club (push)
+   ```
+   
+   If you don't see **upstream** as above then you need to setup your **upstream** like below:
+   
+   ```
+   $ git remote add upstream https://github.com/manwar/perlweeklychallenge-club
+   ```
+   
+   Check if you have everything setup correctly.
+   
+   ```
+   $ git remote -v
+   ```
+   
+   If you see similar output as above then you have setup **upstream** correctly.
+   You only need to do it **once**.
+   
+3. Now we need to **fetch** latest changes from the **upstream**.
+
+   ```
+   $ git fetch upstream
+   ```
+   
+4. We will now merge the changes into your local **master** branch.
+
+   ```
+   $ git merge upstream/master --ff-only
+   ```
+   
+5. Then push your **master** changes back to the repository.
+
+   ```
+   $ git push -u origin master
+   ```
+   
+6. Now it is time create new branch for new challenge
+
+   ```
+   $ git checkout -b branch-for-challenge-005
+   ```
+   
+7. Once you have a new **branch** ready, you can start adding your solutions or blog information.
+   
+   ```
+   $ cd challenge-005/joe-blog
+   
+   $ echo "URL to the blog" > blog.txt
+   
+   $ cd perl5
+   
+   Add script like **ch-1.pl** or **ch-2.pl** or **ch-1.sh** or **ch-2.sh**
+   
+   $ cd perl6
+   
+   Add script like **ch-1.p6** or **ch-2.p6** or **ch-1.sh** or **ch-2.sh**
+   ```
+   
+   Test your script now.
+   
+8. Commit your changes.
+
+   ```
+   $ git add challenge-005/joe-blog
+   
+   $ git commit
+   ```
+   
+9. Now push the newly created branh **branch-for-challenge-005**
+
+   ```
+   $ git push -u origin branch-for-challenge-005
+   ```
+   
+10. Time to submit your changes as **Pull Request**.
+
+    Go to GitHub web profile
+    
+    https://github.com/joe-blog/perlweeklychallenge-club
+    
+    You should button to create **Pull Request**.
+    
+If you have any trouble with the above instructions then please get in touch with me anytime (mohammad.anwar@yahoo.com).
