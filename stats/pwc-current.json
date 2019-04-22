@@ -1,40 +1,14 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-04-22 09:31:03 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "series" : [
-      {
-         "name" : "Champions",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "name" : "Francis Whittle",
-               "y" : 2,
-               "drilldown" : "Francis Whittle"
-            }
-         ]
-      }
-   ],
    "title" : {
       "text" : "Perl Weekly Challenge - 005"
    },
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2019-04-22 13:12:43 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
@@ -47,17 +21,58 @@
                   2
                ]
             ]
+         },
+         {
+            "id" : "Robert Gratza",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Robert Gratza"
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "tooltip" : {
-      "followPointer" : 1,
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "followPointer" : 1
+   },
+   "series" : [
+      {
+         "name" : "Champions",
+         "data" : [
+            {
+               "name" : "Francis Whittle",
+               "drilldown" : "Francis Whittle",
+               "y" : 2
+            },
+            {
+               "name" : "Robert Gratza",
+               "drilldown" : "Robert Gratza",
+               "y" : 2
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
