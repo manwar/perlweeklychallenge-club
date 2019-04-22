@@ -112,11 +112,11 @@ Let us assume you already have a fork. If this is the first time you are using t
    
    $ cd perl5
    
-   Add script like **ch-1.pl** or **ch-2.pl** or **ch-1.sh** or **ch-2.sh**
+   Add script like ch-1.pl or ch-2.pl or ch-1.sh or ch-2.sh
    
    $ cd perl6
    
-   Add script like **ch-1.p6** or **ch-2.p6** or **ch-1.sh** or **ch-2.sh**
+   Add script like ch-1.p6 or ch-2.p6 or ch-1.sh or ch-2.sh
    ```
    
    Test your script now.
