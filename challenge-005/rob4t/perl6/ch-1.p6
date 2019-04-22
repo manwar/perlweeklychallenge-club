@@ -1,7 +1,7 @@
 #!/usr/bin/env perl6
 use v6;
 
-sub MAIN(Str $word, Str $file = '/usr/share/dict/words') {
+sub MAIN(Str $word, Str $file where *.IO.r = '/usr/share/dict/words') {
     my $word_bag = $word.lc.comb.Bag;
 
     my @found_words = $file.IO.lines.grep: {
