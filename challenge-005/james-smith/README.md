@@ -11,13 +11,16 @@ This is similar to the problems from last week - but really is actually simpler 
 create a signature for each word - and check that against the words in the main dictionary.
 ```
 perl   perl5/ch-1.pl teams < /usr/share/dict/british-english-insane
-perl6  perl6/ch-1.p6 teams < /usr/share/dict/british-english-insane
 ```
 
 Now this can be slightly slow - as it is actioning the sort for every set of letters - we
 can short cut this if the word has a different number of letters... so an extra check saves
 us about 66-75% of the time... [ As this is an optimized function we complete the
 optimization by removing the function call overhead ]
+
+```
+perl   perl5/ch-1a.pl teams < /usr/share/dict/british-english-insane
+```
 
 # Problem 2
 
