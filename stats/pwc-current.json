@@ -1,93 +1,108 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "name" : "Francis Whittle",
-            "id" : "Francis Whittle"
-         },
-         {
-            "id" : "Gustavo Chaves",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "name" : "Gustavo Chaves"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "name" : "Robert Gratza",
-            "id" : "Robert Gratza"
-         }
-      ]
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "legend" : {
+      "enabled" : 0
    },
    "series" : [
       {
          "name" : "Champions",
+         "colorByPoint" : 1,
          "data" : [
             {
                "y" : 2,
-               "name" : "Francis Whittle",
-               "drilldown" : "Francis Whittle"
+               "drilldown" : "Francis Whittle",
+               "name" : "Francis Whittle"
             },
             {
-               "y" : 2,
                "name" : "Gustavo Chaves",
-               "drilldown" : "Gustavo Chaves"
+               "drilldown" : "Gustavo Chaves",
+               "y" : 2
             },
             {
                "y" : 2,
+               "drilldown" : "Dr James A. Smith",
+               "name" : "Dr James A. Smith"
+            },
+            {
+               "name" : "Robert Gratza",
                "drilldown" : "Robert Gratza",
-               "name" : "Robert Gratza"
+               "y" : 2
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 005"
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-04-22 19:49:33 GMT"
+   "xAxis" : {
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Francis Whittle",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Francis Whittle"
+         },
+         {
+            "name" : "Gustavo Chaves",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Gustavo Chaves"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Dr James A. Smith",
+            "name" : "Dr James A. Smith"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Robert Gratza",
+            "name" : "Robert Gratza"
+         }
+      ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 005"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2019-04-23 10:48:40 GMT"
    }
 }
