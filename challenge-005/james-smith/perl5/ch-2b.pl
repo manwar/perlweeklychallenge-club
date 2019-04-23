@@ -1,9 +1,11 @@
 use strict;
 use warnings;
 use feature qw(say);
+use Time::HiRes qw(time);
 
 ## Read in letters from command line... and store in signature
 
+my $t0 = time;
 my %ds;
 my $max = 5; ## mates/meats/steam/teams/tames has at least 5 so we will use this as a base!
 
@@ -22,6 +24,7 @@ foreach (<>) {
                                        ## keep this unique!
 }
 
+my $t1 = time;
 ## Now we dump the results out - we loop through maxkeys array - saves the big grep loop
 ## from previous!
 printf "%3d %-12s %s\n", $max, $_, "@{[sort { lc $a cmp lc $b } values %{$ds{$_}}]}" for
@@ -29,3 +32,6 @@ printf "%3d %-12s %s\n", $max, $_, "@{[sort { lc $a cmp lc $b } values %{$ds{$_}
   keys %maxkeys;
 say '';
 
+my $t2 = time;
+
+say 'Loop 1: ', $t1-$t0, '; loop 2: ', $t2-$t1;
