@@ -110,9 +110,13 @@ Let us assume you already have a fork. If this is the first time you are using t
    
    $ echo "URL to the blog" > blog.txt
    
+   $ mkdir perl5
+   
    $ cd perl5
    
    Add script like ch-1.pl or ch-2.pl or ch-1.sh or ch-2.sh
+   
+   $ mkdir perl6
    
    $ cd perl6
    
