@@ -13,7 +13,7 @@ my %signatures;
 $signatures{ sortedlc( $_ ) }++ for @dict;
 my %by_count = reverse %signatures;
 
-my $max = ( sort { $b <=> $a } keys %by_count)[0];
+my $max = ( sort { $b <=> $a } keys %by_count )[0];
 my $word = $by_count{$max};
 my $wordlength = length $word;
 
