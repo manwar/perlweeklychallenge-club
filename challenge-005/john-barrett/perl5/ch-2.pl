@@ -23,5 +23,5 @@ sub is_anagram {
     $word eq sortedlc $dictword;
 }
 
-print "(A) longest anagram set:\n";
+print "(A) longest anagram set from '$word':\n";
 print "$_\n" for grep { is_anagram( $_ ) } @dict;
