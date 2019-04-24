@@ -17,4 +17,4 @@ sub is_anagram {
 
 open my $fh, '<:encoding(UTF-8)', '/usr/share/dict/words';
 chomp( my @dict = <$fh> );
-printf "$_\n" for grep { is_anagram( $_ ) } @dict;
+print "$_\n" for grep { is_anagram( $_ ) } @dict;
