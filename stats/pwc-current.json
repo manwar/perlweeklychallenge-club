@@ -1,71 +1,16 @@
 {
+   "title" : {
+      "text" : "Perl Weekly Challenge - 005"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "tooltip" : {
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "name" : "Andrezgz",
-            "id" : "Andrezgz"
-         },
-         {
-            "name" : "Francis Whittle",
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "id" : "Francis Whittle"
-         },
-         {
-            "name" : "Gustavo Chaves",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Gustavo Chaves"
-         },
-         {
-            "id" : "Dr James A. Smith",
-            "name" : "Dr James A. Smith",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Robert Gratza",
-            "name" : "Robert Gratza",
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ]
-         }
-      ]
    },
    "legend" : {
       "enabled" : 0
@@ -73,34 +18,32 @@
    "chart" : {
       "type" : "column"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 005"
-   },
    "xAxis" : {
       "type" : "category"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-04-24 09:39:17 GMT"
    },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "Champions",
+         "colorByPoint" : 1,
          "data" : [
             {
+               "y" : 2,
                "drilldown" : "Andrezgz",
-               "name" : "Andrezgz",
-               "y" : 2
+               "name" : "Andrezgz"
             },
             {
-               "name" : "Francis Whittle",
+               "drilldown" : "Francis Whittle",
                "y" : 2,
-               "drilldown" : "Francis Whittle"
+               "name" : "Francis Whittle"
             },
             {
                "drilldown" : "Gustavo Chaves",
@@ -113,11 +56,83 @@
                "name" : "Dr James A. Smith"
             },
             {
-               "drilldown" : "Robert Gratza",
+               "y" : 2,
+               "drilldown" : "Lars Balker",
+               "name" : "Lars Balker"
+            },
+            {
                "name" : "Robert Gratza",
+               "drilldown" : "Robert Gratza",
                "y" : 2
             }
          ]
       }
-   ]
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2019-04-24 11:07:40 GMT"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Andrezgz",
+            "id" : "Andrezgz",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Francis Whittle",
+            "name" : "Francis Whittle"
+         },
+         {
+            "name" : "Gustavo Chaves",
+            "id" : "Gustavo Chaves",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Dr James A. Smith",
+            "id" : "Dr James A. Smith",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Lars Balker",
+            "id" : "Lars Balker",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Robert Gratza",
+            "id" : "Robert Gratza",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
+         }
+      ]
+   }
 }
