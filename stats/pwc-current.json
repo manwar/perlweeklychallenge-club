@@ -1,44 +1,26 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 005"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge - 005"
    },
    "series" : [
       {
-         "name" : "Champions",
          "colorByPoint" : 1,
+         "name" : "Champions",
          "data" : [
             {
-               "y" : 2,
                "drilldown" : "Andrezgz",
+               "y" : 2,
                "name" : "Andrezgz"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Daniel Mantovani",
+               "name" : "Daniel Mantovani"
             },
             {
                "drilldown" : "Francis Whittle",
@@ -46,8 +28,8 @@
                "name" : "Francis Whittle"
             },
             {
-               "drilldown" : "Gustavo Chaves",
                "y" : 2,
+               "drilldown" : "Gustavo Chaves",
                "name" : "Gustavo Chaves"
             },
             {
@@ -56,20 +38,40 @@
                "name" : "Dr James A. Smith"
             },
             {
+               "name" : "John Barrett",
                "y" : 2,
+               "drilldown" : "John Barrett"
+            },
+            {
                "drilldown" : "Lars Balker",
+               "y" : 2,
                "name" : "Lars Balker"
             },
             {
-               "name" : "Robert Gratza",
                "drilldown" : "Robert Gratza",
-               "y" : 2
+               "y" : 2,
+               "name" : "Robert Gratza"
             }
          ]
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
    "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2019-04-24 11:07:40 GMT"
+      "text" : "[Champions: 8] Last updated at 2019-04-25 16:10:12 GMT"
    },
    "drilldown" : {
       "series" : [
@@ -86,12 +88,22 @@
          {
             "data" : [
                [
-                  "Perl 6",
+                  "Perl 5",
                   2
                ]
             ],
+            "name" : "Daniel Mantovani",
+            "id" : "Daniel Mantovani"
+         },
+         {
             "id" : "Francis Whittle",
-            "name" : "Francis Whittle"
+            "name" : "Francis Whittle",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
          },
          {
             "name" : "Gustavo Chaves",
@@ -104,28 +116,38 @@
             ]
          },
          {
-            "name" : "Dr James A. Smith",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
             "id" : "Dr James A. Smith",
+            "name" : "Dr James A. Smith"
+         },
+         {
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "John Barrett",
+            "id" : "John Barrett"
          },
          {
-            "name" : "Lars Balker",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
             "id" : "Lars Balker",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
+            "name" : "Lars Balker"
          },
          {
-            "name" : "Robert Gratza",
             "id" : "Robert Gratza",
+            "name" : "Robert Gratza",
             "data" : [
                [
                   "Perl 6",
@@ -134,5 +156,13 @@
             ]
          }
       ]
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
