@@ -37,8 +37,9 @@ my %letter_factor = (
 ##
 # Main
 ##
-my $test_word = $ARGV[0];  
+my $test_word = lc($ARGV[0]);  
 $test_word =~ tr/-//d;
+print "$test_word\n";
 my @letters = split(//, $test_word);
 my $test_word_product = 1;
 map {$test_word_product *= $_} map{$letter_factor{$_}} @letters;
