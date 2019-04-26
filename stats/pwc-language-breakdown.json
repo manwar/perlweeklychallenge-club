@@ -1,40 +1,11 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "followPointer" : "true"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Language"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge Languages",
          "data" : [
             {
-               "drilldown" : "001",
                "y" : 113,
-               "name" : "#001 [P5=76 P6=37]"
+               "name" : "#001 [P5=76 P6=37]",
+               "drilldown" : "001"
             },
             {
                "name" : "#002 [P5=63 P6=32]",
@@ -42,14 +13,14 @@
                "drilldown" : "002"
             },
             {
-               "name" : "#003 [P5=32 P6=26]",
                "y" : 58,
+               "name" : "#003 [P5=32 P6=26]",
                "drilldown" : "003"
             },
             {
+               "drilldown" : "004",
                "y" : 75,
-               "name" : "#004 [P5=46 P6=29]",
-               "drilldown" : "004"
+               "name" : "#004 [P5=46 P6=29]"
             },
             {
                "drilldown" : "005",
@@ -57,19 +28,20 @@
                "y" : 22
             }
          ],
-         "colorByPoint" : "true"
+         "colorByPoint" : "true",
+         "name" : "Perl Weekly Challenge Languages"
       }
    ],
    "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-04-26 10:03:57 GMT"
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-04-26 17:51:37 GMT"
    },
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : "false"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "001",
+            "name" : "001",
             "data" : [
                [
                   "Perl 5",
@@ -80,9 +52,10 @@
                   37
                ]
             ],
-            "name" : "001"
+            "id" : "001"
          },
          {
+            "id" : "002",
             "data" : [
                [
                   "Perl 5",
@@ -93,12 +66,9 @@
                   32
                ]
             ],
-            "name" : "002",
-            "id" : "002"
+            "name" : "002"
          },
          {
-            "id" : "003",
-            "name" : "003",
             "data" : [
                [
                   "Perl 5",
@@ -108,11 +78,11 @@
                   "Perl 6",
                   26
                ]
-            ]
+            ],
+            "id" : "003",
+            "name" : "003"
          },
          {
-            "id" : "004",
-            "name" : "004",
             "data" : [
                [
                   "Perl 5",
@@ -122,9 +92,12 @@
                   "Perl 6",
                   29
                ]
-            ]
+            ],
+            "id" : "004",
+            "name" : "004"
          },
          {
+            "name" : "005",
             "id" : "005",
             "data" : [
                [
@@ -135,9 +108,36 @@
                   "Perl 6",
                   8
                ]
-            ],
-            "name" : "005"
+            ]
          }
       ]
+   },
+   "tooltip" : {
+      "followPointer" : "true",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Language"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }

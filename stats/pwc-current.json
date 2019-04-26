@@ -1,109 +1,35 @@
 {
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Andrezgz",
-               "y" : 2,
-               "name" : "Andrezgz"
-            },
-            {
-               "name" : "Daniel Mantovani",
-               "y" : 2,
-               "drilldown" : "Daniel Mantovani"
-            },
-            {
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba",
-               "y" : 2
-            },
-            {
-               "name" : "Francis Whittle",
-               "y" : 2,
-               "drilldown" : "Francis Whittle"
-            },
-            {
-               "y" : 2,
-               "name" : "Gustavo Chaves",
-               "drilldown" : "Gustavo Chaves"
-            },
-            {
-               "name" : "Dr James A. Smith",
-               "y" : 2,
-               "drilldown" : "Dr James A. Smith"
-            },
-            {
-               "y" : 2,
-               "name" : "John Barrett",
-               "drilldown" : "John Barrett"
-            },
-            {
-               "drilldown" : "Lars Balker",
-               "name" : "Lars Balker",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Mark Senn",
-               "name" : "Mark Senn",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "name" : "Robert Gratza",
-               "drilldown" : "Robert Gratza"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
-            }
-         ],
-         "name" : "Champions",
-         "colorByPoint" : 1
-      }
-   ],
    "drilldown" : {
       "series" : [
          {
-            "id" : "Andrezgz",
-            "name" : "Andrezgz",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Daniel Mantovani",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
+            "name" : "Andrezgz",
+            "id" : "Andrezgz"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Daniel Mantovani",
             "id" : "Daniel Mantovani"
          },
          {
-            "name" : "E. Choroba",
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "E. Choroba"
+            "name" : "E. Choroba"
          },
          {
             "data" : [
@@ -116,34 +42,24 @@
             "id" : "Francis Whittle"
          },
          {
+            "id" : "Gustavo Chaves",
             "name" : "Gustavo Chaves",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Gustavo Chaves"
+            ]
          },
          {
             "id" : "Dr James A. Smith",
-            "name" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
-         },
-         {
-            "id" : "John Barrett",
-            "name" : "John Barrett",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
+            ],
+            "name" : "Dr James A. Smith"
          },
          {
             "data" : [
@@ -152,7 +68,17 @@
                   2
                ]
             ],
+            "name" : "John Barrett",
+            "id" : "John Barrett"
+         },
+         {
             "name" : "Lars Balker",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
             "id" : "Lars Balker"
          },
          {
@@ -166,24 +92,24 @@
             ]
          },
          {
-            "id" : "Robert Gratza",
+            "name" : "Robert Gratza",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
             ],
-            "name" : "Robert Gratza"
+            "id" : "Robert Gratza"
          },
          {
-            "id" : "Simon Proctor",
             "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
          }
       ]
    },
@@ -192,22 +118,96 @@
          "text" : "Total Solutions"
       }
    },
+   "tooltip" : {
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
    "xAxis" : {
       "type" : "category"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 005"
-   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Andrezgz",
+               "name" : "Andrezgz"
+            },
+            {
+               "name" : "Daniel Mantovani",
+               "drilldown" : "Daniel Mantovani",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Francis Whittle",
+               "name" : "Francis Whittle"
+            },
+            {
+               "drilldown" : "Gustavo Chaves",
+               "y" : 2,
+               "name" : "Gustavo Chaves"
+            },
+            {
+               "name" : "Dr James A. Smith",
+               "drilldown" : "Dr James A. Smith",
+               "y" : 2
+            },
+            {
+               "name" : "John Barrett",
+               "drilldown" : "John Barrett",
+               "y" : 2
+            },
+            {
+               "name" : "Lars Balker",
+               "y" : 2,
+               "drilldown" : "Lars Balker"
+            },
+            {
+               "name" : "Mark Senn",
+               "drilldown" : "Mark Senn",
+               "y" : 2
+            },
+            {
+               "name" : "Robert Gratza",
+               "y" : 2,
+               "drilldown" : "Robert Gratza"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "name" : "Champions"
+      }
+   ],
    "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2019-04-26 10:03:45 GMT"
+      "text" : "[Champions: 11] Last updated at 2019-04-26 17:51:12 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 005"
    }
 }
