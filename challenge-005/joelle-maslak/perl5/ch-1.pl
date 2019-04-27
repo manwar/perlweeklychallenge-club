@@ -13,18 +13,18 @@ if ( @ARGV < 1 or @ARGV > 2 )      { die("Provide letters to use and (optionally
 
 # To call this application:
 #
-# perl6 ch-1.pl; <letters> <filename>
+# perl ch-1.pl; <letters> <filename>
 #
 # If you want to use /usr/share/dict/words as the word list, you can
 # omit the filename.
 #
 # Example:
 #
-#   perl6 ch-1.pl binary
+#   perl ch-1.pl binary
 #
 # which is equivilent to:
 #
-#   perl6 ch-1.pl binary /usr/share/dict/words
+#   perl ch-1.pl binary /usr/share/dict/words
 #
 # With my Unix dictionary (English), it returns binary and brainy
 #
