@@ -49,6 +49,7 @@ while (my $word = <$fh>) {
         say $word;
     }
 }
+close $fh;
 
 sub fullmatch($chars, $word) {
     $chars = join '', sort split '', $chars;
