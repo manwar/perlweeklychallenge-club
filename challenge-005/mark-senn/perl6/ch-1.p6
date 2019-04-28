@@ -26,7 +26,7 @@ my Array %hash;
 for (@word)
 {
     # The key for "family" is "amfily".
-    my $key = .comb(/./).sort.join();
+    my $key = .comb(/./).sort.join;
     # Add the current word to the hash.
     %hash{$key}.push($_);
 }
@@ -46,7 +46,7 @@ for (@word)
 my $word = @word.pick;
 
 # Convert $word to $key.
-my $key = $word.comb(/./).sort.join();
+my $key = $word.comb(/./).sort.join;
 
 # Print the output.
 print "Challenge 1\n";
