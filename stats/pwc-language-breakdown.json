@@ -1,60 +1,7 @@
 {
    "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-04-28 08:37:05 GMT"
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-04-28 09:01:22 GMT"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge Language"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "followPointer" : "true",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "#001 [P5=76 P6=37]",
-               "y" : 113,
-               "drilldown" : "001"
-            },
-            {
-               "name" : "#002 [P5=63 P6=32]",
-               "y" : 95,
-               "drilldown" : "002"
-            },
-            {
-               "drilldown" : "003",
-               "y" : 58,
-               "name" : "#003 [P5=32 P6=26]"
-            },
-            {
-               "y" : 75,
-               "name" : "#004 [P5=46 P6=29]",
-               "drilldown" : "004"
-            },
-            {
-               "drilldown" : "005",
-               "y" : 36,
-               "name" : "#005 [P5=22 P6=14]"
-            }
-         ],
-         "name" : "Perl Weekly Challenge Languages",
-         "colorByPoint" : "true"
-      }
-   ],
    "drilldown" : {
       "series" : [
          {
@@ -72,7 +19,6 @@
             "id" : "001"
          },
          {
-            "id" : "002",
             "name" : "002",
             "data" : [
                [
@@ -83,10 +29,10 @@
                   "Perl 6",
                   32
                ]
-            ]
+            ],
+            "id" : "002"
          },
          {
-            "id" : "003",
             "name" : "003",
             "data" : [
                [
@@ -97,7 +43,8 @@
                   "Perl 6",
                   26
                ]
-            ]
+            ],
+            "id" : "003"
          },
          {
             "data" : [
@@ -114,7 +61,6 @@
             "id" : "004"
          },
          {
-            "name" : "005",
             "data" : [
                [
                   "Perl 5",
@@ -125,9 +71,33 @@
                   14
                ]
             ],
+            "name" : "005",
             "id" : "005"
          }
       ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Language"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "tooltip" : {
+      "followPointer" : "true",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
       "title" : {
@@ -137,7 +107,37 @@
    "xAxis" : {
       "type" : "category"
    },
-   "legend" : {
-      "enabled" : "false"
-   }
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 113,
+               "name" : "#001 [P5=76 P6=37]",
+               "drilldown" : "001"
+            },
+            {
+               "drilldown" : "002",
+               "y" : 95,
+               "name" : "#002 [P5=63 P6=32]"
+            },
+            {
+               "name" : "#003 [P5=32 P6=26]",
+               "y" : 58,
+               "drilldown" : "003"
+            },
+            {
+               "y" : 75,
+               "name" : "#004 [P5=46 P6=29]",
+               "drilldown" : "004"
+            },
+            {
+               "name" : "#005 [P5=22 P6=14]",
+               "y" : 36,
+               "drilldown" : "005"
+            }
+         ],
+         "name" : "Perl Weekly Challenge Languages",
+         "colorByPoint" : "true"
+      }
+   ]
 }
