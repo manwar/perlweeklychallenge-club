@@ -29,7 +29,6 @@ sub findAnangrams(@letters, @words) is export {
 		@a[$maxL]=$tmp;
 		my @b=@a.splice($maxK+1).reverse;
 		@a.=append(@b);
-		
 	}
 	@anagrams;
 }
