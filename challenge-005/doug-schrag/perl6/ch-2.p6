@@ -1,13 +1,12 @@
 use v6;
 
-sub MAIN(:$word-file is copy, :$lengthy) {
+sub MAIN(:$word-file!, :$lengthy) {
     my $file = .IO with $word-file;
     my Set $words = Set.new(.lines.sort) with $file;
-    return unless $words;
 
-    my &is-word = $words.defined
-        ?? -> $w { $w (elem) $words }
-        !! -> $w { True };
+    sub is-word ($w) {
+        $w (elem) $words;
+    }
     my %counts;
     for $words.keys -> $word {
         my $norm = normalize-anagram($word);
@@ -18,26 +17,28 @@ sub MAIN(:$word-file is copy, :$lengthy) {
     my @patterns = %counts.pairs.grep(*.value == $max)>>.key;
     for @patterns {
         .say;
-        "  $_".say for .&anagrams;
+        for .&anagrams(&is-word) {
+            "  $_".say;
+        }
     }
 
     if ($lengthy) {
         say %counts.grep({
-            .value > 1
+            .value > 4
             && .key.chars > @patterns.max(*.chars).chars
         });
     }
 
-    sub anagrams ($word) {
-        gather
-        for $word.comb.permutations.unique(:with(&[eqv])) {
-            with .join {
-                .take if .&is-word
-            }
-        }
-    }
     sub normalize-anagram(Str $word) {
         return $word.comb.sort.join;
     }
 }
 
+sub anagrams ($word, &is-word = -> $w { True }) {
+    gather
+    for $word.comb.permutations.unique(:with(&[eqv])) {
+        with .join {
+            .take if .&is-word
+        }
+    }
+}
