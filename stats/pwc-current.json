@@ -1,93 +1,67 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "name" : "Francis Whittle",
-            "id" : "Francis Whittle"
-         },
-         {
-            "id" : "Gustavo Chaves",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "name" : "Gustavo Chaves"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "name" : "Robert Gratza",
-            "id" : "Robert Gratza"
-         }
-      ]
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "series" : [
-      {
-         "name" : "Champions",
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "Francis Whittle",
-               "drilldown" : "Francis Whittle"
-            },
-            {
-               "y" : 2,
-               "name" : "Gustavo Chaves",
-               "drilldown" : "Gustavo Chaves"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Robert Gratza",
-               "name" : "Robert Gratza"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 005"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-04-22 19:49:33 GMT"
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "series" : [
+      {
+         "name" : "Champions",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "Joelle Maslak",
+               "y" : 4,
+               "name" : "Joelle Maslak"
+            }
+         ]
+      }
+   ],
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 1] Last updated at 2019-04-29 09:24:04 GMT"
+   },
    "legend" : {
       "enabled" : 0
    },
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
+         }
+      ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 006"
+   },
    "xAxis" : {
       "type" : "category"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
    }
 }
