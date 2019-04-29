@@ -2,7 +2,7 @@
 
 use v6;
 
-role GrowableRange {
+class GrowableRange {
     has Int $.min;
     has Int $.max;
 
