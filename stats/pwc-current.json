@@ -1,4 +1,36 @@
 {
+   "title" : {
+      "text" : "Perl Weekly Challenge - 006"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 1] Last updated at 2019-04-29 02:53:50 GMT"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ],
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "name" : "Joelle Maslak",
+            "id" : "Joelle Maslak"
+         }
+      ]
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
@@ -7,57 +39,29 @@
    "chart" : {
       "type" : "column"
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak",
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ]
-         }
-      ]
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Joelle Maslak",
                "name" : "Joelle Maslak",
-               "y" : 1
+               "y" : 2,
+               "drilldown" : "Joelle Maslak"
             }
          ],
+         "colorByPoint" : 1,
          "name" : "Champions"
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 006"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          },
          "borderWidth" : 0
       }
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-04-29 02:44:27 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
+   "xAxis" : {
+      "type" : "category"
    }
 }
