@@ -12,5 +12,6 @@ use v6;
 # Checked against http://oeis.org/A060295
 
 # We'll give *33* digits of precison, not 32.  ;)
+# Formula is from the Wiki page.  :)  It's accurate to 33 digits.
 say (640320³ + 744 - 196844.FatRat/(640320³ + 744)).Str.substr(0,34);
 
