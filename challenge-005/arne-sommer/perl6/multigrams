@@ -1,0 +1,70 @@
+#! /usr/bin/env perl6
+
+unit sub MAIN (Str $word is copy,
+  :$dictionary where $dictionary.IO.r = "dict-UK.txt",
+  :$log-words, :$tabular);
+
+$word = $word.trans(" " => "", :delete).lc;
+
+my $dict = get-dictionary($dictionary);
+
+my @permutations = $word.comb.permutations>>.join.unique;
+  
+my SetHash $seen;
+my SetHash $word-list;
+
+check-anagram("", $_) for @permutations; 
+
+say "Anagrams: { $seen.keys.elems }";
+
+if $tabular
+{
+  my %shown;
+  for $seen.keys.sort
+  {
+    unless /\s/ { .say; next; } 
+
+    my @w = .words.sort;
+    my $w = @w.join(" ");
+
+    next if %shown{$w};
+  
+    %shown{$w} = True;
+    print $w unless @w;
+
+    print @w.permutations.unique.join(" | ");
+    print "\n";
+  }
+}
+else
+{
+  .say for $seen.keys.sort;
+}
+
+spurt "wordlog.txt", $word-list.keys.sort.join("\n") ~ "\n" if $log-words;
+
+sub get-dictionary ($file where $file.IO.r)
+{
+  return $file.IO.lines.grep(* !~~ /\W/)>>.lc.Set;
+}
+
+sub check-anagram ($base is copy, $candidate is copy)
+{
+  # say "[$base][$candidate]";
+
+  if $dict{$candidate}
+  {
+    $word-list{$candidate} = True if $log-words;
+    $seen{"$base $candidate".trim-leading} = True;
+      # The first character is a space.
+    return;
+  }
+
+  for 1 .. $candidate.chars
+  {
+    my $new-base      = $candidate.substr(0, $_);
+    my $new-candidate = $candidate.substr($_);
+    # say ">> $new-base >> $new-candidate";
+    check-anagram("$base $new-base", $new-candidate) if $dict{$new-base};
+  }
+}
