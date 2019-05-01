@@ -1,57 +1,26 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-05-01 15:00:30 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 006"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
-         "name" : "Champions",
          "data" : [
             {
-               "name" : "Athanasius",
-               "drilldown" : "Athanasius",
-               "y" : 2
+               "name" : "Alicia Bielsa",
+               "y" : 1,
+               "drilldown" : "Alicia Bielsa"
             },
             {
+               "name" : "Athanasius",
+               "y" : 2,
+               "drilldown" : "Athanasius"
+            },
+            {
+               "y" : 2,
                "drilldown" : "Gustavo Chaves",
-               "name" : "Gustavo Chaves",
-               "y" : 2
+               "name" : "Gustavo Chaves"
             },
             {
                "y" : 4,
-               "name" : "Joelle Maslak",
-               "drilldown" : "Joelle Maslak"
+               "drilldown" : "Joelle Maslak",
+               "name" : "Joelle Maslak"
             },
             {
                "name" : "Simon Proctor",
@@ -59,24 +28,40 @@
                "y" : 1
             },
             {
+               "name" : "Tim Smith",
                "y" : 2,
-               "drilldown" : "Tim Smith",
-               "name" : "Tim Smith"
+               "drilldown" : "Tim Smith"
             }
-         ]
+         ],
+         "colorByPoint" : 1,
+         "name" : "Champions"
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Athanasius",
-            "name" : "Athanasius",
             "data" : [
                [
                   "Perl 5",
-                  2
+                  1
                ]
-            ]
+            ],
+            "id" : "Alicia Bielsa",
+            "name" : "Alicia Bielsa"
          },
          {
             "data" : [
@@ -85,10 +70,21 @@
                   2
                ]
             ],
+            "id" : "Athanasius",
+            "name" : "Athanasius"
+         },
+         {
             "name" : "Gustavo Chaves",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
             "id" : "Gustavo Chaves"
          },
          {
+            "id" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
@@ -99,29 +95,48 @@
                   2
                ]
             ],
-            "id" : "Joelle Maslak",
             "name" : "Joelle Maslak"
          },
          {
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            "id" : "Simon Proctor"
          },
          {
+            "id" : "Tim Smith",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
             ],
-            "id" : "Tim Smith",
             "name" : "Tim Smith"
          }
       ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2019-05-01 15:07:54 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 006"
    }
 }
