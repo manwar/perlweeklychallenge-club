@@ -6,9 +6,9 @@ use 5.028.1;
 use List::Util qw(sum);
 
 s{
-    (\b \d+)
-    (,?\d+,)+
-    (\d+ \b)
+    ( \b  \d+   )
+    ( ,?  \d+ , )+
+    ( \d+ \b    )
     (??{
         # this block is treated as a pattern
         # != will return '' (always match) or 1 (fail because of previous \b)
