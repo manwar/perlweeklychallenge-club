@@ -12,7 +12,7 @@ s{
     (??{
         # this block is treated as a pattern
         # != will return '' (always match) or 1 (fail because of previous \b)
-        ($3-$1+1)*($1+$3)/2 != sum split ',', $&;
+        ( $3 - $1 + 1 ) * ( $1 + $3 ) / 2 != sum split ',', $&;
     })
 }
 {$1-$3}xg;
