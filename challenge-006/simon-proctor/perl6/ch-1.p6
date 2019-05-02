@@ -12,7 +12,10 @@ class GrowableRange {
 
     method grow() { $!max++; return self }
 
-    method gist() { $!min == $!max ?? $!min.Str !! "{$!min}-{$!max}" }
+    method gist() { $!min == $!max ??
+                    $!min.Str !! $!max == $!min+1 ??
+                                 "{$!min},{$!max}"
+                              !! "{$!min}-{$!max}" }
 
     method Str() { self.gist }
 }
