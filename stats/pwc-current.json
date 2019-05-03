@@ -1,124 +1,12 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2019-05-02 18:53:17 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Alicia Bielsa",
-            "name" : "Alicia Bielsa",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ]
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
-         {
-            "name" : "Andrezgz",
-            "id" : "Andrezgz",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "name" : "Athanasius",
-            "id" : "Athanasius"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "E. Choroba",
-            "name" : "E. Choroba"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Gustavo Chaves",
-            "name" : "Gustavo Chaves"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ],
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ],
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "id" : "Laurent Rosenfeld",
-            "name" : "Laurent Rosenfeld"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Maxim Kolodyazhny",
-            "name" : "Maxim Kolodyazhny"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "id" : "Tim Smith",
-            "name" : "Tim Smith"
-         }
-      ]
-   },
-   "legend" : {
-      "enabled" : 0
+         "borderWidth" : 0
+      }
    },
    "chart" : {
       "type" : "column"
@@ -127,19 +15,24 @@
       {
          "data" : [
             {
+               "y" : 1,
                "drilldown" : "Alicia Bielsa",
-               "name" : "Alicia Bielsa",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Andrezgz",
-               "name" : "Andrezgz",
-               "y" : 2
+               "name" : "Alicia Bielsa"
             },
             {
                "y" : 2,
+               "drilldown" : "Andrezgz",
+               "name" : "Andrezgz"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Arpad Toth",
+               "name" : "Arpad Toth"
+            },
+            {
                "name" : "Athanasius",
-               "drilldown" : "Athanasius"
+               "drilldown" : "Athanasius",
+               "y" : 2
             },
             {
                "y" : 2,
@@ -147,19 +40,19 @@
                "drilldown" : "E. Choroba"
             },
             {
+               "y" : 2,
                "drilldown" : "Gustavo Chaves",
-               "name" : "Gustavo Chaves",
-               "y" : 2
+               "name" : "Gustavo Chaves"
             },
             {
-               "y" : 4,
+               "drilldown" : "Joelle Maslak",
                "name" : "Joelle Maslak",
-               "drilldown" : "Joelle Maslak"
+               "y" : 4
             },
             {
-               "drilldown" : "Laurent Rosenfeld",
+               "y" : 2,
                "name" : "Laurent Rosenfeld",
-               "y" : 2
+               "drilldown" : "Laurent Rosenfeld"
             },
             {
                "y" : 2,
@@ -168,39 +61,161 @@
             },
             {
                "drilldown" : "Simon Proctor",
-               "y" : 1,
-               "name" : "Simon Proctor"
+               "name" : "Simon Proctor",
+               "y" : 1
             },
             {
-               "drilldown" : "Tim Smith",
+               "y" : 2,
                "name" : "Tim Smith",
-               "y" : 2
+               "drilldown" : "Tim Smith"
             }
          ],
-         "colorByPoint" : 1,
-         "name" : "Champions"
+         "name" : "Champions",
+         "colorByPoint" : 1
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 006"
+   "tooltip" : {
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 006"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "name" : "Alicia Bielsa",
+            "id" : "Alicia Bielsa"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Andrezgz",
+            "id" : "Andrezgz"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "name" : "Arpad Toth",
+            "id" : "Arpad Toth"
+         },
+         {
+            "id" : "Athanasius",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Athanasius"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "E. Choroba",
+            "id" : "E. Choroba"
+         },
+         {
+            "id" : "Gustavo Chaves",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Gustavo Chaves"
+         },
+         {
+            "id" : "Joelle Maslak",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Joelle Maslak"
+         },
+         {
+            "id" : "Laurent Rosenfeld",
+            "name" : "Laurent Rosenfeld",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ],
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
+         },
+         {
+            "id" : "Maxim Kolodyazhny",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Maxim Kolodyazhny"
+         },
+         {
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "name" : "Simon Proctor"
+         },
+         {
+            "name" : "Tim Smith",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Tim Smith"
          }
-      }
+      ]
+   },
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2019-05-03 16:10:31 GMT"
    }
 }
