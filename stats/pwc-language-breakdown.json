@@ -1,23 +1,19 @@
 {
-   "legend" : {
-      "enabled" : "false"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "type" : "category"
    },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "followPointer" : "true"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge Language"
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-05-05 17:12:52 GMT"
    },
    "series" : [
       {
@@ -28,33 +24,33 @@
                "y" : 113
             },
             {
-               "name" : "#002 [P5=63 P6=32]",
+               "y" : 95,
                "drilldown" : "002",
-               "y" : 95
+               "name" : "#002 [P5=63 P6=32]"
             },
             {
+               "drilldown" : "003",
                "name" : "#003 [P5=32 P6=26]",
-               "y" : 58,
-               "drilldown" : "003"
+               "y" : 58
             },
             {
-               "name" : "#004 [P5=46 P6=29]",
                "y" : 75,
-               "drilldown" : "004"
+               "drilldown" : "004",
+               "name" : "#004 [P5=46 P6=29]"
             },
             {
-               "y" : 55,
                "drilldown" : "005",
-               "name" : "#005 [P5=33 P6=22]"
+               "name" : "#005 [P5=33 P6=22]",
+               "y" : 55
             },
             {
-               "name" : "#006 [P5=17 P6=7]",
-               "y" : 24,
-               "drilldown" : "006"
+               "drilldown" : "006",
+               "name" : "#006 [P5=18 P6=8]",
+               "y" : 26
             }
          ],
-         "colorByPoint" : "true",
-         "name" : "Perl Weekly Challenge Languages"
+         "name" : "Perl Weekly Challenge Languages",
+         "colorByPoint" : "true"
       }
    ],
    "plotOptions" : {
@@ -65,6 +61,9 @@
          },
          "borderWidth" : 0
       }
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "drilldown" : {
       "series" : [
@@ -83,7 +82,6 @@
             "id" : "001"
          },
          {
-            "name" : "002",
             "id" : "002",
             "data" : [
                [
@@ -94,10 +92,10 @@
                   "Perl 6",
                   32
                ]
-            ]
+            ],
+            "name" : "002"
          },
          {
-            "id" : "003",
             "data" : [
                [
                   "Perl 5",
@@ -108,11 +106,12 @@
                   26
                ]
             ],
-            "name" : "003"
+            "name" : "003",
+            "id" : "003"
          },
          {
-            "name" : "004",
             "id" : "004",
+            "name" : "004",
             "data" : [
                [
                   "Perl 5",
@@ -125,7 +124,6 @@
             ]
          },
          {
-            "name" : "005",
             "data" : [
                [
                   "Perl 5",
@@ -136,6 +134,7 @@
                   22
                ]
             ],
+            "name" : "005",
             "id" : "005"
          },
          {
@@ -143,20 +142,21 @@
             "data" : [
                [
                   "Perl 5",
-                  17
+                  18
                ],
                [
                   "Perl 6",
-                  7
+                  8
                ]
             ],
             "id" : "006"
          }
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : "true",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>"
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-05-05 18:13:01 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
