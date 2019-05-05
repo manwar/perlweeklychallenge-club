@@ -5,7 +5,7 @@ use warnings;
 
 use v5.028.1;
 
-use Test::More tests => 10;
+use Test::More tests => 11;
 
 my %tests = (
     '0,0,0'        => '0,0,0',
@@ -18,6 +18,7 @@ my %tests = (
     '100,101,102'  => '100-102',
     '3,2,1,0'      => '3,2,1,0',
     '4,3,2'        => '4,3,2',
+    '100,1,2,3'    => '100,1-3',
 );
 
 while ( my ( $i, $o ) = each %tests ) {
@@ -28,4 +29,4 @@ while ( my ( $i, $o ) = each %tests ) {
     is( $r, $o );
 }
 
-done_testing 10;
+done_testing 11;
