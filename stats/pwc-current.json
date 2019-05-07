@@ -1,10 +1,4 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2019-05-07 12:16:29 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
@@ -13,41 +7,80 @@
    "title" : {
       "text" : "Perl Weekly Challenge - 007"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2019-05-07 14:23:53 GMT"
    },
    "xAxis" : {
       "type" : "category"
    },
+   "chart" : {
+      "type" : "column"
+   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Ozzy",
+            "name" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Dave Jacoby"
+         },
+         {
+            "id" : "Ozzy",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Ozzy"
+            "name" : "Ozzy"
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ]
+            ],
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    },
+   "tooltip" : {
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "Dave Jacoby",
+               "y" : 2,
+               "name" : "Dave Jacoby"
+            },
+            {
+               "drilldown" : "Ozzy",
+               "name" : "Ozzy",
+               "y" : 1
+            },
+            {
+               "y" : 1,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "name" : "Champions"
+      }
+   ],
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
@@ -56,23 +89,5 @@
          },
          "borderWidth" : 0
       }
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "name" : "Ozzy",
-               "drilldown" : "Ozzy",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 1
-            }
-         ],
-         "name" : "Champions"
-      }
-   ]
+   }
 }
