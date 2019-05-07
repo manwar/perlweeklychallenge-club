@@ -1,63 +1,63 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-05-06 19:02:06 GMT"
-   },
-   "series" : [
-      {
-         "name" : "Champions",
-         "data" : [
-            {
-               "y" : 1,
-               "drilldown" : "Ozzy",
-               "name" : "Ozzy"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Ozzy",
             "id" : "Ozzy",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ],
-            "name" : "Ozzy"
+            ]
          }
       ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 007"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 1] Last updated at 2019-05-07 10:49:30 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 007"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
    "chart" : {
       "type" : "column"
+   },
+   "series" : [
+      {
+         "name" : "Champions",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Ozzy",
+               "drilldown" : "Ozzy",
+               "y" : 1
+            }
+         ]
+      }
+   ],
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
