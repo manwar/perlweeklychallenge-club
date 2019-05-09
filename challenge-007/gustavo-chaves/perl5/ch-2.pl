@@ -21,7 +21,9 @@ sub first_shortest_ladder {
 
     my (%graph, %dist, %prev);
 
-    my $length = length $source;
+    my $length   = length $source;
+    my $infinity = @$wordlist + 1;
+
     for my $i (0 .. @$wordlist-2) {
         my $word_i = $wordlist->[$i];
         foreach my $word_j (@{$wordlist}[$i+1 .. @$wordlist-1]) {
@@ -34,7 +36,7 @@ sub first_shortest_ladder {
                 push @{$graph{$word_j}}, $word_i;
             }
         }
-        $dist{$word_i} = @$wordlist + 1; # infinity
+        $dist{$word_i} = $infinity;
         $prev{$word_i} = undef;
     }
 
