@@ -30,8 +30,8 @@ sub first_shortest_ladder {
                 $distance += 1 if substr($word_i, $k, 1) ne substr($word_j, $k, 1);
             }
             if ($distance == 1) {
-                $graph{$word_i}{$word_j} = undef;
-                $graph{$word_j}{$word_i} = undef;
+                push @{$graph{$word_i}}, $word_j;
+                push @{$graph{$word_j}}, $word_i;
             }
         }
         $dist{$word_i} = @$wordlist + 1; # infinity
@@ -47,7 +47,7 @@ sub first_shortest_ladder {
 
         last if $u eq $target;      # found a shortest path to $target
 
-        foreach my $v (grep {exists $graph{$_}} keys %$neighbors) {
+        foreach my $v (grep {exists $graph{$_}} @$neighbors) {
             my $alt = $dist{$u} + 1;
             if ($alt < $dist{$v}) {
                 $dist{$v} = $alt;
