@@ -1,93 +1,127 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 007"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-05-07 14:23:53 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
    },
    "chart" : {
       "type" : "column"
    },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 007"
+   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Dave Jacoby"
+            "name" : "Dave Jacoby"
+         },
+         {
+            "id" : "Gustavo Chaves",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Gustavo Chaves"
+         },
+         {
+            "name" : "Joelle Maslak",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ],
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "id" : "Joelle Maslak"
          },
          {
             "id" : "Ozzy",
+            "name" : "Ozzy",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ],
-            "name" : "Ozzy"
+            ]
          },
          {
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
-   "tooltip" : {
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-05-09 10:07:03 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "series" : [
       {
          "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Dave Jacoby",
                "y" : 2,
+               "drilldown" : "Dave Jacoby",
                "name" : "Dave Jacoby"
             },
             {
-               "drilldown" : "Ozzy",
-               "name" : "Ozzy",
-               "y" : 1
+               "drilldown" : "Gustavo Chaves",
+               "name" : "Gustavo Chaves",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "Joelle Maslak",
+               "drilldown" : "Joelle Maslak"
             },
             {
                "y" : 1,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Ozzy",
+               "name" : "Ozzy"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
             }
          ],
          "name" : "Champions"
       }
-   ],
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   }
+   ]
 }

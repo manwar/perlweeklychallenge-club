@@ -1,21 +1,19 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : "true",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "xAxis" : {
       "type" : "category"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-05-07 14:24:14 GMT"
+   "tooltip" : {
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "followPointer" : "true",
+      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge Languages",
          "data" : [
             {
                "y" : 113,
@@ -28,54 +26,60 @@
                "name" : "#002 [P5=63 P6=32]"
             },
             {
-               "y" : 58,
                "name" : "#003 [P5=32 P6=26]",
-               "drilldown" : "003"
+               "drilldown" : "003",
+               "y" : 58
             },
             {
+               "drilldown" : "004",
                "y" : 75,
-               "name" : "#004 [P5=46 P6=29]",
-               "drilldown" : "004"
+               "name" : "#004 [P5=46 P6=29]"
             },
             {
-               "y" : 55,
+               "name" : "#005 [P5=33 P6=22]",
                "drilldown" : "005",
-               "name" : "#005 [P5=33 P6=22]"
+               "y" : 55
             },
             {
-               "name" : "#006 [P5=27 P6=14]",
+               "y" : 41,
                "drilldown" : "006",
-               "y" : 41
+               "name" : "#006 [P5=27 P6=14]"
             },
             {
-               "name" : "#007 [P5=2 P6=2]",
+               "name" : "#007 [P5=5 P6=3]",
                "drilldown" : "007",
-               "y" : 4
+               "y" : 8
             }
          ],
-         "colorByPoint" : "true"
+         "colorByPoint" : "true",
+         "name" : "Perl Weekly Challenge Languages"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "legend" : {
       "enabled" : "false"
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-05-09 10:07:31 GMT"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "enabled" : 1,
             "format" : "{point.y}"
-         }
+         },
+         "borderWidth" : 0
       }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Language"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "001",
             "data" : [
                [
                   "Perl 5",
@@ -86,11 +90,10 @@
                   37
                ]
             ],
-            "id" : "001",
             "name" : "001"
          },
          {
-            "id" : "002",
+            "name" : "002",
             "data" : [
                [
                   "Perl 5",
@@ -101,7 +104,7 @@
                   32
                ]
             ],
-            "name" : "002"
+            "id" : "002"
          },
          {
             "data" : [
@@ -114,12 +117,12 @@
                   26
                ]
             ],
-            "id" : "003",
-            "name" : "003"
+            "name" : "003",
+            "id" : "003"
          },
          {
-            "name" : "004",
             "id" : "004",
+            "name" : "004",
             "data" : [
                [
                   "Perl 5",
@@ -132,7 +135,6 @@
             ]
          },
          {
-            "name" : "005",
             "id" : "005",
             "data" : [
                [
@@ -143,10 +145,10 @@
                   "Perl 6",
                   22
                ]
-            ]
+            ],
+            "name" : "005"
          },
          {
-            "name" : "006",
             "id" : "006",
             "data" : [
                [
@@ -157,25 +159,23 @@
                   "Perl 6",
                   14
                ]
-            ]
+            ],
+            "name" : "006"
          },
          {
             "id" : "007",
             "data" : [
                [
                   "Perl 5",
-                  2
+                  5
                ],
                [
                   "Perl 6",
-                  2
+                  3
                ]
             ],
             "name" : "007"
          }
       ]
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Language"
    }
 }
