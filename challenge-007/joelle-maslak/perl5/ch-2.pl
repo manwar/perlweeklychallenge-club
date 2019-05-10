@@ -2,7 +2,6 @@
 use v5.26;
 use strict;
 use warnings;
-use Carp;
 
 # Turn on method signatures
 use feature 'signatures';
