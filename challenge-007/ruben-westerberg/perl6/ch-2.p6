@@ -19,44 +19,38 @@ my $found=False;
 my $result;
 @transforms.push: $s;
 while @transforms > 0 && !$found {
-	my $current= @transforms.shift;
-	#make new transforms
-
-	@seen.push($current<word>);
+	say "To Test: "~ @transforms.elems~ " Dict: " ~ @words.elems;
+	my $current:= @transforms.shift;
 	my @toAdd=transforms($current);
-	#say @toAdd;
 	@transforms.append: @toAdd;
-	#say @transforms.elems;
-
 }
-#say $result;
 say pathFromParent($result, $start);
 	
 
 #read word list from file and filter by word length
 sub transforms($parent is rw) {
+	constant @letters="a".."z";
 	my $word=$parent<word>;
-	#@seen.push($word) ;
-	#my $node={:$word, parent=>$parent};
-	#say $word;
+	#@seen.push($word);
 	$found = $word eq $end;
-	$result=$parent if ($word eq $end) && (! so $result);
+	$result=$parent; #if ($word eq $end) && (! so $result);
 
 	return if $found;
 
 	my @c=$word.comb;
-	constant @letters="a".."z";
 
 	#say $word;
+	my $w;
 	my @transforms=gather {
 		for ^@c -> $c {
 			for  @letters -> $l {
 				my @tmp=@c;
 				@tmp[$c]=$l; 
-				my $w=@tmp.join;
-				if ( @seen.grep($w) == 0) {
-#				say $w;
-
+				$w:=@tmp.join;
+				if ( (@words.grep($w) > 0)  && (@transforms.grep($w) == 0)) {
+					#say $w;
+					
+					@words=@words.grep({ $_ ne $w});
 					take {word=>$w, parent=>$parent};
 				}
 			}
@@ -75,5 +69,3 @@ sub pathFromParent($node, $word) {
 	}
 	@path.reverse;
 }
-
-
