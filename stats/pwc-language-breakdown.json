@@ -1,7 +1,66 @@
 {
+   "legend" : {
+      "enabled" : "false"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge Languages",
+         "colorByPoint" : "true",
+         "data" : [
+            {
+               "y" : 113,
+               "drilldown" : "001",
+               "name" : "#001 [P5=76 P6=37]"
+            },
+            {
+               "name" : "#002 [P5=63 P6=32]",
+               "drilldown" : "002",
+               "y" : 95
+            },
+            {
+               "drilldown" : "003",
+               "name" : "#003 [P5=32 P6=26]",
+               "y" : 58
+            },
+            {
+               "y" : 75,
+               "drilldown" : "004",
+               "name" : "#004 [P5=46 P6=29]"
+            },
+            {
+               "y" : 55,
+               "name" : "#005 [P5=33 P6=22]",
+               "drilldown" : "005"
+            },
+            {
+               "drilldown" : "006",
+               "name" : "#006 [P5=27 P6=14]",
+               "y" : 41
+            },
+            {
+               "name" : "#007 [P5=10 P6=7]",
+               "drilldown" : "007",
+               "y" : 17
+            }
+         ]
+      }
+   ],
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "001",
+            "id" : "001",
             "data" : [
                [
                   "Perl 5",
@@ -11,12 +70,9 @@
                   "Perl 6",
                   37
                ]
-            ],
-            "id" : "001",
-            "name" : "001"
+            ]
          },
          {
-            "id" : "002",
             "data" : [
                [
                   "Perl 5",
@@ -27,7 +83,8 @@
                   32
                ]
             ],
-            "name" : "002"
+            "name" : "002",
+            "id" : "002"
          },
          {
             "name" : "003",
@@ -58,6 +115,8 @@
             "name" : "004"
          },
          {
+            "id" : "005",
+            "name" : "005",
             "data" : [
                [
                   "Perl 5",
@@ -67,13 +126,11 @@
                   "Perl 6",
                   22
                ]
-            ],
-            "id" : "005",
-            "name" : "005"
+            ]
          },
          {
-            "name" : "006",
             "id" : "006",
+            "name" : "006",
             "data" : [
                [
                   "Perl 5",
@@ -86,7 +143,6 @@
             ]
          },
          {
-            "name" : "007",
             "data" : [
                [
                   "Perl 5",
@@ -94,74 +150,24 @@
                ],
                [
                   "Perl 6",
-                  5
+                  7
                ]
             ],
+            "name" : "007",
             "id" : "007"
          }
       ]
    },
    "tooltip" : {
-      "followPointer" : "true",
       "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>"
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "followPointer" : "true"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 113,
-               "drilldown" : "001",
-               "name" : "#001 [P5=76 P6=37]"
-            },
-            {
-               "name" : "#002 [P5=63 P6=32]",
-               "y" : 95,
-               "drilldown" : "002"
-            },
-            {
-               "name" : "#003 [P5=32 P6=26]",
-               "y" : 58,
-               "drilldown" : "003"
-            },
-            {
-               "y" : 75,
-               "drilldown" : "004",
-               "name" : "#004 [P5=46 P6=29]"
-            },
-            {
-               "name" : "#005 [P5=33 P6=22]",
-               "y" : 55,
-               "drilldown" : "005"
-            },
-            {
-               "name" : "#006 [P5=27 P6=14]",
-               "y" : 41,
-               "drilldown" : "006"
-            },
-            {
-               "drilldown" : "007",
-               "y" : 15,
-               "name" : "#007 [P5=10 P6=5]"
-            }
-         ],
-         "colorByPoint" : "true",
-         "name" : "Perl Weekly Challenge Languages"
-      }
-   ],
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-05-10 13:41:14 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Language"
-   },
-   "legend" : {
-      "enabled" : "false"
    },
    "plotOptions" : {
       "series" : {
@@ -171,11 +177,5 @@
          },
          "borderWidth" : 0
       }
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-05-10 03:37:47 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
    }
 }

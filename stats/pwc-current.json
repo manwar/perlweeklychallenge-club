@@ -4,27 +4,109 @@
          "text" : "Total Solutions"
       }
    },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Champions",
+         "data" : [
+            {
+               "name" : "Andrezgz",
+               "drilldown" : "Andrezgz",
+               "y" : 1
+            },
+            {
+               "name" : "Athanasius",
+               "drilldown" : "Athanasius",
+               "y" : 2
+            },
+            {
+               "name" : "Dave Jacoby",
+               "y" : 2,
+               "drilldown" : "Dave Jacoby"
+            },
+            {
+               "name" : "Francis Whittle",
+               "drilldown" : "Francis Whittle",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Gustavo Chaves",
+               "y" : 2,
+               "name" : "Gustavo Chaves"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Jo Christian Oterhals",
+               "name" : "Jo Christian Oterhals"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Joelle Maslak",
+               "name" : "Joelle Maslak"
+            },
+            {
+               "name" : "Maxim Nechaev",
+               "y" : 2,
+               "drilldown" : "Maxim Nechaev"
+            },
+            {
+               "name" : "Ozzy",
+               "y" : 1,
+               "drilldown" : "Ozzy"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            }
+         ]
+      }
+   ],
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2019-05-10 13:41:01 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 007"
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Andrezgz",
             "name" : "Andrezgz",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ]
+            ],
+            "id" : "Andrezgz"
          },
          {
-            "id" : "Athanasius",
             "name" : "Athanasius",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "id" : "Athanasius"
          },
          {
             "name" : "Dave Jacoby",
@@ -37,14 +119,14 @@
             "id" : "Dave Jacoby"
          },
          {
-            "id" : "Francis Whittle",
             "name" : "Francis Whittle",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Francis Whittle"
          },
          {
             "id" : "Gustavo Chaves",
@@ -57,8 +139,16 @@
             ]
          },
          {
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak",
+            "id" : "Jo Christian Oterhals",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Jo Christian Oterhals"
+         },
+         {
             "data" : [
                [
                   "Perl 5",
@@ -68,120 +158,45 @@
                   "Perl 6",
                   1
                ]
-            ]
+            ],
+            "name" : "Joelle Maslak",
+            "id" : "Joelle Maslak"
          },
          {
-            "id" : "Maxim Nechaev",
+            "name" : "Maxim Nechaev",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "name" : "Maxim Nechaev"
+            "id" : "Maxim Nechaev"
          },
          {
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
+            "id" : "Ozzy",
             "name" : "Ozzy",
-            "id" : "Ozzy"
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
          },
          {
-            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Simon Proctor"
+            "name" : "Simon Proctor"
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "tooltip" : {
-      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 007"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2019-05-10 03:37:34 GMT"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Andrezgz",
-               "y" : 1,
-               "drilldown" : "Andrezgz"
-            },
-            {
-               "name" : "Athanasius",
-               "y" : 2,
-               "drilldown" : "Athanasius"
-            },
-            {
-               "y" : 2,
-               "name" : "Dave Jacoby",
-               "drilldown" : "Dave Jacoby"
-            },
-            {
-               "drilldown" : "Francis Whittle",
-               "name" : "Francis Whittle",
-               "y" : 2
-            },
-            {
-               "name" : "Gustavo Chaves",
-               "y" : 2,
-               "drilldown" : "Gustavo Chaves"
-            },
-            {
-               "drilldown" : "Joelle Maslak",
-               "y" : 2,
-               "name" : "Joelle Maslak"
-            },
-            {
-               "y" : 2,
-               "name" : "Maxim Nechaev",
-               "drilldown" : "Maxim Nechaev"
-            },
-            {
-               "y" : 1,
-               "name" : "Ozzy",
-               "drilldown" : "Ozzy"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "y" : 1,
-               "name" : "Simon Proctor"
-            }
-         ],
-         "name" : "Champions",
-         "colorByPoint" : 1
-      }
-   ],
-   "chart" : {
-      "type" : "column"
+      "followPointer" : 1
    }
 }
