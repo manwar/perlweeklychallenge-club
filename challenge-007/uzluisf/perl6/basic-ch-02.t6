@@ -1,0 +1,21 @@
+use Test;
+use lib '.';
+use ModuleCH02;
+
+my $ladders = :{
+   ['this', 'that'] =>
+   ['this', 'thin', 'than', 'that'],
+   ['chip', 'chop'] =>
+   ['chip', 'chop'],
+   ['jest', 'past'] =>
+   ['jest', 'pest', 'past'],
+   ['card', 'road'] =>
+   ['card', 'ward', 'word', 'woad', 'road'],
+};
+
+my $file = '4letter-wordlist.txt';
+for $ladders.keys -> $k {
+    is-deeply
+    $ladders{$k},
+    find-shortest-ladder($k.first, $k.tail, $file);
+}
