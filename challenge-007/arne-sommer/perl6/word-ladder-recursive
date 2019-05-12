@@ -1,0 +1,76 @@
+#! /usr/bin/env perl6
+
+multi sub MAIN ($first, $second, *@wordlist)
+{
+  find_shortest_ladder($first, $second, @wordlist);
+}
+
+multi sub MAIN ($first, $second, $dictionary where $dictionary.IO && $dictionary.IO.r)
+{
+  return unless $first.chars == $second.chars;
+  
+  my @wordlist = load-dictionary($dictionary, $first.chars);
+    # Only load the words with the correct length.
+
+  find_shortest_ladder($first, $second, @wordlist);
+  
+  sub load-dictionary ($file where $file.IO && $file.IO.r, $word-length)
+  {
+    return $file.IO.lines.grep({ .chars == $word-length });
+  }
+}
+
+sub find_shortest_ladder ($word1, $word2, @wordlist)
+{
+  constant @letters := "a" .. "z";
+  my %next;
+  my Set $dict = @wordlist.Set;
+
+  return unless $dict{$word1};
+  return unless $dict{$word2};
+  return unless $word1.chars == $word2.chars;
+  return unless all(@wordlist>>.chars) == $word1.chars;
+
+  check-word($_) for @wordlist;
+
+  sub check-word ($word)
+  { 
+    for ^$word.chars -> $index
+    {
+      my $next = $word;
+      for @letters -> $letter
+      {
+        $next.substr-rw($index,1) = $letter;
+        next if $word eq $next;
+        %next{$word}.push($next) if $dict{$next};
+      }
+    }
+  }
+ 
+  check-path($word1, $word2, List.new, Hash.new);
+
+  sub check-path($start, $stop, @path is copy, %seen is copy )
+  {
+    %seen{$start} = True;
+    @path.push: $start;
+    for @(%next{$start}) -> $candidate
+    {
+      next if %seen{$candidate};
+      
+      if $candidate eq $stop
+      {
+        say-output(@path.push: $candidate);
+	last;
+      }
+      else
+      {
+        check-path($candidate, $stop, @path, %seen) unless %seen{$candidate};
+      }
+    }
+  }
+}
+
+sub say-output (@path)
+{
+  say '("', @path.join('","'), '")';
+}
