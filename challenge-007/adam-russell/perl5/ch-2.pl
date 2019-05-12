@@ -76,6 +76,7 @@ sub find_shortest_ladder{
         }
         return join(" -> ", @path) if(($path[0] eq $source) && ($path[@path - 1] eq $target)); 
     } 
+    return undef; 
 } 
 
 ##
