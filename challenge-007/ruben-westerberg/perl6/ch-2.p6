@@ -4,68 +4,56 @@
 #read arguments, first is start word second is end word
 die "Need three arguments, start and end words" if @*ARGS.elems != 3;
 my ($start,$end, $wordFileName)=@*ARGS[0..2];
+$start.=lc;
+$end.=lc;
+die "Words not the same length: Ladder ()"  unless ($start.chars == $end.chars);
 
-my @words=$wordFileName.IO.lines.grep({.chars == $start.chars});
-unless $start.chars == $end.chars && @words.grep( { $_ eq all ($start, $end)} ) {
-	say ((););
-}
+my @words=($wordFileName.IO.lines.grep({.chars == $start.chars})>>.&{.lc.comb.cache});
 
-say "Testing against @words.elems()";
-my @seen;
-my $s={word=>$start,parent=>Any};
-#my $node=transforms($start,$s);
+die  "Start not in dictionary: Ladder ()" unless (grep $start, @words>>.join);
+die "End not in dictionary: Ladder ()" unless (grep $end, @words>>.join);
+
+my @start=$start.comb;
+my @end=$end.comb;
 my @transforms;
 my $found=False;
 my $result;
-@transforms.push: $s;
-while @transforms > 0 && !$found {
-	say "To Test: "~ @transforms.elems~ " Dict: " ~ @words.elems;
-	my $current:= @transforms.shift;
-	my @toAdd=transforms($current);
-	@transforms.append: @toAdd;
-}
-say pathFromParent($result, $start);
+@transforms.push: {w=>@start , p=>Any};
+my @seen.push: @start;
+
+
+my @c=@start;
+my $i=0;
+while @transforms !== 0 {
+	my $e=@transforms.shift;
+	my $c=$e<w>;
+	say "Itertion: $i, Queue Length: "~ @transforms.elems~ " Current word: $c";
+	#exit if $c ~~ <h e r m> && @transforms !==0;
+	$result=$e;
+	last if $c ~~ @end;
 	
-
-#read word list from file and filter by word length
-sub transforms($parent is rw) {
-	constant @letters="a".."z";
-	my $word=$parent<word>;
-	#@seen.push($word);
-	$found = $word eq $end;
-	$result=$parent; #if ($word eq $end) && (! so $result);
-
-	return if $found;
-
-	my @c=$word.comb;
-
-	#say $word;
-	my $w;
-	my @transforms=gather {
-		for ^@c -> $c {
-			for  @letters -> $l {
-				my @tmp=@c;
-				@tmp[$c]=$l; 
-				$w:=@tmp.join;
-				if ( (@words.grep($w) > 0)  && (@transforms.grep($w) == 0)) {
-					#say $w;
-					
-					@words=@words.grep({ $_ ne $w});
-					take {word=>$w, parent=>$parent};
-				}
-			}
+	@words.map(-> $d {
+		if (($d >>eq<< $c).sum == ($c-1)) && (@seen.grep($d) == 0) {
+			@seen.push: $d;
+			@transforms.push: (w=>$d, p=>$e).Hash;
 		}
-	}
-	@transforms;
+	});
+	$i++;
 }
-	
+if $result {
+	say "Ladder: ("~pathFromParent($result,$start)~")";
+}
+else {
+	say "No ladder found: Ladder: ()";
+}
+
 sub pathFromParent($node, $word) {
 	my @path;
 	my $parent=$node;
 	while ($parent) {
-		@path.push: $parent<word>;
-		last if $parent<word> eq $word;
-		$parent=$parent<parent>;
+		@path.push: $parent<w>.join;
+		last if $parent<w>.join eq $word.join;
+		$parent=$parent<p>;
 	}
 	@path.reverse;
 }
