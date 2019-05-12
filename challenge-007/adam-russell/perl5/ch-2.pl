@@ -36,12 +36,13 @@ sub build_graph{
 sub dijkstra_sssp{
     my($graph, $source) = @_;
     my %paths;  
-    our %total_edges;  
-    sub by_total_edges {
+    my %total_edges;  
+    no warnings "once";
+    local *by_total_edges = sub {
         return 1 if $total_edges{$a} eq OO; 
         return -1 if $total_edges{$b} eq OO; 
         return $total_edges{$a} <=> $total_edges{$b};
-    }
+    };   
     my @vertices = $graph->vertices();   
     foreach my $v (@vertices){
         $total_edges{$v} = OO;  
