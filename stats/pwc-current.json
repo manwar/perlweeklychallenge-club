@@ -1,63 +1,82 @@
 {
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Dr James A. Smith",
+               "y" : 4,
+               "name" : "Dr James A. Smith"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Neil Bowers",
+               "name" : "Neil Bowers"
+            }
+         ],
+         "name" : "Champions",
+         "colorByPoint" : 1
+      }
+   ],
    "legend" : {
       "enabled" : 0
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 008"
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2019-05-13 11:29:52 GMT"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Neil Bowers",
-            "id" : "Neil Bowers",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ]
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
          }
-      ]
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 008"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Dr James A. Smith",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Dr James A. Smith"
+         },
+         {
+            "id" : "Neil Bowers",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "name" : "Neil Bowers"
+         }
+      ]
+   },
    "tooltip" : {
       "followPointer" : 1,
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Neil Bowers",
-               "name" : "Neil Bowers",
-               "y" : 1
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Champions"
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-05-13 10:59:48 GMT"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
