@@ -17,4 +17,7 @@ my @perfect = lazy gather { my ($p, $q = 1; take $q*($q+1)/2 if (++($q+<=1)).is-
 
 Things to note... the sequence ++($q+<=1) generates a list of numbers of the form 2<sup>n</sup>-1.
 
+Under perl6 with arbitrary precision this gets the first 20 perfect numbers in around 17-18 seconds, and the first 25 in around 30 minutes.
+The largest of these with 13,066 digits.
+
 
