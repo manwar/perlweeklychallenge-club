@@ -1,4 +1,26 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 008"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
@@ -7,48 +29,6 @@
             "enabled" : 1
          }
       }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 008"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Champions",
-         "data" : [
-            {
-               "name" : "Dr James A. Smith",
-               "y" : 4,
-               "drilldown" : "Dr James A. Smith"
-            },
-            {
-               "drilldown" : "Joelle Maslak",
-               "y" : 1,
-               "name" : "Joelle Maslak"
-            },
-            {
-               "drilldown" : "Neil Bowers",
-               "y" : 1,
-               "name" : "Neil Bowers"
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            }
-         ]
-      }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
@@ -68,13 +48,17 @@
          },
          {
             "name" : "Joelle Maslak",
-            "id" : "Joelle Maslak",
             "data" : [
+               [
+                  "Perl 5",
+                  1
+               ],
                [
                   "Perl 6",
                   1
                ]
-            ]
+            ],
+            "id" : "Joelle Maslak"
          },
          {
             "name" : "Neil Bowers",
@@ -92,21 +76,41 @@
             "data" : [
                [
                   "Perl 6",
-                  1
+                  2
                ]
             ]
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
-   },
    "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-05-13 12:27:38 GMT"
+      "text" : "[Champions: 4] Last updated at 2019-05-13 13:32:50 GMT"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   }
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Dr James A. Smith",
+               "name" : "Dr James A. Smith",
+               "y" : 4
+            },
+            {
+               "name" : "Joelle Maslak",
+               "drilldown" : "Joelle Maslak",
+               "y" : 2
+            },
+            {
+               "y" : 1,
+               "name" : "Neil Bowers",
+               "drilldown" : "Neil Bowers"
+            },
+            {
+               "y" : 2,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Champions"
+      }
+   ]
 }
