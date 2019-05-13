@@ -7,4 +7,4 @@ sub center {
   say ' ' x (($ml-length$_)/2), $_ foreach @_;
 }
 
-print center( "This", "is", "a test of the", "center function");
+center( "This", "is", "a test of the", "center function");
