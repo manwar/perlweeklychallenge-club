@@ -1,7 +1,6 @@
 #!/usr/bin/env perl6
 
 use v6;
-use experimental :cached;
 
 sub perfect-from-prime( Int $p where { $p.is-prime && is-mersine( $p ) } ) is pure {
     return (2**($p-1)) * ((2**$p) -1 ); 
