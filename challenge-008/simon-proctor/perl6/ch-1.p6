@@ -17,7 +17,7 @@ multi sub MAIN ( Bool :h($help) where *.so ) {
 
 #| Give the first X perfect integers
 multi sub MAIN ( 
-    Int $x = 5; #= Number of perfect integers to return (default 5)
+    Int $x = 5 #= Number of perfect integers to return (default 5)
 ) { 
     .say for (0..*).grep( *.is-prime ).grep( { is-mersine( $_ ) } ).map( { perfect-from-prime($_) } )[^$x];
 }
