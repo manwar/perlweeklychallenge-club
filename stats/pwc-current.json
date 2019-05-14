@@ -1,47 +1,43 @@
 {
-   "series" : [
-      {
-         "name" : "Champions",
-         "data" : [
-            {
-               "name" : "Francis Whittle",
-               "drilldown" : "Francis Whittle",
-               "y" : 2
-            },
-            {
-               "y" : 4,
-               "drilldown" : "Dr James A. Smith",
-               "name" : "Dr James A. Smith"
-            },
-            {
-               "drilldown" : "Joelle Maslak",
-               "y" : 4,
-               "name" : "Joelle Maslak"
-            },
-            {
-               "name" : "Neil Bowers",
-               "y" : 1,
-               "drilldown" : "Neil Bowers"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "y" : 2,
-               "name" : "Simon Proctor"
-            }
-         ],
-         "colorByPoint" : 1
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
-   ],
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-05-14 14:02:55 GMT"
+   },
    "tooltip" : {
       "followPointer" : 1,
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "Perl Weekly Challenge - 008"
    },
    "drilldown" : {
       "series" : [
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Dr James A. Smith",
+            "name" : "Dr James A. Smith"
+         },
          {
             "name" : "Francis Whittle",
             "id" : "Francis Whittle",
@@ -53,7 +49,6 @@
             ]
          },
          {
-            "name" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
@@ -64,21 +59,8 @@
                   2
                ]
             ],
-            "id" : "Dr James A. Smith"
-         },
-         {
-            "name" : "Joelle Maslak",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ],
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "id" : "Joelle Maslak"
+            "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak"
          },
          {
             "data" : [
@@ -87,23 +69,56 @@
                   1
                ]
             ],
-            "id" : "Neil Bowers",
-            "name" : "Neil Bowers"
+            "name" : "Neil Bowers",
+            "id" : "Neil Bowers"
          },
          {
             "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ],
-            "id" : "Simon Proctor"
+            ]
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
+   "series" : [
+      {
+         "name" : "Champions",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 4,
+               "name" : "Dr James A. Smith",
+               "drilldown" : "Dr James A. Smith"
+            },
+            {
+               "drilldown" : "Francis Whittle",
+               "y" : 2,
+               "name" : "Francis Whittle"
+            },
+            {
+               "drilldown" : "Joelle Maslak",
+               "name" : "Joelle Maslak",
+               "y" : 4
+            },
+            {
+               "drilldown" : "Neil Bowers",
+               "name" : "Neil Bowers",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 2
+            }
+         ]
+      }
+   ],
+   "legend" : {
+      "enabled" : 0
    },
    "yAxis" : {
       "title" : {
@@ -112,20 +127,5 @@
    },
    "chart" : {
       "type" : "column"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 008"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-05-14 10:21:41 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
    }
 }
