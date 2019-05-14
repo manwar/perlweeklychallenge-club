@@ -76,7 +76,8 @@ sub send_email(%args) {
     my $url = 'https://api:_key_@api.mailgun.net/v3/_domain_/messages';
     my $key = url_escape($args{apikey});
     $url =~ s/_key_/$key/gs;
-    $url =~ s/_domain_/$args{domain}/gs;
+    my $domain = url_escape($args{domain});
+    $url =~ s/_domain_/$domain/gs;
 
     my %form = (
         from    => $args{from},
