@@ -6,16 +6,12 @@ use warnings;
 # of the lines of text so that if they were printed, the text would be 
 # centered, and return the modified lines.
 ## 
-use Data::Dump q/pp/;  
-
-my @words;  
-my @padded_words;  
-my %line_length; 
-my $max_length = -1; 
-my $center;  
-do{
-    local $/;
-    @words = split(/\n/, <DATA>);  
+sub center{
+    my @words = @_;  
+    my @padded_words;  
+    my %line_length; 
+    my $max_length = -1; 
+    my $center;  
     my $i = 0;  
     foreach my $line (@words){
         $line_length{$i} = do{
@@ -24,16 +20,25 @@ do{
         $max_length = $line_length{$i} if $line_length{$i} > $max_length; 
         $i++;
     }  
+    $center = int($max_length / 2);
+    for(my $i = 0; $i < @words; $i++){
+        my $middle = int($line_length{$i} / 2);  
+        my $padding = $center - $middle;  
+        $padded_words[$i] = " " x $padding . $words[$i];   
+    }   
+    return @padded_words;  
+}  
+
+##
+# Main
+##  
+my @words;  
+do{
+    local $/;
+    @words = split(/\n/, <DATA>);  
 };  
-$center = int($max_length / 2);
-for(my $i = 0; $i < @words; $i++){
-    my $middle = int($line_length{$i} / 2);  
-    my $padding = $center - $middle;  
-    $padded_words[$i] = " " x $padding . $words[$i];   
-}   
-
-
-foreach my $w (@padded_words){
+my @centered = center(@words);  
+foreach my $w (@centered){
     print "$w\n";  
 }  
 
