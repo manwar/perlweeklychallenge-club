@@ -1,67 +1,31 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "series" : [
-      {
-         "name" : "Champions",
-         "data" : [
-            {
-               "drilldown" : "Andrezgz",
-               "y" : 2,
-               "name" : "Andrezgz"
-            },
-            {
-               "drilldown" : "Arne Sommer",
-               "y" : 2,
-               "name" : "Arne Sommer"
-            },
-            {
-               "drilldown" : "Athanasius",
-               "name" : "Athanasius",
-               "y" : 2
-            },
-            {
-               "y" : 4,
-               "name" : "Dr James A. Smith",
-               "drilldown" : "Dr James A. Smith"
-            },
-            {
-               "name" : "Francis Whittle",
-               "y" : 2,
-               "drilldown" : "Francis Whittle"
-            },
-            {
-               "drilldown" : "Joelle Maslak",
-               "y" : 6,
-               "name" : "Joelle Maslak"
-            },
-            {
-               "name" : "Neil Bowers",
-               "y" : 1,
-               "drilldown" : "Neil Bowers"
-            },
-            {
-               "name" : "Ozzy",
-               "y" : 1,
-               "drilldown" : "Ozzy"
-            },
-            {
-               "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
+   "tooltip" : {
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "drilldown" : {
       "series" : [
+         {
+            "name" : "Andrezgz",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Andrezgz"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Arne Sommer",
+            "id" : "Arne Sommer"
+         },
          {
             "data" : [
                [
@@ -69,30 +33,11 @@
                   2
                ]
             ],
-            "name" : "Andrezgz",
-            "id" : "Andrezgz"
-         },
-         {
-            "id" : "Arne Sommer",
-            "name" : "Arne Sommer",
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Athanasius",
             "name" : "Athanasius",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
+            "id" : "Athanasius"
          },
          {
+            "name" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
@@ -103,8 +48,7 @@
                   2
                ]
             ],
-            "id" : "Dr James A. Smith",
-            "name" : "Dr James A. Smith"
+            "id" : "Dr James A. Smith"
          },
          {
             "id" : "Francis Whittle",
@@ -127,8 +71,8 @@
                   3
                ]
             ],
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak"
+            "name" : "Joelle Maslak",
+            "id" : "Joelle Maslak"
          },
          {
             "data" : [
@@ -137,18 +81,18 @@
                   1
                ]
             ],
-            "id" : "Neil Bowers",
-            "name" : "Neil Bowers"
+            "name" : "Neil Bowers",
+            "id" : "Neil Bowers"
          },
          {
+            "id" : "Ozzy",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "name" : "Ozzy",
-            "id" : "Ozzy"
+            "name" : "Ozzy"
          },
          {
             "id" : "Simon Proctor",
@@ -162,30 +106,86 @@
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Andrezgz",
+               "name" : "Andrezgz",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Arne Sommer",
+               "name" : "Arne Sommer",
+               "y" : 2
+            },
+            {
+               "name" : "Athanasius",
+               "drilldown" : "Athanasius",
+               "y" : 2
+            },
+            {
+               "y" : 4,
+               "name" : "Dr James A. Smith",
+               "drilldown" : "Dr James A. Smith"
+            },
+            {
+               "y" : 2,
+               "name" : "Francis Whittle",
+               "drilldown" : "Francis Whittle"
+            },
+            {
+               "name" : "Joelle Maslak",
+               "drilldown" : "Joelle Maslak",
+               "y" : 6
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Neil Bowers",
+               "name" : "Neil Bowers"
+            },
+            {
+               "y" : 1,
+               "name" : "Ozzy",
+               "drilldown" : "Ozzy"
+            },
+            {
+               "y" : 2,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Champions"
+      }
+   ],
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 008"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2019-05-15 13:58:57 GMT"
+      "text" : "[Champions: 9] Last updated at 2019-05-15 15:29:06 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
