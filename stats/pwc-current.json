@@ -1,17 +1,91 @@
 {
+   "legend" : {
+      "enabled" : 0
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Andrezgz",
+            "id" : "Andrezgz"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Dr James A. Smith",
+            "id" : "Dr James A. Smith"
+         },
+         {
+            "id" : "Francis Whittle",
+            "name" : "Francis Whittle",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak",
+            "data" : [
+               [
+                  "Perl 5",
+                  3
+               ],
+               [
+                  "Perl 6",
+                  3
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "name" : "Neil Bowers",
+            "id" : "Neil Bowers"
+         },
+         {
+            "id" : "Ozzy",
+            "name" : "Ozzy",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
+         },
+         {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
+         }
+      ]
+   },
    "chart" : {
       "type" : "column"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 008"
-   },
-   "xAxis" : {
-      "type" : "category"
    },
    "yAxis" : {
       "title" : {
@@ -19,99 +93,16 @@
       }
    },
    "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2019-05-15 09:56:15 GMT"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Andrezgz",
-            "id" : "Andrezgz",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ],
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "id" : "Dr James A. Smith",
-            "name" : "Dr James A. Smith"
-         },
-         {
-            "name" : "Francis Whittle",
-            "id" : "Francis Whittle",
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Joelle Maslak",
-            "id" : "Joelle Maslak",
-            "data" : [
-               [
-                  "Perl 5",
-                  3
-               ],
-               [
-                  "Perl 6",
-                  3
-               ]
-            ]
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ],
-            "id" : "Neil Bowers",
-            "name" : "Neil Bowers"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "name" : "Ozzy",
-            "id" : "Ozzy"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
-         }
-      ]
+      "text" : "[Champions: 7] Last updated at 2019-05-15 09:58:40 GMT"
    },
    "series" : [
       {
          "colorByPoint" : 1,
-         "name" : "Champions",
          "data" : [
             {
-               "y" : 2,
+               "drilldown" : "Andrezgz",
                "name" : "Andrezgz",
-               "drilldown" : "Andrezgz"
+               "y" : 2
             },
             {
                "drilldown" : "Dr James A. Smith",
@@ -125,37 +116,46 @@
             },
             {
                "drilldown" : "Joelle Maslak",
-               "name" : "Joelle Maslak",
-               "y" : 6
+               "y" : 6,
+               "name" : "Joelle Maslak"
             },
             {
-               "y" : 1,
                "name" : "Neil Bowers",
+               "y" : 1,
                "drilldown" : "Neil Bowers"
             },
             {
+               "drilldown" : "Ozzy",
                "y" : 1,
-               "name" : "Ozzy",
-               "drilldown" : "Ozzy"
+               "name" : "Ozzy"
             },
             {
                "y" : 2,
                "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor"
             }
-         ]
+         ],
+         "name" : "Champions"
       }
    ],
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "Perl Weekly Challenge - 008"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
    }
 }
