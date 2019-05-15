@@ -1,4 +1,53 @@
 {
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Champions",
+         "data" : [
+            {
+               "y" : 4,
+               "drilldown" : "Dr James A. Smith",
+               "name" : "Dr James A. Smith"
+            },
+            {
+               "name" : "Francis Whittle",
+               "y" : 2,
+               "drilldown" : "Francis Whittle"
+            },
+            {
+               "name" : "Joelle Maslak",
+               "y" : 5,
+               "drilldown" : "Joelle Maslak"
+            },
+            {
+               "name" : "Neil Bowers",
+               "drilldown" : "Neil Bowers",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "y" : 2,
+               "name" : "Simon Proctor"
+            }
+         ]
+      }
+   ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
@@ -8,56 +57,75 @@
          "borderWidth" : 0
       }
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "series" : [
-      {
-         "name" : "Champions",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "name" : "Ozzy",
-               "drilldown" : "Ozzy",
-               "y" : 1
-            }
-         ]
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-05-06 07:55:35 GMT"
-   },
    "title" : {
-      "text" : "Perl Weekly Challenge - 007"
+      "text" : "Perl Weekly Challenge - 008"
    },
-   "tooltip" : {
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-05-14 15:31:02 GMT"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Dr James A. Smith",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Dr James A. Smith"
+         },
+         {
+            "id" : "Francis Whittle",
             "data" : [
                [
                   "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Francis Whittle"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  3
+               ]
+            ],
+            "name" : "Joelle Maslak",
+            "id" : "Joelle Maslak"
+         },
+         {
+            "id" : "Neil Bowers",
+            "data" : [
+               [
+                  "Perl 5",
                   1
                ]
             ],
-            "id" : "Ozzy",
-            "name" : "Ozzy"
+            "name" : "Neil Bowers"
+         },
+         {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
          }
       ]
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
