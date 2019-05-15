@@ -17,7 +17,7 @@ sub factor{
     return @factors;  
 }
 
-my $i = 1; 
+my $i = 2; 
 my $count = 0; 
 do{
     my @factors = factor($i);
