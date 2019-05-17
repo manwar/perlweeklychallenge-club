@@ -10,9 +10,8 @@ return the modified lines.
 =end comment
 
 sub center( *@strings --> List ) {
-    my @sorted  = @strings.sort({.chars});
-    my $max-len = @sorted.tail.chars;
-    return @sorted.map({
+    my $max-len = @strings.sort({.chars}).tail.chars;
+    return @strings.map({
         ( ' ' x (.chars - $max-len).abs div 2, $_).join
     }).list;
 }
