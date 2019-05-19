@@ -1,23 +1,61 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge Language"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "followPointer" : "true",
-      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
    },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 113,
+               "drilldown" : "001",
+               "name" : "#001 [P5=76 P6=37]"
+            },
+            {
+               "drilldown" : "002",
+               "name" : "#002 [P5=63 P6=32]",
+               "y" : 95
+            },
+            {
+               "drilldown" : "003",
+               "y" : 58,
+               "name" : "#003 [P5=32 P6=26]"
+            },
+            {
+               "name" : "#004 [P5=46 P6=29]",
+               "drilldown" : "004",
+               "y" : 75
+            },
+            {
+               "y" : 55,
+               "drilldown" : "005",
+               "name" : "#005 [P5=33 P6=22]"
+            },
+            {
+               "drilldown" : "006",
+               "y" : 41,
+               "name" : "#006 [P5=27 P6=14]"
+            },
+            {
+               "drilldown" : "007",
+               "name" : "#007 [P5=23 P6=19]",
+               "y" : 42
+            },
+            {
+               "y" : 48,
+               "drilldown" : "008",
+               "name" : "#008 [P5=30 P6=18]"
+            }
+         ],
+         "name" : "Perl Weekly Challenge Languages",
+         "colorByPoint" : "true"
+      }
+   ],
    "drilldown" : {
       "series" : [
          {
@@ -35,7 +73,6 @@
             "name" : "001"
          },
          {
-            "id" : "002",
             "data" : [
                [
                   "Perl 5",
@@ -46,10 +83,10 @@
                   32
                ]
             ],
+            "id" : "002",
             "name" : "002"
          },
          {
-            "name" : "003",
             "data" : [
                [
                   "Perl 5",
@@ -60,9 +97,11 @@
                   26
                ]
             ],
+            "name" : "003",
             "id" : "003"
          },
          {
+            "name" : "004",
             "id" : "004",
             "data" : [
                [
@@ -73,12 +112,11 @@
                   "Perl 6",
                   29
                ]
-            ],
-            "name" : "004"
+            ]
          },
          {
-            "name" : "005",
             "id" : "005",
+            "name" : "005",
             "data" : [
                [
                   "Perl 5",
@@ -91,7 +129,6 @@
             ]
          },
          {
-            "name" : "006",
             "data" : [
                [
                   "Perl 5",
@@ -102,10 +139,10 @@
                   14
                ]
             ],
+            "name" : "006",
             "id" : "006"
          },
          {
-            "id" : "007",
             "data" : [
                [
                   "Perl 5",
@@ -116,15 +153,16 @@
                   19
                ]
             ],
+            "id" : "007",
             "name" : "007"
          },
          {
-            "name" : "008",
             "id" : "008",
+            "name" : "008",
             "data" : [
                [
                   "Perl 5",
-                  28
+                  30
                ],
                [
                   "Perl 6",
@@ -134,67 +172,29 @@
          }
       ]
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 113,
-               "name" : "#001 [P5=76 P6=37]",
-               "drilldown" : "001"
-            },
-            {
-               "drilldown" : "002",
-               "y" : 95,
-               "name" : "#002 [P5=63 P6=32]"
-            },
-            {
-               "name" : "#003 [P5=32 P6=26]",
-               "y" : 58,
-               "drilldown" : "003"
-            },
-            {
-               "y" : 75,
-               "name" : "#004 [P5=46 P6=29]",
-               "drilldown" : "004"
-            },
-            {
-               "y" : 55,
-               "name" : "#005 [P5=33 P6=22]",
-               "drilldown" : "005"
-            },
-            {
-               "name" : "#006 [P5=27 P6=14]",
-               "y" : 41,
-               "drilldown" : "006"
-            },
-            {
-               "drilldown" : "007",
-               "name" : "#007 [P5=23 P6=19]",
-               "y" : 42
-            },
-            {
-               "y" : 46,
-               "name" : "#008 [P5=28 P6=18]",
-               "drilldown" : "008"
-            }
-         ],
-         "colorByPoint" : "true",
-         "name" : "Perl Weekly Challenge Languages"
-      }
-   ],
+   "xAxis" : {
+      "type" : "category"
+   },
    "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-05-19 09:13:20 GMT"
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-05-19 15:31:24 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Language"
+   },
+   "tooltip" : {
+      "followPointer" : "true",
+      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>"
    },
    "chart" : {
       "type" : "column"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    }
 }
