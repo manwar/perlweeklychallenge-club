@@ -1,84 +1,79 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Gustavo Chaves",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Gustavo Chaves"
          },
-         "borderWidth" : 0
-      }
+         {
+            "name" : "Joelle Maslak",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "id" : "Joelle Maslak"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
+         },
+         {
+            "id" : "Yozen Hernandez",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Yozen Hernandez"
+         }
+      ]
    },
    "tooltip" : {
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Gustavo Chaves",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Gustavo Chaves"
-         },
-         {
-            "id" : "Joelle Maslak",
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "name" : "Joelle Maslak"
-         },
-         {
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ]
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Yozen Hernandez",
-            "name" : "Yozen Hernandez"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
          }
-      ]
+      }
    },
    "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-05-22 11:11:22 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 009"
+      "text" : "[Champions: 4] Last updated at 2019-05-22 13:25:09 GMT"
    },
    "series" : [
       {
+         "name" : "Champions",
          "data" : [
             {
                "name" : "Gustavo Chaves",
@@ -86,23 +81,28 @@
                "y" : 2
             },
             {
-               "y" : 1,
+               "name" : "Joelle Maslak",
                "drilldown" : "Joelle Maslak",
-               "name" : "Joelle Maslak"
+               "y" : 1
             },
             {
-               "name" : "Simon Proctor",
                "y" : 1,
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
             },
             {
                "name" : "Yozen Hernandez",
-               "y" : 2,
-               "drilldown" : "Yozen Hernandez"
+               "drilldown" : "Yozen Hernandez",
+               "y" : 2
             }
          ],
-         "name" : "Champions",
          "colorByPoint" : 1
       }
-   ]
+   ],
+   "title" : {
+      "text" : "Perl Weekly Challenge - 009"
+   },
+   "legend" : {
+      "enabled" : 0
+   }
 }
