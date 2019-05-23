@@ -50,7 +50,6 @@ sub send-email(
         base-uri     => $url,
         content-type => 'application/json',
         headers      => [ Authorization => $api-key ],
-        http         => 1.1,
     );
 
     my @recipients;
@@ -59,7 +58,6 @@ sub send-email(
     }
 
     my %json =
-        options => %{ sandbox => True },
         content => %{
             from    => $from,
             subject => $subject,
@@ -67,9 +65,10 @@ sub send-email(
         },
         recipients => @recipients,
     ;
+    %json<options> = %{ sandbox => True } if $sandbox;
 
     my $resp = await $client.post('transmissions', body => %json);
-    if $resp.status == 200 { return }
+    return;
 
     CATCH {
         when X::Cro::HTTP::Error {
