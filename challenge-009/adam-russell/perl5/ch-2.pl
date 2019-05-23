@@ -76,25 +76,25 @@ sub standard_rank{
 sub modified_rank{
     my($sorted_objects, $accessor_function) = @_; 
     my %ranking; 
-    my $rank = 1; 
-    my $current_rank; 
+    my $next_rank = 3; 
+    my $current_rank = 1; 
     my $previous; 
     tie %ranking, "Tie::RefHash"; 
     for my $o (@{$sorted_objects}){
         my $a = $o->$accessor_function;
         if(!$previous){
             $previous = $a; 
-            $ranking{$o} = $rank; 
+            $ranking{$o} = $current_rank; 
         } 
         else{
             if($previous == $a){
+                $next_rank++;
                 $ranking{$o} = $current_rank;
-                $rank++;  
             }  
             if($previous != $a){
-                $previous = $a; 
-                $rank++;  
-                $ranking{$o} = $rank; 
+                $previous = $a;  
+                $ranking{$o} = $next_rank; 
+                $current_rank = $next_rank;
             }  
         }  
     }   
