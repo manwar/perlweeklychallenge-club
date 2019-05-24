@@ -1,119 +1,71 @@
 {
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Dave Jacoby",
-               "y" : 2,
-               "name" : "Dave Jacoby"
-            },
-            {
-               "drilldown" : "Gustavo Chaves",
-               "y" : 2,
-               "name" : "Gustavo Chaves"
-            },
-            {
-               "y" : 1,
-               "name" : "Joelle Maslak",
-               "drilldown" : "Joelle Maslak"
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 1,
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "drilldown" : "Steven Wilson",
-               "y" : 2,
-               "name" : "Steven Wilson"
-            },
-            {
-               "drilldown" : "Yozen Hernandez",
-               "y" : 2,
-               "name" : "Yozen Hernandez"
-            }
-         ],
-         "name" : "Champions",
-         "colorByPoint" : 1
-      }
-   ],
    "xAxis" : {
       "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2019-05-23 23:18:32 GMT"
    },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
       }
    },
-   "tooltip" : {
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 009"
-   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Dave Jacoby",
             "name" : "Dave Jacoby"
          },
          {
+            "id" : "Gustavo Chaves",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Gustavo Chaves",
             "name" : "Gustavo Chaves"
          },
          {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
             "name" : "Joelle Maslak",
-            "id" : "Joelle Maslak",
+            "id" : "Joelle Maslak"
+         },
+         {
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ]
-         },
-         {
-            "id" : "Simon Proctor",
+            ],
             "name" : "Simon Proctor",
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ]
+            "id" : "Simon Proctor"
          },
          {
-            "id" : "Steven Wilson",
             "name" : "Steven Wilson",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "id" : "Steven Wilson"
          },
          {
             "id" : "Yozen Hernandez",
@@ -127,12 +79,64 @@
          }
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2019-05-24 11:14:29 GMT"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Champions",
+         "data" : [
+            {
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Gustavo Chaves",
+               "name" : "Gustavo Chaves"
+            },
+            {
+               "drilldown" : "Joelle Maslak",
+               "name" : "Joelle Maslak",
+               "y" : 4
+            },
+            {
+               "y" : 1,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "drilldown" : "Steven Wilson",
+               "name" : "Steven Wilson",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Yozen Hernandez",
+               "name" : "Yozen Hernandez"
+            }
+         ]
+      }
+   ],
+   "tooltip" : {
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 009"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
-   },
-   "legend" : {
-      "enabled" : 0
    }
 }
