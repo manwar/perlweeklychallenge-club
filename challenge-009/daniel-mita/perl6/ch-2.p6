@@ -35,6 +35,14 @@ multi MAIN (
 
 multi GENERATE-USAGE (
   &main,
+  *@ where { .[1,3…*].all !~~ Numeric },
+  |,
+) {
+  "Error:\n  Non-numeric score given.\n\n" ~ GENERATE-USAGE(&main);
+}
+
+multi GENERATE-USAGE (
+  &main,
   *@ where * !%% 2,
   |,
 ) {
