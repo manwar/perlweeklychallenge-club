@@ -1,43 +1,30 @@
 use strict;
 use warnings;
-use feature "switch";  
+##
+# Write a script that finds the first square number that has at least 5 distinct digits.
+##  
+use boolean;
+use constant X_0 => 100; 
 
-use constant X_0 => 1_000_001; 
-
-sub is_first_five{
+sub is_distinct_five{
     my($n) = @_;
-    my $a = length(($n-1)**2);
-    my $b = length($n**2);
-    if($a == 4 && $b == 5){
-        return 0;
+    my @digits = split(//, $n);
+    my @unique_digits = keys %{{map {$_ => 1} @digits}};
+    if(@unique_digits >= 5){
+        return true;
     }
-    if($a >= 4 && $b >= 5){
-        return 1;
-    }
-    if($a <= 4 && $b <= 5){
-        return -1;
-    }
+    return false; 
 }
 
 
 ##
 # Main
 ##
-my $x = X_0;
-my $found = 0;
+my $x = X_0 - 1;
+my $found = false;
 do{
-    my $b = is_first_five($x);  
-    given($b){
-        when(1){
-            $x = int($x / 2) - 1;  
-        }
-        when(-1){
-            $x = ($x * 2);  
-        }
-        when(0){  
-            $found = 1;  
-        }  
-    }  
+    $x++;  
+    $found = is_distinct_five($x**2);  
 }until($found);  
-print "FOUND: ";
-print $x**2 . "\n"; 
+print "First square with five distinct digits: ";
+print $x**2 . " (= $x * $x)\n"; 

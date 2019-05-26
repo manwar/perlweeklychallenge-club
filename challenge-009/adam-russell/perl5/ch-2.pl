@@ -10,9 +10,8 @@ use warnings;
 # the same ranking number, and the next item(s) receive the immediately 
 # following ranking number.
 ##  
-
+use boolean;
 use Tie::RefHash;
-use Data::Dump q/pp/; 
 
 package Thing{
     use boolean;  
@@ -76,27 +75,34 @@ sub standard_rank{
 sub modified_rank{
     my($sorted_objects, $accessor_function) = @_; 
     my %ranking; 
-    my $next_rank = 3; 
+    my $rank = 1; 
     my $current_rank = 1; 
     my $previous; 
+    my $has_previous = false;
     tie %ranking, "Tie::RefHash"; 
     for my $o (@{$sorted_objects}){
         my $a = $o->$accessor_function;
         if(!$previous){
-            $previous = $a; 
+            $previous = $o; 
             $ranking{$o} = $current_rank; 
         } 
         else{
-            if($previous == $a){
-                $next_rank++;
+            if($previous->get_score() == $a){
+                if(!$has_previous && $current_rank != 1){
+                    $has_previous = true;
+                    $current_rank++;
+                }
+                $ranking{$previous} = $current_rank;
                 $ranking{$o} = $current_rank;
             }  
-            if($previous != $a){
-                $previous = $a;  
-                $ranking{$o} = $next_rank; 
-                $current_rank = $next_rank;
+            if($previous->get_score() != $a){
+                $has_previous = false;
+                $previous = $o; 
+                $ranking{$o} = $rank ; 
+                $current_rank = $rank;
             }  
         }  
+        $rank++;    
     }   
     return \%ranking; 
 } 
