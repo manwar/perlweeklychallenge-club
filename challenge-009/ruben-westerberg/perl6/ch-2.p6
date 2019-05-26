@@ -1,19 +1,16 @@
 #!/usr/bin/env perl6
 
 my @inputs=@*ARGS>0??@*ARGS!![10,20,20,51];
-
+@inputs.=sort;
 sub rank1224 (@inputs) {
 	#my @d=reverse sort input;
 	my @r=(for @inputs.kv {
-		state $prev=-1;
-		state $count=1;
+		state $prev=$^v;
+		state $count=0;
+		NEXT {$prev=$v};
 		$count= $prev !== $^v ?? 1!! $count+1;
-		$prev=$v;
-		$^k;
-		$k+2-$count;
+		$^k+2-$count;
 	});
-	#@r.elems +1 <<-<< @r.reverse
-		
 }
 sub rank1334 (@inputs) {
 	my @d=reverse @inputs;
@@ -22,16 +19,14 @@ sub rank1334 (@inputs) {
 }
 
 sub rank1223 (@input) {
-	@input.map({
+	@input.map: {
 		state $prev=$_;
 		state  $r=1;
 		NEXT { $prev=$_};	
 		$r= ($prev !== $_) ?? $r+1 !! $r;
-		#say $r;
-		$r;
-	});
+	};
 }
-
-say rank1224(@inputs);
-say rank1334(@inputs);
-say rank1223(@inputs);
+say "Inputs: "~@inputs;
+say "1224 Ranking: "~rank1224(@inputs);
+say "1334 Ranking: "~rank1334(@inputs);
+say "1223 Ranking: "~rank1223(@inputs);

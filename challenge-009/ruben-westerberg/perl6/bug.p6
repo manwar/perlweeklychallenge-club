@@ -6,8 +6,18 @@ say do for @inputs {
 	NEXT { $prev=$_};	
 	$r= ($prev !== $_) ?? $r+1 !! $r;
 	say $r;
-	$r;
+	$r+0; # THIS IS REQUIRED for some reason
 };
-say (for @inputs {
-	$_*2;
-});
+
+sub bug (@vals) {
+	@vals.map: {
+		state $prev=$_;
+		state  $r=1;
+		NEXT { $prev=$_};	
+		$r= ($prev !== $_) ?? $r+1 !! $r;
+		say $r;
+		$r;
+	};
+}
+
+say bug(@inputs);
