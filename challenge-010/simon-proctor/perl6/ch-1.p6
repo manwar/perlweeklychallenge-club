@@ -80,7 +80,6 @@ sub from-roman( RomanStr $roman is copy ) {
                                       "Ⅲ" | "Ⅱ" |
                                       "I" | "Ⅰ" !! {
         $out += %roman-map{$match};
-        note "$match : $roman : $out";
     }
     $out;
 }
