@@ -1,29 +1,90 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Daniel Mita",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "id" : "Daniel Mita"
+         },
+         {
+            "id" : "Kivanc Yazan",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "name" : "Kivanc Yazan"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Pavel Jurca",
+            "name" : "Pavel Jurca"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
+         }
+      ]
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-05-27 13:17:58 GMT"
+      "text" : "[Champions: 4] Last updated at 2019-05-28 10:05:19 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 010"
+   },
    "series" : [
       {
-         "name" : "Champions",
          "colorByPoint" : 1,
          "data" : [
             {
                "drilldown" : "Daniel Mita",
-               "name" : "Daniel Mita",
-               "y" : 1
+               "y" : 1,
+               "name" : "Daniel Mita"
             },
             {
                "drilldown" : "Kivanc Yazan",
@@ -31,63 +92,17 @@
                "name" : "Kivanc Yazan"
             },
             {
-               "drilldown" : "Pavel Jurca",
                "name" : "Pavel Jurca",
+               "y" : 1,
+               "drilldown" : "Pavel Jurca"
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
                "y" : 1
             }
-         ]
+         ],
+         "name" : "Champions"
       }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 010"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Daniel Mita",
-            "name" : "Daniel Mita",
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ]
-         },
-         {
-            "id" : "Kivanc Yazan",
-            "name" : "Kivanc Yazan",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ]
-         },
-         {
-            "name" : "Pavel Jurca",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ],
-            "id" : "Pavel Jurca"
-         }
-      ]
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   }
+   ]
 }
