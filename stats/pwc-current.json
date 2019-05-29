@@ -1,59 +1,112 @@
 {
-   "xAxis" : {
-      "type" : "category"
+   "series" : [
+      {
+         "name" : "Champions",
+         "data" : [
+            {
+               "name" : "Daniel Mita",
+               "drilldown" : "Daniel Mita",
+               "y" : 1
+            },
+            {
+               "name" : "Donald Hunter",
+               "drilldown" : "Donald Hunter",
+               "y" : 1
+            },
+            {
+               "name" : "Kivanc Yazan",
+               "drilldown" : "Kivanc Yazan",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Pavel Jurca",
+               "name" : "Pavel Jurca",
+               "y" : 1
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 1
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-05-29 11:53:43 GMT"
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Daniel Mita",
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "id" : "Daniel Mita"
-         },
-         {
-            "id" : "Kivanc Yazan",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ],
-            "name" : "Kivanc Yazan"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ],
-            "id" : "Pavel Jurca",
-            "name" : "Pavel Jurca"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
-         }
-      ]
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "legend" : {
       "enabled" : 0
    },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-05-28 10:05:19 GMT"
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "id" : "Daniel Mita",
+            "name" : "Daniel Mita"
+         },
+         {
+            "name" : "Donald Hunter",
+            "id" : "Donald Hunter",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Kivanc Yazan",
+            "name" : "Kivanc Yazan"
+         },
+         {
+            "name" : "Pavel Jurca",
+            "id" : "Pavel Jurca",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ]
+         },
+         {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
+         }
+      ]
    },
    "chart" : {
       "type" : "column"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
@@ -64,45 +117,7 @@
          }
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 010"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "drilldown" : "Daniel Mita",
-               "y" : 1,
-               "name" : "Daniel Mita"
-            },
-            {
-               "drilldown" : "Kivanc Yazan",
-               "y" : 1,
-               "name" : "Kivanc Yazan"
-            },
-            {
-               "name" : "Pavel Jurca",
-               "y" : 1,
-               "drilldown" : "Pavel Jurca"
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 1
-            }
-         ],
-         "name" : "Champions"
-      }
-   ]
+   }
 }
