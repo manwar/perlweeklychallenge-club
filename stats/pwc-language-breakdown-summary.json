@@ -1,10 +1,4 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
    "xAxis" : {
       "type" : "category",
       "labels" : {
@@ -14,12 +8,6 @@
          }
       }
    },
-   "title" : {
-      "text" : "Contribution Summary"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
          "dataLabels" : {
@@ -27,14 +15,13 @@
                "fontFamily" : "Verdana, sans-serif",
                "fontSize" : "13px"
             },
-            "enabled" : "true",
-            "rotation" : -90,
             "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
             "y" : 10,
-            "align" : "right",
-            "format" : "{point.y:.0f}"
+            "rotation" : -90,
+            "align" : "right"
          },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -46,18 +33,31 @@
             ],
             [
                "Perl 6",
-               219
+               221
             ]
-         ]
+         ],
+         "name" : "Contributions"
       }
    ],
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
+      }
    },
    "subtitle" : {
-      "text" : "Last updated at 2019-05-29 15:43:23 GMT"
+      "text" : "Last updated at 2019-05-29 16:27:52 GMT"
+   },
+   "title" : {
+      "text" : "Contribution Summary"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
