@@ -1,37 +1,64 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Daniel Mita",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "name" : "Daniel Mita",
-            "id" : "Daniel Mita"
+            "name" : "Daniel Mita"
          },
          {
+            "id" : "Donald Hunter",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "name" : "Donald Hunter",
-            "id" : "Donald Hunter"
+            "name" : "Donald Hunter"
          },
          {
-            "name" : "Kivanc Yazan",
+            "name" : "Guillermo Ramos",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Guillermo Ramos"
+         },
+         {
             "id" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ]
+            ],
+            "name" : "Kivanc Yazan"
          },
          {
+            "id" : "Laurent Rosenfeld",
             "data" : [
                [
                   "Perl 5",
@@ -42,28 +69,17 @@
                   2
                ]
             ],
-            "name" : "Laurent Rosenfeld",
-            "id" : "Laurent Rosenfeld"
+            "name" : "Laurent Rosenfeld"
          },
          {
             "name" : "Martin Barth",
-            "id" : "Martin Barth",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ]
-         },
-         {
-            "id" : "Maxim Nechaev",
-            "name" : "Maxim Nechaev",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ]
+            ],
+            "id" : "Martin Barth"
          },
          {
             "data" : [
@@ -72,39 +88,39 @@
                   1
                ]
             ],
-            "id" : "Pavel Jurca",
-            "name" : "Pavel Jurca"
+            "name" : "Maxim Nechaev",
+            "id" : "Maxim Nechaev"
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
+            "id" : "Pavel Jurca",
+            "name" : "Pavel Jurca",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ]
+            ],
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2019-05-30 11:29:10 GMT"
+   "legend" : {
+      "enabled" : 0
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 010"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2019-05-30 22:48:02 GMT"
    },
    "plotOptions" : {
       "series" : {
@@ -115,18 +131,14 @@
          "borderWidth" : 0
       }
    },
-   "legend" : {
-      "enabled" : 0
-   },
    "series" : [
       {
          "name" : "Champions",
-         "colorByPoint" : 1,
          "data" : [
             {
+               "name" : "Daniel Mita",
                "y" : 1,
-               "drilldown" : "Daniel Mita",
-               "name" : "Daniel Mita"
+               "drilldown" : "Daniel Mita"
             },
             {
                "name" : "Donald Hunter",
@@ -134,39 +146,42 @@
                "drilldown" : "Donald Hunter"
             },
             {
-               "name" : "Kivanc Yazan",
-               "drilldown" : "Kivanc Yazan",
-               "y" : 1
+               "drilldown" : "Guillermo Ramos",
+               "y" : 2,
+               "name" : "Guillermo Ramos"
             },
             {
-               "name" : "Laurent Rosenfeld",
+               "y" : 1,
+               "name" : "Kivanc Yazan",
+               "drilldown" : "Kivanc Yazan"
+            },
+            {
                "drilldown" : "Laurent Rosenfeld",
+               "name" : "Laurent Rosenfeld",
                "y" : 4
             },
             {
-               "drilldown" : "Martin Barth",
+               "name" : "Martin Barth",
                "y" : 1,
-               "name" : "Martin Barth"
+               "drilldown" : "Martin Barth"
             },
             {
-               "drilldown" : "Maxim Nechaev",
+               "name" : "Maxim Nechaev",
                "y" : 1,
-               "name" : "Maxim Nechaev"
-            },
-            {
-               "drilldown" : "Pavel Jurca",
-               "y" : 1,
-               "name" : "Pavel Jurca"
+               "drilldown" : "Maxim Nechaev"
             },
             {
                "y" : 1,
+               "name" : "Pavel Jurca",
+               "drilldown" : "Pavel Jurca"
+            },
+            {
                "drilldown" : "Simon Proctor",
+               "y" : 1,
                "name" : "Simon Proctor"
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
-   ],
-   "chart" : {
-      "type" : "column"
-   }
+   ]
 }
