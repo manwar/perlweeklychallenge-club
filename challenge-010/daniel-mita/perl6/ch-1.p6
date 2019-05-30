@@ -32,7 +32,7 @@ multi MAIN (
   --> Nil
 ) {
   given |( @overlines.map(@letters X~ *).reverse ), @letters -> @set {
-    $roman-numerals ~~ / ^ ( @(@set[0])+ )? ( @(@set[1])+ )? ( @(@set[2])+ )? $ /;
+    $roman-numerals.uc ~~ / ^ ( @(@set[0])+ )? ( @(@set[1])+ )? ( @(@set[2])+ )? $ /;
   }
 
   if $/ {
