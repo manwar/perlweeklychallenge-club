@@ -1,28 +1,15 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
-   "title" : {
-      "text" : "Contribution Summary"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-05-30 22:48:20 GMT"
+   "legend" : {
+      "enabled" : "false"
    },
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "align" : "right",
-            "rotation" : -90
-         },
          "data" : [
             [
                "Blog",
@@ -36,28 +23,41 @@
                "Perl 6",
                224
             ]
-         ]
+         ],
+         "name" : "Contributions",
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "y" : 10
+         }
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2019-05-30 22:51:02 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions - 2019"
    },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      },
-      "type" : "category"
+      }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "legend" : {
-      "enabled" : "false"
+   "chart" : {
+      "type" : "column"
    }
 }
