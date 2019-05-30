@@ -1,46 +1,26 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-05-29 16:27:37 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
    "series" : [
       {
          "data" : [
             {
-               "drilldown" : "Daniel Mita",
                "name" : "Daniel Mita",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Donald Hunter",
-               "name" : "Donald Hunter",
+               "drilldown" : "Daniel Mita",
                "y" : 1
             },
             {
                "y" : 1,
-               "drilldown" : "Kivanc Yazan",
-               "name" : "Kivanc Yazan"
+               "drilldown" : "Donald Hunter",
+               "name" : "Donald Hunter"
+            },
+            {
+               "y" : 1,
+               "name" : "Kivanc Yazan",
+               "drilldown" : "Kivanc Yazan"
+            },
+            {
+               "drilldown" : "Maxim Nechaev",
+               "name" : "Maxim Nechaev",
+               "y" : 1
             },
             {
                "y" : 1,
@@ -48,21 +28,15 @@
                "drilldown" : "Pavel Jurca"
             },
             {
-               "y" : 1,
+               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
+               "y" : 1
             }
          ],
          "name" : "Champions",
          "colorByPoint" : 1
       }
    ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "drilldown" : {
       "series" : [
          {
@@ -72,28 +46,38 @@
                   1
                ]
             ],
-            "id" : "Daniel Mita",
-            "name" : "Daniel Mita"
+            "name" : "Daniel Mita",
+            "id" : "Daniel Mita"
          },
          {
+            "id" : "Donald Hunter",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "name" : "Donald Hunter",
-            "id" : "Donald Hunter"
+            "name" : "Donald Hunter"
          },
          {
-            "id" : "Kivanc Yazan",
-            "name" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ]
+            ],
+            "name" : "Kivanc Yazan",
+            "id" : "Kivanc Yazan"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "name" : "Maxim Nechaev",
+            "id" : "Maxim Nechaev"
          },
          {
             "id" : "Pavel Jurca",
@@ -106,18 +90,49 @@
             ]
          },
          {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
+            ]
          }
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2019-05-30 10:41:38 GMT"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge - 010"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
