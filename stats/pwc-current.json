@@ -1,13 +1,28 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 010"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2019-05-31 18:25:23 GMT"
    },
    "tooltip" : {
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1,
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "yAxis" : {
@@ -15,49 +30,118 @@
          "text" : "Total Solutions"
       }
    },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 1,
+               "name" : "Alicia Bielsa",
+               "drilldown" : "Alicia Bielsa"
+            },
+            {
+               "drilldown" : "Daniel Mita",
+               "name" : "Daniel Mita",
+               "y" : 1
+            },
+            {
+               "y" : 1,
+               "name" : "Donald Hunter",
+               "drilldown" : "Donald Hunter"
+            },
+            {
+               "y" : 2,
+               "name" : "Guillermo Ramos",
+               "drilldown" : "Guillermo Ramos"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Kivanc Yazan",
+               "name" : "Kivanc Yazan"
+            },
+            {
+               "name" : "Laurent Rosenfeld",
+               "drilldown" : "Laurent Rosenfeld",
+               "y" : 4
+            },
+            {
+               "name" : "Martin Barth",
+               "drilldown" : "Martin Barth",
+               "y" : 1
+            },
+            {
+               "y" : 1,
+               "name" : "Maxim Nechaev",
+               "drilldown" : "Maxim Nechaev"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Pavel Jurca",
+               "name" : "Pavel Jurca"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            }
+         ],
+         "name" : "Champions"
+      }
+   ],
    "drilldown" : {
       "series" : [
          {
-            "id" : "Daniel Mita",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Alicia Bielsa",
+            "name" : "Alicia Bielsa"
+         },
+         {
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
+            "id" : "Daniel Mita",
             "name" : "Daniel Mita"
          },
          {
             "id" : "Donald Hunter",
+            "name" : "Donald Hunter",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ],
-            "name" : "Donald Hunter"
+            ]
          },
          {
+            "id" : "Guillermo Ramos",
             "name" : "Guillermo Ramos",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Guillermo Ramos"
+            ]
          },
          {
-            "id" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
+            "id" : "Kivanc Yazan",
             "name" : "Kivanc Yazan"
          },
          {
+            "name" : "Laurent Rosenfeld",
             "id" : "Laurent Rosenfeld",
             "data" : [
                [
@@ -68,32 +152,31 @@
                   "Perl 6",
                   2
                ]
-            ],
-            "name" : "Laurent Rosenfeld"
+            ]
          },
          {
-            "name" : "Martin Barth",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Martin Barth"
+            "id" : "Martin Barth",
+            "name" : "Martin Barth"
          },
          {
+            "id" : "Maxim Nechaev",
+            "name" : "Maxim Nechaev",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ],
-            "name" : "Maxim Nechaev",
-            "id" : "Maxim Nechaev"
+            ]
          },
          {
-            "id" : "Pavel Jurca",
             "name" : "Pavel Jurca",
+            "id" : "Pavel Jurca",
             "data" : [
                [
                   "Perl 5",
@@ -108,80 +191,12 @@
                   1
                ]
             ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 010"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2019-05-30 22:48:02 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "series" : [
-      {
-         "name" : "Champions",
-         "data" : [
-            {
-               "name" : "Daniel Mita",
-               "y" : 1,
-               "drilldown" : "Daniel Mita"
-            },
-            {
-               "name" : "Donald Hunter",
-               "y" : 1,
-               "drilldown" : "Donald Hunter"
-            },
-            {
-               "drilldown" : "Guillermo Ramos",
-               "y" : 2,
-               "name" : "Guillermo Ramos"
-            },
-            {
-               "y" : 1,
-               "name" : "Kivanc Yazan",
-               "drilldown" : "Kivanc Yazan"
-            },
-            {
-               "drilldown" : "Laurent Rosenfeld",
-               "name" : "Laurent Rosenfeld",
-               "y" : 4
-            },
-            {
-               "name" : "Martin Barth",
-               "y" : 1,
-               "drilldown" : "Martin Barth"
-            },
-            {
-               "name" : "Maxim Nechaev",
-               "y" : 1,
-               "drilldown" : "Maxim Nechaev"
-            },
-            {
-               "y" : 1,
-               "name" : "Pavel Jurca",
-               "drilldown" : "Pavel Jurca"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "y" : 1,
-               "name" : "Simon Proctor"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ]
+   "xAxis" : {
+      "type" : "category"
+   }
 }
