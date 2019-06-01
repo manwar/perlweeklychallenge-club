@@ -1,0 +1,61 @@
+=pod
+
+=encoding utf8
+
+=head1 #1 Roman numerals
+
+=over 4
+
+Write a script to encode/decode Roman numerals. For example, given Roman numeral
+CCXLVI, it should return 246. Similarly, for decimal number 39, it should return
+XXXIX. Checkout L<wikipedia page|https://en.wikipedia.org/wiki/Roman_numerals>
+for more information.
+
+=back
+
+In the Wikipedia I learned that there are two different notations for Roman
+numerals: additive and subtractive.  They differ in how they render some
+numbers, like these:
+
+  +--------+----------+-------------+
+  | Arabic | Additive | Subtractive |
+  +--------+----------+-------------+
+  |    4   |    IIII  |   IV        |
+  |    9   |      IX  |   VIIII     |
+  |   19   |  XVIIII  |   XIX       |
+  |   90   |      XC  |   LXXXX     |
+  +--------+----------+-------------+
+
+My solution (ch-1.pl) accepts a list of arabic or roman numerals as arguments,
+detects in which system they are and converts them to the other system. The
+convertion from arabic to roman always uses the additive notation, but the
+convertion from roman to arabic hopefully understands both notations.
+
+In particular, this means that my solution does not fully comply with the
+specification, because it asks that 39 should be converted to XXXIX, which is in
+subtractive notation. My script converts 39 to XXXVIIII. Like this:
+
+  $ ./ch-1.pl CCXLVI 246 XXXIX 39
+  CCXLVI == 246
+  246 == CCXXXXVI
+  XXXIX == 39
+  39 == XXXVIIII
+
+=head1 #2 Ranking
+
+=over 4
+
+Write a script to find Jaro-Winkler distance between two strings. For more
+information check L<wikipedia
+page|https://en.wikipedia.org/wiki/Jaro%E2%80%93Winkler_distance>.
+
+=back
+
+I found it hard to fully grasp the Definition Section in the English wikipedia
+page. Fortunately, the L<French
+page|https://fr.wikipedia.org/wiki/Distance_de_Jaro-Winkler> has more examples
+which allowed me to get going, although it seems to be confounding the Jaro
+Distance with the Jaro Similarity.
+
+I'm not sure about the correctness of my solution. At least, it calculates
+correctly the three examples in the French page.
