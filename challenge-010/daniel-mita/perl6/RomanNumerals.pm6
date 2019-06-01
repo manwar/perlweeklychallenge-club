@@ -23,7 +23,7 @@ module RomanNumerals {
   constant @letters   = ｢IVXLCDM｣.comb;
   constant @overlines = "\c[combining overline]", "\c[combining double overline]";
   constant @letter-pairs = reverse @letters[0],
-    |('', |@overlines).map( @letters X~ * ).map({
+    |( @letters, |@overlines.map( @letters X~ * ) ).map({
       gather {
         for .rotor(3 => -1) -> @group {
           for 1, 2 {
