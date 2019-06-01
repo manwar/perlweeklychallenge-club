@@ -31,7 +31,7 @@ my %roman_table = (
 
 my $arg = $ARGV[0];
 
-if ($arg =~ /^\d+$/i) {
+if ($arg =~ /^\d+$/) {
     die "Decimal number should be between 1 and 3999" if ($arg < 1 || $arg > 3999);
     print encode_roman($arg);
 }
