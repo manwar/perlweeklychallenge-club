@@ -56,16 +56,17 @@ sub _is_valid_roman {
 
 sub encode_roman {
     my $number = shift;
-    my $roman_number;
+    my $roman;
 
     foreach my $r (sort { $roman_table{$b} <=> $roman_table{$a} } keys %roman_table) {
         my $d = int($number / $roman_table{$r});
         next unless $d;
-        $roman_number .= $r x $d;
+        $roman .= $r x $d;
         $number -= $roman_table{$r} * $d;
+        last unless $number;
     }
 
-    return $roman_number;
+    return $roman;
 }
 
 sub decode_roman {
