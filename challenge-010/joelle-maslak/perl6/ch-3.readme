@@ -1,0 +1,24 @@
+This assumes there is a config file ~/.sendgrid which contains ONE line:
+  api-key (the actual value of the API key, not the string "api-key")
+
+MODULES REQUIRED:
+    Cro::HTTP::Client
+
+To specify multiple email addresses using command line version of script, use
+";" between addresses.
+
+See the source code for how to use the send-email() API implementation.
+
+For command line that uses that API implementation, pass the following:
+
+  --from=<from email address>
+  --subject="<subject of email>"
+  --body="<body of email>"
+
+Example:
+
+perl6 ch-3.p6 --from=jmaslak@antelope.net --to=jmaslak@antelope.net \
+    --subject=Test --body-text="Test Message"
+
+No output means things went well.  :)
+
