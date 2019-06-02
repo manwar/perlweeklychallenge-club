@@ -60,11 +60,9 @@ sub simj {
 
     my @chr1 = split //, $s1;
     my @chr2 = split //, $s2;
-    my @chr2tmp = @chr2;
 
     my @matches;
     my %matches_position;
-
     for (my $i = 0; $i < $l1; $i++) {
 
         my $init = $i - $match_dist;
@@ -74,10 +72,10 @@ sub simj {
         $end = $l2 if $end > $l2;
 
         for (my $j = $init; $j < $end; $j++) {
-            if ($chr1[$i] eq $chr2tmp[$j]){
+            if ($chr1[$i] eq $chr2[$j]){
                 push @matches, $chr1[$i];
                 $matches_position{$j} = $i; #required to detect transpositions
-                $chr2tmp[$j]='-'; # avoid matching with the same character
+                $chr2[$j]='-'; # avoid matching with the same character
                 last;
             }
         }
@@ -88,10 +86,9 @@ sub simj {
     return 0 if ($m == 0);
 
     my $transpositions = 0;
-    my $j = 0;
-    for (my $i = 0; $j < $m; $i++) {
+    for (my ($i,$j) = (0,0); $j < $m; $i++) {
         if (exists $matches_position{$i}){
-            $transpositions++ if( $chr2[$i] ne $matches[$j]);
+            $transpositions++ if( substr( $s2, $i, 1) ne $matches[$j]);
             $j++;
         }
     }
