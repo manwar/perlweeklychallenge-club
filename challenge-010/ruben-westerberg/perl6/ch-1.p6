@@ -5,7 +5,7 @@ sub MAIN(
 ) {
 	given $input {
 		when /<[MDCLXVI]>/ {
-			say romanToDecimal2($_);
+			say romanToDecimal($_);
 		}
 		when /\d+/ {
 			say  decimalToRoman($_);
@@ -18,12 +18,12 @@ sub MAIN(
 }
 sub decimalToRoman ($input) {
 	my @digits=$input.comb;
+	my @p=<I X C M>;
+	my @h=<V L D>;
 	my $roman= join '', do for  @digits.kv {
 		my $power=@digits-$^k-1;	
 		#decimalToRoman($^v,@digits-$^k-1);
 		my @out;
-		my @p=<I X C M>;
-		my @h=<V L D>;
 		my $base=@p[$power];
 		my $half=@h[$power];
 		given $^v {
@@ -51,7 +51,7 @@ sub decimalToRoman ($input) {
 	}
 }
 
-sub romanToDecimal2($input) {
+sub romanToDecimal($input) {
 
 	my %r=(M=>1000, C=>100 ,X=>10, I=>1, V=>5, L=>50, D=>500);
 	my @order=%r.sort: *.value <=> *.value;
