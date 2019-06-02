@@ -8,14 +8,6 @@
       },
       "min" : 0
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 28] Last updated at 2019-06-02 18:13:32 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
    },
@@ -54,6 +46,7 @@
          "name" : "Perl 5"
       },
       {
+         "name" : "Perl 6",
          "data" : [
             0,
             8,
@@ -83,10 +76,16 @@
             0,
             1,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       }
    ],
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 28] Last updated at 2019-06-02 18:16:44 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Neil Bowers",
@@ -119,8 +118,9 @@
          "Yozen Hernandez"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
