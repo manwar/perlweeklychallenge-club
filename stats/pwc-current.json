@@ -1,12 +1,76 @@
 {
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Joelle Maslak",
+               "y" : 4,
+               "name" : "Joelle Maslak"
+            },
+            {
+               "y" : 2,
+               "name" : "Kivanc Yazan",
+               "drilldown" : "Kivanc Yazan"
+            },
+            {
+               "drilldown" : "Pete Houston",
+               "y" : 1,
+               "name" : "Pete Houston"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "y" : 2,
+               "name" : "Simon Proctor"
+            },
+            {
+               "name" : "Steven Wilson",
+               "y" : 2,
+               "drilldown" : "Steven Wilson"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Champions"
+      }
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 011"
+   },
    "tooltip" : {
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-06-03 14:06:57 GMT"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
@@ -16,97 +80,48 @@
                   "Perl 6",
                   2
                ]
-            ],
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak"
+            ]
          },
          {
+            "name" : "Kivanc Yazan",
+            "id" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Kivanc Yazan",
-            "name" : "Kivanc Yazan"
+            ]
          },
          {
-            "id" : "Simon Proctor",
+            "name" : "Pete Houston",
+            "id" : "Pete Houston",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl 6",
                   2
                ]
             ],
-            "name" : "Simon Proctor"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          },
          {
-            "name" : "Steven Wilson",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Steven Wilson"
+            "id" : "Steven Wilson",
+            "name" : "Steven Wilson"
          }
       ]
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-06-03 13:53:29 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 011"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Joelle Maslak",
-               "drilldown" : "Joelle Maslak",
-               "y" : 4
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Kivanc Yazan",
-               "name" : "Kivanc Yazan"
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Steven Wilson",
-               "name" : "Steven Wilson"
-            }
-         ],
-         "name" : "Champions",
-         "colorByPoint" : 1
-      }
-   ]
+   }
 }
