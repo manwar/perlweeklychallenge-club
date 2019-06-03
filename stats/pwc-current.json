@@ -1,76 +1,7 @@
 {
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Joelle Maslak",
-               "y" : 4,
-               "name" : "Joelle Maslak"
-            },
-            {
-               "y" : 2,
-               "name" : "Kivanc Yazan",
-               "drilldown" : "Kivanc Yazan"
-            },
-            {
-               "drilldown" : "Pete Houston",
-               "y" : 1,
-               "name" : "Pete Houston"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "y" : 2,
-               "name" : "Simon Proctor"
-            },
-            {
-               "name" : "Steven Wilson",
-               "y" : 2,
-               "drilldown" : "Steven Wilson"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Champions"
-      }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 011"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-06-03 14:06:57 GMT"
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
@@ -80,17 +11,19 @@
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak"
          },
          {
-            "name" : "Kivanc Yazan",
             "id" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Kivanc Yazan"
          },
          {
             "name" : "Pete Houston",
@@ -109,8 +42,8 @@
                   2
                ]
             ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
             "data" : [
@@ -123,5 +56,72 @@
             "name" : "Steven Wilson"
          }
       ]
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "series" : [
+      {
+         "name" : "Champions",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Joelle Maslak",
+               "y" : 4,
+               "drilldown" : "Joelle Maslak"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Kivanc Yazan",
+               "name" : "Kivanc Yazan"
+            },
+            {
+               "drilldown" : "Pete Houston",
+               "y" : 1,
+               "name" : "Pete Houston"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "y" : 2,
+               "name" : "Simon Proctor"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Steven Wilson",
+               "name" : "Steven Wilson"
+            }
+         ]
+      }
+   ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 011"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-06-03 17:18:45 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
