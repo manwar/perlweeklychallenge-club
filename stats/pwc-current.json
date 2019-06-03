@@ -1,26 +1,15 @@
 {
-   "series" : [
-      {
-         "name" : "Champions",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "name" : "Joelle Maslak",
-               "drilldown" : "Joelle Maslak",
-               "y" : 4
-            },
-            {
-               "name" : "Kivanc Yazan",
-               "y" : 2,
-               "drilldown" : "Kivanc Yazan"
-            }
-         ]
-      }
-   ],
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
@@ -31,7 +20,8 @@
                   2
                ]
             ],
-            "id" : "Joelle Maslak"
+            "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak"
          },
          {
             "data" : [
@@ -42,6 +32,16 @@
             ],
             "id" : "Kivanc Yazan",
             "name" : "Kivanc Yazan"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          }
       ]
    },
@@ -50,22 +50,40 @@
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 011"
    },
-   "xAxis" : {
-      "type" : "category"
-   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 4,
+               "name" : "Joelle Maslak",
+               "drilldown" : "Joelle Maslak"
+            },
+            {
+               "y" : 2,
+               "name" : "Kivanc Yazan",
+               "drilldown" : "Kivanc Yazan"
+            },
+            {
+               "y" : 2,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Champions"
+      }
+   ],
    "chart" : {
       "type" : "column"
    },
    "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2019-06-03 08:05:09 GMT"
+      "text" : "[Champions: 3] Last updated at 2019-06-03 10:13:34 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
@@ -75,8 +93,5 @@
          },
          "borderWidth" : 0
       }
-   },
-   "legend" : {
-      "enabled" : 0
    }
 }
