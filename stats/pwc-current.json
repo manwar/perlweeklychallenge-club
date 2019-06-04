@@ -1,50 +1,142 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2019-06-03 21:39:53 GMT"
-   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    },
+   "legend" : {
+      "enabled" : 0
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "E. Choroba",
+            "id" : "E. Choroba"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  3
+               ],
+               [
+                  "Perl 6",
+                  3
+               ]
+            ],
+            "name" : "Joelle Maslak",
+            "id" : "Joelle Maslak"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Kivanc Yazan",
+            "id" : "Kivanc Yazan"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "name" : "Pete Houston",
+            "id" : "Pete Houston"
+         },
+         {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Steven Wilson",
+            "id" : "Steven Wilson"
+         }
+      ]
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge - 011"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2019-06-04 02:48:35 GMT"
    },
    "chart" : {
       "type" : "column"
    },
    "series" : [
       {
-         "name" : "Champions",
-         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 2,
+               "name" : "Dave Jacoby",
                "drilldown" : "Dave Jacoby",
-               "name" : "Dave Jacoby"
+               "y" : 2
             },
             {
-               "drilldown" : "E. Choroba",
                "name" : "E. Choroba",
+               "drilldown" : "E. Choroba",
                "y" : 2
             },
             {
-               "y" : 4,
+               "name" : "Joelle Maslak",
                "drilldown" : "Joelle Maslak",
-               "name" : "Joelle Maslak"
+               "y" : 6
             },
             {
+               "y" : 2,
                "drilldown" : "Kivanc Yazan",
-               "name" : "Kivanc Yazan",
-               "y" : 2
+               "name" : "Kivanc Yazan"
             },
             {
-               "drilldown" : "Pete Houston",
                "name" : "Pete Houston",
+               "drilldown" : "Pete Houston",
                "y" : 1
             },
             {
@@ -53,105 +145,13 @@
                "y" : 2
             },
             {
-               "name" : "Steven Wilson",
+               "y" : 2,
                "drilldown" : "Steven Wilson",
-               "y" : 2
+               "name" : "Steven Wilson"
             }
-         ]
+         ],
+         "colorByPoint" : 1,
+         "name" : "Champions"
       }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Dave Jacoby",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Dave Jacoby"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "E. Choroba",
-            "name" : "E. Choroba"
-         },
-         {
-            "name" : "Joelle Maslak",
-            "id" : "Joelle Maslak",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ],
-               [
-                  "Perl 6",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Kivanc Yazan",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "name" : "Kivanc Yazan"
-         },
-         {
-            "name" : "Pete Houston",
-            "id" : "Pete Houston",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ]
-         },
-         {
-            "id" : "Simon Proctor",
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "name" : "Simon Proctor"
-         },
-         {
-            "name" : "Steven Wilson",
-            "id" : "Steven Wilson",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
-         }
-      ]
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   }
+   ]
 }
