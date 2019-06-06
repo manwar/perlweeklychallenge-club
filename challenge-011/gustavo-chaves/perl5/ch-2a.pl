@@ -1,13 +1,12 @@
 #!/usr/bin/env perl
 
+use 5.026;
 use strict;
 use warnings;
-use Data::Dump;
+use Math::MatrixReal;
 
 my $n = shift or die "Usage: $0 N\n";
 
-my @matrix = map {[(0) x $n]} (1 .. $n);
+my $matrix = Math::MatrixReal->new_diag([(1) x $n]);
 
-$matrix[$_][$_] = 1 foreach (0 .. $n-1);
-
-ddx \@matrix;
+say $matrix;
