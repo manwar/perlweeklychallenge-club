@@ -10,7 +10,7 @@ Usage:
   
     <n>    the size of the identity matrix
 -USAGE-
-exit(1);
+    exit(1);
 }
 
 my $n = shift // usage();
