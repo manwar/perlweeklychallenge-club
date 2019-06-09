@@ -1,18 +1,20 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
    "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-06-09 08:27:41 GMT"
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-06-09 11:26:13 GMT"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
    },
    "series" : [
       {
          "name" : "Perl Weekly Challenge Languages",
+         "colorByPoint" : "true",
          "data" : [
             {
                "y" : 113,
@@ -20,14 +22,14 @@
                "drilldown" : "001"
             },
             {
-               "drilldown" : "002",
                "y" : 95,
+               "drilldown" : "002",
                "name" : "#002 [P5=63 P6=32]"
             },
             {
-               "name" : "#003 [P5=32 P6=26]",
                "y" : 58,
-               "drilldown" : "003"
+               "drilldown" : "003",
+               "name" : "#003 [P5=32 P6=26]"
             },
             {
                "y" : 75,
@@ -35,57 +37,48 @@
                "drilldown" : "004"
             },
             {
-               "drilldown" : "005",
                "name" : "#005 [P5=33 P6=22]",
+               "drilldown" : "005",
                "y" : 55
             },
             {
-               "y" : 41,
+               "drilldown" : "006",
                "name" : "#006 [P5=27 P6=14]",
-               "drilldown" : "006"
+               "y" : 41
             },
             {
                "name" : "#007 [P5=26 P6=20]",
-               "y" : 46,
-               "drilldown" : "007"
+               "drilldown" : "007",
+               "y" : 46
             },
             {
-               "drilldown" : "008",
-               "name" : "#008 [P5=36 P6=20]",
-               "y" : 56
+               "y" : 58,
+               "name" : "#008 [P5=38 P6=20]",
+               "drilldown" : "008"
             },
             {
+               "y" : 51,
                "drilldown" : "009",
-               "name" : "#009 [P5=33 P6=18]",
-               "y" : 51
+               "name" : "#009 [P5=33 P6=18]"
             },
             {
-               "name" : "#010 [P5=30 P6=15]",
-               "y" : 45,
+               "y" : 47,
+               "name" : "#010 [P5=32 P6=15]",
                "drilldown" : "010"
             },
             {
-               "name" : "#011 [P5=35 P6=24]",
-               "y" : 59,
+               "y" : 61,
+               "name" : "#011 [P5=37 P6=24]",
                "drilldown" : "011"
             }
-         ],
-         "colorByPoint" : "true"
+         ]
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "followPointer" : "true"
+   "chart" : {
+      "type" : "column"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "legend" : {
+      "enabled" : "false"
    },
    "drilldown" : {
       "series" : [
@@ -133,6 +126,7 @@
          },
          {
             "id" : "004",
+            "name" : "004",
             "data" : [
                [
                   "Perl 5",
@@ -142,11 +136,11 @@
                   "Perl 6",
                   29
                ]
-            ],
-            "name" : "004"
+            ]
          },
          {
             "id" : "005",
+            "name" : "005",
             "data" : [
                [
                   "Perl 5",
@@ -156,11 +150,10 @@
                   "Perl 6",
                   22
                ]
-            ],
-            "name" : "005"
+            ]
          },
          {
-            "id" : "006",
+            "name" : "006",
             "data" : [
                [
                   "Perl 5",
@@ -171,11 +164,10 @@
                   14
                ]
             ],
-            "name" : "006"
+            "id" : "006"
          },
          {
             "id" : "007",
-            "name" : "007",
             "data" : [
                [
                   "Perl 5",
@@ -185,21 +177,22 @@
                   "Perl 6",
                   20
                ]
-            ]
+            ],
+            "name" : "007"
          },
          {
-            "id" : "008",
             "data" : [
                [
                   "Perl 5",
-                  36
+                  38
                ],
                [
                   "Perl 6",
                   20
                ]
             ],
-            "name" : "008"
+            "name" : "008",
+            "id" : "008"
          },
          {
             "name" : "009",
@@ -216,42 +209,49 @@
             "id" : "009"
          },
          {
+            "name" : "010",
             "data" : [
                [
                   "Perl 5",
-                  30
+                  32
                ],
                [
                   "Perl 6",
                   15
                ]
             ],
-            "name" : "010",
             "id" : "010"
          },
          {
-            "id" : "011",
             "name" : "011",
             "data" : [
                [
                   "Perl 5",
-                  35
+                  37
                ],
                [
                   "Perl 6",
                   24
                ]
-            ]
+            ],
+            "id" : "011"
          }
       ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Language"
    },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{point.color}\">{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : "true",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>"
    }
 }
