@@ -1,9 +1,9 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "chart" : {
       "type" : "column"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions - 2019"
    },
    "yAxis" : {
       "title" : {
@@ -11,14 +11,30 @@
       },
       "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-06-09 04:58:34 GMT"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
    },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "enabled" : "true",
+            "rotation" : -90,
+            "align" : "right"
+         },
          "data" : [
             [
                "Blog",
@@ -26,36 +42,20 @@
             ],
             [
                "Perl 5",
-               431
+               432
             ],
             [
                "Perl 6",
                255
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "rotation" : -90,
-            "enabled" : "true"
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
+   "subtitle" : {
+      "text" : "Last updated at 2019-06-09 05:03:28 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions - 2019"
    },
    "legend" : {
       "enabled" : "false"
