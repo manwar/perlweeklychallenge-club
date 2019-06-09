@@ -1,0 +1,44 @@
+=pod
+
+=encoding utf8
+
+=head1 #1 Temperatures
+
+=over 4
+
+Write a script that computes the equal point in the Fahrenheit and Celsius
+scales, knowing that the freezing point of water is 32 °F and 0 °C, and that the
+boiling point of water is 212 °F and 100 °C. This challenge was proposed by
+B<Laurent Rosenfeld>.
+
+=back
+
+It's not clear what the script is supposed to do. After all, with a little
+algebra we can calculate the solution by hand. For a while I thought about
+writing the following script:
+
+  #!/usr/bin/env perl
+  print "40\n";
+
+But, since the purpose of the challenge is to allow us to learn something I
+searched CPAN for a Math module that could help me solve a system of linear
+equations. I ended up using the L<Math::MatrixReal> module which seems cool.
+
+=head1 #2 Identity Matrix
+
+=over 4
+
+Write a script to create an Indentity Matrix for the given size. For example, if
+the size is 4, then create Identity Matrix 4x4. For more information about
+Indentity Matrix, please read the
+L<wiki|https://en.wikipedia.org/wiki/Identity_matrix> page.
+
+=back
+
+This one was easier. I wrote two scripts. The first one simply builds a
+two-dimensional array representing the matrix and prints it with the
+L<Data::Dump> module. The only real interest in it is how the array is
+constructed using the 'x' and the '..' operators to make it terse.
+
+The second solution is even simpler using the L<Math::MatrixReal> module's
+C<new_diag> constructor. Go figure!
