@@ -31,7 +31,7 @@ use Getopt::Long;
 use JSON;
 use LWP::UserAgent ();
 
-const my $API_KEY   => '22314778a05bf583f56cda402fce02eb';
+const my $API_KEY   =>  <redacted>;
 const my $TIMEOUT   =>  30;     # seconds
 const my $URL       => 'http://api.openweathermap.org/data/2.5/weather?q=';
 const my $URL_ID    => 'http://api.openweathermap.org/data/2.5/weather?id=';
