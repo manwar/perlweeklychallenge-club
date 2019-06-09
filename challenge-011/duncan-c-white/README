@@ -1,14 +1,24 @@
-Challenge 1: "Create a script which takes a list of numbers from
-command line and print the same in the compact form. For example, if
-you pass 1,2,3,4,9,10,14,15,16 then it should print the compact form
-like 1-4,9,10,14-16.."
+Challenge 1: "Write a script that computes the equal point in the Fahrenheit and Celsius scales, knowing that the freezing point of water is 32 °F and 0 °C, and that the boiling point of water is 212 °F and 100 �,"
 
-Quite simple and dull problem. But ok, let's have a go.
+My notes: Isn't that just Maths?  solve F = 9/5C + 32 for F==C?
 
-Challenge 2: "Create a script to calculate Ramanujan's constant with at
-least 32 digits of precision."
+C = 9/5C + 32 => 4/5C = -32 => C = 5/4 x -32 = 5 x -8 = -40
 
-Never heard of this constant, seems to be e^(pi*sqrt(163)), which is
-"very nearly an integer", I don't particularly care about abtruse mathematical
-formulae.  But ok, Perl's built in module biggrat will let you do this anyway,
-specifying accuracy 32; see ch-2.sh for the oneliner.
+But if I have to "compute" something that I should obviously "solve by
+algebra", could I do some sort of "where do two lines intersect" solver?
+Let's have a go.
+
+
+Challenge 2: "Write a script to create an Indentity Matrix for the given
+size. For example, if the size is 4, then create Identity Matrix 4x4."
+
+My notes:
+
+Surely that's incredibly straight forward.  The identity matrix has 1s
+on the leading diagonal and 0s everywhere else.  But should we create
+it in memory as a 2-D array and print that out, or just print out the
+identity matrix?  Let's choose the latter as it's simpler and more direct,
+even though the former approach would be more useful in real life, as
+presumably this is going to be one operation in a more general Matrix
+class/module [really, these questions need to be BETTER SPECIFIED to
+clarify this sort of thing]
