@@ -4,6 +4,10 @@ use v6;
 
 my %*SUB-MAIN-OPTS = :named-anywhere;
 
+multi sub MAIN is hidden-from-USAGE {
+    say $*USAGE;
+}
+
 #| Given a list of paths returns the longest shared path between them
 multi sub MAIN(
     *@paths, #= List of paths to check
