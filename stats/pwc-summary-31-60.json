@@ -1,15 +1,4 @@
 {
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "xAxis" : {
       "categories" : [
          "Francis Whittle",
@@ -44,14 +33,24 @@
          "Matthew O. Persico"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-06-10 08:28:13 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-06-10 10:21:32 GMT"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "series" : [
       {
+         "name" : "Perl 5",
          "data" : [
             0,
             2,
@@ -83,10 +82,10 @@
             0,
             4,
             0
-         ],
-         "name" : "Perl 5"
+         ]
       },
       {
+         "name" : "Perl 6",
          "data" : [
             16,
             0,
@@ -118,15 +117,16 @@
             2,
             0,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "chart" : {
       "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    }
 }
