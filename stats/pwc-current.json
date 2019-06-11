@@ -1,16 +1,4 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 012"
    },
@@ -18,6 +6,80 @@
       "title" : {
          "text" : "Total Solutions"
       }
+   },
+   "tooltip" : {
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2019-06-11 10:27:35 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Aaron Sherman",
+               "name" : "Aaron Sherman"
+            },
+            {
+               "name" : "Gustavo Chaves",
+               "drilldown" : "Gustavo Chaves",
+               "y" : 2
+            },
+            {
+               "name" : "Joelle Maslak",
+               "drilldown" : "Joelle Maslak",
+               "y" : 2
+            },
+            {
+               "name" : "Kevin Colyer",
+               "drilldown" : "Kevin Colyer",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Ozzy",
+               "y" : 1,
+               "name" : "Ozzy"
+            },
+            {
+               "drilldown" : "Rakesh Kumar Shardiwal",
+               "y" : 2,
+               "name" : "Rakesh Kumar Shardiwal"
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Yozen Hernandez",
+               "y" : 2,
+               "name" : "Yozen Hernandez"
+            }
+         ],
+         "name" : "Champions",
+         "colorByPoint" : 1
+      }
+   ],
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
@@ -32,17 +94,17 @@
             "name" : "Aaron Sherman"
          },
          {
+            "id" : "Gustavo Chaves",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Gustavo Chaves",
             "name" : "Gustavo Chaves"
          },
          {
-            "name" : "Joelle Maslak",
+            "id" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
@@ -53,37 +115,47 @@
                   1
                ]
             ],
-            "id" : "Joelle Maslak"
+            "name" : "Joelle Maslak"
          },
          {
             "name" : "Kevin Colyer",
+            "id" : "Kevin Colyer",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ],
-            "id" : "Kevin Colyer"
+            ]
          },
          {
+            "name" : "Ozzy",
             "id" : "Ozzy",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ],
-            "name" : "Ozzy"
+            ]
+         },
+         {
+            "name" : "Rakesh Kumar Shardiwal",
+            "id" : "Rakesh Kumar Shardiwal",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
          },
          {
             "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ],
-            "id" : "Simon Proctor"
+            ]
          },
          {
             "id" : "Yozen Hernandez",
@@ -96,62 +168,5 @@
             "name" : "Yozen Hernandez"
          }
       ]
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2019-06-11 10:22:25 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "drilldown" : "Aaron Sherman",
-               "name" : "Aaron Sherman",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "name" : "Gustavo Chaves",
-               "drilldown" : "Gustavo Chaves"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Joelle Maslak",
-               "name" : "Joelle Maslak"
-            },
-            {
-               "name" : "Kevin Colyer",
-               "drilldown" : "Kevin Colyer",
-               "y" : 2
-            },
-            {
-               "y" : 1,
-               "name" : "Ozzy",
-               "drilldown" : "Ozzy"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Yozen Hernandez",
-               "name" : "Yozen Hernandez"
-            }
-         ],
-         "name" : "Champions"
-      }
-   ],
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
