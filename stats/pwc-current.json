@@ -1,6 +1,36 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 012"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "drilldown" : {
       "series" : [
+         {
+            "id" : "Aaron Sherman",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Aaron Sherman"
+         },
          {
             "data" : [
                [
@@ -13,7 +43,6 @@
          },
          {
             "name" : "Joelle Maslak",
-            "id" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
@@ -23,7 +52,8 @@
                   "Perl 6",
                   1
                ]
-            ]
+            ],
+            "id" : "Joelle Maslak"
          },
          {
             "name" : "Kevin Colyer",
@@ -36,69 +66,74 @@
             "id" : "Kevin Colyer"
          },
          {
-            "name" : "Ozzy",
+            "id" : "Ozzy",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Ozzy"
+            "name" : "Ozzy"
          },
          {
             "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
          },
          {
+            "id" : "Yozen Hernandez",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Yozen Hernandez",
             "name" : "Yozen Hernandez"
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 012"
+   "legend" : {
+      "enabled" : 0
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2019-06-11 10:22:25 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
          "colorByPoint" : 1,
-         "name" : "Champions",
          "data" : [
             {
-               "name" : "Gustavo Chaves",
-               "drilldown" : "Gustavo Chaves",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Joelle Maslak",
-               "name" : "Joelle Maslak",
+               "drilldown" : "Aaron Sherman",
+               "name" : "Aaron Sherman",
                "y" : 2
             },
             {
                "y" : 2,
-               "drilldown" : "Kevin Colyer",
-               "name" : "Kevin Colyer"
+               "name" : "Gustavo Chaves",
+               "drilldown" : "Gustavo Chaves"
             },
             {
-               "drilldown" : "Ozzy",
+               "y" : 2,
+               "drilldown" : "Joelle Maslak",
+               "name" : "Joelle Maslak"
+            },
+            {
+               "name" : "Kevin Colyer",
+               "drilldown" : "Kevin Colyer",
+               "y" : 2
+            },
+            {
+               "y" : 1,
                "name" : "Ozzy",
-               "y" : 1
+               "drilldown" : "Ozzy"
             },
             {
                "y" : 2,
@@ -106,37 +141,17 @@
                "name" : "Simon Proctor"
             },
             {
-               "name" : "Yozen Hernandez",
+               "y" : 2,
                "drilldown" : "Yozen Hernandez",
-               "y" : 2
+               "name" : "Yozen Hernandez"
             }
-         ]
+         ],
+         "name" : "Champions"
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2019-06-11 10:19:07 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
