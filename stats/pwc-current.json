@@ -1,15 +1,74 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "series" : [
+      {
+         "name" : "Champions",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "Gustavo Chaves",
+               "y" : 2,
+               "name" : "Gustavo Chaves"
+            },
+            {
+               "drilldown" : "Kevin Colyer",
+               "name" : "Kevin Colyer",
+               "y" : 2
+            },
+            {
+               "name" : "Ozzy",
+               "y" : 1,
+               "drilldown" : "Ozzy"
+            },
+            {
+               "y" : 2,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "y" : 2,
+               "name" : "Yozen Hernandez",
+               "drilldown" : "Yozen Hernandez"
+            }
+         ]
+      }
+   ],
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-06-11 10:13:29 GMT"
+   },
+   "tooltip" : {
+      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Gustavo Chaves",
+            "id" : "Gustavo Chaves"
+         },
          {
             "data" : [
                [
@@ -17,8 +76,8 @@
                   2
                ]
             ],
-            "id" : "Kevin Colyer",
-            "name" : "Kevin Colyer"
+            "name" : "Kevin Colyer",
+            "id" : "Kevin Colyer"
          },
          {
             "data" : [
@@ -31,78 +90,34 @@
             "name" : "Ozzy"
          },
          {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            ]
          },
          {
+            "id" : "Yozen Hernandez",
             "name" : "Yozen Hernandez",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Yozen Hernandez"
+            ]
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "xAxis" : {
+      "type" : "category"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 012"
    },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-06-11 10:08:02 GMT"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointerFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "series" : [
-      {
-         "name" : "Champions",
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "Kevin Colyer",
-               "drilldown" : "Kevin Colyer"
-            },
-            {
-               "drilldown" : "Ozzy",
-               "y" : 1,
-               "name" : "Ozzy"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "y" : 2,
-               "name" : "Simon Proctor"
-            },
-            {
-               "drilldown" : "Yozen Hernandez",
-               "name" : "Yozen Hernandez",
-               "y" : 2
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ]
+   "legend" : {
+      "enabled" : 0
+   }
 }
