@@ -6,6 +6,10 @@ The numbers formed by adding one to the products of the smallest
 primes are called the Euclid Numbers (see wiki). Write a script that
 finds the smallest Euclid Number that is not prime.
 
+## Solution
+
+Calculate the product of prime numbers and check if each successor is a prime.
+
 # Challenge #2
 
 Write a script that finds the common directory path, given a
@@ -21,6 +25,17 @@ following paths are supplied.
 
 and the path separator is `/`. Your script should return `/a/b` as common
 directory path.
+
+## Solution
+
+```
+perl -- ch-2.pl <*delimiter*> <*list of strings*>
+```
+
+The path *delimiter* is a string like `/`.
+The *list of strings* is a string like `/usr/bin:/usr/sbin`.
+
+The solution is to find the consecutive intersection of all paths.
 
 # Challenge #3
 
