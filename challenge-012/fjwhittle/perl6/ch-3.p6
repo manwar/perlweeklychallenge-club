@@ -25,10 +25,16 @@ my $result = await(Cro::HTTP::Client.get($uri).then({await .result.body}));
 # This bit is tested.
 $result<error> and die "API responded with error ‘$result<error>’";
 
-my $synonyms = $result<results><result><synonyms>;
+try {
+  my $synonyms = $result<result> ~~ Array
+             ??  $result<result>»<synonyms>
+             !! [$result<result><synonyms>];
 
-say "Synonyms for ‘$word’ using the Synonyms API from STANDS4:";
-say $synonyms;
+  $synonyms .= grep(* ~~ Str) or fail;
+
+  say "Synonyms for ‘$word’ using the Synonyms API from STANDS4:";
+  say $synonyms».split(', ').flat.unique.join(', ');
+} or say "No Synonyms found for ‘$word’";
 
 CATCH {
   when X::Cro::HTTP::Error {
