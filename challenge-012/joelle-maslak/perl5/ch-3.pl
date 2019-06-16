@@ -63,11 +63,16 @@ sub get_synonyms(%args) {
     $url .= '&format=json';
 
     my $ua = Mojo::UserAgent->new();
+    $ua->max_redirects(16);
 
     my $tx = $ua->get($url);
     if ( ( $tx->result->code >= 200 ) && ( $tx->result->code <= 299 ) ) {
         my $json = $tx->result->json;
-        say "Synonyms: " . $json->{results}{result}{synonyms};
+        if (exists($json->{result})) {
+            say "Synonyms: " . $json->{result}[0]{synonyms};
+        } else {
+            say "No synonyms found";
+        }
         return;
     }
 
