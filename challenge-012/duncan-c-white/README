@@ -1,24 +1,40 @@
-Challenge 1: "Write a script that computes the equal point in the Fahrenheit and Celsius scales, knowing that the freezing point of water is 32 °F and 0 °C, and that the boiling point of water is 212 °F and 100 �,"
-
-My notes: Isn't that just Maths?  solve F = 9/5C + 32 for F==C?
-
-C = 9/5C + 32 => 4/5C = -32 => C = 5/4 x -32 = 5 x -8 = -40
-
-But if I have to "compute" something that I should obviously "solve by
-algebra", could I do some sort of "where do two lines intersect" solver?
-Let's have a go.
-
-
-Challenge 2: "Write a script to create an Indentity Matrix for the given
-size. For example, if the size is 4, then create Identity Matrix 4x4."
+Challenge 1: "The numbers formed by adding one to the products of the
+smallest primes are called the Euclid Numbers. Write a script that finds
+the smallest Euclid Number that is not prime."
 
 My notes:
 
-Surely that's incredibly straight forward.  The identity matrix has 1s
-on the leading diagonal and 0s everywhere else.  But should we create
-it in memory as a 2-D array and print that out, or just print out the
-identity matrix?  Let's choose the latter as it's simpler and more direct,
-even though the former approach would be more useful in real life, as
-presumably this is going to be one operation in a more general Matrix
-class/module [really, these questions need to be BETTER SPECIFIED to
-clarify this sort of thing]
+From the wiki:
+
+primes are 2, 3, 5, 7, 11, 13..
+products are 2, 6, 30, 210, 2310, 30030...
+and Euclid numbers are 3, 7, 31, 211, 2301, 30031...
+
+btw, the Wiki page gives the answer:
+	E(6)=30031 is first composite Euclid number (59x509)
+
+Euclid numbers will grow like factorials, being products, will we need
+to use bigint?  30031 being the answer suggests not:-).  I already have a
+"mkprimes.c" program to generate first N primes, so let's use that, hence
+our Perl code will simply use an of primes (rather than generating the primes
+ourselves).  Just need isprime(n) type function checking i=2..sqrt(n).  Simple!
+
+
+Challenge 2: "Write a script that finds the common directory path,
+given a collection of paths and directory separator. For example, if
+the following paths are supplied.
+
+    /a/b/c/d
+    /a/b/cd
+    /a/b/cc
+    /a/b/c/d/e
+
+and the path separator is /. Your script should return /a/b as common
+directory path."
+
+My notes:
+
+The obvious approach is: split each path on pathsep into an array of segments,
+eg. /a/b/c/d == (a,b,c,d) note no '' before first element a
+then compare do all paths have "a" in their segment 0? if so, prefix += "/a"
+etc.  make sure we return "/" if the initial segments are not all identical.
