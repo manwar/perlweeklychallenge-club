@@ -9,7 +9,12 @@ sub MAIN(
     Str:D :$config-file? = $*HOME.add(".stands4u").Str,
     Str:D :$urlbase?     = 'http://www.stands4.com';
 ) {
-    say "Synonyms: " ~ get-synonyms(:$word, :$urlbase, :$config-file);
+    my $syn = get-synonyms(:$word, :$urlbase, :$config-file);
+    if $syn ne '' {
+        say "Synonyms: $syn";
+    } else {
+        say "No synonyms exist";
+    }
 }
 
 sub get-api-key(Str:D $config-file -->Str:D) {
@@ -51,7 +56,11 @@ sub get-synonyms(
     my $resp = await $client.get("/services/v2/syno.php?$querystring");
     my $json = await $resp.body;
 
-    return $json<results><result><synonyms>;
+    if $json<result>:exists {
+        return $json<result>[0]<synonyms>;
+    } else {
+        return '';
+    }
 
     CATCH {
         when X::Cro::HTTP::Error {
