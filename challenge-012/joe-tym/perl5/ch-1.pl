@@ -8,26 +8,29 @@ use Data::Dumper;
 =head1 synopsis
 	http://blogs.perl.org/users/laurent_r/2019/06/perl-weekly-challenge-12-euclids-numbers-and-directories.html
 	
-	Refactored to use Perl Data Language(PDL), Perl's numpy equivalent to calculate prime numbers
+	Refactored to use Perl Data Language(PDL), Perl's numpy equivalent, to calculate prime numbers
 =cut
 
 
 main();
 
 sub main {
-    my $primes = primesfrom2to(31000);
-	print $primes->where($primes > 30000); exit;
-    #print is_prime($primes, 13);
+	my $primes = primesfrom2to(31000);
+	#print $primes->where($primes > 30000); exit;
+	#print is_prime($primes, 13);
 	my @prime_numbers = $primes->list();
-	print is_prime($primes, 30031);
+	#print is_prime($primes, 30031);
 
 
 	for my $i (0..20) {
 		my $euclid_1 = 1;
 		$euclid_1 *= $prime_numbers[$_] for 0..$i;
 		my $euclid = $euclid_1 + 1;
-		print Dumper($euclid);
-		say $euclid and last unless is_prime($primes, $euclid);   
+		#print Dumper($euclid);
+		if (!is_prime($primes, $euclid)) {
+			print $euclid;
+			exit;
+		}
 	}
 }
 
