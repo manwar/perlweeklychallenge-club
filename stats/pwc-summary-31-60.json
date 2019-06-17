@@ -2,10 +2,6 @@
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "xAxis" : {
       "categories" : [
          "Francis Whittle",
@@ -40,11 +36,14 @@
          "Matt Latusek"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
+         "name" : "Perl 5",
          "data" : [
             0,
             2,
@@ -61,7 +60,7 @@
             0,
             6,
             1,
-            30,
+            31,
             7,
             2,
             0,
@@ -76,8 +75,7 @@
             0,
             0,
             4
-         ],
-         "name" : "Perl 5"
+         ]
       },
       {
          "data" : [
@@ -96,7 +94,7 @@
             1,
             12,
             0,
-            30,
+            31,
             0,
             0,
             6,
@@ -150,18 +148,20 @@
          "name" : "Blog"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-06-17 17:23:29 GMT"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
       }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-06-17 18:18:38 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
