@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use PDL;
 use Data::Dumper;
+use Math::Prime::FastSieve qw(primes);
 
 =head1 synopsis
 	http://blogs.perl.org/users/laurent_r/2019/06/perl-weekly-challenge-12-euclids-numbers-and-directories.html
@@ -15,17 +16,23 @@ use Data::Dumper;
 	Pure Perl implementation(above) -> 0m26.662s
 	PDL implementation(below)       -> 0m0.284s
 	NUMPY(1.8.2) implementation:    -> 0m0.129s
-
+	Math::Prime::FastSieve          -> 0m0.122s
+	
 	Perl script that does nothing, just use PDL;        -> 0m0.132s 
-	Python script that does nothing, just import numpy; -> 0m0.066s 
-
+	Python script that does nothing, just import numpy; -> 0m0.066s
 =cut
 
 
 main();
 
 sub main {
-	my $primes = primesfrom2to(10000000);
+	my $n = 10000000;
+	my $primes_ref = primes($n);
+	my $primes = pdl($primes_ref);
+	#print Dumper($primes);
+	#exit;
+	#$primes = primesfrom2to($n);
+	#exit;
 	my $last_prime_index = $primes->dim(0) - 1;
 
 	for my $i (0..$last_prime_index) {
