@@ -3,7 +3,7 @@
 my $format = sub ($self) { sprintf '%04d/%02d/%02d', .year, .month, .day, given $self };
 
 sub last-day-to-last-friday(Int $year, Int $month, Int $day) {
-    my Date $d = Date.new(sprintf("%04d-%02d-%02d", $year, $month, $day));
+    my Date $d = Date.new(sprintf "%04d-%02d-%02d", $year, $month, $day);
     $d -= ($d.day-of-week - 5) mod 7;
 }
 
