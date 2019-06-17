@@ -15,29 +15,24 @@ use Data::Dumper;
 	Pure Perl implementation(above) -> 0m26.662s
 	PDL implementation(below)       -> 0m0.284s
 	NUMPY(1.8.2) implementation:    -> 0m0.129s
+
+	Perl script that does nothing, just use PDL;        -> 0m0.132s 
+	Python script that does nothing, just import numpy; -> 0m0.066s 
+
 =cut
 
 
 main();
 
 sub main {
-	#$PDL::BIGPDL = 1;
 	my $primes = primesfrom2to(10000000);
-	#print $primes->dim(0)."\n";
-	#print $primes->where($primes > 30000); exit;
-	#print is_prime($primes, 13);
-	my @prime_numbers = $primes->list();
-	#print is_prime($primes, 30031);
+	my $last_prime_index = $primes->dim(0) - 1;
 
-
-	for my $i (0..20) {
-		my $euclid_1 = 1;
-		$euclid_1 *= $prime_numbers[$_] for 0..$i;
-		my $euclid = $euclid_1 + 1;
-		#print Dumper($euclid);
+	for my $i (0..$last_prime_index) {
+		my $euclid = $primes->slice("0:$i")->prodover() + 1;
 		if (!is_prime($primes, $euclid)) {
-			print $euclid;
-			exit;
+			print $euclid."\n";
+			#exit;
 		}
 	}
 }
@@ -62,10 +57,19 @@ sub primesfrom2to {
 	#my $x = 11 / 3;
 	#print Dumper($x); exit;	
 	my $n = shift || die 'input expected';
-	my $sieve = ones($n/3 + ($n % 6 == 2));
+	my $size = $n/3 + ($n % 6 == 2);
+	my $last = $size - 1;
+	my $sieve = ones($size);
 	my $end = int($n**0.5)/3+1;
-	my $last = $sieve->dim(0) - 1;
+
+	#my $sieve_true = $sieve->where($sieve == 1);
+
 	foreach my $i (1..$end) {
+		#print $sieve_true->dim(0)."\n";
+		#print $sieve_true;
+		#print $sieve;
+		#$sieve_true .= 0;
+		#print Dumper($i);
 		if ($sieve->at($i) == 1) {
 			my $k = 3*$i+1|1;
 			my $start1 = $k*$k/3;
@@ -74,14 +78,20 @@ sub primesfrom2to {
 			#print "$k $start1 $start2 $step\n";
 			
 			if ($start1 <= $last) {
+			#eval {
 				$sieve->slice($start1.':'.$last.':'.$step) .= 0;
 			}
 			if ($start2 <= $last) {
+			#eval {
 				$sieve->slice($start2.':'.$last.':'.$step) .= 0;
+			#};
 			}
 		}
 	}
-	
+	#return $sieve;
+	#return 1;
+	#return 3*which($sieve == 1)->slice('1:') + 1|1;
+	# takes ~0.1s vs ~0.04s numpy
 	return pdl(2,3)->append(3*which($sieve == 1)->slice('1:') + 1|1);
 }
 
@@ -90,7 +100,7 @@ sub is_prime {
 	my $input = shift || 'die need input';
 	#print Dumper($input, $primes->max());
 	if ($input > $primes->max()) {
-		die 'input is greater than the maximum prime calculated';
+		die "input $input is greater than the maximum prime calculated ".$primes->max();
 	}
 	my $results = which($primes == $input);
 	if (!$results->isempty()) {
