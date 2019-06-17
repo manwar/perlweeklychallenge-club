@@ -134,7 +134,7 @@ sub primesfrom2to {
 
 sub is_prime {
 	my $primes = shift;
-	my $input = shift || 'die need input';
+	my $input = shift || die 'need input';
 	#print Dumper($input, $primes->max());
 	if ($input > $primes->max()) {
 		die "input $input is greater than the maximum prime calculated ".$primes->max();
