@@ -1,6 +1,70 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 013"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-06-17 17:06:50 GMT"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
+            {
+               "drilldown" : "Joelle Maslak",
+               "name" : "Joelle Maslak",
+               "y" : 1
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Kevin Colyer",
+               "name" : "Kevin Colyer"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Pete Houston",
+               "name" : "Pete Houston"
+            },
+            {
+               "y" : 1,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 013"
+      }
+   ],
+   "legend" : {
+      "enabled" : 0
+   },
    "drilldown" : {
       "series" : [
+         {
+            "id" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Dave Jacoby"
+         },
          {
             "id" : "Joelle Maslak",
             "data" : [
@@ -12,14 +76,14 @@
             "name" : "Joelle Maslak"
          },
          {
+            "name" : "Kevin Colyer",
+            "id" : "Kevin Colyer",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ],
-            "name" : "Kevin Colyer",
-            "id" : "Kevin Colyer"
+            ]
          },
          {
             "name" : "Pete Houston",
@@ -43,60 +107,6 @@
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 013"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-06-17 16:15:37 GMT"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 013",
-         "data" : [
-            {
-               "drilldown" : "Joelle Maslak",
-               "name" : "Joelle Maslak",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Kevin Colyer",
-               "name" : "Kevin Colyer",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Pete Houston",
-               "name" : "Pete Houston",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "y" : 1,
-               "name" : "Simon Proctor"
-            }
-         ]
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   },
    "chart" : {
       "type" : "column"
    },
@@ -104,5 +114,10 @@
       "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
