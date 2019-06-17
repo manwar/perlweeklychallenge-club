@@ -9,13 +9,21 @@ use Data::Dumper;
 	http://blogs.perl.org/users/laurent_r/2019/06/perl-weekly-challenge-12-euclids-numbers-and-directories.html
 	
 	Refactored to use Perl Data Language(PDL), Perl's numpy equivalent, to calculate prime numbers
+
+	Benchmark results, to generate primes numbers 0-10 million:
+
+	Pure Perl implementation(above) -> 0m26.662s
+	PDL implementation(below)       -> 0m0.284s
+	NUMPY(1.8.2) implementation:    -> 0m0.129s
 =cut
 
 
 main();
 
 sub main {
-	my $primes = primesfrom2to(31000);
+	#$PDL::BIGPDL = 1;
+	my $primes = primesfrom2to(10000000);
+	#print $primes->dim(0)."\n";
 	#print $primes->where($primes > 30000); exit;
 	#print is_prime($primes, 13);
 	my @prime_numbers = $primes->list();
@@ -35,7 +43,7 @@ sub main {
 }
 
 =head1
-https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n=head1
+https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n
 
 import numpy
 def primesfrom2to(n):
@@ -51,9 +59,11 @@ def primesfrom2to(n):
 
 sub primesfrom2to {
 	use integer;
+	#my $x = 11 / 3;
+	#print Dumper($x); exit;	
 	my $n = shift || die 'input expected';
 	my $sieve = ones($n/3 + ($n % 6 == 2));
-	my $end = int($n**0.5)/3+1 - 1;
+	my $end = int($n**0.5)/3+1;
 	my $last = $sieve->dim(0) - 1;
 	foreach my $i (1..$end) {
 		if ($sieve->at($i) == 1) {
@@ -63,9 +73,9 @@ sub primesfrom2to {
 			my $step = 2*$k;
 			#print "$k $start1 $start2 $step\n";
 			
-			#if ($start1 <= $last) {
+			if ($start1 <= $last) {
 				$sieve->slice($start1.':'.$last.':'.$step) .= 0;
-			#}
+			}
 			if ($start2 <= $last) {
 				$sieve->slice($start2.':'.$last.':'.$step) .= 0;
 			}
