@@ -2,44 +2,46 @@
    "drilldown" : {
       "series" : [
          {
-            "name" : "Joelle Maslak",
+            "id" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Joelle Maslak"
+            "name" : "Joelle Maslak"
          },
          {
-            "id" : "Kevin Colyer",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
             ],
-            "name" : "Kevin Colyer"
+            "name" : "Kevin Colyer",
+            "id" : "Kevin Colyer"
          },
          {
+            "name" : "Pete Houston",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Pete Houston"
+         },
+         {
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor"
          }
       ]
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 013"
@@ -53,16 +55,16 @@
          }
       }
    },
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2019-06-17 16:15:37 GMT"
    },
    "series" : [
       {
@@ -70,14 +72,19 @@
          "name" : "Perl Weekly Challenge - 013",
          "data" : [
             {
+               "drilldown" : "Joelle Maslak",
                "name" : "Joelle Maslak",
-               "y" : 1,
-               "drilldown" : "Joelle Maslak"
+               "y" : 1
             },
             {
                "drilldown" : "Kevin Colyer",
-               "y" : 2,
-               "name" : "Kevin Colyer"
+               "name" : "Kevin Colyer",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Pete Houston",
+               "name" : "Pete Houston",
+               "y" : 1
             },
             {
                "drilldown" : "Simon Proctor",
@@ -87,7 +94,15 @@
          ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-06-17 14:03:09 GMT"
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
