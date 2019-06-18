@@ -2,16 +2,21 @@
 
 use strict;
 use warnings;
-use PDL;
 use Data::Dumper;
-use Math::Prime::FastSieve qw(primes);
+use List::Util qw(product);
 
 =head1 synopsis
 	http://blogs.perl.org/users/laurent_r/2019/06/perl-weekly-challenge-12-euclids-numbers-and-directories.html
 	
 	Refactored to use Perl Data Language(PDL), Perl's numpy equivalent, to calculate prime numbers
 
-	Benchmark results, to generate primes numbers 0-10 million:
+	Benchmark results, full solution:
+
+	PDL Only                    -> 0m0.340s
+	Math::Prime::FastSieve+PDL  -> 0m0.337s
+	Math::Prime::FastSieve Only -> 0m0.188s
+
+	Benchmark results, just to generate prime numbers 0-10 million:
 
 	Pure Perl implementation(above) -> 0m26.662s
 	PDL implementation(below)       -> 0m0.284s
@@ -27,22 +32,47 @@ main();
 
 sub main {
 	my $n = 10000000;
-	my $primes_ref = primes($n);
-	my $primes = pdl($primes_ref);
-	#print Dumper($primes);
-	#exit;
-	#$primes = primesfrom2to($n);
-	#exit;
+	#pdl_version($n);
+	math_prime_fastsieve($n);
+}
+
+sub pdl_version {
+	my $n = shift || die 'need input';
+	use PDL;
+	my $primes = primesfrom2to($n);
 	my $last_prime_index = $primes->dim(0) - 1;
 
 	for my $i (0..$last_prime_index) {
 		my $euclid = $primes->slice("0:$i")->prodover() + 1;
+		
 		if (!is_prime($primes, $euclid)) {
 			print $euclid."\n";
-			#exit;
 		}
 	}
 }
+
+sub math_prime_fastsieve {
+	my $n = shift || die 'need input';
+	use Math::Prime::FastSieve qw(primes);
+	my $sieve = Math::Prime::FastSieve::Sieve->new($n);
+	my $last_prime_index = $sieve->count_sieve();
+	my $largest = $sieve->nth_prime($last_prime_index);	
+
+	for my $i (1..$last_prime_index) {
+		my @values = map { $sieve->nth_prime($_) } (1..$i);
+		my $euclid = product(@values) + 1;
+		#print Dumper(\@values, $euclid);
+		#<STDIN>;
+		
+		if ($euclid > $largest) {
+			die 'greater than largest prime calculated ending';
+		}
+		if (!$sieve->is_prime($euclid)) {
+			print $euclid."\n";
+		}
+	}
+}
+
 
 =head1
 https://stackoverflow.com/questions/2068372/fastest-way-to-list-all-primes-below-n
@@ -104,7 +134,7 @@ sub primesfrom2to {
 
 sub is_prime {
 	my $primes = shift;
-	my $input = shift || 'die need input';
+	my $input = shift || die 'need input';
 	#print Dumper($input, $primes->max());
 	if ($input > $primes->max()) {
 		die "input $input is greater than the maximum prime calculated ".$primes->max();
