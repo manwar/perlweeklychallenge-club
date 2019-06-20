@@ -16,8 +16,10 @@ Usage:
 sub elapsedLeapDays {
     my ($year) = @_;
 
-    $year -= 1752; # We want 1-based years here.
-    return int($year / 4) - int($year / 100) + int($year / 400);
+    # Subtractions because we want 1-based years here.
+    return int(($year - 1753) / 4)
+        - int(($year - 1701) / 100)  # exclude centennial years >= 1800
+        + int(($year - 1601) / 400); # include  quadricentennial years >= 2000
 }
 
 sub isLeap {
@@ -55,5 +57,6 @@ my @offset = (2, 3, 4, 5, 6, 0, 1);
     my $lastFriday = $lastDay - $offset[($newYearDay + $lastDay) % 7];
 
     my $day = $lastFriday - (($month > 0) ? $lastDays[$month - 1] : -1);
+
     say join q{/}, ($year, $month + 1, $day);
 }
