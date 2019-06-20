@@ -1,6 +1,6 @@
 #!/usr/bin/env perl6
 
-my $d=Date.new(year=>@*ARGS[0]);
+my $d=Date.new(year=>@*ARGS[0]//"2019");
 
 $d+=(12-$d.day-of-week);
 my $year=$d.year;
