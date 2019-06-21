@@ -1,0 +1,92 @@
+package PerlWeeklyChallenge;
+
+use Moo;
+use MooX::Options;
+
+option 'members' => (is => 'ro', order => 1, format => 's', required => 1, doc => 'Team members file (JSON)');
+option 'source'  => (is => 'ro', order => 2, format => 's', required => 1, doc => 'Weekly contributions folder');
+option 'verbose' => (is => 'ro', order => 3, doc => 'Be more descriptive');
+
+has 'member_names' => (is => 'rw');
+has 'files'        => (is => 'rw');
+
+use JSON;
+use Data::Dumper;
+use List::Util qw(shuffle);
+use File::Find qw(finddepth);
+
+sub run {
+    my ($self) = @_;
+
+    my $source  = $self->source;
+    my $members = $self->members;
+
+    $self->{member_names} = read_data($members);
+    $self->{files}        = fetch_files($source);
+
+    print sprintf("Congratulation %s.\n", $self->find_the_winner);
+}
+
+#
+#
+# PRIVATE METHODS
+
+sub find_the_winner {
+    my ($self) = @_;
+
+    my $members = $self->{member_names};
+    my $files   = $self->{files};
+    my $contributions = [];
+    foreach my $file (@$files) {
+        $file =~ s/(.*?\/)?(challenge\-\d\d\d.*)/$2/;
+        if (   ($file =~ /ch\-\d\.p[l6]$/)
+            || ($file =~ /ch\-\d\.sh$/)
+            || ($file =~ /blog\d?\.txt/)) {
+
+            $file =~ /(challenge-\d\d\d)\/(.*?)\//;
+            # Skip Mohammad Anwar from the pot.
+            next if ($2 eq "mohammad-anwar");
+            push @$contributions, $2;
+        }
+    }
+
+    my $winner_pot = [ shuffle @$contributions ];
+    print Dumper($winner_pot) if $self->verbose;
+    return $self->{member_names}->{ $winner_pot->[ rand @$winner_pot ] };
+}
+
+sub fetch_files {
+    my ($source) = @_;
+
+    my @files;
+    finddepth(
+        sub {
+            return if($_ eq '.' || $_ eq '..');
+            push @files, $File::Find::name;
+        },
+        $source
+    );
+
+    return \@files;
+}
+
+sub read_data {
+    my ($filename) = shift;
+
+    my $json_text = do {
+        open(my $json_fh, "<:encoding(UTF-8)", $filename)
+            or die("Can't open \$filename\": $!\n");
+        local $/;
+        <$json_fh>
+    };
+
+    return JSON->new->allow_nonref->utf8(1)->decode($json_text);
+}
+
+#
+#
+# MAIN PROGRAM
+
+package main;
+
+PerlWeeklyChallenge->new_with_options->run;
