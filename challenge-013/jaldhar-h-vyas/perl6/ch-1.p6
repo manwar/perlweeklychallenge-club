@@ -1,13 +1,15 @@
 #!/usr/bin/perl6
 
 sub elapsedLeapDays(Int $year) {
-    my $yr = $year - 1752; # We want 1-based years here.
-    return $yr div 4 - $yr div 100 + $yr div 400;
+    # Subtractions because we want 1-based years here.
+    return (($year - 1753) div 4)
+        - (($year - 1701) div 100)  # exclude centennial years >= 1800
+        + (($year - 1601) div 400); # include quadricentennial years >= 2000
 }
 
 sub isLeap(Int $year) {
     # years divisible by 100 are not leap years unless they are divisble by 400.
-    return ($year %% 4 && (!$year %% 100 || $year %% 400));
+    return ($year %% 4 && (!($year %% 100) || $year %% 400));
 }
 
 # BUG: Is only accurate for years per the Gregorian calendar.  Great Britain
@@ -36,6 +38,7 @@ multi sub MAIN(
         my $lastFriday = $lastDay - @offset[($newYearDay + $lastDay) % 7];
 
         my $day = $lastFriday - (($month > 0) ?? @lastDays[$month - 1] !! -1);
+
         ($year, $month + 1, $day).join('/').say;
     }
 }
