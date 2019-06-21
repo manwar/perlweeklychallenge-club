@@ -1,12 +1,15 @@
 {
-   "legend" : {
-      "enabled" : "false"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
+   "subtitle" : {
+      "text" : "Last updated at 2019-06-21 11:22:32 GMT"
    },
    "chart" : {
       "type" : "column"
@@ -14,27 +17,34 @@
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2019-06-21 07:41:33 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
       }
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right",
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "enabled" : "true"
+         },
          "data" : [
             [
                "Blog",
-               111
+               112
             ],
             [
                "Perl 5",
@@ -44,20 +54,10 @@
                "Perl 6",
                303
             ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "rotation" : -90,
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "enabled" : "true"
-         },
-         "name" : "Contributions"
+         ]
       }
-   ]
+   ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   }
 }
