@@ -8,17 +8,12 @@ use Memoize;
 memoize('F');
 memoize('M');
 
-fun F ($n) {
-    return $n ? $n - M(F($n - 1)) : 1
-}
-
-fun M ($n) {
-    return $n ? $n - F(M($n - 1)) : 0
-}
+fun F ($n) { $n ? $n - M(F($n - 1)) : 1 }
+fun M ($n) { $n ? $n - F(M($n - 1)) : 0 }
 
 use Test::More;
 
-warn +(F(98))[-1]; # To see the efficiency
+#warn +(F(98))[-1]; # To see the efficiency
 
 is_deeply
     [map F($_), 0 .. 20],
