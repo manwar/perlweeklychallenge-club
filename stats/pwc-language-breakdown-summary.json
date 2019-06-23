@@ -1,21 +1,12 @@
 {
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions - 2019"
-   },
    "chart" : {
       "type" : "column"
    },
    "subtitle" : {
-      "text" : "Last updated at 2019-06-23 15:55:36 GMT"
+      "text" : "Last updated at 2019-06-23 15:59:05 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
       "title" : {
@@ -23,14 +14,29 @@
       },
       "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
    },
    "series" : [
       {
+         "dataLabels" : {
+            "rotation" : -90,
+            "y" : 10,
+            "enabled" : "true",
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "color" : "#FFFFFF"
+         },
          "data" : [
             [
                "Blog",
@@ -42,22 +48,16 @@
             ],
             [
                "Perl 6",
-               306
+               308
             ]
          ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "rotation" : -90,
-            "y" : 10,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "align" : "right",
-            "format" : "{point.y:.0f}"
-         }
+         "name" : "Contributions"
       }
-   ]
+   ],
+   "legend" : {
+      "enabled" : "false"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions - 2019"
+   }
 }
