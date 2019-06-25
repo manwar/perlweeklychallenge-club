@@ -1,7 +1,6 @@
 {
    "series" : [
       {
-         "name" : "Perl 5",
          "data" : [
             0,
             0,
@@ -33,10 +32,10 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Perl 5"
       },
       {
-         "name" : "Perl 6",
          "data" : [
             4,
             21,
@@ -68,9 +67,11 @@
             0,
             12,
             1
-         ]
+         ],
+         "name" : "Perl 6"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             6,
@@ -102,12 +103,16 @@
             0,
             4,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
    "chart" : {
       "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -143,13 +148,12 @@
          "Martin Barth"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-06-25 19:01:34 GMT"
+      "text" : "[Champions: 30] Last updated at 2019-06-25 19:15:08 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "yAxis" : {
       "title" : {
@@ -159,9 +163,5 @@
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
    }
 }
