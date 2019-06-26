@@ -18,8 +18,6 @@ while (my $word = <$in>) {
     my $uc_word = uc $word;
     my @pairs = $uc_word =~ /\G(..)/g;
 
-    next if length $uc_word != 2 * @pairs;
-
     next if grep ! exists $states{$_}, @pairs;
 
     next if length($word) < length $longest[0];
