@@ -1,0 +1,20 @@
+#! /usr/bin/env perl6
+
+unit sub MAIN (Int $year = DateTime.now.year);
+
+my $date = Date.new($year, 12, 31);
+
+$date.=pred while $date.day-of-week != 5;
+
+my @dates = ($date);
+
+my $current-month = 12;
+
+for ^11
+{
+  $date.=earlier(days => 7) while $date.month == $current-month;
+  $current-month--;
+  @dates.push: $date;
+}
+
+.Str.trans("-" => "/").say for @dates.reverse;

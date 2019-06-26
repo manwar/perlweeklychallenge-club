@@ -1,0 +1,42 @@
+Solution by Jaime Corchado, (@tortsnare)[https://twitter.com/tortsnare].
+
+# Challenge #1
+
+The numbers formed by adding one to the products of the smallest
+primes are called the Euclid Numbers (see wiki). Write a script that
+finds the smallest Euclid Number that is not prime.
+
+## Solution
+
+Calculate the product of prime numbers and check if each successor is a prime.
+
+# Challenge #2
+
+Write a script that finds the common directory path, given a
+collection of paths and directory separator. For example, if the
+following paths are supplied.
+
+```
+/a/b/c/d
+/a/b/cd
+/a/b/cc
+/a/b/c/d/e
+```
+
+and the path separator is `/`. Your script should return `/a/b` as common
+directory path.
+
+## Solution
+
+```
+perl -- ch-2.pl <*delimiter*> <*list of strings*>
+```
+
+The path *delimiter* is a string like `/`.
+The *list of strings* is a string like `/usr/bin:/usr/sbin`.
+
+The solution is to find the consecutive intersection of all paths.
+
+# Challenge #3
+
+Find out the synonyms of a given word using the Synonyms API.
