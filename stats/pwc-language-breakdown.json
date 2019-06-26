@@ -1,14 +1,86 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>",
-      "followPointer" : "true"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Language"
-   },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-06-26 10:10:26 GMT"
+   "series" : [
+      {
+         "colorByPoint" : "true",
+         "name" : "Perl Weekly Challenge Languages",
+         "data" : [
+            {
+               "drilldown" : "001",
+               "name" : "#001",
+               "y" : 123
+            },
+            {
+               "y" : 104,
+               "drilldown" : "002",
+               "name" : "#002"
+            },
+            {
+               "y" : 66,
+               "name" : "#003",
+               "drilldown" : "003"
+            },
+            {
+               "name" : "#004",
+               "drilldown" : "004",
+               "y" : 84
+            },
+            {
+               "y" : 66,
+               "name" : "#005",
+               "drilldown" : "005"
+            },
+            {
+               "drilldown" : "006",
+               "name" : "#006",
+               "y" : 47
+            },
+            {
+               "name" : "#007",
+               "drilldown" : "007",
+               "y" : 54
+            },
+            {
+               "y" : 67,
+               "drilldown" : "008",
+               "name" : "#008"
+            },
+            {
+               "drilldown" : "009",
+               "name" : "#009",
+               "y" : 62
+            },
+            {
+               "drilldown" : "010",
+               "name" : "#010",
+               "y" : 58
+            },
+            {
+               "y" : 75,
+               "name" : "#011",
+               "drilldown" : "011"
+            },
+            {
+               "y" : 80,
+               "name" : "#012",
+               "drilldown" : "012"
+            },
+            {
+               "y" : 72,
+               "name" : "#013",
+               "drilldown" : "013"
+            },
+            {
+               "name" : "#014",
+               "drilldown" : "014",
+               "y" : 34
+            }
+         ]
+      }
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
@@ -27,8 +99,8 @@
                   10
                ]
             ],
-            "name" : "001",
-            "id" : "001"
+            "id" : "001",
+            "name" : "001"
          },
          {
             "data" : [
@@ -45,8 +117,8 @@
                   9
                ]
             ],
-            "name" : "002",
-            "id" : "002"
+            "id" : "002",
+            "name" : "002"
          },
          {
             "id" : "003",
@@ -67,6 +139,8 @@
             ]
          },
          {
+            "id" : "004",
+            "name" : "004",
             "data" : [
                [
                   "Perl 5",
@@ -80,13 +154,9 @@
                   "Blog",
                   9
                ]
-            ],
-            "name" : "004",
-            "id" : "004"
+            ]
          },
          {
-            "name" : "005",
-            "id" : "005",
             "data" : [
                [
                   "Perl 5",
@@ -100,9 +170,13 @@
                   "Blog",
                   11
                ]
-            ]
+            ],
+            "id" : "005",
+            "name" : "005"
          },
          {
+            "id" : "006",
+            "name" : "006",
             "data" : [
                [
                   "Perl 5",
@@ -116,9 +190,7 @@
                   "Blog",
                   6
                ]
-            ],
-            "id" : "006",
-            "name" : "006"
+            ]
          },
          {
             "data" : [
@@ -135,8 +207,8 @@
                   8
                ]
             ],
-            "name" : "007",
-            "id" : "007"
+            "id" : "007",
+            "name" : "007"
          },
          {
             "data" : [
@@ -157,6 +229,8 @@
             "name" : "008"
          },
          {
+            "id" : "009",
+            "name" : "009",
             "data" : [
                [
                   "Perl 5",
@@ -170,13 +244,9 @@
                   "Blog",
                   11
                ]
-            ],
-            "name" : "009",
-            "id" : "009"
+            ]
          },
          {
-            "name" : "010",
-            "id" : "010",
             "data" : [
                [
                   "Perl 5",
@@ -190,7 +260,9 @@
                   "Blog",
                   9
                ]
-            ]
+            ],
+            "id" : "010",
+            "name" : "010"
          },
          {
             "name" : "011",
@@ -211,8 +283,8 @@
             ]
          },
          {
-            "id" : "012",
             "name" : "012",
+            "id" : "012",
             "data" : [
                [
                   "Perl 5",
@@ -229,8 +301,8 @@
             ]
          },
          {
-            "id" : "013",
             "name" : "013",
+            "id" : "013",
             "data" : [
                [
                   "Perl 5",
@@ -247,6 +319,8 @@
             ]
          },
          {
+            "id" : "014",
+            "name" : "014",
             "data" : [
                [
                   "Perl 5",
@@ -258,16 +332,11 @@
                ],
                [
                   "Blog",
-                  3
+                  4
                ]
-            ],
-            "id" : "014",
-            "name" : "014"
+            ]
          }
       ]
-   },
-   "legend" : {
-      "enabled" : "false"
    },
    "plotOptions" : {
       "series" : {
@@ -278,93 +347,24 @@
          }
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "xAxis" : {
+      "type" : "category"
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge Languages",
-         "colorByPoint" : "true",
-         "data" : [
-            {
-               "name" : "#001",
-               "y" : 123,
-               "drilldown" : "001"
-            },
-            {
-               "y" : 104,
-               "name" : "#002",
-               "drilldown" : "002"
-            },
-            {
-               "y" : 66,
-               "name" : "#003",
-               "drilldown" : "003"
-            },
-            {
-               "drilldown" : "004",
-               "y" : 84,
-               "name" : "#004"
-            },
-            {
-               "drilldown" : "005",
-               "y" : 66,
-               "name" : "#005"
-            },
-            {
-               "drilldown" : "006",
-               "name" : "#006",
-               "y" : 47
-            },
-            {
-               "y" : 54,
-               "name" : "#007",
-               "drilldown" : "007"
-            },
-            {
-               "y" : 67,
-               "name" : "#008",
-               "drilldown" : "008"
-            },
-            {
-               "y" : 62,
-               "name" : "#009",
-               "drilldown" : "009"
-            },
-            {
-               "drilldown" : "010",
-               "name" : "#010",
-               "y" : 58
-            },
-            {
-               "name" : "#011",
-               "y" : 75,
-               "drilldown" : "011"
-            },
-            {
-               "y" : 80,
-               "name" : "#012",
-               "drilldown" : "012"
-            },
-            {
-               "y" : 72,
-               "name" : "#013",
-               "drilldown" : "013"
-            },
-            {
-               "y" : 33,
-               "name" : "#014",
-               "drilldown" : "014"
-            }
-         ]
-      }
-   ],
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2019-06-26 11:07:42 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : "true",
+      "headerFormat" : "<span style=\"font-size:11px\"></span>"
+   },
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : "false"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Language"
    }
 }
