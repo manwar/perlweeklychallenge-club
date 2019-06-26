@@ -84,3 +84,20 @@ prints all of them:
   mascaras
   memorial
   moorland
+
+=head1 #extra US Traversal
+
+Neil Bowers blogged about this challenge saying that the second problem wasn't
+exactly the one he proposed. He explained what he actually had in mind in a
+L<blog post|http://neilb.org/2019/06/24/additional-challenge-14.html>.
+
+Basically, he wants to know what is the largest English word that can be made
+using only the initials if US states, beginning in any of them and following
+only adjacent states. He offered a JSON data structure in a GitHub Gist
+containing the ajdacency and initials of the states.
+
+Using the Linux dictionary in F</usr/share/dict/words> my script tells me that
+the word is "fatal":
+
+  $ ./ch-extra.pl
+  fatal (Florida => Alabama => Tennessee => Arkansas => Louisiana)
