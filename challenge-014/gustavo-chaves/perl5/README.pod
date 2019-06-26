@@ -19,7 +19,7 @@ The recursive solution is a little easier to grasp, I think, because it's a more
 direct expression of the sequence's definition. But even using memoization it's
 33 times slower than the iterative version.
 
-  $ ./ch-1a.pl 10
+  $ ./ch-1-recursive.pl 10
   0
   0
   1
@@ -31,7 +31,7 @@ direct expression of the sequence's definition. But even using memoization it's
   1
   6
 
-  $ ./ch-1b.pl 10
+  $ ./ch-1-iterative.pl 10
   0
   0
   1
@@ -60,8 +60,27 @@ the US Postal Codes.
 
 But I was dumbfounded when I ran it and saw the result:
 
-  $ ./ch-2.pl
+  $ ./ch-2-one.pl
   Campinas
 
 Campinas is the name of the city where I live, in Brazil. But I don't have a
 clue what is it doing in an English dictionary! :-)
+
+After having sent my solutions it downed on me that there could be more than one
+"largest" word in the dictionary. So, I implemented a second version which
+prints all of them:
+
+  $ ./ch-2-all.pl
+  Campinas
+  Concorde
+  Ganymede
+  Mandarin
+  Victoria
+  calamine
+  complain
+  mainland
+  malarial
+  mandarin
+  mascaras
+  memorial
+  moorland

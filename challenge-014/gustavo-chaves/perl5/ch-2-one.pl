@@ -6,6 +6,8 @@
 # (https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations). This
 # challenge was proposed by team member Neil Bowers.
 
+# This version prints the first largest word.
+
 use 5.026;
 use strict;
 use autodie;
