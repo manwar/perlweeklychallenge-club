@@ -1,14 +1,6 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "chart" : {
       "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-06-26 16:42:53 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -43,9 +35,6 @@
          "Eddy HS",
          "Feng Chang"
       ]
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
    },
    "series" : [
       {
@@ -119,7 +108,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -148,20 +136,32 @@
             0,
             0,
             0,
-            9,
+            10,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
    "yAxis" : {
       "title" : {
          "text" : ""
       },
       "min" : 0
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-06-27 10:02:55 GMT"
    }
 }
