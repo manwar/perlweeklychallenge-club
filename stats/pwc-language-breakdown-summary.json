@@ -1,15 +1,21 @@
 {
-   "legend" : {
-      "enabled" : "false"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "subtitle" : {
-      "text" : "Last updated at 2019-06-30 15:19:39 GMT"
+      "text" : "Last updated at 2019-06-30 16:10:16 GMT"
    },
    "yAxis" : {
       "min" : 0,
@@ -19,22 +25,11 @@
    },
    "series" : [
       {
-         "dataLabels" : {
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            }
-         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               128
+               129
             ],
             [
                "Perl 5",
@@ -42,22 +37,27 @@
             ],
             [
                "Perl 6",
-               335
+               337
             ]
          ],
-         "name" : "Contributions"
-      }
-   ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+         "dataLabels" : {
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "y" : 10,
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "rotation" : -90
          }
       }
+   ],
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    }
 }
