@@ -1,9 +1,4 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "xAxis" : {
       "categories" : [
          "Aaron Sherman",
@@ -109,24 +104,23 @@
       ]
    },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 100] Last updated at 2019-06-30 08:18:20 GMT"
    },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 100] Last updated at 2019-06-30 08:11:54 GMT"
-   },
    "series" : [
       {
-         "name" : "Perl 5",
          "data" : [
             0,
             2,
-            26,
+            28,
             3,
             0,
             0,
@@ -224,9 +218,11 @@
             1,
             1,
             12
-         ]
+         ],
+         "name" : "Perl 5"
       },
       {
+         "name" : "Perl 6",
          "data" : [
             6,
             0,
@@ -328,14 +324,13 @@
             0,
             1,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       },
       {
          "data" : [
             0,
             0,
-            13,
+            14,
             0,
             0,
             0,
@@ -441,7 +436,12 @@
       "text" : "Perl Weekly Challenge - 2019"
    },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
