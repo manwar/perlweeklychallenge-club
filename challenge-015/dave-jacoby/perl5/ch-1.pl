@@ -38,7 +38,6 @@ for my $n ( 1 .. @primes ) {
     push @strong, $o if $swb == 1;
     push @weak,   $o if $swb == -1;
     last if @weak > 10 && @strong > 10;
-    say $swb;
 }
 say 'strong:  ' . join ", ",  @strong[0..9];
 say 'weak:    ' . join ", ",  @weak[0..9];
