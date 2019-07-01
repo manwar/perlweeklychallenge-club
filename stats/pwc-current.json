@@ -1,28 +1,56 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 015"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 3,
+               "name" : "Dave Jacoby",
+               "drilldown" : "Dave Jacoby"
+            },
+            {
+               "name" : "Roger Bell West",
+               "drilldown" : "Roger Bell West",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "Walt Mankowski",
+               "drilldown" : "Walt Mankowski"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 015",
+         "colorByPoint" : 1
+      }
+   ],
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "drilldown" : {
       "series" : [
+         {
+            "id" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Dave Jacoby"
+         },
          {
             "data" : [
                [
@@ -34,45 +62,36 @@
             "id" : "Roger Bell West"
          },
          {
+            "name" : "Walt Mankowski",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Walt Mankowski",
-            "name" : "Walt Mankowski"
+            "id" : "Walt Mankowski"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 015",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "name" : "Roger Bell West",
-               "y" : 2,
-               "drilldown" : "Roger Bell West"
-            },
-            {
-               "drilldown" : "Walt Mankowski",
-               "y" : 2,
-               "name" : "Walt Mankowski"
-            }
-         ]
-      }
-   ],
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2019-07-01 17:50:16 GMT"
+   },
    "legend" : {
       "enabled" : 0
    },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2019-07-01 17:47:16 GMT"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    },
-   "xAxis" : {
-      "type" : "category"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 015"
    }
 }
