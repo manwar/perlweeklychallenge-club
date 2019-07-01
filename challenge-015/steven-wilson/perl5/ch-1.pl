@@ -38,7 +38,6 @@ while ( ( @strong_primes < 10 || @weak_primes < 10 ) ) {
     }
     if ($is_prime) {
         ( $previous_prime, $current_prime ) = ( $current_prime, $next );
-
     }
     $next++;
 }

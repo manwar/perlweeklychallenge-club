@@ -42,22 +42,22 @@ say "Message $operations{$operation} to '$out_text'";
 
 sub encode {
     my ( $plaintext, $keyword ) = @_;
-    my $cyphertext = "";
+    my $cyphertext;
     for my $i (0..((length $plaintext) - 1)){
-        (my $Mi) = grep { $alphabet[$_] eq substr($plaintext, $i, 1) } (0..@alphabet-1);
-        (my $Ki) = grep { $alphabet[$_] eq substr($keyword, ($i % length $keyword), 1)} (0..@alphabet-1);
-        $cyphertext .= $alphabet[($Mi + $Ki) % 26];
+        (my $mi) = grep { $alphabet[$_] eq substr($plaintext, $i, 1) } (0..@alphabet-1);
+        (my $ki) = grep { $alphabet[$_] eq substr($keyword, ($i % length $keyword), 1)} (0..@alphabet-1);
+        $cyphertext .= $alphabet[($mi + $ki) % 26];
     }
     return $cyphertext;
 }
 
 sub decode {
     my ( $cyphertext, $keyword ) = @_;
-    my $plaintext = "";
+    my $plaintext;
     for my $i (0..((length $cyphertext) - 1)){
-        (my $Ci) = grep { $alphabet[$_] eq substr($cyphertext, $i, 1) } (0..@alphabet-1);
-        (my $Ki) = grep { $alphabet[$_] eq substr($keyword, ($i % length $keyword), 1)} (0..@alphabet-1);
-        $plaintext .= $alphabet[($Ci - $Ki) % 26];
+        (my $ci) = grep { $alphabet[$_] eq substr($cyphertext, $i, 1) } (0..@alphabet-1);
+        (my $ki) = grep { $alphabet[$_] eq substr($keyword, ($i % length $keyword), 1)} (0..@alphabet-1);
+        $plaintext .= $alphabet[($ci - $ki) % 26];
     }
     return $plaintext;
 }
