@@ -1,4 +1,11 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 102] Last updated at 2019-07-01 18:00:43 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Aaron Sherman",
@@ -88,6 +95,7 @@
          "Sergio Iglesias",
          "Rakesh Kumar Shardiwal",
          "Shaun Pearce",
+         "Simon Miner",
          "Simon Proctor",
          "Simon Reinhardt",
          "Steve Rogerson",
@@ -107,15 +115,23 @@
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "chart" : {
       "type" : "column"
    },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
+         "name" : "Perl 5",
          "data" : [
             0,
             2,
@@ -204,6 +220,7 @@
             6,
             2,
             0,
+            1,
             4,
             4,
             3,
@@ -218,8 +235,7 @@
             1,
             1,
             14
-         ],
-         "name" : "Perl 5"
+         ]
       },
       {
          "data" : [
@@ -307,6 +323,7 @@
             0,
             25,
             3,
+            0,
             0,
             0,
             0,
@@ -417,6 +434,7 @@
             0,
             0,
             0,
+            0,
             7,
             0,
             0,
@@ -433,19 +451,5 @@
             6
          ]
       }
-   ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 101] Last updated at 2019-07-01 17:54:19 GMT"
-   }
+   ]
 }
