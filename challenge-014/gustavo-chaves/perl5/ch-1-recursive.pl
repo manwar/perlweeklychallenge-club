@@ -5,26 +5,32 @@
 # (https://en.wikipedia.org/wiki/Van_Eck%27s_sequence). This challenge was
 # proposed by team member Andrezgz.
 
-# This is an iterative implementation, which is more than 30x faster than the
-# recursive one.
+# This is a recursive implementation.
 
 use 5.026;
 use strict;
 use warnings;
+use Memoize;
 
 my $sequence_size = shift or die "Usage: $0 SIZE\n";
 
-my @sequence = (0);
+memoize('van_ecks');
+sub van_ecks {
+    my ($n) = @_;
 
-VALUE:
-for my $i (0 .. $sequence_size-2) {
-    for (my $j=$i-1; $j >= 0; --$j) {
-        if ($sequence[$j] == $sequence[$i]) {
-            push @sequence, $i-$j;
-            next VALUE;
+    return 0 if $n <= 1;
+
+    my $previous_value = van_ecks($n-1);
+
+    for (my $i=$n-2; $i >= 0; --$i) {
+        if (van_ecks($i) == $previous_value) {
+            return ($n-1) - $i;
         }
     }
-    push @sequence, 0;
+
+    return 0;
 }
 
-say foreach @sequence;
+for my $i (0 .. $sequence_size-1) {
+    say van_ecks($i);
+}
