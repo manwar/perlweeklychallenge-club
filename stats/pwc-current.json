@@ -1,6 +1,8 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-07-01 17:35:31 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "plotOptions" : {
       "series" : {
@@ -11,53 +13,66 @@
          }
       }
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 015",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West"
-            }
-         ]
-      }
-   ],
    "title" : {
       "text" : "Perl Weekly Challenge - 015"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
-         }
-      ]
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Roger Bell West",
+            "id" : "Roger Bell West"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Walt Mankowski",
+            "name" : "Walt Mankowski"
+         }
+      ]
    },
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 015",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Roger Bell West",
+               "y" : 2,
+               "drilldown" : "Roger Bell West"
+            },
+            {
+               "drilldown" : "Walt Mankowski",
+               "y" : 2,
+               "name" : "Walt Mankowski"
+            }
+         ]
+      }
+   ],
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2019-07-01 17:47:16 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
