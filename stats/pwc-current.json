@@ -1,23 +1,63 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
    "xAxis" : {
       "type" : "category"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 015",
+         "data" : [
+            {
+               "drilldown" : "Dave Jacoby",
+               "y" : 4,
+               "name" : "Dave Jacoby"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Duane Powell",
+               "name" : "Duane Powell"
+            },
+            {
+               "name" : "Guillermo Ramos",
+               "y" : 3,
+               "drilldown" : "Guillermo Ramos"
+            },
+            {
+               "drilldown" : "Roger Bell West",
+               "y" : 2,
+               "name" : "Roger Bell West"
+            },
+            {
+               "name" : "Simon Miner",
+               "drilldown" : "Simon Miner",
+               "y" : 1
+            },
+            {
+               "name" : "Steven Wilson",
+               "y" : 3,
+               "drilldown" : "Steven Wilson"
+            },
+            {
+               "name" : "Walt Mankowski",
+               "y" : 2,
+               "drilldown" : "Walt Mankowski"
+            }
+         ],
+         "colorByPoint" : 1
       }
-   },
-   "chart" : {
-      "type" : "column"
-   },
+   ],
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl 5",
@@ -28,7 +68,7 @@
                   1
                ]
             ],
-            "name" : "Dave Jacoby"
+            "id" : "Dave Jacoby"
          },
          {
             "id" : "Duane Powell",
@@ -51,14 +91,14 @@
             "name" : "Guillermo Ramos"
          },
          {
-            "name" : "Roger Bell West",
+            "id" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Roger Bell West"
+            "name" : "Roger Bell West"
          },
          {
             "id" : "Simon Miner",
@@ -71,20 +111,39 @@
             ]
          },
          {
-            "id" : "Walt Mankowski",
+            "name" : "Steven Wilson",
+            "data" : [
+               [
+                  "Perl 5",
+                  3
+               ]
+            ],
+            "id" : "Steven Wilson"
+         },
+         {
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "name" : "Walt Mankowski"
+            "name" : "Walt Mankowski",
+            "id" : "Walt Mankowski"
          }
       ]
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 015"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2019-07-02 06:49:45 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "tooltip" : {
-      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "yAxis" : {
@@ -92,51 +151,7 @@
          "text" : "Total Solutions"
       }
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Dave Jacoby",
-               "drilldown" : "Dave Jacoby",
-               "y" : 4
-            },
-            {
-               "drilldown" : "Duane Powell",
-               "name" : "Duane Powell",
-               "y" : 1
-            },
-            {
-               "y" : 3,
-               "drilldown" : "Guillermo Ramos",
-               "name" : "Guillermo Ramos"
-            },
-            {
-               "y" : 2,
-               "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West"
-            },
-            {
-               "drilldown" : "Simon Miner",
-               "name" : "Simon Miner",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Walt Mankowski",
-               "name" : "Walt Mankowski",
-               "y" : 2
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 015",
-         "colorByPoint" : 1
-      }
-   ],
    "legend" : {
       "enabled" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 015"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2019-07-02 06:42:25 GMT"
    }
 }
