@@ -1,45 +1,184 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl 5",
+                  3
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Dave Jacoby"
+         },
+         {
+            "id" : "Duane Powell",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Duane Powell"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "E. Choroba",
+            "name" : "E. Choroba"
+         },
+         {
+            "name" : "Guillermo Ramos",
+            "id" : "Guillermo Ramos",
+            "data" : [
+               [
+                  "Perl 5",
+                  3
+               ]
+            ]
+         },
+         {
+            "name" : "Gustavo Chaves",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Gustavo Chaves"
+         },
+         {
+            "name" : "Joelle Maslak",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ],
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "id" : "Joelle Maslak"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West"
+         },
+         {
+            "id" : "Simon Miner",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "name" : "Simon Miner"
+         },
+         {
+            "id" : "Steven Wilson",
+            "data" : [
+               [
+                  "Perl 5",
+                  3
+               ]
+            ],
+            "name" : "Steven Wilson"
+         },
+         {
+            "name" : "Veesh Goldman",
+            "id" : "Veesh Goldman",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Walt Mankowski",
+            "id" : "Walt Mankowski",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         }
+      ]
+   },
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2019-07-03 13:53:36 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 015"
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
                "drilldown" : "Dave Jacoby",
-               "name" : "Dave Jacoby",
-               "y" : 4
+               "y" : 4,
+               "name" : "Dave Jacoby"
             },
             {
-               "drilldown" : "Duane Powell",
+               "name" : "Duane Powell",
                "y" : 2,
-               "name" : "Duane Powell"
+               "drilldown" : "Duane Powell"
             },
             {
-               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba",
                "y" : 2,
-               "drilldown" : "E. Choroba"
+               "name" : "E. Choroba"
             },
             {
+               "drilldown" : "Guillermo Ramos",
                "y" : 3,
-               "name" : "Guillermo Ramos",
-               "drilldown" : "Guillermo Ramos"
+               "name" : "Guillermo Ramos"
+            },
+            {
+               "y" : 2,
+               "name" : "Gustavo Chaves",
+               "drilldown" : "Gustavo Chaves"
             },
             {
                "drilldown" : "Joelle Maslak",
-               "y" : 2,
-               "name" : "Joelle Maslak"
+               "name" : "Joelle Maslak",
+               "y" : 2
             },
             {
                "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West",
-               "y" : 2
+               "y" : 2,
+               "name" : "Roger Bell West"
             },
             {
                "name" : "Simon Miner",
@@ -53,154 +192,30 @@
             },
             {
                "drilldown" : "Veesh Goldman",
-               "name" : "Veesh Goldman",
-               "y" : 2
+               "y" : 2,
+               "name" : "Veesh Goldman"
             },
             {
+               "drilldown" : "Walt Mankowski",
                "y" : 2,
-               "name" : "Walt Mankowski",
-               "drilldown" : "Walt Mankowski"
+               "name" : "Walt Mankowski"
             }
          ],
-         "name" : "Perl Weekly Challenge - 015",
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 015"
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "chart" : {
+      "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2019-07-03 13:27:43 GMT"
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby",
-            "data" : [
-               [
-                  "Perl 5",
-                  3
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ]
-         },
-         {
-            "name" : "Duane Powell",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Duane Powell"
-         },
-         {
-            "id" : "E. Choroba",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "name" : "E. Choroba"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  3
-               ]
-            ],
-            "id" : "Guillermo Ramos",
-            "name" : "Guillermo Ramos"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ],
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak"
-         },
-         {
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Simon Miner",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ],
-            "id" : "Simon Miner"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  3
-               ]
-            ],
-            "id" : "Steven Wilson",
-            "name" : "Steven Wilson"
-         },
-         {
-            "name" : "Veesh Goldman",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Veesh Goldman"
-         },
-         {
-            "id" : "Walt Mankowski",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "name" : "Walt Mankowski"
-         }
-      ]
    }
 }
