@@ -11,7 +11,7 @@ use v5.10;
 #
 
 # we will receive 3 arguments, a direction that could be E for encrypt
-# or D for decript, a keyword and the string to encode / decode:
+# or D for decrypt, a keyword and the string to encode / decode:
 
 my ( $dir, $key, $string ) = @ARGV[ 0 .. 2 ];
 
@@ -38,12 +38,11 @@ my @text    = map { ord($_) - 65 } split '', $string;
 my @result;
 
 # encrypting is just adding text and keyword values, and
-# decrypting would be the opposite, just substract keyword
+# decrypting would be the opposite, just substracting keyword
 # values from text
-# so we define a sign variable to take care of that
+# so we define a sign variable to take care of both cases
 
-my $sign = 1;    # encryption case
-$sign = -1 if $dir =~ /d/i;
+my $sign = $dir =~ /e/i ? 1 : -1;    # encryption and decryption cases
 
 # now we do encryption or decryption letter by letter
 for my $i ( 0 .. $#text ) {
@@ -55,7 +54,7 @@ for my $i ( 0 .. $#text ) {
 
 say join( '', map { chr( ( $_ % 26 ) + 65 ) } @result );
 
-# example usage (examples from wikipedia page):
+# example usages (examples from wikipedia page):
 # ✘ $> perl ch-2.pl E LEMON ATTACKATDAWN
 # LXFOPVEFRNHR
 #  $> perl ch-2.pl D LEMON LXFOPVEFRNHR
