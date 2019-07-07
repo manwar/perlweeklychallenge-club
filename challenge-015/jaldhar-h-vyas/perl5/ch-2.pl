@@ -21,7 +21,6 @@ sub encrypt {
       substr($tabulaRecta->{$key->[$i++ % $keylength]}, ord($c) - ord('A'), 1);
 }
 
-
 sub makeSquare {
     my @shifted = ('Z', 'A' .. 'Y');
 
@@ -60,7 +59,6 @@ sub vigenere {
 
     my %tabulaRecta = makeSquare();
     my $keylength = scalar @key;
-    my $i = 0;
 
     return
         join q{}, map { $op->(\@key, $keylength, \%tabulaRecta, $_); } @message;
