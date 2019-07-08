@@ -1,10 +1,9 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 016"
-   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
@@ -14,54 +13,70 @@
                   "Perl 6",
                   1
                ]
-            ],
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak"
+            ]
+         },
+         {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
          }
       ]
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "Joelle Maslak",
-               "drilldown" : "Joelle Maslak"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 016"
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-07-08 11:57:01 GMT"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          },
          "borderWidth" : 0
       }
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 016"
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 016",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "Joelle Maslak",
+               "y" : 2,
+               "name" : "Joelle Maslak"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 1
+            }
+         ]
+      }
+   ],
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2019-07-08 14:01:23 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
