@@ -1,34 +1,20 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-07-09 12:12:50 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 016"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -36,8 +22,8 @@
          "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Joelle Maslak",
                "drilldown" : "Joelle Maslak",
+               "name" : "Joelle Maslak",
                "y" : 2
             },
             {
@@ -46,9 +32,14 @@
                "name" : "Laurent Rosenfeld"
             },
             {
-               "name" : "Roger Bell West",
+               "y" : 1,
+               "name" : "Ozzy",
+               "drilldown" : "Ozzy"
+            },
+            {
                "y" : 2,
-               "drilldown" : "Roger Bell West"
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West"
             },
             {
                "y" : 1,
@@ -58,14 +49,11 @@
          ]
       }
    ],
-   "legend" : {
-      "enabled" : 0
-   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Joelle Maslak",
             "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
@@ -78,6 +66,7 @@
             ]
          },
          {
+            "name" : "Laurent Rosenfeld",
             "data" : [
                [
                   "Perl 5",
@@ -92,29 +81,55 @@
                   1
                ]
             ],
-            "name" : "Laurent Rosenfeld",
             "id" : "Laurent Rosenfeld"
          },
          {
+            "id" : "Ozzy",
+            "name" : "Ozzy",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
+         },
+         {
             "id" : "Roger Bell West",
-            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell West"
          },
          {
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
+            "name" : "Simon Proctor"
          }
       ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-07-09 12:29:29 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    }
 }
