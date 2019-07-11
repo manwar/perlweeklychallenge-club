@@ -1,33 +1,49 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "xAxis" : {
       "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       }
    },
-   "legend" : {
-      "enabled" : "false"
-   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-07-10 11:24:40 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+      }
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
    },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2019-07-11 11:15:27 GMT"
+   },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "enabled" : "true",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "y" : 10
+         },
          "data" : [
             [
                "Blog",
@@ -35,29 +51,13 @@
             ],
             [
                "Perl 5",
-               645
+               646
             ],
             [
                "Perl 6",
                367
             ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "enabled" : "true",
-            "rotation" : -90,
-            "y" : 10
-         }
+         ]
       }
-   ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   }
+   ]
 }
