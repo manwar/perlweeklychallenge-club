@@ -1,90 +1,27 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2019-07-11 11:15:18 GMT"
-   },
    "legend" : {
       "enabled" : 0
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 016"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2019-07-12 14:55:55 GMT"
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 016",
-         "data" : [
-            {
-               "drilldown" : "Andrezgz",
-               "y" : 1,
-               "name" : "Andrezgz"
-            },
-            {
-               "name" : "Joelle Maslak",
-               "y" : 2,
-               "drilldown" : "Joelle Maslak"
-            },
-            {
-               "y" : 3,
-               "drilldown" : "Laurent Rosenfeld",
-               "name" : "Laurent Rosenfeld"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Lubos Kolouch",
-               "name" : "Lubos Kolouch"
-            },
-            {
-               "drilldown" : "Ozzy",
-               "y" : 1,
-               "name" : "Ozzy"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West"
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            },
-            {
-               "drilldown" : "Steven Wilson",
-               "y" : 1,
-               "name" : "Steven Wilson"
-            }
-         ]
-      }
-   ],
    "drilldown" : {
       "series" : [
          {
+            "name" : "Andrezgz",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "name" : "Andrezgz",
             "id" : "Andrezgz"
          },
          {
+            "name" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
@@ -95,12 +32,19 @@
                   1
                ]
             ],
-            "name" : "Joelle Maslak",
             "id" : "Joelle Maslak"
          },
          {
-            "id" : "Laurent Rosenfeld",
-            "name" : "Laurent Rosenfeld",
+            "id" : "Kevin Colyer",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Kevin Colyer"
+         },
+         {
             "data" : [
                [
                   "Perl 5",
@@ -114,67 +58,138 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Laurent Rosenfeld",
+            "name" : "Laurent Rosenfeld"
          },
          {
+            "name" : "Lubos Kolouch",
             "id" : "Lubos Kolouch",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "name" : "Lubos Kolouch"
+            ]
          },
          {
+            "name" : "Ozzy",
             "id" : "Ozzy",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ],
-            "name" : "Ozzy"
+            ]
          },
          {
+            "id" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West"
+            "name" : "Roger Bell West"
          },
          {
-            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Simon Proctor"
+            "name" : "Simon Proctor"
          },
          {
-            "id" : "Steven Wilson",
-            "name" : "Steven Wilson",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ]
+            ],
+            "id" : "Steven Wilson",
+            "name" : "Steven Wilson"
          }
       ]
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         }
+         },
+         "borderWidth" : 0
       }
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 016",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 1,
+               "drilldown" : "Andrezgz",
+               "name" : "Andrezgz"
+            },
+            {
+               "name" : "Joelle Maslak",
+               "drilldown" : "Joelle Maslak",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "Kevin Colyer",
+               "drilldown" : "Kevin Colyer"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Laurent Rosenfeld",
+               "name" : "Laurent Rosenfeld"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Lubos Kolouch",
+               "name" : "Lubos Kolouch"
+            },
+            {
+               "drilldown" : "Ozzy",
+               "name" : "Ozzy",
+               "y" : 1
+            },
+            {
+               "name" : "Roger Bell West",
+               "drilldown" : "Roger Bell West",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 1
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Steven Wilson",
+               "name" : "Steven Wilson"
+            }
+         ]
+      }
+   ],
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
