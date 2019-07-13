@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use bigint;
 use Digest::SHA qw(sha256);
+use List::Util qw(all any first);
 use v5.26;
 
 my @addresses=@ARGV;
@@ -10,17 +11,18 @@ my @addresses=@ARGV;
 	3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy> unless @addresses;
 
 my %b;
-for ("1".."9","A".."H","J".."N","P".."Z","a".."k","m".."z") {
+my @valid=("1".."9","A".."H","J".."N","P".."Z","a".."k","m".."z");
+for (@valid) {
 	state $i=0;
 	$b{$_}=$i++;
 }
 
 for (@addresses) {
 	print "Testing Address: $_\n";
-	if (/[IlO]/) { print  "Invalid characters found: $_\n"; next};
-
 	my $sum=0;
 	my @a=reverse (split ("", $_));
+	unless (all {my $t=$_; first {$t eq $_} @valid} @a) { print "Invalid characters found: $_\n"; next};
+
 	while (my ($k,$v)=each @a) {
 		$sum+=$b{$v} *(58**$k);;
 	}
