@@ -10,14 +10,14 @@ multi sub MAIN(Bool :$test where * == True) {
     use Test;
 
     my @tests =
-        '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2'  => True,
-        '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN21' => False, # Too long
-        '1BvBMSEYstWetqTFn5Au4m4GFg0xJaNVN2'  => False, # Invalid char
-        '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVM2'  => False, # Bad checksum
-        '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy'  => True,
-        '1111111111111111111114oLvT2'         => True,
-        '111111111111111111114oLvT2'          => False, # Too short 
-        '11111111111111111111114oLvT2'        => False, # Too long 
+        '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2'   => True,
+        '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN211' => False, # Too long
+        '1BvBMSEYstWetqTFn5Au4m4GFg0xJaNVN2'   => False, # Invalid char
+        '1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVM2'   => False, # Bad checksum
+        '3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy'   => True,
+        '1111111111111111111114oLvT2'          => True,
+        '111111111111111111114oLvT2'           => False, # Too short 
+        '11111111111111111111114oLvT2'         => False, # Too long 
     ;
 
     for @tests -> $test {
@@ -37,10 +37,10 @@ sub validate(Str:D $addr --> Bool) {
     return False unless $val.defined;
 
     # Format we expect:
-    #   0x00 <20 bytes - hash> <4 byte checksum> # Is it too big (>25 bytes decoded)?
-    return False if $val > 2²⁰⁰;    # Too big
+    #   <version> <20 bytes> <4 byte checksum> # Is it too big (>25 bytes decoded)?
+    return False if $val ≥ 2²⁰⁰;    # Too big
 
-    # Is the first digit a 1 or 5? That's the only type we support.
+    # Is the first byte a 1 or 5? Those are the only typew we support.
     my $ver = $val +& ( 0xff +< ( 24 * 8 ) ) +> ( 24 * 8 );
     return False if $ver ≠ 0|5;     # Unknown version
 
