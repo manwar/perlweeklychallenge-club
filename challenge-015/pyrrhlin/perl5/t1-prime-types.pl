@@ -9,7 +9,7 @@ my $n = shift @ARGV || 10;
 
 my (@strong, @weak);
 
-for (my $i = 2; @strong < $n && @weak < $n; $i++) {
+for (my $i = 2; @strong < $n || @weak < $n; $i++) {
     my $prime = getprime($i);
     # avoiding division for speed lol
 
