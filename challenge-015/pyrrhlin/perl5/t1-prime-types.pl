@@ -25,5 +25,5 @@ for (my $i = 2; @strong < $n || @weak < $n; $i++) {
     }
 }
 
-say "Strongs are: @strong";
-say "Weaks are: @weak";
+say "Strongs are: @strong[0 .. $n-1]";
+say "Weaks are:   @weak[0 .. $n-1]";
