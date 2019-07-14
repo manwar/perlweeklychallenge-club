@@ -18,7 +18,7 @@ sub cut_a_slice_for {
 
 for my $guest ( 1 .. $guests ) {
   my $piece = cut_a_slice_for($guest); 
-  $biggest = { name => $_, size => $piece } if $piece > $biggest->{size}
+  $biggest = { name => $guest, size => $piece } if $piece > $biggest->{size}
 }
 
 say $biggest->{name}
