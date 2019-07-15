@@ -13,7 +13,7 @@ use integer;
 
 my @primes = (2, 3, 5);
 sub getprime ($) {
-    my $n = shift || die "must give an ordinal number to getprime";
+    my $n = shift || die "must give an ordinal integer to getprime";
     push @primes, _nextprime() while @primes < $n;
     return $primes[$n - 1];
 }
@@ -41,8 +41,10 @@ sub _hasfactor {
 1;
 
 __END__
+
 #foreach (1..20) {
 #    printf "%2u: %u\n", $_, getprime($_);
 #}
+
 say 'the hundredth prime is ', getprime(100);
 
