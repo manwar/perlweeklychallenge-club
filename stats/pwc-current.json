@@ -1,78 +1,101 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2019-07-15 17:06:42 GMT"
+   "legend" : {
+      "enabled" : 0
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Roger Bell West",
-            "name" : "Roger Bell West"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
-         }
-      ]
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "series" : [
       {
          "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 017",
          "data" : [
+            {
+               "name" : "Laurent Rosenfeld",
+               "y" : 5,
+               "drilldown" : "Laurent Rosenfeld"
+            },
             {
                "y" : 2,
                "drilldown" : "Roger Bell West",
                "name" : "Roger Bell West"
             },
             {
-               "name" : "Simon Proctor",
                "y" : 1,
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 017"
+         ]
       }
    ],
    "xAxis" : {
       "type" : "category"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 017"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          }
       }
    },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2019-07-15 23:00:01 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 017"
+   },
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Laurent Rosenfeld",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Laurent Rosenfeld"
+         },
+         {
+            "name" : "Roger Bell West",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Roger Bell West"
+         },
+         {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
+         }
+      ]
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
