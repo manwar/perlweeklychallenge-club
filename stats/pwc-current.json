@@ -1,37 +1,8 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 017",
-         "data" : [
-            {
-               "name" : "Laurent Rosenfeld",
-               "y" : 5,
-               "drilldown" : "Laurent Rosenfeld"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West"
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            }
-         ]
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
@@ -42,21 +13,24 @@
          }
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-07-15 23:00:01 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 017"
-   },
    "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Laurent Rosenfeld",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby"
+         },
+         {
             "data" : [
                [
                   "Perl 5",
@@ -71,7 +45,8 @@
                   1
                ]
             ],
-            "name" : "Laurent Rosenfeld"
+            "name" : "Laurent Rosenfeld",
+            "id" : "Laurent Rosenfeld"
          },
          {
             "name" : "Roger Bell West",
@@ -84,18 +59,58 @@
             "id" : "Roger Bell West"
          },
          {
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ]
+            ],
+            "name" : "Simon Proctor"
          }
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2019-07-16 06:56:59 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 017"
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Dave Jacoby",
+               "y" : 2,
+               "name" : "Dave Jacoby"
+            },
+            {
+               "name" : "Laurent Rosenfeld",
+               "y" : 5,
+               "drilldown" : "Laurent Rosenfeld"
+            },
+            {
+               "name" : "Roger Bell West",
+               "y" : 2,
+               "drilldown" : "Roger Bell West"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 1,
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 017",
+         "colorByPoint" : 1
+      }
+   ],
    "chart" : {
       "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
