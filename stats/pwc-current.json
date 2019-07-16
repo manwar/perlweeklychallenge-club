@@ -1,4 +1,18 @@
 {
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 017"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
@@ -8,29 +22,61 @@
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2019-07-16 16:37:49 GMT"
    },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 017",
+         "data" : [
+            {
+               "y" : 3,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
+            {
+               "name" : "Laurent Rosenfeld",
+               "drilldown" : "Laurent Rosenfeld",
+               "y" : 5
+            },
+            {
+               "name" : "Roger Bell West",
+               "drilldown" : "Roger Bell West",
+               "y" : 2
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 1
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
    "drilldown" : {
       "series" : [
          {
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl 5",
                   2
+               ],
+               [
+                  "Blog",
+                  1
                ]
             ],
-            "name" : "Dave Jacoby",
             "id" : "Dave Jacoby"
          },
          {
+            "id" : "Laurent Rosenfeld",
+            "name" : "Laurent Rosenfeld",
             "data" : [
                [
                   "Perl 5",
@@ -44,73 +90,31 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Laurent Rosenfeld",
-            "id" : "Laurent Rosenfeld"
+            ]
          },
          {
-            "name" : "Roger Bell West",
+            "id" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Roger Bell West"
+            "name" : "Roger Bell West"
          },
          {
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "name" : "Simon Proctor"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-07-16 06:56:59 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 017"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Dave Jacoby",
-               "y" : 2,
-               "name" : "Dave Jacoby"
-            },
-            {
-               "name" : "Laurent Rosenfeld",
-               "y" : 5,
-               "drilldown" : "Laurent Rosenfeld"
-            },
-            {
-               "name" : "Roger Bell West",
-               "y" : 2,
-               "drilldown" : "Roger Bell West"
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 1,
-               "drilldown" : "Simon Proctor"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 017",
-         "colorByPoint" : 1
-      }
-   ],
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
    }
 }
