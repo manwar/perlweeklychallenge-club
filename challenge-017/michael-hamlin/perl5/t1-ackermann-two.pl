@@ -11,6 +11,10 @@ no warnings 'experimental::signatures';
 use bigint lib => 'GMP';
 
 my $trace = 0;
+my %limits = (
+    5 => 0,
+    4 => 2,
+);
 
 # the hyper function, H_$n($a, $b), with $a = 2:
 sub _twohyper( $n, $b ) {
@@ -47,10 +51,16 @@ sub _twohyper( $n, $b ) {
 }
 sub ack2 ( $m, $n ) {
     die "the function is not defined for negative parameters" if $m < 0 || $n < 0;
-    warn "this may run out of memory..." if $m > 4 || $m == 4 && $n >= 3;
+    if (defined my $nlimit = $limits{$m}) {
+        warn "this may run out of memory..." if $n > $nlimit;
+    }
     return _twohyper($m, $n + 3) - 3;
 }
 
+unless (@ARGV) {
+    _test();
+    exit(0);
+}
 die "must give two nonnegative integers as input" unless @ARGV > 1;
 
 $" = ', ';
@@ -59,4 +69,16 @@ my $desc = $result->length < 78 ? $result :
     sprintf 'int with %u digits', length($result);
 say "A( @ARGV ) = ", $desc;
 
+
+sub _test {
+    for my $m (0 .. 5) {
+        my $nlimit = $limits{$m} // 5;
+        for my $n (0 .. $nlimit) {
+            my $result = ack2($m, $n);
+            my $desc = $result->length < 78 ? $result :
+                sprintf 'int with %u digits', length($result);
+            say "A( $m, $n ) = ", $desc;
+        }
+    }
+}
 
