@@ -12,31 +12,6 @@ use bigint lib => 'GMP';
 
 my $trace = 0;
 
-# compute 2 ^($n) $b, where ^($n) is the knuth up-arrow notation
-# $n is the number of knuth up-arrows, a degree of "hyperness"
-# $b is the repetition argument (how many 2's are iterated)
-sub _twoknuth( $n, $b ) {
-    my $result = 2;
-    if ($n == 1) {
-        # exponentiation is iterated multiplication
-        $result **= $b;
-    } elsif ($b == 0) {
-        $result = 1;
-    } elsif ($b == 1) {
-        # result is just 2
-    } elsif ($n == 2) {
-        # tetration is iterated exponentiation
-        for (2 .. $b) { $result = 2 ** $result }
-    } else {
-        # iterated hyper...
-        $result = _twoknuth( $n - 1, 2 );
-        if ($b > 2) {
-            for (3 .. $b) { $result = _twoknuth( $n - 1, $result ) }
-        }
-    }
-    say "2knuth( $n, $b ) = ", $result if $trace;
-    return $result;
-}
 # the hyper function, H_$n($a, $b), with $a = 2:
 sub _twohyper( $n, $b ) {
     my $result = 2;
