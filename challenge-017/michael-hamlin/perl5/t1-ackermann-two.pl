@@ -56,10 +56,10 @@ sub _twohyper( $n, $b ) {
         # result is just 2
     } elsif ($n == 3) {
         # exponentiation is iterated multiplication
-        $result **= $b;
+        $result = 1 << $b;  # 2 ** $b
     } elsif ($n == 4) {
         # tetration is iterated exponentiation
-        for (2 .. $b) { $result = 2 ** $result }
+        for (2 .. $b) { $result = 1 << $result }    # 2 ** $result
     } else {
         # $n > 4 means iterated hyper...
         $result = _twohyper( $n - 1, 2 );
