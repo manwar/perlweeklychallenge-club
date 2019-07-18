@@ -1,23 +1,62 @@
 {
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Andrezgz",
+               "name" : "Andrezgz"
+            },
+            {
+               "drilldown" : "Dave Jacoby",
+               "y" : 3,
+               "name" : "Dave Jacoby"
+            },
+            {
+               "name" : "Duane Powell",
+               "drilldown" : "Duane Powell",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Laurent Rosenfeld",
+               "y" : 5,
+               "name" : "Laurent Rosenfeld"
+            },
+            {
+               "name" : "Michael Hamlin",
+               "y" : 1,
+               "drilldown" : "Michael Hamlin"
+            },
+            {
+               "drilldown" : "Roger Bell West",
+               "y" : 2,
+               "name" : "Roger Bell West"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "y" : 1,
+               "name" : "Simon Proctor"
+            },
+            {
+               "name" : "Veesh Goldman",
+               "drilldown" : "Veesh Goldman",
+               "y" : 4
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 017"
       }
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2019-07-18 17:49:33 GMT"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge - 017"
    },
    "drilldown" : {
       "series" : [
@@ -32,6 +71,8 @@
             "name" : "Andrezgz"
          },
          {
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl 5",
@@ -41,9 +82,7 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Dave Jacoby",
-            "name" : "Dave Jacoby"
+            ]
          },
          {
             "data" : [
@@ -52,8 +91,8 @@
                   2
                ]
             ],
-            "name" : "Duane Powell",
-            "id" : "Duane Powell"
+            "id" : "Duane Powell",
+            "name" : "Duane Powell"
          },
          {
             "id" : "Laurent Rosenfeld",
@@ -74,28 +113,38 @@
             ]
          },
          {
-            "id" : "Roger Bell West",
-            "name" : "Roger Bell West",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Michael Hamlin",
+            "name" : "Michael Hamlin"
+         },
+         {
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West"
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
-            "name" : "Veesh Goldman",
             "id" : "Veesh Goldman",
+            "name" : "Veesh Goldman",
             "data" : [
                [
                   "Perl 5",
@@ -113,61 +162,27 @@
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2019-07-18 14:23:05 GMT"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "xAxis" : {
       "type" : "category"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Andrezgz",
-               "name" : "Andrezgz",
-               "y" : 2
-            },
-            {
-               "y" : 3,
-               "name" : "Dave Jacoby",
-               "drilldown" : "Dave Jacoby"
-            },
-            {
-               "y" : 2,
-               "name" : "Duane Powell",
-               "drilldown" : "Duane Powell"
-            },
-            {
-               "y" : 5,
-               "name" : "Laurent Rosenfeld",
-               "drilldown" : "Laurent Rosenfeld"
-            },
-            {
-               "name" : "Roger Bell West",
-               "y" : 2,
-               "drilldown" : "Roger Bell West"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Veesh Goldman",
-               "y" : 4,
-               "name" : "Veesh Goldman"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 017",
-         "colorByPoint" : 1
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 017"
    }
 }
