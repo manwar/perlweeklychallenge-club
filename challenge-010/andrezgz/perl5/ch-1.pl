@@ -44,14 +44,14 @@ exit 0;
 
 # Subtractive notation roman number validation
 sub _is_valid_roman {
-    return $arg =~ /
-                ^                       # String start
-                M{0,3}                  # Matching from 1000 to 3000
-                (?:CM|CD|D|D?C{0,3})?   # Matching from 100 to 900
-                (?:XC|XL|L|L?X{0,3})?   # Matching from 10 to 90
-                (?:IX|IV|V|V?I{0,3})?   # Matching from 1 to 9
-                $                       # String end
-            /xi;
+    return $_[0] =~ /
+                        ^                       # String start
+                        M{0,3}                  # Matching from 1000 to 3000
+                        (?:CM|CD|D|D?C{0,3})?   # Matching from 100 to 900
+                        (?:XC|XL|L|L?X{0,3})?   # Matching from 10 to 90
+                        (?:IX|IV|V|V?I{0,3})?   # Matching from 1 to 9
+                        $                       # String end
+                    /xi;
 }
 
 sub encode_roman {
