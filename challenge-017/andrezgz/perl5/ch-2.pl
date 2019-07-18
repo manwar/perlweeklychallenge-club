@@ -21,8 +21,10 @@ use warnings;
 
 my $uri = shift || 'jdbc:mysql://user:password@localhost:3306/pwc?profile=true#h1';
 
-my ($scheme, $auth, $path, $query, $frag) = uri_split($uri);
-my ($userinfo, $host, $port) = auth_split($auth) if $auth;
+my ($scheme, $auth, $path, $query, $frag, $userinfo, $host, $port);
+
+($scheme, $auth, $path, $query, $frag) = uri_split($uri);
+($userinfo, $host, $port) = auth_split($auth) if $auth;
 
 show('scheme',$scheme);
 show('userinfo',$userinfo);
