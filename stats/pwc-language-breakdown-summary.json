@@ -1,37 +1,21 @@
 {
-   "series" : [
-      {
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "rotation" : -90,
-            "align" : "right"
-         },
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               156
-            ],
-            [
-               "Perl 5",
-               692
-            ],
-            [
-               "Perl 6",
-               392
-            ]
-         ]
-      }
-   ],
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
       "title" : {
@@ -42,22 +26,38 @@
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+   "subtitle" : {
+      "text" : "Last updated at 2019-07-19 22:35:23 GMT"
+   },
+   "series" : [
+      {
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               157
+            ],
+            [
+               "Perl 5",
+               692
+            ],
+            [
+               "Perl 6",
+               392
+            ]
+         ],
+         "dataLabels" : {
+            "rotation" : -90,
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "enabled" : "true",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}"
          }
       }
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-07-19 15:44:10 GMT"
-   }
+   ]
 }
