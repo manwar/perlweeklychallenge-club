@@ -17,7 +17,7 @@ grammar URI {
 	token fragment { (<alnum>+)};
 }
 
-my $m=URI.parse(@*ARGS[0]);
+my $m=URI.parse(@*ARGS[0]//"jdbc://user:password@localhost:3306/pwc?profile=true#h1");
 die "Not a URI\n" unless $m;
 given $m {
 	put "Scheme: {.<scheme>}";
