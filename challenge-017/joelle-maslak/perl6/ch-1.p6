@@ -36,5 +36,5 @@ multi sub A(UInt:D $m,             UInt:D $n --> UInt:D) { A( $m-1, A($m, $n-1) 
 multi sub up-arrow(UInt:D $m, UInt:D $num-arrows, 0         --> UInt:D) { 1 }
 multi sub up-arrow(UInt:D $m, 1,                  UInt:D $n --> UInt:D) { $m ** $n }
 multi sub up-arrow(UInt:D $m, UInt:D $num-arrows, UInt:D $n --> UInt:D) {
-    up-arrow($m, $num-arrows-1, up-arrow($m, $num-arrows, $n-1));
+    return up-arrow($m, $num-arrows-1, up-arrow($m, $num-arrows, $n-1));
 }
