@@ -1,45 +1,43 @@
-Challenge 1: "Pythagoras Pie Puzzle, proposed by Jo Christian Oterhals.
+Challenge 1: "Create a script to demonstrate Ackermann function. The
+Ackermann function is defined as below, m and n are positive number:
 
-At a party a pie is to be shared by 100 guest. The first guest gets 1%
-of the pie, the second guest gets 2% of the remaining pie, the third
-gets 3% of the remaining pie, the fourth gets 4% and so on.
+      A(m, n) = n + 1                  if m = 0
+      A(m, n) = A(m - 1, 1)            if m > 0 and n = 0
+      A(m, n) = A(m - 1, A(m, n - 1))  if m > 0 and n > 0
 
-Write a script that figures out which guest gets the largest piece of pie.
+eg. A(1, 2) = A(0, A(1, 1))
+         = A(0, A(0, A(1, 0)))
+         = A(0, A(0, A(0, 1)))
+         = A(0, A(0, 2))
+         = A(0, 3)
+         = 4
 "
 
 My notes:
 
-Beautifully clearly described.  Sounds straightforward.
+Clearly described.  I seem to recall that the Ackermann function is
+tremendously inefficient to calculate recursively, but that memoization
+really helps.  So, before writing a line of code, I think "use Memoize"
+is going to help..
 
 
-Challenge 2: "Write a script to validate a given bitcoin address. Most
-Bitcoin addresses are 34 characters. They consist of random digits and
-uppercase and lowercase letters, with the exception that the uppercase
-letter O, uppercase letter I, lowercase letter l,
-and the number 0 are never used to prevent visual ambiguity. A
-bitcoin address encodes 25 bytes. The last four bytes are a checksum
-check. They are the first four bytes of a double SHA-256 digest of the
-previous 21 bytes. For more information, please refer wiki page. Here
-are some valid bitcoin addresses:
+Challenge 2: "Create a script to parse URL and print the components of
+URL. According to the Wiki page https://en.wikipedia.org/wiki/URL, the URL
+syntax is as below:
 
-1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
-3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy
+    scheme:[//[userinfo@]host[:port]]path[?query][#fragment]
 
-My notes:
+eg.  jdbc://user:password@localhost:3306/pwc?profile=true#h1
 
-After reading several wiki pages, I think this (badly explained) question
-means: decode type 1 or type 3 (not type bc1) Bitcoin addresses, which are
-a base58check encoding of a 25 byte sequence, which itself comprises a 21
-byte payload sequence followed by a 4-byte truncated sha256(sha256(payload)).
+      scheme:   jdbc
+      userinfo: user:password
+      host:     localhost
+      port:     3306
+      path:     /pwc
+      query:    profile=true
+      fragment: h1
 
-base58check itself is described here:
-   https://en.bitcoin.it/wiki/Base58Check_encoding
-
-However, there's some froody leading-zeroes shit, and the only really clear
-specification of the whole process is a reference decoder implementation:
-  http://lenschulwitz.com/b58/base58perl.txt
-which is written in Perl 5!  so if the only way to understand exactly what
-problem we're being asked to solve is to see a solution, in Perl 5, then
-this seems like a completely pointless question.  So I took "Len
-Schulwitz's" code above, and adapted it, which means that I didn't solve
-this problem, in any real sense, myself!
+My notes: sounds pretty trivial for regexes, if the lexical syntax of
+each component is defined clearly.  Ok, reading the above wiki page
+doesn't make it 100% clear, but let's hack it up, that's probably good
+enough for most cases.
