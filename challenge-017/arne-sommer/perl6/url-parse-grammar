@@ -1,0 +1,45 @@
+#! /usr/bin/env perl6
+
+grammar URL
+{
+  regex TOP       { <SchemeW> <Hostinfo>? <Path>? <QueryW>? <FragmentW>? }
+  regex SchemeW   { <Scheme> <SchemeS> }
+  regex SchemeS   { ':' }
+  regex Scheme    { <[a..z]><[a..z 0..9 + . : \-]>* }
+  regex Hostinfo  { '//' <UserinfoW>? <Host> <PortW>? }
+  regex UserinfoW { <Userinfo> <UserinfoS> }
+  regex Userinfo  { .*[\:.+]? }
+  regex UserinfoS { '@' }
+  regex Host      { <[\w \. \-]>* }
+  regex PortW     { <PortS> <Port> }
+  regex PortS     { ':' }
+  regex Port      { \d+ }
+  regex Path      { '/'? <[\w \d -] - [#?]>+ }
+  regex QueryW    { <QueryS> <Query> }
+  regex QueryS    { '?'  }
+  regex Query     { <[\w \d \- =]>* }
+  regex FragmentW { <FragmentS> <Fragment> }
+  regex FragmentS { '#' }
+  regex Fragment  { .+ }
+}
+  
+sub MAIN ($url, :$verbose)
+{
+  my $result = URL.parse($url);
+
+  if $result
+  {
+    say $result if $verbose;
+    say "scheme:   $/<SchemeW><Scheme>";
+    say "userinfo: $/<Hostinfo><UserinfoW><Userinfo>" if $/<Hostinfo><UserinfoW><Userinfo>;
+    say "host:     $/<Hostinfo><Host>" if $/<Hostinfo><Host>;
+    say "port:     $/<Hostinfo><PortW><Port>" if $/<Hostinfo><PortW><Port>;
+    say "path:     $/<Path>" if  $/<Path>;
+    say "query:    $/<QueryW><Query>" if $/<QueryW><Query>;
+    say "fragment: $/<FragmentW><Fragment>" if $/<FragmentW><Fragment>;
+  }
+  else
+  {
+    say "Invalid URL.";
+  }
+}

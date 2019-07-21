@@ -1,19 +1,38 @@
 {
-   "legend" : {
-      "enabled" : "false"
-   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "chart" : {
       "type" : "column"
    },
    "series" : [
       {
+         "dataLabels" : {
+            "enabled" : "true",
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "rotation" : -90,
+            "y" : 10,
+            "color" : "#FFFFFF"
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               161
+               162
             ],
             [
                "Perl 5",
@@ -21,43 +40,24 @@
             ],
             [
                "Perl 6",
-               407
+               409
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "y" : 10,
-            "enabled" : "true",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "rotation" : -90
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
    "subtitle" : {
-      "text" : "Last updated at 2019-07-21 19:30:19 GMT"
+      "text" : "Last updated at 2019-07-21 21:22:53 GMT"
    },
    "xAxis" : {
       "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       }
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
    }
 }
