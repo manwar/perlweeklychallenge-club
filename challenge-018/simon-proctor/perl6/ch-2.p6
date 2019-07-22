@@ -16,7 +16,7 @@ role SingleQueue {
     }
 }
 
-role OrderedQueue {
+role OrderedQueue does Iterator does Iterable {
 
     has SingleQueue %!queues;
 
@@ -50,19 +50,25 @@ role OrderedQueue {
         }
         return $value;
     }
+
+    method pull-one() {
+        self.pull-highest-priority-element // IterationEnd;
+    }
+
+    method iterator() {
+        return self;
+    }
 }
 
 #| Given a file in csv format "priority,item" add all the items to the queue
 #| then print them in the given order
 sub MAIN( $file ) {
-    my $queue = OrderedQueue.new();
+    my $queue := OrderedQueue.new();
 
     for $file.IO.lines -> $line {
         my ( $priority, $item ) = $line.split(",");
         $queue.insert-with-priority( $item, $priority );
     }
 
-    while ! $queue.is-empty {
-        $queue.pull-highest-priority-element().say;
-    }
+    .say for $queue;
 }
