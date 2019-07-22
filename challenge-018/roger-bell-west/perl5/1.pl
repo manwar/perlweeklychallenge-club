@@ -3,6 +3,8 @@
 use strict;
 use warnings;
 
+use List::Util qw(max);
+
 print map {"$_\n"} lcsubstr(@ARGV);
 
 sub lcsubstr {
@@ -17,7 +19,8 @@ sub lcsubstr {
     foreach my $a (@a) {
       map {$b{$_}=1} lcsubstr2($a,$c);
     }
-    @a=sort keys %b;
+    my $m=max(map {length($_)} keys %b);
+    @a=sort grep {length($_)==$m} keys %b;
   }
   return @a;
 }
