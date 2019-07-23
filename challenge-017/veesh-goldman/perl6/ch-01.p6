@@ -4,7 +4,7 @@
 
 sub arrow ( Int $base, Int $times, Int $arrows ) {
   return $base ** $times if $arrows == 1;
-  ($base xx $times).reduce: -> $x, $y { arrow($y, $x, $arrows - 1) }
+  ($base xx $times).reduce:  { arrow($^base, $^accumulator, $arrows - 1) }
 }
 
 sub A ( $m, $n ) {
