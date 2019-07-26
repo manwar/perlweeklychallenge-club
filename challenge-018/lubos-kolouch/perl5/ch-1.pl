@@ -27,7 +27,6 @@ use feature qw{ say };
 use Data::Dumper;
 
 my %all_strings;
-my $max_count = 0;
 
 # ignore substrings 
 my $seen_first;
@@ -55,10 +54,7 @@ sub insert_to_all_strings {
             my $current_count = $all_strings{$sub_string} // 0;
             $current_count++;
 
-            # We have seen the substring one more time
-            $max_count = $current_count if $current_count > $max_count;
-
-            # Let us remember it
+            # Let us store the count
             $all_strings{ length($sub_string) }{$sub_string}++;
         }
 
