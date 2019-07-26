@@ -1,47 +1,25 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Andrezgz",
+            "name" : "Andrezgz",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "name" : "Andrezgz",
-            "id" : "Andrezgz"
+            ]
          },
          {
+            "name" : "Duane Powell",
             "id" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "name" : "Duane Powell"
+            ]
          },
          {
             "data" : [
@@ -58,7 +36,16 @@
             "id" : "E. Choroba"
          },
          {
-            "name" : "Laurent Rosenfeld",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "id" : "Kevin Colyer",
+            "name" : "Kevin Colyer"
+         },
+         {
             "data" : [
                [
                   "Perl 5",
@@ -73,36 +60,37 @@
                   2
                ]
             ],
+            "name" : "Laurent Rosenfeld",
             "id" : "Laurent Rosenfeld"
          },
          {
+            "id" : "Lubos Kolouch",
+            "name" : "Lubos Kolouch",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "name" : "Lubos Kolouch",
-            "id" : "Lubos Kolouch"
+            ]
          },
          {
-            "name" : "Ozzy",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Ozzy"
+            "id" : "Ozzy",
+            "name" : "Ozzy"
          },
          {
-            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
+            "name" : "Roger Bell West",
             "id" : "Roger Bell West"
          },
          {
@@ -121,31 +109,47 @@
          },
          {
             "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ],
-            "name" : "Simon Proctor"
+            ]
          },
          {
-            "id" : "Steven Wilson",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "name" : "Steven Wilson"
+            "name" : "Steven Wilson",
+            "id" : "Steven Wilson"
          }
       ]
    },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2019-07-26 18:44:28 GMT"
+      "text" : "[Champions: 11] Last updated at 2019-07-26 21:37:31 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 018",
+         "colorByPoint" : 1,
          "data" : [
             {
                "name" : "Andrezgz",
@@ -154,13 +158,18 @@
             },
             {
                "drilldown" : "Duane Powell",
-               "name" : "Duane Powell",
-               "y" : 2
+               "y" : 2,
+               "name" : "Duane Powell"
             },
             {
+               "name" : "E. Choroba",
                "drilldown" : "E. Choroba",
-               "y" : 3,
-               "name" : "E. Choroba"
+               "y" : 3
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Kevin Colyer",
+               "name" : "Kevin Colyer"
             },
             {
                "drilldown" : "Laurent Rosenfeld",
@@ -173,42 +182,48 @@
                "drilldown" : "Lubos Kolouch"
             },
             {
-               "name" : "Ozzy",
+               "drilldown" : "Ozzy",
                "y" : 1,
-               "drilldown" : "Ozzy"
+               "name" : "Ozzy"
             },
             {
-               "drilldown" : "Roger Bell West",
                "y" : 2,
+               "drilldown" : "Roger Bell West",
                "name" : "Roger Bell West"
             },
             {
                "name" : "Ruben Westerberg",
-               "y" : 4,
-               "drilldown" : "Ruben Westerberg"
+               "drilldown" : "Ruben Westerberg",
+               "y" : 4
             },
             {
-               "y" : 2,
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Simon Proctor",
+               "y" : 2
             },
             {
                "drilldown" : "Steven Wilson",
                "y" : 1,
                "name" : "Steven Wilson"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 018",
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 018"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    }
 }
