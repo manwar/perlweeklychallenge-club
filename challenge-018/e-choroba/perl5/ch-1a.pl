@@ -18,11 +18,11 @@ use feature qw{ say };
 
     sub new {
         my ($class) = @_;
-        bless my $self = {position => -1,
-                          text => "",
-                          active_edge => 0,
+        bless my $self = {position      => -1,
+                          text          => "",
+                          active_edge   => 0,
                           active_length => 0,
-                          current_node => -1,
+                          current_node  => -1,
         }, $class;
         $self->{root} = $self->new_node(-1, -1);
         $self->{active_node} = $self->{root};
@@ -104,7 +104,8 @@ use feature qw{ say };
             $self->{active_edge} = $self->{position}
                 unless $self->{active_length};
             if (! exists
-                $self->{nodes}[ $self->{active_node} ]{next}{ $self->active_edge }
+                $self->{nodes}[ $self->{active_node} ]
+                    {next}{ $self->active_edge }
             ) {
                 $self->{nodes}[ $self->{active_node} ]
                     {next}{ $self->active_edge }
@@ -115,12 +116,13 @@ use feature qw{ say };
                     {next}{ $self->active_edge };
                 next if $self->walk_down($next);  # Observation 2.
 
-                # Observation 2.
+                # Observation 1.
                 if ($char eq substr $self->{text},
                         $self->{nodes}[$next]{start} + $self->{active_length}, 1
                 ) {
                     ++$self->{active_length};
-                    $self->_add_suffix_link($self->{active_node});  # Observation 3.
+                    # Observation 3.
+                    $self->_add_suffix_link($self->{active_node});
                     last
                 }
                 my $split = $self->new_node($self->{nodes}[$next]{start},
