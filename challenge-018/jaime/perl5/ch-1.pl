@@ -6,11 +6,10 @@
 
 my $head = shift;
 for my $n (reverse 1..(length $head)) {
-    for my $i (0..((length $head)-$n)) {
+    SUBSTRING: for my $i (0..((length $head)-$n)) {
 	my $s = substr($head,$i,$n);
-	if (@ARGV == grep(/$s/,@ARGV)) {
-	    print "$s\n";
-	    exit;
-	}
+	next SUBSTRING unless @ARGV == grep(/$s/,@ARGV);
+	print "$s\n";
+	exit;
     }
 }
