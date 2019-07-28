@@ -1,7 +1,6 @@
 use strict;
 use warnings; 
 package SuffixArray{
-use Data::Dump q/pp/; 
     use boolean;  
     use Class::Struct;
     struct(
