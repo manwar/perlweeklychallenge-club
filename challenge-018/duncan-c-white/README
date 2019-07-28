@@ -1,43 +1,33 @@
-Challenge 1: "Create a script to demonstrate Ackermann function. The
-Ackermann function is defined as below, m and n are positive number:
-
-      A(m, n) = n + 1                  if m = 0
-      A(m, n) = A(m - 1, 1)            if m > 0 and n = 0
-      A(m, n) = A(m - 1, A(m, n - 1))  if m > 0 and n > 0
-
-eg. A(1, 2) = A(0, A(1, 1))
-         = A(0, A(0, A(1, 0)))
-         = A(0, A(0, A(0, 1)))
-         = A(0, A(0, 2))
-         = A(0, 3)
-         = 4
+Challenge 1: "Write a script that takes 2 or more strings as command
+line parameters and print the longest common substring. For example,
+the longest common substring of the strings "ABABC", "ABCA" 
+and "BCBA" is string "BC" of length 3.
 "
 
 My notes:
 
-Clearly described.  I seem to recall that the Ackermann function is
-tremendously inefficient to calculate recursively, but that memoization
-really helps.  So, before writing a line of code, I think "use Memoize"
-is going to help..
+Very clearly described.  No obvious clever way of solving this, but the
+basic method is simple.
 
 
-Challenge 2: "Create a script to parse URL and print the components of
-URL. According to the Wiki page https://en.wikipedia.org/wiki/URL, the URL
-syntax is as below:
+Challenge 2: "Write a script to implement Priority Queue. It is like
+regular queue except each element has a priority associated with it. In a
+priority queue, an element with high priority is served before an element
+with low priority. It should serve the following operations:
 
-    scheme:[//[userinfo@]host[:port]]path[?query][#fragment]
+1) is_empty: check whether the queue has no elements.
 
-eg.  jdbc://user:password@localhost:3306/pwc?profile=true#h1
+2) insert_with_priority: add an element to the queue with an associated
+   priority.
 
-      scheme:   jdbc
-      userinfo: user:password
-      host:     localhost
-      port:     3306
-      path:     /pwc
-      query:    profile=true
-      fragment: h1
+3) pull_highest_priority_element: remove the element from the queue that
+   has the highest priority, and return it. If two elements have the same
+   priority, then return element added first.
 
-My notes: sounds pretty trivial for regexes, if the lexical syntax of
-each component is defined clearly.  Ok, reading the above wiki page
-doesn't make it 100% clear, but let's hack it up, that's probably good
-enough for most cases.
+"
+
+My notes: At last, a nicely specified problem to implement a nice data
+type.  meat and drink to me!  I've split out the Priority Queue
+implementation into the module PQ.pm, minimally-OO in order to
+get free magic PQ printing via interpolation and the magic of
+stringification.
