@@ -35,7 +35,7 @@ use MyPriorityQueue;
 
 sub MAIN()
 {
-	say '';
+    say '';
 
     # (1) Larger number = higher priority
 
@@ -53,7 +53,7 @@ sub MAIN()
        $pq.insert_with_priority( 1, 'dog.');
        $pq.insert_with_priority( 7, 'fox');
 
-	extract-and-display($pq);
+    extract-and-display($pq);
 
     # (2) Lower number = higher priority
 
@@ -71,14 +71,14 @@ sub MAIN()
        $pq.insert_with_priority( 4, 'do');
        $pq.insert_with_priority(-2, "There's");
 
-	extract-and-display($pq);
+    extract-and-display($pq);
 }
 
 sub extract-and-display(MyPriorityQueue:D $pq)
 {
     my @elements;
        @elements.push: $pq.pull_highest_priority_element until $pq.is_empty;
-			
+            
     say join(' ', @elements);
 }
 

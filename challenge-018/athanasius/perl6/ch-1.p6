@@ -26,8 +26,8 @@ details.
 sub MAIN
 (
     Str:D $string1,
-	Str:D $string2,
-		 *@strings3-n
+    Str:D $string2,
+         *@strings3-n
 )
 {
     my @strings = $string1, $string2;

@@ -30,40 +30,40 @@ informations. It should serve the following operations:
 
 class MyPriorityQueue
 {
-	use Heap;
+    use Heap;
 
-	has Heap $!heap;
+    has Heap $!heap;
 
-	submethod BUILD(Bool :$reverse = False)
-	{
-		$!heap = $reverse ?? Heap[-*<order>].new
-						  !! Heap[ *<order>].new;
-	}
+    submethod BUILD(Bool :$reverse = False)
+    {
+        $!heap = $reverse ?? Heap[-*<order>].new
+                          !! Heap[ *<order>].new;
+    }
 
-	method is_empty(--> Bool)
-	{
-		return !?$!heap;
-	}
+    method is_empty(--> Bool)
+    {
+        return !?$!heap;
+    }
 
-	method insert_with_priority(Int:D $priority, Any:D $element)
-	{
-		$!heap.push: { order => $priority,
-					   datum => $element, };
-	}
+    method insert_with_priority(Int:D $priority, Any:D $element)
+    {
+        $!heap.push: { order => $priority,
+                       datum => $element, };
+    }
 
-	method pull_highest_priority_element(--> Any)
-	{
-		my Any $element;
+    method pull_highest_priority_element(--> Any)
+    {
+        my Any $element;
 
-		unless self.is_empty()
-		{
-			my %top = $!heap.pop;
+        unless self.is_empty()
+        {
+            my %top = $!heap.pop;
 
-			$element = %top< datum >;
-		}
+            $element = %top< datum >;
+        }
 
-		return $element;
-	}
+        return $element;
+    }
 }
 
 ################################################################################
