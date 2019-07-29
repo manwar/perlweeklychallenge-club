@@ -2,8 +2,6 @@
 
 use v6;
 
-
-
 #| Read from STDIN and wrap to the given number of characters
 multi sub MAIN (
     UInt() $width = 80, #= Width to wrap to (default 80 characters)
