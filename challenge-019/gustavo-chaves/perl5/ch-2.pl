@@ -28,5 +28,6 @@ while (<>) {
             $line = $word;
         }
     }
-    say "$line\n" if length($line);
+    say $line if length($line);
+    say "\n";
 }
