@@ -1,34 +1,27 @@
 {
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
-   },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "rotation" : -90,
-            "enabled" : "true"
-         },
          "data" : [
             [
                "Blog",
@@ -36,28 +29,35 @@
             ],
             [
                "Perl 5",
-               773
+               775
             ],
             [
                "Perl 6",
                445
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "align" : "right",
+            "y" : 10,
+            "enabled" : "true",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}"
+         },
+         "name" : "Contributions"
       }
    ],
    "subtitle" : {
-      "text" : "Last updated at 2019-07-31 12:49:22 GMT"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
+      "text" : "Last updated at 2019-07-31 12:52:51 GMT"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
+      }
    }
 }
