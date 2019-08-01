@@ -5,9 +5,8 @@
 
 for my $year (1900..2019) {
     for my $month (1, 3, 5, 7, 8, 10, 12) {
+	my $cal = `cal -h -m $month $year`;
 	# print months with 31 days that start on a Friday.
-	if `cal -h -m $month $year | tail -n 6` =~ /^\h+1\h+2\h*\v/; {
-	    print `cal -h -m $month $year`;
-	}
+	print $cal if $cal =~ /^(\V+\v+){2}\h+1\h+2\h*\v/;
     }
 }
