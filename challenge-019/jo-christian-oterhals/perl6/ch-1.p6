@@ -1,18 +1,10 @@
 #!/usr/bin/env perl6
 
-my $format-it = sub ($self) {
-  sprintf "%04d month %02d", .year, .month given $self;
-}
+# Perl Weekly Challenge 019
+#
+# Answer submitted by Jo Christian Oterhals
+#
+# Task 1
+# Write a script to display months from the year 1900 to 2019 where you find 5 weekends i.e. 5 Friday, 5 Saturday and 5 Sunday.
 
-sub MAIN(Int :$from-year = 1900, Int :$to-year where * > $from-year = 2019, Int :$weekend-length where * ~~ 1..3 = 3) {
-  my $date-loop = Date.new($from-year, 1, 1, formatter => $format-it);
-  while ($date-loop.year <= $to-year) {
-    my $date = $date-loop.later(day => $date-loop.days-in-month);
-    $date = $date.truncated-to('week').pred if $date.day-of-week != 7;
-    my @weekend = do for 0..^$weekend-length -> $w {
-      $date.earlier(day => $w).weekday-of-month;
-    };
-    say $date-loop if ([+] @weekend) / @weekend == 5;
-    $date-loop = $date-loop.later(:1month);
-  }
-}
+say join "\n", grep *.day-of-week == 5, map { Date.new: |$_, 1 }, do 1900..2019 X 1,3,5,7,8,10,12;
