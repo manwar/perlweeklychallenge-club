@@ -1,42 +1,38 @@
-# Challenge #1
+# Task #1
 
-Write a script that takes 2 or more strings as command line parameters
-and print the longest common substring. For example, the longest
-common substring of the strings “ABABC”, “BABCA” and “ABCBA” is string
-“ABC” of length 3. Other common substrings are “A”, “AB”, “B”, “BA”,
-“BC” and “C”.
+Write a script to display months from the year 1900 to 2019 where you
+find 5 weekends i.e. 5 Friday, 5 Saturday and 5 Sunday.
 
-## Solution
+# Task #2
 
-Substrings of the first argument are iterated by decreasing length.
+Write a script that can wrap the given paragraph at a specified column
+using the greedy algorithm.
 
-The script finds the `$substring` that is common within the list of
-parameters `@ARGV == grep(/$substring/,@ARGV)`.
+A simple way to do word wrapping is to use a greedy algorithm that
+puts as many words on a line as possible, then moving on to the next
+line to do the same until there are no more words left to place. This
+method is used by many modern word processors, such as OpenOffice.org
+Writer and Microsoft Word[citation needed]. This algorithm always uses
+the minimum possible number of lines but may lead to lines of widely
+varying lengths. The following pseudocode implements this algorithm:
 
-# Challenge #2
+```
+SpaceLeft := LineWidth
+for each Word in Text
+    if (Width(Word) + SpaceWidth) > SpaceLeft
+        insert line break before Word in Text
+        SpaceLeft := LineWidth - Width(Word)
+    else
+        SpaceLeft := SpaceLeft - (Width(Word) + SpaceWidth)
+```
 
-Write a script to implement Priority Queue. It is like regular queue
-except each element has a priority associated with it. In a priority
-queue, an element with high priority is served before an element with
-low priority. Please check this wiki page for more informations. It
-should serve the following operations:
+Where LineWidth is the width of a line, SpaceLeft is the remaining
+width of space on the line to fill, SpaceWidth is the width of a
+single space character, Text is the input text to iterate over and
+Word is a word in this text.
 
-1. `is_empty`: check whether the queue has no elements.
+# Task #3 (Optional)
 
-2. `insert_with_priority`: add an element to the queue with an
-associated priority.
-
-3. `pull_highest_priority_element`: remove the element from the queue
-that has the highest priority, and return it. If two elements have the
-same priority, then return element added first.
-
-## Solution
-
-The solution is a hashmap of priority and anonymous arrays.
-
-The anonymous array `[]` is accessed with a `$priority`.
-`$queue` is the hashmap. `$queue->{$priority}` is an anonymous array.
-`@{$queue->{$priority}}` wraps access to the prioritized queues as arrays.
-
-`pull_highest_priority_element()` parses the `$queue` to find the
-nonempty array with the largest priority, then returns the first entry.
+Write a script to use NYT Books API. You can get API key here. For
+more information about API, please visit page. The API task is
+optional but we would love to see your solution.
