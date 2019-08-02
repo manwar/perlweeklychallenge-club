@@ -1,8 +1,7 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "xAxis" : {
       "categories" : [
@@ -38,16 +37,28 @@
          "Shaun Pearce"
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
    "chart" : {
       "type" : "column"
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-08-02 21:50:36 GMT"
+   },
    "series" : [
       {
-         "name" : "Perl 5",
          "data" : [
             0,
             0,
@@ -79,7 +90,8 @@
             6,
             2,
             0
-         ]
+         ],
+         "name" : "Perl 5"
       },
       {
          "name" : "Perl 6",
@@ -95,7 +107,7 @@
             0,
             8,
             0,
-            10,
+            12,
             4,
             0,
             18,
@@ -117,7 +129,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -149,19 +160,8 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-08-02 20:26:17 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   }
+   ]
 }
