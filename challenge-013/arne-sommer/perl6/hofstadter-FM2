@@ -1,0 +1,21 @@
+#! /usr/bin/env perl6
+
+unit sub MAIN ($limit = 10);
+
+multi sub F (0) { 1; }
+
+multi sub F (Int \n where n > 0)
+{
+  n − M( F(n − 1) ); 
+}
+
+multi sub M (0) { 0; }
+
+multi sub M (Int \n where n > 0)
+{
+  n − F( M(n − 1) ); 
+}
+
+say "  ", (    $_.fmt("%2d") for ^$limit ).join(" ");
+say "F:", ( F($_).fmt("%2d") for ^$limit ).join(" ");
+say "M:", ( M($_).fmt("%2d") for ^$limit ).join(" ");

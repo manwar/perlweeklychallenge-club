@@ -1,0 +1,26 @@
+This assumes there is a config file ~/.mailgun which contains TWO lines:
+  api-key (without the "api" username)
+  domain  (something like sandbox1111111111111111111111111111111.mailgun.org)
+
+MODULES REQUIRED:
+    Cro::HTTP::Client
+
+To specify multiple email addresses using command line version of script, use
+";" between addresses.
+
+See the source code for how to use the send-email() API implementation.
+
+For command line that uses that API implementation, pass the following:
+
+  --domain=<domain>  (configured in Mailgun)
+  --from=<from email address>
+  --subject="<subject of email>"
+  --body="<body of email>"
+
+Example:
+
+perl6 ch-3.p6 --from=jmaslak@antelope.net --to=jmaslak@antelope.net \
+    --subject=Test --body-text="Test Message"
+
+No output means things went well.  :)
+

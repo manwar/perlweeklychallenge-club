@@ -1,0 +1,214 @@
+Rules:
+------
+0:	$start -> url $end
+1:	url -> scheme colondoubleslash userpassword host port path query fragment
+2:	url -> scheme colondoubleslash host path query fragment
+3:	url -> scheme colondoubleslash host path fragment
+4:	url -> scheme colondoubleslash host path
+5:	url -> scheme colondoubleslash host
+6:	colondoubleslash -> '://'
+7:	scheme -> SCHEME
+8:	userpassword -> USERPASSWORD
+9:	host -> HOST
+10:	port -> PORT
+11:	path -> PATH
+12:	query -> QUERY
+13:	fragment -> FRAGMENT
+
+States:
+-------
+State 0:
+
+	$start -> . url $end	(Rule 0)
+
+	SCHEME	shift, and go to state 3
+
+	scheme	go to state 1
+	url	go to state 2
+
+State 1:
+
+	url -> scheme . colondoubleslash userpassword host port path query fragment	(Rule 1)
+	url -> scheme . colondoubleslash host path query fragment	(Rule 2)
+	url -> scheme . colondoubleslash host path fragment	(Rule 3)
+	url -> scheme . colondoubleslash host path	(Rule 4)
+	url -> scheme . colondoubleslash host	(Rule 5)
+
+	'://'	shift, and go to state 4
+
+	colondoubleslash	go to state 5
+
+State 2:
+
+	$start -> url . $end	(Rule 0)
+
+	$end	shift, and go to state 6
+
+State 3:
+
+	scheme -> SCHEME .	(Rule 7)
+
+	$default	reduce using rule 7 (scheme)
+
+State 4:
+
+	colondoubleslash -> '://' .	(Rule 6)
+
+	$default	reduce using rule 6 (colondoubleslash)
+
+State 5:
+
+	url -> scheme colondoubleslash . userpassword host port path query fragment	(Rule 1)
+	url -> scheme colondoubleslash . host path query fragment	(Rule 2)
+	url -> scheme colondoubleslash . host path fragment	(Rule 3)
+	url -> scheme colondoubleslash . host path	(Rule 4)
+	url -> scheme colondoubleslash . host	(Rule 5)
+
+	HOST	shift, and go to state 8
+	USERPASSWORD	shift, and go to state 9
+
+	host	go to state 7
+	userpassword	go to state 10
+
+State 6:
+
+	$start -> url $end .	(Rule 0)
+
+	$default	accept
+
+State 7:
+
+	url -> scheme colondoubleslash host . path query fragment	(Rule 2)
+	url -> scheme colondoubleslash host . path fragment	(Rule 3)
+	url -> scheme colondoubleslash host . path	(Rule 4)
+	url -> scheme colondoubleslash host .	(Rule 5)
+
+	PATH	shift, and go to state 11
+
+	$default	reduce using rule 5 (url)
+
+	path	go to state 12
+
+State 8:
+
+	host -> HOST .	(Rule 9)
+
+	$default	reduce using rule 9 (host)
+
+State 9:
+
+	userpassword -> USERPASSWORD .	(Rule 8)
+
+	$default	reduce using rule 8 (userpassword)
+
+State 10:
+
+	url -> scheme colondoubleslash userpassword . host port path query fragment	(Rule 1)
+
+	HOST	shift, and go to state 8
+
+	host	go to state 13
+
+State 11:
+
+	path -> PATH .	(Rule 11)
+
+	$default	reduce using rule 11 (path)
+
+State 12:
+
+	url -> scheme colondoubleslash host path . query fragment	(Rule 2)
+	url -> scheme colondoubleslash host path . fragment	(Rule 3)
+	url -> scheme colondoubleslash host path .	(Rule 4)
+
+	FRAGMENT	shift, and go to state 14
+	QUERY	shift, and go to state 15
+
+	$default	reduce using rule 4 (url)
+
+	fragment	go to state 16
+	query	go to state 17
+
+State 13:
+
+	url -> scheme colondoubleslash userpassword host . port path query fragment	(Rule 1)
+
+	PORT	shift, and go to state 18
+
+	port	go to state 19
+
+State 14:
+
+	fragment -> FRAGMENT .	(Rule 13)
+
+	$default	reduce using rule 13 (fragment)
+
+State 15:
+
+	query -> QUERY .	(Rule 12)
+
+	$default	reduce using rule 12 (query)
+
+State 16:
+
+	url -> scheme colondoubleslash host path fragment .	(Rule 3)
+
+	$default	reduce using rule 3 (url)
+
+State 17:
+
+	url -> scheme colondoubleslash host path query . fragment	(Rule 2)
+
+	FRAGMENT	shift, and go to state 14
+
+	fragment	go to state 20
+
+State 18:
+
+	port -> PORT .	(Rule 10)
+
+	$default	reduce using rule 10 (port)
+
+State 19:
+
+	url -> scheme colondoubleslash userpassword host port . path query fragment	(Rule 1)
+
+	PATH	shift, and go to state 11
+
+	path	go to state 21
+
+State 20:
+
+	url -> scheme colondoubleslash host path query fragment .	(Rule 2)
+
+	$default	reduce using rule 2 (url)
+
+State 21:
+
+	url -> scheme colondoubleslash userpassword host port path . query fragment	(Rule 1)
+
+	QUERY	shift, and go to state 15
+
+	query	go to state 22
+
+State 22:
+
+	url -> scheme colondoubleslash userpassword host port path query . fragment	(Rule 1)
+
+	FRAGMENT	shift, and go to state 14
+
+	fragment	go to state 23
+
+State 23:
+
+	url -> scheme colondoubleslash userpassword host port path query fragment .	(Rule 1)
+
+	$default	reduce using rule 1 (url)
+
+
+Summary:
+--------
+Number of rules         : 14
+Number of terminals     : 9
+Number of non-terminals : 10
+Number of states        : 24

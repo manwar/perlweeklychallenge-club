@@ -1,0 +1,43 @@
+Challenge 1: "Create a script to demonstrate Ackermann function. The
+Ackermann function is defined as below, m and n are positive number:
+
+      A(m, n) = n + 1                  if m = 0
+      A(m, n) = A(m - 1, 1)            if m > 0 and n = 0
+      A(m, n) = A(m - 1, A(m, n - 1))  if m > 0 and n > 0
+
+eg. A(1, 2) = A(0, A(1, 1))
+         = A(0, A(0, A(1, 0)))
+         = A(0, A(0, A(0, 1)))
+         = A(0, A(0, 2))
+         = A(0, 3)
+         = 4
+"
+
+My notes:
+
+Clearly described.  I seem to recall that the Ackermann function is
+tremendously inefficient to calculate recursively, but that memoization
+really helps.  So, before writing a line of code, I think "use Memoize"
+is going to help..
+
+
+Challenge 2: "Create a script to parse URL and print the components of
+URL. According to the Wiki page https://en.wikipedia.org/wiki/URL, the URL
+syntax is as below:
+
+    scheme:[//[userinfo@]host[:port]]path[?query][#fragment]
+
+eg.  jdbc://user:password@localhost:3306/pwc?profile=true#h1
+
+      scheme:   jdbc
+      userinfo: user:password
+      host:     localhost
+      port:     3306
+      path:     /pwc
+      query:    profile=true
+      fragment: h1
+
+My notes: sounds pretty trivial for regexes, if the lexical syntax of
+each component is defined clearly.  Ok, reading the above wiki page
+doesn't make it 100% clear, but let's hack it up, that's probably good
+enough for most cases.

@@ -1,0 +1,35 @@
+Challenge 1: "Write a program which prints out all anagrams for a given word."
+
+Note: I assume that we'll need a wordlist to judge whether a rearrangement
+of letters is actually a word, /usr/share/dict/words is the obvious one
+to use.  The simplest way of solving this problem is to use alphabetically
+sorted SIGNATURES of words - simply the bag of letters in the word sorted.
+
+So "hello"'s signature is "ehllo".  The important thing for anagram purposes
+is that "ehllo" is the signature not only of "hello", but of any other anagram
+of hello too.
+
+So: calculate the signature of the given word, then for every word in the
+dictionary (of the right length if we want to save time), calculate that
+dictionary word's signature - then print out the dictionary word if it's
+signature is the sameas the given word's signature.
+
+Note that ch-1.pl takes two command line arguments: the first is the
+word, the second is the optional filename of the wordlist to use,
+if it's not given then /usr/share/dict/words is used by default.
+
+
+Challenge 2: "Write a program to find the sequence of characters that has
+the most anagrams."
+
+That's rather badly worded, but I choose to interprete it as "find which
+word in a wordlist has most anagrams also in that wordlist".
+
+Note that ch-2.pl takes a single optional command line argument: 
+the filename of the wordlist to use, if it's not given then
+/usr/share/dict/words is used by default.
+
+So: Calculate the signature of every word in the dictionary, building %anag:
+a mapping from signature -> list of words with that signature, and keep track
+of the longest word list of any signature (i.e. the biggest anagram set so far)
+as we go.  Print out the signature with the longest word list at the end.

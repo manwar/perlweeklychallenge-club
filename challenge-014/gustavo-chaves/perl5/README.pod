@@ -1,0 +1,103 @@
+=pod
+
+=encoding utf8
+
+=head1 #1 Van Eck's sequence
+
+=over 4
+
+Write a script to generate Van Eck’s sequence starts with 0. For more
+information, please check out wikipedia
+L<page|https://en.wikipedia.org/wiki/Van_Eck%27s_sequence>. This challenge was
+proposed by team member Andrezgz.
+
+=back
+
+I wrote two solutions for this challenge: one recursive and one iterative.
+
+The recursive solution is a little easier to grasp, I think, because it's a more
+direct expression of the sequence's definition. But even using memoization it's
+33 times slower than the iterative version.
+
+  $ ./ch-1-recursive.pl 10
+  0
+  0
+  1
+  0
+  2
+  0
+  2
+  2
+  1
+  6
+
+  $ ./ch-1-iterative.pl 10
+  0
+  0
+  1
+  0
+  2
+  0
+  2
+  2
+  1
+  6
+
+=head1 #2 Postal Codes
+
+=over 4
+
+Using only the official postal (2-letter) abbreviations for the 50 U.S. states,
+write a script to find the longest English word you can spell?  Here is the list
+of U.S. states abbreviations as per wikipedia
+L<page|https://en.wikipedia.org/wiki/List_of_U.S._state_abbreviations>. This
+challenge was proposed by team member Neil Bowers.
+
+=back
+
+This was an easy one. More so because I could use te L<Locale:US> module to grok
+the US Postal Codes.
+
+But I was dumbfounded when I ran it and saw the result:
+
+  $ ./ch-2-one.pl
+  Campinas
+
+Campinas is the name of the city where I live, in Brazil. But I don't have a
+clue what is it doing in an English dictionary! :-)
+
+After having sent my solutions it downed on me that there could be more than one
+"largest" word in the dictionary. So, I implemented a second version which
+prints all of them:
+
+  $ ./ch-2-all.pl
+  Campinas
+  Concorde
+  Ganymede
+  Mandarin
+  Victoria
+  calamine
+  complain
+  mainland
+  malarial
+  mandarin
+  mascaras
+  memorial
+  moorland
+
+=head1 #extra US Traversal
+
+Neil Bowers blogged about this challenge saying that the second problem wasn't
+exactly the one he proposed. He explained what he actually had in mind in a
+L<blog post|http://neilb.org/2019/06/24/additional-challenge-14.html>.
+
+Basically, he wants to know what is the largest English word that can be made
+using only the initials if US states, beginning in any of them and following
+only adjacent states. He offered a JSON data structure in a GitHub Gist
+containing the ajdacency and initials of the states.
+
+Using the Linux dictionary in F</usr/share/dict/words> my script tells me that
+the word is "fatal":
+
+  $ ./ch-extra.pl
+  fatal (Florida => Alabama => Tennessee => Arkansas => Louisiana)

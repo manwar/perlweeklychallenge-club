@@ -1,0 +1,40 @@
+Challenge 1: "The numbers formed by adding one to the products of the
+smallest primes are called the Euclid Numbers. Write a script that finds
+the smallest Euclid Number that is not prime."
+
+My notes:
+
+From the wiki:
+
+primes are 2, 3, 5, 7, 11, 13..
+products are 2, 6, 30, 210, 2310, 30030...
+and Euclid numbers are 3, 7, 31, 211, 2301, 30031...
+
+btw, the Wiki page gives the answer:
+	E(6)=30031 is first composite Euclid number (59x509)
+
+Euclid numbers will grow like factorials, being products, will we need
+to use bigint?  30031 being the answer suggests not:-).  I already have a
+"mkprimes.c" program to generate first N primes, so let's use that, hence
+our Perl code will simply use an of primes (rather than generating the primes
+ourselves).  Just need isprime(n) type function checking i=2..sqrt(n).  Simple!
+
+
+Challenge 2: "Write a script that finds the common directory path,
+given a collection of paths and directory separator. For example, if
+the following paths are supplied.
+
+    /a/b/c/d
+    /a/b/cd
+    /a/b/cc
+    /a/b/c/d/e
+
+and the path separator is /. Your script should return /a/b as common
+directory path."
+
+My notes:
+
+The obvious approach is: split each path on pathsep into an array of segments,
+eg. /a/b/c/d == (a,b,c,d) note no '' before first element a
+then compare do all paths have "a" in their segment 0? if so, prefix += "/a"
+etc.  make sure we return "/" if the initial segments are not all identical.

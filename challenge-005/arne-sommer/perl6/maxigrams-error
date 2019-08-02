@@ -1,0 +1,38 @@
+#! /usr/bin/env perl6
+
+unit sub MAIN (Str :$dictionary where $dictionary.IO.r = "dict-UK.txt");
+
+my $dict = get-dictionary($dictionary);
+
+my %count;
+
+for $dict.keys.sort( { $^b.chars <=>  $^a.chars } ) -> $word
+{
+  next if $word.chars > 20;
+  
+  last if %count.values.max > $word.chars;
+  
+  %count{$word} = count-anagrams($word);
+}
+
+for %count.keys.sort( { %count{$^b} <=> %count{$^a} } )
+{
+  say "$_ : ", %count{$_};
+}
+
+
+sub get-dictionary ($file where $file.IO.r)
+{
+  return $file.IO.lines.grep(* !~~ /\W/)>>.lc.Set;
+}
+
+sub count-anagrams ($word)
+{
+  my $count = 0;
+  
+  $count++ if $dict{$_} for $word.comb.permutations>>.join.unique;
+
+  say "$word: $count";
+  return $count;
+}
+
