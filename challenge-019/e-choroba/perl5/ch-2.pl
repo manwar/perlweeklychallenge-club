@@ -11,9 +11,7 @@ sub wrap_paragraph {
         if (length $paragraph <= $width) {
             $pos = length $paragraph;
         } else {
-            $pos = $width;
-            --$pos until ' ' eq substr $paragraph, $pos, 1
-                   or $pos < 0;
+            $pos = rindex $paragraph, ' ', $width;
             $pos = $width if $pos < 0;
         }
         $out .= substr $paragraph, 0, $pos, "";
