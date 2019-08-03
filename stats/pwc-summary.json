@@ -1,4 +1,8 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
    "xAxis" : {
       "categories" : [
          "Aaron Sherman",
@@ -108,18 +112,14 @@
          "Yozen Hernandez"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "chart" : {
+      "type" : "column"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
    },
    "series" : [
       {
-         "name" : "Perl 5",
          "data" : [
             0,
             2,
@@ -226,9 +226,11 @@
             1,
             1,
             21
-         ]
+         ],
+         "name" : "Perl 5"
       },
       {
+         "name" : "Perl 6",
          "data" : [
             6,
             0,
@@ -314,7 +316,7 @@
             3,
             0,
             6,
-            0,
+            2,
             35,
             3,
             0,
@@ -335,11 +337,9 @@
             0,
             1,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -446,14 +446,12 @@
             0,
             0,
             14
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
-   },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 105] Last updated at 2019-08-03 12:11:08 GMT"
    },
    "yAxis" : {
       "min" : 0,
@@ -461,7 +459,9 @@
          "text" : ""
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 105] Last updated at 2019-08-03 08:27:44 GMT"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
