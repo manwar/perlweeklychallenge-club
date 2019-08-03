@@ -9,7 +9,7 @@ class Data::PriorityQueue {
 
     has Element @!queue = ();
 
-    method clear {
+    method clear() {
         @!queue = ();
     }
 
