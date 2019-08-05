@@ -1,51 +1,55 @@
 {
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 1,
-               "drilldown" : "Pete Houston",
-               "name" : "Pete Houston"
-            },
-            {
-               "name" : "Roger Bell West",
-               "y" : 4,
-               "drilldown" : "Roger Bell West"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 020"
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2019-08-05 14:37:53 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 020"
    },
-   "legend" : {
-      "enabled" : 0
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2019-08-05 18:00:12 GMT"
+   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Dave Jacoby"
+         },
+         {
+            "id" : "Pete Houston",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "id" : "Pete Houston",
             "name" : "Pete Houston"
          },
          {
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -55,28 +59,39 @@
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell West",
+            "id" : "Roger Bell West"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    },
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "Dave Jacoby",
+               "y" : 2,
+               "drilldown" : "Dave Jacoby"
+            },
+            {
+               "name" : "Pete Houston",
+               "y" : 1,
+               "drilldown" : "Pete Houston"
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 020",
+         "colorByPoint" : 1
+      }
+   ],
    "xAxis" : {
       "type" : "category"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
    }
 }
