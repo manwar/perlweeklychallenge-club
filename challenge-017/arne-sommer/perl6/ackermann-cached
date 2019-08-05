@@ -1,0 +1,30 @@
+#! /usr/bin/env perl6
+
+subset PositiveInt of Int where * > 0;
+subset PositiveIntZero of Int where * >= 0;
+
+sub MAIN(PositiveIntZero \m, PositiveIntZero \n)
+{
+  say A(m, n);
+}
+my %cache;
+
+sub A(PositiveIntZero \m, PositiveIntZero \n)
+{
+  unless %cache{m}{n}.defined
+  {
+    if m == 0
+    {
+      %cache{m}{n} = n + 1;
+    }
+    elsif n == 0
+    {
+      %cache{m}{n} = A(m - 1, 1);
+    }
+    else
+    {
+      %cache{m}{n} = A(m - 1, A(m, n - 1));
+    }
+  }
+  return %cache{m}{n};
+}

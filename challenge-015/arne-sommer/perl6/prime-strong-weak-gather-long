@@ -1,0 +1,22 @@
+#! /usr/bin/env perl6
+
+my \p := (1 .. Inf).grep(*.is-prime);
+
+my $strong := gather
+{
+  for 1 .. Inf -> \n
+  {
+    take p[n] if p[n] > ( p[n-1] + p[n+1] ) / 2;
+  } 
+}
+
+my $weak := gather
+{
+  for 1 .. Inf -> \n
+  {
+    take p[n] if p[n] < ( p[n-1] + p[n+1] ) / 2;
+  }
+}
+
+say "Strong primes: { $strong[^10].join(", ") }.";
+say "Weak primes: { $weak[^10].join(", ") }.";
