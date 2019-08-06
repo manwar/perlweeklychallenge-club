@@ -44,14 +44,9 @@ data structure where the items are sorted in order of numeric priority.
 
 =cut
 
-has _iterator => (
-    is => 'rw',
-    default => 0,
-);
-
 has _queue => (
     is => 'rw',
-    default => sub { [] } # should use a binary heap really but its all good...
+    default => sub { [] }
 );
 
 has _size => (
@@ -63,7 +58,7 @@ has _size => (
 
 =head3 clear()
 
-    removes all elements from the priority queue and resets iteration.
+    removes all elements from the priority queue.
 
 =cut
 
@@ -72,7 +67,6 @@ sub clear {
 
     $self->_queue([]);
     $self->_size(0);
-    $self->_iterator(0);
 }
 
 =head3 top()
