@@ -2,7 +2,6 @@
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl 5",
@@ -13,7 +12,8 @@
                   1
                ]
             ],
-            "name" : "Dave Jacoby"
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby"
          },
          {
             "data" : [
@@ -26,14 +26,14 @@
             "name" : "Duane Powell"
          },
          {
-            "name" : "E. Choroba",
-            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "E. Choroba",
+            "id" : "E. Choroba"
          },
          {
             "data" : [
@@ -42,22 +42,32 @@
                   2
                ]
             ],
-            "id" : "Kevin Colyer",
-            "name" : "Kevin Colyer"
+            "name" : "Kevin Colyer",
+            "id" : "Kevin Colyer"
          },
          {
-            "id" : "Mark Anderson",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
+            "id" : "Mark Anderson",
             "name" : "Mark Anderson"
          },
          {
-            "name" : "Pete Houston",
+            "id" : "Ozzy",
+            "name" : "Ozzy",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
+         },
+         {
             "id" : "Pete Houston",
+            "name" : "Pete Houston",
             "data" : [
                [
                   "Perl 5",
@@ -66,7 +76,6 @@
             ]
          },
          {
-            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -77,36 +86,42 @@
                   2
                ]
             ],
+            "name" : "Roger Bell West",
             "id" : "Roger Bell West"
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 020"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 020",
+         "colorByPoint" : 1,
          "data" : [
             {
                "y" : 3,
-               "name" : "Dave Jacoby",
-               "drilldown" : "Dave Jacoby"
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
             },
             {
-               "drilldown" : "Duane Powell",
                "name" : "Duane Powell",
+               "drilldown" : "Duane Powell",
                "y" : 2
             },
             {
-               "drilldown" : "E. Choroba",
                "name" : "E. Choroba",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "E. Choroba"
             },
             {
+               "name" : "Kevin Colyer",
                "drilldown" : "Kevin Colyer",
-               "y" : 2,
-               "name" : "Kevin Colyer"
+               "y" : 2
             },
             {
                "drilldown" : "Mark Anderson",
@@ -114,48 +129,48 @@
                "name" : "Mark Anderson"
             },
             {
-               "drilldown" : "Pete Houston",
-               "name" : "Pete Houston",
+               "name" : "Ozzy",
+               "drilldown" : "Ozzy",
                "y" : 1
             },
             {
-               "drilldown" : "Roger Bell West",
+               "name" : "Pete Houston",
+               "drilldown" : "Pete Houston",
+               "y" : 1
+            },
+            {
                "name" : "Roger Bell West",
+               "drilldown" : "Roger Bell West",
                "y" : 4
             }
          ],
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 020"
       }
    ],
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2019-08-06 20:24:06 GMT"
    },
    "legend" : {
       "enabled" : 0
    },
-   "xAxis" : {
-      "type" : "category"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 020"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2019-08-06 13:28:19 GMT"
    }
 }
