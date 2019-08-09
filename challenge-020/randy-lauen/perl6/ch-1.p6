@@ -4,5 +4,5 @@
 # For example, if the string is “ABBCDEEF”, then it should split like “A”, “BB”, “C”, “D”, “EE”, “F”.
 
 sub MAIN( Str $text ) {
-    say $text.match( /((.) {} $0*)*/ ).flat>>.Str.join(",");
+    say $text.comb(/(.) {} $0*/).join(',');
 }
