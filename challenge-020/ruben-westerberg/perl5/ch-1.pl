@@ -4,23 +4,22 @@ use warnings;
 use v5.26;
 #
 my $input=$ARGV[0]//"aabcDDefffgh";
-
 my @a=split "", $input;
-
 my @b;
-for (@a) { 
-	state $prev=$_;
+for (0..@a-1) { 
+	my $v=$a[$_];
+	state $prev=$v;
 	state @stack;
-	if( $_ eq $prev) {
-		push @stack, $_;
+	if( $v eq $prev) {
+		push @stack, $v;
 	}
 	else {
 		push @b, join "", @stack;
 		@stack=();
-		push @stack,$_;
-		
+		push @stack,$v;
 	}
-	$prev=$_;
+	$prev=$v;
+	push @b, join "", @stack if $_ ==  @a-1;
 };
 
 print join("|",@b),"\n";

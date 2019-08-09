@@ -6,15 +6,15 @@ my @b;
 for @a {
 	state $prev=$_;
 	state @stack;
-	if $_ eq $prev {
+	when $prev {
 		@stack.push: $_;
 	}
-	else {
+	default {
 		@b.push: @stack.join: "";
 		@stack=();
 		@stack.push: $_;
-
 	}
-	$prev=$_;
+	NEXT { $prev=$_;};
+	LAST {@b.push: @stack.join: ""};
 }
 put @b.join: "|";
