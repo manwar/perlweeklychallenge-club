@@ -10,5 +10,3 @@ while($string =~ /((.)\2*)/g) {
 }
 
 say "@array";
-
-
