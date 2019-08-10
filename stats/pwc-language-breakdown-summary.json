@@ -1,22 +1,25 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-08-10 17:50:22 GMT"
-   },
    "legend" : {
       "enabled" : "false"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "enabled" : "true",
+            "y" : 10,
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         },
          "data" : [
             [
                "Blog",
@@ -28,21 +31,9 @@
             ],
             [
                "Perl 6",
-               478
+               480
             ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "rotation" : -90
-         }
+         ]
       }
    ],
    "title" : {
@@ -51,13 +42,22 @@
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : null
       }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2019-08-10 18:51:05 GMT"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    }
 }
