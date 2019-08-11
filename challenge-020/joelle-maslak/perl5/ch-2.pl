@@ -3,6 +3,10 @@
 use strict;
 use warnings;
 
+# Smallest pair is a confusing term.  Is it (A, B) where a is the
+# smallest A, or is it where A+B is the smallest A+B?  I'm going with
+# the smallest A.
+
 use v5.22;
 
 # Turn on method signatures
