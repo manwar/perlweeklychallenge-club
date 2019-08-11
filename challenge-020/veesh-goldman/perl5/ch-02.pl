@@ -10,9 +10,10 @@ sub sum_of_proper_divisors {
 
 sub has_amicable {
   my $start = shift;
+  my $pair = sum_of_proper_divisors($start);
   #sometimes the sum of the divisors IS the number. But that's not amicable
-  return 0 if sum_of_proper_divisors($start) == $start;
-  return $start == sum_of_proper_divisors( sum_of_proper_divisors($start) )
+  return 0 if $pair == $start;
+  return $start == sum_of_proper_divisors $pair;
 }
 
 
