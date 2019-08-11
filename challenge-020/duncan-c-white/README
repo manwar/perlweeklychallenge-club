@@ -1,14 +1,25 @@
-Challenge 1: "Write a script to display months from the year 1900 to 2019 where you find 5 weekends i.e. 5 Friday, 5 Saturday and 5 Sunday."
+Challenge 1: "Write a script to accept a string from command line and
+split it on change of character. For example, if the string is "ABBCDEEF",
+then it should split like 'A', 'BB', 'C', 'D', 'EE', 'F'."
 
-My notes:
-
-Clearly defined, although Friday isn't normally considered part of the weekend
-is it?  Anyway, it's clear here that Friday - Sunday is the weekend for the
-purposes of this question.  Date::Manip can do this easily enough.
+My notes: Clearly defined, sounds like a job for regexes.
 
 
-Challenge 2: "Write a script that can wrap the given paragraph at a specified
-column using the greedy algorithm."
+Challenge 2: "Write a script to print the smallest pair of Amicable Numbers."
 
-My notes: Another clearly described problem.  Greedy algorithm wiki page
-just neans: fit words on the line while they fit:-)
+Amicable numbers are two different numbers so related that the sum of the
+proper divisors of each is equal to the other number. (A proper divisor
+of a number is a positive factor of that number other than the number
+itself. For example, the proper divisors of 6 are 1, 2, and 3.)
+
+The smallest pair of amicable numbers is (220, 284). They are amicable
+because the proper divisors of 220 are 1, 2, 4, 5, 10, 11, 20, 22, 44,
+55 and 110, of which the sum is 284; and the proper divisors of 284 are 1,
+2, 4, 71 and 142, of which the sum is 220.
+
+The first ten amicable pairs are: (220, 284), (1184, 1210), (2620,
+2924), (5020, 5564), (6232, 6368), (10744, 10856), (12285, 14595),
+(17296, 18416), (63020, 76084), and (66928, 66992)
+
+My notes: Another clearly described problem.  Obvious method involves
+a bit of caching.
