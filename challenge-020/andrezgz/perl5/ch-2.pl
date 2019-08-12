@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# https://perlweeklychallenge.org/blog/perl-weekly-challenge-019/
+# https://perlweeklychallenge.org/blog/perl-weekly-challenge-020/
 # Task #2
 # Write a script to print the smallest pair of Amicable Numbers.
 # For more information, please checkout wikipedia page.
