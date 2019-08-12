@@ -1,36 +1,14 @@
 {
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 021"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "name" : "Dave Cross",
-            "id" : "Dave Cross"
-         }
-      ]
+   "legend" : {
+      "enabled" : 0
    },
    "tooltip" : {
       "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
    },
    "plotOptions" : {
       "series" : {
@@ -41,23 +19,60 @@
          }
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Dave Cross",
+            "id" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
+         }
+      ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-08-12 14:04:27 GMT"
+      "text" : "[Champions: 2] Last updated at 2019-08-12 14:12:34 GMT"
    },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 021",
          "data" : [
             {
-               "name" : "Dave Cross",
                "y" : 2,
-               "drilldown" : "Dave Cross"
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
             }
          ],
-         "name" : "Perl Weekly Challenge - 021",
          "colorByPoint" : 1
       }
-   ]
+   ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 021"
+   }
 }
