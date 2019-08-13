@@ -28,5 +28,6 @@ while ( $e != $previous_e ) {
     $e += ( 1 / $factorial );
 }
 
-my $dp = 50;
+# This is only accurate to 15 decimal places, oops.
+my $dp = 15;
 say "value of e to $dp decimal places: ", $e->fround($dp);
