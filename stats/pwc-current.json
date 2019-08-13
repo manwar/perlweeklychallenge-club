@@ -1,72 +1,84 @@
 {
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "Dave Cross",
-               "drilldown" : "Dave Cross"
-            },
-            {
-               "y" : 3,
-               "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West"
-            },
-            {
-               "y" : 1,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "name" : "Steven Wilson",
-               "y" : 1,
-               "drilldown" : "Steven Wilson"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 021",
-         "colorByPoint" : 1
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-08-13 12:02:27 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 021"
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "xAxis" : {
       "type" : "category"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-08-13 15:25:44 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 021"
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 021",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross"
+            },
+            {
+               "name" : "Duane Powell",
+               "drilldown" : "Duane Powell",
+               "y" : 2
+            },
+            {
+               "name" : "Roger Bell West",
+               "y" : 3,
+               "drilldown" : "Roger Bell West"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 1,
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "name" : "Steven Wilson",
+               "drilldown" : "Steven Wilson",
+               "y" : 1
+            }
+         ]
+      }
+   ],
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
             "id" : "Dave Cross",
+            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "name" : "Dave Cross"
+            ]
+         },
+         {
+            "id" : "Duane Powell",
+            "name" : "Duane Powell",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
          },
          {
             "data" : [
@@ -79,34 +91,37 @@
                   1
                ]
             ],
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West"
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West"
          },
          {
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
-            "id" : "Steven Wilson",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
+            "id" : "Steven Wilson",
             "name" : "Steven Wilson"
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }

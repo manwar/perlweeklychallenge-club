@@ -1,18 +1,37 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : null
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
       },
-      "min" : 0
+      "type" : "category"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2019-08-13 12:02:39 GMT"
+   "legend" : {
+      "enabled" : "false"
    },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right",
+            "y" : 10
+         },
          "data" : [
             [
                "Blog",
@@ -20,44 +39,25 @@
             ],
             [
                "Perl 5",
-               853
+               855
             ],
             [
                "Perl 6",
                506
             ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "rotation" : -90,
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "y" : 10
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
+   "subtitle" : {
+      "text" : "Last updated at 2019-08-13 15:26:15 GMT"
    }
 }
