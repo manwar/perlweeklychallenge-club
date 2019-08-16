@@ -16,15 +16,13 @@ while (1) {
 }
 
 sub divisors_unself ($k) {
-  my @d=(1);
-  my @e;
+  my SetHash $dd .= new;
+  $dd{ 1 }++;
   for 2..$k.sqrt.Int -> $d {
     if ($k % $d == 0) {
-      push @d,$d,$k/$d;
-      if @d[*-1] == $d {
-        pop @d;
-      }
+      $dd{ $d }++;
+      $dd{ $k/$d }++;
     }
   }
-  return @d;
+  return $dd.keys;
 }

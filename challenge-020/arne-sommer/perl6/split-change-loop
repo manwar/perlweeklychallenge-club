@@ -1,0 +1,35 @@
+#! /usr/bin/env perl6
+
+sub MAIN (Str $string, :$quote = '"')
+{
+  split-change($string).map({ $quote ~ $_ ~ $quote }).join(", ").say;
+}
+
+sub split-change ($string)
+{
+  my @out;
+  my @in = $string.comb;
+  my $out;
+
+  while @in
+  {
+    $out = @in.shift;
+
+    while @in
+    {
+      if @in[0] eq $out.substr(0,1)
+      {
+        $out ~= @in.shift;
+      }
+      else
+      {
+        @out.push($out); $out = ""; 
+        last;
+      }
+    }
+  }
+
+  @out.push($out) if $out;
+
+  return @out;
+}
