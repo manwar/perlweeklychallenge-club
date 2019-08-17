@@ -1,15 +1,33 @@
 #!/usr/bin/env perl
 
-use 5.020;
+use v5.28;
 use strict;
 use warnings;
 
-# Write a script to calculate the value of e, also known as Euler’s number and Napier’s constant.
+=head1 SYNOPSIS
 
-# In addition to calculating it myself, I took a tour through
-# some of the CPAN modules that do it for you. Some modules,
-# like Math::Pari, have a function called Euler that returns
-# Euler's constant, which is not the same as Euler's number.
+Task: Write a script to calculate the value of e, also known as Euler’s number and Napier’s constant.
+
+In addition to calculating it myself, I took a tour through some of the CPAN modules that 
+do it for you. Some modules, like Math::Pari, have a function called Euler() that returns
+Euler's constant, which is not the same as Euler's number.
+
+Example output:
+    $ perl ch-1.pl
+    +------------------------------+-----------------------------------------------------+
+    | Module                       | Euler's Number                                      |
+    +------------------------------+-----------------------------------------------------+
+    | Math::Big::euler             | 2.7182818284590452353602874713526624977572470937    |
+    | Math::NumberCruncher::ECONST | 2.7182818284590452353602874713526624977572470937    |
+    | Math::NumberCruncher::_e_    | 2.7182818284590452353602874713526624977572470936... |
+    | Math::Symbolic::EULER        | 2.71828182845905                                    |
+    | Math::AnyNum::euler          | 2.7182818284590452353602874713526624977572470937    |
+    | Sidef Number.e               | 2.7182818284590452353602874713526624977572470937    |
+    | bigrat::e                    | 2.718281828459045235360287471352662497757           |
+    | Calculated e                 | 2.7182818284590452353602874713526625112110646491... |
+    +------------------------------+-----------------------------------------------------+
+
+=cut
 
 use Math::Big ();
 use Math::BigFloat ();
