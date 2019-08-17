@@ -11,7 +11,7 @@ use warnings;
 
 my $e_aprox = 0;
 my $fact = 1;
-for (1, 1 .. 100) {
+for (1, 1 .. 100) { #tricky - additional 1 to represent 0!
     $fact *= $_;
     $e_aprox += 1/$fact;
 }
