@@ -1,6 +1,15 @@
 #!/usr/bin/env perl6
 
-# Write a script to calculate the value of e, also known as Euler’s number and Napier’s constant.
+=begin SYNOPSIS
+
+Task: Write a script to calculate the value of e, also known as Euler’s number and Napier’s constant.
+
+Example output:
+    $ perl6 ch-1.p6
+    Calculated e = 2.718281828459045
+    Perl6 e      = 2.718281828459045
+
+=end SYNOPSIS
 
 my $e = 0;
 for ^20 -> $n {
