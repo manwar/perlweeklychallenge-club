@@ -1,0 +1,57 @@
+%token '://' SCHEME USERPASSWORD HOST PORT PATH QUERY FRAGMENT 
+%%
+url: scheme colondoubleslash userpassword host port path query fragment 
+   | scheme colondoubleslash host path query fragment 
+   | scheme colondoubleslash host path fragment 
+   | scheme colondoubleslash host path  
+   | scheme colondoubleslash host  
+;
+colondoubleslash: '://' { print $_[1] } 
+;
+scheme: SCHEME { print lc($_[1]) } 
+;
+userpassword: USERPASSWORD { print $_[1] }  
+;
+host: HOST { print lc($_[1]) }   
+;
+port: PORT { $_[1] =~ s/://; print "" }
+;
+path: PATH { print $_[1] }
+;
+query: QUERY { print $_[1] } 
+;
+fragment: FRAGMENT { print "" }  
+;
+%%
+sub lexer{
+    my($parser) = @_;
+    $parser->YYData->{INPUT} or return('', undef);
+    $parser->YYData->{INPUT} =~ s/^[ \t]//;
+    ##
+    # send tokens to parser
+    ##
+    for($parser->YYData->{INPUT}){
+        s/^(http|https|ftp|jdbc)//i and return ("SCHEME", $1); 
+        s/^(:\/\/)// and return ("://", $1);
+        s/^(:[0-9]*)// and return ("PORT", $1);
+        s/^([a-zA-Z]*:[a-zA-Z]*)// and return ("USERPASSWORD", $1); 
+        s/^(\/[\/a-zA-Z]*)// and return ("PATH", $1);
+        s/^(\?{1}[a-zA-z=a-zA-Z]*)// and return ("QUERY", $1);
+        s/^(#{1}[a-zA-Z]*[0-9]*)// and return ("FRAGMENT", $1); 
+        s/^(@?\/{0}[a-zA-z]*)// and return ("HOST", $1);
+    }  
+}
+sub error{
+    exists $_[0]->YYData->{ERRMSG}
+    and do{
+        print $_[0]->YYData->{ERRMSG};
+            return;
+    };
+    print "syntax error\n"; 
+}
+sub parse{
+    my($self, $input) = @_;
+    $self->YYData->{INPUT} = $input;
+    my $result = $self->YYParse(yylex => \&lexer, yyerror => \&error);
+    return $result;  
+}
