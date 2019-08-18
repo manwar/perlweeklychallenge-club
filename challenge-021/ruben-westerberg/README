@@ -2,9 +2,13 @@ Solution by Ruben Westerberg
 
 ch-1.pl and ch-1.p6
 ===
-Run the program with a single command line argument to splt the argument on dissimilar character boundaries.
-If no argument is provided a demo string is used.
+Run with a single argument. Argument is the number of terms to add in calculating Eulers number. If no argument is given, a default of 10 terms are used.
 
 ch-2.pl and ch-2.p6
 ===
-run the program to find the smallest Amicable numbers
+Run with a single argument. Argument is a URI which is normalized (no semantic changes). If no argument is given a test URI is used.
+- Normalizes scheme to lower case
+- Normalize % codes to upper case
+- decode unreserved % codes if present
+- encode any characters outside of reserved or unreserved codes.
+

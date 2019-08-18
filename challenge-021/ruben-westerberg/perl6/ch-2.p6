@@ -1,6 +1,6 @@
 #!/usr/bin/env perl6
 
-my $URI=@*ARGS[0]//'http://a.uri/with/strange%65characters{}?query=true#frag<>';
+my $URI=@*ARGS[0]//'HTTP://a.uri/with/strange%65characters{}?query=true#frag<>';
 
 print "Original URI:\t$URI\n";
 #%Encode any character outside of restriced and unrestricted set except %
@@ -15,6 +15,6 @@ sub decode ($h){
 }
 
 #Scheme to lower case
-$URI=S/^(<[a..zA..Z]><[a..zA..Z\-\.\+]>+)/{uc $0}/ given $URI;
+$URI=S/^(<[a..zA..Z]><[a..zA..Z\-\.\+]>+)/{lc $0}/ given $URI;
 
 print "Normalized URI:\t$URI\n";

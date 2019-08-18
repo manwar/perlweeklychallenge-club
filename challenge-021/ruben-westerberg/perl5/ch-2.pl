@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use v5.26;
 
-my $URI=$ARGV[0]//'http://a.uri/with/strange%65characters{}?query=true#frag<>';
+my $URI=$ARGV[0]//'HTTP://a.uri/with/strange%65characters{}?query=true#frag<>';
 
 print "Original URI:\t$URI\n";
 #%Encode any character outside of restriced and unrestricted set except %
@@ -18,6 +18,6 @@ sub decode {
 }
 
 #Scheme to lower case
-$URI=~s/^([a-zA-Z][a-zA-Z\-\.\+]+)/{uc $1}/e;
+$URI=~s/^([a-zA-Z][a-zA-Z\-\.\+]+)/{lc $1}/e;
 
 print "Normalized URI:\t$URI\n";
