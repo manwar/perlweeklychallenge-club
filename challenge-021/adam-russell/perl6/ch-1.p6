@@ -1,4 +1,4 @@
-##
+##   
 # Write a script to calculate the value of e.
 ##
 sub e {
