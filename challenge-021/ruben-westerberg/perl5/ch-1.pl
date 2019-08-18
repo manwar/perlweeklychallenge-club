@@ -14,5 +14,4 @@ while ($i <= $degree ) {
 	state $fac=1;
 	$sum+=1/($fac*=$i++);
 }
-#printf "Eulers constant to $degree terms:\n%s\n",$sum->as_float(100);
 printf "Eulers constant to $degree terms:\n%s\n",$sum;

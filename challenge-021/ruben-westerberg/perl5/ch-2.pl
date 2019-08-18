@@ -1,9 +1,4 @@
 #!/usr/bin/env perl
-
-my $uri=$ARGV[0]//"http://my.test.url/where/is/../it";
-#split
-#
-#Reuse code from week 17
 use strict;
 use warnings;
 use v5.26;
