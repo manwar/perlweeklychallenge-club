@@ -1,7 +1,6 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "subtitle" : {
+      "text" : "[Champions: 108] Last updated at 2019-08-18 15:42:24 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
@@ -118,20 +117,14 @@
          "Yozen Hernandez"
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 108] Last updated at 2019-08-18 15:36:25 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
+         "name" : "Perl 5",
          "data" : [
             0,
             2,
@@ -217,7 +210,7 @@
             1,
             4,
             4,
-            0,
+            2,
             3,
             2,
             16,
@@ -241,10 +234,10 @@
             1,
             1,
             21
-         ],
-         "name" : "Perl 5"
+         ]
       },
       {
+         "name" : "Perl 6",
          "data" : [
             6,
             0,
@@ -330,7 +323,7 @@
             0,
             0,
             0,
-            8,
+            10,
             0,
             6,
             5,
@@ -354,10 +347,10 @@
             0,
             1,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -467,13 +460,20 @@
             0,
             0,
             14
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
