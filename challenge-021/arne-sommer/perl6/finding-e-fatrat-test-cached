@@ -1,0 +1,67 @@
+#! /usr/bin/env perl6
+
+my $e-seq := gather
+{
+  take 1;
+
+  my FatRat $current = 1.FatRat;
+
+  for 1 .. Inf
+  {
+    $current /= $_;
+    take $current;
+  }
+}
+
+sub MAIN (:$steps = 10, :$verbose, :$test)
+{
+  $verbose && say "{$_ + 1}: { $e-seq[$_].perl }" for ^$steps;
+
+  my $value = $e-seq[^$steps].sum;
+
+  if $test
+  {
+    my $long = get-euler-from-web($test);
+
+    print "Answer:  ";
+    for ^$value.chars -> $pos
+    {
+      $value.substr($pos, 1) eq $long.substr($pos, 1)
+      ?? print $value.substr($pos, 1)
+      !! print "\x1b[41m" ~ $value.substr($pos, 1) ~ "\x1b[0m";
+    }
+    print "\n";
+    say "Correct: " ~ $long.substr(0, $value.chars + 2) ~ "...";
+
+  }
+  else
+  {
+    say $e-seq[^$steps].sum;
+  }
+}
+
+sub get-euler-from-web ($test)
+{
+  use LWP::Simple;
+
+  my $e-string = "";
+
+  if $test eq "cached"
+  {
+    say "Loaded cached e.";
+    return $*TMPDIR.add('euler_10000.txt').slurp if $*TMPDIR.add('euler_10000.txt').e;
+  }
+
+  for LWP::Simple.get('http://www-history.mcs.st-and.ac.uk/HistTopics/e_10000.html').lines -> $line
+  {
+    $e-string ~= $line.trim unless $line ~~ /<[a .. z A .. Z]>/; # Skip lines with html tags
+  }
+  
+  if $test eq "cached"
+  {
+    $*TMPDIR.add('euler_10000.txt').spurt: $e-string;
+    say "Saved cached e.";
+  }
+
+  return $e-string;
+}
