@@ -5,7 +5,7 @@ use v6;
 #| Usage notes
 multi sub MAIN ( :h(:$help) where so * ) { say $*USAGE }
 
-#| Calculate the first n paris of "sexy" primes (being two primes seperated by 6)
+#| Calculate the first n pairs of "sexy" primes (being two primes seperated by 6)
 multi sub MAIN (
     UInt $n = 10 #= Number to calculate
 ) {
