@@ -3,7 +3,7 @@ use warnings;
 ##
 # Write a script to calculate the value of e. 
 ## 
-sub e_calculation{ 
+sub e_calculation{   
     my($n) = @_; 
     my @d; 
     my $m = 4;

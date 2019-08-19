@@ -2,7 +2,7 @@ use strict;
 use warnings;
 ##
 # Write a script for URL normalization based on rfc3986.
-##
+##    
 use UrlParser;
 use constant URL => q|JDBC://user:password@localhost:3306/pwc?profile=true#h1|; 
 MAIN:{
