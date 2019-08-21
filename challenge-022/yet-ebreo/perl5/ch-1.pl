@@ -6,7 +6,7 @@
 #This part determines the primes from 0 to 54 using sieve of eratosthenes
 #Multiple of each current value (from 0..54) are set to 0 leaving only those
 #which are not (Primes)
-@_=grep{@_[ map $x*$_,//..@_/($x=$_) ] =0 if $_[$_] > 1}@_=0..54;
+@_=grep{@_[ map $x*$_,$_..@_/($x=$_) ] =0 if $_[$_] > 1}@_=0..54;
 
 #The ocde below go through the primes generated above and print combinations
 #which have difference of +6
