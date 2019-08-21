@@ -1,4 +1,10 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-08-21 14:16:34 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Mark Senn",
@@ -39,18 +45,18 @@
       },
       "min" : 0
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-08-21 14:09:46 GMT"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
+         "name" : "Perl 5",
          "data" : [
             0,
             0,
@@ -82,8 +88,7 @@
             16,
             39,
             0
-         ],
-         "name" : "Perl 5"
+         ]
       },
       {
          "name" : "Perl 6",
@@ -121,6 +126,7 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             7,
             0,
@@ -152,16 +158,10 @@
             5,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
    }
 }

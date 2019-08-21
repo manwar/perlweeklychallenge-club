@@ -1,42 +1,52 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2019-08-21 14:16:34 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
          "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 022",
          "data" : [
             {
-               "name" : "Duane Powell",
+               "drilldown" : "Duane Powell",
                "y" : 1,
-               "drilldown" : "Duane Powell"
+               "name" : "Duane Powell"
             },
             {
-               "y" : 1,
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Simon Proctor",
+               "y" : 1
             },
             {
+               "y" : 2,
                "drilldown" : "Yet Ebreo",
-               "y" : 1,
                "name" : "Yet Ebreo"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 022"
+         ]
       }
    ],
    "drilldown" : {
       "series" : [
          {
-            "id" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
+            "id" : "Duane Powell",
             "name" : "Duane Powell"
          },
          {
@@ -50,44 +60,34 @@
             "name" : "Simon Proctor"
          },
          {
+            "name" : "Yet Ebreo",
+            "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
-                  1
+                  2
                ]
-            ],
-            "id" : "Yet Ebreo",
-            "name" : "Yet Ebreo"
+            ]
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    },
    "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "followPointer" : 1
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 022"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-08-21 14:09:45 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 022"
+   "legend" : {
+      "enabled" : 0
    }
 }
