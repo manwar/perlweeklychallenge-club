@@ -12,7 +12,7 @@ In case you have created a blog about your solutions, then create a file called 
 ## Step-by-step instructions
 Let us assume you want to subtmit solutions for **Challenge 002** and your Github user name is **joe-blog**. 
 
-1. If you are submitting the solution for the first time then you have to **Fork** the repository by clicking the "Fork" button in the top right corner and should have repository e.g. **https://github.com/joe-blog/perlweeklychallenge-club**. 
+1. If you are submitting the solution for the first time then you have to **Fork** the repository **https://github.com/manwar/perlweeklychallenge-club** by clicking the "Fork" button in the top right corner and should have repository e.g. **https://github.com/joe-blog/perlweeklychallenge-club**.
  
 2. Go to your favourite terminal and **clone** your repository. e.g **git clone https://github.com/joe-blog/perlweeklychallenge-club**.
 
