@@ -1,14 +1,14 @@
 #!/usr/bin/env perl
 
-use strict;
-use warnings;
-use feature 'say';
-
 # Task:
 # Write a script to implement Lempel–Ziv–Welch (LZW) compression algorithm. 
 # The script should have method to encode/decode algorithm.
 
 # This is a port of LZW-B found at https://marknelson.us/posts/2011/11/08/lzw-revisited.html
+
+use strict;
+use warnings;
+use feature 'say';
 
 encode( $ARGV[0] );
 
@@ -32,10 +32,10 @@ sub encode {
                 $current_string = $char;
             }
         }
+    }
 
-        if ( length $current_string ) {
-            print $out pack( 'S', $codes{ $current_string} );
-        }
+    if ( length $current_string ) {
+        print $out pack( 'S', $codes{ $current_string} );
     }
 
     close $in;
