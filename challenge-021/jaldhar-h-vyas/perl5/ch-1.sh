@@ -1,0 +1,1 @@
+perl -Mbigrat=e -e 'printf("%.15f\n", e);'
