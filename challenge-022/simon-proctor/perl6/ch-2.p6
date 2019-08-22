@@ -10,11 +10,15 @@ Encoded data is expected as a series of space seperated numbers because I don't 
 
 =end pod
 
+sub USAGE() {
+    say "Encodes and Decodes using the LZW algorithm.\n\nEncoded data is expected as a series of space seperated numbers because I don't want to mess about bit twiddling.\n$*USAGE";
+}
+
 subset FilePath of Str where *.IO.f;
 subset ValidToEncode of Str where m/^<[a..z A..Z 0..9 \  _ \n \. , ]>* \n?$/;
 subset ValidToDecode of Str where m/^ [\d+]+ % " " $/;
 
-multi sub MAIN( Bool :h(:$help) where ?* ) { say $*USAGE }
+multi sub MAIN( Bool :h(:$help) where ?* ) { USAGE() }
 
 #| Read from STDIN and encode the result
 multi sub MAIN( 'encode' ) {
@@ -101,6 +105,10 @@ multi sub decode-data( ValidToDecode $str ) {
     }
     
     @output.join("");
+}
+
+multi sub decode-data( Str $ ) {
+    die "Data to decode should be a space seperated string of Ints";
 }
 
 sub available-characters() {
