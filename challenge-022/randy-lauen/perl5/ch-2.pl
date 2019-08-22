@@ -15,22 +15,21 @@ encode( $ARGV[0] );
 sub encode {
     my $file = shift;
 
-    open my $in, '<', $file or die $!;
+    open my $in, '<:raw', $file or die $!;
     open my $out, '>', "$file.lzw" or die $!;
 
     my %codes = map { chr($_) => $_ } 0 .. 255;
     my $next_code = 256;
     my $current_string = '';
 
-    while ( my $line = <$in> ) {
-        foreach my $char ( split //, $line ) {
-            $current_string .= $char;
-            if ( !exists $codes{ $current_string } ) {
-                $codes{ $current_string } = $next_code++;
-                $current_string = substr( $current_string, 0, -1 );
-                print $out pack( 'S', $codes{ $current_string} );
-                $current_string = $char;
-            }
+    my $char;
+    while ( read($in, $char, 1)  ) {
+        $current_string .= $char;
+        if ( !exists $codes{ $current_string } ) {
+            $codes{ $current_string } = $next_code++;
+            $current_string = substr( $current_string, 0, -1 );
+            print $out pack( 'S', $codes{ $current_string} );
+            $current_string = $char;
         }
     }
 
