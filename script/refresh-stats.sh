@@ -39,6 +39,8 @@ mv pwc-current.json stats/pwc-challenge-019.json
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-020 --current
 mv pwc-current.json stats/pwc-challenge-020.json
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-021 --current
+mv pwc-current.json stats/pwc-challenge-021.json
+fetch-pwc-stats --members members.json --guests guests.json --source challenge-022 --current
 mv pwc-current.json stats/
 
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-001 --summary
@@ -61,6 +63,7 @@ fetch-pwc-stats --members members.json --guests guests.json --source challenge-0
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-018 --master pwc-summary.json --update
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-019 --master pwc-summary.json --update
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-020 --master pwc-summary.json --update
+fetch-pwc-stats --members members.json --guests guests.json --source challenge-021 --master pwc-summary.json --update
 mv pwc-summary.json stats/pwc-master-stats.json
 
 echo Now fetch current stats
