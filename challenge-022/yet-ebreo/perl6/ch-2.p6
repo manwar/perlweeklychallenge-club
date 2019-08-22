@@ -16,17 +16,14 @@ sub encode (Str $string){
     my Int $code    = INIT_DICT_SIZE+1;
     my @buff_out    = ();
 
-    # say "String\tOutput Code\tAddition";
     for 0..$len-1 -> $i {
         if ($i != $len-1) {
             $curr ~= $string.substr: $i + 1,1;
         }
         if (%dictionary{$prev~$curr}:exists) {
-
             $prev ~= $curr;
         } else {
 
-            # say ($prev~"\t"~(%dictionary{$prev})~"\t\t"~$prev~$curr~"\t"~$code);
             push @buff_out, %dictionary{$prev};
             %dictionary{$prev~$curr} = $code;
             $code++;
@@ -34,7 +31,6 @@ sub encode (Str $string){
         }
         $curr = "";
     }
-    # say "$prev\t%dictionary{$prev}";
     push @buff_out, %dictionary{$prev};
     return @buff_out;
 }
