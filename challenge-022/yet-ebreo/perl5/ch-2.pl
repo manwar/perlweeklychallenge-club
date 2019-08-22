@@ -15,36 +15,28 @@ sub encode {
     my %dictionary  = map { chr $_ => $_ } 0..$dict_size;
 
     #Initialize variables
+    my $prev        = substr $string, 0,1;
+    my $curr        = "";
+
+    my $code        = INIT_DICT_SIZE+1;
     my @buff_out    = ();
-    my $pos         = 0;
-    my $output      = "";
-    my $l           = "";
-    my $v           = "";
 
     #Go through the characters and build-up the $dictionary
-    while ($pos<$len) {
-        my $incr = 1;
-        for my $x ($pos+1..$len) {
-            $l = substr $string, $pos, $x-$pos;
-
-            #Check if current L value is in the $dictionary
-            if (exists $dictionary{$l}) {
-                $v = $dictionary{$l};
-
-                if ($x == $len) {
-                    push @buff_out, $v;
-                    $dictionary{$l} = ++$dict_size;
-                }
-            } else {
-                $incr = $x - $pos-1;
-                #Store last value to @buff_out and update the $dictionary
-                push @buff_out, $v;
-                $dictionary{$l} = ++$dict_size;
-                last;
-            }
+    for my $i (0..$len-1) {
+        if ($i != $len-1) {
+            $curr .= substr $string,$i + 1,1;
         }
-        $pos+=$incr;
+        if (exists $dictionary{$prev.$curr}) {
+            $prev .= $curr;
+        } else {
+            push @buff_out, $dictionary{$prev};
+            $dictionary{$prev.$curr} = $code;
+            $code++;
+            $prev = $curr;
+        }
+        $curr = "";
     }
+    push @buff_out, $dictionary{$prev};
     return @buff_out;
 }
 
