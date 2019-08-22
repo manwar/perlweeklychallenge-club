@@ -1,42 +1,4 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-08-21 14:16:34 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 022",
-         "data" : [
-            {
-               "drilldown" : "Duane Powell",
-               "y" : 1,
-               "name" : "Duane Powell"
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 1
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Yet Ebreo",
-               "name" : "Yet Ebreo"
-            }
-         ]
-      }
-   ],
    "drilldown" : {
       "series" : [
          {
@@ -60,29 +22,82 @@
             "name" : "Simon Proctor"
          },
          {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Steven Wilson",
+            "name" : "Steven Wilson"
+         },
+         {
             "name" : "Yet Ebreo",
-            "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "id" : "Yet Ebreo"
          }
       ]
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
    },
    "tooltip" : {
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1
    },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 022",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 1,
+               "drilldown" : "Duane Powell",
+               "name" : "Duane Powell"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 1
+            },
+            {
+               "y" : 1,
+               "name" : "Steven Wilson",
+               "drilldown" : "Steven Wilson"
+            },
+            {
+               "drilldown" : "Yet Ebreo",
+               "name" : "Yet Ebreo",
+               "y" : 2
+            }
+         ]
+      }
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "title" : {
       "text" : "Perl Weekly Challenge - 022"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2019-08-22 11:30:32 GMT"
    },
    "xAxis" : {
       "type" : "category"
