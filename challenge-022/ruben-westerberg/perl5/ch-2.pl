@@ -10,6 +10,7 @@ my @encoded;
 my @symbols;
 
 print "Input: ",join("",@input),"\n";
+
 encode(\@symbols, \@input ,\@encoded);
 
 print "Encoded: ",join(",",@encoded),"\n";
