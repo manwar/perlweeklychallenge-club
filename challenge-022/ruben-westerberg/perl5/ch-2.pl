@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
+use List::Util qw<uniq first>;
 use v5.26;
 
 # implement LZW 
@@ -23,26 +24,17 @@ print "Decoded: ",join("",@decoded),"\n";
 
 sub encode {
 	my ($dict,$in, $out)=@_;
-	@$dict= ((0..9),('A'..'Z'),('a'..'z'));
+	@$dict= uniq @$in;# ((0..9),('A'..'Z'),('a'..'z'));
 	push @$in, undef;
 	for (@$in) {
 		state $symbol="";
-		state $count= @$dict;
 		my $next=$_;#shift;
 		$symbol.=$next if defined $next;
 		state $prev="";
-		my $s=(grep {$symbol eq $_} @$dict)[0];
-		my $res;
-		if (defined $s and  $next) {
-			#found existing keep adding
-			$res=undef;
-		}
-		else {
-			#add new symbol
-			#$$dict{$symbol}=$count++;
+		my $s=first {$symbol eq $_} @$dict; 
+		unless ( $s and $next) {
 			push @$dict, $symbol;
-			$res=(grep {$prev eq $$dict[$_]} 0..@$dict-1)[0];
-			push @$out, $res;
+			push @$out, first {$prev eq $$dict[$_]} 0..@$dict-1;
 			$symbol=substr $symbol, -1;
 		}
 		$prev=$symbol;
