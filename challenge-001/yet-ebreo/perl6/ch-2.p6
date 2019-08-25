@@ -3,4 +3,4 @@
 # any divisible by 5 by the word ‘buzz’. Those numbers that are both divisible 
 # by 3 and 5 become ‘fizzbuzz’.
 
-perl -E 'say $_ % 15?$_ % 5?$_ % 3?$_:fizz:buzz:fizzbuzz for 1..20'
+say $_ % 15??$_ % 5??$_ % 3??$_!!'fizz'!!'buzz'!!'fizzbuzz' for 1..20
