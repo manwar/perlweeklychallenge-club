@@ -52,13 +52,13 @@ sub encode {
                 $codes{ $current_string } = $next_code++;
             }
             $current_string = substr( $current_string, 0, -1 );
-            print pack( 'S<', $codes{ $current_string } );
+            print pack( 'S', $codes{ $current_string } );
             $current_string = $char;
         }
     }
 
     if ( length $current_string ) {
-        print pack( 'S<', $codes{ $current_string} );
+        print pack( 'S', $codes{ $current_string} );
     }
 
     close $fh;
@@ -78,7 +78,7 @@ sub decode {
 
     my $code;
     while ( read($fh, $code, 2)  ) {
-        $code = unpack( 'S<', $code );
+        $code = unpack( 'S', $code );
         if ( !exists $strings{ $code } ) {
             $strings{ $code } = $previous_string . substr($previous_string, 0, 1);
         }
