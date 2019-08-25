@@ -26,8 +26,9 @@ lzw_setdebug( 0 );
 die "Usage: encdecode STRING\n" unless @ARGV==1;
 my $text = shift;
 
+$text .= '#' unless substr($text,length($text)-1) eq '#';
+
 my $binstr = lzw_encode( $text );
-#$text .= '#';
 print "\ntext: $text\n" if 0;
 #print "  encodes to: $binstr\n";
 my $text2 = lzw_decode( $binstr );

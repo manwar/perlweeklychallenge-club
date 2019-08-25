@@ -11,6 +11,17 @@
 # quite clear is what initial alphabet both encoding and decoding should
 # use?  but let's have a go anyway, hopefully building an encoder will
 # start to clarify most things?
+#
+# Update: the encoding was very straight forward, but I struggled for
+# several hours to get my head around the decoding - especially the
+# special case described in the wikipedia page where the dictionary
+# doesn't contain the entry.  The description was NOT CLEAR ENOUGH
+# in that case (and giving an example text where the special case
+# applied would have helped a lot, eg TOTOTOT was the shortest I found)
+#
+# Eventually, with time running out, I checked some Rosetta code
+# implementations, discovered what pseudo-code the description
+# really mapped onto, and adapted it to fit my code..
 # 
 
 use strict;
