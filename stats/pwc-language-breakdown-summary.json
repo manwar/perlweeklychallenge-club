@@ -1,30 +1,6 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
    "legend" : {
       "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-08-25 09:28:04 GMT"
-   },
-   "chart" : {
-      "type" : "column"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
@@ -32,6 +8,18 @@
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "enabled" : "true",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right"
+         },
          "data" : [
             [
                "Blog",
@@ -39,25 +27,37 @@
             ],
             [
                "Perl 5",
-               903
+               904
             ],
             [
                "Perl 6",
                540
             ]
-         ],
-         "dataLabels" : {
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "y" : 10
+         ]
+      }
+   ],
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       }
-   ]
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2019-08-25 14:25:07 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   }
 }
