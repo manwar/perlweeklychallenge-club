@@ -10,7 +10,7 @@
 
 my ($n, @list) = @*ARGS;
 
-die "Usage: ch-1.pl <n> <list>\n\tn\tmust be less than the number of elements in list\n\tlist\tvalues are space separated\n" if !@*ARGS;
+die "Usage: ch-1.p6 <n> <list>\n\tn\tmust be less than the number of elements in list\n\tlist\tvalues are space separated\n" if !@*ARGS;
 die "n($n) must be less than the number("~@list.end+1~") of elements in list\n" if $n> @list.end;
 
 

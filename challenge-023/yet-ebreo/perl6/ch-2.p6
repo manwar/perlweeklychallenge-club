@@ -6,7 +6,7 @@
 
 my $n   = @*ARGS[0];
 my $m   = $n;
-die "Usage: ch-2.pl <n> \n\tn is a postive number\n" if !@*ARGS;
+die "Usage: ch-2.p6 <n> \n\tn is a postive number\n" if !@*ARGS;
 die "n must be a postive number\n" if $n < 1;
 
 #Backticks solution using factor, works both on windows and linux :D
