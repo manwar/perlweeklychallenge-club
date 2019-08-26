@@ -4,6 +4,33 @@
          "text" : "Total Solutions"
       }
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 023"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2019-08-26 19:23:40 GMT"
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Laurent Rosenfeld",
+               "name" : "Laurent Rosenfeld",
+               "y" : 5
+            },
+            {
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West",
+               "y" : 4
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 023",
+         "colorByPoint" : 1
+      }
+   ],
+   "legend" : {
+      "enabled" : 0
+   },
    "chart" : {
       "type" : "column"
    },
@@ -12,15 +39,38 @@
    },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         }
+         },
+         "borderWidth" : 0
       }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
+         {
+            "name" : "Laurent Rosenfeld",
+            "id" : "Laurent Rosenfeld",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
          {
             "data" : [
                [
@@ -36,32 +86,5 @@
             "name" : "Roger Bell West"
          }
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-08-26 14:15:33 GMT"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Roger Bell West",
-               "y" : 4,
-               "name" : "Roger Bell West"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 023"
-      }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 023"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
    }
 }
