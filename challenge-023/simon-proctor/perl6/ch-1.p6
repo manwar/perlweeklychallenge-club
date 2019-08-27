@@ -9,10 +9,9 @@ multi sub MAIN( Bool :h(:$help) where so * ) {
 
 #| Calculate the Nth forward difference series of the given values
 multi sub MAIN(
-    UInt $n, #= Order to calculate
-    *@vals where @vals.all ~~ Int #= List of Integers to calculate from 
+    UInt $n, #= Order to calculate must be between 0 and 1 less than the list length
+    *@vals where @vals.all ~~ Int && 0 <= $n <= @vals.elems-1 #= List of Integers to calculate from 
 ) {
-    die "N must between 1 and {@vals.elems-1}" unless  0 < $n <= @vals.elems-1;
     for ^$n {
         @vals = @vals.rotor(2=>-1).map( { [R-] |$_ } )
     }
