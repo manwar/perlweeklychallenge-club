@@ -14,7 +14,7 @@ multi sub MAIN(
 ) {
     die "N must between 1 and {@vals.elems-1}" unless  0 < $n <= @vals.elems-1;
     for ^$n {
-        @vals = @vals.rotor(2=>-1).map( { $_[1] - $_[0] })
+        @vals = @vals.rotor(2=>-1).map( { [R-] |$_ } )
     }
     say @vals.join(",");
 }
