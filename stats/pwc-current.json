@@ -2,24 +2,44 @@
    "legend" : {
       "enabled" : 0
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 023"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "xAxis" : {
       "type" : "category"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
    "drilldown" : {
       "series" : [
          {
             "name" : "Andrezgz",
+            "id" : "Andrezgz",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Andrezgz"
+            ]
          },
          {
-            "id" : "Laurent Rosenfeld",
-            "name" : "Laurent Rosenfeld",
             "data" : [
                [
                   "Perl 5",
@@ -33,7 +53,9 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Laurent Rosenfeld",
+            "name" : "Laurent Rosenfeld"
          },
          {
             "name" : "Roger Bell West",
@@ -50,17 +72,17 @@
             "id" : "Roger Bell West"
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
-            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
@@ -68,45 +90,32 @@
                ],
                [
                   "Perl 6",
-                  2
+                  3
                ]
             ],
-            "name" : "Yet Ebreo"
+            "id" : "Yet Ebreo"
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-08-27 11:29:19 GMT"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 023",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 2,
+               "name" : "Andrezgz",
                "drilldown" : "Andrezgz",
-               "name" : "Andrezgz"
+               "y" : 2
             },
             {
+               "name" : "Laurent Rosenfeld",
                "y" : 5,
-               "drilldown" : "Laurent Rosenfeld",
-               "name" : "Laurent Rosenfeld"
+               "drilldown" : "Laurent Rosenfeld"
             },
             {
                "y" : 4,
@@ -114,26 +123,17 @@
                "name" : "Roger Bell West"
             },
             {
+               "name" : "Simon Proctor",
                "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
+               "drilldown" : "Simon Proctor"
             },
             {
-               "y" : 5,
-               "drilldown" : "Yet Ebreo",
-               "name" : "Yet Ebreo"
+               "name" : "Yet Ebreo",
+               "y" : 6,
+               "drilldown" : "Yet Ebreo"
             }
          ],
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 023"
       }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-08-27 11:21:59 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 023"
-   }
+   ]
 }
