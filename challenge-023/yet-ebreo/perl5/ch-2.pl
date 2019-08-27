@@ -25,6 +25,7 @@ say "@r\n";
 #But I feel like I should do a non-backtick/module solution so here we go:
 #It's slow(and inaccurate) on very large numbers
 say "Using non-backticks solution (trial division/modulo):";
+use bigint;
 @r = ();
 while ($n % 2<1) {
     push @r, 2;

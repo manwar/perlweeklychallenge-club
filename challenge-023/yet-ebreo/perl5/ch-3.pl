@@ -12,8 +12,7 @@ use JSON;
 binmode STDOUT, ":encoding(UTF-8)";
 
 my $api_content = get "https://www.poemist.com/api/v1/randompoems";
-my @data;
-push @data, @{$_} for JSON->new->utf8->decode($api_content);
+my @data = @{ JSON->new->utf8->decode($api_content) };
 
 #Printing the info of the first poem
 say "$data[0]{title} - $data[0]{poet}{name} - $data[0]{url}\n";
