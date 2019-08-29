@@ -8,24 +8,24 @@ defined as a list of prime numbers which when all multiplied together, are equal
 the Prime decomposition of 228 is 2,2,3,19 as 228 = 2 * 2 * 3 * 19.
 
 Usage:
-    $ perl6 ch-2.p6 228
-    $ perl6 ch-2.p6 --test
+    $ perl6 ch-2.p6 228     # print out prime factors
+    $ perl6 ch-2.p6 --test  # test results against Prime::Factor
 
 Notes:
 I used the algorithm described here: https://www.geeksforgeeks.org/print-all-prime-factors-of-a-given-number/ 
 
 =end SYNOPSIS
 
-sub my-prime-factors( $n is copy ) {
+sub my-prime-factors( Int $n is copy ) {
     my @factors;
     while $n %% 2 {
         @factors.push: 2;
-        $n /= 2;
+        $n = ($n / 2).Int;
     }
     for 3, 5 ... sqrt($n) -> $i {
         while $n %% $i {
             @factors.push: $i;
-            $n /= $i;
+            $n = ($n / $i).Int;
         }
     }
     @factors.push: $n if $n > 2;
@@ -45,9 +45,15 @@ multi MAIN( Int $input where * > 0 ) {
 
 multi MAIN( Bool :$test! ) {
     use Test;
-    for 1 .. 1000 -> $n {
-        say "$n: " ~ my-prime-factors($n).join(', ');
-    }
+    use Prime::Factor;
+
+    plan 1;
+
+    my $max = 10_000;
+    my %mine     = hyper for 1 .. $max { $_ => my-prime-factors($_).List };
+    my %expected = hyper for 1 .. $max { $_ => prime-factors($_).List };
+
+    is-deeply( %mine, %expected, "all prime factors up to $max match" );
 }
 
 
