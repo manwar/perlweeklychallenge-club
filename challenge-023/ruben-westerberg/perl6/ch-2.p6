@@ -1,11 +1,11 @@
 #!/usr/bin/env perl6
 
 
-sub MAIN($number) {
+sub MAIN(*@a) {
 	my $primes=(0..*).grep({.is-prime}).cache;
 	my @factors;
 	my $i=0;
-	my $value=$number;
+	my $value=my $number=@a[0]//228;
 	loop {
 		if $value%%$primes[$i] {
 			$value/=$primes[$i];

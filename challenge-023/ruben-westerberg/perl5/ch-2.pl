@@ -6,7 +6,7 @@ use v5.26;
 my $i=0;
 my @primes;
 my @factors;
-my $value=my $number=$ARGV[0];
+my $value=my $number=$ARGV[0]//228;
 while (1) {	
 	push(@primes, nextPrime()) if $i >= @primes;
 	last if $primes[$i]>$value;
