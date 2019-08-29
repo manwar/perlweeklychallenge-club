@@ -5,7 +5,7 @@
 use strict;
 use bytes;
 use constant INIT_DICT_SIZE => 255;
-
+use constant LOG2           => log(2);
 sub encode {
     my $string      = pop;
     my $len         = length $string;
@@ -15,41 +15,64 @@ sub encode {
     my %dictionary  = map { chr $_ => $_ } 0..$dict_size;
 
     #Initialize variables
+    my $prev        = substr $string, 0,1;
+    my $curr        = "";
+
+    my $code        = INIT_DICT_SIZE+1;
     my @buff_out    = ();
-    my $pos         = 0;
-    my $output      = "";
-    my $l           = "";
-    my $v           = "";
 
     #Go through the characters and build-up the $dictionary
-    while ($pos<$len) {
-        my $incr = 1;
-        for my $x ($pos+1..$len) {
-            $l = substr $string, $pos, $x-$pos;
-
-            #Check if current L value is in the $dictionary
-            if (exists $dictionary{$l}) {
-                $v = $dictionary{$l};
-
-                if ($x == $len) {
-                    push @buff_out, $v;
-                    $dictionary{$l} = ++$dict_size;
-                }
-            } else {
-                $incr = $x - $pos-1;
-                #Store last value to @buff_out and update the $dictionary
-                push @buff_out, $v;
-                $dictionary{$l} = ++$dict_size;
-                last;
-            }
+    for my $i (0..$len-1) {
+        if ($i != $len-1) {
+            $curr .= substr $string,$i + 1,1;
         }
-        $pos+=$incr;
+        if (exists $dictionary{$prev.$curr}) {
+            $prev .= $curr;
+        } else {
+            push @buff_out, $dictionary{$prev};
+            $dictionary{$prev.$curr} = $code;
+            $code++;
+            $prev = $curr;
+        }
+        $curr = "";
     }
-    return @buff_out;
+    push @buff_out, $dictionary{$prev};
+
+    #output as string
+    my $bin_string  = "";
+    my $chr_string  = "";
+    my $dict_index  = INIT_DICT_SIZE;
+    for my $bytes (@buff_out) {
+        my $width = 0|1+log(++$dict_index)/LOG2;
+        $bin_string .= sprintf "%0${width}b",$bytes;
+
+    }
+
+    while ($bin_string=~s/.{8}//) {
+        $chr_string .= chr oct "b$&";
+    }
+
+    $chr_string .= chr oct "b".$bin_string.(0 x (8 - length $bin_string));
+    return $chr_string;
 }
 
 sub decode {
-    my @buff_in     = @{+pop};
+    my $chr_string  = pop;
+    my $bin_string  = "";
+    my @buff_in     = ();
+
+    #decode the string passed
+    for (0..~-length $chr_string) {
+        $bin_string .= sprintf "%08b", ord (substr $chr_string, $_,1)
+    }
+
+    my $dict_index  = INIT_DICT_SIZE+1;
+    my $width       = 9;
+    while ($bin_string=~s/.{$width}//) {
+        push @buff_in, oct "b$&";
+        $width = 0|1+log(++$dict_index)/LOG2;
+    }
+    $buff_in[-1]+= oct "b$bin_string";
 
     #Initialize dictionary using numbers as keys
     #Using array would work too
@@ -61,7 +84,6 @@ sub decode {
     my $s           = $dictionary{$o};
     my $c           = substr $s, 0, 1;
     my $ret         = $s;
-
 
     my $count       = INIT_DICT_SIZE;
 
@@ -97,12 +119,23 @@ my $string = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ei
 print ("Original String has length ". (length $string)."\n");
 print "$string\n\n";
 
-my @compressed = encode($string);
-print ("Compressed String has length ". (@compressed)."\n");
-print (("@compressed "=~s/\d+ /chr $&/gre)."\n\n");
+my $filename = "./compressed.z";
+my $fh;
+open( $fh, '>', $filename);
+print $fh encode($string);
+close $fh;
 
-my $uncompressed = decode(\@compressed);
+my $comp_cfile_size = -s $filename;
+my $comp_ratio = (length ($string)/ $comp_cfile_size) * 100;
+
+printf "Compresed file size: ".(-s $filename)." Bytes (Ratio: %0.2f %)\n\n", $comp_ratio;
+
+open( $fh, '<', $filename);
+my $compressed = do { local $/; <$fh> };
+close $fh;
+
+my $uncompressed = decode($compressed);
 print ("Uncompressed String has length ". (length $uncompressed)."\n");
 print "$uncompressed\n\n";
-
+#
 print "Uncompressed string matches original\n\n" if $uncompressed eq $string;
