@@ -15,7 +15,7 @@ my $json = get('https://www.poemist.com/api/v1/randompoems');
 
 my $data = from_json($json);
 
-for ($count)
+for (0 .. $count -1)
 {
   last unless $data->[$_];
     
