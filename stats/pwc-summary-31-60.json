@@ -1,9 +1,9 @@
 {
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
    },
    "xAxis" : {
       "categories" : [
@@ -39,8 +39,27 @@
          "Mano Chandar"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-08-29 14:29:17 GMT"
+   },
    "series" : [
       {
+         "name" : "Perl 5",
          "data" : [
             0,
             0,
@@ -72,10 +91,10 @@
             19,
             1,
             0
-         ],
-         "name" : "Perl 5"
+         ]
       },
       {
+         "name" : "Perl 6",
          "data" : [
             4,
             37,
@@ -107,8 +126,7 @@
             0,
             1,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       },
       {
          "data" : [
@@ -145,23 +163,5 @@
          ],
          "name" : "Blog"
       }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-08-28 10:27:07 GMT"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   }
+   ]
 }
