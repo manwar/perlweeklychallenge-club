@@ -1,35 +1,38 @@
 {
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 023"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2019-08-29 14:29:17 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : 0
-   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          },
          "borderWidth" : 0
       }
    },
-   "xAxis" : {
-      "type" : "category"
-   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 023",
          "data" : [
             {
-               "drilldown" : "Andrezgz",
                "y" : 2,
-               "name" : "Andrezgz"
+               "name" : "Andrezgz",
+               "drilldown" : "Andrezgz"
             },
             {
                "drilldown" : "Arne Sommer",
@@ -37,14 +40,14 @@
                "name" : "Arne Sommer"
             },
             {
-               "drilldown" : "Duane Powell",
+               "name" : "Duane Powell",
                "y" : 2,
-               "name" : "Duane Powell"
+               "drilldown" : "Duane Powell"
             },
             {
-               "y" : 5,
                "drilldown" : "Laurent Rosenfeld",
-               "name" : "Laurent Rosenfeld"
+               "name" : "Laurent Rosenfeld",
+               "y" : 5
             },
             {
                "drilldown" : "Mark Anderson",
@@ -52,9 +55,9 @@
                "name" : "Mark Anderson"
             },
             {
-               "name" : "Randy Lauen",
                "drilldown" : "Randy Lauen",
-               "y" : 6
+               "y" : 6,
+               "name" : "Randy Lauen"
             },
             {
                "drilldown" : "Roger Bell West",
@@ -62,19 +65,26 @@
                "name" : "Roger Bell West"
             },
             {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
+               "y" : 4,
+               "name" : "Ruben Westerberg",
+               "drilldown" : "Ruben Westerberg"
             },
             {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "drilldown" : "Yet Ebreo",
                "name" : "Yet Ebreo",
-               "y" : 6,
-               "drilldown" : "Yet Ebreo"
+               "y" : 6
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
    "drilldown" : {
       "series" : [
          {
@@ -84,8 +94,8 @@
                   2
                ]
             ],
-            "name" : "Andrezgz",
-            "id" : "Andrezgz"
+            "id" : "Andrezgz",
+            "name" : "Andrezgz"
          },
          {
             "name" : "Arne Sommer",
@@ -112,10 +122,11 @@
                   2
                ]
             ],
-            "name" : "Duane Powell",
-            "id" : "Duane Powell"
+            "id" : "Duane Powell",
+            "name" : "Duane Powell"
          },
          {
+            "name" : "Laurent Rosenfeld",
             "id" : "Laurent Rosenfeld",
             "data" : [
                [
@@ -130,22 +141,19 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Laurent Rosenfeld"
+            ]
          },
          {
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Perl 5",
                   3
                ]
             ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
+            "name" : "Mark Anderson"
          },
          {
-            "id" : "Randy Lauen",
-            "name" : "Randy Lauen",
             "data" : [
                [
                   "Perl 5",
@@ -155,10 +163,12 @@
                   "Perl 6",
                   3
                ]
-            ]
+            ],
+            "id" : "Randy Lauen",
+            "name" : "Randy Lauen"
          },
          {
-            "id" : "Roger Bell West",
+            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -173,19 +183,34 @@
                   1
                ]
             ],
-            "name" : "Roger Bell West"
+            "id" : "Roger Bell West"
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
+            "id" : "Ruben Westerberg",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Ruben Westerberg"
+         },
+         {
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
+            "name" : "Yet Ebreo",
             "id" : "Yet Ebreo",
             "data" : [
                [
@@ -196,20 +221,14 @@
                   "Perl 6",
                   3
                ]
-            ],
-            "name" : "Yet Ebreo"
+            ]
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 023"
+   "legend" : {
+      "enabled" : 0
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2019-08-29 14:26:13 GMT"
+   "chart" : {
+      "type" : "column"
    }
 }
