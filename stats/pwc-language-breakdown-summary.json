@@ -1,12 +1,18 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       },
       "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2019-08-30 11:24:23 GMT"
    },
    "legend" : {
       "enabled" : "false"
@@ -14,35 +20,8 @@
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-08-29 23:51:24 GMT"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "series" : [
       {
-         "dataLabels" : {
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "enabled" : "true",
-            "color" : "#FFFFFF"
-         },
          "data" : [
             [
                "Blog",
@@ -54,10 +33,31 @@
             ],
             [
                "Perl 6",
-               567
+               569
             ]
          ],
-         "name" : "Contributions"
+         "name" : "Contributions",
+         "dataLabels" : {
+            "y" : 10,
+            "rotation" : -90,
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         }
       }
-   ]
+   ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   }
 }
