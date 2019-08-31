@@ -1,9 +1,4 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "xAxis" : {
       "categories" : [
          "Feng Chang",
@@ -38,11 +33,17 @@
          "Magnus Woldrich"
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-08-31 16:28:39 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-08-31 16:24:48 GMT"
    },
    "series" : [
       {
@@ -81,7 +82,6 @@
          ]
       },
       {
-         "name" : "Perl 6",
          "data" : [
             21,
             4,
@@ -113,7 +113,8 @@
             45,
             0,
             1
-         ]
+         ],
+         "name" : "Perl 6"
       },
       {
          "name" : "Blog",
@@ -154,14 +155,13 @@
    "chart" : {
       "type" : "column"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
