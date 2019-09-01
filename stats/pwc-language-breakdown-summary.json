@@ -1,54 +1,51 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
    "chart" : {
       "type" : "column"
    },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "subtitle" : {
-      "text" : "Last updated at 2019-08-29 14:29:39 GMT"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions - 2019"
+      "text" : "Last updated at 2019-08-31 21:14:51 GMT"
    },
    "series" : [
       {
          "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               236
+            ],
+            [
+               "Perl 5",
+               954
+            ],
+            [
+               "Perl 6",
+               574
+            ]
+         ],
          "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
+            "y" : 10,
             "style" : {
                "fontSize" : "13px",
                "fontFamily" : "Verdana, sans-serif"
             },
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
             "align" : "right",
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "enabled" : "true"
-         },
-         "data" : [
-            [
-               "Blog",
-               233
-            ],
-            [
-               "Perl 5",
-               940
-            ],
-            [
-               "Perl 6",
-               567
-            ]
-         ]
+            "enabled" : "true",
+            "color" : "#FFFFFF"
+         }
       }
    ],
    "yAxis" : {
@@ -57,7 +54,10 @@
       },
       "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "legend" : {
+      "enabled" : "false"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions - 2019"
    }
 }
