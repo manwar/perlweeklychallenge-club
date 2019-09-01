@@ -1,5 +1,8 @@
-use Data::Dump q/pp/; 
-
+use strict;
+use warnings;
+##
+# Create a script that prints Prime Decomposition of a given number. 
+##
 sub prime_factor{
     my $x = shift(@_); 
     my @factors;    
@@ -12,7 +15,7 @@ sub prime_factor{
     return @factors;  
 }
 
-print pp prime_factor(228); 
-print pp prime_factor(100); 
-print pp prime_factor(110); 
-
+MAIN:{
+    my $n = $ARGV[0]; 
+    print join(", ", prime_factor($n)) . "\n"; 
+}
