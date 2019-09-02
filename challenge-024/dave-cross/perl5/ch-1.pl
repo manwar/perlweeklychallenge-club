@@ -1,3 +1,3 @@
-#!/use/bin/perl
+#!/usr/bin/perl
 
 1
