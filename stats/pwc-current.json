@@ -1,38 +1,15 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-09-02 10:44:39 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 024"
-   },
    "drilldown" : {
       "series" : [
          {
             "id" : "Dave Cross",
-            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ]
+            ],
+            "name" : "Dave Cross"
          },
          {
             "data" : [
@@ -45,8 +22,8 @@
                   1
                ]
             ],
-            "name" : "Joelle Maslak",
-            "id" : "Joelle Maslak"
+            "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak"
          },
          {
             "data" : [
@@ -59,8 +36,8 @@
                   1
                ]
             ],
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West"
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West"
          },
          {
             "id" : "Simon Proctor",
@@ -75,22 +52,37 @@
                ]
             ],
             "name" : "Simon Proctor"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Steven Wilson",
+            "name" : "Steven Wilson"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Dave Cross",
+               "y" : 1,
                "drilldown" : "Dave Cross",
-               "y" : 1
+               "name" : "Dave Cross"
             },
             {
                "name" : "Joelle Maslak",
@@ -98,23 +90,46 @@
                "y" : 2
             },
             {
-               "name" : "Roger Bell West",
                "y" : 3,
-               "drilldown" : "Roger Bell West"
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West"
             },
             {
-               "name" : "Simon Proctor",
                "y" : 3,
+               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Steven Wilson",
+               "name" : "Steven Wilson"
             }
          ],
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 024"
       }
    ],
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-09-02 11:24:58 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 024"
    }
 }
