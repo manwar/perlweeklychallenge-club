@@ -20,7 +20,6 @@ multi sub MAIN (
     my %index;
     my $word-channel = Channel.new;
     my @promises;
-    my $promise-count++;
     
     for @documents -> $path {
         @promises.push(
