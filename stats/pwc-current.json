@@ -1,15 +1,41 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "Dave Cross",
+               "y" : 1,
+               "drilldown" : "Dave Cross"
+            },
+            {
+               "name" : "Joelle Maslak",
+               "y" : 4,
+               "drilldown" : "Joelle Maslak"
+            },
+            {
+               "drilldown" : "Roger Bell West",
+               "y" : 4,
+               "name" : "Roger Bell West"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 3,
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "drilldown" : "Steven Wilson",
+               "name" : "Steven Wilson",
+               "y" : 1
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 024",
+         "colorByPoint" : 1
       }
-   },
-   "xAxis" : {
-      "type" : "category"
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
@@ -38,6 +64,7 @@
             ]
          },
          {
+            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -46,10 +73,13 @@
                [
                   "Perl 6",
                   1
+               ],
+               [
+                  "Blog",
+                  1
                ]
             ],
-            "id" : "Roger Bell West",
-            "name" : "Roger Bell West"
+            "id" : "Roger Bell West"
          },
          {
             "data" : [
@@ -62,74 +92,48 @@
                   2
                ]
             ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          },
          {
-            "id" : "Steven Wilson",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
             "name" : "Steven Wilson",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ]
+            "id" : "Steven Wilson"
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 024"
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-09-03 09:47:48 GMT"
    },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    },
    "legend" : {
       "enabled" : 0
    },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-09-03 09:37:42 GMT"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 024"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Dave Cross",
-               "y" : 1,
-               "drilldown" : "Dave Cross"
-            },
-            {
-               "name" : "Joelle Maslak",
-               "y" : 4,
-               "drilldown" : "Joelle Maslak"
-            },
-            {
-               "name" : "Roger Bell West",
-               "y" : 3,
-               "drilldown" : "Roger Bell West"
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 3,
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "drilldown" : "Steven Wilson",
-               "y" : 1,
-               "name" : "Steven Wilson"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 024"
-      }
-   ],
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    }
 }
