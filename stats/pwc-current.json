@@ -1,29 +1,41 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "name" : "Dave Cross"
+            "name" : "Dave Cross",
+            "id" : "Dave Cross"
          },
          {
+            "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
-                  1
+                  2
                ],
                [
                   "Perl 6",
-                  1
+                  2
                ]
-            ],
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak"
+            ]
          },
          {
             "data" : [
@@ -40,7 +52,6 @@
             "name" : "Roger Bell West"
          },
          {
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 5",
@@ -51,85 +62,74 @@
                   2
                ]
             ],
+            "id" : "Simon Proctor",
             "name" : "Simon Proctor"
          },
          {
+            "id" : "Steven Wilson",
+            "name" : "Steven Wilson",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ],
-            "id" : "Steven Wilson",
-            "name" : "Steven Wilson"
+            ]
          }
       ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 024"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-09-03 09:37:42 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
+               "name" : "Dave Cross",
                "y" : 1,
-               "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
+               "drilldown" : "Dave Cross"
             },
             {
                "name" : "Joelle Maslak",
-               "drilldown" : "Joelle Maslak",
-               "y" : 2
+               "y" : 4,
+               "drilldown" : "Joelle Maslak"
             },
             {
+               "name" : "Roger Bell West",
                "y" : 3,
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West"
+               "drilldown" : "Roger Bell West"
             },
             {
-               "y" : 3,
                "name" : "Simon Proctor",
+               "y" : 3,
                "drilldown" : "Simon Proctor"
             },
             {
-               "y" : 1,
                "drilldown" : "Steven Wilson",
+               "y" : 1,
                "name" : "Steven Wilson"
             }
          ],
+         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 024"
       }
    ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-09-02 11:24:58 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 024"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    }
 }
