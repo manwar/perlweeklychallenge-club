@@ -1,34 +1,30 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
+            "name" : "Dave Cross",
             "id" : "Dave Cross"
          },
          {
             "name" : "Duane Powell",
+            "id" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Duane Powell"
+            ]
          },
          {
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
@@ -38,10 +34,11 @@
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "name" : "Joelle Maslak",
+            "id" : "Joelle Maslak"
          },
          {
-            "id" : "Laurent Rosenfeld",
             "data" : [
                [
                   "Perl 5",
@@ -56,9 +53,12 @@
                   1
                ]
             ],
+            "id" : "Laurent Rosenfeld",
             "name" : "Laurent Rosenfeld"
          },
          {
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -72,13 +72,9 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West"
+            ]
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 5",
@@ -88,90 +84,117 @@
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          },
          {
             "name" : "Steven Wilson",
+            "id" : "Steven Wilson",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ],
-            "id" : "Steven Wilson"
+            ]
+         },
+         {
+            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 024"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
                "name" : "Dave Cross",
-               "y" : 1,
-               "drilldown" : "Dave Cross"
+               "drilldown" : "Dave Cross",
+               "y" : 1
             },
             {
-               "drilldown" : "Duane Powell",
+               "name" : "Duane Powell",
                "y" : 2,
-               "name" : "Duane Powell"
+               "drilldown" : "Duane Powell"
             },
             {
-               "y" : 4,
                "name" : "Joelle Maslak",
-               "drilldown" : "Joelle Maslak"
-            },
-            {
-               "drilldown" : "Laurent Rosenfeld",
-               "y" : 5,
-               "name" : "Laurent Rosenfeld"
-            },
-            {
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West",
+               "drilldown" : "Joelle Maslak",
                "y" : 4
             },
             {
-               "drilldown" : "Simon Proctor",
-               "y" : 3,
-               "name" : "Simon Proctor"
+               "name" : "Laurent Rosenfeld",
+               "drilldown" : "Laurent Rosenfeld",
+               "y" : 5
             },
             {
-               "y" : 1,
+               "name" : "Roger Bell West",
+               "y" : 4,
+               "drilldown" : "Roger Bell West"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 3,
+               "drilldown" : "Simon Proctor"
+            },
+            {
                "name" : "Steven Wilson",
-               "drilldown" : "Steven Wilson"
+               "drilldown" : "Steven Wilson",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Yet Ebreo",
+               "y" : 5,
+               "name" : "Yet Ebreo"
             }
          ],
+         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 024"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2019-09-03 21:39:32 GMT"
-   },
    "legend" : {
       "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          }
       }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2019-09-04 20:20:46 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 024"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
