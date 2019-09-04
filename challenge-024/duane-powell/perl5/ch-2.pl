@@ -74,16 +74,12 @@ sub new {
 sub thaw {
         my $self = shift;
 	# Retrieve the Storable object from disk and return it.
-	if (-e $self->{storable_index}) {
-		my $i = retrieve($self->{storable_index});
-		print "No files have been indexed yet.\n" unless ($i->{file_id});
-		return $i; 
-	} else {
+	unless (-e $self->{storable_index}) {
 		# First call ever, so create the Storable. 
 		print "No files have been indexed yet.\n";
-		store $self, $self->{storable_index};
-		exit;
+		$self->freeze();
 	}
+	return retrieve($self->{storable_index});
 }
 
 sub freeze {
