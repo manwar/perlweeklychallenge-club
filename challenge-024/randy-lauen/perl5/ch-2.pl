@@ -11,9 +11,9 @@ Notes:
 
 Example Usage:
     $ perl ch-2.pl minds
-	Found 2 document(s) for 'minds'
-	* "Pride and Prejudice": 1 occurence(s)
-	* "War of the Worlds": 1 occurence(s)
+    Found 2 document(s) for 'minds'
+    * "Pride and Prejudice": 1 occurence(s)
+    * "War of the Worlds": 1 occurence(s)
 
     $ perl ch-2.pl universe
     Found 0 document(s) for 'universe'
