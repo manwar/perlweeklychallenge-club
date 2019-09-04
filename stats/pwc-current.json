@@ -1,118 +1,166 @@
 {
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Dave Cross",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ],
-            "name" : "Dave Cross"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ],
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ],
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "id" : "Roger Bell West",
-            "name" : "Roger Bell West"
-         },
-         {
-            "id" : "Simon Proctor",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ],
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "name" : "Simon Proctor"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ],
-            "id" : "Steven Wilson",
-            "name" : "Steven Wilson"
-         }
-      ]
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Dave Cross"
+         },
+         {
+            "name" : "Duane Powell",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Duane Powell"
+         },
+         {
+            "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Laurent Rosenfeld",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Laurent Rosenfeld"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  1
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Roger Bell West",
+            "id" : "Roger Bell West"
+         },
+         {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Steven Wilson",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Steven Wilson"
+         }
+      ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 024"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "tooltip" : {
-      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    },
    "series" : [
       {
          "colorByPoint" : 1,
          "data" : [
             {
+               "name" : "Dave Cross",
                "y" : 1,
-               "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
+               "drilldown" : "Dave Cross"
             },
             {
+               "drilldown" : "Duane Powell",
+               "y" : 2,
+               "name" : "Duane Powell"
+            },
+            {
+               "y" : 4,
                "name" : "Joelle Maslak",
-               "drilldown" : "Joelle Maslak",
-               "y" : 2
+               "drilldown" : "Joelle Maslak"
             },
             {
-               "y" : 3,
+               "drilldown" : "Laurent Rosenfeld",
+               "y" : 5,
+               "name" : "Laurent Rosenfeld"
+            },
+            {
                "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West"
+               "name" : "Roger Bell West",
+               "y" : 4
             },
             {
+               "drilldown" : "Simon Proctor",
                "y" : 3,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "name" : "Simon Proctor"
             },
             {
                "y" : 1,
-               "drilldown" : "Steven Wilson",
-               "name" : "Steven Wilson"
+               "name" : "Steven Wilson",
+               "drilldown" : "Steven Wilson"
             }
          ],
          "name" : "Perl Weekly Challenge - 024"
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2019-09-03 21:39:32 GMT"
+   },
    "legend" : {
       "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-09-02 11:24:58 GMT"
    },
    "chart" : {
       "type" : "column"
@@ -121,15 +169,9 @@
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 024"
    }
 }
