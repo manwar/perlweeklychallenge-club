@@ -35,7 +35,7 @@ print "\nSearch word: ";
 my $w = <>;
 chomp $w;
 if ( exists $index{lc $w} ) {
-    print "'$w' was found on ", join(',',keys $index{lc $w}) . "\n";
+    print "'$w' was found on ", join(',',keys %{$index{lc $w}}) . "\n";
 }
 else {
     print "'$w' wasn't found on any document\n";
