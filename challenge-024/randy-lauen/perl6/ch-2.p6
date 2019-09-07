@@ -1,6 +1,6 @@
-#!/usr/bin/env perl
+#!/usr/bin/env perl6
 
-=head2 SYNOPSIS
+=begin SYNOPSIS
 
 Task:
     Create a script to implement full text search functionality using Inverted Index.
@@ -11,43 +11,32 @@ Notes:
     by the document with the most occurrences of the word.
 
 Example Usage:
-    $ perl ch-2.pl minds
+    $ perl6 ch-2.p6 minds
     Found 2 document(s) for 'minds'
     * "Pride and Prejudice": 1 occurence(s)
     * "War of the Worlds": 1 occurence(s)
 
-    $ perl ch-2.pl universe
+    $ perl6 ch-2.p6 universe
     Found 0 document(s) for 'universe'
 
-=cut
-
-use v5.26;
-use strict;
-use warnings;
-
-use List::MoreUtils qw( frequency );
-
-my %index = build_inverse_index( get_documents() );
-my $keyword = lc $ARGV[0] // '';
-die "Must provide a keyword as an argument\n" unless length($keyword);
-
-my @matches = sort { $b->{freq} <=> $a->{freq} || $a->{doc} cmp $b->{doc} } $index{ $keyword }->@*;
-say "Found " . scalar(@matches) . " document(s) for '$keyword'";
-say qq[* "$_->{doc}": $_->{freq} occurence(s)] for @matches;
-
-exit 0;
+=end SYNOPSIS
 
 
-sub build_inverse_index {
-    my %documents = @_;
+sub MAIN( Str $keyword where *.chars > 0 ) {
+    my %index = build_inverse_index( get_documents() );
+    my @matches = %index{ $keyword.lc }:v.sort( { .<freq> } ).reverse;
+    say "Found @matches.elems() document(s) for '$keyword.lc()'";
+    say "* '$_.<doc>': $_.<freq> occurrence(s)" for @matches;
+}
 
+
+sub build_inverse_index( %documents ) {
     my %index;
 
-    while ( my ($name, $text) = each %documents ) {
-        my @words = map { lc $_ } $text =~ /\w+/g;
-        my %freq = frequency @words;
-        foreach my $word ( keys %freq ) {
-            push $index{ $word }->@*, { doc => $name, freq => $freq{$word} };
+    for %documents.kv -> $name, $text {
+        my $bag = bag $text.lc.words;
+        for $bag.kv -> $word, $freq {
+            %index{ $word }.push: %( doc => $name, freq => $freq );
         }
     }
 
@@ -56,8 +45,8 @@ sub build_inverse_index {
 
 
 sub get_documents {
-    return (
-        'Pride and Prejudice' => <<~'TXT',
+    return %(
+        'Pride and Prejudice' => q:to/TXT/,
             It is a truth universally acknowledged, that
             a single man in possession of a good fortune
             must be in want of a wife. However little
@@ -68,7 +57,7 @@ sub get_documents {
             considered the rightful property of some one
             or other of their daughters.
             TXT
-        'War of the Worlds' => <<~'TXT',
+        'War of the Worlds' => q:to/TXT/,
             No one would have believed, in the last years
             of the nineteenth century, that human affairs
             were being watched from the timeless worlds
@@ -81,7 +70,7 @@ sub get_documents {
             envious eyes, and slowly, and surely, they
             drew their plans against us...
             TXT
-        'Richard III' => <<~'TXT',
+        'Richard III' => q:to/TXT/,
             Now is the winter of our discontent made
             glorious summer by this sun of York; and
             all the clouds that lour'd upon our
@@ -93,7 +82,7 @@ sub get_documents {
             dreadful marches to delightful
             measures.
             TXT
-        "Hitchhiker's Guide to the Galaxy" => <<~'TXT',
+        "Hitchhiker's Guide to the Galaxy" => q:to/TXT/,
             Far back in the mists of ancient
             time, in the great and glorious days
             of the former Galactic Empire, life
@@ -101,6 +90,3 @@ sub get_documents {
             TXT
     );
 }
-
-
-
