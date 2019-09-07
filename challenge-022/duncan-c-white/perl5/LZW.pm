@@ -180,11 +180,9 @@ fun lzw_decode( $binstr )
 	my $ndict = @newdict;
 	print "decoding first $b, pos=$pos, ndict=$ndict\n" if $debug;
 
-
 	die "LZW_decode: first bin $b (pos $pos) not in dict, $ndict entries\n" unless $pos<$ndict;
 
 	my $prevf = $newdict[$pos];	# previous text fragment
-
 	my $result = $prevf;
 
 	while( $binstr )
@@ -199,30 +197,22 @@ fun lzw_decode( $binstr )
 
 		my $ndict = @newdict;
 
-		my $f;		# current decoded text fragment
+		die "decode: bad pos $pos (dictionary has $ndict ".
+		    "entries) result=$result, b=$b, ".
+		    "binstr=$binstr)\n" if $pos > $ndict;
 
-		# if pos in dict?
-		if( $pos < $ndict )
-		{
-			$f = $newdict[$pos];
-		} elsif( $pos == $ndict )
-		{
-			$f = $prevf . substr($prevf,0,1);
-		} else
-		{
-			die "decode: bad pos $pos (dictionary has $ndict ".
-			    "entries) result=$result, b=$b, ".
-			    "binstr=$binstr)\n";
-		}
+		my $f = $pos < $ndict ?    # current decoded text fragment
+				$newdict[$pos] :
+				$prevf . substr($prevf,0,1);
 
-		# ok, so $b represents text frag $f
+		# ok, so encoded $b represents decoded text frag $f
 		print "b $b, pos=$pos, prevf=$prevf, f=$f\n" if $debug;
 
 		$result .= $f;
 
-		# the next entry in the dictionary must be the WHOLE of
-		# the previous fragment plus the FIRST letter of the
-		# current fragment $f
+		# the next entry in the dictionary is the WHOLE of
+		# the previous fragment $prevf, plus the FIRST letter
+		# of the current fragment $f
 		my $new = $prevf . substr($f,0,1);
 
 		$pos = @newdict;
