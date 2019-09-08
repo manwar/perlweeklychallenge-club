@@ -1,21 +1,38 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 22] Last updated at 2019-09-08 17:40:40 GMT"
+   },
    "series" : [
       {
          "data" : [
             {
+               "name" : "Adam Russell",
                "y" : 3,
-               "drilldown" : "Adam Russell",
-               "name" : "Adam Russell"
+               "drilldown" : "Adam Russell"
             },
             {
-               "name" : "Alicia Bielsa",
                "y" : 1,
+               "name" : "Alicia Bielsa",
                "drilldown" : "Alicia Bielsa"
             },
             {
-               "y" : 1,
                "drilldown" : "Andrezgz",
-               "name" : "Andrezgz"
+               "name" : "Andrezgz",
+               "y" : 1
             },
             {
                "drilldown" : "Arne Sommer",
@@ -23,43 +40,43 @@
                "name" : "Arne Sommer"
             },
             {
-               "drilldown" : "Athanasius",
+               "name" : "Athanasius",
                "y" : 2,
-               "name" : "Athanasius"
+               "drilldown" : "Athanasius"
             },
             {
                "y" : 2,
-               "drilldown" : "Daniel Mantovani",
-               "name" : "Daniel Mantovani"
+               "name" : "Daniel Mantovani",
+               "drilldown" : "Daniel Mantovani"
             },
             {
-               "name" : "Dave Jacoby",
                "y" : 4,
+               "name" : "Dave Jacoby",
                "drilldown" : "Dave Jacoby"
             },
             {
+               "name" : "E. Choroba",
                "y" : 3,
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
+               "drilldown" : "E. Choroba"
             },
             {
-               "drilldown" : "Finley",
+               "name" : "Finley",
                "y" : 2,
-               "name" : "Finley"
+               "drilldown" : "Finley"
             },
             {
-               "drilldown" : "Francis Whittle",
+               "name" : "Francis Whittle",
                "y" : 2,
-               "name" : "Francis Whittle"
+               "drilldown" : "Francis Whittle"
             },
             {
+               "y" : 1,
                "name" : "Guillermo Ramos",
-               "drilldown" : "Guillermo Ramos",
-               "y" : 1
+               "drilldown" : "Guillermo Ramos"
             },
             {
-               "y" : 2,
                "drilldown" : "Gustavo Chaves",
+               "y" : 2,
                "name" : "Gustavo Chaves"
             },
             {
@@ -68,19 +85,19 @@
                "name" : "Jaldhar H. Vyas"
             },
             {
-               "y" : 3,
                "drilldown" : "Jo Christian Oterhals",
-               "name" : "Jo Christian Oterhals"
+               "name" : "Jo Christian Oterhals",
+               "y" : 3
             },
             {
-               "drilldown" : "Joelle Maslak",
+               "name" : "Joelle Maslak",
                "y" : 4,
-               "name" : "Joelle Maslak"
+               "drilldown" : "Joelle Maslak"
             },
             {
+               "name" : "Kian-Meng Ang",
                "y" : 3,
-               "drilldown" : "Kian-Meng Ang",
-               "name" : "Kian-Meng Ang"
+               "drilldown" : "Kian-Meng Ang"
             },
             {
                "drilldown" : "Laurent Rosenfeld",
@@ -89,8 +106,8 @@
             },
             {
                "name" : "Luis F. Uceta",
-               "drilldown" : "Luis F. Uceta",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Luis F. Uceta"
             },
             {
                "drilldown" : "Maxim Nechaev",
@@ -99,48 +116,32 @@
             },
             {
                "drilldown" : "Ozzy",
-               "y" : 1,
-               "name" : "Ozzy"
+               "name" : "Ozzy",
+               "y" : 1
             },
             {
-               "name" : "Ruben Westerberg",
                "y" : 4,
+               "name" : "Ruben Westerberg",
                "drilldown" : "Ruben Westerberg"
             },
             {
-               "drilldown" : "Simon Proctor",
                "y" : 1,
-               "name" : "Simon Proctor"
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
             }
          ],
          "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 007"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 22] Last updated at 2019-09-08 16:57:25 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 007"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
          {
             "name" : "Adam Russell",
+            "id" : "Adam Russell",
             "data" : [
                [
                   "Perl 5",
@@ -150,17 +151,16 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Adam Russell"
+            ]
          },
          {
-            "id" : "Alicia Bielsa",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
+            "id" : "Alicia Bielsa",
             "name" : "Alicia Bielsa"
          },
          {
@@ -174,6 +174,7 @@
             ]
          },
          {
+            "name" : "Arne Sommer",
             "data" : [
                [
                   "Perl 6",
@@ -184,28 +185,27 @@
                   1
                ]
             ],
-            "id" : "Arne Sommer",
-            "name" : "Arne Sommer"
+            "id" : "Arne Sommer"
          },
          {
-            "id" : "Athanasius",
+            "name" : "Athanasius",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "name" : "Athanasius"
+            "id" : "Athanasius"
          },
          {
-            "name" : "Daniel Mantovani",
-            "id" : "Daniel Mantovani",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "id" : "Daniel Mantovani",
+            "name" : "Daniel Mantovani"
          },
          {
             "name" : "Dave Jacoby",
@@ -236,48 +236,46 @@
             "name" : "E. Choroba"
          },
          {
-            "name" : "Finley",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
             ],
-            "id" : "Finley"
+            "id" : "Finley",
+            "name" : "Finley"
          },
          {
-            "name" : "Francis Whittle",
+            "id" : "Francis Whittle",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
             ],
-            "id" : "Francis Whittle"
+            "name" : "Francis Whittle"
          },
          {
-            "name" : "Guillermo Ramos",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "id" : "Guillermo Ramos"
+            "id" : "Guillermo Ramos",
+            "name" : "Guillermo Ramos"
          },
          {
             "name" : "Gustavo Chaves",
+            "id" : "Gustavo Chaves",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Gustavo Chaves"
+            ]
          },
          {
-            "name" : "Jaldhar H. Vyas",
-            "id" : "Jaldhar H. Vyas",
             "data" : [
                [
                   "Perl 5",
@@ -287,7 +285,9 @@
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Jaldhar H. Vyas",
+            "name" : "Jaldhar H. Vyas"
          },
          {
             "name" : "Jo Christian Oterhals",
@@ -304,8 +304,6 @@
             ]
          },
          {
-            "name" : "Joelle Maslak",
-            "id" : "Joelle Maslak",
             "data" : [
                [
                   "Perl 5",
@@ -315,11 +313,11 @@
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Joelle Maslak",
+            "name" : "Joelle Maslak"
          },
          {
-            "name" : "Kian-Meng Ang",
-            "id" : "Kian-Meng Ang",
             "data" : [
                [
                   "Perl 5",
@@ -329,9 +327,12 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "id" : "Kian-Meng Ang",
+            "name" : "Kian-Meng Ang"
          },
          {
+            "name" : "Laurent Rosenfeld",
             "id" : "Laurent Rosenfeld",
             "data" : [
                [
@@ -346,18 +347,17 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Laurent Rosenfeld"
+            ]
          },
          {
-            "name" : "Luis F. Uceta",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
             ],
-            "id" : "Luis F. Uceta"
+            "id" : "Luis F. Uceta",
+            "name" : "Luis F. Uceta"
          },
          {
             "name" : "Maxim Nechaev",
@@ -370,16 +370,18 @@
             ]
          },
          {
+            "id" : "Ozzy",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Ozzy",
             "name" : "Ozzy"
          },
          {
+            "name" : "Ruben Westerberg",
+            "id" : "Ruben Westerberg",
             "data" : [
                [
                   "Perl 5",
@@ -389,19 +391,17 @@
                   "Perl 6",
                   2
                ]
-            ],
-            "id" : "Ruben Westerberg",
-            "name" : "Ruben Westerberg"
+            ]
          },
          {
-            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Simon Proctor"
+            "name" : "Simon Proctor"
          }
       ]
    },
