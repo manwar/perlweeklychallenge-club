@@ -1,121 +1,85 @@
 {
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Dave Cross",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ],
-            "name" : "Dave Cross"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ],
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "id" : "Joelle Maslak",
-            "name" : "Joelle Maslak"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ],
-               [
-                  "Perl 6",
-                  1
-               ]
-            ],
-            "id" : "Roger Bell West",
-            "name" : "Roger Bell West"
-         },
-         {
-            "id" : "Simon Proctor",
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ],
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "name" : "Simon Proctor"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  1
-               ]
-            ],
-            "id" : "Steven Wilson",
-            "name" : "Steven Wilson"
-         }
-      ]
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 025",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 1
+            },
+            {
+               "y" : 1,
+               "name" : "Yet Ebreo",
+               "drilldown" : "Yet Ebreo"
+            }
+         ]
+      }
+   ],
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 6",
+                  1
+               ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
+         },
+         {
+            "name" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Yet Ebreo"
+         }
+      ]
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 1,
-               "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
-            },
-            {
-               "name" : "Joelle Maslak",
-               "drilldown" : "Joelle Maslak",
-               "y" : 2
-            },
-            {
-               "y" : 3,
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West"
-            },
-            {
-               "y" : 3,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Steven Wilson",
-               "name" : "Steven Wilson"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 024"
-      }
-   ],
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "Perl Weekly Challenge - 025"
    },
    "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-09-02 11:24:58 GMT"
+      "text" : "[Champions: 3] Last updated at 2019-09-09 14:30:58 GMT"
    },
    "chart" : {
       "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
@@ -125,11 +89,5 @@
             "format" : "{point.y}"
          }
       }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 024"
    }
 }
