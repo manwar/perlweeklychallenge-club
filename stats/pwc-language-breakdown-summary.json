@@ -1,7 +1,4 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "xAxis" : {
       "labels" : {
          "style" : {
@@ -11,8 +8,24 @@
       },
       "type" : "category"
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions - 2019"
+   },
    "series" : [
       {
+         "dataLabels" : {
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10,
+            "rotation" : -90,
+            "enabled" : "true",
+            "format" : "{point.y:.0f}"
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -20,44 +33,31 @@
             ],
             [
                "Perl 5",
-               1007
+               1008
             ],
             [
                "Perl 6",
                607
             ]
-         ],
-         "dataLabels" : {
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "y" : 10,
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "rotation" : -90
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-09-09 14:31:04 GMT"
-   },
    "chart" : {
       "type" : "column"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions - 2019"
-   },
    "legend" : {
       "enabled" : "false"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2019-09-10 10:56:44 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
    }
 }

@@ -1,10 +1,17 @@
 {
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-09-10 10:56:36 GMT"
    },
    "series" : [
       {
-         "name" : "Perl 5",
          "data" : [
             0,
             2,
@@ -36,7 +43,8 @@
             21,
             41,
             40
-         ]
+         ],
+         "name" : "Perl 5"
       },
       {
          "name" : "Perl 6",
@@ -74,7 +82,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -106,15 +113,19 @@
             0,
             0,
             19
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-09-09 14:30:59 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "xAxis" : {
       "categories" : [
@@ -150,18 +161,7 @@
          "E. Choroba"
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    }
 }
