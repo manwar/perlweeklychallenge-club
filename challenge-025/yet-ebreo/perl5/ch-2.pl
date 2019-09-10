@@ -6,15 +6,13 @@ use strict;
 use warnings;
 use 5.010;
 
+#It should be okay to modify the zenith/nadir (0 to $wheelsize)
 use constant ZENITH  => 0;
 use constant NADIR   => 13;
 
-my @g_pt;
-my @g_ct;
-
 #Initialize  wheels (chaocipher with bigger wheels!)
-my @pt = @g_pt = "7bqkj9l2hOWyzA8SLPEtRvBwUQVmxa45g ufspeTF1KHd0DrGMCZoJXi3YIN6nc"=~/./g;
-my @ct = @g_ct = "vEDclCHZYeWo9drb6Jnkf5MRXOt UgN4Fi231GzQIx7sPaLK8TBuVpA0yjShqwm"=~/./g;
+my @pt = "7bqkj9l2hOWyzA8SLPEtRvBwUQVmxa45g ufspeTF1KHd0DrGMCZoJXi3YIN6nc"=~/./g;
+my @ct = "vEDclCHZYeWo9drb6Jnkf5MRXOt UgN4Fi231GzQIx7sPaLK8TBuVpA0yjShqwm"=~/./g;
 
 my $wheel_size = $#pt;
 
