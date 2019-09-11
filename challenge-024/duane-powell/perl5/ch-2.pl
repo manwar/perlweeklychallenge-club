@@ -121,6 +121,8 @@ sub build {
 
 			# Parse and count words in $f 
 			while (<$FH>) {
+				# substitue all non-alpha-numberic chars with space then split on space
+				$_ =~ s/[^a-zA-Z0-9]/ /g;
 				foreach (split(/\s+/,$_)) {
 					$word_count++;
 					my $w = lc($_);
