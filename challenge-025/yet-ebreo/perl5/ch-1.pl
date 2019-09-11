@@ -14,13 +14,11 @@ use 5.010;
 my $start_run = time();
 
 my @names = qw(bagon audino baltoy banette bidoof braviary bronzor carracosta charmeleon cresselia croagunk darmanitan deino emboar emolga exeggcute gabite girafarig gulpin haxorus heatmor heatran ivysaur jellicent jumpluff kangaskhan kricketune landorus ledyba loudred lumineon lunatone machamp magnezone mamoswine nosepass petilil pidgeotto pikachu pinsir poliwrath poochyena porygon2 porygonz registeel relicanth remoraid rufflet sableye scolipede scrafty seaking sealeo silcoon simisear snivy snorlax spoink starly tirtouga trapinch treecko tyrogue vigoroth vulpix wailord wartortle whismur wingull yamask);
-
 my %hash;
 my $max_length = 0;
-my $length = 0;
 my @chain;
 
-#First I need to group each name (in @names) by the starting letter
+#First, I need to group each name (in @names) by the starting letter
 #so that I dont have to filter out @names in each iteration
 #For this, I used Hashes of Arrays which will be structured like so:
 #%hash = (
@@ -28,7 +26,7 @@ my @chain;
 #    ...
 #    e => ["emboar", "emolga", "exeggcute"],
 #    ..
-#    z => ["yamask"],
+#    y => ["yamask"],
 #)
 for my $n (@names) {
     my $first = substr $n,0,1;
@@ -79,7 +77,7 @@ for my $seq (@{$chain[-1]}) {
     say "$seq\n";
 }
 say "Highest chain count: $#chain";
-say "Number of Sequence found: $#{$chain[-1]}";
+say "Number of Sequence found: ".@{$chain[-1]};
 
 my $run_time = time() - $start_run;
 say "Run Time: $run_time sec";
@@ -93,11 +91,11 @@ Sequence:
 
 > machamp > pinsir > rufflet > trapinch > heatmor > remoraid > darmanitan > nosepass > starly > yamask > kricketune > exeggcute > emboar > relicanth > haxorus > simisear > registeel > landorus > seaking > girafarig > gabite > emolga > audino
 Highest chain count: 23
-Number of Sequence found: 1247
+Number of Sequence found: 1248
 Run Time: 5 sec
 
 #Note(s):
-- There are actually 1247 sequences with 23 chain counts. I decided to print them all. 
+- There are actually 1248 sequences with 23 chain counts. I decided to print them all. 
 - I am surprised with the speed compared to other algorithms.
 - I appreciate the challenges for this week, they are actually challenging. Thanks!
 =cut
