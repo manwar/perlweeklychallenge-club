@@ -15,7 +15,7 @@
 # - 3 mins is still slow compared to perl5 version. 
 # - I hope somebody can tell me why perl6 is taking a lot longer vs my perl5 version (< 10 sec)
 # - I kept on thinking of a better approcah, then an I came up with an idea...
-# - ...this time we are going backwards!
+# - ...this time we are going backwards! Run Time is now under a minute
 my Str @names = <bagon audino baltoy banette bidoof braviary bronzor carracosta charmeleon cresselia croagunk darmanitan deino emboar emolga exeggcute gabite girafarig gulpin haxorus heatmor heatran ivysaur jellicent jumpluff kangaskhan kricketune landorus ledyba loudred lumineon lunatone machamp magnezone mamoswine nosepass petilil pidgeotto pikachu pinsir poliwrath poochyena porygon2 porygonz registeel relicanth remoraid rufflet sableye scolipede scrafty seaking sealeo silcoon simisear snivy snorlax spoink starly tirtouga trapinch treecko tyrogue vigoroth vulpix wailord wartortle whismur wingull yamask>;
 my Array @chain;
 my %hash = ();
@@ -26,7 +26,7 @@ sub MAIN {
         %hash{$n} = @names.grep(/$n$/);
     }
 
-    #The code below list down the valid last names,
+    #The code below list down the candidates for last names,
     #These are names ending with letter which is NOT 
     #a starting letter of any name in the list @names
     my Str @last_names;
@@ -35,12 +35,23 @@ sub MAIN {
         (!grep {/^$last/}, @names) &&  @last_names.push($name);
     }
 
-    #Use the valid last names as starting point;
-    #Although, upon checking all longest sequence ended with 'alduino'
-    await do for @last_names -> $lname {
-        start {
+    #The code below was added to further filter out @last_names
+    #and find the best candidate(s) and store it in @best_last
+    #The name in @last_name with the most number of linkage 
+    #(its first char is same as last char of name in @names) will be used 
+    my @best_last;
+    for @last_names -> $lname {
+        my $first = $lname.substr(0,1);
+        my $count = grep { /$first$/}, @names;
+
+        @best_last[$count].push($lname);
+    }
+
+    #Use the @best_last as starting point
+    for @best_last[*-1] -> @last {
+        for @last -> $e {
             my Str $m_name_chain = "";
-            iter($lname, $m_name_chain, %hash{$lname.substr(0,1)}.Seq );
+            iter($e, $m_name_chain, %hash{$e.substr(0,1)}.Seq );
         }
     }
 
@@ -80,10 +91,10 @@ sub iter {
 # ..
 # > machamp > pinsir > rufflet > trapinch > haxorus > seaking > girafarig > gabite > exeggcute > emboar > relicanth > heatmor > registeel > landorus > simisear > remoraid > darmanitan > nosepass > starly > yamask > kricketune > emolga > alduino
 #
-# > machamp > pinsir > relicanth > haxorus > seaking > girafarig > gabite > exeggcute > emboar > rufflet > trapinch > heatmor > registeel > landorus > simisear > remoraid > darmanitan > nosepass > starly > yamask > kricketune > emolga > alduino# Highest chain count: 23
+# > machamp > pinsir > relicanth > haxorus > seaking > girafarig > gabite > exeggcute > emboar > rufflet > trapinch > heatmor > registeel > landorus > simisear > remoraid > darmanitan > nosepass > starly > yamask > kricketune > emolga > alduino
 # 
 # Highest chain count: 23
 # Number of Sequence found: 1248
-# Run Time: 61.6021016 sec
+# Run Time: 56.786985 sec
 # 
 # It is still slow compared to my perl5 version, but a big improvement to my previous perl6 solutions
