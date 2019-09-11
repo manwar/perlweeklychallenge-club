@@ -60,7 +60,7 @@ sub iter {
     #Only do computation when name list is empty
     if (!@m_name_list) {
         #from what I understand the task was asking for the longest sequence,
-        #I assumed that it referes to the highes number of names/chain in a valid sequence (not character count)
+        #I assumed that it refers to the highest number of names/chain in a valid sequence (not character count)
         my $length = $m_name_arr=~y/>//; 
         if ($length >= $max_length) {
             push @{$chain[$length]}, $m_name_arr;
