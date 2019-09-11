@@ -6,6 +6,10 @@ use strict;
 use warnings;
 use 5.010;
 
+die "Usage:\n\tch-2.pl <-d|e> \"<string to encrypt>\"\n\n" if @ARGV<2;
+my $encrypt     = $ARGV[0] eq '-e';
+my $text_string = $ARGV[1];
+
 #It should be okay to modify the zenith/nadir (0 to $wheelsize)
 use constant ZENITH  => 0;
 use constant NADIR   => 13;
@@ -16,11 +20,7 @@ my @ct = "vEDclCHZYeWo9drb6Jnkf5MRXOt UgN4Fi231GzQIx7sPaLK8TBuVpA0yjShqwm"=~/./g
 
 my $wheel_size = $#pt;
 
-die "Usage:\n\tch-2.pl <-d|e> \"<string to encrypt>\"\n\n" if @ARGV<2;
-my $encrypt     = $ARGV[0] eq '-e';
-my $text_string = $ARGV[1];
-
-# This function rotate the given array or a portion of the given array 
+# This function rotates the given array or a portion of the given array 
 # Rotation count is defined by $r
 # The whole array will be rotated by default
 # but the range can be specified in $from and $to variable
@@ -40,14 +40,14 @@ sub cipher {
     my ($text,$enc,$ret) = @_;
     
     for my $c ($text=~/./g) {
-        #find where $c is in the plain text @pt
+        #find where $c is in the plain text @pt (or @ct when decrypting)
         #grep wont stop when first occurence was found
         my $pt_pos = (grep {($enc?$pt[$_]:$ct[$_]) eq $c} 0..$wheel_size)[0];
 
-        #Get the character from the cipher text in that position
+        #Get the character from the cipher text in that position($pt_pos)
         $ret .= $enc?$ct[$pt_pos]:$pt[$pt_pos];
         
-        #rotate @pt and @ct from $pt to ZENITH
+        #rotate @pt and @ct from $pt_pos to ZENITH
         &rot($pt_pos-ZENITH, \@pt);
         &rot($pt_pos-ZENITH, \@ct);
 
@@ -62,9 +62,9 @@ sub cipher {
 }
 say &cipher($text_string,$encrypt);
 =begin
-perl .\ch-2.pl -e "a quick brown fox jumps over lazy dog"
-gFv4ujqOyIPdTk5I9bKrYUXY4DwkCtV27vpk9
+perl .\ch-2.pl -e "a quick brown fox jumps over the lazy dog"
+gFv4ujqOyIPdTk5I9bKrYUXY4DwkCygHDKmQmyqUh
 
-perl .\ch-2.pl -d "gFv4ujqOyIPdTk5I9bKrYUXY4DwkCtV27vpk9"
-a quick brown fox jumps over lazy dog
+perl .\ch-2.pl -d "gFv4ujqOyIPdTk5I9bKrYUXY4DwkCygHDKmQmyqUh"
+a quick brown fox jumps over the lazy dog
 =cut
