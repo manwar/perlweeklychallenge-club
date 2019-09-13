@@ -16,6 +16,10 @@
 # - I hope somebody can tell me why perl6 is taking a lot longer vs my perl5 version (< 10 sec)
 # - I kept on thinking of a better approcah, then an I came up with an idea...
 # - ...this time we are going backwards! Run Time is now under a minute
+# - The said method is not applicable in general case as pointed out by laurent in:
+# http://blogs.perl.org/users/laurent_r/2019/09/perl-weekly-challenge-25-pokemon-sequence-and-chaocipher.html#comments
+# It just happened to work on the given names in the task
+
 my Str @names = <bagon audino baltoy banette bidoof braviary bronzor carracosta charmeleon cresselia croagunk darmanitan deino emboar emolga exeggcute gabite girafarig gulpin haxorus heatmor heatran ivysaur jellicent jumpluff kangaskhan kricketune landorus ledyba loudred lumineon lunatone machamp magnezone mamoswine nosepass petilil pidgeotto pikachu pinsir poliwrath poochyena porygon2 porygonz registeel relicanth remoraid rufflet sableye scolipede scrafty seaking sealeo silcoon simisear snivy snorlax spoink starly tirtouga trapinch treecko tyrogue vigoroth vulpix wailord wartortle whismur wingull yamask>;
 my Array @chain;
 my %hash = ();
