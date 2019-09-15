@@ -3,21 +3,21 @@
 subset ChaoChar of Str where $_ eq any ('A' .. 'Z');
 subset ChaoStr  of Str where /^ <[A .. Z]>+ $/;
 
-subset ChaoAlphabet of Str where $_.chars == 26 && $_.comb.sort.join eq 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+subset ChaoAlphabet of Str where $_.comb.sort.join eq 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 
 unit sub MAIN (ChaoStr      $message,
                Bool         :$verbose,
 	       Bool         :$decipher,
-	       ChaoAlphabet :$left = ('A' ... 'Z').pick(*).join,
-	       ChaoAlphabet :$right  = ('A' ... 'Z').pick(*).join);
+	       ChaoAlphabet :$left  = ('A' ... 'Z').pick(*).join,
+	       ChaoAlphabet :$right = ('A' ... 'Z').pick(*).join);
 
-my @left = $left.comb; # also called "left"
-my @right  = $right.comb;  # also called "right"
+my @left  = $left.comb;
+my @right = $right.comb; 
 
 say "!! { @left.join }  { @right.join }" if $verbose;
 
-constant ZENITH = 0;    # Shown as '+'
-constant NADIR  = 13;   # Shown as '*'
+constant ZENITH = 0;
+constant NADIR  = 13;
 constant END    = 25; 
 
 my $encoded-message = "";
@@ -50,7 +50,7 @@ for $message.comb -> $letter
 
 sub right2left (ChaoChar $letter)
 {
-  for 0 .. Inf -> $index  # we could have used 'index', if we had a string!!
+  for 0 .. Inf -> $index
   {
     return @left[$index] if @right[$index] eq $letter;
   }
@@ -58,7 +58,7 @@ sub right2left (ChaoChar $letter)
 
 sub left2right (ChaoChar $letter)
 {
-  for 0 .. Inf -> $index  # we could have used 'index', if we had a string!!
+  for 0 .. Inf -> $index
   {
     return @right[$index] if @left[$index] eq $letter;
   }
