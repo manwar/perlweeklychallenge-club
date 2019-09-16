@@ -1,61 +1,76 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "chart" : {
-      "type" : "column"
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Steven Wilson",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Steven Wilson"
+         },
+         {
+            "id" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Yet Ebreo"
+         }
+      ]
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 026",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Steven Wilson",
                "name" : "Steven Wilson",
+               "drilldown" : "Steven Wilson",
                "y" : 2
+            },
+            {
+               "name" : "Yet Ebreo",
+               "y" : 2,
+               "drilldown" : "Yet Ebreo"
             }
          ],
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 026"
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge - 026"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2019-09-16 07:51:19 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "xAxis" : {
       "type" : "category"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 026"
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-09-16 06:22:55 GMT"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Steven Wilson",
-            "id" : "Steven Wilson",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
-         }
-      ]
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
    "legend" : {
       "enabled" : 0
