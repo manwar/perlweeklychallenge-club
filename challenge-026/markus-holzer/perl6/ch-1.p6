@@ -3,11 +3,14 @@ use Test;
 # In Raku, all operators are just multi - functions.
 # So we can easily define ourselves an infix left-associative element-of operator.
 # It will take an `Iterable` (`Seq`, `Array`, `List`) on its left side and a `Set` on the right side.
-# It returns a `Seq` of all elements of the left side that are present on the right side.
+# It returns a `Seq` of all elements of the left side that are present on the right side and that
+# are part of our alphabet
 
 multi sub infix:<\<∈>( Iterable $stones, Set $jewels ) returns Seq
 {
-    $stones.grep: * ∈ $jewels
+    # constant runs at BEGIN time, so this work gets only done once
+    constant \alphabet = ( 'a' .. 'z', 'A' .. 'Z' ).Set;
+    $stones.grep({ $_ ∈ alphabet && $_ ∈ $jewels });
 }
 
 # Now we could call that good, but in true Raku spirit we provide additional
