@@ -2,8 +2,8 @@ use Test;
 
 # Rakus trigonometry functions operate on radians. So we must convert degrees to radians.
 # That's simple enough using a new postfix operator and high school math.
-multi sub postfix:<°>( Numeric $degrees ) is looser(&prefix:<->) returns Real { $degrees * π / 180 }
-
+multi sub postfix:<°>( Numeric $degrees ) returns Real { $degrees * π / 180 }
+ 
 # This implements the "simple" version of the algorithm as described on Wikipedia.
 # There already is an implementation of the complex math version (that uses `i`)
 # on Rosetta-Code https://rosettacode.org/wiki/Averages/Mean_angle#Perl_6
