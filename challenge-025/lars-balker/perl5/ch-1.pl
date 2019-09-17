@@ -26,7 +26,7 @@ try([], "", @names);
 
 say "@$longest";
 
-# naive O(n^2) recursion
+# naive brute force recursion
 sub try {
     my ($picks, $prefix, @rest) = @_;
 
