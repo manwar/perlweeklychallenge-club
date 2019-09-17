@@ -1,3 +1,5 @@
+use Test;
+
 # Rakus trigonometry functions operate on radians. So we must convert degrees to radians.
 # That's simple enough using a new postfix operator and high school math.
 multi sub postfix:<°>( Numeric $degrees ) returns Real { $degrees * π / 180 }
@@ -15,11 +17,11 @@ sub mean-angle( *@α ) returns Real
     );
 
     ρ > 0
-        ?? ρ         # We always want positive values
+        ?? ρ         # We always want a positive value
         !! ρ + 2 * π # When it isn't, we add 360°
 }
 
-ok( mean-angle( 10°, 10°, 10° )         =~= 10°,  "The mean of 3 times alpha is alpha" );
+ok( mean-angle( 10°, 10°, 10° )         =~= 10°,  "The mean of equal angles is the angle" );
 ok( mean-angle( 10°, 20°, 30° )         =~= 20°,  "All angles in one quadrant" );
 ok( mean-angle( 355°, 5°, 15° )         =~= 5°,   "Angles in multiple quadrants" );
 ok( mean-angle( 90°, 180°, 270°, 360° ) =~= 270°, "Angle is not negative" );
