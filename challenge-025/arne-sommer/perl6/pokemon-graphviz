@@ -1,0 +1,34 @@
+#! /usr/bin/env perl6
+
+my @names = <audino bagon baltoy banette bidoof braviary bronzor carracosta charmeleon cresselia croagunk darmanitan deino emboar emolga exeggcute gabite girafarig gulpin haxorus heatmor heatran ivysaur jellicent jumpluff kangaskhan kricketune landorus ledyba loudred lumineon lunatone machamp magnezone mamoswine nosepass petilil pidgeotto pikachu pinsir poliwrath poochyena porygon2 porygonz registeel relicanth remoraid rufflet sableye scolipede scrafty seaking sealeo silcoon simisear snivy snorlax spoink starly tirtouga trapinch treecko tyrogue vigoroth vulpix wailord wartortle whismur wingull yamask>;
+
+my @start = @names.map( *.substr(0,1) ).unique;
+
+my %start-list;
+
+for @start -> $letter
+{
+   %start-list{$letter} = @names.grep(*.substr(0,1) eq $letter);
+}
+
+say 'digraph foogrph {';
+
+for @names -> $name
+{
+  my $last-char = $name.substr(*-1,1);
+
+  if %start-list{$last-char}
+  {
+    for @(%start-list{$last-char}) -> $next
+    {
+      say "  $name -> $next;" unless $name eq $next;
+    }
+  }
+  else
+  {
+    say "  $name;"; # A dead end.
+  } 
+
+}
+
+say '}';
