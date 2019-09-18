@@ -25,7 +25,7 @@ multi sub infix:<\<∈>( Iterable $stones, Iterable $jewels ) returns Seq
 
 multi sub infix:<\<∈>( Str $stones, Str $jewels ) returns Str
 {
-    ( $stones.split( '', :skip-empty ) <∈ $jewels.split( '', :skip-empty ) ).join("")
+    ( $stones.comb <∈ $jewels.comb ).join("")
 }
 
 # And here we finally use it to solve the problem
