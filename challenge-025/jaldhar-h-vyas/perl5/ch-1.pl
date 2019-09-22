@@ -22,23 +22,20 @@ sub graph {
 sub traverse {
     my ($graph, $word, $path) = @_;
 
-    if (scalar grep /$word/, @{$path}) {
-        return $path;
-    }
+    my $path_copy = [ @{$path} ];
+    push @{$path_copy}, $word;
 
-    my $pathCopy = [ @{$path} ];
-    push @{$pathCopy}, $word;
-
-    my $longest = $pathCopy;
-    foreach my $neighbor (@{$graph->{$word}}) {
-        my $p = traverse($graph, $neighbor, $pathCopy);
-        if (scalar @{$p} > scalar @{$longest}) {
-            $longest = $p;
+    my $longest = $path_copy;
+    for my $neighbor (@{$graph->{$word}}) {
+        if (!grep /$neighbor/,  @{$path_copy}) {
+            my $p = traverse($graph, $neighbor, $path_copy);
+            if (scalar @{$p} > @{$longest}) {
+                $longest = $p;
+            }
         }
     }
-    $path = $longest;
 
-    return $path;
+    return $longest;
 }
 
 my @words = qw/
@@ -54,13 +51,13 @@ my @words = qw/
 /;
 
 my $g = graph(\@words);
+my $longest = [];
 
-my $longestPath = [];
 for my $word (keys %{$g}) {
     my $path = traverse($g, $word, []);
-    if (scalar @{$path} > scalar @{$longestPath}) {
-        $longestPath = $path;
+    if (scalar @{$path} > scalar @{$longest}) {
+        $longest = $path;
     }
 }
 
-say join q{ }, @{$longestPath};
+say join q{ }, @{$longest};
