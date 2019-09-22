@@ -7,8 +7,8 @@ use List::Util qw{ uniq };
 sub count {
     my %args = @_;
     my $count = 0;
-    $count += () = $args{jewels} =~ /$_/g for uniq(split //, $args{stones});
-    $count
+    $count += () = $args{jewels} =~ /[$args{stones}]/g;
+    return $count
 }
 
 use Test::More tests => 6;
