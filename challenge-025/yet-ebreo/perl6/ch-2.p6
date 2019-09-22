@@ -1,3 +1,7 @@
+# Create script to implement Chaocipher. Please checkout wiki page for more information
+# Visualizing it using rotating disk is a bit difficult, here's a video illustration of the algo
+# https://www.youtube.com/watch?v=0tL9A69olRc , that helped me understand it
+
 #It should be okay to modify the zenith/nadir (0 to $wheelsize)
 constant $ZENITH = 0;
 constant $NADIR  = 13;
