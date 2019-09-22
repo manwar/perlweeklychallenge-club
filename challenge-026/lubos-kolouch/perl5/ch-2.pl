@@ -30,8 +30,11 @@ sub get_mean {
 
     my ( $sin_sum, $cos_sum );
 
-    $sin_sum += sin( deg2rad($_) ) for @angles;
-    $cos_sum += cos( deg2rad($_) ) for @angles;
+    for (@angles) {
+        $sin_sum += sin( deg2rad($_) );
+        $cos_sum += cos( deg2rad($_) );
+    }
+
 
     return rad2deg( atan2( $sin_sum, $cos_sum ) );
 }
