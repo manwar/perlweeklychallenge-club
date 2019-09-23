@@ -2,21 +2,30 @@
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2019-09-23 16:09:30 GMT"
+   "chart" : {
+      "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
       }
    },
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "align" : "right",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "y" : 10,
+            "enabled" : "true",
+            "color" : "#FFFFFF"
+         },
          "data" : [
             [
                "Blog",
@@ -24,38 +33,29 @@
             ],
             [
                "Perl 5",
-               1069
+               1071
             ],
             [
                "Perl 6",
                652
             ]
-         ],
-         "dataLabels" : {
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "y" : 10,
-            "color" : "#FFFFFF"
-         }
+         ]
       }
    ],
+   "subtitle" : {
+      "text" : "Last updated at 2019-09-23 17:16:45 GMT"
+   },
    "legend" : {
       "enabled" : "false"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : null
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
       },
-      "min" : 0
-   },
-   "chart" : {
-      "type" : "column"
+      "type" : "category"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
