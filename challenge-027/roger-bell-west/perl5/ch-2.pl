@@ -10,7 +10,7 @@ use Storable qw(dclone);
 my @history;
 
 my $wiz=wizard(
-  set => sub { warn "set\n";if (ref ${$_[0]}) {push @history,dclone(${$_[0]})} else {push @history,${$_[0]}} },
+  set => sub { if (ref ${$_[0]}) {push @history,dclone(${$_[0]})} else {push @history,${$_[0]}} },
 );
 
 cast my ($x),$wiz;
