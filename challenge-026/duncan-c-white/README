@@ -1,36 +1,21 @@
-Challenge 1: "Create a script that prints nth order forward difference
-series. You should be a able to pass the list of numbers and order number
-as command line parameters. Let me show you with an example:
+Challenge 1: "Create a script that accepts two strings, let us call it,
+"stones" and "jewels". It should print the count of "alphabet" from the
+string "stones" found in the string "jewels". For example, if your stones
+is "chancellor" and "jewels" is "chocolate", then the script should print
+"8". To keep it simple, only A-Z,a-z characters are acceptable. Also
+make the comparison case sensitive."
 
-Suppose we have list (X) of numbers: 5, 9, 2, 8, 1, 6 and we would like
-to create 1st order forward difference series (Y). So using the formula
-Y(i) = X(i+1) - X(i), we get the following numbers: (9-5), (2-9), (8-2),
-(1-8), (6-1), ie 4, -7, 6, -7, 5.
-If you noticed, it has one less number than the original series.
-Similarly you can generate the 2nd order forward difference series like:
-(-7-4), (6+7), (-7-6), (5+7) => -11, 13, -13, 12.
-
-My notes: Clearly defined, very easy - let's have a go..
+My notes: Not very clearly defined, but to get 8 in the example, I infer
+that it means "form a set from the first string (thus ignoring repeated
+letters) and then count up how many occurrences of each letter in that set
+in the second word".  That's trivial, let's do it.
 
 
-Challenge 2: "Create a script that prints Prime Decomposition of a
-given number. The prime decomposition of a number is defined as a list
-of prime numbers which when all multiplied together, are equal to that
-number. For example, the Prime decomposition of 228 is 2,2,3,19 as 228 =
-2 * 2 * 3 * 19."
+Challenge 2: "Create a script that prints mean angles of the given list
+of angles in degrees. Please read 
+https://en.wikipedia.org/wiki/Mean_of_circular_quantities
+that explains the formula in details with an example."
 
-My notes: So, prime factors then.  Very easy again.  In fact, haven't I
-already solved this in one of the other prime-based questions?
-
-
-Challenge 3: "Write a script to use Random Poems API:
-https://www.poemist.com/api/v1/randompoems
-This is the easiset API, I have come across so far. You don't need API
-key for this. They have only route to work with (GET). The API task is
-optional but we would love to see your solution."
-
-My notes: ok, even I can't argue that obtaining an API key for an API
-I will literally never use again is too much hassle - when I don't need
-an API key, and the whole program appears to be an LWP::Simple get..
-
-update: well, apart from the Unicode in the response, complicating life.
+My notes: So, means of circular quantities as applied to angles, in short
+  meanangle = atan2( average(sin(ai)), average(cos(ai)) )
+(where ai are the input angles a1..aN).  Ok, that seems trivial.
