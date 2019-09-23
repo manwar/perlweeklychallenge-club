@@ -3,18 +3,18 @@
 package XHistory;
 require Tie::Scalar;
 @ISA = 'Tie::StdScalar';
-use Modern::Perl;# '2018';
+use Modern::Perl '2018';
+use feature qw(signatures);
+no warnings qw(experimental::signatures);
 
 my @history;
 
-sub STORE {
-    my($self, $value) = @_;
+sub STORE($self, $value) {
     push @history, $value;
 }
 
-sub FETCH {
-    my $self = shift;
-    return $history[-1];
+sub FETCH($self) {
+    $history[-1];
 }
 
 tie my $x, 'XHistory';
