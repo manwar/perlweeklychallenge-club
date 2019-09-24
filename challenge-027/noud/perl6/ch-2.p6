@@ -13,12 +13,12 @@ my @variables = ();
 my $pattern = /my\s*\$(\w+)/;
 
 my $exec_prog = "";
-for 'exm.p6'.IO.lines -> $line {
+for 'exm.p6'.IO.slurp.split(";") -> $line {
     my @line_var = ($line ~~ $pattern).values;
     if (@line_var.elems > 0) {
         @variables = (|(@line_var), |(@variables));
     }
-    $exec_prog = "$exec_prog $line";
+    $exec_prog = "$exec_prog $line\;";
     # After every line update %var_hash_ with the current variable values.
     for @variables -> $x {
         $exec_prog = "$exec_prog \%var_hash_\.push: ($x => \$$x)\;";
