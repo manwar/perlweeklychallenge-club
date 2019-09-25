@@ -1,29 +1,11 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
    "tooltip" : {
-      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2019-09-25 11:08:06 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 027"
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 027",
          "data" : [
             {
@@ -32,24 +14,29 @@
                "drilldown" : "Andrezgz"
             },
             {
-               "drilldown" : "Duane Powell",
                "name" : "Duane Powell",
+               "drilldown" : "Duane Powell",
                "y" : 2
             },
             {
-               "drilldown" : "Mark Anderson",
+               "y" : 1,
                "name" : "Mark Anderson",
-               "y" : 1
+               "drilldown" : "Mark Anderson"
             },
             {
-               "y" : 3,
+               "y" : 2,
+               "name" : "Noud",
+               "drilldown" : "Noud"
+            },
+            {
                "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West"
+               "drilldown" : "Roger Bell West",
+               "y" : 3
             },
             {
                "y" : 1,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
             },
             {
                "drilldown" : "Trenton Langer",
@@ -57,33 +44,54 @@
                "y" : 2
             },
             {
-               "drilldown" : "Yet Ebreo",
                "name" : "Yet Ebreo",
+               "drilldown" : "Yet Ebreo",
                "y" : 1
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2019-09-25 11:16:05 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 027"
+   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
+      }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andrezgz",
-            "id" : "Andrezgz",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Andrezgz",
+            "id" : "Andrezgz"
          },
          {
             "data" : [
@@ -92,18 +100,28 @@
                   2
                ]
             ],
-            "id" : "Duane Powell",
-            "name" : "Duane Powell"
+            "name" : "Duane Powell",
+            "id" : "Duane Powell"
          },
          {
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
+            ]
+         },
+         {
+            "id" : "Noud",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
             ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "name" : "Noud"
          },
          {
             "name" : "Roger Bell West",
@@ -120,38 +138,35 @@
             "id" : "Roger Bell West"
          },
          {
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "id" : "Simon Proctor",
             "name" : "Simon Proctor"
          },
          {
-            "name" : "Trenton Langer",
             "id" : "Trenton Langer",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Trenton Langer"
          },
          {
             "name" : "Yet Ebreo",
-            "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ]
+            ],
+            "id" : "Yet Ebreo"
          }
       ]
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
