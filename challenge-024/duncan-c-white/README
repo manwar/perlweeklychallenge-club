@@ -1,36 +1,37 @@
-Challenge 1: "Create a script that prints nth order forward difference
-series. You should be a able to pass the list of numbers and order number
-as command line parameters. Let me show you with an example:
+Challenge 1: "Create a smallest script in terms of size that on
+execution doesn't throw any error. The script doesn't have to do anything
+special. You could even come up with smallest one-liner."
 
-Suppose we have list (X) of numbers: 5, 9, 2, 8, 1, 6 and we would like
-to create 1st order forward difference series (Y). So using the formula
-Y(i) = X(i+1) - X(i), we get the following numbers: (9-5), (2-9), (8-2),
-(1-8), (6-1), ie 4, -7, 6, -7, 5.
-If you noticed, it has one less number than the original series.
-Similarly you can generate the 2nd order forward difference series like:
-(-7-4), (6+7), (-7-6), (5+7) => -11, 13, -13, 12.
-
-My notes: Clearly defined, very easy - let's have a go..
+My notes: Umm, if it doesn't have to do anything special, and we want it to
+be tiny, does it have to do anything at all?  Why not write the shortest
+Perl one-liner: perl -e 1:-)
 
 
-Challenge 2: "Create a script that prints Prime Decomposition of a
-given number. The prime decomposition of a number is defined as a list
-of prime numbers which when all multiplied together, are equal to that
-number. For example, the Prime decomposition of 228 is 2,2,3,19 as 228 =
-2 * 2 * 3 * 19."
+Challenge 2: "Create a script to implement full text search functionality
+using Inverted Index. According to wikipedia:
 
-My notes: So, prime factors then.  Very easy again.  In fact, haven't I
-already solved this in one of the other prime-based questions?
+In computer science, an inverted index (also referred to as a
+postings file or inverted file) is a database index storing
+a mapping from content, such as words or numbers, to its
+locations in a table, or in a document or a set of documents
+(named in contrast to a forward index, which maps from documents
+to content). The purpose of an inverted index is to allow fast
+full-text searches, at a cost of increased processing when a
+document is added to the database."
 
+My notes: One extreme to the other, an inverted index might be quite a
+lot of work.  Most especially, it would need an index-creator/updater
+and a search-using-index tool.  Also, the wikipedia article says that
+some inverted indexes are:
 
-Challenge 3: "Write a script to use Random Poems API:
-https://www.poemist.com/api/v1/randompoems
-This is the easiset API, I have come across so far. You don't need API
-key for this. They have only route to work with (GET). The API task is
-optional but we would love to see your solution."
+wordindocument: word -> set of document (names or numbers),
 
-My notes: ok, even I can't argue that obtaining an API key for an API
-I will literally never use again is too much hassle - when I don't need
-an API key, and the whole program appears to be an LWP::Simple get..
+whereas others are:
 
-update: well, apart from the Unicode in the response, complicating life.
+wordwhereindocuments: word -> set of (document, position)
+
+(or perhaps set of word -> set of document -> list of position)
+
+Knowing the positions of each word in each document allows us to
+search for several words "near to each other", so that's very useful.
+But does the question want us to do that or not?  Minimalism says not:-)

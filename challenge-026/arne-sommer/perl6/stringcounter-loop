@@ -1,0 +1,15 @@
+#! /usr/bin/env perl6
+
+unit sub MAIN (Str $alphabet, Str $string, :$verbose);
+
+my $count = 0;
+
+for $alphabet.comb.unique -> $letter
+{
+  my $current = $string.comb.grep(* eq $letter).elems;
+  $count += $current;
+  say "$letter:  $current" if $verbose;
+}
+
+say $count;
+
