@@ -1,14 +1,42 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-09-23 17:35:52 GMT"
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 027"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 027",
          "data" : [
             {
-               "drilldown" : "Mark Anderson",
+               "drilldown" : "Duane Powell",
+               "name" : "Duane Powell",
+               "y" : 2
+            },
+            {
                "name" : "Mark Anderson",
-               "y" : 1
+               "y" : 1,
+               "drilldown" : "Mark Anderson"
             },
             {
                "drilldown" : "Roger Bell West",
@@ -21,53 +49,46 @@
                "y" : 1
             },
             {
+               "y" : 2,
                "name" : "Trenton Langer",
-               "drilldown" : "Trenton Langer",
-               "y" : 2
+               "drilldown" : "Trenton Langer"
             },
             {
                "name" : "Yet Ebreo",
-               "drilldown" : "Yet Ebreo",
-               "y" : 1
+               "y" : 1,
+               "drilldown" : "Yet Ebreo"
             }
          ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 027"
+         "colorByPoint" : 1
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 027"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "xAxis" : {
       "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Duane Powell",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Duane Powell"
+         },
+         {
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson"
          },
          {
+            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -78,50 +99,44 @@
                   1
                ]
             ],
-            "id" : "Roger Bell West",
-            "name" : "Roger Bell West"
+            "id" : "Roger Bell West"
          },
          {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            ]
          },
          {
-            "id" : "Trenton Langer",
+            "name" : "Trenton Langer",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "name" : "Trenton Langer"
+            "id" : "Trenton Langer"
          },
          {
-            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "name" : "Yet Ebreo"
+            "id" : "Yet Ebreo"
          }
       ]
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2019-09-25 10:34:05 GMT"
    },
    "chart" : {
       "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
    }
 }
