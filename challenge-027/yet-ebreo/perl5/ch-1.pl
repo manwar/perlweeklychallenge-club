@@ -9,7 +9,6 @@ use v5.10;
 
 die "Usage:\n\tch-1.pl <X11> <Y11> <X12> <Y12> <X21> <Y21> <X22> <Y22>\n\n" if @ARGV != 8;
 
-# one intersection point
 my @line1 = ([$ARGV[0],$ARGV[1]],[$ARGV[2],$ARGV[3]]);
 my @line2 = ([$ARGV[4],$ARGV[5]],[$ARGV[6],$ARGV[7]]);
 my $y_intercept1 = 0;
