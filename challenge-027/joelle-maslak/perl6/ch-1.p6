@@ -90,7 +90,7 @@ class Line does StrictClass {
             die "Cannot solve for $x" if $.point.x ≠ $x;
         }
 
-        # Lines between horizontal and ertical
+        # Lines between horizontal and vertical
         return $.slope × $x + self.y-offset;
     }
 
