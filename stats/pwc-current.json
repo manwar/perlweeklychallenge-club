@@ -1,11 +1,14 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 027"
+   "subtitle" : {
+      "text" : "[Champions: 12] Last updated at 2019-09-29 04:28:24 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
@@ -16,18 +19,18 @@
                   2
                ]
             ],
-            "id" : "Andrezgz",
-            "name" : "Andrezgz"
+            "name" : "Andrezgz",
+            "id" : "Andrezgz"
          },
          {
-            "id" : "Duane Powell",
             "name" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "id" : "Duane Powell"
          },
          {
             "data" : [
@@ -40,8 +43,8 @@
             "id" : "E. Choroba"
          },
          {
-            "name" : "Kevin Colyer",
             "id" : "Kevin Colyer",
+            "name" : "Kevin Colyer",
             "data" : [
                [
                   "Perl 6",
@@ -70,6 +73,16 @@
             ]
          },
          {
+            "id" : "Markus Holzer",
+            "name" : "Markus Holzer",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl 6",
@@ -80,8 +93,8 @@
             "id" : "Noud"
          },
          {
-            "name" : "Roger Bell West",
             "id" : "Roger Bell West",
+            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -94,26 +107,27 @@
             ]
          },
          {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            ]
          },
          {
+            "name" : "Trenton Langer",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Trenton Langer",
-            "name" : "Trenton Langer"
+            "id" : "Trenton Langer"
          },
          {
+            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
@@ -124,25 +138,13 @@
                   1
                ]
             ],
-            "id" : "Yet Ebreo",
-            "name" : "Yet Ebreo"
+            "id" : "Yet Ebreo"
          }
       ]
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2019-09-29 03:53:20 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 027",
          "data" : [
             {
                "drilldown" : "Andrezgz",
@@ -150,14 +152,14 @@
                "y" : 2
             },
             {
+               "y" : 2,
                "name" : "Duane Powell",
-               "drilldown" : "Duane Powell",
-               "y" : 2
+               "drilldown" : "Duane Powell"
             },
             {
-               "y" : 2,
                "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
+               "name" : "E. Choroba",
+               "y" : 2
             },
             {
                "name" : "Kevin Colyer",
@@ -165,14 +167,19 @@
                "y" : 2
             },
             {
-               "drilldown" : "Lubos Kolouch",
+               "y" : 2,
                "name" : "Lubos Kolouch",
-               "y" : 2
+               "drilldown" : "Lubos Kolouch"
             },
             {
+               "y" : 1,
                "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson",
-               "y" : 1
+               "name" : "Mark Anderson"
+            },
+            {
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer",
+               "y" : 2
             },
             {
                "y" : 2,
@@ -180,9 +187,9 @@
                "drilldown" : "Noud"
             },
             {
-               "y" : 3,
+               "drilldown" : "Roger Bell West",
                "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West"
+               "y" : 3
             },
             {
                "y" : 2,
@@ -190,32 +197,40 @@
                "name" : "Simon Proctor"
             },
             {
+               "y" : 2,
                "name" : "Trenton Langer",
-               "drilldown" : "Trenton Langer",
-               "y" : 2
+               "drilldown" : "Trenton Langer"
             },
             {
-               "name" : "Yet Ebreo",
+               "y" : 3,
                "drilldown" : "Yet Ebreo",
-               "y" : 3
+               "name" : "Yet Ebreo"
             }
          ],
-         "name" : "Perl Weekly Challenge - 027"
+         "colorByPoint" : 1
       }
    ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
    "legend" : {
       "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "chart" : {
       "type" : "column"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge - 027"
    }
 }
