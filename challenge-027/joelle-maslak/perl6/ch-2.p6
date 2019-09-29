@@ -20,7 +20,6 @@ class History {
 
     method history() {
         my @h = @!hist;
-        @h.push: $!data;
         return @h;
     }
 }
