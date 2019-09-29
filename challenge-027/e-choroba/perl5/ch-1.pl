@@ -13,8 +13,9 @@ sub line {
             ($A, $B, $C) = (1, 0, 0);
         }
     } else {
-        ($A, $B, $C) = (($y2 - $y1) / ($x1 - $x2), 1,
-                        -($x1 * ($y2 - $y1) / ($x1 - $x2) + $y1));
+        ($A, $B, $C) = (($y2 - $y1) / ($x1 - $x2),
+                        1,
+                        $x1 * ($y1 - $y2) / ($x1 - $x2) - $y1);
     }
     return $A, $B, $C
 }
@@ -25,8 +26,9 @@ sub intersection {
         die 'No intersection' if $c1 != $c2;
         die 'Identical lines' if $c1 == $c2;
     }
-    my $y = ($a2 * $c1 / $a1 - $c2) * $a1 / ($b2 * $a1 - $a2 * $b1);
-    my $x = (-$b1 * $y - $c1) / $a1;
+    my $y = ($a2 * $c1 - $c2 * $a1) / ($a1 * $b2 - $a2 * $b1);
+    my $x = $a1 ? (-$b1 * $y - $c1) / $a1
+                : (-$b2 * $y - $c2) / $a2;
     return $x, $y
 }
 
@@ -66,6 +68,11 @@ is_deeply [ intersection(
     line(4, 19, 3.5, 17.5)
 ) ], [4.5, 20.5];
 
+is_deeply [ intersection(
+    line(1, 1, 5, 1),
+    line(1, 1, 1, 5),
+) ], [ 1, 1 ];
+
 throws_ok { intersection(
     line(0, 0, 1, 1),
     line(2, 2, 3, 3)
@@ -76,4 +83,4 @@ throws_ok { intersection(
     line(0, 2, 1, 3)
 ) } qr/No intersection/;
 
-done_testing(13);
+done_testing(14);
