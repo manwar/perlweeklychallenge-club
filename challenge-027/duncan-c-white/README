@@ -1,36 +1,36 @@
-Challenge 1: "Create a script that prints nth order forward difference
-series. You should be a able to pass the list of numbers and order number
-as command line parameters. Let me show you with an example:
+Challenge 1: "Write a script to find the intersection of two straight
+lines. The co-ordinates of the two lines should be provided as command
+line parameter. For example:
 
-Suppose we have list (X) of numbers: 5, 9, 2, 8, 1, 6 and we would like
-to create 1st order forward difference series (Y). So using the formula
-Y(i) = X(i+1) - X(i), we get the following numbers: (9-5), (2-9), (8-2),
-(1-8), (6-1), ie 4, -7, 6, -7, 5.
-If you noticed, it has one less number than the original series.
-Similarly you can generate the 2nd order forward difference series like:
-(-7-4), (6+7), (-7-6), (5+7) => -11, 13, -13, 12.
+The two ends of Line 1 are represented as co-ordinates (a,b) and (c,d).
 
-My notes: Clearly defined, very easy - let's have a go..
+The two ends of Line 2 are represented as co-ordinates (p,q) and (r,s).
 
+The script should print the co-ordinates of point of intersection of
+the above two lines."
 
-Challenge 2: "Create a script that prints Prime Decomposition of a
-given number. The prime decomposition of a number is defined as a list
-of prime numbers which when all multiplied together, are equal to that
-number. For example, the Prime decomposition of 228 is 2,2,3,19 as 228 =
-2 * 2 * 3 * 19."
-
-My notes: So, prime factors then.  Very easy again.  In fact, haven't I
-already solved this in one of the other prime-based questions?
+My notes: Clearly defined, very easy if I can remember the formulae - let's
+have a go..  after doing it, I decided to run Gnuplot to display the results
+as it's an intensely graphical concept..
 
 
-Challenge 3: "Write a script to use Random Poems API:
-https://www.poemist.com/api/v1/randompoems
-This is the easiset API, I have come across so far. You don't need API
-key for this. They have only route to work with (GET). The API task is
-optional but we would love to see your solution."
+Challenge 2: "Write a script that allows you to capture/display historical
+data. It could be an object or a scalar. For example
 
-My notes: ok, even I can't argue that obtaining an API key for an API
-I will literally never use again is too much hassle - when I don't need
-an API key, and the whole program appears to be an LWP::Simple get..
+        my $x = 10; $x = 20; $x -= 5;
 
-update: well, apart from the Unicode in the response, complicating life.
+After the above operations, it should list $x historical value in order."
+
+My notes: The idea is easy, but we're not told the API to implement.  I'm
+certainly not going to introspect into Perl to find out whenever a scalar
+variable is assigned to!  I have chosen to implement this for numeric
+variables, using an input sequence of VARNAME OP VALUE triples (where OP='=',
+'+=', '-=', '*=', '/=' or '%='), where each input triple N occurs at time N,
+and we track the historic value of each variable over time.
+
+I did that, using __DATA__ (at the end of this file) for the default sequence,
+or the contents of a named input file if given.
+
+I also graphed the time-series results via Gnuplot as I seem to be having
+a Gnuplot kick this week:-)  It's not really the ideal output format, but
+it's relatively cute.
