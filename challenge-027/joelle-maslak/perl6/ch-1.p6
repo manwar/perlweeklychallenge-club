@@ -90,7 +90,7 @@ class Line does StrictClass {
             die "Cannot solve for $x" if $.point.x ≠ $x;
         }
 
-        # Lines between horizontal and ertical
+        # Lines between horizontal and vertical
         return $.slope × $x + self.y-offset;
     }
 
@@ -150,7 +150,7 @@ class Line does StrictClass {
 
 # point1 and point2 define a line.  You can determine which line by the
 # letter
-sub MAIN(Str:D $point1a, Str:D $point2a, Str:D $point1b, $point2b) {
+sub MAIN(Str:D $point1a, Str:D $point2a, Str:D $point1b, Str:D $point2b) {
     my $line1 = Line.from-points(
         Point.from-string($point1a),
         Point.from-string($point2a),
