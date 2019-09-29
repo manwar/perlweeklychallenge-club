@@ -1,0 +1,21 @@
+#! /usr/bin/env perl6
+
+use lib "lib";
+
+use HistoryVariable;
+
+my $x = HistoryVariable.new;
+say $x;
+
+$x.set(10);
+say $x;
+
+$x.set(20);
+say $x;
+
+$x.set(5);
+say $x.get;
+
+say $x.get;
+say $x.history;
+say $x.history('time');
