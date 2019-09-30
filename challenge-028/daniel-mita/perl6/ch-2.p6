@@ -9,7 +9,12 @@ loop {
   given DateTime.now -> $t {
     for @num-groups -> %nums {
       once {print ' ' x 8 ~ "\t"}
-      print $t.hh-mm-ss.comb.map({ %nums{$_} || ':' }).join;
+      print $t.hh-mm-ss.comb.map( { %nums{$_}
+        || do given %nums{0}.uniprop('Block') {
+          when 'Arabic' {'؛'}
+          when 'NKo'    {'߸'}
+          default       {':'}
+        }} ).join;
       print $++ % 3 ?? "\t" !! "\n";
     }
     sleep 0.1 while $t.whole-second == DateTime.now.whole-second;
