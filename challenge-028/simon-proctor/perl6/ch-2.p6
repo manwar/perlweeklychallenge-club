@@ -9,9 +9,10 @@ multi sub MAIN( Bool :h(:$help) where so * ) {
 
 #| Print an updating clock on the command line
 multi sub MAIN() {
-    END { say "" };
+    END say "";
     loop {
-        print "{DateTime.now.hh-mm-ss}\r";
+        print "{DateTime.now.hh-mm-ss}";
         sleep 1;
+        print "\r";
     }
 }
