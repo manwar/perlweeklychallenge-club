@@ -48,6 +48,20 @@ if ($x_delta2) {
 #Lines are parallel if slopes are equal
 if ($slope1 == $slope2)  {
     say "Two given lines are parallel"
+} elsif ($ARGV[0] == $ARGV[2]) {
+    # X is either X11($ARGV[0]) or X12($ARGV[2])
+    # Y is equal to mX + b with:
+    #   m = slope of the second line ($slope2)
+    #   X = as defined above
+    #   b = Y intercept of second line ($y_intercept2)
+    say( ($ARGV[0]).",".($slope2*$ARGV[0]+$y_intercept2) );
+} elsif ($ARGV[4] == $ARGV[6]) {
+    # X is either X21($ARGV[4]) or X22($ARGV[6])
+    # Y is equal to mX + b with:
+    #   m = slope of the first line ($slope1)
+    #   X = as defined above
+    #   b = Y intercept of first line ($y_intercept1)
+    say( ($ARGV[4]).",".($slope1*$ARGV[4]+$y_intercept1) );
 } else {
     #Solve the linear equation using determinants
     # | x1 y1 | 
