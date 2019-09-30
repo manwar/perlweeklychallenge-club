@@ -1,5 +1,6 @@
 # This program requires a VT-100 compatible terminal or emulator thereof
 # xterm is just fine
+# For windows, see the README
 
 subset CoordStr of Str where / ^ \d+ \, \d+ $ /;
 
@@ -8,7 +9,7 @@ my @numbers = map *.comb(3).Array,
     "╻━╸╹━╻╺━╹", "╻━╸┃━╻╹━╹", "╺━╻  ┃  ╹", "╻━╻┃━┃╹━╹", "╻━╻╹━┃╺━╹";
 
 
-multi sub MAIN( CoordStr :$at )
+sub MAIN( CoordStr :$at )
 {
     my ($x, $y) = $at.Str.split(',');
 

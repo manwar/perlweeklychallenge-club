@@ -1,3 +1,5 @@
+# For windows, see the README
+
 sub MAIN( $file )
 {
     my $magic = run( "file", $file, :out ).out.slurp;
