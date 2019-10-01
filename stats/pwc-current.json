@@ -1,47 +1,52 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Daniel Mita",
+            "name" : "Daniel Mita",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "name" : "Daniel Mita"
+            "id" : "Daniel Mita"
          },
          {
+            "name" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "name" : "Duane Powell",
             "id" : "Duane Powell"
          },
          {
             "id" : "Markus Holzer",
-            "name" : "Markus Holzer",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "name" : "Markus Holzer"
          },
          {
-            "id" : "Simon Proctor",
+            "name" : "Prajith P",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Prajith P"
+         },
+         {
             "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
@@ -50,28 +55,58 @@
             ]
          },
          {
+            "name" : "Yet Ebreo",
             "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "name" : "Yet Ebreo"
+            ]
          }
       ]
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-10-01 09:53:22 GMT"
+      "text" : "[Champions: 6] Last updated at 2019-10-01 10:04:10 GMT"
    },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Daniel Mita",
+               "drilldown" : "Daniel Mita",
+               "y" : 1
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Duane Powell",
+               "name" : "Duane Powell"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Markus Holzer",
+               "name" : "Markus Holzer"
+            },
+            {
+               "name" : "Prajith P",
+               "y" : 2,
+               "drilldown" : "Prajith P"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            },
+            {
+               "name" : "Yet Ebreo",
+               "drilldown" : "Yet Ebreo",
+               "y" : 2
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 028"
+      }
+   ],
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
@@ -81,43 +116,23 @@
          }
       }
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Daniel Mita",
-               "y" : 1,
-               "drilldown" : "Daniel Mita"
-            },
-            {
-               "drilldown" : "Duane Powell",
-               "name" : "Duane Powell",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Markus Holzer",
-               "name" : "Markus Holzer",
-               "y" : 2
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 1,
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "drilldown" : "Yet Ebreo",
-               "name" : "Yet Ebreo",
-               "y" : 2
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 028",
-         "colorByPoint" : 1
-      }
-   ],
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 028"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
