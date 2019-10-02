@@ -17,8 +17,8 @@ die "'$file' is not a file" unless (-f $file );
 # Maybe I'm cheating here because, being precise,
 # the -T/-B test "reads" the first bytes of the file and then makes an educated guess
 
-print "The file content is ascii." if -T $file;
-print "The file content is binary." if -B $file;
+print 'The file content is ascii.' if -T $file;
+print 'The file content is binary.' if -B $file;
 
 __END__
 

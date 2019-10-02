@@ -19,10 +19,10 @@ my @pattern = (
 
 while (1) {
     sleep 1;
-    system('clear'); #clear screen
+    system 'clear'; #clear screen
 
-    my ($s,$m,$h) = localtime();
-    my @clock_components = split //, sprintf "%02d:%02d:%02d",$h,$m,$s;
+    my ($s,$m,$h) = localtime;
+    my @clock_components = split //, sprintf '%02d:%02d:%02d',$h,$m,$s;
 
     foreach my $p (@pattern) {                             # loop over each pattern line and
         foreach my $c (@clock_components) {                ## loop over each clock component
