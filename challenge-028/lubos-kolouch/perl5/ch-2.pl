@@ -26,8 +26,13 @@ use feature qw/say/;
 use Acme::Cow;
 use DateTime;
 
+my $secret = shift || 0;
+
 my $cow = new Acme::Cow;
 my $dt=DateTime->now;
 
 $cow->say($dt->hms);
+
+# secret undocumented parameter to make the cow think!
+$cow->think if $secret;
 $cow->print();
