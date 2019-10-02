@@ -44,4 +44,10 @@ my $file = shift || die 'Usage: ch-1.pl filename';
 
 say get_file_status($file);
 
+# TESTS
 
+use Test::More;
+
+is (get_file_status('ch-1.pl'),'The file content is ascii.');
+
+done_testing;
