@@ -8,23 +8,24 @@ my @numbers = map *.comb(3).Array,
     "╻━╻┃ ┃╹━╹", "  ╻  ┃  ╹", "╺━╻╻━╹╹━╸", "╺━╻╺━┃╺━╹", "╻ ╻╹━┃  ╹",
     "╻━╸╹━╻╺━╹", "╻━╸┃━╻╹━╹", "╺━╻  ┃  ╹", "╻━╻┃━┃╹━╹", "╻━╻╹━┃╺━╹";
 
-
-sub MAIN( CoordStr :$at )
+sub MAIN( CoordStr :$at = "2,2" )
 {
     my ($x, $y) = $at.Str.split(',');
 
     react {
         whenever Supply.interval(1) -> $v {
             print clear-screen;
-            display-time( $x, $y, DateTime.now );
+            display-time( $x, $y, DateTime.now.hh-mm-ss );
             print go-to(0,0);
         }
+
+        whenever signal(SIGINT) { exit 0; }
     }
 }
 
 sub display-time( $x, $y, $time )
 {
-    for $time.hh-mm-ss.comb.kv -> $column, $part
+    for $time.comb.kv -> $column, $part
     {
         if $part ~~ /\d/
         {
@@ -43,4 +44,6 @@ sub display-time( $x, $y, $time )
 sub clear-screen() { escape("2J") ~ escape(";H"); }
 sub go-to( $column, $row ) { escape( "$row;$column" ~ "H" ); }
 sub escape( $value ) { "\e[" ~ $value; }
+
+
 
