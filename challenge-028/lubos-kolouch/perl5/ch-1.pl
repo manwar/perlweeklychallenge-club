@@ -49,5 +49,9 @@ say get_file_status($file);
 use Test::More;
 
 is (get_file_status('ch-1.pl'),'The file content is ascii.');
+is (get_file_status('.'),'The file is not regular.');
+is (get_file_status('/dev/zero'),'The file is empty.');
+is (get_file_status('ch-3.pl'),'The file does not exist.');
+is (get_file_status('/etc/shadow'),'The file is not readable.');
 
 done_testing;
