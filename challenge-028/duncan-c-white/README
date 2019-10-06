@@ -1,36 +1,19 @@
-Challenge 1: "Write a script to find the intersection of two straight
-lines. The co-ordinates of the two lines should be provided as command
-line parameter. For example:
+Challenge 1: "Write a script to check the file content without explicitly
+reading the content. It should accept file name with path as command
+line argument and print 'The file content is binary.' or else 'The file
+content is ascii.' accordingly."
 
-The two ends of Line 1 are represented as co-ordinates (a,b) and (c,d).
-
-The two ends of Line 2 are represented as co-ordinates (p,q) and (r,s).
-
-The script should print the co-ordinates of point of intersection of
-the above two lines."
-
-My notes: Clearly defined, very easy if I can remember the formulae - let's
-have a go..  after doing it, I decided to run Gnuplot to display the results
-as it's an intensely graphical concept..
+My notes: That's bafflingly unclear!  Without "explicitly" reading
+the content, does that imply "implicitly" reading it is ok, or that
+we're really not supposed to read the content at all.  In the former
+case, I guess we can run "file" and parse the outout.  In the latter
+case, unless there's some magic metadata somewhere else, that only
+leaves file extensions.  In that case, we just need a hash of file
+extension -> binary/ascii choices. Dull.  
 
 
-Challenge 2: "Write a script that allows you to capture/display historical
-data. It could be an object or a scalar. For example
+Challenge 2: "Write a script to display Digital Clock. Feel free to be
+as creative as you can when displaying digits. We expect bare minimum
+something like '14:10:11'"
 
-        my $x = 10; $x = 20; $x -= 5;
-
-After the above operations, it should list $x historical value in order."
-
-My notes: The idea is easy, but we're not told the API to implement.  I'm
-certainly not going to introspect into Perl to find out whenever a scalar
-variable is assigned to!  I have chosen to implement this for numeric
-variables, using an input sequence of VARNAME OP VALUE triples (where OP='=',
-'+=', '-=', '*=', '/=' or '%='), where each input triple N occurs at time N,
-and we track the historic value of each variable over time.
-
-I did that, using __DATA__ (at the end of this file) for the default sequence,
-or the contents of a named input file if given.
-
-I also graphed the time-series results via Gnuplot as I seem to be having
-a Gnuplot kick this week:-)  It's not really the ideal output format, but
-it's relatively cute.
+My notes: Sounds like a job for Tk:-)
