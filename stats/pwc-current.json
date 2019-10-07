@@ -1,63 +1,82 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Kivanc Yazan",
+            "id" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Kivanc Yazan",
-            "name" : "Kivanc Yazan"
+            ]
+         },
+         {
+            "name" : "Roger Bell West",
+            "id" : "Roger Bell West",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 029"
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2019-10-07 12:32:59 GMT"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "legend" : {
-      "enabled" : 0
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 029",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Kivanc Yazan",
+               "y" : 2,
                "name" : "Kivanc Yazan",
-               "y" : 2
+               "drilldown" : "Kivanc Yazan"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West"
             }
          ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-10-07 12:09:22 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "xAxis" : {
-      "type" : "category"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 029"
    }
 }
