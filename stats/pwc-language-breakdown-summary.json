@@ -1,43 +1,37 @@
 {
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-10-06 23:59:06 GMT"
-   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2019-10-07 00:50:32 GMT"
    },
    "series" : [
       {
-         "dataLabels" : {
-            "rotation" : -90,
-            "align" : "right",
-            "y" : 10,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}"
-         },
          "data" : [
             [
                "Blog",
-               299
+               302
             ],
             [
                "Perl 5",
@@ -48,16 +42,22 @@
                690
             ]
          ],
-         "name" : "Contributions"
+         "name" : "Contributions",
+         "dataLabels" : {
+            "align" : "right",
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            }
+         }
       }
    ],
    "chart" : {
       "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
    }
 }
