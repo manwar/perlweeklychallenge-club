@@ -1,9 +1,8 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -42,6 +41,7 @@
          ]
       },
       {
+         "name" : "Perl 6",
          "data" : [
             55,
             0,
@@ -73,8 +73,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       },
       {
          "name" : "Blog",
@@ -112,9 +111,6 @@
          ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-10-07 00:50:27 GMT"
-   },
    "xAxis" : {
       "categories" : [
          "Laurent Rosenfeld",
@@ -149,9 +145,11 @@
          "Philippe Bruhat"
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-10-07 00:54:23 GMT"
    },
    "yAxis" : {
       "title" : {
@@ -159,9 +157,11 @@
       },
       "min" : 0
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
    }
 }
