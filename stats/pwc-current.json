@@ -1,4 +1,15 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
@@ -8,33 +19,30 @@
          }
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 029",
          "data" : [
             {
-               "drilldown" : "Daniel Mita",
                "y" : 1,
+               "drilldown" : "Daniel Mita",
                "name" : "Daniel Mita"
             },
             {
-               "drilldown" : "Kivanc Yazan",
+               "drilldown" : "Dave Cross",
+               "y" : 2,
+               "name" : "Dave Cross"
+            },
+            {
                "name" : "Kivanc Yazan",
+               "drilldown" : "Kivanc Yazan",
                "y" : 2
             },
             {
-               "drilldown" : "Lars Thegler",
                "y" : 2,
+               "drilldown" : "Lars Thegler",
                "name" : "Lars Thegler"
             },
             {
@@ -43,44 +51,51 @@
                "name" : "Roger Bell West"
             },
             {
-               "name" : "Yet Ebreo",
+               "drilldown" : "Yet Ebreo",
                "y" : 1,
-               "drilldown" : "Yet Ebreo"
+               "name" : "Yet Ebreo"
             }
          ],
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 029"
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 029"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Daniel Mita",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
             ],
-            "name" : "Daniel Mita",
             "id" : "Daniel Mita"
          },
          {
+            "name" : "Dave Cross",
+            "id" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Kivanc Yazan",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "name" : "Kivanc Yazan",
-            "id" : "Kivanc Yazan"
+            "name" : "Kivanc Yazan"
          },
          {
             "data" : [
@@ -93,6 +108,7 @@
             "name" : "Lars Thegler"
          },
          {
+            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -103,25 +119,24 @@
                   1
                ]
             ],
-            "name" : "Roger Bell West",
             "id" : "Roger Bell West"
          },
          {
-            "id" : "Yet Ebreo",
-            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ]
+            ],
+            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-10-08 13:13:07 GMT"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 029"
    },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2019-10-08 13:17:18 GMT"
    }
 }
