@@ -1,12 +1,10 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-10-09 07:25:20 GMT"
    },
    "series" : [
       {
@@ -45,6 +43,7 @@
          ]
       },
       {
+         "name" : "Perl 6",
          "data" : [
             55,
             0,
@@ -76,8 +75,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       },
       {
          "name" : "Blog",
@@ -115,14 +113,22 @@
          ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-10-09 07:22:21 GMT"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "chart" : {
       "type" : "column"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -157,11 +163,5 @@
          "Peter Scott",
          "Philippe Bruhat"
       ]
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
    }
 }
