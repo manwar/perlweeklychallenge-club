@@ -1,4 +1,6 @@
-
+#!/usr/bin/env perl
+# Write a script to demonstrate calling a C function. 
+# It could be any user defined or standard C function.
 use strict;
 use warnings;
 use feature 'say';
