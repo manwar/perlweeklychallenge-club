@@ -36,7 +36,7 @@ sub expand {
         my ($l,$m,$r) = ($`,$1,$');
         # The captured value stored in $m was split using comma(,) as delimiter
         # The resulting list was used in a for loop
-        for (split ",", $m) {
+        for (",$m"=~/,([^,]*)/g) {
             #A new string containing the prematch, a value from the split operation of $m
             #and the postmatch will be used in the recursive function.
             #The process will be repeated until...
