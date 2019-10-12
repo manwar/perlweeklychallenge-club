@@ -22,8 +22,9 @@ grammar Expansion {
     token element  { <string> | <curly> }
     token string   { <-[ \{ \} ]>+ }
     token curly    { \{ <option>+ % ',' \} }
-    token option   { <innerstr> | <curly> }
-    token innerstr { <-[ \{ \} \, ]>* }
+    token option   { <innerele>* }
+    token innerele { <innerstr> | <curly> }
+    token innerstr { <-[ \{ \} \, ]>+ }
 }
 
 
@@ -44,13 +45,18 @@ sub expand($str) {
 # descends the tree.  Have I mentioned how much I love Perl 6 grammars?
 #
 # Note that string token is different than the innerstr, which looks
-# like duplicated code (I'm willing to live with a couple lines here)
+# like duplicated code (I'm willing to live with a few lines here)
 # but is not quite since string and innerstring *are* different - the
 # outter strings (outside any curlies) allows commas.
 sub expansion(@arr is copy, $tree) {
     if $tree<element>:exists {
         # Handle each element.
         for @($tree<element>) -> $ele {
+            @arr = expansion(@arr, $ele);
+        }
+        return @arr;
+    } elsif $tree<innerele>:exists {
+        for @($tree<innerele>) -> $ele {
             @arr = expansion(@arr, $ele);
         }
         return @arr;
