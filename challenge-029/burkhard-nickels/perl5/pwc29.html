@@ -1,0 +1,409 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Perl Weekly Challenge #029</title>
+<link rel="stylesheet" href="pwc29.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #029</span></strong></big>
+</td></tr>
+</table>
+
+
+
+<ul id="index">
+  <li><a href="#Perl-Weekly-Challenge-029">Perl Weekly Challenge #029</a></li>
+  <li><a href="#In-brief">In brief</a></li>
+  <li><a href="#Task-1---Brace-expansion-1:-Pattern-matching-and-split">Task #1 - Brace expansion 1: Pattern matching and split</a></li>
+  <li><a href="#Task-1---Brace-expansion-2:-Code-compressed">Task #1 - Brace expansion 2: Code compressed</a></li>
+  <li><a href="#Task-1-and-2---Brace-expansion-3:-C-Inline">Task #1 and #2 - Brace expansion 3: C Inline</a>
+    <ul>
+      <li><a href="#C-Code-for-Inline">C-Code for Inline</a></li>
+      <li><a href="#Perl-Code-with-Inline">Perl Code with Inline</a></li>
+    </ul>
+  </li>
+  <li><a href="#Task-1-and-2---Brace-expansion-4:-External-C-program-system-call">Task #1 and #2 - Brace expansion 4: External C program system call</a>
+    <ul>
+      <li><a href="#The-C-Code-for-main">The C Code for main()</a></li>
+      <li><a href="#The-Perl-code-with-system-call">The Perl code with system call</a></li>
+    </ul>
+  </li>
+  <li><a href="#Task-1-and-2---Brace-expansion-5:-C-code-with-XS">Task #1 and #2 - Brace expansion 5: C code with XS</a>
+    <ul>
+      <li><a href="#Perl-XS-file">Perl XS file</a></li>
+      <li><a href="#Perl-Module-with-XS-Loader">Perl Module with XS Loader</a></li>
+      <li><a href="#Creation-of-XS-Module-Brex.pm">Creation of XS Module Brex.pm</a></li>
+      <li><a href="#Usage-of-Brex.pm">Usage of Brex.pm</a></li>
+      <li><a href="#Executing-XS-code">Executing XS code</a></li>
+    </ul>
+  </li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<h1 id="Perl-Weekly-Challenge-029">Perl Weekly Challenge #029</h1>
+
+<p>I want to try the Perl Weekly Challenge. During I am working on it, I get more and more ideas what to do next. So I decided to put all of the work in only one file. The result is this one and only file &quot;pwd29.pl&quot; for several solutions.</p>
+
+<p>The tasks for my first Perl Weekly Challenge are:</p>
+
+<p>Task #1: Write a script to demonstate brace expansion.</p>
+
+<p>Task #2: Write a script to demonstate calling a C function.</p>
+
+<h1 id="In-brief">In brief</h1>
+
+<p>Cite from the Song &quot;Ich weiss was ich will&quot; from Udo Juergens: &quot;Ich hab noch nie in meinem Leben Berge versetzt, ich tu&#39;es jetzt.&quot; (chuck, 12.10.2019)</p>
+
+<p>I will do the following trials:</p>
+
+<ul>
+
+<li><p>Task #1 and #2, Documentation on PWC</p>
+
+<p>I created an inline documentation in POD format. With arg &quot;html&quot; pod2html is executed to convert the POD to HTML. The files &quot;pwc29.css&quot; and &quot;pwc29.html&quot; are created.</p>
+
+<pre><code> # perldoc pwc29.pl
+   or
+ # ./pwc29.pl html</code></pre>
+
+</li>
+<li><p>Task #1, Brace expansion 1: Pattern matching and split</p>
+
+<pre><code> # ./pwc29.pl brace1 &quot;Perl {Daily,Weekly,Monthly} Challenge&quot;</code></pre>
+
+</li>
+<li><p>Task #1, Brace expansion 2: Code compressed</p>
+
+<pre><code> # ./pwc29.pl brace1 &quot;Perl {Daily,Weekly,Monthly} Challenge&quot;</code></pre>
+
+</li>
+<li><p>Task #1 and #2, Brace expansion 3: C Inline</p>
+
+<p>The C function brex() is created and used with the &quot;Inline&quot; module.</p>
+
+<pre><code> # ./pwc29.pl brace3 &quot;Perl {Daily,Weekly,Monthly} Challenge&quot;</code></pre>
+
+</li>
+<li><p>Task #1 and #2, Brace expansion 4: External C program system call</p>
+
+<p>The main C function is created and written to file &quot;brex.c&quot; together with the former created &quot;brex()&quot; function. Than the C program &quot;brex&quot; and C library libbrex.so are created with gcc.</p>
+
+<pre><code> # ./pwc29.pl brace4 &quot;Perl {Daily,Weekly,Monthly} Challenge&quot;</code></pre>
+
+</li>
+<li><p>Task #1 and #2, Brace expansion 5 and 6; C-Code with XS</p>
+
+<p>The Brex.pm Perl Module with XS-Loader and the Brex.xs file to create the interface module are created with arg &quot;brace5&quot;. With arg &quot;brace6&quot; the new Perl XS code is executed.</p>
+
+<pre><code> # ./pwc29.pl brace5 &quot;Perl {Daily,Weekly,Monthly} Challenge&quot;
+        and
+ # ./pwc29.pl brace6 &quot;Perl {Daily,Weekly,Monthly} Challenge&quot;</code></pre>
+
+</li>
+</ul>
+
+<h1 id="Task-1---Brace-expansion-1:-Pattern-matching-and-split">Task #1 - Brace expansion 1: Pattern matching and split</h1>
+
+<p>Also the shell is doing brace expansion, so I need to put the whole string in double quotes.</p>
+
+<pre><code> ./pwc29.pl brace1 &quot;Perl {Daily,Weekly,Monthly} Challenge&quot;
+ IN: Perl {Daily,Weekly,Monthly} Challenge
+ Perl  Daily  Challenge
+ Perl  Weekly  Challenge
+ Perl  Monthly  Challenge</code></pre>
+
+<p>The perl script is only doing pattern matching and split the list of comma separated strings.</p>
+
+<pre><code> my $str = $ARGV[0] || die &quot;Error: String not set!\n&quot;;
+ print &quot;IN: $str\n&quot;;
+
+ $str =~ /^(.*)\{(.*)\}(.*)/ || die &quot;No braces in string!\n&quot;;
+ my ($a,$b,$c) = ($1,$2,$3);
+ my @ele = split(&quot;,&quot;,$b);
+
+ foreach my $e (@ele) { print &quot;$a $e $c\n&quot;; }</code></pre>
+
+<h1 id="Task-1---Brace-expansion-2:-Code-compressed">Task #1 - Brace expansion 2: Code compressed</h1>
+
+<p>The second verion of brace expansion is only a compressed version written on two lines. I was not really able to make it a simple one-liner.</p>
+
+<pre><code> my ($a,$b,$c) = $ARGV[0] =~ /^(.*)\{(.*)\}(.*)/;
+ foreach my $e (split(&quot;,&quot;,$b)) { print &quot;$a $e $c\n&quot;; }</code></pre>
+
+<p>The script is called with arg one &quot;brace2&quot;</p>
+
+<pre><code> ./pwc29.pl brace2 &quot;Perl {Daily,Weekly,Monthly} Challenge&quot;
+ Perl  Daily  Challenge
+ Perl  Weekly  Challenge
+ Perl  Monthly  Challenge</code></pre>
+
+<h1 id="Task-1-and-2---Brace-expansion-3:-C-Inline">Task #1 and #2 - Brace expansion 3: C Inline</h1>
+
+<p>The &quot;Inline&quot; Perl Module offers an easy way to call a C function from Perl. To learn about it use perldoc:</p>
+
+<pre><code> # perldoc Inline</code></pre>
+
+<h2 id="C-Code-for-Inline">C-Code for Inline</h2>
+
+<p>So first I wrote the &quot;brex()&quot; function in C. Then I called the C function with the use of the Inline Module. Here I had some difficulties, beside the difficulties I had with too low C knowledge. My C code must be in a BEGIN{} section to be available at perl compile time. And within my C code are backslashes that needed to be masked with an extra backslash. I.e. &#39;\0&#39; becomes &#39;\\0&#39; or &#39;printf(&quot;%s %s %s\n&quot;, a, tmp, c);&#39; becomes &#39;printf(&quot;%s %s %s\\n&quot;, a, tmp, c);&#39;</p>
+
+<pre><code> my $code_sub;
+ BEGIN {
+        $code_sub = &lt;&lt;END_C_SUB;
+
+ void without_braces (char* str, char* res) { 
+        int len = strlen(str)-2;
+        strncpy(res,str+1,len);
+        *(res+len)   = &#39;,&#39;;
+        *(res+len+1) = &#39;\\0&#39;;
+ }
+
+ void brex(char* a, char* b, char* c) {
+        char list[50];                  // String without curly braces and extra comma
+        without_braces(b,list);
+
+        char* ref  = list;
+        char* nref = strchr(ref,&#39;,&#39;);
+        int   pos=0;
+        do {
+                char tmp[20];
+                pos = nref - ref;
+
+                strncpy(tmp,ref,pos);
+                printf(&quot;%s %s %s\\n&quot;, a, tmp, c);
+                ref += pos+1;
+
+        } while ((nref = strchr(ref,&#39;,&#39;)) != NULL);
+ }
+ END_C_SUB
+ }</code></pre>
+
+<h2 id="Perl-Code-with-Inline">Perl Code with Inline</h2>
+
+<p>The &quot;use Inline&quot; is compiling the C-Code. Afterwards the C function can be called in Perl. The &quot;Inline&quot; module seems also to create XS code for me. When you look into the &quot;_Inline/&quot; folder you can see the created temporary files.</p>
+
+<pre><code> use Inline C =&gt; $code_sub;
+ my ($a,$b,$c) = $ARGV[0] =~ /^(.*)(\{.*\})(.*)/;
+ brex($a,$b,$c);</code></pre>
+
+<p>Now I can execute the program:</p>
+
+<pre><code> ./pwc29.pl brace3 &quot;Perl {Daily,Weekly,Monthly} Challenge&quot;
+ Perl  Daily  Challenge
+ Perl  Weekly  Challenge
+ Perl  Monthly  Challenge</code></pre>
+
+<h1 id="Task-1-and-2---Brace-expansion-4:-External-C-program-system-call">Task #1 and #2 - Brace expansion 4: External C program system call</h1>
+
+<p>This is about an external C library used within Perl with XS code. I start this with writing the previous C code to file and compile it as C executable &quot;brex&quot; and C shared library brex.so. And I verify if the external program &quot;brex&quot; is executed properly.</p>
+
+<pre><code> # ./pwc29.pl brace4 &quot;Perl {Daily,Weekly,Monthly} Challenge&quot;
+ Command: gcc -fPIC -c tmp/brex.c -o tmp/brex.o
+ Command: gcc tmp/brex.o -o tmp/brex
+ Command: gcc -shared tmp/brex.o -L/usr/local/lib -o tmp/libbrex.so
+ Command: tmp/brex Perl  &quot;{Daily,Weekly,Monthly}&quot;  Challenge
+ IN: 4 - tmp/brex Perl {Daily,Weekly,Monthly} Challenge
+ Perl Daily Challenge
+ Perl Weekly Challenge
+ Perl Monthly Challenge</code></pre>
+
+<h2 id="The-C-Code-for-main">The C Code for main()</h2>
+
+<p>A C program needs the main() function. This main function is stored in a perl variable. The code must be available during perl compile time, so it is surrounded by a BEGIN {} block. The main() function is only calling the brex() function that we discussed in the former chapter.</p>
+
+<pre><code> my $code_main;
+
+ BEGIN {
+        $code_main = &lt;&lt;END_C_MAIN;
+
+ #include &lt;stdio.h&gt;
+ #include &lt;string.h&gt;
+
+ void brex(char*,char*,char*);
+
+ int main( int argc, char** argv ) {
+        printf(&quot;IN: %d - %s %s %s %s\\n&quot;,argc, argv[0], argv[1], argv[2], argv[3]);
+        brex(argv[1],argv[2],argv[3]);
+ }
+ END_C_MAIN
+ }</code></pre>
+
+<h2 id="The-Perl-code-with-system-call">The Perl code with system call</h2>
+
+<p>A system call with perl function &quot;qx()&quot; is used to compile the C code and to call the resulting &quot;brex&quot; program. In the C code before we needed to mask the backslash. Now we have to substitute the backslash again. Why? Because otherwise the code is not working. Try and Error.</p>
+
+<p>I also do this to create an external C shared library for the XS trial below.</p>
+
+<p>C Code from $code_main and $code_sub is written to tmp/brex.c</p>
+
+<p>gcc creates tmp/brex.o, tmp/brex, tmp/libbrex.so</p>
+
+<p>C program is executed with command: tmp/brex Perl &quot;{Daily,Weekly,Monthly}&quot; Challenge</p>
+
+<pre><code> my $LIB1= &quot;/usr/local/lib&quot;;
+
+ sub brace_expansion_4 {
+        my $str = shift || die &quot;Error: String not set!\n&quot;;
+        my ($a,$b,$c) = $str =~ /^(.*)(\{.*\})(.*)/;
+
+        # ------ Write C code to file ----------
+        open(my $fh, &quot;&gt;tmp/brex.c&quot;) or die &quot;Error: Cant open brex.c!\n&quot;;
+        $code_sub =~ s/\\\\/\\/g;
+        $code_main =~ s/\\\\/\\/g;
+        print $fh &quot;$code_main\n$code_sub\n&quot;;
+        close $fh;
+        
+        my @com = (
+                &quot;gcc -fPIC -c tmp/brex.c -o tmp/brex.o&quot;,
+                &quot;gcc tmp/brex.o -o tmp/brex&quot;,
+                &quot;gcc -shared tmp/brex.o -L$LIB1 -o tmp/libbrex.so&quot;,
+                &quot;tmp/brex $a \&quot;$b\&quot; $c&quot;,
+        );
+        foreach my $c (@com) { print &quot;Command: $c\n&quot;; my $ret = qx[$c]; print $ret; }
+ }</code></pre>
+
+<h1 id="Task-1-and-2---Brace-expansion-5:-C-code-with-XS">Task #1 and #2 - Brace expansion 5: C code with XS</h1>
+
+<p>We use our external library libbrex.so for the Perl Module Brex.pm. So we write a XS file &quot;Brex.xs&quot; that calls the brex() function from our libbrex.so library. The Brex.pm is dynamically loading the Brex.so library that was created from the Brex.xs file.</p>
+
+<p>Because this is a not very easy thing, and I also do not know much about it, it is better to investigate in the appropriate XS docu:</p>
+
+<pre><code> # perldoc perlxs
+ # perldoc perlxstut
+ # perldoc Module::Load::Conditional</code></pre>
+
+<h2 id="Perl-XS-file">Perl XS file</h2>
+
+<p>Here the XS code is stored in a perl variable. In the following program this is written to the file &quot;tmp/Brex.xs&quot;. The XS code is for translating perl data types to C data types and vice versa. This is done by the &quot;xsubpp&quot;, the &quot;XS subroutine pre-processor&quot;.</p>
+
+<p>Here we state the C brex() function from our formerly created external libbrex.so and the input and output variables. The &quot;template&quot; is used to translate the vars.</p>
+
+<pre><code> $code_xs =&lt;&lt;CODE_XS_END;
+ #define PERL_NO_GET_CONTEXT
+ #include &quot;EXTERN.h&quot;
+ #include &quot;perl.h&quot;
+ #include &quot;XSUB.h&quot;
+ #include &quot;ppport.h&quot;
+ extern void brex(char*,char*,char*);
+ MODULE = Brex             PACKAGE = Brex
+ PROTOTYPES: ENABLE
+ void 
+ brex(a,b,c)
+        char* a
+        char* b
+        char* c
+ CODE_XS_END</code></pre>
+
+<h2 id="Perl-Module-with-XS-Loader">Perl Module with XS Loader</h2>
+
+<p>Here the Perl Module code for XS is stored in a perl variable. In the following program this is written to the file &quot;tmp/Brex.pm&quot;. This code is loading the Brex.so interface library.</p>
+
+<pre><code> $code_module =&lt;&lt;CODE_MOD_END;
+ package Brex;
+ 
+ require Exporter;
+ our \@ISA = qw(Exporter);
+ our \@EXPORT = qw( );
+ our \$VERSION = &#39;0.01&#39;;
+ 
+ require XSLoader;
+ XSLoader::load(&#39;Brex&#39;, \$VERSION);
+ 
+ 1;
+ CODE_MOD_END</code></pre>
+
+<h2 id="Creation-of-XS-Module-Brex.pm">Creation of XS Module Brex.pm</h2>
+
+<p>The tools gcc and xsubpp are executed with perl system calls with the function &quot;qx()&quot;. So the arg &quot;brace5&quot; is only for writing the file &quot;tmp/Brex.pm&quot; and &quot;tmp/Brex.xs&quot; and for compiling the XS code.</p>
+
+<pre><code> my $INC1= &quot;/usr/lib/x86_64-linux-gnu/perl/5.24/CORE&quot;;
+ my $INC2= &quot;/usr/local/include&quot;;
+ my $INC3= &quot;/usr/local/lib/x86_64-linux-gnu/perl/5.24.1/PDL/Core&quot;;
+ my $PP  = &quot;/usr/local/bin/xsubpp&quot;;
+ my $TM  = &quot;/usr/share/perl/5.24.1/ExtUtils/typemap&quot;;
+
+ sub brace_expansion_5 {
+        my $str = shift || die &quot;Error: String not set!\n&quot;;
+        my ($a,$b,$c) = $str =~ /^(.*)(\{.*\})(.*)/;
+
+        # ------ Write  code to file ----------
+        open(my $fh, &quot;&gt;tmp/Brex.pm&quot;) or die &quot;Error: Cant open tmp/Brex.pm!\n&quot;;
+        print $fh &quot;$code_module\n&quot;;
+        close $fh;
+        open($fh, &quot;&gt;tmp/Brex.xs&quot;) or die &quot;Error: Cant open tmp/Brex.xs!\n&quot;;
+        print $fh &quot;$code_xs\n&quot;;
+        close $fh;
+
+        my @com = (
+                &quot;perl $PP -typemap $TM tmp/Brex.xs &gt; tmp/Brex.xsc&quot;,
+                &quot;mv tmp/Brex.xsc tmp/Brex.c&quot;,
+                &quot;gcc -fPIC -I$INC1 -I$INC2 -I$INC3 -c tmp/Brex.c -o tmp/Brex.o&quot;,
+                &quot;gcc -shared -L$LIB1 -L. -lbrex tmp/Brex.o -o tmp/libBrex.so&quot;,
+        );
+        foreach my $c (@com) { print &quot;$c\n&quot;; my $ret = qx[$c]; print $ret; }
+ }</code></pre>
+
+<h2 id="Usage-of-Brex.pm">Usage of Brex.pm</h2>
+
+<p>Before we created the C-Code XS Module Brex.pm, now we use it. We simply call the Perl function &quot;Brex::brex($a,$b,$c)&quot;. The only difficulty here is the &quot;use Brex.pm&quot; statement. We can not use it here because otherwise we get a compile error, when Brex.pm is not created before. And this is the case here, because this same script shall create it. So here the Module &quot;Module::Load::Conditional&quot; with its funcion &quot;can_load()&quot; is used.</p>
+
+<p>In the BEGIN block the LD_LIBRARY_PATH must be set. It also can be set in the shell before executing this script.</p>
+
+<pre><code> BEGIN {
+        $ENV{LD_LIBRARY_PATH}=&quot;tmp&quot;;
+        my $ret = qx[ echo \$LD_LIBRARY_PATH; export \$LD_LIBRARY_PATH ];
+        print &quot;ENV: $ret\n&quot;;
+ }
+
+ sub brace_expansion_6 {
+        my $str = shift || die &quot;Error: String not set!\n&quot;;
+        my ($a,$b,$c) = $str =~ /^(.*)(\{.*\})(.*)/;
+
+        use lib &#39;tmp&#39;;
+
+        # --- Conditional execution, if module can be loaded
+        if(my $ret = require &quot;Brex.pm&quot;) { Brex::brex($a,$b,$c); }
+        else { die &quot;Error: Perl Module tmp/Brex.pm not available ($ret)!\n&quot;; }
+
+        # --- Conditional execution, if module can be loaded
+        # this somehow did NOT work:
+        use Module::Load::Conditional qw[can_load];
+        if(can_load(modules=&gt;&quot;Brex&quot;)) {
+                Brex::brex($a,$b,$c);
+        }
+        else { die &quot;Error: Perl Module tmp/Brex.pm not available!\n&quot;; }
+ }</code></pre>
+
+<h2 id="Executing-XS-code">Executing XS code</h2>
+
+<p>The XS code ist executed. The LD_LIBRARY_PATH is now also set in the code of this script in a BEGIN block, see above. So this export statement is not necessary.</p>
+
+<pre><code> # export LD_LIBRARY_PATH=tmp
+ # ./pwc29.pl brace6 &quot;Perl {Daily,Weekly,Monthly} Challenge&quot;
+ ENV: tmp
+
+ Perl  Daily  Challenge
+ Perl  Weekly  Challenge
+ Perl  Monthly  Challenge</code></pre>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>chuck</p>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #029</span></strong></big>
+</td></tr>
+</table>
+
+</body>
+
+</html>
+
+
