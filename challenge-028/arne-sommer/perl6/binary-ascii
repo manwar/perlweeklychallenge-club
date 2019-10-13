@@ -1,0 +1,21 @@
+#! /usr/bin/env perl6
+
+sub MAIN ($file where $file.IO && $file.IO.r)
+{
+  my $fh = open $file, :bin;
+
+  while my $blob = $fh.read(1024)
+  {
+    for @$blob -> $byte
+    {
+      if $byte > 127
+      {
+        say "The file content is binary";
+	$fh.close;
+	return;
+      }
+    }
+  }
+  say "The file content is ascii";
+  $fh.close;
+}

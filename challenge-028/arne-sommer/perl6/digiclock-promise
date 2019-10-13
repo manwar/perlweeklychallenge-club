@@ -1,0 +1,14 @@
+#! /usr/bin/env perl6
+
+show-time;
+
+sleep;
+
+sub show-time
+{
+  Promise.in(1).then:
+  {
+    show-time;
+    say DateTime.now.hh-mm-ss;
+  }
+}
