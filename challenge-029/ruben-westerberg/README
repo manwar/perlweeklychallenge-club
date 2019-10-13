@@ -2,9 +2,17 @@ Solution by Ruben Westerberg
 
 ch-1.pl and ch-1.p6
 ===
-Run the program with command line arguments representing file names. The extension of the file name is matched against known file types.
+Run the program with commanline arguments enclosed in single quotes to prevent the shell from performing its own brace expansion. This will to multiple levels of expension and generate all combinations;
+	eg 
+	./ch-1.pl '{Bob,Tim} say hello to {Mary,Rose}'
+
+	this will ouput 4 lines
+	Bob say hellow to Mary
+	Bob say hellow to Rose
+	Tim say hellow to Mary
+	Tim say hellow to Rose
+
 
 ch-2.pl and ch-2.p6
 ===
-Run the program to show a simple digital clock
 
