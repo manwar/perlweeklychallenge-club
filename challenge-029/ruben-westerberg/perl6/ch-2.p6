@@ -2,4 +2,4 @@
 
 use NativeCall;
 sub getuid() returns uint32   is native { * };
-put getuid;
+put "User ID: "~getuid;
