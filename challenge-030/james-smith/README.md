@@ -35,11 +35,11 @@ perl -E 'say"@{[grep{6==(int(5*$_/4)-int($_/100)+int$_/400)%7}2019..3e3]}"'
 
 ## Lengths of scripts:
 All four scripts come in at: 269 bytes - the shortest two solutions come in at 131 bytes
-```
+
 | script | Bytes |
 | --- | ---: |
 | ch1.sh | 73 |
 | ch1-duplicates.sh | 69 |
 | ch2.sh | 52 |
 | ch2-better.sh | 75 |
-```
+
