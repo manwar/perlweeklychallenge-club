@@ -1,25 +1,47 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 030"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
    "series" : [
       {
          "data" : [
             {
-               "y" : 2,
+               "name" : "Dave Cross",
                "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
+               "y" : 2
+            },
+            {
+               "drilldown" : "Dr James A. Smith",
+               "name" : "Dr James A. Smith",
+               "y" : 2
             },
             {
                "y" : 2,
@@ -28,8 +50,8 @@
             },
             {
                "y" : 1,
-               "drilldown" : "Pete Houston",
-               "name" : "Pete Houston"
+               "name" : "Pete Houston",
+               "drilldown" : "Pete Houston"
             },
             {
                "name" : "Roger Bell West",
@@ -37,31 +59,41 @@
                "y" : 4
             },
             {
-               "drilldown" : "Simon Proctor",
                "y" : 2,
+               "drilldown" : "Simon Proctor",
                "name" : "Simon Proctor"
             },
             {
                "drilldown" : "Yet Ebreo",
-               "y" : 2,
-               "name" : "Yet Ebreo"
+               "name" : "Yet Ebreo",
+               "y" : 2
             }
          ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 030"
+         "name" : "Perl Weekly Challenge - 030",
+         "colorByPoint" : 1
       }
    ],
    "drilldown" : {
       "series" : [
          {
-            "name" : "Dave Cross",
-            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "id" : "Dave Cross",
+            "name" : "Dave Cross"
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "id" : "Dr James A. Smith",
+            "name" : "Dr James A. Smith"
          },
          {
             "data" : [
@@ -74,14 +106,14 @@
             "name" : "Markus Holzer"
          },
          {
+            "id" : "Pete Houston",
+            "name" : "Pete Houston",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ],
-            "id" : "Pete Houston",
-            "name" : "Pete Houston"
+            ]
          },
          {
             "data" : [
@@ -94,18 +126,18 @@
                   2
                ]
             ],
-            "id" : "Roger Bell West",
-            "name" : "Roger Bell West"
+            "name" : "Roger Bell West",
+            "id" : "Roger Bell West"
          },
          {
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
             ],
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
             "data" : [
@@ -114,29 +146,12 @@
                   2
                ]
             ],
-            "id" : "Yet Ebreo",
-            "name" : "Yet Ebreo"
+            "name" : "Yet Ebreo",
+            "id" : "Yet Ebreo"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
    "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2019-10-14 11:02:48 GMT"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 030"
-   },
-   "chart" : {
-      "type" : "column"
+      "text" : "[Champions: 7] Last updated at 2019-10-14 11:39:16 GMT"
    }
 }
