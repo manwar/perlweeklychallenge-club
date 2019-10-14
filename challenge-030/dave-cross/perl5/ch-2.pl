@@ -21,9 +21,11 @@ for my $x (1 .. $max) {
 sub valid {
   state $seen;
 
-  return if $seen->{join ',', sort { $a <=> $b} @_};
+  @_ = sort { $a <=> $b } @_;
+
+  return if $seen->{join ',', @_};
   return unless sum(@_) == 12;
   return unless grep { ! ($_ % 2) } @_;
-  $seen->{join ',', sort { $a <=> $b} @_} = 1;
+  $seen->{join ',', sort @_} = 1;
   return 1;
 }
