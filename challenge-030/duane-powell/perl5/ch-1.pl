@@ -5,9 +5,11 @@ use strict;
 # Write a script to list dates for Sunday Christmas between 2019 and 2100. For example, 25 Dec 2022 is Sunday.
 
 use DateTime;
-use constant SUNDAY   => 7;
-use constant DECEMBER => 12;
-use constant XMAS     => 25;
+use constant {
+	SUNDAY   => 7,
+	DECEMBER => 12,
+	XMAS     => 25,
+};
 
 print "List of Sunday Christmas between 2019 and 2100\n";
 foreach my $year (2019 .. 2100) {
