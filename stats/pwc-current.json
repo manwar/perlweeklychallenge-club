@@ -1,81 +1,89 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 030",
          "data" : [
             {
                "y" : 2,
-               "name" : "Dave Cross",
-               "drilldown" : "Dave Cross"
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross"
             },
             {
                "y" : 2,
-               "name" : "Markus Holzer",
-               "drilldown" : "Markus Holzer"
+               "drilldown" : "Markus Holzer",
+               "name" : "Markus Holzer"
             },
             {
-               "y" : 4,
+               "y" : 1,
+               "drilldown" : "Pete Houston",
+               "name" : "Pete Houston"
+            },
+            {
                "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West"
+               "drilldown" : "Roger Bell West",
+               "y" : 4
             },
             {
-               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
-               "y" : 2
+               "y" : 2,
+               "name" : "Simon Proctor"
             },
             {
-               "y" : 2,
                "drilldown" : "Yet Ebreo",
+               "y" : 2,
                "name" : "Yet Ebreo"
             }
          ],
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 030"
       }
    ],
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Dave Cross",
+            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "name" : "Dave Cross",
-            "id" : "Dave Cross"
+            ]
          },
          {
-            "id" : "Markus Holzer",
-            "name" : "Markus Holzer",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Markus Holzer",
+            "name" : "Markus Holzer"
          },
          {
-            "id" : "Roger Bell West",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ],
+            "id" : "Pete Houston",
+            "name" : "Pete Houston"
+         },
+         {
             "data" : [
                [
                   "Perl 5",
@@ -86,6 +94,7 @@
                   2
                ]
             ],
+            "id" : "Roger Bell West",
             "name" : "Roger Bell West"
          },
          {
@@ -99,29 +108,35 @@
             "id" : "Simon Proctor"
          },
          {
-            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Yet Ebreo"
+            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo"
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "legend" : {
+      "enabled" : 0
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 030"
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2019-10-14 11:02:48 GMT"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-10-14 10:44:25 GMT"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 030"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
