@@ -37,7 +37,7 @@ perl -E 'say"@{[grep{6==(int(5*$_/4)-int($_/100)+int$_/400)%7}2019..3e3]}"'
 All four scripts come in at: 269 bytes - the shortest two solutions come in at 131 bytes
 
 | Script | Bytes | Notes |
-| --- | ---: |
+| :---: | ---: | :--- |
 | ch1.sh | 73 | Initial version of script with strictly increasing numbers |
 | ch1-duplicates.sh | 69 | Version of script which allows duplicates |
 | ch2.sh | 52 | Solve the actual problem of 2019-2099 - doesn't have issues with centuries |
