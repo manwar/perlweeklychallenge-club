@@ -21,9 +21,9 @@ no warnings
 
 my %done ;
 
-for my $m ( 1 .. 9 ) {
-    for my $n ( 1 .. 9 ) {
-        for my $o ( 1 .. 9 ) {
+for my $m ( 1 .. 10 ) {
+    for my $n ( 1 .. 10 ) {
+        for my $o ( 1 .. 10 ) {
             my $i = join ' ' , sort $m,$n,$o;
             next if $done{$i}++;;
             my $p = $m + $n + $o;
