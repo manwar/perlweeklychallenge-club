@@ -1,18 +1,33 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2019-10-14 15:43:28 GMT"
+      "text" : "[Champions: 12] Last updated at 2019-10-14 16:59:17 GMT"
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    },
+   "xAxis" : {
+      "type" : "category"
+   },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 030",
          "colorByPoint" : 1,
          "data" : [
             {
@@ -22,61 +37,62 @@
             },
             {
                "drilldown" : "Dave Cross",
-               "y" : 2,
-               "name" : "Dave Cross"
-            },
-            {
-               "name" : "Dr James A. Smith",
-               "drilldown" : "Dr James A. Smith",
+               "name" : "Dave Cross",
                "y" : 2
             },
             {
-               "drilldown" : "Markus Holzer",
                "y" : 2,
+               "drilldown" : "Dr James A. Smith",
+               "name" : "Dr James A. Smith"
+            },
+            {
+               "y" : 2,
+               "name" : "Duane Powell",
+               "drilldown" : "Duane Powell"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Markus Holzer",
                "name" : "Markus Holzer"
             },
             {
-               "y" : 2,
+               "name" : "Pete Houston",
                "drilldown" : "Pete Houston",
-               "name" : "Pete Houston"
+               "y" : 2
             },
             {
-               "name" : "Roger Bell West",
+               "drilldown" : "Rage311",
+               "name" : "Rage311",
+               "y" : 2
+            },
+            {
                "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West",
                "y" : 4
             },
             {
-               "name" : "Simon Proctor",
                "y" : 2,
+               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor"
             },
             {
-               "name" : "Steven Wilson",
                "y" : 2,
-               "drilldown" : "Steven Wilson"
+               "drilldown" : "Steven Wilson",
+               "name" : "Steven Wilson"
             },
             {
-               "name" : "Trenton Langer",
                "drilldown" : "Trenton Langer",
+               "name" : "Trenton Langer",
                "y" : 2
             },
             {
+               "y" : 3,
                "name" : "Yet Ebreo",
-               "drilldown" : "Yet Ebreo",
-               "y" : 2
+               "drilldown" : "Yet Ebreo"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 030"
+         ]
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "drilldown" : {
       "series" : [
          {
@@ -94,24 +110,34 @@
             "id" : "Daniel Mita"
          },
          {
+            "name" : "Dave Cross",
+            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "name" : "Dave Cross",
-            "id" : "Dave Cross"
+            ]
          },
          {
+            "name" : "Dr James A. Smith",
+            "id" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "name" : "Dr James A. Smith",
-            "id" : "Dr James A. Smith"
+            ]
+         },
+         {
+            "id" : "Duane Powell",
+            "name" : "Duane Powell",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
          },
          {
             "id" : "Markus Holzer",
@@ -130,12 +156,20 @@
                   2
                ]
             ],
-            "id" : "Pete Houston",
-            "name" : "Pete Houston"
+            "name" : "Pete Houston",
+            "id" : "Pete Houston"
          },
          {
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West",
+            "name" : "Rage311",
+            "id" : "Rage311",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl 5",
@@ -145,7 +179,9 @@
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell West",
+            "id" : "Roger Bell West"
          },
          {
             "data" : [
@@ -154,18 +190,18 @@
                   2
                ]
             ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
+            "id" : "Steven Wilson",
             "name" : "Steven Wilson",
-            "id" : "Steven Wilson"
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
          },
          {
             "data" : [
@@ -174,8 +210,8 @@
                   2
                ]
             ],
-            "name" : "Trenton Langer",
-            "id" : "Trenton Langer"
+            "id" : "Trenton Langer",
+            "name" : "Trenton Langer"
          },
          {
             "name" : "Yet Ebreo",
@@ -184,23 +220,21 @@
                [
                   "Perl 5",
                   2
+               ],
+               [
+                  "Perl 6",
+                  1
                ]
             ]
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 030"
    },
-   "xAxis" : {
-      "type" : "category"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
