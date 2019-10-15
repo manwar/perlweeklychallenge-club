@@ -21,9 +21,9 @@ no warnings
 
 my %done ;
 
-for my $m ( 1 .. 9 ) {
-    for my $n ( 1 .. 9 ) {
-        for my $o ( 1 .. 9 ) {
+for my $m ( 1 .. 10 ) {
+    for my $n ( 1 .. 10 ) {
+        for my $o ( 1 .. 10 ) {
             my $i = join ' ' , sort $m,$n,$o;
             next if $done{$i}++;;
             my $p = $m + $n + $o;
@@ -38,6 +38,7 @@ for my $m ( 1 .. 9 ) {
 
 __DATA__
 
+    1 + 1 + 10 = 12
     1 + 2 + 9 = 12
     1 + 3 + 8 = 12
     1 + 4 + 7 = 12
