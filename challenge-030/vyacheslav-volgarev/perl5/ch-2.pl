@@ -14,6 +14,6 @@ for my $first ( 1..10 ) {
 		push @numbers, join ", ", sort { $a <=> $b } ( $first, $second, $third ) if $third > 0;
 	}
 }
-my %uniq;
+
 $, = ";\n";
 say uniqstr @numbers;
