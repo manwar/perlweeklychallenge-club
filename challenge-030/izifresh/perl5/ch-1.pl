@@ -1,27 +1,32 @@
 #!/usr/bin/env perl
-package Christmas; 
-
 use strict; 
 use warnings;
 use v5.10;
-
- my $year = 2019;
- my $i = 3;
- my $x = 2;
- my @day = qw(Monday Tuesday Wednesday Thursday Friday Saturday Sunday);
-  for ($year .. 2099 ) {
-    print ( "25 December of $year - $day[$x] \n");
+use constant {
+ACTUALYEAR => 2019,
+ACTUALDAY => 3,
+ACTUALORDER => 3,
+};
+my $year = ACTUALYEAR;
+my $order = ACTUALORDER;
+my $day = ACTUALDAY;
+  for ( $year .. 2099 ) {
+    if ( $day == 7 ) {
+      if ( $order != 4) {
+      print "25 December of $year - Sunday \n";
+}
+}
     $year++;
-     if ($i == 4) {
-      $i = 1;
-      $x += 2;
+    if ( $order == 4 ) {
+      $order = 1;
+      $day += 2;
 }
-     else { 
-      $x += 1;
-      $i++;
+    else { 
+      $day += 1;
+      $order++;
 }
-  if ($x == 7) { $x = 0; }
-  if ($x == 8) { $x = 1; }
+    $day = 1 if $day == 8;
+    $day = 2 if $day == 9;
 }
- print ("25 December of 2100 - $day[$x] \n"); 
+print "25 December of 2100 - Sunday \n"; 
 END
