@@ -6,7 +6,7 @@ use warnings;
 use List::Util qw( sum0 any );
 
 use constant {
-    NUM_COUNT    => 3,
+    MAX_NUMS     => 3,
     REQUIRED_SUM => 12,
 };
 
@@ -16,7 +16,7 @@ sub n {
 
     my $sum = sum0 @nums;
 
-    if ( $depth > NUM_COUNT || REQUIRED_SUM < $sum ) {
+    if ( $depth > MAX_NUMS || REQUIRED_SUM < $sum ) {
 
         if ( $sum == REQUIRED_SUM && any { $_ % 2 == 0 } @nums ) {
             print "@nums\n";
