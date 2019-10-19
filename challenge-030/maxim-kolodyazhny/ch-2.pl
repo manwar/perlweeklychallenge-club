@@ -3,10 +3,10 @@
 use strict;
 use warnings;
 
-use List::Util qw( sum0 any );
+use List::Util qw( sum0 );
 
 use constant {
-    MAX_NUMS     => 3,
+    NUM_COUNT    => 3,
     REQUIRED_SUM => 12,
 };
 
@@ -16,15 +16,13 @@ sub n {
 
     my $sum = sum0 @nums;
 
-    if ( $depth > MAX_NUMS || REQUIRED_SUM < $sum ) {
+    if ( $depth > NUM_COUNT || REQUIRED_SUM < $sum ) {
 
-        if ( $sum == REQUIRED_SUM && any { $_ % 2 == 0 } @nums ) {
-            print "@nums\n";
-        }
+        print "@nums\n" if $sum == REQUIRED_SUM;
 
         return;
     }
-    n( $depth + 1, @nums, $_ ) for 0 .. REQUIRED_SUM;
+    n( $depth + 1, @nums, $_ ) for 1 .. REQUIRED_SUM;
 }
 
 n();
