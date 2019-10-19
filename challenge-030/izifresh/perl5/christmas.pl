@@ -13,7 +13,7 @@ my $day = ACTUALDAY;
   for ( $year .. 2099 ) {
     if ( $day == 7 ) {
       if ( $order != 4) {
-      print ( "25 December of $year - Sunday \n");
+      print "25 December of $year - Sunday \n";
 }
 }
     $year++;
@@ -28,5 +28,5 @@ my $day = ACTUALDAY;
     $day = 1 if $day == 8;
     $day = 2 if $day == 9;
 }
-print ("25 December of 2100 - Sunday \n"); 
+print "25 December of 2100 - Sunday \n"; 
 END
