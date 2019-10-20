@@ -4,8 +4,8 @@ use warnings;
 use Time::Piece;
 use Time::Seconds;
 
- my $t=localtime(0)->add_months(11)->add_years(49)+24*ONE_DAY;
-while ((2019 <= $t->year) && ($t->year <= 2100)) {
-	print "$t\n" if $t->_wday==0;
-	$t=$t->add_years(1);
-}
+print map { $_->strftime("%Y-%m-%d\n") }map  {
+	my $t=localtime(0)->add_months(11)->add_years($_-1970)+24*ONE_DAY;
+	$t->_wday == 0? $t: ();	
+ }
+(2019..2100);
