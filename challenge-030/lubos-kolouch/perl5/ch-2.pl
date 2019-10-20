@@ -24,24 +24,26 @@ use strict;
 use warnings;
 use feature qw/say/;
 
+sub is_ok_triple {
+    my ($x,$y,$z) = @_;
+
+    return 0 unless $x+$y+$z == 12;
+    return 0 unless ($x % 2 ==0) or ($y % 2 == 0) or ($z % 2 == 0);
+    return 1;
+}
+
 my $max = 12;
 
+
 for my $x (1..10) {    # max 10+1+1
-    my $even_switch;
-
-    $even_switch = 1 if $x % 2 == 0;
-
     for my $y (1..10) {
         last if ( $x + $y ) >= $max;
-        $even_switch = 1 if $y % 2 == 0;
 
         for my $z (1..10) {
-            $even_switch = 1 if $z % 2 == 0;
             my $sum = $x + $y + $z;
             last if $sum > $max;
-            next unless $even_switch;
 
-            say "$x $y $z" if $sum == $max;
+            say "$x $y $z" if is_ok_triple($x,$y,$z);
         
         }
     }
