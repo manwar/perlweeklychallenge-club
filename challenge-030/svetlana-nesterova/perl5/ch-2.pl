@@ -2,7 +2,6 @@
 use strict;
 use warnings FATAL => 'all';
 
-use List::Util;
 
 =Write a script to print all possible series of 3 positive numbers,
  where in each series at least one of the number is even and sum of the three numbers is always 12.
@@ -23,7 +22,5 @@ sub PrintSeries() {
         }
     }
 }
-
-
 
 PrintSeries();

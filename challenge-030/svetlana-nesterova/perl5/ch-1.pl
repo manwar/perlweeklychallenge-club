@@ -21,4 +21,4 @@ sub PrintSundayChristmases() {
     }
 }
 
-print PrintSundayChristmases();
+PrintSundayChristmases();
