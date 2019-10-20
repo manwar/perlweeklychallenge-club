@@ -8,4 +8,4 @@ print map { $_->strftime("%Y-%m-%d\n") }map  {
 	my $t=localtime(0)->add_months(11)->add_years($_-1970)+24*ONE_DAY;
 	$t->_wday == 0? $t: ();	
  }
-(2019..2100);
+(2020..2099);
