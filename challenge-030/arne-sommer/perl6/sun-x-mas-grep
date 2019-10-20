@@ -1,0 +1,5 @@
+#! /usr/bin/env perl6
+
+(@*ARGS[0] // 2019 ... @*ARGS[1] // 2100)
+  .grep({ Date.new($_, 12, 25).day-of-week == 7 })
+  .map({ say "25 Dec $_ is Sunday." });
