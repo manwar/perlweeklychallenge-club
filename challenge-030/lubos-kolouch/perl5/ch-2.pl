@@ -1,0 +1,49 @@
+#!/usr/bin/perl 
+#===============================================================================
+#
+#         FILE: ch-2.pl
+#
+#        USAGE: ./ch-2.pl
+#
+#  DESCRIPTION: https://perlweeklychallenge.org/blog/perl-weekly-challenge-030/
+#
+#  Write a script to print all possible series of 3 positive numbers, where in each series at least one of the number is even and sum of the three numbers is always 12. For example, 3,4,5.
+#
+#      OPTIONS: ---
+# REQUIREMENTS: ---
+#         BUGS: ---
+#        NOTES: ---
+#       AUTHOR: Lubos Kolouch
+# ORGANIZATION:
+#      VERSION: 1.0
+#      CREATED: 10/20/2019 10:30:56 AM
+#     REVISION: ---
+#===============================================================================
+
+use strict;
+use warnings;
+use feature qw/say/;
+
+my $max = 12;
+
+for my $x (1..10) {    # max 10+1+1
+    my $even_switch;
+
+    $even_switch = 1 if $x % 2 == 0;
+
+    for my $y (1..10) {
+        last if ( $x + $y ) >= $max;
+        $even_switch = 1 if $y % 2 == 0;
+
+        for my $z (1..10) {
+            $even_switch = 1 if $z % 2 == 0;
+            my $sum = $x + $y + $z;
+            last if $sum > $max;
+            next unless $even_switch;
+
+            say "$x $y $z" if $sum == $max;
+        
+        }
+    }
+}
+
