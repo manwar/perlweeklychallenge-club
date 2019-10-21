@@ -1,46 +1,60 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "xAxis" : {
       "type" : "category"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2019-10-21 12:28:20 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 031",
          "data" : [
             {
                "y" : 2,
-               "name" : "Dave Cross",
-               "drilldown" : "Dave Cross"
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross"
             },
             {
-               "y" : 1,
+               "drilldown" : "Maxim Kolodyazhny",
                "name" : "Maxim Kolodyazhny",
-               "drilldown" : "Maxim Kolodyazhny"
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 1,
-               "drilldown" : "Simon Proctor"
+               "y" : 1
             },
             {
                "y" : 1,
-               "name" : "Yet Ebreo",
-               "drilldown" : "Yet Ebreo"
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Yet Ebreo",
+               "name" : "Yet Ebreo"
             }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 031"
+         ]
       }
    ],
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "Perl Weekly Challenge - 031"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "drilldown" : {
       "series" : [
@@ -55,54 +69,40 @@
             ]
          },
          {
-            "id" : "Maxim Kolodyazhny",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "name" : "Maxim Kolodyazhny"
+            "name" : "Maxim Kolodyazhny",
+            "id" : "Maxim Kolodyazhny"
          },
          {
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
-            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
-                  1
+                  2
                ]
             ],
+            "name" : "Yet Ebreo",
             "id" : "Yet Ebreo"
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 031"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-10-21 12:26:05 GMT"
-   },
    "tooltip" : {
-      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    }
 }
