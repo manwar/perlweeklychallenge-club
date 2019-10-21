@@ -1,21 +1,11 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -51,14 +41,13 @@
          "Julien Fiegehenn"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-10-21 10:56:43 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
+         "name" : "Perl 5",
          "data" : [
             0,
             0,
@@ -90,10 +79,10 @@
             7,
             2,
             1
-         ],
-         "name" : "Perl 5"
+         ]
       },
       {
+         "name" : "Perl 6",
          "data" : [
             0,
             4,
@@ -125,8 +114,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       },
       {
          "data" : [
@@ -163,5 +151,17 @@
          ],
          "name" : "Blog"
       }
-   ]
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-10-21 11:05:31 GMT"
+   }
 }
