@@ -1,27 +1,58 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2019-10-21 11:08:18 GMT"
    },
    "series" : [
       {
          "data" : [
             {
-               "drilldown" : "Dave Cross",
                "y" : 2,
-               "name" : "Dave Cross"
+               "name" : "Dave Cross",
+               "drilldown" : "Dave Cross"
             },
             {
                "y" : 1,
-               "name" : "Yet Ebreo",
-               "drilldown" : "Yet Ebreo"
+               "name" : "Maxim Kolodyazhny",
+               "drilldown" : "Maxim Kolodyazhny"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Yet Ebreo",
+               "name" : "Yet Ebreo"
             }
          ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 031"
+         "name" : "Perl Weekly Challenge - 031",
+         "colorByPoint" : 1
       }
    ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
    "drilldown" : {
       "series" : [
          {
@@ -35,44 +66,28 @@
             "name" : "Dave Cross"
          },
          {
+            "name" : "Maxim Kolodyazhny",
+            "id" : "Maxim Kolodyazhny",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ]
+         },
+         {
+            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "name" : "Yet Ebreo",
             "id" : "Yet Ebreo"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 031"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2019-10-21 11:05:31 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
    }
 }
