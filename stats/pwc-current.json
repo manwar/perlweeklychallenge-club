@@ -1,9 +1,15 @@
 {
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-10-21 11:08:18 GMT"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
    },
    "series" : [
       {
@@ -19,58 +25,51 @@
                "drilldown" : "Maxim Kolodyazhny"
             },
             {
+               "name" : "Simon Proctor",
                "y" : 1,
-               "drilldown" : "Yet Ebreo",
-               "name" : "Yet Ebreo"
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "y" : 1,
+               "name" : "Yet Ebreo",
+               "drilldown" : "Yet Ebreo"
             }
          ],
-         "name" : "Perl Weekly Challenge - 031",
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 031"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
    "legend" : {
       "enabled" : 0
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Dave Cross",
+            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Dave Cross",
-            "name" : "Dave Cross"
+            ]
          },
          {
-            "name" : "Maxim Kolodyazhny",
             "id" : "Maxim Kolodyazhny",
             "data" : [
                [
                   "Perl 5",
+                  1
+               ]
+            ],
+            "name" : "Maxim Kolodyazhny"
+         },
+         {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
                   1
                ]
             ]
@@ -89,5 +88,21 @@
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 031"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2019-10-21 12:26:05 GMT"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
