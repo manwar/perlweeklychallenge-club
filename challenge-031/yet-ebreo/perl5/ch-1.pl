@@ -1,3 +1,4 @@
+#!/usr/bin/perl
 #Create a function to check divide by zero error 
 #without checking if the denominator is zero.
 use strict;
