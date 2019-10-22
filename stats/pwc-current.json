@@ -1,86 +1,10 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2019-10-22 13:02:26 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 031"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "drilldown" : "Dave Cross",
-               "y" : 2,
-               "name" : "Dave Cross"
-            },
-            {
-               "drilldown" : "Duane Powell",
-               "y" : 2,
-               "name" : "Duane Powell"
-            },
-            {
-               "name" : "Markus Holzer",
-               "y" : 2,
-               "drilldown" : "Markus Holzer"
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Maxim Kolodyazhny",
-               "name" : "Maxim Kolodyazhny"
-            },
-            {
-               "drilldown" : "Pete Houston",
-               "y" : 1,
-               "name" : "Pete Houston"
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 1
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Tyler Limkemann",
-               "name" : "Tyler Limkemann"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Vyacheslav Volgarev",
-               "name" : "Vyacheslav Volgarev"
-            },
-            {
-               "name" : "Yet Ebreo",
-               "drilldown" : "Yet Ebreo",
-               "y" : 2
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 031"
-      }
-   ],
    "drilldown" : {
       "series" : [
          {
@@ -94,14 +18,14 @@
             ]
          },
          {
-            "id" : "Duane Powell",
-            "name" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "id" : "Duane Powell",
+            "name" : "Duane Powell"
          },
          {
             "data" : [
@@ -114,12 +38,22 @@
             "name" : "Markus Holzer"
          },
          {
-            "name" : "Maxim Kolodyazhny",
-            "id" : "Maxim Kolodyazhny",
             "data" : [
                [
                   "Perl 5",
                   1
+               ]
+            ],
+            "name" : "Maxim Kolodyazhny",
+            "id" : "Maxim Kolodyazhny"
+         },
+         {
+            "name" : "Nazareno Delucca",
+            "id" : "Nazareno Delucca",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
                ]
             ]
          },
@@ -134,28 +68,28 @@
             "id" : "Pete Houston"
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
+            "name" : "Tyler Limkemann",
+            "id" : "Tyler Limkemann",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ],
-            "name" : "Tyler Limkemann",
-            "id" : "Tyler Limkemann"
+            ]
          },
          {
-            "id" : "Vyacheslav Volgarev",
             "name" : "Vyacheslav Volgarev",
+            "id" : "Vyacheslav Volgarev",
             "data" : [
                [
                   "Perl 5",
@@ -164,20 +98,101 @@
             ]
          },
          {
-            "id" : "Yet Ebreo",
-            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo"
          }
       ]
    },
    "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Dave Cross",
+               "y" : 2,
+               "drilldown" : "Dave Cross"
+            },
+            {
+               "name" : "Duane Powell",
+               "y" : 2,
+               "drilldown" : "Duane Powell"
+            },
+            {
+               "drilldown" : "Markus Holzer",
+               "y" : 2,
+               "name" : "Markus Holzer"
+            },
+            {
+               "drilldown" : "Maxim Kolodyazhny",
+               "y" : 1,
+               "name" : "Maxim Kolodyazhny"
+            },
+            {
+               "drilldown" : "Nazareno Delucca",
+               "y" : 2,
+               "name" : "Nazareno Delucca"
+            },
+            {
+               "y" : 1,
+               "name" : "Pete Houston",
+               "drilldown" : "Pete Houston"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 1,
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "name" : "Tyler Limkemann",
+               "y" : 2,
+               "drilldown" : "Tyler Limkemann"
+            },
+            {
+               "y" : 2,
+               "name" : "Vyacheslav Volgarev",
+               "drilldown" : "Vyacheslav Volgarev"
+            },
+            {
+               "drilldown" : "Yet Ebreo",
+               "y" : 2,
+               "name" : "Yet Ebreo"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 031"
+      }
+   ],
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 031"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2019-10-22 13:11:33 GMT"
    }
 }
