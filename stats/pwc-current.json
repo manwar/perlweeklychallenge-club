@@ -1,56 +1,52 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Dave Cross",
             "name" : "Dave Cross",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Dave Cross"
+            ]
          },
          {
+            "name" : "Duane Powell",
             "id" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "name" : "Duane Powell"
+            ]
          },
          {
-            "name" : "Markus Holzer",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
             ],
-            "id" : "Markus Holzer"
+            "id" : "Markus Holzer",
+            "name" : "Markus Holzer"
          },
          {
-            "id" : "Maxim Kolodyazhny",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
+            "id" : "Maxim Kolodyazhny",
             "name" : "Maxim Kolodyazhny"
          },
          {
@@ -60,94 +56,113 @@
                   1
                ]
             ],
-            "id" : "Pete Houston",
-            "name" : "Pete Houston"
+            "name" : "Pete Houston",
+            "id" : "Pete Houston"
          },
          {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            ]
          },
          {
-            "id" : "Yet Ebreo",
+            "name" : "Vyacheslav Volgarev",
+            "id" : "Vyacheslav Volgarev",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
+            "id" : "Yet Ebreo",
             "name" : "Yet Ebreo"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2019-10-22 10:18:13 GMT"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
    },
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : 0
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 031"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 031",
-         "colorByPoint" : 1,
          "data" : [
             {
+               "drilldown" : "Dave Cross",
                "y" : 2,
-               "name" : "Dave Cross",
-               "drilldown" : "Dave Cross"
+               "name" : "Dave Cross"
             },
             {
-               "drilldown" : "Duane Powell",
                "name" : "Duane Powell",
+               "y" : 2,
+               "drilldown" : "Duane Powell"
+            },
+            {
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer",
                "y" : 2
             },
             {
-               "y" : 2,
-               "name" : "Markus Holzer",
-               "drilldown" : "Markus Holzer"
-            },
-            {
-               "y" : 1,
                "drilldown" : "Maxim Kolodyazhny",
+               "y" : 1,
                "name" : "Maxim Kolodyazhny"
             },
             {
+               "drilldown" : "Pete Houston",
                "y" : 1,
-               "name" : "Pete Houston",
-               "drilldown" : "Pete Houston"
+               "name" : "Pete Houston"
             },
             {
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 1
+               "y" : 1,
+               "drilldown" : "Simon Proctor"
             },
             {
+               "name" : "Vyacheslav Volgarev",
                "y" : 2,
+               "drilldown" : "Vyacheslav Volgarev"
+            },
+            {
                "name" : "Yet Ebreo",
-               "drilldown" : "Yet Ebreo"
+               "drilldown" : "Yet Ebreo",
+               "y" : 2
             }
-         ]
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 031"
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2019-10-22 10:20:37 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "tooltip" : {
-      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
    }
 }
