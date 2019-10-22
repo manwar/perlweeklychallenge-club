@@ -1,10 +1,21 @@
 {
-   "subtitle" : {
-      "text" : "Last updated at 2019-10-22 13:12:16 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "y" : 10
+         },
          "data" : [
             [
                "Blog",
@@ -12,29 +23,24 @@
             ],
             [
                "Perl 5",
-               1266
+               1268
             ],
             [
                "Perl 6",
                755
             ]
          ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "y" : 10,
-            "rotation" : -90,
-            "enabled" : "true"
-         }
+         "name" : "Contributions"
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2019-10-22 13:15:17 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions - 2019"
    },
    "yAxis" : {
       "min" : 0,
@@ -42,22 +48,16 @@
          "text" : null
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions - 2019"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       },
       "type" : "category"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "legend" : {
+      "enabled" : "false"
    }
 }
