@@ -9,7 +9,7 @@ use v5.10;
 use Math::Trig;
 
 die "Usage:\n\tch-2.pl <angle1> .. <anglen>\n\n" if !@ARGV;
-die "Only numbers are allowed as input\n" if "@ARGV"=~/[^0-9 ]/;
+die "Only numbers are allowed as input\n" if grep  !/^[-+]?\d+$/,  @ARGV;
 
 my ($y_comp,$x_comp) = 0;
 $y_comp+=sin deg2rad($_),$x_comp+=cos deg2rad($_)  for @ARGV;

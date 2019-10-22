@@ -20,6 +20,7 @@ print "The mean of angles ", join(',',@angles), " is $angle_mean\n";
 
 __END__
 
+
 /ch-2.pl 10 20 30
 The mean of angles 10,20,30 is 20
 
