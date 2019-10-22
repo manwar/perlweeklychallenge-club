@@ -1,36 +1,47 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 031"
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Dave Cross",
-            "name" : "Dave Cross"
+            "id" : "Dave Cross"
          },
          {
-            "name" : "Duane Powell",
             "id" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Duane Powell"
+         },
+         {
+            "name" : "Markus Holzer",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Markus Holzer"
          },
          {
             "id" : "Maxim Kolodyazhny",
@@ -43,14 +54,14 @@
             "name" : "Maxim Kolodyazhny"
          },
          {
-            "name" : "Pete Houston",
-            "id" : "Pete Houston",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ]
+            ],
+            "id" : "Pete Houston",
+            "name" : "Pete Houston"
          },
          {
             "data" : [
@@ -63,35 +74,34 @@
             "name" : "Simon Proctor"
          },
          {
-            "name" : "Yet Ebreo",
             "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Yet Ebreo"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
    "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2019-10-21 17:26:10 GMT"
+      "text" : "[Champions: 7] Last updated at 2019-10-22 10:18:13 GMT"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 031"
    },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 031",
          "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Dave Cross",
                "y" : 2,
+               "name" : "Dave Cross",
                "drilldown" : "Dave Cross"
             },
             {
@@ -100,39 +110,44 @@
                "y" : 2
             },
             {
-               "y" : 1,
-               "name" : "Maxim Kolodyazhny",
-               "drilldown" : "Maxim Kolodyazhny"
+               "y" : 2,
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer"
             },
             {
-               "name" : "Pete Houston",
                "y" : 1,
+               "drilldown" : "Maxim Kolodyazhny",
+               "name" : "Maxim Kolodyazhny"
+            },
+            {
+               "y" : 1,
+               "name" : "Pete Houston",
                "drilldown" : "Pete Houston"
             },
             {
                "name" : "Simon Proctor",
-               "y" : 1,
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Simon Proctor",
+               "y" : 1
             },
             {
-               "name" : "Yet Ebreo",
                "y" : 2,
+               "name" : "Yet Ebreo",
                "drilldown" : "Yet Ebreo"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 031"
+         ]
       }
    ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "legend" : {
       "enabled" : 0
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
    }
 }
