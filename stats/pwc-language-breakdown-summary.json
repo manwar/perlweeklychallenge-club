@@ -1,28 +1,36 @@
 {
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2019-10-24 10:53:29 GMT"
+   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : null
       }
    },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "series" : [
       {
-         "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         },
          "data" : [
             [
                "Blog",
@@ -30,34 +38,26 @@
             ],
             [
                "Perl 5",
-               1274
+               1276
             ],
             [
                "Perl 6",
                756
             ]
          ],
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true",
-            "y" : 10,
-            "rotation" : -90,
-            "format" : "{point.y:.0f}",
-            "align" : "right"
-         }
+         "name" : "Contributions"
       }
    ],
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
    },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "legend" : {
       "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-10-23 10:48:34 GMT"
    }
 }
