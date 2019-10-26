@@ -1,4 +1,4 @@
-#1/usr/bin/perl 
+#!/usr/bin/perl 
 
 use strict;
 use warnings;
@@ -6,7 +6,7 @@ use v5.10;
 
 sub check_div_zero {
     my ( $numerator, $denominator ) = @_;
-    return 'Can\'t divide by zero' if cos($denominator) == 1;
+    return 'Can\'t divide by zero' if !eval{$numerator/$denominator};
     return $numerator/$denominator;
 }
 
