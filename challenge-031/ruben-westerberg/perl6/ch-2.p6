@@ -1,6 +1,6 @@
 #!/usr/bin/env perl6
 use MONKEY-SEE-NO-EVAL;
-my $name=@*ARGS[0]//"\$var"~1000.Int;
+my $name=@*ARGS[0]//"var"~1000.rand.Int;
 my $value=@*ARGS[1]//1.rand;
 {
 	put "Using Module/eval";
