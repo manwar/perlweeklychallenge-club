@@ -7,7 +7,7 @@ use warnings;
 use feature 'signatures';
 no warnings 'experimental::signatures';
 
-if ( @ARGV != 2 ) { die("Provide letters to use and (optionally) filename") }
+if ( @ARGV != 2 ) { die("Provide numerator and denominator") }
 
 MAIN: {
     if ( check_for_div_by_zero(@ARGV) ) {
