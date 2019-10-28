@@ -3,10 +3,6 @@ use v5.14;
 use strict;
 use warnings;
 
-# Turn on method signatures
-use feature 'signatures';
-no warnings 'experimental::signatures';
-
 my $csv;
 if (@ARGV and $ARGV[0] eq '--csv') {
     $csv = 1;
