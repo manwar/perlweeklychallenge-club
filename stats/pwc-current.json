@@ -1,34 +1,79 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
-      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 032"
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Dave Cross",
+            "id" : "Dave Cross"
+         },
+         {
+            "name" : "Lars Balker",
+            "id" : "Lars Balker",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
+         },
+         {
+            "name" : "Yet Ebreo",
+            "id" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ]
+            ]
+         }
+      ]
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          }
       }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 032"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2019-10-28 15:13:33 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
                "y" : 2,
@@ -36,58 +81,28 @@
                "drilldown" : "Dave Cross"
             },
             {
+               "drilldown" : "Lars Balker",
                "name" : "Lars Balker",
-               "y" : 2,
-               "drilldown" : "Lars Balker"
+               "y" : 2
             },
             {
                "drilldown" : "Simon Proctor",
                "y" : 2,
                "name" : "Simon Proctor"
+            },
+            {
+               "drilldown" : "Yet Ebreo",
+               "name" : "Yet Ebreo",
+               "y" : 1
             }
          ],
-         "name" : "Perl Weekly Challenge - 032",
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 032"
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2019-10-28 15:17:45 GMT"
+   },
    "legend" : {
       "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Dave Cross",
-            "id" : "Dave Cross",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Lars Balker",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "name" : "Lars Balker"
-         },
-         {
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ]
-         }
-      ]
    }
 }
