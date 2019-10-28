@@ -27,7 +27,6 @@ sub text_bar {
   }
 
   my ($width) = GetTerminalSize;
-  say $width;
 
   my $keylen = max map { length } keys %$data;
   my $maxval = max values %$data;
