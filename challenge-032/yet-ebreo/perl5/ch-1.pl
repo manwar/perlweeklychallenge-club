@@ -23,6 +23,7 @@ use feature 'say';
 
 my @files;
 my $csv_flag = 0;
+my $longest  = 0;
 for my $arg (@ARGV) {
     if ($arg eq '-csv') {
         $csv_flag = 1;
@@ -30,11 +31,13 @@ for my $arg (@ARGV) {
         push @files, $arg;
     }
 }
+
 my %dictionary;
 if (@ARGV < ($csv_flag+1)) {
     say "Type the word(s) then press enter, :end to quit:";
     while (chomp(my $word = <STDIN>)) {
         ($word =~ /^:end$/) && last;
+        $longest = length $word if $longest < length $word;
         $dictionary{$word}++;
     }
 } else {
@@ -42,17 +45,42 @@ if (@ARGV < ($csv_flag+1)) {
         open my $handle, '<', $text;
         chomp(my @lines = <$handle>);
         close $handle;
-        
+
         for my $word (@lines) {
+            $longest = length $word if $longest < length $word;
             $dictionary{$word}++;
         }
     }
 }
 
+$longest = 0 if $csv_flag;
+
 for my $keys (sort { $dictionary{$b}-$dictionary{$a} } sort keys %dictionary) {
-    say $keys.($csv_flag?",":"\t").$dictionary{$keys};
+    printf ("%-${longest}s%s%s\n",$keys,$csv_flag?",":"  ",$dictionary{$keys});
 }
 =begin
+perl .\ch-1.pl
+Type the word(s) then press enter, :end to quit:
+a
+quick
+brown
+apple
+jumps
+over
+dog
+brown
+cat
+apple
+:end
+apple   2
+brown   2
+a       1
+cat     1
+dog     1
+jumps   1
+over    1
+quick   1
+
 perl .\ch-1.pl .\sample.txt
 apple   2
 brown   2
