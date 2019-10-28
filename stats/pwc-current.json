@@ -2,77 +2,92 @@
    "chart" : {
       "type" : "column"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 032"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Dave Cross",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Dave Cross"
-         },
-         {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
-            "data" : [
-               [
-                  "Perl 6",
-                  1
-               ]
-            ]
-         }
-      ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2019-10-28 13:59:57 GMT"
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    },
-   "xAxis" : {
-      "type" : "category"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2019-10-28 15:13:33 GMT"
    },
    "series" : [
       {
          "data" : [
             {
                "y" : 2,
-               "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
+               "name" : "Dave Cross",
+               "drilldown" : "Dave Cross"
             },
             {
-               "y" : 1,
+               "name" : "Lars Balker",
+               "y" : 2,
+               "drilldown" : "Lars Balker"
+            },
+            {
                "drilldown" : "Simon Proctor",
+               "y" : 2,
                "name" : "Simon Proctor"
             }
          ],
          "name" : "Perl Weekly Challenge - 032",
          "colorByPoint" : 1
       }
-   ]
+   ],
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Dave Cross",
+            "id" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Lars Balker",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Lars Balker"
+         },
+         {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
+         }
+      ]
+   }
 }
