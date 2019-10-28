@@ -66,7 +66,12 @@ sub get-bar( Int $available, $max, $value ) {
 }
 
 sub get-screen-width() {
-    run("tput","cols",:out).out.slurp.chomp;
+    my $result;
+    try {
+        $result = run("tput","cols",:out).out.slurp.chomp;
+    }
+    # Fallback incase tput not available
+    return $result || 100;
 }
 
 sub parse-space-sep( Str $line ) {
