@@ -1,4 +1,7 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
          "name" : "Perl 5",
@@ -106,8 +109,13 @@
          "name" : "Blog"
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-10-29 18:33:02 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -143,17 +151,6 @@
          "Chenyf"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-10-29 18:29:07 GMT"
-   },
    "yAxis" : {
       "min" : 0,
       "title" : {
@@ -161,7 +158,10 @@
       }
    },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
    }
 }
