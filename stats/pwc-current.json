@@ -1,30 +1,47 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 032"
-   },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2019-10-29 14:15:57 GMT"
    },
    "legend" : {
       "enabled" : 0
    },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 032",
          "data" : [
             {
-               "y" : 2,
-               "name" : "Dave Cross",
-               "drilldown" : "Dave Cross"
+               "name" : "Andrezgz",
+               "drilldown" : "Andrezgz",
+               "y" : 2
             },
             {
-               "y" : 2,
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross",
+               "y" : 2
+            },
+            {
                "name" : "E. Choroba",
-               "drilldown" : "E. Choroba"
+               "drilldown" : "E. Choroba",
+               "y" : 2
             },
             {
                "name" : "Lars Balker",
@@ -32,46 +49,70 @@
                "y" : 2
             },
             {
-               "y" : 2,
                "name" : "Lars Thegler",
-               "drilldown" : "Lars Thegler"
+               "drilldown" : "Lars Thegler",
+               "y" : 2
             },
             {
-               "name" : "Markus Holzer",
+               "y" : 2,
                "drilldown" : "Markus Holzer",
-               "y" : 2
+               "name" : "Markus Holzer"
             },
             {
-               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
                "y" : 2
             },
             {
+               "y" : 1,
                "drilldown" : "Steven Wilson",
-               "name" : "Steven Wilson",
-               "y" : 1
+               "name" : "Steven Wilson"
             },
             {
                "drilldown" : "Yet Ebreo",
                "name" : "Yet Ebreo",
                "y" : 2
             }
-         ]
+         ],
+         "name" : "Perl Weekly Challenge - 032",
+         "colorByPoint" : 1
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2019-10-29 10:51:34 GMT"
-   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Dave Cross",
+            "id" : "Andrezgz",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Andrezgz"
+         },
+         {
             "id" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Dave Cross"
+         },
+         {
+            "id" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "E. Choroba"
+         },
+         {
+            "id" : "Lars Balker",
+            "name" : "Lars Balker",
             "data" : [
                [
                   "Perl 5",
@@ -80,34 +121,14 @@
             ]
          },
          {
-            "name" : "E. Choroba",
+            "name" : "Lars Thegler",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "E. Choroba"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Lars Balker",
-            "name" : "Lars Balker"
-         },
-         {
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ]
-            ],
-            "id" : "Lars Thegler",
-            "name" : "Lars Thegler"
+            "id" : "Lars Thegler"
          },
          {
             "id" : "Markus Holzer",
@@ -121,48 +142,42 @@
          },
          {
             "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
          },
          {
+            "id" : "Steven Wilson",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "id" : "Steven Wilson",
             "name" : "Steven Wilson"
          },
          {
-            "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "name" : "Yet Ebreo"
+            "name" : "Yet Ebreo",
+            "id" : "Yet Ebreo"
          }
       ]
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 032"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    }
 }
