@@ -1,0 +1,15 @@
+#! /usr/bin/env raku
+
+multi sub MAIN ($file where $file.IO.f && $file.IO.r = "example.txt")
+{
+  say "[file]";
+  my %input = $file.IO.lines.Bag;
+  say "$_:\t%input{$_}" for %input.keys.sort( { %input{$^b} <=> %input{$^a} });
+}
+
+multi sub MAIN ()
+{
+  say "[argfiles]";
+  my %input = $*ARGFILES.lines.Bag;
+  say "$_:\t%input{$_}" for %input.keys.sort( { %input{$^b} <=> %input{$^a} });
+}
