@@ -15,7 +15,7 @@ sub head_print {
 	my $d = shift;
 	print "  x|";
 	print sprintf "%4s", $_ foreach (1 .. $d);
-	print "\n___+",  "____" x $d, "\n";	
+	print "\n---+",  "----" x $d, "\n";	
 }
 
 sub body_print {
