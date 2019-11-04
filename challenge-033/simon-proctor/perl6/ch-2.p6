@@ -9,20 +9,28 @@ multi sub MAIN( Bool :h($help) where so * ) {
     say $*USAGE;
 }
 
-#| Print the times table up to 11
-multi sub MAIN() {
-    .say for get-header();
-    .say for (1..11).map( { get-row($_) } );
+#| Print the times table (default to 11)
+multi sub MAIN(
+    UInt $max = 11 #= Max number to print the table to
+) {
+    my &formater = format-row( $max );
+    .say for get-header( $max, &formater );
+    .say for (1..$max).map( { get-row( $max, &formater, $_) } );
 }
 
-sub format-row( *@data ) {
-    sprintf " %2s | %3s %3s %3s %3s %3s %3s %3s %3s %3s %3s %3s", @data;
+sub format-row( UInt $max ) {
+    my $max-width = ($max*$max).codes;
+    my $row = " %{$max.codes}s |{" %{$max-width}s" x $max}";
+    return sub ( *@data ) {
+        sprintf $row, @data;
+    }
 }
 
-sub get-header() {
-    ( format-row( "x", |(1..11) ), "-" x 49 );
+sub get-header( UInt $max, &formater ) {
+    my $max-width = ($max*$max).codes;
+    ( &formater( "x", |(1..$max) ), "-" x ( 3 + $max.codes + ( $max * ($max-width+1) ) ) );
 }
 
-sub get-row( $val ) {
-    format-row( $val, |( "" xx $val-1 ), |($val..11).map( * * $val ) );
+sub get-row(  UInt $max, &formater, UInt $val ) {
+    &formater( $val, |( "" xx $val-1 ), |($val..$max).map( * * $val ) );
 }
