@@ -8,7 +8,7 @@ There are two ways to solve this -> split and count or using tr... one is short 
 
 Uses lc, split and grep to count the elements and put them in a hash... looping through each file a line at a time with <>
 
-```
+```perl
 use feature 'say';
 use strict;
 my %T = map { $_=>0 } foreach 'a'..'z';
@@ -29,7 +29,7 @@ either need to use string eval (which is evIl) or manually replicate the loop - 
 code... Note we set $/ to undef so that we slurp the whole file in in one go (to improve performance of using tr)
 and less modifications to the %T hash...
 
-```
+```perl
 use feature 'say';
 $/=undef;
 
@@ -47,7 +47,7 @@ say $_,': ',$T{$_}||0 foreach 'a'..'z';
 ```
 OK - so didn't want to type 26 lines so used this one liner to do it for me!
 
-```
+```bash
 perl -E 'say "  \$t{'"'"'$_'"'"'} += y/$_".uc($_)."/$_".uc($_)."/;" foreach "a".."z";' 
 ```
 
@@ -92,12 +92,12 @@ Again going to extend the challenge to make this generic (in case someone wants 
 
 Hidden in the solution above was getting the number of digits for a number (so we can format the totals) - we do this again to get the size of the left hand column and the main table columns.
 
-```
+```perl
 my $sl = int(log($N)/log(10)+1);     ## Get size of integer $N - defines the width of the LH column
 my $sr = int(2*log($N)/log(10)+1);   ## Get size of $N squared - defines the width of other columns
 ```
 and we use this to tweak the formats and the padding/line drawing elements!
-```
+```perl
 #!/usr/bin/perl
 
 use strict;
