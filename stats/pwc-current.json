@@ -1,21 +1,9 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Bruce Van Allen",
             "id" : "Bruce Van Allen",
+            "name" : "Bruce Van Allen",
             "data" : [
                [
                   "Perl 5",
@@ -34,18 +22,27 @@
             "id" : "Daniel Mita"
          },
          {
-            "name" : "Dr James A. Smith",
-            "id" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Dr James A. Smith",
+            "id" : "Dr James A. Smith"
+         },
+         {
+            "id" : "Duane Powell",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
+            ],
+            "name" : "Duane Powell"
          },
          {
             "id" : "Roger Bell West",
-            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -55,57 +52,20 @@
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell West"
          },
          {
             "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
          }
       ]
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Bruce Van Allen",
-               "drilldown" : "Bruce Van Allen",
-               "y" : 2
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Daniel Mita",
-               "name" : "Daniel Mita"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Dr James A. Smith",
-               "name" : "Dr James A. Smith"
-            },
-            {
-               "y" : 4,
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West"
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 2
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 033",
-         "colorByPoint" : 1
-      }
-   ],
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "legend" : {
       "enabled" : 0
@@ -115,11 +75,66 @@
          "text" : "Total Solutions"
       }
    },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Bruce Van Allen",
+               "drilldown" : "Bruce Van Allen"
+            },
+            {
+               "drilldown" : "Daniel Mita",
+               "name" : "Daniel Mita",
+               "y" : 1
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Dr James A. Smith",
+               "name" : "Dr James A. Smith"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Duane Powell",
+               "name" : "Duane Powell"
+            },
+            {
+               "y" : 4,
+               "name" : "Roger Bell West",
+               "drilldown" : "Roger Bell West"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 033",
+         "colorByPoint" : 1
+      }
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2019-11-04 15:27:23 GMT"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge - 033"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2019-11-04 15:24:05 GMT"
    },
    "chart" : {
       "type" : "column"
