@@ -10,7 +10,7 @@ multi sub MAIN( Bool :h($help) where so * ) {
     say $*USAGE;
 }
 
-#| Read data from standard out.
+#| Read data from standard in.
 #| Returns a list of a-z and the number of times each occurs in the input
 multi sub MAIN() {
     read-files( IO::CatHandle.new( $*IN ) );
