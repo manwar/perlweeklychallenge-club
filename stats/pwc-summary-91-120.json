@@ -1,7 +1,12 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
@@ -40,8 +45,21 @@
          "Svetlana Nesterova"
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-11-04 00:47:27 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
+         "name" : "Perl 5",
          "data" : [
             0,
             0,
@@ -73,10 +91,10 @@
             0,
             45,
             2
-         ],
-         "name" : "Perl 5"
+         ]
       },
       {
+         "name" : "Perl 6",
          "data" : [
             32,
             4,
@@ -108,8 +126,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       },
       {
          "data" : [
@@ -146,22 +163,5 @@
          ],
          "name" : "Blog"
       }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-11-04 00:35:31 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   }
+   ]
 }
