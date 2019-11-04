@@ -1,45 +1,129 @@
 Solutions by James Smith.
 
-Sorry these are such nice golf questions they had to be golfed..
+# Challenge 1 - Counting letters
 
-# Challenge 1 - Christmas on a Sunday?
+There are two ways to solve this -> split and count or using tr... one is short code - one is longer - but much faster.
 
-Solving the actual problem - we need to work out which days have 5*year/4 mod 7 to be zero, so just use a simple grep, to keep the code sort we use "@{[ ]}" which at 7 bytes is one byte shorter than join" ",
+## Version 1 - short code
 
-```
-perl -E 'say"@{[grep{!(int(5*$_/4)%7)}2019..2099]}"'
-```
+Uses lc, split and grep to count the elements and put them in a hash... looping through each file a line at a time with <>
 
-We can extend this to every year (since the Gregorian calendar was introduced) by subtracting
-int year/100 & adding int year/400...
+```perl
+use feature 'say';
+use strict;
+my %T = map { $_=>0 } foreach 'a'..'z';
+while(<>) {
+  $T{$_}++ foreach grep { /[a-z]/ } split m{}, lc $_;
+}
 
-```
-perl -E 'say"@{[grep{6==(int(5*$_/4)-int($_/100)+int$_/400)%7}2019..3e3]}"'
-```
-
-# Challenge 2 - sum to 12
-
-I've included two solutions to this as the question was slighlty ambiguous, as not sure if duplicates are allowed. Note the second requirement of one of the numbers being even is irrelevant as for three numbers to add to 12 then at least 1 must me even - 3 odds would add to an odd number...
-
-The first solution is for a strictly increasing sequence of numbers {no dupes}
-```
-perl -E 'say map{$a=$_;map{" $a,$_,".(12-$a-$_)}$a+1..5.5-$a/2}1..3'
+say "$_: $T{$_}" foreach 'a'..'z';
 ```
 
-The second is for a series of sequences which can allow duplicates
+Running this over 13Mbytes of PHP takes approximately 6.5 seconds...
+
+## Version 2 - faster code
+
+Now counting letters in a string is quickest using the tr or y operator - as this requires the number of characters
+changed. Without using eval you can't unfortunately sub in a variable into the pattern unlike with m/s... So we
+either need to use string eval (which is evIl) or manually replicate the loop - $T{'a'} =~ y/aA/aA/ etc - in this
+code... Note we set $/ to undef so that we slurp the whole file in in one go (to improve performance of using tr)
+and less modifications to the %T hash...
+
+```perl
+use feature 'say';
+$/=undef;
+
+while(<>) {
+  $T{'a'} += y/aA/aA/;
+  $T{'b'} += y/bB/bB/;
+..
+..
+  $T{'y'} += y/yY/yY/;
+  $T{'z'} += y/zZ/zZ/;
+}
+
+say $_,': ',$T{$_}||0 foreach 'a'..'z';
+
 ```
-perl -E 'say map{$a=$_;map{" $a,$_,".(12-$a-$_)}$a..6-$a/2}1..4'
+OK - so didn't want to type 26 lines so used this one liner to do it for me!
+
+```bash
+perl -E 'say "  \$t{'"'"'$_'"'"'} += y/$_".uc($_)."/$_".uc($_)."/;" foreach "a".."z";' 
 ```
 
-In both cases we have used shortest loops - possible...
+This now runs in approxy 0.25 seconds a big improvement...
 
-## Lengths of scripts:
-All four scripts come in at: 259 bytes - the shortest two solutions come in at 116 bytes (pushing into a single script is just 107 bytes);
+## Version 3 - nicer output...
 
-| Script | Bytes | Notes |
-| :---: | ---: | :--- |
-| ch1.sh | 52 | Solve the actual problem of 2019-2099 - doesn't have issues with centuries |
-| ch1-better.sh | 75 | Include the century rules |
-| ch2.sh | 68 | Initial version of script with strictly increasing numbers |
-| ch2-duplicates.sh | 64 | Version of script which allows duplicates |
+The version 3 code just expands the version 2 code - but creates a "histogram" to show the distribution (and at the same time formats the totals better)
 
+```
+a : 584193 : ##########################
+b : 108267 : ####
+c : 287124 : #############
+d : 272798 : ############
+e : 877936 : ########################################
+f : 209371 : #########
+g : 152944 : ######
+h : 200641 : #########
+i : 546465 : ########################
+j :  15133 :
+k :  50049 : ##
+l : 326976 : ##############
+m : 214631 : #########
+n : 438874 : ###################
+o : 436059 : ###################
+p : 282120 : ############
+q :  19825 :
+r : 551144 : #########################
+s : 552344 : #########################
+t : 724711 : #################################
+u : 260233 : ###########
+v :  68882 : ###
+w :  80759 : ###
+x :  57019 : ##
+y : 115201 : #####
+z :  11021 :
+```
+
+# Challenge 2 - multiplication square...
+
+Again going to extend the challenge to make this generic (in case someone wants a different version)
+
+Hidden in the solution above was getting the number of digits for a number (so we can format the totals) - we do this again to get the size of the left hand column and the main table columns.
+
+```perl
+my $sl = int(log($N)/log(10)+1);     ## Get size of integer $N - defines the width of the LH column
+my $sr = int(2*log($N)/log(10)+1);   ## Get size of $N squared - defines the width of other columns
+```
+and we use this to tweak the formats and the padding/line drawing elements!
+```perl
+#!/usr/bin/perl
+
+use strict;
+use feature 'say';
+
+## This solves more than the puzzle - but thought I would make it more generic!
+
+## This gets the size of the square that we want to display...
+
+my $N  = shift =~ s{\D}{}gr || 11;        ## Default to 11 - but use first parameter as size of square!
+my @R  = 1..$N;                           ## Create a "range array" - we use this 4 times!!!
+
+## Get width of columns for use in the renderer..
+
+my $sl = int( log($N) / log(10) + 1);     ## Get size of integer $N - defines the width of the LH column
+my $sr = int( 2 * log($N) / log(10) + 1); ## Get size of $N squared - defines the width of other columns
+my $fl = sprintf ' %%%dd |', $sl;         ## Create a template for the first column..
+my $fr = sprintf ' %%%dd', $sr;           ## .... and for the other columns!
+
+## Finally we render - make a use of sprintf with the templates and '$' x $ to generate padding
+
+say ' ' x $sl, 'x |',                                               ## Header (LH side)
+    map          { sprintf $fr, $_ }                            @R; ##        (column headers)
+say join '-', '-' x $sl, '-+',                                      ## Separator (LH side)
+    map          { '-' x $sr }                                  @R; ##           (RH side)
+say sprintf( $fl, $a=$_ ),                                          ## Body of table (LH headers)
+    map          { $a>$_ ? ' ' x ($sr+1) : sprintf $fr, $a*$_ } @R  ##               (content of row)
+    foreach                                                     @R;
+```
