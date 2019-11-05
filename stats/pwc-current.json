@@ -1,26 +1,38 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2019-11-05 16:26:02 GMT"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
          "name" : "Perl Weekly Challenge - 033",
-         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Andrezgz",
                "name" : "Andrezgz",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Bruce Van Allen",
                "y" : 2,
-               "name" : "Bruce Van Allen"
+               "drilldown" : "Andrezgz"
             },
             {
+               "name" : "Bruce Van Allen",
+               "y" : 2,
+               "drilldown" : "Bruce Van Allen"
+            },
+            {
+               "drilldown" : "Daniel Mita",
                "y" : 1,
-               "name" : "Daniel Mita",
-               "drilldown" : "Daniel Mita"
+               "name" : "Daniel Mita"
             },
             {
                "name" : "Dr James A. Smith",
@@ -28,14 +40,14 @@
                "drilldown" : "Dr James A. Smith"
             },
             {
-               "drilldown" : "Duane Powell",
+               "name" : "Duane Powell",
                "y" : 2,
-               "name" : "Duane Powell"
+               "drilldown" : "Duane Powell"
             },
             {
+               "drilldown" : "Javier Luque",
                "name" : "Javier Luque",
-               "y" : 5,
-               "drilldown" : "Javier Luque"
+               "y" : 5
             },
             {
                "drilldown" : "Roger Bell West",
@@ -43,73 +55,90 @@
                "y" : 4
             },
             {
+               "name" : "Ruben Westerberg",
+               "y" : 4,
+               "drilldown" : "Ruben Westerberg"
+            },
+            {
                "drilldown" : "Simon Proctor",
-               "y" : 2,
-               "name" : "Simon Proctor"
+               "name" : "Simon Proctor",
+               "y" : 2
             },
             {
                "name" : "Ulrich Rieke",
                "y" : 4,
                "drilldown" : "Ulrich Rieke"
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2019-11-05 16:28:02 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Andrezgz",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Andrezgz",
-            "name" : "Andrezgz"
+            "id" : "Andrezgz"
          },
          {
-            "name" : "Bruce Van Allen",
             "id" : "Bruce Van Allen",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Bruce Van Allen"
          },
          {
+            "id" : "Daniel Mita",
             "name" : "Daniel Mita",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ],
-            "id" : "Daniel Mita"
+            ]
          },
          {
+            "name" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Dr James A. Smith",
-            "name" : "Dr James A. Smith"
+            "id" : "Dr James A. Smith"
          },
          {
-            "id" : "Duane Powell",
+            "name" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "name" : "Duane Powell"
+            "id" : "Duane Powell"
          },
          {
             "name" : "Javier Luque",
-            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl 5",
@@ -123,7 +152,8 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Javier Luque"
          },
          {
             "id" : "Roger Bell West",
@@ -140,18 +170,7 @@
             "name" : "Roger Bell West"
          },
          {
-            "name" : "Simon Proctor",
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "id" : "Simon Proctor"
-         },
-         {
-            "name" : "Ulrich Rieke",
-            "id" : "Ulrich Rieke",
+            "id" : "Ruben Westerberg",
             "data" : [
                [
                   "Perl 5",
@@ -161,39 +180,39 @@
                   "Perl 6",
                   2
                ]
+            ],
+            "name" : "Ruben Westerberg"
+         },
+         {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
             ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "name" : "Ulrich Rieke",
+            "id" : "Ulrich Rieke"
          }
       ]
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 033"
    },
    "xAxis" : {
       "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
    }
 }
