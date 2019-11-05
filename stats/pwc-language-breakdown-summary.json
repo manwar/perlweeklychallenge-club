@@ -1,45 +1,30 @@
 {
-   "legend" : {
-      "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-11-05 16:13:57 GMT"
-   },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontSize" : "13px",
             "fontFamily" : "Verdana, sans-serif"
          }
-      },
-      "type" : "category"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions - 2019"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2019-11-05 16:26:07 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+      }
    },
    "series" : [
       {
-         "dataLabels" : {
-            "align" : "right",
-            "rotation" : -90,
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "y" : 10,
-            "format" : "{point.y:.0f}"
-         },
          "data" : [
             [
                "Blog",
@@ -47,17 +32,32 @@
             ],
             [
                "Perl 5",
-               1373
+               1375
             ],
             [
                "Perl 6",
                812
             ]
          ],
+         "dataLabels" : {
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10,
+            "enabled" : "true",
+            "align" : "right",
+            "color" : "#FFFFFF"
+         },
          "name" : "Contributions"
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions - 2019"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
