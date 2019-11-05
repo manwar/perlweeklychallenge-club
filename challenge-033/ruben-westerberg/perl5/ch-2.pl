@@ -27,6 +27,6 @@ sub printRow {
         for (@$data) {
                 $output.=sprintf "%".$minWidth."s",$_;
         }
-	printf "%".$maxWidth."s|%s\n",$header,$output;
+	printf "%".$minWidth."s|%s\n",$header,$output;
 }
 

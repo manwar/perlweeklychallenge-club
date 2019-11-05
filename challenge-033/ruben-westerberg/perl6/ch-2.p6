@@ -1,6 +1,5 @@
 #!/usr/bin/env perl6
-
-my $limit=11//@*ARGS[0];
+my $limit=@*ARGS[0]//11;
 my $maxWidth=1+(chars $limit**2);
 printRow "", (1..$limit), $maxWidth;
 put "-" x (($limit+2)*$maxWidth);
