@@ -1,33 +1,17 @@
 {
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
          "name" : "Perl Weekly Challenge - 033",
          "data" : [
             {
-               "name" : "Andrezgz",
                "y" : 2,
-               "drilldown" : "Andrezgz"
+               "drilldown" : "Andrezgz",
+               "name" : "Andrezgz"
             },
             {
-               "name" : "Bruce Van Allen",
                "y" : 2,
-               "drilldown" : "Bruce Van Allen"
+               "drilldown" : "Bruce Van Allen",
+               "name" : "Bruce Van Allen"
             },
             {
                "drilldown" : "Daniel Mita",
@@ -35,34 +19,39 @@
                "name" : "Daniel Mita"
             },
             {
-               "name" : "Dr James A. Smith",
+               "name" : "Dave Cross",
+               "drilldown" : "Dave Cross",
+               "y" : 2
+            },
+            {
                "y" : 2,
-               "drilldown" : "Dr James A. Smith"
+               "drilldown" : "Dr James A. Smith",
+               "name" : "Dr James A. Smith"
             },
             {
                "name" : "Duane Powell",
-               "y" : 2,
-               "drilldown" : "Duane Powell"
+               "drilldown" : "Duane Powell",
+               "y" : 2
             },
             {
-               "drilldown" : "Javier Luque",
                "name" : "Javier Luque",
-               "y" : 5
+               "y" : 5,
+               "drilldown" : "Javier Luque"
             },
             {
-               "drilldown" : "Roger Bell West",
                "name" : "Roger Bell West",
+               "drilldown" : "Roger Bell West",
                "y" : 4
             },
             {
-               "name" : "Ruben Westerberg",
+               "drilldown" : "Ruben Westerberg",
                "y" : 4,
-               "drilldown" : "Ruben Westerberg"
+               "name" : "Ruben Westerberg"
             },
             {
+               "y" : 2,
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
+               "name" : "Simon Proctor"
             },
             {
                "name" : "Ulrich Rieke",
@@ -73,71 +62,76 @@
          "colorByPoint" : 1
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2019-11-05 16:28:02 GMT"
+   "xAxis" : {
+      "type" : "category"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2019-11-05 16:32:39 GMT"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Andrezgz",
             "name" : "Andrezgz",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Andrezgz"
+            ]
          },
          {
-            "id" : "Bruce Van Allen",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
+            "id" : "Bruce Van Allen",
             "name" : "Bruce Van Allen"
          },
          {
-            "id" : "Daniel Mita",
-            "name" : "Daniel Mita",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
+            ],
+            "id" : "Daniel Mita",
+            "name" : "Daniel Mita"
+         },
+         {
+            "name" : "Dave Cross",
+            "id" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ]
             ]
          },
          {
-            "name" : "Dr James A. Smith",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Dr James A. Smith"
+            "id" : "Dr James A. Smith",
+            "name" : "Dr James A. Smith"
          },
          {
             "name" : "Duane Powell",
+            "id" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Duane Powell"
+            ]
          },
          {
+            "id" : "Javier Luque",
             "name" : "Javier Luque",
             "data" : [
                [
@@ -152,11 +146,9 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Javier Luque"
+            ]
          },
          {
-            "id" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -167,9 +159,11 @@
                   2
                ]
             ],
+            "id" : "Roger Bell West",
             "name" : "Roger Bell West"
          },
          {
+            "name" : "Ruben Westerberg",
             "id" : "Ruben Westerberg",
             "data" : [
                [
@@ -180,18 +174,17 @@
                   "Perl 6",
                   2
                ]
-            ],
-            "name" : "Ruben Westerberg"
+            ]
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
             "data" : [
@@ -209,10 +202,32 @@
          }
       ]
    },
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge - 033"
    },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
