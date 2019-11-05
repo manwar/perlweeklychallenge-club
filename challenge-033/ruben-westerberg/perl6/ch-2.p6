@@ -2,7 +2,7 @@
 
 my $limit=11//@*ARGS[0];
 my $maxWidth=1+(chars $limit**2);
-printRow "", (0..$limit), $maxWidth;
+printRow "", (1..$limit), $maxWidth;
 put "-" x (($limit+2)*$maxWidth);
 for 1..$limit {
 	my $i=$_;
@@ -21,7 +21,7 @@ for 1..$limit {
 
 sub printRow($header, $data, $minWidth) {
 	my $output="";
-	for $data {
+	for @$data {
 		$output ~= sprintf "%"~$minWidth~"s",$_;
 	}
 	printf "%"~$minWidth~"s|%s\n",$header,$output;
