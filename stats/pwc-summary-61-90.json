@@ -1,10 +1,4 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-11-09 09:42:16 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "categories" : [
          "Joelle Maslak",
@@ -39,15 +33,28 @@
          "Nick Logan"
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-11-09 11:49:34 GMT"
+   },
    "series" : [
       {
-         "name" : "Perl 5",
          "data" : [
             78,
             7,
@@ -79,7 +86,8 @@
             8,
             6,
             8
-         ]
+         ],
+         "name" : "Perl 5"
       },
       {
          "data" : [
@@ -152,16 +160,8 @@
          ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
