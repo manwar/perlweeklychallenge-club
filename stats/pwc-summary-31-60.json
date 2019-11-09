@@ -1,11 +1,7 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
    "series" : [
@@ -80,6 +76,7 @@
          "name" : "Perl 6"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -111,24 +108,21 @@
             1,
             7,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-11-08 21:02:47 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "xAxis" : {
       "categories" : [
@@ -163,5 +157,11 @@
          "Jo Christian Oterhals",
          "Joe Tym"
       ]
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-11-09 09:42:16 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
