@@ -1,8 +1,12 @@
+/**
+* Write a script to print 11x11 multiplication 
+* table, only the top half triangle.
+**/
 #include <iostream>
 
 int main(int argc, char **argv){
-    std::cout << "     x|   1   2   3   4   5   6   7   8   9   10   11" << std::endl;
-    std::cout << "   ---+----------------------------------------------" << std::endl;
+    std::cout << "     x|   1   2   3   4   5   6   7   8   9    10    11" << std::endl;
+    std::cout << "   ---+------------------------------------------------" << std::endl;
     for(int x = 1; x <= 11; x++){
         std::cout.width(6); std::cout << x << "|";
         for(int y = 1; y <= 11; y++){
@@ -14,7 +18,7 @@ int main(int argc, char **argv){
                     std::cout.width(4); std::cout << std::right << x*y;
                 }
                 else{
-                    std::cout.width(5); std::cout << std::right << x*y;
+                    std::cout.width(6); std::cout << std::right << x*y;
                 }
             }
         }

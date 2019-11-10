@@ -16,7 +16,7 @@ sub print_table11 {
         my @b = map({$_ ==  0 ?? "" !! $_}, map({ $x * $_ }, @a));
         print sprintf '%5s|', $x;
         my $s = sprintf '%4s%4s%4s%4s%4s%4s%4s%4s%4s%5s%5s', @b;
-say $s;
+        say $s;
     }
 }
 
