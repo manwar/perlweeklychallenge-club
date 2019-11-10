@@ -2,7 +2,7 @@
 
 sub MAIN( Int $n = 11 )
 {
-    my $ln = ( $n * $n ).Str.chars + 1;
+    my $ln = ( $n * $n ).chars + 1;
     my $li = $n.chars + 1;
 
     header;
