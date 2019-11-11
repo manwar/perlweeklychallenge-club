@@ -63,6 +63,8 @@ mv pwc-current.json stats/pwc-challenge-031.json
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-032 --current
 mv pwc-current.json stats/pwc-challenge-032.json
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-033 --current
+mv pwc-current.json stats/pwc-challenge-033.json
+fetch-pwc-stats --members members.json --guests guests.json --source challenge-034 --current
 mv pwc-current.json stats/
 
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-001 --summary
@@ -97,6 +99,7 @@ fetch-pwc-stats --members members.json --guests guests.json --source challenge-0
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-030 --master pwc-summary.json --update
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-031 --master pwc-summary.json --update
 fetch-pwc-stats --members members.json --guests guests.json --source challenge-032 --master pwc-summary.json --update
+fetch-pwc-stats --members members.json --guests guests.json --source challenge-033 --master pwc-summary.json --update
 mv pwc-summary.json stats/pwc-master-stats.json
 
 echo #####################################
