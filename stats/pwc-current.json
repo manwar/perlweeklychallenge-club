@@ -1,74 +1,97 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-11-11 17:25:31 GMT"
+   "legend" : {
+      "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          },
          "borderWidth" : 0
       }
    },
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 034"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 034",
+         "colorByPoint" : 1,
          "data" : [
             {
+               "drilldown" : "Duane Powell",
                "name" : "Duane Powell",
-               "y" : 2,
-               "drilldown" : "Duane Powell"
+               "y" : 2
             },
             {
                "name" : "Javier Luque",
-               "y" : 5,
-               "drilldown" : "Javier Luque"
+               "drilldown" : "Javier Luque",
+               "y" : 5
+            },
+            {
+               "drilldown" : "Laurent Rosenfeld",
+               "name" : "Laurent Rosenfeld",
+               "y" : 5
             },
             {
                "name" : "Mark Anderson",
-               "y" : 1,
-               "drilldown" : "Mark Anderson"
+               "drilldown" : "Mark Anderson",
+               "y" : 1
             },
             {
-               "drilldown" : "Simon Proctor",
                "y" : 2,
-               "name" : "Simon Proctor"
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
             }
          ],
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 034"
       }
    ],
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-11-12 11:03:56 GMT"
+   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "name" : "Duane Powell",
             "id" : "Duane Powell"
+         },
+         {
+            "id" : "Javier Luque",
+            "name" : "Javier Luque",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
          },
          {
             "data" : [
@@ -85,32 +108,32 @@
                   1
                ]
             ],
-            "name" : "Javier Luque",
-            "id" : "Javier Luque"
+            "name" : "Laurent Rosenfeld",
+            "id" : "Laurent Rosenfeld"
          },
          {
             "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ],
-            "name" : "Mark Anderson"
+            ]
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    }
 }
