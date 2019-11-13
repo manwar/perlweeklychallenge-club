@@ -1,54 +1,11 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 034",
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Duane Powell",
-               "name" : "Duane Powell"
-            },
-            {
-               "drilldown" : "Javier Luque",
-               "y" : 5,
-               "name" : "Javier Luque"
-            },
-            {
-               "y" : 5,
-               "drilldown" : "Laurent Rosenfeld",
-               "name" : "Laurent Rosenfeld"
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 1,
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "y" : 2,
-               "name" : "Simon Proctor"
-            },
-            {
-               "name" : "Steven Wilson",
-               "drilldown" : "Steven Wilson",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Ulrich Rieke",
-               "y" : 2,
-               "name" : "Ulrich Rieke"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
@@ -59,11 +16,10 @@
                   2
                ]
             ],
-            "id" : "Duane Powell",
-            "name" : "Duane Powell"
+            "name" : "Duane Powell",
+            "id" : "Duane Powell"
          },
          {
-            "name" : "Javier Luque",
             "data" : [
                [
                   "Perl 5",
@@ -78,6 +34,7 @@
                   1
                ]
             ],
+            "name" : "Javier Luque",
             "id" : "Javier Luque"
          },
          {
@@ -95,31 +52,20 @@
                   1
                ]
             ],
-            "id" : "Laurent Rosenfeld",
-            "name" : "Laurent Rosenfeld"
+            "name" : "Laurent Rosenfeld",
+            "id" : "Laurent Rosenfeld"
          },
          {
             "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
-            ],
-            "name" : "Mark Anderson"
+            ]
          },
          {
-            "data" : [
-               [
-                  "Perl 6",
-                  2
-               ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
-         },
-         {
-            "name" : "Steven Wilson",
             "data" : [
                [
                   "Perl 5",
@@ -130,44 +76,117 @@
                   1
                ]
             ],
-            "id" : "Steven Wilson"
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West"
          },
          {
-            "name" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
             ],
-            "id" : "Ulrich Rieke"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
+         },
+         {
+            "name" : "Steven Wilson",
+            "id" : "Steven Wilson",
+            "data" : [
+               [
+                  "Perl 5",
+                  1
+               ],
+               [
+                  "Perl 6",
+                  1
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Ulrich Rieke",
+            "name" : "Ulrich Rieke"
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 034"
+   "chart" : {
+      "type" : "column"
    },
    "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2019-11-12 16:03:12 GMT"
+      "text" : "[Champions: 8] Last updated at 2019-11-13 14:45:18 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "xAxis" : {
       "type" : "category"
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Duane Powell",
+               "name" : "Duane Powell"
+            },
+            {
+               "name" : "Javier Luque",
+               "y" : 5,
+               "drilldown" : "Javier Luque"
+            },
+            {
+               "name" : "Laurent Rosenfeld",
+               "drilldown" : "Laurent Rosenfeld",
+               "y" : 5
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 1,
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Roger Bell West",
+               "y" : 2,
+               "name" : "Roger Bell West"
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 2
+            },
+            {
+               "name" : "Steven Wilson",
+               "drilldown" : "Steven Wilson",
+               "y" : 2
+            },
+            {
+               "name" : "Ulrich Rieke",
+               "drilldown" : "Ulrich Rieke",
+               "y" : 2
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 034",
+         "colorByPoint" : 1
+      }
+   ],
+   "title" : {
+      "text" : "Perl Weekly Challenge - 034"
    }
 }
