@@ -1,18 +1,49 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "yAxis" : {
       "title" : {
          "text" : null
       },
       "min" : 0
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions - 2019"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "legend" : {
-      "enabled" : "false"
+   "series" : [
+      {
+         "dataLabels" : {
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "align" : "right",
+            "enabled" : "true",
+            "rotation" : -90,
+            "color" : "#FFFFFF"
+         },
+         "data" : [
+            [
+               "Blog",
+               364
+            ],
+            [
+               "Perl 5",
+               1433
+            ],
+            [
+               "Perl 6",
+               849
+            ]
+         ],
+         "name" : "Contributions"
+      }
+   ],
+   "subtitle" : {
+      "text" : "Last updated at 2019-11-13 19:37:34 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "type" : "category",
@@ -23,41 +54,10 @@
          }
       }
    },
-   "subtitle" : {
-      "text" : "Last updated at 2019-11-13 14:45:37 GMT"
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions - 2019"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "data" : [
-            [
-               "Blog",
-               364
-            ],
-            [
-               "Perl 5",
-               1432
-            ],
-            [
-               "Perl 6",
-               849
-            ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "align" : "right",
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            }
-         }
-      }
-   ]
+   "legend" : {
+      "enabled" : "false"
+   }
 }
