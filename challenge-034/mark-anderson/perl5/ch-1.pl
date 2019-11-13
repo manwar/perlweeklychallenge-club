@@ -1,15 +1,11 @@
 #!/usr/bin/env perl
-
 use Modern::Perl '2018';
 
-my @numbers = (0 .. 25);
+my @indices = (0 .. 25);
+my @letters = ('A' .. 'Z');
 
-my @letters = ('a' .. 'z');
+my %index;
+@index{@letters} = @indices;
 
-my %number;
-
-@number{@letters} = @numbers;
-
-say "array: ", join ", ", @letters[0, 4, 7];
-
-say "hash:  ", join ", ", @number{'a', 'e', 'h'};
+say "array: ", @letters[9, 0, 15, 7];
+say "hash:  ", join ", ", @index{'J', 'A', 'P', 'H'};
