@@ -1,0 +1,20 @@
+#! /usr/bin/env raku
+
+my $value = 0;
+
+my %dispatch;
+
+%dispatch<q> = %dispatch<quit>   = { exit  };
+%dispatch<d> = %dispatch<double> = { $value *= 2 };
+%dispatch<h> = %dispatch<half>   = { $value /= 2 };
+%dispatch<c> = %dispatch<clear>  = { $value = 0 };
+%dispatch<help>                  = { say "Please consult a doctor." };
+
+loop
+{
+  my $command = prompt "[$value]: ";
+
+  if %dispatch{$command}     { %dispatch{$command}(); }
+  elsif $command ~~ /^(\d)$/ { $value = $0.Int; }
+}
+
