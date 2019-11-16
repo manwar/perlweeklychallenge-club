@@ -1,0 +1,26 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (:$from = 1, :$to = 11);
+
+my $size-label = $to.chars + 1;
+my $size-val   = ($to * $to).chars + 1;
+
+print "x".fmt("%{$size-label}s") ~ "|";
+print .fmt("%{$size-val}d") for $from .. $to;
+print "\n";
+
+print "-" x $size-label;
+print "+";
+say   "-" x ($size-val * ($to - $from + 1));
+
+for $from .. $to -> $row
+{
+  print $row.fmt("%{$size-label}d") ~ "|";
+  print " " x ($row - $from) x $size-val;
+
+  for $row .. $to -> $col
+  {
+    print ($row * $col).fmt("%{$size-val}d");
+  }
+  print "\n";
+}
