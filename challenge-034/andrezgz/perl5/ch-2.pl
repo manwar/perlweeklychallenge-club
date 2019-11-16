@@ -26,9 +26,9 @@ my $actions = {
     '-hs'  => \&hash_slice,
 };
 
-my ($param, @rest) = @ARGV;
-#choose action from
-my $action = $param && $actions->{$param} || $actions->{'--help'};
+my ($option, @rest) = @ARGV;
+#choose action from the given option or invoke the default one
+my $action = $option && $actions->{$option} || $actions->{'--help'};
 $action->($heroes_identity,@rest);
 exit 0;
 
