@@ -6,7 +6,7 @@
 #include <iostream>
 #include <functional>
 
-int main(){
+int main(int argc, char** argv){
   std::map< const std::string , std::function<void(void)> > dispTable{
       {"hello",[](){ std::cout << "Hello!" << std::endl; } },
       {"goodbye",[](){ std::cout << "Goodbye!" << std::endl; } } 
