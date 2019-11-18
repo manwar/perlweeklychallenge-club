@@ -1,0 +1,8 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($file where $file.IO.f && $file.IO.r = "example.txt");
+
+my %input = $file.IO.lines.Bag;
+
+say "$_\t%input{$_}" for %input.keys.sort( { %input{$^b} <=> %input{$^a} });
+
