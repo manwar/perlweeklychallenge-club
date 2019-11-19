@@ -26,7 +26,7 @@ while (<>) {
 my $m=join('',@in);
 
 my @m;
-foreach my $word (split /000000+/,$m) {
+foreach my $word (split /0000000+/,$m) {
   my @w;
   foreach my $char (split /000+/,$word) {
     push @w,($d{$char} or '?');

@@ -56,7 +56,7 @@ for lines() {
 my $m=join('',@in);
 
 my @m;
-for grep /./,split /000000+/,$m -> $word {
+for grep /./,split /0000000+/,$m -> $word {
   my @w;
   for grep /./,split /000+/,$word -> $char {
     push @w,(%d{$char} or '?');

@@ -37,7 +37,7 @@ foreach my $word (split ' ',$m) {
   }
   push @l,join('000',@w);
 }
-print join('000000',@l),"\n";
+print join('0000000',@l),"\n";
 
 __DATA__
 E .
