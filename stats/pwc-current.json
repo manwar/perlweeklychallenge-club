@@ -1,14 +1,66 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 035",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Daniel Mita",
+               "y" : 2,
+               "drilldown" : "Daniel Mita"
+            },
+            {
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba",
+               "y" : 2
+            },
+            {
+               "name" : "Javier Luque",
+               "drilldown" : "Javier Luque",
+               "y" : 5
+            },
+            {
+               "drilldown" : "Roger Bell West",
+               "y" : 4,
+               "name" : "Roger Bell West"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "y" : 2,
+               "name" : "Simon Proctor"
+            }
+         ]
+      }
+   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 035"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
    "drilldown" : {
       "series" : [
+         {
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ],
+            "id" : "Daniel Mita",
+            "name" : "Daniel Mita"
+         },
          {
             "data" : [
                [
@@ -38,6 +90,8 @@
             ]
          },
          {
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -47,9 +101,7 @@
                   "Perl 6",
                   2
                ]
-            ],
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West"
+            ]
          },
          {
             "data" : [
@@ -58,63 +110,26 @@
                   2
                ]
             ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          }
       ]
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 035"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-11-20 11:40:14 GMT"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "legend" : {
       "enabled" : 0
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-11-20 11:46:08 GMT"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "type" : "category"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "E. Choroba",
-               "drilldown" : "E. Choroba",
-               "y" : 2
-            },
-            {
-               "y" : 5,
-               "name" : "Javier Luque",
-               "drilldown" : "Javier Luque"
-            },
-            {
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West",
-               "y" : 4
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 2
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 035"
-      }
-   ]
+   }
 }
