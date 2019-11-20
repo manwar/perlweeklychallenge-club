@@ -3,8 +3,5 @@ use v6.d;
 use lib $?FILE.IO.dirname;
 use Morse;
 
+our &MAIN = &say ∘ &decode;
 RUN-MAIN( &decode, Nil );
-
-sub MAIN ( |c --> Nil ) {
-  decode(||c).say;
-}

@@ -87,9 +87,9 @@ module Morse {
     Str $phrase,
     --> Str
   ) is export {
-    $phrase.uc.split(/\s+/)
+    $phrase.uc.comb(/\S+/)
       .map(*.comb)
-      .deepmap({ %values{$_}.base(2) })
+      .deepmap({ %values{$_} andthen .defined ?? .base(2) !! '' })
       .map(*.join('000'))
       .join('0' x 7);
   }
