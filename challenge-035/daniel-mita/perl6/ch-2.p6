@@ -5,3 +5,10 @@ use Morse;
 
 our &MAIN = &say ∘ &decode;
 RUN-MAIN( &decode, Nil );
+
+CATCH {
+  when X::Morse {
+    say "Error:\n  {.message}\n\n" ~ $*USAGE;
+    exit 1;
+  }
+}
