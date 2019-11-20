@@ -87,6 +87,10 @@ module Morse {
     Str $phrase,
     --> Str
   ) is export {
-    X::NYI.new( :feature(&?ROUTINE.name) ).throw;
+    $phrase.uc.split(/\s+/)
+      .map(*.comb)
+      .deepmap({ %values{$_}.base(2) })
+      .map(*.join('000'))
+      .join('0' x 7);
   }
 }
