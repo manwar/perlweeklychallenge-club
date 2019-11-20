@@ -1,0 +1,17 @@
+#! /usr/bin/env raku
+
+use lib "lib";
+
+use BinaryMorse2;
+
+multi sub MAIN (BinaryMorse2::BinaryMorse $binary-morse)
+{
+  say BinaryMorse2::demorsify($binary-morse);
+}
+
+multi sub MAIN (Str $text, :$roundtrip)
+{
+  my $encoded = BinaryMorse2::morsify($text);
+  say $encoded;
+  say BinaryMorse2::demorsify($encoded) if $roundtrip;
+}
