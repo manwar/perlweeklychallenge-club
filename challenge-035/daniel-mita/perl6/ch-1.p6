@@ -3,8 +3,12 @@ use v6.d;
 use lib $?FILE.IO.dirname;
 use Morse;
 
+our &MAIN = &say ∘ &encode;
 RUN-MAIN( &encode, Nil );
 
-sub MAIN ( |c --> Nil ) {
-  encode(||c).say;
+CATCH {
+  when X::Morse {
+    say "Error:\n  {.message}\n\n" ~ $*USAGE;
+    exit 1;
+  }
 }
