@@ -133,7 +133,7 @@ Let us assume you already have a fork. If this is the first time you are using t
    $ git commit
    ```
    
-9. Now push the newly created branh **branch-for-challenge-005**
+9. Now push the newly created branch **branch-for-challenge-005**
 
    ```
    $ git push -u origin branch-for-challenge-005
