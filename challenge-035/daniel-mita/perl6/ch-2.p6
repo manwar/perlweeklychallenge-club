@@ -3,12 +3,21 @@ use v6.d;
 use lib $?FILE.IO.dirname;
 use Morse;
 
-our &MAIN = &say ∘ &decode;
-RUN-MAIN( &decode, Nil );
-
-CATCH {
-  when X::Morse {
-    say "Error:\n  {.message}\n\n" ~ $*USAGE;
-    exit 1;
+proto MAIN (|) {
+  {*}
+  CATCH {
+    when X::Morse {
+      say "Error: {.message}";
+      exit 1;
+    }
   }
 }
+
+multi MAIN (--> Nil) { MAIN(slurp) }
+
+multi MAIN (
+  |c where * ~~ &decode.signature,
+  --> Nil
+) { decode(||c).say }
+
+sub GENERATE-USAGE ( &main, |capture ) { RUN-MAIN( &decode, Nil ) }
