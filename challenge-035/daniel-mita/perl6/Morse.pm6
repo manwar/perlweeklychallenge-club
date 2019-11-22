@@ -88,10 +88,10 @@ module Morse {
 
   #| Decode binary morse code
   sub decode (
-    Str $bits where *.comb.all eq 1|0, #= A string containing a sequence of 1s and 0s
+    Str $bits where *.trim.comb.all eq 1|0, #= A string containing a sequence of 1s and 0s
     --> Str
   ) is export {
-    .return with Decode.parse( $bits, :actions(Decoder.new) ).made;
+    .return with Decode.parse( $bits.trim, :actions(Decoder.new) ).made;
     X::Morse::InvalidSequence.new.throw;
   }
 
