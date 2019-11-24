@@ -1,25 +1,33 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "xAxis" : {
       "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-11-24 08:13:40 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
    "series" : [
       {
-         "name" : "Contributions",
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "enabled" : "true",
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "y" : 10
+         },
          "data" : [
             [
                "Blog",
@@ -27,37 +35,29 @@
             ],
             [
                "Perl 5",
-               1472
+               1474
             ],
             [
                "Perl 6",
                874
             ]
          ],
-         "dataLabels" : {
-            "align" : "right",
-            "enabled" : "true",
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "rotation" : -90,
-            "format" : "{point.y:.0f}"
-         }
+         "name" : "Contributions"
       }
    ],
+   "subtitle" : {
+      "text" : "Last updated at 2019-11-24 08:49:29 GMT"
+   },
    "legend" : {
       "enabled" : "false"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
+   "chart" : {
+      "type" : "column"
    }
 }
