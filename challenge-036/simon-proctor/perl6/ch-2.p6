@@ -27,4 +27,5 @@ sub MAIN(
 
     say "I think I'll take :";
     .say for @options[0].list;
+    say "Which weighs {[+] @options[0].map(*.weight)}kg and is worth £{[+] @options[0].map(*.worth)}";
 }
