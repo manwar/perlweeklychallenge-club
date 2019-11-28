@@ -34,8 +34,8 @@ foreach my $k (1 .. 5) {
 
 say "-" x 42 . "\nNumber Of Boxes | Colors | Weight | Amount\n" . "-" x 42;
 
-foreach my $k (@answers) {
-    say sprintf "%-18d%-9s%-9d%d", $k->@*;
+foreach my $answer (@answers) {
+    say sprintf "%-18d%-9s%-9d%d", $answer->@*;
 }
 
 # Output:
