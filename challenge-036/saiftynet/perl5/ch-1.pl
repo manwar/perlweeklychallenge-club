@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 # usage: VINValidator($VINundertest,[verbosity]);
-# 1st parameter is VIN to test, second paramete is verbosity required
+# 1st parameter is VIN to test, second parameter if verbosity required
 # returns 1 for valid or 0 for invalid
 # if verbose parameter resolves to true, the success or failure (with reason) 
 # is printed to console 
