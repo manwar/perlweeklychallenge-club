@@ -89,7 +89,7 @@ for my $count ( 1 .. scalar @list ) {
     if ($max_value) {
         say "Best combination for $count boxes is $max_boxes with value $max_value";
     } else {
-        say "There is no possible combination for $count boxes under or equal value $max_value";
+        say "There is no possible combination for $count boxes under or equal weight $weight_limit";
     }
 }
 
