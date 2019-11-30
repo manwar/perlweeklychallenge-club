@@ -3,46 +3,43 @@ use Modern::Perl             '2018';
 use List::Util               'sum';
 use Algorithm::Combinatorics 'combinations';
 
-my @boxes = (
-    { Color => 'R', Weight => 1,  Amount => 1  },
-    { Color => 'B', Weight => 1,  Amount => 2  },
-    { Color => 'G', Weight => 2,  Amount => 2  },
-    { Color => 'Y', Weight => 12, Amount => 4  },
-    { Color => 'P', Weight => 4,  Amount => 10 }
-);
-
+my @indices = (0 .. 4);
+my @colors  = qw/R B G Y P/;
+my @weights = (1, 1, 2, 12, 4);
+my @amounts = (1, 2, 2, 4, 10);
 my @answers;
 
-foreach my $k (1 .. 5) {
-    my $biggest_sum  = 0;
-    my @combinations = combinations(\@boxes, $k);
+foreach my $k (@indices) {
+    my $current_max_amount = 0;
+    my @combinations = combinations(\@indices, $k+1);
 
     foreach my $combination (@combinations) {
-        my @colors  = map { $_->{Color}  } $combination->@*;
-        my @weights = map { $_->{Weight} } $combination->@*;
-        my @amounts = map { $_->{Amount} } $combination->@*;
+        my $colors = join q{}, @colors[$combination->@*];
+        my $weight_sum = sum @weights[$combination->@*];
+        my $amount_sum = sum @amounts[$combination->@*];
 
-        my $weight_sum = sum @weights;
-        my $amount_sum = sum @amounts;
-
-        if($weight_sum <= 15 and $amount_sum > $biggest_sum) {
-            $biggest_sum   = $amount_sum;
-            $answers[$k-1] = [$k, (join '', @colors), $weight_sum, $amount_sum]; 
+        if($weight_sum <= 15 and $amount_sum > $current_max_amount) {
+            $current_max_amount = $amount_sum;
+            $answers[$k] = [ $k+1, $colors, $weight_sum, $amount_sum ]; 
         }
     }
 }
 
-say "-" x 42 . "\nNumber Of Boxes | Colors | Weight | Amount\n" . "-" x 42;
+print <<~HEADER;
+    --------------------------------
+    Boxes | Colors | Weight | Amount
+    --------------------------------
+    HEADER
 
 foreach my $answer (@answers) {
-    printf "%-18d%-9s%-9d%d\n", $answer->@*;
+    printf "%-8d%-9s%-9d%d\n", $answer->@*;
 }
 
 # Output:
-# ------------------------------------------
-# Number Of Boxes | Colors | Weight | Amount
-# ------------------------------------------
-# 1                 P        4        10
-# 2                 BP       5        12
-# 3                 BGP      7        14
-# 4                 RBGP     8        15
+# --------------------------------
+# Boxes | Colors | Weight | Amount
+# --------------------------------
+# 1       P        4        10
+# 2       BP       5        12
+# 3       BGP      7        14
+# 4       RBGP     8        15
