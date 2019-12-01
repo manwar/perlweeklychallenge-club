@@ -1,0 +1,26 @@
+#! /usr/bin/env raku
+
+my regex VINCHAR { A | B | C | D | E | F | G | H | J | K | L | M | N | P | R | S | T | U | V | W | X | Y | Z | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 0 };
+
+subset VIN of Str where * ~~ /^ <VINCHAR> ** 17 $/;
+subset WMI of Str where * ~~ /^ <VINCHAR> **  3 $/;
+
+multi sub MAIN (VIN $vin)
+{
+  say "Looks like a legal VIN. Checking if it is valid..";
+
+  my $wmi = $vin.substr(0,3); # World Manufacturer Identifier
+  my $vds = $vin.substr(3,6); # Vehicle Descriptor Section
+  my $vis = $vin.substr(9,8); # Vehicle Identifier Section
+
+  say "WMI: $wmi";
+  say "VDS: $vds";
+  say "VIS: $vis";
+}
+
+multi sub MAIN (Str $vin)
+{
+  say "Not a legal VIN";
+  say " - contains illegal character(s)" unless $vin ~~ /^ <VINCHAR> + $/;
+  say " - wrong length ({ $vin.chars } instead of 17)" unless $vin.chars == 17;
+}
