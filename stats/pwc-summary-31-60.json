@@ -1,4 +1,8 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
    "xAxis" : {
       "categories" : [
          "David Kayal",
@@ -33,11 +37,25 @@
          "Joe Tym"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-12-03 14:53:47 GMT"
+   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -76,6 +94,7 @@
          "name" : "Perl 5"
       },
       {
+         "name" : "Perl 6",
          "data" : [
             0,
             0,
@@ -107,8 +126,7 @@
             1,
             15,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       },
       {
          "data" : [
@@ -145,23 +163,5 @@
          ],
          "name" : "Blog"
       }
-   ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-12-03 11:31:30 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   }
+   ]
 }
