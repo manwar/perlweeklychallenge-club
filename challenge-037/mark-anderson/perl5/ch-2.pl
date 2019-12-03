@@ -1,5 +1,4 @@
 #!/usr/bin/env perl
-
 use Modern::Perl '2018';
 use Mojo::UserAgent;
 
