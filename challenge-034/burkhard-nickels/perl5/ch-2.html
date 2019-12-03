@@ -1,0 +1,646 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Perl Weekly Challenge #34 Task #2, Demonstrate Dispatch Table</title>
+<link rel="stylesheet" href="pwc.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #34 Task #2, Demonstrate Dispatch Table</span></strong></big>
+</td></tr>
+</table>
+
+
+
+<ul id="index">
+  <li><a href="#Perl-Weekly-Challenge-34-Task-2:-Dispatch-Table">Perl Weekly Challenge #34 Task #2: Dispatch Table</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#Hide-a-Secret-image-in-a-Vessel-image">Hide a Secret image in a Vessel image</a></li>
+  <li><a href="#Main-Program">Main Program</a></li>
+  <li><a href="#Dispatch-Table">Dispatch Table</a></li>
+  <li><a href="#Secret-Image">Secret Image</a>
+    <ul>
+      <li><a href="#print_secret_raw">print_secret_raw()</a></li>
+      <li><a href="#print_secret_msb">print_secret_msb()</a></li>
+    </ul>
+  </li>
+  <li><a href="#Vessel-Image">Vessel Image</a>
+    <ul>
+      <li><a href="#print_vessel_rgb">print_vessel_rgb()</a></li>
+      <li><a href="#print_vessel_lsb">print_vessel_lsb()</a></li>
+    </ul>
+  </li>
+  <li><a href="#Compose-Vessel-and-Secret">Compose Vessel and Secret</a>
+    <ul>
+      <li><a href="#print_composed_examples">print_composed_examples()</a></li>
+    </ul>
+  </li>
+  <li><a href="#Functions">Functions</a>
+    <ul>
+      <li><a href="#data-one_color-rgb_data-color">$data = one_color($rgb_data,$color)</a></li>
+      <li><a href="#data-rebuild_bit_plane-bit_plane">$data = rebuild_bit_plane($bit_plane);</a></li>
+      <li><a href="#data-torgb-red-green-blue">$data = torgb($red,$green,$blue);</a></li>
+    </ul>
+  </li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<h1 id="Perl-Weekly-Challenge-34-Task-2:-Dispatch-Table">Perl Weekly Challenge #34 Task #2: Dispatch Table</h1>
+
+<p>This week PWC in Task #2 shall demonstrate a Dispatch Table. We use the Dispatch Table to call different functions according to command line arguments.</p>
+
+<p>These different functions do some different kinds of image processing. Mainly we want to create a miraculous image. Means we want to hide one grayscale image within a bigger colored image. Some intermediate steps of this image processing can be printed to file with command line arguments.</p>
+
+<p>In Task #1 of PWC #34 you could already see how to reveal the hidden image. The functions used there are not explained anymore in Task #2. Also some basic explanations on Hash Slices and Array Slices are in Task #1. But in Task #2 we try to use Slices were ever possible.</p>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code> # perldoc ch-2.pl              - POD
+ ./ch-2.pl &lt;command&gt;
+
+ # ./ch-2.pl pdl                - Creates Hidden Grayscale from Colored Image
+ # ./ch-2.pl array              - Array Version does NOT work properly
+ # ./ch-2.pl html               - HTML/CSS in ch-1.html/pwc.css
+ # ./ch-2.pl help               - Usage information</code></pre>
+
+<h1 id="Hide-a-Secret-image-in-a-Vessel-image">Hide a Secret image in a Vessel image</h1>
+
+<p>The big image is the &quot;vessel&quot;, where I want to hide the &quot;secret&quot; grayscale image. The resulting image looks like the &quot;vessel&quot;, but in each LSB of the R/G/B channels are hidden the MSB&#39;s (Bit 7/6/5) of the secret image. This is possible because the LSB does not add much significancy to the &quot;vessel&quot; image.</p>
+
+<table><tr>
+	<td><img style="padding:10px;" width=250 src="ch2-400x533.png"></td>
+	<td style="font-size:50px; font-weight:bold;"> + </td>
+	<td><img style="padding:10px;" src="ch2-200x265.png"></td>
+	<td style="font-size:50px; font-weight:bold;"> = </td>
+	<td><img style="padding:10px;" width=250 src="miraculous-image-400x533.png"></td>
+	<td><b>ch1-400x533.png<br>
+	    ch1-200x265.png<br>
+		=<br>
+	    miraculous-image-400x533.png<br></b>
+	</td>
+</tr></table>
+
+<p>Below you can see the steps done to create this <b>Miraculous Image</b>.</p>
+
+<ul>
+
+<li><p>Read the &quot;Secret&quot; image and split it into its Bit Planes. We hide Bit 7/6/5.</p>
+
+</li>
+<li><p>Read the &quot;Vessel&quot; image and split it into its R/G/B values. Then split each R/G/B into its Bit Planes.</p>
+
+</li>
+<li><p>Hide Bit 7/6/5 of &quot;Secret&quot; in Bit 0 of each R/G/B of &quot;Vessel&quot;.</p>
+
+</li>
+<li><p>Write Miraculous Image to PNG file.</p>
+
+</li>
+</ul>
+
+<h1 id="Main-Program">Main Program</h1>
+
+<p>The main program starts with the definition of some variables. This is not really necessary for the keys of the Hashes. But I use it to explain them in the beginning, because they are used everywhere.</p>
+
+<p>So lets start with the array <code>@RGB</code>. It is used to create a RGB Slice a little bit easier:</p>
+
+<pre><code> my @RGB = (&#39;red&#39;,&#39;green&#39;,&#39;blue&#39;); # For creating Hash Slices</code></pre>
+
+<p>i.e. the below Hash Slice becomes a little bit shorter:</p>
+
+<pre><code> @vessel{&#39;red&#39;,&#39;green&#39;,&#39;blue&#39;} = rgb($vessel{data});
+ @vessel{@RGB}                 = rgb($vessel{data});</code></pre>
+
+<p>Our &quot;Secret&quot; Image has a filenam &quot;name&quot; and reads the PDL &quot;data&quot;. It is splitted in a &quot;bit_plane&quot; in 3 variants: &quot;lsb&quot;, &quot;msb&quot;, &quot;raw&quot;.</p>
+
+<pre><code> my %secret = (
+        name =&gt; &quot;ch1-200x265.png&quot;,
+        data =&gt; 0,
+        bit_plane =&gt; {
+                lsb =&gt; [],
+                msb =&gt; [],
+                raw =&gt; [],
+        },
+ );</code></pre>
+
+<p>Similar Hash Keys we use for the &quot;Vessel&quot; Image. But because it is a coloured image we split the image in its &quot;red&quot;, &quot;green&quot; and &quot;blue&quot; channels. Also the &quot;bit_plane&quot; is split into &quot;red&quot;, &quot;green&quot; and &quot;blue&quot;.</p>
+
+<pre><code> my %vessel = (
+        name =&gt; &quot;ch1-400x533.png&quot;,  # file name
+        data =&gt; 0,                  # PDL data
+        bit_plane =&gt; {              # Bit Plane
+                red   =&gt; [],
+                green =&gt; [],
+                blue  =&gt; [],
+        },
+        red   =&gt; 0,
+        green =&gt; 0,
+        blue  =&gt; 0,
+ );</code></pre>
+
+<p>The &quot;Composed&quot; Image is defined here only with the filename &quot;name&quot;. All other Hash Keys are defined somewhere else in the program.</p>
+
+<pre><code> my %composed = (
+        name =&gt; &quot;composed-400x533.png&quot;,
+ );</code></pre>
+
+<h1 id="Dispatch-Table">Dispatch Table</h1>
+
+<p>We use a Dispatch Table to call the different functions of the program. So our main program mainly consists of this Dispatch Table.</p>
+
+<p>A Dispatch Table is simply a Hash that takes as value a code reference. So the code can be executed when <code>&amp;{$dispatch{$command}($ARGV[0])}</code> is called, see below:</p>
+
+<pre><code> my $cmd = shift @ARGV;         # Read command
+ $cmd = &quot;help&quot; if not $cmd;
+ print &quot;ch-2.pl (Version 1.0) PWC #34 Task #2: $cmd\n&quot;;
+
+ # --- Dispatch Table
+ my %dispatch = (
+        html             =&gt; \&amp;html,
+        help             =&gt; \&amp;usage,
+        print_secret_raw =&gt; \&amp;print_secret_raw,
+        print_secret_msb =&gt; \&amp;print_secret_msb,
+        print_vessel_rgb =&gt; \&amp;print_vessel_rgb,
+        print_vessel_lsb =&gt; \&amp;print_vessel_lsb,
+        print_composed_examples   =&gt; \&amp;print_composed_examples,
+        compose          =&gt; \&amp;compose,
+ );
+ if( $dispatch{$command} ) { &amp;{$dispatch{$command}}($ARGV[0]);
+ else { &amp;usage; }</code></pre>
+
+<p>The &quot;print_*&quot; commands only prints the intermediate images that you can see in this Blog. Only the &quot;compose&quot; option creates the <b>Miraculous Image</b>.</p>
+
+<h1 id="Secret-Image">Secret Image</h1>
+
+<p>What we need from the <b>Secret Image</b> is the Bit Plane. Every Bit Plane is needed on LSB, because we want to hide this information in LSB of the <b>Vessel Image</b>. So we would only need to call the Bit Plane function <code>bit_plane($secret{data},&quot;lsb&quot;)</code> with the &quot;lsb&quot; option.</p>
+
+<p>The assignment to the <code>%secret</code> Hash is done via a Hash Slice.</p>
+
+<pre><code> sub secret {
+        $secret{data} = read_png($secret{name});
+        @{ $secret{bit_plane} }{&#39;lsb&#39;,&#39;msb&#39;,&#39;raw&#39;} = (
+                [ bit_plane($secret{data},&quot;lsb&quot;) ],
+                [ bit_plane($secret{data},&quot;msb&quot;) ],
+                [ bit_plane($secret{data},&quot;raw&quot;) ],
+        );
+ }</code></pre>
+
+<h2 id="print_secret_raw">print_secret_raw()</h2>
+
+<p>The function <code>print_secret_raw()</code> prints some intermediate steps in our hiding process. It prints the bit planes for bit 7, 6, 5 and the composed image of the 3 bit planes to the below files. The composed image is also the image that we want to hide in the vessel image.</p>
+
+<table><tr>
+	<td><img src="tmp/secret-bp-7-raw.png"></td>
+	<td><img src="tmp/secret-bp-6-raw.png"></td>
+	<td><img src="tmp/secret-bp-5-raw.png"></td>
+	<td>
+	<b># ./ch-2.pl print_secret_raw</b><br>
+		<br>
+		secret-bp-7-raw.png<br>
+	    secret-bp-6-raw.png<br>
+	    secret-bp-5-raw.png<br>
+	<br>
+	<b><i>These "Secret" 3 Bit Planes shall be hidden in "Vessel".</i></b>
+	</td>
+</tr><tr>
+	<td colspan=3 style="text-align:center;"><img src="tmp/secret-bp-765.png"></td>
+	<td>secret-bp-765.png</td>
+</tr></table>
+
+<p>First the secret image is read from PNG file. Second the image data is split into its bit planes, the option &quot;raw&quot; preserves the bit position within the byte of each pixel. The 3 most significant bits (MSB) are binary ORed to a new image. All 4 images are printed to a PNG file.</p>
+
+<pre><code> sub print_secret_raw {
+
+        # ------- read secret image
+        $secret{data} = read_png($secret{name}); 
+
+        # ------- separate image into its bit planes, preserve bit position
+        @{ $secret{bit_plane_raw} } = bit_plane($secret{data},&quot;raw&quot;);
+
+        # ------- binary OR of bit plane 7/6/5
+        my $new_secret = 
+                $secret{bit_plane_raw}-&gt;[7] |
+                $secret{bit_plane_raw}-&gt;[6] |
+                $secret{bit_plane_raw}-&gt;[5];
+
+        # ------- write image data to PNG file
+        write_png($new_secret,&quot;secret-bp-765.png&quot;);
+        write_png($secret{bit_plane_raw}-&gt;[7],&quot;secret-bp-7-raw.png&quot;);
+        write_png($secret{bit_plane_raw}-&gt;[6],&quot;secret-bp-6-raw.png&quot;);
+        write_png($secret{bit_plane_raw}-&gt;[5],&quot;secret-bp-5-raw.png&quot;);
+ }</code></pre>
+
+<h2 id="print_secret_msb">print_secret_msb()</h2>
+
+<p>The function <code>print_secret_msb()</code> makes each bit plane a little bit more visible. It shifts each bit up to bit 7 (MSB). So the intensity of the two values 0/1 is in decimal 0/128. The following 3 images are the same bits 7/6/5.</p>
+
+<table><tr>
+	<td><img src="tmp/secret-bp-7-msb.png"></td>
+	<td><img src="tmp/secret-bp-6-msb.png"></td>
+	<td><img src="tmp/secret-bp-5-msb.png"></td>
+	<td><b># ./ch-2.pl print_secret_msb</b><br>
+		<br>
+		secret-bp-7-msb.png<br>
+	    secret-bp-6-msb.png<br>
+	    secret-bp-5-msb.png<br>
+	</td>
+</tr></table>
+
+<p>The important difference in this code is the call of function <code>bit_plane()</code> with the option &quot;msb&quot;.</p>
+
+<pre><code> sub print_secret_msb {
+        $secret{data} = read_png($secret{name});
+        @{ $secret{bit_plane_msb} } = bit_plane($secret{data},&quot;msb&quot;);
+
+        write_png($secret{bit_plane_msb}-&gt;[7],&quot;secret-bp-7-msb.png&quot;);
+        write_png($secret{bit_plane_msb}-&gt;[6],&quot;secret-bp-6-msb.png&quot;);
+        write_png($secret{bit_plane_msb}-&gt;[5],&quot;secret-bp-5-msb.png&quot;);
+ }</code></pre>
+
+<h1 id="Vessel-Image">Vessel Image</h1>
+
+<h2 id="print_vessel_rgb">print_vessel_rgb()</h2>
+
+<p>This intermediate step extracts the R/G/B channels of the coloured <b>Vessel Image</b>. From each channel another RGB Image is created by setting the other 2 colors to zero. These resulting images are written to PNG file.</p>
+
+<table><tr>
+	<td><img width=250 src="tmp/vessel-red.png"></td>
+	<td><img width=250 src="tmp/vessel-grn.png"></td>
+	<td><img width=250 src="tmp/vessel-blu.png"></td>
+	<td>
+	<b># ./ch-2.pl print_vessel_rgb</b><br>
+		<br>
+		vessel-red.png<br>
+	    vessel-grn.png<br>
+	    vessel-blu.png<br>
+	<br>
+	<b><i>Each R/G/B Channel of "Vessel" is used to hide one Bit (7/6/5) of "Secret".</i></b>
+	</td>
+</tr></table>
+
+<pre><code> sub print_vessel_rgb {
+
+        $vessel{data} = read_png($vessel{name});
+        @vessel{&#39;red&#39;,&#39;green&#39;,&#39;blue&#39;} = rgb($vessel{data});
+
+        my $red = one_color($vessel{red},&quot;red&quot;);
+        my $grn = one_color($vessel{green},&quot;green&quot;);
+        my $blu = one_color($vessel{blue},&quot;blue&quot;);
+
+        write_png($red,&quot;vessel-red.png&quot;);
+        write_png($grn,&quot;vessel-grn.png&quot;);
+        write_png($blu,&quot;vessel-blu.png&quot;);
+ }</code></pre>
+
+<h2 id="print_vessel_lsb">print_vessel_lsb()</h2>
+
+<p>The LSB of each R/G/B channel has not much information, it becomes more or less Noise.</p>
+
+<table><tr>
+	<td><img width=250 src="tmp/vessel-red-lsb.png"></td>
+	<td><img width=250 src="tmp/vessel-grn-lsb.png"></td>
+	<td><img width=250 src="tmp/vessel-blu-lsb.png"></td>
+	<td>
+	<b># ./ch-2.pl print_vessel_lsb</b><br>
+		<br>
+		vessel-red-lsb.png<br>
+	    vessel-grn-lsb.png<br>
+	    vessel-blu-lsb.png<br>
+	<br>
+	<b><i>Each Bit 0 (LSB) of R/G/B Channel of "Vessel" is used to hide one Bit (7/6/5) of "Secret".<br><br>
+	LSB is mostly Noise.
+	</i></b>
+	</td>
+</tr></table>
+
+<p>Most of the code we know already. Complicate here is the Hash Slice for the Bit Plane. The function <code>bit_plane()</code> returns a list, but how to assign 3 arrays to a Hash Slice of arrays? So I had to assign an array ref to the Hash Slice.</p>
+
+<p>To make a Bit Plane better visible, we shifted the LSB to the MSB. Now I multiplicate the LSB with 255. This is even better visible, because the binary 0/1 values become 0/255 (before 0/128).</p>
+
+<pre><code> sub print_vessel_lsb {
+
+        # ---- Read PNG and convert rot R/G/B
+        $vessel{data} = read_png($vessel{name});
+        @vessel{&#39;red&#39;,&#39;green&#39;,&#39;blue&#39;} = rgb($vessel{data});
+
+        # ---- Print some information for PDL
+        info_pdl($vessel{red}  , &quot;Vessel RED&quot;);
+        info_pdl($vessel{green}, &quot;Vessel GRN&quot;);
+        info_pdl($vessel{blue} , &quot;Vessel BLU&quot;);
+
+        # ---- Get Bit Plane of each R/G/B
+        @{ $vessel{bit_plane} }{@RGB} = (
+                [ bit_plane($vessel{red})   ],
+                [ bit_plane($vessel{green}) ],
+                [ bit_plane($vessel{blue})  ],
+        );
+
+        # ----  Alternative to get Bit Plane, without Hash Slice
+        # @{ $vessel{bit_plane}{red} }   = bit_plane($vessel{red},&quot;raw&quot;);
+        # @{ $vessel{bit_plane}{green} } = bit_plane($vessel{green},&quot;raw&quot;);
+        # @{ $vessel{bit_plane}{blue} }  = bit_plane($vessel{blue},&quot;raw&quot;);
+
+        # ---- Again some information for PDL, because Hash Slice above was not easy.
+        info_pdl($vessel{bit_plane}{red}[0],&quot;Vessel Bit Plane RED&quot;);
+        info_pdl($vessel{bit_plane}{green}[0],&quot;Vessel Bit Plane GRN&quot;);
+        info_pdl($vessel{bit_plane}{blue}[0],&quot;Vessel Bit Plane BLU&quot;);
+
+        # ---- Make RGB from each channel, but no shift to MSB, instead
+        #      multiplicate with 255.  
+        my $red = one_color(($vessel{bit_plane}{red}[0]*255)  ,&quot;red&quot;);
+        my $grn = one_color(($vessel{bit_plane}{green}[0]*255),&quot;green&quot;);
+        my $blu = one_color(($vessel{bit_plane}{blue}[0]*255) ,&quot;blue&quot;);
+
+        # ---- Write PDL data to PNG file
+        write_png($red,&quot;vessel-red-lsb.png&quot;);
+        write_png($grn,&quot;vessel-grn-lsb.png&quot;);
+        write_png($blu,&quot;vessel-blu-lsb.png&quot;);
+ }</code></pre>
+
+<p>The following output is generated for the <b>print_vessel_lsb</b> Option. We can see that for every PDL an info is printed. This we needed to debug the code above. It was difficult to get the Hash Slice working. The direct assignment as a Hash Value (see above alternative) was easier.</p>
+
+<pre><code> # ./ch-2.pl print_vessel_lsb
+ ch-2.pl (Version 1.0) PWC #34 Task #2: print_vessel_lsb
+ Vessel RED:  Type byte (0) Dims 2 (400/533) #Ele 213200 Sum  30696312
+ Vessel GRN:  Type byte (0) Dims 2 (400/533) #Ele 213200 Sum  28325969
+ Vessel BLU:  Type byte (0) Dims 2 (400/533) #Ele 213200 Sum  22381809
+ Vessel Bit Plane RED:  Type byte (0) Dims 2 (400/533) #Ele 213200 Sum  98516
+ Vessel Bit Plane GRN:  Type byte (0) Dims 2 (400/533) #Ele 213200 Sum  111231
+ Vessel Bit Plane BLU:  Type byte (0) Dims 2 (400/533) #Ele 213200 Sum  109309</code></pre>
+
+<h1 id="Compose-Vessel-and-Secret">Compose Vessel and Secret</h1>
+
+<p>In the former code we only read the <b>Vessel</b> and <b>Secret</b> Image from PNG file and decomposed them into the <b>Colour Channels</b> and <b>Bit Planes</b>.</p>
+
+<p>Now we need to compose Bit 7/6/5 of the Secret Image into the LSB of the three Colour Channels (RGB). Depending on the Option <b>zero|mid|slice</b> the Secret image is hidden in the left-bottom corner (zero), in the middle (mid) or in every second column (slice).</p>
+
+<pre><code> sub compose {
+        my ($type) = @_;         # zero|mid|slice
+        $type = &quot;zero&quot; if not $type;
+
+        secret();                # Read and split &quot;Secret&quot; image.
+        vessel();                # Read and split &quot;Vessel&quot; image.
+
+        print &quot;---- Compose Vessel/Secret $type ----\n&quot;;
+
+        # Get reference to Bit 0, PDL::NiceSlice otherwise will not work.
+        my $red = $vessel{bit_plane}{red}-&gt;[0];   
+        my $grn = $vessel{bit_plane}{green}-&gt;[0];
+        my $blu = $vessel{bit_plane}{blue}-&gt;[0];
+
+        if($type eq &quot;zero&quot;) {    # Put &quot;Secret&quot; in left-bottom corner of &quot;Vessel&quot;, with PDL::NiceSlice.
+                $red(0:199,0:264) .= $secret{bit_plane}{lsb}-&gt;[7];
+                $grn(0:199,0:264) .= $secret{bit_plane}{lsb}-&gt;[6];
+                $blu(0:199,0:264) .= $secret{bit_plane}{lsb}-&gt;[5];
+        }
+        elsif($type eq &quot;mid&quot;) {  # Put &quot;Secret&quot; in the middle of &quot;Vessel&quot;, with PDL::NiceSlice.
+                $red(100:299,132:396) .= $secret{bit_plane}{lsb}-&gt;[7];
+                $grn(100:299,132:396) .= $secret{bit_plane}{lsb}-&gt;[6];
+                $blu(100:299,132:396) .= $secret{bit_plane}{lsb}-&gt;[5];
+        }
+        elsif($type eq &quot;slice&quot;) {  
+
+                # Get reference to &quot;Secret&quot; Bit 7/6/5, PDL::NiceSlice otherwise will not work.
+                my $sec_red = $secret{bit_plane}{lsb}-&gt;[7];
+                my $sec_grn = $secret{bit_plane}{lsb}-&gt;[6];
+                my $sec_blu = $secret{bit_plane}{lsb}-&gt;[5];
+
+                for(my $i=0; $i&lt;=199; $i++) {
+
+                        # Put Slices of &quot;Secret&quot; in every second row, with PDL::NiceSlice.
+                        $red(($i*2),132:396) .= $sec_red(($i),:);
+                        $grn(($i*2),132:396) .= $sec_grn(($i),:);
+                        $blu(($i*2),132:396) .= $sec_blu(($i),:);
+                }
+        }
+
+        # Rebuild the Bit Planes of the 3 Colours
+        $composed{red}   = rebuild_bit_plane($vessel{bit_plane}{red});
+        $composed{green} = rebuild_bit_plane($vessel{bit_plane}{green});
+        $composed{blue}  = rebuild_bit_plane($vessel{bit_plane}{blue});
+
+        # Compose final image
+        $composed{data} = torgb(@composed{@RGB}); # Hash Slice
+        write_png(@composed{&#39;data&#39;,&#39;name&#39;});      # Hash Slice
+ }</code></pre>
+
+<table><tr>
+	<td><img width=180 src="tmp/composed-zero-red-bit7.png"></td>
+	<td><img width=180 src="tmp/composed-zero-grn-bit6.png"></td>
+	<td><img width=180 src="tmp/composed-zero-blu-bit5.png"></td>
+	<td><img width=180 src="tmp/composed-zero-color-lsb.png"></td>
+	<td>
+	<b># ./ch-2.pl print_composed_examples zero</b><br>
+		<br>
+	    composed-zero-red-bit7.png<br>
+	    composed-zero-red-bit6.png<br>
+	    composed-zero-red-bit5.png<br>
+		<br>
+		<b><i> Secret image is hidden at position "zero",
+			in left-bottom corner.
+		</i></b>
+	</td>
+</tr><tr>
+	<td><img width=180 src="tmp/composed-mid-red-bit7.png"></td>
+	<td><img width=180 src="tmp/composed-mid-grn-bit6.png"></td>
+	<td><img width=180 src="tmp/composed-mid-blu-bit5.png"></td>
+	<td><img width=180 src="tmp/composed-mid-color-lsb.png"></td>
+	<td>
+	<b># ./ch-2.pl print_composed_examples mid</b><br>
+		<br>
+	    composed-mid-red-bit7.png<br>
+	    composed-mid-grn-bit6.png<br>
+	    composed-mid-blu-bit5.png<br>
+		<br>
+		<b><i> Secret image is hidden in the middle of the
+			vessel image.
+		</i></b>
+	</td>
+</tr><tr>
+	<td><img width=180 src="tmp/composed-slice-red-bit7.png"></td>
+	<td><img width=180 src="tmp/composed-slice-grn-bit6.png"></td>
+	<td><img width=180 src="tmp/composed-slice-blu-bit5.png"></td>
+	<td><img width=180 src="tmp/composed-slice-color-lsb.png"></td>
+	<td>
+	<b># ./ch-2.pl print_composed_examples slice</b><br>
+		<br>
+	    composed-slice-red-bit7.png<br>
+	    composed-slice-grn-bit6.png<br>
+	    composed-slice-blu-bit5.png<br>
+		<br>
+		<b><i> Secret image is hidden vertically in the middle and
+			horizontally in every second column of the vessel image.
+		</i></b>
+	</td>
+</tr></table>
+<table><tr>
+	<td><img width=200 src="tmp/composed-zero-color-msb.png"></td>
+	<td style="font-size:50px; font-weight:bold;"> ... </td>
+	<td><img width=200 src="tmp/composed-zero-color-lsb.png"></td>
+	<td style="font-size:50px; font-weight:bold;"> = </td>
+	<td><img width=200 src="composed-400x533.png"></td>
+</tr><tr>
+	<td style="font-size:25px; font-weight:bold;"> Vessel Bit 7 </td>
+	<td></td>
+	<td style="font-size:25px; font-weight:bold;"> Vessel Bit 0<br>Secret </td>
+	<td></td>
+	<td style="font-size:25px; font-weight:bold;"> Miraculous Image </td>
+</tr></table>
+
+<h2 id="print_composed_examples">print_composed_examples()</h2>
+
+<p>The previous showed intermediate images have been printed with the option <b>print_composed_examples</b>.</p>
+
+<pre><code> sub print_composed_examples {
+        my ($type) = @_;
+        $type = &quot;zero&quot; if not $type;
+
+        compose($type);
+
+        # --- Bit 0 multiplied with 255 and create a RGB image with 2 colors set to &quot;0&quot;.
+        my $red = one_color($vessel{bit_plane}{red}-&gt;[0]*255,&quot;red&quot;);
+        my $grn = one_color($vessel{bit_plane}{green}-&gt;[0]*255,&quot;green&quot;);
+        my $blu = one_color($vessel{bit_plane}{blue}-&gt;[0]*255,&quot;blue&quot;);
+
+        # --- Compose only Bit 0 to a RGB image, each multiplied with 255.
+        my $color0 = torgb(
+                $vessel{bit_plane}{red}-&gt;[0]*255,
+                $vessel{bit_plane}{green}-&gt;[0]*255,
+                $vessel{bit_plane}{blue}-&gt;[0]*255,
+        );
+        # --- Compose only Bit 7 to a RGB image
+        my $color7 = torgb(
+                $vessel{bit_plane}{red}-&gt;[7],
+                $vessel{bit_plane}{green}-&gt;[7],
+                $vessel{bit_plane}{blue}-&gt;[7],
+        );
+
+        write_png($red,&quot;tmp/composed-$type-red-bit7.png&quot;);
+        write_png($grn,&quot;tmp/composed-$type-grn-bit6.png&quot;);
+        write_png($blu,&quot;tmp/composed-$type-blu-bit5.png&quot;);
+        write_png($color0,&quot;tmp/composed-$type-color-lsb.png&quot;);
+        write_png($color7,&quot;tmp/composed-$type-color-msb.png&quot;);
+ }</code></pre>
+
+<h1 id="Functions">Functions</h1>
+
+<p>Here are some new functions implemented, that we did not need in Task #1.</p>
+
+<ul>
+
+<li><p>$data = one_color($rgb_data,$color)</p>
+
+</li>
+<li><p>$data = rebuild_bit_plane($bit_plane);</p>
+
+</li>
+<li><p>$data = torgb($red,$green,$blue);</p>
+
+</li>
+</ul>
+
+<p>Some functions used in Task #2 are explained already in Task #1 of PWC #34.</p>
+
+<dl>
+
+<dt id="read_png">- read_png()</dt>
+<dd>
+
+</dd>
+<dt id="write_png">- write_png()</dt>
+<dd>
+
+</dd>
+<dt id="bit_plane">- bit_plane()</dt>
+<dd>
+
+</dd>
+<dt id="bit_plane_array">- bit_plane_array()</dt>
+<dd>
+
+</dd>
+<dt id="rgb">- rgb()</dt>
+<dd>
+
+</dd>
+<dt id="rgb_array">- rgb_array()</dt>
+<dd>
+
+</dd>
+<dt id="info_pdl">- info_pdl()</dt>
+<dd>
+
+</dd>
+<dt id="info_array">- info_array()</dt>
+<dd>
+
+</dd>
+</dl>
+
+<h2 id="data-one_color-rgb_data-color">$data = one_color($rgb_data,$color)</h2>
+
+<p>The function <code>one_color()</code> creates a RGB image with one color channel set to its value, but the two other colors are set to zero. This is done to better visualize the splitted channels of a RGB image.</p>
+
+<pre><code> sub one_color {
+        my ($img,$color) = @_;   # $color = red|green|blue
+
+        # ------- Create image data of same dimension with only zeroes
+        my $result = zeroes(byte(),3,$img-&gt;dims);
+
+        # ------- Assign image data to choosen channel
+        my %c = ( red=&gt;0, green=&gt;1, blue=&gt;2 );
+        for(my $i=0; $i&lt;3; $i++) {
+                if($i == $c{$color}) { $result(($i),:,:) .= $img; }     # PDL::NiceSlice
+        }
+        return ($result); # Return new image
+ }</code></pre>
+
+<h2 id="data-rebuild_bit_plane-bit_plane">$data = rebuild_bit_plane($bit_plane);</h2>
+
+<p>The argument is an array ref to the <code>@bit_plane</code> array. It returns the composed image data.</p>
+
+<pre><code> sub rebuild_bit_plane {
+        my ($bp) = @_;             # array ref to bit plane
+        my $result = zeroes(       # empty PDL of same size
+                byte(),                # PDL type byte
+                $bp-&gt;[0]-&gt;dims         # PDL dimenstion of bit plane bit 0.
+        );
+        for(my $i=0;$i&lt;=7;$i++) {  # iterate each bit position
+                $result |= $bp-&gt;[$i];  # binary OR of each bit plane
+        }
+        return $result;            # return result
+ }</code></pre>
+
+<h2 id="data-torgb-red-green-blue">$data = torgb($red,$green,$blue);</h2>
+
+<p>The three single R/G/B channels are composed to one RGB image. Takes a list of the 3 channels <code>$red,$green,$blue</code> and returns the composed image data.</p>
+
+<pre><code> sub torgb {
+        my ($r,$g,$b) = @_;
+        my $img = zeroes(byte(),3,$r-&gt;dims); # Create empty PDL with same dimenstion
+        $img((0),:,:) .= $r; # Assign Value to PDL::NiceSlice
+        $img((1),:,:) .= $g;
+        $img((2),:,:) .= $b;
+        return $img;         # Return composed coloured image
+ }</code></pre>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Chuck</p>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #34 Task #2, Demonstrate Dispatch Table</span></strong></big>
+</td></tr>
+</table>
+
+</body>
+
+</html>
+
+

@@ -10,7 +10,7 @@ First find out the latest challenge folder, more likely the highest numbered fol
 In case you have created a blog about your solutions, then create a file called **blog.txt** and add the link to it.
 
 ## Step-by-step instructions
-Let us assume you want to subtmit solutions for **Challenge 002** and your Github user name is **joe-blog**. 
+Let us assume you want to submit solutions for **Challenge 002** and your Github user name is **joe-blog**. 
 
 1. If you are submitting the solution for the first time then you have to **Fork** the repository **https://github.com/manwar/perlweeklychallenge-club** by clicking the "Fork" button in the top right corner and should have repository e.g. **https://github.com/joe-blog/perlweeklychallenge-club**.
  
@@ -133,7 +133,7 @@ Let us assume you already have a fork. If this is the first time you are using t
    $ git commit
    ```
    
-9. Now push the newly created branh **branch-for-challenge-005**
+9. Now push the newly created branch **branch-for-challenge-005**
 
    ```
    $ git push -u origin branch-for-challenge-005

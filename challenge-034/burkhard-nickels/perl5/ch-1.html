@@ -1,0 +1,572 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Perl Weekly Challenge #34 Task #1, Demonstrate Array/Hash Slices</title>
+<link rel="stylesheet" href="pwc.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #34 Task #1, Demonstrate Array/Hash Slices</span></strong></big>
+</td></tr>
+</table>
+
+
+
+<ul id="index">
+  <li><a href="#Perl-Weekly-Challenge-34-Task-1:-Array-Hash-Slices">Perl Weekly Challenge #34 Task #1: Array / Hash Slices</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#Definition-of-Task-1:-Array-Hash-Slices">Definition of Task #1: Array / Hash Slices</a></li>
+  <li><a href="#Reading-Image-from-PNG-file:-General-Usage-of-a-Hash">1.) Reading Image from PNG file: General Usage of a Hash</a></li>
+  <li><a href="#Separating-RGB-and-Bit-Plane">2.) Separating RGB and Bit Plane</a>
+    <ul>
+      <li><a href="#Hash-Slice">Hash Slice</a></li>
+      <li><a href="#A.-Separation-with-PDL">A. Separation with PDL</a></li>
+      <li><a href="#B.-Separation-with-Array">B. Separation with Array</a></li>
+      <li><a href="#Bit-Plane">Bit Plane</a></li>
+      <li><a href="#About-Image-Data">About Image Data</a></li>
+    </ul>
+  </li>
+  <li><a href="#Compose-hidden-image-from-Bit-0">3.) Compose hidden image from Bit 0</a>
+    <ul>
+      <li><a href="#A.-Compose-hidden-image-with-PDL">A. Compose hidden image with PDL</a></li>
+      <li><a href="#B.-Compose-hidden-image-with-Array">B. Compose hidden image with Array</a>
+        <ul>
+          <li><a href="#res-recreate-bit7-bit6-bit5">$res = recreate($bit7,$bit6,$bit5)</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#Write-hidden-image-to-file:-PDL::NiceSlice1">4.) Write hidden image to file: PDL::NiceSlice</a></li>
+  <li><a href="#Comparision-of-Execution-Time">5.) Comparision of Execution Time</a>
+    <ul>
+      <li><a href="#B.-Execution-Time-of-Array-Solution">B. Execution Time of Array Solution:</a></li>
+      <li><a href="#A.-Execution-Time-of-PDL-Solution">A. Execution Time of PDL Solution:</a></li>
+    </ul>
+  </li>
+  <li><a href="#Basic-Functions">Basic Functions</a>
+    <ul>
+      <li><a href="#data-one_color-rgb_data-color">$data = one_color($rgb_data,$color)</a></li>
+      <li><a href="#data-read_png-filename">$data = read_png($filename);</a></li>
+      <li><a href="#write_png-data-filename">write_png($data,$filename);</a></li>
+      <li><a href="#A.-bit_planes-bit_plane-data-type">A. @bit_planes = bit_plane($data,$type);</a></li>
+      <li><a href="#B.-bit_planes-bit_plane_array-data-type">B. $bit_planes = bit_plane_array($data,$type)</a></li>
+      <li><a href="#A.-red-green-blue-rgb-data">A. ($red,$green,$blue) = rgb($data);</a></li>
+      <li><a href="#B.-red-green-blue-rgb_array-data">B. ($red,$green,$blue) = rgb_array($data);</a></li>
+      <li><a href="#A.-info_array-array_ref">A. info_array($array_ref)</a></li>
+      <li><a href="#B.-info_pdl-data-title">B. info_pdl($data,$title)</a></li>
+    </ul>
+  </li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<h1 id="Perl-Weekly-Challenge-34-Task-1:-Array-Hash-Slices">Perl Weekly Challenge #34 Task #1: Array / Hash Slices</h1>
+
+<p>This week PWC in Task #1 shall demonstrate Array Slices or Hash slices.</p>
+
+<p>To demonstate some different Array and Hash slicing features I do some image processing. An image is &quot;data&quot; that can be stored in 2- or 3-dimensional Arrays. To separate the data I will store the data in Hashes (Named Lists). For example a coloured image can be separated in its &#39;red&#39;, &#39;green&#39; and &#39;blue&#39; parts.</p>
+
+<p>The source is a miraculous colored image from my son. This example creates a new miracle image (Some odd inheritance). I go two ways to solve it: (A) First I use PDL, the Perl Data Language. With PDL you can simply calculate big arrays of data. All operators can be used directly on the Piddle (PDL object). (B) Second I use Perl Arrays.</p>
+
+<p>The steps done in this example are:</p>
+
+<dl>
+
+<dt id="Reading-Image-from-PNG-file:-Using-Hash">1.) Reading Image from PNG file: Using Hash</dt>
+<dd>
+
+</dd>
+<dt id="Separate-RGB-and-Bit-Plane:-Hash-Slices">2.) Separate RGB and Bit Plane: Hash Slices</dt>
+<dd>
+
+</dd>
+<dt id="Extract-hidden-image-from-Bit-0:-Hash-Slice">3.) Extract hidden image from Bit 0: Hash Slice</dt>
+<dd>
+
+</dd>
+<dt id="Write-hidden-image-to-file:-PDL::NiceSlice">4.) Write hidden image to file: PDL::NiceSlice</dt>
+<dd>
+
+</dd>
+<dt id="Comparision-of-execution-time">5.) Comparision of execution time</dt>
+<dd>
+
+</dd>
+</dl>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code> # perldoc ch-1.pl              - POD
+ ./ch-1.pl &lt;command&gt;
+
+ # ./ch-1.pl pdl                - Creates Hidden Grayscale from Colored Image
+ # ./ch-1.pl array              - Array Version does NOT work properly
+ # ./ch-1.pl html               - HTML/CSS in ch-1.html/pwc.css
+ # ./ch-1.pl help               - Usage information</code></pre>
+
+<h1 id="Definition-of-Task-1:-Array-Hash-Slices">Definition of Task #1: Array / Hash Slices</h1>
+
+<p>Write a program that demonstrates using hash slices and/or array slices.</p>
+
+<h1 id="Reading-Image-from-PNG-file:-General-Usage-of-a-Hash">1.) Reading Image from PNG file: General Usage of a Hash</h1>
+
+<p>A Hash is a List of Key/Value pairs, so that values can be accessed easily by a name (key). In Perl a Hash is declared with a percent sign &quot;%&quot; (i.e. <code>%hash</code>) in front of the name. The Hash can be initialized with key/value pairs.</p>
+
+<pre><code> %hash = ( key =&gt; $value, ... );       # Initialize Hash
+ $hash{ key } = $value;                # Assign Value to Hash Element
+ $var = $hash{ key };                  # Get Hash Value of Key</code></pre>
+
+<p>As example I read a PNG file and store every needed parameter in a hash. In the below example the keys <code>base</code> (basename of file), <code>file</code> (filename) and <code>data</code> (read PDL data) are used.</p>
+
+<pre><code> my %image = (                          # Initialize Hash
+        base =&gt; &quot;miraculous-image-400x533&quot;,
+        file =&gt; &quot;miraculous-image-400x533.png&quot;,
+ );
+ $image{data} = read_png($image{file}); # Assign Value to Hash Element
+ info_pdl($image{data},$image{file});   # Use Hash Values</code></pre>
+
+<table><tr><td>
+	<img width=200 src="miraculous-image-400x533.png">
+</td><td>
+	<b>miraculous-image-400x533.png</b><br>
+	<br>
+</td></tr></table>
+
+<h1 id="Separating-RGB-and-Bit-Plane">2.) Separating RGB and Bit Plane</h1>
+
+<h2 id="Hash-Slice">Hash Slice</h2>
+
+<p>A Hash Slice represents more Hash elements at once. The At (<code>@</code>) sign is used to represent a hash slice.</p>
+
+<pre><code> @list = @hash{&#39;key1&#39;,&#39;key2&#39;};          # Access Hash Slice
+ @hash{ &#39;key1&#39;,&#39;key2&#39;,&#39;key3&#39; } = ...;   # Assignment of Values to Hash Slice</code></pre>
+
+<h2 id="A.-Separation-with-PDL">A. Separation with PDL</h2>
+
+<p>In the example below we assign the RGB layers of the image to a Hash Slice. The <code>rgb()</code> function is doing it for us. Then we create a Hash Element named &quot;bit_plane&quot; and assign the bit planes (an array) of each color to the Hash Slice <code>(&#39;red&#39;,&#39;green&#39;,&#39;blue&#39;)</code>. This is done with the function <code>bit_plane()</code>.</p>
+
+<pre><code> @image{ &#39;red&#39;,&#39;green&#39;,&#39;blue&#39; } = rgb($image{data}); # Assigning values to Hash slice
+
+ my @colors = (&#39;red&#39;,&#39;green&#39;,&#39;blue&#39;);
+ @{ $image{bit_plane} }{ @colors } = (   # Assigning values to Hash Slice
+        [ bit_plane($image{red}) ],
+        [ bit_plane($image{green}) ],
+        [ bit_plane($image{blue}) ],
+ );</code></pre>
+
+<h2 id="B.-Separation-with-Array">B. Separation with Array</h2>
+
+<p>Because we read the PNG file with PDL mechanisms, first we need to change the PDL object into an array. This we do with exchanging the order of the dimensions with <code>PDL xchg(0,2)</code> and with <code>PDL unpdl()</code> function.</p>
+
+<p>Also for the Array-Solution we implemented a <code>rgb_array()</code> function that is separating the 3 RGB channels. Than the <code>bit_plane_array()</code> function is creating the Bit Planes.</p>
+
+<pre><code> my $tmp1 = $image{data}-&gt;xchg(0,2);
+ $image{array} = $tmp1-&gt;unpdl;
+
+ @image{ &#39;red&#39;,&#39;green&#39;,&#39;blue&#39; } = rgb_array($image{array});
+
+ my @colors = (&#39;red&#39;,&#39;green&#39;,&#39;blue&#39;);
+ @{ $image{bit_plane} }{ @colors } = (   # Bit Plane
+        bit_plane_array($image{red}),
+        bit_plane_array($image{green}),
+        bit_plane_array($image{blue}),
+ );</code></pre>
+
+<h2 id="Bit-Plane">Bit Plane</h2>
+
+<p>The following 3 Images are an extract of the previous operations. Every Pixel can have a value range from 0 - 255.</p>
+
+<p>For the third image, Bit Mask on Bit 0 of Bit Plane, to make it visible I multiplied it with 255. Normally the values are only 0 / 1, so it would be a black image. When multiplied with 255, value 1 becomes 255, value 0 is still value 0. On the Green channel, Bit 6 of the hidden Image is available.</p>
+
+<dl>
+
+<dt id="Green-Channel-only.-Green-Value-Range-from-0---255">1.) Green Channel only. Green Value Range from 0 - 255.</dt>
+<dd>
+
+</dd>
+<dt id="Green-Channel-Bit-7-of-Bit-Plane.-Only-Value-0-128-because-of-Bit-Mask-on-Bit-7">2.) Green Channel Bit 7 of Bit Plane. Only Value 0 / 128, because of Bit Mask on Bit 7.</dt>
+<dd>
+
+</dd>
+<dt id="Green-Channel-Bit-0-of-Bit-Plane-multiplied-with-255">3.) Green Channel Bit 0 of Bit Plane, multiplied with 255.</dt>
+<dd>
+
+</dd>
+</dl>
+
+<table><tr><td>
+	<img width=200 src="tmp/miraculous-green.png">
+	<img width=200 src="tmp/miraculous-green-bit7.png">
+	<img width=200 src="tmp/miraculous-green-bit0.png">
+</td><td>
+	<b>1.) tmp/miraculous-green.png</b><br>
+	<b>2.) tmp/miraculous-green-bit7.png</b><br>
+	<b>3.) tmp/miraculous-green-bit0.png</b><br>
+	<br>
+</td></tr></table>
+
+<h2 id="About-Image-Data">About Image Data</h2>
+
+<p>The miraculous image has a size of 3x400x533. The image has a size width x height of 400x533 and is composed of 3 color values red/green/blue (RGB). Each value has 8 Bit means decimal from 0 to 255. One Red Pixel for example has the R/G/B values of 255/0/0.</p>
+
+<p>When we first separate the RGB values, we assign to <code>$image{red}</code> an image of 400x533 only red pixel values. Afterwards we separate all 8 bit planes.</p>
+
+<p>The 8 Bit Value of 255 is a binary value of 0b11111111. Separating the 8 bit planes means we create an array of only Bit 0 (LSB), only Bit 1, ..., only Bit 7 (MSB). So the bit plane of Bit 7 can have value 0 or 1, means in decimal 0 or 128 (because of MSB).</p>
+
+<p>Representation of Bits and Significancy:</p>
+
+<pre><code> Bit Number:    (MSB) 7           6           5           4   3  2  1  0 (LSB)
+ Binary Value:        0b10000000, 0b01000000, 0b00100000, ...
+ Decimal Value:       128,        64,         32,         16, 8, 4, 2, 1</code></pre>
+
+<p>So the most information of an image is in the highest bits. Only with Bits 5-7 it is possible to get a visible image out of the data. In Bit 0 is the least information of the image, this is rather some image noise in the LSB.</p>
+
+<h1 id="Compose-hidden-image-from-Bit-0">3.) Compose hidden image from Bit 0</h1>
+
+<p>So in Bit 0 (Least Significant, Noise) of each RGB Value you can hide the Bits 5-7 (Most Significant) of another image. I separated a grayscale image in its bit plane and put these 3 bit planes from Bit 5-7 into the Bit 0 of the RGB. To extract the hidden image the process is vice versa.</p>
+
+<p>The Bits extracted from the coloured image are in Bit position 0, means they need to be shifted to their original position. That is Bit 7/6/5. For this we can use the &quot;Shift&quot; <code>&lt;&lt;</code> operator. Than the 3 Bytes with their proper position must be binary ORed with the OR <code>|</code> operator. Both operator exist in PDL as well for Scalars.</p>
+
+<h2 id="A.-Compose-hidden-image-with-PDL">A. Compose hidden image with PDL</h2>
+
+<p>With PDL a whole Matrix can be Shifted and ORed at once. This is done in one single line.</p>
+
+<pre><code> my %hidden;
+ @hidden{ &#39;bit7&#39;,&#39;bit6&#39;,&#39;bit5&#39; } = (
+        $image{bit_plane}{red}[0],
+        $image{bit_plane}{green}[0],
+        $image{bit_plane}{blue}[0],
+ );
+ $hidden{data} = ($hidden{bit7} &lt;&lt; 7) | ($hidden{bit6} &lt;&lt; 6) | ($hidden{bit5} &lt;&lt; 5);</code></pre>
+
+<p>The first 3 PNG files are from <code>@hidden{&#39;bit7&#39;,&#39;bit6&#39;,&#39;bit5&#39;}</code>, all three multiplied with 255. In the code above each image (bit position) is shifted up to the proper position for the resulting image. The fourth image is from <code>$hidden{data}</code>, and is the composed image out of the other three.</p>
+
+<table><tr><td>
+	<img width=150 src="tmp/miraculous-red-bit7.png">
+	<img width=150 src="tmp/miraculous-grn-bit6.png">
+	<img width=150 src="tmp/miraculous-blu-bit5.png">
+	<img width=150 src="tmp/miraculous-grey.png">
+</td><td>
+	<b>1.) tmp/miraculous-red-bit7.png</b><br>
+	<b>2.) tmp/miraculous-grn-bit6.png</b><br>
+	<b>3.) tmp/miraculous-blu-bit5.png</b><br>
+	<b>Result) tmp/miraculous-grey.png</b><br>
+	<br>
+</td></tr></table>
+
+<h2 id="B.-Compose-hidden-image-with-Array">B. Compose hidden image with Array</h2>
+
+<p>With a Perl Array we must iterate through every element to shift and OR every single element. I implemented the <code>recreate()</code> function for this task.</p>
+
+<p>The <code>recreate()</code> function puts the bits 7/6/5 together to one image. The perl array is converted back to a PDL object, because we write the data to a PNG file with PDL. The <code>PDL xchg()</code> function has to exchange the dimensions of the data.</p>
+
+<pre><code>        @hidden{ &#39;bit7&#39;,&#39;bit6&#39;,&#39;bit5&#39; } = (
+                $image{bit_plane}{red}[0],
+                $image{bit_plane}{green}[0],
+                $image{bit_plane}{blue}[0],
+        );
+        my $tmp1 = recreate(@hidden{&#39;bit7&#39;,&#39;bit6&#39;,&#39;bit5&#39;});
+
+        my $tmp2 = pdl(byte(),$tmp1);
+        $hidden{data} = $tmp2-&gt;xchg(0,1);</code></pre>
+
+<h3 id="res-recreate-bit7-bit6-bit5">$res = recreate($bit7,$bit6,$bit5)</h3>
+
+<p>To put Bits 7/6/5 together I have to iterate through every value of that image matrix (array). Each bit needs to be shifted from bit position 0 (LSB) to the appropriate position (7/6/5). Afterwards the Bytes with the proper bit position needs to be binary ORed to one value. This one value is stored in the resulting array at its indices.</p>
+
+<pre><code> sub recreate {
+        my ($bit7,$bit6,$bit5) = @_;
+        my @res;
+        for( my $w=0; $w&lt;=$#$bit7; $w++ ) {   # Iterate Column
+                my $col = $bit7-&gt;[$w];
+                for( my $h=0; $h&lt;=$#$col; $h++ ) {  # Iterate Row
+                        my $v7 = $bit7-&gt;[$w][$h] &lt;&lt; 7;  # Shift to Bit 7
+                        my $v6 = $bit6-&gt;[$w][$h] &lt;&lt; 6;  # Shift to Bit 6
+                        my $v5 = $bit5-&gt;[$w][$h] &lt;&lt; 5;  # Shift to Bit 5
+                        $res[$w][$h] = $v7 | $v6 | $v5; # Binary OR
+                }
+        }
+        return \@res;    # Return resulting image
+ }</code></pre>
+
+<h1 id="Write-hidden-image-to-file:-PDL::NiceSlice1">4.) Write hidden image to file: PDL::NiceSlice</h1>
+
+<p>The hidden image was a grayscale with size 200x265. So I create an empty PDL object with this size and assign a PDL::NiceSlice of that size from the composed data. Afterwards the data is written to file.</p>
+
+<pre><code> $hidden{slice} = zeroes(byte(),200,265);
+ my $tmp = $hidden{data};
+ $hidden{slice} .= $tmp(0:199,0:264);
+ write_png($hidden{slice},&quot;hidden-200x265.png&quot;);</code></pre>
+
+<p>So this is our final result:</p>
+
+<table><tr><td>
+	<img width=200 src="hidden-pdl-200x265.png">
+</td><td>
+	<b>hidden-pdl-200x265.png</b><br>
+	<br>
+</td></tr></table>
+
+<h1 id="Comparision-of-Execution-Time">5.) Comparision of Execution Time</h1>
+
+<p>The measurement of the time to extract the hidden image from the vessel results in <b>4.52 sec</b> for the Array Solution and <b>0.06 sec</b> for the PDL Solution. Details see below.</p>
+
+<h2 id="B.-Execution-Time-of-Array-Solution">B. Execution Time of Array Solution:</h2>
+
+<pre><code> ./ch-1.pl array
+ ch-1.pl (Version 1.0) PWC #34 Task #1: Argument - array
+ TIME: read_png(): 0.029254
+ TIME: read_image: 0.0293169021606445
+ TIME: bit_plane_array(): 1.379272
+ TIME: bit_plane_array(): 1.385368
+ TIME: bit_plane_array(): 1.380695
+ TIME: extract_bit_plane: 4.21236300468445
+ TIME: create_hidden: 0.25209
+ Write PNG file hidden-array-200x265.png
+ TIME: write_png(): 0.029869
+        hidden-array-200x265.png:  Type byte (0) Dims 2 (200/265) #Ele 53000 Sum  6348672
+ TIME: main(): 4.524511
+ </code></pre>
+
+<h2 id="A.-Execution-Time-of-PDL-Solution">A. Execution Time of PDL Solution:</h2>
+
+<pre><code> ./ch-1.pl pdl
+ ch-1.pl (Version 1.0) PWC #34 Task #1: Argument - pdl
+ TIME: read_png(): 0.028898
+ TIME: read_image: 0.0289709568023682
+ TIME: bit_plane(): 0.003825
+ TIME: bit_plane(): 0.003659
+ TIME: bit_plane(): 0.003666
+ TIME: extract_bit_plane: 0.0113928318023682
+ TIME: create_hidden: 0.00251
+ Write PNG file hidden-pdl-200x265.png
+ TIME: write_png(): 0.018439
+        hidden-pdl-200x265.png:  Type byte (0) Dims 2 (200/265) #Ele 53000 Sum  6348672
+ TIME: main(): 0.062353</code></pre>
+
+<h1 id="Basic-Functions">Basic Functions</h1>
+
+<p>Some basic functions are used in this example.</p>
+
+<pre><code> $data = one_color($rgb_data,$color);    # Creates rgb image from one color channel
+ $data = read_png($filename);            # Reads image data from PNG file.
+ write_png($data,$filename);             # Writes image data to PNG file.
+ @bit_planes = bit_plane($data,$type);   # Separates bit planes.
+ $bit_planes = bit_plane_array($data,$type); # Separates bit planes.
+ ($red,$green,$blue) = rgb($data);       # Separates red/green/blue from Color Image.
+ ($red,$green,$blue) = rgb_array($data); # Separates red/green/blue from Color Image.
+ info_array($array_ref);                 # Prints Array Size to STDOUT.
+ info_pdl($data,$title);                 # Prints PDL Info to STDOUT.</code></pre>
+
+<p>Because two different solutions are implemented in this script, I wanted to compare both related to time behaviour. For this reason I used the module Time::HiRes. The following code I inserted to measure the time.</p>
+
+<pre><code>        use Time::HiRes qw(gettimeofday tv_interval);
+        ...
+
+        my $t0 = [gettimeofday];
+
+        ... (measured code)
+
+        my $t1 = [gettimeofday];
+        my $td = tv_interval $t0, $t1;
+        print &quot;TIME: bit_plane(): $td\n&quot;;</code></pre>
+
+<h2 id="data-one_color-rgb_data-color">$data = one_color($rgb_data,$color)</h2>
+
+<p>The function <code>one_color()</code> creates a RGB image with one color channel set to its value, but the two other colors are set to zero. This is done to better visualize the splitted channels of a RGB image.</p>
+
+<pre><code> sub one_color {
+        my ($img,$color) = @_;   # $color = red|green|blue
+
+        # ------- Create image data of same dimension with only zeroes
+        my $result = zeroes(byte(),3,$img-&gt;dims);
+
+        # ------- Assign image data to choosen channel
+        my %c = ( red=&gt;0, green=&gt;1, blue=&gt;2 );
+        for(my $i=0; $i&lt;3; $i++) {
+                if($i == $c{$color}) { $result(($i),:,:) .= $img; }     # PDL::NiceSlice
+        }
+        return ($result); # Return new image
+ }</code></pre>
+
+<h2 id="data-read_png-filename">$data = read_png($filename);</h2>
+
+<p>Reads an image file with PNG format and returns the PDL data.</p>
+
+<pre><code> sub read_png {
+    my ($png) = @_; 
+    my $cr = PDL-&gt;rpiccan(&#39;PNG&#39;);   # is PNG format allowed
+    if(! $cr ) { print &quot;Error (read): Png not allowed!\n&quot;; return 0; }
+    my $tmp = PDL::IO::Pic::rpic($png, {FORMAT =&gt; &#39;PNG&#39;}); # read image
+ }</code></pre>
+
+<h2 id="write_png-data-filename">write_png($data,$filename);</h2>
+
+<p>Writes a PDL image as PNG file.</p>
+
+<pre><code> sub write_png {
+    my ($img,$png) = @_; 
+    my $cr = PDL-&gt;wpiccan(&#39;PNG&#39;);   # is PNG format allowed
+    if(! $cr ) { print &quot;Error (write): Png not allowed!\n&quot;; return 0; }
+    PDL::IO::Pic::wpic($img,$png, {FORMAT =&gt; &#39;PNG&#39;}); # write image
+ }</code></pre>
+
+<h2 id="A.-bit_planes-bit_plane-data-type">A. @bit_planes = bit_plane($data,$type);</h2>
+
+<p>Separates image <code>$data</code> in its <code>@bit_planes</code>. The <code>$type</code> can be &#39;raw&#39;|&#39;msb&#39;|&#39;lsb&#39;. This function takes only a 2-dimensional array, i.e. a grayscale image or only one color of a RGB image. All the operations are done on the whole image matrix at once. This is the advantage the PDL module gives to us.</p>
+
+<p>It returns an array of 8 images, for each bit plane one separate image.</p>
+
+<p>Let me give an example: A grayscale pixel has a decimal value of 255. The binary value is <code>0b11111111</code>.</p>
+
+<p>Each bit is masked in the <code>for</code> loop:</p>
+
+<pre><code> Pixel      &amp; Mask       = Bit Plane (raw)            = (lsb)      = (msb)
+ 0b11111111 &amp; 0b00000001 = 0b00000001 = $bit_plane[0] = 0b00000001 = 0b10000000
+ 0b11111111 &amp; 0b00000010 = 0b00000010 = $bit_plane[1] = 0b00000001 = 0b10000000
+ 0b11111111 &amp; 0b00000100 = 0b00000100 = $bit_plane[2] = 0b00000001 = 0b10000000
+ ...</code></pre>
+
+<p>What is the meaning of the $type argument? (raw, lsb, msb)</p>
+
+<ul>
+
+<li><p>raw</p>
+
+<p>The masked bit is on the same position in the byte than the original bit.</p>
+
+</li>
+<li><p>lsb</p>
+
+<p>The masked bit is shifted down to the LSB position (bit 0). This is needed because I want to hide the MSB of the hidden image in the LSB of the vessel image. So I need to shift the MSB down to the LSB.</p>
+
+</li>
+<li><p>msb</p>
+
+<p>The masked bit is shifted up to the MSB position (bit 7). This can be useful in case you want to see the Bit Plane as an image. When you have binary values 0/1 on LSB the grayscale has a decimal value of 0/1, so you can not see the difference. When you have binary values 0/1 on MSB, the grayscale has a decimal value of 0/128, this difference in intensity you can see in an image.</p>
+
+</li>
+</ul>
+
+<pre><code> sub bit_plane {                                    # $type = raw|lsb|msb
+   my ($layer,$type) = @_;
+   $type = &quot;raw&quot; if not $type;
+   my @bit_plane;                                   # resulting bit plane
+   my $mask = PDL::Core::pdl(PDL::Core::byte(),
+       0b00000001);                                 # initial mask on LSB
+   for(my $i=0;$i&lt;=7;$i++) {                        # iterate bit 0 to bit 7
+     $bit_plane[$i] = $layer &amp; $mask;               # mask image
+     $mask = $mask &lt;&lt; 1;                            # shift mask to bit 1
+     if($type eq &quot;lsb&quot;) {                                  
+       $bit_plane[$i] = $bit_plane[$i] &gt;&gt; $i;       # shift to LSB
+     }
+     elsif($type eq &quot;msb&quot;) { 
+       $bit_plane[$i] = $bit_plane[$i] &lt;&lt; (7 - $i); # shift to MSB
+     }
+   }
+   return @bit_plane;                               # return bit plane
+ }</code></pre>
+
+<h2 id="B.-bit_planes-bit_plane_array-data-type">B. $bit_planes = bit_plane_array($data,$type)</h2>
+
+<p>The <code>bit_plane_array()</code> function is doing the same as the <code>bit_plane()</code> function. Only the implementation is different, that it needs to iterate through every array element and also through all eight bits. Every Pixel value is binary ANDed <code>&amp;</code> with a Mask. The same Option <code>$type</code> exists, to keep the Bit in its original position &quot;raw&quot;, to put the Bit in LSB &quot;lsb&quot; or to put the Bit in MSB &quot;msb&quot;.</p>
+
+<pre><code> sub bit_plane_array {                       # raw|lsb|msb
+   my ($layer,$type) = @_;
+   $type = &quot;raw&quot; if not $type;
+   my @bit_plane;
+   my $mask = 0b00000001;                    # Initialize Mask
+   my $act_mask = $mask;
+   for( my $w=0; $w&lt;=$#$layer; $w++ ) {      # Iterate Column
+     my $col = $layer-&gt;[$w];
+     for( my $h=0; $h&lt;=$#$col; $h++ ) {      # Iterate Row
+       $act_mask = $mask;
+       for(my $i=0;$i&lt;=7;$i++) {                     # Iterate Mask
+         my $val = $col-&gt;[$h];                         # Value
+         $bit_plane[$i][$w][$h] = $val &amp; $act_mask;    # Binary AND: Value &amp; Mask
+         $act_mask = $mask &lt;&lt; $i;                      # Shift Mask
+         if($type eq &quot;lsb&quot;) { 
+           $bit_plane[$i][$w][$h] = $bit_plane[$i][$w][$h] &gt;&gt; $i; 
+         }
+         elsif($type eq &quot;msb&quot;) { 
+           $bit_plane[$i][$w][$h] = $bit_plane[$i][$w][$h] &lt;&lt; (7 - $i); 
+         }
+       }
+     }
+   }
+   return \@bit_plane;                       # Return Bit Plane
+ }</code></pre>
+
+<h2 id="A.-red-green-blue-rgb-data">A. ($red,$green,$blue) = rgb($data);</h2>
+
+<p>Returns the RED/GREEN/BLUE layers of a coloured image PDL $data. The separation is done with the PDL::NiceSlice module. So it is an easy task.</p>
+
+<pre><code> sub rgb {
+        my ($img) = @_;
+        my $red   = $img((0),:,:);      # PDL::NiceSlice
+        my $green = $img((1),:,:);
+        my $blue  = $img((2),:,:);
+        return ($red,$green,$blue);
+ }</code></pre>
+
+<h2 id="B.-red-green-blue-rgb_array-data">B. ($red,$green,$blue) = rgb_array($data);</h2>
+
+<p>The function <code>rgb_array()</code> is rather easy, it only returns the Array Slice.</p>
+
+<pre><code> sub rgb_array {
+        my ($img) = @_;
+        return @{$img}[0..2];    # Array Slice
+ }</code></pre>
+
+<h2 id="A.-info_array-array_ref">A. info_array($array_ref)</h2>
+
+<p>The function <code>info_array()</code> prints the size of the array to STDOUT. This can be helpful to debug the image processing, to see the size of some resulting image array.</p>
+
+<pre><code> sub info_array {
+        my ($aref) = @_;
+        print &quot;Array: Size &quot;;
+        print &quot;$#{$aref}&quot; if ref($aref) eq &quot;ARRAY&quot;;
+        print &quot; x $#{$aref-&gt;[0]} &quot; if ref($aref-&gt;[0]) eq &quot;ARRAY&quot;;
+        print &quot; x $#{$aref-&gt;[0]-&gt;[0]}&quot; if ref($aref-&gt;[0][0]) eq &quot;ARRAY&quot;;
+        print &quot;\n&quot;;
+ }</code></pre>
+
+<h2 id="B.-info_pdl-data-title">B. info_pdl($data,$title)</h2>
+
+<p>The function <code>info_pdl()</code> prints some information of the PDL data to STDOUT. This can be helpful to debug the image processing, to see the size and some other data of some resulting image PDL.</p>
+
+<p>Some PDL functions are used to get this information, i.e. get_datatype(), ndims(), nelem(), dims() and sum().</p>
+
+<pre><code> sub info_pdl {
+    my ($image,$title) = @_;
+    my $dt = $image-&gt;get_datatype;
+    my @type = (&quot;byte&quot;,&quot;short&quot;,&quot;ushort&quot;,&quot;long&quot;,&quot;indx&quot;,&quot;unknown&quot;,&quot;float&quot;,&quot;double&quot;);
+
+    my $str = &quot;$title: &quot;;
+    $str .= &quot; Type &quot; . $type[$dt]    . &quot; (&quot; . $dt . &quot;)&quot;;
+    $str .= &quot; Dims &quot; . $image-&gt;ndims . &quot; (&quot; . join(&quot;/&quot;,( $image-&gt;dims )) . &quot;)&quot;;
+    $str .= &quot; #Ele &quot; . $image-&gt;nelem;
+    $str .= &quot; Sum  &quot; . $image-&gt;sum . &quot;\n&quot;;
+    print $str;
+    return $str;
+ }</code></pre>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Chuck</p>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #34 Task #1, Demonstrate Array/Hash Slices</span></strong></big>
+</td></tr>
+</table>
+
+</body>
+
+</html>
+
+
