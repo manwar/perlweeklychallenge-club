@@ -10,7 +10,7 @@ use LWP::Simple qw(get);
 my $difference=getDayLight( country=>"uk", city =>"london", month =>"11", year =>"2019", ) -
                getDayLight( country=>"uk", city =>"london", month =>"12", year =>"2019", );
                
-print "\n\nThe difference in daylight is ".s2hms($difference)."(Hours:Minutes:Seconds)\n";     
+print "\n\nThe difference in daylight is ".s2hms(abs($difference))."(Hours:Minutes:Seconds)\n";     
      
 sub s2hms{                    # converts seconds to days hours minutes and seconds
 	my $time=shift;
