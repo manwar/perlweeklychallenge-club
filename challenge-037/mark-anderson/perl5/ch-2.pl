@@ -1,24 +1,27 @@
 #!/usr/bin/env perl
 use Modern::Perl '2018';
 use Mojo::UserAgent;
-
-my $ua = Mojo::UserAgent->new;
-
-my $nov = "https://www.timeanddate.com/sun/uk/london?month=11&year=2019";
-my $dec = "https://www.timeanddate.com/sun/uk/london?month=12&year=2019";
-
-# load the 'Length' column values into a collection
-my $nov_c = $ua->get($nov)->result->dom->find('td[class="c tr sep-l"]')->map('text');
-my $dec_c = $ua->get($dec)->result->dom->find('td[class="c tr sep-l"]')->map('text');
-
-# convert the values from hh:mm:ss to seconds
-$nov_c->map(sub { $_ = Mojo::Date->new("1970-01-01T$_")->epoch });
-$dec_c->map(sub { $_ = Mojo::Date->new("1970-01-01T$_")->epoch });
-
-# sum the seconds in each collection
-my $nov_sum = $nov_c->reduce(sub { $a + $b });
-my $dec_sum = $dec_c->reduce(sub { $a + $b });
+use feature 'signatures';
+no warnings 'experimental::signatures';
 
 # make a date from the seconds difference and print the hh:mm:ss
-my $hms = (split /\s/, Mojo::Date->new(abs($dec_sum - $nov_sum)))[4];
-say "Dec has $hms", $dec_sum > $nov_sum ? " more " : " less ", "daylight";
+my $hms = (split /\s/, Mojo::Date->new(secs(11) - secs(12)))[4];
+say "Dec has $hms less daylight";
+
+sub secs($month) {
+    my $ua = Mojo::UserAgent->new;
+
+    my $link = "https://www.timeanddate.com/sun/uk/london?month=$month&year=2019";
+
+    # load the 'Length' column values into a collection
+    my $c = $ua->get($link)->result->dom->find('td[class="c tr sep-l"]')->map('text');
+
+    # convert the values from hh:mm:ss to seconds
+    $c->map(sub { $_ = Mojo::Date->new("1970-01-01T$_")->epoch });
+
+    # sum the seconds in the collection
+    $c->reduce(sub { $a + $b });
+}
+
+# Output:
+# Dec has 21:15:39 less daylight
