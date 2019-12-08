@@ -17,7 +17,7 @@ my $sign= $delta>=0?"+":"-"; $delta=abs($delta);
 my $hours=int($delta / 3600); $delta-=$hours*3600;
 my $mins=int ($delta/60); $delta-=$mins*60;
 
-print "December gained $sign$hours:$mins:$delta compared to November\n";
+print "December gained $sign$hours:$mins:$delta (H:M:S) compared to November\n";
 
 
 sub extractDaylight {
