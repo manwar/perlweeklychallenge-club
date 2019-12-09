@@ -76,6 +76,6 @@ sub check-words( Channel $input, Bag $match-bag ) {
 
 sub valid-word( Str $word, Bag $match-bag ) is pure {
     my $word-bag =  $word.uc.comb.map( { Tile.new( $_ ) } ).Bag;
-    $word.uc.comb.map( { Tile.new( $_ ) } ).Bag (<=) $match-bag ?? $word-bag !! Bag.new(); 
+    $word-bag (<=) $match-bag ?? $word-bag !! Bag.new(); 
 }
 
