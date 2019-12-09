@@ -53,7 +53,7 @@ sub MAIN(
      my $data-channel = Channel.new;
      my @p;
      @p.push( start check-words( $data-channel, $match-bag ) ) for ^3;
-     $data-channel.send($_) for "/etc/dictionaries-common/words".IO.lines.grep(*.codes <= 7);
+     $data-channel.send($_) for "/etc/dictionaries-common/words".IO.lines.grep(*.codes <= $tile-count);
      $data-channel.close;
      await @p;
      my $result = @p.sort( { $^b.result.value cmp $^a.result.value } ).head.result;
