@@ -1,0 +1,59 @@
+Challenge 1: "Write a script to calculate the total number of weekdays (Mon-Fri) in each month of the year 2019.
+Jan: 23 days
+Feb: 20 days
+Mar: 21 days
+Apr: 22 days
+May: 23 days
+Jun: 20 days
+Jul: 23 days
+Aug: 22 days
+Sep: 21 days
+Oct: 23 days
+Nov: 21 days
+Dec: 22 days
+"
+
+My notes: sounds rather straightforward, with or without date manipulation
+modules.  Might even have a crack at this in an unconventional language
+as well as Perl - how about Adobe Postscript?
+
+Afternotes: I did 3 versions of this:
+
+ch-1-Date-Manip.pl: first version uses Date::Manip's Date_DaysInMonth(m,y) and
+		    Date_DayOfWeek(m,d,y) functions.
+
+ch-1.pl:	    second version does it ourselves from scratch.
+
+ch-1-in-postscript.ps: translated ch-1.pl into Postscript.  Yes, the language
+		       mostly used for printer page layout, can be used as a
+		       full-blown programming language.  However, you have to
+		       include functions to append strings and produce a
+		       variety of debugging messages down the page, before
+		       you start on the actual program logic.
+
+
+Challenge 2: "Write a script to find out the DayLight gain/loss in
+the month of December 2019 as compared to November 2019 in the city of
+London. You can find out London sunrise and sunset data for November 2019 here:
+https://www.timeanddate.com/sun/uk/london?month=11&year=2019
+
+and for December 2019 here:
+https://www.timeanddate.com/sun/uk/london?month=12&year=2019
+"
+
+My notes: most of this problem is fetching the web pages and parsing the
+information out of the first table in each page: that's a typical
+HTML::Parser state machine, easy enough.  But once we have that information,
+eg. for each month a day->daylight duration mapping, what exactly does the
+question mean us to do?  
+
+I think this problem means
+
+"calculate the difference between the amount of daylight on 1st Nov and on
+30th Nov, do the same for December (1st and 31st), and find out which
+"within month daylight duration" is smaller."
+
+btw, if I'm right the smaller duration is obviously between 1st-31st Dec
+than between 1st-30th Nov, because in November the days are getting shorter
+throughout the whole month, whereas in December they get shorter from
+1st-21st Dec, and then get longer again!
