@@ -1,15 +1,27 @@
 {
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
+   "subtitle" : {
+      "text" : "Last updated at 2019-12-09 13:32:30 GMT"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
       }
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
    },
    "legend" : {
       "enabled" : "false"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "chart" : {
       "type" : "column"
@@ -17,11 +29,21 @@
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2019-12-09 13:29:36 GMT"
-   },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "enabled" : "true",
+            "format" : "{point.y:.0f}"
+         },
          "data" : [
             [
                "Blog",
@@ -29,35 +51,13 @@
             ],
             [
                "Perl 5",
-               1548
+               1549
             ],
             [
                "Perl 6",
                924
             ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "rotation" : -90
-         }
+         ]
       }
-   ],
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
-   }
+   ]
 }
