@@ -75,4 +75,4 @@ sub best_word {
 }
 
 # Calculate a word score. Memoized, so it is computed at most once.
-sub word_score { sum map { $val{$_} } split shift }
+sub word_score { sum map { $val{$_} } split '', shift }
