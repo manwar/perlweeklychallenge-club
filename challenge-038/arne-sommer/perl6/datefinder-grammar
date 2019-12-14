@@ -1,0 +1,31 @@
+#! /usr/bin/env raku
+
+## use Grammar::Tracer;
+
+unit sub MAIN (Str $date);
+
+grammar PerlWeeklyDate
+{
+  token TOP       { <century> <year> <month> <day> }
+  token century   { [ 1 | 2 ] }
+  token year      { <digit> <digit> }
+  token month     { 01 | 02 | 03 | 04 | 05 | 06 | 07 | 08 | 09 | 10 | 11 | 12 }
+  token day       { [ 0 <pos-digit> | 1 <digit> | 2 <digit> | 30 | 31 ] }
+  token digit     { [ 0 | <pos-digit> ] } 
+  token pos-digit { [ 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 ] } 
+}
+
+my $result = PerlWeeklyDate.parse($date);
+
+if $result
+{
+  my $datestring = "{ $result<century> == 1 ?? '20' !! '19' }{ $result<year> }-{ $result<month> }-{ $result<day> }";
+
+  if try Date.new($datestring)
+  {
+    say $datestring;
+    exit;
+  }
+}
+
+say "Not a valid date.";
