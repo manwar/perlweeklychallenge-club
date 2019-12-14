@@ -23,7 +23,7 @@ sub MAIN (--> Nil) {
   given %tiles.pick(7).Bag -> %picked {
     %picked.say;
     # source: https://www.wordgamedictionary.com/sowpods/download/sowpods.txt
-    .say for 'sowpods.txt'.IO.slurp.uc.words
+    .say for $?FILE.IO.parent.add('sowpods.txt').slurp.uc.words
       .race.grep( *.comb ⊆ %picked )
       .map({ $_ => .comb.map({ %values{$_} }).sum })
       .sort({ $^b.value <=> $^a.value });
