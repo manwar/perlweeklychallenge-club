@@ -14,6 +14,7 @@ for (0..$#l) {
 	$tileBag{$l[$_]}=$c[$_];
 	$values{$l[$_]}=$v[$_];
 }
+
 my @words=buildValidWordList();
 my $draw=join "", map {drawTile(\%tileBag)} 1..7;
 my %contenders=contenderWords($draw,\@words);
@@ -23,8 +24,9 @@ print "$_: $contenders{$_}\n" for @sorted;
 print "\nTiles Drawn: $draw\n";
 
 =item contenderWords()
-Finds all matching words in valid word list from the drawing letters
-Returns a hash of the contender word and it score
+Finds all matching words in valid word list from the drawing letters.
+Match is performed by sorting letters of words. A regex is used to then match contender words in the draw word
+Returns a hash of the contender words and scores
 =cut
 sub contenderWords {
 	my ($draw,$validWordList)=@_;
@@ -44,7 +46,6 @@ sub contenderWords {
 =item drawTile()
 Draws a tile from the tile bag. The bag is adjusted by removing the tile
 =cut
-
 sub drawTile {
 	my $tileBag=shift;
 	my $total= List::Util::sum(values %$tileBag);
@@ -78,5 +79,4 @@ sub buildValidWordList {
 		}
 		$valid
 	} @words;
-
 }
