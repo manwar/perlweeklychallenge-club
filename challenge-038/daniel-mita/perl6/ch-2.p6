@@ -21,11 +21,16 @@ constant %tiles = (
 
 sub MAIN (--> Nil) {
   given %tiles.pick(7).Bag -> %picked {
-    %picked.say;
+    "Tiles: %picked.kxxv.join()".say;
     # source: https://www.wordgamedictionary.com/sowpods/download/sowpods.txt
-    .say for $?FILE.IO.parent.add('sowpods.txt').slurp.uc.words
-      .race.grep( *.comb ⊆ %picked )
-      .map({ $_ => .comb.map({ %values{$_} }).sum })
-      .sort({ $^b.value <=> $^a.value });
+    "Winner: $_.key() for $_.value()".say with
+      $?FILE.IO.parent.add('sowpods.txt').slurp.uc.words
+      .grep({ .chars ≤ %picked.elems && .comb ⊆ %picked })
+      .map(sub {
+        given $^a => $a.comb.map({ %values{$_} }).sum {
+          .say;
+          .return;
+        }
+      }).sort({ $^b.value <=> $^a.value }).first;
   }
 }
