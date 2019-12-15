@@ -19,18 +19,27 @@ constant %tiles = (
   :5Y, :5Z,
 ).Bag;
 
-sub MAIN (--> Nil) {
-  given %tiles.pick(7).Bag -> %picked {
+#| Find the highest scoring SOWPODS word for a given number of tiles
+sub MAIN (
+  Int $amount where * > 0 = 7, #= Number of tiles to pick (default: 7)
+  --> Nil
+) {
+  given %tiles.pick($amount).Bag -> %picked {
     "Tiles: %picked.kxxv.join()".say;
     # source: https://www.wordgamedictionary.com/sowpods/download/sowpods.txt
     "Winner: $_.key() for $_.value()".say with
       $?FILE.IO.parent.add('sowpods.txt').slurp.uc.words
-      .grep({ .chars ≤ %picked.elems && .comb ⊆ %picked })
+      .grep({ .chars ≤ $amount && .comb ⊆ %picked })
       .map(sub {
         given $^a => $a.comb.map({ %values{$_} }).sum {
-          .say;
+          sprintf("%-{$amount}s: %u", |.kv).say;
           .return;
         }
-      }).sort({ $^b.value <=> $^a.value }).first;
+      }).sort({
+        given $^b.value <=> $^a.value {
+          when Same { $a.key.chars <=> $b.key.chars }
+          default { $_ }
+        }
+      }).first;
   }
 }

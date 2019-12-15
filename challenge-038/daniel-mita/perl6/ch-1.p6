@@ -8,7 +8,7 @@ my token date-number {
 }
 
 sub MAIN(
-  $number where * ~~ &date-number,
+  $number where * ~~ &date-number, #= 7 digit number starting with 1 or 2 followed by YYMMDD
   --> Nil
 ) {
   given $0[0] {
