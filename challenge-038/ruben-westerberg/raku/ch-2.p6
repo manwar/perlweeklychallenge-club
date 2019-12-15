@@ -27,14 +27,13 @@ for 1..7 {
 
 #Find all words which can be made from the drawn bag
 "../words_alpha.txt".IO.lines.map({.uc}).grep({$_.chars <= 7}) ==>
-grep({ .comb.BagHash (<=) $drawBag; }) ==> my @contenders;
+grep({ .comb.BagHash (<=) $drawBag; }) ==> 
+map({|($_, %values{.comb}.sum)})==>
+my %contenders;
 
 #Print sores of all possible words in asscending order
-my %contenders=@contenders.map({|($_, %values{.comb}.sum)});
 my @sorted=%contenders.keys.sort({%contenders{$^a} <=> %contenders{$^b}});
 
 put "Contenders (word: score):";
-for @sorted {
-        put "$_: %contenders{$_}"
-}
+put "$_: %contenders{$_}" for @sorted;
 put "\nDrawn tiles: $drawBag";
