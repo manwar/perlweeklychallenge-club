@@ -1,59 +1,51 @@
-Challenge 1: "Write a script to calculate the total number of weekdays (Mon-Fri) in each month of the year 2019.
-Jan: 23 days
-Feb: 20 days
-Mar: 21 days
-Apr: 22 days
-May: 23 days
-Jun: 20 days
-Jul: 23 days
-Aug: 22 days
-Sep: 21 days
-Oct: 23 days
-Nov: 21 days
-Dec: 22 days
+Challenge 1: "Date Finder
+
+Create a script to accept a 7 digits number, where the first
+number can only be 1 or 2. The second and third digits can be
+anything 0-9. The fourth and fifth digits corresponds to the month
+i.e. 01,02,03....11,12. And the last 2 digits respresents the days in
+the month i.e. 01,02,03....29,30,31. Your script should validate if
+the given number is valid as per the rule and then convert into human
+readable format date.
+
+RULES
+
+1) If 1st digit is 1, then prepend 20 otherwise 19 to the 2nd and 3rd
+   digits to make it 4-digits year.
+
+2) The 4th and 5th digits together should be a valid month.
+
+3) The 6th and 7th digits together should be a valid day for the above month.
+
+For example, the given number is 2230120, it should print 1923-01-20.
 "
 
 My notes: sounds rather straightforward, with or without date manipulation
-modules.  Might even have a crack at this in an unconventional language
-as well as Perl - how about Adobe Postscript?
-
-Afternotes: I did 3 versions of this:
-
-ch-1-Date-Manip.pl: first version uses Date::Manip's Date_DaysInMonth(m,y) and
-		    Date_DayOfWeek(m,d,y) functions.
-
-ch-1.pl:	    second version does it ourselves from scratch.
-
-ch-1-in-postscript.ps: translated ch-1.pl into Postscript.  Yes, the language
-		       mostly used for printer page layout, can be used as a
-		       full-blown programming language.  However, you have to
-		       include functions to append strings and produce a
-		       variety of debugging messages down the page, before
-		       you start on the actual program logic.
+modules.  Reuse the "number of days in the month" code.
 
 
-Challenge 2: "Write a script to find out the DayLight gain/loss in
-the month of December 2019 as compared to November 2019 in the city of
-London. You can find out London sunrise and sunset data for November 2019 here:
-https://www.timeanddate.com/sun/uk/london?month=11&year=2019
+Challenge 2: "Word Game
 
-and for December 2019 here:
-https://www.timeanddate.com/sun/uk/london?month=12&year=2019
+Lets assume we have tiles as listed below, with an alphabet (A..Z)
+printed on them. Each tile has a value, e.g. A (1 point), B (4 points)
+etc. You are allowed to draw 7 tiles from the lot randomly. Then try
+to form a word using the 7 tiles with maximum points altogether. You
+don't have to use all the 7 tiles to make a word. You should try to
+use as many tiles as possible to get the maximum points.
+
+For example, A (x8) means there are 8 tiles with letter A.
+
+1 point: A (x8), G (x3), I (x5), S (x7), U (x5), X (x2), Z (x5)
+
+2 points: E (x9), J (x3), L (x3), R (x3), V (x3), Y (x5)
+
+3 points: F (x3), D (x3), P (x5), W (x5)
+
+4 points: B (x5), N (x4)
+
+5 points: T (x5), O (x3), H (x3), M (x4), C (x4)
+
+10 points: K (x2), Q (x2)
 "
 
-My notes: most of this problem is fetching the web pages and parsing the
-information out of the first table in each page: that's a typical
-HTML::Parser state machine, easy enough.  But once we have that information,
-eg. for each month a day->daylight duration mapping, what exactly does the
-question mean us to do?  
-
-I think this problem means
-
-"calculate the difference between the amount of daylight on 1st Nov and on
-30th Nov, do the same for December (1st and 31st), and find out which
-"within month daylight duration" is smaller."
-
-btw, if I'm right the smaller duration is obviously between 1st-31st Dec
-than between 1st-30th Nov, because in November the days are getting shorter
-throughout the whole month, whereas in December they get shorter from
-1st-21st Dec, and then get longer again!
+My notes: So not scrabble then:-)
