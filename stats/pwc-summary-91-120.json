@@ -2,6 +2,12 @@
    "chart" : {
       "type" : "column"
    },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
@@ -40,22 +46,6 @@
          "Simon Proctor",
          "Simon Reinhardt"
       ]
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-12-16 00:21:07 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
    },
    "series" : [
       {
@@ -129,6 +119,7 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -160,8 +151,17 @@
             0,
             7,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
-   ]
+   ],
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-12-16 00:28:08 GMT"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   }
 }
