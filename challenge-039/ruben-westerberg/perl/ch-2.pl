@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-my $expression=$ARGV[0]//"2 3 + 10 * 10 - 4 /";
+my $expression=$ARGV[0]//"15 7 1 1 + - / 3 * 2 1 1 + + -";
 my @stack;
 $expression=~s/ +/ /g;
 print "Input expression: $expression\n";
@@ -8,23 +8,19 @@ for (split " ", $expression) {
 	die "Error in input expression" if !/[\-+]?\d+(\.\d+)*/ && !/[+\-*\/]/;
 	for ($_) {
 		if ($_ eq "+") {
-			my @opds=splice @stack,0,2;
-			push @stack, @opds[0]+@opds[1];
+			push @stack, pop(@stack)+ pop(@stack);
 			last;
 		}
 		if ($_ eq "-") {
-			my @opds=splice @stack,0,2;
-			push @stack, @opds[0]-@opds[1];
+			push @stack, pop(@stack)-pop(@stack);
 			last;
 		}
 		if ($_ eq "*") {
-			my @opds=splice @stack,0,2;
-			push @stack, @opds[0]*@opds[1];
+			push @stack, pop(@stack)*pop(@stack);
 			last;
 		}
 		if ($_ eq "/") {
-			my @opds=splice @stack,0,2;
-			push @stack, @opds[0]/@opds[1];
+			push @stack, pop(@stack)/pop(@stack);
 			last;
 		}
 		push @stack, $_;
