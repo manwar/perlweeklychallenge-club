@@ -1,40 +1,68 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 039"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-12-17 12:33:04 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Daniel Mita",
+               "drilldown" : "Daniel Mita",
+               "y" : 1
+            },
+            {
+               "y" : 5,
+               "name" : "Javier Luque",
+               "drilldown" : "Javier Luque"
+            },
+            {
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West",
+               "y" : 4
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Ruben Westerberg",
+               "name" : "Ruben Westerberg"
+            },
+            {
+               "name" : "Steven Wilson",
+               "drilldown" : "Steven Wilson",
+               "y" : 2
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 039"
+      }
+   ],
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Daniel Mita",
-            "name" : "Daniel Mita",
             "data" : [
                [
                   "Perl 6",
                   1
                ]
-            ]
+            ],
+            "id" : "Daniel Mita",
+            "name" : "Daniel Mita"
          },
          {
             "id" : "Javier Luque",
@@ -55,6 +83,21 @@
             "name" : "Javier Luque"
          },
          {
+            "name" : "Roger Bell West",
+            "id" : "Roger Bell West",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Ruben Westerberg",
             "data" : [
                [
                   "Perl 5",
@@ -65,56 +108,32 @@
                   2
                ]
             ],
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West"
+            "name" : "Ruben Westerberg"
          },
          {
+            "name" : "Steven Wilson",
+            "id" : "Steven Wilson",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "name" : "Steven Wilson",
-            "id" : "Steven Wilson"
+            ]
          }
       ]
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 039",
-         "data" : [
-            {
-               "name" : "Daniel Mita",
-               "y" : 1,
-               "drilldown" : "Daniel Mita"
-            },
-            {
-               "drilldown" : "Javier Luque",
-               "name" : "Javier Luque",
-               "y" : 5
-            },
-            {
-               "drilldown" : "Roger Bell West",
-               "y" : 4,
-               "name" : "Roger Bell West"
-            },
-            {
-               "drilldown" : "Steven Wilson",
-               "name" : "Steven Wilson",
-               "y" : 2
-            }
-         ]
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-12-16 19:55:34 GMT"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 039"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "legend" : {
       "enabled" : 0
    },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    }
 }

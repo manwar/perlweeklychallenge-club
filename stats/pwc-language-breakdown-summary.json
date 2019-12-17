@@ -1,6 +1,15 @@
 {
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
       "min" : 0,
@@ -8,29 +17,29 @@
          "text" : null
       }
    },
+   "subtitle" : {
+      "text" : "Last updated at 2019-12-17 12:35:06 GMT"
+   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-12-16 19:56:28 GMT"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
    },
    "series" : [
       {
+         "dataLabels" : {
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10,
+            "enabled" : "true",
+            "align" : "right",
+            "format" : "{point.y:.0f}"
+         },
          "data" : [
             [
                "Blog",
@@ -38,26 +47,17 @@
             ],
             [
                "Perl 5",
-               1584
+               1586
             ],
             [
                "Perl 6",
-               948
+               950
             ]
          ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "enabled" : "true",
-            "y" : 10,
-            "rotation" : -90,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "format" : "{point.y:.0f}"
-         }
+         "name" : "Contributions"
       }
-   ]
+   ],
+   "chart" : {
+      "type" : "column"
+   }
 }
