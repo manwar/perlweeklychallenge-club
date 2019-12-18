@@ -1,13 +1,34 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
    },
    "series" : [
       {
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "align" : "right",
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "color" : "#FFFFFF",
+            "enabled" : "true"
+         },
          "data" : [
             [
                "Blog",
-               413
+               414
             ],
             [
                "Perl 5",
@@ -18,46 +39,25 @@
                960
             ]
          ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "rotation" : -90
-         }
+         "name" : "Contributions"
       }
    ],
+   "subtitle" : {
+      "text" : "Last updated at 2019-12-18 12:38:04 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
-      },
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-12-17 23:46:29 GMT"
+      }
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
