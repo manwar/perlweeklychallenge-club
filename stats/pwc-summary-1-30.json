@@ -33,21 +33,32 @@
          "Dave Jacoby"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-12-19 11:13:02 GMT"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 2019"
    },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
-         "name" : "Perl 5",
          "data" : [
             2,
             0,
@@ -79,7 +90,8 @@
             4,
             21,
             42
-         ]
+         ],
+         "name" : "Perl 5"
       },
       {
          "data" : [
@@ -151,17 +163,5 @@
             23
          ]
       }
-   ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-12-19 11:03:37 GMT"
-   }
+   ]
 }
