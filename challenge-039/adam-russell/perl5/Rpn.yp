@@ -1,0 +1,47 @@
+%token NUMBER   
+%%
+
+line: '\n' | rpn '\n' {print $_[1] . "\n"} 
+;
+
+rpn: NUMBER
+   | rpn rpn '+' { $_[1] + $_[2]}
+   | rpn rpn '-' {$_[1] - $_[2]}
+   | rpn rpn '*' {$_[1] * $_[2]}
+   | rpn rpn '/' {$_[1] / $_[2]}
+;
+
+%%
+
+sub lexer{
+    my($parser) = @_;
+    $parser->YYData->{INPUT} or return('', undef);
+    $parser->YYData->{INPUT} =~ s/^[ \t]//;
+    ##
+    # send tokens to parser
+    ##
+    for($parser->YYData->{INPUT}){
+        s/^([0-9]+)// and return ("NUMBER", $1);
+        s/^(\+)// and return ("+", $1);
+        s/^(-)// and return ("-", $1);
+        s/^(\*)// and return ("*", $1);
+        s/^(\/)// and return ("/", $1);
+        s/^(\n)// and return ("\n", $1);
+    }  
+}
+
+sub error{
+    exists $_[0]->YYData->{ERRMSG}
+    and do{
+        print $_[0]->YYData->{ERRMSG};
+            return;
+    };
+    print "syntax error\n"; 
+}
+
+sub parse{
+    my($self, $input) = @_;
+    $self->YYData->{INPUT} = $input;
+    my $result = $self->YYParse(yylex => \&lexer, yyerror => \&error);
+    return $result;  
+}
