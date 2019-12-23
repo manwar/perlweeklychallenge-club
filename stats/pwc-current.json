@@ -1,11 +1,20 @@
 {
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 040"
    },
    "drilldown" : {
       "series" : [
          {
             "id" : "Roger Bell West",
+            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl 5",
@@ -15,53 +24,59 @@
                   "Perl 6",
                   2
                ]
-            ],
-            "name" : "Roger Bell West"
+            ]
+         },
+         {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl 6",
+                  2
+               ]
+            ]
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 040"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 040",
          "data" : [
             {
                "y" : 4,
-               "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West"
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 040",
-         "colorByPoint" : 1
+         ]
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
    "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2019-12-23 12:44:37 GMT"
+      "text" : "[Champions: 2] Last updated at 2019-12-23 12:50:38 GMT"
    },
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
    }
 }
