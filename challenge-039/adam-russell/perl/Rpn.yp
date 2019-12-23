@@ -5,7 +5,7 @@ line: '\n' | rpn '\n' {print $_[1] . "\n"}
 ;
 
 rpn: NUMBER
-   | rpn rpn '+' { $_[1] + $_[2]}
+   | rpn rpn '+' {$_[1] + $_[2]}
    | rpn rpn '-' {$_[1] - $_[2]}
    | rpn rpn '*' {$_[1] * $_[2]}
    | rpn rpn '/' {$_[1] / $_[2]}
