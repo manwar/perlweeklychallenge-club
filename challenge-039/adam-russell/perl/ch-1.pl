@@ -45,7 +45,7 @@ while(my $line = <DATA>){
         ){
         $lights_on -> add_duration($out->subtract_datetime($start_time));
     } 
-    $start_time = $out; 
+    $start_time = $out if (DateTime->compare($start_time, $out) < 0); 
 } 
 print $lights_on->hours() . " hours "; 
 print $lights_on->minutes() . " minutes\n"; 
