@@ -6,13 +6,14 @@ use warnings;
 # is guest book which tracks all guest in/out time. 
 # Write a script to find out how long in minutes the light were ON.
 ##
+use DateTime;
 use DateTime::Duration;
 my $lights_on = new DateTime::Duration(
                     hours   => 0, 
                     minutes => 0,
                     seconds => 0   
 );
-my $start_time;
+my $start_time;  
 
 while(my $line = <DATA>){
     chomp($line);
@@ -22,29 +23,27 @@ while(my $line = <DATA>){
     $in_minute =~ tr/ OUT//d;
     $out_hour =~ tr/ //d;
     if(!$start_time){
-        $start_time = new DateTime::Duration(
-                             hours   => $in_hour, 
-                             minutes => $in_minute,
-                             seconds => 0   
-        );
+        $start_time = DateTime -> now(); 
+        $start_time->set_hour($in_hour);  
+        $start_time->set_minute($in_minute);  
+        $start_time->set_second(0);  
     } 
-    my $in = new DateTime::Duration(
-                 hours   => $in_hour, 
-                 minutes => $in_minute,
-                 seconds => 0   
-    );
-    my $out = new DateTime::Duration(
-                 hours   => $out_hour, 
-                 minutes => $out_minute,   
-                 seconds => 0   
-    );
-    if(DateTime::Duration->compare($start_time, $in) <= 0){
-        $lights_on -> add_duration($out->subtract_duration($in));
+    
+    my $in = DateTime -> now();  
+    $in->set_hour($in_hour);  
+    $in->set_minute($in_minute);  
+    $in->set_second(0);  
+    my $out = DateTime -> now();  
+    $out->set_hour($out_hour);  
+    $out->set_minute($out_minute);  
+    $out->set_second(0);  
+    if(DateTime->compare($start_time, $in) <= 0){
+        $lights_on -> add_duration($out->subtract_datetime($in));
     } 
-    if(DateTime::Duration->compare($start_time, $in) > 0 && 
-           DateTime::Duration->compare($start_time, $out) < 0
+    if(DateTime->compare($start_time, $in) > 0 && 
+           DateTime->compare($start_time, $out) < 0
         ){
-        $lights_on -> add_duration($out->subtract_duration($start_time));
+        $lights_on -> add_duration($out->subtract_datetime($start_time));
     } 
     $start_time = $out; 
 } 
