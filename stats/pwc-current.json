@@ -1,66 +1,59 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2019-12-23 18:58:46 GMT"
-   },
    "legend" : {
       "enabled" : 0
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 040",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 5,
+               "name" : "Javier Luque",
+               "drilldown" : "Javier Luque"
+            },
+            {
+               "name" : "Lubos Kolouch",
+               "drilldown" : "Lubos Kolouch",
+               "y" : 2
+            },
+            {
+               "y" : 4,
+               "name" : "Roger Bell West",
+               "drilldown" : "Roger Bell West"
+            },
+            {
+               "y" : 5,
+               "drilldown" : "Ryan Thompson",
+               "name" : "Ryan Thompson"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 2
+            }
+         ]
+      }
+   ],
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 5,
-               "drilldown" : "Javier Luque",
-               "name" : "Javier Luque"
-            },
-            {
-               "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West",
-               "y" : 4
-            },
-            {
-               "y" : 5,
-               "name" : "Ryan Thompson",
-               "drilldown" : "Ryan Thompson"
-            },
-            {
-               "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 040"
-      }
-   ],
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 040"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Javier Luque",
             "name" : "Javier Luque",
+            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl 5",
@@ -81,18 +74,28 @@
                [
                   "Perl 5",
                   2
+               ]
+            ],
+            "id" : "Lubos Kolouch",
+            "name" : "Lubos Kolouch"
+         },
+         {
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West",
+            "data" : [
+               [
+                  "Perl 5",
+                  2
                ],
                [
                   "Perl 6",
                   2
                ]
-            ],
-            "id" : "Roger Bell West",
-            "name" : "Roger Bell West"
+            ]
          },
          {
-            "id" : "Ryan Thompson",
             "name" : "Ryan Thompson",
+            "id" : "Ryan Thompson",
             "data" : [
                [
                   "Perl 5",
@@ -120,9 +123,21 @@
          }
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2019-12-23 19:05:54 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "tooltip" : {
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 040"
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
