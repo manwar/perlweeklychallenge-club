@@ -22,7 +22,7 @@ sub printAtIndex{
 
     my ($arrays,$indices)=@_;
     
-    $indices//=[0..$#{@$arrays[0]}];           # if indices not sepcified make list
+    $indices//=[0..$#{@$arrays[0]}];           # if indices not specified make list of all indices
     
     $indices=[$indices] unless (ref $indices); # if index passed as scalar convert to arrayRef
     
