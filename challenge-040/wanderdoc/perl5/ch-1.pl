@@ -20,8 +20,11 @@ Y 0 ^
 O 1 &
 U 9 *
 =cut
-use utf8; # Source file encoding.
 
+
+# Correction: there should be n arrays not just three.
+
+use utf8; # Source file encoding.
 binmode (STDOUT, ":encoding(cp850)"); # '£' in Windows cmd.
 
 my @arr_1 = qw(I L O V E Y O U);
@@ -29,14 +32,33 @@ my @arr_2 = qw(2 4 0 3 2 0 1 9);
 my @arr_3 = qw(! ? £ $ % ^ & *);
 
 
-for my $i ( 0 .. $#arr_1 )
-{
+print "@$_$/" for my_zip6(\@arr_1, \@arr_2, \@arr_3);
 
-     print join(' ', $arr_1[$i], $arr_2[$i], $arr_3[$i]), $/;
-}
+
 print "Now cheating with module: $/";
 
 
-
 use List::MoreUtils qw(zip6);
-print "@$_$/"for zip6 @arr_1, @arr_2, @arr_3;
+print "@$_$/" for zip6 @arr_1, @arr_2, @arr_3;
+
+
+sub my_zip6
+{
+     my @arefs = @_;
+
+     my @result;
+     my $imax = $#{$arefs[0]};
+
+     for my $i ( 0 .. $imax )
+     {
+          my @row;
+          for my $ar ( @arefs )
+          {
+               push @row, $ar->[$i];
+
+          }
+          push @result, [@row];
+
+     }
+     return @result;
+}
