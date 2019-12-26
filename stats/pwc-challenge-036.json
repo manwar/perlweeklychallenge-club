@@ -1,38 +1,148 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 23] Last updated at 2019-12-23 03:15:56 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          }
       }
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "chart" : {
+      "type" : "column"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 036"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 3,
+               "drilldown" : "Adam Russell",
+               "name" : "Adam Russell"
+            },
+            {
+               "name" : "Andrezgz",
+               "drilldown" : "Andrezgz",
+               "y" : 2
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Arne Sommer",
+               "name" : "Arne Sommer"
+            },
+            {
+               "name" : "Burkhard Nickels",
+               "drilldown" : "Burkhard Nickels",
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Colin Crain",
+               "name" : "Colin Crain"
+            },
+            {
+               "drilldown" : "Daniel Mita",
+               "y" : 2,
+               "name" : "Daniel Mita"
+            },
+            {
+               "name" : "Duane Powell",
+               "y" : 2,
+               "drilldown" : "Duane Powell"
+            },
+            {
+               "name" : "Duncan C. White",
+               "drilldown" : "Duncan C. White",
+               "y" : 2
+            },
+            {
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba",
+               "y" : 3
+            },
+            {
+               "name" : "Jaldhar H. Vyas",
+               "y" : 2,
+               "drilldown" : "Jaldhar H. Vyas"
+            },
+            {
+               "drilldown" : "Javier Luque",
+               "y" : 5,
+               "name" : "Javier Luque"
+            },
+            {
+               "name" : "Kevin Colyer",
+               "drilldown" : "Kevin Colyer",
+               "y" : 3
+            },
+            {
+               "drilldown" : "Kian-Meng Ang",
+               "y" : 1,
+               "name" : "Kian-Meng Ang"
+            },
+            {
+               "name" : "Laurent Rosenfeld",
+               "drilldown" : "Laurent Rosenfeld",
+               "y" : 6
+            },
+            {
+               "name" : "Lubos Kolouch",
+               "drilldown" : "Lubos Kolouch",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "y" : 1,
+               "name" : "Mark Anderson"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Petr Roubicek",
+               "name" : "Petr Roubicek"
+            },
+            {
+               "y" : 5,
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West"
+            },
+            {
+               "drilldown" : "Ruben Westerberg",
+               "y" : 4,
+               "name" : "Ruben Westerberg"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Saif Ahmed",
+               "name" : "Saif Ahmed"
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Steven Wilson",
+               "name" : "Steven Wilson"
+            },
+            {
+               "name" : "Ulrich Rieke",
+               "y" : 2,
+               "drilldown" : "Ulrich Rieke"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 036",
+         "colorByPoint" : 1
+      }
+   ],
    "drilldown" : {
       "series" : [
          {
+            "name" : "Adam Russell",
             "data" : [
                [
                   "Perl 5",
@@ -43,12 +153,11 @@
                   1
                ]
             ],
-            "name" : "Adam Russell",
             "id" : "Adam Russell"
          },
          {
-            "name" : "Andrezgz",
             "id" : "Andrezgz",
+            "name" : "Andrezgz",
             "data" : [
                [
                   "Perl 5",
@@ -57,6 +166,7 @@
             ]
          },
          {
+            "id" : "Arne Sommer",
             "data" : [
                [
                   "Perl 6",
@@ -67,10 +177,11 @@
                   1
                ]
             ],
-            "name" : "Arne Sommer",
-            "id" : "Arne Sommer"
+            "name" : "Arne Sommer"
          },
          {
+            "id" : "Burkhard Nickels",
+            "name" : "Burkhard Nickels",
             "data" : [
                [
                   "Perl 5",
@@ -80,53 +191,50 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Burkhard Nickels",
-            "name" : "Burkhard Nickels"
+            ]
          },
          {
-            "name" : "Colin Crain",
             "id" : "Colin Crain",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ]
+            ],
+            "name" : "Colin Crain"
          },
          {
             "id" : "Daniel Mita",
-            "name" : "Daniel Mita",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "name" : "Daniel Mita"
          },
          {
+            "id" : "Duane Powell",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Duane Powell",
             "name" : "Duane Powell"
          },
          {
+            "id" : "Duncan C. White",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Duncan C. White",
             "name" : "Duncan C. White"
          },
          {
             "name" : "E. Choroba",
-            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl 5",
@@ -136,11 +244,11 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "E. Choroba"
          },
          {
             "name" : "Jaldhar H. Vyas",
-            "id" : "Jaldhar H. Vyas",
             "data" : [
                [
                   "Perl 5",
@@ -150,29 +258,28 @@
                   "Perl 6",
                   1
                ]
-            ]
+            ],
+            "id" : "Jaldhar H. Vyas"
          },
          {
+            "data" : [
+               [
+                  "Perl 5",
+                  2
+               ],
+               [
+                  "Perl 6",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
             "name" : "Javier Luque",
-            "id" : "Javier Luque",
-            "data" : [
-               [
-                  "Perl 5",
-                  2
-               ],
-               [
-                  "Perl 6",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ]
+            "id" : "Javier Luque"
          },
          {
-            "name" : "Kevin Colyer",
-            "id" : "Kevin Colyer",
             "data" : [
                [
                   "Perl 6",
@@ -182,7 +289,9 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Kevin Colyer",
+            "id" : "Kevin Colyer"
          },
          {
             "id" : "Kian-Meng Ang",
@@ -196,7 +305,6 @@
          },
          {
             "id" : "Laurent Rosenfeld",
-            "name" : "Laurent Rosenfeld",
             "data" : [
                [
                   "Perl 5",
@@ -210,37 +318,38 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Laurent Rosenfeld"
          },
          {
+            "id" : "Lubos Kolouch",
+            "name" : "Lubos Kolouch",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
-            ],
-            "id" : "Lubos Kolouch",
-            "name" : "Lubos Kolouch"
+            ]
          },
          {
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Perl 5",
                   1
                ]
             ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
+            "name" : "Mark Anderson"
          },
          {
+            "name" : "Petr Roubicek",
             "data" : [
                [
                   "Perl 5",
                   2
                ]
             ],
-            "id" : "Petr Roubicek",
-            "name" : "Petr Roubicek"
+            "id" : "Petr Roubicek"
          },
          {
             "data" : [
@@ -261,6 +370,7 @@
             "id" : "Roger Bell West"
          },
          {
+            "name" : "Ruben Westerberg",
             "data" : [
                [
                   "Perl 5",
@@ -271,7 +381,6 @@
                   2
                ]
             ],
-            "name" : "Ruben Westerberg",
             "id" : "Ruben Westerberg"
          },
          {
@@ -281,18 +390,18 @@
                   2
                ]
             ],
-            "id" : "Saif Ahmed",
-            "name" : "Saif Ahmed"
+            "name" : "Saif Ahmed",
+            "id" : "Saif Ahmed"
          },
          {
             "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
          },
          {
             "data" : [
@@ -305,141 +414,32 @@
             "id" : "Steven Wilson"
          },
          {
-            "id" : "Ulrich Rieke",
             "name" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl 6",
                   2
                ]
-            ]
+            ],
+            "id" : "Ulrich Rieke"
          }
       ]
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 036",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 3,
-               "name" : "Adam Russell",
-               "drilldown" : "Adam Russell"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Andrezgz",
-               "name" : "Andrezgz"
-            },
-            {
-               "y" : 3,
-               "name" : "Arne Sommer",
-               "drilldown" : "Arne Sommer"
-            },
-            {
-               "drilldown" : "Burkhard Nickels",
-               "name" : "Burkhard Nickels",
-               "y" : 3
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Colin Crain",
-               "name" : "Colin Crain"
-            },
-            {
-               "y" : 2,
-               "name" : "Daniel Mita",
-               "drilldown" : "Daniel Mita"
-            },
-            {
-               "drilldown" : "Duane Powell",
-               "name" : "Duane Powell",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Duncan C. White",
-               "name" : "Duncan C. White"
-            },
-            {
-               "y" : 3,
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
-            },
-            {
-               "drilldown" : "Jaldhar H. Vyas",
-               "name" : "Jaldhar H. Vyas",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Javier Luque",
-               "name" : "Javier Luque",
-               "y" : 5
-            },
-            {
-               "drilldown" : "Kevin Colyer",
-               "name" : "Kevin Colyer",
-               "y" : 3
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Kian-Meng Ang",
-               "name" : "Kian-Meng Ang"
-            },
-            {
-               "name" : "Laurent Rosenfeld",
-               "drilldown" : "Laurent Rosenfeld",
-               "y" : 6
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Lubos Kolouch",
-               "name" : "Lubos Kolouch"
-            },
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 1
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Petr Roubicek",
-               "name" : "Petr Roubicek"
-            },
-            {
-               "y" : 5,
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West"
-            },
-            {
-               "name" : "Ruben Westerberg",
-               "drilldown" : "Ruben Westerberg",
-               "y" : 4
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Saif Ahmed",
-               "name" : "Saif Ahmed"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "name" : "Steven Wilson",
-               "drilldown" : "Steven Wilson"
-            },
-            {
-               "drilldown" : "Ulrich Rieke",
-               "name" : "Ulrich Rieke",
-               "y" : 2
-            }
-         ]
+   "title" : {
+      "text" : "Perl Weekly Challenge - 036"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
-   ],
-   "chart" : {
-      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 23] Last updated at 2019-12-26 01:42:51 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
