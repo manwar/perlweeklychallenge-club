@@ -26,7 +26,7 @@ my $n = shift || die "USAGE $0 <7-digit-date>";
 
 die 'invalid 7-digits date'.$/
     if $n !~ /^
-                (?<y1>[1,2])                    # 1st: 1 or 2
+                (?<y1>[12])                     # 1st: 1 or 2
                 (?<y2>\d{2})                    # 2nd & 3rd: anything
                 (?<m>0[1-9]|1[0-2])             # 4th & 5th: month
                 (?<d>0[1-9]|[12][0-9]|3[01])    # 6th & 7th: day of the month
