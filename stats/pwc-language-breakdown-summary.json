@@ -1,15 +1,37 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2019-12-26 10:10:20 GMT"
-   },
-   "legend" : {
-      "enabled" : "false"
+   "series" : [
+      {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "rotation" : -90,
+            "y" : 10
+         },
+         "data" : [
+            [
+               "Blog",
+               428
+            ],
+            [
+               "Perl 5",
+               1639
+            ],
+            [
+               "Perl 6",
+               984
+            ]
+         ]
+      }
+   ],
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "type" : "category",
@@ -23,41 +45,19 @@
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "series" : [
-      {
-         "dataLabels" : {
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "align" : "right",
-            "enabled" : "true"
-         },
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               427
-            ],
-            [
-               "Perl 5",
-               1639
-            ],
-            [
-               "Perl 6",
-               982
-            ]
-         ]
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
       }
-   ],
-   "chart" : {
-      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2019-12-27 00:03:15 GMT"
    }
 }
