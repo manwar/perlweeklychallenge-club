@@ -145,6 +145,6 @@ Let us assume you already have a fork. If this is the first time you are using t
     
     https://github.com/joe-blog/perlweeklychallenge-club
     
-    You should button to create **Pull Request**.
+    You should see button to create **Pull Request**.
     
-If you have any trouble with the above instructions then please get in touch with me anytime (mohammad.anwar@yahoo.com).
+If you have any trouble with the above instructions then please get in touch with me anytime <mohammad.anwar@yahoo.com>.
