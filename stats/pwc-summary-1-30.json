@@ -1,13 +1,4 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "xAxis" : {
       "categories" : [
          "Leoltron",
@@ -42,9 +33,32 @@
          "Dave Jacoby"
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-12-29 18:28:20 GMT"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
    "series" : [
       {
-         "name" : "Perl 5",
          "data" : [
             2,
             0,
@@ -57,7 +71,7 @@
             0,
             11,
             78,
-            6,
+            8,
             0,
             3,
             5,
@@ -76,7 +90,8 @@
             4,
             21,
             42
-         ]
+         ],
+         "name" : "Perl 5"
       },
       {
          "name" : "Perl 6",
@@ -148,20 +163,5 @@
             23
          ]
       }
-   ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-12-29 18:13:11 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   }
+   ]
 }
