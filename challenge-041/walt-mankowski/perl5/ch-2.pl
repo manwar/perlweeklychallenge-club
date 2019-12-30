@@ -16,16 +16,14 @@ use experimental qw(signatures);
 # and so on.
 
 my $N = 20;
-
-my ($l1, $l2) = (1,1);
+my ($l1, $l2) = (1, 1);
 
 for my $i (0..$N-1) {
     if ($i < 2) {
         say "L($i) = 1";
     } else {
-        my $tmp = $l1 + $l2 + 1;
-        say "L($i) = $tmp";
-        ($l1, $l2) = ($l2, $tmp);
+        ($l1, $l2) = ($l2, $l1 + $l2 + 1);
+        say "L($i) = $l2";
     }
 }
 
