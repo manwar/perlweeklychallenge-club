@@ -1,0 +1,48 @@
+Task 1: "Show multiple arrays content:
+
+You are given two or more arrays. Write a script to display values of
+each list at a given index.
+
+For example:
+Array 1: [ I L O V E Y O U ]
+Array 2: [ 2 4 0 3 2 0 1 9 ]
+Array 3: [ ! ? £ $ % ^ & * ]
+
+We expect the following output:
+
+I 2 !
+L 4 ?
+O 0 £
+V 3 $
+E 2 %
+Y 0 ^
+O 1 &
+U 9 *
+"
+
+My notes: trivial.  Each array on command line as a word, i.e. array elements
+are single characters?  Allow any number of arrays (arguments) >= 2.
+Also handle the case where the arrays are not necessarily of the same length,
+by displaying '?' for any element off the end of an array.
+
+
+Task 2: "Sort SubList
+
+You are given a list of numbers and set of indices belong to the
+list. Write a script to sort the values belongs to the indices.
+
+For example:
+
+List: [ 10, 4, 1, 8, 12, 3 ]
+Indices: 0,2,5
+
+We would sort the values at indices 0, 2 and 5 i.e. 10, 1 and 3.
+
+Final List would look like below:
+List: [ 1, 4, 3, 8, 12, 10 ]
+"
+
+My notes: looks very easy. I guess the decision is: sort in place, or
+extract items via an array slice, sort them, then update those items
+in the original array (via another array slice?) The latter sounds
+much the easier, so let's do that:-).
