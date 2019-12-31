@@ -1,6 +1,8 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -36,30 +38,24 @@
          "Simon Reinhardt"
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2019-12-31 05:52:43 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
+   },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
       }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2019-12-31 05:47:12 GMT"
    },
    "series" : [
       {
-         "name" : "Perl 5",
          "data" : [
             3,
             0,
@@ -80,7 +76,7 @@
             0,
             3,
             2,
-            52,
+            54,
             79,
             24,
             10,
@@ -91,9 +87,11 @@
             1,
             5,
             4
-         ]
+         ],
+         "name" : "Perl 5"
       },
       {
+         "name" : "Perl 6",
          "data" : [
             0,
             43,
@@ -114,7 +112,7 @@
             4,
             0,
             6,
-            31,
+            33,
             79,
             19,
             0,
@@ -125,11 +123,9 @@
             0,
             66,
             0
-         ],
-         "name" : "Perl 6"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -161,7 +157,11 @@
             0,
             7,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
-   ]
+   ],
+   "chart" : {
+      "type" : "column"
+   }
 }
