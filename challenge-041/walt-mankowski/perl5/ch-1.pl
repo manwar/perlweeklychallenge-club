@@ -31,6 +31,7 @@ sub prime_factors($n, %primes) {
     my @factors;
 
     for my $i (sort { $a<=>$b } keys %primes) {
+        last if $i > $n;
         while ($n % $i == 0) {
             push @factors, $i;
             $n /= $i;
