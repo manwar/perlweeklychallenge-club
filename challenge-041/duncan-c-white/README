@@ -1,48 +1,26 @@
-Task 1: "Show multiple arrays content:
+Task 1: "Write a script to display attractive numbers between 1 and 50.
 
-You are given two or more arrays. Write a script to display values of
-each list at a given index.
+A number is an attractive number if the number of its prime factors is
+also prime number.
 
-For example:
-Array 1: [ I L O V E Y O U ]
-Array 2: [ 2 4 0 3 2 0 1 9 ]
-Array 3: [ ! ? £ $ % ^ & * ]
-
-We expect the following output:
-
-I 2 !
-L 4 ?
-O 0 £
-V 3 $
-E 2 %
-Y 0 ^
-O 1 &
-U 9 *
+For example: The number 20 is an attractive number, whose prime factors
+are 2, 2 and 5. The total prime factors is 3 which is also a prime number.
 "
 
-My notes: trivial.  Each array on command line as a word, i.e. array elements
-are single characters?  Allow any number of arrays (arguments) >= 2.
-Also handle the case where the arrays are not necessarily of the same length,
-by displaying '?' for any element off the end of an array.
+My notes: Think I have a prime-factors finder from an earlier challenge;
+should be easy given that.
 
 
-Task 2: "Sort SubList
-
-You are given a list of numbers and set of indices belong to the
-list. Write a script to sort the values belongs to the indices.
+Task 2: "Write a script to display the first 20 Leonardo Numbers. Read
+https://en.wikipedia.org/wiki/Leonardo_number for more information.
 
 For example:
+L(0) = 1
+L(1) = 1
+L(2) = L(0) + L(1) + 1 = 3
+L(3) = L(1) + L(2) + 1 = 5
 
-List: [ 10, 4, 1, 8, 12, 3 ]
-Indices: 0,2,5
-
-We would sort the values at indices 0, 2 and 5 i.e. 10, 1 and 3.
-
-Final List would look like below:
-List: [ 1, 4, 3, 8, 12, 10 ]
+and so on.
 "
 
-My notes: looks very easy. I guess the decision is: sort in place, or
-extract items via an array slice, sort them, then update those items
-in the original array (via another array slice?) The latter sounds
-much the easier, so let's do that:-).
+My notes: sounds very nearly as simple as Fibonacci numbers.
