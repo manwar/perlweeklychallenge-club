@@ -1,6 +1,6 @@
 # Perl Weekly Challenge Club
 
-This is the central repository for the members of **Perl Weekly Challenge**. The members can submit the solution to the challenge each week under version control.
+This is the central repository for the members of [**Perl Weekly Challenge**](https://perlweeklychallenge.org). The members can submit the solution to the challenge each week under version control.
 
 ## How to contribute?
 Just submit Pull Request with your solutions.
