@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 # Author: Steven Wilson
 # Date: 2020-01-02
-# Week: 040
+# Week: 041
 # Task #2
 # Write a script to display first 20 Leonardo Numbers. Please checkout wiki page for more information.
 # For example:
@@ -15,7 +15,6 @@
 
 use strict;
 use warnings;
-use feature qw/ say /;
 
 my @leonardo_numbers = ( 1, 1 );
 
