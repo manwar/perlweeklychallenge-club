@@ -17,20 +17,14 @@ use strict;
 use warnings;
 
 my @leonardo_numbers = ( 1, 1 );
-
-my $counter = 0;
+my $counter = 2;
 
 while ( $counter < 20 ) {
-    if ( $counter < 2 ) {
-        print $leonardo_numbers[$counter], " ";
-    }
-    else {
-        $leonardo_numbers[$counter] =
-            $leonardo_numbers[ $counter - 1 ] +
-            $leonardo_numbers[ $counter - 2 ] +
-            1;
-        print $leonardo_numbers[$counter], " ";
-    }
+    $leonardo_numbers[$counter] =
+        $leonardo_numbers[ $counter - 1 ] +
+        $leonardo_numbers[ $counter - 2 ] +
+        1;
     $counter++;
 }
-print "\n";
+
+print join " ", @leonardo_numbers, "\n";
