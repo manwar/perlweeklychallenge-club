@@ -1,6 +1,6 @@
 # Perl Weekly Challenge Club
 
-This is the central repository for the members of **Perl Weekly Challenge**. The members can submit the solution to the challenge each week under version control.
+This is the central repository for the members of [**Perl Weekly Challenge**](https://perlweeklychallenge.org). The members can submit the solution to the challenge each week under version control.
 
 ## How to contribute?
 Just submit Pull Request with your solutions.
@@ -145,6 +145,6 @@ Let us assume you already have a fork. If this is the first time you are using t
     
     https://github.com/joe-blog/perlweeklychallenge-club
     
-    You should button to create **Pull Request**.
+    You should see button to create **Pull Request**.
     
-If you have any trouble with the above instructions then please get in touch with me anytime (mohammad.anwar@yahoo.com).
+If you have any trouble with the above instructions then please get in touch with me anytime <mohammad.anwar@yahoo.com>.
