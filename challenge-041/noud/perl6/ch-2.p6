@@ -12,13 +12,17 @@
 # Define a lazy fibonacci sequence.
 constant @fib = 0, 1, * + * ... *;
 
-# Leonard numbers are related to Fibonacci numbers as
-#   leonard(n) = 2 * fib(n) + 1
-sub leonard(Int $n) {
-    2 * @fib[$n] + 1;
+# Leonardo numbers are related to Fibonacci numbers as
+#   leonardo(n + 1) = 2 * fib(n) + 1
+sub leonardo(Int $n) {
+    if ($n == 0) {
+        1;
+    } else {
+        2 * @fib[$n - 1] + 1;
+    }
 }
 
-say "Leonard numbers 0 to 20:";
-for 0..20 -> $n {
-    leonard($n).say;
+say "First 20 Leonardo numbers:";
+for ^20 -> $n {
+    leonardo($n).say;
 }
