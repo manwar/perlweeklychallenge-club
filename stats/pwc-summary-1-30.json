@@ -1,7 +1,14 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-01-04 17:48:56 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 2019"
    },
    "xAxis" : {
       "categories" : [
@@ -37,26 +44,17 @@
          "Dave Jacoby"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-01-04 00:06:49 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 2019"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
       }
    },
    "series" : [
       {
-         "name" : "Perl 5",
          "data" : [
             2,
             0,
@@ -88,9 +86,11 @@
             4,
             21,
             42
-         ]
+         ],
+         "name" : "Perl 5"
       },
       {
+         "name" : "Perl 6",
          "data" : [
             0,
             0,
@@ -122,10 +122,10 @@
             0,
             0,
             1
-         ],
-         "name" : "Perl 6"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -157,11 +157,11 @@
             0,
             2,
             23
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }

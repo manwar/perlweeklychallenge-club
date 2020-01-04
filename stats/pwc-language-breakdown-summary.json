@@ -1,34 +1,30 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
-   },
-   "legend" : {
-      "enabled" : "false"
+      },
+      "min" : 0
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions - 2019"
    },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "Last updated at 2020-01-04 17:49:07 GMT"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
    },
    "series" : [
       {
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -36,28 +32,32 @@
             ],
             [
                "Perl 5",
-               1679
+               1681
             ],
             [
                "Perl 6",
-               1008
+               1012
             ]
          ],
          "dataLabels" : {
+            "rotation" : -90,
+            "enabled" : "true",
             "format" : "{point.y:.0f}",
             "y" : 10,
-            "enabled" : "true",
             "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
             },
-            "color" : "#FFFFFF",
             "align" : "right",
-            "rotation" : -90
-         }
+            "color" : "#FFFFFF"
+         },
+         "name" : "Contributions"
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2020-01-04 00:07:01 GMT"
+   "legend" : {
+      "enabled" : "false"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
