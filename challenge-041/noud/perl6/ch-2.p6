@@ -13,13 +13,9 @@
 constant @fib = 0, 1, * + * ... *;
 
 # Leonardo numbers are related to Fibonacci numbers as
-#   leonardo(n + 1) = 2 * fib(n) + 1
+#   leonardo(n) = 2 * fib(n + 1) - 1
 sub leonardo(Int $n) {
-    if ($n == 0) {
-        1;
-    } else {
-        2 * @fib[$n - 1] + 1;
-    }
+    2 * @fib[$n + 1] - 1;
 }
 
 say "First 20 Leonardo numbers:";
