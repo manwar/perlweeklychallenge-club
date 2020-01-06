@@ -1,0 +1,1 @@
+.say for (^51).map( *.base(8) )
