@@ -9,7 +9,7 @@
 # the brackets are balanced or not.  The script also shows which
 # are the unmtached brackets.
 #
-# With random strings, unblanaced strings are far more common
+# With random strings, unbalanced strings are far more common
 # so 100 are generated and tested
 use strict; use warnings;
 
