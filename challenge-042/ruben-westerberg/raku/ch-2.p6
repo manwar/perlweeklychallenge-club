@@ -7,7 +7,7 @@ while 1 {
 	my @v= [\+] $str.comb.map({(ord($_)-40)*-2+1});
 
 	if @v[*-1]==0 and !@v.grep(* < 0) {
-		put "balanced $str";
+		put "balanced: $str";
 		sleep 1;
 		next;
 	}
