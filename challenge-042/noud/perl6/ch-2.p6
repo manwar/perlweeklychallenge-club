@@ -24,10 +24,7 @@ sub balanced($brackets) {
     for $brackets.comb() -> $b {
         if ($b === '(') {
             $c++;
-        } else {
-            $c--;
-        }
-        if ($c < 0) {
+        } elsif (--$c < 0) {
             return False;
         }
     }
@@ -35,9 +32,14 @@ sub balanced($brackets) {
     return $c == 0;
 }
 
+say "()    - " ~ balanced("()");
+say "(())  - " ~ balanced("(())");
+say ")(    - " ~ balanced(")(");
+say "())() - " ~ balanced("())()");
+
 
 my $brackets = '';
-for 1..10 -> $i {
+for 1..20 -> $i {
     # Only generate bracket strings of length 4, because with higher lengths
     # the randomly generated strings rarely are balanced.
     $brackets = rand_brackets(4);
