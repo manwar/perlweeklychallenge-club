@@ -7,11 +7,6 @@ multi sub MAIN()
     {
         say output( $base, $numbers );
     }
-
-    for self-descriptive-numbers-dec() -> ($base, $numbers)
-    {
-        say $base, $numbers;
-    }
 }
 
 multi sub MAIN( Int $base where 1 < $base < 37 )
