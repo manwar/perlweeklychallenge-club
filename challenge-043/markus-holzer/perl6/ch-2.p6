@@ -7,6 +7,11 @@ multi sub MAIN()
     {
         say output( $base, $numbers );
     }
+
+    for self-descriptive-numbers-dec() -> ($base, $numbers)
+    {
+        say $base, $numbers;
+    }
 }
 
 multi sub MAIN( Int $base where 1 < $base < 37 )
@@ -26,8 +31,8 @@ multi sub MAIN( "test" )
 
 sub output( $base, $numbers )
 {
-    my $num-base = $numbers.map( *.base( $base ) ).join(',');
-    my $num-dec  = $numbers.join(',');
+    my $num-base = $numbers.join(',');
+    my $num-dec  = $numbers.map({ parse-base( $_, $base ) }).join(',');
 
     "Base $base, " ~ ( $numbers.elems ?? "$num-base; $num-dec (decimal)" !! '---' );
 }
