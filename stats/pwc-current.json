@@ -1,58 +1,83 @@
 {
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 043",
-         "data" : [
-            {
-               "drilldown" : "E. Choroba",
-               "y" : 2,
-               "name" : "E. Choroba"
-            },
-            {
-               "name" : "Javier Luque",
-               "y" : 5,
-               "drilldown" : "Javier Luque"
-            },
-            {
-               "name" : "Markus Holzer",
-               "drilldown" : "Markus Holzer",
-               "y" : 2
-            },
-            {
-               "y" : 4,
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
+   "title" : {
+      "text" : "Perl Weekly Challenge - 043"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 043"
+   "chart" : {
+      "type" : "column"
    },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "E. Choroba",
+               "y" : 2,
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "drilldown" : "Javier Luque",
+               "name" : "Javier Luque",
+               "y" : 5
+            },
+            {
+               "y" : 2,
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer"
+            },
+            {
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West",
+               "y" : 4
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 043"
+      }
+   ],
    "drilldown" : {
       "series" : [
          {
-            "id" : "E. Choroba",
-            "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "E. Choroba",
+            "id" : "E. Choroba"
          },
          {
+            "id" : "Javier Luque",
+            "name" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -66,19 +91,17 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Javier Luque",
-            "id" : "Javier Luque"
+            ]
          },
          {
-            "id" : "Markus Holzer",
-            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Markus Holzer",
+            "name" : "Markus Holzer"
          },
          {
             "data" : [
@@ -91,8 +114,8 @@
                   2
                ]
             ],
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West"
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West"
          },
          {
             "data" : [
@@ -101,35 +124,12 @@
                   2
                ]
             ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2020-01-14 12:39:28 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
+      "text" : "[Champions: 5] Last updated at 2020-01-14 17:12:19 GMT"
    }
 }
