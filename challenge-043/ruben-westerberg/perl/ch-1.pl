@@ -10,11 +10,12 @@ my @m=( [1,0,0,0,0],
         [0,0,0,1,1],
         [0,0,0,0,1]
 );
+
+#Perform Gauss-Jordan Elimination to solve.
 my $x=solve(\@m,\@y);
 
 my @labels=qw(red/green green/black black black/yellow yellow/blue);
 printf "%-15s%d\n",$labels[$_],$$x[$_] for 0..$#labels;
-
 
 sub solve {
 	my ($c, $y)=@_;
@@ -41,9 +42,7 @@ sub solve {
 sub build {
 	my ($c,$y)=@_;
 	my @j;
-	for (0..(scalar @$c -1)) {
-		push @j, [@{$c->[$_]},$y->[$_]];
-	}
+	push @j, [@{$c->[$_]},$y->[$_]] for 0..@$c -1;
 	\@j;
 }
 
@@ -54,9 +53,7 @@ sub backsub {
 	for my $r (reverse 0..$s-1) {
 		my $sum=0;
 		my $row=$j->[$r];
-		for (0..$s-1) {
-			$sum+=$$row[$_]*$x[$_];	
-		}
+		$sum+=$$row[$_]*$x[$_]	for (0..$s-1);
 		$x[$r]=$row->[$s]-$sum;
 	}
 
