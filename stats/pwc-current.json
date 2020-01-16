@@ -1,75 +1,76 @@
 {
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2020-01-15 11:38:03 GMT"
+   "xAxis" : {
+      "type" : "category"
    },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
+            {
+               "y" : 2,
+               "name" : "Duane Powell",
+               "drilldown" : "Duane Powell"
+            },
             {
                "drilldown" : "E. Choroba",
                "name" : "E. Choroba",
                "y" : 3
             },
             {
+               "name" : "Javier Luque",
                "y" : 5,
-               "drilldown" : "Javier Luque",
-               "name" : "Javier Luque"
+               "drilldown" : "Javier Luque"
             },
             {
-               "drilldown" : "Markus Holzer",
                "name" : "Markus Holzer",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Markus Holzer"
             },
             {
-               "name" : "Roger Bell West",
                "drilldown" : "Roger Bell West",
-               "y" : 4
+               "y" : 4,
+               "name" : "Roger Bell West"
             },
             {
+               "y" : 2,
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 2
+               "drilldown" : "Simon Proctor"
             }
          ],
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 043"
       }
    ],
-   "xAxis" : {
-      "type" : "category"
-   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 043"
    },
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "E. Choroba",
+            "id" : "Duane Powell",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Duane Powell"
+         },
+         {
             "name" : "E. Choroba",
             "data" : [
                [
@@ -80,9 +81,11 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "E. Choroba"
          },
          {
+            "name" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -97,21 +100,19 @@
                   1
                ]
             ],
-            "id" : "Javier Luque",
-            "name" : "Javier Luque"
+            "id" : "Javier Luque"
          },
          {
+            "id" : "Markus Holzer",
+            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Markus Holzer",
-            "name" : "Markus Holzer"
+            ]
          },
          {
-            "id" : "Roger Bell West",
             "name" : "Roger Bell West",
             "data" : [
                [
@@ -122,18 +123,32 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell West"
          },
          {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
+            ]
          }
       ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2020-01-16 09:24:32 GMT"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
