@@ -1,31 +1,44 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 043"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andrezgz",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Andrezgz"
+            "id" : "Andrezgz",
+            "name" : "Andrezgz"
          },
          {
+            "name" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Dave Jacoby"
+         },
+         {
+            "name" : "Duane Powell",
             "id" : "Duane Powell",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Duane Powell"
+            ]
          },
          {
             "data" : [
@@ -60,17 +73,16 @@
             ]
          },
          {
-            "id" : "Markus Holzer",
+            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Markus Holzer"
+            "id" : "Markus Holzer"
          },
          {
-            "name" : "Roger Bell West",
             "id" : "Roger Bell West",
             "data" : [
                [
@@ -81,70 +93,63 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell West"
          },
          {
             "name" : "Saif Ahmed",
-            "id" : "Saif Ahmed",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Saif Ahmed"
          },
          {
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Simon Proctor"
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2020-01-16 22:22:38 GMT"
-   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 043",
          "colorByPoint" : 1,
          "data" : [
             {
                "drilldown" : "Andrezgz",
-               "y" : 2,
-               "name" : "Andrezgz"
+               "name" : "Andrezgz",
+               "y" : 2
             },
             {
-               "y" : 2,
+               "drilldown" : "Dave Jacoby",
+               "y" : 3,
+               "name" : "Dave Jacoby"
+            },
+            {
+               "drilldown" : "Duane Powell",
                "name" : "Duane Powell",
-               "drilldown" : "Duane Powell"
+               "y" : 2
             },
             {
-               "drilldown" : "E. Choroba",
+               "y" : 3,
                "name" : "E. Choroba",
-               "y" : 3
+               "drilldown" : "E. Choroba"
             },
             {
-               "drilldown" : "Javier Luque",
                "y" : 5,
-               "name" : "Javier Luque"
+               "name" : "Javier Luque",
+               "drilldown" : "Javier Luque"
             },
             {
-               "y" : 2,
                "name" : "Markus Holzer",
+               "y" : 2,
                "drilldown" : "Markus Holzer"
             },
             {
@@ -154,31 +159,45 @@
             },
             {
                "drilldown" : "Saif Ahmed",
-               "name" : "Saif Ahmed",
-               "y" : 2
+               "y" : 2,
+               "name" : "Saif Ahmed"
             },
             {
+               "drilldown" : "Simon Proctor",
                "name" : "Simon Proctor",
-               "y" : 2,
-               "drilldown" : "Simon Proctor"
+               "y" : 2
             }
-         ]
+         ],
+         "name" : "Perl Weekly Challenge - 043"
       }
    ],
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "Perl Weekly Challenge - 043"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2020-01-17 07:21:31 GMT"
    },
    "xAxis" : {
       "type" : "category"
    },
    "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "legend" : {
+      "enabled" : 0
    }
 }
