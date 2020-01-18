@@ -7,11 +7,14 @@ use v5.26;
 my $base=$ARGV[0]||4;
 my $i=baseToDec($base,"1"."0"x($base-1));#6210001000;
 my $num=decToBase($base,$i);
-
-while (length $num <= $base) {
+my $run=1;
+my @found;
+$SIG{INT}=sub {print "Stopping Search\n"; $run=undef};
+while ($run) {
 	my $res=test($base,$num);
 	if ($res) {
 		print "***OK: $num***\n";
+		push @found,$num;
 		sleep 1;
 	}
 	else {
@@ -19,7 +22,10 @@ while (length $num <= $base) {
 	}
 	$i++;
 	$num=decToBase($base,$i);
+	last if length $num > $base
 }
+print "Found Self Describing Numbers:\n";
+print "$_\n" for @found;
 
 sub baseToDec {
 	my ($base,$value)=@_;
