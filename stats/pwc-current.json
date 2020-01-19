@@ -1,9 +1,4 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "drilldown" : {
       "series" : [
          {
@@ -17,7 +12,6 @@
             "name" : "Andrezgz"
          },
          {
-            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -28,17 +22,18 @@
                   1
                ]
             ],
-            "id" : "Dave Jacoby"
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby"
          },
          {
             "name" : "Duane Powell",
-            "id" : "Duane Powell",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Duane Powell"
          },
          {
             "data" : [
@@ -55,8 +50,6 @@
             "name" : "E. Choroba"
          },
          {
-            "name" : "Javier Luque",
-            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -70,20 +63,21 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Javier Luque",
+            "name" : "Javier Luque"
          },
          {
-            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Markus Holzer"
+            "id" : "Markus Holzer",
+            "name" : "Markus Holzer"
          },
          {
-            "id" : "Roger Bell West",
             "data" : [
                [
                   "Perl",
@@ -94,7 +88,22 @@
                   2
                ]
             ],
+            "id" : "Roger Bell West",
             "name" : "Roger Bell West"
+         },
+         {
+            "name" : "Ruben Westerberg",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Ruben Westerberg"
          },
          {
             "name" : "Saif Ahmed",
@@ -107,30 +116,34 @@
             "id" : "Saif Ahmed"
          },
          {
-            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Simon Proctor"
+            "id" : "Simon Proctor"
          }
       ]
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Andrezgz",
+               "y" : 2,
                "name" : "Andrezgz",
-               "y" : 2
+               "drilldown" : "Andrezgz"
             },
             {
-               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
                "y" : 3,
-               "name" : "Dave Jacoby"
+               "drilldown" : "Dave Jacoby"
             },
             {
                "drilldown" : "Duane Powell",
@@ -138,41 +151,50 @@
                "y" : 2
             },
             {
-               "y" : 3,
                "name" : "E. Choroba",
+               "y" : 3,
                "drilldown" : "E. Choroba"
             },
             {
-               "y" : 5,
                "name" : "Javier Luque",
+               "y" : 5,
                "drilldown" : "Javier Luque"
             },
             {
-               "name" : "Markus Holzer",
                "y" : 2,
+               "name" : "Markus Holzer",
                "drilldown" : "Markus Holzer"
             },
             {
-               "y" : 4,
                "name" : "Roger Bell West",
+               "y" : 4,
                "drilldown" : "Roger Bell West"
             },
             {
-               "drilldown" : "Saif Ahmed",
-               "y" : 2,
-               "name" : "Saif Ahmed"
+               "drilldown" : "Ruben Westerberg",
+               "name" : "Ruben Westerberg",
+               "y" : 4
             },
             {
-               "drilldown" : "Simon Proctor",
+               "y" : 2,
+               "name" : "Saif Ahmed",
+               "drilldown" : "Saif Ahmed"
+            },
+            {
                "name" : "Simon Proctor",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
             }
          ],
-         "name" : "Perl Weekly Challenge - 043"
+         "name" : "Perl Weekly Challenge - 043",
+         "colorByPoint" : 1
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 043"
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
    },
    "plotOptions" : {
       "series" : {
@@ -183,21 +205,18 @@
          }
       }
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2020-01-17 07:21:31 GMT"
+      "text" : "[Champions: 10] Last updated at 2020-01-19 19:16:19 GMT"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "Perl Weekly Challenge - 043"
    }
 }
