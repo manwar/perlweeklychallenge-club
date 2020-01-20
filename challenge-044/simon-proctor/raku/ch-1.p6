@@ -52,7 +52,8 @@ for @inputs -> @test {
         my $result = apply-ops( @test, @ops.map( { %ops-map{$_} } ) );
         if ( $result ~~ 100 ) {
             say "{display(@test,@ops)} = $result";
-            exit;
         }
     }
 }
+
+
