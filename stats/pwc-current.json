@@ -1,56 +1,39 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-01-20 18:06:25 GMT"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 044",
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
-            },
-            {
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 2
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Wanderdoc",
-               "y" : 2,
-               "name" : "Wanderdoc"
-            }
-         ]
-      }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "E. Choroba",
             "name" : "E. Choroba"
          },
          {
-            "name" : "Luca Ferrari",
             "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
             "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Roger Bell West",
+            "id" : "Roger Bell West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
                [
                   "Raku",
                   2
@@ -68,41 +51,77 @@
             "name" : "Simon Proctor"
          },
          {
+            "name" : "Wanderdoc",
             "id" : "Wanderdoc",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Wanderdoc"
+            ]
          }
       ]
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 044",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "E. Choroba",
+               "y" : 2,
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "y" : 2,
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "drilldown" : "Roger Bell West",
+               "y" : 4,
+               "name" : "Roger Bell West"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Wanderdoc",
+               "name" : "Wanderdoc",
+               "y" : 2
+            }
+         ]
+      }
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 044"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2020-01-20 18:10:27 GMT"
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          }
       }
    },
    "chart" : {
       "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 044"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
    }
 }
