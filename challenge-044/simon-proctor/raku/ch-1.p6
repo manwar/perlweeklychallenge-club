@@ -3,7 +3,7 @@
 use v6.d;
 
 multi sub concat( \a, \b ) { a ~ b }
-multi sub concat( \a, @b ) { ( a ~ @b[0], @b[1..*] ) }
+multi sub concat( @a, \b ) { ( @a[0..*-2], @a[*-1] ~ b ) }
 
 my %ops-map = (
     '+' => &infix:<+>,
@@ -36,7 +36,7 @@ multi sub apply-ops( @list where *.elems == 2, @ops ) {
 }
 
 multi sub apply-ops( @list, @ops ) {
-    return @ops[0](@list[0],apply-ops( @list[1..*], @ops[1..*] ) );
+    return @ops[*-1](apply-ops( @list[0..*-2], @ops[0..*-2] ), @list[*-1] );
 }
 
 sub display( @nums, @ops ) {
