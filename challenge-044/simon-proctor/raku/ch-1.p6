@@ -17,7 +17,7 @@ multi sub selections(0, *@) is pure {
 }
 
 multi sub selections(1,*@ops) is pure {
-    return [[@ops[0]],[@ops[1]]];
+    return [ @ops.map( -> $v { [$v] } ) ];
 }
 
 multi sub selections(UInt \c, *@ops) is pure {
