@@ -1,46 +1,24 @@
 {
+   "subtitle" : {
+      "text" : "Last updated at 2020-01-20 02:27:21 GMT"
+   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               461
-            ],
-            [
-               "Perl",
-               1764
-            ],
-            [
-               "Raku",
-               1064
-            ]
-         ],
-         "dataLabels" : {
-            "rotation" : -90,
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "align" : "right",
-            "format" : "{point.y:.0f}"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
       }
-   ],
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
    "legend" : {
       "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-01-20 02:22:42 GMT"
    },
    "yAxis" : {
       "title" : {
@@ -48,16 +26,38 @@
       },
       "min" : 0
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
+   "series" : [
+      {
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right",
+            "y" : 10,
+            "rotation" : -90,
+            "enabled" : "true",
+            "color" : "#FFFFFF"
+         },
+         "data" : [
+            [
+               "Blog",
+               461
+            ],
+            [
+               "Perl",
+               1766
+            ],
+            [
+               "Raku",
+               1064
+            ]
+         ],
+         "name" : "Contributions"
+      }
+   ],
+   "chart" : {
+      "type" : "column"
    }
 }
