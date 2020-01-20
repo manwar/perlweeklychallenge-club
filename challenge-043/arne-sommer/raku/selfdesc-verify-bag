@@ -1,0 +1,21 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $val, :$verbose);
+
+my @digits = $val.comb>>.Int;
+my $base   = $val.chars;
+my $coll   = @digits.Bag;
+my $sum    = @digits.sum;
+
+if $sum != $base
+{
+  say "NOT OK"; exit;
+}
+
+for ^$base
+{
+  say "- $_: { $coll{$_}  } (count) == @digits[$_] (pos) - { $coll{$_} == @digits[$_] }" if $verbose;
+  if $coll{$_} != @digits[$_] { say "NOT OK"; exit; }
+}
+
+say "OK";
