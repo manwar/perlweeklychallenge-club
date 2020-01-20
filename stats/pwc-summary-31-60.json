@@ -1,20 +1,4 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-01-20 02:05:00 GMT"
-   },
    "xAxis" : {
       "categories" : [
          "Dave Jacoby",
@@ -49,11 +33,33 @@
          "Jo Christian Oterhals"
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-01-20 02:09:00 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             46,
             4,
@@ -85,8 +91,7 @@
             1,
             0,
             6
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -158,10 +163,5 @@
             7
          ]
       }
-   ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   }
+   ]
 }
