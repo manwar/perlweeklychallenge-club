@@ -5,11 +5,10 @@ sub candidates( $str )
     for 1..^($str.chars) -> $l
     {
         my $i = $str.substr( 0, $l ).Int;
-
+        my $j = $str.substr( $l, * ).Int;
+        
         for -1, 1 -> $f
         {
-            my $j = $str.substr( $l, * ).Int;
-
             take [ $i * $f, $j ];
             take [ $i * $f, $j * -1 ];
             take [ $i * $f, |$_ ] for gather candidates( $j.Str );
