@@ -1,6 +1,6 @@
 my $amount = 200;
 
-.say for my @amounts = reverse +$amount, |gather until $amount < 2
+.say for reverse +$amount, |gather until $amount < 2
 { 
     take $amount = $amount %% 2 
         ?? $amount / 2 

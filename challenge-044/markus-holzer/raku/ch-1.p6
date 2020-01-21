@@ -6,7 +6,7 @@ sub candidates( $str )
     {
         my $i = $str.substr( 0, $l ).Int;
         my $j = $str.substr( $l, * ).Int;
-        
+
         for -1, 1 -> $f
         {
             take [ $i * $f, $j ];
