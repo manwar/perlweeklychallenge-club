@@ -1,0 +1,271 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Perl Weekly Challenge #43 Task #1, Olympic Rings</title>
+<link rel="stylesheet" href="pwc_coloured.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #43 Task #1, Olympic Rings</span></strong></big>
+</td></tr>
+</table>
+
+
+
+<ul id="index">
+  <li><a href="#Perl-Weekly-Challenge-43-Task-1:-Olympic-Rings">Perl Weekly Challenge #43 Task #1: Olympic Rings</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#Definition-Task-1:-Olympic-Rings">Definition Task #1: Olympic Rings</a></li>
+  <li><a href="#Sourcecode-for-Perl5">Sourcecode for Perl5</a></li>
+  <li><a href="#Sourcecode-for-Perl6">Sourcecode for Perl6</a></li>
+  <li><a href="#Sourcecode-for-Python">Sourcecode for Python</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<h1 id="Perl-Weekly-Challenge-43-Task-1:-Olympic-Rings">Perl Weekly Challenge #43 Task #1: Olympic Rings</h1>
+
+<p>This task is solved with flattening the olympic ring values into an array, setting each missing value to &#39;x&#39; and letting a window of 3 elements running over the whole array. In case that on this window is only one value missing, it can be calculated. The window is iterating over the array as long as a x-value exists.</p>
+
+<ul>
+
+<li><p>do-while loop while any x in array.</p>
+
+</li>
+<li><p>for loop with a step of 2.</p>
+
+</li>
+<li><p>Array slice of 3 elements (window).</p>
+
+</li>
+<li><p>Match operator to determine the number of missing elements.</p>
+
+</li>
+</ul>
+
+<h2> Download and References </h2>
+<b>Download File:</b><a href="ch-1.pl" download> Perl5 Solution PWC #43 Task #1 ch-1.pl</a><br>
+<b>Download File:</b><a href="ch-1.p6" download> Perl6 Solution PWC #43 Task #1 ch-1.p6</a><br>
+<b>Download File:</b><a href="ch-1.py" download> Python Solution PWC #43 Task #1 ch-1.py</a><br>
+<br>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code> # ./ch-1.pl                    - Program execution
+ # ./ch-1.p6                    - Program execution
+ # ./ch-1.py                    - Program execution
+ # perldoc ch-1.pod             - POD
+
+ # ./ch-1.pl
+ ch-1.pl (Version 1.0) PWC #43 Task #1: Olympic Rings
+ Values: 9-x-5-x-x-x-7-x-8
+ Result: 9-2-5-4-6-1-7-3-8</code></pre>
+
+<h1 id="Definition-Task-1:-Olympic-Rings">Definition Task #1: Olympic Rings</h1>
+
+<p>There are 5 rings in the Olympic Logo as shown below. They are color coded as in Blue, Black, Red, Yellow and Green.</p>
+
+<p>Olympic Rings</p>
+
+<pre><code>  RED   GRN    BL   YLW   BLU
+ ( 9 (x) 5 (x) x (x) 7 (x) 8 )</code></pre>
+
+<p>(Chuck: For a better graphic look at PWC, my ASCII graphic here is not optimal.)</p>
+
+<p>We have allocated some numbers to these rings as below: Blue: 8 Yellow: 7 Green: 5 Red: 9</p>
+
+<p>The Black ring is empty currently. You are given the numbers 1, 2, 3, 4 and 6. Write a script to place these numbers in the rings so that the sum of numbers in each ring is exactly 11.</p>
+
+<h1 id="Sourcecode-for-Perl5">Sourcecode for Perl5</h1>
+
+<p>The Olympic Ring values and the intersected values are stored in an array with each missing value set to &#39;x&#39;.</p>
+
+<pre><code> my @a = (9,&#39;x&#39;,5,&#39;x&#39;,&#39;x&#39;,&#39;x&#39;,7,&#39;x&#39;,8);</code></pre>
+
+<p>The number of missing values is determined with the matching operator. As long as there are missing values the do-while loop is iterated.</p>
+
+<pre><code> $nrx = () = join(&quot;&quot;,@a) =~ /x/g;</code></pre>
+
+<p>Every second value (every olympic ring) is iterated in a for loop.</p>
+
+<pre><code> for(my $i=0; $i&lt;=$#a; $i+=2)</code></pre>
+
+<p>A window of three values (before and after the iteration steps) is extracted. If only one of the three values is missing, this value is calculated.</p>
+
+<pre><code> my @win = @a[$i-1 .. $i+1];
+ $win[0] = 0 if $i==0;
+ $win[2] = 0 if $i==$#a;</code></pre>
+
+<p>Calculation of the missing value.</p>
+
+<pre><code> if($nr == 1) {
+    if($win[1] eq &#39;x&#39;) { $a[$i] = 11 - $win[0] - $win[2]; } 
+    elsif($win[0] eq &#39;x&#39;) { $a[$i-1] = 11 - $win[1] - $win[2]; }
+    elsif($win[2] eq &#39;x&#39;) { $a[$i+1] = 11 - $win[1] - $win[0]; }
+ }</code></pre>
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Perl5 </div>
+  1 <span class="synPreProc">#!/usr/bin/perl</span>
+  2 
+  3 <span class="synStatement">use strict</span>;
+  4 <span class="synStatement">use warnings</span>;
+  5 
+  6 <span class="synStatement">print</span> <span class="synConstant">&quot;ch-1.pl, PWC #43 Task #1: Olympic Rings</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+  7 <span class="synStatement">my</span> <span class="synIdentifier">$DEBUG</span>=<span class="synConstant">0</span>;
+  8 
+  9 <span class="synStatement">my</span> <span class="synIdentifier">@a</span> = (<span class="synConstant">9</span>,<span class="synConstant">'x'</span>,<span class="synConstant">5</span>,<span class="synConstant">'x'</span>,<span class="synConstant">'x'</span>,<span class="synConstant">'x'</span>,<span class="synConstant">7</span>,<span class="synConstant">'x'</span>,<span class="synConstant">8</span>);
+ 10 
+ 11 <span class="synStatement">print</span> <span class="synConstant">&quot;Values: &quot;</span>, <span class="synStatement">join</span>(<span class="synConstant">&quot;-&quot;</span>,<span class="synIdentifier">@a</span>), <span class="synConstant">&quot;</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 12 <span class="synStatement">my</span> <span class="synIdentifier">$nrx</span>;                             <span class="synComment"># Number of x in array</span>
+ 13 <span class="synStatement">do</span> {
+ 14 	numbers();
+ 15 	<span class="synIdentifier">$nrx</span> = () = <span class="synStatement">join</span>(<span class="synConstant">&quot;&quot;</span>,<span class="synIdentifier">@a</span>) =~ <span class="synStatement">/</span><span class="synConstant">x</span><span class="synStatement">/g</span>; <span class="synComment"># Determine Nr of x</span>
+ 16 } <span class="synStatement">while</span>(<span class="synIdentifier">$nrx</span>);                       <span class="synComment"># if Nr of x</span>
+ 17 
+ 18 <span class="synStatement">print</span> <span class="synConstant">&quot;Result: &quot;</span>, <span class="synStatement">join</span>(<span class="synConstant">&quot;-&quot;</span>,<span class="synIdentifier">@a</span>), <span class="synConstant">&quot;</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 19 
+ 20 <span class="synComment"># ------------------- function to determine missing numbers</span>
+ 21 <span class="synStatement">sub </span><span class="synIdentifier">numbers </span>{
+ 22 	<span class="synStatement">for</span>(<span class="synStatement">my</span> <span class="synIdentifier">$i</span>=<span class="synConstant">0</span>; <span class="synIdentifier">$i</span>&lt;=<span class="synIdentifier">$#a</span>; <span class="synIdentifier">$i</span>+=<span class="synConstant">2</span>) {  <span class="synComment"># Only every second value is a Main Ring Value</span>
+ 23 
+ 24 		<span class="synStatement">my</span> <span class="synIdentifier">@win</span> = <span class="synIdentifier">@a[$i</span>-<span class="synConstant">1</span> .. <span class="synIdentifier">$i</span>+<span class="synConstant">1</span><span class="synIdentifier">]</span>; <span class="synComment"># Create window of 3 numbers that shifts along array</span>
+ 25 		<span class="synIdentifier">$win[</span><span class="synConstant">0</span><span class="synIdentifier">]</span> = <span class="synConstant">0</span> <span class="synStatement">if</span> <span class="synIdentifier">$i</span>==<span class="synConstant">0</span>;       <span class="synComment"># At begin, set window first element to zero</span>
+ 26 		<span class="synIdentifier">$win[</span><span class="synConstant">2</span><span class="synIdentifier">]</span> = <span class="synConstant">0</span> <span class="synStatement">if</span> <span class="synIdentifier">$i</span>==<span class="synIdentifier">$#a</span>;     <span class="synComment"># At end,   set window last  element to zero</span>
+ 27 
+ 28 		<span class="synStatement">my</span> <span class="synIdentifier">$nr</span> = () = <span class="synStatement">join</span>(<span class="synConstant">&quot;&quot;</span>,<span class="synIdentifier">@win</span>) =~ <span class="synStatement">/</span><span class="synConstant">x</span><span class="synStatement">/g</span>;  <span class="synComment"># How many x are in window</span>
+ 29 		<span class="synStatement">print</span> <span class="synConstant">&quot;(</span><span class="synIdentifier">$i</span><span class="synConstant">) Win(&quot;</span>, <span class="synStatement">join</span>(<span class="synConstant">&quot;/&quot;</span>,<span class="synIdentifier">@win</span>), <span class="synConstant">&quot;) Nrx </span><span class="synIdentifier">$nr</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span> <span class="synStatement">if</span> <span class="synIdentifier">$DEBUG</span>;
+ 30 		<span class="synStatement">if</span>(<span class="synIdentifier">$nr</span> == <span class="synConstant">1</span>) {                     <span class="synComment"># Only if 1 value is missing, determine next value</span>
+ 31 			<span class="synStatement">if</span>(<span class="synIdentifier">$win[</span><span class="synConstant">1</span><span class="synIdentifier">]</span> <span class="synStatement">eq</span> <span class="synConstant">'x'</span>) { <span class="synIdentifier">$a[$i]</span> = <span class="synConstant">11</span> - <span class="synIdentifier">$win[</span><span class="synConstant">0</span><span class="synIdentifier">]</span> - <span class="synIdentifier">$win[</span><span class="synConstant">2</span><span class="synIdentifier">]</span>; } 
+ 32 			<span class="synStatement">elsif</span>(<span class="synIdentifier">$win[</span><span class="synConstant">0</span><span class="synIdentifier">]</span> <span class="synStatement">eq</span> <span class="synConstant">'x'</span>) { <span class="synIdentifier">$a[$i</span>-<span class="synConstant">1</span><span class="synIdentifier">]</span> = <span class="synConstant">11</span> - <span class="synIdentifier">$win[</span><span class="synConstant">1</span><span class="synIdentifier">]</span> - <span class="synIdentifier">$win[</span><span class="synConstant">2</span><span class="synIdentifier">]</span>; }
+ 33 			<span class="synStatement">elsif</span>(<span class="synIdentifier">$win[</span><span class="synConstant">2</span><span class="synIdentifier">]</span> <span class="synStatement">eq</span> <span class="synConstant">'x'</span>) { <span class="synIdentifier">$a[$i</span>+<span class="synConstant">1</span><span class="synIdentifier">]</span> = <span class="synConstant">11</span> - <span class="synIdentifier">$win[</span><span class="synConstant">1</span><span class="synIdentifier">]</span> - <span class="synIdentifier">$win[</span><span class="synConstant">0</span><span class="synIdentifier">]</span>; }
+ 34 		}
+ 35 	} 
+ 36 }
+</pre>
+</td></tr></table>
+
+<h1 id="Sourcecode-for-Perl6">Sourcecode for Perl6</h1>
+
+<p>The processing for Perl6 is equivalent to that explained for Perl5. Only the syntax here is different.</p>
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Perl6 </div>
+  1 <span class="synComment">#!/home/chuck/rakudo/bin/perl6</span>
+  2 
+  3 <span class="synPreProc">use</span> strict<span class="synStatement">;</span>
+  4 
+  5 <span class="synIdentifier">print</span> <span class="synSpecial">&quot;</span><span class="synConstant">ch-1.p6, PWC #43 Task #1: Olympic Rings</span><span class="synSpecial">\n&quot;</span><span class="synStatement">;</span>
+  6 
+  7 <span class="synSpecial">my</span> <span class="synIdentifier">@a</span> <span class="synStatement">=</span> (<span class="synConstant">9</span><span class="synStatement">,</span><span class="synSpecial">'</span><span class="synConstant">x</span><span class="synSpecial">'</span><span class="synStatement">,</span><span class="synConstant">5</span><span class="synStatement">,</span><span class="synSpecial">'</span><span class="synConstant">x</span><span class="synSpecial">'</span><span class="synStatement">,</span><span class="synSpecial">'</span><span class="synConstant">x</span><span class="synSpecial">'</span><span class="synStatement">,</span><span class="synSpecial">'</span><span class="synConstant">x</span><span class="synSpecial">'</span><span class="synStatement">,</span><span class="synConstant">7</span><span class="synStatement">,</span><span class="synSpecial">'</span><span class="synConstant">x</span><span class="synSpecial">'</span><span class="synStatement">,</span><span class="synConstant">8</span>)<span class="synStatement">;</span>
+  8 
+  9 <span class="synIdentifier">print</span> <span class="synSpecial">&quot;</span><span class="synConstant">Values: </span><span class="synSpecial">&quot;</span><span class="synStatement">,</span> <span class="synIdentifier">join</span>(<span class="synSpecial">&quot;</span><span class="synConstant">-</span><span class="synSpecial">&quot;</span><span class="synStatement">,</span><span class="synIdentifier">@a</span>)<span class="synStatement">,</span> <span class="synSpecial">&quot;\n&quot;</span><span class="synStatement">;</span>
+ 10 <span class="synSpecial">my</span> (<span class="synIdentifier">$c</span><span class="synStatement">,</span><span class="synIdentifier">$nrx</span>)<span class="synStatement">;</span>                               <span class="synComment"># Number of x in array</span>
+ 11 <span class="synStatement">repeat</span> {
+ 12 	numbers()<span class="synStatement">;</span>
+ 13 	<span class="synIdentifier">$c</span> <span class="synStatement">=</span> <span class="synIdentifier">join</span>(<span class="synSpecial">&quot;&quot;</span><span class="synStatement">,</span><span class="synIdentifier">@a</span>) <span class="synStatement">~~</span> <span class="synStatement">m:</span><span class="synConstant">g</span><span class="synSpecial">/</span><span class="synConstant">x</span><span class="synSpecial">/</span><span class="synStatement">;</span>  <span class="synComment"># Determine Nr of x</span>
+ 14 	<span class="synIdentifier">$nrx</span> <span class="synStatement">=</span> <span class="synIdentifier">$c</span><span class="synStatement">.</span><span class="synIdentifier">chars</span><span class="synStatement">;</span>
+ 15 } <span class="synStatement">while</span> (<span class="synIdentifier">$nrx</span>)<span class="synStatement">;</span>                  <span class="synComment"># if Nr of x</span>
+ 16 
+ 17 <span class="synIdentifier">print</span> <span class="synSpecial">&quot;</span><span class="synConstant">Result: </span><span class="synSpecial">&quot;</span><span class="synStatement">,</span> <span class="synIdentifier">join</span>(<span class="synSpecial">&quot;</span><span class="synConstant">-</span><span class="synSpecial">&quot;</span><span class="synStatement">,</span><span class="synIdentifier">@a</span>)<span class="synStatement">,</span> <span class="synSpecial">&quot;\n&quot;</span><span class="synStatement">;</span>
+ 18 
+ 19 <span class="synComment"># ------------------- function to determine missing numbers</span>
+ 20 <span class="synStatement">sub</span> numbers {
+ 21 	<span class="synStatement">loop</span> (<span class="synSpecial">my</span> <span class="synIdentifier">$i</span> <span class="synStatement">=</span> <span class="synConstant">0</span><span class="synStatement">;</span> <span class="synIdentifier">$i</span> <span class="synStatement">&lt;=</span> <span class="synIdentifier">@a</span><span class="synStatement">.</span><span class="synIdentifier">end</span><span class="synStatement">;</span> <span class="synIdentifier">$i</span> <span class="synStatement">+=</span> <span class="synConstant">2</span>) {  <span class="synComment"># Only every second value is a Main Ring Value</span>
+ 22 
+ 23 		<span class="synSpecial">my</span> <span class="synIdentifier">@win</span> <span class="synStatement">=</span> <span class="synIdentifier">@a</span>[<span class="synIdentifier">$i</span><span class="synStatement">-</span><span class="synConstant">1</span> <span class="synStatement">..</span> <span class="synIdentifier">$i</span><span class="synStatement">+</span><span class="synConstant">1</span>]<span class="synStatement">;</span> <span class="synComment"># Create window of 3 numbers that shifts along array</span>
+ 24 		<span class="synIdentifier">@win</span>[<span class="synConstant">0</span>] <span class="synStatement">=</span> <span class="synConstant">0</span> <span class="synStatement">if</span> <span class="synIdentifier">$i</span><span class="synStatement">==</span><span class="synConstant">0</span><span class="synStatement">;</span>       <span class="synComment"># At begin, set window first element to zero</span>
+ 25 		<span class="synIdentifier">@win</span>[<span class="synConstant">2</span>] <span class="synStatement">=</span> <span class="synConstant">0</span> <span class="synStatement">if</span> <span class="synIdentifier">$i</span><span class="synStatement">==</span><span class="synIdentifier">@a</span><span class="synStatement">.</span><span class="synIdentifier">end</span><span class="synStatement">;</span>  <span class="synComment"># At end,   set window last  element to zero</span>
+ 26 
+ 27 		<span class="synSpecial">my</span> <span class="synIdentifier">$c</span> <span class="synStatement">=</span> <span class="synIdentifier">join</span>(<span class="synSpecial">&quot;&quot;</span><span class="synStatement">,</span><span class="synIdentifier">@win</span>) <span class="synStatement">~~</span> <span class="synStatement">m:</span><span class="synConstant">g</span><span class="synSpecial">/</span><span class="synConstant">x</span><span class="synSpecial">/</span><span class="synStatement">;</span>  <span class="synComment"># How many x are in window</span>
+ 28 		<span class="synSpecial">my</span> <span class="synIdentifier">$nr</span> <span class="synStatement">=</span> <span class="synIdentifier">$c</span><span class="synStatement">.</span><span class="synIdentifier">chars</span><span class="synStatement">;</span>
+ 29 		<span class="synStatement">if</span> (<span class="synIdentifier">$nr</span> <span class="synStatement">==</span> <span class="synConstant">1</span>) {                   <span class="synComment"># Only if 1 value is missing, determine next value</span>
+ 30 			<span class="synStatement">if</span> (<span class="synIdentifier">@win</span>[<span class="synConstant">1</span>] <span class="synStatement">eq</span> <span class="synSpecial">'</span><span class="synConstant">x</span><span class="synSpecial">'</span>) { <span class="synIdentifier">@a</span>[<span class="synIdentifier">$i</span>] <span class="synStatement">=</span> <span class="synConstant">11</span> <span class="synStatement">-</span> <span class="synIdentifier">@win</span>[<span class="synConstant">0</span>] <span class="synStatement">-</span> <span class="synIdentifier">@win</span>[<span class="synConstant">2</span>]<span class="synStatement">;</span> } 
+ 31 			<span class="synStatement">elsif</span> (<span class="synIdentifier">@win</span>[<span class="synConstant">0</span>] <span class="synStatement">eq</span> <span class="synSpecial">'</span><span class="synConstant">x</span><span class="synSpecial">'</span>) { <span class="synIdentifier">@a</span>[<span class="synIdentifier">$i</span><span class="synStatement">-</span><span class="synConstant">1</span>] <span class="synStatement">=</span> <span class="synConstant">11</span> <span class="synStatement">-</span> <span class="synIdentifier">@win</span>[<span class="synConstant">1</span>] <span class="synStatement">-</span> <span class="synIdentifier">@win</span>[<span class="synConstant">2</span>]<span class="synStatement">;</span> }
+ 32 			<span class="synStatement">elsif</span> (<span class="synIdentifier">@win</span>[<span class="synConstant">2</span>] <span class="synStatement">eq</span> <span class="synSpecial">'</span><span class="synConstant">x</span><span class="synSpecial">'</span>) { <span class="synIdentifier">@a</span>[<span class="synIdentifier">$i</span><span class="synStatement">+</span><span class="synConstant">1</span>] <span class="synStatement">=</span> <span class="synConstant">11</span> <span class="synStatement">-</span> <span class="synIdentifier">@win</span>[<span class="synConstant">1</span>] <span class="synStatement">-</span> <span class="synIdentifier">@win</span>[<span class="synConstant">0</span>]<span class="synStatement">;</span> }
+ 33 		}
+ 34 	} 
+ 35 }
+</pre>
+</td></tr></table>
+
+<h1 id="Sourcecode-for-Python">Sourcecode for Python</h1>
+
+<p>Also the Python processing is similar to the above. Here the code is different in several cases.</p>
+
+<p>In Python exists a simple <code>list</code>. I first tried to solve this with an array or a numpy array. But for this case it was too complicated. This simple <code>list</code> can do the job very &quot;simple&quot;.</p>
+
+<pre><code> a = [9,&quot;x&quot;,5,&#39;x&#39;,&#39;x&#39;,&#39;x&#39;,7,&#39;x&#39;,8]</code></pre>
+
+<p>Determining the number of missing values:</p>
+
+<pre><code> nrx = a.count(&quot;x&quot;)</code></pre>
+
+<p>In Python no do-while loop exists, this is done only with while and a break statement:</p>
+
+<pre><code> while True:
+   ...
+   if nrx == 0: break</code></pre>
+
+<p>Also the for loop with the step of 2 is solved differently:</p>
+
+<pre><code> while start &lt;= end:
+   start += 2
+   ...</code></pre>
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Python </div>
+  1 <span class="synComment">#!/usr/bin/python</span>
+  2 
+  3 <span class="synIdentifier">print</span> <span class="synConstant">&quot;ch-1.py, PWC #43 Task #1: Olympic rings.&quot;</span>
+  4 
+  5 <span class="synStatement">def</span> <span class="synIdentifier">numbers</span>():
+  6   start = <span class="synConstant">0</span>
+  7   end   = <span class="synConstant">8</span>
+  8   <span class="synStatement">while</span> start &lt;= end:
+  9     i = start
+ 10     start += <span class="synConstant">2</span>
+ 11 
+ 12     <span class="synStatement">if</span> i == <span class="synConstant">0</span>  : win = [<span class="synConstant">0</span>,a[i],a[i+<span class="synConstant">1</span>]]
+ 13     <span class="synStatement">elif</span> i == <span class="synConstant">8</span>: win = [a[i-<span class="synConstant">1</span>],a[i],<span class="synConstant">0</span>]
+ 14     <span class="synStatement">else</span>       : win = [a[i-<span class="synConstant">1</span>],a[i],a[i+<span class="synConstant">1</span>]]
+ 15 
+ 16     nr = win.count(<span class="synConstant">&quot;x&quot;</span>)
+ 17     <span class="synStatement">if</span> nr == <span class="synConstant">1</span>:
+ 18       <span class="synStatement">if</span> win[<span class="synConstant">1</span>] == <span class="synConstant">'x'</span>: a[i] = <span class="synConstant">11</span> - win[<span class="synConstant">0</span>] - win[<span class="synConstant">2</span>] 
+ 19       <span class="synStatement">elif</span> win[<span class="synConstant">0</span>] == <span class="synConstant">'x'</span>: a[i-<span class="synConstant">1</span>] = <span class="synConstant">11</span> - win[<span class="synConstant">1</span>] - win[<span class="synConstant">2</span>]
+ 20       <span class="synStatement">elif</span> win[<span class="synConstant">2</span>] == <span class="synConstant">'x'</span>: a[i+<span class="synConstant">1</span>] = <span class="synConstant">11</span> - win[<span class="synConstant">1</span>] - win[<span class="synConstant">0</span>]
+ 21 
+ 22 <span class="synComment"># ---------------- MAIN -------------------</span>
+ 23 
+ 24 a = [<span class="synConstant">9</span>,<span class="synConstant">&quot;x&quot;</span>,<span class="synConstant">5</span>,<span class="synConstant">'x'</span>,<span class="synConstant">'x'</span>,<span class="synConstant">'x'</span>,<span class="synConstant">7</span>,<span class="synConstant">'x'</span>,<span class="synConstant">8</span>]
+ 25 <span class="synIdentifier">print</span> <span class="synConstant">&quot;Values: &quot;</span>, a
+ 26 
+ 27 <span class="synStatement">while</span> <span class="synIdentifier">True</span>:
+ 28   numbers()
+ 29   nrx = a.count(<span class="synConstant">&quot;x&quot;</span>)
+ 30   <span class="synStatement">if</span> nrx == <span class="synConstant">0</span>: <span class="synStatement">break</span>
+ 31 
+ 32 <span class="synIdentifier">print</span> <span class="synConstant">&quot;Result: &quot;</span>, a
+</pre>
+</td></tr></table>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Chuck</p>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #43 Task #1, Olympic Rings</span></strong></big>
+</td></tr>
+</table>
+
+</body>
+
+</html>
+
+
