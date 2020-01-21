@@ -15,4 +15,4 @@ multi recur( \v ) {
 }
 
 
-say "{recur( 100 ).flat.join('')} == 100";
+say "{recur( 200 ).flat.join('')} == 200";
