@@ -1,11 +1,4 @@
-my $amount = 200;
-
-.say for reverse +$amount, |gather until $amount < 2
-{ 
-    take $amount = $amount %% 2 
-        ?? $amount / 2 
-        !! $amount - 1;  
-};
+.say for reverse 200, { $^a %% 2 ?? $^a / 2 !! $^a - 1 } ... 1;
 
 
 # Outputs:
