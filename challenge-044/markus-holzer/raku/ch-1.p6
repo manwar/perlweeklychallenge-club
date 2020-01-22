@@ -1,8 +1,8 @@
-.say for ( gather candidates( "123456789" ) ).grep: *.sum == 100;
+.say for candidates( "123456789" ).grep: *.sum == 100;
 
 sub candidates( $str )
 {
-    for 1..^($str.chars) -> $l
+    gather for 1..^($str.chars) -> $l
     {
         my $i = $str.substr( 0, $l ).Int;
         my $j = $str.substr( $l, * ).Int;
@@ -11,7 +11,7 @@ sub candidates( $str )
         {
             take [ $i * $f, $j ];
             take [ $i * $f, $j * -1 ];
-            take [ $i * $f, |$_ ] for gather candidates( $j.Str );
+            take [ $i * $f, |$_ ] for candidates( $j.Str );
         }
     }
 }
