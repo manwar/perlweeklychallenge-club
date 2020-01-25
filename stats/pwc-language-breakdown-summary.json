@@ -1,18 +1,40 @@
 {
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-01-24 21:43:31 GMT"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-01-25 16:44:11 GMT"
+   },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "y" : 10,
+            "rotation" : -90,
+            "align" : "right",
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         },
          "data" : [
             [
                "Blog",
@@ -24,40 +46,18 @@
             ],
             [
                "Raku",
-               1082
+               1084
             ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "y" : 10,
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "align" : "right"
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
-   "legend" : {
-      "enabled" : "false"
-   },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontSize" : "13px",
             "fontFamily" : "Verdana, sans-serif"
          }
-      },
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+      }
    }
 }
