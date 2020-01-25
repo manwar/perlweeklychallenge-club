@@ -39,9 +39,10 @@ sub increment {
 }
 
 my @mask = (NOTHING) x (@digits - 1);
-while (grep $_ != MINUS, @mask) {
+while (1) {
     my $expression = apply(\@mask);
     say $expression if 100 == evaluate($expression);
+    last unless grep $_ != MINUS, @mask;
     increment(\@mask);
 }
 
