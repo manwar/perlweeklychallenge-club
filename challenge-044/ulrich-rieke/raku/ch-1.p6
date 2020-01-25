@@ -8,38 +8,44 @@ use v6 ;
 #somehow you have to circumvent the fact the immutability of resulting
 #strings
 
+sub createNumberString( @numbersequence ) {
+    for @numbersequence -> @array {
+      my $str = join '+' , @array ;
+      $str ~~ s:g/\+\-/\-/ ;
+      say $str ;
+    }
+}
+
 sub testSubSequences_8( @numbers ) {
   my @sources ;
   for (0..7 ) -> $i {
       @sources.push( @numbers[ $i ] , -@numbers[ $i ] ) ;
   }
   my  @fittingnumbers = gather {
-    for @sources[0,1] -> $n0 {
-        for @sources[2,3] -> $n1 {
-            for @sources[4,5] -> $n2 {
-                for @sources[6,7] -> $n3 {
-                    for @sources[8,9] -> $n4 {
-                        for @sources[10,11] -> $n5 {
-                            for @sources[12,13] -> $n6 {
-                                for @sources[14,15] -> $n7 {
-                                    if ( $n0 + $n1 + $n2 + $n3 + $n4 + $n5 + $n6 + $n7 ) == 100 {
-                                        take $n0 , $n1 , $n2 , $n3 , $n4 , $n5 , $n6 , $n7 ;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
+      for @sources[0,1] -> $n0 {
+      for @sources[2,3] -> $n1 {
+    for @sources[4,5] -> $n2 {
+        for @sources[6,7] -> $n3 {
+          for @sources[8,9] -> $n4 {
+          for @sources[10,11] -> $n5 {
+            for @sources[12,13] -> $n6 {
+            for @sources[14,15] -> $n7 {
+              if ( $n0 + $n1 + $n2 + $n3 + $n4 + $n5 + $n6 + $n7 )
+              == 100 {
+                  take $n0 , $n1 , $n2 , $n3 , $n4 , $n5 , $n6 ,
+                  $n7 ;
+              }
             }
+            }
+          }
+          }
         }
     }
+    }
+      }
   }
   if @fittingnumbers {
-      for @fittingnumbers -> @array {
-        my $str = join '+' , @array ;
-        $str ~~ s:g/\+\-/\-/ ;
-        say $str ;
-      }
+      createNumberString( @fittingnumbers ) ;
   }
 }
 
@@ -49,30 +55,27 @@ sub testSubSequences_7( @numbers ) {
       @sources.push( @numbers[ $i ] , -@numbers[ $i ] ) ;
   }
   my @fittingnumbers = gather {
-    for @sources[0, 1] -> $n0 {
-        for @sources[2 , 3] -> $n1 {
-            for @sources[4 , 5] -> $n2 {
-                for @sources[6 , 7] -> $n3 {
-                    for @sources[8 , 9] -> $n4 {
-                        for @sources[10 , 11 ] -> $n5 {
-                            for @sources[12 , 13] -> $n6 {
-                                if ( $n0 + $n1 + $n2 + $n3 + $n4 + $n5 + $n6 ) == 100 {
-                                    take $n0 , $n1 , $n2 , $n3 , $n4 , $n5 , $n6 ;
-                                }
-                            }
-                        }
-                    }
-                }
+      for @sources[0, 1] -> $n0 {
+    for @sources[2 , 3] -> $n1 {
+        for @sources[4 , 5] -> $n2 {
+          for @sources[6 , 7] -> $n3 {
+          for @sources[8 , 9] -> $n4 {
+            for @sources[10 , 11 ] -> $n5 {
+            for @sources[12 , 13] -> $n6 {
+              if ( $n0 + $n1 + $n2 + $n3 + $n4 + $n5 + $n6 )
+              == 100 {
+                  take $n0 , $n1 , $n2 , $n3 , $n4 , $n5 , $n6 ;
+                  }
             }
+            }
+          }
+          }
         }
     }
+      }
   }
   if @fittingnumbers {
-      for @fittingnumbers -> @array {
-        my $str = join '+', @array ;
-        $str ~~ s:g/\+\-/\-/ ;
-        say $str ;
-      }
+      createNumberString( @fittingnumbers ) ;
   }
 }
 
@@ -82,28 +85,25 @@ sub testSubSequences_6( @numbers ) {
       @sources.push( @numbers[ $i ] , -@numbers[ $i ] ) ;
   }
   my @fittingnumbers = gather {
-    for @sources[0,1] -> $n0 {
-        for @sources[2 , 3] -> $n1 {
-            for @sources[4 , 5] -> $n2 {
-                for @sources[6 , 7] -> $n3 {
-                    for @sources[8 , 9] -> $n4 {
-                        for @sources[10, 11] -> $n5 {
-                            if ( $n0 + $n1 + $n2 + $n3 + $n4 + $n5 ) == 100 {
-                                take $n0 , $n1 , $n2 , $n3 , $n4 , $n5 ;
-                            }
-                        }
-                    }
-                }
+      for @sources[0,1] -> $n0 {
+    for @sources[2 , 3] -> $n1 {
+        for @sources[4 , 5] -> $n2 {
+          for @sources[6 , 7] -> $n3 {
+          for @sources[8 , 9] -> $n4 {
+            for @sources[10, 11] -> $n5 {
+            if ( $n0 + $n1 + $n2 + $n3 + $n4 + $n5 )
+              == 100 {
+                  take $n0 , $n1 , $n2 , $n3 , $n4 , $n5 ;
+              }
             }
+            }
+          }
+          }
         }
     }
   }
   if @fittingnumbers {
-      for @fittingnumbers -> @array {
-        my $str = join '+' , @array ;
-        $str ~~ s:g/\+\-/\-/ ;
-        say $str ;
-      }
+      createNumberString( @fittingnumbers ) ;
   }
 }
 
@@ -113,26 +113,23 @@ sub testSubSequences_5( @numbers ) {
       @sources.push( @numbers[ $i ] , -@numbers[ $i ] ) ;
   }
   my @fittingnumbers = gather {
-    for @sources[0, 1] -> $n0 {
-        for @sources[2 , 3] -> $n1 {
-            for @sources[4 , 5] -> $n2 {
-                for @sources[6 , 7] -> $n3 {
-                    for @sources[8 , 9] -> $n4 {
-                        if ( $n0 + $n1 + $n2 + $n3 + $n4 ) == 100 {
-                            take $n0 , $n1 , $n2 , $n3 , $n4 ;
-                        }
-                    }
-                }
-            }
+      for @sources[0, 1] -> $n0 {
+    for @sources[2 , 3] -> $n1 {
+        for @sources[4 , 5] -> $n2 {
+          for @sources[6 , 7] -> $n3 {
+          for @sources[8 , 9] -> $n4 {
+          if ( $n0 + $n1 + $n2 + $n3 + $n4 )
+            == 100 {
+            take $n0 , $n1 , $n2 , $n3 , $n4 ;
+          }
         }
+    }
+      }
+      }
     }
   }
   if @fittingnumbers {
-      for @fittingnumbers -> @array {
-        my $str = join '+' , @array ;
-        $str ~~ s:g/\+\-/\-/ ;
-    s   ay $str ;
-      }
+      createNumberString( @fittingnumbers ) ;
   }
 }
 
@@ -142,24 +139,20 @@ sub testSubSequences_4( @numbers ) {
       @sources.push( @numbers[ $i ] , -@numbers[ $i ] ) ;
   }
   my @fittingnumbers = gather {
-    for @sources[0, 1] -> $n0 {
-        for @sources[2 , 3] -> $n1 {
-            for @sources[4, 5] -> $n2 {
-                for @sources[6, 7] -> $n3 {
-                    if ( $n0 + $n1 + $n2 + $n3 ) == 100 {
-                        take $n0 , $n1 , $n2 , $n3 ;
-                    }
-                }
-            }
+      for @sources[0, 1] -> $n0 {
+    for @sources[2 , 3] -> $n1 {
+        for @sources[4, 5] -> $n2 {
+          for @sources[6, 7] -> $n3 {
+          if ( $n0 + $n1 + $n2 + $n3 ) == 100 {
+            take $n0 , $n1 , $n2 , $n3 ;
+          }
+          }
         }
     }
+      }
   }
   if @fittingnumbers {
-      for @fittingnumbers -> @array {
-        my $str = join '+' , @array ;
-        $str ~~ s:g/\+\-/\-/ ;
-        say $str ;
-      }
+      createNumberString( @fittingnumbers ) ;
   }
 }
 

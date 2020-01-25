@@ -1,6 +1,9 @@
 use v6 ;
 
 sub doublingSteps( Int $n is copy ) {
+  if ( $n == 100 ) {
+      return ( 200 , 1 ) ;
+  }
   my $count = 0 ;
   while ( $n < 200 ) {
       $count++ ;
@@ -15,6 +18,5 @@ sub computeSteps( Int $n is copy --> Int ) {
   my @result = doublingSteps( $n ) ;
   return ( $n - 1 + @result[1] + 200 - @result[0] ) ;
 }
-
 my $moves = (1..100).map( { computeSteps( $_ ) } ).sort( {$^a <=> $^b})[0] ;
 say "The minimum number of moves is $moves!" ;
