@@ -1,35 +1,19 @@
-Task 1: "Octal Number System
+Task 1: "Only 100, please.
 
-Write a script to print decimal number 0 to 50 in Octal Number System.
+You are given a string "123456789". Write a script that would insert "+"
+or "-" in between digits so that when you evaluate, the result should
+be 100."
 
-For example:
-Decimal 0 = Octal 0
-Decimal 1 = Octal 1
-Decimal 2 = Octal 2
-Decimal 3 = Octal 3
-Decimal 4 = Octal 4
-Decimal 5 = Octal 5
-Decimal 6 = Octal 6
-Decimal 7 = Octal 7
-Decimal 8 = Octal 10
+My notes: hmm.. looks like it might be combinatorial.  Is there a clever way?
+It's almost like a version of Countdown's number game (without * and /).
 
-and so on.
+Task #2: "Make it $200
+
+You have only $1 left at the start of the week. You have been given an
+opportunity to make it $200. The rule is simple with every move you can
+either double what you have or add another $1. Write a script to help
+you get $200 with the smallest number of moves.
 "
 
-My notes: Trivial.
-
-Task #2: "Balanced Brackets
-
-Write a script to generate a string with random number of ( and ) brackets. Then make the script validate the string if it has balanced brackets.
-
-For example:
-() - OK
-(()) - OK
-)( - NOT OK
-())() - NOT OK
-"
-
-My notes: sounds quite easy. Generate is like coin tossing, validator could
-either count how many nested brackets we're in, or we could use regex search
-and replace to repeatedly delete () pairs of adjacent characters, valid if
-we end up with the empty string.
+My notes: doubling sounds like the way to go..  exhaustive breadth first
+search "try both options at every move" seems obvious but combinatorial growth
