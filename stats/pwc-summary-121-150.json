@@ -1,11 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "xAxis" : {
       "categories" : [
          "Simon Proctor",
@@ -32,22 +25,23 @@
          "Yozen Hernandez"
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "subtitle" : {
+      "text" : "[Champions: 22] Last updated at 2020-01-26 21:28:40 GMT"
    },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             5,
             4,
@@ -71,11 +65,9 @@
             2,
             30,
             21
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             73,
             0,
@@ -99,7 +91,8 @@
             2,
             21,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -129,7 +122,14 @@
          ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 22] Last updated at 2020-01-26 21:09:44 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    }
 }
