@@ -47,7 +47,7 @@
 
 
 sub MAIN( Str :$message! where { .chars > 8 }
-        , Int :$columns? where { $_ > 0 } = 8 ) {
+        , Int :$columns? where { $_ > 0 && $_ < $message.chars } = 8 ) {
 
     my @matrix = $message.lc.comb( /\w/ ).rotor: $columns, :partial;
 
