@@ -29,17 +29,18 @@ sub MAIN( Str :$message! where { .chars > 8 }  ) {
 
     my Int $columns = 8;
     my @matrix;
-    my @chars    = $message.comb( / \w / ); # keeps letters, avoid spaces
-    my Int $rows = ( @chars.elems / $columns ).Int + 1;
-    my Int $start = 0;
-    loop ( my $current_row = 0; $current_row < $rows; $current_row++ ) {
-        @matrix.push( @chars[ $start .. $start + $columns - 1 ] );
-        $start += $columns;
+
+    my Int $row = 0;
+    for $message.lc.comb( / \w / )  {
+        @matrix[ $row ].push: $_ if @matrix[ $row ].elems < $columns;
+        $row++ if @matrix[ $row ].elems == $columns;
     }
 
-    say "Your original message is [$message], and encoded results:\n";
+    say "Your original message is \n\t$message\n and encoded results:\n";
+    @matrix.join( "\n" ).say;
+    say "\nthat leads to\n";
     for 0 .. $columns -> $start {
-        ( @matrix[ $_ ][ $start ] // ' ' ).print for 0 .. $rows;
+        ( @matrix[ $_ ][ $start ] // '' ).print for 0 .. $row;
     }
 
     say "\n\nAll done!";
