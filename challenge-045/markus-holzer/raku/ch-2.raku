@@ -1,0 +1,1 @@
+$*PROGRAM-NAME.IO.slurp.say;
