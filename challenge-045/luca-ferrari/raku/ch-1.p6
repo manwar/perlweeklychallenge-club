@@ -23,13 +23,33 @@
 #
 # Write a script that accepts a message from command line
 # and prints the equivalent coded message.
+#
+#
+#
+# Example of invocation:
+# % perl6 ch-1.p6 --message="The quick brown fox jumps over the lazy dog"
+# Your original message is
+# The quick brown fox jumps over the lazy dog
+# and encoded results:
+#
+#   t h e q u i c k
+#   b r o w n f o x
+#   j u m p s o v e
+#   r t h e l a z y
+#   d o g
+#
+#   that leads to
+#
+#   tbjrdhrutoeomhgqwpeunslifoacovzkxey
+#
+#   All done!
 
 
-sub MAIN( Str :$message! where { .chars > 8 }  ) {
 
-    my Int $columns = 8;
+sub MAIN( Str :$message! where { .chars > 8 }
+        , Int :$columns? = 8 ) {
+
     my @matrix;
-
     my Int $row = 0;
     for $message.lc.comb( / \w / )  {
         @matrix[ $row ].push: $_ if @matrix[ $row ].elems < $columns;
