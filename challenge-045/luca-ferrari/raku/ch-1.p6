@@ -49,18 +49,13 @@
 sub MAIN( Str :$message! where { .chars > 8 }
         , Int :$columns? = 8 ) {
 
-    my @matrix;
-    my Int $row = 0;
-    for $message.lc.comb( / \w / )  {
-        @matrix[ $row ].push: $_ if @matrix[ $row ].elems < $columns;
-        $row++ if @matrix[ $row ].elems == $columns;
-    }
+    my @matrix = $message.lc.comb( /\w/ ).rotor: 8, :partial;
 
     say "Your original message is \n\t$message\n and encoded results:\n";
     @matrix.join( "\n" ).say;
     say "\nthat leads to\n";
     for 0 .. $columns -> $start {
-        ( @matrix[ $_ ][ $start ] // '' ).print for 0 .. $row;
+        ( @matrix[ $_ ][ $start ] // '' ).print for 0 .. @matrix.elems;
     }
 
     say "\n\nAll done!";
