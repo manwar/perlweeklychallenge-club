@@ -47,9 +47,9 @@
 
 
 sub MAIN( Str :$message! where { .chars > 8 }
-        , Int :$columns? = 8 ) {
+        , Int :$columns? where { $_ > 0 } = 8 ) {
 
-    my @matrix = $message.lc.comb( /\w/ ).rotor: 8, :partial;
+    my @matrix = $message.lc.comb( /\w/ ).rotor: $columns, :partial;
 
     say "Your original message is \n\t$message\n and encoded results:\n";
     @matrix.join( "\n" ).say;
