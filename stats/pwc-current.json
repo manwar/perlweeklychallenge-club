@@ -1,29 +1,23 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2020-01-30 12:16:59 GMT"
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         },
-         "borderWidth" : 0
+         }
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 045"
    },
    "series" : [
       {
@@ -32,8 +26,8 @@
          "data" : [
             {
                "y" : 2,
-               "name" : "Dave Cross",
-               "drilldown" : "Dave Cross"
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross"
             },
             {
                "y" : 3,
@@ -41,9 +35,9 @@
                "name" : "Dave Jacoby"
             },
             {
-               "y" : 2,
+               "drilldown" : "Duane Powell",
                "name" : "Duane Powell",
-               "drilldown" : "Duane Powell"
+               "y" : 2
             },
             {
                "name" : "E. Choroba",
@@ -51,8 +45,13 @@
                "y" : 2
             },
             {
-               "name" : "Luca Ferrari",
+               "y" : 5,
+               "name" : "Javier Luque",
+               "drilldown" : "Javier Luque"
+            },
+            {
                "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
                "y" : 3
             },
             {
@@ -61,41 +60,52 @@
                "y" : 2
             },
             {
-               "y" : 2,
                "name" : "Nazareno Delucca",
-               "drilldown" : "Nazareno Delucca"
+               "drilldown" : "Nazareno Delucca",
+               "y" : 2
             },
             {
-               "y" : 1,
                "name" : "Peter Scott",
-               "drilldown" : "Peter Scott"
+               "drilldown" : "Peter Scott",
+               "y" : 1
             },
             {
-               "y" : 2,
                "name" : "Rage311",
-               "drilldown" : "Rage311"
+               "drilldown" : "Rage311",
+               "y" : 2
             },
             {
-               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
                "y" : 2
             }
          ]
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2020-01-30 12:53:38 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 045"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Cross",
-            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Dave Cross",
+            "name" : "Dave Cross"
          },
          {
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -105,33 +115,47 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Dave Jacoby",
-            "name" : "Dave Jacoby"
+            ]
          },
          {
             "id" : "Duane Powell",
-            "name" : "Duane Powell",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "E. Choroba",
-            "name" : "E. Choroba"
+            "name" : "Duane Powell"
          },
          {
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari",
+            "name" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "E. Choroba"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Javier Luque",
+            "name" : "Javier Luque"
+         },
+         {
             "data" : [
                [
                   "Raku",
@@ -141,66 +165,65 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
          },
          {
-            "name" : "Markus Holzer",
-            "id" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Markus Holzer",
+            "name" : "Markus Holzer"
          },
          {
-            "name" : "Nazareno Delucca",
-            "id" : "Nazareno Delucca",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Nazareno Delucca",
+            "name" : "Nazareno Delucca"
          },
          {
+            "id" : "Peter Scott",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "name" : "Peter Scott",
-            "id" : "Peter Scott"
+            "name" : "Peter Scott"
          },
          {
+            "id" : "Rage311",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Rage311",
             "name" : "Rage311"
          },
          {
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Simon Proctor"
          }
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
