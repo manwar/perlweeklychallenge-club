@@ -1,12 +1,29 @@
 {
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 045"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 045",
          "data" : [
             {
                "drilldown" : "Dave Cross",
@@ -14,57 +31,64 @@
                "name" : "Dave Cross"
             },
             {
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari",
-               "y" : 3
-            },
-            {
-               "drilldown" : "Markus Holzer",
+               "drilldown" : "Duane Powell",
                "y" : 2,
-               "name" : "Markus Holzer"
+               "name" : "Duane Powell"
             },
             {
-               "drilldown" : "Simon Proctor",
+               "drilldown" : "Luca Ferrari",
+               "y" : 3,
+               "name" : "Luca Ferrari"
+            },
+            {
+               "y" : 2,
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer"
+            },
+            {
                "name" : "Simon Proctor",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
             }
          ],
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 045"
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 045"
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2020-01-30 11:50:41 GMT"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Cross",
             "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Dave Cross"
          },
          {
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari",
+            "name" : "Duane Powell",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Duane Powell"
+         },
+         {
             "data" : [
                [
                   "Raku",
@@ -74,39 +98,30 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
          },
          {
+            "id" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Markus Holzer",
-            "id" : "Markus Holzer"
+            "name" : "Markus Holzer"
          },
          {
             "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
          }
       ]
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-01-30 11:47:44 GMT"
    }
 }
