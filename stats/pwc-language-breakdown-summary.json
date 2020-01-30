@@ -1,45 +1,36 @@
 {
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
       },
-      "type" : "category"
+      "min" : 0
    },
-   "legend" : {
-      "enabled" : "false"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
+         "name" : "Contributions",
          "dataLabels" : {
+            "enabled" : "true",
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "align" : "right",
             "y" : 10,
             "style" : {
                "fontFamily" : "Verdana, sans-serif",
                "fontSize" : "13px"
-            },
-            "rotation" : -90,
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "align" : "right"
+            }
          },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               473
+               474
             ],
             [
                "Perl",
-               1812
+               1814
             ],
             [
                "Raku",
@@ -48,16 +39,25 @@
          ]
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-01-30 12:00:31 GMT"
    },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2020-01-30 11:53:24 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   "legend" : {
+      "enabled" : "false"
    }
 }
