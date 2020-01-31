@@ -27,8 +27,6 @@ my %values = (
     Blue => 8,
 );
 
-my %numbers = map {$_ => 1} (1,2,3,4,6);
-
 # each ring components with unknown value at the end
 my @rings_components = (
     ['Red','RedGreen'],
