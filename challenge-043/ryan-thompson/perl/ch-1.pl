@@ -106,7 +106,7 @@ sub check_sol {
     my @sums = map {
         sum map {
             $sol->{$_} || $given{$_} || -100;
-        } split '+';
+        } split /\+/;
     } qw<r+rg rg+g+gk gk+k+ky ky+y+yb yb+b>;
 
     return   (all { $_ == 11           } @sums) ?     'solved'
