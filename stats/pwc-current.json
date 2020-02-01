@@ -1,35 +1,142 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
    "subtitle" : {
-      "text" : "[Champions: 16] Last updated at 2020-02-01 18:38:01 GMT"
+      "text" : "[Champions: 17] Last updated at 2020-02-01 18:43:25 GMT"
    },
-   "xAxis" : {
-      "type" : "category"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 045"
    },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Andrezgz",
+               "y" : 2,
+               "name" : "Andrezgz"
+            },
+            {
+               "y" : 5,
+               "drilldown" : "Arne Sommer",
+               "name" : "Arne Sommer"
+            },
+            {
+               "name" : "Athanasius",
+               "y" : 1,
+               "drilldown" : "Athanasius"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross"
+            },
+            {
+               "drilldown" : "Dave Jacoby",
+               "y" : 3,
+               "name" : "Dave Jacoby"
+            },
+            {
+               "name" : "Duane Powell",
+               "y" : 2,
+               "drilldown" : "Duane Powell"
+            },
+            {
+               "name" : "E. Choroba",
+               "y" : 3,
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "name" : "Javier Luque",
+               "y" : 5,
+               "drilldown" : "Javier Luque"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "y" : 3,
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer",
+               "y" : 2
+            },
+            {
+               "name" : "Nazareno Delucca",
+               "drilldown" : "Nazareno Delucca",
+               "y" : 2
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Peter Scott",
+               "name" : "Peter Scott"
+            },
+            {
+               "drilldown" : "Rage311",
+               "y" : 2,
+               "name" : "Rage311"
+            },
+            {
+               "name" : "Roger Bell West",
+               "y" : 4,
+               "drilldown" : "Roger Bell West"
+            },
+            {
+               "drilldown" : "Ruben Westerberg",
+               "y" : 4,
+               "name" : "Ruben Westerberg"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "name" : "Wanderdoc",
+               "drilldown" : "Wanderdoc",
+               "y" : 2
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 045",
+         "colorByPoint" : 1
+      }
+   ],
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andrezgz",
+            "id" : "Andrezgz",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Andrezgz"
+            "name" : "Andrezgz"
          },
          {
             "name" : "Arne Sommer",
@@ -50,14 +157,24 @@
             "id" : "Arne Sommer"
          },
          {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "name" : "Athanasius",
+            "id" : "Athanasius"
+         },
+         {
             "id" : "Dave Cross",
-            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Dave Cross"
          },
          {
             "data" : [
@@ -74,17 +191,16 @@
             "id" : "Dave Jacoby"
          },
          {
-            "id" : "Duane Powell",
             "name" : "Duane Powell",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Duane Powell"
          },
          {
-            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
@@ -95,10 +211,11 @@
                   1
                ]
             ],
-            "name" : "E. Choroba"
+            "name" : "E. Choroba",
+            "id" : "E. Choroba"
          },
          {
-            "id" : "Javier Luque",
+            "name" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -113,10 +230,9 @@
                   1
                ]
             ],
-            "name" : "Javier Luque"
+            "id" : "Javier Luque"
          },
          {
-            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari",
             "data" : [
                [
@@ -127,51 +243,64 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari"
          },
          {
             "id" : "Markus Holzer",
+            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Markus Holzer"
+            ]
          },
          {
             "id" : "Nazareno Delucca",
-            "name" : "Nazareno Delucca",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Nazareno Delucca"
          },
          {
-            "name" : "Peter Scott",
+            "id" : "Peter Scott",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "id" : "Peter Scott"
+            "name" : "Peter Scott"
          },
          {
-            "id" : "Rage311",
             "name" : "Rage311",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Rage311"
          },
          {
-            "id" : "Roger Bell West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
             "name" : "Roger Bell West",
+            "id" : "Roger Bell West"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -181,144 +310,30 @@
                   "Raku",
                   2
                ]
-            ]
-         },
-         {
-            "id" : "Ruben Westerberg",
+            ],
             "name" : "Ruben Westerberg",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ]
+            "id" : "Ruben Westerberg"
          },
          {
-            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Simon Proctor"
+            "name" : "Simon Proctor"
          },
          {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
             "name" : "Wanderdoc",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
             "id" : "Wanderdoc"
          }
       ]
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Andrezgz",
-               "drilldown" : "Andrezgz",
-               "y" : 2
-            },
-            {
-               "name" : "Arne Sommer",
-               "drilldown" : "Arne Sommer",
-               "y" : 5
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
-            },
-            {
-               "y" : 3,
-               "drilldown" : "Dave Jacoby",
-               "name" : "Dave Jacoby"
-            },
-            {
-               "name" : "Duane Powell",
-               "drilldown" : "Duane Powell",
-               "y" : 2
-            },
-            {
-               "name" : "E. Choroba",
-               "drilldown" : "E. Choroba",
-               "y" : 3
-            },
-            {
-               "name" : "Javier Luque",
-               "drilldown" : "Javier Luque",
-               "y" : 5
-            },
-            {
-               "name" : "Luca Ferrari",
-               "y" : 3,
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "name" : "Markus Holzer",
-               "drilldown" : "Markus Holzer",
-               "y" : 2
-            },
-            {
-               "name" : "Nazareno Delucca",
-               "y" : 2,
-               "drilldown" : "Nazareno Delucca"
-            },
-            {
-               "drilldown" : "Peter Scott",
-               "y" : 1,
-               "name" : "Peter Scott"
-            },
-            {
-               "name" : "Rage311",
-               "y" : 2,
-               "drilldown" : "Rage311"
-            },
-            {
-               "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West",
-               "y" : 4
-            },
-            {
-               "name" : "Ruben Westerberg",
-               "drilldown" : "Ruben Westerberg",
-               "y" : 4
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 2
-            },
-            {
-               "name" : "Wanderdoc",
-               "drilldown" : "Wanderdoc",
-               "y" : 2
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 045",
-         "colorByPoint" : 1
-      }
-   ],
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
