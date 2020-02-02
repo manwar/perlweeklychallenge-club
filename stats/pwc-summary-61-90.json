@@ -1,11 +1,6 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-02-02 21:53:50 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -41,12 +36,12 @@
          "Michael Schaap"
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             6,
             1,
@@ -62,7 +57,7 @@
             16,
             15,
             12,
-            86,
+            88,
             42,
             0,
             1,
@@ -78,9 +73,11 @@
             12,
             4,
             0
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             17,
             0,
@@ -96,7 +93,7 @@
             0,
             4,
             0,
-            87,
+            89,
             0,
             6,
             1,
@@ -112,11 +109,9 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             7,
             0,
@@ -132,7 +127,7 @@
             0,
             0,
             0,
-            100,
+            101,
             0,
             1,
             0,
@@ -148,12 +143,17 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "yAxis" : {
       "min" : 0,
@@ -161,7 +161,7 @@
          "text" : ""
       }
    },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-02-02 22:03:50 GMT"
    }
 }
