@@ -1,26 +1,50 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 046"
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2020-02-03 13:22:41 GMT"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba",
+               "y" : 2
+            },
+            {
+               "name" : "Luca Ferrari",
+               "y" : 3,
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "name" : "Roger Bell West",
+               "y" : 4,
+               "drilldown" : "Roger Bell West"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 2
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 046"
+      }
+   ],
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2020-02-03 13:19:02 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "Perl Weekly Challenge - 046"
    },
    "drilldown" : {
       "series" : [
@@ -35,6 +59,21 @@
             "name" : "E. Choroba"
          },
          {
+            "id" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Luca Ferrari"
+         },
+         {
+            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl",
@@ -45,51 +84,31 @@
                   2
                ]
             ],
-            "name" : "Roger Bell West",
             "id" : "Roger Bell West"
          },
          {
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Simon Proctor"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 046",
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "E. Choroba",
-               "drilldown" : "E. Choroba"
-            },
-            {
-               "y" : 4,
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West"
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 2
-            }
-         ]
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
-   ],
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "xAxis" : {
       "type" : "category"
