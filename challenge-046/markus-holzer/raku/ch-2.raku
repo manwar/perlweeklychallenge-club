@@ -4,8 +4,8 @@ say "Open rooms: \n", (1..^500).grep({
 
 sub is-open( $i )
 {
-    my $is-open = !($i %% 2);
-    $is-open = !$is-open if $i %% $_ for 3 .. 500;
+    my $is-open = True;
+    $is-open = !$is-open if $i %% $_ for 2 .. 500;
     $is-open;
 }
 

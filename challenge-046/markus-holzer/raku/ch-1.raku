@@ -12,7 +12,7 @@ say decrypt( $message );
 
 sub decrypt( $encrypted )
 {
-    join '', roundrobin( 
+    join '', zip( 
         $encrypted.lines.map({ .split(/ \s /) }) 
     ).map({ 
         .Bag.first({ .value > 1 }).key 
