@@ -10,97 +10,85 @@
                "name" : "Duane Powell"
             },
             {
-               "name" : "E. Choroba",
                "drilldown" : "E. Choroba",
+               "name" : "E. Choroba",
                "y" : 2
             },
             {
+               "y" : 2,
                "name" : "Kevin Colyer",
-               "drilldown" : "Kevin Colyer",
-               "y" : 2
+               "drilldown" : "Kevin Colyer"
             },
             {
-               "name" : "Luca Ferrari",
                "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
                "y" : 3
             },
             {
                "y" : 2,
-               "drilldown" : "Markus Holzer",
-               "name" : "Markus Holzer"
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer"
+            },
+            {
+               "drilldown" : "Peter Scott",
+               "name" : "Peter Scott",
+               "y" : 1
             },
             {
                "y" : 4,
-               "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West"
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West"
             },
             {
+               "y" : 2,
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 2
+               "drilldown" : "Simon Proctor"
             },
             {
-               "drilldown" : "Wanderdoc",
+               "y" : 2,
                "name" : "Wanderdoc",
-               "y" : 2
+               "drilldown" : "Wanderdoc"
             }
          ]
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
             "name" : "Duane Powell",
-            "id" : "Duane Powell",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "E. Choroba"
+            "id" : "Duane Powell"
          },
          {
-            "name" : "Kevin Colyer",
-            "id" : "Kevin Colyer",
+            "name" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "E. Choroba"
+         },
+         {
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Kevin Colyer",
+            "name" : "Kevin Colyer"
          },
          {
-            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -111,17 +99,27 @@
                   1
                ]
             ],
-            "name" : "Luca Ferrari"
+            "id" : "Luca Ferrari"
          },
          {
-            "name" : "Markus Holzer",
             "id" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Markus Holzer"
+         },
+         {
+            "name" : "Peter Scott",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "id" : "Peter Scott"
          },
          {
             "name" : "Roger Bell West",
@@ -159,18 +157,35 @@
          }
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2020-02-06 06:51:28 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 046"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2020-02-06 06:44:43 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 046"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : 0
    }
 }
