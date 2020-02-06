@@ -1,40 +1,42 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
    "series" : [
       {
          "name" : "Perl Weekly Challenge - 046",
          "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Duane Powell",
+               "y" : 2,
                "drilldown" : "Duane Powell",
+               "name" : "Duane Powell"
+            },
+            {
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba",
                "y" : 2
             },
             {
-               "y" : 2,
-               "name" : "E. Choroba",
-               "drilldown" : "E. Choroba"
-            },
-            {
-               "y" : 2,
                "name" : "Kevin Colyer",
-               "drilldown" : "Kevin Colyer"
+               "drilldown" : "Kevin Colyer",
+               "y" : 2
             },
             {
-               "y" : 3,
                "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
+               "drilldown" : "Luca Ferrari",
+               "y" : 3
             },
             {
-               "drilldown" : "Roger Bell West",
+               "y" : 2,
+               "drilldown" : "Markus Holzer",
+               "name" : "Markus Holzer"
+            },
+            {
+               "y" : 4,
                "name" : "Roger Bell West",
-               "y" : 4
+               "drilldown" : "Roger Bell West"
             },
             {
-               "drilldown" : "Simon Proctor",
                "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
                "y" : 2
             },
             {
@@ -48,57 +50,57 @@
    "chart" : {
       "type" : "column"
    },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "enabled" : 1,
             "format" : "{point.y}"
-         }
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2020-02-06 06:39:59 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+         },
+         "borderWidth" : 0
       }
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Duane Powell",
             "id" : "Duane Powell",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Duane Powell"
+            ]
          },
          {
-            "name" : "E. Choroba",
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "E. Choroba"
+            "name" : "E. Choroba"
          },
          {
+            "name" : "Kevin Colyer",
             "id" : "Kevin Colyer",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Kevin Colyer"
+            ]
          },
          {
-            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -109,11 +111,21 @@
                   1
                ]
             ],
-            "id" : "Luca Ferrari"
+            "name" : "Luca Ferrari"
          },
          {
-            "id" : "Roger Bell West",
+            "name" : "Markus Holzer",
+            "id" : "Markus Holzer",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
             "name" : "Roger Bell West",
+            "id" : "Roger Bell West",
             "data" : [
                [
                   "Perl",
@@ -127,35 +139,38 @@
          },
          {
             "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor"
+            ]
          },
          {
+            "name" : "Wanderdoc",
             "id" : "Wanderdoc",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Wanderdoc"
+            ]
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2020-02-06 06:44:43 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 046"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "xAxis" : {
+      "type" : "category"
    }
 }
