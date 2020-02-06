@@ -1,0 +1,192 @@
+%!PS-Adobe-3.0
+%%Pages: 1
+%%EndComments
+%
+% Task #2: "Is the room open?
+%
+% There are 500 rooms in a hotel with 500 employees having keys to all the
+% rooms. The first employee opened main entrance door of all the rooms. The
+% second employee then closed the doors of room numbers 2,4,6,8,10 and
+% so on to 500. The third employee then closed the door if it was opened
+% or opened the door if it was closed of rooms 3,6,9,12,15 and so on to
+% 500. Similarly the fourth employee did the same as the third but only
+% room numbers 4,8,12,16 and so on to 500. This goes on until all employees
+% has had a turn.
+% 
+% Write a script to find out all the rooms still open at the end.
+% "
+%
+
+
+% Debugging....
+
+% const debuglm: left margin of debug messages
+/debuglm 0.5 72 mul def
+
+% const debugtop: top of debug messages - 11 inches up.
+/debugtop 11 72 mul def
+
+% const debugdown: how far to go down each line
+/debugdown 20 def
+
+
+% debugorigin():
+%	 move to debugging origin
+/debugorigin
+{
+	debuglm debugtop moveto
+	(Debugging log:) show
+	newline
+} bind def
+
+
+% debugnv( name, value );
+%	display name and value on a debug line.
+%	keep this as it's so much simpler than debug() below
+%	and also debug() has commented out invocations to
+%	this throughout it:-)
+/debugnv
+{
+	% initially: stack top: value, name
+	30 0 rmoveto
+	exch		% stack top: name, value
+	show		% show name, stack top: value
+	(: ) show
+	80 string cvs show	% show convert_to_string(value)
+	newline
+} bind def
+
+
+% debugsay( string, array_of_pairs );
+%	display a single message, combining the initial string and then
+%	every pair of items (variable,string) in <array> with no separators.
+%	eg debugsay( (x:), [ x (, y:) y (, z:) z ()] ) produces
+%	"x: value_of_x, y: value_of_y, z: value_of_z"
+/debugsay
+{
+    6 dict begin	% next N items defined are in a local dictionary
+	/array exch def % localize parameter name, removing it from stack
+	/initstr exch def % localize parameter name, removing it from stack
+	/len 0 def	% local variable - length of array
+	/pos 0 def	% local variable - position in array
+	/name () def	% local variable - an array element
+	/value () def	% local variable - next array element
+
+	30 0 rmoveto
+
+	/len array length def
+
+	initstr 80 string cvs show
+
+	% for pos = 0 to $#array step 2
+	0 2 len 1 sub
+	{
+		/pos exch def
+%		(pos) pos debugnv
+
+		% $name = $array[$pos];
+		/name array pos get def
+%		(name) name debugnv
+
+		% $value = $array[$pos+1];
+		/value array pos 1 add get def
+%		(value) value debugnv
+
+		name 80 string cvs show
+		value 80 string cvs show
+	} for
+
+	newline
+
+    end		% local dictionary destroyed here
+
+} def
+
+
+% newline();
+%	go to left margin of next line for debug messages
+/newline
+{
+	currentpoint debugdown sub % decrement Y pos
+	exch pop		% drop old X
+	debuglm exch		% form (debuglm,Y) on stack
+	moveto			% go there!
+} def
+
+
+% str = i2s(n):
+%	 convert n to a string
+/i2s
+{
+	20 string cvs
+} def
+
+
+% result = append( string1, string2 )
+% 	Concatenates two strings together.  Some languages
+%	already know how to do stuff like this!!!
+/append
+{
+	 % Initial stack: s1 s2 <-- top of stack
+         2 copy		% s1 s2 s1 s2
+	 length		% s1 s2 s1 len(s2)
+	 exch		% s1 s2 len(s2) s1
+	 length add	% s1 s2 len(s1)+len(s2)
+         string dup     % s1 s2 r r
+         4 2 roll       % r r s1 s2
+         2 index	% r r s1 s2 r
+	 0		% r r s1 s2 r 0
+	 3 index	% r r s1 s2 r 0 s1
+         putinterval    % strcpy( r+0, s1 )
+         		% r r s1 s2
+         exch		% r r s2 s1
+	 length		% r r s2 len(s1)
+	 exch		% r r len(s1) s2
+	 putinterval	% strcpy( r+len(s1), s2 )
+	 		% return r
+} bind def
+
+
+%%Page: 1 1
+%%PageOrientation: Portrait
+
+/Helvetica-Bold findfont 13 scalefont setfont
+
+debugorigin
+
+% n = 500
+/n 500 def 
+
+% say "answer:"
+(answer:) [] debugsay
+
+% for r = 1 to n
+1 1 n 
+{
+	/r exch def
+
+	% odd=1
+	/odd 1 def 
+
+	% for i = 2 to r
+	2 1 r 
+	{
+		/i exch def
+		% if r % i == 0?
+		r i mod 0 eq 
+		{
+			% odd = 1-odd
+			/odd 1 odd sub def 
+		} if
+	} for
+
+	% if odd
+	odd 1 eq 
+	{
+		% say "$r"
+		() [r ()] debugsay
+	} if
+} for
+
+
+showpage
