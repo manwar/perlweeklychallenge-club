@@ -17,7 +17,7 @@
 #
 # Thus we can solve by 
 
-say "Open rooms: ", join ',', ( 1..^500 ).grep: *.&is-open;
+say "Open rooms: ", join ',', ( 1..500 ).grep: *.&is-open;
 
 sub is-open( $room )
 {
