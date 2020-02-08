@@ -1,34 +1,52 @@
-Task 1: "Square Secret Code:
+Task 1: "Cryptic Message:
 
-The square secret code mechanism first removes any space from the original
-message. Then it lays down the message in a row of 8 columns. The coded
-message is then obtained by reading down the columns going left to right.
+The communication system of an office is broken and messages received
+are not completely reliable. To send the message Hello 6 times, it ended
+up sending these following:
 
-For example, the message is "The quick brown fox jumps over the lazy dog".
+H x l 4 !
+c e - l o
+z e 6 l g
+H W l v R
+q 9 m # o
 
-Then the message would be laid out as below:
+Similarly another day we received a message repeatedly like below:
 
-thequick
-brownfox
-jumpsove
-rthelazy
-dog
+P + 2 l ! a t o
+1 e 8 0 R $ 4 u
+5 - r ] + a > /
+P x w l b 3 k \
+2 e 3 5 R 8 y u
+< ! r ^ ( ) k 0
 
-The code message would be as below:
+Write a script to decrypt the above repeated message (one message repeated
+6 times).
 
-tbjrd hruto eomhg qwpe unsl ifoa covz kxey
-
-Write a script that accepts a message from command line and prints the
-equivalent coded message.
+HINT: Look for characters repeated in a particular position in all six
+messages received.
 "
 
-My notes: sounds trivial, let's write the decoder as well.
+My notes: ah, so pick maxfreq letter in each column?
 
-Task #2: "Source Dumper:
+Task #2: "Is the room open?
 
-Write a script that dumps its own source code. For example, say, the script name is ch-2.pl then the following command should returns nothing.
+There are 500 rooms in a hotel with 500 employees having keys to all the
+rooms. The first employee opened main entrance door of all the rooms. The
+second employee then closed the doors of room numbers 2,4,6,8,10 and
+so on to 500. The third employee then closed the door if it was opened
+or opened the door if it was closed of rooms 3,6,9,12,15 and so on to
+500. Similarly the fourth employee did the same as the third but only
+room numbers 4,8,12,16 and so on to 500. This goes on until all employees
+has had a turn.
 
-$ perl ch-2.pl | diff - ch-2.pl
+Write a script to find out all the rooms still open at the end.
 "
 
-My notes: trivial if we're allowed to use $0.
+My notes: sounds pretty easy, two nested for loops, but one of those questions
+where I can't predict in advance what the answer will be.
+
+But having written the naive roomopen[r] based solution, I find that the
+answer is: the open rooms are all the room numbers that are exact squares!
+I'm not sure why, but I then implemented that more directly, with no
+arrays.  I then translated that into Postscript too, see the postscript
+directory:-)
