@@ -19,10 +19,6 @@
 
 say "Open rooms: ", join ',', ( 1..500 ).grep: *.&is-open;
 
-sub is-open( $room )
-{
-    my $sqrt = $room.sqrt;
-    $sqrt == $sqrt.Int
-}
+sub is-open( $room ) { ($_ = $room.sqrt) && $_ == $_.Int; }
 
 # Open rooms: 1,4,9,16,25,36,49,64,81,100,121,144,169,196,225,256,289,324,361,400,441,484
