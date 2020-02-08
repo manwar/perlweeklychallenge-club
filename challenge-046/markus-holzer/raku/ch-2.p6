@@ -12,12 +12,12 @@
 # In the case of a square number however, there is always one pair for which both elements are the same.
 # 16 for example, has the divisor pairs are (1,16), (2, 8) and (4,4). 
 # This last pair contains the same number twice. 
-# And that is what makes the total number of divisors odd
-# And that is what tells us the door 16 will be open.
+# And that is what makes the total number of divisors odd.
+# And then that is what tells us the door 16 will be open.
 #
-# Knowing all that we can solve by 
+# Thus we can solve by 
 
-say "Open rooms: \n", (1..^500).grep({ .&is-open }) .join(", ");
+say "Open rooms: ", join ',', ( 1..^500 ).grep: *.&is-open;
 
 sub is-open( $room )
 {
