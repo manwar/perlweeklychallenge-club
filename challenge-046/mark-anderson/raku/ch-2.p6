@@ -1,24 +1,23 @@
 #!/usr/bin/env perl6
 
-# @doors will be an array of 0s and 1s.
-# A 0 will be an open door and a 1 will be a closed door.
-# Employee 1 opens all doors.
-my @doors[500] = 0 xx 500;
+my $open := True;
 
-for 2..500 -> $emp {
-    # @seq will hold the door numbers that 
-    # the current employee will open/close.
-    my @seq = $emp, $emp*2...500;
+# @doors is an array of Bools.
+# The first employee opens every door.
+my @doors = $open xx 500;
 
-    for @seq -> $door {
+for 2 .. 500 -> $emp {
+    # The following sequence is the doors that 
+    # the next employee opens or closes.
+    for $emp, $emp*2 ... 500 -> $door {
         # If the door is open then close it.
         # If the door is closed then open it.
-        # The "+^= 1" will toggle the number.
-        @doors[$door-1] +^= 1;
+        # The "?^= $open" will toggle the Bool.
+        @doors[$door-1] ?^= $open;
     }
 }
 
-for 1..500 -> $door {
-    # Print the door number if it is open.
-    say $door unless @doors[$door-1];
+for 1 .. 500 -> $door {
+    # Print the door if it's open.
+    say $door if @doors[$door-1];
 }
