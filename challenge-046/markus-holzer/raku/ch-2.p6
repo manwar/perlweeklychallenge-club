@@ -11,14 +11,19 @@
 #
 # In the case of a square number however, there is always one pair for which both elements are the same.
 # 16 for example, has the divisor pairs are (1,16), (2, 8) and (4,4). 
-# This last pair contains the same number twice. 
+# The last (square) pair contains the same number twice. 
 # And that is what makes the total number of divisors odd.
-# And then that is what tells us the door 16 will be open.
+# And then that is what tells us the door 16, and all other squares, will be open.
 #
-# Thus we can solve by 
+# Thus we can know wether a door is open  by checking if the room number is sqare.
 
-say "Open rooms: ", join ',', ( 1..500 ).grep: *.&is-open;
+say "Open rooms: ", ( 1..500 ).grep: *.&is-open;
+sub is-open( $room ) { $room.sqrt.narrow ~~ Int }
 
-sub is-open( $room ) { ($_ = $room.sqrt) && $_ == $_.Int; }
+# We could also simply generate the list of squares
 
-# Open rooms: 1,4,9,16,25,36,49,64,81,100,121,144,169,196,225,256,289,324,361,400,441,484
+say "Open rooms: ", (1..500.sqrt.Int).map: * ** 2;
+
+# Or even
+
+say "Open rooms: ", (1..500.sqrt.Int)>>²; # nicest idiom by jnthn
