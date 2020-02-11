@@ -7,11 +7,11 @@ my %r = @r.Hash;
 
 sub r2d( $r is copy ) { 
     $r .= uc;
-    %r{$r} || reduce { $^a >= $^b ?? $a + $b !! $a - $b }, $r.comb.map( -> $d { %r{$d} } );
+    %r{$r} || [+] $r.comb.map({  %r{$_} });
 }
 
 sub d2r( $d is copy ) {
-    join '', gather while $d > 0 {
+    [~] gather while $d > 0 {
          my ($k, $n) = @r.first( *.value <= $d ).kv; 
          take $k;
          $d -= $n;
