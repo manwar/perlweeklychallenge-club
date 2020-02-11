@@ -39,10 +39,10 @@ exit;
 
 sub arabic {
 	my @roman = split(//, uc(shift));
-	return 0 unless (scalar @roman > 0);
-
 	my ($arabic, $next, $error, $min) = (0, '', '', 1000);
-	while (1) {
+
+	while (scalar @roman and not $error) {
+		# Check for matching pair of Roman numerals, eg 'IV'
 		if (scalar @roman > 1) {
 			$next = $roman[0].$roman[1];
 			if ( defined($arabic{$next}) ) {
@@ -54,6 +54,7 @@ sub arabic {
 				next;
 	 		}				
 		} 
+		# Pair not found, maybe there is one matching numeral, eg 'I'
 		if (scalar @roman > 0) {
 			$next = $roman[0];
 			if ( defined($arabic{$next}) ) {
@@ -67,19 +68,13 @@ sub arabic {
 				$error = "Invalid Roman numeral at $next";
 			}
 		}
-		else {
-			last;
-		}
-
-		last if ($error);
 	}
+
 	if ($error) {
 		say $error;
 		exit;
 	} 
-	else {
-		return $arabic;
-	}
+	return $arabic;
 }
 
 sub roman {
