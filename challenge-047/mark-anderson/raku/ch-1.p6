@@ -1,76 +1,174 @@
 #!/usr/bin/env perl6
+      
+grammar Roman2Arabic {
+    token TOP {
+        :my Int $*Arabic;
+        <Thousands>? <Hundreds>? <Tens>? <Ones>?
+    }
 
-grammar Calculator {
-    rule TOP {
-        <Roman> <operator> <Roman> {
-            my $integer;
-            my $i1 = Roman_to_integer($<Roman>[0].Str, 0);
-            my $i2 = Roman_to_integer($<Roman>[1].Str, 0);
+    token Thousands { [M ** 1..3] }
 
-            given $<operator> {
-                when '+' { $integer = $i1 + $i2 }
-                when '-' { $integer = $i1 - $i2 }
-                when 'x' { $integer = $i1 * $i2 }
-                when '/' { $integer = $i1 / $i2 }
-            }
+    token Hundreds  { [C [C ** 1..2|D|M]?] || [D [C ** 1..3]?] }
 
-            say integer_to_Roman($integer.Int, q{});
+    token Tens      { [X [X ** 1..2|C|L]?] || [L [X ** 1..3]?] }
+
+    token Ones      { [I [I ** 1..2|V|X]?] || [V [I ** 1..3]?] }
+}
+
+grammar Arabic2Roman {
+    token TOP       { 
+        :my Str $*Roman; 
+        <Thousands>? <Hundreds>? <Tens>? <Ones> 
+    }
+
+    token Thousands { <[123]> <?before \d ** 3> }
+
+    token Hundreds  { \d <?before \d ** 2> }
+
+    token Tens      { \d <?before \d> }
+
+    token Ones      { \d }
+}
+
+class Roman2ArabicActions {
+    method TOP ($/) {
+        make $*Arabic;
+    }
+
+    method Thousands ($/) {
+        $*Arabic = 1000 * $/.chars;
+    }
+
+    method Hundreds ($/) {
+        given $/ {
+            when "CM"   { $*Arabic += 900 }
+            when "DCCC" { $*Arabic += 800 } 
+            when "DCC"  { $*Arabic += 700 }
+            when "DC"   { $*Arabic += 600 }
+            when "D"    { $*Arabic += 500 }
+            when "CD"   { $*Arabic += 400 }
+            when "CCC"  { $*Arabic += 300 }
+            when "CC"   { $*Arabic += 200 }
+            when "C"    { $*Arabic += 100 }
         }
     }
 
-    token Roman {
-        <[IVXLCDM]>+
+    method Tens ($/) {
+        given ($/) {
+            when "XC"   { $*Arabic += 90 }
+            when "LXXX" { $*Arabic += 80 } 
+            when "LXX"  { $*Arabic += 70 }
+            when "LX"   { $*Arabic += 60 }
+            when "L"    { $*Arabic += 50 }
+            when "XL"   { $*Arabic += 40 }
+            when "XXX"  { $*Arabic += 30 }
+            when "XX"   { $*Arabic += 20 }
+            when "X"    { $*Arabic += 10 }
+        }
     }
+
+    method Ones ($/) {
+        given ($/) {
+            when "IX"   { $*Arabic += 9 }
+            when "VIII" { $*Arabic += 8 } 
+            when "VII"  { $*Arabic += 7 }
+            when "VI"   { $*Arabic += 6 }
+            when "V"    { $*Arabic += 5 }
+            when "IV"   { $*Arabic += 4 }
+            when "III"  { $*Arabic += 3 }
+            when "II"   { $*Arabic += 2 }
+            when "I"    { $*Arabic += 1 }
+        }
+    }
+}
+    
+class Arabic2RomanActions {
+    method TOP ($/) { 
+        make $*Roman; 
+    } 
+
+    method Thousands ($/) {
+        $*Roman = "M" x $/.Str;
+    }
+
+    method Hundreds ($/) {
+        given $/ {
+            when 9 { $*Roman ~= "CM"   }
+            when 8 { $*Roman ~= "DCCC" }
+            when 7 { $*Roman ~= "DCC"  }
+            when 6 { $*Roman ~= "DC"   }
+            when 5 { $*Roman ~= "D"    }
+            when 4 { $*Roman ~= "CD"   }
+            when 3 { $*Roman ~= "CCC"  }
+            when 2 { $*Roman ~= "CC"   }
+            when 1 { $*Roman ~= "C"    }
+        } 
+    }
+
+    method Tens ($/) {
+        given $/ {
+            when 9 { $*Roman ~= "XC" }
+            when 8 { $*Roman ~= "LXXX" }
+            when 7 { $*Roman ~= "LXX" }
+            when 6 { $*Roman ~= "LX" }
+            when 5 { $*Roman ~= "L"  }
+            when 4 { $*Roman ~= "XL" }
+            when 3 { $*Roman ~= "XXX" }
+            when 2 { $*Roman ~= "XX" }
+            when 1 { $*Roman ~= "X"  }
+        }
+    }
+    
+    method Ones ($/) {
+        given $/ {
+            when 9 { $*Roman ~= "IX" }
+            when 8 { $*Roman ~= "VIII" }
+            when 7 { $*Roman ~= "VII" }
+            when 6 { $*Roman ~= "VI" }
+            when 5 { $*Roman ~= "V"  }
+            when 4 { $*Roman ~= "IV" }
+            when 3 { $*Roman ~= "III" }
+            when 2 { $*Roman ~= "II" }
+            when 1 { $*Roman ~= "I"  }
+        }
+    }
+}
+
+grammar Calculator {
+    has Arabic2Roman $.a2r;
+    has Roman2Arabic $.r2a;
+
+    rule  TOP      { <Roman> <Operator> <Roman> }
+
+    token Roman    { <[IVXLCDM]>+ }
  
-    token operator {
-        <[+x/-]>
-    }
+    token Operator { <[+x/-]> }
 }
 
-sub Roman_to_integer(Str $str is copy, Int $int is copy) {
-    given $str {
-        when * ~~ /^M/  { $int += 1000; $str .= subst(/^M/ , q{}) }
-        when * ~~ /^CM/ { $int += 900;  $str .= subst(/^CM/, q{}) }
-        when * ~~ /^D/  { $int += 500;  $str .= subst(/^D/ , q{}) }
-        when * ~~ /^CD/ { $int += 400;  $str .= subst(/^CD/, q{}) }
-        when * ~~ /^C/  { $int += 100;  $str .= subst(/^C/ , q{}) }
-        when * ~~ /^XC/ { $int += 90;   $str .= subst(/^XC/, q{}) }
-        when * ~~ /^L/  { $int += 50;   $str .= subst(/^L/ , q{}) }
-        when * ~~ /^XL/ { $int += 40;   $str .= subst(/^XL/, q{}) }
-        when * ~~ /^X/  { $int += 10;   $str .= subst(/^X/ , q{}) }
-        when * ~~ /^IX/ { $int += 9;    $str .= subst(/^IX/, q{}) }
-        when * ~~ /^V/  { $int += 5;    $str .= subst(/^V/ , q{}) }
-        when * ~~ /^IV/ { $int += 4;    $str .= subst(/^IV/, q{}) }
-        when * ~~ /^I/  { $int += 1;    $str .= subst(/^I/ , q{}) }
+class CalculatorActions {
+    method TOP ($/ is copy) { 
+        my $calc = $/;
+
+        my $answer;
+
+        my $i1 = $calc.r2a.parse($calc<Roman>[0], 
+                                 :actions(Roman2ArabicActions)).made; 
+
+        my $i2 = $calc.r2a.parse($calc<Roman>[1], 
+                                 :actions(Roman2ArabicActions)).made; 
+
+        given $calc<Operator> {
+            when "+" { $answer = $i1 + $i2 }
+            when "-" { $answer = $i1 - $i2 }
+            when "x" { $answer = $i1 * $i2 }
+            when "/" { $answer = $i1 / $i2 }
+        }
+
+        $calc.make($calc.a2r.parse($answer, 
+                   :actions(Arabic2RomanActions)).made);
     }
-
-    return $int unless $str;
-
-    Roman_to_integer($str, $int); 
-}
-            
-sub integer_to_Roman(Int $int is copy, Str $str is copy) {
-    given $int {
-        when * >= 1000 { $str ~= "M" ; $int -= 1000 }
-        when * >= 900  { $str ~= "CM"; $int -= 900  }
-        when * >= 500  { $str ~= "D" ; $int -= 500  }
-        when * >= 400  { $str ~= "CD"; $int -= 400  } 
-        when * >= 100  { $str ~= "C" ; $int -= 100  }
-        when * >= 90   { $str ~= "XC"; $int -= 90   }
-        when * >= 50   { $str ~= "L" ; $int -= 50   }
-        when * >= 40   { $str ~= "XL"; $int -= 40   }
-        when * >= 10   { $str ~= "X" ; $int -= 10   }
-        when * >= 9    { $str ~= "IX"; $int -= 9    }
-        when * >= 5    { $str ~= "V" ; $int -= 5    }
-        when * >= 4    { $str ~= "IV"; $int -= 4    }
-        when * >= 1    { $str ~= "I" ; $int -= 1    }
-    }
-
-    return $str unless $int;
-
-    integer_to_Roman($int, $str);
 }
 
 sub MAIN(*@args) {
-    Calculator.parse(@args.Str);
+    Calculator.parse(@args.Str, :actions(CalculatorActions)).made.say;
 }
