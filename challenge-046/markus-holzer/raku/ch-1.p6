@@ -12,9 +12,9 @@ say decrypt( $message );
 
 sub decrypt( $encrypted )
 {
-    join '', zip( 
-        $encrypted.lines.map({ .split(/ \s /) }) 
-    ).map({ 
-        .Bag.first({ .value > 1 }).key 
-    });
+    [~] zip( 
+        $encrypted.lines.map: *.words
+    ).map( 
+        *.Bag.maxpairs[0].key 
+    );
 }
