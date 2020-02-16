@@ -27,17 +27,22 @@ sub firstDigit {
     while ($number >= 10) {
         $number /= 10;
     }
-    return $number;
+    return int($number);
 }
 
 for (my $i = 100; $count < $QUANTITY ; ++$i) {
 
     $first = firstDigit $i;
     $last  = $i % 10;
+    my $formedBy = ($first * 10) + $last;
 
-    if ( $i % $first == 0 && ($last == 0 || $i % $last == 0 )) {
+    if ( $i % $formedBy == 0 ) {
         print "$i ";
         ++$count;
     }
 }
 print "\n";
+
+__END__
+output:
+        100 105 108 110 120 121 130 132 135 140 143 150 154 160 165 170 176 180 187 190 
