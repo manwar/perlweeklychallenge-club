@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+my $gapful := gather
+{
+  for 100 .. *
+  {
+    take $_ if is-gapful($_);
+  }
+}
+
+say "First 20 Gapful numbers: { $gapful[^20].join(',') }.";
+
+sub is-gapful (Int $number)
+{
+  my $divisor = $number.substr(0,1) ~ $number.substr(*-1,1);
+
+  return $number %% $divisor;
+}

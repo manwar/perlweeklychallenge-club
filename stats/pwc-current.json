@@ -1,8 +1,20 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 047"
    },
    "chart" : {
       "type" : "column"
@@ -10,18 +22,26 @@
    "legend" : {
       "enabled" : 0
    },
+   "xAxis" : {
+      "type" : "category"
+   },
    "series" : [
       {
          "data" : [
             {
-               "name" : "Andrezgz",
                "y" : 2,
+               "name" : "Andrezgz",
                "drilldown" : "Andrezgz"
             },
             {
+               "y" : 3,
+               "name" : "Arne Sommer",
+               "drilldown" : "Arne Sommer"
+            },
+            {
+               "drilldown" : "Dave Cross",
                "name" : "Dave Cross",
-               "y" : 2,
-               "drilldown" : "Dave Cross"
+               "y" : 2
             },
             {
                "y" : 3,
@@ -34,29 +54,29 @@
                "drilldown" : "Duane Powell"
             },
             {
-               "y" : 2,
                "name" : "E. Choroba",
+               "y" : 2,
                "drilldown" : "E. Choroba"
             },
             {
                "drilldown" : "Javier Luque",
-               "y" : 5,
-               "name" : "Javier Luque"
+               "name" : "Javier Luque",
+               "y" : 5
             },
             {
-               "drilldown" : "Luca Ferrari",
+               "y" : 4,
                "name" : "Luca Ferrari",
-               "y" : 4
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
                "y" : 2,
-               "name" : "Mark Anderson"
+               "drilldown" : "Mark Anderson"
             },
             {
-               "drilldown" : "Markus Holzer",
+               "name" : "Markus Holzer",
                "y" : 2,
-               "name" : "Markus Holzer"
+               "drilldown" : "Markus Holzer"
             },
             {
                "drilldown" : "Mohammad S Anwar",
@@ -64,38 +84,30 @@
                "name" : "Mohammad S Anwar"
             },
             {
+               "drilldown" : "Saif Ahmed",
                "name" : "Saif Ahmed",
-               "y" : 2,
-               "drilldown" : "Saif Ahmed"
+               "y" : 2
             },
             {
+               "drilldown" : "Simon Proctor",
                "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "name" : "Simon Proctor"
             },
             {
-               "y" : 1,
+               "drilldown" : "Steven Wilson",
                "name" : "Steven Wilson",
-               "drilldown" : "Steven Wilson"
+               "y" : 1
             }
          ],
          "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 047"
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Andrezgz",
             "name" : "Andrezgz",
+            "id" : "Andrezgz",
             "data" : [
                [
                   "Perl",
@@ -104,8 +116,22 @@
             ]
          },
          {
-            "id" : "Dave Cross",
+            "name" : "Arne Sommer",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Arne Sommer"
+         },
+         {
             "name" : "Dave Cross",
+            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl",
@@ -128,28 +154,26 @@
             "id" : "Dave Jacoby"
          },
          {
-            "name" : "Duane Powell",
+            "id" : "Duane Powell",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Duane Powell"
+            "name" : "Duane Powell"
          },
          {
+            "name" : "E. Choroba",
             "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "E. Choroba"
+            ]
          },
          {
-            "id" : "Javier Luque",
-            "name" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -163,9 +187,12 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Javier Luque",
+            "name" : "Javier Luque"
          },
          {
+            "name" : "Luca Ferrari",
             "id" : "Luca Ferrari",
             "data" : [
                [
@@ -176,8 +203,7 @@
                   "Blog",
                   2
                ]
-            ],
-            "name" : "Luca Ferrari"
+            ]
          },
          {
             "name" : "Mark Anderson",
@@ -190,42 +216,22 @@
             "id" : "Mark Anderson"
          },
          {
-            "id" : "Markus Holzer",
+            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Markus Holzer"
+            "id" : "Markus Holzer"
          },
          {
             "name" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
                   1
-               ]
-            ],
-            "id" : "Mohammad S Anwar"
-         },
-         {
-            "name" : "Saif Ahmed",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "id" : "Saif Ahmed"
-         },
-         {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
-            "data" : [
-               [
-                  "Raku",
-                  2
                ]
             ]
          },
@@ -233,27 +239,40 @@
             "data" : [
                [
                   "Perl",
+                  2
+               ]
+            ],
+            "id" : "Saif Ahmed",
+            "name" : "Saif Ahmed"
+         },
+         {
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Simon Proctor"
+         },
+         {
+            "id" : "Steven Wilson",
+            "data" : [
+               [
+                  "Perl",
                   1
                ]
             ],
-            "name" : "Steven Wilson",
-            "id" : "Steven Wilson"
+            "name" : "Steven Wilson"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 13] Last updated at 2020-02-13 14:06:08 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 047"
+   "subtitle" : {
+      "text" : "[Champions: 14] Last updated at 2020-02-16 01:35:45 GMT"
    }
 }
