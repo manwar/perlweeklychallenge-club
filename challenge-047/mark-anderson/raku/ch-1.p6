@@ -2,7 +2,8 @@
       
 grammar Roman2Arabic {
     token TOP {
-        :my Int $*Arabic;
+        :my $*Arabic;
+
         <Thousands>? <Hundreds>? <Tens>? <Ones>?
     }
 
@@ -17,7 +18,8 @@ grammar Roman2Arabic {
 
 grammar Arabic2Roman {
     token TOP       { 
-        :my Str $*Roman; 
+        :my $*Roman; 
+
         <Thousands>? <Hundreds>? <Tens>? <Ones> 
     }
 
@@ -88,7 +90,7 @@ class Arabic2RomanActions {
     } 
 
     method Thousands ($/) {
-        $*Roman = "M" x $/.Str;
+        $*Roman = "M" x $/;
     }
 
     method Hundreds ($/) {
@@ -107,38 +109,41 @@ class Arabic2RomanActions {
 
     method Tens ($/) {
         given $/ {
-            when 9 { $*Roman ~= "XC" }
+            when 9 { $*Roman ~= "XC"   }
             when 8 { $*Roman ~= "LXXX" }
-            when 7 { $*Roman ~= "LXX" }
-            when 6 { $*Roman ~= "LX" }
-            when 5 { $*Roman ~= "L"  }
-            when 4 { $*Roman ~= "XL" }
-            when 3 { $*Roman ~= "XXX" }
-            when 2 { $*Roman ~= "XX" }
-            when 1 { $*Roman ~= "X"  }
+            when 7 { $*Roman ~= "LXX"  }
+            when 6 { $*Roman ~= "LX"   }
+            when 5 { $*Roman ~= "L"    }
+            when 4 { $*Roman ~= "XL"   }
+            when 3 { $*Roman ~= "XXX"  }
+            when 2 { $*Roman ~= "XX"   }
+            when 1 { $*Roman ~= "X"    }
         }
     }
     
     method Ones ($/) {
         given $/ {
-            when 9 { $*Roman ~= "IX" }
+            when 9 { $*Roman ~= "IX"   }
             when 8 { $*Roman ~= "VIII" }
-            when 7 { $*Roman ~= "VII" }
-            when 6 { $*Roman ~= "VI" }
-            when 5 { $*Roman ~= "V"  }
-            when 4 { $*Roman ~= "IV" }
-            when 3 { $*Roman ~= "III" }
-            when 2 { $*Roman ~= "II" }
-            when 1 { $*Roman ~= "I"  }
+            when 7 { $*Roman ~= "VII"  }
+            when 6 { $*Roman ~= "VI"   }
+            when 5 { $*Roman ~= "V"    }
+            when 4 { $*Roman ~= "IV"   }
+            when 3 { $*Roman ~= "III"  }
+            when 2 { $*Roman ~= "II"   }
+            when 1 { $*Roman ~= "I"    }
         }
     }
 }
 
 grammar Calculator {
-    has Arabic2Roman $.a2r;
-    has Roman2Arabic $.r2a;
+    rule  TOP      { 
+        :my @*Arabics; 
+        :my $*Answer;
+        :my $*Operator;
 
-    rule  TOP      { <Roman> <Operator> <Roman> }
+        <Roman> <Operator> <Roman> 
+    }
 
     token Roman    { <[IVXLCDM]>+ }
  
@@ -146,26 +151,29 @@ grammar Calculator {
 }
 
 class CalculatorActions {
-    method TOP ($/ is copy) { 
-        my $calc = $/;
+    method TOP ($/) { 
+        make $*Answer if $*Answer;
+    }
 
-        my $answer;
-
-        my $i1 = $calc.r2a.parse($calc<Roman>[0], 
-                                 :actions(Roman2ArabicActions)).made; 
-
-        my $i2 = $calc.r2a.parse($calc<Roman>[1], 
-                                 :actions(Roman2ArabicActions)).made; 
-
-        given $calc<Operator> {
-            when "+" { $answer = $i1 + $i2 }
-            when "-" { $answer = $i1 - $i2 }
-            when "x" { $answer = $i1 * $i2 }
-            when "/" { $answer = $i1 / $i2 }
+    method Roman ($match) {
+        push(@*Arabics, Roman2Arabic.parse($match, :actions(
+                        Roman2ArabicActions)).made); 
+        
+        if ($*Operator) {
+            given $*Operator {
+                when "+" { $*Answer = [+] @*Arabics }
+                when "-" { $*Answer = [-] @*Arabics }
+                when "x" { $*Answer = [*] @*Arabics }
+                when "/" { $*Answer = [/] @*Arabics }
+            }
+        
+            $*Answer = Arabic2Roman.parse($*Answer, :actions(
+                       Arabic2RomanActions)).made;
         }
+    }
 
-        $calc.make($calc.a2r.parse($answer, 
-                   :actions(Arabic2RomanActions)).made);
+    method Operator ($/) {
+        $*Operator = $/;
     }
 }
 
