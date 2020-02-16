@@ -43,7 +43,9 @@ print STDERR "Calculation result had a decimal $decimal that was truncated.\n" i
 if ( $result == 0) {
     print "N (no formal zero)\n"; # https://en.wikipedia.org/wiki/Roman_numerals#Zero
 } elsif ($result > 3_999) {
-    die "Calculation result $result , exceeds MMMCMXCIX (3,999) the maximum value of the Roman number format.\n";
+    die "Calculation result $result exceeds MMMCMXCIX (3,999) the maximum value of the Roman number format.\n";
+} elsif ($result < 0) {
+    die "Calculation result $result is negative. Roman numbers are positive integers.\n";
 } else {
     $result = Roman(int $result);
     print "$result\n";
