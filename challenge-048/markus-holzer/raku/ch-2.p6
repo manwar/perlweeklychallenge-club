@@ -3,8 +3,7 @@ my $formatter = sub { sprintf '%02d%02d%04d', .month, .day, .year given $^date }
 .say for (2000..2999)
     .grep({ 
         0 < .substr(2,2).flip < 13 &&
-        0 < .substr(0,2).flip < 32
-    })
+        0 < .substr(0,2).flip < 32 })
     .map({ 
         Date.new($_, |.flip.comb(2), :$formatter ) });
 
