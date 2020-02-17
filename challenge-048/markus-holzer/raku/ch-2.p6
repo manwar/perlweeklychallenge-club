@@ -1,7 +1,7 @@
 my $formatter = sub { sprintf '%02d%02d%04d', .month, .day, .year given $^date }; 
 
 #.say for (1300..1399)
-.say for (2000..2990)
+.say for (2000..2999)
     # filter out most of the impossible years
     .grep({ 
         0 < .substr(2,2).flip < 13 &&
