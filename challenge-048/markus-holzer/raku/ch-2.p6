@@ -7,7 +7,7 @@ my $formatter = sub { sprintf '%02d%02d%04d', .month, .day, .year given $^date }
         0 < .substr(2,2).flip < 13 &&
         0 < .substr(0,2).flip < 32 })
     # Try making a date, this fails sometimes, eg for the year 1311 -> 11311311
-    # which is not a valid date
+    # which is not a valid date. That doesn't happen for 2000 to 29999 though.
     .map({  
         try Date.new($_, |.flip.comb(2), :$formatter ) })
     # So we need to filter these out
