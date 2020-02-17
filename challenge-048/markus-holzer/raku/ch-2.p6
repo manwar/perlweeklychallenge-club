@@ -1,11 +1,18 @@
 my $formatter = sub { sprintf '%02d%02d%04d', .month, .day, .year given $^date }; 
 
-.say for (2000..2999)
+#.say for (1300..1399)
+.say for (2000..2990)
+    # filter out most of the impossible years
     .grep({ 
         0 < .substr(2,2).flip < 13 &&
         0 < .substr(0,2).flip < 32 })
-    .map({ 
-        Date.new($_, |.flip.comb(2), :$formatter ) });
+    # Try making a date, this fails sometimes, eg for the year 1311 -> 11311311
+    # which is not a valid date
+    .map({  
+        try Date.new($_, |.flip.comb(2), :$formatter ) })
+    # So we need to filter these out
+    .grep({ 
+        .so });
 
 # 36 solutions in total
 # 10022001
