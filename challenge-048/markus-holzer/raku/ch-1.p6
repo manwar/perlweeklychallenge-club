@@ -6,4 +6,5 @@ while @circle.elems > 1
     @circle = @circle[ $offset, { $_ + 2 } ... * ];
 }
 
-say "Survivor: #", @circle.first;
+# Survivor: No. 245
+say "Survivor: No.", @circle.first;
