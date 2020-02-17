@@ -12,5 +12,5 @@ while @circle.elems > 1
     $offset = @circle[ *-1 ] == $pivot-man ?? 0 !! 1;
 }
 
-# Survivor: No. 245
+# Survivor: No. 489
 say "Survivor: No.", @circle.first;
