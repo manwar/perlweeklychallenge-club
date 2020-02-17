@@ -1,32 +1,62 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "drilldown" : "Dave Cross",
-               "y" : 2,
-               "name" : "Dave Cross"
-            },
-            {
-               "drilldown" : "Peter Scott",
-               "y" : 1,
-               "name" : "Peter Scott"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 048"
-      }
-   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Dave Cross",
+            "name" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "name" : "Peter Scott",
+            "id" : "Peter Scott"
+         },
+         {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         }
+      ]
+   },
    "legend" : {
       "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 048"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2020-02-17 10:43:43 GMT"
    },
    "plotOptions" : {
       "series" : {
@@ -37,42 +67,27 @@
          "borderWidth" : 0
       }
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 048"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "name" : "Dave Cross",
-            "id" : "Dave Cross"
-         },
-         {
-            "id" : "Peter Scott",
-            "name" : "Peter Scott",
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ]
-            ]
-         }
-      ]
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-02-17 10:39:00 GMT"
-   }
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 048",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Dave Cross",
+               "drilldown" : "Dave Cross",
+               "y" : 2
+            },
+            {
+               "name" : "Peter Scott",
+               "y" : 1,
+               "drilldown" : "Peter Scott"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            }
+         ]
+      }
+   ]
 }
