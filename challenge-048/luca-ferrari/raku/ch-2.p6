@@ -20,7 +20,7 @@ sub MAIN( Int :$year-start? = 2000,
     # produce the months and days. That also means that we can skip every year terminating
     # with two digits greates than 12, and days gtreater than 31
     for $year-start .. $year-end {
-        $_ ~~ / ^ $<month>=\d ** 2 $<day>=\d ** 2 $ /;
+        $_ ~~ / ^ $<day>=\d ** 2 $<month>=\d ** 2 $ /;
         my $month = $/<month>.flip;
         my $day   = $/<day>.flip;
         next if  $month > 12 || $month == 0;
