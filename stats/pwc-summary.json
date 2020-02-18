@@ -1,18 +1,24 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 147] Last updated at 2020-02-18 16:37:44 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -165,14 +171,11 @@
          "Yozen Hernandez"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 147] Last updated at 2020-02-18 17:21:02 GMT"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             0,
@@ -181,7 +184,7 @@
             45,
             2,
             0,
-            0,
+            1,
             0,
             13,
             47,
@@ -321,10 +324,10 @@
             2,
             15,
             11
-         ]
+         ],
+         "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -473,9 +476,11 @@
             2,
             11,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -624,12 +629,7 @@
             1,
             5,
             10
-         ],
-         "name" : "Blog"
+         ]
       }
-   ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   }
+   ]
 }
