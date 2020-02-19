@@ -13,7 +13,8 @@ use DateTime;
 # on October 2, 2001 as it is represented as 10022001.
 
 for my $year (2000..2999) {
-    for my $month (1..12) {
+    my $month = reverse(substr($year, 2, 2));
+    if ($month >= 1 && $month <= 12) {
         my $dt = DateTime->new(year => $year, month => $month);
         for my $day (1..$dt->month_length()) {
             my $date = sprintf("%02d%02d%d", $month, $day, $year);
