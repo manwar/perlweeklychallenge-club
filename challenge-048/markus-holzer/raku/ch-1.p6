@@ -2,7 +2,7 @@
 # the shift two, push one method is probably nicer,
 # if not faster
 
-my @circle = 1..500;
+my @circle = 1..50;
 my $offset = 0;
 
 while @circle.elems > 1
@@ -12,5 +12,5 @@ while @circle.elems > 1
     $offset = @circle[ *-1 ] == $pivot-man ?? 0 !! 1;
 }
 
-# Survivor: No. 489
+# Survivor: No. 37
 say "Survivor: No.", @circle.first;
