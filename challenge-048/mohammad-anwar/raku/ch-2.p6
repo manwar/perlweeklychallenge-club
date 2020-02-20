@@ -3,7 +3,6 @@
 use v6;
 
 sub MAIN() {
-
     my $fmt  = { sprintf "%02d%02d%04d", .month, .day, .year };
     my $date = Date.new(2000, 1, 1, formatter => $fmt);
     while $date.year <= 2999 {
