@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-my @people = map { $_ } (1 ..50);
+my @people = (1 ..50);
 while (scalar(@people) > 1) {
     my $sword = shift @people;
     shift @people;
