@@ -10,6 +10,6 @@ sub MAIN() {
         if $date-as-str eq $date-as-str.flip {
             say "$date-as-str is a Palindrome date.";
         }
-        $date = $date.later(days => 1);
+        ++$date;
     }
 }
