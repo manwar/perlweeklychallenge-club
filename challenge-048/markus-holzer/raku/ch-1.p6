@@ -1,16 +1,25 @@
-# perfect example of overcomplicated thinking
-# the shift two, push one method is probably nicer,
-# if not faster
+role Concatenationem { has $.vicinus is rw; }
+class Moribunda is Int does Concatenationem { };
 
-my @circle = 1..50;
-my $offset = 0;
-
-while @circle.elems > 1
+sub bicimare-sine-fine( Int $homines where * > 1 ) 
 {
-    my $pivot-man = @circle[ *-2 ];
-    @circle = @circle[ $offset, { $_ + 2 } ... * ];
-    $offset = @circle[ *-1 ] == $pivot-man ?? 0 !! 1;
+    my $armis = my $primus = Moribunda.new(1);
+
+    for 2..$homines
+    { 
+        my $homine = Moribunda.new($_); 
+        $armis.vicinus = $homine; 
+        $armis = $homine; 
+    }
+    
+    $armis = $armis.vicinus = $primus;
+
+    while $armis != $armis.vicinus 
+    {
+        $armis = $armis.vicinus = $armis.vicinus.vicinus;
+    }
+
+    $armis;
 }
 
-# Survivor: No. 37
-say "Survivor: No.", @circle.first;
+say bicimare-sine-fine( 50 );
