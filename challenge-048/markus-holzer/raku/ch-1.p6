@@ -38,3 +38,32 @@ sub bicimare-sine-fine( Int $homines where * > 1 )
 
 say bicimare-sine-fine( 50 );
 
+# The following solution looks at the number of men in each round of
+# killing and then use rotor(2) to split them up into killer / victim tuples,
+# from which only the survivors will be shoved into the next round.
+
+sub rotor-kill( $n )
+{
+    my @men = 1..$n;
+    
+    while @men.elems > 1
+    {
+        if @men.elems %% 2 
+        {
+            # When the number of men is even, we know the very last man 
+            # in line will die and we can start the next round at the beginning.
+            @men = @men.rotor(2).map: *.first;
+        } 
+        else 
+        {
+            # When the number of men is odd, the last man survives and will 
+            # kill the first in the next round, so we need to skip over the 
+            # poor fellow.
+            @men = @men.rotor(2, :partial).skip.map: *.first;
+        }
+    }
+    
+    @men.first;
+}
+
+say rotor-kill( 50 );
