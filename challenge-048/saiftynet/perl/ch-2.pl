@@ -28,8 +28,8 @@ my $format = $ARGV[0] // "MDY";  # valid strings "MDY", "DMY" and "YMD".
 die 'Invalid string, must be "MDY", "DMY" or "YMD"' if $format !~/^MDY|DMY|YMD\b/;
 
 foreach my $yyyy (2000..2999){
-   my $mm   =  substr($yyyy,3,1).substr($yyyy,2,1);
-   my $dd   =  substr($yyyy,1,1).substr($yyyy,0,1);
+   my $mm   =  reverse substr($yyyy,2,2);
+   my $dd   =  reverse substr($yyyy,0,2);
    
    ($mm,$dd)=($dd,$mm) if $format eq "DMY";    # Swap if DDMMYYY required
    
