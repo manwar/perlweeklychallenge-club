@@ -1,5 +1,7 @@
 #!/usr/bin/env perl6
      
+# Just brute force.
+
 my $mdy = sub ($self) { 
               sprintf "%02d%02d%04d", .month, .day, .year given $self;
           }
@@ -18,5 +20,8 @@ while ($dt.year < 3000) {
         printf "%02d/%02d/%04d\n", .month, .day, .year given $dt;
     }
 
+    #$dt += 1; # Formatting may be lost with this line 
+               # so I'm doing the below hack for now.
+               # (The issue has been fixed in Rakudo Star RC-1)
     $dt = $dt.succ.clone(formatter => $mdy);
 }

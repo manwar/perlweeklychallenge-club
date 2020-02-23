@@ -1,16 +1,15 @@
 #!/usr/bin/env perl6
 
-my @living = 1 .. 50;
-my @temp;
+# I wish I would have thought of the "push @a, shift @a; shift @a;" solution.
 
-while (@living > 1) {
-    loop (my $i = 0; $i < @living; $i += 2) {
-        push @temp, @living[$i];
-    }
-    
-    shift @temp if @temp[*-1] == @living[*-1]; 
-    @living = @temp;
-    @temp   = [];
+my @people = 1 .. 50;
+
+while @people > 1 {
+    my $last = @people[*-1];
+
+    @people  = @people[@people.keys.grep(* %% 2)];
+
+    shift @people if @people[*-1] == $last;
 }
 
-say @living.pop;
+put @people;
