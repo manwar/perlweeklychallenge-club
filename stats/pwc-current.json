@@ -1,26 +1,9 @@
 {
    "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-02-24 11:51:19 GMT"
+      "text" : "[Champions: 2] Last updated at 2020-02-24 11:57:01 GMT"
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Peter Scott",
-            "id" : "Peter Scott",
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ]
-            ]
-         }
-      ]
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 049"
+   "legend" : {
+      "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
@@ -31,33 +14,65 @@
          }
       }
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 049",
-         "data" : [
-            {
-               "y" : 1,
-               "drilldown" : "Peter Scott",
-               "name" : "Peter Scott"
-            }
-         ]
-      }
-   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Peter Scott",
+               "drilldown" : "Peter Scott",
+               "y" : 1
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 049"
+      }
+   ],
+   "chart" : {
+      "type" : "column"
    },
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "Perl Weekly Challenge - 049"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "name" : "Peter Scott",
+            "id" : "Peter Scott"
+         },
+         {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         }
+      ]
    }
 }
