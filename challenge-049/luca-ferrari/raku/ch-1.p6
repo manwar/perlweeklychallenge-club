@@ -14,7 +14,6 @@
 
 
 sub MAIN( Int :$number! where { $number > 0 } ) {
-    say "Input number is $number";
     "Minor multiple of $number made up by 0 and 1 only is { $number * $_ }".say && exit if ( $number * $_ ) ~~ / ^ <[01]>+ $ /
     for 2 .. Inf;
 }
