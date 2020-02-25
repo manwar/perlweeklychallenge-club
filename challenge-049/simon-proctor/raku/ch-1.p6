@@ -6,13 +6,13 @@ use v6.d;
 sub MAIN(
     UInt $x #= Number to look for multiple of
 ) {
-    my $current = 1;
-    my $current-bin = $current.base(2);
-
-    while ( ! ( $current-bin %% $x ) ) {
-        $current++;
-        $current-bin = $current.base(2);
+    my @seq = lazy gather {
+        my $current = 1;
+        loop {
+            take $current.base(2);
+            $current++;
+        }
     }
 
-    say $current-bin;
+    @seq.first( * %% $x ).say;
 }
