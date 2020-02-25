@@ -6,5 +6,13 @@ use v6.d;
 sub MAIN(
     UInt $x #= Number to look for multiple of
 ) {
-    ( $x, * + $x...* ).hyper.first( { $_ ~~ m!^ <[10]>+ $! } ).say;
+    my @seq = lazy gather {
+        my $current = 1;
+        loop {
+            take $current.base(2);
+            $current++;
+        }
+    }
+
+    @seq.first( * %% $x ).say;
 }
