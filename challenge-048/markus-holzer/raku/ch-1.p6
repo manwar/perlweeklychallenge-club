@@ -4,7 +4,7 @@
 #
 # A concise version of this looks like
 
-given my @men = 1..50 { .push( .splice(0,2).first ) while .elems > 1 };
+given my @men = 1..50 { .push( .splice(0,2).first ) while .elems };
 say @men.first;
 
 # But, the problem naturally lends itself to be expressed in terms of a circular linked list,
