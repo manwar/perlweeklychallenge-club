@@ -5,9 +5,15 @@ use feature qw/say/;
 
 my ($int) = @ARGV;
 die "$int isn't an int! \n" if $int =~ /\D/;
-say "checking $int";
 
-for (my $i = 1;;$i++){
+for (my $i = 2;;$i++){
     my $bin = sprintf("%b", $i);
-    say "$bin is the smallest 0/1 multiple of $int" and last unless $bin % $int;
+    next if $bin == $int;
+
+    # we know it starts with 1, but make sure there's at least one 0
+    next unless $bin =~ /0+/;
+
+    say "$bin is the smallest multiple of $int with 1s *and* 0s."
+	and last
+	unless $bin % $int;
 }
