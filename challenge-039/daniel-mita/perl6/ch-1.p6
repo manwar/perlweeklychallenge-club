@@ -16,36 +16,28 @@ constant @guest-list = (
   { name => 'Neil',    in => '10:01', out => '10:19' },
   { name => 'Chris',   in => '10:10', out => '11:00' },
 );
+my %present is SetHash; # To contain @guest-list indexes
 
-my Supplier $sign-in.=new;
-my Supplier $sign-out.=new;
-
-my Supplier $lightswitch.=new;
 my Bool $light;
-
-start react whenever $lightswitch.Supply {
+sub lightswitch ( --> Nil ) {
   "Light has been switched {$light.=not ?? 'on' !! 'off'}".say;
 }
 
-start react {
-  my %present is SetHash; # To contain @guest-list indexes
+sub sign-in ( $i --> Nil ) {
+  lightswitch unless $light; # Pretty dark, let's hit the switch
+  %present{$i}++;
+  "@guest-list[$i]<name> has signed in".say;
+}
 
-  whenever $sign-in.Supply {
-    $lightswitch.emit(Nil) unless $light; # Pretty dark, let's hit the switch
-    %present{$_}++;
-    "@guest-list[$_]<name> has signed in".say;
+sub sign-out ( $i --> Nil ) {
+  %present{$i}--;
+  "@guest-list[$i]<name> has signed out".say;
+  if %present ~~ ∅ {
+    'Looks like nobody is here'.say;
+    lightswitch;
   }
-
-  whenever $sign-out.Supply {
-    %present{$_}--;
-    "@guest-list[$_]<name> has signed out".say;
-    if %present ~~ ∅ {
-      'Looks like nobody is here'.say;
-      $lightswitch.emit(Nil);
-    }
-    else {
-      say 'Leave light on for ' ~ %present.keys.map({ @guest-list[$_]<name> }).join(', ');
-    }
+  else {
+    say 'Leave light on for ' ~ %present.keys.map({ @guest-list[$_]<name> }).join(', ');
   }
 }
 
@@ -58,13 +50,15 @@ loop (
   $light-duration++ if $light;
 
   my $t = $d.hh-mm-ss.substr(0, *-3); # Don't care about seconds
-  my @in  = @guest-list.pairs.grep(*.value<in>  eq $t).map(*.key);
-  my @out = @guest-list.pairs.grep(*.value<out> eq $t).map(*.key);
+  my %sign;
+  for <in out> -> $k {
+    %sign{$k} = @guest-list.pairs.grep(*.value{$k} eq $t).map(*.key);
+  }
 
-  if @in.elems || @out.elems {
+  if %sign<in out>.any {
     "\n$t".say;
-    $sign-in.emit($_)  for @in;
-    $sign-out.emit($_) for @out;
+    sign-in($_)  for %sign<in> .values;
+    sign-out($_) for %sign<out>.values;
   }
   elsif $all-times {
     "\n$t: Nothing happened".say;

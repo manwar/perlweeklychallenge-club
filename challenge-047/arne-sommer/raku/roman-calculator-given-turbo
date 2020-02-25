@@ -1,0 +1,19 @@
+#! /usr/bin/env raku
+
+use lib "lib";
+
+use Number::Roman;
+
+unit sub MAIN (Str $first, Str $operator, Str $second);
+
+my Int $f = $first.from-roman;
+my Int $s = $second.from-roman;
+
+given $operator
+{
+  when '+' { say ($f + $s).roman };
+  when '-' { say ($f - $s).roman };
+  when 'x' { say ($f * $s).roman };
+  when '*' { say ($f * $s).roman };
+  when '/' { say (Int($f) / Int($s)).roman };
+}

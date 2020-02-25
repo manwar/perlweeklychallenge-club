@@ -1,0 +1,10 @@
+#! /usr/bin/env raku
+
+for ^Inf
+{
+  my $value = .base(3).fmt('%08d');
+
+  last if $value.chars > 8;
+
+  say $value;
+}

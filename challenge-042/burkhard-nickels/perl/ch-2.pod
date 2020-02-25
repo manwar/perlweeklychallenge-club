@@ -1,0 +1,317 @@
+#!/usr/bin/perldoc
+
+=head1 Perl Weekly Challenge #42 Task #2: Balanced Brackets
+
+This Task "Balanced Brackets" I solved in 3 languages: Perl5, Perl6 and Python.
+My personal aim here is also to learn Perl6 and Python beside the eager in solving
+the Tasks in Perl5.
+
+Some highlights:
+
+=over 3
+
+=item * Perl5, Perl6 and Python solution.
+
+=item * Recursive function call.
+
+=item * do-while, do-repeat or while-if-break as DO-WHILE loop.
+
+=item * random integer number generation.
+
+=back
+
+
+=begin html
+
+<h2> Download and References </h2>
+<b>Download File:</b><a href="ch-2.pl" download> Perl5 Solution PWC #42 Task #2 ch-2.pl</a><br>
+<b>Download File:</b><a href="ch-2.p6" download> Perl6 Solution PWC #42 Task #2 ch-2.p6</a><br>
+<b>Download File:</b><a href="ch-2.py" download> Python Solution PWC #42 Task #2 ch-2.py</a><br>
+<br>
+
+=end html
+
+=head1 SYNOPSIS
+
+ # ./ch-2.pl            - Execution of program
+ # ./ch-2.p6            - Execution of program
+ # ./ch-2.py            - Execution of program
+ # perldoc ch-2.pod		- POD
+
+=cut
+
+# ====================== TASK 1 ==============================
+
+=head1 Definition Task #2: Balanced Brackets
+
+Write a script to generate a string with random number of ( and ) brackets. 
+Then make the script validate the string if it has balanced brackets.
+
+ For example:
+ () - OK
+ (()) - OK
+ )( - NOT OK
+ ())() - NOT OK
+
+=head1 Perl5 and Perl6
+
+How does the program work? Within a loop, that is left when some B<Balanced Brackets>
+are found, a random number of brackets is created with the function C<create_brackets()>.
+Than the bracket string is verified if it is B<Balanced Brackets> in the function
+C<balanced_brackets()>. The function C<balanced_brackets()> is called recursively as
+long as a pair of brackets can be found with search/replace.
+
+=head2 Perl Example Execution
+
+ # ./ch-2.pl
+ ch-2.pl (Version 1.0) PWC #42 Task #2: Balanced Brackets
+ (()))()))) - NOT OK
+ () - OK
+
+=head2 Source Code
+
+The code for Perl5 and Perl6 are similar, only the differences in the language.
+Let me mention some of the differences between B<Perl5 / Perl6>:
+
+=over 2
+
+=item * for() / loop (), Remember the blank in Perl6.
+
+=item * .= / ~=, Assignment of a String.
+
+=item * int(rand(2)) / Int(2.rand), Create a random integer.
+
+=item * if() / if (), Again the blank after the statement, in Perl6 brackets
+	directly after the keyword means to call a function.
+
+=item * sub balanced_brackets { my $str = shift; ... }
+	sub balanced_brackets ($arg) { ... }
+	Different function call syntax.
+
+=item *  =~ / ~~, for applying the search/replace on a scalar. 
+
+=item * do {} while() / repeat {} while (), A do-while loop becomes repeat-while.
+
+=back
+
+=begin html
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Perl5 </div>
+  1 <span class="synPreProc">#!/usr/bin/perl</span>
+  2 
+  3 <span class="synStatement">use strict</span>;
+  4 <span class="synStatement">use warnings</span>;
+  5 
+  6 <span class="synStatement">print</span> <span class="synConstant">&quot;ch-2.pl (Version 1.0) PWC #42 Task #2: Balanced Brackets</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+  7 
+  8 <span class="synStatement">sub </span><span class="synIdentifier">create_brackets </span>{
+  9 	<span class="synStatement">my</span> (<span class="synIdentifier">$nr</span>) = <span class="synIdentifier">@_</span>;
+ 10 	<span class="synStatement">my</span> <span class="synIdentifier">$s</span>;
+ 11 	<span class="synStatement">for</span>( <span class="synStatement">my</span> <span class="synIdentifier">$i</span>=<span class="synConstant">0</span>; <span class="synIdentifier">$i</span>&lt;=<span class="synIdentifier">$nr</span>; <span class="synIdentifier">$i</span>++ )  {
+ 12 		<span class="synStatement">my</span> <span class="synIdentifier">$br</span> = <span class="synStatement">int</span>(<span class="synStatement">rand</span>(<span class="synConstant">2</span>));
+ 13 		<span class="synStatement">if</span>(<span class="synIdentifier">$br</span>) { <span class="synIdentifier">$s</span> .= <span class="synConstant">&quot;)&quot;</span>; } <span class="synStatement">else</span> { <span class="synIdentifier">$s</span> .= <span class="synConstant">&quot;(&quot;</span>; }
+ 14 	}
+ 15 	<span class="synStatement">return</span> <span class="synIdentifier">$s</span>;
+ 16 }
+ 17 
+ 18 <span class="synStatement">my</span> <span class="synIdentifier">$ok</span>;
+ 19 <span class="synStatement">do</span> {
+ 20 	<span class="synStatement">my</span> <span class="synIdentifier">$nr</span> = <span class="synStatement">int</span>(<span class="synStatement">rand</span>(<span class="synConstant">10</span>));
+ 21 	<span class="synStatement">my</span> <span class="synIdentifier">$str</span> = create_brackets(<span class="synIdentifier">$nr</span>);
+ 22 	<span class="synIdentifier">$ok</span>  = balanced_brackets(<span class="synIdentifier">$str</span>);
+ 23 	<span class="synStatement">my</span> <span class="synIdentifier">$rs</span>  = <span class="synConstant">&quot;NOT OK&quot;</span>;
+ 24 	<span class="synIdentifier">$rs</span> = <span class="synConstant">&quot;OK&quot;</span> <span class="synStatement">if</span> <span class="synIdentifier">$ok</span>;
+ 25 	<span class="synStatement">print</span> <span class="synIdentifier">$str</span>, <span class="synConstant">&quot; - &quot;</span>, <span class="synIdentifier">$rs</span>, <span class="synConstant">&quot;</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 26 } <span class="synStatement">while</span>( ! <span class="synIdentifier">$ok</span> );
+ 27 
+ 28 <span class="synStatement">sub </span><span class="synIdentifier">balanced_brackets </span>{
+ 29 	<span class="synStatement">my</span> <span class="synIdentifier">$str</span> = <span class="synStatement">shift</span>;
+ 30 	<span class="synStatement">my</span> <span class="synIdentifier">$found</span> = <span class="synIdentifier">$str</span> =~ <span class="synStatement">s/</span><span class="synSpecial">\(\)</span><span class="synStatement">//</span>;
+ 31 	<span class="synStatement">my</span> <span class="synIdentifier">$ok</span>;
+ 32 	<span class="synStatement">if</span>(<span class="synIdentifier">$found</span>) { 
+ 33 		<span class="synIdentifier">$ok</span> = balanced_brackets(<span class="synIdentifier">$str</span>);
+ 34 		<span class="synStatement">return</span> <span class="synIdentifier">$ok</span>;
+ 35 	}
+ 36 	<span class="synStatement">else</span> { 
+ 37 		<span class="synStatement">if</span>( <span class="synIdentifier">$str</span>=~<span class="synStatement">/</span><span class="synSpecial">\(</span><span class="synConstant">|</span><span class="synSpecial">\)</span><span class="synStatement">/</span> ) { <span class="synStatement">return</span> <span class="synConstant">0</span>; }
+ 38 		<span class="synStatement">else</span> { <span class="synStatement">return</span> <span class="synConstant">1</span>; }
+ 39 	}
+ 40 }
+</pre>
+</td><td class=code>
+<pre class=code><div class=t> Perl6 </div>
+  1 <span class="synComment">#!/home/chuck/rakudo/bin/perl6</span>
+  2 
+  3 <span class="synPreProc">use</span> strict<span class="synStatement">;</span>
+  4 
+  5 <span class="synIdentifier">print</span> <span class="synSpecial">&quot;</span><span class="synConstant">ch-2.p6 (Version 1.0) PWC #42 Task #2: Balanced Brackets</span><span class="synSpecial">\n&quot;</span><span class="synStatement">;</span>
+  6 
+  7 <span class="synStatement">sub</span> create_brackets {
+  8 	<span class="synSpecial">my</span> (<span class="synIdentifier">$nr</span>) <span class="synStatement">=</span> <span class="synIdentifier">@_</span><span class="synStatement">;</span>
+  9 	<span class="synSpecial">my</span> <span class="synIdentifier">$s</span><span class="synStatement">;</span>
+ 10 	<span class="synStatement">loop</span> ( <span class="synSpecial">my</span> <span class="synIdentifier">$i</span><span class="synStatement">=</span><span class="synConstant">0</span><span class="synStatement">;</span> <span class="synIdentifier">$i</span> <span class="synStatement">&lt;=</span> <span class="synIdentifier">$nr</span><span class="synStatement">;</span> <span class="synIdentifier">$i</span><span class="synStatement">++</span> )  {
+ 11 		<span class="synSpecial">my</span> <span class="synIdentifier">$br</span> <span class="synStatement">=</span> Int(<span class="synConstant">2</span><span class="synStatement">.</span><span class="synIdentifier">rand</span>)<span class="synStatement">;</span>
+ 12 		<span class="synStatement">if</span> (<span class="synIdentifier">$br</span>) { <span class="synIdentifier">$s</span> <span class="synStatement">~=</span> <span class="synSpecial">&quot;</span><span class="synConstant">)</span><span class="synSpecial">&quot;</span><span class="synStatement">;</span> } <span class="synStatement">else</span> { <span class="synIdentifier">$s</span> <span class="synStatement">~=</span> <span class="synSpecial">&quot;</span><span class="synConstant">(</span><span class="synSpecial">&quot;</span><span class="synStatement">;</span> }
+ 13 	}
+ 14 	<span class="synSpecial">return</span> <span class="synIdentifier">$s</span><span class="synStatement">;</span>
+ 15 }
+ 16 
+ 17 <span class="synSpecial">my</span> <span class="synIdentifier">$ok</span><span class="synStatement">;</span>
+ 18 <span class="synStatement">repeat</span> {
+ 19 	<span class="synSpecial">my</span> <span class="synIdentifier">$nr</span> <span class="synStatement">=</span> Int(<span class="synConstant">10</span><span class="synStatement">.</span><span class="synIdentifier">rand</span>)<span class="synStatement">;</span>
+ 20 	<span class="synSpecial">my</span> <span class="synIdentifier">$str</span> <span class="synStatement">=</span> create_brackets(<span class="synIdentifier">$nr</span>)<span class="synStatement">;</span>
+ 21 	<span class="synIdentifier">$ok</span>  <span class="synStatement">=</span> balanced_brackets(<span class="synIdentifier">$str</span>)<span class="synStatement">;</span>
+ 22 	<span class="synSpecial">my</span> <span class="synIdentifier">$rs</span>  <span class="synStatement">=</span> <span class="synSpecial">&quot;</span><span class="synConstant">NOT OK</span><span class="synSpecial">&quot;</span><span class="synStatement">;</span>
+ 23 	<span class="synIdentifier">$rs</span> <span class="synStatement">=</span> <span class="synSpecial">&quot;</span><span class="synConstant">OK</span><span class="synSpecial">&quot;</span> <span class="synStatement">if</span> <span class="synIdentifier">$ok</span><span class="synStatement">;</span>
+ 24 	<span class="synIdentifier">print</span> <span class="synIdentifier">$str</span><span class="synStatement">,</span> <span class="synSpecial">&quot;</span><span class="synConstant"> - </span><span class="synSpecial">&quot;</span><span class="synStatement">,</span> <span class="synIdentifier">$rs</span><span class="synStatement">,</span> <span class="synSpecial">&quot;\n&quot;</span><span class="synStatement">;</span>
+ 25 } <span class="synStatement">while</span> ( <span class="synStatement">!</span> <span class="synIdentifier">$ok</span> )<span class="synStatement">;</span>
+ 26 
+ 27 <span class="synStatement">sub</span> balanced_brackets (<span class="synIdentifier">$arg</span>) {
+ 28 	<span class="synSpecial">my</span> <span class="synIdentifier">$str</span> <span class="synStatement">=</span> <span class="synIdentifier">$arg</span><span class="synStatement">;</span>  <span class="synComment"># Cannot assign to a read-only.</span>
+ 29 	<span class="synSpecial">my</span> <span class="synIdentifier">$found</span> <span class="synStatement">=</span> (<span class="synIdentifier">$str</span> <span class="synStatement">~~</span> <span class="synStatement">s</span><span class="synSpecial">/\(\)//</span>)<span class="synStatement">;</span>
+ 30 	<span class="synSpecial">my</span> <span class="synIdentifier">$ok</span><span class="synStatement">;</span>
+ 31 	<span class="synStatement">if</span> (<span class="synIdentifier">$found</span>) { 
+ 32 		<span class="synIdentifier">$ok</span> <span class="synStatement">=</span> balanced_brackets(<span class="synIdentifier">$str</span>)<span class="synStatement">;</span>
+ 33 		<span class="synSpecial">return</span> <span class="synIdentifier">$ok</span><span class="synStatement">;</span>
+ 34 	}
+ 35 	<span class="synStatement">else</span> { 
+ 36 		<span class="synStatement">if</span> ( <span class="synIdentifier">$str</span> <span class="synStatement">~~</span> <span class="synSpecial">/\(|\)/</span> ) { <span class="synSpecial">return</span> <span class="synConstant">0</span><span class="synStatement">;</span> }
+ 37 		<span class="synStatement">else</span> { <span class="synSpecial">return</span> <span class="synConstant">1</span><span class="synStatement">;</span> }
+ 38 	}
+ 39 }
+ 40
+</pre>
+</td></tr></table>
+
+=end html
+
+=head1 Python
+
+Because the syntax is rather different, it takes some more time to convert the code
+to Python. But I succeeded and can publish also a Python code for this PWC Task.
+
+=head2 Python Example Execution
+
+ # ./ch-2.py
+ ch-2.pl (Version 1.0) PWC #42 Task #2: Balanced Brackets
+
+ ( 1)          ( = NOT OK
+ ( 2)     (((()( = NOT OK
+ ( 3)          ) = NOT OK
+ ( 4)     (()))( = NOT OK
+ ( 5)         (( = NOT OK
+ ( 6)   ))))(()) = NOT OK
+ ( 7)       (()( = NOT OK
+ ( 8)        )(( = NOT OK
+ ( 9)    ()((((( = NOT OK
+ (10)     )())() = NOT OK
+ (11)   (()())() = OK
+
+=head2 Source Code Python
+
+The Python source code is similar to the two Perl examples. The defined functions 
+are the same. Because the syntax is very different to the two Perl examples, it is
+up to you to investigate in its details.
+
+Beside all the other differences I want to mention the loop 
+C<while True: ... if condition: break> instead of the do-while or repeat-while
+in Perl5 or Perl6.
+
+=begin html
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Python </div>
+  1 <span class="synComment">#!/usr/bin/python</span>
+  2 
+  3 <span class="synPreProc">import</span> array <span class="synStatement">as</span> arr
+  4 <span class="synPreProc">import</span> re
+  5 <span class="synPreProc">import</span> random
+  6 
+  7 <span class="synIdentifier">print</span> <span class="synConstant">&quot;ch-2.pl (Version 1.0) PWC #42 Task #2: Balanced Brackets</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+  8 
+  9 <span class="synStatement">def</span> <span class="synIdentifier">create_brackets</span>(nr):
+ 10 	s = <span class="synConstant">&quot;&quot;</span>
+ 11 	<span class="synStatement">for</span> i <span class="synStatement">in</span> <span class="synIdentifier">range</span>(<span class="synConstant">1</span>,nr):
+ 12 		br = random.randint(<span class="synConstant">0</span>,<span class="synConstant">1</span>)
+ 13 		<span class="synStatement">if</span> br: s += <span class="synConstant">&quot;)&quot;</span>
+ 14 		<span class="synStatement">else</span> : s += <span class="synConstant">&quot;(&quot;</span>
+ 15 	<span class="synStatement">return</span> s
+ 16 
+ 17 <span class="synStatement">def</span> <span class="synIdentifier">balanced_brackets</span>(brs):
+ 18 	brs, found = re.subn(<span class="synConstant">'\(\)'</span>,<span class="synConstant">''</span>,brs);
+ 19 	ok = <span class="synConstant">0</span>
+ 20 	<span class="synStatement">if</span> found:
+ 21 		ok = balanced_brackets(brs)
+ 22 		<span class="synStatement">return</span> ok
+ 23 	<span class="synStatement">else</span>:
+ 24 		<span class="synStatement">if</span> re.search(<span class="synConstant">'\(|\)'</span>,brs): <span class="synStatement">return</span> <span class="synConstant">0</span>
+ 25 		<span class="synStatement">else</span>: <span class="synStatement">return</span> <span class="synConstant">1</span>
+ 26 
+ 27 loops = <span class="synConstant">0</span>
+ 28 <span class="synStatement">while</span> <span class="synIdentifier">True</span>:
+ 29 	loops = loops + <span class="synConstant">1</span>
+ 30 	nr  = random.randint(<span class="synConstant">2</span>,<span class="synConstant">10</span>)
+ 31 	brs = create_brackets(nr)
+ 32 	ok  = balanced_brackets(brs)
+ 33 	rs  = <span class="synConstant">&quot;NOT OK&quot;</span>
+ 34 	<span class="synStatement">if</span> ok: rs  = <span class="synConstant">&quot;OK&quot;</span> 
+ 35 	<span class="synIdentifier">print</span>(<span class="synConstant">&quot;(%2d) %10s = %s&quot;</span> % (loops, brs, rs))
+ 36 	<span class="synStatement">if</span> ok: <span class="synStatement">break</span>
+ 37 	<span class="synStatement">if</span> loops &gt; <span class="synConstant">20</span>: <span class="synStatement">break</span>
+</pre>
+</td></tr></table>
+
+=end html
+
+=head2 Python help
+
+One important question as a biginner is: How do I get help? One answer is to search the net.
+The other is use the command line tools shipped with your Python. Below I, as a biginner,
+can see how to use the offline help:
+
+In short: Start python CLI, use C<help()> command, type the class or function you want
+to find, i.e. C<re>.
+
+ # python
+ Python 2.7.13 (default, Sep 26 2018, 18:42:22) 
+ [GCC 6.3.0 20170516] on linux2
+ Type "help", "copyright", "credits" or "license" for more information.
+ >>> help()
+
+ Welcome to Python 2.7!  This is the online help utility.
+
+ If this is your first time using Python, you should definitely check out
+ the tutorial on the Internet at http://docs.python.org/2.7/tutorial/.
+
+ Enter the name of any module, keyword, or topic to get help on writing
+ Python programs and using Python modules.  To quit this help utility and
+ return to the interpreter, just type "quit".
+
+ To get a list of available modules, keywords, or topics, type "modules",
+ "keywords", or "topics".  Each module also comes with a one-line summary
+ of what it does; to list the modules whose summaries contain a given word
+ such as "spam", type "modules spam".
+
+ help> re
+ ...
+ /subn
+ ...
+ q
+ help> quit
+
+ You are now leaving help and returning to the Python interpreter.
+ If you want to ask for help on a particular object directly from the
+ interpreter, you can type "help(object)".  Executing "help('string')"
+ has the same effect as typing a particular string at the help> prompt.
+ >>> quit()
+
+
+=head1 AUTHOR
+
+Chuck
+
+=cut
+
+# ############################## END #############################################
+

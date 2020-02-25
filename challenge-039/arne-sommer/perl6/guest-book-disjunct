@@ -1,0 +1,30 @@
+#! /usr/bin/env raku
+
+use lib "/home/arne/Dropbox/perl6/modules/Time-Repeat/lib/";
+
+use Time::Repeat::HHMM;
+use Time::Repeat::HHMM::Interval;
+
+unit sub MAIN (:$verbose,
+               :$guest-book where $guest-book.IO.r = "guest-book.txt");
+
+my Time::Repeat::HHMM::Interval @intervals;
+
+for $guest-book.IO.lines -> $line
+{
+  die "Wrong file format" unless $line ~~ /IN \: \s+ (\d\d) \: (\d\d) \s+ OUT \: \s+ (\d\d) \: (\d\d)/;
+
+  my $current-from = "$0$1";
+  my $current-to   = "$2$3";
+
+  say "- Line (from: $current-from to: $current-to)" if $verbose;
+
+  @intervals.push(Time::Repeat::HHMM::Interval.new($current-from, $current-to));
+}
+
+my Time::Repeat::HHMM::Interval @merged = Time::Repeat::HHMM::Interval::merge(@intervals);
+
+for @merged -> $interval
+{
+  say "The light was ON for { +$interval } minutes (at { $interval.Str }).";
+}
