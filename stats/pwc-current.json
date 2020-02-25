@@ -1,36 +1,29 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2020-02-25 14:18:59 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "E. Choroba",
+            "id" : "Duane Powell",
+            "name" : "Duane Powell",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "E. Choroba"
+            ]
+         },
+         {
+            "name" : "E. Choroba",
+            "id" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          },
          {
             "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -40,22 +33,21 @@
                   "Blog",
                   2
                ]
-            ],
-            "name" : "Luca Ferrari"
+            ]
          },
          {
+            "id" : "Markus Holzer",
             "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ],
-            "id" : "Markus Holzer"
+            ]
          },
          {
-            "id" : "Mohammad S Anwar",
             "name" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -68,14 +60,14 @@
             ]
          },
          {
+            "id" : "Peter Scott",
             "name" : "Peter Scott",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "id" : "Peter Scott"
+            ]
          },
          {
             "id" : "Roger Bell West",
@@ -106,37 +98,55 @@
             ]
          },
          {
-            "id" : "Wanderdoc",
-            "name" : "Wanderdoc",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Wanderdoc",
+            "name" : "Wanderdoc"
          }
       ]
    },
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2020-02-25 16:38:29 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
    "title" : {
       "text" : "Perl Weekly Challenge - 049"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
    },
    "xAxis" : {
       "type" : "category"
    },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 049",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba",
+               "drilldown" : "Duane Powell",
+               "name" : "Duane Powell",
                "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba"
             },
             {
                "name" : "Luca Ferrari",
@@ -144,9 +154,9 @@
                "drilldown" : "Luca Ferrari"
             },
             {
-               "y" : 1,
+               "drilldown" : "Markus Holzer",
                "name" : "Markus Holzer",
-               "drilldown" : "Markus Holzer"
+               "y" : 1
             },
             {
                "y" : 3,
@@ -154,28 +164,33 @@
                "drilldown" : "Mohammad S Anwar"
             },
             {
-               "y" : 1,
                "name" : "Peter Scott",
+               "y" : 1,
                "drilldown" : "Peter Scott"
             },
             {
-               "drilldown" : "Roger Bell West",
                "y" : 4,
-               "name" : "Roger Bell West"
+               "name" : "Roger Bell West",
+               "drilldown" : "Roger Bell West"
             },
             {
+               "drilldown" : "Simon Proctor",
                "y" : 3,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "name" : "Simon Proctor"
             },
             {
-               "drilldown" : "Wanderdoc",
                "name" : "Wanderdoc",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Wanderdoc"
             }
          ]
       }
    ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
