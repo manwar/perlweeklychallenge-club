@@ -6,5 +6,13 @@ use v6.d;
 sub MAIN(
     UInt $x #= Number to look for multiple of
 ) {
-    ( $x, * + $x...* ).hyper.first( { $_ ~~ m!^ <[10]>+ $! } ).say;
+    my $current = 1;
+    my $current-bin = $current.base(2);
+
+    while ( ! ( $current-bin %% $x ) ) {
+        $current++;
+        $current-bin = $current.base(2);
+    }
+
+    say $current-bin;
 }
