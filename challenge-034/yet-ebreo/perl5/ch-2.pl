@@ -33,9 +33,9 @@ sub multiply {
     return $m*$n;
 }
 
-my $commands = "add multiply subtract divide ";
+my $commands = "add multiply subtract divide";
 my @operands = (43,6);
-for my $cmd ($commands=~/(\S+) /g) {
+for my $cmd ($commands=~/\w+/g) {
     say "[$cmd]";
     say $table{$cmd}->(@operands);
 }
