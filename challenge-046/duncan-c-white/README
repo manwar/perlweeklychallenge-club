@@ -1,0 +1,52 @@
+Task 1: "Cryptic Message:
+
+The communication system of an office is broken and messages received
+are not completely reliable. To send the message Hello 6 times, it ended
+up sending these following:
+
+H x l 4 !
+c e - l o
+z e 6 l g
+H W l v R
+q 9 m # o
+
+Similarly another day we received a message repeatedly like below:
+
+P + 2 l ! a t o
+1 e 8 0 R $ 4 u
+5 - r ] + a > /
+P x w l b 3 k \
+2 e 3 5 R 8 y u
+< ! r ^ ( ) k 0
+
+Write a script to decrypt the above repeated message (one message repeated
+6 times).
+
+HINT: Look for characters repeated in a particular position in all six
+messages received.
+"
+
+My notes: ah, so pick maxfreq letter in each column?
+
+Task #2: "Is the room open?
+
+There are 500 rooms in a hotel with 500 employees having keys to all the
+rooms. The first employee opened main entrance door of all the rooms. The
+second employee then closed the doors of room numbers 2,4,6,8,10 and
+so on to 500. The third employee then closed the door if it was opened
+or opened the door if it was closed of rooms 3,6,9,12,15 and so on to
+500. Similarly the fourth employee did the same as the third but only
+room numbers 4,8,12,16 and so on to 500. This goes on until all employees
+has had a turn.
+
+Write a script to find out all the rooms still open at the end.
+"
+
+My notes: sounds pretty easy, two nested for loops, but one of those questions
+where I can't predict in advance what the answer will be.
+
+But having written the naive roomopen[r] based solution, I find that the
+answer is: the open rooms are all the room numbers that are exact squares!
+I'm not sure why, but I then implemented that more directly, with no
+arrays.  I then translated that into Postscript too, see the postscript
+directory:-)

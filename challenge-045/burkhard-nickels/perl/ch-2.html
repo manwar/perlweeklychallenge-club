@@ -1,0 +1,276 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Perl Weekly Challenge #45 Task #2, Source Dumper</title>
+<link rel="stylesheet" href="/www/Perl/PWC/pwc_coloured.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #45 Task #2, Source Dumper</span></strong></big>
+</td></tr>
+</table>
+
+
+
+<ul id="index">
+  <li><a href="#Perl-Weekly-Challenge-45-Task-2:-Source-Dumper">Perl Weekly Challenge #45 Task #2: Source Dumper</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#Definition-Task-2:-Source-Dumper">Definition Task #2: Source Dumper</a></li>
+  <li><a href="#Perl5">Perl5</a>
+    <ul>
+      <li><a href="#Source-Code">Source Code</a></li>
+    </ul>
+  </li>
+  <li><a href="#Perl6">Perl6</a></li>
+  <li><a href="#Python">Python</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<h1 id="Perl-Weekly-Challenge-45-Task-2:-Source-Dumper">Perl Weekly Challenge #45 Task #2: Source Dumper</h1>
+
+<p>The Source Dumper dumps the source code of itself. For my Blog of the PWC I use syntax highlighting. The perl program I use for the syntax highlighting I included in the Source Dumper of my Perl5 solution. This is a simple add-on with Text::VimColor.</p>
+
+<p>Some highlights:</p>
+
+<ul>
+
+<li><p>Perl5, Perl6 and Python solution.</p>
+
+</li>
+<li><p>Syntax Highlighting with Text::VimColor.</p>
+
+</li>
+<li><p>Program name with $0, $*PROGRAM and __file__</p>
+
+</li>
+<li><p>Simple line by line file reading.</p>
+
+</li>
+</ul>
+
+<h2> Download and References </h2>
+<b>Download File:</b><a href="ch-2.pl" download> Perl5 Solution PWC #45 Task #2 ch-2.pl</a><br>
+<b>Download File:</b><a href="ch-2.p6" download> Perl6 Solution PWC #45 Task #2 ch-2.p6</a><br>
+<b>Download File:</b><a href="ch-2.py" download> Python Solution PWC #45 Task #2 ch-2.py</a><br>
+<br>
+Here I found the $*PROGRAM variable for Perl6:<br>
+<a target=_blank href="https://docs.perl6.org/language/variables.html">docs.perl6.org: Variables</a><br>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code> # ./ch-2.pl            - Execution of program
+ # ./ch-2.pl help       - Help on parameters
+ # ./ch-2.p6            - Execution of program
+ # ./ch-2.py            - Execution of program
+
+ # ./ch-2.pl | diff - ch-2.pl   - Should result in no difference
+ # ./ch-2.p6 | diff - ch-2.p6
+ # ./ch-2.py | diff - ch-2.py
+
+ # perldoc ch-2.pod             - POD</code></pre>
+
+<h1 id="Definition-Task-2:-Source-Dumper">Definition Task #2: Source Dumper</h1>
+
+<p>Write a script that dumps its own source code. For example, say, the script name is ch-2.pl then the following command should returns nothing.</p>
+
+<pre><code> $ perl ch-2.pl | diff - ch-2.pl</code></pre>
+
+<h1 id="Perl5">Perl5</h1>
+
+<p>The printing of the Source Code is done with <code>open(IN,$0)</code> the file, a while loop <code>while(IN) { print; }</code> together with print and to <code>close</code> the file. Here the program name is in var <code>$0</code>.</p>
+
+<p>The biggest part of the code is not needed for the PWC. It is a Source Dumper in HTML with Syntax Highlighting. This is done with the module <code>Text::VimColor</code> rather easy. You can print a full HTML page or only the source code part of the HTML. Some extra code is spent for the line numbers. Allthough <code>Text::VimColor</code> has an option for line numbers, it did not work. So I added the line numbers for myself.</p>
+
+<h2 id="Source-Code">Source Code</h2>
+
+<p>This is the code part needed for PWC, like described above:</p>
+
+<pre><code> 35     open(IN,$0) or die &quot;Cant open $0\n&quot;;
+ 36     while(&lt;IN&gt;) { print; }
+ 37     close IN;</code></pre>
+
+<p>Some Highlights are:</p>
+
+<ul>
+
+<li><p><code>Text::VimColor</code> for Synthax Highlighting.</p>
+
+</li>
+<li><p><code>$0</code> for the program name,</p>
+
+</li>
+<li><p><code>while(IN)</code> for the loop,</p>
+
+</li>
+</ul>
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Perl5 </div>
+  1 <span class="synPreProc">#!/usr/bin/perl</span>
+  2 
+  3 <span class="synStatement">use strict</span>;
+  4 <span class="synStatement">use warnings</span>;
+  5 <span class="synStatement">use </span>Text::VimColor;
+  6 
+  7 <span class="synStatement">if</span>(<span class="synIdentifier">$ARGV[</span><span class="synConstant">0</span><span class="synIdentifier">]</span> <span class="synStatement">and</span> <span class="synIdentifier">$ARGV[</span><span class="synConstant">0</span><span class="synIdentifier">]</span> <span class="synStatement">eq</span> <span class="synConstant">&quot;help&quot;</span>) {
+  8 	<span class="synStatement">print</span> <span class="synConstant">&quot;</span><span class="synSpecial">\n</span><span class="synIdentifier">$0</span><span class="synConstant"> - PWC #45 Task #2: Source Dumper</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+  9 	<span class="synStatement">print</span> <span class="synConstant">&quot;</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 10 	<span class="synStatement">print</span> <span class="synConstant">&quot;    This source code dumper dumps its own source code, but also the </span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 11 	<span class="synStatement">print</span> <span class="synConstant">&quot;    source code of other files with syntax highlighting using Text::VimColor.</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 12 	<span class="synStatement">print</span> <span class="synConstant">&quot;</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 13 	<span class="synStatement">print</span> <span class="synConstant">&quot;    ./ch-2.pl [&lt;command|file&gt;] [&lt;full&gt;]</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 14 	<span class="synStatement">print</span> <span class="synConstant">&quot;       command - help|high</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 15 	<span class="synStatement">print</span> <span class="synConstant">&quot;       file    - filename of file to dump.</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 16 	<span class="synStatement">print</span> <span class="synConstant">&quot;       full    - dump full html page not only source code.</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 17 	<span class="synStatement">print</span> <span class="synConstant">&quot;</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 18 	<span class="synStatement">print</span> <span class="synConstant">&quot;  Examples:</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 19 	<span class="synStatement">print</span> <span class="synConstant">&quot;    ./ch-2.pl           - Dumps own source code</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 20 	<span class="synStatement">print</span> <span class="synConstant">&quot;    ./ch-2.pl help      - This Usage information</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 21 	<span class="synStatement">print</span> <span class="synConstant">&quot;    ./ch-2.pl high      - Syntax high for ch-2.pl</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 22 	<span class="synStatement">print</span> <span class="synConstant">&quot;    ./ch-2.pl ch-1.pl   - Syntax high for ch-1.pl</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 23 	<span class="synStatement">print</span> <span class="synConstant">&quot;    ./ch-2.pl high 1    - Syntax high for ch-2.pl in full html page.</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 24 	<span class="synStatement">print</span> <span class="synConstant">&quot;    ./ch-2.pl ch-1.pl 1 - Syntax high for ch-1.pl in full html page.</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 25 	<span class="synStatement">print</span> <span class="synConstant">&quot;    ./ch-2.pl | diff - ch-2.pl - PWC 45 Task #2</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 26 	<span class="synStatement">print</span> <span class="synConstant">&quot;</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 27 }
+ 28 <span class="synStatement">elsif</span>(<span class="synIdentifier">$ARGV[</span><span class="synConstant">0</span><span class="synIdentifier">]</span> <span class="synStatement">and</span> <span class="synIdentifier">$ARGV[</span><span class="synConstant">0</span><span class="synIdentifier">]</span> <span class="synStatement">eq</span> <span class="synConstant">&quot;high&quot;</span>) { 
+ 29 	syntax_high(<span class="synIdentifier">$0</span>,<span class="synIdentifier">$ARGV[</span><span class="synConstant">1</span><span class="synIdentifier">]</span>); 
+ 30 }
+ 31 <span class="synStatement">elsif</span>(<span class="synIdentifier">$ARGV[</span><span class="synConstant">0</span><span class="synIdentifier">]</span>) { 
+ 32 	syntax_high(<span class="synIdentifier">@ARGV</span>); 
+ 33 }
+ 34 <span class="synStatement">else</span> { 
+ 35 	<span class="synStatement">open</span>(<span class="synIdentifier">IN</span>,<span class="synIdentifier">$0</span>) <span class="synStatement">or</span> <span class="synStatement">die</span> <span class="synConstant">&quot;Cant open </span><span class="synIdentifier">$0</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 36 	<span class="synStatement">while</span>(<span class="synIdentifier">&lt;IN&gt;</span>) { <span class="synStatement">print</span>; }
+ 37 	<span class="synStatement">close</span> <span class="synIdentifier">IN</span>;
+ 38 }
+ 39 
+ 40 <span class="synStatement">sub </span><span class="synIdentifier">syntax_high </span>{
+ 41 	<span class="synStatement">my</span> (<span class="synIdentifier">$file</span>,<span class="synIdentifier">$full</span>) = <span class="synIdentifier">@_</span>;
+ 42 	
+ 43 	<span class="synComment"># Option $full is for Debug Reasons, a Full HTML Page is created.</span>
+ 44 	<span class="synStatement">if</span>(! <span class="synIdentifier">$full</span>) { <span class="synIdentifier">$full</span> = <span class="synConstant">0</span>; }
+ 45 	
+ 46 	<span class="synStatement">my</span> <span class="synIdentifier">$syntax</span> = Text::VimColor-&gt;new(
+ 47 		<span class="synConstant">file</span> =&gt; <span class="synIdentifier">$file</span>,
+ 48 		<span class="synConstant">filetype</span> =&gt; <span class="synConstant">'perl'</span>,
+ 49 		<span class="synConstant">html_full_page</span> =&gt; <span class="synIdentifier">$full</span>,
+ 50 		<span class="synComment"># Extra vim options do not work: I want to have the line number</span>
+ 51 		<span class="synComment"># in the source code and also to try different colorschemes for vim.</span>
+ 52 		<span class="synComment"># extra_vim_options =&gt; [ &quot;+set number&quot;, &quot;+color darkblue&quot; ],</span>
+ 53 	);
+ 54 	
+ 55 	<span class="synStatement">my</span> <span class="synIdentifier">$html</span> = <span class="synIdentifier">$syntax-&gt;html</span>;
+ 56 	
+ 57 	<span class="synStatement">my</span> (<span class="synIdentifier">$html1</span>,<span class="synIdentifier">$html2</span>); <span class="synComment"># Full Page needs to be splitted, to get line numbers on each line.</span>
+ 58 	<span class="synStatement">if</span>(<span class="synIdentifier">$full</span>) {
+ 59 		<span class="synStatement">my</span> <span class="synIdentifier">$tmp</span>;
+ 60 		(<span class="synIdentifier">$html1</span>,<span class="synIdentifier">$tmp</span>)  = <span class="synStatement">split</span>(<span class="synConstant">&quot;&lt;pre&gt;&quot;</span>,<span class="synIdentifier">$html</span>);
+ 61 		(<span class="synIdentifier">$html</span>,<span class="synIdentifier">$html2</span>) = <span class="synStatement">split</span>(<span class="synConstant">&quot;&lt;/pre&gt;&quot;</span>,<span class="synIdentifier">$tmp</span>);
+ 62 	}
+ 63 	
+ 64 	<span class="synStatement">my</span> <span class="synIdentifier">@lnes</span> = <span class="synStatement">split</span>(<span class="synConstant">&quot;</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>,<span class="synIdentifier">$html</span>); <span class="synComment"># Every line for Line Number</span>
+ 65 	
+ 66 	<span class="synStatement">if</span>(<span class="synIdentifier">$full</span>) { <span class="synStatement">print</span> <span class="synIdentifier">$html1</span>, <span class="synConstant">&quot;&lt;pre&gt;</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>; } <span class="synComment"># Print first part of full page</span>
+ 67 	<span class="synStatement">my</span> <span class="synIdentifier">$cnt</span> = <span class="synConstant">1</span>;               <span class="synComment"># Count line number</span>
+ 68 	<span class="synStatement">foreach</span> <span class="synStatement">my</span> <span class="synIdentifier">$line</span> (<span class="synIdentifier">@lnes</span>) { <span class="synComment"># Every line for Line Number</span>
+ 69 		<span class="synStatement">printf</span>(<span class="synConstant">&quot;%3d %s</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>,<span class="synIdentifier">$cnt</span>,<span class="synIdentifier">$line</span>); <span class="synComment"># Print Line with Line Number</span>
+ 70 		<span class="synIdentifier">$cnt</span>++;
+ 71 	}
+ 72 	<span class="synStatement">if</span>(<span class="synIdentifier">$full</span>) { <span class="synStatement">print</span> <span class="synConstant">&quot;&lt;/pre&gt;</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>, <span class="synIdentifier">$html2</span>; } <span class="synComment"># Print last part of full page</span>
+ 73 }
+</pre>
+</td></tr></table>
+
+<h1 id="Perl6">Perl6</h1>
+
+<p>I translated the necessary part for PWC to Perl6. And let me mention some parts different to Perl5 here. May-be things could be solved easier? But for me as a beginner in Perl6, this is what I found first.</p>
+
+<ul>
+
+<li><p><code>$*PROGRAM</code> for the program name.</p>
+
+</li>
+<li><p><code>my $fh = open :r, $*PROGRAM;</code> In Perl6 are used attributes with double-colons everywhere, here &quot;:r&quot;. This can become difficult for me to swallow.</p>
+
+</li>
+<li><p><code>while ( ! $fh.eof; ) {</code> While loop asks for not eof().</p>
+
+</li>
+<li><p><code>$str = $fh.get;</code> And get reads without newline.</p>
+
+</li>
+</ul>
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Perl6 </div>
+  1 <span class="synComment">#!/home/chuck/rakudo/bin/perl6</span>
+  2 
+  3 <span class="synPreProc">use</span> strict<span class="synStatement">;</span>
+  4 
+  5 <span class="synComment"># print &quot;ch-2.p6 - PWC #45 Task #2: Source Dumper\n&quot;;</span>
+  6 <span class="synComment"># print $*PROGRAM, &quot;, &quot;, $*PROGRAM-NAME, &quot;\n&quot;;</span>
+  7 
+  8 <span class="synSpecial">my</span> <span class="synIdentifier">$fh</span> <span class="synStatement">=</span> <span class="synIdentifier">open</span> <span class="synStatement">:</span><span class="synConstant">r</span><span class="synStatement">,</span> <span class="synIdentifier">$</span><span class="synSpecial">*</span><span class="synIdentifier">PROGRAM</span><span class="synStatement">;</span>
+  9 
+ 10 <span class="synSpecial">my</span> <span class="synIdentifier">$str</span><span class="synStatement">;</span>
+ 11 <span class="synStatement">while</span> ( <span class="synStatement">!</span> <span class="synIdentifier">$fh</span><span class="synStatement">.</span><span class="synIdentifier">eof</span><span class="synStatement">;</span> ) { 
+ 12 	<span class="synIdentifier">$str</span> <span class="synStatement">=</span> <span class="synIdentifier">$fh</span><span class="synStatement">.</span>get<span class="synStatement">;</span>
+ 13 	<span class="synIdentifier">$str</span><span class="synStatement">.</span><span class="synIdentifier">print</span><span class="synStatement">;</span> <span class="synIdentifier">print</span> <span class="synSpecial">&quot;\n&quot;</span><span class="synStatement">;</span> 
+ 14 }
+ 15 <span class="synIdentifier">$fh</span><span class="synStatement">.</span><span class="synIdentifier">close</span><span class="synStatement">;</span>
+</pre>
+</td></tr></table>
+
+<h1 id="Python">Python</h1>
+
+<p>Because the code is not too complicated, let me mention some points. Put in mind that I am a beginner in Python, so any other Python programmer may wonder:</p>
+
+<ul>
+
+<li><p><code>__file__</code> for the program name.</p>
+
+</li>
+<li><p><code>print(line),</code> the comma at the end ommits newline. Otherwise newline is printed twice, first read from file and second an automatic newline from print.</p>
+
+</li>
+<li><p><code>for line in fh:</code> I used a for loop, because this is what I found in the net.</p>
+
+</li>
+</ul>
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Python </div>
+  1 <span class="synComment">#!/usr/bin/python</span>
+  2 
+  3 <span class="synComment"># print &quot;ch-2.pl (Version 1.0) PWC #42 Task #2: Balanced Brackets\n&quot;;</span>
+  4 <span class="synComment"># print &quot;File:&quot;, __file__, &quot;\n&quot;;</span>
+  5 
+  6 fh = <span class="synIdentifier">open</span>(__file__);
+  7 <span class="synStatement">for</span> line <span class="synStatement">in</span> fh:
+  8 	<span class="synIdentifier">print</span>(line),
+  9 
+ 10 fh.close
+</pre>
+</td></tr></table>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Chuck</p>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #45 Task #2, Source Dumper</span></strong></big>
+</td></tr>
+</table>
+
+</body>
+
+</html>
+
+

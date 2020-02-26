@@ -1,0 +1,30 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (:$maxchars = 6, :$iterations = 10);
+
+sub brackets ($count = (1 .. $maxchars).pick)
+{
+  return (^$count).map({ <( )>.pick }).join;
+}
+
+sub is-balanced ($brackets)
+{
+  my $count = 0;
+
+  for $brackets.comb -> $char
+  {
+    if    $char eq '(' { $count++; }
+    elsif $char eq ')' { $count--; }
+    else { die "Illegal character $char"; }
+    
+    return False if $count < 0; # Unbalanced inside
+  }
+  
+  return $count == 0;
+}
+
+for ^$iterations
+{
+  my $brackets = brackets;
+  say "$brackets - { is-balanced($brackets) ?? "OK" !! "NOT OK" }";
+}

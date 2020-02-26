@@ -1,0 +1,26 @@
+#! /usr/bin/env raku
+
+multi MAIN ()
+{
+  MAIN('I L O V E Y O U', '2 4 0 3 2 0 1 9', '! ? £ $ % ^ & *');
+}
+
+multi sub MAIN (:$verbose, *@strings where @strings.elems)
+{
+  my @arrays = @strings.map(*.words.List);
+  
+  my $length = @arrays>>.elems.max; 
+  my $width  = @arrays>>.chars>>.max.max;
+  
+  if $verbose
+  {
+    say ":A: { @arrays.perl }";
+    say ":L: $length";
+    say ":W: $width";
+  }
+  
+  for ^$length -> $index
+  {
+    print "{ ($_[$index] // '').fmt("%-{ $width }s") } " for @arrays; say "";
+  }
+}

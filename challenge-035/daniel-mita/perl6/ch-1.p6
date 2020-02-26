@@ -18,6 +18,6 @@ multi MAIN (--> Nil) { MAIN(slurp) }
 multi MAIN (
   |c where * ~~ &encode.signature,
   --> Nil
-) { encode(||c).say }
+) { encode(|c).say }
 
 sub GENERATE-USAGE ( &main, |capture ) { RUN-MAIN( &encode, Nil ) }
