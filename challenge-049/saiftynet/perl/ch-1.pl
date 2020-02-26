@@ -20,7 +20,7 @@ else{              # interactive operation starts if no commandline parameter
     while (1){
       print "Enter a number to process, or a non-number to quit >>";
       chomp( $input = <STDIN>);
-      last if $input=~/[^\d]/;
+      last if not $input or $input=~/[^\d]/;
       method2($input);
     };
 }
