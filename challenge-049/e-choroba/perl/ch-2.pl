@@ -5,7 +5,6 @@ use feature qw{ say };
 
 {   package Cache::LRU;
     use enum qw( CAPACITY HASH ARRAY );
-    use enum qw( POS VALUE );
 
     sub new {
         my ($class, $capacity) = @_;
@@ -16,21 +15,11 @@ use feature qw{ say };
 
     sub _last { $#{ $_[0][ARRAY] } }
 
-    sub _value { $_[0][HASH]{ $_[1] }[VALUE] }
-
-    sub _pos :lvalue { $_[0][HASH]{ $_[1] }[POS] }
+    sub _value { $_[0][HASH]{ $_[1] } }
 
     sub _move_to_start {
-        my ($self, $key, $value, $size) = @_;
-        $value //= $self->_value($key);
-        my $pos = exists $self->[HASH]{$key}
-                ? $self->_pos($key)
-                : 1 + $self->_last;
-        @{ $self->[HASH]{$key} }[POS, VALUE] = (0, $value);
-        splice @{ $self->[ARRAY] }, $pos, 1;
-        unshift @{ $self->[ARRAY] }, $key;
-        ++$self->_pos($_)
-            for @{ $self->[ARRAY] }[1 .. $pos];
+        my ($self, $key) = @_;
+        @{ $self->[ARRAY] } = ($key, grep $_ ne $key, @{ $self->[ARRAY] });
     }
 
     sub get {
@@ -43,9 +32,10 @@ use feature qw{ say };
 
     sub set {
         my ($self, $key, $value) = @_;
-        $self->_move_to_start($key, $value);
+        $self->[HASH]{$key} = $value if 3 == @_;
+        $self->_move_to_start($key);
         delete $self->[HASH]{ pop @{ $self->[ARRAY] } }
-            if $self->_last == $self->capacity;
+            if @{ $self->[ARRAY] } > $self->capacity;
     }
 
     sub inspect {
@@ -57,9 +47,7 @@ use Test::More;
 
 my $c = 'Cache::LRU'->new(3);
 $c->set(1, 3);
-
 $c->set(2, 5);
-
 $c->set(3, 7);
 
 is_deeply [$c->inspect], [1, 2, 3];
