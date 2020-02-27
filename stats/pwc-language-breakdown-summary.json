@@ -1,19 +1,21 @@
 {
+   "legend" : {
+      "enabled" : "false"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-02-27 14:33:29 GMT"
+   },
    "series" : [
       {
-         "dataLabels" : {
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "align" : "right",
-            "color" : "#FFFFFF"
-         },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -21,41 +23,39 @@
             ],
             [
                "Perl",
-               2021
+               2023
             ],
             [
                "Raku",
                1236
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "y" : 10,
+            "color" : "#FFFFFF"
+         },
+         "name" : "Contributions"
       }
    ],
-   "legend" : {
-      "enabled" : "false"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-02-27 11:50:52 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+      }
    },
    "chart" : {
       "type" : "column"
