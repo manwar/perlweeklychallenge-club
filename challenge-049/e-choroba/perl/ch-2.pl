@@ -13,8 +13,6 @@ use feature qw{ say };
 
     sub capacity { $_[0][CAPACITY] }
 
-    sub _last { $#{ $_[0][ARRAY] } }
-
     sub _value { $_[0][HASH]{ $_[1] } }
 
     sub _move_to_start {
