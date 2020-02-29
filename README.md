@@ -2,6 +2,10 @@
 
 This is the central repository for the members of [**Perl Weekly Challenge**](https://perlweeklychallenge.org). The members can submit the solution to the challenge each week under version control.
 
+## EZPWC - Easy Perl Weekly Challenges Script
+
+**Saif Ahmed**, respected member of **Team PWC**, created the tool **[EZPWC](https://github.com/saiftynet/EZPWC)** to help you with contributing to the weekly challenge. We highly recommend you to give it a try. If you have any questions/suggestions, then please raise an issue against the tool.
+
 ## How to contribute?
 Just submit Pull Request with your solutions.
 
