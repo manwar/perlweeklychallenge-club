@@ -25,7 +25,7 @@ use feature qw{ say };
         return undef unless exists $self->[HASH]{$key};
 
         $self->_move_to_start($key);
-        return $self->_value($key)
+        return \$self->_value($key)
     }
 
     sub set {
@@ -37,7 +37,7 @@ use feature qw{ say };
     }
 
     sub inspect {
-        reverse @{ $_[0][ARRAY] }
+        [reverse @{ $_[0][ARRAY] }]
     }
 }
 
@@ -48,23 +48,23 @@ $c->set(1, 3);
 $c->set(2, 5);
 $c->set(3, 7);
 
-is_deeply [$c->inspect], [1, 2, 3];
+is_deeply $c->inspect, [1, 2, 3];
 
-is $c->get(2), 5, 'get 2';
+is ${ $c->get(2) }, 5, 'get 2';
 
-is_deeply [$c->inspect], [1, 3, 2];
+is_deeply $c->inspect, [1, 3, 2];
 
-is $c->get(1), 3, 'get 1';
+is ${ $c->get(1) }, 3, 'get 1';
 
-is_deeply [$c->inspect], [3, 2, 1];
+is_deeply $c->inspect, [3, 2, 1];
 
 is $c->get(4), undef, 'get 4';
 
-is_deeply [$c->inspect], [3, 2, 1];
+is_deeply $c->inspect, [3, 2, 1];
 
 $c->set(4, 9);
 
-is_deeply [$c->inspect], [2, 1, 4];
+is_deeply $c->inspect, [2, 1, 4];
 
 is $c->get(3), undef, 'get 3';
 

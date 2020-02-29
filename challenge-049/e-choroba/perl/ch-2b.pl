@@ -4,109 +4,105 @@ use strict;
 use feature qw{ say };
 
 {   package Linked::List;
-    use enum qw( PREV NEXT KEY VALUE );
+
+    use enum qw( KEY VALUE PREV NEXT );
 
     sub new {
-        my ($class, $args) = @_;
+        my ($class, $key, $value) = @_;
         my $self = [];
-
-        $self->[PREV] = $self->[NEXT] = $self;
-
-        $self->[KEY]   = $args->{key};
-        $self->[VALUE] = $args->{value};
-
+        @$self[KEY, VALUE, PREV, NEXT] = ($key, $value, $self, $self);
         bless $self, $class
     }
 
-    sub prepend {
+    sub extract {
+        my ($self) = @_;
+        my $prev = $self->[PREV];
+        my $next = $self->[NEXT];
+        $prev->[NEXT] = $next;
+        $next->[PREV] = $prev;
+        @$self[PREV, NEXT] = ($self, $self);
+    }
+
+    sub prepend_to {
         my ($self, $list) = @_;
-        $self->[NEXT][PREV] = $self->[PREV];
-        $self->[PREV][NEXT] = $self->[NEXT];
-        @$self[NEXT, PREV] = ($list, $list->[PREV]);
+        return unless $list;
+        $self->extract if $self->[PREV] != $self;
+        $self->[NEXT] = $list // $self;
+        $self->[PREV] = $list->[PREV] // $self;
         $list->[PREV][NEXT] = $self;
         $list->[PREV] = $self;
     }
 
-    sub remove_last {
-        my ($self) = @_;
-        my $last = $self->last;
-        $last->[PREV][NEXT] = $self;
-        $self->[PREV] = $last->[PREV];
-        undef $_ for @$last[PREV, NEXT], $last;
+    # Prevent memory leaks.
+    sub demolish {
+        $_[0][NEXT] = $_[0][PREV] = undef;
     }
 
-
+    sub key  { $_[0][KEY] }
+    sub prev { $_[0][PREV] }
     sub next { $_[0][NEXT] }
-    sub last { $_[0][PREV] }
-    sub key { $_[0][KEY] }
-    sub value { $_[0][VALUE] }
+    sub value :lvalue { $_[0][VALUE] }
 }
 
 {   package Cache::LRU;
-    use enum qw( CAPACITY HASH HEAD );
+
+    use enum qw( CAPACITY HASH FIRST );
 
     sub new {
         my ($class, $capacity) = @_;
-        bless [$capacity, {}, undef], $class
-    }
-
-    sub capacity { $_[0][CAPACITY] }
-
-    sub value { $_[0][HASH]{$_[1]}->value }
-
-    sub head { $_[0][HASH]{ $_[0][HEAD] } }
-
-    sub move_to_start {
-        my ($self, $key) = @_;
-
-        $self->[HEAD] = $key
-            unless defined $self->[HEAD];
-
-        my $head = $self->head;
-        my $moving = $self->[HASH]{$key};
-        return if $head == $moving;
-
-        $moving->prepend($head);
-        $self->[HEAD] = $key;
+        my $self = [];
+        @$self[CAPACITY, HASH, FIRST]
+            = ($capacity, {}, undef);
+        bless $self, $class
     }
 
     sub get {
         my ($self, $key) = @_;
-        return undef unless exists $self->[HASH]{$key};
+        return unless exists $self->[HASH]{$key};
 
-        $self->move_to_start($key);
-        return $self->value($key)
+        my $element = $self->[HASH]{$key};
+        if ($element != ($self->[FIRST] // -1)) {
+            $element->extract;
+            $element->prepend_to($self->[FIRST]);
+            $self->[FIRST] = $element;
+        }
+        return \$element->value
     }
 
     sub set {
         my ($self, $key, $value) = @_;
-        $self->[HASH]{$key}
-            //= 'Linked::List'->new({key => $key, value => $value});
 
-        $self->move_to_start($key);
-
-        if (keys %{ $self->[HASH] } > $self->capacity) {
-            my $last = $self->head->last;
-            my $last_key = $last->key;
-            $self->head->remove_last;
-            delete $self->[HASH]{ $last_key };
+        my $element;
+        if (exists $self->[HASH]{$key}) {
+            $element = $self->[HASH]{$key};
+        } else {
+            $element = 'Linked::List'->new($key, $value);
+            $self->[HASH]{$key} = $element;
+        }
+        $element->prepend_to($self->[FIRST])
+            unless $element == ($self->[FIRST] // -1);
+        $self->[HASH]{$key}->value = $value;
+        $self->[FIRST] = $element;
+        if (keys %{ $self->[HASH] } > $self->[CAPACITY]) {
+            my $last = $self->[FIRST]->prev;
+            $last->extract;
+            delete $self->[HASH]{ $last->key };
+            $last->demolish;
         }
     }
 
     sub inspect {
         my ($self) = @_;
-        my %refs_to_keys = reverse %{ $self->[HASH] };
-
-        my $element = $self->head;
-        my @ordered_keys;
-        while ($refs_to_keys{$element}) {
-            unshift @ordered_keys, $refs_to_keys{$element};
-            delete $refs_to_keys{$element};
+        my $element = $self->[FIRST];
+        my @keys;
+        for (keys %{ $self->[HASH] }) {
+            unshift @keys, $element->key;
             $element = $element->next;
         }
-        return \@ordered_keys
+        return [@keys]
     }
 }
+
 
 use Test::More;
 
@@ -117,11 +113,11 @@ $c->set(3, 7);
 
 is_deeply $c->inspect, [1, 2, 3];
 
-is $c->get(2), 5, 'get 2';
+is ${ $c->get(2) }, 5, 'get 2';
 
 is_deeply $c->inspect, [1, 3, 2];
 
-is $c->get(1), 3, 'get 1';
+is ${ $c->get(1) }, 3, 'get 1';
 
 is_deeply $c->inspect, [3, 2, 1];
 
