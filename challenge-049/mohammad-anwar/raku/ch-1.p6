@@ -2,8 +2,8 @@
 
 use v6;
 
-sub MAIN($num!) {
+sub MAIN(Int $num) {
     my (Int $res, Int $i);
-    repeat { $res = $num * ++$i; } until $res ~~ /^<[01]>+$/;
+    repeat { $res = $num * ++$i } until $res ~~ /^<[01]>+$/;
     $res.say;
 }
