@@ -1,10 +1,7 @@
-#!/usr/bin/env python3
+#!/usr/bin/env python
 
 ###########################################################################
 # script name: ch-2.py                                                    #
-# Tue Feb 18 23:48:19 2020 | 1582087699                                   #
-# jtangele+python@gmail.com                                               #
-#                                                                         #
 #                                                                         #
 # https://perlweeklychallenge.org/blog/perl-weekly-challenge-048/         #
 #                                                                         #

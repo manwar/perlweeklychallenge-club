@@ -2,7 +2,6 @@
 
 ###########################################################################
 # script name: ch-2.pl                                                    #
-# Mon Feb 17 01:12:07 2020 | 1581919927                                   #
 #                                                                         #
 # https://perlweeklychallenge.org/blog/perl-weekly-challenge-048/         #
 #                                                                         #
