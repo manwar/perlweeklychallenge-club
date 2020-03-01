@@ -1,50 +1,50 @@
 #!/usr/bin/env perl6
 
+use Adverb::Eject;
+
 class LRU {
     has $.capacity;
     has @!cache;
-    has %!index;
-    has %!value;
+    has %!hash;
 
     method set(Int $k, Int $v) {
-        if defined %!index{$k} {
+        if %!hash{$k}:exists {
             self!update($k);
         }
 
         else {
-            if (@!cache.elems == $.capacity) {
-                %!value{shift @!cache}:delete;
+            if @!cache.elems == $.capacity {
+                %!hash{shift @!cache}:delete;
             }
             
             @!cache.push($k);
-            %!value{$k} = $v;
-            %!index = @!cache.kv.reverse; #this can be improved since all
-                                          #indexes don't need to be updated. 
+            %!hash{$k}{"value"} = $v;
+            0..@!cache.elems-1 ==> 
+                map { %!hash{@!cache[$_]}{"index"} = $_ }; 
         }
     } 
 
     method get(Int $k) {
-        if defined %!index{$k} {
+        if %!hash{$k}:exists {
             self!update($k);
         }
 
-        return %!value{$k} // -1;
+        return %!hash{$k}{"value"} // -1;
     }
 
     method !update(Int $k) {
-        my $i = %!index{$k};
+        my $i = %!hash{$k}{"index"};
 
-        unless ($i == $.capacity - 1) {
-            @!cache = (@!cache[0..$i-1], @!cache[$i+1..*-1], $k).flat;
-            %!index = @!cache.kv.reverse; # ditto
+        unless $i == @!cache.elems - 1 {
+            @!cache[$i]:eject;
+            @!cache.push($k);
+            $i..@!cache.elems-1 ==> 
+                map { %!hash{@!cache[$_]}{"index"} = $_ }; 
         }
     }
 
     method printIt {
-        say "[least recently used] {@!cache.join(", ")} [most recently used]";
-        #say "Value = ", %!value;
-        #say "Index = ", %!index;
-        print "\n";
+        say "[least recently used] {@!cache.join(", ")} [most recently used]\n";
     }
 }
 
@@ -53,30 +53,38 @@ sub MAIN(Int $capacity where $capacity > 0) {
 
     say "capacity = {$lru.capacity}\n";
  
+    "set(1, 3)".say;
     $lru.set(1, 3);
 
+    "set(2, 5)".say;
     $lru.set(2, 5);
 
+    "set(3, 7)".say;
     $lru.set(3, 7);
 
     $lru.printIt;
 
+    "get(2)".say;
     $lru.get(2).say;
 
     $lru.printIt;
-    
+
+    "get(1)".say;
     $lru.get(1).say;
 
     $lru.printIt;
 
+    "get(4)".say;
     $lru.get(4).say;
 
     $lru.printIt;
 
+    "set(4, 9)".say;
     $lru.set(4, 9);
 
     $lru.printIt;
 
+    "get(3)".say;
     $lru.get(3).say;
 
     $lru.printIt;
