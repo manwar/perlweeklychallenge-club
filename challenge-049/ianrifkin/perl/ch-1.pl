@@ -16,9 +16,6 @@ my $input = $ARGV[0];
 
 die("Input must be a positive number") unless $input > 0;
 
-my $i = 2;
-my $output = undef;
-
 
 # You could loop through every number and check if it's correct
 # For smaller answers like when $input = 2, or 5, or 100 it's quick
@@ -39,6 +36,8 @@ sub dec2bin {
 # it would take 1011111110 loops to get to 1011111111
 # But in this method it only takes 766 loops.
 
+my $i = 2;
+my $output = undef;
 while ($output == undef) {
     my $bin_i = dec2bin($i);
     $i++ and next unless $bin_i =~ /^1[1]*[0]+[0-1]*$/;
@@ -46,6 +45,8 @@ while ($output == undef) {
     $test->bdiv($input);
     $output = $bin_i if $test == $test->as_int() and $input != $bin_i;
     $i++;
+    #Consider if there needs to be an emergency exit after too many iterations
+    #without finding an answer
 }
 
 print "\n\nThe smallest multiple of $input with only digits 0 and 1 is: $output\n\n";
