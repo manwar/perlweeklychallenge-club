@@ -43,8 +43,8 @@ sub print_intervals {
     my ($key, $intervals) = @_;
 
     print "$key: [";
-    foreach (@$intervals) {
-        print sprintf(" [%d, %d]", $_->[0], $_->[1]);
+    foreach my $i (@$intervals) {
+        print sprintf(" [%d, %d]", $i->[0], $i->[1]);
     }
     print " ]\n";
 }
