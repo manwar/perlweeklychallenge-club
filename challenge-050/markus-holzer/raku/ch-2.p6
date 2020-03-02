@@ -1,6 +1,6 @@
 sub noble( @n ) 
 {
-	@n.sort.pairs.grep({.value + .key == @n.end }).map({ .value });
+	@n.sort.pairs.grep({ .value + .key == @n.end }).map({ .value });
 }
 
 say noble( [2, 4, 0, 3] );
