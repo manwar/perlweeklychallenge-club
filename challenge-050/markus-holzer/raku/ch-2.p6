@@ -1,6 +1,6 @@
 sub noble( @n ) 
 {
-	my Int $n = (@n = @n.sort).elems; 
+	my Int $n = ( @n = @n.sort ).elems; 
 
 	( 0..^$n )
 		.grep({ 
