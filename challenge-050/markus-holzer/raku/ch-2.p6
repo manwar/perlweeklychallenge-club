@@ -1,6 +1,6 @@
 sub noble( @n ) 
 {
-	( $_ = @n.sort.kv.batch(2).first({ .[1] == @n.end - .[0] }) ) ?? $_[1] !! Nil;
+	@n.sort.kv.batch(2).grep({ .[1] == @n.end - .[0] }).map({ .[1] });
 }
 
 say noble( [2, 4, 0, 3] );
