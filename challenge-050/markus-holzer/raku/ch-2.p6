@@ -1,8 +1,6 @@
 sub noble( @n ) 
 {
-	my $n = ( @n = @n.sort ).end; 
-	my $i = ( 0..$n ).first({ @n[ $^i ] == $n - $^i });
-	try @n[ $i ]; # $i can be Nil
+	( $_ = @n.sort.kv.batch(2).grep({ .[1] == @n.end - .[0] }).first ) ?? $_[1] !! Nil;
 }
 
 say noble( [2, 4, 0, 3] );
