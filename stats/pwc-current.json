@@ -1,30 +1,71 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 050"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2020-03-02 12:26:24 GMT"
+   },
    "legend" : {
       "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Cross",
-            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Dave Cross",
+            "name" : "Dave Cross"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Markus Holzer",
+            "name" : "Markus Holzer"
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 050"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-03-02 12:15:06 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 050",
+         "data" : [
+            {
+               "name" : "Dave Cross",
+               "drilldown" : "Dave Cross",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
@@ -33,31 +74,5 @@
             "enabled" : 1
          }
       }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 050",
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
