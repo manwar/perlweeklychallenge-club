@@ -1,25 +1,28 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-03-02 12:32:54 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Alexander Karelas",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Dave Cross",
-            "name" : "Dave Cross"
+            "id" : "Alexander Karelas"
          },
          {
+            "name" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Dave Cross"
+         },
+         {
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -30,40 +33,47 @@
                   2
                ]
             ],
-            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari"
          },
          {
-            "id" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "id" : "Markus Holzer",
             "name" : "Markus Holzer"
          },
          {
-            "name" : "Yet Ebreo",
+            "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "id" : "Yet Ebreo"
+            "name" : "Yet Ebreo"
          }
       ]
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 050"
+   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 050",
          "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 050",
          "data" : [
             {
-               "name" : "Dave Cross",
+               "y" : 2,
+               "name" : "Alexander Karelas",
+               "drilldown" : "Alexander Karelas"
+            },
+            {
+               "y" : 2,
                "drilldown" : "Dave Cross",
-               "y" : 2
+               "name" : "Dave Cross"
             },
             {
                "y" : 4,
@@ -83,30 +93,35 @@
          ]
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2020-03-02 12:38:55 GMT"
+   },
    "xAxis" : {
       "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 050"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
    "chart" : {
       "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    }
 }
