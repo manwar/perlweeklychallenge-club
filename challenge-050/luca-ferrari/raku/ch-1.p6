@@ -16,32 +16,18 @@
 # [2, 9], [10, 12], [15, 22]
 
 
-sub overlap( Range $a, Range $b ) {
-    return $b.max > $a.max > $b.min || $b.max >  $a.min > $b.min;
-}
-
-sub merge( Range $a, Range $b ) {
-    return Range.new: min( $a.min, $b.min ), max( $b.max, $a.max );
-}
-
-
-
-
 my @ranges = 2..7, 3..9, 10..12, 15..19, 18..22;
 my @merged-ranges;
 
-while ( @ranges.elems > 1 ) {
-    if overlap( @ranges[ 0 ], @ranges[ 1 ] ) {
-        # merge the ranges
-        @merged-ranges.push: merge( @ranges[ 0 ], @ranges[ 1 ] );
-        @ranges.shift;
-        @ranges.shift;
-    }
-    else {
-        # dont' merge, push the first one
-        @merged-ranges.push: @ranges[ 0 ];
-        @ranges.shift;
-    }
+while ( @ranges.elems  ) {
+    my $a = @ranges.shift;
+    my $b = @ranges[ 0 ];
+    @merged-ranges.push( Range.new( min( $a.min, $b.min ), max( $a.max, $b.max ) ) )
+    && @ranges.shift
+    && next
+    if $b.max > $a.max > $b.min || $b.max >  $a.min > $b.min;
+
+    @merged-ranges.push: $a;
 }
 
 
