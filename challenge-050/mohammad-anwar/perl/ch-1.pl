@@ -12,7 +12,7 @@ foreach my $interval (@$intervals) {
     my $i = $interval->[0];
     next if (defined $k && ($k == $i));
 
-    my ($j, $_k) = merge_interval($interval->[1], $intervals);
+    my ($j, $_k) = merge_intervals($interval->[1], $intervals);
     push @$m, [$i, $j];
 
     $k = $_k;
@@ -25,7 +25,7 @@ print_intervals("Merged", $m);
 #
 # METHODS
 
-sub merge_interval {
+sub merge_intervals {
     my ($j, $intervals) = @_;
 
     my $_j = $j;
