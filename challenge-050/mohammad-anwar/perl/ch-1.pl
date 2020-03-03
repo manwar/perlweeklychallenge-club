@@ -3,28 +3,43 @@
 use strict;
 use warnings;
 
-my $o = [ [2,7], [3,9], [10,12], [15,19], [18,22] ];
-my $k;
-my $m;
+use Test::More tests => 2;
+use Test::Deep;
 
-foreach my $interval (@$o) {
-    my $i = $interval->[0];
-    next if (defined $k && ($k == $i));
-
-    my ($j, $_k) = merge_intervals($interval->[1], $o);
-    push @$m, [$i, $j];
-
-    $k = $_k;
-}
-
-print_intervals("Original", $o);
-print_intervals("Merged", $m);
+cmp_deeply( merge_intervals( [ [1, 12], [7, 8], [12, 14], [15, 19] ]),
+            [ [1, 14], [15, 19] ] );
+cmp_deeply( merge_intervals( [ [2,7], [3,9], [10,12], [15,19], [18,22] ]),
+            [ [2, 9], [10, 12], [15, 22] ] );
 
 #
 #
 # METHODS
 
 sub merge_intervals {
+    my ($intervals) = @_;
+
+    my $k;
+    my $l;
+    my $m;
+
+    foreach my $interval (@$intervals) {
+        my $i = $interval->[0];
+
+        next if (defined $l &&
+                 defined $k &&
+                 (($i <= $l) || ($k == $i)));
+
+        my ($j, $_k) = _merge_intervals($interval->[1], $intervals);
+        push @$m, [$i, $j];
+
+        $k = $_k;
+        $l = $j;
+    }
+
+    return $m;
+}
+
+sub _merge_intervals {
     my ($j, $intervals) = @_;
 
     my $_j = $j;
@@ -37,14 +52,4 @@ sub merge_intervals {
     }
 
     return ($_j, $_i);
-}
-
-sub print_intervals {
-    my ($key, $intervals) = @_;
-
-    print "$key: [";
-    foreach my $i (@$intervals) {
-        print sprintf(" [%d, %d]", $i->[0], $i->[1]);
-    }
-    print " ]\n";
 }
