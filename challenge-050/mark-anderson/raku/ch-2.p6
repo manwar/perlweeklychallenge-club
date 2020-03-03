@@ -2,10 +2,7 @@
 
 my @L = [2, 6, 1, 3];
 
-for @L -> $n {
-    if $n < @L.elems {
-        if @L.grep(* > $n).elems == $n {
-            say $n;
-        }
-    }
-}
+@L                                    ==>
+grep  { $_ < @L.elems }               ==> # skip numbers that aren't possible
+first { @L.grep(* > $_).elems == $_ } ==> # I'm trusting there can only be 1 
+say();
