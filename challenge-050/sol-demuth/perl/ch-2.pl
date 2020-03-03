@@ -18,10 +18,12 @@ while ($len) {
 print '[' . join(', ', @L) . "]\n\n";
 
 foreach my $i (@L) {
-    # there cannot be multiple in a list because
-    # the next greater noble integer nullifies the
-    # the previous smaller noble integer
     if (scalar(grep {$_ > $i} @L) == $i) {
         print "Noble Integer: $i\n";
+        
+        # there cannot be multiple in a list because
+        # the next greater noble integer nullifies the
+        # the previous smaller noble integer
+        last;
     }
 }
