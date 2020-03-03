@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 6;
+use Test::More tests => 8;
 use Test::Deep;
 
 cmp_deeply( merge_intervals( [ [1, 12], [7, 8], [12, 14], [15, 19] ] ),
@@ -18,6 +18,10 @@ cmp_deeply( merge_intervals( [ [1, 1], [2, 2], [3, 3] ] ),
             [ [1, 1], [2, 2], [3, 3] ] );
 cmp_deeply( merge_intervals( [ [1, 3], [4, 8], [5, 7] ] ),
             [ [1, 3], [4, 8] ] );
+cmp_deeply( merge_intervals( [ [2, 3], [2, 5] ] ),
+            [ [2, 5] ] );
+cmp_deeply( merge_intervals( [ [2, 5], [2, 3] ] ),
+            [ [2, 5] ] );
 
 #
 #
@@ -63,12 +67,26 @@ sub merge_intervals {
 sub _order_intervals {
     my ($intervals) = @_;
 
-    my $ordered = {};
+    my @intervals = ();
     foreach my $i (@$intervals) {
-        $ordered->{$i->[0]} = $i;
+        push @intervals, sprintf("%d-%d", $i->[0], $i->[1]);
     }
 
-    return [  map { $ordered->{$_} } sort { $a <=> $b } keys %$ordered ];
+    # Borrowed
+    # https://stackoverflow.com/questions/27089498/sorting-arrays-of-intervals-in-perl
+    my @_sorted = sort {
+        my ($a1, $a2) = $a =~ /\d+/g;
+        my ($b1, $b2) = $b =~ /\d+/g;
+        $a1 <=> $b1 || $a2 <=> $b2;
+    } @intervals;
+
+    my $sorted = [];
+    foreach (@_sorted) {
+        my ($a, $b) = split /\-/, $_, 2;
+        push @$sorted, [ $a+0, $b+0 ];
+    }
+
+    return $sorted;
 }
 
 sub _merge_intervals {
