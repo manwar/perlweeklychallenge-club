@@ -17,7 +17,7 @@ while ($len) {
 
 print '[' . join(', ', @L) . "]\n\n";
 
-foreach my $i (@L) {
+foreach my $i (sort { $a <=> $b } @L) {
     if (scalar(grep {$_ > $i} @L) == $i) {
         print "Noble Integer: $i\n";
         
