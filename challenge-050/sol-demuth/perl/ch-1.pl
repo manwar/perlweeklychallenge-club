@@ -20,16 +20,13 @@ print "Intervals:\n". dumpSets(@sets);
 } @sets;
 
 my $cur = undef;
-my $nxt = undef;
 my $i   = 0; # cleaner than for loop, IMHO
 
-foreach my $r (@sets) {
+foreach my $nxt (@sets) {
     unless ($cur) {
         # get started
-        $cur = $r;
+        $cur = $nxt;
     } else {
-        $nxt = $r;
-
         if ($cur->[1] < $nxt->[0]) {
             # no overlap, increment
             $cur = $nxt;
