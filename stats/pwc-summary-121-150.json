@@ -1,11 +1,9 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-03-03 12:41:44 GMT"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             3,
             70,
@@ -37,10 +35,10 @@
             22,
             1,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             49,
@@ -72,10 +70,10 @@
             0,
             0,
             2
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             29,
@@ -107,17 +105,21 @@
             0,
             0,
             1
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-03-02 18:21:41 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -159,9 +161,7 @@
          "text" : ""
       }
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    }
 }
