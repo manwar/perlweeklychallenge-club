@@ -23,23 +23,19 @@ my $cur = undef;
 my $i   = 0; # cleaner than for loop, IMHO
 
 foreach my $nxt (@sets) {
-    unless ($cur) {
-        # get started
+    if (
+           !$cur # start
+        || $cur->[1] < $nxt->[0] # no overlap, increment
+    ) {
         $cur = $nxt;
     } else {
-        if ($cur->[1] < $nxt->[0]) {
-            # no overlap, increment
-            $cur = $nxt;
-        } else {
-            # partial overlap where next interval
-            # ends after end of current
-            if ($cur->[1] < $nxt->[1]) {
-                # current takes end of next
-                $cur->[1] = $nxt->[1];
-            }
-            # consume next
-            splice @sets, $i, 1;
+        # part overlap, next interval ends after current
+        if ($cur->[1] < $nxt->[1]) {
+            # current takes end of next
+            $cur->[1] = $nxt->[1];
         }
+        # consume next
+        splice @sets, $i, 1;
     }
 
     $i++;
