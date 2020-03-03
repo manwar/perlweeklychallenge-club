@@ -32,7 +32,7 @@ foreach my $nxt (@sets) {
             $cur = $nxt;
         } else {
             # partial overlap where next interval
-            # ends after current
+            # ends after end of current
             if ($cur->[1] < $nxt->[1]) {
                 # current takes end of next
                 $cur->[1] = $nxt->[1];
@@ -47,7 +47,7 @@ foreach my $nxt (@sets) {
 
 print "Merged:\n" . dumpSets(@sets);
 
-sub dumpSets { #convenienct for printing sets of intervals
+sub dumpSets { # convenience for printing sets of intervals
     return join(', ',
         map { '[' . $_->[0] . ', ' . $_->[1] . ']' } @_
     ) . "\n";
