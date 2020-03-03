@@ -3,19 +3,22 @@
 use strict;
 use warnings;
 
-use Test::More tests => 5;
+use Test::More tests => 6;
 use Test::Deep;
 
 cmp_deeply( merge_intervals( [ [1, 12], [7, 8], [12, 14], [15, 19] ] ),
             [ [1, 14], [15, 19] ] );
-cmp_deeply( merge_intervals( [ [2,7], [3,9], [10,12], [15,19], [18,22] ] ),
+cmp_deeply( merge_intervals( [ [2, 7], [3, 9], [10, 12], [15, 19], [18, 22] ] ),
             [ [2, 9], [10, 12], [15, 22] ] );
-cmp_deeply( merge_intervals( [ [1,2], [5,6], [3,4] ] ),
-            [ [1,2], [3,4], [5,6] ] );
-cmp_deeply( merge_intervals( [ [1,2], [5,6], [2,5] ] ),
-            [ [1,6] ] );
-cmp_deeply( merge_intervals( [ [1,1], [2,2], [3,3] ] ),
-            [ [1,1], [2,2], [3,3] ] );
+cmp_deeply( merge_intervals( [ [1, 2], [5, 6], [3, 4] ] ),
+            [ [1, 2], [3, 4], [5, 6] ] );
+cmp_deeply( merge_intervals( [ [1, 2], [5, 6], [2, 5] ] ),
+            [ [1, 6] ] );
+cmp_deeply( merge_intervals( [ [1, 1], [2, 2], [3, 3] ] ),
+            [ [1, 1], [2, 2], [3, 3] ] );
+cmp_deeply( merge_intervals( [ [1, 3], [4, 8], [5, 7] ] ),
+            [ [1, 3], [4, 8] ] );
+
 #
 #
 # METHODS
@@ -35,12 +38,19 @@ sub merge_intervals {
         if (defined $l && defined $k) {
             if (($i <= $l) || ($k == $i)) {
                 $k = $interval->[1];
-                $m->[-1]->[1] = $k;
+                if ($m->[-1]->[1] < $k) {
+                    $m->[-1]->[1] = $k;
+                }
                 next;
             }
         }
 
         my ($j, $_k) = _merge_intervals($interval->[1], $intervals);
+
+        if ($j < $interval->[1]) {
+            $j = $interval->[1];
+        }
+
         push @$m, [$i, $j];
 
         $k = $_k;
