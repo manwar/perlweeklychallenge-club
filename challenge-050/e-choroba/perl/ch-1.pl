@@ -4,27 +4,27 @@ use strict;
 
 {   package MyInterval;
 
+    use enum 'BITMASK:' => qw( LEFT RIGHT SINGLE );
+
     sub new { bless {}, shift }
 
     sub insert {
         my ($self, $from, $to) = @_;
-        $self->{$from} ||= 0, undef $self->{same}{$from}, return
-            if $from == $to;
-        $self->{$from} |= 1;
-        $self->{$_} = 3 for $from + 1 .. $to - 1;
-        $self->{$to} |= 2;
+        $self->{$from} |= SINGLE, return if $from == $to;
+        $self->{$from} |= LEFT;
+        $self->{$_} = LEFT | RIGHT for $from + 1 .. $to - 1;
+        $self->{$to} |= RIGHT;
     }
 
     sub out {
         my ($self) = @_;
         my @r;
-        my $same = $self->{same};
-        for my $k (sort { $a <=> $b } grep $_ ne 'same', keys %$self) {
-            if ($self->{$k} == 1) {
+        for my $k (sort { $a <=> $b } grep 'same' ne $_, keys %$self) {
+            if (($self->{$k} & (LEFT | RIGHT)) == LEFT) {
                 push @r, [$k];
-            } elsif ($self->{$k} == 2) {
+            } elsif (($self->{$k} & (LEFT | RIGHT)) == RIGHT) {
                 push @{ $r[-1] }, $k
-            } elsif ((! @r || 1 != @{ $r[-1] }) && exists $same->{$k}) {
+            } elsif ((! @r || 1 != @{ $r[-1] }) && ($self->{$k} == SINGLE)) {
                 push @r, [$k, $k];
             }
         }
