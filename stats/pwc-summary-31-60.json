@@ -1,6 +1,11 @@
 {
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-03-04 12:30:37 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -36,24 +41,18 @@
          "Javier Luque"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-03-04 12:05:15 GMT"
+   "chart" : {
+      "type" : "column"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             5,
             30,
@@ -85,7 +84,8 @@
             88,
             0,
             40
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -123,6 +123,7 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             2,
@@ -154,14 +155,13 @@
             31,
             0,
             20
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    }
 }
