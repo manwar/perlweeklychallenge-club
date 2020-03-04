@@ -6,7 +6,7 @@ use v6;
 #| Then print the Noble Integers in the list
 multi sub MAIN (
     UInt :n(:$number) = 10, #= Number of values to generate
-    UInt :m(:$max) where { $max > $number } = 30  #= Maximum value (must be greater then $n)
+    UInt :m(:$max) where { $max > $number } = 50  #= Maximum value (must be greater then $n)
 ) {
     my @list = (1..$max).pick($number);
     say "Generated List : {@list.join(",")}";
