@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 8;
+use Test::More;
 use Test::Deep;
 
 cmp_deeply( merge_intervals( [ [1, 12], [7, 8], [12, 14], [15, 19] ] ),
@@ -22,6 +22,92 @@ cmp_deeply( merge_intervals( [ [2, 3], [2, 5] ] ),
             [ [2, 5] ] );
 cmp_deeply( merge_intervals( [ [2, 5], [2, 3] ] ),
             [ [2, 5] ] );
+
+#
+#
+# Test case borrowed from E. Choroba contributions.
+# https://github.com/manwar/perlweeklychallenge-club/blob/master/challenge-050/e-choroba/perl/ch-1.pl
+
+cmp_deeply( merge_intervals([[1,2]]), [[1,2]]);
+cmp_deeply( merge_intervals([[1,2],[3,4]]), [[1,2],[3,4]]);
+cmp_deeply( merge_intervals([[3,4],[1,2]]), [[1,2],[3,4]]);
+
+cmp_deeply( merge_intervals([[2,5],[1,2]]), [[1,5]]);
+cmp_deeply( merge_intervals([[2,5],[1,3]]), [[1,5]]);
+cmp_deeply( merge_intervals([[2,5],[1,5]]), [[1,5]]);
+cmp_deeply( merge_intervals([[2,5],[1,6]]), [[1,6]]);
+cmp_deeply( merge_intervals([[2,5],[2,3]]), [[2,5]]);
+cmp_deeply( merge_intervals([[2,5],[2,5]]), [[2,5]]);
+cmp_deeply( merge_intervals([[2,5],[2,6]]), [[2,6]]);
+cmp_deeply( merge_intervals([[2,5],[3,4]]), [[2,5]]);
+cmp_deeply( merge_intervals([[2,5],[3,5]]), [[2,5]]);
+cmp_deeply( merge_intervals([[2,5],[3,6]]), [[2,6]]);
+cmp_deeply( merge_intervals([[2,5],[5,6]]), [[2,6]]);
+
+cmp_deeply( merge_intervals([[1,3],[5,7],[-1,0]]), [[-1,0],[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[-1,1]]), [[-1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[-1,2]]), [[-1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[-1,3]]), [[-1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[-1,4]]), [[-1,4],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[-1,5]]), [[-1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[-1,6]]), [[-1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[-1,7]]), [[-1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[-1,8]]), [[-1,8]]);
+
+cmp_deeply( merge_intervals([[1,3],[5,7],[1,2]]), [[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[1,3]]), [[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[1,4]]), [[1,4],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[1,5]]), [[1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[1,6]]), [[1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[1,7]]), [[1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[1,8]]), [[1,8]]);
+
+cmp_deeply( merge_intervals([[1,3],[5,7],[2,2]]), [[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[2,3]]), [[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[2,4]]), [[1,4],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[2,5]]), [[1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[2,6]]), [[1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[2,7]]), [[1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[2,8]]), [[1,8]]);
+
+cmp_deeply( merge_intervals([[1,3],[5,7],[3,3]]), [[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[3,4]]), [[1,4],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[3,5]]), [[1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[3,6]]), [[1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[3,7]]), [[1,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[3,8]]), [[1,8]]);
+
+cmp_deeply( merge_intervals([[1,3],[5,7],[4,4]]), [[1,3],[4,4],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[4,5]]), [[1,3],[4,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[4,6]]), [[1,3],[4,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[4,7]]), [[1,3],[4,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[4,8]]), [[1,3],[4,8]]);
+
+cmp_deeply( merge_intervals([[1,3],[5,7],[5,5]]), [[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[5,6]]), [[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[5,7]]), [[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[5,8]]), [[1,3],[5,8]]);
+
+cmp_deeply( merge_intervals([[1,3],[5,7],[6,6]]), [[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[6,7]]), [[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[6,8]]), [[1,3],[5,8]]);
+
+cmp_deeply( merge_intervals([[1,3],[5,7],[7,7]]), [[1,3],[5,7]]);
+cmp_deeply( merge_intervals([[1,3],[5,7],[7,8]]), [[1,3],[5,8]]);
+
+cmp_deeply( merge_intervals([[1,3],[5,7],[8,8]]), [[1,3],[5,7],[8,8]]);
+
+cmp_deeply( merge_intervals([[1,2],[5,6],[3,4]]), [[1,2],[3,4],[5,6]]);
+cmp_deeply( merge_intervals([[1,2],[5,6],[2,5]]), [[1,6]]);
+cmp_deeply( merge_intervals([[1,1],[2,2],[3,3]]), [[1,1],[2,2],[3,3]]);
+
+cmp_deeply( merge_intervals([[0,6],[7,8],[12,19],[3,8]]), [[0,8],[12,19]]);
+cmp_deeply( merge_intervals([[12,14],[15,19],[7,8],[1,12]]), [[1,14],[15,19]]);
+cmp_deeply( merge_intervals([[12,17],[18,18],[9,9],[5,17]]), [[5,17],[18,18]]);
+
+cmp_deeply( merge_intervals([[2,7],[3,9],[10,12],[15,19],[18,22]]), [[2,9],[10,12],[15,22]]);
+
+done_testing();
 
 #
 #
@@ -72,17 +158,17 @@ sub _order_intervals {
         push @intervals, sprintf("%d-%d", $i->[0], $i->[1]);
     }
 
-    # Borrowed
+    # Borrowed with input from E. Choroba
     # https://stackoverflow.com/questions/27089498/sorting-arrays-of-intervals-in-perl
     my @_sorted = sort {
-        my ($a1, $a2) = $a =~ /\d+/g;
-        my ($b1, $b2) = $b =~ /\d+/g;
+        my ($a1, $a2) = $a =~ /-?\d+/g;
+        my ($b1, $b2) = $b =~ /-?\d+/g;
         $a1 <=> $b1 || $a2 <=> $b2;
     } @intervals;
 
     my $sorted = [];
     foreach (@_sorted) {
-        my ($a, $b) = split /\-/, $_, 2;
+        my ($a, $b) = split /(?<=\d)-(?=\d)/, $_, 2;
         push @$sorted, [ $a+0, $b+0 ];
     }
 
