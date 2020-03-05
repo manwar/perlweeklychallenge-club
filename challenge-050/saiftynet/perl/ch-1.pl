@@ -12,47 +12,46 @@
 
 # 1st part generates random intervals. Intervals are pairs of numbers.
 # $start is smaller than the $end. Because these are random, they are
-# also unsorted unlike the example shown above
+# also unsorted unlike the example shown above.  The merging is more
+# efficient if the list is sorted.  This is similar to challenge 039
+# mergeIntervals() subroutine contains the sub merge() which merges
+# adjacent of intervals
+
+use strict; use warnings;
 my @list=();
-foreach (0..10){
+foreach (0..10){                              # random interval generator
     my $start=int(80*rand());
     my $end=$start+int(10*rand()+2);
     push @list,[$start,$end];
 }
 
-print "Before Merging:-\n",printall(@list), "\n"; # Prints the the initial list
-@list=mergeIntervals(@list);                      # Merge the list
-print "After Merging:-\n",printall(@list),"\n\n"; # Print the list post merger
+print "Before Merging:-\n",                   
+      (join ",",map{"[$$_[0],$$_[1]]"} @list),# Prints the initial list
+       "\n"; 
+@list=mergeIntervals(@list);                  # Merge the list
+print "After Merging:-\n",                    
+      (join ",",map{"[$$_[0],$$_[1]]"} @list),# Print the list post merger
+      "\n\n"; 
 
-# The mergeIntervals takes a list of intervals and merges where possible
+# The mergeIntervals takes a list of intervals, sorts them and merges where possible
 sub mergeIntervals{
-  my @toMerge=@_;
-  @toMerge=sort {$$a[0]<=>$$b[0]} @toMerge;     # sort intervals on the intervals' start
+  my @toMerge=sort {$$a[0]<=>$$b[0]} @_;      # sort intervals on the intervals' start
     
-  my $merges=1;                                 # ensure loop executes at least once
-    while ($merges){                            # until no more merges
-      my $pointer=$merges=0;                    # reset pointer and merges
-      while ($pointer<@toMerge-1){              # check two adjacent intervals for merging
+  my $pointer=our $merges=0;                    
+  while ($pointer<$#toMerge){                 # check two adjacent intervals for merging
          splice @toMerge,$pointer,2,merge($toMerge[$pointer],$toMerge[$pointer+1]);
-         $pointer++;                            # check next pair
-      }
-    }
+         $pointer++ unless $merges;           # unless merging can move to next set
+         $merges=0;                           # reset merges flag
+   }
   return @toMerge;
     
   sub merge{          # for sorted pair, pair will merge if start of second is
     my ($a,$b)=@_;    # less or equal to end of first. When a merge happens,
 		              # start is the start of first, and end is the largest
-		              # of either end
+		              # of either ends
     return ([$$a[0], $$a[1]>$$b[1]?$$a[1]:$$b[1]])
          if  $$a[1]>=$$b[0] and $merges=1;   # a merge happens and is flagged
     return ($a,$b);                          # if not merged, returns the pair
   }
-}
-
-# printall prints the lists of intervals
-sub printall{
-  my $printOut="";
-  $printOut.="[".$$_[0].",".$$_[1]."]," foreach(@_);
-  return $printOut;
 }
 
