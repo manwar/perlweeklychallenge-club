@@ -19,7 +19,7 @@ use strict;
     sub out {
         my ($self) = @_;
         my @r;
-        for my $k (sort { $a <=> $b } grep 'same' ne $_, keys %$self) {
+        for my $k (sort { $a <=> $b } keys %$self) {
             if (($self->{$k} & (LEFT | RIGHT)) == LEFT) {
                 push @r, [$k];
             } elsif (($self->{$k} & (LEFT | RIGHT)) == RIGHT) {
