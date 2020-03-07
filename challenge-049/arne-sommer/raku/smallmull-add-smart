@@ -1,0 +1,37 @@
+#! /usr/bin/env raku
+
+subset binary of Int where { /^<[ 0 1 ]>+$/ };
+
+unit sub MAIN (Int $number, :$verbose);
+
+my $current = $number;
+
+loop
+{
+  $current += $number;
+  say ": Checking $current" if $verbose;
+  if $current ~~ binary
+  {
+    say "Match: $current";
+    exit;
+  }
+
+  next if $current.chars < 2;
+
+  my @digits = $current.comb.reverse;
+
+  for 0 .. @digits.end -> $index
+  {
+    # say "*** $index ***";
+    if @digits[$index] > 1
+    {
+      @digits[$index +1]++;
+      @digits[0 .. $index] = (0 xx $index +1);
+
+      # say "::: { @digits }" if $verbose;
+    }
+  }
+
+  my $new = @digits.reverse.join;
+  $current = $new - ( $new % $number );
+}
