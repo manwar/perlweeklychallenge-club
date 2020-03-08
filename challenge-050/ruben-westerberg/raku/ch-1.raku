@@ -17,7 +17,6 @@ my @merged;
 
 while @ranges {
 	my $test=@ranges.shift;
-	my $size=@ranges;
 	@ranges.=map({  
 		do {
 			my $contained=.<start> <= $test<start> <= .<end>;
