@@ -1,18 +1,18 @@
 # Ryan Thompson
 
-## Week 049 Solutions
+## Week 050 Solutions
 
-### Task 1 › Smallest Multiple 1s and 0s
+### Task 1 › Merge Intervals
 
  * [Perl](perl/ch-1.pl)
  * [Raku](raku/ch-1.p6)
 
-### Task 2 › LRU Cache
+### Task 2 › Noble Integers
 
  * [Perl](perl/ch-2.pl)
  * [Raku](raku/ch-2.p6)
 
 ## Blogs
 
- * [Task 1 › Smallest Multiple](http://www.ry.ca/2020/03/smallest-multiple/)
- * [Task 2 › LRU Cache](http://www.ry.ca/2020/03/lru-cache/)
+ * [Task 1 › Merge Intervals](http://www.ry.ca/2020/03/merge-intervals/)
+ * [Task 2 › Noble Integers](http://www.ry.ca/2020/03/noble-integers/)
