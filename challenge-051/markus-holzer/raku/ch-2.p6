@@ -1,16 +1,15 @@
 use Terminal::ANSIColor;
 
-sub MAIN( Int $from, Int $to, Bool :$only = False )
+sub MAIN( Int $from, Int $to, Bool :$show-all = False )
 {
 
-	print "$_, " for gather for $from..$to -> $n 
+	print join ', ', gather for $from..$to -> $n 
 	{
 		my $is-colorful = is-colorful( $n );
 		take colorize( $n, $is-colorful ) 
-			if $is-colorful or not $only;
+			if $is-colorful or $show-all;
 	}
 }
-
 
 sub colorize( $n, $colorful )
 {
@@ -28,24 +27,34 @@ sub is-colorful( $n )
 		if ( @digits.repeated )
 		or ( $n > 1 && '1' (elem) @digits );
 
+	my sub product( @n ) { [*] @n };
+
 	not consecutive-combinations( @digits )
-		.map({ [*] $_ })
+		.map({ .&product })
 		.repeated
 	;
 }
 
 sub consecutive-combinations( @n )
 {
-	my sub keys-of( @p )   { @p.map: *.key   }
-	my sub values-of( @p ) { @p.map: *.value }
+	my sub keys( @p )   { @p.map: *.key   }
+	my sub values( @p ) { @p.map: *.value }
 
-	my sub is-consecutive( @n ) { 
-		not @n.rotor( 2 => -1 ).first( -> ($a, $b) { $a + 1 != $b }) }
+#       Pretty, but adhoc mixins are terribly sloooooow
+#	my sub infix:<++>($a, $b)    { $b but ($a + 1 == $b) }; 
+#	my sub are-consecutive( @n ) { so [++] @n }; 
+
+#       Too much work
+#	my sub are-consecutive( @n ) { 
+#		not @n.rotor( 2 => -1 ).first( -> ($a, $b) { $a + 1 != $b }) }
+
+	my sub are-consecutive( @n ) { not ( 1..@n.end ).first({ 
+		@n[ $_ ] - @n[ $_ - 1 ] != 1 }) }; 
 
 	@n
 		.pairs
 		.combinations( 1..* )
-		.grep({ is-consecutive( .&keys-of ) })
-		.map({ .&values-of })
+		.grep({ .&keys.&are-consecutive })
+		.map({ .&values })
 	;
 }
