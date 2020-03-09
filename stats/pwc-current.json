@@ -1,12 +1,19 @@
 {
    "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-03-09 10:21:50 GMT"
+      "text" : "[Champions: 3] Last updated at 2020-03-09 10:26:14 GMT"
    },
-   "legend" : {
-      "enabled" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 051",
          "data" : [
             {
                "y" : 2,
@@ -14,52 +21,60 @@
                "drilldown" : "Dave Cross"
             },
             {
+               "y" : 2,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "y" : 2,
                "name" : "Yet Ebreo",
-               "drilldown" : "Yet Ebreo",
-               "y" : 2
+               "drilldown" : "Yet Ebreo"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 051",
-         "colorByPoint" : 1
+         ]
       }
    ],
    "title" : {
       "text" : "Perl Weekly Challenge - 051"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Cross",
-            "name" : "Dave Cross",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Yet Ebreo"
+            "name" : "Dave Cross",
+            "id" : "Dave Cross"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
+         },
+         {
+            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          }
       ]
    },
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
@@ -71,8 +86,8 @@
       }
    },
    "tooltip" : {
+      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
