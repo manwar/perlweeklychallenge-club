@@ -1,6 +1,22 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 051"
    },
    "drilldown" : {
       "series" : [
@@ -15,6 +31,7 @@
             ]
          },
          {
+            "id" : "Javier Luque",
             "name" : "Javier Luque",
             "data" : [
                [
@@ -29,12 +46,19 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Javier Luque"
+            ]
          },
          {
-            "id" : "Roger Bell West",
-            "name" : "Roger Bell West",
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -44,16 +68,18 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell West",
+            "id" : "Roger Bell West"
          },
          {
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "name" : "Simon Proctor",
             "id" : "Simon Proctor"
          },
          {
@@ -68,54 +94,34 @@
          },
          {
             "id" : "Yet Ebreo",
-            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Yet Ebreo"
          }
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2020-03-09 17:23:57 GMT"
-   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 051",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 2,
+               "name" : "Dave Cross",
                "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
+               "y" : 2
             },
             {
                "name" : "Javier Luque",
                "drilldown" : "Javier Luque",
                "y" : 5
+            },
+            {
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
+               "y" : 2
             },
             {
                "y" : 4,
@@ -124,27 +130,36 @@
             },
             {
                "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
             },
             {
-               "drilldown" : "Wanderdoc",
+               "y" : 2,
                "name" : "Wanderdoc",
-               "y" : 2
+               "drilldown" : "Wanderdoc"
             },
             {
-               "name" : "Yet Ebreo",
                "drilldown" : "Yet Ebreo",
+               "name" : "Yet Ebreo",
                "y" : 2
             }
          ],
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 051"
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 051"
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2020-03-09 18:08:32 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    }
 }
