@@ -16,7 +16,7 @@ sub colorize( $n, $colorful )
 {
 	state @colors = <red green yellow blue magenta cyan>;
 	my $color     = $colorful ?? @colors.pick !! 'white';
-	color($color) ~ $n ~ color('reset');
+	color( $color ) ~ $n ~ color( 'reset' );
 }
 
 sub is-colorful( $n )
@@ -40,11 +40,11 @@ sub consecutive-combinations( @n )
 	my sub values-of( @p ) { @p.map: *.value }
 
 	my sub is-consecutive( @n ) { 
-		not @n.rotor(2 => -1).first( -> ($a, $b) { $a + 1 != $b }) }
+		not @n.rotor( 2 => -1 ).first( -> ($a, $b) { $a + 1 != $b }) }
 
 	@n
 		.pairs
-		.combinations(1..*)
+		.combinations( 1..* )
 		.grep({ is-consecutive( .&keys-of ) })
 		.map({ .&values-of })
 	;
