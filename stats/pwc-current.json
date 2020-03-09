@@ -1,22 +1,28 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-03-09 10:11:08 GMT"
+      "text" : "[Champions: 2] Last updated at 2020-03-09 10:21:50 GMT"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "legend" : {
+      "enabled" : 0
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Dave Cross",
+               "drilldown" : "Dave Cross"
+            },
+            {
+               "name" : "Yet Ebreo",
+               "drilldown" : "Yet Ebreo",
+               "y" : 2
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 051",
+         "colorByPoint" : 1
       }
-   },
+   ],
    "title" : {
       "text" : "Perl Weekly Challenge - 051"
    },
@@ -28,36 +34,45 @@
    "drilldown" : {
       "series" : [
          {
-            "name" : "Yet Ebreo",
-            "id" : "Yet Ebreo",
+            "id" : "Dave Cross",
+            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ]
+         },
+         {
+            "name" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Yet Ebreo"
          }
       ]
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Yet Ebreo",
-               "name" : "Yet Ebreo"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 051"
-      }
-   ],
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "chart" : {
+      "type" : "column"
    },
-   "legend" : {
-      "enabled" : 0
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    }
 }
