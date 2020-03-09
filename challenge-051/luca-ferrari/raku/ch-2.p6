@@ -24,16 +24,16 @@ sub is-colorful( Int:D $number ) {
     # how many times it appear
     my %products;
 
-    # all the digits product
-    %products{ [*] @digits }++;
 
     # products of all sequences, use range and reduction operator
-    for 0 .. @digits.elems - 2 {
-        %products{ [*] @digits[ $_ .. $_ + @digits.elems - 2 ] }++;
+    for 0 ..^ @digits.elems  {
+        # skip single element arrays
+        next if $_ == @digits.elems - 1;
+        %products{ [*] @digits[ $_ ..^ @digits.elems ] }++;
     }
 
-
     # NOT CLEAR: are the single digits to be included?
+    # suppose they are
     %products{ $_ }++ for @digits;
 
     return False if %products.values.grep: * > 1;
