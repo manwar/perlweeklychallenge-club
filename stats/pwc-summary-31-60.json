@@ -1,15 +1,7 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
    "xAxis" : {
@@ -46,9 +38,27 @@
          "Jeff"
       ]
    },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-03-09 11:14:03 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             32,
             60,
@@ -78,9 +88,10 @@
             12,
             90,
             0,
-            40,
+            42,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -112,12 +123,13 @@
             0,
             89,
             4,
-            40,
+            42,
             0
          ],
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             2,
             27,
@@ -147,21 +159,9 @@
             0,
             32,
             0,
-            20,
+            21,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-03-09 11:07:34 GMT"
-   }
+   ]
 }
