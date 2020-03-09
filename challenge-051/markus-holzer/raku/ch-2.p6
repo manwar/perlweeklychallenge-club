@@ -7,7 +7,7 @@ sub MAIN( Int $from, Int $to, Bool :$only = False )
 	{
 		my $is-colorful = is-colorful( $n );
 		take colorize( $n, $is-colorful ) 
-			if $is-colorful or !$only;
+			if $is-colorful or not $only;
 	}
 }
 
