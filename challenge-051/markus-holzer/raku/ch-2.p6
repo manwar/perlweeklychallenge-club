@@ -1,13 +1,13 @@
 use Terminal::ANSIColor;
 
-sub MAIN( Int $from, Int $to, Bool :$only = False )
+sub MAIN( Int $from, Int $to, Bool :$show-all = False )
 {
 
 	print join ', ', gather for $from..$to -> $n 
 	{
 		my $is-colorful = is-colorful( $n );
 		take colorize( $n, $is-colorful ) 
-			if $is-colorful or not $only;
+			if $is-colorful or $show-all;
 	}
 }
 
