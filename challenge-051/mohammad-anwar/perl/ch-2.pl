@@ -1,0 +1,14 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use List::Util 1.45 qw(uniq);
+
+foreach my $i (100 .. 999) {
+    my @N = split //, $i;
+    my @S = ($N[0], $N[1], $N[2], ($N[0] * $N[1]), ($N[1] * $N[2]), ($N[0] * $N[1] * $N[2]));
+
+    print "[$i] => [", join(", ", @S), "]\n"
+        if ( scalar(uniq(@S)) == scalar(@S) );
+}
