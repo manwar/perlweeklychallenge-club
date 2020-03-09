@@ -49,4 +49,3 @@ sub consecutive-combinations( @n )
 		.map({ .&values-of })
 	;
 }
-
