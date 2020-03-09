@@ -2,28 +2,26 @@
    "legend" : {
       "enabled" : 0
    },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge - 051"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "xAxis" : {
+      "type" : "category"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 051",
          "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 051",
          "data" : [
             {
-               "drilldown" : "Dave Cross",
                "name" : "Dave Cross",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Dave Cross"
             },
             {
                "drilldown" : "Roger Bell West",
@@ -31,26 +29,28 @@
                "name" : "Roger Bell West"
             },
             {
+               "y" : 2,
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
+               "name" : "Simon Proctor"
             },
             {
-               "name" : "Yet Ebreo",
                "y" : 2,
-               "drilldown" : "Yet Ebreo"
+               "drilldown" : "Yet Ebreo",
+               "name" : "Yet Ebreo"
             }
          ]
       }
    ],
-   "xAxis" : {
-      "type" : "category"
-   },
    "chart" : {
       "type" : "column"
    },
    "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-03-09 10:31:49 GMT"
+      "text" : "[Champions: 4] Last updated at 2020-03-09 10:48:21 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "plotOptions" : {
       "series" : {
@@ -64,8 +64,8 @@
    "drilldown" : {
       "series" : [
          {
-            "name" : "Dave Cross",
             "id" : "Dave Cross",
+            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
@@ -74,6 +74,7 @@
             ]
          },
          {
+            "name" : "Roger Bell West",
             "id" : "Roger Bell West",
             "data" : [
                [
@@ -84,27 +85,26 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Roger Bell West"
+            ]
          },
          {
+            "name" : "Simon Proctor",
             "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Simon Proctor"
+            ]
          },
          {
-            "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Yet Ebreo",
             "name" : "Yet Ebreo"
          }
       ]
