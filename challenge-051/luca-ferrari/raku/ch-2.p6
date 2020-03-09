@@ -27,9 +27,9 @@ sub is-colorful( Int:D $number ) {
     # all the digits product
     %products{ [*] @digits }++;
 
-    # products of all sequences
+    # products of all sequences, use range and reduction operator
     for 0 .. @digits.elems - 2 {
-        %products{ @digits[ $_ ] * @digits[ $_ + 1 ] }++;
+        %products{ [*] @digits[ $_ .. $_ + @digits.elems - 2 ] }++;
     }
 
 
