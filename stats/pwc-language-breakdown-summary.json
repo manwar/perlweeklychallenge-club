@@ -1,43 +1,36 @@
 {
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-03-09 20:41:03 GMT"
-   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-03-09 20:51:03 GMT"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
       }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "align" : "right",
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "y" : 10
-         },
          "data" : [
             [
                "Blog",
@@ -45,19 +38,26 @@
             ],
             [
                "Perl",
-               2121
+               2123
             ],
             [
                "Raku",
                1300
             ]
-         ]
+         ],
+         "name" : "Contributions",
+         "dataLabels" : {
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "rotation" : -90,
+            "align" : "right",
+            "color" : "#FFFFFF"
+         }
       }
-   ],
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   }
+   ]
 }
