@@ -1,27 +1,22 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
    "chart" : {
       "type" : "column"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 051"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
    },
    "drilldown" : {
@@ -55,8 +50,6 @@
             ]
          },
          {
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -66,11 +59,21 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
          },
          {
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Markus Holzer",
+            "name" : "Markus Holzer"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -80,21 +83,23 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West"
          },
          {
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          },
          {
-            "name" : "Wanderdoc",
             "id" : "Wanderdoc",
+            "name" : "Wanderdoc",
             "data" : [
                [
                   "Perl",
@@ -114,47 +119,51 @@
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2020-03-09 18:11:30 GMT"
+   "legend" : {
+      "enabled" : 0
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 051"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "series" : [
       {
          "data" : [
             {
                "y" : 2,
-               "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
+               "name" : "Dave Cross",
+               "drilldown" : "Dave Cross"
             },
             {
-               "name" : "Javier Luque",
                "drilldown" : "Javier Luque",
-               "y" : 5
+               "y" : 5,
+               "name" : "Javier Luque"
             },
             {
-               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
                "y" : 4,
-               "drilldown" : "Luca Ferrari"
+               "name" : "Luca Ferrari"
             },
             {
+               "name" : "Markus Holzer",
+               "y" : 2,
+               "drilldown" : "Markus Holzer"
+            },
+            {
+               "drilldown" : "Roger Bell West",
                "name" : "Roger Bell West",
-               "y" : 4,
-               "drilldown" : "Roger Bell West"
+               "y" : 4
             },
             {
-               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
                "y" : 2,
-               "drilldown" : "Simon Proctor"
+               "name" : "Simon Proctor"
             },
             {
-               "drilldown" : "Wanderdoc",
+               "name" : "Wanderdoc",
                "y" : 2,
-               "name" : "Wanderdoc"
+               "drilldown" : "Wanderdoc"
             },
             {
                "name" : "Yet Ebreo",
@@ -162,8 +171,14 @@
                "drilldown" : "Yet Ebreo"
             }
          ],
-         "name" : "Perl Weekly Challenge - 051",
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 051"
       }
-   ]
+   ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2020-03-09 18:15:09 GMT"
+   }
 }
