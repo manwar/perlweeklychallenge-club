@@ -1,93 +1,112 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2020-03-09 10:26:14 GMT"
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 051"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "xAxis" : {
-      "type" : "category"
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 051",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 2,
+               "drilldown" : "Dave Cross",
                "name" : "Dave Cross",
-               "drilldown" : "Dave Cross"
+               "y" : 2
             },
             {
-               "y" : 2,
+               "drilldown" : "Roger Bell West",
+               "y" : 4,
+               "name" : "Roger Bell West"
+            },
+            {
+               "drilldown" : "Simon Proctor",
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "y" : 2
             },
             {
-               "y" : 2,
                "name" : "Yet Ebreo",
+               "y" : 2,
                "drilldown" : "Yet Ebreo"
             }
          ]
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 051"
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2020-03-09 10:31:49 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
    "drilldown" : {
       "series" : [
          {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
             "name" : "Dave Cross",
-            "id" : "Dave Cross"
-         },
-         {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
-         },
-         {
-            "id" : "Yet Ebreo",
-            "name" : "Yet Ebreo",
+            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ]
+         },
+         {
+            "id" : "Roger Bell West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Roger Bell West"
+         },
+         {
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Simon Proctor"
+         },
+         {
+            "id" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Yet Ebreo"
          }
       ]
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
