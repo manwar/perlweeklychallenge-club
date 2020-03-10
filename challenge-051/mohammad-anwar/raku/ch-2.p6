@@ -4,7 +4,7 @@ use v6;
 
 sub MAIN() {
 
-    for 102 .. 987 -> $i {
+    for 234 .. 987 -> $i {
         my $j = $i.comb.unique.join;
         # Only try if all three digits are unique.
         next if $i != $j;

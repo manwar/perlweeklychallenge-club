@@ -5,7 +5,7 @@ use warnings;
 
 use List::Util 1.45 qw(uniq);
 
-foreach my $i (102 .. 987) {
+foreach my $i (234 .. 987) {
     my @N = split //, $i;
     # Only try if all three digits are unique.
     next if ( scalar(uniq(@N)) != scalar(@N) );
