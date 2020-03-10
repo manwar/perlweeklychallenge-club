@@ -23,9 +23,9 @@
 use strict;
 use warnings;
 
-my $length = shift || 3;
+my $elements = shift || 3;
 
-my @L = sort {$a <=> $b} map { int(rand(49)) + 1 } 1..$length;
+my @L = sort {$a <=> $b} map { int(rand(49)) + 1 } 1..$elements;
 print 'List: ' . join ',', @L;
 
 my @nobles;
