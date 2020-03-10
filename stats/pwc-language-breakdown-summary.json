@@ -1,12 +1,18 @@
 {
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      },
-      "type" : "category"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "yAxis" : {
       "title" : {
@@ -14,24 +20,8 @@
       },
       "min" : 0
    },
-   "subtitle" : {
-      "text" : "Last updated at 2020-03-10 00:50:45 GMT"
-   },
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "align" : "right",
-            "y" : 10,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "rotation" : -90,
-            "format" : "{point.y:.0f}"
-         },
          "data" : [
             [
                "Blog",
@@ -39,25 +29,35 @@
             ],
             [
                "Perl",
-               2126
+               2128
             ],
             [
                "Raku",
                1302
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "align" : "right",
+            "y" : 10,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "enabled" : "true",
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF"
+         },
+         "name" : "Contributions"
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-03-10 01:08:03 GMT"
    },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : "false"
    }
 }
