@@ -9,5 +9,6 @@ sub MAIN() {
 
 sub is-colourful( Int $number ) {
     my @vals = $number.comb;
-    [!==] @vals[0] * @vals[1], @vals[1] * @vals[2], @vals[0] * @vals[1] * @vals[2], @vals[0] * @vals[1];
+    [!==] (|@vals, @vals[0] * @vals[1], @vals[1] * @vals[2], @vals[0] * @vals[1] * @vals[2]).sort;
+
 }
