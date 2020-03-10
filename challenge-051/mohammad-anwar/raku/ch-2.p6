@@ -6,6 +6,7 @@ sub MAIN() {
 
     for 102 .. 987 -> $i {
         my $j = $i.comb.unique.join;
+        # Only try if all three digits are unique.
         next if $i != $j;
 
         my @N = $i.comb;
