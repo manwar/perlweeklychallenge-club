@@ -19,7 +19,7 @@
 use strict;
 use warnings;
 
-my $intervals = join '', @ARGV;
+my $intervals = join ',', @ARGV;
 if ($intervals) {
     print merge($intervals);
 }
