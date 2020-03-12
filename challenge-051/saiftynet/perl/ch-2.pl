@@ -21,7 +21,7 @@ foreach(100..999){  #all possible three digit numbers
             # all the possible consecutive products
   @l{$d1, $d2, $d3, $d1*$d2,$d2*$d3,$d1*$d2*$d3}=1x6;
   
-  # if number of keys is 7, then no duplicates exist
+  # if number of keys is 6, then no duplicates exist
   print  "$d1$d2$d3 " if 6 == keys %l; 
 }
 
