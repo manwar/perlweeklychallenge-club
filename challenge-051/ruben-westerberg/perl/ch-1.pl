@@ -4,7 +4,6 @@ use warnings;
 no warnings "experimental";
 use feature "switch";
 use List::Util;
-use Data::Dumper;
 my @list=(-25, -10, -7, -3, 2, 4, 8, 10);
 my $target=0;
 
