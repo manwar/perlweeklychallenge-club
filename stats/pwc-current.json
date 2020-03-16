@@ -1,74 +1,64 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2020-03-16 10:57:26 GMT"
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Dave Cross",
+               "drilldown" : "Dave Cross",
+               "y" : 2
+            },
+            {
+               "name" : "Dave Jacoby",
+               "drilldown" : "Dave Jacoby",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Yet Ebreo",
+               "name" : "Yet Ebreo",
+               "y" : 1
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 052"
+      }
+   ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 052"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "chart" : {
+      "type" : "column"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 052",
-         "data" : [
-            {
-               "drilldown" : "Dave Cross",
-               "name" : "Dave Cross",
-               "y" : 2
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Dave Jacoby",
-               "name" : "Dave Jacoby"
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 1
-            }
-         ]
-      }
-   ],
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Cross",
-            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Dave Cross",
+            "id" : "Dave Cross"
          },
          {
+            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby"
+            "name" : "Dave Jacoby"
          },
          {
             "id" : "Simon Proctor",
@@ -79,8 +69,33 @@
                ]
             ],
             "name" : "Simon Proctor"
+         },
+         {
+            "name" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "id" : "Yet Ebreo"
          }
       ]
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2020-03-16 16:31:21 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "legend" : {
       "enabled" : 0
