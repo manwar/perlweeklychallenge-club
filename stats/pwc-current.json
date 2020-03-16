@@ -1,32 +1,61 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
                "name" : "Dave Jacoby",
                "y" : 1,
                "drilldown" : "Dave Jacoby"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 1
             }
          ],
-         "name" : "Perl Weekly Challenge - 052",
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 052"
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "name" : "Dave Jacoby"
+         },
+         {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ]
+         }
+      ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "legend" : {
+      "enabled" : 0
    },
    "xAxis" : {
       "type" : "category"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "plotOptions" : {
       "series" : {
@@ -37,27 +66,13 @@
          }
       }
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ]
-            ],
-            "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby"
-         }
-      ]
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-03-16 09:29:01 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 052"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2020-03-16 10:38:22 GMT"
    }
 }
