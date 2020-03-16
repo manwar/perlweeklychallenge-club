@@ -1,12 +1,92 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 052"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Dave Cross",
+            "id" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
+         },
+         {
+            "name" : "Wanderdoc",
+            "id" : "Wanderdoc",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ]
+         }
+      ]
+   },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 052",
          "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Dave Cross",
                "drilldown" : "Dave Cross",
-               "y" : 2
+               "y" : 2,
+               "name" : "Dave Cross"
             },
             {
                "name" : "Dave Jacoby",
@@ -14,95 +94,30 @@
                "y" : 1
             },
             {
-               "drilldown" : "Simon Proctor",
                "name" : "Simon Proctor",
-               "y" : 1
+               "y" : 1,
+               "drilldown" : "Simon Proctor"
             },
             {
+               "y" : 2,
+               "drilldown" : "Wanderdoc",
+               "name" : "Wanderdoc"
+            },
+            {
+               "y" : 1,
                "drilldown" : "Yet Ebreo",
-               "name" : "Yet Ebreo",
-               "y" : 1
+               "name" : "Yet Ebreo"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 052"
+         ]
       }
    ],
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 052"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "name" : "Dave Cross",
-            "id" : "Dave Cross"
-         },
-         {
-            "id" : "Dave Jacoby",
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ]
-            ],
-            "name" : "Dave Jacoby"
-         },
-         {
-            "id" : "Simon Proctor",
-            "data" : [
-               [
-                  "Raku",
-                  1
-               ]
-            ],
-            "name" : "Simon Proctor"
-         },
-         {
-            "name" : "Yet Ebreo",
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ]
-            ],
-            "id" : "Yet Ebreo"
-         }
-      ]
-   },
    "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-03-16 16:31:21 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+      "text" : "[Champions: 5] Last updated at 2020-03-16 17:18:23 GMT"
    },
    "xAxis" : {
       "type" : "category"
    },
    "legend" : {
       "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
    }
 }
