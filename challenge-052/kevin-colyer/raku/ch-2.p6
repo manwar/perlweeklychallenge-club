@@ -8,33 +8,32 @@
 # pick one coin at a time from either ends. Find out the lucky winner, 
 # who has the larger amounts in total?
 
-# alphabeta search?
-# simple search with backtracking? (yes as fewest coins)
-# heuristic - make opponant pick two back choices
-my @line= 100, 50, 1, 10, 5, 20, 200, 2;
 
-my $ticks=0;
+my Int @line= 100, 50, 1, 10, 5, 20, 200, 2;
+my Int $ticks=0;
+
 # do a recursive alphabeta search, ending at last coin, returning best coin to choose...
-sub search($alpha is copy,$beta is copy ,@line is copy) {
+sub search(Int $alpha is copy, Int $beta is copy , Int $lstart is copy, Int $lend is copy, Int $depth is copy) {
     
     # reached bottom of search
-    return (@line.head,'l') if @line.elems==1;
+    # depth helps prevent search explosion as line of coins increases
+    return (@line[$lstart],'l') if $depth==0 || $lstart==$lend;
 
     # thinking dots..
-    print "." if $ticks %% 100;
+    print "." if $ticks +& 0x3FF == 0 ;
     $ticks++;
     
     # search the two ends of the line of coins
-    my $coin1 = @line.head;
-    my $s1=search($beta,$alpha+$coin1,@line[1..*]);
-    my $coin2 = @line.tail;
-    my $s2=search($beta,$alpha+$coin2,@line[0..*-2]);
+    my Int $coin1 = @line[$lstart];
+    my $s1=search($beta, $alpha+$coin1, $lstart+1, $lend, $depth-1);
+    my Int $coin2 = @line[$lend];
+    my $s2=search($beta, $alpha+$coin2, $lstart, $lend-1, $depth-1);
 
     return $s1[0] < $s2[0] ?? ($coin1,'l') !! ($coin2,'r');
 }
 
 #= Coin game. Set --hardness=0 or --hardness=1, 2, 3, etc
-sub MAIN(Int :$hardness=0) {
+sub MAIN(Int :$hardness=0, Int :$maxdepth=20) {
     my $round=0;
     my $you=0;
     my $pc=0;
@@ -59,8 +58,9 @@ sub MAIN(Int :$hardness=0) {
         
         # recursive alpha beta search
         print "PC picks...";
-        ($coin,$side) = search($pc,$you,@line);
-        say " $coin ($side)\n";
+        $ticks=0;
+        ($coin,$side) = search($pc, $you, 0, @line.elems-1, $maxdepth);
+        say " $coin ($side) in $ticks searches\n";
         
         $side eq 'l' ?? @line.shift !! @line.pop ;
         $pc+=$coin;
