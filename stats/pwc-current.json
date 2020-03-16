@@ -1,44 +1,60 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "Dave Cross",
+               "drilldown" : "Dave Cross",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
+               "y" : 1
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
+            },
+            {
+               "y" : 1,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "y" : 2,
+               "name" : "Wanderdoc",
+               "drilldown" : "Wanderdoc"
+            },
+            {
+               "name" : "Yet Ebreo",
+               "drilldown" : "Yet Ebreo",
+               "y" : 1
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 052",
+         "colorByPoint" : 1
       }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 052"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   ],
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Dave Cross",
-            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Dave Cross",
+            "name" : "Dave Cross"
          },
          {
-            "name" : "Dave Jacoby",
             "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -50,74 +66,77 @@
             "data" : [
                [
                   "Raku",
-                  1
+                  2
+               ],
+               [
+                  "Blog",
+                  2
                ]
             ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
          },
          {
-            "name" : "Wanderdoc",
-            "id" : "Wanderdoc",
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Wanderdoc",
+            "id" : "Wanderdoc"
          },
          {
-            "id" : "Yet Ebreo",
-            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "name" : "Yet Ebreo",
+            "id" : "Yet Ebreo"
          }
       ]
-   },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 052",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "drilldown" : "Dave Cross",
-               "y" : 2,
-               "name" : "Dave Cross"
-            },
-            {
-               "name" : "Dave Jacoby",
-               "drilldown" : "Dave Jacoby",
-               "y" : 1
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 1,
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Wanderdoc",
-               "name" : "Wanderdoc"
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Yet Ebreo",
-               "name" : "Yet Ebreo"
-            }
-         ]
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2020-03-16 17:18:23 GMT"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "legend" : {
-      "enabled" : 0
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2020-03-16 18:13:18 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 052"
    }
 }
