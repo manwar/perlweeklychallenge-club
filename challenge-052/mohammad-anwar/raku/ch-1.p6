@@ -8,9 +8,9 @@ sub MAIN(Int $start is copy = 100, Int $stop = 999) {
     die "ERROR: Invalid stop [$stop]."   if $stop  > 999 || $stop < $start;
 
     while $start <= $stop {
-        say $start if ($start.comb("") Z- <0 1 2>).unique.elems == 1
+        say $start if ([==] $start.comb("") Z- <0 1 2>)
                       ||
-                      ($start.comb("") Z- <2 1 0>).unique.elems == 1;
+                      ([==] $start.comb("") Z- <2 1 0>);
         $start++;
     }
 }
