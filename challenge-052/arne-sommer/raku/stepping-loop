@@ -1,0 +1,29 @@
+#! /usr/bin/env raku
+
+subset SteppingLimit of Int where 100 <= * <= 999;
+
+unit sub MAIN (SteppingLimit $from,
+               SteppingLimit $to where $to > $from,
+	       :$verbose);
+
+say ": Candidates: { ($from.Int .. $to.Int).list }" if $verbose;
+
+for $from .. $to -> $number
+{
+  say $number if is_stepping($number);
+}
+
+sub is_stepping (SteppingLimit $number)
+{
+  my @digits = $number.comb;
+
+  my $current = @digits.shift;
+
+  while (@digits)
+  {
+    return False unless @digits[0] == any($current +1, $current -1);
+    $current = @digits.shift;
+  }
+
+  return True;
+}
