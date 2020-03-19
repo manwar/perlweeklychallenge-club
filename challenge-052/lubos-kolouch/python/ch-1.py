@@ -2,7 +2,8 @@
 
 import sys
 
-def is_stepping(number:str):
+
+def is_stepping(number: str):
 
     number = str(number)
     seq = str(number)[0]
@@ -14,10 +15,12 @@ def is_stepping(number:str):
 
     return 1
 
+
 assert len(sys.argv) == 3
 
 for i in range(int(sys.argv[1]), int(sys.argv[2])+1):
-    if is_stepping(i): print(i)
+    if is_stepping(i):
+        print(i)
 
 
 # TESTS
