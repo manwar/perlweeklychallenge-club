@@ -46,7 +46,7 @@ sub MAIN() {
 }
 
 sub declare-lucky-winner(%players) {
-    if %players<0><bank> > %players<1><bank> {
+    if %players<0><"bank"> > %players<1><"bank"> {
         say "The lucky winner is " ~ %players<0><name> ~ ".";
     }
     else {
