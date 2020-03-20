@@ -150,7 +150,14 @@ sub merge_intervals {
     return $m;
 }
 
+# Ryan Thompson suggested version as in review blog.
+# https://perlweeklychallenge.org/blog/review-challenge-050
 sub _order_intervals {
+    [ sort { $a->[0] <=> $b->[0] || $a->[1] <=> $b->[1] } @{$_[0]} ]
+}
+
+# My unnecessary over complicated version.
+sub __order_intervals {
     my ($intervals) = @_;
 
     my @intervals = ();
