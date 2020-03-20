@@ -24,8 +24,8 @@ sub MAIN() {
 
     # Pick random player 0 or 1.
     # DISCLAIMER:
-    # Idea borrowed by E. Choroba as he found out the player
-    # who picks first is the winner always.
+    # E. Choroba found out the player who picks the coin
+    # first is always the winner.
     my Int $current = (^2).pick;
 
     # Play the game now
