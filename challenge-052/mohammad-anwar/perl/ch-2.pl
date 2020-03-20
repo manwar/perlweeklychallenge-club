@@ -35,31 +35,31 @@ $coin = shift @$table;
 $players->{$current}->{bank} += $coin;
 push @{$players->{$current}->{coins}}, $coins->{$coin};
 
-_declare_winner($players);
+_declare_lucky_winner($players);
 _show_coins($players);
 
 #
 #
 # METHODS
 
-sub _declare_winner {
+sub _declare_lucky_winner {
     my ($players) = @_;
 
-    print "The winner is ";
+    print "The lucky winner is ";
     if ($players->{0}->{bank} > $players->{1}->{bank}) {
         print $players->{0}->{name};
     }
     else {
         print $players->{1}->{name};
     }
-    print "\n";
+    print ".\n";
 }
 
 sub _show_coins {
     my ($players) = @_;
 
     foreach (0..1) {
-        print sprintf("%s picked coins %s\n",
+        print sprintf("%s picked coins %s.\n",
             $players->{$_}->{name}, join(", ", @{$players->{$_}->{coins}}) );
     }
 }
