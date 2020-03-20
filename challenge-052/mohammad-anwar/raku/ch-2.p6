@@ -22,8 +22,11 @@ sub MAIN() {
         1 => { "name" => "Machine", "bank" => 0, "coins" => [] },
     ;
 
-    # Make machine the first player to pick the coin
-    my Int $current = 1;
+    # Pick random player 0 or 1.
+    # DISCLAIMER:
+    # Idea borrowed by E. Choroba as he found out the player
+    # who picks first is the winner always.
+    my Int $current = (^2).pick;
 
     # Play the game now
     my $coin;

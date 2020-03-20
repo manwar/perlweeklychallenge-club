@@ -14,7 +14,11 @@ my $players = {
     1 => { "name" => "Machine", "bank" => 0, "coins" => [] },
 };
 
-my $current = 1; # Machine gets to pick coin first.
+# Pick random player 0 or 1.
+# DISCLAIMER:
+# Idea borrowed by E. Choroba as he found out the player
+# who picks first is the winner always.
+my $current = int rand(2);
 
 my $coin;
 while ($#$table) {
