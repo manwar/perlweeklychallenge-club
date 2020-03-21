@@ -15,7 +15,8 @@ remaining coins is only £1.88.
 {   package My::Game;
     use Moo;
 
-    has [qw[ player1 player2 ]] => (is => 'rw', default => 0, init_arg => 0);
+    has [qw[ player1 player2 ]] => (
+        is => 'rw', default => 0, init_arg => undef);
     has coins => (is => 'ro', required => 1);
     has remaining => (is => 'rw', lazy => 1, builder => 'coins');
 
@@ -24,18 +25,14 @@ remaining coins is only £1.88.
         if (1 == @{ $self->remaining }
             || $self->remaining->[0] == 200
         ) {
-            $self->player1($self->player1
-                           + shift @{ $self->remaining });
+            $self->turn('l');
         } elsif ($self->remaining->[-1] == 200
                  || $self->remaining->[1] == 200
              ) {
-            $self->player1($self->player1
-                           + pop @{ $self->remaining });
+            $self->turn('r');
         } else {
-            $self->player1($self->player1
-                           + shift @{ $self->remaining });
+            $self->turn('l');
         };
-        $self->switch;
     }
 
     sub turn {
