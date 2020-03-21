@@ -7,14 +7,14 @@ my @coins = <1 2 5 10 20 50 100 200>;
 
 @coins .= pick(8);
 
-my @players = 2.rand.Int ?? <person computer> !! <computer person>;
+my @players = 2.rand.Int ?? <Person Computer> !! <Computer Person>;
 
-say @players[0].tc, " goes first";
+say @players[0], " goes first";
  
 while @coins {
     say @coins;
 
-    if @players[@coins % 2] eq "person" {
+    if @players[@coins % 2] eq "Person" {
         if @coins == 1 { 
             $person += @coins.pop;
         }
@@ -42,5 +42,5 @@ while @coins {
     }
 }
 
-say "person:   $person";
-say "computer: $computer";
+say "Person:   $person";
+say "Computer: $computer";
