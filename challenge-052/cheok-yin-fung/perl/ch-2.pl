@@ -1,6 +1,5 @@
 #!/usr/bin/perl
 use strict;
-use List::Util qw(any);
 
 # I use array implementation for the binary tree, 
 # ref: https://en.wikipedia.org/wiki/Binary_tree#Arrays
