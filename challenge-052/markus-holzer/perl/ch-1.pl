@@ -5,7 +5,11 @@ sub stepping
 {
 	my @n = split '', shift;
 	my $m = shift @n;
-	for my $n ( @n ) { return 0 unless $m + 1 == ($m = $n) }
+
+	for my $n ( @n ) { 
+		return unless abs($m - $n) == 1;
+		$m = $n;
+	}
 	1;
 }
 
