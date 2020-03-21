@@ -1,4 +1,3 @@
-# Inspired by Simon
 sub is-stepping( UInt $n ) {
 	not so $n.comb.rotor( 2 => -1 ).first: -> ($a, $b) { abs($a - $b) != 1 }
 }
