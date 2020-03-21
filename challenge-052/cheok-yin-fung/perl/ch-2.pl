@@ -1,9 +1,8 @@
 #!/usr/bin/perl
 use strict;
-# I will use array implementation for the binary tree, 
-# see https://en.wikipedia.org/wiki/Binary_tree#Arrays
-# Usage: ch-2.pl LIST, 
-# example: "ch-2.pl 2 5 3 1" returns first player wins
+
+# I use array implementation for the binary tree, 
+# ref: https://en.wikipedia.org/wiki/Binary_tree#Arrays
 
 sub jumptoLc {
     return $_ * 2 + 1;
@@ -14,9 +13,31 @@ sub jumptoRc {
 }
 
 
-my $Plist;
-$Plist->[0] = \@ARGV;
+#Input Stage
+print "Enter the coins for the game, ".
+      "splitted by comma and with their units. \n";
 
+chomp(my $enter = <STDIN>);
+
+my @coin = split /[\s]*,[\s]*/ , $enter;
+
+my @allinpence;
+
+my $poundsign = chr(156); #or directly £ ... 
+#chr(156) on my Windows Command Prompt, 
+#chr(163) for some character sets (??), e.g. Latin-1  
+foreach (@coin) {
+    if ($_ =~ /.p$/) {
+        push @allinpence, substr($_, 0, -1);
+    } elsif ($_ =~ /^($poundsign)./) {
+        push @allinpence, 100*substr($_, 1);
+     }
+}
+
+my $Plist;
+$Plist->[0] = \@allinpence;
+
+#initialization
 my $size = $#{$Plist->[0]}+1;
 
 my @Pvaluef = (0);
@@ -96,11 +117,28 @@ foreach (reverse 0..2**($size-1)-1 ) {
         }
 }
 
-print "Optimal Play Diff: ".($Pvaluef[0]-$Pvalues[0])."\n";
 
-if ($Pvaluef[0]-$Pvalues[0] > 0) {
+my $opdiff = $Pvaluef[0]-$Pvalues[0];
+
+
+
+#Output Stage
+sub pize {
+    my $a = int($_[0] / (100));
+    my $b = $_[0] % 100;
+    if ($a == 0) {return $b."p";}
+    if ($b == 0) {return $poundsign.$a;}
+    if ($a != 0 && $b != 0) {
+        return ($poundsign.($_[0]/100));
+    }
+}
+
+
+print "Optimal Play Diff: ".pize($opdiff)."\n";
+
+if ($opdiff > 0) {
     print "First player wins."
-} elsif ($Pvaluef[0]==$Pvalues[0]) {
+} elsif ($opdiff==0) {
     print "Draw.";
 } else {
     print "Second player wins.";
