@@ -3,11 +3,9 @@
 my $person;
 my $computer;
 
-my @coins = <1 2 5 10 20 50 100 200>;
+my @coins = <1 2 5 10 20 50 100 200>.pick(8);
 
-@coins .= pick(8);
-
-my @players = 2.rand.Int ?? <Person Computer> !! <Computer Person>;
+my @players = <Person Computer>.pick(2);
 
 say @players[0], " goes first";
  
