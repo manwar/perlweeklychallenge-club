@@ -1,10 +1,19 @@
 enum Player <Computer Human>;
+subset Difficulty of Int where * ~~ 1|2|3;
 
-sub MAIN( $difficulty where * ~~ 1|2|3 )
+sub USAGE {
+	say q:to/USAGE/;
+    Usage:
+        ch-2.p6 <difficulty>
+
+    Possible Difficulties: 1, 2, 3
+    USAGE
+}
+
+sub MAIN( Difficulty $difficulty  )
 {
 	my @moneyz = (0.01, 0.02, 0.05, 0.1, 0.2, 0.5, 1, 2).pick(8);
 	my @player = (Computer, Human).pick(2);
-	my $winner = Player;
 	my %score;
 
 	while @moneyz.elems
