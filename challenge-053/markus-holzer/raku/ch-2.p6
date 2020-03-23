@@ -17,12 +17,12 @@ multi sub build-str( $n, $current )
 {
     my $last = $current.substr( * - 1, 1 );
 
-    for <a e i o u> -> $vovel
+    for @vowels
     {
         next
-            unless %rules{ $vovel }( $last );
+            unless %rules{ $_ }( $last );
 
-        given $current ~ $vovel
+        given $current ~ $_
         {
             take $_ and next
                     if .chars == $n;
