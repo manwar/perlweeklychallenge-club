@@ -1,47 +1,20 @@
 {
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 4,
-               "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Wanderdoc",
-               "y" : 2,
-               "name" : "Wanderdoc"
-            },
-            {
-               "drilldown" : "Yet Ebreo",
-               "y" : 2,
-               "name" : "Yet Ebreo"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 053"
-      }
-   ],
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2020-03-23 12:08:07 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 053"
    },
    "plotOptions" : {
       "series" : {
@@ -52,13 +25,63 @@
          "borderWidth" : 0
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 053"
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "Javier Luque",
+               "drilldown" : "Javier Luque",
+               "y" : 5
+            },
+            {
+               "name" : "Roger Bell West",
+               "drilldown" : "Roger Bell West",
+               "y" : 4
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "y" : 2,
+               "name" : "Simon Proctor"
+            },
+            {
+               "name" : "Wanderdoc",
+               "y" : 2,
+               "drilldown" : "Wanderdoc"
+            },
+            {
+               "name" : "Yet Ebreo",
+               "y" : 2,
+               "drilldown" : "Yet Ebreo"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 053",
+         "colorByPoint" : 1
+      }
+   ],
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Roger Bell West",
+            "name" : "Javier Luque",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Javier Luque"
+         },
+         {
             "id" : "Roger Bell West",
             "data" : [
                [
@@ -69,17 +92,18 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell West"
          },
          {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            ]
          },
          {
             "id" : "Wanderdoc",
@@ -92,21 +116,20 @@
             ]
          },
          {
-            "name" : "Yet Ebreo",
             "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Yet Ebreo"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-03-23 11:52:54 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
