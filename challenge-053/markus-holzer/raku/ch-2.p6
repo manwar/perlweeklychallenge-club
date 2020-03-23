@@ -8,7 +8,8 @@ my %rules =
 
 sub MAIN(Int $n)
 {
-    .say for gather {
+    .say for gather
+    {
         build-str( $_, $n )
             for %rules.keys.sort;
     }
