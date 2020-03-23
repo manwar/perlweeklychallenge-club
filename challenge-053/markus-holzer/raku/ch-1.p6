@@ -1,7 +1,7 @@
 multi sub MAIN( Int:D $degrees where * ~~ 90|180|270|360 )
 {
     my @matrix[ 3, 3 ] = ( 1..9 ).batch( 3 );
-    my $times       = $degrees / 90;
+    my $times          = $degrees / 90;
 
     clockwise( @matrix ) for ^$times;
 
@@ -20,7 +20,7 @@ sub clockwise( @matrix )
         {
             my $dj = $y - $j;
             my $di = $y - $i;
-            my $k = @matrix[ $i; $j ];
+            my $k  = @matrix[ $i; $j ];
 
             @matrix[ $i;  $j  ] = @matrix[ $dj; $i  ];
             @matrix[ $dj; $i  ] = @matrix[ $di; $dj ];
