@@ -13,7 +13,7 @@ sub MAIN(Int $n)
 
 multi sub build-str( $n, $current )
 {
-    my $last = $current.substr( * - 1, 1 );
+    my $last = $current.substr( * - 1 );
 
     for |%rules{ $last }
     {
