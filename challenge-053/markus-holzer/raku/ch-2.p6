@@ -1,26 +1,30 @@
 my %rules =
-        :a('e','i'),
-        :e('i'),
-        :o('a','u'),
-        :u('e','o'),
-        :i('a','e', 'o', 'u')
+    :a( 'e', 'i'           ),
+    :e( 'i'                ),
+    :i( 'a', 'e', 'o', 'u' ),
+    :o( 'a', 'u'           ),
+    :u( 'e', 'o'           ),
 ;
 
 sub MAIN(Int $n)
 {
-    .say for gather { build-str( $n, $_ ) for %rules.keys.sort }
+    .say for gather
+    {
+        build-str( $_, $n )
+            for %rules.keys.sort;
+    }
 }
 
-multi sub build-str( $n, $current )
+sub build-str( $current, $n )
 {
-    my $last = $current.substr( * - 1, 1 );
+    my $last = $current.substr( * - 1 );
 
     for |%rules{ $last }
     {
         given $current ~ $_
         {
             take $_ and next if .chars == $n;
-            build-str( $n, $_ );
+            build-str( $_, $n );
         }
     }
 }

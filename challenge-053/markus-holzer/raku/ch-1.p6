@@ -1,9 +1,8 @@
-multi sub MAIN( Int:D $degrees where * ~~ 90|180|270|360 )
+sub MAIN( Int $degrees where * %% 90, :$size = 3 )
 {
-    my @matrix[ 3, 3 ] = ( 1..9 ).batch( 3 );
-    my $times          = $degrees / 90;
+    my @matrix[ $size, $size ]  = ( 1..$size² ).batch( $size );
 
-    clockwise( @matrix ) for ^$times;
+    clockwise( @matrix ) for ^( $degrees / 90 );
 
     dd @matrix;
 }
