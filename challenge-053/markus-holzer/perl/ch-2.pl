@@ -1,6 +1,6 @@
 use Modern::Perl;
 use feature qw( signatures postderef switch );
-no warnings qw(experimental);
+no warnings qw( experimental );
 
 my %rules = (
     a => [ 'e', 'i'           ],
