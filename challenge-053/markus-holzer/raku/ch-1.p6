@@ -1,6 +1,6 @@
 sub MAIN( Int $degrees where * %% 90, :$size = 3 )
 {
-    my @matrix[ $size, $size ]  = ( 1..$size² ).batch( $size );
+    my @matrix[ $size, $size ] = ( 1..$size² ).batch( $size );
 
     clockwise( @matrix ) for ^($degrees / 90);
 
