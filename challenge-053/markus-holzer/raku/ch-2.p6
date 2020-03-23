@@ -11,7 +11,7 @@ sub MAIN(Int $n)
     .say for gather { build-str( $n, $_ ) for %rules.keys.sort }
 }
 
-multi sub build-str( $n, $current )
+sub build-str( $n, $current )
 {
     my $last = $current.substr( * - 1 );
 
