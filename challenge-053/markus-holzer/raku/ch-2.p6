@@ -1,32 +1,25 @@
 my %rules =
-        :a({ $_ ~~ 'i'|'o'     }),
-        :e({ $_ ~~ 'a'|'i'|'u' }),
-        :i({ $_ ~~ 'a'|'e'     }),
-        :o({ $_ ~~ 'i'|'u'     }),
-        :u({ $_ ~~ 'o'|'i'     })
+        :a('e','i'),
+        :e('i'),
+        :o('a','u'),
+        :u('e','o'),
+        :i('a','e', 'o', 'u')
 ;
-
-my @vowels = <a e i o u>;
 
 sub MAIN(Int $n)
 {
-    .say for gather { build-str( $n, $_ ) for @vowels }
+    .say for gather { build-str( $n, $_ ) for %rules.keys.sort }
 }
 
 multi sub build-str( $n, $current )
 {
     my $last = $current.substr( * - 1, 1 );
 
-    for @vowels
+    for |%rules{ $last }
     {
-        next
-            unless %rules{ $_ }( $last );
-
         given $current ~ $_
         {
-            take $_ and next
-                    if .chars == $n;
-
+            take $_ and next if .chars == $n;
             build-str( $n, $_ );
         }
     }
