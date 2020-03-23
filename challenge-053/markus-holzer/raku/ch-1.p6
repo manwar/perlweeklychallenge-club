@@ -1,8 +1,11 @@
+multi sub infix:<times>( Int $n, Callable $b --> Nil  ) is looser(&infix:<+>) { &$b($_) for ^$n; }
+multi sub infix:<times>( Numeric $n, Callable $b  --> Nil ) is looser(&infix:<+>) { &$b($_) for ^($n.Int); }
+
 sub MAIN( Int $degrees where * %% 90, :$size = 3 )
 {
     my @matrix[ $size, $size ] = ( 1..$size² ).batch( $size );
 
-    clockwise( @matrix ) for ^($degrees / 90);
+    $degrees / 90 times { @matrix.&clockwise };
 
     dd @matrix;
 }
