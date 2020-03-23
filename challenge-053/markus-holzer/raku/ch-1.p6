@@ -1,4 +1,4 @@
-multi sub MAIN( Int:D $degrees where * ~~ 90|180|270|360 )
+multi sub MAIN( Int:D $degrees where * %% 90 )
 {
     my @matrix[ 3, 3 ] = ( 1..9 ).batch( 3 );
     my $times          = $degrees / 90;
