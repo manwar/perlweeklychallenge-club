@@ -16,34 +16,38 @@ sub MAIN (
     .say for process( @strings, $count );
 }
 
-multi sub process( @list, 0 ) {
+multi sub process( @list, 0 ) is pure {
     @list;
 }
 
-multi sub process( @list, $count ) {
+multi sub process( @list, $count ) is pure {
     process( @list.map( { valid-next( $_ ) } ).flat, $count - 1 );
 }
 
-multi sub valid-next( '' ) {
+multi sub valid-next( '' ) is pure {
     <a e i o u>; 
 }
 
-multi sub valid-next( Str $x where * ~~ /'a'$/ ) {
-    ("{$x}e", "{$x}i");
+sub append-val( $val, *@rest ) is pure {
+    @rest.map( { $val ~ $_ } );
 }
 
-multi sub valid-next( Str $x where * ~~ /'e'$/ ) {
-    ("{$x}i");
+multi sub valid-next( Str $x where * ~~ /'a'$/ ) is pure {
+    append-val( $x, <e i> );
 }
 
-multi sub valid-next( Str $x where * ~~ /'i'$/ ) {
-    ("{$x}a", "{$x}e", "{$x}o", "{$x}u");
+multi sub valid-next( Str $x where * ~~ /'e'$/ ) is pure {
+    append-val( $x, <i> );
 }
 
-multi sub valid-next( Str $x where * ~~ /'o'$/ ) {
-    ("{$x}a", "{$x}u");
+multi sub valid-next( Str $x where * ~~ /'i'$/ ) is pure {
+    append-val( $x, <a e o u> );
 }
 
-multi sub valid-next( Str $x where * ~~ /'u'$/ ) {
-    ("{$x}o", "{$x}e");
+multi sub valid-next( Str $x where * ~~ /'o'$/ ) is pure {
+    append-val( $x, <a u> );
+}
+
+multi sub valid-next( Str $x where * ~~ /'u'$/ ) is pure {
+    append-val( $x, <o e> );
 }
