@@ -9,7 +9,7 @@ use v6;
 #|   ‘o’ can only be followed by ‘a’ and ‘u’.
 #|   ‘u’ can only be followed by ‘o’ and ‘e’.
 sub MAIN (
-    UInt $count is copy where 1 <= * <= 5;
+    UInt $count where 1 <= * <= 5;
 ) {
     my @strings = ('');
 
@@ -32,22 +32,22 @@ sub append-val( $val, *@rest ) is pure {
     @rest.map( { $val ~ $_ } );
 }
 
-multi sub valid-next( Str $x where * ~~ /'a'$/ ) is pure {
+multi sub valid-next( Str $x where *.ends-with('a') ) is pure {
     append-val( $x, <e i> );
 }
 
-multi sub valid-next( Str $x where * ~~ /'e'$/ ) is pure {
+multi sub valid-next( Str $x where *.ends-with('e') ) is pure {
     append-val( $x, <i> );
 }
 
-multi sub valid-next( Str $x where * ~~ /'i'$/ ) is pure {
+multi sub valid-next( Str $x where *.ends-with('i') ) is pure {
     append-val( $x, <a e o u> );
 }
 
-multi sub valid-next( Str $x where * ~~ /'o'$/ ) is pure {
+multi sub valid-next( Str $x where *.ends-with('o') ) is pure {
     append-val( $x, <a u> );
 }
 
-multi sub valid-next( Str $x where * ~~ /'u'$/ ) is pure {
+multi sub valid-next( Str $x where *.ends-with('u') ) is pure {
     append-val( $x, <o e> );
 }
