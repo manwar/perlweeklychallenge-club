@@ -1,4 +1,4 @@
-#!/usr/bin/env perl6
+#!/usr/bin/env raku
 
 sub MAIN($length where 1 <= $length <= 5) {
     my @connections = ["ae", "ai", "ei", "ia", "ie", 
