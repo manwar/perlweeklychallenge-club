@@ -1,8 +1,13 @@
 #!/usr/bin/env raku
 
 sub MAIN($length where 1 <= $length <= 5) {
-    my @connections = ["ae", "ai", "ei", "ia", "ie", 
-                       "io", "iu", "oa", "ou", "uo", "ue"];
+    my %next_letter = (
+           a => [<e i>],
+           e => [<i>],
+           i => [<a e o u>],
+           o => [<a u>],
+           u => [<o e>]
+       );
 
     for <a e i o u> -> $first_letter {
         my @queue = Empty;
@@ -11,11 +16,11 @@ sub MAIN($length where 1 <= $length <= 5) {
         while @queue[0].chars < $length {
             my $str = @queue.shift;
             my $last_letter = $str.substr(*-1);
-            for @connections.grep(/^$last_letter/).map(*.substr(*-1)) -> $ltr {
+            for %next_letter{$last_letter}.Array -> $ltr {
                 @queue.push($str ~ $ltr);
             }
         }
 
-        say @queue;
+        say @queue.join("\n");
     }
 }
