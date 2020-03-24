@@ -12,15 +12,16 @@ sub MAIN (
     UInt $count is copy where 1 <= * <= 5;
 ) {
     my @strings = ('');
-    while $count > 0 {
-        $count--;
-        my @next = ();
-        for @strings -> $string {
-            @next.push( |valid-next( $string ) );
-        }
-        @strings = @next;
-    }
-    .say for @strings;
+
+    .say for process( @strings, $count );
+}
+
+multi sub process( @list, 0 ) {
+    @list;
+}
+
+multi sub process( @list, $count ) {
+    process( @list.map( { valid-next( $_ ) } ).flat, $count - 1 );
 }
 
 multi sub valid-next( '' ) {
