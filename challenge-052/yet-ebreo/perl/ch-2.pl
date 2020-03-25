@@ -10,47 +10,93 @@ my @money = qw(£1 50p 1p 10p 5p 20p £2 2p);
 
 #Converts £ to p
 @money = "@money"=~s/£(\S+)/$1*100/gre =~ /\d+/g;
+my $rmax = 0;
+my $lmax = 0;
+sub check_lr {
+    my ($arr,$turn,$lscore,$rscore) = @_;
 
-#This means the algo optimized for player2 (vs player1)
-my $optimized = 1;
+    if ($turn == 0) {
 
-my $min = 1e99;
-my $comb;
+        $lscore += $arr->[0];
+        my @new_arr1 = @{$arr}[1..$#{$arr}];
+        if ($#new_arr1) {
+            check_lr(\@new_arr1,1,$lscore,$rscore);
+        } 
 
-#This is a brute force algo, it outputs the final set of money
-#for both players (if they both played optimally) but not in correct sequence
-for my $pick (0.. 2 ** (2*@money)-1) {
-    my @accu = (0,0);
-    my @monay = @money;
-    for my $pos (0..@monay-1) {
-        my $val;
-        if ($pick & 1 << $pos) {
-            $val = shift @monay;
-            
-        } else {
-            $val = pop @monay
+        $rscore += $arr->[-1];
+        my @new_arr2 = @{$arr}[0..$#{$arr}-1];
+        if ($#new_arr2) {
+            check_lr(\@new_arr2,1,$lscore,$rscore);
+        } 
+        if ($rscore>$rmax) {
+            $rmax = $rscore;
         }
-
-        $accu[$pos % 2] += $val;
-    }
-    if (($accu[$optimized] - $accu[!$optimized]) > 0 && ($min >$accu[$optimized] - $accu[!$optimized])) {
-        $min = $accu[$optimized] - $accu[!$optimized];
-        $comb = $pick;
-    }
-}
-my @path;
-say "@money";
-for my $pos (0..@money-1) { 
-    my $val;
-    if ($comb & 1 << $pos) {
-        $val = shift @money;
-        
+        if ($lscore>$lmax) {
+            $lmax = $lscore;
+        }
+        return $lmax>$rmax?0:1;
     } else {
-        $val = pop @money
+        my @new_arr3;
+        if ($arr->[0]>$arr->[-1]) {
+            @new_arr3 = @{$arr}[1..$#{$arr}];
+        } else {
+            @new_arr3 = @{$arr}[0..$#{$arr}-1];
+        }
+        if($#new_arr3) {
+            check_lr(\@new_arr3,0,$lscore,$rscore);
+        }
     }
-    $path[$pos % 2] .= ">> $val ";
+
+}
+say "Original Array: @money\n";
+my @scores;
+while (@money) {
+    $rmax = $lmax = 0;
+    my $ai_move = check_lr(\@money,0,0,0);
+    if ($ai_move == 0) {
+        $scores[0][0]+= $money[0];
+        $scores[0][1].= ">> $money[0] ";
+        shift @money;
+    } else {
+        $scores[0][0]+= $money[-1];
+        $scores[0][1].= ">> $money[-1] ";
+        pop @money;
+    }
+    my $random_move = int(rand(2));
+    if ($random_move == 0) {
+        $scores[1][0]+= $money[0];
+        $scores[1][1].= ">> $money[0] ";
+        shift @money;
+    } else {
+        $scores[1][0]+= $money[-1];
+        $scores[1][1].= ">> $money[-1] ";
+        pop @money;
+    }
+
 }
 
-say "Player".($optimized+1).": " . $path[$optimized];
-say "Player".($optimized).  ": " . $path[!$optimized];
+say "Optimized Score: $scores[0][0]";
+say "Optimized Moves: $scores[0][1]\n";
 
+say "Random Score:    $scores[1][0]";
+say "Random Moves:    $scores[1][1]\n";
+
+=begin
+perl .\ch-2.pl
+Original Array: 100 50 1 10 5 20 200 2
+
+Optimized Score: 311
+Optimized Moves: >> 100 >> 1 >> 200 >> 10
+
+Random Score:    77
+Random Moves:    >> 50 >> 2 >> 20 >> 5
+
+perl .\ch-2.pl
+Original Array: 100 50 1 10 5 20 200 2
+
+Optimized Score: 306
+Optimized Moves: >> 100 >> 1 >> 5 >> 200
+
+Random Score:    82
+Random Moves:    >> 50 >> 10 >> 20 >> 2
+=cut
