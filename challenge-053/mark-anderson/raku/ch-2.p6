@@ -1,13 +1,11 @@
 #!/usr/bin/env raku
 
 sub MAIN($length where 1 <= $length <= 5) {
-    my %next_letter = (
-           a => [<e i>],
-           e => [<i>],
-           i => [<a e o u>],
-           o => [<a u>],
-           u => [<o e>]
-    );
+    my %next_letter = a => <e i>,
+                      e => <i>,
+                      i => <a e o u>,
+                      o => <a u>,
+                      u => <o e>;
 
     for <a e i o u> -> $first_letter {
         my @queue = Empty;
