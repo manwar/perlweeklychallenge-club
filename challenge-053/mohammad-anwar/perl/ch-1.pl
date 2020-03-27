@@ -24,9 +24,7 @@ my $unit_tests = {
 foreach my $degree (sort { $a <=> $b } keys %$unit_tests) {
     my $in  = $unit_tests->{$degree}->{in};
     my $out = $unit_tests->{$degree}->{out};
-    cmp_deeply( rotate_matrix($in, $degree),
-                $out,
-                "testing $degree rotation" );
+    cmp_deeply(rotate_matrix($in, $degree), $out, "rotation by $degree.");
 }
 
 done_testing;
@@ -38,29 +36,20 @@ done_testing;
 sub rotate_matrix {
     my ($matrix, $degree) = @_;
 
-    my $_matrix;
     foreach my $i ( 1 .. int($degree/90) ) {
-        $_matrix = _rotate_matrix($matrix);
+        my $rows = @$matrix;
+        my $cols = @{$matrix->[0]};
+
+        my $_matrix = [];
+        foreach my $i ( 0 .. $rows-1 ) {
+            my $k = 2;
+            foreach my $j ( 0 .. $cols-1 ) {
+                $_matrix->[$i][$j] = $matrix->[$k][$i];
+                $k--;
+            }
+        }
         $matrix = $_matrix;
     }
 
-    return $_matrix;
-}
-
-sub _rotate_matrix {
-    my ($matrix) = @_;
-
-    my $rows = @$matrix;
-    my $cols = @{$matrix->[0]};
-
-    my $_matrix = [];
-    foreach my $i ( 0 .. $rows-1 ) {
-        my $k = 2;
-        foreach my $j ( 0 .. $cols-1 ) {
-            $_matrix->[$i][$j] = $matrix->[$k][$i];
-            $k--;
-        }
-    }
-
-    return $_matrix;
+    return $matrix;
 }
