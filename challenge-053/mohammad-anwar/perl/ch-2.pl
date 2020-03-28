@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use Algorithm::Combinatorics qw(combinations);
+use Algorithm::Combinatorics qw(variations_with_repetition);
 
 my $count = $ARGV[0] // 2;
 die "ERROR: Invalid count $count.\n"
@@ -17,7 +17,7 @@ if ($count == 1) {
     exit;
 }
 
-my $iter  = combinations($chars, $count);
+my $iter = variations_with_repetition($chars, $count);
 
 my $char_sets = [];
 while (my $char = $iter->next) {
