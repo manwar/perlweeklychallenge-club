@@ -29,10 +29,13 @@ sub run(Bool $playerTurn_) {
     }
 }
 
-say 'Assuming both take the best coin...';
-for (True, False) -> $playerTurn {
-    print 'If the ', ($playerTurn ?? 'player' !! 'computer'), ' goes first, ';
-    my ($winner, $amount) = run($playerTurn);
-    print 'the ', ($winner ?? 'player' !! 'computer'), ' wins with £',
-        $amount, ".\n";
+multi sub MAIN() {
+    say 'Assuming both take the best coin...';
+    for (True, False) -> $playerTurn {
+        print 'If the ', ($playerTurn ?? 'player' !! 'computer'),
+            ' goes first, ';
+        my ($winner, $amount) = run($playerTurn);
+        print 'the ', ($winner ?? 'player' !! 'computer'), ' wins with £',
+            $amount, ".\n";
+    }
 }
