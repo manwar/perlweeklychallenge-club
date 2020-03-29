@@ -11,22 +11,16 @@ sub MAIN($length where 1 <= $length <= 5) {
         append_letter($first_letter);
     }
 
-    multi sub append_letter($ltr where $length == 1) {
-        say $ltr;
-    }
+    sub append_letter($str) {
+        if ($str.chars == $length) {
+            say $str;
+        }
 
-    multi sub append_letter($str) {
-        my $last_letter = $str.substr(*-1);
+        else {
+            my $last_letter = $str.substr(*-1);
 
-        for %next_letter{$last_letter}.Array -> $ltr {
-            my $new_str = $str ~ $ltr;
-        
-            if ($new_str.chars == $length) {
-                say $new_str;
-            }
-
-            else {
-                append_letter($new_str);
+            for %next_letter{$last_letter}.Array -> $ltr {
+                append_letter($str ~ $ltr);
             }
         }
     }
