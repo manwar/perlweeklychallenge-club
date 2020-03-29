@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 ###########################################################################
-# script name: ch-1.py                                                    #
+# script name: ch-1-CORRECTED.py                                          #
 #                                                                         #
 # https://github.com/user-person                                          #
 #                                                                         #
@@ -33,9 +33,9 @@ for i in range(1,10):
         step.append( (i * 100) + ((i-1) * 10) + (i-2) )
 
     if i < 9:                   # UP DOWN
-        step.append( (i * 100) + ((i+1) * 10) + i )
+        step.append( (i * 100) + (i+1) * 10 + i )
 
-    step.append( (i * 100) + ((i-1) * 10) + i ) # DOWN UP
+    step.append( (i * 100) + (i-1) * 10 + i ) # DOWN UP
 
 step.sort()
 
@@ -46,7 +46,7 @@ if len(sys.argv) != 3:
     exit(1)
 
 args = [int(arg) for arg in sys.argv[1:]]
-
+        
 for arg in args:
     if arg < LOWER_LIMIT or arg > UPPER_LIMIT:
         print(errorString)
