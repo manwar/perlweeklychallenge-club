@@ -2,7 +2,6 @@
 
 ###########################################################################
 # script name: ch-2.py                                                    #
-# Thu Mar 19 14:51:04 2020 | 1584643864                                   #
 #                                                                         #
 # https://github.com/user-person                                          #
 #                                                                         #
@@ -70,7 +69,7 @@ def playerChoice():
             takeCoin( 'f', 'player')
             continue
 
-        fl = input()
+        fl = input('> ')
 
         if fl == 'f' or fl == 'l':
             takeCoin( fl, 'player')
@@ -123,7 +122,7 @@ while len(coins):
 
 if bank['computer'] > bank['player']:
     print('Computer Wins. Computer: L ' + '{:.2f}'.format(bank['computer']) \
-              + ' Player: L ' + '{:.2f}'.format(bank['player']))
+              + ' Player: L ' + '{:.2f}'.format(bank['player']) + '\n')
 else:
     print('Player Wins. Player: L ' + '{:.2f}'.format(bank['player']) \
-                  + ' Computer: L ' + '{:.2f}'.format(bank['computer']))
+                  + ' Computer: L ' + '{:.2f}'.format(bank['computer']) + '\n')

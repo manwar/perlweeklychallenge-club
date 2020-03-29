@@ -1,62 +1,42 @@
 #!/usr/bin/env raku
 
-# A breadth first search solution at 
-# https://www.geeksforgeeks.org/stepping-numbers/
-# The C++ code translated to Raku.  
+my @results;
 
-sub MAIN($arg1, $arg2 where $arg1 >= 100 < $arg2 <= 999) {  
-    my @results;
-
-    for (0 .. 9) -> $num {
-        bfs($arg1, $arg2, $num, @results);
-    }  
-
-    @results.sort.join("\n").say;
+sub MAIN($arg1, $arg2 where $arg1 >= 100 < $arg2 <= 999) {
+    my $start = $arg1.polymod(10,10).Array.pop;
+    my $stop  = $arg2.polymod(10,10).Array.pop;
+  
+    for $start .. $stop -> $num {
+        step_it($arg1, $arg2, $num);
+        say @results.join("\n") if @results;
+    }
 }
 
-sub bfs(Int $n, Int $m, Int $num, @results) { 
-    my @nums; 
-  
-    @nums.push($num); 
-  
-    while (@nums) { 
-        my $stepNum = @nums.shift; 
-  
-        if ($m >= $stepNum >= $n) {
-            @results.push($stepNum);
-        }
- 
-        if ($num == 0 || $stepNum > $m) {
-            next; 
-        }
-  
-        my $lastDigit = $stepNum % 10; 
-  
-        my $stepNumA = $stepNum * 10 + ($lastDigit - 1); 
-        my $stepNumB = $stepNum * 10 + ($lastDigit + 1); 
-  
-        if ($lastDigit == 0) { 
-            @nums.push($stepNumB); 
-        }
-  
-        elsif ($lastDigit == 9) { 
-            @nums.push($stepNumA); 
-        }
-  
-        else { 
-            @nums.push($stepNumA); 
-            @nums.push($stepNumB); 
-        } 
-    } 
-} 
+sub step_it($arg1, $arg2, $num) {
+    @results = Empty;
+    @results.push($num);
 
-# A bonus brute force solution
+    while @results {
+        last if @results[0].chars == $arg2.chars;
+        my $num = @results.shift;
+        my $last_digit = $num % 10;
 
-#sub MAIN($arg1, $arg2 where $arg1 >= 100 < $arg2 <= 999) {
-#    for ($arg1..$arg2) -> $num {
-#        my @digits = (+$num).polymod(10,10);
-#        if (([-] @digits[0,1]).abs == ([-] @digits[1,2]).abs == 1) {
-#            say $num;
-#        }
-#    }
-#}
+        unless $last_digit == 0 {
+            my $new = $num ~ $last_digit - 1;
+            push_it($arg1, $arg2, $new);
+        }
+
+        unless $last_digit == 9 {
+            my $new = $num ~ $last_digit + 1;
+            push_it($arg1, $arg2, $new);
+        }
+    }
+}
+
+sub push_it($arg1, $arg2, $new) { 
+    if $new >= $arg1.substr(0, $new.chars) {
+        if $new <= $arg2.substr(0, $new.chars) {
+            @results.push($new);
+        }
+    }
+}

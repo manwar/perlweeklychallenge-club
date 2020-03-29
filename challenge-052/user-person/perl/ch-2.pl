@@ -2,7 +2,6 @@
 
 ###########################################################################
 # script name: ch-2.pl                                                    #
-# Wed Mar 18 13:06:06 2020 | 1584551166                                   #
 #                                                                         #
 # https://github.com/user-person                                          #
 #                                                                         #
@@ -85,7 +84,7 @@ sub playerChoice {
             next ILOOP;
         }
 
-        chomp( my $fl = $term->readline(""));
+        my $fl = $term->readline('> ');
 
         if ($fl eq 'f' or $fl eq 'l') {
             takeCoin($fl,'player');
@@ -142,7 +141,7 @@ while (scalar @coins) {
 }
 
 if ( $bank{computer} > $bank{player} ) {
-    printf "Computer Wins. Computer: L %.2f Player: L %.2f\n", $bank{computer}, $bank{player};
+    printf "Computer Wins. Computer: L %.2f Player: L %.2f\n\n", $bank{computer}, $bank{player};
 } else {
-    printf "Player Wins. Player: L %.2f Computer: L %.2f\n", $bank{player}, $bank{computer};
+    printf "Player Wins. Player: L %.2f Computer: L %.2f\n\n", $bank{player}, $bank{computer};
 }
