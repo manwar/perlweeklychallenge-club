@@ -1,6 +1,21 @@
 {
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-03-29 16:02:32 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -36,19 +51,12 @@
          "Martin Mugeni"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-03-28 22:19:22 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             6,
             2,
@@ -80,10 +88,10 @@
             5,
             0,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             1,
@@ -115,11 +123,9 @@
             43,
             3,
             2
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -151,17 +157,11 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    }
 }
