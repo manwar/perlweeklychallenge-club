@@ -8,17 +8,26 @@ sub MAIN($length where 1 <= $length <= 5) {
                       u => <o e>;
 
     for <a e i o u> -> $first_letter {
-        my @queue = Empty;
-        @queue.push($first_letter);
+        append_letter($first_letter);
+    }
 
-        while @queue[0].chars < $length {
-            my $str = @queue.shift;
-            my $last_letter = $str.substr(*-1);
-            for %next_letter{$last_letter}.Array -> $ltr {
-                @queue.push($str ~ $ltr);
+    multi sub append_letter($ltr where $length == 1) {
+        say $ltr;
+    }
+
+    multi sub append_letter($str) {
+        my $last_letter = $str.substr(*-1);
+
+        for %next_letter{$last_letter}.Array -> $ltr {
+            my $new_str = $str ~ $ltr;
+        
+            if ($new_str.chars == $length) {
+                say $new_str;
+            }
+
+            else {
+                append_letter($new_str);
             }
         }
-
-        say @queue.join("\n");
     }
 }
