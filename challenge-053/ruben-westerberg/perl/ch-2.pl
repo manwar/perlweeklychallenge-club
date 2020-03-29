@@ -5,12 +5,12 @@ use List::Util;
 use v5.26;
 no warnings 'experimental';
 
-my $n=$ARGV[0]//5;
+my $n=$ARGV[0]//2;
 my @vowels=qw<a e i o u>;
 
 die "Number not in range 1..5\n" unless grep /$n/, 1..5;
 
-say join "",@$_ for grep {
+say for sort map {join "",@$_} grep {
 	my $sum=0;
 	my $s=join '', @$_;
 	given ($s) {
