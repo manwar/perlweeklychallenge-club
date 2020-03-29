@@ -2,7 +2,6 @@
 
 ###########################################################################
 # script name: ch-2.py                                                    #
-# Thu Mar 26 00:42:17 2020 | 1585197737                                   #
 #                                                                         #
 # https://github.com/user-person                                          #
 #                                                                         #
@@ -56,16 +55,6 @@ for i in range(0,MAX):
     j = int(toStr(i,5))
 
     j = '{number:0{size}d}'.format(number=j,size=num)
-#     if num == 1:
-#         j = '{num:01d}'.format(num=j)
-#     elif num == 2:
-#         j = '{num:02d}'.format(num=j)        
-#     elif num == 3:
-#         j = '{num:03d}'.format(num=j)
-#     elif num == 4:
-#         j = '{num:04d}'.format(num=j)
-#     elif num == 5:
-#         j = '{num:05d}'.format(num=j)
 
     string = ''
     for k in str(j):
