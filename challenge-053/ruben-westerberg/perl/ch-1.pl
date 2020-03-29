@@ -26,8 +26,8 @@ sub rotate {
 	my ($input,$angle)=@_;
 	#input indexing
 	my @ip=map {pip4 *$_} 0..7;
-	my @ir= map {1+round sin} @ip;
-	my @ic =map {1+round cos} @ip;
+	my @ir=map {1+round sin} @ip;
+	my @ic=map {1+round cos} @ip;
 
 	#output indexing
 	my @polar=map {($angle/180 *pi) + pip4 *$_} 0..7;
