@@ -13,3 +13,5 @@ sub new {
 sub x{ $_[0]->{_x}}
 sub y{ $_[0]->{_y}}
 sub value{ $_[0]->{_value} }
+
+1;
