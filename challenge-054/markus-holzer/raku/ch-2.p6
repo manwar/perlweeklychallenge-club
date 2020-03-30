@@ -6,7 +6,6 @@ sub MAIN( Int $N )
     for 1..$N -> $n
     {
         my $current = 0;
-        my $cached  = 0;
         my $next    = $n;
 
         loop
@@ -28,7 +27,7 @@ sub MAIN( Int $N )
         %result
             .keys
             .sort({ %result{ $^b } <=> %result{ $^a } })
-            .head(20);
+            .head( 20 );
 
     say "runtime: { now - $start } seconds";
 }
