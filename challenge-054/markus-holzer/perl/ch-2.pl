@@ -1,5 +1,4 @@
 use Modern::Perl;
-use Data::Dumper;
 
 my $N = shift @ARGV;
 my $S = time;
