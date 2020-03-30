@@ -1,63 +1,78 @@
 {
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 054"
-      }
-   ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 054"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2020-03-30 18:36:45 GMT"
+   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari"
+            ]
+         },
+         {
+            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-03-30 18:04:29 GMT"
+   "legend" : {
+      "enabled" : 0
    },
    "tooltip" : {
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
    "chart" : {
       "type" : "column"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 054"
-   }
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Luca Ferrari",
+               "y" : 2,
+               "name" : "Luca Ferrari"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Yet Ebreo",
+               "name" : "Yet Ebreo"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 054"
+      }
+   ]
 }
