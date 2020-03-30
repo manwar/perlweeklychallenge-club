@@ -1,6 +1,8 @@
 {
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
@@ -19,20 +21,21 @@
                   1
                ]
             ],
-            "name" : "Javier Luque",
-            "id" : "Javier Luque"
+            "id" : "Javier Luque",
+            "name" : "Javier Luque"
          },
          {
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari"
+            ]
          },
          {
+            "name" : "Markus Holzer",
             "data" : [
                [
                   "Perl",
@@ -43,12 +46,9 @@
                   2
                ]
             ],
-            "name" : "Markus Holzer",
             "id" : "Markus Holzer"
          },
          {
-            "id" : "Roger Bell West",
-            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl",
@@ -58,11 +58,13 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West"
          },
          {
-            "id" : "Simon Proctor",
             "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
@@ -71,8 +73,8 @@
             ]
          },
          {
-            "id" : "Ulrich Rieke",
             "name" : "Ulrich Rieke",
+            "id" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -85,13 +87,13 @@
             ]
          },
          {
+            "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Yet Ebreo",
             "name" : "Yet Ebreo"
          }
       ]
@@ -99,75 +101,73 @@
    "xAxis" : {
       "type" : "category"
    },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2020-03-30 20:25:25 GMT"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "legend" : {
       "enabled" : 0
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 054"
    },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2020-03-30 19:54:10 GMT"
-   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 054",
          "colorByPoint" : 1,
          "data" : [
             {
+               "name" : "Javier Luque",
                "drilldown" : "Javier Luque",
-               "y" : 5,
-               "name" : "Javier Luque"
+               "y" : 5
             },
             {
-               "y" : 2,
                "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
+               "drilldown" : "Luca Ferrari",
+               "y" : 2
             },
             {
+               "name" : "Markus Holzer",
                "drilldown" : "Markus Holzer",
-               "y" : 3,
-               "name" : "Markus Holzer"
-            },
-            {
-               "drilldown" : "Roger Bell West",
-               "y" : 4,
-               "name" : "Roger Bell West"
-            },
-            {
-               "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "drilldown" : "Ulrich Rieke",
-               "name" : "Ulrich Rieke",
                "y" : 3
             },
             {
+               "drilldown" : "Roger Bell West",
+               "name" : "Roger Bell West",
+               "y" : 4
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Ulrich Rieke",
+               "y" : 3,
+               "name" : "Ulrich Rieke"
+            },
+            {
                "drilldown" : "Yet Ebreo",
-               "y" : 2,
-               "name" : "Yet Ebreo"
+               "name" : "Yet Ebreo",
+               "y" : 2
             }
-         ]
+         ],
+         "name" : "Perl Weekly Challenge - 054"
       }
    ],
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
