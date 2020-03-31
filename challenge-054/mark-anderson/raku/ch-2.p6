@@ -3,59 +3,45 @@
 # Usage: ch-2.p6
 # Output: The length of the 20 longest Collatz sequences from 1 to 1e6.
 
-# 10971  => 268
-# 13255  => 276
-# 17647  => 279
-# 17673  => 279
-# 23529  => 282
-# 26623  => 308
-# 34239  => 311
-# 35497  => 311
-# 35655  => 324
-# 52527  => 340
-# 77031  => 351
-# 106239 => 354
-# 142587 => 375
-# 156159 => 383
-# 216367 => 386
-# 230631 => 443
+# 922524 => 445
+# 922525 => 445
+# 922526 => 445
+# 938143 => 445
+# 615017 => 447
 # 410011 => 449
+# 818943 => 450
+# 820022 => 450
+# 820023 => 450
+# 546681 => 452
+# 970599 => 458
+# 767903 => 468
+# 796095 => 468
 # 511935 => 470
+# 910107 => 476
+# 927003 => 476
+# 704623 => 504
+# 939497 => 507
 # 626331 => 509
 # 837799 => 525
 
-# I implemented my own "memoize" with the seen hash.
-# With memoize this program takes about about 90 seconds to run on my pc.
-# Without memoize it takes about 9 and 1/2 minutes.
-
 multi sub MAIN {
-    my $elems; 
-    my @twenty = (1 => 1) xx 20;
-    state %seen;
+    my $length;
+    my %seen;
+    %seen{1} = 1;
+    my @collatz;
 
     for (1 .. 1e6) -> $start {
-        $elems = 0;
-        my $c = collatz_elems($start);
-        %seen{$start} = $c;
-
-        if (@twenty[0].value <= @twenty[19].value <= $c+1) {
-            @twenty.shift;
-            @twenty.push($start => $c+1);
-            @twenty = @twenty.sort({$^a.value <=> $^b.value});
-        }
+        $length = 0;
+        %seen{$start} = collatz($start);
+        @collatz.push($start => %seen{$start});
     }
 
-    for @twenty -> $pair {
-        say $pair.fmt("%-6s => %s");
-    }
+    .fmt("%-6s => %s").say 
+        for @collatz.sort({$^a.value <=> $^b.value}).tail(20);
 
-    sub collatz_elems($n is copy --> UInt) {
+    sub collatz($n is copy) {
         if (%seen{$n}) {
-            return (%seen{$n} + $elems);
-        }
- 
-        if ($n == 1) { 
-            return $elems;
+            return $length + %seen{$n};
         }
 
         if $n %% 2 {
@@ -65,23 +51,23 @@ multi sub MAIN {
         else {
             $n = 3 * $n + 1;
         }
-
-        $elems++;
-        collatz_elems($n);
+       
+        $length++;
+        collatz($n);
     }
 }
 
 # Usage: ch-2.p6 23 
 # Output: The length of the Collatz sequence followed by the sequence.
-# length = 16
 # 23 -> 70 -> 35 -> 106 -> 53 -> 160 -> 80 -> 40 -> 20 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1
+# length = 16
 
 multi sub MAIN(UInt $num where $num > 0) {
-    my @arr = collatz_array($num);
-    say "length = {@arr.elems}";
+    my @arr = collatz($num);
     say @arr.join(" -> ");
+    say "length = {@arr.elems}";
 
-    sub collatz_array($n is copy --> Array) {
+    sub collatz($n is copy --> Array) {
         my @collatz;
 
         loop {
