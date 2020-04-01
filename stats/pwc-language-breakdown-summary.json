@@ -1,31 +1,41 @@
 {
-   "legend" : {
-      "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
       }
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
+   },
    "series" : [
       {
+         "dataLabels" : {
+            "y" : 10,
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "rotation" : -90,
+            "format" : "{point.y:.0f}"
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               587
+               588
             ],
             [
                "Perl",
@@ -35,29 +45,19 @@
                "Raku",
                1411
             ]
-         ],
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "rotation" : -90,
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true"
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "subtitle" : {
-      "text" : "Last updated at 2020-04-01 09:13:42 GMT"
+      "text" : "Last updated at 2020-04-01 23:03:54 GMT"
    }
 }
