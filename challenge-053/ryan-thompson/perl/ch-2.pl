@@ -19,7 +19,7 @@ sub vowel_string {
 
     my @vstrs;
     while (my $str = shift @queue) {
-        push @vstrs, $str    and edges if $len <= length $str;
+        push @vstrs, $str    and next if $len <= length $str;
         push @queue, $str.$_ for @{$edges{ substr $str, -1 }}
     }
     @vstrs;
