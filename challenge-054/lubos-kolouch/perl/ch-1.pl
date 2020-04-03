@@ -8,8 +8,7 @@ sub get_nth_permutations {
 
     my ( $n, $k ) = @_;
 
-    # reverse because Algorithm::Permute returns the sequence backwards
-    my @numbers = reverse ( 1 .. $n );
+    my @numbers = ( 1 .. $n );
 
     my $p = Algorithm::Permute->new(\@numbers, $n);
 
