@@ -6,8 +6,6 @@ use v6;
 multi sub MAIN( Bool :v(:$verbose)=False){
     constant MAX-VALUE = 1000000;
     
-    my %collatz-chains;
-
     my \batch-size = MAX-VALUE div 10;
 
     my @promises;
