@@ -14,33 +14,64 @@
 # all starting numbers up to 1000000 (1e6), and output the starting 
 # number and sequence length for the longest 20 sequences.
 
-my @cache;
-my @length;
-sub collatz(Int $n) is pure {
-#     return $n if $n==1;
-    return @cache[$n] if @cache[$n]:exists;
-    if $n +& 1 == 0 {
-        @cache[$n]=Int($n / 2);
-        return @cache[$n];
-    };
-    @cache[$n] = $n * 3 + 1;
-    return @cache[$n];
-}
-
-sub collatzSeq(Int $number) {
-    my Int $n=$number;
-    my Int $len=0;
+my Int @cache;
+my Int @length;
+sub collatzSeqChain(Int $n is copy) {
     my Str $seq = "$n";
     while $n > 1 {
-        $n = collatz($n);
-        $seq~= " -> $n";
+        if $n +& 1 == 0 {
+            $n=Int($n / 2);
+        } else {
+            $n = $n * 3 + 1;
+        }
+        $seq ~= " -> $n";
     }
     return $seq;
 }
 
-say collatzSeq(23);
-say collatzSeq(2000);
+sub collatzSeqLen(Int $number) {
+    my Int $n=$number;
+    my Int $len=1;
+    my Str $seq = "$n";
+    while $n > 1 {
+        if @length[$n]:exists { $len += @length[$n]; last }
+        if $n +& 1 == 0 {
+            $n=Int($n / 2);
+        } else {
+            $n = $n * 3 + 1;
+        }
+        $len++;
+    }
+    @length[$number]=$len;
+    return $len;
+}
 
+say collatzSeqChain(23);
+say collatzSeqLen(2000);
+
+my Int @chain=0;
+my $want=20;
+my $topMin=1;
+my @top;
+my @topN;
+my %ltoi;
 my $t =now.Int;
-for 1..10000 -> $i { collatzSeq($i)}
+for 1..1_000_00 -> $i { 
+    my $l=collatzSeqLen($i);
+    
+    next if $l < $topMin;
+    next if  $l == any @top;
+    
+    %ltoi{$l}=$i;
+    
+    @top.push: $l;
+    @top.=sort;
+    @top.shift if @top.elems > $want;
+    $topMin=@top[0];
+}
 say now -$t;
+say @top.map: %ltoi{*};
+# 
+# for  @chain.reverse[1..20] -> $i {
+#     my $n=@chain
+# };
