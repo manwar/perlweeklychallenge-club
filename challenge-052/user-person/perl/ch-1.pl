@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 
 ###########################################################################
-# script name: ch-1.pl                                                    #
+# script name: ch-1-CORRECTED.pl                                          #
 #                                                                         #
 # https://github.com/user-person                                          #
 #                                                                         #
@@ -29,7 +29,7 @@ for (my $i = 1; $i < 10; ++$i) {
     if ($i < 8) { # UP UP
         push @step, ($i * 100) + ( $i + 1 ) * 10 + ($i + 2);
     }
-    if ($i > 1) { # DOWN DOWN
+    if ($i > 1 && $i < 10) { # DOWN DOWN
         push @step, ($i * 100) + ( $i - 1 ) * 10 + ($i - 2);
     }
     if ($i < 9) { # UP DOWN

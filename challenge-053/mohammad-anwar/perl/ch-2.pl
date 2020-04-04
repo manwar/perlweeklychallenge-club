@@ -17,7 +17,7 @@ if ($count == 1) {
     exit;
 }
 
-my $iter  = combinations($chars, $count);
+my $iter = combinations($chars, $count);
 
 my $char_sets = [];
 while (my $char = $iter->next) {

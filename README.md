@@ -9,9 +9,9 @@ This is the central repository for the members of [**Perl Weekly Challenge**](ht
 ## How to contribute?
 Just submit Pull Request with your solutions.
 
-First find out the latest challenge folder, more likely the highest numbered folder is the latest challenge folder e.g. challenge-002. If you are an existing member, you would probably find a folder by your name. For example, if your name is "Joe Blog" then there would be a folder called "joe-blog". Under your named folder, you would find a file **README**. Depending on your choice of language, you should create a folder here e.g. **perl** for **Perl** and **raku** for **Raku**. Inside each of these folders you can save your solutions. If it is perl script for **Task #1** then call it **ch-1.pl**. Similarly if it is perl script for **Task #2** then call it **ch-2.pl**. For **Raku** solutions, call it **ch-1.p6** and **ch-2.p6** respectively. And if you are writing one-liner then call it **ch-1.sh** or **ch-2.sh**. If you are contributing for the first time, please create your named folder as described above. Also let us know what name you would like us to use?
+First find out the latest challenge folder, more likely the highest numbered folder is the latest challenge folder e.g. challenge-002. If you are an existing member, you would probably find a folder by your name. For example, if your name is **"Joe Blog"** then there would be a folder called **"joe-blog"**. Under your named folder, you would find a file **README**. Depending on your choice of language, you should create a folder here e.g. **perl** for **Perl** and **raku** for **Raku**. Inside each of these folders you can save your solutions. If it is perl script for **Task #1** then call it **ch-1.pl**. Similarly if it is perl script for **Task #2** then call it **ch-2.pl**. For **Raku** solutions, call it **ch-1.p6** and **ch-2.p6** respectively. And if you are writing one-liner then call it **ch-1.sh** or **ch-2.sh**. If you are contributing for the first time, please create your named folder as described above. Also let us know what name you would like us to use?
 
-In case you have created a blog about your solutions, then create a file called **blog.txt** and add the link to it.
+In case you have created a blog about your solutions, then create a file called **blog.txt** and add the link to it. In case you have more than one blog then create another file called **blog1.txt** and add your link there.
 
 ## Step-by-step instructions
 Let us assume you want to submit solutions for **Challenge 002** and your Github user name is **joe-blog**.
@@ -46,9 +46,9 @@ Let us assume you want to submit solutions for **Challenge 002** and your Github
 
 14. You should see a button to submit **Pull Request**.
 
-## How to add new solution when you already have a fork?
+## How to add new solution when you already have the forked repository?
 
-Let us assume you already have a fork. If this is the first time you are using the same fork for submitting subsequent challenges solution. I also assume your GitHub user name is **joe-blog**.
+Let us assume you already have the repository forked. If this is the first time you are using the same forked repository for submitting subsequent challenges solution. I also assume your GitHub user name is **joe-blog**.
 
 1. Checkout out the **master** branch first.
    ```
