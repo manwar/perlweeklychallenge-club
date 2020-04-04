@@ -94,7 +94,7 @@ while ( $n <= $noofperm-1  ) {
 
 }
 
-my @fresult = sort {$a <=> $b} @result;
+my @result = sort {$a <=> $b} @result;
 
 print $result[$k-1];
 
