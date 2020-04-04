@@ -15,7 +15,7 @@ if ($ARGV[0] == undef or $ARGV[1] == undef) {
 my $TARGET_BEGIN = $ARGV[0];
 my $TARGET_END = $ARGV[1];  
 
-open LOG, ">", "logfile";   # Use for the extra credit
+open LOG, ">", "ch-2_logfile";   # Use for the extra credit
 
 #BEGIN: space allocation, Use for the extra credit
 my @seqlength ;#= (undef) x (100000+1); 
