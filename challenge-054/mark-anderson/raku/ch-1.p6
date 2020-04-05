@@ -1,5 +1,5 @@
 #!/usr/bin/env raku 
 
-sub MAIN(UInt $length, UInt $which where $length > 0 < $which) {
-    say (1..$length).permutations[$which-1];
+sub MAIN(UInt $n where * > 0, UInt $k where * > 0) {
+    say (1..$n).permutations[$k-1];
 }
