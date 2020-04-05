@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 
 # Usage: ch-2.p6
-# Output: The length of the 20 longest Collatz sequences from 1 to 1e6.
+# Output: 
 
 # 922524 => 445
 # 922525 => 445
@@ -24,66 +24,67 @@
 # 626331 => 509
 # 837799 => 525
 
+# I couldn't figure out the built-in memoize so I just did my
+# own caching with the hash. 
+
+# YMMV but on my computer...
+
+# The hash brings the runtime from 800 seconds to 160 seconds.
+
+# The exists adverb brings it down to 120 seconds.
+
+# Keeping a current sorted array of the 20 largest items brings it 
+# down to 95 seconds. (vs. sorting 1_000_000 items later)
 multi sub MAIN {
-    my $length;
+    my $t = now;
+
     my %seen;
     %seen{1} = 1;
-    my @collatz;
+    my @collatz = (1 => 1) xx 20;
 
     for (1 .. 1e6) -> $start {
-        $length = 0;
-        %seen{$start} = collatz($start);
-        @collatz.push($start => %seen{$start});
-    }
+        my $n = $start;
+        my $length = 0;
 
-    .fmt("%-6s => %s").say 
-        for @collatz.sort({$^a.value <=> $^b.value}).tail(20);
+        loop {
+            if %seen{$n}:exists {
+                %seen{$start} = %seen{$n} + $length;
 
-    sub collatz($n is copy) {
-        if (%seen{$n}) {
-            return $length + %seen{$n};
+                if @collatz[0].value <= %seen{$start} {
+                    @collatz.shift;
+                    @collatz.push($start => %seen{$start});
+                    @collatz = @collatz.sort({$^a.value <=> $^b.value});
+                }
+               
+                last;
+            }
+
+            $n = $n %% 2 ?? $n / 2 !! 3 * $n + 1;
+            $length++;
         }
+    }    
 
-        if $n %% 2 {
-            $n = $n / 2; 
-        }
+    .say for @collatz;
 
-        else {
-            $n = 3 * $n + 1;
-        }
-       
-        $length++;
-        collatz($n);
-    }
+    say now - $t;
 }
 
 # Usage: ch-2.p6 23 
-# Output: The length of the Collatz sequence followed by the sequence.
-# 23 -> 70 -> 35 -> 106 -> 53 -> 160 -> 80 -> 40 -> 20 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1
+# Output: 
+# 23       70       35       106      53       160     
+# 80       40       20       10       5        16      
+# 8        4        2        1       
+
 # length = 16
+multi sub MAIN(Numeric $n is copy where $n > 0) {
+    my @collatz = ($n);
 
-multi sub MAIN(UInt $num where $num > 0) {
-    my @arr = collatz($num);
-    say @arr.join(" -> ");
-    say "length = {@arr.elems}";
-
-    sub collatz($n is copy --> Array) {
-        my @collatz;
-
-        loop {
-            @collatz.push($n);
-
-            if ($n == 1) { 
-                return @collatz;
-            }
-
-            if $n %% 2 {
-                $n = $n / 2; 
-            }
-
-            else {
-                $n = 3 * $n + 1;
-            }
-        }
+    loop {
+        last if $n == 1;
+        $n = $n %% 2 ?? $n / 2 !! 3 * $n + 1;
+        @collatz.push($n);
     }
+ 
+    .fmt("%-8d").say for @collatz.rotor(6, :partial);
+    say "\nlength = {@collatz.elems}";
 }
