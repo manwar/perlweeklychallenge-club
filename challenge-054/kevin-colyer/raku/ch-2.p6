@@ -14,13 +14,12 @@
 # all starting numbers up to 1000000 (1e6), and output the starting 
 # number and sequence length for the longest 20 sequences.
 
-my Int @cache;
-my Int @length;
+
 sub collatzSeqChain(Int $n is copy) {
     my Str $seq = "$n";
     while $n > 1 {
         if $n +& 1 == 0 {
-            $n=Int($n / 2);
+            $n= $n +> 1;
         } else {
             $n = $n * 3 + 1;
         }
@@ -29,14 +28,19 @@ sub collatzSeqChain(Int $n is copy) {
     return $seq;
 }
 
-sub collatzSeqLen(Int $number) {
+
+sub collatzSeqLen(Int $number) returns Int {
+    state Int @length;
     my Int $n=$number;
     my Int $len=1;
     my Str $seq = "$n";
     while $n > 1 {
-        if @length[$n]:exists { $len += @length[$n]; last }
+        if @length[$n]:exists { 
+            $len += @length[$n]; 
+            last; 
+        }
         if $n +& 1 == 0 {
-            $n=Int($n / 2);
+            $n = $n +> 1;
         } else {
             $n = $n * 3 + 1;
         }
@@ -46,32 +50,47 @@ sub collatzSeqLen(Int $number) {
     return $len;
 }
 
-say collatzSeqChain(23);
-say collatzSeqLen(2000);
-
-my Int @chain=0;
-my $want=20;
-my $topMin=1;
-my @top;
-my @topN;
-my %ltoi;
-my $t =now.Int;
-for 1..1_000_00 -> $i { 
-    my $l=collatzSeqLen($i);
-    
-    next if $l < $topMin;
-    next if  $l == any @top;
-    
-    %ltoi{$l}=$i;
-    
-    @top.push: $l;
-    @top.=sort;
-    @top.shift if @top.elems > $want;
-    $topMin=@top[0];
+multi MAIN('test') {
+    say collatzSeqChain(23);
 }
-say now -$t;
-say @top.map: %ltoi{*};
-# 
-# for  @chain.reverse[1..20] -> $i {
-#     my $n=@chain
-# };
+
+multi MAIN('sequence', Int :$number=23 ) {
+    die "number must be a positive integer > 1 [$number]" if $number < 1;
+    say collatzSeqChain($number);
+}
+
+multi MAIN ('top',  Int :$number=10_000, Int :$want=20) {
+
+    die "Longest chainst WANTed [$want] must be > number in sequence [$number]" if $want >= $number;
+    
+    my Int @chain = 0;
+    my Int $topMin = 1;
+    my Int @top;
+    my Int @topN;
+    my %ltoi;
+    my $t = now.Int;
+    my Int $x = $number; 
+    my Int $l;
+
+    for 1..$x -> Int $i { 
+        $l = collatzSeqLen($i);
+        
+        next if $l < $topMin;
+        next if $l == any @top;
+        
+        %ltoi{$l} = $i;
+        
+        @top.push: $l;
+        @top.=sort;
+        @top.shift if @top.elems > $want;
+        $topMin = @top[0];
+    }
+
+    @top.map({ "\n{%ltoi{$_}} length $_ = \n"~collatzSeqChain( %ltoi{$_} )  })>>.say;
+    say "\n$x sequences searched in {Rat(now -$t)} seconds";
+}
+
+# 1000000 sequences searched in 17.394643 seconds
+# 1000000 sequences searched in 10.144286 seconds
+
+
