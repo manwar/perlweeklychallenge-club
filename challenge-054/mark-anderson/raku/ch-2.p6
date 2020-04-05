@@ -64,7 +64,7 @@ multi sub MAIN {
         }
     }    
 
-    .say for @collatz.tail(20);
+    .say for @collatz;
 
     say now - $t;
 }
