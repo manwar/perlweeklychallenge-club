@@ -1,52 +1,56 @@
-Task 1: "Rotate Matrix
+Task 1: "kth Permutation Sequence
 
-Write a script to rotate the followin matrix by given 90/180/270 degrees clockwise.
+Write a script to accept two integers n (>=1) and k (>=1). It should
+print the kth permutation of n integers. For more information, please
+follow the wiki page 
 
-[ 1, 2, 3 ]
-[ 4, 5, 6 ]
-[ 7, 8, 9 ]
+	https://en.wikipedia.org/wiki/Permutation#k-permutations_of_n
 
-For example, if you rotate by 90 degrees then expected result should be like below
+(in summary: 'in other words, these k-permutations of n are the different
+ordered arrangements of a k-element subset of an n-set (sometimes called
+variations or 'arrangements' in the older literature.')
 
-[ 7, 4, 1 ]
-[ 8, 5, 2 ]
-[ 9, 6, 3 ]
+For example, n=3 and k=4, the possible permutation sequences are listed below:
+
+123
+132
+213
+231
+312
+321
+
+The script should print the 4th permutation sequence 231.
 "
 
-My notes: sounds pretty trivial.  Made slightly cuter by an inline package in order
-to use classic Perl OO in order to get autostringification.
+My notes: The wiki definition describes a LIST of all k-from-n partial
+permutations, whereas the example shows something different: generate a
+single permutation: the Kth complete permutation sequence of 1..N.  So
+ignore the wiki, and go with the example.  Obvious method: generate all
+permutations of 1..N in the above order, then pick the Kth one.  But can
+we directly generate the Kth permutation?  After a bit of thought: yes we can.
 
 
-Task 2: "Vowel Strings
+Task 2: "Collatz Conjecture
 
-Write a script to accept an integer 1 <= N <= 5 that would print all
-possible strings of size N formed by using only vowels (a, e, i, o, u).
+It is thought that the following sequence will always reach 1:
 
-The string should follow the following rules:
+    $n = $n / 2 when $n is even
+    $n = 3*$n + 1 when $n is odd
 
-    'a' can only be followed by 'e' and 'i'.
+For example, if we start at 23, we get the following sequence:
 
-    'e' can only be followed by 'i'.
+	23 -> 70 -> 35 -> 106 -> 53 -> 160 -> 80 -> 40 -> 20 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1
 
-    'i' can only be followed by 'a', 'e', 'o', and 'u'.
+Write a function that finds the Collatz sequence for any positive
+integer. Notice how the sequence itself may go far above the
+original starting number.
 
-    'o' can only be followed by 'a' and 'u'.
+Extra Credit
 
-    'u' can only be followed by 'o' and 'e'.
+Have your script calculate the sequence length for all starting numbers
+up to 1000000 (1e6), and output the starting number and sequence length
+for the longest 20 sequences."
 
-For example, if the given integer N = 2 then script should print the following strings:
-
-ae
-ai
-ei
-ia
-io
-iu
-ie
-oa
-ou
-uo
-ue
-"
-
-My notes: reading "and" as "or" above, it sounds pretty simple as a generator.
+My notes: Sounds interesting!  For the extra credit question, you can find the
+"longest 20 sequences for N up to 1e6" output in ch-2:-100000.output.  The
+longest sequence is of length 351.
