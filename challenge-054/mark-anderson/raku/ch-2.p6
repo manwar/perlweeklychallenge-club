@@ -64,7 +64,8 @@ multi sub MAIN {
         }
     }    
 
-    .say for @collatz.sort({$^a.value <=> $^b.value}).tail(20);
+    #.say for @collatz.sort({$^a.value <=> $^b.value}).tail(20);
+    .say for @collatz.tail(20);
 
     say now - $t;
 }
