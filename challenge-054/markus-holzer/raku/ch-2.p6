@@ -1,43 +1,55 @@
+my Int $hits = 0;
+my Int $miss = 0;
+
+multi sub MAIN( Int $N, :$s )
+{
+    my ($n, @c) = collatz( $N );
+    say "n: $n, length: { @c.elems }";
+    say @c.join( ',' );
+}
+
 multi sub MAIN( Int $N, :$l )
 {
     my $start  = now;
-    my @result = Array.new( Any, 1, :shape( $N + 1 ) );
+    my %result;
 
     for 1..$N -> $n
     {
-        my $current = 0;
-        my $next    = $n;
-        my $cached;
-        loop
+        my Int $count = 0;
+        my Int $cache = 0;
+
+        my @new = gather for collatz( $n ) -> $collatz
         {
             # Dynamic programming:
             # see what you have computed so far, so you
             # don't have to compute it again
-            $cached = @result[ $next ];
-            last if $cached;
+            if %result{ $collatz }:exists
+            {
+                $hits += $cache = %result{ $collatz };
+                last;
+            }
 
-            $next = $next %% 2 ?? $next / 2 !! $next * 3 + 1;
-            $current++;
+            $miss++;
+            take $collatz, $count++;
         }
 
-        @result[ $n ] = [ $n, $current + $cached ];
+        %result{ .[0] } = @new.elems - .[1] + $cache
+            for @new;
     }
 
-    say "n: { .[0] }, length: { .[1] }" for
-        @result
-            .skip
-            .sort( -*[1] )
+#    say "halftime: { now - $start } seconds";
+
+    say "n: { .key }, length: { .value - 1 }" for
+            %result
+            .grep( *.key   < $N )
+            .sort( *.value * -1 )
             .head(20);
 
-    say "runtime: { now - $start } seconds";
+    say "runtime: { now - $start }";
+    say "cache misses: $miss, cache hits: $hits";
 }
 
-multi sub MAIN( Int $n, :$s )
+sub collatz( Int $n ) is pure
 {
-    say collatz( $n ).join( ',' );
-}
-
-sub collatz( Int $n )
-{
-    $n, { $^n %% 2 ?? $^n / 2 !! $^n * 3 + 1 } ... { $^n == 1 }
+    $n, { $^n %% 2 ?? $^n div 2 !! $^n * 3 + 1 } ... { $^n == 1 }
 }
