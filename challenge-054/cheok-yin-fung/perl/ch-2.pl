@@ -1,121 +1,115 @@
 #!/usr/bin/perl
 # Perl Weekly Challenge #054 Task 2
-# Usage: ch-2.pl [TARGET_BEGIN] [TARGET_END]
-# It creates a file "ch-2_logfile" saving the seqence length.
-# (recommend setting:)
-# while TARGET_BEGIN <=1 , TARGET_END <= 200_000
+
+# Normal Usage: ch-2.pl [TARGET]
+# It returns the Collatz sequence beginning with the target number.
+
+# For the display of the sequence length from 1 to 1000000: 
+# Usage: ch-2.pl
+# it creates a file "ch-2_logfile" saving the seqence length.
+
+# For the extra credit (the 20 numbers which have the largest seq length):
+# I wanna write a selection algorithm (trying a binary heap) for getting 
+# the extra credit seq length), but I have no time, ooops
+
 use strict;
 use integer;
 
-my $MAX_U = 134217728; #(2^27)
-if ($ARGV[0] == undef or $ARGV[1] == undef) {
-    die "not enough arguments";
-}
+my $MAX_U = 333334;  
+# Laurent's codes and explanations on blog teach me that
+# this cutting value should be fine-tuned rather 
+# than making it as large as the systems allow.
+# (my 40-hrs attempt use $MAX_U = 2^27; in addition, 
+# those codes did not follow "YAGNI" rule - ambitious but "unoptimized",
+# hence my laptop suffered for 40 hrs)
 
-my $TARGET_BEGIN = $ARGV[0];
-my $TARGET_END = $ARGV[1];  
-
-open LOG, ">", "ch-2_logfile";   # Use for the extra credit
-
-#BEGIN: space allocation, Use for the extra credit
-my @seqlength ;#= (undef) x (100000+1); 
-my @indexT ;#= (undef) x ($MAX_U+1);     
-#END
-my %SeqlengthLargeInt;
+my $TARGET_BEGIN = 1;
+my $TARGET_END = 1000_000;  
 
 
+#space allocation
+my @seqlength; 
+my %SeqlengthLargeInt = {1 =>1};
 
 $seqlength[1] = 1;
-$indexT[1] = 0; 
 
 foreach (1..27) {
     $seqlength[2**$_] = 1+$_; 
-    $indexT[2**$_] = $_; 
+    $SeqlengthLargeInt{2**$_} = 1+$_;
 }
 
+
+sub traceSmallint {
+    my @route = reverse @_;
+
+    my $h = shift @route;
+    my $ref;
+    foreach $ref (@route) {
+        $seqlength[$ref] = 1 + $seqlength[$h];
+        $h = $ref;
+    }
+    $SeqlengthLargeInt{$route[0]} = $seqlength[$route[0]];
+}
+
+
+
+   ###########################
+
+if ($ARGV[0] != undef ) { 
+    my $mazed = $ARGV[0];
+    print $mazed, " ";
+    while ($mazed != 1) {
+            if ($mazed % 2 == 1) {
+                $mazed = $mazed*3+1;
+            } else {
+                $mazed = $mazed/2;
+            }
+            print $mazed, " ";
+    }
+} else {
+
+    ###########################
+
+open LOG, ">", "ch-2_logfile";
 foreach ($TARGET_BEGIN..$TARGET_END) {
-    my @temp;
+    my @temp = (); my @tempB = ();
     push @temp, $_;
     my $mazed = $_;
-    while( not(defined($indexT[$mazed])) 
-                 and $mazed<$MAX_U 
-    ) {
-        if ($mazed % 2 == 1) {
-           $mazed = $mazed*3+1;
-           push @temp, $mazed;
-        } else {
-            $mazed = $mazed/2;
-            push @temp, $mazed;
-        } 
-    }
-    if ($mazed<$MAX_U) {
-        #if the mazed person doesn't go far from $MAX_U
-        traceSmallint(@temp);
-        printing($_); #EXCLUDE when for extra credit
-        print "\n"; #EXCLUDE when for extra credit
-    } else { #Use for the extra credit
-        my @tempB;
-        push @tempB, $mazed;
-        while ($mazed != 1 and
-            not(defined($SeqlengthLargeInt{$mazed})) 
+    while ( $mazed<$MAX_U  and
+            not(defined($SeqlengthLargeInt{$mazed}))
+            
         ) {
             if ($mazed % 2 == 1) {
+                $mazed = $mazed*3+1;
+                push @temp, $mazed;
+            } else {
+                $mazed = $mazed/2;
+                push @temp, $mazed;
+            }   
+        }
+    if ($mazed<$MAX_U) {
+        traceSmallint(@temp);
+    } else {
+         push @tempB, $mazed;
+         while (not(defined($SeqlengthLargeInt{$mazed}))) {
+             if ($mazed % 2 == 1) {
                 $mazed = $mazed*3+1;
                 push @tempB, $mazed;
             } else {
                 $mazed = $mazed/2;
                 push @tempB, $mazed;
             }    
-        }
-        if ($mazed == 1) {       
-            $seqlength[$_] = $#tempB + $#temp + 1;
-        } else {
-            $seqlength[$_] = $#tempB + $#temp + $SeqlengthLargeInt{$mazed};
-        }
-        $SeqlengthLargeInt{$_} = $seqlength[$_];
-        printing($_);  #EXCLUDE when for extra credit
-    }
-
-    print LOG $seqlength[$_], "\n";          # Use for the extra credit
-}
-
-
-sub printing {
-    my $mazed = $_; 
-    print $mazed, " ";
-    while ($mazed != 1) {
-        if ($mazed % 2 == 1) {
-            $mazed = $mazed*3+1;
-        } else {
-            $mazed = $mazed/2;
-            } 
-        print $mazed, " ";
-        }
-}
-
-sub traceSmallint {
-    my @route = reverse @_;
-
-    my $treeid = $indexT[$route[0]];
-
-    my $h = shift @route;
-    my $ref;
-    foreach $ref (@route) {
-        $indexT[$ref] = $treeid;
-        $seqlength[$ref] = 1 + $seqlength[$h]; 
-
-        $h = $ref;
-    }
-    $SeqlengthLargeInt{$route[0]} = $seqlength[$route[0]];
-}
+        }  
+        $seqlength[$_] = $#tempB + $#temp + $SeqlengthLargeInt{$mazed};
+    }    
         
+    print LOG $seqlength[$_], "\n"; 
 
-close LOG;     # Use for the extra credit
-# My laptop spent roughly 40.5 hours 
-# (from 02nd Apr 14:30 to 04th Apr 06:53)
-# for getting the 
-# sequence length(s) for N = 1 to 1e6 .
-# This version optimzed and skip some unsuccessful 
-# functionalities, but probably not more than 15%.
-# For the unsuccessful functionalities, refer to the blog
-# http://blogs.perl.org/users/c_y_fung/2020/03
+}
+
+close LOG;
+
+}
+   ###########################
+
+# For other unsuccessful functionalities and a story of crazy attempt, refer to the blog
