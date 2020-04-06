@@ -31,8 +31,6 @@ sub MAIN( Int:D $number where { $number.chars > 1 && $number ~~ / ^ <[01]>+ $ / 
 
     my @src = $number.comb;
     my $N = @src.elems;
-    say @src;
-    say $N;
 
     my $wanted =  $N - 1;
     say "Searching for at least $wanted ones...";
