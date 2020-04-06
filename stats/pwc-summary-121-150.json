@@ -1,16 +1,20 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-04-06 00:37:23 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -46,26 +50,16 @@
          "Vyacheslav Volgarev"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-04-06 00:21:18 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             0,
             2,
             3,
             78,
             107,
-            53,
+            55,
             38,
             0,
             6,
@@ -90,8 +84,7 @@
             18,
             17,
             4
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -101,7 +94,7 @@
             0,
             57,
             107,
-            47,
+            49,
             0,
             3,
             0,
@@ -129,13 +122,14 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
             0,
             33,
             0,
-            27,
+            29,
             1,
             0,
             0,
@@ -160,8 +154,14 @@
             0,
             3,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
-   ]
+   ],
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   }
 }
