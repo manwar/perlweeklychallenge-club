@@ -1,11 +1,49 @@
 {
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : 0
    },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 055",
+         "data" : [
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 1
+            },
+            {
+               "name" : "Roger Bell West",
+               "drilldown" : "Roger Bell West",
+               "y" : 3
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
    "drilldown" : {
       "series" : [
          {
-            "name" : "Roger Bell West",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
+         },
+         {
+            "id" : "Roger Bell West",
             "data" : [
                [
                   "Perl",
@@ -16,67 +54,44 @@
                   1
                ]
             ],
-            "id" : "Roger Bell West"
+            "name" : "Roger Bell West"
          },
          {
-            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Simon Proctor"
+            "id" : "Simon Proctor"
          }
       ]
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 055"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-04-06 10:59:35 GMT"
+   "chart" : {
+      "type" : "column"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2020-04-06 17:11:43 GMT"
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    },
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 055"
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Roger Bell West",
-               "y" : 3,
-               "drilldown" : "Roger Bell West"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 055"
-      }
-   ]
+   "xAxis" : {
+      "type" : "category"
+   }
 }

@@ -1,13 +1,4 @@
 {
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-04-06 10:59:35 GMT"
-   },
    "xAxis" : {
       "categories" : [
          "Richard Park",
@@ -45,12 +36,25 @@
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-04-06 17:11:43 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "chart" : {
       "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             2,
@@ -82,9 +86,11 @@
             18,
             17,
             4
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             1,
             6,
@@ -116,11 +122,9 @@
             0,
             2,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -152,16 +156,12 @@
             0,
             3,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
