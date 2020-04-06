@@ -34,19 +34,12 @@ sub MAIN( Int:D $number where { $number.chars > 1 } ){
     for @array.permutations -> @current {
         my $ok = False;
         my $test = True; # true = greater
-        my @result;
         for 0 ..^ @current.elems - 1 -> $index {
             $ok   = is-ok @current[ $index ].Int, @current[ $index + 1 ].Int, $test;
             $test = ! $test;
-            @result.push( @current[ $index ].Str ~ ( $test ?? ' ≥ ' !! ' ≤ ' ) ); 
             last if ! $ok;
         }
 
-        if $ok {
-            @result.push( @current[ *-1 ].Str ~ ( $test ?? ' ≥ ' !! ' ≤ ' ) );
-            say @result;
-        }
-      
         say "Found wave { @current }" if $ok;
     }
 }
