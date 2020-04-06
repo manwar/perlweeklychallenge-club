@@ -29,11 +29,11 @@ sub unique-perms ( @input ) {
     }
 }
 
-multi sub is-wave( 'lte', Int $a, Int $b where { $a <= $b } ) { True }
-multi sub is-wave( 'lte', Int $a, Int $b where { $a > $b } )  { False }
-multi sub is-wave( 'gte', Int $a, Int $b where { $a >= $b } ) { True }
-multi sub is-wave( 'gte', Int $a, Int $b where { $a < $b } )  { False }
-multi sub is-wave( 'gte', Int $a, Int $b where { $b > $a }, *@ ) { False }
-multi sub is-wave( 'lte', Int $a, Int $b where { $a > $b }, *@ ) { False }
+multi sub is-wave( 'lte', Int $a, Int $b where { $a <= $b } )          { True }
+multi sub is-wave( 'lte', Int $a, Int $b where { $a > $b } )           { False }
+multi sub is-wave( 'gte', Int $a, Int $b where { $a >= $b } )          { True }
+multi sub is-wave( 'gte', Int $a, Int $b where { $a < $b } )           { False }
+multi sub is-wave( 'gte', Int $a, Int $b where { $b > $a }, *@ )       { False }
+multi sub is-wave( 'lte', Int $a, Int $b where { $a > $b }, *@ )       { False }
 multi sub is-wave( 'gte', Int $a, Int $b where { $a >= $b }, $c, *@r ) { True && is-wave( 'lte', $b, $c, |@r ); }
 multi sub is-wave( 'lte', Int $a, Int $b where { $a <= $b }, $c, *@r ) { True && is-wave( 'gte', $b, $c, |@r ); }
