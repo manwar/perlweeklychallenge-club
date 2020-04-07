@@ -1,27 +1,12 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
+   "subtitle" : {
+      "text" : "Last updated at 2020-04-07 14:40:30 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "series" : [
       {
-         "dataLabels" : {
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "rotation" : -90,
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF"
-         },
          "data" : [
             [
                "Blog",
@@ -33,14 +18,29 @@
             ],
             [
                "Raku",
-               1439
+               1440
             ]
          ],
-         "name" : "Contributions"
+         "name" : "Contributions",
+         "dataLabels" : {
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "enabled" : "true",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10
+         }
       }
    ],
    "chart" : {
       "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
       "title" : {
@@ -48,16 +48,16 @@
       },
       "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-04-06 17:32:02 GMT"
-   },
    "legend" : {
       "enabled" : "false"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
    }
 }
