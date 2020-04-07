@@ -2,19 +2,24 @@
    "legend" : {
       "enabled" : "false"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2020-04-07 14:47:36 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
-         "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "color" : "#FFFFFF"
+         },
          "data" : [
             [
                "Blog",
-               599
+               600
             ],
             [
                "Perl",
@@ -25,39 +30,34 @@
                1440
             ]
          ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "rotation" : -90,
-            "y" : 10,
-            "align" : "right"
-         }
+         "name" : "Contributions"
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
    "yAxis" : {
       "title" : {
          "text" : null
       },
       "min" : 0
    },
+   "subtitle" : {
+      "text" : "Last updated at 2020-04-07 14:58:20 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       },
       "type" : "category"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "chart" : {
+      "type" : "column"
    }
 }
