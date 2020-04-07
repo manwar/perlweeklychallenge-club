@@ -17,16 +17,7 @@ multi sub MAIN( *@input where { $_.elems >= 2 && $_.all ~~ Int } ) {
 }
 
 sub unique-perms ( @input ) {
-    my %seen;
-    my @perms = @input.permutations;
-    gather {
-        while ( @perms ) {           
-            my $next = @perms.shift;
-            next if %seen{$next}:exists;
-            %seen{$next} = True;
-            take $next;        
-        }
-    }
+    @input.permutations.unique(:as(*.join(",")));
 }
 
 multi sub is-wave( 'lte', Int $a, Int $b where { $a <= $b } )          { True }
