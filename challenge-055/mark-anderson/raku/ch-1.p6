@@ -1,5 +1,3 @@
-#!/usr/bin/env raku
-
 sub MAIN(Str $binary) {
     my @LR = (0 .. $binary.chars-1).combinations: 2;
 
@@ -17,10 +15,8 @@ sub MAIN(Str $binary) {
         $middle = (("0b" ~ $middle).Int +^ ("0b" ~ "1" x $middle.chars).Int)
                   .fmt("%0" ~ $middle.chars ~ "b");
 
-        my $result = $left ~ $middle ~ $right;
-        %results{"($l, $r)"} = $result.comb(/1/).elems;
+        %results{"($l, $r)"} = ($left ~ $middle ~ $right).comb(/1/).elems;
     }
 
-    my $max = %results.values.max;
-    .say if .value == $max for %results.sort;
+    .say if .value == %results.values.max for %results.sort;
 }

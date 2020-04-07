@@ -1,6 +1,6 @@
 use MONKEY-SEE-NO-EVAL;
 
-sub MAIN(*@array) {
+sub MAIN(*@array where @array ~~ /\d/) {
     my @strings = @array.permutations.map(~*).unique;
 
     for @strings -> $string {
