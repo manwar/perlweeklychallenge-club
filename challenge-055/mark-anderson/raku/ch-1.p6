@@ -1,4 +1,4 @@
-sub MAIN(Str $binary) {
+sub MAIN(Str $binary where $binary ~~ /<[01]>/) {
     my @LR = (0 .. $binary.chars-1).combinations: 2;
 
     for (0 .. $binary.chars-1) -> $n {
