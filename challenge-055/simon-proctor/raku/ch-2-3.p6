@@ -26,16 +26,12 @@ multi sub MAIN( *@input where { $_.elems >= 2 && $_.all ~~ Int } ) {
                 $messages.done;
             }
         }
-        start react {
-            whenever $output-channel -> @out {
-                @out.join(",").say;
-            }
+        whenever $output-channel -> @out {
+            @out.join(",").say;
         }
-        start react {
-            whenever $input-channel -> ( @i, @p, $t ) {
-                find-waves( @i, @p, $t, $input-channel, $output-channel, $messages );
-            }
-        }        
+        whenever $input-channel -> ( @i, @p, $t ) {
+            find-waves( @i, @p, $t, $input-channel, $output-channel, $messages );
+        }
     }
 }
 
