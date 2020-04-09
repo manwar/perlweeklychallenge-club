@@ -4,26 +4,19 @@ use warnings;
 use feature 'say';
 
 
-my @n       = @ARGV ? @ARGV : (1, 2, 3, 4) ;
-
+my @n = sort {$a - $b} @ARGV ? @ARGV : (1, 2, 3, 4) ;
+my %h;
 sub wave {  
     my ($a,$l,$r) = @_;
  
     if ($l == $r) {
-        if ($a->[1]<=$a->[0]) {
-            #This filter assumes numbers in array @n are unique. 
-            #So, combinations like [2, 2, 1, 4, 3] will not be
-            #generated/printed when given @n = [1, 2, 2, 3, 4]
-            (!grep { 
-                (
-                    ($a->[$_]   >= $a->[$_-1]) && 
-                    ($a->[$_-1] >= $a->[$_-2])
-                ) or (
-                    ($a->[$_]   <= $a->[$_-1]) && 
-                    ($a->[$_-1] <= $a->[$_-2])
-                ) 
-            } 2..$#{$a}) && say "@{$a}";
+        my $flag = 1;
+        for my $e (1..$#{$a}) {
+            !($flag &= $e % 2? $a->[$e]<=$a->[$e-1] : $a->[$e]>=$a->[$e-1]) && last;   
         }
+        
+        #Only unique permutation will be printed
+        $flag && !$h{"@{$a}"}++ && say "@{$a}"
     } else {  
         for my $i ($l..$r) {  
             ($a->[$l], $a->[$i]) = ($a->[$i],$a->[$l]);
@@ -45,10 +38,14 @@ perl .\ch-2.pl
 perl .\ch-2.pl 1 2 2 3 4
 2 1 3 2 4
 2 1 4 2 3
-2 1 3 2 4
-2 1 4 2 3
+2 2 3 1 4
+2 2 4 1 3
+3 2 2 1 4
 3 2 4 1 2
-3 2 4 1 2
+3 1 2 2 4
+3 1 4 2 2
+4 2 2 1 3
 4 2 3 1 2
-4 2 3 1 2
+4 1 2 2 3
+4 1 3 2 2
 =cut
