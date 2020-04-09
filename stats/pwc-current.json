@@ -1,95 +1,14 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2020-04-09 10:38:30 GMT"
+   },
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "xAxis" : {
       "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Dave Jacoby",
-            "name" : "Dave Jacoby",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ],
-               [
-                  "Blog",
-                  2
-               ]
-            ]
-         },
-         {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
-         },
-         {
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  1
-               ]
-            ]
-         },
-         {
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Wanderdoc",
-            "id" : "Wanderdoc",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         }
-      ]
    },
    "legend" : {
       "enabled" : 0
@@ -99,9 +18,91 @@
          "text" : "Total Solutions"
       }
    },
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Dave Jacoby"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
+         },
+         {
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Roger Bell West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "id" : "Roger Bell West"
+         },
+         {
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Simon Proctor"
+         },
+         {
+            "name" : "Wanderdoc",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Wanderdoc"
+         },
+         {
+            "name" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Yet Ebreo"
+         }
+      ]
+   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 055",
+         "colorByPoint" : 1,
          "data" : [
             {
                "name" : "Dave Jacoby",
@@ -110,35 +111,49 @@
             },
             {
                "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari",
-               "y" : 4
+               "y" : 4,
+               "name" : "Luca Ferrari"
             },
             {
+               "name" : "Mark Anderson",
                "y" : 2,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
+               "drilldown" : "Mark Anderson"
             },
             {
-               "y" : 3,
                "name" : "Roger Bell West",
-               "drilldown" : "Roger Bell West"
+               "drilldown" : "Roger Bell West",
+               "y" : 3
             },
             {
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "name" : "Wanderdoc",
+               "drilldown" : "Wanderdoc",
                "y" : 2
             },
             {
                "y" : 2,
-               "name" : "Wanderdoc",
-               "drilldown" : "Wanderdoc"
+               "drilldown" : "Yet Ebreo",
+               "name" : "Yet Ebreo"
             }
          ],
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 055"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2020-04-07 14:58:20 GMT"
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 055"
