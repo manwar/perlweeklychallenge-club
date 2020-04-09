@@ -13,9 +13,7 @@ multi sub find-waves( [], @input is copy ) {
     gather {
         for @input.kv -> $i, $val {
             my @poss = @input[0..^$i,$i^..*-1].flat;
-            for find-waves( [$val], @poss, 'gte' ).grep( { defined $_ } ) -> @r {
-                take @r;
-            }
+            take $_ for find-waves( [$val], @poss, 'gte' ).grep( { defined $_ } );
         }
     }
 }
@@ -37,9 +35,7 @@ multi sub find-waves( @output is copy, @input is copy, $test ) {
             next unless &test( @output[*-1], $val );
             my @poss = @input[0..^$i,$i^..*-1].flat;
 
-            for find-waves( [|@output, $val], @poss, $test ~~ 'gte' ?? 'lte' !! 'gte' ).grep( { defined $_ } ) -> @r {
-                take @r;
-            }
+            take $_ for find-waves( [|@output, $val], @poss, $test ~~ 'gte' ?? 'lte' !! 'gte' ).grep( { defined $_ } );
         }
     }
 }
