@@ -30,12 +30,12 @@ sub do_flip {
     my ( $l_count, $r_count, $input ) = @_;
 
     my @binary = split //, $input;
-    
+
     for my $str_pos ( $l_count .. $r_count ) {
         $binary[$str_pos] = $binary[$str_pos] == 1 ? 0:1;
     }
 
-    return join "", @binary;
+    return join '', @binary;
 }
 
 my $result = process_all_flips("010");
