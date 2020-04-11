@@ -34,5 +34,25 @@ sub flip_binary {
         }
     }
 
-    return [ sort { $result->{$b} <=> $result->{$a} } keys %$result ]->[0];
+    return flipped_binary($result);
+}
+
+sub flipped_binary {
+    my ($result) = @_;
+
+    my $v;
+    my @r;
+    foreach my $k (sort { $result->{$b} <=> $result->{$a} } sort keys %$result) {
+        if (defined $v) {
+            if ($result->{$k} == $v) {
+                push @r, $k;
+            }
+        }
+        else {
+            $v = $result->{$k};
+            push @r, $k;
+        }
+    }
+
+    return join (" | ", @r);
 }

@@ -6,8 +6,8 @@ use warnings;
 use Test::More;
 
 is (flip_binary("10001"), "11111 (2,4)");
-is (flip_binary("10101"), "11011 (2,4)");
-is (flip_binary("00101"), "11011 (1,4)");
+is (flip_binary("10101"), "10111 (4,4) | 11011 (2,4) | 11101 (2,2)");
+is (flip_binary("00101"), "11011 (1,4) | 11101 (1,2)");
 
 done_testing;
 
@@ -38,5 +38,25 @@ sub flip_binary {
         }
     }
 
-    return [ sort { $result->{$b} <=> $result->{$a} } keys %$result ]->[0];
+    return flipped_binary($result);
+}
+
+sub flipped_binary {
+    my ($result) = @_;
+
+    my $v;
+    my @r;
+    foreach my $k (sort { $result->{$b} <=> $result->{$a} } sort keys %$result) {
+        if (defined $v) {
+            if ($result->{$k} == $v) {
+                push @r, $k;
+            }
+        }
+        else {
+            $v = $result->{$k};
+            push @r, $k;
+        }
+    }
+
+    return join (" | ", @r);
 }
