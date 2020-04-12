@@ -2,7 +2,7 @@ subset BinaryStr of Str where * ~~ /^ <[01]>+ $/;
 
 sub USAGE() {
     print Q:c:to/EOH/;
-        ch-1.p6 <binary-str>
+    ch-1.p6 <binary-str>
 
         Example:
             ch-1.p6 010
@@ -20,7 +20,7 @@ sub MAIN( BinaryStr $input )
 sub top-flips-of( BinaryStr $input )
 {
     my %result = flips-of( $input );
-    |%result{ %result.keys.sort.tail };
+    |%result{ %result.keys.max };
 }
 
 sub flips-of( BinaryStr $input )
