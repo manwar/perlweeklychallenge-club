@@ -1,56 +1,57 @@
-Task 1: "kth Permutation Sequence
+Task 1: "Flip Binary
 
-Write a script to accept two integers n (>=1) and k (>=1). It should
-print the kth permutation of n integers. For more information, please
-follow the wiki page 
+You are given a binary number B, consisting of N binary digits 0 or 1: s0, s1
+.. s(N-1).
 
-	https://en.wikipedia.org/wiki/Permutation#k-permutations_of_n
+Choose two indices L and R such that 0 <= L <= R < N and flip the digits s(L),
+s(L+1) .... s(R). By flipping, we mean change 0 to 1 and vice-versa.
 
-(in summary: 'in other words, these k-permutations of n are the different
-ordered arrangements of a k-element subset of an n-set (sometimes called
-variations or 'arrangements' in the older literature.')
+For example, given the binary number 010, the possible flip pair results
+are listed below:
 
-For example, n=3 and k=4, the possible permutation sequences are listed below:
+    L=0, R=0 the result binary: 110
+    L=0, R=1 the result binary: 100
+    L=0, R=2 the result binary: 101
+    L=1, R=1 the result binary: 000
+    L=1, R=2 the result binary: 001
+    L=2, R=2 the result binary: 011
 
-123
-132
-213
-231
-312
-321
+Write a script to find the indices (L,R) that results in a binary number
+with maximum number of 1s. If you find more than one maximal pair L,R
+then print all of them.
 
-The script should print the 4th permutation sequence 231.
+Continuing our example, note that we had three pairs (L=0, R=0), (L=0,
+R=2), and (L=2, R=2) that resulted in a binary number with two 1s,
+which was the maximum. So we would print all three pairs.
+
+My notes: sounds interesting.  Do we need to first compute the maximum
+numbers of 1s and then compute all (L,R) pairs having that value? Hopefully
+not.
+
+
+Task 2: "Wave Array
+
+Any array N of non-unique, unsorted integers can be arranged into a
+wave-like array such that n1 >= n2 <= n3 >= n4 <= n5 and so on.
+
+For example, given the array [1, 2, 3, 4], possible wave arrays include
+[2, 1, 4, 3] or [4, 1, 3, 2], since 2 >= 1 <= 4 >= 3 and 4 >= 1 <= 3 >= 2.
+This is not a complete list.
+
+Write a script to print all possible wave arrays for an integer array
+N of arbitrary length.
+
+Notes:
+
+When considering N of any length, note that the first element is always greater than or equal to the second, and then the >=, <=, >= sequence alternates until
+the end of the array.
 "
 
-My notes: The wiki definition describes a LIST of all k-from-n partial
-permutations, whereas the example shows something different: generate a
-single permutation: the Kth complete permutation sequence of 1..N.  So
-ignore the wiki, and go with the example.  Obvious method: generate all
-permutations of 1..N in the above order, then pick the Kth one.  But can
-we directly generate the Kth permutation?  After a bit of thought: yes we can.
-
-
-Task 2: "Collatz Conjecture
-
-It is thought that the following sequence will always reach 1:
-
-    $n = $n / 2 when $n is even
-    $n = 3*$n + 1 when $n is odd
-
-For example, if we start at 23, we get the following sequence:
-
-	23 -> 70 -> 35 -> 106 -> 53 -> 160 -> 80 -> 40 -> 20 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1
-
-Write a function that finds the Collatz sequence for any positive
-integer. Notice how the sequence itself may go far above the
-original starting number.
-
-Extra Credit
-
-Have your script calculate the sequence length for all starting numbers
-up to 1000000 (1e6), and output the starting number and sequence length
-for the longest 20 sequences."
-
-My notes: Sounds interesting!  For the extra credit question, you can find the
-"longest 20 sequences for N up to 1e6" output in ch-2:-100000.output.  The
-longest sequence is of length 351.
+My notes: sounds cute.  How to get started? possible values of n1 are any
+value in the array APART FROM THE SMALLEST ONE, eg given 1..4, n1=2..4
+Then n2 is any other value of the array <= n1; given n1 and n2 and list of
+unused elements @u, n3 is any element in @u that is >= n2.
+eg given 1..4, and n1=2, n2=1, n3 is 3 or 4.  Some sort of recursion should
+do the trick (initially I thought 2 mutually recursive functions, one to
+extend with a value LESS than or equal, the other to extend with a value
+GREATER than or equal, but then I collapsed that via the parameter $less).
