@@ -9,40 +9,45 @@ use v6;
 #|   ‘o’ can only be followed by ‘a’ and ‘u’.
 #|   ‘u’ can only be followed by ‘o’ and ‘e’.
 sub MAIN (
-    UInt $count is copy where 1 <= * <= 5;
+    UInt $count where 1 <= * <= 5;
 ) {
     my @strings = ('');
-    while $count > 0 {
-        $count--;
-        my @next = ();
-        for @strings -> $string {
-            @next.push( |valid-next( $string ) );
-        }
-        @strings = @next;
-    }
-    .say for @strings;
+
+    .say for process( @strings, $count );
 }
 
-multi sub valid-next( '' ) {
+multi sub process( @list, 0 ) is pure {
+    @list;
+}
+
+multi sub process( @list, $count ) is pure {
+    process( @list.map( { valid-next( $_ ) } ).flat, $count - 1 );
+}
+
+multi sub valid-next( '' ) is pure {
     <a e i o u>; 
 }
 
-multi sub valid-next( Str $x where * ~~ /'a'$/ ) {
-    ("{$x}e", "{$x}i");
+sub append-val( $val, *@rest ) is pure {
+    @rest.map( { $val ~ $_ } );
 }
 
-multi sub valid-next( Str $x where * ~~ /'e'$/ ) {
-    ("{$x}i");
+multi sub valid-next( Str $x where *.ends-with('a') ) is pure {
+    append-val( $x, <e i> );
 }
 
-multi sub valid-next( Str $x where * ~~ /'i'$/ ) {
-    ("{$x}a", "{$x}e", "{$x}o", "{$x}u");
+multi sub valid-next( Str $x where *.ends-with('e') ) is pure {
+    append-val( $x, <i> );
 }
 
-multi sub valid-next( Str $x where * ~~ /'o'$/ ) {
-    ("{$x}a", "{$x}u");
+multi sub valid-next( Str $x where *.ends-with('i') ) is pure {
+    append-val( $x, <a e o u> );
 }
 
-multi sub valid-next( Str $x where * ~~ /'u'$/ ) {
-    ("{$x}o", "{$x}e");
+multi sub valid-next( Str $x where *.ends-with('o') ) is pure {
+    append-val( $x, <a u> );
+}
+
+multi sub valid-next( Str $x where *.ends-with('u') ) is pure {
+    append-val( $x, <o e> );
 }

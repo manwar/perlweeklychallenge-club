@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 ###########################################################################
-# script name: ch-1.py                                                    #
+# script name: ch-1-CORRECTED.py                                          #
 #                                                                         #
 # https://github.com/user-person                                          #
 #                                                                         #
@@ -25,17 +25,28 @@ step = []
 UPPER_LIMIT = 1000
 LOWER_LIMIT = 99
 
-for i in range(1,8):
-    step.append( (i * 100) + ((i+1) * 10) + (i+2) )
+for i in range(1,10):
+    if i < 8:                   # UP UP
+        step.append( (i * 100) + ((i+1) * 10) + (i+2) )
+
+    if i > 1:                   # DOWN DOWN
+        step.append( (i * 100) + ((i-1) * 10) + (i-2) )
+
+    if i < 9:                   # UP DOWN
+        step.append( (i * 100) + (i+1) * 10 + i )
+
+    step.append( (i * 100) + (i-1) * 10 + i ) # DOWN UP
+
+step.sort()
 
 errorString = os.path.basename(sys.argv[0]) + ' requires 2 arguments between 100 and 999.'
 
 if len(sys.argv) != 3:
     print(errorString)
     exit(1)
-    
-args = [int(arg) for arg in sys.argv[1:]]
 
+args = [int(arg) for arg in sys.argv[1:]]
+        
 for arg in args:
     if arg < LOWER_LIMIT or arg > UPPER_LIMIT:
         print(errorString)
