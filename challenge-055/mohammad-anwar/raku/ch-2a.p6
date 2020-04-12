@@ -13,6 +13,8 @@ for $unit-tests.keys.sort -> $size {
     is-deeply(fetch-wave-array($size), $unit-tests{$size}, "array size $size");
 }
 
+done-testing;
+
 sub fetch-wave-array($size) {
     die "ERROR: Invalid array size [$size]\n"
         unless ($size ~~ /^\d+$/ && $size > 0);
