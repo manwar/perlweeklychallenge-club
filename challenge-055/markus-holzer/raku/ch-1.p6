@@ -1,5 +1,14 @@
 subset BinaryStr of Str where * ~~ /^ <[01]>+ $/;
 
+sub USAGE() {
+    print Q:c:to/EOH/;
+        ch-1.p6 <binary-str>
+
+        Example:
+            ch-1.p6 010
+    EOH
+}
+
 sub MAIN( BinaryStr $input )
 {
     my $pad    = '%0' ~ $input.chars ~ 's';
