@@ -1,7 +1,6 @@
 #!/usr/bin/env perl
 use strict;
 use warnings;
-use Data::Dump qw(pp);
 use List::Util qw(sum max);
 use List::MoreUtils qw(indexes);
 
