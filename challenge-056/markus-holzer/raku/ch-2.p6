@@ -25,7 +25,7 @@ multi sub find-path-sum( %t, $n )
     gather find-path-sum( %t, 0, [], $n );
 }
 
-multi find-path-sum( $tree, $sum, $path, $n )
+multi sub find-path-sum( $tree, $sum, $path, $n )
 {
     for $tree.keys -> $k
     {
