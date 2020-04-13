@@ -30,7 +30,6 @@ multi sub find-path-sum( $tree, $n, $path )
     for $tree.keys -> $k
     {
         my $p = $path.clone.push( $k );
-        my $s = $path.sum + $k;
 
         if my $t = $tree{ $k }
         {
@@ -38,6 +37,6 @@ multi sub find-path-sum( $tree, $n, $path )
             next;
         }
 
-        take $p if $s == $n;
+        take $p if $p.sum == $n;
     }
 }
