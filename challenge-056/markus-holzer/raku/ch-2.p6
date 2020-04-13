@@ -20,21 +20,21 @@ my %tree =
 .join('→').say
     for find-path-sum( %tree, 22 );
 
-multi sub find-path-sum( %t, $n )
+multi sub find-path-sum( %tree, $n )
 {
-    gather find-path-sum( %t, 0, [], $n );
+    gather find-path-sum( %tree, $n, [] );
 }
 
-multi sub find-path-sum( $tree, $sum, $path, $n )
+multi sub find-path-sum( $tree, $n, $path )
 {
     for $tree.keys -> $k
     {
         my $p = $path.clone.push( $k );
-        my $s = $sum + $k;
+        my $s = $path.sum + $k;
 
         if my $t = $tree{ $k }
         {
-            find-path-sum( $t, $s, $p, $n );
+            find-path-sum( $t, $n, $p );
             next;
         }
 
