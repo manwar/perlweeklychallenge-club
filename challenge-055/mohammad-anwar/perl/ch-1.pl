@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-my $binary_str = $ARGV[0];
+my $binary_str = $ARGV[0] // "101";
 
 print "$binary_str => ", flip_binary($binary_str), "\n";
 
