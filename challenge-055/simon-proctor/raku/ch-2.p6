@@ -13,20 +13,11 @@ multi sub MAIN( *@ ) is hidden-from-USAGE { say "Please give a list of 2 or more
 
 #| Given a list of integers return all the wave sorted lists
 multi sub MAIN( *@input where { $_.elems >= 2 && $_.all ~~ Int } ) {
-    .say for unique-perms( @input ).race.grep( -> @l { is-wave( 'lte', |@l ) } );
+    .say for unique-perms( @input ).race.grep( -> @l { is-wave( 'gte', |@l ) } );
 }
 
 sub unique-perms ( @input ) {
-    my %seen;
-    my @perms = @input.permutations;
-    gather {
-        while ( @perms ) {           
-            my $next = @perms.shift;
-            next if %seen{$next}:exists;
-            %seen{$next} = True;
-            take $next;        
-        }
-    }
+    @input.permutations.unique(:as(*.join(",")));
 }
 
 multi sub is-wave( 'lte', Int $a, Int $b where { $a <= $b } )          { True }
