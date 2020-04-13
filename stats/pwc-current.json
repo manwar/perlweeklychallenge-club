@@ -1,68 +1,33 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2020-04-13 18:47:13 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
-            },
-            {
-               "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "drilldown" : "Markus Holzer",
-               "name" : "Markus Holzer",
-               "y" : 2
-            },
-            {
-               "name" : "Matthew Somerville",
-               "drilldown" : "Matthew Somerville",
-               "y" : 3
-            },
-            {
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West",
-               "y" : 3
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 056",
-         "colorByPoint" : 1
-      }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 056"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "E. Choroba",
             "id" : "E. Choroba"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Javier Luque",
+            "id" : "Javier Luque"
          },
          {
             "id" : "Mark Anderson",
@@ -79,18 +44,17 @@
             ]
          },
          {
-            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "name" : "Markus Holzer",
             "id" : "Markus Holzer"
          },
          {
             "id" : "Matthew Somerville",
-            "name" : "Matthew Somerville",
             "data" : [
                [
                   "Perl",
@@ -100,10 +64,12 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Matthew Somerville"
          },
          {
             "id" : "Roger Bell West",
+            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl",
@@ -113,23 +79,80 @@
                   "Raku",
                   1
                ]
-            ],
-            "name" : "Roger Bell West"
+            ]
          }
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2020-04-13 19:01:10 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "tooltip" : {
-      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 056",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba",
+               "y" : 2
+            },
+            {
+               "y" : 5,
+               "name" : "Javier Luque",
+               "drilldown" : "Javier Luque"
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "name" : "Markus Holzer",
+               "y" : 2,
+               "drilldown" : "Markus Holzer"
+            },
+            {
+               "drilldown" : "Matthew Somerville",
+               "y" : 3,
+               "name" : "Matthew Somerville"
+            },
+            {
+               "drilldown" : "Roger Bell West",
+               "y" : 3,
+               "name" : "Roger Bell West"
+            }
+         ]
+      }
+   ],
+   "title" : {
+      "text" : "Perl Weekly Challenge - 056"
    },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
