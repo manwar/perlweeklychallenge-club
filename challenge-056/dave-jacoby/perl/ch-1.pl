@@ -20,9 +20,7 @@ diffk( 2, 2, 7, 9 );
 sub diffk ( $k, @N ) {
     for my $j ( 0 .. -1 + scalar @N ) {
         for my $i ( $j + 1 .. -1 + scalar @N ) {
-            next if $i == $j;
-            next unless $k == $N[$i] - $N[$j];
-            say join ", ", $i, $j;
+            say join ", ", $i, $j if $k == $N[$i] - $N[$j];
         }
     }
 
