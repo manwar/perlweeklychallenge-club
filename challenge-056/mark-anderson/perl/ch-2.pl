@@ -12,7 +12,7 @@ $tree->walk_down ({callback => \&traverse});
 say for $tree->draw_ascii_tree->@*;
 
 sub traverse {
-    my($node, $options) = @_;
+    my $node = shift;
  
     unless ($node->daughters) {
         my @nodes = reverse ($node->name, (map { $_->name } $node->ancestors));
