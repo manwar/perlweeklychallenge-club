@@ -9,7 +9,7 @@ my $lol = [ [ [ [7], [2], 11 ], 4 ], [ [13], [ [1], 9 ], 8 ], 5 ];
 
 my $tree = Tree::DAG_Node->lol_to_tree($lol);
 
-$tree->walk_down ({callback => \&traverse});
+$tree->walk_down({callback => \&traverse});
 
 say for $tree->draw_ascii_tree->@*;
 
