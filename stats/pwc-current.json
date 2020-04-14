@@ -1,89 +1,67 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2020-04-14 13:48:17 GMT"
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 056",
+         "colorByPoint" : 1,
          "data" : [
             {
+               "name" : "Dave Jacoby",
                "y" : 3,
-               "drilldown" : "Dave Jacoby",
-               "name" : "Dave Jacoby"
+               "drilldown" : "Dave Jacoby"
             },
             {
+               "drilldown" : "E. Choroba",
                "y" : 2,
-               "name" : "E. Choroba",
-               "drilldown" : "E. Choroba"
+               "name" : "E. Choroba"
             },
             {
                "drilldown" : "Javier Luque",
-               "name" : "Javier Luque",
-               "y" : 5
+               "y" : 5,
+               "name" : "Javier Luque"
             },
             {
-               "y" : 3,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
-            },
-            {
+               "drilldown" : "Luca Ferrari",
                "y" : 2,
-               "name" : "Markus Holzer",
-               "drilldown" : "Markus Holzer"
+               "name" : "Luca Ferrari"
             },
             {
-               "name" : "Matthew Somerville",
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 3
+            },
+            {
+               "drilldown" : "Markus Holzer",
+               "y" : 2,
+               "name" : "Markus Holzer"
+            },
+            {
                "drilldown" : "Matthew Somerville",
-               "y" : 3
+               "y" : 3,
+               "name" : "Matthew Somerville"
             },
             {
-               "name" : "Roger Bell West",
                "drilldown" : "Roger Bell West",
-               "y" : 3
+               "y" : 3,
+               "name" : "Roger Bell West"
             },
             {
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 1
+               "y" : 1,
+               "name" : "Simon Proctor"
             }
          ]
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 056"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "xAxis" : {
+      "type" : "category"
    },
    "legend" : {
       "enabled" : 0
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Dave Jacoby",
             "id" : "Dave Jacoby",
             "data" : [
                [
@@ -94,20 +72,20 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Dave Jacoby"
+            ]
          },
          {
-            "id" : "E. Choroba",
+            "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "E. Choroba"
+            "id" : "E. Choroba"
          },
          {
+            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -122,10 +100,21 @@
                   1
                ]
             ],
-            "name" : "Javier Luque",
-            "id" : "Javier Luque"
+            "name" : "Javier Luque"
          },
          {
+            "name" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Luca Ferrari"
+         },
+         {
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Perl",
@@ -135,9 +124,7 @@
                   "Raku",
                   1
                ]
-            ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
+            ]
          },
          {
             "name" : "Markus Holzer",
@@ -150,8 +137,8 @@
             "id" : "Markus Holzer"
          },
          {
-            "id" : "Matthew Somerville",
             "name" : "Matthew Somerville",
+            "id" : "Matthew Somerville",
             "data" : [
                [
                   "Perl",
@@ -164,8 +151,6 @@
             ]
          },
          {
-            "id" : "Roger Bell West",
-            "name" : "Roger Bell West",
             "data" : [
                [
                   "Perl",
@@ -175,18 +160,48 @@
                   "Raku",
                   1
                ]
-            ]
+            ],
+            "id" : "Roger Bell West",
+            "name" : "Roger Bell West"
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          }
       ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 056"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2020-04-14 15:39:09 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    }
 }
