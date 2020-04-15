@@ -1,21 +1,24 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "chart" : {
+      "type" : "column"
    },
    "legend" : {
       "enabled" : "false"
    },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
-      }
+      },
+      "type" : "category"
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "yAxis" : {
       "min" : 0,
@@ -24,10 +27,22 @@
       }
    },
    "subtitle" : {
-      "text" : "Last updated at 2020-04-14 19:56:48 GMT"
+      "text" : "Last updated at 2020-04-15 00:42:12 GMT"
    },
    "series" : [
       {
+         "dataLabels" : {
+            "enabled" : "true",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "align" : "right",
+            "rotation" : -90,
+            "format" : "{point.y:.0f}"
+         },
          "data" : [
             [
                "Blog",
@@ -39,25 +54,10 @@
             ],
             [
                "Raku",
-               1473
+               1474
             ]
          ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "y" : 10
-         }
+         "name" : "Contributions"
       }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   }
+   ]
 }
