@@ -144,7 +144,7 @@ multi sub MAIN( 'rep' ) {
 #| also displays all traversals
 multi sub MAIN ( 'example' ) {
     my $example = example-tree;
-    say $example;
+    say "String : $example";
     UBTree.from-Str( $example.Str ).say;
     
     for $example.traverse -> @row {
