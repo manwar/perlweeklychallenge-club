@@ -87,16 +87,18 @@ class BTreeRep {
         my ( $left, $right, $left-width, $right-width );
         my ( @ldata, @rdata, $left-pad, $right-pad );
 
+        my $mid-string = '┘';
         $left = BTreeRep.new( tree => $tree.left );
         $left-width = $left.data[0].codes;
         @ldata = $left.data;
-        @ldata.unshift( (" " x $left.join-point) ~ "+" ~ ("-" x ($left-width - 1 - $left.join-point) ) );
+        @ldata.unshift( (" " x $left.join-point) ~ "┌" ~ ("─" x ($left-width - 1 - $left.join-point) ) );
 
         if ( $tree.right ) {
             my $right = BTreeRep.new( tree => $tree.right );
+            $mid-string = '┴';
             @rdata = $right.data;
             $right-width = @rdata[0].codes;
-            @rdata.unshift( ( "-" x ( $right.join-point ) ~ '+' ~ ( " " x $right-width - 1 - $right.join-point ) ) );
+            @rdata.unshift( ( "─" x ( $right.join-point ) ~ '┐' ~ ( " " x $right-width - 1 - $right.join-point ) ) );
         } else {
             $right-width = 1;
             @rdata = @ldata.map( { " " } );
@@ -116,7 +118,7 @@ class BTreeRep {
         my $left-fill = gather { for @ldata.elems^..@rdata.elems { take " " x $left-width } };
         my $right-fill = gather { for @rdata.elems^..@ldata.elems { take " " x $right-width } };
 
-        @!data = $top, |( ( (|@ldata, |$left-fill) Z, (|@rdata, |$right-fill) ).map( { state $i=0;$_.join($i++??" "!!"+") } ) );
+        @!data = $top, |( ( (|@ldata, |$left-fill) Z, (|@rdata, |$right-fill) ).map( { state $i=0;$_.join($i++??" "!!$mid-string) } ) );
         $!join-point = $left-pad + ( $tree.value.Str.codes div 2);
     }
 
