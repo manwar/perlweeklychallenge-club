@@ -11,6 +11,8 @@ grammar BTreeGrammar {
     regex value { <-[()]>+ }
 }
 
+class BTreeRep {...}
+
 role BTree[::T] {
     has T $.value is required;
     has BTree[T] $.left;
@@ -21,7 +23,7 @@ role BTree[::T] {
     }
 
     method gist() {
-        self.Str();        
+        BTreeRep.new( tree=>self ).gist();
     }
 
     method traverse() {
@@ -62,9 +64,78 @@ role BTree[::T] {
 class UBTree does BTree[UInt] {
     submethod BUILD ( :$value, :$left = UBTree, :$right = UBTree ) {
         $!value = $value.UInt();
-        $!left = $left;
-        $!right = $right;
+        if ( ! $left && $right ) {
+            $!left = $right;
+            $!right = UBTree;
+        } else {
+            $!left = $left;
+            $!right = $right;
+        }
     }
+}
+
+class BTreeRep {
+    has @.data;
+    has UInt $.join-point;
+
+    multi submethod BUILD ( BTree :$tree where { ! $tree.left && ! $tree.right } ) {
+            @!data = [$tree.value.Str];
+            $!join-point = $tree.value.Str.codes div 2;
+    }
+
+    multi submethod BUILD ( BTree :$tree ) {
+        my ( $left, $right, $left-width, $right-width );
+        my ( @ldata, @rdata, $left-pad, $right-pad );
+
+        $left = BTreeRep.new( tree => $tree.left );
+        $left-width = $left.data[0].codes;
+        @ldata = $left.data;
+        @ldata.unshift( (" " x $left.join-point) ~ "+" ~ ("-" x ($left-width - 1 - $left.join-point) ) );
+
+        if ( $tree.right ) {
+            my $right = BTreeRep.new( tree => $tree.right );
+            @rdata = $right.data;
+            $right-width = @rdata[0].codes;
+            @rdata.unshift( ( "-" x ( $right.join-point ) ~ '+' ~ ( " " x $right-width - 1 - $right.join-point ) ) );
+        } else {
+            $right-width = 1;
+            @rdata = @ldata.map( { " " } );
+        }
+
+        if ( $left-width + $right-width + 1 < $tree.value.codes ) {
+            $left-pad = 0;
+            $right-pad = 0;
+            my $extra = $tree.value.codes - ($left-width + $right-width + 1);
+            @ldata = @ldata.map( { ( " " x ( $extra div 2 ) ) ~ $_ } );
+            @rdata = @rdata.map( { $_ ~ ( " " x ( $extra div 2 + $extra % 2 ) ) } );
+        } else {
+            $left-pad = $left-width - ($tree.value.codes div 2);
+            $right-pad = ($left-width + $right-width + 1) - $left-pad - $tree.value.codes;
+        }
+        my $top = ( " " x $left-pad ) ~ $tree.value ~ ( " " x $right-pad );
+        my $left-fill = gather { for @ldata.elems^..@rdata.elems { take " " x $left-width } };
+        my $right-fill = gather { for @rdata.elems^..@ldata.elems { take " " x $right-width } };
+
+        @!data = $top, |( ( (|@ldata, |$left-fill) Z, (|@rdata, |$right-fill) ).map( { state $i=0;$_.join($i++??" "!!"+") } ) );
+        $!join-point = $left-pad + ( $tree.value.Str.codes div 2);
+    }
+
+    method gist {
+        @.data.join("\n");
+    }
+
+}
+
+#| Displays a set of Tree Representations
+multi sub MAIN( 'rep' ) {
+    say BTreeRep.new( tree => UBTree.from-Str( '123(234)(345)' ) );
+    say BTreeRep.new( tree => UBTree.from-Str( '1(2)' ) );
+    say BTreeRep.new( tree => UBTree.from-Str( '1(2(3))' ) );
+    say BTreeRep.new( tree => UBTree.from-Str( '1(2(3(4)(5)))' ) );
+    say BTreeRep.new( tree => UBTree.from-Str( '123(234(345)(456))(345(456)(567))' ) );
+    say BTreeRep.new( tree => UBTree.from-Str( '12345(2)(3)' ) );
+    say BTreeRep.new( tree => UBTree.from-Str( '1234(25678789)(333434354)' ) );
+    say BTreeRep.new( tree => UBTree.from-Str( '5(4(11(7)(2)))(8(13)(9(1)))' ) );
 }
 
 #| Display the example Tree in Str and gist representations
@@ -81,17 +152,14 @@ multi sub MAIN ( 'example' ) {
 
 #| Traverses the example tree and prints any routes that add up to the target.
 multi sub MAIN ( UInt $target, 'example' ) {
-    my $example = example-tree;
-
-    for $example.traverse -> @row {
-        @row.join("->").say if ( [+] @row ) == $target;
-    }
+    MAIN( $target, example-tree.Str );
 }
 
 #| Given a target number and a tree string find all the traversals that add up to is
 #| Note the Tree string is in the format "number (left tree) (right tree)" spaces are optional
 multi sub MAIN ( UInt $target, *@rest ) {
     my $tree = UBTree.from-Str( @rest.join("") );
+    say "Tree :\n{$tree.gist}\n";
 
     for $tree.traverse -> @row {
         @row.join("->").say if ( [+] @row ) == $target;
@@ -121,7 +189,7 @@ sub example-tree() {
             ),
             right => UBTree.new(
                 value => 9,
-                right => UBTree.new(
+                left => UBTree.new(
                     value => 1
                 )
             )
