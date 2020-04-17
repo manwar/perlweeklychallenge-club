@@ -15,44 +15,48 @@ class BTreeRep {...}
 
 role BTree[::T] {
     has T $.value is required;
-    has BTree[T] $.left;
-    has BTree[T] $.right;
+    has BTree @!nodes[2];
     
     method Str( ) {
-        $!value ~ ( $!left ?? "({$!left.Str()})" !! "" ) ~ ( $!right ?? "({$!right.Str()})" !! "" );
+        ( $!value , |@.nodes.map( { "({$_})" } ) ).join("");
     }
 
+    method nodes() {
+        @!nodes.grep({defined $_});
+    }
+
+    method children() {
+        @.nodes.elems;
+    }
     method gist() {
         BTreeRep.new( tree=>self ).gist();
     }
 
     method traverse() {
         gather {
-            if $!left {
-                for $!left.traverse -> @t {
-                    take ($!value, |@t);
+            if ( self.children ) {
+                for @.nodes -> $n {
+                    for $n.traverse -> @t {
+                        take ($!value, |@t);
+                    }
                 }
-            }
-            if $!right {
-                for $!right.traverse -> @t {
-                    take ($!value, |@t);
-                }
-            }
-            if ! $!left && ! $!right {
+            } else {
                 take ( $!value, );
             }
         }
     }
 
-    multi method from-Str('') { }
+    multi method from-Str('') { BTree }
     
     multi method from-Str( ::?CLASS:U: Str $in ) {
         my $match = BTreeGrammar.parse( $in );
         if ( $match ) {
             self.new(
                 value => $match<tree><value>.Str,
-                left => self.from-Str( $match<tree><left> ?? $match<tree><left>.Str !! '' ),
-                right => self.from-Str( $match<tree><right> ?? $match<tree><right>.Str !! '' )
+                nodes => [
+                          self.from-Str( $match<tree><left> ?? $match<tree><left>.Str !! '' ),
+                          self.from-Str( $match<tree><right> ?? $match<tree><right>.Str !! '' )
+                      ]
             );
         } else {
             die "Unable to Parse $in";
@@ -62,15 +66,9 @@ role BTree[::T] {
 }
 
 class UBTree does BTree[UInt] {
-    submethod BUILD ( :$value, :$left = UBTree, :$right = UBTree ) {
+    submethod BUILD ( :$value, :@nodes ) {
         $!value = $value.UInt();
-        if ( ! $left && $right ) {
-            $!left = $right;
-            $!right = UBTree;
-        } else {
-            $!left = $left;
-            $!right = $right;
-        }
+        @!nodes = @nodes;
     }
 }
 
@@ -78,7 +76,7 @@ class BTreeRep {
     has @.data;
     has UInt $.join-point;
 
-    multi submethod BUILD ( BTree :$tree where { ! $tree.left && ! $tree.right } ) {
+    multi submethod BUILD ( BTree :$tree where { ! $tree.children } ) {
             @!data = [$tree.value.Str];
             $!join-point = $tree.value.Str.codes div 2;
     }
@@ -88,13 +86,13 @@ class BTreeRep {
         my ( @ldata, @rdata, $left-pad, $right-pad );
 
         my $mid-string = '┘';
-        $left = BTreeRep.new( tree => $tree.left );
+        $left = BTreeRep.new( tree => $tree.nodes[0] );
         $left-width = $left.data[0].codes;
         @ldata = $left.data;
         @ldata.unshift( (" " x $left.join-point) ~ "┌" ~ ("─" x ($left-width - 1 - $left.join-point) ) );
 
-        if ( $tree.right ) {
-            my $right = BTreeRep.new( tree => $tree.right );
+        if ( $tree.children == 2 ) {
+            my $right = BTreeRep.new( tree => $tree.nodes[1] );
             $mid-string = '┴';
             @rdata = $right.data;
             $right-width = @rdata[0].codes;
@@ -172,29 +170,39 @@ multi sub MAIN ( UInt $target, *@rest ) {
 sub example-tree() {
     return UBTree.new(
         value => 5,
-        left => UBTree.new(
-            value => 4,
-            left => UBTree.new(
-                value => 11,
-                left => UBTree.new(
-                    value => 7,
-                ),
-                right => UBTree.new(
-                    value => 2,
-                )
-            )
-        ),
-        right => UBTree.new(
-            value => 8,
-            left => UBTree.new(
-                value => 13,
-            ),
-            right => UBTree.new(
-                value => 9,
-                left => UBTree.new(
-                    value => 1
-                )
-            )
-        )
+        nodes => [
+                  UBTree.new(
+                      value => 4,
+                      nodes => [
+                                UBTree.new(
+                                    value => 11,
+                                    nodes => [
+                                              UBTree.new(
+                                                  value => 7,
+                                              ),
+                                              UBTree.new(
+                                                  value => 2,
+                                              )
+                                          ]
+                                )
+                            ]
+                  ),
+                  UBTree.new(
+                      value => 8,
+                      nodes => [
+                                UBTree.new(
+                                    value => 13,
+                                ),
+                                UBTree.new(
+                                    value => 9,
+                                    nodes => [
+                                              UBTree.new(
+                                                  value => 1
+                                              )
+                                          ]
+                                )
+                            ]
+                  )
+              ]
     );
 }
