@@ -66,8 +66,8 @@ role BTree[::T] {
 }
 
 class UBTree does BTree[UInt] {
-    submethod BUILD ( :$value, :@nodes ) {
-        $!value = $value.UInt();
+    submethod BUILD ( UInt() :$value, :@nodes ) {
+        $!value = $value;
         @!nodes = @nodes;
     }
 }
