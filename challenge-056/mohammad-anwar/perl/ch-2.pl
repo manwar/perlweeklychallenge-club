@@ -24,7 +24,7 @@ my $TREE = {
          },
 };
 
-print find_matched_paths($TREE, $SUM), "\n";
+print join("\n", @{find_matched_paths($TREE, $SUM)}), "\n";
 
 sub find_matched_paths {
     my ($TREE, $SUM) = @_;
@@ -55,5 +55,5 @@ sub find_matched_paths {
         push @$matched_paths, join(" -> ", @$path) if ($total == $SUM);
     }
 
-    return join("\n", @$matched_paths);
+    return $matched_paths;
 }

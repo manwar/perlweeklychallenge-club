@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
+use Test::Deep;
 
 =head1 TREE
 
@@ -28,7 +29,7 @@ my $unit_tests = {
 };
 
 foreach my $sum (keys %$unit_tests) {
-    is (find_matched_paths($unit_tests->{$sum}, $sum), "5 -> 4 -> 11 -> 2");
+    is_deeply (find_matched_paths($unit_tests->{$sum}, $sum), ["5 -> 4 -> 11 -> 2"]);
 }
 
 done_testing;
@@ -62,5 +63,5 @@ sub find_matched_paths {
         push @$matched_paths, join(" -> ", @$path) if ($total == $SUM);
     }
 
-    return join("\n", @$matched_paths);
+    return $matched_paths;
 }
