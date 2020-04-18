@@ -28,26 +28,13 @@ my $unit_tests = {
 };
 
 foreach my $sum (keys %$unit_tests) {
-    is (match_path_sum(find_paths($unit_tests->{$sum}), $sum), "5 -> 4 -> 11 -> 2");
+    is (find_matched_paths($unit_tests->{$sum}, $sum), "5 -> 4 -> 11 -> 2");
 }
 
 done_testing;
 
-sub match_path_sum {
-    my ($paths, $sum) = @_;
-
-    my $matched_paths = [];
-    foreach my $path (@$paths) {
-        my $total = 0;
-        $total += $_ foreach @$path;
-        push @$matched_paths, join(" -> ", @$path) if ($total == $sum);
-    }
-
-    return join("\n", @$matched_paths);
-}
-
-sub find_paths {
-    my ($TREE) = @_;
+sub find_matched_paths {
+    my ($TREE, $SUM) = @_;
 
     my $paths = [];
     foreach my $k (keys %$TREE) {
@@ -68,5 +55,12 @@ sub find_paths {
         }
     }
 
-    return $paths;
+    my $matched_paths = [];
+    foreach my $path (@$paths) {
+        my $total = 0;
+        $total += $_ foreach @$path;
+        push @$matched_paths, join(" -> ", @$path) if ($total == $SUM);
+    }
+
+    return join("\n", @$matched_paths);
 }
