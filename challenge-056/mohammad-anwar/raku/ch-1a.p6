@@ -21,7 +21,10 @@ my $unit-tests = :{
 };
 
 for $unit-tests.keys -> $K {
-    my @L = $unit-tests{$K}<in>.Slip;
+    # contributed by @smokemachine
+    my @L = $unit-tests{$K}<in><>;
+    # same as above, contributed by @khaledelboray
+    # my @L = $unit-tests{$K}<in>.Slip;
     my $R = $unit-tests{$K}<out>;
 
     is-deeply(find-match($K, @L), $R, "testing with K=$K");
