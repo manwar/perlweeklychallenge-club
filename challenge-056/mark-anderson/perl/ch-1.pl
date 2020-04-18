@@ -7,7 +7,7 @@ use List::Util 'all';
 # Example: perl ch-1.pl 2 7 9 2
 # Output:  2,1
 
-die "Usage: perl ch-1.pl \@N \$k" unless all { /\d/ } @ARGV;
+die "Usage: perl ch-1.pl \@N \$k" unless all { /\A\d+\z/ } @ARGV;
  
 my $k = pop @ARGV;
 

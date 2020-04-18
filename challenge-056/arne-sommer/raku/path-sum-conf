@@ -1,0 +1,64 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $sum = 22, :$verbose);
+
+class BinaryNode
+{
+  has Int        $.value;
+  has BinaryNode $.left;
+  has BinaryNode $.right;
+}
+
+my @btree = ( 5, (4, 8), (11, *, 13, 9), (7, 2, *, *, *, 1) );
+
+my @old-nodes;
+my @new-nodes;
+
+for @btree.reverse -> $row
+{
+  my @current = @$row;
+  @old-nodes  = @new-nodes;
+  @new-nodes  = ();
+  
+  for @current -> $value
+  {
+    if $value eq "*"
+    {
+      @new-nodes.push("*");
+      next;
+    }
+
+    my $left  = @old-nodes.shift // "*"; $left  = Nil if $left  eq "*";
+    my $right = @old-nodes.shift // "*"; $right = Nil if $right eq "*";
+
+    # say "Left: { $left | Right: $right";
+
+    @new-nodes.push(BinaryNode.new(value => $value,
+                                   left  => $left  // Nil,
+                                   right => $right // Nil)); 
+  }
+}
+
+my $tree = @new-nodes[0];
+
+say $tree, "\n" if $verbose;
+
+traverse($tree, $sum, ());
+
+sub traverse ($current, $target-sum, @path is copy)
+{
+  if ($current.left or $current.right)
+  {
+    @path.push: $current.value;
+
+    traverse($current.left,  $target-sum, @path) if $current.left;
+    traverse($current.right, $target-sum, @path) if $current.right;
+  }
+  else
+  {
+    @path.push: $current.value;
+    say ": " ~ @path.join(" -> ") if $verbose;
+    say @path.join(" -> ") if @path.sum == $target-sum;
+    return;
+  }
+}
