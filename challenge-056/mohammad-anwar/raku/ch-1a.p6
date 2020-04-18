@@ -40,7 +40,7 @@ sub find-match(Int $K, @L where .all ~~ Int) {
         for $i+1 .. $S -> $j {
             my $k = @L[$i] - @L[$j];
             if $k == $K {
-                push @$matched, sprintf($fmt, $i, $j, @L[$i], @L[$j], $k);
+                $matched.push: sprintf($fmt, $i, $j, @L[$i], @L[$j], $k);
             }
         }
     }
