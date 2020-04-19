@@ -1,15 +1,6 @@
-sub USAGE() {
-    print Q:c:to/EOH/;
-            ch-2.p6 <k> <N1> <N2> <N3> ... <Nn>
-
-        Example:
-            ch-1.p6 2 2 4 6 7 9
-    EOH
-}
-
-sub MAIN( UInt $k, *@N where *.elems > 1 )
+sub MAIN( UInt $k, *@N )
 {
-    CATCH { USAGE() and exit -1; }
+    CATCH { say $*USAGE() and exit -1; }
 
     .say for ( @N>>.UInt )
         .pairs
