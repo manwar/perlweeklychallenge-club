@@ -14,6 +14,7 @@ GetOptions( 'k=i' => \$difference ) or die "Problem with GetOptions.";
 
 # "non negative integer k"
 
+die "The --k option must be used to set the difference." unless defined $difference;
 die "The --k option must be non-negative: $difference" unless $difference >= 0;
 
 # "array @N of positive integers (sorted)"
