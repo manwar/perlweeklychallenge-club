@@ -4,7 +4,7 @@ sub MAIN( UInt $k, *@N )
 
     .say for ( @N>>.UInt )
         .pairs
-        .rotor( 2 => -1 )
-        .grep({ .[1].value - .[0].value == $k })
+        .combinations(2)
+        .grep( abs( [-] *>>.value ) == $k )
         .map( *>>.key );
 }
