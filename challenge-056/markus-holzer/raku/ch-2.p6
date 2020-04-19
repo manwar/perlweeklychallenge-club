@@ -20,12 +20,14 @@ my %tree =
 .join('→').say
     for find-path-sum( %tree, 22 );
 
-multi sub find-path-sum( Hash:D $tree, Int $n ) {
-    gather find-path-sum( $tree, $n, [] ); }
+multi sub find-path-sum( Hash:D $tree, Int $n )
+{
+    multi sub find-path-sum( Hash:D $tree, Int $n, Array $path ) {
+        find-path-sum( $tree{ $_ }, $n - $_, $path.clone.push($_) )
+            for $tree.keys; }
 
-multi sub find-path-sum( Hash:D $tree, Int $n, Array $path ) {
-    find-path-sum( $tree{ $_ }, $n, $path.clone.push($_) )
-        for $tree.keys; }
+    multi sub find-path-sum( Any, Int $n, Array $path ) {
+        take $path if $n == 0; }
 
-multi sub find-path-sum( Any, Int $n, Array $path ) {
-    take $path if $path.sum == $n; }
+    gather find-path-sum( $tree, $n, [] );
+}
