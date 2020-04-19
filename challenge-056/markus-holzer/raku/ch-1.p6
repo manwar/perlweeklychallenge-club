@@ -1,6 +1,6 @@
 sub MAIN( UInt $k, *@N )
 {
-    CATCH { say $*USAGE() and exit -1; }
+    CATCH { say $*USAGE and exit -1; }
 
     .say for ( @N>>.UInt )
         .pairs
