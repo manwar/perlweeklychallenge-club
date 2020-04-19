@@ -5,6 +5,6 @@ sub MAIN( UInt $k, *@N )
     .say for ( @N>>.UInt )
         .pairs
         .combinations(2)
-        .grep( abs( [-] *>>.value ) == $k )
+        .grep({ .[1].value - .[0].value == $k })
         .map( *>>.key );
 }
