@@ -13,7 +13,7 @@ sub MAIN( UInt $k, *@N where *.elems > 1 )
 
     .say for ( @N>>.UInt )
         .pairs
-        .combinations( 2 )
+        .rotor( 2 => -1 )
         .grep({ .[1].value - .[0].value == $k })
         .map( *>>.key );
 }
