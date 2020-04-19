@@ -73,3 +73,7 @@ elif match == 1:
     print('1 branch equals', k)
 else:
     print(match, 'branches equal', k)
+
+# output:
+#
+# 1 branch equals 22
