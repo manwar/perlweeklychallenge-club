@@ -1,4 +1,4 @@
-sub MAIN( UInt $k, *@N )
+sub MAIN( UInt $k, *@N where *.elems > 1 )
 {
     CATCH { say $*USAGE and exit -1; }
 
