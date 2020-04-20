@@ -1,8 +1,21 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2020-04-20 21:29:19 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "series" : [
       {
@@ -10,54 +23,55 @@
          "data" : [
             {
                "drilldown" : "Javier Luque",
-               "y" : 5,
-               "name" : "Javier Luque"
+               "name" : "Javier Luque",
+               "y" : 5
             },
             {
-               "drilldown" : "Luca Ferrari",
                "y" : 4,
-               "name" : "Luca Ferrari"
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "drilldown" : "Markus Holzer",
                "y" : 1,
-               "name" : "Markus Holzer"
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer"
             },
             {
                "drilldown" : "Pete Houston",
-               "y" : 1,
-               "name" : "Pete Houston"
+               "name" : "Pete Houston",
+               "y" : 1
             },
             {
-               "drilldown" : "Roger Bell West",
+               "y" : 2,
                "name" : "Roger Bell West",
-               "y" : 2
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 2,
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Roger Bell West"
             },
             {
                "y" : 2,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            },
+            {
                "name" : "Yet Ebreo",
-               "drilldown" : "Yet Ebreo"
+               "drilldown" : "Yet Ebreo",
+               "y" : 2
             }
          ],
          "colorByPoint" : 1
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 057"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "drilldown" : {
       "series" : [
@@ -76,10 +90,11 @@
                   1
                ]
             ],
-            "name" : "Javier Luque",
-            "id" : "Javier Luque"
+            "id" : "Javier Luque",
+            "name" : "Javier Luque"
          },
          {
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -90,18 +105,17 @@
                   2
                ]
             ],
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari"
+            "name" : "Luca Ferrari"
          },
          {
-            "id" : "Markus Holzer",
+            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "name" : "Markus Holzer"
+            "id" : "Markus Holzer"
          },
          {
             "name" : "Pete Houston",
@@ -114,52 +128,38 @@
             "id" : "Pete Houston"
          },
          {
+            "id" : "Roger Bell West",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Roger Bell West",
-            "id" : "Roger Bell West"
+            "name" : "Roger Bell West"
          },
          {
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
+            "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Yet Ebreo",
-            "id" : "Yet Ebreo"
+            "name" : "Yet Ebreo"
          }
       ]
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2020-04-20 20:28:41 GMT"
-   },
    "chart" : {
       "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
    }
 }
