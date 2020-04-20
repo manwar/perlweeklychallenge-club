@@ -10,5 +10,5 @@ my %in_array;
 @in_array{ @N } = 0 .. $#N;
 
 for (@N) {
-    say join ', ', @in_array{ $_, $k + $_ } if exists $in_array{ $k + $_ };
+    say join ', ', @in_array{ $k + $_, $_ } if exists $in_array{ $k + $_ };
 }
