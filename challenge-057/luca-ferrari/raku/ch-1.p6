@@ -28,16 +28,27 @@ sub switch( Node $current-node is rw ) {
 }
 
 
+sub print ( @nodes ) {
+    return if ! @nodes;
+    
+    my $spaces = " " x 6 / @nodes.elems;
+    my @children;
+    my $line = "";
+    my $subline = "";
+    loop ( my $i = 0; $i < @nodes.elems; $i++ ) {
+        next if ! @nodes[ $i ];
+        $line ~= $spaces ~ $spaces x $i;
+        $line ~= @nodes[ $i ].value;
+        $subline ~= $spaces ~ $spaces x $i;
+        $subline ~= "/ \\";
+        @children.push: @nodes[ $i ].left, @nodes[ $i ].right;
+    }
 
-sub print( $left, $right, $height ) {
-    my $message = "%s %s %s".sprintf: "  " x $height,
-        $left ?? $left.value !! " ",
-        $right ?? $right.value !! " ";
-
-    $message ~= print( $left.left, $left.right, $height - 1 ) if $left;
-    $message ~= print( $right.left, $right.right, $height- 1 ) if $right;
-    return $message;
+    say $line;
+    say $subline;
+    print( @children );
 }
+
 
 sub MAIN() {
 
@@ -50,7 +61,7 @@ sub MAIN() {
     $root.right.right = Node.new( :value( 7 ) );
 
     switch( $root );
-    #    put $root.Str;
-    say print $root, Nil, 5;
+
+    print( [ $root ] );
 
 }
