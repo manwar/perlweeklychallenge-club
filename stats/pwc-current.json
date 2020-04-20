@@ -1,19 +1,32 @@
 {
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 057",
          "data" : [
             {
                "drilldown" : "Markus Holzer",
                "name" : "Markus Holzer",
                "y" : 1
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 057"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
@@ -24,40 +37,42 @@
                   1
                ]
             ],
-            "id" : "Markus Holzer",
-            "name" : "Markus Holzer"
+            "name" : "Markus Holzer",
+            "id" : "Markus Holzer"
+         },
+         {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
          }
       ]
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2020-04-20 09:59:16 GMT"
    },
-   "xAxis" : {
-      "type" : "category"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 057"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-04-20 09:55:00 GMT"
-   },
    "legend" : {
       "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
    }
 }
