@@ -1,41 +1,31 @@
 #!/usr/bin/env raku
 
 class node {
-    has UInt $.value;
-    has node $.left   is rw;
-    has node $.right  is rw;
-    has node $.parent is rw;  
+    has UInt  $.value;
+    has Array $.parents  is rw;
+    has node  $.left     is rw;
+    has node  $.right    is rw;
 }
 
 sub traverse($node) {
+    my @parents = [$node.value, |$node.parents];
+
     if $node.left {
-        $node.left.parent = $node;
+        $node.left.parents = @parents;
         traverse($node.left);
     }
 
     if $node.right {
-        $node.right.parent = $node;
+        $node.right.parents = @parents;
         traverse($node.right);
     }
 
     unless $node.left or $node.right {
-        sum_path($node);
+        say @parents.reverse.join(" -> ") ~ " == 22" if @parents.sum == 22;
     }
 }
 
-sub sum_path($node is copy) {
-    my @path;
-
-    loop {
-        @path.push($node.value);
-        last unless $node.parent;
-        $node = $node.parent;
-    }
-        
-    say @path.reverse.join(" -> ") ~ " == 22" if @path.sum == 22;
-}
-
-my $root = node.new(value => 5, parent => Nil);
+my $root = node.new(value => 5, parents => []);
 
 $root.left  = node.new(value => 4);
 $root.right = node.new(value => 8);
