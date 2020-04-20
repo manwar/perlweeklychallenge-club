@@ -1,37 +1,18 @@
 {
-   "series" : [
-      {
-         "data" : [
-            [
-               "Blog",
-               626
-            ],
-            [
-               "Perl",
-               2386
-            ],
-            [
-               "Raku",
-               1495
-            ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "enabled" : "true",
-            "rotation" : -90,
-            "align" : "right"
-         },
-         "name" : "Contributions"
-      }
-   ],
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
    "chart" : {
       "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
       "title" : {
@@ -39,25 +20,44 @@
       },
       "min" : 0
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
+   "series" : [
+      {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "align" : "right",
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "color" : "#FFFFFF"
+         },
+         "data" : [
+            [
+               "Blog",
+               626
+            ],
+            [
+               "Perl",
+               2388
+            ],
+            [
+               "Raku",
+               1495
+            ]
+         ]
+      }
+   ],
    "subtitle" : {
-      "text" : "Last updated at 2020-04-20 09:59:15 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
+      "text" : "Last updated at 2020-04-20 13:26:21 GMT"
    }
 }
