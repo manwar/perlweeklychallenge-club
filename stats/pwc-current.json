@@ -1,8 +1,19 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2020-04-20 15:34:51 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 057"
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari",
             "data" : [
                [
@@ -13,7 +24,8 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari"
          },
          {
             "data" : [
@@ -26,8 +38,18 @@
             "name" : "Markus Holzer"
          },
          {
-            "id" : "Roger Bell West",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "id" : "Pete Houston",
+            "name" : "Pete Houston"
+         },
+         {
             "name" : "Roger Bell West",
+            "id" : "Roger Bell West",
             "data" : [
                [
                   "Perl",
@@ -36,65 +58,66 @@
             ]
          },
          {
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            "id" : "Simon Proctor"
          },
          {
-            "id" : "Yet Ebreo",
-            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo"
          }
       ]
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2020-04-20 15:16:23 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 057"
    },
    "tooltip" : {
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "legend" : {
       "enabled" : 0
    },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 4,
+               "name" : "Luca Ferrari",
                "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari"
+               "y" : 4
+            },
+            {
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer",
+               "y" : 1
             },
             {
                "y" : 1,
-               "name" : "Markus Holzer",
-               "drilldown" : "Markus Holzer"
+               "name" : "Pete Houston",
+               "drilldown" : "Pete Houston"
             },
             {
                "name" : "Roger Bell West",
@@ -102,26 +125,18 @@
                "y" : 2
             },
             {
-               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
                "y" : 2
             },
             {
-               "name" : "Yet Ebreo",
                "drilldown" : "Yet Ebreo",
+               "name" : "Yet Ebreo",
                "y" : 2
             }
          ],
-         "name" : "Perl Weekly Challenge - 057"
+         "name" : "Perl Weekly Challenge - 057",
+         "colorByPoint" : 1
       }
-   ],
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   }
+   ]
 }
