@@ -18,6 +18,8 @@ for $unit-tests.keys -> $SUM {
     is-deeply(find-matched-paths($TREE, $SUM), $OUT, "Tree with sum $SUM");
 }
 
+done-testing;
+
 sub find-matched-paths(Hash[] $TREE, Int $SUM) {
 
     my $paths = [];

@@ -1,19 +1,43 @@
 #!/usr/bin/env raku
-use Tree::DAG_Node:from<Perl5>;
 
-my $lol = [ [ [ [7], [2], 11 ], 4 ], [ [13], [ [1], 9 ], 8 ], 5 ];
-
-my $tree = Tree::DAG_Node.lol_to_tree($lol);
-
-$tree.walk_down({callback => &traverse});
-
-.say for $tree.draw_ascii_tree;
-
-sub traverse($node, $options) {
-    unless ($node.daughters) {
-        my @nodes = ($node.name, |(map { .name }, $node.ancestors)).reverse;
-        "@nodes.join(' + ') == 22".say if @nodes.sum == 22;
-    }
- 
-    return 1; 
+class node {
+    has UInt  $.value;
+    has Array $.parents  is rw;
+    has node  $.left     is rw;
+    has node  $.right    is rw;
 }
+
+sub traverse($node) {
+    my @parents = [$node.value, |$node.parents];
+
+    if $node.left {
+        $node.left.parents = @parents;
+        traverse($node.left);
+    }
+
+    if $node.right {
+        $node.right.parents = @parents;
+        traverse($node.right);
+    }
+
+    unless $node.left or $node.right {
+        say @parents.reverse.join(" -> ") ~ " == 22" if @parents.sum == 22;
+    }
+}
+
+my $root = node.new(value => 5, parents => []);
+
+$root.left  = node.new(value => 4);
+$root.right = node.new(value => 8);
+
+$root.left.left = node.new(value => 11);
+
+$root.left.left.left  = node.new(value => 7);
+$root.left.left.right = node.new(value => 2);
+
+$root.right.left  = node.new(value => 13);
+$root.right.right = node.new(value => 9);
+
+$root.right.right.right = node.new(value => 1);
+
+traverse($root);
