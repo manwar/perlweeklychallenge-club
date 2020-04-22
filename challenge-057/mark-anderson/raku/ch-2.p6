@@ -1,20 +1,21 @@
 #!/usr/bin/env raku
+use Trie;
 
-my @words = <alphabet book carpet cadmium cadeau alpine>;
+my $trie = Trie.new;
+
+$trie.insert: $_ for <alphabet book carpet cadmium cadeau alpine>;
 
 my @prefixes = gather {
-    for @words -> $word {
+    for ^$trie.elems -> $i {
         my $length;
         my $prefix;
-        my @rest = @words;
 
         repeat {
             $length++;
-            $prefix = $word.substr(0, $length); 
-            @rest = @rest.grep(/^$prefix/); 
-        } while @rest > 1;
+            $prefix = $trie[$i].substr(0, $length);
+        } while ($trie.get-all: $prefix).elems > 1;
 
-        take $prefix;
+        take $prefix; 
     }
 }
 
