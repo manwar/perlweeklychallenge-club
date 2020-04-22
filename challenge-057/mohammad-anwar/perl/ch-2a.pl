@@ -15,12 +15,12 @@ my $unit_tests = [
 foreach my $unit_test (@$unit_tests) {
     my $in  = $unit_test->{in};
     my $out = $unit_test->{out};
-    is_deeply(find_unique_prefix($in), $out);
+    is_deeply(shortest_unique_prefix($in), $out);
 }
 
 done_testing;
 
-sub find_unique_prefix {
+sub shortest_unique_prefix {
     my ($words) = @_;
 
     my $p = [];

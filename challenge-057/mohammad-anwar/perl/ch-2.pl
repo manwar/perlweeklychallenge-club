@@ -4,11 +4,11 @@ use strict;
 use warnings;
 
 my $words  = [ "alphabet", "book", "carpet", "cadmium", "cadeau", "alpine" ];
-my $unique = find_unique_prefix($words);
+my $unique = shortest_unique_prefix($words);
 
 print sprintf("[ %s ]\n", join(", ", @$unique));
 
-sub find_unique_prefix {
+sub shortest_unique_prefix {
     my ($words) = @_;
 
     my $p = [];
