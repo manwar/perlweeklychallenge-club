@@ -21,9 +21,13 @@ sub shortest-unique-prefix($words where .all ~~ Str) {
         my $l = $word.chars;
         while $i < $l {
             my $char  = $word.substr(0, $i);
-            my $count = $words.grep({ m/^$char/ }).elems;
+            # before :
+            # my $count = $words.grep({ m/^$char/ }).elems;
+            # after  : suggested by @HrBollermann
+            my $count = $words.grep( *.starts-with( $char ) ).elems;
 
-            $count > 1 && $i++ and next;
+            $i++;
+            next if $count > 1;
             $p.push: $char and last;
         }
     }
