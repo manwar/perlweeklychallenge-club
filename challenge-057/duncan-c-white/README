@@ -1,57 +1,58 @@
-Task 1: "Diff-K
+Task 1: "Invert Tree
 
-You are given an array @N of positive integers (sorted) and another non
-negative integer k.
+You are given a full binary tree of any height, similar to the one below:
 
-Write a script to find if there exists 2 indices i and j such that A[i]
-- A[j] = k and i != j.
+       1
+     /   \
+     2    3
+    / \  / \
+    4  5 6  7
 
-It should print the pairs of indices, if any such pairs exist.
+Write a script to invert the tree, by mirroring the children of every node, from left to right. The expected output from the tree above would be:
 
-Example:
+       1
+     /   \
+     3    2
+    / \  / \
+    7  6 5  4
 
-    @N = (2, 7, 9)
-    $k = 2
+The input can be any sensible machine-readable binary tree format of your choosing, and the output should be the same format.
 
-Output : 2,1"
+BONUS
 
-My notes: sounds entirely straightforward.
+In addition to the above, you may wish to pretty-print your binary tree in a human readable text-based format similar to the above."
 
 
-Task 2: "Path Sum
+My notes: Let's reuse the same binary tree representation and input format as last time.  That's the bulk of the problem.
 
-You are given a binary tree and a sum, write a script to find if the tree
-has a path such that adding up all the values along the path equals the
-given sum. Only complete paths (from root to leaf node) may be considered
-for a sum.
+The "flip-left-right" algorithm looks very simple.  Not sure why "full"
+is stressed, AFAIK any obvious algorithm for this would deal with any
+binary tree.  In Haskell, it's as simple as:
 
-Example
+fliplr e = e
+fliplr leaf(n) = leaf(n)
+fliplr node(n,l,r) = node(n, fliplr(r), fliplr(l))
 
-Given the below binary tree and sum = 22,
+The bonus is MUCH the most difficult part, as best layout may be slightly
+subjective, and it wasn't immediately clear exactly what spacing is needed
+at each level.  An obvious alternative would be to use GraphViz to
+draw the directed graph (our tree), I did that first and it worked fine,
+but in this version I attempt the fullblown ASCII art layout..  new:
+decided to generalise it to deal properly with non-full binary trees too,
+ie. missing elements.
 
-          5
-         / \
-        4   8
-       /   / \
-      11  13  9
-     /  \      \
-    7    2      1
 
-For the given binary tree, the partial path sum 5 - 8 - 9 = 22 is not valid.
+Task 2: "Shortest Unique Prefix
 
-The script should return the path 5 - 4 - 11 - 2 whose sum is 22.
+Write a script to find the shortest unique prefix for each each word in the given list. The prefixes will not necessarily be of the same length.
+
+Sample Input
+
+ [ "alphabet", "book", "carpet", "cadmium", "cadeau", "alpine" ]
+
+Expected Output
+
+ [ "alph", "b", "car", "cadm", "cade", "alpi" ]
 "
 
-My notes: Obvious question: how to represent binary tree.  Let's go with..
-a traditional Perl OO self-printing package inline in the main program.
-
-Second question: we'll need to parse a binary tree from the command line,
-so what text format do we want to represent a parsable binary tree on the command line?
-After some thought, decided on (5,(4,(11,l7,l2),n),(8,l13,(9,n,1))) where
-(N,L,R) represents a node with value N, left tree L and right tree R;
-lN represents a leaf with value N
-n represents nil
-
-There's a lot more code for this task 2 than for many, I don't know if
-there's some simpler way of doing it that I'm missing?  Perhaps there's
-a more concrete way of representing a binary tree that supports path summing?
+My notes: sounds entirely straightforward.
