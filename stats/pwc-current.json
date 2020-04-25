@@ -1,14 +1,113 @@
 {
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
+               "y" : 3
+            },
+            {
+               "name" : "E. Choroba",
+               "y" : 2,
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "drilldown" : "Javier Luque",
+               "name" : "Javier Luque",
+               "y" : 5
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "y" : 4,
+               "name" : "Luca Ferrari"
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 1,
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "y" : 1,
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer"
+            },
+            {
+               "drilldown" : "Mohammad S Anwar",
+               "y" : 4,
+               "name" : "Mohammad S Anwar"
+            },
+            {
+               "name" : "Pete Houston",
+               "y" : 1,
+               "drilldown" : "Pete Houston"
+            },
+            {
+               "drilldown" : "Roger Bell West",
+               "y" : 2,
+               "name" : "Roger Bell West"
+            },
+            {
+               "drilldown" : "Shahed Nooshmand",
+               "name" : "Shahed Nooshmand",
+               "y" : 3
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Wanderdoc",
+               "y" : 2,
+               "name" : "Wanderdoc"
+            },
+            {
+               "name" : "Yet Ebreo",
+               "y" : 2,
+               "drilldown" : "Yet Ebreo"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 057"
+      }
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 14] Last updated at 2020-04-25 13:23:14 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Dave Jacoby",
             "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -59,32 +158,30 @@
                   2
                ]
             ],
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari"
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
          },
          {
+            "name" : "Mark Anderson",
             "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ],
-            "name" : "Mark Anderson"
+            ]
          },
          {
-            "id" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
+            "id" : "Markus Holzer",
             "name" : "Markus Holzer"
          },
          {
-            "name" : "Mohammad S Anwar",
-            "id" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -94,37 +191,53 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar"
          },
          {
-            "name" : "Pete Houston",
-            "id" : "Pete Houston",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "id" : "Pete Houston",
+            "name" : "Pete Houston"
          },
          {
-            "id" : "Roger Bell West",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Roger Bell West",
             "name" : "Roger Bell West"
          },
          {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Shahed Nooshmand",
+            "name" : "Shahed Nooshmand"
+         },
+         {
             "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor"
+            ]
          },
          {
             "data" : [
@@ -151,117 +264,23 @@
             "name" : "Wanderdoc"
          },
          {
+            "name" : "Yet Ebreo",
             "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Yet Ebreo"
+            ]
          }
       ]
    },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge - 057"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 13] Last updated at 2020-04-25 10:56:37 GMT"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Dave Jacoby",
-               "y" : 3,
-               "drilldown" : "Dave Jacoby"
-            },
-            {
-               "name" : "E. Choroba",
-               "y" : 2,
-               "drilldown" : "E. Choroba"
-            },
-            {
-               "name" : "Javier Luque",
-               "y" : 5,
-               "drilldown" : "Javier Luque"
-            },
-            {
-               "drilldown" : "Luca Ferrari",
-               "y" : 4,
-               "name" : "Luca Ferrari"
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson",
-               "y" : 1
-            },
-            {
-               "y" : 1,
-               "name" : "Markus Holzer",
-               "drilldown" : "Markus Holzer"
-            },
-            {
-               "name" : "Mohammad S Anwar",
-               "y" : 4,
-               "drilldown" : "Mohammad S Anwar"
-            },
-            {
-               "drilldown" : "Pete Houston",
-               "name" : "Pete Houston",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Roger Bell West",
-               "name" : "Roger Bell West",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "name" : "Ulrich Rieke",
-               "drilldown" : "Ulrich Rieke"
-            },
-            {
-               "drilldown" : "Wanderdoc",
-               "y" : 2,
-               "name" : "Wanderdoc"
-            },
-            {
-               "drilldown" : "Yet Ebreo",
-               "y" : 2,
-               "name" : "Yet Ebreo"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 057",
-         "colorByPoint" : 1
-      }
-   ]
+   }
 }
