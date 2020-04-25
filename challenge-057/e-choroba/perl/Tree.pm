@@ -14,7 +14,7 @@ sub from_structure {
         my ($parent, $left, $right) = ($1, $2, $3);
         $tree{$parent} = [$left, $right];
     }
-    my ($root) = $structure =~ /[0-9]+/g;
+    my ($root) = $structure;
     return $root, \%tree
 }
 
@@ -49,7 +49,7 @@ sub to_structure {
     my @children = @{ $tree->{$node} };
     my $output = $node . '('
                . join(',', map to_structure($_, $tree, 1), @children) . ')';
-    return $inner ? $output : "($output)"
+    return $output
 }
 
 sub to_edges {

@@ -4,11 +4,15 @@ use strict;
 use feature qw{ say };
 
 sub invert {
+    my ($tree) = @_;
+    $_ = [reverse @$_] for values %$tree;
+}
+
+sub serialise {
     my ($node, $tree) = @_;
     return $node unless exists $tree->{$node};
-
-    my @ch = reverse @{ $tree->{$node} };
-    return $node . '(' . join(',', map invert($_, $tree), @ch) . ')'
+    return "$node("
+           . join(',', map serialise($_, $tree), @{ $tree->{$node} }) . ')'
 }
 
 chomp( my $structure = <DATA> );
@@ -19,8 +23,10 @@ while ($structure =~ s/([0-9]+) \( ([0-9]+) , ([0-9]+) \) /$1/x) {
     $tree{$parent} = [$left, $right];
 }
 
-my ($root) = $structure =~ /[0-9]+/;
-say '(', invert($root, \%tree), ')';
+invert(\%tree);
+
+my ($root) = $structure;
+say serialise($root, \%tree);
 
 __DATA__
-(1(2(4,5),3(6,7)))
+1(2(4,5),3(6,7))

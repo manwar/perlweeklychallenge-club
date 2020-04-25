@@ -4,9 +4,7 @@ use strict;
 
 use ARGV::OrDATA;
 
-my %invert = qw( L R R L );
-
-print s/ ([LR]) / $invert{$1} /r while <DATA>;
+print tr/LR/RL/r while <DATA>;
 
 __DATA__
 4 L 2
