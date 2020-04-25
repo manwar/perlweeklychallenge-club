@@ -43,12 +43,12 @@ sub invert {
 }
 
 sub to_structure {
-    my ($node, $tree, $inner) = @_;
+    my ($node, $tree) = @_;
     return $node unless exists $tree->{$node};
 
     my @children = @{ $tree->{$node} };
     my $output = $node . '('
-               . join(',', map to_structure($_, $tree, 1), @children) . ')';
+               . join(',', map to_structure($_, $tree), @children) . ')';
     return $output
 }
 
