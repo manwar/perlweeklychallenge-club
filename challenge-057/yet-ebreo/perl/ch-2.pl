@@ -11,11 +11,15 @@ sub uniq_prefix {
         splice @copy, $_, 1;
 
         my $prefix;
+        my $flag = 0;
         for my $size (1..length $word) {
             $prefix = substr $word, 0, $size;
-            last unless grep { /^$prefix/ } @copy 
+            unless (grep { /^$prefix/ } @copy ) {
+                $flag = 1;
+                last;
+            }
         }
-        $prefix;
+        $flag?$prefix:'na';
     } 0..$#{$words};
 }
 
