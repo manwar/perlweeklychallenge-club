@@ -1,4 +1,5 @@
 #!/usr/bin/env raku
+
 use Trie;
 
 my $trie = Trie.new;
