@@ -5,7 +5,6 @@ use Data::Dumper;
 my @ro_tree1;
 
 sub array_transform_rowform {
-
     my ($h, $val, @kids) = @_;
     if (! defined(@ro_tree1[$h])) {    
         @{$ro_tree1[$h]} = ();
@@ -20,7 +19,6 @@ sub array_transform_rowform {
         my ($temp, @smallkids) = @{kids[1]};
         array_transform_rowform($h+1, shift @{$kids[1]}, @{$kids[1]});
     }
-
 }
 
 sub rowform_transform_array {
@@ -34,9 +32,8 @@ sub rowform_transform_array {
             $newdata[$j] = CombineTwo($data[$j*2], $data[$j*2+1]);
             unshift @{$newdata[$j]}, $rowform[$i][$j];
         }
-        for my $j (0..2**$i-1) {$data[$j] = $newdata[$j];}
+        for my $j (0..2**($i-1)) {$data[$j] = $newdata[$j];}
     }
-
     return [$rowform[0][0], $data[0], $data[1]] ;
 }
 
@@ -54,7 +51,6 @@ sub swaprowformtree {
             = ($btree[$i][2**($i)-1-$j], $btree[$i][$j]);
         }
     }
-
     return @btree;
 }
 
@@ -86,7 +82,5 @@ sub display_rowform {       # haven't used in program; use for checking
         print join "," , @{$bb[$i]};
         print "],\n"
     }
-
     print ")";
 }
-
