@@ -1,0 +1,5 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($tree = "1 | 2 3 | 4 5 6 7");
+
+say $tree.split(" | ")>>.words>>.reverse>>.join(" ").join(" | ");

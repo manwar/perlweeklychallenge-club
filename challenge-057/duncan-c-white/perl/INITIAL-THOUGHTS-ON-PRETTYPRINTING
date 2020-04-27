@@ -1,0 +1,57 @@
+Want to work out how to layout a "Pretty print of a binary tree",
+in roughly the naive-ASCII art representation of a binary tree, ie:
+
+1
+
+  1
+ / \
+2   3
+
+     1
+   /   \
+  2     3
+ / \   / \
+4   5 6   7
+
+           1
+        /     \
+     2           3
+   /   \       /   \
+  4     5     6     7
+ / \   / \   / \   / \
+8   9 10 11 12 13 14 15
+
+or perhaps the following slightly clearer format that
+adjusts the spacing based on how many digits there are
+in each numeric label..
+
+      1
+......|......
+   /    \
+...|....|...
+  2      3
+..|......|..
+ / \    / \
+.|.|....|.|.
+4   5  6   7
+|...|..|...|
+
+                1
+................|.................
+            /        \
+............|........|............
+        2                 3
+........|.................|.......
+     /    \            /    \
+.....|....|............|....|.....
+   4        5        6        7
+...|........|........|........|...
+ /   \    /   \    /   \    /   \
+.|...|....|...|....|...|....|...|.
+8    9   10   11  12   13  14   15
+||...||..||...||..||...||..||...||
+
+damn, this is difficult, due to the "pixelated"
+nature of characters, because really we want to
+draw the "|" in the MIDDLE of the two char positions,
+and centre the "8" in the two char width field.
