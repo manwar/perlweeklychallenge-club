@@ -1,44 +1,6 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-04-27 20:46:08 GMT"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Wanderdoc",
-            "name" : "Wanderdoc",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Yet Ebreo",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "name" : "Yet Ebreo"
-         }
-      ]
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 058"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "chart" : {
       "type" : "column"
@@ -48,31 +10,88 @@
          "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Wanderdoc",
+               "y" : 4,
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
+            },
+            {
                "drilldown" : "Wanderdoc",
+               "name" : "Wanderdoc",
                "y" : 2
             },
             {
-               "drilldown" : "Yet Ebreo",
                "name" : "Yet Ebreo",
+               "drilldown" : "Yet Ebreo",
                "y" : 2
             }
          ],
          "name" : "Perl Weekly Challenge - 058"
       }
    ],
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2020-04-27 20:50:44 GMT"
+   },
    "tooltip" : {
-      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "followPointer" : 1
    },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ]
          },
-         "borderWidth" : 0
+         {
+            "id" : "Wanderdoc",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Wanderdoc"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo"
+         }
+      ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    }
 }
