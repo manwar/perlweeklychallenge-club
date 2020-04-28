@@ -1,47 +1,27 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2020-04-28 10:50:20 GMT"
    },
    "chart" : {
       "type" : "column"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 058"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-04-27 20:59:32 GMT"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 058",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 5,
+               "name" : "Cheok-Yin Fung",
+               "drilldown" : "Cheok-Yin Fung",
+               "y" : 1
+            },
+            {
                "drilldown" : "Javier Luque",
-               "name" : "Javier Luque"
+               "name" : "Javier Luque",
+               "y" : 5
             },
             {
                "y" : 4,
@@ -49,21 +29,46 @@
                "drilldown" : "Luca Ferrari"
             },
             {
-               "name" : "Wanderdoc",
+               "y" : 2,
                "drilldown" : "Wanderdoc",
-               "y" : 2
+               "name" : "Wanderdoc"
             },
             {
-               "drilldown" : "Yet Ebreo",
                "name" : "Yet Ebreo",
+               "drilldown" : "Yet Ebreo",
                "y" : 2
             }
          ]
       }
    ],
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Cheok-Yin Fung",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "id" : "Cheok-Yin Fung"
+         },
+         {
+            "id" : "Javier Luque",
             "name" : "Javier Luque",
             "data" : [
                [
@@ -78,11 +83,9 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Javier Luque"
+            ]
          },
          {
-            "name" : "Luca Ferrari",
             "id" : "Luca Ferrari",
             "data" : [
                [
@@ -93,28 +96,40 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Luca Ferrari"
          },
          {
-            "name" : "Wanderdoc",
-            "id" : "Wanderdoc",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Yet Ebreo"
+            "name" : "Wanderdoc",
+            "id" : "Wanderdoc"
+         },
+         {
+            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          }
       ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 058"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
