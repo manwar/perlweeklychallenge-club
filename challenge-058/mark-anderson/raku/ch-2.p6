@@ -15,7 +15,7 @@ my @A = (@H Z @T).sort;
 my @Ans;
 
 while @A.pop -> ($h, $t) {
-    @Ans = |@Ans[0 .. $t-1], ($h, $t), |@Ans[$t .. *-1]; 
+    @Ans.splice($t, 0, [$($h, $t)]);
 }
 
 say @Ans.map(*[0]).rotor(16).join("\n");
