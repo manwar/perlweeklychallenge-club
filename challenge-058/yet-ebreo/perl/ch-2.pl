@@ -11,7 +11,7 @@ my @taller  = qw(1 0 2 0 1 2);
 @taller  = eval "qw($ARGV[1])" if $ARGV[1];
 
 @hash{@heights} = @taller;
-my @sorted = sort {$b-$a} keys %hash;
+my @sorted = sort {$b-$a} @heights;
 
 for my $i (0..$#sorted) {
     splice @sorted, $hash{$sorted[$i]}, 0, splice @sorted, $i, 1;
