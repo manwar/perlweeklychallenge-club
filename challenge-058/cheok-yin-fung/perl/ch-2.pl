@@ -23,7 +23,6 @@ my @H = (27, 21, 37,  4, 19, 52, 23, 64,  1,  7, 51, 17, 24, 50,  3,  2,
 # end: from the question statement
 
 my $N = $#H+1;
-my @inversion_seq;
 
 my %height_appeartime;
 for (1..$N) { $height_appeartime{$_} = $H[$_-1]; }
@@ -43,7 +42,11 @@ for my $i (0..$N-1) {
     for (0..$N-1) {
         push @possible_place, $_ if $placement[$_] == -1;
     }
-    $placement[ $possible_place[ $inversion_seq[$i] ] ] = $i;
+    if ( defined($possible_place[$inversion_seq[$i]]) ) {
+        $pos = $possible_place[ $inversion_seq[$i] ]; 
+    } else {die "ERROR";}
+
+    $placement[ $pos ] = $i;
 }
 
 @placement = map { $_+1 } @placement;
