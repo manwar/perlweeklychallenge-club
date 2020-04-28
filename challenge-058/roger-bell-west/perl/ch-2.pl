@@ -19,7 +19,7 @@ foreach my $p (@i) {
   }
 }
 
-print join(', ',@n),"\n";
+print join(', ',map {$H[$_-1]} @n),"\n";
 
 foreach my $ti (0..$#n) {
   my $tx=$n[$ti]-1;
