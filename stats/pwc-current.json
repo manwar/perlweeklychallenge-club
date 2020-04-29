@@ -1,28 +1,38 @@
 {
-   "xAxis" : {
-      "type" : "category"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 1,
                "drilldown" : "Cheok-Yin Fung",
-               "name" : "Cheok-Yin Fung"
+               "name" : "Cheok-Yin Fung",
+               "y" : 1
             },
             {
-               "y" : 5,
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba",
+               "y" : 2
+            },
+            {
                "drilldown" : "Javier Luque",
-               "name" : "Javier Luque"
+               "name" : "Javier Luque",
+               "y" : 5
             },
             {
-               "drilldown" : "Luca Ferrari",
                "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
                "y" : 4
             },
             {
@@ -37,30 +47,33 @@
             },
             {
                "y" : 2,
-               "name" : "Wanderdoc",
-               "drilldown" : "Wanderdoc"
+               "drilldown" : "Wanderdoc",
+               "name" : "Wanderdoc"
             },
             {
-               "y" : 2,
                "drilldown" : "Yet Ebreo",
-               "name" : "Yet Ebreo"
+               "name" : "Yet Ebreo",
+               "y" : 2
             }
          ],
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 058"
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
    "legend" : {
       "enabled" : 0
    },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2020-04-28 19:41:22 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 058"
-   },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
@@ -71,12 +84,20 @@
                   1
                ]
             ],
-            "id" : "Cheok-Yin Fung",
-            "name" : "Cheok-Yin Fung"
+            "name" : "Cheok-Yin Fung",
+            "id" : "Cheok-Yin Fung"
          },
          {
-            "name" : "Javier Luque",
-            "id" : "Javier Luque",
+            "id" : "E. Choroba",
+            "name" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -90,9 +111,12 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Javier Luque",
+            "id" : "Javier Luque"
          },
          {
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -103,12 +127,11 @@
                   2
                ]
             ],
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari"
+            "name" : "Luca Ferrari"
          },
          {
-            "name" : "Mark Anderson",
             "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
@@ -117,49 +140,41 @@
             ]
          },
          {
-            "id" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
             "name" : "Roger Bell_West",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
+            "id" : "Roger Bell_West"
          },
          {
+            "id" : "Wanderdoc",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Wanderdoc",
-            "id" : "Wanderdoc"
+            "name" : "Wanderdoc"
          },
          {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
             "name" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
             "id" : "Yet Ebreo"
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge - 058"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2020-04-29 00:20:31 GMT"
    }
 }
