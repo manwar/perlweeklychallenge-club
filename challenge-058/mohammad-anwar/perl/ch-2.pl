@@ -5,13 +5,13 @@ use warnings;
 
 my $H = [2, 6, 4, 5, 1, 3];
 my $T = [1, 0, 2, 0, 1, 2];
-my $O = order_list({ H => $H, T => $T });
+my $O = order_lineup({ H => $H, T => $T });
 
 print sprintf("\@H = (%s)\n", join(", ", @$H));
 print sprintf("\@T = (%s)\n", join(", ", @$T));
 print sprintf("\@O = (%s)\n", join(", ", @$O));
 
-sub order_list {
+sub order_lineup {
     my ($args) = @_;
 
     my @H = @{$args->{H}};

@@ -15,12 +15,12 @@ my $unit_tests = [
 ];
 
 foreach my $unit_test (@$unit_tests) {
-    is_deeply(order_list($unit_test->{in}), $unit_test->{out});
+    is_deeply(order_lineup($unit_test->{in}), $unit_test->{out});
 }
 
 done_testing;
 
-sub order_list {
+sub order_lineup {
     my ($args) = @_;
 
     my @H = @{$args->{H}};
