@@ -9,12 +9,16 @@ is (cmp_version('0.1', '1.1'),    -1, '0.1 < 1.1');
 is (cmp_version('2.0', '1.2'),     1, '2.0 > 1.2');
 is (cmp_version('1.2', '1.2_5'),  -1, '1.2 < 1.2_5');
 is (cmp_version('1.2.2', '1.2_1'), 1, '1.2.2 > 1.2_1');
-is (cmp_version('1.2.1', '1.2.1'), 0, '1.2.1 = 1.2.1');
+is (cmp_version('1.2_1', '1.2_1'), 0, '1.2_1 = 1.2_1');
+is (cmp_version('1.2.2', '1.2_1'), 1, '1.2.2 > 1.2_1');
 
 done_testing;
 
 sub cmp_version {
     my ($v1, $v2) = @_;
+
+    # Short circuit, good idea?
+    return 0 if ($v1 eq $v2);
 
     my @v1 = split /\./, $v1;
     my @v2 = split /\./, $v2;

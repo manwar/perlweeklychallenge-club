@@ -10,6 +10,9 @@ print sprintf("%s cmp %s = %d\n", $v1, $v2, cmp_version($v1, $v2));
 sub cmp_version {
     my ($v1, $v2) = @_;
 
+    # Short circuit, good idea?
+    return 0 if ($v1 eq $v2);
+
     my @v1 = split /\./, $v1;
     my @v2 = split /\./, $v2;
 
