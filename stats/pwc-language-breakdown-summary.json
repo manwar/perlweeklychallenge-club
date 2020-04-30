@@ -1,4 +1,13 @@
 {
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
@@ -8,29 +17,18 @@
    "legend" : {
       "enabled" : "false"
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
+   "subtitle" : {
+      "text" : "Last updated at 2020-04-30 04:25:54 GMT"
    },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-04-29 18:14:52 GMT"
+      },
+      "min" : 0
    },
    "series" : [
       {
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -38,26 +36,28 @@
             ],
             [
                "Perl",
-               2440
+               2441
             ],
             [
                "Raku",
                1525
             ]
          ],
-         "name" : "Contributions",
          "dataLabels" : {
+            "enabled" : "true",
             "style" : {
                "fontSize" : "13px",
                "fontFamily" : "Verdana, sans-serif"
             },
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "align" : "right",
-            "rotation" : -90,
             "y" : 10,
-            "format" : "{point.y:.0f}"
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "align" : "right"
          }
       }
-   ]
+   ],
+   "chart" : {
+      "type" : "column"
+   }
 }
