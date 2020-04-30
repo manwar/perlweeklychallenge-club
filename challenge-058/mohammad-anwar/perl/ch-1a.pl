@@ -5,12 +5,12 @@ use warnings;
 
 use Test::More;
 
-is (cmp_version('0.1', '1.1'),    -1, '0.1 < 1.1');
-is (cmp_version('2.0', '1.2'),     1, '2.0 > 1.2');
-is (cmp_version('1.2', '1.2_5'),  -1, '1.2 < 1.2_5');
-is (cmp_version('1.2.2', '1.2_1'), 1, '1.2.2 > 1.2_1');
-is (cmp_version('1.2_1', '1.2_1'), 0, '1.2_1 = 1.2_1');
-is (cmp_version('1.2.2', '1.2_1'), 1, '1.2.2 > 1.2_1');
+is (cmp_version('0.1', '1.1'),    -1, '0.1   cmp 1.1');
+is (cmp_version('2.0', '1.2'),     1, '2.0   cmp 1.2');
+is (cmp_version('1.2', '1.2_5'),  -1, '1.2   cmp 1.2_5');
+is (cmp_version('1.2.2', '1.2_1'), 1, '1.2.2 cmp 1.2_1');
+is (cmp_version('1.2_1', '1.2_1'), 0, '1.2_1 cmp 1.2_1');
+is (cmp_version('1.2.1', '1.2.1'), 0, '1.2.1 cmp 1.2.1');
 
 done_testing;
 
