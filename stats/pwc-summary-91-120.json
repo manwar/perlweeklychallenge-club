@@ -1,11 +1,10 @@
 {
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-04-30 06:45:46 GMT"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
    "series" : [
@@ -57,7 +56,7 @@
             0,
             0,
             0,
-            20,
+            21,
             0,
             0,
             8,
@@ -80,6 +79,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -111,10 +111,19 @@
             2,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "xAxis" : {
       "categories" : [
          "Markus Holzer",
@@ -149,19 +158,10 @@
          "Prajith P"
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-04-30 05:55:47 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    }
 }
