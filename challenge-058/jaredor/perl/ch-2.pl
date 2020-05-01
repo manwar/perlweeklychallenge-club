@@ -6,7 +6,7 @@ use Getopt::Long;
 use List::Util qw(all any);
 use List::MoreUtils qw(uniq indexes last_index);
 
-# TASK #2 › Ordered Lineup
+# PWC 058, TASK #2 : Ordered Lineup
 #
 # Write a script to arrange people in a lineup according to how many taller
 # people are in front of each person in line. You are given two arrays. @H is a
