@@ -7,7 +7,7 @@ use List::Util qw(all any);
 use List::MoreUtils qw(uniq indexes last_index);
 
 # PWC 058, TASK #2 : Ordered Lineup
-#
+
 # Write a script to arrange people in a lineup according to how many taller
 # people are in front of each person in line. You are given two arrays. @H is a
 # list of unique heights, in any order. @T is a list of how many taller people
