@@ -27,7 +27,6 @@
 
 use strict;
 use warnings;
-use Perl::Version;
 
 sub compare_versions {
     my ($ver1, $ver2) = @_;
@@ -47,6 +46,6 @@ is(compare_versions('2.0','1.2'),1);
 is(compare_versions('1.2','1.2_5'),-1);
 
 # There is likely bug in the module, I have reported it
-# https://rt.cpan.org/Ticket/Display.html?id=132481&
+# https://rt.cpan.org/Ticket/Display.html?id=132482
 is(compare_versions('1.2.1','1.2_1'),1);
 is(compare_versions('1.2.1','1.2.1'),0);
