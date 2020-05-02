@@ -2,7 +2,6 @@
 
 use v5.012;    # Using keys on arrays
 use warnings;
-use Data::Dump qw(pp);
 use List::Util qw(max min uniq);
 
 # PWC 058, Task #1 : Compare Version
