@@ -173,12 +173,12 @@ my @T;
         34,    2,  153,  261,  257,   74,  431,  401,  755,  101,   94,  593, 
        782,  366,  192,   11);
 
-my @A = (@H Z @T).sort;
+my @Z = (@H Z @T).sort;
 
 my @Ans;
 
-while @A.pop -> ($h, $t) {
-    @Ans.splice($t, 0, [$($h, $t)]);
+while @Z.pop -> ($h, $t) {
+    @Ans.splice($t, 0, $h);
 }
 
-say @Ans.map(*[0]).rotor(10)>>.fmt("%-4d").join("\n");
+say @Ans.rotor(10)>>.fmt("%-4d").join("\n");
