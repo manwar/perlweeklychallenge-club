@@ -40,19 +40,19 @@ multi sub MAIN (*@args where (.elems == 2 and .all ~~ /^ [\d+]+ % <[._]> $/)) {
 }
 
 sub compare(Str $str1, Str $str2) {
-    my @str1 = $str1.comb(/\d+|\.|_/);
-    my @str2 = $str2.comb(/\d+|\.|_/);
+    my @elems1 = $str1.comb(/\d+|\.|_/);
+    my @elems2 = $str2.comb(/\d+|\.|_/);
 
     my $result;
 
-    for @str1 Z @str2 -> ($e1, $e2) {
-        $result = compare_elems($e1, $e2);
+    while @elems1 and @elems2 {
+        $result = compare_elems(@elems1.shift, @elems2.shift);
         last unless $result == 0;
     }
 
     if $result == 0 {
-        if @str1 > @str2 { $result =  1 }
-        if @str1 < @str2 { $result = -1 }
+        if @elems1 > @elems2 { $result =  1 }
+        if @elems1 < @elems2 { $result = -1 }
     }
 
     $result;
