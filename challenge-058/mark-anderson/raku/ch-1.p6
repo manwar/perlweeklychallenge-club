@@ -14,7 +14,7 @@ multi sub MAIN {
            1.2.1 > 1.2_1   1
            1.2.1 = 1.2.1   0
 
-           #more tests 
+           #my tests 
            1.2.1   < 1.11.1    -1
            1.2_2   < 1.2_11    -1
            001.2_3 = 1.2_03     0
@@ -43,11 +43,9 @@ sub compare(Str $str1, Str $str2) {
     my @str1 = $str1.comb(/\d+|\.|_/);
     my @str2 = $str2.comb(/\d+|\.|_/);
 
-    my @elems = @str1 Z @str2;
-
     my $result;
 
-    for @elems -> ($e1, $e2) {
+    for @str1 Z @str2 -> ($e1, $e2) {
         $result = compare_elems($e1, $e2);
         last unless $result == 0;
     }
@@ -63,27 +61,23 @@ sub compare(Str $str1, Str $str2) {
 sub compare_elems(Str $e1, Str $e2) {
     given $e1 {
         when /\d+/ {
-            given $e2 {
-                when /\d+/ { +($e1.subst(/^0+(\d+)$/, { $0 })
-                               <=> 
-                               $e2.subst(/^0+(\d+)$/, { $0 })) }
-                when "."   { 1 }
-                when "_"   { 1 }
-            }
+            +($e1.subst(/^0+(\d+)$/, { $0 }) 
+              <=> 
+              $e2.subst(/^0+(\d+)$/, { $0 })); 
         }
+
         when "."  {
             given $e2 {
-                when /\d+/ { -1 }
-                when "."   {  0 }
-                when "_"   {  1 }
+                when "." {  0 }
+                when "_" {  1 }
             }
         }
+
         when "_"  { 
             given $e2 {
-                when /\d+/ { -1 }
-                when "."   { -1 }
-                when "_"   {  0 }
+                when "." { -1 }
+                when "_" {  0 }
             }
         }
     }
-} 
+}
