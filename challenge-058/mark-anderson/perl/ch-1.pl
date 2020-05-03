@@ -2,7 +2,7 @@
 
 use Modern::Perl;
 use Test::More;
-use feature qw(switch signatures);
+use feature qw(signatures);
 no warnings qw(experimental);
 
 # Leading zeroes are ignored.
