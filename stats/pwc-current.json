@@ -1,15 +1,35 @@
 {
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 059"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Javier Luque",
+            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -23,13 +43,21 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Javier Luque",
-            "id" : "Javier Luque"
+            ]
          },
          {
-            "id" : "Simon Proctor",
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ]
+         },
+         {
             "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
@@ -39,63 +67,50 @@
          },
          {
             "id" : "Wanderdoc",
-            "name" : "Wanderdoc",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Wanderdoc"
          }
       ]
    },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Javier Luque",
+               "name" : "Javier Luque",
                "y" : 5,
-               "name" : "Javier Luque"
+               "drilldown" : "Javier Luque"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
             },
             {
                "name" : "Simon Proctor",
-               "y" : 2,
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Simon Proctor",
+               "y" : 2
             },
             {
-               "name" : "Wanderdoc",
                "y" : 2,
-               "drilldown" : "Wanderdoc"
+               "drilldown" : "Wanderdoc",
+               "name" : "Wanderdoc"
             }
          ],
+         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 059"
       }
    ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2020-05-04 11:43:07 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
+      "text" : "[Champions: 4] Last updated at 2020-05-04 11:46:41 GMT"
    }
 }
