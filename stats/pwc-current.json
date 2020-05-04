@@ -1,12 +1,13 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-05-04 08:18:42 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "plotOptions" : {
       "series" : {
@@ -17,16 +18,20 @@
          "borderWidth" : 0
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 059"
-   },
    "xAxis" : {
       "type" : "category"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 059"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2020-05-04 08:41:52 GMT"
    },
    "drilldown" : {
       "series" : [
@@ -47,25 +52,35 @@
                ]
             ],
             "id" : "Javier Luque"
+         },
+         {
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "name" : "Simon Proctor"
          }
       ]
    },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 059",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Javier Luque",
                "name" : "Javier Luque",
+               "drilldown" : "Javier Luque",
                "y" : 5
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 1
             }
-         ],
-         "name" : "Perl Weekly Challenge - 059",
-         "colorByPoint" : 1
+         ]
       }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   }
+   ]
 }
