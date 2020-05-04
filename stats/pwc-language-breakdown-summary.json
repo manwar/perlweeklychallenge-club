@@ -1,37 +1,18 @@
 {
-   "series" : [
-      {
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "align" : "right",
-            "rotation" : -90,
-            "color" : "#FFFFFF"
-         },
-         "data" : [
-            [
-               "Blog",
-               653
-            ],
-            [
-               "Perl",
-               2460
-            ],
-            [
-               "Raku",
-               1544
-            ]
-         ],
-         "name" : "Contributions"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
       }
-   ],
+   },
    "subtitle" : {
-      "text" : "Last updated at 2020-05-04 11:41:17 GMT"
+      "text" : "Last updated at 2020-05-04 11:43:07 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "title" : {
@@ -39,25 +20,44 @@
       },
       "min" : 0
    },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "series" : [
+      {
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               653
+            ],
+            [
+               "Perl",
+               2462
+            ],
+            [
+               "Raku",
+               1544
+            ]
+         ],
+         "dataLabels" : {
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "align" : "right"
+         }
+      }
+   ],
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : "false"
    }
 }
