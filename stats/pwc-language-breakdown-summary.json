@@ -1,18 +1,55 @@
 {
-   "legend" : {
-      "enabled" : "false"
-   },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
+      },
+      "type" : "category"
+   },
+   "series" : [
+      {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "y" : 10,
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "color" : "#FFFFFF",
+            "enabled" : "true"
+         },
+         "data" : [
+            [
+               "Blog",
+               653
+            ],
+            [
+               "Perl",
+               2462
+            ],
+            [
+               "Raku",
+               1545
+            ]
+         ]
       }
+   ],
+   "subtitle" : {
+      "text" : "Last updated at 2020-05-04 11:46:41 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "chart" : {
       "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
@@ -22,42 +59,5 @@
       "title" : {
          "text" : null
       }
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "series" : [
-      {
-         "dataLabels" : {
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "rotation" : -90,
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "align" : "right"
-         },
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               653
-            ],
-            [
-               "Perl",
-               2460
-            ],
-            [
-               "Raku",
-               1543
-            ]
-         ]
-      }
-   ],
-   "subtitle" : {
-      "text" : "Last updated at 2020-05-04 08:41:52 GMT"
    }
 }
