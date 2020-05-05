@@ -5,11 +5,7 @@ my @list = (2, 3, 4);
 my $sum;
 
 for @list.combinations(2) -> ($n1, $n2) {
-   $sum += f($n1, $n2);
+   $sum += ($n1 +^ $n2).fmt("%b").comb("1").elems;
 }
 
 say $sum;
-
-sub f ($n1, $n2) {
-    ($n1 +^ $n2).fmt("%b").comb("1").elems;
-}
