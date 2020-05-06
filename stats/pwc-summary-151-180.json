@@ -1,11 +1,12 @@
 {
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "series" : [
       {
          "data" : [
+            0,
             27,
             24,
             17,
@@ -22,6 +23,7 @@
       {
          "name" : "Raku",
          "data" : [
+            2,
             42,
             0,
             2,
@@ -36,6 +38,7 @@
       },
       {
          "data" : [
+            0,
             0,
             0,
             3,
@@ -53,8 +56,14 @@
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "xAxis" : {
       "categories" : [
+         "Tyler Limkemann",
          "Ulrich Rieke",
          "User Person",
          "Veesh Goldman",
@@ -68,20 +77,15 @@
       ]
    },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
+      },
+      "min" : 0
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2020-05-06 22:04:45 GMT"
    },
    "chart" : {
       "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2020-05-06 16:05:20 GMT"
    }
 }
