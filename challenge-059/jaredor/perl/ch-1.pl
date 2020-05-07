@@ -2,7 +2,6 @@
 
 use v5.012;
 use warnings;
-use Data::Dump qw(pp);
 use Getopt::Long;
 use List::Util qw(all);
 use Scalar::Util qw(looks_like_number);
