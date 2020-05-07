@@ -4,8 +4,7 @@ use strict;
 
 sub diff_bits {
     my ($x, $y) = @_;
-    my ($bx, $by) = map { pack 'N', $_ } $x, $y;
-    return unpack '%32b*', $bx ^ $by
+    return unpack '%32b*', pack 'N', $x ^ $y
 }
 
 sub chain_diff_bits {
