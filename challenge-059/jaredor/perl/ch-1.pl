@@ -9,32 +9,6 @@ use Scalar::Util qw(looks_like_number);
 
 # PWC 059, TASK #1 : Linked List
 
-# You are given a linked list and a value k. Write a script to partition the
-# linked list such that all nodes less than k come before nodes greater than or
-# equal to k. Make sure you preserve the original relative order of the nodes in
-# each of the two partitions.
-
-# For example:
-
-# Linked List: 1 → 4 → 3 → 2 → 5 → 2
-
-# k = 3
-
-# Expected Output: 1 → 2 → 2 → 4 → 3 → 5.
-
-# Linked list provided as a list of arguments on the command line.
-#
-# If I were to claim that a linked list is simply an array of numbers, then
-# I could declare victory like this:
-#
-# given a value, $k, set by user option, via Getopt::Long, say, then the rest
-# of the command line arguments are the linked list in the @ARGV array:
-#
-# print join(' ', (grep { $_ < $k } @ARGV), (grep { $_ >= $k } @ARGV)), "\n";
-#
-# But I will *not* submit that, I won't even run it, once, for a linked list
-# must have at least one pointer in it ;-)
-
 Getopt::Long::Configure( 'bundling_values', 'ignorecase_always',
     'pass_through' );
 
@@ -43,40 +17,52 @@ GetOptions( 'k=f' => \( my $k ) );
 die "The --k option must set a numeric value for the partitioning definition."
   unless looks_like_number $k;
 
-die "The node values of the linked list must all be numeric."
+die "The link values of the linked list must all be numeric."
   unless all { looks_like_number $_ } @ARGV;
 
-die "No node values provided for the linked list."
+die "No link values provided for the linked list."
   unless @ARGV;
 
-# Create the Linked list:
+# Convenience constructs.
 
-sub get_node { return [ $_[0], [] ]; }
+use constant NULL => [];
+sub make_link { return [ $_[0], NULL ]; }
 
-my $ll_head = get_node;
-my $ll_curr = $ll_head;
+# Create the linked list from the input arguments.
 
-# Load the linked list from the input arguments.
+my $ll_input = make_link;
+my $ll_curpt = $ll_input;
 
-$ll_curr = ( $ll_curr->[1] = get_node $_ ) for @ARGV;
-$ll_head = pop @$ll_head;
+$ll_curpt = ( $ll_curpt->[1] = make_link $_ ) for @ARGV;
+$ll_input = pop @$ll_input;
 
-# Split the input linked list into "less than" and "greater than or equal"
-# linked lists.
+# Split the input linked list into "<" and ">=" linked lists.
+# This is a destructive rearrangement of the $ll_input linked list.
 
-my ( $lt_head, $ge_head ) = ( get_node, get_node );
-my ( $lt_curr, $ge_curr ) = ( $lt_head, $ge_head );
+my ( $lt_subll, $ge_subll ) = ( make_link, make_link );
+my ( $lt_curpt, $ge_curpt ) = ( $lt_subll, $ge_subll );
 
-while ( defined $ll_head and @$ll_head) {
-    my $curr_ptr = $ll_head->[0] < $k ? \$lt_curr : \$ge_curr;
-    $ll_head = ( $$curr_ptr = ( $$curr_ptr->[1] = $ll_head ) )->[1];
+while (@$ll_input) {
+    my $curr_ptr = $ll_input->[0] < $k ? \$lt_curpt : \$ge_curpt;
+    $ll_input = ( $$curr_ptr = ( $$curr_ptr->[1] = $ll_input ) )->[1];
 }
 
-undef $lt_head unless defined( $lt_curr->[0] ) and $lt_head = pop @$lt_head;
-undef $ge_head unless defined( $ge_curr->[0] ) and $ge_head = pop @$ge_head;
+( $lt_curpt->[1], $ge_curpt->[1] ) = ( NULL, NULL );
+( $lt_subll, $ge_subll ) = ( pop @$lt_subll, pop @$ge_subll );
 
-$lt_curr->[1] = $ge_head and $ge_curr->[1] = [] if defined $ge_head;
+# Attach the ">=" linked list to the "<" list if "<" exists.
 
-my $ll_out = defined $lt_head ? $lt_head : defined $ge_head ? $ge_head : undef;
+$lt_curpt->[1] = $ge_subll if defined $lt_subll->[0];
 
-pp $ll_out;
+# Create output re-linked list.
+
+my $ll_ltge = defined $lt_subll->[0] ? $lt_subll : $ge_subll;
+
+# Print linked list data from head to tail.
+# This is a non-destructive walk of the $ll_ltge linked list.
+
+my ( $ll_print, $delim, @outlist ) = ( $ll_ltge, ' -> ', );
+
+( $outlist[@outlist], $ll_print ) = @$ll_print while @$ll_print;
+
+say join( $delim, @outlist );
