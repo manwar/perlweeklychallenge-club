@@ -1,0 +1,56 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $limit where $limit > 1 = 100, :$verbose, :$type = "int");
+
+my $prev-sum = 0;
+my $prev-inc = 0;
+my $prev-inx = 0;
+
+my @result;
+
+for 2 .. $limit -> $number
+{
+  my @list;
+
+  given $type
+  {
+    when "int"   { @list = (1     .. Inf)[^$number] }
+    when "even"  { @list = (2, 4 ... Inf)[^$number] }
+    when "odd"   { @list = (1, 3 ... Inf)[^$number] }
+    when "prime" { @list = ((1 .. Inf).grep: *.is-prime)[^$number] }
+    when "fib"   { @list = (1, 1, * + * ... Inf)[^$number] }
+    default      { die "Unknown type $_" }
+  }
+
+  my $sum  = bit-sum(@list);
+  my $inc  = $sum - $prev-sum;
+  my $inx  = $inc - $prev-inc;
+  
+  say ": bit-sum @list[] -> { $sum.fmt("%3d") } ->  { $inc.fmt("%3d") } ->  { $inx.fmt("%3d") }" if $verbose;
+
+  @result.push: $inx;
+  
+  $prev-sum = $sum;
+  $prev-inc = $inc;
+  $prev-inx = $inx;
+}
+
+put @result;
+
+sub bit-sum (*@numbers where @numbers.elems > 1 && all(@numbers) ~~ Int)
+{
+  my $grand-total;
+
+  for @numbers.combinations(2) -> $list
+  {
+    my $sum = bit-diff(|$list);
+    $grand-total += $sum;
+  }
+
+  return $grand-total;
+
+  sub bit-diff (Int $a, Int $b)
+  {
+    return ($a +^ $b).base(2).comb.sum;
+  }
+}

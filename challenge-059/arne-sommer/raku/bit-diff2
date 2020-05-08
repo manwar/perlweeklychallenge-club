@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $a, $b, :$verbose);
+
+my $c = ($a +^ $b);
+
+my $sum = $c.comb.sum;
+
+if $verbose
+{
+  my $length = (max($a, $b)).base(2).chars;
+  
+  say ": { $a.fmt('%0' ~ $length ~ 'b') } ($a)";
+  say ": { $b.fmt('%0' ~ $length ~ 'b') } ($b)";
+  say ": { $c.fmt('%0' ~ $length ~ 'b') } -> $sum";
+}
+
+say $sum;
