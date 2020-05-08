@@ -1,7 +1,18 @@
 {
    "series" : [
       {
-         "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "y" : 10,
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}",
+            "enabled" : "true"
+         },
          "data" : [
             [
                "Blog",
@@ -9,55 +20,44 @@
             ],
             [
                "Perl",
-               2478
+               2479
             ],
             [
                "Raku",
                1554
             ]
          ],
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "y" : 10,
-            "align" : "right",
-            "enabled" : "true"
-         }
+         "name" : "Contributions"
       }
    ],
-   "legend" : {
-      "enabled" : "false"
-   },
    "chart" : {
       "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "subtitle" : {
-      "text" : "Last updated at 2020-05-08 11:52:56 GMT"
+      "text" : "Last updated at 2020-05-08 20:00:07 GMT"
    },
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
       },
       "type" : "category"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+      }
    }
 }
