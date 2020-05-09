@@ -52,7 +52,7 @@ sub parent_of_node ($self, $node, $start_node=undef) {
     return $start_node;
 }
 
-sub rotate_right_to_left ($self, $i, $j) {
+sub shift_right_rotate ($self, $i, $j) {
     my $parent_i = $self->parent_of_node($i);
     my $parent_j = $self->parent_of_node($j, $i);
 
@@ -76,7 +76,7 @@ sub partition ($self, $k) {
         my $j = $i->{next_node};
         $j = $j->{next_node} while defined $j && $j->{val} >= $k;
         return unless defined $j;
-        $self->rotate_right_to_left($i, $j);
+        $self->shift_right_rotate($i, $j);
     }
 }
 
