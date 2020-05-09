@@ -80,8 +80,6 @@ sub partition ($self, $k) {
     }
 }
 
-__END__
-
 my $list = Listy->new ([1, 4, 3, 2, 5, 2]);
 $list->partition(3);
 $list->print_list;
