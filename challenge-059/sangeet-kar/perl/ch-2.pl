@@ -6,7 +6,7 @@ use Algorithm::Combinatorics qw(combinations);
 
 sub helper {
     my ( $a, $b ) = @_;
-    sum( split //, sprintf( "%b", $a ) ^ sprintf( "%b", $b ) );
+    sum( split //, sprintf ("%b", $a ^ $b ));
 }
 
 sub bitsum {
