@@ -9,21 +9,21 @@ use List::Util qw(all sum);
 
 # Answer based on perl doc for unpack and www.perlmonks.org/?node_id=407933
 
-my ( $LL, $NN ) =
-  defined $Config{longlongsize}
-  ? ( 8 * $Config{longlongsize}, 'Q' )
-  : ( 8 * $Config{longsize}, 'N' );
-
 die "This script requires one or more positive integer arguments."
   unless @ARGV;
 
 die "Not all arguments to the script are positive integers."
   unless all { /\A [1-9] \d* \Z/xms } @ARGV;
 
+my ( $LL, $NN ) =
+  defined $Config{longlongsize}
+  ? ( 8 * $Config{longlongsize}, 'Q' )
+  : ( 8 * $Config{longsize}, 'L' );
+
 my @nums = map { pack "${NN}*", $_ } @ARGV;
 
-my (@diffbits, $num);
-while ($num = shift @nums) {
+my ( @diffbits, $num );
+while ( $num = pop @nums ) {
     push @diffbits, unpack( "%${LL}b*", $num ^ $_ ) for @nums;
 }
 say @diffbits ? sum @diffbits : 0;
