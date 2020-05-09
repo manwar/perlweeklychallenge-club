@@ -26,7 +26,7 @@ while ($link->iter) {
         $dnlink->add($i);
     }
     print $i;
-    print " -> " if $link->next
+    print " → " if $link->next
 }
 
 #Join dnlink and uplink
@@ -38,7 +38,7 @@ say "\n\nPartitioned List:";
 while ($dnlink->iter) {
     my $i = $dnlink->value;
     print $i;
-    print " -> " if $dnlink->next
+    print " → " if $dnlink->next
 }
 
 
@@ -78,7 +78,7 @@ sub next {
     return $iter_item->{next};
 } 
 sub iter {
-    my ($self, $join_mode) = @_;
+    my $self = shift;
 
     if (!$iter_item) {
         $iter_item = $self;
@@ -98,3 +98,20 @@ sub join {
     }
 }
 1;
+
+=begin
+Original List:
+1 → 4 → 3 → 2 → 5 → 2
+
+Partitioned List:
+1 → 2 → 2 → 4 → 3 → 5
+
+The setting below was added in VS code internal terminal (PowerShell) 
+to properly show the arrow ( → ) character:
+
+    "terminal.integrated.shellArgs.windows": [
+        "-NoExit",
+        "/c",
+        "chcp.com 65001"
+    ],
+=cut
