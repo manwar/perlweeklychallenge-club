@@ -20,7 +20,12 @@
 #For example, given 2, 3, 4, the output would be 6, since f(2,3) + f(2,4) + f(3,4) = 1 + 2 + 3 = 6
 
 # F XORs bits then counts them by mask of bit one, shifts left, ends when empty
-sub f(Int $a, Int $b) {
+
+use Test;
+
+subset PosInt of Int where * >=0 ;
+
+sub f(PosInt $a, PosInt $b) {
     my Int $count=0;
     my Int $bits = $a +^ $b;
     while $bits>0 {
@@ -30,15 +35,18 @@ sub f(Int $a, Int $b) {
     return $count;
 }
 
-is f(1,3),1,"example";
-is f(2,3),1,"example 2";
-is f(2,4),2,"example 2";
-is f(4,3),3,"example 2";
-is f(2,3)+f(2,4)+f(3,4),6,"example 2";
+multi MAIN('test') {
+    is f(1,3),1,"example";
+    is f(2,3),1,"example 2";
+    is f(2,4),2,"example 2";
+    is f(4,3),3,"example 2";
+    is f(2,3)+f(2,4)+f(3,4),6,"example 2";
+}
 
-# accept n pos ints and add them...
-sub MAIN(+@n) {
-
+#|Sum the different bits of pairs of positive ints...
+multi MAIN(+@n) {
+    die "Need pairs of numbers, got {@n.elems}" unless @n %% 2 && @n.elems > 0;
+    say [+] gather for @n -> $a,$b { take f($a,$b) };
 }
 
 # http://graphics.stanford.edu/~seander/bithacks.html#CountBitsSetParallel
