@@ -1,17 +1,14 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2020-05-11 21:05:09 GMT"
+   },
    "xAxis" : {
       "type" : "category"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 060",
          "data" : [
             {
                "name" : "Javier Luque",
@@ -19,47 +16,64 @@
                "y" : 5
             },
             {
-               "name" : "Luca Ferrari",
                "drilldown" : "Luca Ferrari",
-               "y" : 4
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Markus Holzer",
-               "name" : "Markus Holzer"
-            },
-            {
-               "drilldown" : "Mohammad S Anwar",
-               "y" : 1,
-               "name" : "Mohammad S Anwar"
-            },
-            {
                "y" : 4,
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West"
+               "name" : "Luca Ferrari"
+            },
+            {
+               "name" : "Markus Holzer",
+               "drilldown" : "Markus Holzer",
+               "y" : 2
+            },
+            {
+               "name" : "Mohammad S Anwar",
+               "y" : 2,
+               "drilldown" : "Mohammad S Anwar"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
             },
             {
                "name" : "Sangeet Kar",
-               "drilldown" : "Sangeet Kar",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Sangeet Kar"
             },
             {
                "name" : "Wanderdoc",
-               "drilldown" : "Wanderdoc",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Wanderdoc"
             },
             {
                "name" : "Yet Ebreo",
                "drilldown" : "Yet Ebreo",
                "y" : 2
             }
-         ],
-         "name" : "Perl Weekly Challenge - 060",
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2020-05-11 19:07:41 GMT"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 060"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
    },
    "drilldown" : {
       "series" : [
@@ -82,7 +96,6 @@
             ]
          },
          {
-            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari",
             "data" : [
                [
@@ -93,7 +106,8 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari"
          },
          {
             "name" : "Markus Holzer",
@@ -106,14 +120,14 @@
             "id" : "Markus Holzer"
          },
          {
+            "id" : "Mohammad S Anwar",
             "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
-                  1
+                  2
                ]
-            ],
-            "id" : "Mohammad S Anwar"
+            ]
          },
          {
             "data" : [
@@ -131,52 +145,38 @@
          },
          {
             "id" : "Sangeet Kar",
+            "name" : "Sangeet Kar",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Sangeet Kar"
+            ]
          },
          {
             "id" : "Wanderdoc",
+            "name" : "Wanderdoc",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Wanderdoc"
+            ]
          },
          {
-            "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Yet Ebreo"
+            "name" : "Yet Ebreo",
+            "id" : "Yet Ebreo"
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 060"
+   "chart" : {
+      "type" : "column"
    },
    "legend" : {
       "enabled" : 0
