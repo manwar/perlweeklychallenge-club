@@ -13,7 +13,7 @@ sub to_exl {
     }
     chr(64 + $%).$"
 }
-my $excelcol = uc $ARGV[0];
+my $excelcol = uc ($ARGV[0]||2708874);
 
 if ($excelcol=~/\D/) {
     say to_num($excelcol);
@@ -21,6 +21,9 @@ if ($excelcol=~/\D/) {
     say to_exl($excelcol);
 }
 =begin
+perl .\ch-1.pl 2708874 
+EXCEL
+
 perl .\ch-1.pl 1
 A
 
