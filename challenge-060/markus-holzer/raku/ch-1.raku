@@ -1,21 +1,41 @@
 use Test;
 
-sub excel-column( Int $n )
-{
-    state @digits = |('A'..'Z');
+subset ExcelColumn of Str where * ~~ / ^ <[ A .. Z ]>+ $ /;
+subset PositiveInt of Int where * > 0;
 
-    multi ec( Int $i where * < 26 ) { 
-	@digits[ $i ] }
+multi sub MAIN( ExcelColumn $c ) { say from-excel( $c ) }
+multi sub MAIN( PositiveInt $n ) { say to-excel( $n ) }
+multi sub MAIN( Bool:D :$t  )    { run-tests; }
+
+sub to-excel( PositiveInt $n )
+{
+    state @digits = |( 'A'..'Z' );
+
+    multi ec( Int $i where * < 26 ) {
+        @digits[ $i ] }
 
     multi ec( Int $i ) {
         ec( $i div 26 - 1 ) ~ ec( $i % 26 ) }
 
-    ec( $n - 1 );
+    ec $n - 1;
 }
 
-ok excel-column( 1 ) eq 'A', 'A';
-ok excel-column( 26 ) eq 'Z', 'Z';
-ok excel-column( 27 ) eq 'AA', 'AA';
-ok excel-column( 28 ) eq 'AB', 'AB';
-ok excel-column( 26**3 + 26**2 + 26) eq 'ZZZ', 'ZZZ';
-ok excel-column( 26**3 + 26**2 + 1) eq 'ZZA', 'ZZA';
+sub from-excel( ExcelColumn $column )
+{
+    [+] $column.comb.map( *.ord - 64 ).reverse.kv.map: -> $i, $v {
+        26 ** $i * $v
+    }
+}
+
+sub run-tests( $n = 26**3 + 26**2 + 26 )
+{
+    for ( 'A', 'B' ... * ).kv -> $i, $v
+    {
+        last if $i == $n;
+        ok to-excel( $i + 1 ) eq $v, "to-excel({ $i + 1 })";
+        ok from-excel( $v ) eq $i + 1, "from-excel({ $v })";
+    }
+
+    dies-ok { from-excel( "AÜA" ) }, "bad input: Ü";
+    dies-ok { to-excel( 0 ) }, "bad input: 0";
+}
