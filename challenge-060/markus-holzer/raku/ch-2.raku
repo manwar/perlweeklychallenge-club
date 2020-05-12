@@ -5,8 +5,8 @@ my $Y = 21;
 .say for ( |@L xx $X )
     .combinations( $X )
     .map( *.join.Int )
-    .unique
     .grep( * < $Y )
     .grep( *.chars == $X )
+    .unique
     .sort
 ;
