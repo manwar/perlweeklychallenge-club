@@ -9,10 +9,8 @@ multi sub MAIN( Bool:D :$t  )    { run-tests; }
 
 sub to-excel( PositiveInt $n )
 {
-    state @digits = |( 'A'..'Z' );
-
     multi ec( Int $i where * < 26 ) {
-        @digits[ $i ] }
+        ( $i + 65 ).chr }
 
     multi ec( Int $i ) {
         ec( $i div 26 - 1 ) ~ ec( $i % 26 ) }
