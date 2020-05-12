@@ -7,7 +7,9 @@
 
 use Test2::V0;
 
-# expects a number of the desired length and a control hash.
+# check_num expects:
+# - number that has the desired length
+# - control hash.
 # if the number fits, it is added to the result set.
 # cut this branch otherwise
 sub check_num {
@@ -19,16 +21,18 @@ sub check_num {
 	0;
 }
 
-# recursively constructs numbers from the given parts.
-# expects the current recursion level and the config hash as parameters
-sub gennum;
-sub gennum {
+# Recursively constructs numbers from the given parts.
+# gen_num expects:
+# - current recursion level
+# - config hash
+sub gen_num;
+sub gen_num {
 	my $level = shift;
 	my $ctl = shift;
 
 	our @current;
-	# make the array element for the current level local to this
-	# invocation, thus auto-deleting it at return
+	# localize the array element for the current level,
+	# will be auto-deleted at return
 	local $current[$level];
 
 	# loop over parts at this level
@@ -48,20 +52,21 @@ sub gennum {
 				return;
 			} else {
 				# recurse to next level
-				gennum $level + 1, $ctl;
+				gen_num $level + 1, $ctl;
 			}
 		} elsif ($t == 0) { # $value has desired length
 			# cut if $value is too large
+			# next cannot lead to something smaller,
+			# even if it is shorter
 			return unless check_num $value, $ctl;
-		} else { # $value is too long
-			return;
 		}
+		# else: $value is too long, next might be shorter
 	}
 }
 
-# create numbers of given length, below given limit
-# and assembled from given parts
-# parts are not restricted to single digits
+# Create numbers of given length, below given limit
+# and assembled from given parts.
+# Parts are not restricted to single digits.
 sub create_numbers {
 	my $length = shift;
 	my $limit = shift;
@@ -72,20 +77,23 @@ sub create_numbers {
 	my $ctl = {length => $length, limit => $limit, parts => $parts};
 
 	# enter generator
-	gennum 0, $ctl;
+	gen_num 0, $ctl;
 	return sort keys %{$ctl->{result}};
 }
 
-my @L = (0, 1, 2, 5);
-my $X = 2;
-my $Y = 21;
-my @result = create_numbers $X, $Y, @L;
-is \@result, [10, 11, 12, 15, 20], 'example from challenge';
+# main
+my (@L, $X, $Y, @R);
+
+@L = (0, 1, 2, 5);
+$X = 2;
+$Y = 21;
+@R = create_numbers $X, $Y, @L;
+is \@R, [10, 11, 12, 15, 20], 'example from challenge';
 
 @L = (0, 1, 100000002);
 $X = 9;
 $Y = 100000003;
-@result = create_numbers $X, $Y, @L;
-is \@result, [100000000, 100000001, 100000002], 'cut search space example';
+@R = create_numbers $X, $Y, @L;
+is \@R, [100000000, 100000001, 100000002], 'cut example';
 
 done_testing;
