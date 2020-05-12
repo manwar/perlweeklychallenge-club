@@ -1,10 +1,15 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             0,
             0,
@@ -45,7 +50,7 @@
             8,
             35,
             53,
-            55,
+            56,
             1,
             4,
             10,
@@ -168,11 +173,9 @@
             2,
             31,
             11
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             3,
@@ -336,7 +339,8 @@
             2,
             11,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -506,22 +510,12 @@
          ]
       }
    ],
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "subtitle" : {
-      "text" : "[Champions: 162] Last updated at 2020-05-12 01:58:37 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
+      "text" : "[Champions: 162] Last updated at 2020-05-12 02:03:46 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -689,7 +683,13 @@
          "Yozen Hernandez"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    }
 }
