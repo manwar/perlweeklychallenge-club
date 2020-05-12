@@ -1,21 +1,26 @@
 #!/usr/bin/perl
 
-# generate numbers of length $X that are smaller than $Y
-# from the parts in @L.
+# sub create_numbers generates numbers
+# - of length $X
+# - that are smaller than $Y
+# - from the parts in @L.
+# See below.
 #
-# recursive "branch and cut"
+# Performs recursive "branch and cut".
+# Though data is numeric, processing is string based.
 
 use Test2::V0;
+use Data::Dumper;
 
 # check_num expects:
-# - number that has the desired length
+# - number to be checked
 # - control hash.
-# if the number fits, it is added to the result set.
-# cut this branch otherwise
+# If the number fits, it is added to the result set.
+# Cut this branch otherwise.
 sub check_num {
 	my $num = shift;
 	my $ctl = shift;
-	if ($num lt $ctl->{limit}) {
+	if ($num < $ctl->{limit}) {
 		return $ctl->{result}{$num} = 1
 	};
 	0;
@@ -45,12 +50,14 @@ sub gen_num {
 
 		# construct current value from selected parts
 		my $value = join '', @current;
+
+		# test length of current value
 		my $t = length($value) <=> $ctl->{length};
 		if ($t < 0) { # $value is too short
-			if ($value gt $ctl->{limit}) {
-				# cut if current prefix is already too large
+			if ($value ge $ctl->{limit}) {
+				# cut if $value is too large
 				return;
-			} else {
+			} else { # $value is not too large but too short
 				# recurse to next level
 				gen_num $level + 1, $ctl;
 			}
@@ -82,18 +89,24 @@ sub create_numbers {
 }
 
 # main
-my (@L, $X, $Y, @R);
+my (@L, $X, $Y);
 
 @L = (0, 1, 2, 5);
 $X = 2;
 $Y = 21;
-@R = create_numbers $X, $Y, @L;
-is \@R, [10, 11, 12, 15, 20], 'example from challenge';
+is [create_numbers $X, $Y, @L], [10, 11, 12, 15, 20],
+	'example from challenge';
 
 @L = (0, 1, 100000002);
 $X = 9;
 $Y = 100000003;
-@R = create_numbers $X, $Y, @L;
-is \@R, [100000000, 100000001, 100000002], 'cut example';
+is [create_numbers $X, $Y, @L], [100000000, 100000001, 100000002],
+	'cut example';
 
 done_testing;
+
+# another example
+@L = (0, 7, 65, 543, 4321);
+$X = 5;
+$Y = 70001;
+print Dumper [create_numbers $X, $Y, @L];
