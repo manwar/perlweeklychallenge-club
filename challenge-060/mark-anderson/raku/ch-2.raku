@@ -9,9 +9,7 @@ sub MAIN (*@L where @L.all ~~ UInt) {
 
     my @ans = gather {
         for (10**($x-1)..^$y) -> $num {
-            my $digits = $num.comb;
-
-            if $digits (<=) $list {
+            if $num.comb (<=) $list {
                 take $num;
             }
         }
