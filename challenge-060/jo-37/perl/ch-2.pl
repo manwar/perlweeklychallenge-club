@@ -7,7 +7,7 @@
 # See below.
 #
 # Performs recursive "branch and cut".
-# Though data is numeric, processing is string based.
+# Though data is numeric, processing is strictly string based.
 
 use Test2::V0;
 use Data::Dumper;
@@ -20,7 +20,7 @@ use Data::Dumper;
 sub check_num {
 	my $num = shift;
 	my $ctl = shift;
-	if ($num < $ctl->{limit}) {
+	if ($num lt $ctl->{limit}) {
 		return $ctl->{result}{$num} = 1
 	};
 	0;
@@ -43,7 +43,7 @@ sub gen_num {
 	# loop over parts at this level
 	foreach my $num (@{$ctl->{parts}}) {
 		# skip leading zero
-		next if $num == 0 && $level == 0;
+		next if $num eq 0 && $level == 0;
 
 		$current[$level] = "$num";
 		my $stop;
@@ -109,4 +109,10 @@ done_testing;
 @L = (0, 7, 65, 543, 4321);
 $X = 5;
 $Y = 70001;
+print Dumper [create_numbers $X, $Y, @L];
+
+# non-numeric
+@L = qw(a b c);
+$X = 3;
+$Y = 'abc';
 print Dumper [create_numbers $X, $Y, @L];
