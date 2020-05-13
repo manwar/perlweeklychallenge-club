@@ -100,7 +100,7 @@ is [create_numbers $X, $Y, @L], [10, 11, 12, 15, 20],
 $X = 9;
 $Y = 100000003;
 is [create_numbers $X, $Y, @L], [100000000, 100000001, 100000002],
-	'cut example';
+	'avoid too much scanning';
 
 @L = qw(a b c);
 $X = 3;
