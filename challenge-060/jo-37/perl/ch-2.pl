@@ -10,7 +10,6 @@
 # strictly string based. (Example provided.)
 
 use Test2::V0;
-use Data::Dumper;
 
 # check_num expects:
 # - number to be checked
@@ -103,16 +102,17 @@ $Y = 100000003;
 is [create_numbers $X, $Y, @L], [100000000, 100000001, 100000002],
 	'cut example';
 
-done_testing;
-
-# another example
-@L = (0, 7, 65, 543, 4321);
-$X = 5;
-$Y = 70001;
-print Dumper [create_numbers $X, $Y, @L];
-
-# non-numeric
 @L = qw(a b c);
 $X = 3;
 $Y = 'abc';
-print Dumper [create_numbers $X, $Y, @L];
+is [create_numbers $X, $Y, @L], [qw(aaa aab aac aba abb)],
+	'non numeric';
+
+@L = (0, 5, 43, 321);
+$X = 4;
+$Y = 5001;
+is [create_numbers $X, $Y, @L],
+	[3210, 3215, 4300, 4305, 4343, 4350, 4355, 5000],
+	'another example';
+
+done_testing;
