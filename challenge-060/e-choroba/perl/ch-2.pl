@@ -24,7 +24,10 @@ sub extend {
 
 sub find {
     my ($length, $greater, @list) = @_;
-    return grep $greater > $_, extend($length, \@list, {});
+    my @long = grep $length == length $_, @list;
+    my %long; undef @long{@long} if @long;
+    return grep $greater > $_,
+           extend($length, \@list, \%long);
 }
 
 use Test::More;
@@ -48,5 +51,8 @@ cmp_deeply [ find(10, 2000000022, 0, 2) ],
 cmp_deeply [ find(5, 30000, 1, 20, 300) ],
            bag(11111, 11120, 11201, 11300, 12011, 12020,
                13001, 20111, 20120, 20201, 20300);
+
+cmp_deeply [ find(3, 789, 123, 456, 1000) ],
+           bag(123, 456);
 
 done_testing();
