@@ -40,7 +40,7 @@ my $last = chr(ord('A') + BASE - 1);
 # build example input data if none provided
 unless (@ARGV) {
 	@ARGV = 
-		map {((BASE ** ($_ + 1) - 1)/(BASE - 1) - 1, $last x $_)} (1 .. 14);
+		map {((BASE**($_+1) - 1)/(BASE - 1) - 1, $last x $_)} (1 .. 14);
 }
 
 for (@ARGV) {
