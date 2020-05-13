@@ -6,8 +6,8 @@
 # - from the parts in @L.
 # See below.
 #
-# Performs recursive "branch and cut".
-# Though data is numeric, processing is strictly string based.
+# Though data has been described as numeric, processing is
+# strictly string based. (Example provided.)
 
 use Test2::V0;
 use Data::Dumper;
@@ -73,7 +73,7 @@ sub gen_num {
 
 # Create numbers of given length, below given limit
 # and assembled from given parts.
-# Parts are not restricted to single digits.
+# Parts are not restricted to single digits (nor to numeric data).
 sub create_numbers {
 	my $length = shift;
 	my $limit = shift;
