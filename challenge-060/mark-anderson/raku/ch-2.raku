@@ -5,15 +5,6 @@
 sub MAIN (*@L where @L.all ~~ UInt) {
     my $y = @L.pop;
     my $x = @L.pop;
-    my $list = @L>>.Str;
 
-    my @ans = gather {
-        for (10**($x-1)..^$y) -> $num {
-            if $num.comb (<=) $list {
-                take $num;
-            }
-        }
-    }
-
-    say @ans.join(", ");
+    say ([X~] @L xx $x).grep(/^<-[0]>/).grep(* < $y).join(", ");
 }
