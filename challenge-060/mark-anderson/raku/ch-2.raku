@@ -3,17 +3,8 @@
 # Usage: raku ch-2.raku 0 1 2 5 2 21
 
 sub MAIN (*@L where @L.all ~~ UInt) {
-    my $y = @L.pop;
-    my $x = @L.pop;
-    my $list = @L>>.Str;
+    my $Y = @L.pop;
+    my $X = @L.pop;
 
-    my @ans = gather {
-        for (10**($x-1)..^$y) -> $num {
-            if $num.comb (<=) $list {
-                take $num;
-            }
-        }
-    }
-
-    say @ans.join(", ");
+    say ([X~] @L xx $X).grep(* !~~ /^0/).grep(* < $Y).join(", ");
 }
