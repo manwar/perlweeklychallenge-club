@@ -2,8 +2,8 @@
 use strict;
 
 #usage: 
-#Input: ch-2.pl -e NUMBER   Output: corresponding Excel Column
-#Input: ch-2.pl -n ALPHABETAS Output: corresponding numbers
+#Input: ch-1.pl -e NUMBER      Output: corresponding Excel Column
+#Input: ch-1.pl -n ALPHABETAS  Output: corresponding number
 
 my $MAX = 16384;
 
