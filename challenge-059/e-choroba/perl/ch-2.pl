@@ -4,8 +4,7 @@ use strict;
 
 sub diff_bits {
     my ($x, $y) = @_;
-    my ($bx, $by) = map { pack 'N', $_ } $x, $y;
-    return unpack '%32b*', $bx ^ $by
+    return unpack '%32b*', pack 'N', $x ^ $y
 }
 
 sub chain_diff_bits {
@@ -15,6 +14,29 @@ sub chain_diff_bits {
         for my $j ($i + 1 .. $#list) {
             $s += diff_bits($list[$i], $list[$j]);
         }
+    }
+    return $s
+}
+
+sub chain_diff_bits2 {
+    my (@list) = @_;
+    my @binary = map { unpack 'b*', pack N => $_ } @list;
+    my $s = 0;
+    for my $pos (0 .. length($binary[0]) - 1) {
+        my $ones = grep $_, map { substr $_, $pos, 1 } @binary;
+        $s += $ones * (@list - $ones);
+    }
+    return $s
+}
+
+sub chain_diff_bits3 {
+    my (@list) = @_;
+    my $s = 0;
+    my $mask = 1;
+    for (1 .. 8 * length $list[0]) {
+        my $ones = grep $mask & $_, @list;
+        $mask <<= 1;
+        $s += $ones * (@list - $ones);
     }
     return $s
 }
@@ -32,6 +54,12 @@ is diff_bits(113, 68), 4, 'd 113 68';
 is chain_diff_bits(2, 3, 4), 6, 'chain 2 3 4';
 is chain_diff_bits(89, 106, 116), 12, 'chain 89, 106, 116';
 
+is chain_diff_bits2(2, 3, 4), 6, 'chain 2 3 4';
+is chain_diff_bits2(89, 106, 116), 12, 'chain 89, 106, 116';
+
+is chain_diff_bits3(2, 3, 4), 6, 'chain 2 3 4';
+is chain_diff_bits3(89, 106, 116), 12, 'chain 89, 106, 116';
+
 =heading1 Last test explained
 
    89 | 1 1 1 0 1 0 0
@@ -42,4 +70,18 @@ is chain_diff_bits(89, 106, 116), 12, 'chain 89, 106, 116';
 
 =cut
 
+my @l = map int rand 100, 1 .. 1000;
+
+is  chain_diff_bits(@l),
+    chain_diff_bits2(@l), 'same 1 2';
+is  chain_diff_bits2(@l),
+    chain_diff_bits3(@l), 'same 2 3';
+
 done_testing();
+
+use Benchmark qw{ cmpthese };
+cmpthese(-2, {
+    new => sub { chain_diff_bits2(@l) },
+    old => sub { chain_diff_bits(@l) },
+    newest => sub { chain_diff_bits3(@l) }
+});
