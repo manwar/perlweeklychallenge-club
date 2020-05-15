@@ -24,7 +24,7 @@ if ($ARGV[0] eq '-n') {
 
 if ($ARGV[0] eq '-t') {
     for (1..$MAX) {
-        print ($_,"\n") unless $_ == excelcoltoNum(numtoExcelCol($_)); 
+        print($_,"\n") unless $_ == excelcoltoNum(numtoExcelCol($_)); 
         #For Testing
     }
 }
