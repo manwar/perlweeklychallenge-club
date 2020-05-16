@@ -2,6 +2,7 @@
 
 use Test;
 
+is excel-column('Z'),  26, 'Z  => 26';
 is excel-column('AB'), 28, 'AB => 28';
 is excel-column(28), 'AB', '28 => AB';
 
