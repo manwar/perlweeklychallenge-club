@@ -5,9 +5,9 @@ use warnings;
 
 use Test::More;
 
-is (excel_column(26),  "Z",  "Z  => 26");
-is (excel_column(28),  "AB", "28 => AB");
+is (excel_column("Z"),  26,  "Z  => 26");
 is (excel_column("AB"), 28,  "AB => 28");
+is (excel_column(28),  "AB", "28 => AB");
 
 done_testing;
 
