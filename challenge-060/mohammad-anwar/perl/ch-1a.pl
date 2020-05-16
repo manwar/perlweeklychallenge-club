@@ -5,35 +5,38 @@ use warnings;
 
 use Test::More;
 
-is (to_excel(28),    "AB", "28 => AB");
-is (from_excel("AB"), 28,  "AB => 28");
+is (excel_column(26),  "Z",  "Z  => 26");
+is (excel_column(28),  "AB", "28 => AB");
+is (excel_column("AB"), 28,  "AB => 28");
 
 done_testing;
 
-sub from_excel {
-    my ($name) = @_;
+sub excel_column {
+    my ($arg) = @_;
 
-    my $i = 0;
-    my $b = 26;
-    my $d = 0;
-    foreach my $c (split //, scalar(reverse(uc $name))) {
-        $d += (ord($c) - ord("A") + 1) * ($b ** $i++);
+    if ($arg =~ /^\d+$/) {
+        my $name = '';
+        my @name = (0, 'A' .. 'Z');
+        while ($arg > 26) {
+            my $i = int $arg / 26;
+            $name .= $name[$i];
+            $arg  -= ($i * 26);
+        }
+        $name .= $name[$arg];
+
+        return $name;
     }
+    elsif ($arg =~ /^[A-Z]+$/i) {
+        my $i = 0;
+        my $b = 26;
+        my $d = 0;
+        foreach my $c (split //, scalar(reverse(uc $arg))) {
+            $d += (ord($c) - ord("A") + 1) * ($b ** $i++);
+        }
 
-    return $d;
-}
-
-sub to_excel {
-    my ($number) = @_;
-
-    my $name = '';
-    my @name = (0, 'A' .. 'Z');
-    while ($number > 26) {
-        my $i = int $number / 26;
-        $name   .= $name[$i];
-        $number -= ($i * 26);
+        return $d;
     }
-    $name .= $name[$number];
-
-    return $name;
+    else {
+        die "ERROR: Invalid column [$arg].\n";
+    }
 }
