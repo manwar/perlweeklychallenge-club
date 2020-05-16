@@ -14,7 +14,7 @@ multi sub MAIN(Str :$name?, Int :$number?) {
     ??
     say sprintf("%s => %s", $name, excel-column($name))
     !!
-    say sprintf("%s => %s", $number.Str, excel-column($number.Int));
+    say sprintf("%s => %s", $number, excel-column($number.Int));
 }
 
 multi sub excel-column(Str $name) {
