@@ -24,8 +24,8 @@ sub to-excel(UInt $num is copy) {
         $num div= 26;
     
         if $remainder == 0 {
-            $num--;
             $remainder = 26;
+            $num--;
         }
 
         $string ~= @letters[$remainder - 1];
