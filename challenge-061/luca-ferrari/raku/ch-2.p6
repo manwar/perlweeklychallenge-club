@@ -20,7 +20,7 @@
 # 
 
 sub MAIN( Int $string = 25525511135 ) {
-    say "Starting from $string";
+    say "Numeric value is $string";
 
       for $string ~~ m:ex/ ^ ( <[0..9]> ** 1..3 ) ** 4  $/ {
         my @ip = $_[0].map( *.Int );
