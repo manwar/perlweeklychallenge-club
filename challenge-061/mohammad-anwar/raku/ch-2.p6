@@ -7,7 +7,7 @@ sub MAIN(Str $S = "25525511135") {
     say sprintf("%s = %s", $S, @V.join(", "));
 }
 
-sub ipv4-partition($ipv4_string) {
+sub ipv4-partition(Str $ipv4_string) {
 
     my @valid = Empty;
     my $ipv4  = '';
