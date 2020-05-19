@@ -8,7 +8,7 @@ is @V.join(", "), "255.255.11.135, 255.255.111.35";
 
 done-testing;
 
-sub ipv4-partition($ipv4_string) {
+sub ipv4-partition(Str $ipv4_string) {
 
     my @valid = Empty;
     my $ipv4  = '';
