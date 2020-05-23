@@ -13,17 +13,15 @@ sub product {
 
 sub max_prod {
     my ($list) = @_;
-    my $max = $list->[0];
+    my $max = [$list->[0]];
     for my $i (0 .. $#$list) {
         for my $j ($i .. $#$list) {
             my $p = product(@$list[$i .. $j]);
-            $max = $p if $p > $max;
+            $max = [$p, @$list[$i .. $j]] if $p > $max->[0];
         }
     }
     return $max
 }
 
 use Test::More tests => 1;
-is max_prod([2, 5, -1, 3]), 10;
-
-
+is_deeply max_prod([2, 5, -1, 3]), [10, 2, 5];
