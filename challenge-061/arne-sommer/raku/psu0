@@ -1,0 +1,11 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@list where @list.elems >= 4 && all(@list) ~~ Numeric);
+
+for 0 .. @list.end - 1 -> $left
+{
+  for $left + 1 .. @list.end -> $right
+  {
+    say ": (L:$left R:$right) -> @list[$left .. $right]";
+  }
+}
