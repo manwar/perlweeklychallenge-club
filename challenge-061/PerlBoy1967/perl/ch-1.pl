@@ -73,9 +73,6 @@ foreach my $list (@listOfLists) {
       $rIdx++;
     }
 
-    # List exhausted?
-    last if ($rIdx == scalar(@list) - 1);
-
     $lIdx = $rIdx - 1; 
 
     # Calculate the new potential maximum
