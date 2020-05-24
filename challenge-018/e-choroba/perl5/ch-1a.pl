@@ -35,17 +35,27 @@ use feature qw{ say };
         for my $next_index (values %{ $node->{next} }) {
             undef $node->{numbers}{$_} for $self->add_numbers($next_index);
         }
-        return $node->{number} // () unless exists $node->{numbers};
 
-        return keys %{ $self->{numbers} }
+        return $node->{number} // () unless %{ $node->{numbers} // {} };
+
+        return keys %{ $node->{numbers} }
+    }
+
+    my $SEP = chr 2 ** 20;
+    sub fresh_separator {
+        my ($self) = @_;
+        $self->{separator} //= 2 ** 20;
+        return chr ++$self->{separator}
     }
 
     sub add_words {
         my ($self, @words) = @_;
-        $self->{number_of_words} = @ARGV;
+        $self->{number_of_words} = @words;
         for my $word_index (0 .. $#words) {
             $self->add_char($_)
-                for split //, "$words[$word_index]<$word_index>";
+                for split //, $words[$word_index];
+            $self->add_char($self->fresh_separator);
+            $self->add_char($_) for split //, "$word_index$SEP";
         }
         my $text_length = length $self->{text};
         for my $node (@{ $self->{nodes} }) {
@@ -55,7 +65,7 @@ use feature qw{ say };
                      : substr $self->{text}, $node->{start},
                            $node->{end} - $node->{start};
             $node->{text} = $text;
-            if (my ($number) =  $text =~ /<([0-9]+)>/) {
+            if (my ($number) = $text =~ /([0-9]+)$SEP/) {
                 $node->{number} = $number;
             }
         }
