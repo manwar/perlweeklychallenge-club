@@ -13,7 +13,7 @@ my %l;
 while (<>) {
   chomp;
   my @e=split /@/,$_;
-  my $k=lc($e[1]).'!'.$e[0];
+  my $k=lc($e[1]).'@'.$e[0];
   if ($o{u}) {
     delete $l{$k};
   }

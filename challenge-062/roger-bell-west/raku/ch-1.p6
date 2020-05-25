@@ -21,7 +21,7 @@ for @fn -> $fn {
   for $fh.lines {
     .chomp;
     my @e=comb(/<-[@]>+/,$_);
-    my $k=lc(@e[1]) ~ '!' ~ @e[0];
+    my $k=lc(@e[1]) ~ '@' ~ @e[0];
     if ($u) {
       %l{$k}:delete;
     }
