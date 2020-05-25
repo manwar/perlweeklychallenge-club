@@ -16,12 +16,14 @@
 
 
 
-sub MAIN( Bool :$u? = False ) {
-    my @emails = 'name@example.org',
+sub MAIN( Bool :$u? = False, *@emails ) {
+    if ( ! @emails ) {
+        @emails = 'name@example.org',
         'rjt@cpan.org',
         'Name@example.org',
         'rjt@CPAN.org',
         'user@alpha.example.org';
+    }
 
 
     @emails = @emails.sort( *.split( '@' )[ 0 ] ).sort( *.split( '@' )[ 1 ].lc );
