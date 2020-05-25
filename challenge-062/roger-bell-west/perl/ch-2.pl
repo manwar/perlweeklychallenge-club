@@ -50,8 +50,7 @@ do {
               my $l=abs($k[$a][$ax[0]]-$k[$b][$ax[0]]);
               if ($l ==
                     abs($k[$a][$ax[1]]-$k[$b][$ax[1]]) &&
-                    ($k[$a][$api] == $k[$b][$api] ||
-                       $l==abs($k[$a][$api]-$k[$b][$api]))) {
+                    ($k[$a][$api] == $k[$b][$api])) {
                 @k=();
                 last OUTER;
               }
@@ -68,7 +67,6 @@ do {
   unless ($d) {
     my $n=scalar @{$r};
     if ($n>$m) {
-      print "$n\n";
       $m=$n;
       $o=$r;
     }
