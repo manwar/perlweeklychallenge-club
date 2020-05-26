@@ -3,6 +3,8 @@
 # Task 2
 # N-queens
 
+# Places the queen into the chessboard at the indicated coordinates.
+# Also setto False every square the queen can reach.
 sub place-queen( @chessboard, $row, $column, $height, $dimension ){
 
     for 0 ..^ $dimension {
@@ -23,7 +25,9 @@ sub place-queen( @chessboard, $row, $column, $height, $dimension ){
 }
 
 
-
+#
+# Show every level of the chessboard.
+#
 sub show-chessboard( @chessboard, $dimension ) {
     for 0 ..^ $dimension -> $height {
         say "Layer $height";
@@ -43,7 +47,6 @@ sub show-chessboard( @chessboard, $dimension ) {
 }
 
 sub MAIN( Int $dimension = 3 ){
-    my $val = True;
     my @chessboard = [[True xx $dimension] xx $dimension] xx $dimension;
     
     for 0 ..^ $dimension -> $height {
