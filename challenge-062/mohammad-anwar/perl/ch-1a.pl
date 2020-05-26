@@ -53,12 +53,12 @@ sub sort_data {
     my $sorted = [];
     if ($flag) {
         foreach (sort { lc $source->{$a} cmp lc $source->{$b} } sort keys %$source) {
-            push @$sorted, sprintf("%s@%s", $_, $source->{$_});
+            push @$sorted, join "@", $_, $source->{$_};
         }
     }
     else {
         foreach (reverse sort { lc $a->[0] cmp lc $b->[0] || $a->[1] cmp $b->[1] } @source) {
-            push @$sorted, sprintf("%s@%s", $_->[0], $_->[1]);
+            push @$sorted, join "@", @$_;
         }
     }
 

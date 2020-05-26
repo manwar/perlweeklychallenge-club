@@ -42,7 +42,7 @@ sub sort-data(Str $file, Bool $unique?) {
         for %source.sort({ $^a.value.lc cmp $^b.value.lc || $^a.key cmp $^b.key }) -> $k {
             my $_k = $k.keys;
             my $_v = $k.values;
-            $sorted.push: sprintf("%s@%s", $_k, $_v);
+            $sorted.push: ($_k, $_v).join("@");
         }
     }
     else {
