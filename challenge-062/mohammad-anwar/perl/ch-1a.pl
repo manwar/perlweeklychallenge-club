@@ -6,7 +6,7 @@ use warnings;
 use Test::More;
 use Test::Deep;
 
-is_deeply ( sort_data('data.txt'),
+is_deeply ( sort_data('../data.txt'),
             [ 'user@alpha.example.org',
               'rjt@cpan.org',
               'rjt@CPAN.org',
@@ -15,7 +15,7 @@ is_deeply ( sort_data('data.txt'),
             ],
             'regular sort' );
 
-is_deeply ( sort_data('data.txt', '-u'),
+is_deeply ( sort_data('../data.txt', '-u'),
             [ 'user@alpha.example.org',
               'rjt@CPAN.org',
               'Name@example.org',
