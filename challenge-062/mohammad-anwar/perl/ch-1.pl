@@ -28,7 +28,7 @@ sub sort_data {
         my ($mailbox, $domain) = split /\@/, $row, 2;
         push @source, [$mailbox, $domain];
         if ($flag) {
-            $source->{$mailbox} = lc $domain;
+            $source->{$mailbox} = $domain;
         }
     }
 
@@ -36,7 +36,7 @@ sub sort_data {
 
     my $sorted = [];
     if ($flag) {
-        foreach (sort { $source->{$a} cmp $source->{$b} } sort keys %$source) {
+        foreach (sort { lc $source->{$a} cmp lc $source->{$b} } sort keys %$source) {
             push @$sorted, sprintf("%s@%s", $_, $source->{$_});
         }
     }
