@@ -1,37 +1,84 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2020-05-26 09:59:47 GMT"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "legend" : {
       "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         },
-         "borderWidth" : 0
+         }
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 062"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    },
    "chart" : {
       "type" : "column"
    },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 062",
+         "data" : [
+            {
+               "name" : "Javier Luque",
+               "y" : 5,
+               "drilldown" : "Javier Luque"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 3,
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "name" : "Simon Miner",
+               "y" : 1,
+               "drilldown" : "Simon Miner"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "y" : 1,
+               "name" : "Simon Proctor"
+            },
+            {
+               "name" : "Yet Ebreo",
+               "drilldown" : "Yet Ebreo",
+               "y" : 1
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
    "xAxis" : {
       "type" : "category"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 062"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2020-05-26 13:38:44 GMT"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -46,10 +93,20 @@
                   1
                ]
             ],
-            "name" : "Javier Luque"
+            "name" : "Javier Luque",
+            "id" : "Javier Luque"
          },
          {
-            "id" : "Niels van Dijke",
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
             "name" : "Niels van Dijke",
             "data" : [
                [
@@ -60,7 +117,8 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Niels van Dijke"
          },
          {
             "name" : "Roger Bell_West",
@@ -77,78 +135,35 @@
             "id" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Miner",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "name" : "Simon Miner"
+            "name" : "Simon Miner",
+            "id" : "Simon Miner"
          },
          {
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "name" : "Simon Proctor"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          },
          {
-            "name" : "Yet Ebreo",
+            "id" : "Yet Ebreo",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "id" : "Yet Ebreo"
+            "name" : "Yet Ebreo"
          }
       ]
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 062",
-         "data" : [
-            {
-               "y" : 5,
-               "drilldown" : "Javier Luque",
-               "name" : "Javier Luque"
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "y" : 2,
-               "name" : "Niels van Dijke"
-            },
-            {
-               "y" : 3,
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West"
-            },
-            {
-               "name" : "Simon Miner",
-               "y" : 1,
-               "drilldown" : "Simon Miner"
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 1
-            },
-            {
-               "name" : "Yet Ebreo",
-               "drilldown" : "Yet Ebreo",
-               "y" : 1
-            }
-         ]
-      }
-   ]
+   }
 }
