@@ -41,7 +41,7 @@ sub sort_data {
         }
     }
     else {
-        foreach (reverse sort { lc $a->[0] cmp lc $b->[0] } @source) {
+        foreach (reverse sort { lc $a->[0] cmp lc $b->[0] || lc $a->[1] cmp $b->[1] } @source) {
             push @$sorted, sprintf("%s@%s", $_->[0], $_->[1]);
         }
     }

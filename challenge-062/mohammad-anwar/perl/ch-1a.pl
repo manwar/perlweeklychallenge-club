@@ -8,8 +8,8 @@ use Test::Deep;
 
 is_deeply ( sort_data('data.txt'),
             [ 'user@alpha.example.org',
-              'rjt@CPAN.org',
               'rjt@cpan.org',
+              'rjt@CPAN.org',
               'Name@example.org',
               'name@example.org',
             ],
@@ -57,7 +57,7 @@ sub sort_data {
         }
     }
     else {
-        foreach (reverse sort { lc $a->[0] cmp lc $b->[0] } @source) {
+        foreach (reverse sort { lc $a->[0] cmp lc $b->[0] || $a->[1] cmp $b->[1] } @source) {
             push @$sorted, sprintf("%s@%s", $_->[0], $_->[1]);
         }
     }
