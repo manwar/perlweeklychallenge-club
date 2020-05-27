@@ -16,11 +16,10 @@ sub place-queen(@indices, @queens, @solutions) {
 
 
 sub is-available($ref, $pos) {
-        my ($refx, $refy, $refz) = $ref;
-        my ($x, $y, $z)          = $pos;
         my $diff = ($ref »-« $pos)».abs.Set;
         not (+$diff == 1 || (+$diff == 2 && 0 ∈ $diff))
 }
+
 
 sub indices-to-array(@indices, $n) {
     my @array = [[[ 0 xx $n] xx $n] xx $n];
@@ -29,6 +28,7 @@ sub indices-to-array(@indices, $n) {
     }
     return @array;
 }
+
 
 sub MAIN (Int :$n=2) {
         say n-queens-threeD $n;
