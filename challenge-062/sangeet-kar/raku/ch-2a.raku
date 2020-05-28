@@ -22,9 +22,8 @@ sub place-queen(@indices, @queens, @solutions, $beam-width=2) {
        }
        my @best = (for @indices -> $pos {($pos, @indices.grep({is-available($pos, $_)}))});
        if $beam-width ≠ -1 {
-               @best = find-best($beam-width, @best, {+@_.[1]}); 
+               @best = find-best($beam-width, @best, {+$^b[1] cmp +$^a[1]}); 
        }
-       
        for @best -> ($pos, @available) {
                place-queen(@available, (|@queens, $pos), @solutions, $beam-width);
        }
