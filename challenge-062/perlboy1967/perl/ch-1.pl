@@ -1,5 +1,12 @@
 #!/usr/bin/perl
 
+# Perl Weekly Challenge - 062 
+#
+# Task 1 - Sort Email Addresses
+#
+# Author: Niels 'PerlBoy' van Dijke
+
+
 use strict;
 use warnings;
 
