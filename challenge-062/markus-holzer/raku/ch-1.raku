@@ -1,43 +1,58 @@
+# This should really follow the spec or use something from CPAN
 class Mail
 {
-	has Str $.adress;
-	has Str $.domain;
-	has Str $.mailbox;
-	has Str $.norm;
+    has Str  $.address;
+    has Str  $.domain;
+    has Str  $.mailbox;
+    has Str  $.norm;
+    has Bool $.valid;
 
-	submethod TWEAK( :$!adress )
-	{
-		my $index = $!adress.index: '@';
+    method Str { $!address }
 
-		$!mailbox = $!adress.substr( 0, $index );
-		$!domain  = $!adress.substr( $index + 1, * ).lc;
-		$!norm    = $!mailbox ~ '@' ~ $!domain;		
-	}
+    submethod TWEAK( :$!address )
+    {
+        my $index = $!address.index: '@';
+        return unless $index && 0 < $index < $!address.chars - 1;
 
-	method gist() {
-		$.norm 	}
-
-	method Str() {
-		$.adress }
+        $!mailbox = $!address.substr: 0, $index;
+        $!domain  = lc $!address.substr: $index + 1, *;
+        $!norm    = $!mailbox ~ '@' ~ $!domain;
+        $!valid   = True;
+    }
 }
 
-multi sub MAIN( :$u ) {
-	output-email-adresses $u, sort-mail-adresses $*IN }
+subset FileIsReadable   where { .IO.f && .IO.e && .IO.r }
+subset FilesAreReadable where { .all ~~ FileIsReadable }
 
-multi sub MAIN( :$u, *@args ) {
-	output-email-adresses $u, sort-mail-adresses @args.map: *.IO.open( :r ) }
+#| read from files
+multi sub MAIN( 
+    Bool :$u,                       #= unique. filters duplicates
+    *@files where FilesAreReadable  #= files containing email addresses, 1 per line 
+) {
+    output-email-addresses $u, sort-mail-addresses @files.map: *.IO.open( :r ) }
 
-sub output-email-adresses( $unique, @things ) {
-	.Str.say for $unique ?? @things.unique( :as( *.norm ) ) !! @things } 
+#| read from STDIN 
+multi sub MAIN( Bool :$u ) {
+    output-email-addresses $u, sort-mail-addresses $*IN }
 
-sub sort-mail-adresses( *@handles ) 
+# catch bad arguments
+multi sub MAIN( Bool :$u?, *@bad ) is hidden-from-USAGE {
+    $*USAGE.say }
+
+sub output-email-addresses( $unique, @addresses ) {
+    .address.say for $unique
+        ?? @addresses.squish( as => *.norm ) 
+        !! @addresses } 
+
+multi sub sort-mail-addresses( $handles where { .cache.all ~~ IO::Handle } ) 
 {
-	my &adress = -> $adress { Mail.new( :$adress ) };	 
-	my &sort   = -> $a, $b  { $a.domain cmp $b.domain || $a.mailbox cmp $b.mailbox };
+    my &address = -> $address { Mail.new( :$address ) }
+    my &valid   = -> $mail    { $mail.valid || $*ERR.say("Bad data <$mail>") && False }
+    my &sort    = -> $a, $b   { $a.domain cmp $b.domain || $a.mailbox cmp $b.mailbox }
 
-	@handles
-		.map( *.lines )
-		.flat
-		.map( &adress )
-		.sort( &sort )
+    $handles
+        .map( | *.lines )
+        .map( &address )
+        .grep( &valid )
+        .sort( &sort )
 }
