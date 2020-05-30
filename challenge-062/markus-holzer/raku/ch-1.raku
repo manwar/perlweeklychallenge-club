@@ -36,7 +36,7 @@ multi sub MAIN( Bool :$u ) {
     output-email-addresses $u, sort-mail-addresses $*IN }
 
 # catch bad arguments
-multi sub MAIN( Bool :$u, *@bad ) is hidden-from-USAGE {
+multi sub MAIN( Bool :$u, *@ ) is hidden-from-USAGE {
     $*USAGE.say }
 
 sub output-email-addresses( $unique, @addresses ) {
