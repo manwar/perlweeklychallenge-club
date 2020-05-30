@@ -44,15 +44,19 @@ sub output-email-addresses( $unique, @addresses ) {
         ?? @addresses.squish( as => *.norm ) 
         !! @addresses } 
 
-multi sub sort-mail-addresses( $handles where { .cache.all ~~ IO::Handle } ) 
-{
-    my &address = -> $address { Mail.new( :$address ) }
-    my &valid   = -> $mail    { $mail.valid || $*ERR.say("Bad data <$mail>") && False }
-    my &sort    = -> $a, $b   { $a.domain cmp $b.domain || $a.mailbox cmp $b.mailbox }
-
+multi sub sort-mail-addresses( $handles where { .cache.all ~~ IO::Handle } ) {
     $handles
         .map( | *.lines )
-        .map( &address )
-        .grep( &valid )
-        .sort( &sort )
-}
+        .map( &make-mail )
+        .grep( &valid-mail )
+        .sort( &sort-mail ) }
+
+sub make-mail( $address ) { 
+    Mail.new( :$address ) }
+
+sub valid-mail( $mail ) { 
+    $mail.valid || 
+    $*ERR.say("Bad data <$mail>") && False }
+
+sub sort-mail( $a, $b ) { 
+    $a.domain cmp $b.domain || $a.mailbox cmp $b.mailbox }
