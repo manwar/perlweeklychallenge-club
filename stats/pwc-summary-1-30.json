@@ -1,15 +1,8 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -45,9 +38,15 @@
          "Darren Bottin"
       ]
    },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             0,
@@ -79,10 +78,10 @@
             43,
             3,
             5
-         ]
+         ],
+         "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             6,
@@ -114,7 +113,8 @@
             0,
             21,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "data" : [
@@ -152,16 +152,16 @@
          "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-05-31 12:04:23 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-05-31 16:21:08 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    }
 }
