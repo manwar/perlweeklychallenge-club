@@ -22,15 +22,15 @@ sub rotate_string
 	}
 }
 
-# use Test::More;
-#
-# is rotate_string('xy'), 3;
-# is rotate_string('xyxx'), 7;
-# is rotate_string('xxxx'), 1;
-# is rotate_string('xyxy'), 3;
-# is rotate_string('xxyy'), 7;
-# is rotate_string('xxxxx'), 1;
-# is rotate_string('xyyxx'), 4;
-# is rotate_string('xyyxxyyyxxx'), 4;
-#
-# done_testing;
+use Test::More;
+
+is rotate_string('xy'), 3;
+is rotate_string('xyxx'), 7;
+is rotate_string('xxxx'), 1;
+is rotate_string('xyxy'), 3;
+is rotate_string('xxyy'), 7;
+is rotate_string('xxxxx'), 1;
+is rotate_string('xyyxx'), 4;
+is rotate_string('xyyxxyyyxxx'), 10;
+
+done_testing;
