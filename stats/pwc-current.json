@@ -1,24 +1,11 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2020-06-01 11:05:27 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
+      "text" : "[Champions: 4] Last updated at 2020-06-01 16:05:29 GMT"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -33,69 +20,97 @@
                   1
                ]
             ],
-            "name" : "Javier Luque",
             "id" : "Javier Luque"
          },
          {
-            "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Niels van Dijke"
+            "name" : "Niels van Dijke"
          },
          {
+            "id" : "Pete Houston",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "name" : "Pete Houston"
+         },
+         {
+            "name" : "Wanderdoc",
+            "id" : "Wanderdoc",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Wanderdoc",
-            "id" : "Wanderdoc"
+            ]
          }
       ]
    },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 063",
          "data" : [
             {
-               "drilldown" : "Javier Luque",
+               "y" : 5,
                "name" : "Javier Luque",
-               "y" : 5
+               "drilldown" : "Javier Luque"
             },
             {
-               "drilldown" : "Niels van Dijke",
                "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke",
                "y" : 2
             },
             {
-               "drilldown" : "Wanderdoc",
+               "drilldown" : "Pete Houston",
+               "name" : "Pete Houston",
+               "y" : 1
+            },
+            {
                "name" : "Wanderdoc",
+               "drilldown" : "Wanderdoc",
                "y" : 2
             }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 063"
+         ]
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 063"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
    }
 }
