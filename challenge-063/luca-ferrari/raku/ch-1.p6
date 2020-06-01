@@ -17,7 +17,17 @@
 
 
 sub last_word( $string, $regexp ){
+    my $last-word = Nil;
     for $string.split( " " ) {
+        $last-word =  $_ if $_ ~~ $regexp;
+    }
+
+    return $last-word;
+}
+
+
+sub last_word_shorter( $string, $regexp ){
+    for $string.split( " " ).reverse {
         return $_ if $_ ~~ $regexp;
     }
 }
@@ -27,5 +37,10 @@ sub MAIN(){
     say last_word('  hello world',                rx/<[ea]>l/);      # 'hello'
     say last_word("Don't match too much, Chet!",  rx:i/ch.t/);      # 'Chet!'
     say last_word("spaces in regexp won't match", rx:s/ in re / );      #  undef
-                  say last_word( join(' ', 1..1e6),             rx/ ^ (3.*?) ** 3 / ); # '399933'
+    say last_word( join(' ', 1..1e6),             rx/ ^ (3.*?) ** 3 / ); # '399933'
+
+    say last_word_shorter('  hello world',                rx/<[ea]>l/);      # 'hello'
+    say last_word_shorter("Don't match too much, Chet!",  rx:i/ch.t/);      # 'Chet!'
+    say last_word_shorter("spaces in regexp won't match", rx:s/ in re / );      #  undef
+    say last_word_shorter( join(' ', 1..1e6),             rx/ ^ (3.*?) ** 3 / ); # '399933'
 }
