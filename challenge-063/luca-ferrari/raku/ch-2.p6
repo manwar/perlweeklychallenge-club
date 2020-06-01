@@ -18,7 +18,7 @@
 # 
 # Output: 7
 
-sub rotate( $string, $verbose = False ){
+sub rotate( $string where { $string.split( '', :skip-empty ).chars > 1 }, $verbose = False ){
     my $step = 1;
     my @chars  = $string.split( '', :skip-empty );
 
