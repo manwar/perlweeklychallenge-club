@@ -1,8 +1,28 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2020-06-01 16:27:09 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 063"
+   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Javier Luque",
+            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -17,27 +37,41 @@
                   1
                ]
             ],
-            "id" : "Javier Luque"
+            "name" : "Javier Luque"
+         },
+         {
+            "name" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "id" : "Luca Ferrari"
          },
          {
             "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Niels van Dijke"
          },
          {
-            "name" : "Pete Houston",
             "id" : "Pete Houston",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "name" : "Pete Houston"
          },
          {
             "name" : "Roger Bell_West",
@@ -54,14 +88,14 @@
             "id" : "Roger Bell_West"
          },
          {
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            "id" : "Simon Proctor"
          },
          {
             "id" : "Wanderdoc",
@@ -75,11 +109,9 @@
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 063",
          "data" : [
             {
                "name" : "Javier Luque",
@@ -87,14 +119,19 @@
                "drilldown" : "Javier Luque"
             },
             {
-               "name" : "Niels van Dijke",
-               "y" : 2,
-               "drilldown" : "Niels van Dijke"
+               "name" : "Luca Ferrari",
+               "y" : 4,
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "drilldown" : "Pete Houston",
+               "drilldown" : "Niels van Dijke",
+               "y" : 2,
+               "name" : "Niels van Dijke"
+            },
+            {
+               "name" : "Pete Houston",
                "y" : 1,
-               "name" : "Pete Houston"
+               "drilldown" : "Pete Houston"
             },
             {
                "drilldown" : "Roger Bell_West",
@@ -102,17 +139,16 @@
                "y" : 4
             },
             {
-               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
                "y" : 2,
-               "name" : "Simon Proctor"
+               "drilldown" : "Simon Proctor"
             },
             {
+               "drilldown" : "Wanderdoc",
                "y" : 2,
-               "name" : "Wanderdoc",
-               "drilldown" : "Wanderdoc"
+               "name" : "Wanderdoc"
             }
          ],
-         "name" : "Perl Weekly Challenge - 063",
          "colorByPoint" : 1
       }
    ],
@@ -127,24 +163,7 @@
    "legend" : {
       "enabled" : 0
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 063"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2020-06-01 16:22:48 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
+   "chart" : {
+      "type" : "column"
    }
 }
