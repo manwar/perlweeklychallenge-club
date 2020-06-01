@@ -1,0 +1,14 @@
+ SortEmailAddresses←{
+⍝ Sort email addresses ⍵ first by domain, then by mailbox
+⍝ ⍺: Optional unique flag
+     ⍺←0 ⍝: Default, return all addresses
+⍝    ⍺←1  : Return unique email addresses (case-folded domains)
+⍝ ⍵: Character vector with embedded new line characters
+     admat←↑(⎕UCS 10 13)((~∊⍨)⊆⊢)⍵      ⍝ Split by new line
+     dnorm←⎕C 2⊃↓⍉'@'(≠⊆⊢)⍤1↑admat      ⍝ Normalise domains
+     dgroup←dnorm(⊂admat⍳⊢)⌸admat       ⍝ Indices grouped by domain
+     dsort←admat∘{⍵[⍋⍺⌷⍤0 99⍨⍵]}¨dgroup ⍝ Indices sorted within each domain
+     sea←admat⌷⍨⊂∊dsort[⍋∪dnorm]        ⍝ Sorted Email Addresses
+     ⍺:sea⌿⍨≠⎕C@(∨\'@'∘=)sea            ⍝ Unique only
+     sea
+ }

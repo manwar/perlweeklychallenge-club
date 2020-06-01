@@ -1,0 +1,75 @@
+#! /usr/bin/env raku
+
+use lib "lib";
+use QueenCube;
+
+unit sub MAIN
+(
+  $size     = 8,
+  :$id       = 'Q',
+  :$empty    =".",
+  :$queen,
+  :$colour,
+  :$newlines,
+  :$fill,
+  :$random,
+  :$silent
+);
+
+if $silent ~~ Int
+{
+  get-many-solutions;
+}
+else
+{
+  get-one-solution;
+}
+
+
+sub get-one-solution
+{
+  my $c = QueenCube.new(size => $size);
+
+  $c.init($empty);
+  
+  if $queen
+  {
+    $c.queen($id, $_) for $queen.words;
+  }
+
+  if $fill || $random
+  {
+    loop
+    {
+      my ($pos) = $random ?? $c.get-empty-cell-random !! $c.get-empty-cell;
+      last unless defined $pos;
+      say ": Queen at $pos" if $verbose;
+      my ($x, $y, $z) = $pos.split(";");
+      $c.queen($id, $x, $y, $z);
+    }
+  }
+  
+  unless $silent
+  {
+    $newlines
+      ?? $c.display-with-newlines($colour, $newlines)
+      !! $c.display($colour);
+  }
+  
+  my $count = $c.number-of-queens;
+  say "Number of Queens: ", $count if $count > 1;
+}
+
+
+sub get-many-solutions
+{
+  my @result;
+
+  @result.push(get-one-solution) for ^$silent;
+
+  my %result;
+
+  %result{$_}++ for @result;
+
+  say "$_ (%result{$_})" for %result.keys.sort;
+}
