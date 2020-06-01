@@ -1,40 +1,73 @@
 {
-   "xAxis" : {
-      "type" : "category"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Javier Luque",
+            "name" : "Javier Luque"
+         },
+         {
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Niels van Dijke",
             "name" : "Niels van Dijke"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 063",
+         "data" : [
+            {
+               "drilldown" : "Javier Luque",
+               "name" : "Javier Luque",
+               "y" : 5
+            },
+            {
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke",
+               "y" : 2
+            }
+         ],
+         "colorByPoint" : 1
       }
+   ],
+   "xAxis" : {
+      "type" : "category"
    },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-06-01 06:59:18 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "legend" : {
       "enabled" : 0
@@ -42,22 +75,12 @@
    "title" : {
       "text" : "Perl Weekly Challenge - 063"
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
-               "y" : 2
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 063"
-      }
-   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2020-06-01 07:48:25 GMT"
    }
 }
