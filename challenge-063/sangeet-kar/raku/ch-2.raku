@@ -1,3 +1,5 @@
+#!/usr/bin/env raku
+
 sub MAIN (Str $input) {
         my $tmp = $input;
         for 1 ... ∞ {
