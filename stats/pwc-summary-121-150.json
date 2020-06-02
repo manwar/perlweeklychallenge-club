@@ -1,4 +1,18 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-06-02 07:51:50 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Philippe Bruhat",
@@ -33,29 +47,18 @@
          "Tester R59"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-06-01 23:55:54 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             4,
             8,
@@ -87,7 +90,8 @@
             64,
             2,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -159,9 +163,5 @@
          ],
          "name" : "Blog"
       }
-   ],
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   }
+   ]
 }
