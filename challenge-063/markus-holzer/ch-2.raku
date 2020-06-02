@@ -1,19 +1,19 @@
-say r('xyxx'); 
-
-multi sub r( Str $orig ) 
+multi sub rotmodN( Str $orig ) 
 { 
-	r $orig.comb.List
+    rotmodN $orig.comb.List
 }
 
-multi sub r( List $orig ) 
+multi sub rotmodN ( List $orig, $n = $orig.elems ) 
 { 
     my $work = $orig;
 
-    for ( 1 .. Inf ).map( * % 4 ).kv -> $n, $by
+    for ( 1 .. Inf ).map( * % $n ).kv -> $i, $by
     {
 	$work = $work.rotate: $by;
 
-	return $n + 1 
-		if $work cmp $orig == Same;
+        return $i + 1 
+            if $work cmp $orig == Same;
     }
 }
+
+say rotmodN 'xyxx';
