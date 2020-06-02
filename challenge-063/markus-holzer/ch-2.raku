@@ -9,11 +9,11 @@ multi sub rotmodN ( List $orig, $n = $orig.elems )
 
     for ( 1 .. Inf ).map( * % $n ).kv -> $i, $by
     {
-	$work = $work.rotate: $by;
+        $work = $work.rotate: $by;
 
         return $i + 1 
-            if $work cmp $orig == Same;
+            if $work cmp $orig == Same
     }
 }
 
-say rotmodN 'xyxx';
+say rotmodN 'xyxx'
