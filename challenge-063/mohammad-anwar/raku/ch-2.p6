@@ -6,7 +6,7 @@ sub MAIN(Str :$string = 'xyxx', Bool :$verbose?) {
     rotate($string, $verbose).say;
 }
 
-sub rotate(Str $string where { $_ ~~ rx:i/^ <[xy]>+ $/ }, Bool $verbose?) {
+sub rotate(Str $string where rx:i/^ <[xy]>+ $/, Bool $verbose?) {
 
     my $size = $string.chars;
     my $temp = $string;

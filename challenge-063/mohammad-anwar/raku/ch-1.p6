@@ -10,5 +10,5 @@ is last-word( (1..1e6).join(' '),            rx  /^^(3.*?)**3/), '399933';
 done-testing;
 
 sub last-word(Str $string, Regex $regex) {
-    return ($string.split(" ").reverse.grep: { $_ ~~ $regex }).[0];
+    return $string.split(" ").reverse.grep($regex).head;
 }
