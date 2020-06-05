@@ -8,8 +8,8 @@ sub lookup_repeated {
     my $word = $_[0];
     my $le = 1;
     while ($le <= $wordlen/2) {
-        if ($wordlen % $le == 0) { 
-            my $multiple = $wordlen/$le;
+        my $multiple = int $wordlen/$le;
+        if ($wordlen == $le * $multiple) {
             my $pattern = substr $word, 0, $le;
             if ( ($pattern x $multiple) eq $word ) {
                 return $le;
