@@ -1,9 +1,7 @@
 #!/usr/bin/perl
-
 use strict;
 
 my $word = $ARGV[0];
-
 my $wordlen = length $word;
 
 sub lookup_repeated {
@@ -24,8 +22,6 @@ sub lookup_repeated {
             $le++;
         }
     }
-
-
     return $wordlen if $le > $wordlen/2 ;
 }
 
@@ -47,4 +43,3 @@ while ($tri_no % $patternlen != 0) {
 
 print $i;
 print "\n";
-
