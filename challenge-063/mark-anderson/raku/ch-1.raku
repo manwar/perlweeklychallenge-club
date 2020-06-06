@@ -7,6 +7,6 @@ say last_word(join(' ', 1..1e6),              rx/^(3.*?)**3/);
 
 sub last_word(Str $string, Regex $regexp) {
 
-    return $string.split(/\s+/).grep($regexp).Array.pop || Nil;
+    return $string.words.grep($regexp).Array.pop || Nil;
 
 }
