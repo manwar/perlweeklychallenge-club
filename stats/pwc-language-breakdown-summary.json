@@ -1,26 +1,14 @@
 {
-   "legend" : {
-      "enabled" : "false"
+   "subtitle" : {
+      "text" : "Last updated at 2020-06-06 18:50:31 GMT"
    },
    "series" : [
       {
-         "dataLabels" : {
-            "align" : "right",
-            "enabled" : "true",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "rotation" : -90,
-            "color" : "#FFFFFF"
-         },
          "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               726
+               727
             ],
             [
                "Perl",
@@ -28,25 +16,31 @@
             ],
             [
                "Raku",
-               1665
+               1667
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "rotation" : -90,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "y" : 10
+         }
       }
    ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "min" : 0,
@@ -54,10 +48,16 @@
          "text" : null
       }
    },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2020-06-06 10:26:57 GMT"
+   "legend" : {
+      "enabled" : "false"
    }
 }
