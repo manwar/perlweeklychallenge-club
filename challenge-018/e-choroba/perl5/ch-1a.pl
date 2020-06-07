@@ -15,11 +15,12 @@ use feature qw{ say };
 }
 
 {   package My::Suffix::Tree;
+    use List::Util qw{ first };
 
     sub new {
         my ($class) = @_;
         bless my $self = {position      => -1,
-                          text          => "",
+                          text          => [],
                           active_edge   => 0,
                           active_length => 0,
                           current_node  => -1,
@@ -41,11 +42,10 @@ use feature qw{ say };
         return keys %{ $node->{numbers} }
     }
 
-    my $SEP = chr 2 ** 20;
-    sub fresh_separator {
-        my ($self) = @_;
-        $self->{separator} //= 2 ** 20;
-        return chr ++$self->{separator}
+    sub add_mark {
+        my ($self, $index) = @_;
+        $self->add_char("<$index");
+        push @{ $self->{numbers} }, $self->{position};
     }
 
     sub add_words {
@@ -54,20 +54,16 @@ use feature qw{ say };
         for my $word_index (0 .. $#words) {
             $self->add_char($_)
                 for split //, $words[$word_index];
-            $self->add_char($self->fresh_separator);
-            $self->add_char($_) for split //, "$word_index$SEP";
+            $self->add_mark($word_index);
         }
-        my $text_length = length $self->{text};
         for my $node (@{ $self->{nodes} }) {
             next if $node->{start} < 0;
-            my $text = $node->{end} > $text_length
-                     ? substr $self->{text}, $node->{start}
-                     : substr $self->{text}, $node->{start},
-                           $node->{end} - $node->{start};
-            $node->{text} = $text;
-            if (my ($number) = $text =~ /([0-9]+)$SEP/) {
-                $node->{number} = $number;
-            }
+
+            my $number = first {
+                $node->{start} <= $self->{numbers}[$_]
+                && $self->{numbers}[$_] <= $node->{end}
+            } 0 .. $#{ $self->{numbers} };
+            $node->{number} = $number if defined $number;
         }
         $self->add_numbers(0);
     }
@@ -79,7 +75,7 @@ use feature qw{ say };
         $self->{need_suffix_link} = $node;
     }
 
-    sub active_edge { substr $_[0]{text}, $_[0]{active_edge}, 1 }
+    sub active_edge { $_[0]{text}[ $_[0]{active_edge} ] }
 
     sub walk_down {
         my ($self, $next) = @_;
@@ -107,7 +103,7 @@ use feature qw{ say };
 
     sub add_char {
         my ($self, $char) = @_;
-        substr $self->{text}, ++$self->{position}, 1, $char;
+        splice @{ $self->{text} }, ++$self->{position}, 1, $char;
         $self->{need_suffix_link} = -1;
         ++$self->{remainder};
         while ($self->{remainder} > 0) {
@@ -127,9 +123,9 @@ use feature qw{ say };
                 next if $self->walk_down($next);  # Observation 2.
 
                 # Observation 1.
-                if ($char eq substr $self->{text},
-                        $self->{nodes}[$next]{start} + $self->{active_length}, 1
-                ) {
+                if ($char eq $self->{text}[
+                    $self->{nodes}[$next]{start} + $self->{active_length}
+                ]) {
                     ++$self->{active_length};
                     # Observation 3.
                     $self->_add_suffix_link($self->{active_node});
@@ -142,8 +138,10 @@ use feature qw{ say };
                 my $leaf = $self->new_node($self->{position}, 'INF');
                 $self->{nodes}[$split]{next}{$char} = $leaf;
                 $self->{nodes}[$next]{start} += $self->{active_length};
-                $self->{nodes}[$split]{next}{ substr $self->{text},
-                    $self->{nodes}[$next]{start}, 1 } = $next;
+
+                $self->{nodes}[$split]{next}{
+                    $self->{text}[ $self->{nodes}[$next]{start} ]
+                } = $next;
                 $self->_add_suffix_link($split);  # Rule 2.
             }
             -- $self->{remainder};
@@ -164,6 +162,15 @@ use feature qw{ say };
         }
     }
 
+    my @text;
+    sub text {
+        my ($self, $node) = @_;
+        @text = @{ $self->{text} } unless @text;
+        my $to = $node->{end} - 1;
+        $to = $#text if $node->{end} > $#text;
+        return join "", @text[ $node->{start} .. $to ]
+    }
+
     my @lcs;
     sub longest_common_substring {
         my ($self, $node_index, $string) = @_;
@@ -179,9 +186,10 @@ use feature qw{ say };
         for my $next_char (keys %{ $node->{next} }) {
             my $next_index = $node->{next}{$next_char};
             my $next = $self->{nodes}[$next_index];
+            my $text = $self->text($next);
             $self->longest_common_substring(
                 $next_index,
-                "$string$next->{text}");
+                "$string$text");
         }
         return @lcs
     }
