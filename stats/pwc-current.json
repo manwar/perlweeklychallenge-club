@@ -1,20 +1,12 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-06-08 11:53:06 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Javier Luque",
             "name" : "Javier Luque",
+            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -31,7 +23,6 @@
             ]
          },
          {
-            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -42,49 +33,77 @@
                   2
                ]
             ],
+            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari"
+         },
+         {
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Roger Bell_West"
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 064"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    },
    "chart" : {
       "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Javier Luque",
+               "y" : 5,
+               "name" : "Javier Luque"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "y" : 4,
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 064",
+         "colorByPoint" : 1
+      }
+   ],
+   "title" : {
+      "text" : "Perl Weekly Challenge - 064"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 5,
-               "drilldown" : "Javier Luque",
-               "name" : "Javier Luque"
-            },
-            {
-               "y" : 4,
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 064"
-      }
-   ],
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2020-06-08 14:43:03 GMT"
    }
 }
