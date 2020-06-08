@@ -44,6 +44,8 @@ class Node {
         return $!right if $!right && $!down && $!right.value < $!down.value;
         return $!down;
     }
+
+
 }
 
 
