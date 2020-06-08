@@ -6,10 +6,11 @@
 
 use strict;
 use warnings;
+use List::Util qw(reduce);
 
+my @bits = map {pack 'Q', $_} @ARGV;
 my $sum;
-while (defined (my $x = shift)) {
-	my $bits = pack 'Q', $x;
-	$sum += unpack '%64b*', $bits ^ $_ foreach map {pack 'Q', $_} @ARGV;
+while (defined (my $bits = shift @bits)) {
+	$sum += unpack '%64b*', $bits ^ $_ foreach @bits;
 }
 print $sum, "\n";
