@@ -19,9 +19,10 @@ sub match_words
 			}
 		}
 
-		return 0;
+		last;
 	}
 
+	return 0 if @found != @words;
 	return
 		join ", ",
 		map { '"' . $_ . '"' }
@@ -51,6 +52,16 @@ my @data = (
 		"perlishperl",
 		[qw(perl perlish)],
 		'"perlish", "perl"',
+	],
+	[
+		"",
+		[],
+		"",
+	],
+	[
+		"",
+		[qw(test)],
+		0,
 	],
 );
 
