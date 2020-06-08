@@ -1,11 +1,77 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 064",
+         "data" : [
+            {
+               "name" : "Bartosz Jarzyna",
+               "drilldown" : "Bartosz Jarzyna",
+               "y" : 3
+            },
+            {
+               "y" : 5,
+               "name" : "Javier Luque",
+               "drilldown" : "Javier Luque"
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
+               "y" : 4
+            }
+         ]
+      }
+   ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2020-06-08 18:17:52 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 064"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Javier Luque",
+            "id" : "Bartosz Jarzyna",
+            "name" : "Bartosz Jarzyna",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
             "id" : "Javier Luque",
             "data" : [
                [
@@ -20,9 +86,11 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Javier Luque"
          },
          {
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -33,10 +101,10 @@
                   2
                ]
             ],
-            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari"
          },
          {
+            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West",
             "data" : [
                [
@@ -47,63 +115,14 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Roger Bell_West"
+            ]
          }
       ]
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
    },
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Javier Luque",
-               "y" : 5,
-               "name" : "Javier Luque"
-            },
-            {
-               "name" : "Luca Ferrari",
-               "y" : 4,
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 064",
-         "colorByPoint" : 1
-      }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 064"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2020-06-08 14:43:03 GMT"
+   "legend" : {
+      "enabled" : 0
    }
 }
