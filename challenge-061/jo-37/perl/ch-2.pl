@@ -22,7 +22,6 @@ use Test2::V0;
 	# return an unmatchable pattern
 	sub collect {
 		push @result, [$1, $2, $3, $4] if pos == length;
-		'^';	# cannot match after address
 	};
 
 	# Regex that never matches anything, but
@@ -31,7 +30,8 @@ use Test2::V0;
 		qr{
 			^
 			$addr			# match an address
-			(??{ collect })	# collect address and fail
+			(?{ collect })	# collect address
+			(*FAIL)			# force backtracking
 		}x;
 
 	# prepare actual call and
