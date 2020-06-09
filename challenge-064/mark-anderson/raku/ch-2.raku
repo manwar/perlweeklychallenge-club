@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 
-my $S = "perlweeklychallenge";
-my @W = <weekly challenge perl week>;
+my $S := "perlweeklychallenge";
+my @W := <weekly challenge perl week>;
 my %H;
 
 @W.map: -> $w { %H{$/.from}.push: ~$/ if $S ~~ /$w/ };
