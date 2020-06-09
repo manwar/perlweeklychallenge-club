@@ -1,19 +1,9 @@
 #!/usr/bin/env raku
 
-my $S = "perlweeklychallenge";
-my @W = <weekly challenge perl week>;
+my $S := "perlweeklychallenge";
+my @W := <weekly challenge perl week>;
 my %H;
 
-for @W -> $w {
-    if $S ~~ /$w/ {
-        %H{$/.from}.push: ~$/;
-    }
-}
+@W.map: -> $w { %H{$/.from}.push: ~$/ if $S ~~ /$w/ };
 
-if %H.keys == 0 {
-    say "0 as no matching word found";
-}
-
-else {
-    say %H.keys.sort(* <=> *).map({|%H{$_}.sort(*.chars)}).join(", ");
-}
+say %H.keys.sort(* <=> *).map({|%H{$_}.sort(*.chars)}).join(", ") || "0";
