@@ -3,13 +3,11 @@
 use strict;
 use warnings;
 
-my $M = [
-    [ 1, 2, 3 ],
-    [ 4, 5, 6 ],
-    [ 7, 8, 9 ],
-];
+my $matrix = [[ 1, 2, 3 ],
+              [ 4, 5, 6 ],
+              [ 7, 8, 9 ]];
 
-print sprintf("%s\n", join " →  ", @$_) for find_path($M, 0, 0);
+print sprintf("%s\n", join " →  ", @$_) for find_path($matrix, 0, 0);
 
 sub find_path {
     my ($matrix, $row, $col, $path) = @_;
