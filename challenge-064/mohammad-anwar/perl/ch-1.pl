@@ -2,12 +2,21 @@
 
 use strict;
 use warnings;
+use List::Util qw(sum);
 
 my $matrix = [[ 1, 2, 3 ],
               [ 4, 5, 6 ],
               [ 7, 8, 9 ]];
 
-print sprintf("%s\n", join " →  ", @$_) for find_path($matrix, 0, 0);
+print min_sum_path($matrix, 0, 0), "\n";
+
+sub min_sum_path {
+    my ($matrix, $row, $col, $path) = @_;
+
+    my $paths = {};
+    $paths->{join " →  ", @$_} = sum @$_ for find_path($matrix, 0, 0);
+    return (sort {  $paths->{$a} <=> $paths->{$b} } keys %$paths)[0];
+}
 
 sub find_path {
     my ($matrix, $row, $col, $path) = @_;

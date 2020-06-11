@@ -4,20 +4,23 @@ use strict;
 use warnings;
 
 use Test::More;
-use Test::Deep;
+use List::Util qw(sum);
 
-is_deeply([find_path([[ 1, 2, 3 ],
-                      [ 4, 5, 6 ],
-                      [ 7, 8, 9 ]],
-                      0, 0)],
-          [[ 1, 2, 3, 6, 9 ],
-           [ 1, 2, 5, 6, 9 ],
-           [ 1, 2, 5, 8, 9 ],
-           [ 1, 4, 5, 6, 9 ],
-           [ 1, 4, 5, 8, 9 ],
-           [ 1, 4, 7, 8, 9 ]]);
+is(min_sum_path([[ 1, 2, 3 ],
+                 [ 4, 5, 6 ],
+                 [ 7, 8, 9 ]],
+                 0, 0),
+   "1 →  2 →  3 →  6 →  9");
 
 done_testing;
+
+sub min_sum_path {
+    my ($matrix, $row, $col, $path) = @_;
+
+    my $paths = {};
+    $paths->{join " →  ", @$_} = sum @$_ for find_path($matrix, 0, 0);
+    return (sort {  $paths->{$a} <=> $paths->{$b} } keys %$paths)[0];
+}
 
 sub find_path {
     my ($matrix, $row, $col, $path) = @_;
