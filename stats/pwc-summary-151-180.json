@@ -1,12 +1,12 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
+         "Tester R59",
          "Tiago Stock",
          "Tim Smith",
          "Tore Andersson",
@@ -24,27 +24,23 @@
          "Yozen Hernandez"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 15] Last updated at 2020-06-11 10:36:54 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "series" : [
       {
          "data" : [
+            2,
             1,
             0,
             2,
@@ -64,8 +60,8 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
+            0,
             0,
             4,
             0,
@@ -81,11 +77,13 @@
             2,
             21,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
          "data" : [
+            0,
             0,
             0,
             0,
@@ -103,5 +101,11 @@
             14
          ]
       }
-   ]
+   ],
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 16] Last updated at 2020-06-11 11:24:28 GMT"
+   }
 }
