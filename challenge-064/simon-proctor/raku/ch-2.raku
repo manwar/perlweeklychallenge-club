@@ -7,7 +7,6 @@ sub MAIN (
     Str $haystack, #= Target string to search
     *@needles #= Strings to search for
 ) {
-    my @out = @needles.map( { $_ => $haystack.index($_) } ).grep( { $_.value.defined } ).sort( { $^a.value <=> $^b.value } ).map( *.key );
-    (.say for @out ) if @out;
-    "0".say unless @out;
+    my @out = ( @needles.map( { $_ => $haystack.index($_) } ).grep( { $_.value.defined } ).sort( { $^a.value <=> $^b.value } ).map( *.key ) ) || [0];
+    .say for @out;
 }
