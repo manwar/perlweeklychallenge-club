@@ -16,5 +16,5 @@ my $match  = word_break($string, $words);
 sub word_break {
     my ($string, $words) = @_;
 
-    return [ grep { $string =~ /$_.*?/i } @$words ];
+    return [ grep { $string =~ /$_/i } @$words ];
 }

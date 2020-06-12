@@ -1,9 +1,23 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "Perl Weekly Challenge - 064"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "chart" : {
       "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2020-06-12 16:41:10 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "yAxis" : {
       "title" : {
@@ -14,21 +28,7 @@
       "series" : [
          {
             "id" : "Bartosz Jarzyna",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "name" : "Bartosz Jarzyna"
-         },
-         {
-            "id" : "Dave Jacoby",
-            "name" : "Dave Jacoby",
+            "name" : "Bartosz Jarzyna",
             "data" : [
                [
                   "Perl",
@@ -39,6 +39,20 @@
                   1
                ]
             ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby"
          },
          {
             "name" : "E. Choroba",
@@ -69,7 +83,6 @@
             ]
          },
          {
-            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari",
             "data" : [
                [
@@ -80,7 +93,8 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari"
          },
          {
             "data" : [
@@ -93,27 +107,31 @@
             "id" : "Mark Anderson"
          },
          {
-            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
                   2
                ],
                [
+                  "Raku",
+                  1
+               ],
+               [
                   "Blog",
                   1
                ]
             ],
-            "name" : "Mohammad S Anwar"
+            "id" : "Mohammad S Anwar"
          },
          {
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Niels van Dijke",
             "id" : "Niels van Dijke"
          },
          {
@@ -135,50 +153,44 @@
             "id" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Simon Proctor"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          },
          {
+            "id" : "Wanderdoc",
             "name" : "Wanderdoc",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Wanderdoc"
+            ]
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
-   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2020-06-11 13:22:41 GMT"
    },
    "series" : [
       {
-         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 064",
          "data" : [
             {
-               "name" : "Bartosz Jarzyna",
                "drilldown" : "Bartosz Jarzyna",
-               "y" : 3
+               "y" : 3,
+               "name" : "Bartosz Jarzyna"
             },
             {
                "y" : 3,
@@ -186,8 +198,8 @@
                "name" : "Dave Jacoby"
             },
             {
-               "drilldown" : "E. Choroba",
                "y" : 2,
+               "drilldown" : "E. Choroba",
                "name" : "E. Choroba"
             },
             {
@@ -196,8 +208,8 @@
                "y" : 5
             },
             {
-               "y" : 4,
                "drilldown" : "Luca Ferrari",
+               "y" : 4,
                "name" : "Luca Ferrari"
             },
             {
@@ -207,13 +219,13 @@
             },
             {
                "name" : "Mohammad S Anwar",
-               "y" : 3,
-               "drilldown" : "Mohammad S Anwar"
+               "drilldown" : "Mohammad S Anwar",
+               "y" : 4
             },
             {
-               "name" : "Niels van Dijke",
+               "y" : 2,
                "drilldown" : "Niels van Dijke",
-               "y" : 2
+               "name" : "Niels van Dijke"
             },
             {
                "drilldown" : "Roger Bell_West",
@@ -226,20 +238,12 @@
                "drilldown" : "Simon Proctor"
             },
             {
-               "drilldown" : "Wanderdoc",
+               "name" : "Wanderdoc",
                "y" : 2,
-               "name" : "Wanderdoc"
+               "drilldown" : "Wanderdoc"
             }
          ],
-         "name" : "Perl Weekly Challenge - 064"
+         "colorByPoint" : 1
       }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 064"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   }
+   ]
 }
