@@ -16,5 +16,16 @@ my $match  = word_break($string, $words);
 sub word_break {
     my ($string, $words) = @_;
 
-    return [ grep { $string =~ /$_/i } @$words ];
+    my $matched = [ grep { $string =~ /$_/i } @$words ];
+    return [] unless scalar @$matched;
+
+    my $search_order = {};
+    foreach my $word (@$matched) {
+        $search_order->{index($string, $word)} = $word;
+    }
+
+    return [
+        map  { $search_order->{$_} }
+        sort { $a <=> $b } keys %$search_order
+    ];
 }

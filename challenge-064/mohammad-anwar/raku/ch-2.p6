@@ -15,5 +15,15 @@ sub MAIN(Str $string = "perlweeklychallenge",
 }
 
 sub word-break(Str $string, @words where .all ~~ Str) {
-    return @words.grep: -> $word { $string ~~ / $word / };
+
+    my @matched = @words.grep: -> $word { $string ~~ / $word / };
+    return unless @matched.elems;
+
+    my %search-order = @matched.map(
+        -> $word { $string.index($word) => $word });
+
+    return [
+        %search-order.keys.sort({ $^a <=> $^b })
+        .map({ %search-order{$_} })
+    ];
 }
