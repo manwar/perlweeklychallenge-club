@@ -12,7 +12,7 @@ class Node {
 sub manhattan-dist ($pos, $goal) { ($goal »-« $pos).sum }
 
 sub next-states ($pos, $matrix) {
-        (((1, 0), (0, 1), (-1, 0), (0, -1)) »+» ($pos,*)).grep({(0 ≤ $_[0] < 0+$matrix) && (0 ≤ $_[1] < 0+$matrix[0])}).map({tuple($_)}); 
+        (((1, 0), (0, 1), (-1, 0), (0, -1)) »+» ($pos,)).grep({(0 ≤ $_[0] < 0+$matrix) && (0 ≤ $_[1] < 0+$matrix[0])}).map({tuple($_)})
 }
 
 sub move($curr-node, $pos, $matrix) {
