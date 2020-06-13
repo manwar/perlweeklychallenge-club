@@ -6,7 +6,7 @@ use feature qw{ say };
 sub distinct_digits {
     my ($n) = @_;
     my %d;
-    undef @d{split //, $n};
+    @d{split //, $n} = ();
     return keys %d
 }
 
