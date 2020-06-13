@@ -28,7 +28,7 @@ sub from_edges {
         push @children, $child;
     }
     my %root;
-    undef @root{ keys %tree };
+    @root{ keys %tree } = ();
     delete @root{ @children };
     my @roots = keys %root;
     die "One root not found: @roots." if @roots != 1;

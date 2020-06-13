@@ -5,7 +5,7 @@ use strict;
 sub extend {
     my ($length, $short, $long) = @_;
     my %next;
-    undef @next{@$short};
+    @next{@$short} = ();
     for my $i (0 .. $#$short) {
         for my $j (0 .. $#$short) {
             my $new = 0 + ($short->[$i] . $short->[$j]);
@@ -25,7 +25,7 @@ sub extend {
 sub find {
     my ($length, $greater, @list) = @_;
     my @long = grep $length == length $_, @list;
-    my %long; undef @long{@long} if @long;
+    my %long; @long{@long} = ();
     return grep $greater > $_,
            extend($length, \@list, \%long);
 }
