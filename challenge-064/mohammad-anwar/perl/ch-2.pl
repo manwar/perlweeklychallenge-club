@@ -7,17 +7,13 @@ my $string = "perlweeklychallenge";
 my $words  = [ "weekly", "challenge", "perl" ];
 my $match  = word_break($string, $words);
 
-(@$match)
-?
-(print sprintf("Matched: %s\n", join (", ", @$match)))
-:
-(print "None matched.\n");
+print sprintf("%s\n", join (", ", @$match));
 
 sub word_break {
     my ($string, $words) = @_;
 
     my $matched = [ grep { $string =~ /$_/i } @$words ];
-    return 0 unless scalar @$matched;
+    return [0] unless scalar @$matched;
 
     my $search_order = {};
     foreach my $word (@$matched) {

@@ -9,7 +9,7 @@ use Test::Deep;
 is_deeply(word_break("perlweeklychallenge", [ "weekly", "challenge", "perl" ]),
           [ "perl", "weekly", "challenge" ], "match test");
 is_deeply(word_break("perlandraku", [ "python", "ruby", "haskell" ]),
-          0, "no match test");
+          [ 0 ], "no match test");
 
 done_testing;
 
@@ -17,7 +17,7 @@ sub word_break {
     my ($string, $words) = @_;
 
     my $matched = [ grep { $string =~ /$_/i } @$words ];
-    return 0 unless scalar @$matched;
+    return [0] unless scalar @$matched;
 
     my $search_order = {};
     foreach my $word (@$matched) {
