@@ -3,6 +3,9 @@ use strict;
 use Math::Combinatorics;
 use List::Util qw{sum};
 
+# Usage:
+# Example Input: $ perl ch-2.pl perlweeklychallenge weekly challenge perl
+#        Output: "perl","weekly","challenge"
 
 #ref Challenge-051 task-1 3 Sum
 #brute force
@@ -13,8 +16,8 @@ my $S;
 my @W;
 
 if ($ARGV[0] eq undef) {
-    $S = "thequickbrownfoxjumpsoverthelazydogwooyousee";
-    @W = split / /, "theq uickb rownf ox jumps over the lazy dog";
+    $S = "thequickbrownfoxjumpsoverthelazydogwoo";
+    @W = split / /, "theq uickb rownf ox jumps over the lazy dog woo";
 } else {
     $S = shift @ARGV;
     @W = @ARGV;
