@@ -2,8 +2,8 @@
 
 use v6.d;
 
-sub MAIN(Str $string = "perlweeklychallenge",
-         @words where .all ~~ Str = ("weekly", "challenge", "perl")) {
+sub MAIN(Str :$string = "perlweeklychallenge",
+         :@words where .all ~~ Str = ("weekly", "challenge", "perl")) {
 
     my @matched = word-break($string, @words);
 
@@ -17,7 +17,7 @@ sub MAIN(Str $string = "perlweeklychallenge",
 sub word-break(Str $string, @words where .all ~~ Str) {
 
     my @matched = @words.grep: -> $word { $string ~~ / $word / };
-    return unless @matched.elems;
+    return 0 unless @matched.elems;
 
     my %search-order = @matched.map(
         -> $word { $string.index($word) => $word });
