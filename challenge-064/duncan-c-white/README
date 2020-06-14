@@ -1,56 +1,61 @@
-Task 1: "Last Word
+Task 1: "Minimum Sum Path
 
-Define sub last_word($string, $regexp) that returns the last word
-matching $regexp found in the given string, or undef if the string does
-not contain a word matching $regexp.
-
-For this challenge, a "word" is defined as any character sequence
-consisting of non-whitespace characters (\S) only. That means punctuation
-and other symbols are part of the word.
-
-The $regexp is a regular expression. Take care that the regexp can only
-match individual words! See the Examples for one way this can break if
-you are not careful.
-
-Examples
-
-last_word('  hello world',                qr/[ea]l/);      # 'hello'
-last_word("Don't match too much, Chet!",  qr/ch.t/i);      # 'Chet!'
-last_word("spaces in regexp won't match", qr/in re/);      #  undef
-last_word( join(' ', 1..1e6),             qr/^(3.*?){3}/); # '399933'
-"
-
-My notes: cool question. Will have a go!
-
-
-Task 2: "Rotate String
-
-Given a word made up of an arbitrary number of x and y characters, that
-word can be rotated as follows: For the ith rotation (starting at i =
-1), i % length(word) characters are moved from the front of the string to
-the end. Thus, for the string xyxx, the initial (i = 1) % 4 = 1 character
-(x) is moved to the end, forming yxxx. On the second rotation, (i = 2) %
-4 = 2 characters (yx) are moved to the end, forming xxyx, and so on. See
-below for a complete example.
-
-Your task is to write a function that takes a string of xs and ys and
-returns the minimum non-zero number of rotations required to obtain
-the original string. You may show the individual rotations if you wish,
-but that is not required.
+Given an MxN matrix with non-negative integers, write a script to find
+a path from top left to bottom right which minimizes the sum of all
+numbers along its path. You can only move either down or right at any
+point in time.
 
 Example
 
-Input: $word = 'xyxx';
+Input:
 
-Rotation 1: you get yxxx by moving x to the end.
-Rotation 2: you get xxyx by moving yx to the end.
-Rotation 3: you get xxxy by moving xxy to the end.
-Rotation 4: you get xxxy by moving nothing as 4 % length(xyxx) == 0.
-Rotation 5: you get xxyx by moving x to the end.
-Rotation 6: you get yxxx by moving xx to the end.
-Rotation 7: you get xyxx by moving yxx to the end which is same as the given word.
+[ 1 2 3 ]
+[ 4 5 6 ]
+[ 7 8 9 ]
 
-Output: 7
+The minimum sum path looks like this:
+
+1->2->3
+      |
+      6
+      |
+      9
+
+Thus, your script could output: 21 ( 1 -> 2 -> 3 -> 6 -> 9 )
+"
+
+My notes: sounds like fun.
+
+
+Task 2: "Word Break
+
+You are given a string $S and an array of words @W.
+
+Write a script to find out if $S can be split into sequence of one
+or more words as in the given @W.  Print all the words if found
+otherwise print 0.
+
+Example 1:
+
+Input:
+
+$S = "perlweeklychallenge"
+@W = ("weekly", "challenge", "perl")
+
+Output:
+
+"perl", "weekly", "challenge"
+
+Example 2:
+
+Input:
+
+$S = "perlandraku"
+@W = ("python", "ruby", "haskell")
+
+Output:
+
+0 as none matching word found.
 "
 
 My notes: sounds like fun.  Nice question.
