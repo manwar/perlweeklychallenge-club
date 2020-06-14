@@ -17,7 +17,7 @@ sub word_break {
     my ($string, $words) = @_;
 
     my $matched = [ grep { $string =~ /$_/i } @$words ];
-    return [] unless scalar @$matched;
+    return 0 unless scalar @$matched;
 
     my $search_order = {};
     foreach my $word (@$matched) {
