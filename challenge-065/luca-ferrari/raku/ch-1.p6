@@ -16,7 +16,7 @@
 
 
 sub MAIN( Int $N where { $N > 0 },
-          Int $S where { $S > 0 } ) {
+          Int $S where { $S >= 1 && $S <= 9 } ) {
 
 
     my @found;
