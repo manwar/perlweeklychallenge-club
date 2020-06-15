@@ -18,9 +18,9 @@ multi sub MAIN (
     .say for calculate-sums( $n, $s, 1 ).grep( { defined $_ } );
 }
 
-multi sub calculate-sums( UInt $n, UInt $s where { $n * 9 < $s }, $ ) { gather take Nil }
+multi sub calculate-sums( UInt $n, UInt $s where { $n * 9 < $s }, $ ) {}
 
-multi sub calculate-sums( UInt $n, 0, $ ) { gather take 0 x $n }
+multi sub calculate-sums( UInt $n, 0, $ ) { 0 x $n }
 
 multi sub calculate-sums( UInt $n, UInt $s, $start = 0 ) {
     my $end = $s > 9 ?? 9 !! $s;
