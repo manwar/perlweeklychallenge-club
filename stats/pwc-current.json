@@ -1,12 +1,15 @@
 {
-   "xAxis" : {
-      "type" : "category"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andrew Shitov",
-            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -16,44 +19,31 @@
                   "Blog",
                   1
                ]
+            ],
+            "id" : "Andrew Shitov",
+            "name" : "Andrew Shitov"
+         },
+         {
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
             ]
          }
       ]
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Andrew Shitov",
-               "y" : 2,
-               "drilldown" : "Andrew Shitov"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 065"
-      }
-   ],
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-06-15 06:57:20 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "chart" : {
       "type" : "column"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 065"
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2020-06-15 14:03:52 GMT"
    },
    "plotOptions" : {
       "series" : {
@@ -63,5 +53,34 @@
             "enabled" : 1
          }
       }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 065",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Andrew Shitov",
+               "y" : 2,
+               "drilldown" : "Andrew Shitov"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "y" : 4,
+               "drilldown" : "Luca Ferrari"
+            }
+         ]
+      }
+   ],
+   "title" : {
+      "text" : "Perl Weekly Challenge - 065"
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
