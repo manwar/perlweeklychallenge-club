@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 
 # Usage:
-# raku ch-2.p6 aabbababba
+# raku ch-2.raku aabbababba
 
 # Output:
 # aa bbababb
