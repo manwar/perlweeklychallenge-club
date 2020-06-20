@@ -1,41 +1,41 @@
 #!/usr/bin/env raku
 
-# Usage: 
-# raku ch-2.raku aabbababba 
+# Usage:
+# raku ch-2.raku aabbababba
 
 # Output:
 # aa bbababb
-# bb aba bb
+# aa bb aba bb
 # abbababba
 # abba bab
 # babab
 # bab abba
 
-my @matches;
-
 sub MAIN(Str $str) {
-    @matches = gather ($str ~~ m:ex /(\w ** 2..*) <?{ $0 eq $0.flip }>/)>>.take;
+    my %seen;
 
-    partition([$_]) for @matches;
-}
+    my @matches = gather ($str ~~ m:ex /(\w ** 2..*) <?{ $0 eq $0.flip }>/)>>.take;
 
-sub partition(@arr) { 
-    state %seen;
+    for @matches -> $match { 
+        next if %seen{$match.from ~ " " ~ $match.to}:exists;
 
-    my $match = @arr[*-1];
+        my @arr = [$match];
 
-    unless %seen{$match.from ~ " " ~ $match.to}:exists {
-        %seen{$match.from ~ " " ~ $match.to} = 1;
-    
-        my @m = @matches.grep($match.to == *.from);
+        while @arr {
+            my @a = @arr.shift;
 
-        if @m {
-            partition(@arr.push: $_) for @m;
-        }
+            my @m = @matches.grep(@a[*-1].to == *.from);
 
-        else {
-            say @arr>>.flat.Str;
-            @arr = Empty;
+            if @m ~~ Empty {
+                say @a>>.flat.Str;
+            }
+
+            else {
+                for @m -> $m {
+                    @arr.push: [@a, $m];
+                    %seen{$m.from ~ " " ~ $m.to} = 1;
+                }
+            }
         }
     }
 }
