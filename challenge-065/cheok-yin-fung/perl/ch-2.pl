@@ -83,9 +83,10 @@ sub need_to_remove_subsequence {
     }
     if (    #all components of $pierre is inside $peter
           $number_of_components == $#in+1 
-             and 
-            #avoid $peter permutes -> $pierre
-         $sizeresult{$bigbrother} > $#in+1 ) 
+               and 
+            #avoid $peter permuted is $pierre
+            $sizeresult{$bigbrother} > $#in+1 
+        ) 
     {
        return 1; 
     }
@@ -96,9 +97,8 @@ sub need_to_remove_subsequence {
 
 
 #remove_subsequence
-my @aresult = keys %hresult;
-for my $peter (@aresult) {
-    for my $pierre (@aresult) {
+for my $peter (keys %hresult) {
+    for my $pierre (keys %hresult) {
         unless ( $peter eq $pierre or $peter eq $S) {
             if ( need_to_remove_subsequence( $peter, (split /,/, $pierre) )) {
                 delete $hresult{$pierre};
