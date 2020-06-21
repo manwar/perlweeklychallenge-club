@@ -1,0 +1,8 @@
+ DigitsSum←{
+⍝ ⍺: Number of digits 
+⍝ ⍵: Sum of digits 
+⍝ ←: Numbers with ⍺ digits whose digits sum to ⍵
+     n←,1↓(⎕D∘.,⊢)⍣(¯1+⍺)⊢⎕D   ⍝ All numbers with ⍺ digits
+     s←+/¨⍎¨¨n                 ⍝ Sum of digits
+     (s=⍵)/⍎¨n                 ⍝ ←
+ }
