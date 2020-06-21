@@ -1,61 +1,95 @@
-Task 1: "Minimum Sum Path
+Task 1: "Digits Sum
 
-Given an MxN matrix with non-negative integers, write a script to find
-a path from top left to bottom right which minimizes the sum of all
-numbers along its path. You can only move either down or right at any
-point in time.
+You are given two positive numbers $N and $S.
+
+Write a script to list all positive numbers having exactly $N digits
+where sum of all digits equals to $S.
 
 Example
 
 Input:
+    $N = 2
+    $S = 4
 
-[ 1 2 3 ]
-[ 4 5 6 ]
-[ 7 8 9 ]
-
-The minimum sum path looks like this:
-
-1->2->3
-      |
-      6
-      |
-      9
-
-Thus, your script could output: 21 ( 1 -> 2 -> 3 -> 6 -> 9 )
+Output:
+    13, 22, 31, 40
 "
 
 My notes: sounds like fun.
 
 
-Task 2: "Word Break
+Task 2: "Palindrome Partition
 
-You are given a string $S and an array of words @W.
+You are given a string $S. Write a script print all possible partitions
+that gives Palindrome. Return -1 if none found.
 
-Write a script to find out if $S can be split into sequence of one
-or more words as in the given @W.  Print all the words if found
-otherwise print 0.
+Please make sure, partition should not overlap. For example, for given
+string "abaab", the partition "aba" and "baab" would not be valid,
+since they overlap.
 
-Example 1:
+Example 1
 
-Input:
+Input: $S = 'aabaab'
+Ouput:
+ There are 3 possible solutions.
+ a) 'aabaa'
+ b) 'aa', 'baab'
+ c) 'aba'
 
-$S = "perlweeklychallenge"
-@W = ("weekly", "challenge", "perl")
+Example 2
 
+Input: $S = 'abbaba'
 Output:
-
-"perl", "weekly", "challenge"
-
-Example 2:
-
-Input:
-
-$S = "perlandraku"
-@W = ("python", "ruby", "haskell")
-
-Output:
-
-0 as none matching word found.
+ There are 3 possible solutions.
+ a) 'abba'
+ b) 'bb', 'aba'
+ c) 'bab'
 "
 
-My notes: sounds like fun.  Nice question.
+My notes: hang on, what exactly do we mean by a "partition"?  this isn't clear!
+
+First: isn't a single letter a substring - an element - of a partition?
+presumably not - otherwise 'a', 'a', 'b', 'a', 'a', 'b' would be a solution
+to the first example.  So presumably each partitioned substring is of
+minimum length 2.
+
+Second: Do all the substrings in a partition have to "span" the string, i.e.
+do all the substrings in a partition have to append together to form the
+original string?  Presumably not, otherwise 'aabaa' would not be a solution to
+the first example.
+
+Third: Can there be more than two elements in a single partition of a string?
+None of the examples show more than two.  I don't know the answer to this one,
+so I'll assume that "there can only one or two elements in a partition".
+
+So this problem is badly specified.  Let's assume that we mean:
+
+"A partition of a string S is either a single substring of minimum length 2
+or a pair of exactly 2 non-overlapping substrings of S, each of minimum length
+2.  Find all partitions of S for which the partition substring(s) are all
+palindromes."
+
+If this isn't the right definition, well damn it, the question should have
+been clearer - and I expect full marks!
+
+Having programmed the above, this also claims (for example) that "aa" is a
+possible solution to example 1 - which is fair enough by the above statement.
+So I tried adding the logic:
+- find the single substrings that are palindromes, call that @p1
+- find the pairs of non-overlapping substrings where each substring is
+  a palindrome, call that @p2
+- remove from @p1 any element that is one of any pair in @p2
+
+But even this shows 4 solutions for example 1:
+
+aabaa
+aba
+aa,baab
+aa,aa
+
+(whereas only the first 3 are expected).  I guess we are saying that aa,aa
+should not a solution because aa,baab is (and baab contains aa)?  I can't
+be bothered to implement this, as the deal is: we implement the problems
+given to us; not we first debug the problem specs given to us and then
+implement the debugged spec.  Please make the problem spec clearer next
+week, Mohammed!
