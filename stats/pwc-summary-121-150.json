@@ -1,11 +1,14 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             9,
             7,
@@ -37,8 +40,7 @@
             3,
             1,
             3
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -76,7 +78,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -108,22 +109,10 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-06-21 14:45:34 GMT"
-   },
    "xAxis" : {
       "categories" : [
          "Peter Scott",
@@ -158,10 +147,21 @@
          "Steve Rogerson"
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "chart" : {
       "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-06-21 15:27:24 GMT"
    }
 }
