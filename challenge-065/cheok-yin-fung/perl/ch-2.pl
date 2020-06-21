@@ -84,7 +84,7 @@ sub need_to_remove_subsequence {
     if (    #all components of $pierre is inside $peter
           $number_of_components == $#in+1 
                and 
-            #avoid $peter permuted is $pierre
+            # '> instead of '>=' : ALLOW $peter permuted is $pierre
             $sizeresult{$bigbrother} > $#in+1 
         ) 
     {
