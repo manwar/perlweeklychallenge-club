@@ -11,7 +11,6 @@
 #                   For given $N = 45, it should print 0.
 
 sub is-power( Int:D $what = 100, Int:D $base = 10 ) {
-#    say "$what power of $base { $what %% $base } ?";
     # if power of 1 must be itself!
     return 0 if ( $what == 1 );
 
