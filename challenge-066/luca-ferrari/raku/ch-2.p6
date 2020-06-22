@@ -10,7 +10,7 @@
 
 #                   For given $N = 45, it should print 0.
 
-sub is-power( Int:D $what = 100, Int:D $base = 10 ) {
+sub is-power( Int:D :$what = 100, Int:D :$base = 10 ) {
     # if power of 1 must be itself!
     return 0 if ( $what == 1 );
 
@@ -38,7 +38,7 @@ sub is-power( Int:D $what = 100, Int:D $base = 10 ) {
 sub MAIN( Int :$N ){
     my $found = False;
     for 2 ..^ $N {
-        my $power = is-power( $N, $_ );
+        my $power = is-power( :what( $N ), :base( $_ ) );
         "$N can be expressed as $_ pow( $power )".say && $found = True if $power;
     }
 
