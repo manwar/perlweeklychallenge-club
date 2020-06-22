@@ -19,8 +19,9 @@ sub boofoo {
     my $start = $_[2];    #  $start = 1 if $tf == 1
     my $tf = $_[3];
     my @ans = ();
+    $start = 0 if $start < 0;  #line added after official deadline
+    my $end = ($dSum >= 9 ? 9 : $dSum );
     if ($dNumber > 1) {
-        my $end = ($dSum >= 9 ? 9 : $dSum );
         for my $lfs ($start..$end) {  # lfs , shorthand for largest sig fig
             for my $baby 
               (boofoo($dSum-$lfs, $dNumber-1, int ($dSum-$lfs-1)/9, 0)){ 
@@ -30,8 +31,9 @@ sub boofoo {
         }
     } 
     else {
-        push @ans, ($dSum != 0 ? $dSum : "0");
-    }
+        push @ans, ($dSum != 0 ? $dSum : "0") if $dSum<10; 
+        #if condition of above line has been added after official deadline
+   }
     
     return @ans;
 }
