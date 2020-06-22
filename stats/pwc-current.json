@@ -1,30 +1,23 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2020-06-22 18:58:14 GMT"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 066"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Andrew Shitov",
             "name" : "Andrew Shitov",
+            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -33,6 +26,7 @@
             ]
          },
          {
+            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -47,10 +41,10 @@
                   1
                ]
             ],
-            "name" : "Javier Luque",
-            "id" : "Javier Luque"
+            "name" : "Javier Luque"
          },
          {
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -61,20 +55,21 @@
                   2
                ]
             ],
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari"
+            "name" : "Luca Ferrari"
          },
          {
-            "name" : "Pete Houston",
             "id" : "Pete Houston",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "name" : "Pete Houston"
          },
          {
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -84,56 +79,76 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            ]
+         },
+         {
+            "name" : "Yet Ebreo",
+            "id" : "Yet Ebreo",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          }
       ]
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2020-06-22 19:01:18 GMT"
    },
    "legend" : {
       "enabled" : 0
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 066"
    },
    "series" : [
       {
          "data" : [
             {
-               "name" : "Andrew Shitov",
                "drilldown" : "Andrew Shitov",
+               "name" : "Andrew Shitov",
                "y" : 1
             },
             {
-               "y" : 5,
                "drilldown" : "Javier Luque",
-               "name" : "Javier Luque"
+               "name" : "Javier Luque",
+               "y" : 5
             },
             {
+               "name" : "Luca Ferrari",
                "y" : 4,
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari"
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "drilldown" : "Pete Houston",
+               "y" : 1,
                "name" : "Pete Houston",
-               "y" : 1
+               "drilldown" : "Pete Houston"
             },
             {
                "y" : 4,
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West"
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "drilldown" : "Yet Ebreo",
+               "name" : "Yet Ebreo",
+               "y" : 2
             }
          ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 066"
+         "name" : "Perl Weekly Challenge - 066",
+         "colorByPoint" : 1
       }
    ],
    "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
