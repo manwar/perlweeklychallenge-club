@@ -1,5 +1,13 @@
 #!/usr/bin/perl
 
+#
+# Perl Weekly Challenge - 066
+#
+# Task #2: Power Integers
+#
+# https://perlweeklychallenge.org/blog/perl-weekly-challenge-066/
+#
+
 use strict;
 use warnings;
 
