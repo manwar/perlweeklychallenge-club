@@ -19,18 +19,6 @@
 # Input: $M = -5, $N = -2
 # Output: 2
 
-# multi tedious-div($m, $n) {
-#     if ($m > 0 && $n > 0) {
-#         return ($n, {$_ + $n} ... ^ * > $m);
-#     } elsif ($m < 0 && $n < 0) {
-#         return tedious-div(-$m, -$n);
-#     } elsif ($m > 0 && $n < 0) {
-#         return (-$n, {$_ - $n} ... ^ * > $m);
-#     } else {
-#         return tedious-div(-$m, -$n);
-#     }
-# }
-
 sub tedious-div($m, $n) {
     if (abs($m) < abs($n)) {
         if ($m >= 0) {
