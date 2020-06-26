@@ -1,37 +1,27 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
    "legend" : {
       "enabled" : "false"
    },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-06-26 12:17:34 GMT"
+   },
    "series" : [
       {
-         "dataLabels" : {
-            "enabled" : "true",
-            "rotation" : -90,
-            "y" : 10,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "align" : "right"
-         },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -43,21 +33,31 @@
             ],
             [
                "Raku",
-               1734
+               1736
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "y" : 10
+         },
+         "name" : "Contributions"
       }
    ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-06-26 08:51:52 GMT"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
