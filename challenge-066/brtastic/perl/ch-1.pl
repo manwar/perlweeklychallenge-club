@@ -5,7 +5,7 @@ use List::Util qw(first);
 sub funky_division
 {
 	my ($am, $an) = map abs, my ($m, $n) = @_;
-	my $is_negative = (($m != $am) ^ ($n != $an));
+	my $is_negative = (($m != $am) xor ($n != $an));
 
 	my @mul_map = (0); # zero is always zero
 	while ($mul_map[-1] <= $am) {
