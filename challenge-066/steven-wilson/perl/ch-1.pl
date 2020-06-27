@@ -21,7 +21,7 @@ sub divide {
     }
     if ( ( ( $M < 0 ) && ( $N > 0 ) ) || ( ( $N < 0 ) && ( $M > 0 ) ) ) {
         $q = -$q;
-        if ($a != 0) { --$q }; # if neg and has remainder, floor number
+        $q-- if $a != 0; # if neg and has remainder, floor number
     }
     $q;
 }
