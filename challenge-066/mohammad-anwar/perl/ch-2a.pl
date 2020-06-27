@@ -18,7 +18,7 @@ is_deeply(get_power_integers(9),
           ['3 ^ 2'],
           ' 9 = 3 ^ 2');
 is_deeply(get_power_integers(45),
-          (0),
+          [ 0 ],
           '45 = N/A');
 is_deeply(get_power_integers(64),
           ['2 ^ 6', '4 ^ 3', '8 ^ 2'],
@@ -43,6 +43,7 @@ sub get_power_integers {
         $i++;
     }
 
-    return $power_integers if scalar(@$power_integers);
-    return 0;
+    $power_integers = [0] unless scalar(@$power_integers);
+
+    return $power_integers;
 }

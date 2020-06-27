@@ -31,6 +31,7 @@ sub get_power_integers {
         $i++;
     }
 
-    return $power_integers if scalar(@$power_integers);
-    return 0;
+    $power_integers = [0] unless scalar(@$power_integers);
+
+    return $power_integers;
 }
