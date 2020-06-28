@@ -1,6 +1,6 @@
 #!/usr/bin/env raku
 
-sub MAIN(Int $M, Int $N) {
+sub MAIN(Int $M, Int $N where $N !== 0) {
     my $M-sign = $M.sign;
     my $N-sign = $N.sign;
 
