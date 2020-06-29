@@ -12,7 +12,7 @@ say '[ ',
     ([X] (1..$m) xx $n)\
         >>.sort
         .unique(:as(*.Str))
-        .grep({$_[0] != $_[1]})
+        .grep(*.unique.elems == $n)
         .sort(*.Str)
         .map({"[{.join(',')}]"})
         .join(', '),
