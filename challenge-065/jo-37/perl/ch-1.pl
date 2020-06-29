@@ -8,7 +8,9 @@ use List::Util qw(min max);
 # For every possible first digit the following digits are
 # retrieved by recursing into the same sub with reduced
 # length and sum.
-# A leading zero is allowed when the third parameter is true.
+# A leading zero is allowed when the third parameter is true:
+# Must not be true when called at top level,
+# must be true when recursing.
 sub digit_sum;
 sub digit_sum {
 	my ($length, $sum, $leading_zero) = @_;
