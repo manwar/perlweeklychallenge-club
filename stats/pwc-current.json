@@ -1,20 +1,4 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 067"
    },
@@ -22,12 +6,24 @@
       "type" : "column"
    },
    "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2020-06-29 12:10:04 GMT"
+      "text" : "[Champions: 4] Last updated at 2020-06-29 12:14:32 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "series" : [
       {
          "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 067",
          "data" : [
             {
                "y" : 2,
@@ -35,18 +31,27 @@
                "name" : "Andrew Shitov"
             },
             {
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 2
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
+               "y" : 4
             },
             {
-               "name" : "Simon Proctor",
+               "y" : 2,
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "y" : 2,
                "drilldown" : "Simon Proctor",
-               "y" : 2
+               "name" : "Simon Proctor"
             }
-         ]
+         ],
+         "name" : "Perl Weekly Challenge - 067"
       }
    ],
+   "legend" : {
+      "enabled" : 0
+   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
@@ -59,14 +64,28 @@
    "drilldown" : {
       "series" : [
          {
+            "id" : "Andrew Shitov",
+            "name" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Andrew Shitov",
-            "id" : "Andrew Shitov"
+            ]
+         },
+         {
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ]
          },
          {
             "data" : [
@@ -79,14 +98,14 @@
             "name" : "Roger Bell_West"
          },
          {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            ]
          }
       ]
    }
