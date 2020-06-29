@@ -17,9 +17,10 @@ sub MAIN( Int :$m where { 10 > $m > 2 }  = 5,
         my @digits = $_.comb;
         next if @digits.elems != $n;
         next if @digits.grep( * > $m );
-        my $ok = True;
-        $ok = False if ( @digits[ $_  ] >= @digits[ $_ + 1 ] ) for 0 ..^ @digits.elems - 1;
-        @combinations.push: @digits if $ok;
+        next if @digits.sort !~~ @digits;
+        next if @digits.unique !~~ @digits;
+
+        @combinations.push: @digits;
     }
 
 
