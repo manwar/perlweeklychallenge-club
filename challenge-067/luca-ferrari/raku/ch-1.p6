@@ -6,7 +6,7 @@
 # Every combination should be sorted i.e. [2,3] is valid combination but [3,2] is not.
 
 
-sub MAIN( Int :$m where { $m > 2 }  = 5,
+sub MAIN( Int :$m where { 10 > $m > 2 }  = 5,
           Int :$n where { $n < $m } = 2 ) {
 
     # found combinations
@@ -16,6 +16,7 @@ sub MAIN( Int :$m where { $m > 2 }  = 5,
     for ( 1 x $n ).Int ^..^ ( $m x $n  ).Int {
         my @digits = $_.comb;
         next if @digits.elems != $n;
+        next if @digits.grep( * > $m );
         my $ok = True;
         $ok = False if ( @digits[ $_  ] >= @digits[ $_ + 1 ] ) for 0 ..^ @digits.elems - 1;
         @combinations.push: @digits if $ok;
