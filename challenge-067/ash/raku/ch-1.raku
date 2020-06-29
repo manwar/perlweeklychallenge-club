@@ -3,7 +3,7 @@
 # Task 1 from
 # https://perlweeklychallenge.org/blog/perl-weekly-challenge-067/
 
-# Comments: 
+# Comments: https://andrewshitov.com/2020/06/29/combinations-in-raku/
 
 my $m = 5;
 my $n = 2;
