@@ -1,6 +1,27 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "legend" : {
       "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-06-29 02:59:16 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
@@ -8,19 +29,24 @@
       },
       "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
-         "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "y" : 10
+         },
          "data" : [
             [
                "Blog",
-               772
+               773
             ],
             [
                "Perl",
@@ -31,33 +57,7 @@
                1751
             ]
          ],
-         "dataLabels" : {
-            "rotation" : -90,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "align" : "right"
-         }
+         "name" : "Contributions"
       }
-   ],
-   "subtitle" : {
-      "text" : "Last updated at 2020-06-29 01:14:36 GMT"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   }
+   ]
 }
