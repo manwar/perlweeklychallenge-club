@@ -9,42 +9,34 @@
 sub MAIN( Int :$m where { $m > 2 }  = 5,
           Int :$n where { $n < $m } = 2 ) {
 
-    # available digits
-    my @digits = 1 .. $m;
     # found combinations
     my @combinations;
 
-    for @digits -> $start {
+    for 0 ..^ $m {
 
-        # build the array of combinations starting with the
-        # current digits, place another one that is increased by one
-        # so to keep sorting...
-        my @combination = $start;
-        @combination.push: $start + 1;
+        # cannot get negative numbers!
+        next if $m - $_ < $n;
+
+        # current combination
+        my @combination;
+        # push the last digit of this combination, for example m=5, n=3 -> 5
+        @combination.push: $m - $_;
+
+        # fill up the combination with decreasing order
+        @combination.push( @combination[ *-1 ] - 1 )  while ( @combination.elems < $n );
+        # push this initial combination, e.g., 5,4,3
+        @combinations.push: Array.new( @combination.reverse );
 
 
-        # ... and all an element until I've made the array
-        while ( @combination.elems < $n ) {
-            @combination.push( @combination[ *-1 ] + 1 );
+        # now go backwards all the digits until we reach '1' with the last digit
+        # e.g. 5,4,2; 5,4,1
+        while ( @combination[ *-1 ] > 1 ) {
+            @combination[ *-1 ] -= 1;
+            @combinations.push: Array.new( @combination.reverse );
         }
-
-
-        # the last element of the array must be the value
-        # I've got as parameter, otherwise iterate
-        while ( @combination[ *-1 ] < $m ) {
-            # clone the array because I'm going to change it!
-            @combinations.push: Array.new( @combination );
-
-
-            # increase by one every element, so it will be kept in
-            # order
-            for 1 ..^ @combination.elems {
-                @combination[ $_ ] += 1;
-            }
-        }
-
-        @combinations.push: @combination if ( @combination[ *-1 ] == $m );
     }
 
-    @combinations.join( ", " ).say;
+
+
+    @combinations.sort.join( ", " ).say;
 }
