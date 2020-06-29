@@ -17,5 +17,5 @@ sub MAIN (
         0 => []
     );
 
-    .say for [X~] $phone.comb.map( { %letters{$_} } );
+    .say for [X~] %letters{$phone.comb};
 }
