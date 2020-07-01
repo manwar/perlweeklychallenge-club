@@ -1,5 +1,13 @@
 #!/usr/bin/perl
 
+#
+# Perl Weekly Challenge - 067
+#
+# Task #1: Number Combinations
+#
+# https://perlweeklychallenge.org/blog/perl-weekly-challenge-067/
+#
+
 use strict;
 use warnings;
 
