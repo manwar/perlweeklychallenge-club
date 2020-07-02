@@ -1,18 +1,16 @@
 #!/usr/bin/perl
 
 use Test2::V0;
+use List::MoreUtils qw(pairwise firstidx reduce_1);
 
 # exchange item at position $pos and next taller item.
 # return position of found next item.
 sub exchange {
 	my ($items, $pos) = @_;
-	my $next;
-	for ($next = $pos; $next < @$items; $next++) {
-		last if $items->[$next]{height} > $items->[$pos]{height};
-	}
-	my $tmp = $items->[$pos];
-	$items->[$pos] = $items->[$next];
-	$items->[$next] = $tmp;
+	my $pos_height = $items->[$pos]{height};
+	my $next = $pos + firstidx {$_->{height} > $pos_height}
+		@$items[$pos..$#$items];
+	@$items[$pos, $next] = @$items[$next, $pos];
 	return $next;
 }
 
@@ -21,23 +19,13 @@ sub lineup {
 	die "hights and talls have different sizes" if @$heights != @$talls;
 
 	# collect hights and talls into single array.
-	my @items;
-	while (defined (my $height = shift @$heights)) {
-		my $taller = shift @$talls;
-		push @items, {height => $height, taller => $taller};
-	}
-
-	# sort array by height
-	@items = sort {$a->{height} <=> $b->{height}} @items;
+	my @items = sort {$a->{height} <=> $b->{height}}
+		pairwise { {height => $a, taller => $b} } @$heights, @$talls;
 
 	# check solvability: the required number of taller predecessors must
 	# not exceed the number of taller items.
-	for (my $i = 0; $i < @items; $i++) {
-		my $item = $items[$i];
-		die "height: $item->{height}, " .
-			"requested: $item->{taller}, available: " . ($#items - $i)
-			if $item->{taller} > $#items - $i;
-	}
+	reduce_1 {$a && $b->{taller} <= $#items - $_} @items
+			or die "no solution";
 
 	# create an index to locate items in the array.
 	my @index = (0 .. $#items);
@@ -47,15 +35,12 @@ sub lineup {
 		my $pos = $index[$i];
 		my $item = $items[$pos];
 
-
 		# move item to the right for the desired number of taller
 		# predecessors.
 		foreach my $offs (1 .. $item->{taller}) {
-			my $taller = exchange \@items, $pos;
-
 			# store new position of moved item
 			$index[$i + $offs] = $pos;
-			$pos = $taller;
+			$pos = exchange \@items, $pos;
 		}
 	}
 	return [map $_->{height}, @items];
