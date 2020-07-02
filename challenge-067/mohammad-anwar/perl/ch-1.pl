@@ -49,9 +49,9 @@ sub comb {
     foreach my $member (@combinations) {
         my @uniq = uniq split //, $member;
         next unless (@uniq == $n);
-        $filter{ join ', ', sort @uniq } = 1;
+        $filter{ sprintf("[%s]", join ', ', sort @uniq) } = 1;
     }
 
     # return sorted result
-    return (sort keys %filter);
+    return sprintf("[ %s ]", join ', ', (sort keys %filter));
 }
