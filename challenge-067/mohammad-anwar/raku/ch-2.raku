@@ -1,5 +1,13 @@
 #!/usr/bin/env raku
 
+#
+# Perl Weekly Challenge - 067
+#
+# Task #2: Letter Phone
+#
+# https://perlweeklychallenge.org/blog/perl-weekly-challenge-067/
+#
+
 use v6.d;
 
 sub MAIN(Str :$digits where { $digits ~~ /^ <[0..9\*\#]>+ $/ } = '35') {

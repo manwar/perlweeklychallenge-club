@@ -1,5 +1,13 @@
 #!/usr/bin/env raku
 
+#
+# Perl Weekly Challenge - 067
+#
+# Task #2: Letter Phone
+#
+# https://perlweeklychallenge.org/blog/perl-weekly-challenge-067/
+#
+
 use Test;
 
 is sprintf("[ %s ]", phone-letters('35').join(", ")),
