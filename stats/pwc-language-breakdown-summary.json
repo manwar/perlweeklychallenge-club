@@ -2,11 +2,17 @@
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2020-07-04 13:49:45 GMT"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "yAxis" : {
       "title" : {
@@ -14,24 +20,11 @@
       },
       "min" : 0
    },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   "subtitle" : {
+      "text" : "Last updated at 2020-07-04 16:39:40 GMT"
    },
    "series" : [
       {
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -39,7 +32,7 @@
             ],
             [
                "Perl",
-               2777
+               2779
             ],
             [
                "Raku",
@@ -47,17 +40,24 @@
             ]
          ],
          "dataLabels" : {
-            "rotation" : -90,
+            "align" : "right",
+            "y" : 10,
             "format" : "{point.y:.0f}",
             "color" : "#FFFFFF",
-            "y" : 10,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
             "enabled" : "true",
-            "align" : "right"
-         }
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            }
+         },
+         "name" : "Contributions"
       }
-   ]
+   ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "legend" : {
+      "enabled" : "false"
+   }
 }
