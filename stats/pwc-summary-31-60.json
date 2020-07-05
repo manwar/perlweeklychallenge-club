@@ -36,13 +36,17 @@
          "Jaime Corchado"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -116,7 +120,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -148,20 +151,17 @@
             1,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-07-05 07:58:22 GMT"
+   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-07-04 23:57:02 GMT"
+      }
    }
 }
