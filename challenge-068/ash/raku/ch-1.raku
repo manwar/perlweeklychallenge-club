@@ -10,9 +10,11 @@ my @input =
     [1, 1, 1],
     [1, 1, 1];
 
-for empty_lines(@input) X empty_lines([Z] @input) -> ($row, $col) {
-    @input[$row][$_] = 0 for ^@input[0];
-    @input[$_][$col] = 0 for ^@input;
+my @rows = empty_lines(@input);
+my @cols = empty_lines([Z] @input);
+
+for ((@rows X ^@input[0]), (^@input X @cols)).flat -> $row, $col {
+    @input[$row][$col] = 0;
 }
 
 say @input.join("\n");
