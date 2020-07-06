@@ -1,50 +1,8 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov"
-            },
-            {
-               "name" : "Javier Luque",
-               "drilldown" : "Javier Luque",
-               "y" : 5
-            },
-            {
-               "y" : 4,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 068"
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 068"
-   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andrew Shitov",
+            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -55,10 +13,19 @@
                   1
                ]
             ],
-            "id" : "Andrew Shitov"
+            "name" : "Andrew Shitov"
          },
          {
-            "name" : "Javier Luque",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "E. Choroba",
+            "name" : "E. Choroba"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -73,9 +40,11 @@
                   1
                ]
             ],
-            "id" : "Javier Luque"
+            "id" : "Javier Luque",
+            "name" : "Javier Luque"
          },
          {
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -86,7 +55,6 @@
                   2
                ]
             ],
-            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari"
          },
          {
@@ -100,25 +68,55 @@
             "id" : "Mark Anderson"
          },
          {
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "id" : "Simon Proctor",
             "name" : "Simon Proctor"
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Andrew Shitov",
+               "drilldown" : "Andrew Shitov"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba"
+            },
+            {
+               "y" : 5,
+               "drilldown" : "Javier Luque",
+               "name" : "Javier Luque"
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
+            },
+            {
+               "y" : 1,
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 068"
       }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
+   ],
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
@@ -128,12 +126,29 @@
          }
       }
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 068"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "tooltip" : {
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2020-07-06 20:28:24 GMT"
+      "text" : "[Champions: 6] Last updated at 2020-07-06 22:10:14 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
