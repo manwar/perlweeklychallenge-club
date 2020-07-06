@@ -21,7 +21,7 @@ my @matrix = [1, 1, 1, 1, 1, 1, 1, 1, 1],
 my $rows = @matrix.elems;
 my $cols = @matrix[0].elems;
 
-my @zeroes = gather {
+my @zeros = gather {
     for ^$rows -> $r {
         for ^$cols -> $c {
             take [$r, $c] if @matrix[$r][$c] == 0;
@@ -32,7 +32,7 @@ my @zeroes = gather {
 my %seen_row;
 my %seen_col;
 
-for @zeroes -> $p {
+for @zeros -> $p {
     unless %seen_row{$p[0]} {
         @matrix[$p[0]] = [0 xx $cols];
         %seen_row{$p[0]} = True;
