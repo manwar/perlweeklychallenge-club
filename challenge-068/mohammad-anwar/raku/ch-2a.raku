@@ -60,7 +60,7 @@ sub reorder-list(Str $linked-list is copy) {
     for $min .. $max-1 {
         my $last = @link.pop;
         @link.splice($i, 0, $last);
-        @link.tail.c    = Node;
+        @link.tail.c    = Nil;
         @link[$i - 1].c = $last;
         @link[$i].c     = @link[$i + 1];
         $i += 2;
