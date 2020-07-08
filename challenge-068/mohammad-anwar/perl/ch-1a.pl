@@ -55,21 +55,3 @@ sub make_zero_matrix {
 
     return $zero_matrix;
 }
-
-sub get_matrix {
-    my ($rows, $cols) = @_;
-
-    # prabability of picking 1 is higher than 0 (80:20).
-    my $min   = 0;
-    my $max   = 9;
-    my $array = [ 1, 0, 1, 1, 1, 1, 1, 0, 1, 1 ];
-
-    my $matrix  = [];
-    foreach my $r (0..$rows) {
-        foreach my $c (0..$cols) {
-            $matrix->[$r][$c] = $array->[int($min + rand($max - $min))];
-        }
-    }
-
-    return $matrix;
-}
