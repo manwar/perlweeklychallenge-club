@@ -12,12 +12,9 @@ class Node {
     has Int  $.v is rw;
     has Node $.c is rw;
 
-    multi method c()        { return $!c }
-    multi method c(Node $c) { $!c = $c   }
-
     method show-link() {
         my $c = $!c;
-        my @v = ($!v);
+        my @v = $!v;
 
         while defined $c {
             @v.push: $c.v;
@@ -28,7 +25,7 @@ class Node {
     }
 }
 
-sub MAIN(Str :$linked-list? = '1 -> 2 -> 3 -> 4 -> 5') {
+sub MAIN(Str :$linked-list = '1 -> 2 -> 3 -> 4 -> 5') {
     reorder-list($linked-list).show-link.say;
 }
 
@@ -37,12 +34,12 @@ sub reorder-list(Str $linked-list is copy) {
     $linked-list ~~ s:g/\s//;
     my @list = $linked-list.split('->');
     my $head = Node.new(v => @list.shift.Int);
-    my @link = ($head);
+    my @link = $head;
 
     # prepare singly linked list
     for @list -> $v {
         my $node = Node.new(v => $v.Int);
-        @link.tail.c($node);
+        @link.tail.c = $node;
         @link.push: $node;
     }
 
@@ -53,9 +50,9 @@ sub reorder-list(Str $linked-list is copy) {
     for $min .. $max-1 {
         my $last = @link.pop;
         @link.splice($i, 0, $last);
-        @link.tail.c(Node);
-        @link[$i - 1].c($last);
-        @link[$i].c(@link[$i + 1]);
+        @link.tail.c    = Node;
+        @link[$i - 1].c = $last;
+        @link[$i].c     = @link[$i + 1];
         $i += 2;
     }
 
