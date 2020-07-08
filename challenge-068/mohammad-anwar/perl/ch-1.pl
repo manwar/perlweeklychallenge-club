@@ -29,10 +29,10 @@ else {
     ];
 }
 
-my $zero_m = make_zero_matrix($matrix);
+my $zero_matrix = make_zero_matrix($matrix);
 
-print matrix($matrix), "\n";
-print matrix($zero_m), "\n";
+display_matrix('Matrix:', $matrix);
+display_matrix('Zero Matrix:', $zero_matrix);
 
 #
 #
@@ -67,16 +67,6 @@ sub make_zero_matrix {
     return $zero_matrix;
 }
 
-sub matrix {
-    my ($matrix) = @_;
-
-    my $rows = $#$matrix;
-    my $cols = $#{$matrix->[0]};
-    foreach my $r (0..$rows) {
-        print sprintf("[ %s ]\n", join ', ', @{$matrix->[$r]});
-    }
-}
-
 sub get_matrix {
     my ($rows, $cols) = @_;
 
@@ -93,4 +83,14 @@ sub get_matrix {
     }
 
     return $matrix;
+}
+
+sub display_matrix {
+    my ($label, $matrix) = @_;
+
+    print "$label\n";
+    foreach my $r (0..$#$matrix) {
+        print sprintf("[ %s ]\n", join ', ', @{$matrix->[$r]});
+    }
+    print "\n";
 }
