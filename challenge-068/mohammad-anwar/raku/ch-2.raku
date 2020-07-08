@@ -9,10 +9,9 @@
 #
 
 class Node {
-    has Int  $.v;
-    has Node $.c;
+    has Int  $.v is rw;
+    has Node $.c is rw;
 
-          method v()        { return $!v }
     multi method c()        { return $!c }
     multi method c(Node $c) { $!c = $c   }
 
