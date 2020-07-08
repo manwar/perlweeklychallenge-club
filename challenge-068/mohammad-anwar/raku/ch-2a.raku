@@ -5,7 +5,7 @@
 #
 # Task #2: Reorder List
 #
-# https://perlweeklychallenge.org/blog/perl-wee
+# https://perlweeklychallenge.org/blog/perl-weekly-challenge-068
 #
 
 class Node {
