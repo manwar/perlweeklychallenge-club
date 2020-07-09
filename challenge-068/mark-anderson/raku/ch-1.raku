@@ -1,47 +1,25 @@
 #!/usr/bin/env raku
 
-my @matrix = [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 0, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1],
-             [1, 1, 1, 1, 1, 1, 1, 1, 1];
+# a naive solution :-(
 
-my $rows = @matrix.elems;
-my $cols = @matrix[0].elems;
+my @matrix = [1 xx 11] xx 11;
 
-my @zeros = gather {
-    for ^$rows -> $r {
-        for ^$cols -> $c {
-            take [$r, $c] if @matrix[$r][$c] == 0;
+@matrix[5][5] = 0;
+
+my %rows;
+my %cols;
+
+for @matrix.keys -> $r { 
+    for @matrix[0].keys -> $c {
+        if @matrix[$r][$c] == 0 {
+            %rows{$r} = True;
+            %cols{$c} = True;
         }
     }
 }
 
-my %seen_row;
-my %seen_col;
+@matrix[$_] = [0 xx @matrix[0]] for keys %rows;
 
-for @zeros -> $p {
-    unless %seen_row{$p[0]} {
-        @matrix[$p[0]] = [0 xx $cols];
-        %seen_row{$p[0]} = True;
-    }
-
-    unless %seen_col{$p[1]} {
-        @matrix.map({$_[$p[1]] = 0;});
-        %seen_col{$p[1]} = True;
-    }
-}
+@matrix.map(-> $r {$r[$_] = 0}) for keys %cols;
 
 say @matrix.join("\n");
