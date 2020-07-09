@@ -13,7 +13,7 @@ class Node {
     has Node $.c is rw;
 
     # my implementation
-    method show-link-orig() {
+    method _show-link() {
         my $c = $!c;
         my @v = $!v;
 
