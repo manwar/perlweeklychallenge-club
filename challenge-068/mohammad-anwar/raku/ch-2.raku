@@ -12,7 +12,8 @@ class Node {
     has Int  $.v is rw;
     has Node $.c is rw;
 
-    method show-link() {
+    # my implementation
+    method show-link-orig() {
         my $c = $!c;
         my @v = $!v;
 
@@ -22,6 +23,11 @@ class Node {
         }
 
         return @v.join(' -> ');
+    }
+
+    # contributed by Moritz Lenz
+    method show-link() {
+        return join ' -> ', (self, *.c ...^ !*.defined).map: *.v;
     }
 }
 
@@ -48,11 +54,18 @@ sub reorder-list(Str $linked-list is copy) {
     my Int $max = (@list.elems/ 2).Int;
     my Int $i   = 1;
     for $min .. $max-1 {
-        my $last = @link.pop;
-        @link.splice($i, 0, $last);
-        @link.tail.c    = Nil;
-        @link[$i - 1].c = $last;
-        @link[$i].c     = @link[$i + 1];
+        my $node = @link.pop;
+        @link.splice($i, 0, $node);
+
+        # remove child from the last node
+        @link.tail.c = Nil;
+
+        # link new node to previous node
+        @link[$i - 1].c = $node;
+
+        # make the next node as child of new node
+        $node.c = @link[$i + 1];
+
         $i += 2;
     }
 
