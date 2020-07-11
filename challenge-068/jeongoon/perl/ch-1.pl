@@ -1,5 +1,10 @@
 #!/usr/bin/env perl
 use strict; use warnings;
+use Getopt::Long;
+
+sub usage () {
+    print basename($0).$/;
+}
 
 sub read_row_ {
     my @buffer = @{$_[0]};
@@ -13,14 +18,57 @@ sub get_row_ {
     shift @{$buffer};
 }
 
+sub gen_rows_of_string ($$) {
+    my ( $R, $C ) = @_;
+    my $max_chance = int( $R / 2 );
+
+    my @result;
+    for ( 1..$R ) {
+        push @result,
+            '['.
+              join( ", ",
+                    map {
+                        if ( $max_chance > 0 and $_ < 2 )  {
+                            --$max_chance;
+                            0;
+                        }
+                        else {
+                            1;
+                        }
+                    }
+                    map { int(rand(10)) } 1..$C ).
+              ']';
+    }
+    return @result;
+}
+
 my @row_raw;
 my $round = 1;
-my $use_example;
+my $use_random = 1;
+my $read_from_stdin = 0;
+my $R = 3;
+my $C = 3;
 
-if ( $use_example = !!( grep { /^--use-example$/ } @ARGV) ) {
+GetOptions( "round=i"     => \$round,
+            "stdin"       => \$read_from_stdin,
+            "rows=i"      => \$R,
+            "columns=i"   => \$C ) or usage();
+
+
+if ( $read_from_stdin ) {
+    $use_random = 0;
+}
+
+unless ( $use_random and $R > 2 and $C > 2 ) {
+    die "Invalid Rows($R) or Columns($C): both should be greater than 2";
+}
+
+if ( $use_random ) {
     $round = 2;
-    @row_raw = ( "[1, 0, 1]", "[1, 1, 1]", "[1, 1, 1]", undef,
-                 "[1, 0, 1]", "[1, 1, 1]", "[1, 0, 1]", undef );
+    for ( 1..$round ) {
+        push @row_raw, $_ for gen_rows_of_string( $R, $C );
+        push @row_raw, undef; # indicate end of the row
+    }
 
 }
 
@@ -28,18 +76,21 @@ if ( $use_example = !!( grep { /^--use-example$/ } @ARGV) ) {
 {
     my ( @row_whole_zero_flag,  $row_some_zero_str );
 
-    read_row_( \@row_raw ) unless $use_example;
+    print STDERR ( "Input:\n" );
+    read_row_( \@row_raw ) unless $use_random;
     ( $row_some_zero_str = $row_raw[0] ) =~ s/0/1/g;
 
     while ( defined( my $r_raw = get_row_( \@row_raw) ) ) {
         my $new_row_some_zero_str = $row_some_zero_str & $r_raw;
         push @row_whole_zero_flag, !!( index( $r_raw, "0" ) > 0 );
         $row_some_zero_str = $new_row_some_zero_str;
-        read_row_( \@row_raw ) unless $use_example;
+        read_row_( \@row_raw ) unless $use_random;
+        print STDERR $r_raw.$/;
     }
 
     ( my $row_whole_zero_str = $row_some_zero_str ) =~ s/1/0/g;
 
+    print STDERR ( "Output:\n" );
     print( ( $_ ? $row_whole_zero_str : $row_some_zero_str ).$/ )
       for @row_whole_zero_flag;
     print $/;
