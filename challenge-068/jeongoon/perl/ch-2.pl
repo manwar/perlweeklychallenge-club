@@ -129,26 +129,57 @@ sub DESTROY {
 
 package main;
 
+our $sep_str;
+sub separator () { $main::sep_str || " → " }
+
 sub print_all_values ($) {
     my $itr = shift;
     print $itr->value;
     while ( $itr = $itr->next_itr ) {
-        print " → ".$itr->value;
+        print separator.$itr->value;
     }
     print "\n";
 }
 
-my @example = 1..6;
+# instruction is not clear about how to give the list
+# so I copied from the website and modfied.
+my $example_str = "1  →  2 →  3 →  4 →  5 →  6 →  7";
+print STDERR "Default: $example_str\n",
+    "please input a linked list like above or press <enter> to use default values..\n",
+    "Input: ";
+my $input = <STDIN>;
+chomp $input;
+
+$input ||= $example_str;
+my @words = split /\b/, $input;
+my %words_count;
+
+for my $w ( @words ) {
+    $w =~ s/\s+/ /g; # remove excess spaces ...
+    ++$words_count{$w};
+}
+
+my $max_count = 0;
+for my $k ( keys %words_count ) {
+    if ( $words_count{$k} > $max_count ) {
+        $max_count = $words_count{$k};
+        $sep_str = $k;
+    }
+}
+
+my @given = split( /\s*$sep_str\s*/, $example_str );
+
 my $L = linked_list->new();
 my $itr = $L->itr;
-for my $value ( @example ) {
+
+for my $value ( @given ) {
     $itr->push_back_value( $value );
     $itr = $itr->next_itr || $L->itr; # ugly
 }
 
 $itr = $L->itr;
 
-::dprint "input:\n";
+::dprint "Using Input:\n";
 print_all_values( $itr ) if $::debugging;
 
 my $count = $L->count;
@@ -162,10 +193,10 @@ my $pair_right_pos = $pair_left_pos + 1;
 
 my $l_itr = $L->itr;
 
-while ( ( $pair_right_pos + 1 ) < $pair_right_num ) {
+for ( my $round = int( $count / 2 ); $round > 0; --$round ) {
     my $r2_itr = $l_itr; # 2nd last iterator
 
-    my $n_repeat = $pair_right_num - 1 - $pair_left_pos;
+    my $n_repeat = $count - 1 - $pair_left_pos;
     ::dprint "from: $pair_left_pos, go next $n_repeat time(s) to find 2nd last iterator.\n";
     while ( --$n_repeat > 0 ) {  # find (N-1)th node
          $r2_itr = $r2_itr->next_itr;
@@ -185,5 +216,5 @@ while ( ( $pair_right_pos + 1 ) < $pair_right_num ) {
 undef $l_itr;
 $itr = $L->itr;
 
-::dprint "output:\n";
+print STDERR "Output:\n";
 print_all_values( $itr );
