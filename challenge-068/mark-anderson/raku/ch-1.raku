@@ -1,6 +1,29 @@
 #!/usr/bin/env raku
 
-# a naive solution :-(
+# Task #1 Zero Matrix
+# Submitted by: Mohammad S Anwar
+
+# You are given a matrix of size M x N having only 0s and 1s.
+
+# Write a script to set the entire row and column to 0 if an element is 0.
+
+# Example 1
+# Input: [1, 0, 1]
+#        [1, 1, 1]
+#        [1, 1, 1]
+
+# Output: [0, 0, 0]
+#         [1, 0, 1]
+#         [1, 0, 1]
+
+# Example 2
+# Input: [1, 0, 1]
+#        [1, 1, 1]
+#        [1, 0, 1]
+
+# Output: [0, 0, 0]
+#         [1, 0, 1]
+#         [0, 0, 0]
 
 my @matrix = [1 xx 11] xx 11;
 
@@ -18,8 +41,7 @@ for @matrix.keys -> $r {
     }
 }
 
-@matrix[$_] = [0 xx @matrix[0]] for keys %rows;
-
-@matrix.map(-> $r {$r[$_] = 0}) for keys %cols;
+@matrix[$_] = [0 xx @matrix[0]] for %rows.keys;
+@matrix.map(-> $r {$r[$_] = 0}) for %cols.keys;
 
 say @matrix.join("\n");
