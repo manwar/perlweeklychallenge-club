@@ -1,12 +1,21 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-07-12 15:50:15 GMT"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             116,
             0,
@@ -38,8 +47,7 @@
             59,
             0,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -113,8 +121,11 @@
       }
    ],
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -150,18 +161,7 @@
          "Luis F. Uceta"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-07-12 14:56:47 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
