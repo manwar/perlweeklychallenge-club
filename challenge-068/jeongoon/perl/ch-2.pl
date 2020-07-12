@@ -2,12 +2,20 @@
 use utf8;
 use open ':std', ':encoding(UTF-8)';
 use strict; use warnings;
+use Getopt::Long;
+use Pod::Usage;
 
 BEGIN {
     $::debugging = 0;
-    if ( grep { /^--debug$/ } @ARGV ) {
-        $::debugging = 1;
-    }
+    $::reading_data_from_stdin = 0;
+    my $help = 0;
+
+    GetOptions( "debug" => \$::debugging,
+                "stdin" => \$::reading_data_from_stdin,
+                "help"  =>  \$help,
+        ) or pod2usage(2);
+
+    pod2usage( -exitval => 0, -verbose => 2 ) if $help;
 
     our $dprint = sub( @ ) {
         ++$|;
@@ -57,14 +65,14 @@ sub count {
     $count;
 }
 
-sub last_itr {
-    my $itr = $_[0]->itr;
-    return undef unless defined $itr;
-    while ( defined $itr->next_itr ) {
-        $itr = $itr->next_itr;
-    }
-    return $itr;
-}
+#sub last_itr {  # not used in this case
+#    my $itr = $_[0]->itr;
+#    return undef unless defined $itr;
+#    while ( defined $itr->next_itr ) {
+#        $itr = $itr->next_itr;
+#    }
+#    return $itr;
+#}
 
 package linked_list::iterator;
 use Scalar::Util qw(blessed refaddr weaken isweak);
@@ -144,25 +152,38 @@ sub print_all_values ($) {
 # instruction is not clear about how to give the list
 # so I copied from the website and modfied.
 my $example_str = "1  →  2 →  3 →  4 →  5 →  6 →  7";
-print STDERR "Default: $example_str\n",
-    "please input a linked list like above or press <enter> to use default values..\n",
-    "Input: ";
-my $input = <STDIN>;
-chomp $input;
+my $input = "";
 
-$input ||= $example_str;
+if ( $::reading_data_from_stdin ) {
+    print STDERR "Default: $example_str\n".
+        "please input a linked list like above".
+        " or press <enter> to use default values..\n".
+        "Input: ";
+    $input = <STDIN>;
+    chomp $input;
+}
+elsif ( $input eq "" or not $::reading_data_from_stdin ) {
+    print STDERR "Using list: $example_str\n";
+    $input = $example_str;
+}
+
+# finding separator
 my @words = split /\b/, $input;
-my %words_count;
+my %words_score;
 
 for my $w ( @words ) {
     $w =~ s/\s+/ /g; # remove excess spaces ...
-    ++$words_count{$w};
+    if ( index( $w, '->' ) > 0 or index( $w, '→' ) > 0 ) {
+        $words_score{$w} += 5;
+    } else {
+        ++$words_score{$w};
+    }
 }
 
-my $max_count = 0;
-for my $k ( keys %words_count ) {
-    if ( $words_count{$k} > $max_count ) {
-        $max_count = $words_count{$k};
+my $max_score = 0;
+for my $k ( keys %words_score ) {
+    if ( $words_score{$k} > $max_score ) {
+        $max_score = $words_score{$k};
         $sep_str = $k;
     }
 }
@@ -188,8 +209,6 @@ my $count = $L->count;
 
 my $pair_left_num  = 1;
 my $pair_left_pos  = 0;
-my $pair_right_num = $count - $pair_left_num + 1;
-my $pair_right_pos = $pair_left_pos + 1;
 
 my $l_itr = $L->itr;
 
@@ -209,8 +228,6 @@ for ( my $round = int( $count / 2 ); $round > 0; --$round ) {
 
     ++$pair_left_num;
     $pair_left_pos += 2;
-    --$pair_right_num;
-    $pair_right_pos = ( $pair_left_pos + 1 );
 }
 
 undef $l_itr;
@@ -218,3 +235,51 @@ $itr = $L->itr;
 
 print STDERR "Output:\n";
 print_all_values( $itr );
+
+
+__END__
+=encoding utf8
+=head1 NAME
+
+CHALLENGE 68 Task #2 - Reorder List
+
+=head1 SYNOPSIS
+
+perl ch-2.pl [--debug] [--stdin]
+
+  Options:
+    --stdin:    read data from the stdin,
+                not from internal example
+    --rows:     number of rows of matrix    [ > 2; default: 3 ]
+    --columns:  number of columns of matrix [ > 2; default: 3 ]
+
+=head1 DESCRIPTION
+
+  Task:
+
+    You are given a singly linked list $L as below:
+
+    L0 →  L1 →  … →  Ln-1 →  Ln
+
+    Write a script to reorder list as below:
+
+    L0 →  Ln →  L1 →  Ln-1 →  L2 →  Ln-2 → ...
+
+  My Solution:
+    I simply follow the rule in this case because I assume that the starting
+    point of this challenge when we are "only" given a real linked list.
+
+    Steps are also straight foward.
+
+      1. I made poor single-linked list class and save the data in the list
+      2. with 'left' iterators I follow L0, L1 ...
+      3. with 'right' iterators  I follow Ln, Ln-1 ...
+
+    Pros:
+      I could save memory a little bit not by making another array
+    Cons:
+      If the list is too long, it could be slow
+    Comment:
+      I think we can impove it by using circular linked list.
+
+=cut
