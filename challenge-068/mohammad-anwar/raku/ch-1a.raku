@@ -41,8 +41,8 @@ sub make-zero-matrix($matrix) {
     }
 
     # fill empty cells, if any.
-    for (0..$rows) -> $r {
-        for (0..$cols) -> $c {
+    for 0..$rows -> $r {
+        for 0..$cols -> $c {
             $zero_matrix.[$r][$c] = 1 unless
                 defined $zero_matrix.[$r][$c];
         }
