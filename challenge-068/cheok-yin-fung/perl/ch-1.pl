@@ -15,15 +15,16 @@ if ($ARGV[0] and $ARGV[1]) {
     $N = $ARGV[1];
     @matrix = ();
     die "parameter(s) problem" unless scalar @ARGV == ($M*$N+2);
+
+    for my $i (0..$N-1) {
+        my @s = ();
+        for my $j (0..$M-1) {
+            push @s, $ARGV[$M*$i+$j +2 ];
+        }
+        push @matrix, \@s ;
+    }
 }
 
-for my $i (0..$N-1) {
-    my @s = ();
-    for my $j (0..$M-1) {
-        push @s, $ARGV[$N*$i+$j +2 ];
-    }
-    push @matrix, \@s ;
-}
 
 my @newmatrix;
 
