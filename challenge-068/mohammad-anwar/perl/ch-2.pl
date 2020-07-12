@@ -18,7 +18,6 @@ has c => (is => 'rw');
 sub show_link {
     my ($self) = @_;
 
-
     my $head = $self;
     my @v = ();
     while ($head->c) {
