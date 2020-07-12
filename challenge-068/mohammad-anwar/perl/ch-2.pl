@@ -15,10 +15,25 @@ use Moo;
 has v => (is => 'rw');
 has c => (is => 'rw');
 
+sub show_link {
+    my ($self) = @_;
+
+
+    my $head = $self;
+    my @v = ();
+    while ($head->c) {
+        push @v, $head->v;
+        $head = $head->c;
+    }
+    push @v, $head->v;
+
+    return sprintf("%s", join ' -> ', @v);
+}
+
 package main;
 
 my $list = $ARGV[0]//'1 -> 2 -> 3 -> 4 -> 5';
-print linked_list(reorder_list($list)), "\n";
+print reorder_list($list)->show_link, "\n";
 
 #
 #
@@ -60,15 +75,3 @@ sub reorder_list {
     return $head;
 }
 
-sub linked_list {
-    my ($head) = @_;
-
-    my @v = ();
-    while ($head->c) {
-        push @v, $head->v;
-        $head = $head->c;
-    }
-    push @v, $head->v;
-
-    return sprintf("%s", join ' -> ', @v);
-}

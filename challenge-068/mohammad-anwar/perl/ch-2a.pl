@@ -15,17 +15,32 @@ use Moo;
 has v => (is => 'rw');
 has c => (is => 'rw');
 
+sub show_link {
+    my ($self) = @_;
+
+
+    my $head = $self;
+    my @v = ();
+    while ($head->c) {
+        push @v, $head->v;
+        $head = $head->c;
+    }
+    push @v, $head->v;
+
+    return sprintf("%s", join ' -> ', @v);
+}
+
 package main;
 
 use Test::More;
 
-is( linked_list(reorder_list('1 -> 2 -> 3 -> 4')),
+is( reorder_list('1 -> 2 -> 3 -> 4')->show_link,
     '1 -> 4 -> 2 -> 3',
     'testing 1 -> 2 -> 3 -> 4' );
-is( linked_list(reorder_list('1 -> 2 -> 3 -> 4 -> 5')),
+is( reorder_list('1 -> 2 -> 3 -> 4 -> 5')->show_link,
     '1 -> 5 -> 2 -> 4 -> 3',
     'testing 1 -> 2 -> 3 -> 4 -> 5' );
-is( linked_list(reorder_list('1 -> 2 -> 3 -> 4 -> 5 -> 6')),
+is( reorder_list('1 -> 2 -> 3 -> 4 -> 5 -> 6')->show_link,
     '1 -> 6 -> 2 -> 5 -> 3 -> 4',
     'testing 1 -> 2 -> 3 -> 4 -> 5 -> 6' );
 
@@ -69,17 +84,4 @@ sub reorder_list {
     }
 
     return $head;
-}
-
-sub linked_list {
-    my ($head) = @_;
-
-    my @v = ();
-    while ($head->c) {
-        push @v, $head->v;
-        $head = $head->c;
-    }
-    push @v, $head->v;
-
-    return sprintf("%s", join ' -> ', @v);
 }
