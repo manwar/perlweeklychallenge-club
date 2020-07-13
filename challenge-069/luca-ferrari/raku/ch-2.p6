@@ -26,6 +26,6 @@ sub MAIN( Int:D $max? = 100  ) {
         $current-string = $current-string ~ '0' ~ switch( reverse( $current-string ) );
     }
 
-    $current-string.say;
+    $current-string.csay;
 
 }
