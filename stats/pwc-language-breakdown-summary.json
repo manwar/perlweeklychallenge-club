@@ -1,9 +1,15 @@
 {
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
    },
-   "subtitle" : {
-      "text" : "Last updated at 2020-07-13 17:36:31 GMT"
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
       "title" : {
@@ -11,53 +17,47 @@
       },
       "min" : 0
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "enabled" : "true",
+            "y" : 10,
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            }
+         },
          "data" : [
             [
                "Blog",
-               807
+               808
             ],
             [
                "Perl",
-               2824
+               2825
             ],
             [
                "Raku",
-               1814
+               1815
             ]
          ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            }
-         }
+         "name" : "Contributions"
       }
-   ]
+   ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-07-13 17:45:51 GMT"
+   }
 }
