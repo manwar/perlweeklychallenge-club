@@ -1,25 +1,13 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 069"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    },
    "legend" : {
       "enabled" : 0
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -34,7 +22,22 @@
                   1
                ]
             ],
+            "id" : "Javier Luque",
             "name" : "Javier Luque"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
          },
          {
             "data" : [
@@ -43,10 +46,13 @@
                   1
                ]
             ],
-            "id" : "Simon Miner",
-            "name" : "Simon Miner"
+            "name" : "Simon Miner",
+            "id" : "Simon Miner"
          }
       ]
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2020-07-13 09:57:52 GMT"
    },
    "plotOptions" : {
       "series" : {
@@ -57,19 +63,28 @@
          "borderWidth" : 0
       }
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "tooltip" : {
-      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 5,
                "name" : "Javier Luque",
-               "drilldown" : "Javier Luque"
+               "drilldown" : "Javier Luque",
+               "y" : 5
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
+               "y" : 4
             },
             {
                "y" : 1,
@@ -77,10 +92,14 @@
                "name" : "Simon Miner"
             }
          ],
-         "name" : "Perl Weekly Challenge - 069"
+         "name" : "Perl Weekly Challenge - 069",
+         "colorByPoint" : 1
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-07-13 09:51:12 GMT"
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 069"
    }
 }
