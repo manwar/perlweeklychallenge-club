@@ -17,16 +17,7 @@ use experimental qw(signatures);
 # Input: $A = 50, $B = 100
 #     Output: 69, 88, 96
 
-my %flip = (0 => 0,
-            1 => 1,
-            2 => 'x',
-            3 => 'x',
-            4 => 'x',
-            5 => 'x',
-            6 => 9,
-            7 => 'x',
-            8 => 8,
-            9 => 6);
+my @flip = qw(0 1 x x x x 9 x 8 6);
 
 my ($A, $B) = @ARGV;
 for my $n ($A..$B) {
@@ -34,6 +25,6 @@ for my $n ($A..$B) {
 }
 
 sub is_strobogrammatic($n) {
-    my $flipped = join '', reverse map { $flip{$_} } split //, $n;
+    my $flipped = join '', reverse map { $flip[$_] } split //, $n;
     return $n eq $flipped;
 }
