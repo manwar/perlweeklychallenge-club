@@ -1,35 +1,106 @@
 {
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 069"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "legend" : {
       "enabled" : 0
    },
    "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2020-07-14 14:19:55 GMT"
+      "text" : "[Champions: 12] Last updated at 2020-07-14 22:30:05 GMT"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "Andrew Shitov",
+               "y" : 3,
+               "drilldown" : "Andrew Shitov"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
+            {
+               "drilldown" : "E. Choroba",
+               "y" : 2,
+               "name" : "E. Choroba"
+            },
+            {
+               "name" : "Javier Luque",
+               "drilldown" : "Javier Luque",
+               "y" : 5
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
+            },
+            {
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke",
+               "y" : 2
+            },
+            {
+               "name" : "Pete Houston",
+               "drilldown" : "Pete Houston",
+               "y" : 1
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Simon Miner",
+               "name" : "Simon Miner"
+            },
+            {
+               "drilldown" : "Ulrich Rieke",
+               "y" : 4,
+               "name" : "Ulrich Rieke"
+            },
+            {
+               "name" : "Walt Mankowski",
+               "drilldown" : "Walt Mankowski",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Wanderdoc",
+               "y" : 2,
+               "name" : "Wanderdoc"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 069"
+      }
+   ],
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andrew Shitov",
-            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -39,17 +110,19 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Andrew Shitov",
+            "name" : "Andrew Shitov"
          },
          {
+            "id" : "Dave Jacoby",
             "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Dave Jacoby"
+            ]
          },
          {
             "data" : [
@@ -62,6 +135,8 @@
             "name" : "E. Choroba"
          },
          {
+            "name" : "Javier Luque",
+            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -75,11 +150,11 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Javier Luque",
-            "name" : "Javier Luque"
+            ]
          },
          {
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -89,9 +164,17 @@
                   "Blog",
                   2
                ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
             ],
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari"
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
          },
          {
             "data" : [
@@ -104,6 +187,8 @@
             "name" : "Pete Houston"
          },
          {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -113,21 +198,21 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            ]
          },
          {
             "id" : "Simon Miner",
+            "name" : "Simon Miner",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "name" : "Simon Miner"
+            ]
          },
          {
+            "id" : "Ulrich Rieke",
+            "name" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -137,19 +222,17 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Ulrich Rieke",
-            "name" : "Ulrich Rieke"
+            ]
          },
          {
+            "id" : "Walt Mankowski",
+            "name" : "Walt Mankowski",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Walt Mankowski",
-            "name" : "Walt Mankowski"
+            ]
          },
          {
             "data" : [
@@ -163,75 +246,7 @@
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov",
-               "y" : 3
-            },
-            {
-               "y" : 2,
-               "name" : "Dave Jacoby",
-               "drilldown" : "Dave Jacoby"
-            },
-            {
-               "drilldown" : "E. Choroba",
-               "y" : 2,
-               "name" : "E. Choroba"
-            },
-            {
-               "drilldown" : "Javier Luque",
-               "name" : "Javier Luque",
-               "y" : 5
-            },
-            {
-               "y" : 4,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "drilldown" : "Pete Houston",
-               "y" : 1,
-               "name" : "Pete Houston"
-            },
-            {
-               "y" : 4,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
-            },
-            {
-               "drilldown" : "Simon Miner",
-               "name" : "Simon Miner",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Ulrich Rieke",
-               "name" : "Ulrich Rieke",
-               "y" : 4
-            },
-            {
-               "drilldown" : "Walt Mankowski",
-               "y" : 2,
-               "name" : "Walt Mankowski"
-            },
-            {
-               "drilldown" : "Wanderdoc",
-               "y" : 2,
-               "name" : "Wanderdoc"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 069",
-         "colorByPoint" : 1
-      }
-   ]
+   "title" : {
+      "text" : "Perl Weekly Challenge - 069"
+   }
 }
