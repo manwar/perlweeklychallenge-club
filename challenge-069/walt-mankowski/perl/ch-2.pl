@@ -29,25 +29,21 @@ use experimental qw(signatures);
 # SN = SN-1 + “0” + switch(reverse(SN-1))
 
 my $n = $ARGV[0];
-# printf "S(%d) = %s\n", $n, S($n);
 say S($n);
 
-
 sub S($n) {
-    if ($n == 0) {
-        return "";
-    } else {
-        my $sn1 = S($n-1);
-        return $sn1 . "0" . switch(rev($sn1));
+    my $S = '';
+    for my $i (1..$n) {
+        $S .= '0' . switch(rev($S));
     }
+    return $S;
 }
 
 sub switch($s) {
-    state @swap = (1, 0);
-
-    return join '', map { $swap[$_] } split //, $s;
+    $s =~ tr/01/10/;
+    return $s;
 }
 
 sub rev($s) {
-    return join '', reverse split //, $s;
+    return scalar reverse $s;
 }
