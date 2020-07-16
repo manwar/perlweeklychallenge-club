@@ -43,12 +43,12 @@ sub strobogrammatic_numbers {
         my $found = 1;
         my @match = ();
         foreach my $i (split //, $n) {
-            if (not exists $digits{$i}) {
-                $found = 0;
-                last;
+            if (exists $digits{$i}) {
+                push @match, $digits{$i};
             }
             else {
-                push @match, $digits{$i};
+                $found = 0;
+                last;
             }
         }
 
