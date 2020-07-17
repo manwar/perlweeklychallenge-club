@@ -25,6 +25,7 @@ for my $n ($A..$B) {
 }
 
 sub is_strobogrammatic($n) {
-    my $flipped = join '', reverse map { $flip[$_] } split //, $n;
-    return $n eq $flipped;
+    my $flipped = $n;
+    $flipped =~ tr/0123456789/01xxxx9x86/;
+    return $n eq scalar reverse $flipped;
 }
