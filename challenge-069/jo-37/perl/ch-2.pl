@@ -30,10 +30,10 @@ use Benchmark qw(cmpthese timeit);
 # with a single switch/reverse operation.
 #
 sub sn_extend {
-	# first arg: S(k)
-	# prevent copying S(k) by aliasing it to $_
+	# first arg: ref to S(k)
+	# make $_ an alias to sk
 	local $_;
-	*_ = \shift;
+	*_ = shift;
 	# second arg: l
 	# get loop limit from l
 	my $upper = int 2**(shift() - 1) - 1;
@@ -46,7 +46,8 @@ sub sn_extend {
 		$sl .= $_ . ($i % 2) . $rsw;
 		$sl .= substr $sl, $i, 1 if $i < $upper;
 	}
-	$sl;
+	# avoid copying the result
+	\$sl;
 }
 
 # Build S(n) by repeating sn_extend() with variable parametrization.
@@ -73,7 +74,7 @@ sub sn_build (&$$) {
 
 	# perform parametrized extension of S(k) -> S(k+l)
 	# until the next step would exceed the target order
-	my ($cum, $next, $s) = (0, $iterate->(), '');
+	my ($cum, $next, $s) = (0, $iterate->(), \'');
 	while ($cum + $_ <= $n) {
 		$s = sn_extend($s, $_);
 		$cum += $_;
@@ -81,8 +82,8 @@ sub sn_build (&$$) {
 		$next =  $iterate->();
 	}
 
-	# get missing part of S(n) if necessary
-	$cum == $n ? $s : sn_extend $s, $n - $cum
+	# get missing part of S(n) if necessary and dereference the result
+	$cum == $n ? $$s : ${sn_extend $s, $n - $cum}
 }
 
 # Benchmarks are disabled by default
@@ -91,12 +92,12 @@ SKIP:  {
 	for my $n (5, 10, 15, 20) {
 		# It turns out that the doubling rule outperforms
 		# the others by increasing magnitude and the single-steping
-		# iterator performs poorly.
+		# iterator lags behind when n > 5.
 		print "\nn=$n\n";
 		cmpthese(-1, {
 				std     => sub {sn_build {1} 1, $n},
 				double  => sub {sn_build {2 * $_} 1, $n},
-				single => sub {sn_build {$n} $n, $n},
+				single => sub {sn_build {0} $n + 1, $n},
 			});
 	}
 }
@@ -145,8 +146,15 @@ sub sn_print {
 	}
 }
 
-# As the challenge says "generate SN", but not "print" or "store",
-# the following might count as a valid solution to "generate S40":
+# Demo for S10
+open my $fh, '>', \my $s10 or die;
+sn_print $fh, sn(5), 5;
+close $fh;
+is $s10, sn(10), 'S10 from sn_print';
+
+# As the challenge says "generate SN", but not "store it",
+# the following might count as a valid solution to the task of "generate
+# S40".
 SKIP: {
 	skip "S40";
 	open my $null, '>', '/dev/null' or die;
@@ -161,8 +169,8 @@ SKIP: {
 # With the single-stepping rule it is possible to create each SI(i)
 # with a very simple recursive procedure.  The required heap size is
 # O(1) and the stack size is O(n) for S(n).  But, as this procedure
-# is painfully slow, it is of no practical relevance.  However,
-# here it is:
+# becomes painfully slow for larger n, it is of no practical relevance.
+# However, here it is:
 sub sn_i {
 	my $i = shift;
 	if ($i % 2 == 0) {
