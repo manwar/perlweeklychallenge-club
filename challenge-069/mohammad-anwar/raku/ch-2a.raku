@@ -20,7 +20,7 @@ sub string_0_1($string) {
 
     my $limit = .Int for $string ~~ m/(\d+)/;
     die "ERROR: Invalid string [$string]. S30 is the limit.\n"
-        if ($limit > 30);
+        if $limit > 30;
 
     my $string_0_1 = '';
     for 1 .. $limit {
