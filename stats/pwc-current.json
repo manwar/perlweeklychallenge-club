@@ -2,8 +2,6 @@
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andrew Shitov",
-            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -12,6 +10,26 @@
                [
                   "Blog",
                   2
+               ]
+            ],
+            "name" : "Andrew Shitov",
+            "id" : "Andrew Shitov"
+         },
+         {
+            "id" : "Javier Luque",
+            "name" : "Javier Luque",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
                ]
             ]
          },
@@ -31,19 +49,42 @@
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-07-20 10:11:52 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 070"
-   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Andrew Shitov",
+               "drilldown" : "Andrew Shitov",
+               "y" : 4
+            },
+            {
+               "name" : "Javier Luque",
+               "y" : 5,
+               "drilldown" : "Javier Luque"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Simon Green",
+               "name" : "Simon Green"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 070"
+      }
+   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
@@ -54,33 +95,15 @@
          "borderWidth" : 0
       }
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 070",
-         "data" : [
-            {
-               "y" : 4,
-               "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov"
-            },
-            {
-               "name" : "Simon Green",
-               "drilldown" : "Simon Green",
-               "y" : 3
-            }
-         ]
-      }
-   ],
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "tooltip" : {
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 070"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2020-07-20 10:20:23 GMT"
    }
 }
