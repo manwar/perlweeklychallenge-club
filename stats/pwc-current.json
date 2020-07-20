@@ -1,16 +1,41 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 4,
+               "drilldown" : "Andrew Shitov",
+               "name" : "Andrew Shitov"
+            },
+            {
+               "y" : 5,
+               "name" : "Javier Luque",
+               "drilldown" : "Javier Luque"
+            },
+            {
+               "name" : "Mohammad S Anwar",
+               "drilldown" : "Mohammad S Anwar",
+               "y" : 2
+            },
+            {
+               "y" : 4,
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Simon Green",
+               "name" : "Simon Green"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 070"
       }
-   },
+   ],
    "drilldown" : {
       "series" : [
          {
+            "name" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -21,11 +46,9 @@
                   2
                ]
             ],
-            "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov"
+            "id" : "Andrew Shitov"
          },
          {
-            "id" : "Javier Luque",
             "name" : "Javier Luque",
             "data" : [
                [
@@ -40,11 +63,21 @@
                   "Blog",
                   1
                ]
+            ],
+            "id" : "Javier Luque"
+         },
+         {
+            "name" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
             ]
          },
          {
             "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -54,7 +87,8 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell_West"
          },
          {
             "data" : [
@@ -72,57 +106,38 @@
          }
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2020-07-20 10:56:00 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 070"
    },
    "chart" : {
       "type" : "column"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Andrew Shitov",
-               "y" : 4,
-               "name" : "Andrew Shitov"
-            },
-            {
-               "drilldown" : "Javier Luque",
-               "name" : "Javier Luque",
-               "y" : 5
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 4
-            },
-            {
-               "y" : 3,
-               "name" : "Simon Green",
-               "drilldown" : "Simon Green"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 070",
-         "colorByPoint" : 1
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-07-20 10:25:23 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 070"
    }
 }
