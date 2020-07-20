@@ -1,4 +1,13 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
    "drilldown" : {
       "series" : [
          {
@@ -12,8 +21,8 @@
                   2
                ]
             ],
-            "name" : "Andrew Shitov",
-            "id" : "Andrew Shitov"
+            "id" : "Andrew Shitov",
+            "name" : "Andrew Shitov"
          },
          {
             "id" : "Javier Luque",
@@ -34,6 +43,20 @@
             ]
          },
          {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -44,34 +67,11 @@
                   1
                ]
             ],
-            "name" : "Simon Green",
-            "id" : "Simon Green"
+            "id" : "Simon Green",
+            "name" : "Simon Green"
          }
       ]
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "name" : "Andrew Shitov",
-               "drilldown" : "Andrew Shitov",
-               "y" : 4
-            },
-            {
-               "name" : "Javier Luque",
-               "y" : 5,
-               "drilldown" : "Javier Luque"
-            },
-            {
-               "y" : 3,
-               "drilldown" : "Simon Green",
-               "name" : "Simon Green"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 070"
-      }
-   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
@@ -80,30 +80,49 @@
    "legend" : {
       "enabled" : 0
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
+   "chart" : {
+      "type" : "column"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Andrew Shitov",
+               "y" : 4,
+               "name" : "Andrew Shitov"
+            },
+            {
+               "drilldown" : "Javier Luque",
+               "name" : "Javier Luque",
+               "y" : 5
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
+               "y" : 3,
+               "name" : "Simon Green",
+               "drilldown" : "Simon Green"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 070",
+         "colorByPoint" : 1
+      }
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2020-07-20 10:25:23 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 070"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2020-07-20 10:20:23 GMT"
    }
 }
