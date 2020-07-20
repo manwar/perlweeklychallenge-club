@@ -1,40 +1,27 @@
-Solution by Simon Green
-# Perl Weekly Challenge 069
+# Perl Weekly Challenge 070
 
-## TASK #1 › Strobogrammatic Number
+Solution by Simon Green.
 
-This is a lot harder than it looks. My first thought is to just do a foreach loop between `$a` and `$b` and add it to the list if the number is strobogrammatic. However when I ran
+ 
+## TASK #1 › Character Swapping
 
-    perl -E '$b = 0; foreach my $a (0 ..  10**10) { $b++ } say $b;'
+For this I used the fact that `($a, $b) = ($b, a)` does what it should. Therefore it was a simple exercise of  doing this for `$C` times, and then display the output.
 
-on my PC, that took nearly 3 minutes. With $b being up to 10<sup>15</sup> this was not a feasible approach. Even if I only had all the numbers between 1 and 10<sup>15</sup> containing only the digits 0, 6, 8, 9 that was still going to be in the billions.
+The task states that `$C + $O <= $O`. This however is not possible. When `$C + $O = $N`, you will get a `substr outside of string` error. For this reason, I've only allowed `$C + $O < $N` to be valid.
 
-So I took a different approach. I calculated the first half of all valid numbers, and then generated the second half. The logic is pretty simple. The first digit must be 6, 8 or 9 (as 0 isn't valid as a first digit). If the number of digits is odd, the middle number can only be 0 or 8.
+### Example
 
-Taking this approach, I can generate all 49,150 strobogrammatic numbers between 1 and 10<sup>15</sup> in less than half a second.
+    » ./ch-1.pl perlandraku 3 4
+    pndraerlaku
 
-### Examples
-    » ./ch-1.pl 50 100
-    69 88 96
+    » perl/ch-1.pl helloworld 8 1
+    hlloworlde
 
-    » ./ch-1.pl 50 900
-    69 88 96 609 689 808 888
+## TASK 2 › Gray Code Sequence
 
-## TASK #2 › 0/1 String
+Not really much to say about this task, as it is string forward. Given that `$N` can not be greater than five, I simply stored the array in memory. Even at 24 bits, it will run without any issues.
 
-After the first task, these seemed a lot easier. But it wasn't entirely straight forward. I thought I had a bug in my code when it was spewing out digits on my screen. It turns out that is expected. The length of a number is twice the length of a previous number plus one. This meant the expected length was:
+## Example
 
-    1st  1
-    2nd  3
-    3rd  7
-    4th  15
-    5th  31
-    10th 1,023
-    15th 32,767
-    20th 1,048,575
-    25th 33,554,431
-    30th 1,073,741,823
-
-No wonder the task was changed from 1,000 iterations to 30! It goes without saying I'm not posting an example here, as the final line is 1,073,741,823 characters long.
-
-Thankfully perl has a built in [reverse](https://perldoc.pl/functions/reverse) operator which does what you expect to do on a scalar (string). For the switch I used `tr/01/10/` which [translates](https://perldoc.pl/perlop#tr/SEARCHLIST/REPLACEMENTLIST/cdsr) the zeros to one and visa versa.
+    » ./ch-2.pl 4
+    0 1 3 2 6 7 5 4 12 13 15 14 10 11 9 8
