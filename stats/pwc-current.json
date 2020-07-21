@@ -1,10 +1,11 @@
 {
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2020-07-21 16:27:34 GMT"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -15,12 +16,10 @@
                   2
                ]
             ],
-            "id" : "Andrew Shitov",
             "name" : "Andrew Shitov"
          },
          {
             "id" : "Javier Luque",
-            "name" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -34,11 +33,11 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Javier Luque"
          },
          {
             "name" : "Mohammad S Anwar",
-            "id" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -48,11 +47,11 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mohammad S Anwar"
          },
          {
             "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -62,9 +61,11 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West"
          },
          {
+            "id" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -75,11 +76,9 @@
                   1
                ]
             ],
-            "id" : "Simon Green",
             "name" : "Simon Green"
          },
          {
-            "id" : "Ulrich Rieke",
             "name" : "Ulrich Rieke",
             "data" : [
                [
@@ -90,7 +89,18 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Ulrich Rieke"
+         },
+         {
+            "id" : "Walt Mankowski",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Walt Mankowski"
          }
       ]
    },
@@ -98,26 +108,42 @@
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    },
    "tooltip" : {
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 070"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "legend" : {
       "enabled" : 0
    },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 070",
          "data" : [
             {
                "y" : 4,
-               "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov"
+               "name" : "Andrew Shitov",
+               "drilldown" : "Andrew Shitov"
             },
             {
                "y" : 5,
@@ -131,36 +157,25 @@
             },
             {
                "y" : 4,
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West"
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
             },
             {
-               "y" : 3,
+               "name" : "Simon Green",
                "drilldown" : "Simon Green",
-               "name" : "Simon Green"
+               "y" : 3
             },
             {
-               "y" : 3,
+               "drilldown" : "Ulrich Rieke",
                "name" : "Ulrich Rieke",
-               "drilldown" : "Ulrich Rieke"
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Walt Mankowski",
+               "name" : "Walt Mankowski"
             }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 070"
+         ]
       }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 070"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2020-07-20 18:32:24 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   }
+   ]
 }
