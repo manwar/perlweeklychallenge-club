@@ -1,39 +1,23 @@
 {
-   "series" : [
-      {
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               825
-            ],
-            [
-               "Perl",
-               2870
-            ],
-            [
-               "Raku",
-               1846
-            ]
-         ],
-         "dataLabels" : {
-            "y" : 10,
-            "enabled" : "true",
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90
-         }
-      }
-   ],
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : null
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
       }
    },
    "legend" : {
@@ -42,22 +26,38 @@
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
+   "series" : [
+      {
+         "dataLabels" : {
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "rotation" : -90,
+            "y" : 10,
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "enabled" : "true"
+         },
+         "data" : [
+            [
+               "Blog",
+               825
+            ],
+            [
+               "Perl",
+               2872
+            ],
+            [
+               "Raku",
+               1846
+            ]
+         ],
+         "name" : "Contributions"
+      }
+   ],
    "subtitle" : {
-      "text" : "Last updated at 2020-07-21 16:43:08 GMT"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
+      "text" : "Last updated at 2020-07-21 16:48:02 GMT"
    }
 }
