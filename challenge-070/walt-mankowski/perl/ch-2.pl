@@ -55,6 +55,5 @@ for my $i (3..$n) {
 say "@S";
 
 sub gray_code($n, @S) {
-    my @S2 = map { "1$_" } reverse map { sprintf "%.*b", $n-1, $_ } @S;
-    return @S, map { eval "0b$_" } @S2;
+    return @S, reverse map { 2**($n-1) + $_ } @S;
 }
