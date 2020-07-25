@@ -1,26 +1,16 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "chart" : {
       "type" : "column"
    },
    "series" : [
       {
-         "dataLabels" : {
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "rotation" : -90,
-            "enabled" : "true"
-         },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               829
+               830
             ],
             [
                "Perl",
@@ -28,36 +18,46 @@
             ],
             [
                "Raku",
-               1854
+               1856
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "y" : 10,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "enabled" : "true",
+            "color" : "#FFFFFF"
+         },
+         "name" : "Contributions"
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-07-25 11:23:34 GMT"
    },
    "xAxis" : {
       "type" : "category",
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-07-25 00:57:11 GMT"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
       }
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "legend" : {
-      "enabled" : "false"
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
    }
 }
