@@ -1,3 +1,5 @@
+;; Perl Weekly Challenge 070 Task 2 Gray Code Sequence
+
 (setf n 4)
 (setf a '(0 1))
 (setf m (- n 1))
@@ -10,6 +12,6 @@
   (setf a (append a b))
 )
 
-;;now the variable a stores the n-bit gray code sequence
+;; now the variable a stores the n-bit gray code sequence
 
 a 
