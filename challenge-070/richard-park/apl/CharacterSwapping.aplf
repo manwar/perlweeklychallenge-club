@@ -1,0 +1,10 @@
+ CharacterSwapping←{
+⍝ Swap elements of ⍺ from (1 to c) and (o+1 to o+c)
+     ⍺←'PerlWeeklyChallenge'
+     ⎕IO←0
+     n←≢⍺
+     (c o)←⍵
+     si←n|1+⍳c
+     ri←n|1+o+⍳c
+     s[ri]@si⊢s[si]@ri⊢⍺
+ }
