@@ -7,15 +7,15 @@ sub MAIN(Str $S, UInt $C, UInt $O) {
 
     my @S = $S.comb;
 
-    map { @S[$_ % $N, ($_ + $O) % $N] = @S[($_ + $O) % $N, $_ % $N] }, 1 .. $C;
+    map { @S[$_ % $N, ($_ + $O) % $N] = @S[($_ + $O) % $N, $_ % $N] }, 1..$C;
 
     say @S.join;
 }
 
 sub Usage {
-    note "Usage: $*PROGRAM-NAME " ~ '$S $C $O';
+    note "$*PROGRAM-NAME $*USAGE";
 
-    note 'where $C >= 1, $O >= 1, $O >= $C, $S.chars >= $C + $O';
+    note '  where $C >= 1, $O >= 1, $O >= $C, $S.chars >= $C + $O';
 
     exit;
 }
