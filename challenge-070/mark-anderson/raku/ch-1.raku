@@ -14,7 +14,7 @@ sub MAIN(UInt $C where $C >= 1,
 }
 
 sub USAGE {
-    note "$*PROGRAM-NAME, $*USAGE";
+    note "$*PROGRAM-NAME $*USAGE";
 
     note '  where $C >= 1, $O >= $C, $S.chars >= $C + $O';
 
