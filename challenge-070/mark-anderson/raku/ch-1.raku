@@ -2,7 +2,7 @@
 
 sub MAIN(UInt $C where $C >= 1, 
          UInt $O where $O >= $C, 
-         Str $S where $S.chars >= $C + $O) {
+         Str  $S where $S.chars >= $C + $O) {
 
     my $N = $S.chars;
 
