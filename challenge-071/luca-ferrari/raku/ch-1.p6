@@ -20,6 +20,6 @@ sub MAIN( Int $N where { $N > 1 } ) {
                              || ( $neighbour-right && $current > $neighbour-right );
     }
 
-    @array.say;
-    @peak.say;
+    "Array: { @array }".say;
+    "Peak:  { @peak  }".say;
 }
