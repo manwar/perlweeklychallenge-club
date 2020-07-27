@@ -115,7 +115,7 @@ sub sn {
 # check alternative building rules
 for (1 .. 5) {
 	is sn($_), $S[$_], "S$_ doubling rule";
-	is sn_build(sub{$_}, $_, $_), $S[$_], "S$_ single iteration";
+	is sn_build(sub{0}, $_ + 1, $_), $S[$_], "S$_ single iteration";
 }
 
 # Finally: task 2: Generate S30.

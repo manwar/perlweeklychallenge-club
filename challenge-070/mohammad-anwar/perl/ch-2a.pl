@@ -16,10 +16,10 @@ use Test::Deep;
 
 is_deeply( [ generate_gray_code_sequence(3) ],
            [ 0, 1, 3, 2, 6, 7, 5, 4 ],
-           'testing 3-bit gray code sequence' );
+           'testing 3-bit gray code sequence.' );
 is_deeply( [ generate_gray_code_sequence(4) ],
            [ 0, 1, 3, 2, 6, 7, 5, 4, 12, 13, 15, 14, 10, 11, 9, 8 ],
-           'testing 4-bit gray code sequence' );
+           'testing 4-bit gray code sequence.' );
 
 done_testing;
 
