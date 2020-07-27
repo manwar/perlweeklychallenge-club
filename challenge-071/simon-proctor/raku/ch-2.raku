@@ -75,7 +75,7 @@ class ListNode {
 }
 
 sub MAIN (
-    UInt $N, #= Number from the end to remove if N is greated than list length remove the first item
+    UInt $N where * > 0, #= Number from the end to remove if N is greated than list length remove the first item
     *@list, #= List of values 
 ) {
     my $linked = ListNode.from-iterator(@list);
