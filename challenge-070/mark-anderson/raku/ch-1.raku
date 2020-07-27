@@ -1,7 +1,8 @@
 #!/usr/bin/env raku 
 
-sub MAIN(Str $S, UInt $C, UInt $O) {
-    Usage() if $C < 1 or $O < 1 or $O < $C or $S.chars < $C + $O;
+sub MAIN(UInt $C where $C >= 1, 
+         UInt $O where $O >= $C, 
+         Str  $S where $S.chars >= $C + $O) {
 
     my $N = $S.chars;
 
@@ -12,10 +13,10 @@ sub MAIN(Str $S, UInt $C, UInt $O) {
     say @S.join;
 }
 
-sub Usage {
+sub USAGE {
     note "$*PROGRAM-NAME $*USAGE";
 
-    note '  where $C >= 1, $O >= 1, $O >= $C, $S.chars >= $C + $O';
+    note '  where $C >= 1, $O >= $C, $S.chars >= $C + $O';
 
     exit;
 }
