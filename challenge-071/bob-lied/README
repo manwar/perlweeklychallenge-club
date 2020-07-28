@@ -26,7 +26,7 @@ the problem easier.
 
 Creating the random array: make a set of numbers from 1..50, move random
 element from this pool to the input array.  Look up random values and
-splice (sigh, again; some kind of brain barrier prevents me from remembering
+splice (sigh, again; some kind of brain defect prevents me from remembering
 its arguments).  Googling for a module to do it led me to an answer on
 Perl Monks that's almost a one-liner.
 
@@ -54,8 +54,26 @@ Example 2
 
 We can reuse the linked list from a couple of weeks ago (simple Moo class).
 
-Walking backwards from the end of a linked list is a good reason not to use a linked list.
-It would help to know the size of the list so we don't have to walk the whole thing to get the length, and then walk again to the deletion point.
+Walking backwards from the end of a linked list is a good reason not to use
+a linked list.  It would help to know the size of the list so we don't have
+to walk the whole thing to get the length, and then walk again to the
+deletion point.
+
+** Post Solution Thoughts
+
+Wanting to keep the size of the list, I decided to make a class for a
+singly-linked list that would store the size as an attribute and do all the
+list operations as methods.  Debatable whether this gained much over the
+simpler use of Node alone and passing N around, but it was kind of fun.
+Making a more complicated object motivated learning some things about Moo
+constructors and member attributes.
+
+As always, the edge cases take the longest to get right, but setting up the
+test cases made sure they got covered.
+
+Implementing a singly-linked list feels a lot like programming C in Perl.
+Array access is just too easy; I don't think I'd ever realistically use a
+linked list in Perl.
 
 ** Problem Statement
 
