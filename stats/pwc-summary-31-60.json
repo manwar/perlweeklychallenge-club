@@ -1,8 +1,6 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -38,21 +36,13 @@
          "JJ Merelo"
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             18,
@@ -84,11 +74,9 @@
             6,
             2,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -120,7 +108,8 @@
             0,
             0,
             1
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -158,10 +147,21 @@
          ]
       }
    ],
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-07-28 05:20:40 GMT"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-07-28 00:32:15 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    }
 }
