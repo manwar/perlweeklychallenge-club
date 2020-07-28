@@ -11,10 +11,11 @@ use warnings;
 
 my ($N) = @ARGV;
 
-die "Argument must be a positive number bigger then 1"
-  unless (defined $N && $N =~ m#^[2-9][0-9]*#);
+die "Argument must be a positive number ( 1 <= N <= 50)"
+  unless (defined $N && $N =~ m#^[2-9][0-9]*# and $N <= 50);
 
-my @array = map { int(rand(50) + 0.5) } (1 .. $N);
+my @iPool = (1 .. 50);
+my @array = map { splice(@iPool, int(rand(scalar(@iPool))), 1) } (1 .. $N);
 
 my @peak = 
   map { $array[$_] } 
