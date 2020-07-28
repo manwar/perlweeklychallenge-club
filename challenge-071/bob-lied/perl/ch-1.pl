@@ -58,6 +58,32 @@ sub peakElement
     return \@peak;
 }
 
+sub makeArray
+{
+    my ($min, $max, $size) = @_;
+    my @chooseFrom = ( $min .. $max );
+    my @result;
+
+    for my $n ( 1..$size )
+    {
+        push @result, splice(@chooseFrom, int(rand(@chooseFrom)), 1)
+
+    }
+    return @result;
+}
+
+sub checkUniq
+{
+    my (@arr) = @_;
+    my %uniq;
+    $uniq{$_}++ foreach @arr;
+    my $notUnique = grep { $_ != 1 } values %uniq;
+    return $notUnique == 0;
+}
+
+is( scalar(makeArray(1, 50, 10)), 10, "Make random array size  10");
+ok( checkUniq(makeArray(1, 50, 10)), "Random array unique elements");
+
 is_deeply(peakElement(2, 1 ),         [2],    "two elements, left");
 is_deeply(peakElement(1, 2 ),         [2],    "two elements, right");
 is_deeply(peakElement(6, 4, 2 ),      [6],    "three elements, first");
@@ -72,4 +98,11 @@ is_deeply(peakElement(3, 9, 4, 8, 5), [9, 8], "odd # elements, middle peaks");
 is_deeply(peakElement(18, 45, 38, 25, 10, 7, 21, 6, 28, 48), [45, 21, 48], "example 1");
 is_deeply(peakElement(47, 11, 32, 8, 1, 9, 39, 14, 36, 23), [47, 32, 39, 36], "example 2");
 
+
 done_testing();
+
+my @uniqArray = makeArray($MinVal, $MaxVal, 25);
+my $peaks = peakElement @uniqArray;
+
+say "Array: ", join ",", @uniqArray;
+say "Peaks: ", join ",", @$peaks;
