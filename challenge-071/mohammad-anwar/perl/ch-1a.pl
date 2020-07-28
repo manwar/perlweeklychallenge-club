@@ -29,7 +29,7 @@ my %test_cases = (
     },
 );
 
-foreach my $test (keys %test_cases) {
+foreach my $test (sort keys %test_cases) {
     is_deeply(
         get_peak_elements($test_cases{$test}->{in}),
         $test_cases{$test}->{out},
@@ -41,7 +41,7 @@ done_testing;
 
 #
 #
-# METHODS
+# METHOD
 
 sub get_peak_elements {
     my ($array) = @_;
@@ -65,20 +65,4 @@ sub get_peak_elements {
     }
 
     return \@peak_elements;
-}
-
-sub get_random_array {
-    my ($size) = @_;
-
-    my $min = 1;
-    my $max = 50;
-    my %elements = ();
-    while ($size >= 1) {
-        my $e = $max - int(rand($min + $max));
-        next if (exists $elements{$e});
-        $elements{$e} = 1;
-        $size--;
-    }
-
-    return [ keys %elements ];
 }

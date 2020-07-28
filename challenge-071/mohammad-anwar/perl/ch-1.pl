@@ -11,8 +11,8 @@
 use strict;
 use warnings;
 
-my $S = $ARGV[0] || 10;
-my $array = get_random_array($S);
+my $N = $ARGV[0] || 10;
+my $array = get_random_array($N);
 my $peak_elements = get_peak_elements($array);
 
 print sprintf("Array: [%s]\n", join(", ", @$array));
