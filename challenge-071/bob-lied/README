@@ -1,1 +1,36 @@
-Solutions by Bob Lied.
+Solutions to weekly challenge 71 by Bob Lied.
+
+This week I would like to incorporate Test::More TDD into the problem, creating
+some tests before even starting to program the answer.
+
+* TASK #1 > Peak Element
+
+** Initial thoughts
+
+The first interesting problem is creating an array of unique random elements.
+There is probably a CPAN module, but this is a programming challenge, so let's
+program it.
+
+Finding the peak looks like it will mean linear search, comparing the value
+before and the value after.  Watch out for boundaries.  Maybe an easy trick
+is to put 0 on the front of the list and 51 on the end.
+
+** Problem Statement
+
+You are given positive integer $N (>1).
+
+Write a script to create an array of size $N with random unique elements between 1 and 50.
+
+In the end it should print peak elements in the array, if found.
+
+    An array element is called peak if it is bigger than it’s neighbour.
+
+Example 1
+  Array: [ 18, 45, 38, 25, 10, 7, 21, 6, 28, 48 ]
+  Peak: [ 48, 45, 21 ]
+
+Example 2
+  Array: [ 47, 11, 32, 8, 1, 9, 39, 14, 36, 23 ]
+  Peak: [ 47, 32, 39, 36 ]
+
+
