@@ -70,13 +70,13 @@ package main;
 
 my $L = $ARGV[0] || '1 -> 2 -> 3 -> 4 -> 5';
 my $N = $ARGV[1] || 2;
-print make_linked_list($L)->trim($N)->show, "\n";
+print create_linked_list($L)->trim($N)->show, "\n";
 
 #
 #
 # METHOD
 
-sub make_linked_list {
+sub create_linked_list {
     my ($list) = @_;
 
     $list =~ s/\s+//g;
@@ -85,9 +85,8 @@ sub make_linked_list {
 
     $list = [ split /\-\>/, $list ];
     my $node = Node->new(v => pop @$list);
-
-    # prepare singly linked list
     my $tail = $node;
+
     while (@$list) {
         my $node = Node->new(v => pop @$list);
         $tail->p($node);

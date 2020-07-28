@@ -82,7 +82,7 @@ my %test_cases = (
 
 foreach my $test (sort keys %test_cases) {
     is(
-        make_linked_list($list)->trim($test_cases{$test}->{n})->show,
+        create_linked_list($list)->trim($test_cases{$test}->{n})->show,
         $test_cases{$test}->{o},
         $test
     );
@@ -94,7 +94,7 @@ done_testing;
 #
 # METHOD
 
-sub make_linked_list {
+sub create_linked_list {
     my ($list) = @_;
 
     $list =~ s/\s+//g;
@@ -103,9 +103,8 @@ sub make_linked_list {
 
     $list = [ split /\-\>/, $list ];
     my $node = Node->new(v => pop @$list);
-
-    # prepare singly linked list
     my $tail = $node;
+
     while (@$list) {
         my $node = Node->new(v => pop @$list);
         $tail->p($node);
