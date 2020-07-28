@@ -18,6 +18,9 @@ has p => (is => 'rw');
 sub trim {
     my ($self, $position) = @_;
 
+    die "ERROR: Invalid position [$position].\n"
+        unless ($position =~ /^\d+$/);
+
     my $tail  = $self;
     my $count = 1;
     my $node;
