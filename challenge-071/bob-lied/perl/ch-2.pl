@@ -12,6 +12,7 @@ use strict;
 use warnings;
 use feature qw(say);
 
+use Getopt::Long;
 
 ##########
 package Node;
@@ -123,17 +124,21 @@ sub show
     return join('->', $self->_asList());
 }
 
-
-
 ##########
 package main;
 
-use Test::More;
+sub Usage { "Usage: ch-2.pl 'x->y->z' N\n\t'x->y->z' is a linked list\n\tN > 1\n"; }
 
-sub Usage { "Usage: ch-2.pl N\n\tN > 1\n"; }
+my $doTest;
+GetOptions("test!" => \$doTest);
 
-die Usage unless @ARGV == 1;
-my $N = $ARGV[0];
+exit(!runTest()) if $doTest;
+
+die Usage unless @ARGV == 2;
+
+my $StrList = $ARGV[0];
+
+my $N = $ARGV[1];
 die Usage unless $N >= 1;
 
 sub trimList
@@ -150,14 +155,19 @@ sub trimList
     return $sllist->show();
 }
 
+say trimList($StrList, $N);
 
-is( trimList('1->2->3->4->5', 1), '1->2->3->4', "n = 1" );
-is( trimList('1->2->3->4->5', 2), '1->2->3->5', "n = 2" );
-is( trimList('1->2->3->4->5', 3), '1->2->4->5', "n = 3" );
-is( trimList('1->2->3->4->5', 4), '1->3->4->5', "n = 4" );
-is( trimList('1->2->3->4->5', 5), '2->3->4->5', "n = 5" );
-is( trimList('1->2->3->4->5', 6), '2->3->4->5', "n = 6" );
+sub runTest
+{
+    use Test::More;
 
-done_testing();
+    is( trimList('1->2->3->4->5', 1), '1->2->3->4', "n = 1" );
+    is( trimList('1->2->3->4->5', 2), '1->2->3->5', "n = 2" );
+    is( trimList('1->2->3->4->5', 3), '1->2->4->5', "n = 3" );
+    is( trimList('1->2->3->4->5', 4), '1->3->4->5', "n = 4" );
+    is( trimList('1->2->3->4->5', 5), '2->3->4->5', "n = 5" );
+    is( trimList('1->2->3->4->5', 6), '2->3->4->5', "n = 6" );
 
-say trimList('1->2->3->4->5', $N);
+    my ($result) = (done_testing())[0];
+    return $result;
+}
