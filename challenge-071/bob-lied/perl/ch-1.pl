@@ -102,9 +102,8 @@ sub runTests
     is_deeply(peakElement(47, 11, 32, 8, 1, 9, 39, 14, 36, 23), [47, 32, 39, 36], "example 2");
 
 
-    my @result = done_testing();
-    say "@result";
-    return $result[0];
+    my ($result) = (done_testing())[0];
+    return $result;
 }
 
 ########## MAIN ##########
@@ -112,7 +111,7 @@ sub runTests
 my $doTest;
 GetOptions('test!' => \$doTest);
 
-exit(runTests() ? 0 : 1) if $doTest;
+exit(!runTests()) if $doTest;
 
 my $N = $ARGV[0] // 0;
 die Usage() unless $N > 1;
