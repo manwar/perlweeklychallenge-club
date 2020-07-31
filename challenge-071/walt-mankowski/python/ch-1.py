@@ -1,8 +1,8 @@
 from sys import argv
-from random import randint
+from random import sample
 
 def make_array(N):
-    return [0] + [randint(1,50) for _ in range(N)] + [0]
+    return [0] + sample(range(1,51), k=50)[0:N] + [0]
     
 def peaks(a):
     p = []
