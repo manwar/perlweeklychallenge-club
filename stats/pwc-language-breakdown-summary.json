@@ -1,12 +1,36 @@
 {
    "subtitle" : {
-      "text" : "Last updated at 2020-08-01 21:35:07 GMT"
+      "text" : "Last updated at 2020-08-01 21:38:30 GMT"
    },
    "legend" : {
       "enabled" : "false"
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
    "series" : [
       {
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "y" : 10,
+            "enabled" : "true",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right",
+            "color" : "#FFFFFF"
+         },
          "name" : "Contributions",
          "data" : [
             [
@@ -15,49 +39,25 @@
             ],
             [
                "Perl",
-               2928
+               2930
             ],
             [
                "Raku",
-               1892
+               1894
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "align" : "right",
-            "rotation" : -90,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true"
-         }
+         ]
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
+   "yAxis" : {
+      "title" : {
+         "text" : null
       },
-      "type" : "category"
+      "min" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    }
 }
