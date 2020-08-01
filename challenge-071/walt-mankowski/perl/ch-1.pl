@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use feature qw(:5.32);
 use experimental qw(signatures);
+use List::Util qw(shuffle);
 
 # TASK #1 › Peak Element
 # Submitted by: Mohammad S Anwar
@@ -34,11 +35,8 @@ say "Array: [@a[1..$#a-1]]";
 say "Peak:  [@p]";
 
 sub make_array($N) {
-    my @a = (0);
-    push @a, map { int(rand(50)) + 1} 1..$N;
-    push @a, 0;
-
-    return @a;
+    my @a = shuffle 1..50;
+    return (0, @a[0..$N-1], 0);
 }
 
 sub peaks(@a) {

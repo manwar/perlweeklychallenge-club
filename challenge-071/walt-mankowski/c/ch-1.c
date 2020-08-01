@@ -1,12 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
+
+void fisher_yates(int *a, const int N) {
+    for (int i = N-1; i >= 1; i--) {
+        const int j = rand() % (i+1);
+        const int tmp = a[i];
+        a[i] = a[j];
+        a[j] = tmp;
+    }
+}
 
 const int *make_array(const int N) {
-    int *a = calloc(N+2, sizeof(int));
+    int digits[50];
+    for (int i = 0; i < 50; i++)
+        digits[i] = i+1;
 
-    for (int i = 1; i <= N; i++)
-        a[i] = 1 + rand() % 50;
+    fisher_yates(digits, 50);
+
+    int *a = calloc(N+2, sizeof(int));
+    memcpy(a+1, digits, N * sizeof(int));
 
     return a;
 }
