@@ -116,15 +116,18 @@ sub push_back ( $;$ ) {
         ::dprint "nothing to do";
         return 0;
     }
+    elsif ( scalar @_ > 3) {
+        warn "too much arguments: use last two arguments";
+    }
 
     my ( $itr, $sth ) = @_[ -2, -1 ];
     my $class = blessed $itr;
 
     # get valid iterator to push back
-    if ( not defined $itr ) {
-        # making begin and push something
+    if ( not defined $itr ) { # this is act as unshift()
+        warn "iterator is undef: unshift the $sth at the beginning or making first node";
         ::dprint "push_back: iterator not defined: making first node";
-        return $_[0]->push_back( itr_class_str->new(), $sth );
+        return $_[0]->push_back( $_ [0]->before_begin_, $sth );
     }
     if ( $class eq __PACKAGE__ ) { # scalar @_ == 2
         ::dprint "push_back: use tail node to push $sth";

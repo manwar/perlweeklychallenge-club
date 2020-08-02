@@ -91,7 +91,7 @@ In the end it should print peak elements in the array, if found.
 sub get_peak_from_array ( @ ) {
     my $n     =  0;
     my $l     =  1;
-    my $pasc  =  1; # previous ascend value
+    my $pasc  =  1 << 1; # previous ascend value
     my @ps;
 
     ::dpush "visual list: ";
@@ -119,14 +119,14 @@ sub get_peak_from_array ( @ ) {
         #   0      1       no (low peak)
         #   1      1       no (keep increasing)
         # not very usueful here but I hope someday it will be :-]
-        if ( ($pasc<<1 | $asc) == 0b10 ) {  # if $pasc and not $asc;
+        if ( ($pasc | $asc) == 0b10 ) {  # if $pasc and not $asc;
             push @ps, $_;
             ::dpush " ", colored( ['yellow on_black'], $_ ), " ";
         }
         else {
             ::dpush " $_ ";
         }
-        $pasc = $asc;
+        $pasc = $asc << 1;
     }
     ::dmesg " ", ($pasc?IC:DC), "\n";
     return @ps;
