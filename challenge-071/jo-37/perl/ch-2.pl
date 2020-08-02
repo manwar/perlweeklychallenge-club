@@ -19,10 +19,10 @@ sub remove_from_end {
 	my ($list, $n) = @_;
 
 	# Create a new singly linked list that will hold at most $n
-	# "position pointers" into the original list.  'undef' is used
-	# as a pseudo-pointer referencing the original list's first node
-	# and is stored in the new list's first node.
-	my $record = LinkedList::Single->new(undef);
+	# "position pointers" into the original list.
+	# The root node is special and is stored in the new
+	# list's first node.
+	my $record = LinkedList::Single->new($list->root_node);
 	my $len = 1;
 
 	# Process all nodes but the last from the original list.
@@ -37,18 +37,13 @@ sub remove_from_end {
 	}
 
 	# Retrieve the cut-node position from the first node of the record
-	# list, reposition the original list and cut the next node or
-	# remove the first node.
-	# Note: "cut" removes the next node after the current and thus
-	# cannot be used to remove the first node, where a "shift" is
-	# required.
+	# list, reposition the original list and cut the next node.
+	# If $n is large enough, the root_node is still the first node
+	# of the record list causing the first node of the original list
+	# to be cut.
 	my $node = $record->head->node_data->[0];
-	if ($node) {
-		$list->node($node);
-		$list->cut;
-	} else {
-		$list->shift;
-	}
+	$list->node($node);
+	$list->cut;
 
 	$list;
 }
