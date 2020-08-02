@@ -28,8 +28,8 @@ sub remove_from_end {
 	# Process all nodes but the last from the original list.
 	for ($list->head; $list->has_next; $list->next) {
 
-		# Record the position and skip over the new node.
-		$record->add($list->node)->next;
+		# Record the position.
+		$record->push($list->node);
 
 		# Discard the first recorded position if the maximum length
 		# is exceeded.
@@ -41,8 +41,7 @@ sub remove_from_end {
 	# If $n is large enough, the root_node is still the first node
 	# of the record list causing the first node of the original list
 	# to be cut.
-	my $node = $record->head->node_data->[0];
-	$list->node($node);
+	$list->node($record->head->node_data->[0]);
 	$list->cut;
 
 	$list;
