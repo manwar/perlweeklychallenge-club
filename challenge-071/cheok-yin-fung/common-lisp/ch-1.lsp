@@ -1,3 +1,7 @@
+; notes on 10min before deadline: I forgot to implement the uniqueness
+; requirement until I saw laurent_r's blog.
+; Here the Lisp script hasn't implemented the uniqueness requirement.
+
 (setf n 20)
 (setf seq () )
 (setf peak_eles ())
