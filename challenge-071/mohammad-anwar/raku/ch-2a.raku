@@ -26,7 +26,7 @@ class Node {
                 $node = $tail;
             }
             elsif $position == $count {
-                if (defined $node) {
+                if $node.defined {
                     # Remove current node by making the
                     # parent of  current node as parent
                     # of previous node
