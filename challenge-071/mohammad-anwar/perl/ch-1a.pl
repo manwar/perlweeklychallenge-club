@@ -31,7 +31,7 @@ my %test_cases = (
 
 foreach my $test (sort keys %test_cases) {
     is_deeply(
-        get_peak_elements($test_cases{$test}->{in}),
+        find_peak_elements_in($test_cases{$test}->{in}),
         $test_cases{$test}->{out},
         $test
     );
@@ -43,7 +43,7 @@ done_testing;
 #
 # METHOD
 
-sub get_peak_elements {
+sub find_peak_elements_in {
     my ($array) = @_;
 
     my @peak_elements = ();

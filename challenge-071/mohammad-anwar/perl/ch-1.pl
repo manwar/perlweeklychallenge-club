@@ -12,17 +12,17 @@ use strict;
 use warnings;
 
 my $N = $ARGV[0] || 10;
-my $array = get_random_array($N);
-my $peak_elements = get_peak_elements($array);
+my $random_array  = get_random_array($N);
+my $peak_elements = find_peak_elements_in($random_array);
 
-print sprintf("Array: [%s]\n", join(", ", @$array));
+print sprintf("Array: [%s]\n", join(", ", @$random_array));
 print sprintf(" Peak: [%s]\n", join(", ", @$peak_elements));
 
 #
 #
 # METHODS
 
-sub get_peak_elements {
+sub find_peak_elements_in {
     my ($array) = @_;
 
     my @peak_elements = ();
