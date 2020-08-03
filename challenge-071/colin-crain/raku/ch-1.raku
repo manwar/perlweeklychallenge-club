@@ -35,7 +35,8 @@ sub MAIN (Int $n where {$n > 0} = 10 ) {
     # create our random array:
     # bookending the arr in 0s  
     # makes the comparisons at the ends cleaner
-    my @a = 0, |(^$n).map({ (1..50).pick }), 0 ;
+    
+    my @a = 0, |(1..50).pick($n), 0 ;
 
     say "input array: @a[1..@a-2]";
 

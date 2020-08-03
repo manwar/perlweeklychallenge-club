@@ -31,10 +31,14 @@ use feature ":5.26";
 
 my $n = shift @ARGV // 10;
 
-## encapsulating the arr in 0s first 
-## makes the comparisons at the ends of cleaner
+die "cannot create more than 50 unique elements" if $n > 50;
+
+## make a list of n unique numbers
+## --> encapsulating the arr in 0s  
+##     makes the comparisons at the ends easy
+my @pool = (1..50);
 my @arr = (0);
-push @arr, int(rand(50))+1 for (1..$n);
+push @arr, splice( @pool, int(rand(@pool)) , 1 ) while (@arr < $n+1);
 push @arr, 0;
 
 say "input array: @arr[1..@arr-2]";
