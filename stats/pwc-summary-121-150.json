@@ -1,9 +1,18 @@
 {
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-08-03 10:30:44 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -39,22 +48,9 @@
          "Simon Miner"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-08-03 10:21:52 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             3,
             0,
@@ -75,7 +71,7 @@
             0,
             2,
             3,
-            110,
+            112,
             113,
             57,
             54,
@@ -86,8 +82,7 @@
             0,
             6,
             5
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -111,7 +106,7 @@
             2,
             6,
             0,
-            77,
+            79,
             113,
             51,
             0,
@@ -160,8 +155,13 @@
          "name" : "Blog"
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    }
 }
