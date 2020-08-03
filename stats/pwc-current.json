@@ -1,15 +1,15 @@
 {
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 072"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 072",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 2,
+               "name" : "Duncan C. White",
                "drilldown" : "Duncan C. White",
-               "name" : "Duncan C. White"
+               "y" : 2
             },
             {
                "name" : "Jason Messer",
@@ -17,76 +17,74 @@
                "y" : 2
             },
             {
-               "y" : 5,
+               "name" : "Javier Luque",
                "drilldown" : "Javier Luque",
-               "name" : "Javier Luque"
+               "y" : 5
             },
             {
-               "y" : 4,
                "name" : "Luca Ferrari",
+               "y" : 4,
                "drilldown" : "Luca Ferrari"
             },
             {
-               "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
                "y" : 2
             },
             {
                "y" : 4,
-               "name" : "Mohammad S Anwar",
-               "drilldown" : "Mohammad S Anwar"
+               "drilldown" : "Mohammad S Anwar",
+               "name" : "Mohammad S Anwar"
             },
             {
+               "y" : 2,
                "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
-               "y" : 2
+               "name" : "Niels van Dijke"
             },
             {
+               "name" : "Roger Bell_West",
                "y" : 4,
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "name" : "Simon Miner",
+               "drilldown" : "Simon Miner",
+               "y" : 2
             },
             {
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
+               "y" : 2,
+               "name" : "Simon Proctor"
             }
          ],
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 072"
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Duncan C. White",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Duncan C. White",
             "name" : "Duncan C. White"
          },
          {
-            "name" : "Jason Messer",
+            "id" : "Jason Messer",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Jason Messer"
+            "name" : "Jason Messer"
          },
          {
+            "name" : "Javier Luque",
+            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -100,12 +98,9 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Javier Luque",
-            "id" : "Javier Luque"
+            ]
          },
          {
-            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -116,19 +111,21 @@
                   2
                ]
             ],
+            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari"
          },
          {
             "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Mark Anderson"
+            ]
          },
          {
+            "name" : "Mohammad S Anwar",
             "id" : "Mohammad S Anwar",
             "data" : [
                [
@@ -139,8 +136,7 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Mohammad S Anwar"
+            ]
          },
          {
             "name" : "Niels van Dijke",
@@ -153,6 +149,7 @@
             "id" : "Niels van Dijke"
          },
          {
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -163,41 +160,59 @@
                   2
                ]
             ],
-            "name" : "Roger Bell_West",
             "id" : "Roger Bell_West"
          },
          {
+            "name" : "Simon Miner",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Simon Miner"
+         },
+         {
             "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Simon Proctor"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2020-08-03 13:29:37 GMT"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    },
    "xAxis" : {
       "type" : "category"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 072"
+   "legend" : {
+      "enabled" : 0
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2020-08-03 20:08:32 GMT"
    }
 }
