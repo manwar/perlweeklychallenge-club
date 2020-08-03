@@ -13,8 +13,13 @@ my @peak_eles = ();
 
 if ($ARGV[0]) {$N = $ARGV[0];} else {$N = 10;}
 
-for (1..$N) {
-   push @seq, 1+int(rand(50))
+while ($#seq < $N) {
+    my $a = 1+int(rand(50));
+    push @seq, $a unless exists $unique{$a} ;
+    $unique{ $a } = 1;
+    #  notes on 10min before deadline: I forgot to implement the uniqueness
+    #  requirement until I saw laurent_r's blog.
+    #  Therefore, The code of generating the close to his.
 }
 
 sub checkpeak {
