@@ -2,27 +2,49 @@
    "title" : {
       "text" : "Perl Weekly Challenge - 072"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "xAxis" : {
+      "type" : "category"
    },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Jason Messer",
+               "drilldown" : "Jason Messer"
+            },
+            {
+               "y" : 5,
+               "name" : "Javier Luque",
+               "drilldown" : "Javier Luque"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 072",
+         "colorByPoint" : 1
+      }
+   ],
    "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-08-03 09:51:23 GMT"
+      "text" : "[Champions: 3] Last updated at 2020-08-03 09:55:15 GMT"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Jason Messer",
-            "id" : "Jason Messer",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Jason Messer",
+            "name" : "Jason Messer"
          },
          {
+            "name" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -37,13 +59,19 @@
                   1
                ]
             ],
-            "id" : "Javier Luque",
-            "name" : "Javier Luque"
+            "id" : "Javier Luque"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          }
       ]
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
@@ -54,27 +82,6 @@
          "borderWidth" : 0
       }
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 072",
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Jason Messer",
-               "name" : "Jason Messer"
-            },
-            {
-               "y" : 5,
-               "drilldown" : "Javier Luque",
-               "name" : "Javier Luque"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
@@ -82,5 +89,13 @@
    },
    "chart" : {
       "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
