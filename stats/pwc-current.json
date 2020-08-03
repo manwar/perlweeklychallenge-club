@@ -1,23 +1,20 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 072"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 072",
          "data" : [
             {
                "y" : 2,
+               "drilldown" : "Duncan C. White",
+               "name" : "Duncan C. White"
+            },
+            {
+               "name" : "Jason Messer",
                "drilldown" : "Jason Messer",
-               "name" : "Jason Messer"
+               "y" : 2
             },
             {
                "y" : 5,
@@ -25,37 +22,37 @@
                "name" : "Javier Luque"
             },
             {
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 4
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 2,
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "name" : "Mohammad S Anwar",
                "y" : 4,
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "y" : 4,
+               "name" : "Mohammad S Anwar",
                "drilldown" : "Mohammad S Anwar"
             },
             {
+               "drilldown" : "Niels van Dijke",
                "name" : "Niels van Dijke",
-               "y" : 2,
-               "drilldown" : "Niels van Dijke"
+               "y" : 2
             },
             {
-               "drilldown" : "Roger Bell_West",
                "y" : 4,
+               "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West"
             },
             {
-               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
                "y" : 2
             }
          ],
-         "name" : "Perl Weekly Challenge - 072"
+         "colorByPoint" : 1
       }
    ],
    "plotOptions" : {
@@ -70,17 +67,26 @@
    "drilldown" : {
       "series" : [
          {
+            "id" : "Duncan C. White",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Duncan C. White"
+         },
+         {
+            "name" : "Jason Messer",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Jason Messer",
-            "name" : "Jason Messer"
+            "id" : "Jason Messer"
          },
          {
-            "id" : "Javier Luque",
             "data" : [
                [
                   "Perl",
@@ -95,10 +101,11 @@
                   1
                ]
             ],
-            "name" : "Javier Luque"
+            "name" : "Javier Luque",
+            "id" : "Javier Luque"
          },
          {
-            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -109,7 +116,7 @@
                   2
                ]
             ],
-            "id" : "Luca Ferrari"
+            "name" : "Luca Ferrari"
          },
          {
             "name" : "Mark Anderson",
@@ -122,7 +129,6 @@
             "id" : "Mark Anderson"
          },
          {
-            "name" : "Mohammad S Anwar",
             "id" : "Mohammad S Anwar",
             "data" : [
                [
@@ -133,20 +139,20 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Mohammad S Anwar"
          },
          {
-            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Niels van Dijke"
+            "id" : "Niels van Dijke"
          },
          {
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -157,11 +163,12 @@
                   2
                ]
             ],
+            "name" : "Roger Bell_West",
             "id" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
@@ -171,18 +178,26 @@
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2020-08-03 13:29:37 GMT"
    },
    "xAxis" : {
       "type" : "category"
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 072"
+   },
    "tooltip" : {
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2020-08-03 13:22:36 GMT"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
