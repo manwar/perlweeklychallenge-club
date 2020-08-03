@@ -11,4 +11,4 @@
 our ($begin_line, $end_line);
 BEGIN { ($begin_line, $end_line)=splice @ARGV,0,2 };
 
-$. == $begin_line .. print, $. >= $end_line && exit
+$. == $begin_line .. print && $. >= $end_line && exit
