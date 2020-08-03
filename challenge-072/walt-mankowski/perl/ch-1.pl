@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use feature qw(:5.32);
 use experimental qw(signatures);
+use Lingua::EN::Inflect qw(PL);
 
 # TASK #1 › Trailing Zeroes
 # Submitted by: Mohammad S Anwar
@@ -41,5 +42,5 @@ sub num_trailing_zeros($n) {
 my $n = shift @ARGV;
 my $f = fact($n);
 my $z = num_trailing_zeros($f);
-say "$n as \$N! = $f has $z trailing zero(s)";
+say "$n as \$N! = $f has $z trailing ", PL("zero", $z);
 
