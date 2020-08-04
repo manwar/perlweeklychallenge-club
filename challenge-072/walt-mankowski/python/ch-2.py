@@ -10,3 +10,5 @@ with open(fname) as f:
         if a <= lineno <= b:
             print(line, end='')
         lineno += 1
+        if lineno > b:
+            break
