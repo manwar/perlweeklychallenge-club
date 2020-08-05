@@ -76,9 +76,9 @@ sub create-linked-list(Str $list is copy) {
     my $tail = $node;
 
     while @list {
-        my $node = Node.new(v => @list.pop.Int);
-        $tail.p = $node;
-        $tail = $node;
+        my $_node = Node.new(v => @list.pop.Int);
+        $tail.p = $_node;
+        $tail = $_node;
     }
 
     $node.show.say;
