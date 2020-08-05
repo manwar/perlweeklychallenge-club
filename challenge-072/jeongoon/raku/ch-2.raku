@@ -8,9 +8,9 @@ sub MAIN (
     Int:D $A where { $A > 0  },         #= from
     Int:D $B where { $B >= $A },        #= to
          ) {
-    my $lnum = 1;
-    for $F.IO.lines -> $line {
+
+    for $F.IO.lines.kv -> $lnum, $line {
         say $line if $lnum == $A fff^ $lnum++ == $B;
-        last if $A == $B;
+        last if $lnum == $B;
     }
 }

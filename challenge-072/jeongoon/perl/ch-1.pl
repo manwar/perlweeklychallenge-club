@@ -7,11 +7,9 @@ use bigint;
 
 my $N = $ARGV[0];
 if ( not defined $N ) {
-    print "use default value: 10.\n";
+    warn "use default value: 10.\n";
+    $N = 10;
 }
-
-my $e;
-
 
 sub f {
     return 1 if $_[0] == 1;
@@ -27,14 +25,14 @@ sub zero_length::f_and_count ($) {
 }
 
 sub zero_length::reduce ($) {
+    my $z = 0; # put this line here for better indention in CPerl Mode
 
-    my $z = 0;
 =pod
 
  => Every 10 ( 2 * 5 ) makes a zero digit in the end.
  A. if find the even number count it
  B: if find the the number divisible by 5
-    then count how many times divisible by 5a
+    then count how many times divisible by 5
 
  But even numbers exsists plenty which more than the numbers divisible by 5
  ** sorry I cannot prove it mathematically but..
@@ -45,10 +43,11 @@ sub zero_length::reduce ($) {
 
  graphically it shows it is right.
 
-    if A.count > B.count then ( which seems correct)
+    if A.count > B.count then (which seems correct)
         sum of B.count would be how many zeros in the end of the number
 
 =cut
+
     map {
         my $i = 0;
         ( ++$z, ++$i ) while not $_ % ( 5**($i+1) );
