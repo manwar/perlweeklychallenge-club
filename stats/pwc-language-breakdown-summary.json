@@ -1,6 +1,9 @@
 {
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "Last updated at 2020-08-05 08:07:50 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
       "title" : {
@@ -8,25 +11,40 @@
       },
       "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
       },
       "type" : "category"
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "y" : 10
+         },
          "data" : [
             [
                "Blog",
-               857
+               859
             ],
             [
                "Perl",
@@ -36,28 +54,10 @@
                "Raku",
                1925
             ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "y" : 10,
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90
-         }
+         ]
       }
    ],
    "legend" : {
       "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-08-05 03:43:45 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    }
 }
