@@ -1,102 +1,65 @@
-Solutions to weekly challenge 71 by Bob Lied.
+Solutions to weekly challenge 72 by Bob Lied.
 
-This week I would like to incorporate Test::More TDD into the problem, creating
-some tests before even starting to program the answer.
+https://perlweeklychallenge.org/blog/perl-weekly-challenge-072/
 
-* TASK #1 > Peak Element
+This week, I would like to add two personal elements to the problem:
+(1) create a template for perl-vim that sets up these weekly challenges
+(includes Test::More, a skeleton for checking ARGV, and whatever else
+is quickly becoming a pattern; and (2) use a github issue in the submission
+process, just to learn more about using git and github.
+
+* TASK #1 > Trailing Zeroes
 
 ** Initial thoughts
 
-The first interesting problem is creating an array of unique random elements.
-For test purposes, we are going to give manually created lists, but command
-line arguments should be validated.
+Too easy, unless I'm missing something.  The result gets a zero on the end every time
+it's multiplied by 10, and since we're doing factorials, that will happen every time N
+rolls past a multiple of 5.  The answer is int(N/5), I think, but I'll need to convince
+myself completely.
 
-Finding the peak looks like it will mean linear search, comparing the value
-before and the value after.  Watch out for boundaries.  Maybe an easy trick
-is to put 0 on the front of the list and 51 on the end.
+We could make it a little tougher by actually calculating N!, and maybe using Memoize
+as an optimization.  And maybe finding out how high N can be until overflow or waiting time
+make it impractical.
 
 ** Post Solution Thoughts
 
-Setting up the test cases first was helpful to think about those edge cases.
-Not sure why the given example solution 1 lists 48 as the first element;
-perhaps it was doing edges first.
+Yep, it was really that easy.  I implemented the factorial using Memoize just
+for fun.  The highest number that didn't roll over to floating point was 20!.
 
-Putting extra 0 elements (not 51) before and after the list did indeed make
-the problem easier.
-
-Creating the random array: make a set of numbers from 1..50, move random
-element from this pool to the input array.  Look up perl documentationn for
-random values and splice (sigh, again; some kind of brain defect prevents me
-from remembering its arguments).  Googling for a module to do it led me to
-an answer on Perl Monks that's almost a one-liner.
 
 ** Problem Statement
 
-You are given positive integer $N (>1).
+You are given a positive integer $N (<= 10).
 
-Write a script to create an array of size $N with random unique elements between 1 and 50.
+Write a script to print number of trailing zeroes in $N!.
 
-In the end it should print peak elements in the array, if found.
-
-    An array element is called peak if it is bigger than it’s neighbour.
-
-Example 1
-  Array: [ 18, 45, 38, 25, 10, 7, 21, 6, 28, 48 ]
-  Peak: [ 48, 45, 21 ]
-
-Example 2
-  Array: [ 47, 11, 32, 8, 1, 9, 39, 14, 36, 23 ]
-  Peak: [ 47, 32, 39, 36 ]
-
-* TASK #2 > Trim Linked List
+* TASK #2 > Lines Range
 
 ** Initial Thoughts
 
-We can reuse the linked list from a couple of weeks ago (simple Moo class).
-
-Walking backwards from the end of a linked list is a good reason not to use
-a linked list.  It would help to know the size of the list so we don't have
-to walk the whole thing to get the length, and then walk again to the
-deletion point.
+This has come up often enough that I know I've done it in sed and awk; and in
+a pipeline with head and tail.  The flip-flop operator comes to mind, but
+there'll be some experimentation for boundary conditions.  Also some test
+cases for A or B being outside the range of the file or having an empty file.
 
 ** Post Solution Thoughts
 
-Wanting to keep the size of the list, I decided to make a class for a
-singly-linked list that would store the size as an attribute and do all the
-list operations as methods.  Debatable whether this gained much over the
-simpler use of Node alone and passing N around, but it was kind of fun.
-Making a more complicated object motivated learning some things about Moo
-constructors and member attributes.
+The hardest part of this turned out to be how to set up tests.  I wanted the
+testing to be self-contained, so I put the test data into __DATA__.  But then
+re-reading that repeatedly for different tests required seeking back to the
+start and also resetting $.  A couple of trips to Google there.
 
-As always, the edge cases take the longest to get right, but setting up the
-test cases made sure they got covered.
+I also wanted to capture the output in a variable and not just print to the
+console.  I knew that a string could be opened as a file handle using a
+reference to the string.  It should have been easy; but I spent a long time
+debugging before I realized that I had typed \&TestResult instead of
+\$TestResult.
 
-Implementing a singly-linked list feels a lot like programming C in Perl.
-Array access is just too easy; I don't think I'd ever realistically use a
-linked list in Perl.
 
 ** Problem Statement
 
-You are given a singly linked list and a positive integer $N (>0).
+You are given a text file name $file and range $A - $B where $A <= $B.
 
-Write a script to remove the $Nth node from the end of the linked list and print the linked list.
+Write a script to display lines range $A and $B in the given file.
 
-If $N is greater than the size of the linked list then remove the first node of the list.
-
-NOTE: Please use pure linked list implementation.
-
-Example
-
-    Given Linked List: 1 -> 2 -> 3 -> 4 -> 5
-    when $N = 1
-    Output: 1 -> 2 -> 3 -> 4
-    when $N = 2
-    Output: 1 -> 2 -> 3 -> 5
-    when $N = 3
-    Output: 1 -> 2 -> 4 -> 5
-    when $N = 4
-    Output: 1 -> 3 -> 4 -> 5
-    when $N = 5
-    Output: 2 -> 3 -> 4 -> 5
-    when $N = 6
-    Output: 2 -> 3 -> 4 -> 5
+(That's A and B inclusive, from the examples.)
