@@ -1,10 +1,12 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -T
 
 use strict;
 use warnings;
 
 sub print_range {
-	my ($file, $A, $B) = (shift, shift() + 0, shift() + 0);
+	my $file = shift;
+	my ($A) = shift =~ /^(\d+)/;
+	my ($B) = shift =~ /^(\d+)/;
 
 	return if !$file || $A < 1 || $B < $A;
 
@@ -18,4 +20,8 @@ EOS
 	close $fh or warn "$file: $!\n";
 }
 
-print_range 'ch-2.in', 3, 5;
+if (@ARGV) {
+	print_range @ARGV;
+} else {
+	print_range 'ch-2.in', 3, 5;
+}
