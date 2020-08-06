@@ -28,10 +28,11 @@ putLinesBetween fh from to acc
       putStrLn $ "[WRN] line starts from: 1 not: " ++ show from
       putStrLn $ "[INF] -> Starts with line no. 1 again."
       putLinesBetween fh 1 to acc
-  | acc >= from && acc <= to = do
+  | acc >= from && acc <= to =
+    do
       line <- hGetLine fh
       putStrLn line
-      putLinesBetween fh from to (acc+1)
+      putLinesBetween fh from to $! (acc+1)
   | otherwise                = return ()
 
 toTry :: IO ()
