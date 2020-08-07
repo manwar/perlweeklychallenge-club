@@ -17,7 +17,6 @@ if ( not defined $N ) {
     $N = 10;
 }
 
-
 sub f {
     return 1 if $_[0] == 1; # $_[0] < 1 is filtered above
     return $_[0] * f ($_[0]-1);
