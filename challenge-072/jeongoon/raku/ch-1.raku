@@ -2,11 +2,11 @@
 # -*- Mode: Raku; indent-tabs-mode: nil; coding: utf-8 -*-
 # vim: set et ts=4 sw=4:
 
-use v6;
+use v6.d;
 
 sub f ( Int $n where * > 0 ) { [*] 1 .. $n }
 sub zero-length-f-and-count ( Int $n where * > 0 ) {
-    f($n).match( /0+$/ ).chars;
+    ( f($n) ~~ /0+$/, '' ).chars;
 }
 
 sub zero-length-reduce ( Int $n where * > 0 ) {
