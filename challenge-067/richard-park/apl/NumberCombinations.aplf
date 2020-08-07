@@ -1,0 +1,16 @@
+ NumberCombinations←{
+⍝ ←: All strictly ascending vectors of length ⍵ 
+⍝    which contain numbers in ⍳⍺
+⍝ Attempt 1
+⍝ =========
+     c←,((⍳⍺)∘.,⊢)⍣(¯1+⍵)⊢⍳⍺       ⍝ All combinations of digits in (⍳⍺)
+                                   ⍝ Of length ⍵
+     c⌿⍨{((∪≡⊢)⍵)∧((⊂⍋⍵)⌷⍵)≡⍵}¨c   ⍝ Strictly ascending combinations
+⍝ Attempt 2
+⍝ =========
+⍝ e.g. 5 NumberCombinations 2
+     a←⍳¯1+⍺   
+     b←(¯1+⍺)⍴⊂a     ⍝ Maximal run repeated ¯1+⍺ times
+     c←1+0~⍨¨b×a≤b   ⍝ Remove 0s and add 1
+     ⊃,/a,¨¨c        ⍝ Catenate a's with c's 
+ }

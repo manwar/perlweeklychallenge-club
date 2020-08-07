@@ -1,0 +1,24 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * >= 1;
+
+unit sub MAIN (:$S = 'perlandraku',
+               PosInt :$O = 4,
+	       PosInt :$C where $C < $O && $C + $O <= $S.chars = 3,
+	       :$v, :$verbose = $v);
+
+my @S = $S.comb;
+
+for 1 .. $C -> $index
+{
+  say "swap $index: { @S[$index] } <-> { @S[$index + $O] } == { @S.join }" if $verbose;
+  
+  swap(@S[$index], @S[$index + $O]);
+}
+
+say @S.join;
+
+sub swap ($a is rw, $b is rw)
+{
+  ($a, $b) = ($b, $a);
+}

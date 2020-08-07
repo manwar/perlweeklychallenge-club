@@ -1,0 +1,42 @@
+Solution by Bob Lied
+
+* Notes on challenge 1
+
+The problem is very proscribed; there's an obvious solution that is brute
+force implementation of the specification.  Using substr() to get the bits
+requires a short reference visit to perldoc.  Swapping values is a standard
+trick that requires a temporary.  Python has a cute multi-value assignment
+that lets you say the equivalent of (a,b) = (b,a), but this isn't python.
+The most confusing thing is the boundary conditions between origin-zero
+in Perl and origin-one in the problem statement.
+
+The next most obvious way to attack the problem is to turn  the string into
+an array of characters.  substr() gets replaced by splice() -- another trip
+to perldoc -- but otherwise still a direct implementation of the specification.
+The C programmer in me cringes at the inefficiency of turning a string into
+list operations, but it's probably more idiomatic for perl.
+
+A third approach to the problem is to realize that the constraints mean that
+we're really swapping one substring with another.  Those modulus operators
+made me wary of dealing with possible wrap-around conditions as we go past
+the end of the string, but as specified, the substrings fall entirely within
+the string.  So, a more efficient way is to calculate the bounds of the
+substrings that are moving and move the whole block at once.
+
+* Notes on challenge 2
+
+The referenced Wikipedia article makes it really obvious how to do the
+operation as a reversal of a list and an append of a 1 bit onto each element.
+
+First thought was to quite literally do it with strings of 0 and 1.  But
+the C programmer again shook its angry head and reminded me that this is
+bit-twiddling.  Does perl have bit-wise operations? Of course it does.
+
+The bit of cleverness is realizing that setting the next higher bit is a power
+of two, and that power of two is exactly the size of the list.  That is, when
+the list has two items, the b10 bit will get set, creating a list of four items,
+in which the b100 bit gets set to make the next larger list, and so on.
+
+A final trip to perldoc to see how to print out a binary representation finishes
+the project.  For a moment, I thought I was going to have to play games with
+pack()/unpack(), but the answer was way simpler in printf().
