@@ -16,17 +16,32 @@ In case you have created a blog about your solutions, then create a file called 
 ## Step-by-step instructions
 Let us assume you want to submit solutions for **Challenge 002** and your Github user name is **joe-blog**.
 
-1. If you are submitting the solution for the first time then you have to **Fork** the repository **https://github.com/manwar/perlweeklychallenge-club** by clicking the "Fork" button in the top right corner and should have repository e.g. **https://github.com/joe-blog/perlweeklychallenge-club**.
+1. If you are submitting the solution for the first time then you have to **Fork** the repository **https://github.com/manwar/perlweeklychallenge-club** by clicking the **"Fork"** button in the top right corner and should have repository e.g. **https://github.com/joe-blog/perlweeklychallenge-club**.
 
-2. Go to your favourite terminal and **clone** your repository. e.g **git clone https://github.com/joe-blog/perlweeklychallenge-club**.
+2. Go to your favourite terminal and **clone** your repository.
+   ```
+   $ git clone https://github.com/joe-blog/perlweeklychallenge-club
+   ```
 
-3. Create a new branch for the solution **git checkout -b new-branch**.
+3. Create a new branch for the solution 
+   ```
+   $ git checkout -b new-branch
+   ```
 
-3. Go to the **Challenge 002** folder **cd perlweeklychallenge-club/challenge-002**.
+3. Go to the **Challenge 002** folder.
+   ```
+   $ cd perlweeklychallenge-club/challenge-002
+   ```
 
-4. If you find a folder with your name in the current folder then skip to next step otherwise create a new folder **mkdir joe-blog**.
+4. If you find a folder with your name in the current folder then skip to next step otherwise create a new folder. 
+   ```
+   $ mkdir joe-blog
+   ```
 
-5. Change into your named folder **cd joe-blog**.
+5. Change into your named folder.
+   ```
+   $ cd joe-blog
+   ```
 
 6. If you just created the folder then you should add a file **README** and add a line **Solution by Joe Blog** otherwise skip to next step.
 
@@ -36,11 +51,20 @@ Let us assume you want to submit solutions for **Challenge 002** and your Github
 
 9. Now you are ready to add your solutions. If it is for the first challenge then create a file named **ch-1.pl** or **ch-1.p6** or **ch-1.sh**. Similarly, if it is for the second challenge then create a file named **ch-2.pl** or **ch-2.p6** or **ch-2.sh**.
 
-10. Once you are happy with your solutions, you should **add** it to the repository. First go back to **root** of the repository and then fire the command **git add challenge-002/joe-blog**.
+10. Once you are happy with your solutions, you should **add** it to the repository. First go back to **root** of the repository and then fire the command 
+    ```
+    $ git add challenge-002/joe-blog
+    ```
 
-11. Commit your changes **git commit**
+11. Commit your changes.
+    ```
+    $ git commit
+    ```
 
-12. Push your changes **git push -u origin new-branch**
+12. Push your changes.
+    ```
+    $ git push -u origin new-branch
+    ```
 
 13. Now go to your fork repository in GitHub web portal **https://github.com/joe-blog/perlweeklychallenge-club**
 
