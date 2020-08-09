@@ -15,29 +15,36 @@ https://stackoverflow.com/questions/940382/what-is-the-difference-between-dot-an
 ... and many more..
 --}
 
-factorial :: Integer -> Integer
-factorial x = product [ 1.. x ]
+factorial :: Int -> Integer
+factorial x = product [ 1.. fromIntegral x ]
 
-nthRootOfFive :: Integer -> Integer
+nthRootOfFive :: Integer -> Int
 nthRootOfFive x
   | x `mod` 5 /= 0  = 0
   | otherwise       = 1 + nthRootOfFive ( x `div` 5 )
 
-
-getN :: [String] -> Integer
+getN :: [String] -> Int
 getN []     = 0
-getN (x:xs) = if all isNumber x then read x :: Integer else getN xs
+getN (x:xs) = if all isNumber x then read x :: Int else getN xs
 
-printGenTrim :: [String] -> Integer -> Integer -> IO ()
+printGenTrim :: [String] -> Int -> Int-> IO ()
 printGenTrim x n a
   | ( "--show-divided" `elem` x ) = do
       putStrLn $ "N! = " ++ fnstr
       putStrLn $ "N! = " ++ take h fnstr ++ " | " ++ drop h fnstr
   | otherwise             = return ()
   where
-    fnstr = show $ factorial $ n
+    fnstr = show $ factorial n
     a' = fromIntegral a
     h  = length fnstr - a'
+
+calculateTrailingZero :: Int -> Int
+calculateTrailingZero n = sum [ nthRootOfFive $ fromIntegral x | x <- [1 .. n] ]
+
+bruteforceTrailingZero :: Int -> Int
+bruteforceTrailingZero n =
+  length $ takeWhile (\x -> nFact `mod` x == 0) (map (10^) [(1::Integer)..])
+  where nFact = factorial $ fromIntegral n
 
 main :: IO ()
 main = do
@@ -56,7 +63,9 @@ main = do
     else
     die "Could not find N (Not given or Invalid)"
 
-  putStrLn $ "Given Number: " ++ show n
-  let answer = sum [ nthRootOfFive x | x <- [ 1 .. n ] ]
+  putStrLn  $ "Given Number: " ++ show n
+  let answer  =  calculateTrailingZero n
+  let answer' = bruteforceTrailingZero n
   printGenTrim args n answer
-  putStrLn $ "Answer: " ++ show answer
+  putStrLn $ "Calcuated:   " ++ show answer
+  putStrLn $ "BruteForced: " ++ show answer'
