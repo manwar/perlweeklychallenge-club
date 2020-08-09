@@ -31,5 +31,5 @@ ok tzero(4) == 0, 'pass test case N=4';
 ok tzero(25) == 6, 'pass test case N=25';
 ok tzero(30) == 7, 'pass test case N=30';
 ok tzero(50) == 12, 'pass test case N=50';
-ok tzero(100) == 25, 'pass test case N=24';
+ok tzero(100) == 24, 'pass test case N=100';
 =cut
