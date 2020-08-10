@@ -9,7 +9,7 @@ use Carp;
 use Getopt::Long;
 
 my $f = $0; # this program
-my $a = 1;
+my $a = 1;  
 my $b = 4;
 GetOptions(
     'f=s' => \$f,
