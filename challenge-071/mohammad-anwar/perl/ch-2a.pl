@@ -109,9 +109,9 @@ sub create_linked_list {
     my $tail = $node;
 
     while (@$list) {
-        my $node = Node->new(v => pop @$list);
-        $tail->p($node);
-        $tail = $node;
+        my $_node = Node->new(v => pop @$list);
+        $tail->p($_node);
+        $tail = $_node;
     }
 
     return $node;

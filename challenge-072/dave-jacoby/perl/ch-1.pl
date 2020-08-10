@@ -30,4 +30,3 @@ sub trailing( $f ) {
 sub factorial ( $n ) {
     return reduce { $a * $b } 1 .. $n;
 }
-

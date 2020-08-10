@@ -53,7 +53,7 @@ sub get_random_array {
     my $max = 50;
     my %elements = ();
     while ($size >= 1) {
-        my $e = $max - int(rand($min + $max));
+        my $e = $min + int(rand($max - $min)) + 1;
         next if (exists $elements{$e});
         $elements{$e} = 1;
         $size--;
