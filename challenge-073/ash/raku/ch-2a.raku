@@ -8,7 +8,7 @@
 my @a = 7, 8, 3, 12, 10;
 
 my $min = Inf;
-for @a.kv -> $i, $v {
+for @a -> $v {
     say $v < $min ?? 0 !! $min;
     $min = $v if $v < $min;
 }
