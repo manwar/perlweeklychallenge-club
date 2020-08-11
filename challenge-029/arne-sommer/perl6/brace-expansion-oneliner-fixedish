@@ -1,0 +1,5 @@
+#! /usr/bin/env perl6
+
+@*ARGS && (@*ARGS[0] ~~ /(.*) \{ (.*) \} (.*)/
+  ?? $1.Str.split(",").map({ say "$0$_$2" })
+  !! say @*ARGS[0]);

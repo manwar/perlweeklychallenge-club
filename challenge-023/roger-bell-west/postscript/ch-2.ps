@@ -1,0 +1,31 @@
+%! not DSC compliant, no rasterisation, run me where you can see %stdout
+
+/ns 30 string def
+/n input cvi def
+
+/f 2 def
+
+{
+    n f mod 0 eq {
+        /n n f idiv def
+        (%stdout) (w) file
+        dup f ns cvs writestring
+        (\n) writestring
+    }
+    {
+        f 2 eq {
+            /f f 1 add def
+        }
+        {
+            /f f 2 add def
+        } ifelse
+        f f mul n gt {
+            exit
+        } if
+    } ifelse
+} loop
+
+(%stdout) (w) file
+dup n ns cvs writestring
+(\n) writestring
+(%stdout) (w) file flushfile

@@ -1,0 +1,25 @@
+#! /usr/bin/env raku
+
+use lib "lib";
+
+use BinaryMorse;
+
+for %BinaryMorse::morse.keys.sort -> $key
+{
+  say "$key | { (%BinaryMorse::morse{$key}).fmt('%-6s') } | %BinaryMorse::binary-morse{$key}";
+}
+
+
+say "";
+
+for %BinaryMorse::remorse.keys.sort -> $key
+{
+  say "{ $key.fmt('%-6s') } | { %BinaryMorse::remorse{$key} } | { %BinaryMorse::binary-morse{%BinaryMorse::remorse{$key}} }";
+}
+
+say "";
+
+for %BinaryMorse::binary-remorse.keys.sort -> $key
+{
+  say "{ $key.fmt('%-20s') } | { (%BinaryMorse::binary-remorse{$key}) } | %BinaryMorse::morse{%BinaryMorse::binary-remorse{$key}}";
+}

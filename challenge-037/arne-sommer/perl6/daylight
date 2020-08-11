@@ -1,0 +1,82 @@
+#! /usr/bin/env raku
+
+use LWP::Simple;
+
+my %file = (
+             nov => '2019-nov.html',
+             dec => '2019-dec.html'
+	   );
+
+
+my %url = (
+            nov => 'https://www.timeanddate.com/sun/uk/london?month=11&year=2019',
+            dec => 'https://www.timeanddate.com/sun/uk/london?month=12&year=2019'
+	  );
+
+my %data;
+
+read-data("nov");
+read-data("dec");
+
+sub read-data ($month)
+{
+  my $line;
+ 
+  if %file{$month}.IO.e
+  {
+    $line = slurp %file{$month};
+  }
+  else
+  {
+    $line = LWP::Simple.get(%url{$month}).lines.join("\n");
+    spurt %file{$month}, $line;
+  }
+
+  $line ~~ /\<tbody\>(.*?)\<\/tbody\>/;
+
+  for $0.Str.split("</tr>") -> $line
+  {
+    # $line ~~ /data\-day\=(\d+) \s .*? /; # \<td \s class\=\"c \s tr \s sep\-l\"\>\s+\:(\d+\:\d+\:\d+)\<\/td\>/;
+    # $line ~~ /data\-day\=(\d+) \s .*? \"c \s tr \s sep\-l\"\>\s(\d+\:\d+\:\d+)\<\/td\>/;
+    $line ~~ /data\-day\=(\d+) \s .*? \"c \s tr \s sep\-l\"\>(\d+\:\d+\:\d+)\<\/td\>/;
+
+    next unless $0;
+
+    %data{$month}{$0.Str} = $1.Str;
+
+    # say "$0 --- $1";
+  }
+}
+
+say "Day  November  December  Difference";
+
+for 1..30 -> $day
+{ 
+  my $nov = %data<nov>{$day};
+  my $dec = %data<dec>{$day};
+
+  say "{ $day.fmt('%2d') } { $nov.fmt('%9s') }  { $dec.fmt('%9s') } { (s2hms( hms2s($dec) - hms2s($nov))).fmt('%10s') }";
+}
+
+say "{ "31".fmt('%2d') }            {  %data<dec>{31}.fmt('%9s') }";
+
+# say %data;
+
+sub hms2s ($hms)
+{
+  my @parts = $hms.split(":") // return 0;
+  return @parts[0] * 60 * 60 + @parts[1] * 60 + @parts[2];
+}
+
+sub s2hms ($s is copy)
+{
+  my $sign = "";
+  if $s < 0 { $s = -$s; $sign = "-"; } 
+  
+  my $h = $s div 3600; $s -=  $h * 3600;
+  my $m = $s div   60; $s -=  $m *   60;
+
+  return "$sign$h:{ $m.fmt('%02d') }:{ $s.fmt('%02d') }" if $h;
+  return "$sign$m:{ $s.fmt('%02d') }" if $s;
+  return "$sign$s";
+}

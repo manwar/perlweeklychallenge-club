@@ -1,0 +1,24 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $number, :$verbose, :$upto);
+
+$upto
+  ?? ( show($_) for 2 .. $number )
+  !! show($number);
+
+sub show ($number)
+{
+  for 1 .. Inf -> $binary
+  {
+    my $current = $binary.base(2);
+    say ": Checking $current" if $verbose;
+
+    if ($current > $number && $current %% $number)
+    {
+      say $upto
+        ?? "$number Match: $current"
+        !! "Match: $current";
+      last;
+    }
+  }
+}

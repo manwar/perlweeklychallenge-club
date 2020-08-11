@@ -1,0 +1,355 @@
+%!PS-Adobe-3.0
+%%Pages: 1
+%%EndComments
+%
+% ch-1-in-postscript.ps: translated ch-1.pl into Postscript.
+%
+% Yes, the language mostly used for printer page layout, can be used as a
+% full-blown programming language.  However, you have to include functions
+% to append strings and produce a variety of debugging messages down the
+% page, before you start on the actual program logic.
+%
+% Debugging....
+
+% const debuglm: left margin of debug messages
+/debuglm 0.5 72 mul def
+
+% const debugtop: top of debug messages - 11 inches up.
+/debugtop 11 72 mul def
+
+% const debugdown: how far to go down each line
+/debugdown 20 def
+
+
+% debugorigin():
+%	 move to debugging origin
+/debugorigin
+{
+	debuglm debugtop moveto
+	(Debugging log:) show
+	newline
+} bind def
+
+
+% debugn( name );
+%	display a single string $name on a debug line.
+/debugn
+{
+	30 0 rmoveto
+	show		% show name
+	newline
+} bind def
+
+
+% debugnv( name, value );
+%	display name and value on a debug line.
+%	keep this as it's so much simpler than debug() below
+%	and also debug() has commented out invocations to
+%	this throughout it:-)
+/debugnv
+{
+	% initially: stack top: value, name
+	30 0 rmoveto
+	exch		% stack top: name, value
+	show		% show name, stack top: value
+	(: ) show
+	50 string cvs show	% show convert_to_string(value)
+	newline
+} bind def
+
+
+% debug( array_of_pairs );
+%	display a single message, combining every pair of items (name,value)
+%	in <array> as name: value, and comma-separating them.
+%	eg debug( [(x) x (y) y (z) z] ) produces
+%	"x: value_of_x, y: value_of_y, z: value_of_z"
+%	(whether or not the values are strings or integers)
+/debug
+{
+    6 dict begin	% next N items defined are in a local dictionary
+	/array exch def % localize parameter name, removing it from stack
+	/len 0 def	% local variable - length of array
+	/pos 0 def	% local variable - position in array
+	/name () def	% local variable - an array element
+	/value () def	% local variable - next array element
+	/first 1 def	% local variable - first time round loop?
+
+	30 0 rmoveto
+
+	/len array length def
+
+	%Perl for pos = 0 to $#array step 2
+	0 2 len 1 sub
+	{
+		/pos exch def
+
+		%Perl $name = $array[$pos];
+		/name array pos get def
+
+		%Perl $value = $array[$pos+1];
+		/value array pos 1 add get def
+
+		%Perl print "," unless first
+		first 0 eq {
+			(, ) show
+		} if
+
+		%Perl print "$name: $value";
+		name 50 string cvs show
+		(: ) show
+		value 50 string cvs show
+
+		%Perl $first=0;
+		/first 0 def
+	} for
+
+	newline
+
+    end		% local dictionary destroyed here
+
+} def
+
+
+% newline();
+%	go to left margin of next line for debug messages
+/newline
+{
+	currentpoint debugdown sub % decrement Y pos
+	exch pop		% drop old X
+	debuglm exch		% form (debuglm,Y) on stack
+	moveto			% go there!
+} def
+
+
+% result = append( string1, string2 )
+% 	Concatenates two strings together.  Some languages
+%	already know how to do stuff like this!!!
+/append
+{
+	 % Initial stack: s1 s2 <-- top of stack
+         2 copy		% s1 s2 s1 s2
+	 length		% s1 s2 s1 len(s2)
+	 exch		% s1 s2 len(s2) s1
+	 length add	% s1 s2 len(s1)+len(s2)
+         string dup     % s1 s2 r r
+         4 2 roll       % r r s1 s2
+         2 index	% r r s1 s2 r
+	 0		% r r s1 s2 r 0
+	 3 index	% r r s1 s2 r 0 s1
+         putinterval    % strcpy( r+0, s1 )
+         		% r r s1 s2
+         exch		% r r s2 s1
+	 length		% r r s2 len(s1)
+	 exch		% r r len(s1) s2
+	 putinterval	% strcpy( r+len(s1), s2 )
+	 		% return r
+} bind def
+
+
+% isleap = isleapyear( y );
+%	Return 1 if year $y is a leap year; 0 if not.
+%
+%Perl code:	return 0 if y % 4 != 0;
+%Perl code:	return 1 if y % 100 != 0;
+%Perl code:	return 0 if y % 400 != 0;
+%Perl code:	return 1;
+%
+/isleapyear
+{
+    2 dict begin	% next N items defined are in a local dictionary
+	/y exch def	% localize parameter name, removing it from stack
+	/isleap 0 def	% local variable - the return value, boolean
+
+	%[ (debug: is leap year y) y (isleap) isleap ] debug
+
+	% if y%4 == 0 then
+	y 4 mod 0 eq {          % 1st if..then
+	     % if y%100 != 0 then isleap=1..
+	     y 100 mod 0 ne {
+		 /isleap 1 def
+	% else  [y%100 == 0]
+	} {
+		 % isleap=1 if y%400 == 0
+		 y 400 mod 0 eq {
+		      /isleap 1 def
+	         } if
+	     } ifelse
+	} if
+
+	isleap		% leave result on stack
+
+    end		% local dictionary destroyed here
+} def
+
+
+% dow = dayofweek1stjanyear( year );
+%	Find and return the day-of-the-week
+%	(0=Monday, 1=Tuesday.. 4=Friday, 5=Saturday, 6=Sunday)
+%	of 1st Jan $year (only valid for year>=1900).
+%
+/dayofweek1stjanyear
+{
+    4 dict begin	% next N items defined are in a local dictionary
+	/year exch def	% localize parameter name, removing it from stack
+	/dow 0 def	% local variable: day-of-week, return value
+			% why initial value 0?  1st Jan 1900 was Monday==0..
+	/y 0 def	% local variable: for loop variable
+	/days 0 def	% local variable: how many days to add (2 in leap years, 1 otherwise)
+
+	% year--
+	year 1 sub /year exch def
+
+	% foreach my $y (1900..$year)
+	% {
+	1900 1 year
+	{
+		/y exch def
+%		(y) y debugnv
+
+		/days y isleapyear 1 add def
+%		(days) days debugnv
+
+%		%print "$y: advance $days days\n";
+%		(y:) y 50 string cvs append (: advance ) append
+%		days 50 string cvs append ( days) debugnv
+
+		% dow = (dow + days) % 7;
+		dow days add 7 mod /dow exch def
+
+%		% print "dow=$dow"
+%		(dow) dow debugnv
+	% }
+	} for
+
+	dow	% leave value on stack
+
+    end		% local dictionary destroyed here
+} def
+
+
+%
+% mdays = daysinmonth( m, isleap );
+%	Return the number of days in month $m (0..11), adjusting
+%	number of days in February is $isleap is true.
+%
+/daysinmonth
+{
+    3 dict begin	% next N items defined are in a local dictionary
+	/isleap exch def% parameter - boolean, are we in a leap year?
+	/m exch def	% parameter - month number 0..11
+	/d 0 def	% local variable
+
+	%Perl my @d = (31,28,31,30,31,30,31,31,30,31,30,31);
+	/d [31 28 31 30 31 30 31 31 30 31 30 31] def
+
+	%Perl $d[1]=29  if $isleap;
+	isleap 1 eq {
+		d 1 29 put
+	} if
+
+	%Perl return $d[$m];
+	d m get
+
+    end		% local dictionary destroyed here
+} def
+
+
+% showweekdays( $y );
+%	Show each month in year $y and the number of week days (Monday-Friday)
+%	in that month.
+%
+/showweekdays
+{
+    8 dict begin	% next N items defined are in a local dictionary
+	/y exch def	% parameter - the year
+	/isleap 0 def	% local variable - boolean, is $y a leap year?
+	/dow 0 def	% local variable - day-of-week: 0..6
+	/m 0 def	% local variable - month: 0..11
+	/mdays 0 def	% local variable - number of days in month $m
+	/monthname 0 def% local variable - name of month $m
+	/weekdays 0 def	% local variable - number of week days in month $m
+	/d 0 def	% local variable - day number 1..$mdays
+
+	%Perl my @monthname = qw(Jan Feb Mar Apr May Jun Jul
+	%Perl			 Aug Sep Oct Nov Dec);
+	/monthname [(Jan) (Feb) (Mar) (Apr) (May) (Jun) (Jul)
+		    (Aug) (Sep) (Oct) (Nov) (Dec)] def
+
+	%Perl my $isleap = isleapyear( $y );
+	/isleap y isleapyear def
+
+	%#Perl print "isleap[ $y ]: $isleap\n";
+	%(isleap[ ) y 50 string cvs append ( ] ) append isleap debugnv
+
+	%Perl my $dow = dayofweek1stjanyear( $y );
+	/dow y dayofweek1stjanyear def
+
+	%#Perl print "day-of-week[ 1st Jan $year ]: $dow\n";
+	%(day-of-week[ 1st Jan ) y 50 string cvs append ( ] ) append dow debugnv
+
+	%Perl foreach my $m (0..11)
+	%Perl {
+	0 1 11
+	{
+		/m exch def
+
+		%Perl 	my $mdays = daysinmonth( $m, $isleap );
+		/mdays m isleap daysinmonth def
+
+		%Perl  my $mname = monthname[m];
+		/mname monthname m get def
+		%(monthname) mname debugnv
+
+		%#Perl 	print "days in month[$mname, " $y]: $mdays\n";
+		%(days in month[) mname append
+		%( ) append
+		%y 50 string cvs append
+		%(]) append
+		%mdays debugnv
+
+		%Perl 	my $weekdays = 0;
+		/weekdays 0 def
+
+		%Perl 	foreach my $d (1..$mdays)
+		%Perl 	{
+		1 1 mdays
+		{
+			/d exch def
+			%[ (d) d (dow) dow (weekdays) weekdays ] debug
+
+			%Perl 		$weekdays++ if $dow < 5;
+			dow 5 lt {
+				weekdays 1 add /weekdays exch def
+			} if
+
+			% dow = (dow + 1) % 7;
+			dow 1 add 7 mod /dow exch def
+
+		%Perl 	}
+		} for
+
+		%Perl 	print "$mname $y: $weekdays weekdays\n";
+		mname ( ) append
+		y 50 string cvs append
+		(: ) append
+		weekdays 50 string cvs append
+		( weekdays) append
+		debugn
+
+	%Perl }
+	} for
+
+    end		% local dictionary destroyed here
+} def
+
+
+%%Page: 1 1
+%%PageOrientation: Portrait
+
+/Helvetica-Bold findfont 13 scalefont setfont
+
+debugorigin
+
+2019 showweekdays
+
+showpage

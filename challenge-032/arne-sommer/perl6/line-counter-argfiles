@@ -1,0 +1,5 @@
+#! /usr/bin/env raku
+
+my %input = $*ARGFILES.lines.Bag;
+
+say "$_:\t%input{$_}" for %input.keys.sort( { %input{$^b} <=> %input{$^a} });

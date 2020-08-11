@@ -1,0 +1,17 @@
+#! /usr/bin/env raku
+
+multi sub MAIN ($file where $file.IO.f && $file.IO.r, :$csv = False)
+{
+  line-counter($file.IO.lines.Bag, $csv);
+}
+
+multi sub MAIN (:$csv = False)
+{
+  line-counter($*ARGFILES.lines.Bag, $csv);
+}
+
+sub line-counter (%input, $csv)
+{
+  my $separator = $csv ?? "," !! "\t";
+  say "$_$separator%input{$_}" for %input.keys.sort( { %input{$^b} <=> %input{$^a} });
+}

@@ -1,0 +1,41 @@
+#! /usr/bin/env raku
+
+my $value = 0;
+
+loop
+{
+  given prompt "[$value]: "
+  {
+    when "q" | "quit"   { last; }
+    when "d" | "double" { double; }
+    when "h" | "half"   { half; }
+    when "c" | "clear"  { clear; }
+    when /^(\d)$/       { set($0.Int); }
+    when "help"         { help; }
+  }  
+}
+
+sub double
+{
+  $value *= 2;
+}
+
+sub half
+{
+  $value /= 2;
+}
+
+sub clear
+{
+  $value = 0;
+}
+
+sub set ($new)
+{
+  $value = $new;
+}
+
+sub help
+{
+  say "Please consult a doctor.";
+}

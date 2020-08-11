@@ -1,0 +1,15 @@
+#! /usr/bin/env perl6
+
+use NativeCall;
+
+sub upper_string(Str) returns Str is native('./upper_string.so') { * }
+
+sub MAIN ($string)
+{
+  say "Before: $string";
+
+  my $new = upper_string($string);
+
+  say "After:  $new";
+}
+

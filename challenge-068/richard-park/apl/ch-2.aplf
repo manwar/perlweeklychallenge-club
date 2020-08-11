@@ -1,0 +1,6 @@
+ ReorderArray←{
+⍝ ←: Major cells of ⍵ reordered
+⍝    from a0,a1, ... ,a(n-1),an
+⍝    to a0,an,a1,a(n-1),...
+     ⍵⌷⍨⊂∪,(⌈2÷⍨≢⍵)↑(⊢,⊖)⍪⍳≢⍵
+ }

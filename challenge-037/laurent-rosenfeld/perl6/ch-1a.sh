@@ -1,0 +1,1 @@
+perl6 -e 'my @a; for Date.new(2019, 1, 1) .. Date.new(2019, 12, 31) -> $day { @a[$day.month]++ if $day.day-of-week == (1..5).any}; for @a[1..12].kv -> $k, $v {printf "%02d/2019: %d week days\n", $k+1, $v};'

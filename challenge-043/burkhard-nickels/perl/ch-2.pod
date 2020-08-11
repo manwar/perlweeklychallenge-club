@@ -1,0 +1,466 @@
+#!/usr/bin/perldoc
+
+=head1 Perl Weekly Challenge #43 Task #2: Self-descriptive Numbers
+
+The Task "Self-descriptive Numbers" I did in an iterative way. I created the
+code together with understanding the problem. So I am not sure if the solution
+is not only one solution, but rather a discussion of the several approaches to
+the solution.
+
+First I simply tried to code a solution with applying the formula given on the
+wiki page below. And verifying if it is a "Self-descriptive Number" in comparing 
+some integer values. But because of a different Base on each number I did a second
+approach with hexadecimal numbers. For this I created even a class "Hex", because
+I became confused where I have an integer or a hex value. But since the Base is
+above 15 the number room is still not enough and in a third approach I was going to
+all letters of the alphabet. And I compared strings to verify the "Self-descriptive
+Numbers".
+
+So what are the highlights:
+
+=over 3
+
+=item * Perl5, Perl6 solution.
+
+=item * Using integer digits for Base up to 9, hex digits for Base up to 15 and letters for higher basis.
+
+=item * Using module bigint, because it gets to very high integer numbers.
+
+=item * Comparing integer "!=", hex with operator overloading, and chars with "ne".
+
+=item * Creating a class "Hex" with operator overloading.
+
+=back
+
+
+=begin html
+
+<h2> Download and References </h2>
+<b>Download File:</b><a href="ch-2.pl" download> Perl5 Solution PWC #43 Task #2 ch-2.pl</a><br>
+<b>Download File:</b><a href="ch-2.p6" download> Perl6 Solution PWC #43 Task #2 ch-2.p6</a><br>
+<br>
+<b> Perl6 OO Programming:</b><a href="https://docs.perl6.org/language/objects">
+docs.perl6.org: Objects </a><br>
+<b> Perl6 OO Tutorial: </b><a href="https://docs.perl6.org/language/classtut">
+docs.perl6.org: Class Tutorial</a><br>
+<b> Raku Design Overloading:</b><a href="https://design.raku.org/S13.html">
+design.raku.org: Overloading</a><br>
+
+=end html
+
+=head1 SYNOPSIS
+
+ # ./ch-2.pl            - Execution of program
+ # ./ch-2.p6            - Execution of program
+ # perldoc ch-2.pod		- POD
+
+ # ./ch-2.p6
+ ch-2.p6, PWC #43 Task #2: Self-descriptive Numbers
+ Base:  4, Nmbr:                            100,                      1210 = self-descriptive
+ Base:  5, Nmbr:                           1025,                     13100 = NOT self-descriptive
+ Base:  6, Nmbr:                          18576,                    222000 = NOT self-descriptive
+ Base:  7, Nmbr:                         389305,                   3211000 = self-descriptive
+ Base:  8, Nmbr:                        8946176,                  42101000 = self-descriptive
+ Base:  9, Nmbr:                      225331713,                 521001000 = self-descriptive
+ Base: 10, Nmbr:                     6210001000,                6210001000 = self-descriptive
+ Base: 11, Nmbr:                   186492227801,               72100001000 = self-descriptive
+ Base: 12, Nmbr:                  6073061476032,              821000001000 = self-descriptive
+ Base: 13, Nmbr:                213404945384449,             9210000001000 = self-descriptive
+ Base: 14, Nmbr:               8054585122464440,            a2100000001000 = self-descriptive
+ Base: 15, Nmbr:             325144322753909625,           b21000000001000 = self-descriptive
+ Base: 16, Nmbr:           13983676842985394176,          c210000000001000 = self-descriptive
+ Base: 17, Nmbr:          638488718313248327681,         d2100000000001000 = self-descriptive
+ Base: 18, Nmbr:        30852387539151417415368,        e21000000000001000 = self-descriptive
+ Base: 19, Nmbr:      1573159469597805848539033,       f210000000000001000 = self-descriptive
+ Base: 20, Nmbr:     84423475200000000000008000,      g2100000000000001000 = self-descriptive
+ Base: 21, Nmbr:   4756841174671235094613299201,     h21000000000000001000 = self-descriptive
+ Base: 22, Nmbr: 280793005454401827960409041304,    i210000000000000001000 = self-descriptive
+ Base: 23, Nmbr: 17329741584816652890845493751865,   j2100000000000000001000 = self-descriptive
+ Base: 24, Nmbr: 1116173987440750653627851819988480,  k21000000000000000001000 = self-descriptive
+
+=cut
+
+# ====================== TASK 1 ==============================
+
+=head1 Definition Task #2: Self-descriptive Numbers
+
+Write a script to generate Self-descriptive Numbers in a given base.
+
+In mathematics, a self-descriptive number is an integer m that in a given base b 
+is b digits long in which each digit d at position n 
+(the most significant digit being at position 0 and the least significant at position b - 1) 
+counts how many instances of digit n are in m.
+
+ b = 10
+ m = 6210001000
+
+   n = pos 0 ... pos b-1
+   0 1 2 3 4 5 6 7 8 9  = pos n
+   6 2 1 0 0 0 1 0 0 0  = 10 = b long
+
+   6 x '0'
+   2 x '1'
+   1 x '2'
+   0 x '0'
+   ...
+
+   Like said on wikipedia (see links above):
+   - there are no self-descriptive numbers for base 1,2,3 and 6
+   - for 4 and 5 ?
+   - for b >= 7 following formula is doing the calculation
+
+   (b-4) * b^(b-1) + 2*b^(b-2) + b^(b-3) + b^3
+
+For example, if the given base is 10, then script should print 6210001000. 
+For more information, please checkout wiki page.
+
+=head1 Solution for Perl5
+
+Now a little bit explanation of the code. First I iterate with a for loop
+through the different base:
+
+ 12 for( my $b=4; $b<=24; $b++ ) {
+
+The given formula calculates the decimal value of the "self-descriptive number"
+of each base.
+
+ 14   my $m = ($b - 4) * $b**($b-1) + 
+ 15     2 * $b**($b-2) + 
+ 16     $b**($b-3) + 
+ 17     $b**3;
+
+Afterwards the convert() function creates a number of each base from the
+decimal value. With the modulo operator each digit is calculated. The integer
+part of the division is given to the recusive call of the convert function.
+
+ 41   my $d = int($n / $b);
+ 42   my $r = $n % $b;
+
+Afterwards the verify() function compares each digit with the number of occurences
+of each value. This is done to determine if it is realy a "self-descriptive number".
+This is in Perl5 done in 3 ways, like described already in the introduction.
+
+For Perl6 I implemented only the last solution.
+
+=head2 Collection of some problems
+
+During programming I had problems with the size of an integer value.
+The size of an integer can be determined on command line with the followin
+command:
+
+ perl -V:[in]vsize
+ ivsize='8';           - means 64 bit integer
+ nvsize='8';           - means 64 bit float
+
+So what is the highest number of a 64 bit integer?
+
+ 2^64 = 1,84467440737e+19
+ 2^63 = 9,22337203685e+18
+
+I also got the following warning message.
+
+ Base: 14, Nmbr:     8054585122464440,       a2100000001000 = NOT self-descriptive
+ Hexadecimal number > 0xffffffff non-portable at ./ch-2.pl line 60.
+
+
+=begin html
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Perl5 </div>
+  1 <span class="synPreProc">#!/usr/bin/perl</span>
+  2 
+  3 <span class="synStatement">use strict</span>;
+  4 <span class="synStatement">use warnings</span>;
+  5 <span class="synStatement">use lib</span> <span class="synConstant">&quot;.&quot;</span>;
+  6 <span class="synStatement">use bigint</span> <span class="synConstant">qw/hex/</span>;
+  7 <span class="synStatement">use </span>Hex <span class="synConstant">qw(debug)</span>;
+  8 
+  9 <span class="synStatement">my</span> <span class="synIdentifier">@C</span> = ((<span class="synConstant">0..9</span>),(<span class="synConstant">&quot;a&quot;</span>..<span class="synConstant">&quot;z&quot;</span>));
+ 10 <span class="synStatement">print</span> <span class="synConstant">&quot;ch-2.pl, PWC #43 Task #2: Self-descriptive Numbers</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 11 
+ 12 <span class="synStatement">for</span>( <span class="synStatement">my</span> <span class="synIdentifier">$b</span>=<span class="synConstant">4</span>; <span class="synIdentifier">$b</span>&lt;=<span class="synConstant">24</span>; <span class="synIdentifier">$b</span>++ ) {
+ 13 
+ 14   <span class="synStatement">my</span> <span class="synIdentifier">$m</span> = (<span class="synIdentifier">$b</span> - <span class="synConstant">4</span>) * <span class="synIdentifier">$b</span>**(<span class="synIdentifier">$b</span>-<span class="synConstant">1</span>) + 
+ 15     <span class="synConstant">2</span> * <span class="synIdentifier">$b</span>**(<span class="synIdentifier">$b</span>-<span class="synConstant">2</span>) + 
+ 16     <span class="synIdentifier">$b</span>**(<span class="synIdentifier">$b</span>-<span class="synConstant">3</span>) + 
+ 17     <span class="synIdentifier">$b</span>**<span class="synConstant">3</span>;
+ 18   <span class="synStatement">my</span> <span class="synIdentifier">@r</span>;
+ 19   convert(<span class="synIdentifier">$b</span>,<span class="synIdentifier">$m</span>,\<span class="synIdentifier">@r</span>);
+ 20 
+ 21   <span class="synStatement">my</span> <span class="synIdentifier">$base</span>   = <span class="synStatement">join</span>(<span class="synConstant">&quot;&quot;</span>,<span class="synIdentifier">@r</span>);
+ 22   <span class="synStatement">my</span> <span class="synIdentifier">$is_sdn</span>;
+ 23   <span class="synStatement">if</span>(<span class="synIdentifier">$b</span> &gt; <span class="synConstant">3</span>  <span class="synStatement">and</span> <span class="synIdentifier">$b</span> &lt; <span class="synConstant">15</span>) { <span class="synIdentifier">$is_sdn</span> = verify_dec(<span class="synIdentifier">$base</span>); }
+ 24   <span class="synStatement">if</span>(<span class="synIdentifier">$b</span> &gt; <span class="synConstant">12</span> <span class="synStatement">and</span> <span class="synIdentifier">$b</span> &lt; <span class="synConstant">18</span>) { <span class="synIdentifier">$is_sdn</span> = verify_hex(<span class="synIdentifier">$base</span>); }
+ 25   <span class="synStatement">if</span>(<span class="synIdentifier">$b</span> &gt; <span class="synConstant">15</span>) { <span class="synIdentifier">$is_sdn</span> = verify_str(<span class="synIdentifier">$base</span>); }
+ 26 
+ 27   <span class="synStatement">if</span>(<span class="synIdentifier">$is_sdn</span>) { 
+ 28     <span class="synIdentifier">$is_sdn</span> = <span class="synConstant">&quot;self-descriptive&quot;</span>; 
+ 29   } 
+ 30   <span class="synStatement">else</span> { 
+ 31     <span class="synIdentifier">$is_sdn</span> = <span class="synConstant">&quot;NOT self-descriptive&quot;</span>; 
+ 32   }
+ 33   <span class="synStatement">printf</span>(<span class="synConstant">&quot;Base: %2d, Nmbr: %30s, %25s = %s</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>, 
+ 34     <span class="synIdentifier">$b</span>, <span class="synIdentifier">$m</span>, <span class="synIdentifier">$base</span>, <span class="synIdentifier">$is_sdn</span>);
+ 35 }
+ 36 
+ 37 <span class="synComment"># -------------------- Functions -------------------------</span>
+ 38 
+ 39 <span class="synStatement">sub </span><span class="synIdentifier">convert </span>{
+ 40   <span class="synStatement">my</span> (<span class="synIdentifier">$b</span>,<span class="synIdentifier">$n</span>,<span class="synIdentifier">$erg</span>) = <span class="synIdentifier">@_</span>;
+ 41   <span class="synStatement">my</span> <span class="synIdentifier">$d</span> = <span class="synStatement">int</span>(<span class="synIdentifier">$n</span> / <span class="synIdentifier">$b</span>);
+ 42   <span class="synStatement">my</span> <span class="synIdentifier">$r</span> = <span class="synIdentifier">$n</span> % <span class="synIdentifier">$b</span>;
+ 43   <span class="synStatement">if</span>(<span class="synIdentifier">$r</span> &gt; <span class="synConstant">15</span>) { 
+ 44     <span class="synComment"># print &quot;Value &gt; 15: $r $C[$r]\n&quot;;</span>
+ 45     <span class="synIdentifier">$r</span> = <span class="synIdentifier">$C[$r]</span>; 
+ 46   }
+ 47   <span class="synStatement">elsif</span>(<span class="synIdentifier">$r</span> &gt; <span class="synConstant">9</span>) { <span class="synIdentifier">$r</span> = <span class="synStatement">sprintf</span>(<span class="synConstant">&quot;%x&quot;</span>, <span class="synIdentifier">$r</span>); }
+ 48   <span class="synStatement">unshift</span>(<span class="synIdentifier">@$erg</span>,<span class="synIdentifier">$r</span>);
+ 49   convert(<span class="synIdentifier">$b</span>,<span class="synIdentifier">$d</span>,<span class="synIdentifier">$erg</span>) <span class="synStatement">if</span> <span class="synIdentifier">$d</span>;
+ 50 }
+ 51 
+ 52 <span class="synStatement">sub </span><span class="synIdentifier">verify_dec </span>{
+ 53   <span class="synStatement">my</span> (<span class="synIdentifier">$sdn</span>) = <span class="synIdentifier">@_</span>;  <span class="synComment"># i.e. (1210) base 4</span>
+ 54   <span class="synStatement">my</span> <span class="synIdentifier">$i</span> = <span class="synConstant">0</span>;       <span class="synComment"># Position of number</span>
+ 55   <span class="synStatement">my</span> <span class="synIdentifier">$is_sdn</span> = <span class="synConstant">1</span>;  <span class="synComment"># is self-descriptive number</span>
+ 56   <span class="synStatement">foreach</span> <span class="synStatement">my</span> <span class="synIdentifier">$v</span> (<span class="synStatement">split</span>(<span class="synStatement">//</span>,<span class="synIdentifier">$sdn</span>)) { <span class="synComment"># every digit 1 - 2 - 1 - 0</span>
+ 57     <span class="synStatement">my</span> <span class="synIdentifier">$nr</span>;
+ 58     <span class="synStatement">if</span>(<span class="synIdentifier">$i</span>&gt;<span class="synConstant">9</span>) { <span class="synIdentifier">$nr</span> = <span class="synConstant">0</span>; }
+ 59     <span class="synStatement">else</span> {
+ 60       <span class="synIdentifier">$nr</span> = () = <span class="synIdentifier">$sdn</span> =~ <span class="synStatement">m/</span><span class="synIdentifier">$i</span><span class="synStatement">/g</span>; <span class="synComment"># count occurence of position-value</span>
+ 61     }
+ 62     <span class="synStatement">if</span>(<span class="synIdentifier">$v</span> !~ <span class="synStatement">/</span><span class="synSpecial">\d+</span><span class="synStatement">/</span>) { <span class="synIdentifier">$v</span> = <span class="synStatement">hex</span>(<span class="synIdentifier">$v</span>); }
+ 63     <span class="synStatement">if</span>( <span class="synIdentifier">$v</span> != <span class="synStatement">hex</span>(<span class="synIdentifier">$nr</span>) ) { <span class="synComment"># value is not self-descriptive ?</span>
+ 64       <span class="synIdentifier">$is_sdn</span> = <span class="synConstant">0</span>;
+ 65       <span class="synStatement">return</span> <span class="synIdentifier">$is_sdn</span>;      <span class="synComment"># - than finish here</span>
+ 66     }
+ 67     <span class="synIdentifier">$i</span>++;                  <span class="synComment"># increase position</span>
+ 68   }
+ 69   <span class="synStatement">return</span> <span class="synIdentifier">$is_sdn</span>;          <span class="synComment"># all values are self-descriptive</span>
+ 70 }
+ 71 <span class="synStatement">sub </span><span class="synIdentifier">verify_hex </span>{
+ 72   <span class="synStatement">my</span> (<span class="synIdentifier">$sdn</span>) = <span class="synIdentifier">@_</span>;
+ 73   <span class="synStatement">my</span> <span class="synIdentifier">$H_sdn</span> = Hex-&gt;new(<span class="synIdentifier">$sdn</span>,<span class="synConstant">1</span>);
+ 74   <span class="synStatement">my</span> <span class="synIdentifier">$H_i</span>   = Hex-&gt;new(<span class="synConstant">0x0</span>);
+ 75   <span class="synStatement">my</span> <span class="synIdentifier">$is_sdn</span> = <span class="synConstant">1</span>;
+ 76   <span class="synStatement">my</span> <span class="synIdentifier">$H_v</span> = Hex-&gt;new();
+ 77   <span class="synStatement">foreach</span> <span class="synStatement">my</span> <span class="synIdentifier">$v</span> (<span class="synStatement">split</span>(<span class="synStatement">//</span>,<span class="synIdentifier">$H_sdn</span>)) {
+ 78     <span class="synIdentifier">$H_v-&gt;set</span>(<span class="synIdentifier">$v</span>,<span class="synConstant">1</span>);
+ 79     <span class="synStatement">my</span> <span class="synIdentifier">$H_nr</span> = Hex-&gt;new();
+ 80     <span class="synStatement">if</span>(<span class="synStatement">hex</span>(<span class="synIdentifier">$H_i</span>)&gt;<span class="synConstant">0xf</span>) { <span class="synIdentifier">$H_nr</span> = <span class="synConstant">0</span>; }
+ 81     <span class="synStatement">else</span> {
+ 82       <span class="synStatement">my</span> <span class="synIdentifier">$nr</span> = () = <span class="synIdentifier">$H_sdn</span> =~ <span class="synStatement">m/</span><span class="synIdentifier">$H_i</span><span class="synStatement">/g</span>;
+ 83       <span class="synIdentifier">$H_nr-&gt;set</span>(<span class="synIdentifier">$nr</span>);
+ 84     }
+ 85     <span class="synStatement">if</span>( <span class="synIdentifier">$H_nr</span> != <span class="synIdentifier">$H_v</span> ) {
+ 86       <span class="synIdentifier">$is_sdn</span> = <span class="synConstant">0</span>;
+ 87       <span class="synStatement">return</span> <span class="synIdentifier">$is_sdn</span>;
+ 88     }
+ 89     <span class="synIdentifier">$H_i</span>++;
+ 90   }
+ 91   <span class="synStatement">return</span> <span class="synIdentifier">$is_sdn</span>;
+ 92 }
+ 93 
+ 94 <span class="synStatement">sub </span><span class="synIdentifier">verify_str </span>{
+ 95   <span class="synStatement">my</span> (<span class="synIdentifier">$sdn</span>) = <span class="synIdentifier">@_</span>;
+ 96   <span class="synStatement">my</span> <span class="synIdentifier">$i</span> = <span class="synConstant">0</span>;
+ 97   <span class="synStatement">my</span> <span class="synIdentifier">$is_sdn</span> = <span class="synConstant">1</span>;
+ 98   <span class="synStatement">foreach</span> <span class="synStatement">my</span> <span class="synIdentifier">$v</span> (<span class="synStatement">split</span>(<span class="synStatement">//</span>,<span class="synIdentifier">$sdn</span>)) {
+ 99     <span class="synStatement">my</span> <span class="synIdentifier">$nr</span>;
+100     <span class="synStatement">my</span> <span class="synIdentifier">$search</span> = <span class="synIdentifier">$C[$i]</span>;
+101     <span class="synIdentifier">$nr</span> = () = <span class="synIdentifier">$sdn</span> =~ <span class="synStatement">m/</span><span class="synIdentifier">$search</span><span class="synStatement">/g</span>;
+102     <span class="synIdentifier">$nr</span> = <span class="synIdentifier">$C[$nr]</span>;
+103     <span class="synStatement">if</span>( <span class="synIdentifier">$v</span> <span class="synStatement">ne</span> <span class="synIdentifier">$nr</span> ) {
+104       <span class="synIdentifier">$is_sdn</span> = <span class="synConstant">0</span>;
+105       <span class="synStatement">return</span> <span class="synIdentifier">$is_sdn</span>;
+106     }
+107     <span class="synIdentifier">$i</span>++; 
+108   }
+109   <span class="synStatement">return</span> <span class="synIdentifier">$is_sdn</span>;
+110 }
+</pre>
+</td></tr></table>
+
+=end html
+
+=head2 Class Hex in Hex.pm
+
+For the second approach I created a simple class C<Hex>. Unfortunately I was not
+able to complete this class. The interesting part is the overloading of some operators.
+
+=begin html
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Perl5 </div>
+  1 <span class="synPreProc">#!/usr/bin/perl</span>
+  2 
+  3 <span class="synStatement">package</span><span class="synType"> Hex</span>;
+  4 
+  5 <span class="synStatement">use strict</span>;
+  6 <span class="synStatement">use warnings</span>;
+  7 <span class="synStatement">use </span>Data::Dumper <span class="synConstant">qw(Dumper)</span>;
+  8 <span class="synStatement">use bigint</span> <span class="synConstant">qw/hex/</span>;
+  9 <span class="synStatement">require</span> Exporter;
+ 10 
+ 11 <span class="synStatement">use overload</span> 
+ 12 	<span class="synConstant">'&quot;&quot;'</span> =&gt; \<span class="synIdentifier">&amp;out</span>,
+ 13 	<span class="synConstant">'++'</span> =&gt; \<span class="synIdentifier">&amp;incr</span>,
+ 14 	<span class="synConstant">'!='</span> =&gt; \<span class="synIdentifier">&amp;ne</span>,
+ 15 	<span class="synConstant">'='</span> =&gt; \<span class="synIdentifier">&amp;clone</span>,
+ 16 	<span class="synConstant">'fallback'</span> =&gt; <span class="synConstant">1</span>;
+ 17 
+ 18 <span class="synStatement">our</span> <span class="synIdentifier">@ISA</span> = <span class="synConstant">qw(Exporter)</span>;
+ 19 <span class="synStatement">our</span> <span class="synIdentifier">@EXPORT_OK</span> = <span class="synConstant">qw(debug)</span>;
+ 20 <span class="synIdentifier">$</span><span class="synType">Data::Dumper::</span><span class="synIdentifier">Indent</span>=<span class="synConstant">0</span>;
+ 21 
+ 22 <span class="synStatement">sub </span><span class="synIdentifier">new </span>{
+ 23 	<span class="synStatement">my</span> (<span class="synIdentifier">$class</span>,<span class="synIdentifier">$n</span>,<span class="synIdentifier">$hex</span>) = <span class="synIdentifier">@_</span>;
+ 24 	<span class="synIdentifier">$n</span> = <span class="synStatement">hex</span>(<span class="synIdentifier">$n</span>) <span class="synStatement">if</span> <span class="synIdentifier">$hex</span>;
+ 25 	<span class="synIdentifier">$n</span> = <span class="synConstant">0</span> <span class="synStatement">if</span> ! <span class="synIdentifier">$n</span>;
+ 26 	<span class="synStatement">my</span> <span class="synIdentifier">$self</span> = \<span class="synIdentifier">$n</span>;
+ 27 	<span class="synStatement">bless</span> <span class="synIdentifier">$self</span>, <span class="synIdentifier">$class</span>;
+ 28 	<span class="synStatement">return</span> <span class="synIdentifier">$self</span>;
+ 29 }
+ 30 
+ 31 <span class="synStatement">sub </span><span class="synIdentifier">clone </span>{
+ 32 	<span class="synStatement">my</span> (<span class="synIdentifier">$self</span>) = <span class="synIdentifier">@_</span>;
+ 33 	<span class="synStatement">my</span> <span class="synIdentifier">$n</span> = <span class="synIdentifier">$$self</span>;
+ 34 	<span class="synStatement">my</span> <span class="synIdentifier">$copy</span> = <span class="synStatement">bless</span> \<span class="synIdentifier">$n</span>, <span class="synStatement">ref</span> <span class="synIdentifier">$self</span>;
+ 35     <span class="synStatement">return</span> <span class="synIdentifier">$copy</span>;
+ 36 }
+ 37 
+ 38 <span class="synStatement">sub </span><span class="synIdentifier">set </span>{
+ 39 	<span class="synStatement">my</span> (<span class="synIdentifier">$self</span>,<span class="synIdentifier">$value</span>,<span class="synIdentifier">$hex</span>) = <span class="synIdentifier">@_</span>;
+ 40 	<span class="synIdentifier">$value</span> = <span class="synStatement">hex</span>(<span class="synIdentifier">$value</span>) <span class="synStatement">if</span> <span class="synIdentifier">$hex</span>;
+ 41 	<span class="synIdentifier">$$self</span> = <span class="synIdentifier">$value</span>;
+ 42 }
+ 43 
+ 44 <span class="synStatement">sub </span><span class="synIdentifier">incr </span>{
+ 45 	<span class="synStatement">my</span> (<span class="synIdentifier">$self</span>) = <span class="synIdentifier">@_</span>;
+ 46 	<span class="synIdentifier">$$self</span>++;
+ 47 	<span class="synStatement">my</span> <span class="synIdentifier">$hex</span> = <span class="synStatement">sprintf</span>(<span class="synConstant">&quot;%x&quot;</span>,<span class="synIdentifier">$$self</span>);
+ 48 	<span class="synStatement">return</span> <span class="synIdentifier">$hex</span>;
+ 49 }
+ 50 
+ 51 <span class="synStatement">sub </span><span class="synIdentifier">ne </span>{
+ 52 	<span class="synStatement">my</span> (<span class="synIdentifier">$self</span>,<span class="synIdentifier">$cmp</span>) = <span class="synIdentifier">@_</span>;
+ 53 	<span class="synStatement">my</span> <span class="synIdentifier">$hex</span> = <span class="synStatement">sprintf</span>(<span class="synConstant">&quot;%x&quot;</span>,<span class="synIdentifier">$$self</span>);
+ 54 	<span class="synStatement">if</span>(<span class="synIdentifier">$$self</span> != <span class="synIdentifier">$cmp-&gt;dec</span>()) {
+ 55 		<span class="synStatement">return</span> <span class="synConstant">1</span>;
+ 56 	} 
+ 57 	<span class="synStatement">return</span> <span class="synConstant">0</span>;
+ 58 }
+ 59 
+ 60 <span class="synStatement">sub </span><span class="synIdentifier">out </span>{ 
+ 61 	<span class="synStatement">my</span> <span class="synIdentifier">$self</span> = <span class="synStatement">shift</span>; 
+ 62 	<span class="synStatement">my</span> <span class="synIdentifier">$hex</span> = <span class="synStatement">sprintf</span>(<span class="synConstant">&quot;%x&quot;</span>,<span class="synIdentifier">$$self</span>);
+ 63 	<span class="synStatement">return</span> <span class="synIdentifier">$hex</span>; 
+ 64 }
+ 65 
+ 66 <span class="synStatement">sub </span><span class="synIdentifier">dec </span>{
+ 67 	<span class="synStatement">my</span> <span class="synIdentifier">$self</span> = <span class="synStatement">shift</span>;
+ 68 	<span class="synStatement">return</span> <span class="synIdentifier">$$self</span>;
+ 69 }
+ 70 
+ 71 <span class="synStatement">sub </span><span class="synIdentifier">print </span>{
+ 72 	<span class="synStatement">my</span> <span class="synIdentifier">$self</span> = <span class="synStatement">shift</span>; 
+ 73 	<span class="synStatement">printf</span>(<span class="synConstant">&quot;%x&quot;</span>,<span class="synIdentifier">$$self</span>);
+ 74 }
+ 75 
+ 76 <span class="synConstant">1</span>;
+</pre>
+</td></tr></table>
+
+=end html
+
+=head1 Solution for Perl6
+
+The code for the Perl6 solution is similar to Perl5. See explanation above.
+
+=head2 Trial of Perl6 Class Hex
+
+My aim here was also to implement the class Hex in Perl6. So I tried the first
+time to convert my Perl5 class code to Perl6 class. 
+
+I thought I simply can use Perl6, but when I started reading the documents about
+Objects in Perl6 (see links above) I found double-colons everywhere. Double-colons
+in classes, double-colons in functions, double-colons in attributes, ...
+
+So Classes in Perl6 were not simply to use, I have to properly learn them before I can use it.
+So for today I have to stop my efforts in using Perl6 classes.
+
+Unfortunately Perl6 always says: 
+
+ ===SORRY!===
+ 'self' used where no object is available.
+   or
+ Variable $!n used where no 'self' is available
+   or
+ ...
+
+Following is the complete code for my Perl5 solution of Task#2:
+
+=begin html
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Perl6 </div>
+  1 <span class="synComment">#!/home/chuck/rakudo/bin/perl6</span>
+  2 
+  3 <span class="synPreProc">use</span> strict<span class="synStatement">;</span>
+  4 
+  5 <span class="synSpecial">my</span> <span class="synIdentifier">@C</span> <span class="synStatement">=</span> (<span class="synConstant">0</span><span class="synStatement">..</span><span class="synConstant">9</span><span class="synStatement">,</span><span class="synSpecial">&quot;</span><span class="synConstant">a</span><span class="synSpecial">&quot;</span><span class="synStatement">..</span><span class="synSpecial">&quot;</span><span class="synConstant">z</span><span class="synSpecial">&quot;</span>)<span class="synStatement">.</span>flat<span class="synStatement">;</span>
+  6 <span class="synIdentifier">print</span> <span class="synSpecial">&quot;</span><span class="synConstant">ch-2.p6, PWC #43 Task #2: Self-descriptive Numbers</span><span class="synSpecial">\n&quot;</span><span class="synStatement">;</span>
+  7 
+  8 <span class="synStatement">loop</span> ( <span class="synSpecial">my</span> <span class="synIdentifier">$b</span> <span class="synStatement">=</span> <span class="synConstant">4</span><span class="synStatement">;</span> <span class="synIdentifier">$b</span> <span class="synStatement">&lt;=</span> <span class="synConstant">24</span><span class="synStatement">;</span> <span class="synIdentifier">$b</span><span class="synStatement">++</span> ) {
+  9 
+ 10   <span class="synSpecial">my</span> <span class="synIdentifier">$m</span> <span class="synStatement">=</span> (<span class="synIdentifier">$b</span> <span class="synStatement">-</span> <span class="synConstant">4</span>) <span class="synStatement">*</span> <span class="synIdentifier">$b</span><span class="synStatement">**</span>(<span class="synIdentifier">$b</span><span class="synStatement">-</span><span class="synConstant">1</span>) <span class="synStatement">+</span> <span class="synConstant">2</span> <span class="synStatement">*</span> <span class="synIdentifier">$b</span><span class="synStatement">**</span>(<span class="synIdentifier">$b</span><span class="synStatement">-</span><span class="synConstant">2</span>) <span class="synStatement">+</span> <span class="synIdentifier">$b</span><span class="synStatement">**</span>(<span class="synIdentifier">$b</span><span class="synStatement">-</span><span class="synConstant">3</span>) <span class="synStatement">+</span> <span class="synIdentifier">$b</span><span class="synStatement">**</span><span class="synConstant">3</span><span class="synStatement">;</span>
+ 11   <span class="synSpecial">my</span> <span class="synIdentifier">@r</span><span class="synStatement">;</span>
+ 12   convert(<span class="synIdentifier">$b</span><span class="synStatement">,</span><span class="synIdentifier">$m</span><span class="synStatement">,</span><span class="synIdentifier">@r</span>)<span class="synStatement">;</span>
+ 13 
+ 14   <span class="synSpecial">my</span> <span class="synIdentifier">$base</span>   <span class="synStatement">=</span> <span class="synIdentifier">join</span>(<span class="synSpecial">&quot;&quot;</span><span class="synStatement">,</span><span class="synIdentifier">@r</span>)<span class="synStatement">;</span>
+ 15   <span class="synSpecial">my</span> <span class="synIdentifier">$is_sdn</span><span class="synStatement">;</span>
+ 16   <span class="synIdentifier">$is_sdn</span> <span class="synStatement">=</span> verify(<span class="synIdentifier">$base</span>)<span class="synStatement">;</span>
+ 17 
+ 18   <span class="synStatement">if</span> (<span class="synIdentifier">$is_sdn</span>) { <span class="synIdentifier">$is_sdn</span> <span class="synStatement">=</span> <span class="synSpecial">&quot;</span><span class="synConstant">self-descriptive</span><span class="synSpecial">&quot;</span><span class="synStatement">;</span> } 
+ 19   <span class="synStatement">else</span> { <span class="synIdentifier">$is_sdn</span> <span class="synStatement">=</span> <span class="synSpecial">&quot;</span><span class="synConstant">NOT self-descriptive</span><span class="synSpecial">&quot;</span><span class="synStatement">;</span> }
+ 20 
+ 21   <span class="synIdentifier">printf</span>(<span class="synSpecial">&quot;</span><span class="synConstant">Base: %2d, Nmbr: %30s, %25s = %s</span><span class="synSpecial">\n&quot;</span><span class="synStatement">,</span> <span class="synIdentifier">$b</span><span class="synStatement">,</span> <span class="synIdentifier">$m</span><span class="synStatement">,</span> <span class="synIdentifier">$base</span><span class="synStatement">,</span> <span class="synIdentifier">$is_sdn</span>)<span class="synStatement">;</span>
+ 22 }
+ 23 
+ 24 <span class="synStatement">sub</span> convert(<span class="synIdentifier">$b</span><span class="synStatement">,</span><span class="synIdentifier">$n</span><span class="synStatement">,</span><span class="synIdentifier">@erg</span>) {
+ 25   <span class="synSpecial">my</span> <span class="synIdentifier">$d</span> <span class="synStatement">=</span> Int( <span class="synIdentifier">$n</span><span class="synStatement">/</span><span class="synIdentifier">$b</span> )<span class="synStatement">;</span>
+ 26   <span class="synSpecial">my</span> <span class="synIdentifier">$r</span> <span class="synStatement">=</span> <span class="synIdentifier">$n</span> <span class="synStatement">%</span> <span class="synIdentifier">$b</span><span class="synStatement">;</span>
+ 27   <span class="synStatement">if</span> (<span class="synIdentifier">$r</span> <span class="synStatement">&gt;</span> <span class="synConstant">15</span>) { <span class="synIdentifier">$r</span> <span class="synStatement">=</span> <span class="synIdentifier">@C</span>[<span class="synIdentifier">$r</span>]<span class="synStatement">;</span> }
+ 28   <span class="synStatement">elsif</span> (<span class="synIdentifier">$r</span> <span class="synStatement">&gt;</span> <span class="synConstant">9</span>) { <span class="synIdentifier">$r</span> <span class="synStatement">=</span> <span class="synIdentifier">sprintf</span>(<span class="synSpecial">&quot;</span><span class="synConstant">%x</span><span class="synSpecial">&quot;</span><span class="synStatement">,</span> <span class="synIdentifier">$r</span>)<span class="synStatement">;</span> }
+ 29   <span class="synIdentifier">unshift</span>(<span class="synIdentifier">@erg</span><span class="synStatement">,</span><span class="synIdentifier">$r</span>)<span class="synStatement">;</span>
+ 30   convert(<span class="synIdentifier">$b</span><span class="synStatement">,</span><span class="synIdentifier">$d</span><span class="synStatement">,</span><span class="synIdentifier">@erg</span>) <span class="synStatement">if</span> <span class="synIdentifier">$d</span><span class="synStatement">;</span>
+ 31 }
+ 32 
+ 33 <span class="synStatement">sub</span> verify(<span class="synIdentifier">$sdn</span>) {
+ 34   <span class="synSpecial">my</span> <span class="synIdentifier">$i</span> <span class="synStatement">=</span> <span class="synConstant">0</span><span class="synStatement">;</span>
+ 35   <span class="synSpecial">my</span> <span class="synIdentifier">$is_sdn</span> <span class="synStatement">=</span> <span class="synConstant">1</span><span class="synStatement">;</span>
+ 36   <span class="synSpecial">my</span> <span class="synIdentifier">@a</span> <span class="synStatement">=</span> <span class="synIdentifier">$sdn</span><span class="synStatement">.</span><span class="synIdentifier">split</span>(<span class="synSpecial">&quot;&quot;</span><span class="synStatement">,:</span><span class="synConstant">skip-empty</span>)<span class="synStatement">;</span>
+ 37   <span class="synStatement">for</span> <span class="synIdentifier">@a</span> <span class="synStatement">-&gt;</span> <span class="synIdentifier">$v</span> {
+ 38     <span class="synSpecial">my</span> <span class="synIdentifier">$search</span> <span class="synStatement">=</span> <span class="synIdentifier">@C</span>[<span class="synIdentifier">$i</span>]<span class="synStatement">;</span>
+ 39     <span class="synSpecial">my</span> <span class="synIdentifier">$nr</span> <span class="synStatement">=</span> <span class="synIdentifier">$sdn</span> <span class="synStatement">~~</span> <span class="synStatement">m:</span><span class="synConstant">g</span><span class="synSpecial">/</span><span class="synIdentifier">$search</span><span class="synSpecial">/</span><span class="synStatement">;</span>
+ 40     <span class="synIdentifier">$nr</span> <span class="synStatement">=</span> <span class="synIdentifier">@C</span>[<span class="synIdentifier">$nr</span>]<span class="synStatement">;</span>
+ 41     <span class="synStatement">if</span> ( <span class="synIdentifier">$v</span> <span class="synStatement">ne</span> <span class="synIdentifier">$nr</span> ) {
+ 42       <span class="synIdentifier">$is_sdn</span> <span class="synStatement">=</span> <span class="synConstant">0</span><span class="synStatement">;</span>
+ 43       <span class="synSpecial">return</span> <span class="synIdentifier">$is_sdn</span><span class="synStatement">;</span>
+ 44     }
+ 45     <span class="synIdentifier">$i</span><span class="synStatement">++;</span> 
+ 46   }
+ 47   <span class="synSpecial">return</span> <span class="synIdentifier">$is_sdn</span><span class="synStatement">;</span>
+ 48 }
+</pre>
+</td></tr></table>
+
+=end html
+
+=head1 AUTHOR
+
+Chuck
+
+=cut
+
+# ############################## END #############################################
+

@@ -1,0 +1,7 @@
+ LastWord←{
+     ' '∊⍺:⎕NULL
+     ⎕IO←0
+     words←' '(≠⊆⊢)⍵
+     matches←(⍺ ⎕S'%')words
+     {⊃⌽⍵⌿⍨×≢¨⍵}matches ⍝ Last Matching Word
+ }

@@ -1,0 +1,13 @@
+#! /usr/bin/env raku
+
+my $money = 1;
+
+for 1 .. Inf -> $move
+{
+  $money *= 2;
+  if $money >= 200
+  {
+    say "Amount $money after $move moves.";
+    last;
+  }
+}

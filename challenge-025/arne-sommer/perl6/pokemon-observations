@@ -1,0 +1,23 @@
+#! /usr/bin/env perl6
+
+my @names = <audino bagon baltoy banette bidoof braviary bronzor carracosta charmeleon cresselia croagunk darmanitan deino emboar emolga exeggcute gabite girafarig gulpin haxorus heatmor heatran ivysaur jellicent jumpluff kangaskhan kricketune landorus ledyba loudred lumineon lunatone machamp magnezone mamoswine nosepass petilil pidgeotto pikachu pinsir poliwrath poochyena porygon2 porygonz registeel relicanth remoraid rufflet sableye scolipede scrafty seaking sealeo silcoon simisear snivy snorlax spoink starly tirtouga trapinch treecko tyrogue vigoroth vulpix wailord wartortle whismur wingull yamask>;
+
+say "Names: { @names.elems }.";
+
+my @start = @names.map( *.substr(  0,1) ).unique;
+my @end   = @names.map( *.substr(*-1,1) ).unique.sort;
+
+say "Start: { @start }.";
+say "End:   { @end }.";
+
+my %start   = @start.Set;
+my %end     = @end.Set;
+my @orphans = @names.grep({ ! %end{$_.substr(0,1)} && ! %start{$_.substr(*-1,1)} });
+
+say "Orphans: { @orphans }";
+
+my @not-dead = (@names ∖ @orphans).keys.sort;
+say "Not Dead (implied): { @not-dead }";
+
+
+

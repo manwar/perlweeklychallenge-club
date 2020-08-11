@@ -1,0 +1,27 @@
+#! /usr/bin/env raku
+
+sub MAIN ($string, *@words where @words.elems > 0, :$verbose)
+{
+  my $string-length = $string.chars;
+  my $shortest-word = @words>>.chars.min;
+
+  say ": SL: $string-length SW: $shortest-word" if $verbose;
+
+  my @words2 = (@words xx $string-length div $shortest-word).flat.sort({ $^a.chars <=> $^b.chars || $^a cmp $^b });
+
+  say ": Words: @words2[]" if $verbose;
+
+  my $match = 0;
+  for @words2.combinations(1..3).unique(:with(&[eqv])).map({ .elems > 1 ?? | .permutations !! $_ }).unique(:with(&[eqv])) -> @candidate
+  {
+    my $wordlist = @candidate.map({ "\"$_\"" }).join(", ");
+
+    say ": Candidate: $wordlist" if $verbose;
+    if @candidate.join eq $string
+    {
+      say $wordlist;
+      $match++;
+    }
+  }
+  say "0" unless $match;
+}

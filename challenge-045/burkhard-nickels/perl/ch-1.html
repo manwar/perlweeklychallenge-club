@@ -1,0 +1,272 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Perl Weekly Challenge #45 Task #1, Square Secret Code</title>
+<link rel="stylesheet" href="/www/Perl/PWC/pwc_coloured.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #45 Task #1, Square Secret Code</span></strong></big>
+</td></tr>
+</table>
+
+
+
+<ul id="index">
+  <li><a href="#Perl-Weekly-Challenge-45-Task-1:-Square-Secret-Code">Perl Weekly Challenge #45 Task #1: Square Secret Code</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#Definition-Task-1:-Square-Secret-Code">Definition Task #1: Square Secret Code</a></li>
+  <li><a href="#Perl5-and-Perl6-Solutions">Perl5 and Perl6 Solutions</a>
+    <ul>
+      <li><a href="#Program-execution">Program execution</a></li>
+      <li><a href="#Sourcecode-for-Perl5-and-Perl6">Sourcecode for Perl5 and Perl6</a></li>
+    </ul>
+  </li>
+  <li><a href="#Sourcecode-for-Python">Sourcecode for Python</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<h1 id="Perl-Weekly-Challenge-45-Task-1:-Square-Secret-Code">Perl Weekly Challenge #45 Task #1: Square Secret Code</h1>
+
+<p>This task is more or less about reformatting some text. So first I eleminate spaces, do lower case letters and split every letter into an array.</p>
+
+<p>In a second step I reorder the letters with 2 <code>for</code> loops.</p>
+
+<h2> Download and References </h2>
+<b>Download File:</b><a href="ch-1.pl" download> Perl5 Solution PWC #45 Task #1 ch-1.pl</a><br>
+<b>Download File:</b><a href="ch-1.p6" download> Perl6 Solution PWC #45 Task #1 ch-1.p6</a><br>
+<b>Download File:</b><a href="ch-1.py" download> Python Solution PWC #45 Task #1 ch-1.py</a><br>
+<br>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code> # ./ch-1.pl                    - Program execution
+ # ./ch-1.p6                    - Program execution
+ # ./ch-1.py                    - Program execution
+ # perldoc ch-1.pod             - POD</code></pre>
+
+<h1 id="Definition-Task-1:-Square-Secret-Code">Definition Task #1: Square Secret Code</h1>
+
+<p>The square secret code mechanism first removes any space from the original message. Then it lays down the message in a row of 8 columns. The coded message is then obtained by reading down the columns going left to right.</p>
+
+<p>For example, the message is &quot;The quick brown fox jumps over the lazy dog&quot;.</p>
+
+<p>Then the message would be laid out as below:</p>
+
+<pre><code> thequick
+ brownfox
+ jumpsove
+ rthelazy
+ dog</code></pre>
+
+<p>The code message would be as below:</p>
+
+<pre><code> tbjrd hruto eomhg qwpe unsl ifoa covz kxey</code></pre>
+
+<p>Write a script that accepts a message from command line and prints the equivalent coded message.</p>
+
+<h1 id="Perl5-and-Perl6-Solutions">Perl5 and Perl6 Solutions</h1>
+
+<p>First the Command Line Arguments are read. See below differences in Perl5 and Perl6.</p>
+
+<pre><code>  9 if($ARGV[0]) { $msg = $ARGV[0]; }
+
+  8 if (@*ARGS[0]) { $msg = @*ARGS[0]; }</code></pre>
+
+<p>Next is eleminating spaces, change to lower case letters and split into an array.</p>
+
+<pre><code> 12 $msg =~ s/\s//g;
+ 13 $msg = lc($msg);
+ 14 my @l = split(&quot;&quot;,$msg);</code></pre>
+
+<p>Although the split line looks exact equal in Perl5 and Perl6, Perl6 has an empty array element on index 0 and on last index. Perl6 has the global search as &quot;:g&quot; appended to the &quot;s&quot;. For me all this double-colon attributes is difficult to get used to.</p>
+
+<pre><code> 11 $msg ~~ s:g/\s//;
+ 12 $msg = $msg.lc;
+ 14 my @l = split(&quot;&quot;,$msg);</code></pre>
+
+<p>Then two for loops change the order of the letters, see below.</p>
+
+<p>Other differences:</p>
+
+<ul>
+
+<li><p>$#l versus @l.end</p>
+
+</li>
+<li><p>.= versus ~=</p>
+
+</li>
+<li><p>for versus loop</p>
+
+</li>
+<li><p>lc($msg) versus $msg.lc</p>
+
+</li>
+<li><p>$msg =~ s/\s//g; versus $msg ~~ s:g/\s//;</p>
+
+</li>
+<li><p>$ARGV[0] versus @*ARGS[0]</p>
+
+</li>
+</ul>
+
+<h2 id="Program-execution">Program execution</h2>
+
+<p>After execution of the program either without argument or with a text on the command line, following output is generated.</p>
+
+<pre><code> ./ch-1.pl
+ ch-1.pl - PWC #45 Task #1: Square Secret Code
+ Original: The quick brown fox jumps over the lazy dog
+ Coded   : tbjrd hruto eomhg qwpe unsl ifoa covz kxey 
+
+ ./ch-1.pl &quot;This is my solution for perl weekly challenge fourtyfive task two&quot;
+ ch-1.pl - PWC #45 Task #1: Square Secret Code
+ Original: This is my solution for perl weekly challenge fourtyfive task two
+ Coded   : tsfelut hooelra ilrkets suplnyk iteygft sirceiw molhfvo ynwaoe </code></pre>
+
+<h2 id="Sourcecode-for-Perl5-and-Perl6">Sourcecode for Perl5 and Perl6</h2>
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Perl5 </div>
+  1 <span class="synPreProc">#!/usr/bin/perl</span>
+  2 
+  3 <span class="synStatement">use strict</span>;
+  4 <span class="synStatement">use warnings</span>;
+  5 
+  6 <span class="synStatement">print</span> <span class="synConstant">&quot;ch-1.pl - PWC #45 Task #1: Square Secret Code</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+  7 
+  8 <span class="synStatement">my</span> <span class="synIdentifier">$msg</span> = <span class="synConstant">&quot;The quick brown fox jumps over the lazy dog&quot;</span>;
+  9 <span class="synStatement">if</span>(<span class="synIdentifier">$ARGV[</span><span class="synConstant">0</span><span class="synIdentifier">]</span>) { <span class="synIdentifier">$msg</span> = <span class="synIdentifier">$ARGV[</span><span class="synConstant">0</span><span class="synIdentifier">]</span>; }
+ 10 
+ 11 <span class="synStatement">print</span> <span class="synConstant">&quot;Original: </span><span class="synIdentifier">$msg</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+ 12 <span class="synIdentifier">$msg</span> =~ <span class="synStatement">s/</span><span class="synSpecial">\s</span><span class="synStatement">//g</span>;
+ 13 <span class="synIdentifier">$msg</span> = <span class="synStatement">lc</span>(<span class="synIdentifier">$msg</span>);
+ 14 <span class="synStatement">my</span> <span class="synIdentifier">@l</span> = <span class="synStatement">split</span>(<span class="synConstant">&quot;&quot;</span>,<span class="synIdentifier">$msg</span>);
+ 15 
+ 16 <span class="synStatement">my</span> <span class="synIdentifier">$coded_msg</span>;
+ 17 <span class="synStatement">for</span>(<span class="synStatement">my</span> <span class="synIdentifier">$i</span>=<span class="synConstant">0</span>; <span class="synIdentifier">$i</span>&lt;=<span class="synConstant">7</span>; <span class="synIdentifier">$i</span>++) {
+ 18 	<span class="synStatement">for</span>(<span class="synStatement">my</span> <span class="synIdentifier">$j</span>=<span class="synIdentifier">$i</span>; <span class="synIdentifier">$j</span>&lt;=<span class="synIdentifier">$#l</span>; <span class="synIdentifier">$j</span>+=<span class="synConstant">8</span>) {
+ 19 		<span class="synIdentifier">$coded_msg</span> .= <span class="synIdentifier">$l[$j]</span>;
+ 20 	}
+ 21 	<span class="synIdentifier">$coded_msg</span> .= <span class="synConstant">&quot; &quot;</span>;
+ 22 }
+ 23 <span class="synStatement">print</span> <span class="synConstant">&quot;Coded   : </span><span class="synIdentifier">$coded_msg</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+</pre>
+</td><td class=code>
+<pre class=code><div class=t> Perl6 </div>
+  1 <span class="synComment">#!/home/chuck/rakudo/bin/perl6</span>
+  2 
+  3 <span class="synPreProc">use</span> strict<span class="synStatement">;</span>
+  4 
+  5 <span class="synIdentifier">print</span> <span class="synSpecial">&quot;</span><span class="synConstant">ch-1.p6 - PWC #45 Task #1: Square Secret Code</span><span class="synSpecial">\n&quot;</span><span class="synStatement">;</span>
+  6 
+  7 <span class="synSpecial">my</span> <span class="synIdentifier">$msg</span> <span class="synStatement">=</span> <span class="synSpecial">&quot;</span><span class="synConstant">The quick brown fox jumps over the lazy dog</span><span class="synSpecial">&quot;</span><span class="synStatement">;</span>
+  8 <span class="synStatement">if</span> (<span class="synIdentifier">@</span><span class="synSpecial">*</span><span class="synIdentifier">ARGS</span>[<span class="synConstant">0</span>]) { <span class="synIdentifier">$msg</span> <span class="synStatement">=</span> <span class="synIdentifier">@</span><span class="synSpecial">*</span><span class="synIdentifier">ARGS</span>[<span class="synConstant">0</span>]<span class="synStatement">;</span> }
+  9 
+ 10 <span class="synIdentifier">print</span> <span class="synSpecial">&quot;</span><span class="synConstant">Original: </span><span class="synIdentifier">$msg</span><span class="synSpecial">\n&quot;</span><span class="synStatement">;</span>
+ 11 <span class="synIdentifier">$msg</span> <span class="synStatement">~~</span> <span class="synStatement">s:</span><span class="synConstant">g</span><span class="synSpecial">/\s//</span><span class="synStatement">;</span>
+ 12 <span class="synIdentifier">$msg</span> <span class="synStatement">=</span> <span class="synIdentifier">$msg</span><span class="synStatement">.</span><span class="synIdentifier">lc</span><span class="synStatement">;</span>
+ 13 <span class="synComment"># print &quot;Debug: $msg\n&quot;;</span>
+ 14 <span class="synSpecial">my</span> <span class="synIdentifier">@l</span> <span class="synStatement">=</span> <span class="synIdentifier">split</span>(<span class="synSpecial">&quot;&quot;</span><span class="synStatement">,</span><span class="synIdentifier">$msg</span>)<span class="synStatement">;</span>
+ 15 <span class="synComment"># print join(&quot;-&quot;,@l), &quot;\n&quot;;</span>
+ 16 
+ 17 <span class="synSpecial">my</span> <span class="synIdentifier">$coded_msg</span><span class="synStatement">;</span>
+ 18 <span class="synStatement">for</span> (<span class="synConstant">1</span> <span class="synStatement">..</span> <span class="synConstant">8</span>) {
+ 19 	<span class="synStatement">loop</span> (<span class="synSpecial">my</span> <span class="synIdentifier">$j</span> <span class="synStatement">=</span> <span class="synIdentifier">$_</span><span class="synStatement">;</span> <span class="synIdentifier">$j</span> <span class="synStatement">&lt;=</span> <span class="synIdentifier">@l</span><span class="synStatement">.</span><span class="synIdentifier">end</span><span class="synStatement">;</span> <span class="synIdentifier">$j</span> <span class="synStatement">+=</span> <span class="synConstant">8</span>) {
+ 20 		<span class="synComment"># print &quot;($j) @l[$j] &quot;;</span>
+ 21 		<span class="synIdentifier">$coded_msg</span> <span class="synStatement">~=</span> <span class="synIdentifier">@l</span>[ <span class="synIdentifier">$j</span> ]<span class="synStatement">;</span>
+ 22 	}
+ 23 	<span class="synIdentifier">$coded_msg</span> <span class="synStatement">~=</span> <span class="synSpecial">&quot;</span><span class="synConstant"> </span><span class="synSpecial">&quot;</span><span class="synStatement">;</span>
+ 24 }
+ 25 <span class="synIdentifier">print</span> <span class="synSpecial">&quot;</span><span class="synConstant">Coded   : </span><span class="synIdentifier">$coded_msg</span><span class="synSpecial">\n&quot;</span><span class="synStatement">;</span>
+</pre>
+</td></tr></table>
+
+<h1 id="Sourcecode-for-Python">Sourcecode for Python</h1>
+
+<p>Because the code is similar to the above ones I do not explain it here. Only some remarks for me as a Python beginner:</p>
+
+<ul>
+
+<li><p>Command line arguments are extracted with sys.argv</p>
+
+<pre><code>  3 import sys
+ ...
+ 12 if len(sys.argv) &gt; 1:
+ 13     msg = sys.argv[1]</code></pre>
+
+</li>
+<li><p>Splitting the letters from the string is done by a list constructor.</p>
+
+<pre><code> 19 l = list(msg)</code></pre>
+
+</li>
+<li><p>I wanted to use the range from 0 - 7, but my last element was missing. To write here &quot;range (0,8)&quot; I do not understand, but trial and error told me so.</p>
+
+<pre><code> 24 for i in range (0,8):</code></pre>
+
+</li>
+</ul>
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Python </div>
+  1 <span class="synComment">#!/usr/bin/python</span>
+  2 
+  3 <span class="synPreProc">import</span> sys
+  4 <span class="synPreProc">import</span> re
+  5 <span class="synPreProc">import</span> array <span class="synStatement">as</span> arr
+  6 
+  7 <span class="synIdentifier">print</span> <span class="synConstant">&quot;ch-1.py - PWC #45 Task #1: Square Secret Code.&quot;</span>
+  8 
+  9 <span class="synComment"># ----------------------------------</span>
+ 10 msg = <span class="synConstant">&quot;The quick brown fox jumps over the lazy dog&quot;</span>
+ 11 
+ 12 <span class="synStatement">if</span> <span class="synIdentifier">len</span>(sys.argv) &gt; <span class="synConstant">1</span>:
+ 13 	msg = sys.argv[<span class="synConstant">1</span>]
+ 14 
+ 15 <span class="synIdentifier">print</span> <span class="synConstant">&quot;Original: &quot;</span>, msg
+ 16 
+ 17 msg = re.sub(<span class="synConstant">'\s'</span>,<span class="synConstant">''</span>,msg)
+ 18 msg = msg.lower()
+ 19 l = <span class="synIdentifier">list</span>(msg)
+ 20 <span class="synComment"># print &quot;Original: &quot;, msg</span>
+ 21 <span class="synComment"># print &quot;Letters : &quot;, l</span>
+ 22 
+ 23 coded_msg = <span class="synConstant">&quot;&quot;</span>
+ 24 <span class="synStatement">for</span> i <span class="synStatement">in</span> <span class="synIdentifier">range</span> (<span class="synConstant">0</span>,<span class="synConstant">8</span>):
+ 25 	<span class="synComment"># print</span>
+ 26 	<span class="synComment"># print i, &quot;:&quot;,</span>
+ 27 	j = i
+ 28 	e = <span class="synIdentifier">len</span>(l)
+ 29 	<span class="synStatement">while</span> j &lt; e:
+ 30 		<span class="synComment"># print &quot;(&quot;,j,&quot;/&quot;,e,&quot;) &quot;, l[j], &quot; &quot;,</span>
+ 31 		coded_msg += l[j]
+ 32 		j += <span class="synConstant">8</span>
+ 33 
+ 34 	coded_msg += <span class="synConstant">&quot; &quot;</span>
+ 35 
+ 36 <span class="synIdentifier">print</span> <span class="synConstant">&quot;Coded   : &quot;</span>, coded_msg
+</pre>
+</td></tr></table>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Chuck</p>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #45 Task #1, Square Secret Code</span></strong></big>
+</td></tr>
+</table>
+
+</body>
+
+</html>
+
+

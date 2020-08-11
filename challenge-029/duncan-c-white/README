@@ -1,0 +1,23 @@
+Challenge 1: "Write a script to demonstrate brace expansion. For example,
+script would take command line argument Perl {Daily,Weekly,Monthly,Yearly}
+Challenge and should expand it and print like below:
+
+  Perl Daily Challenge
+  Perl Weekly Challenge
+  Perl Monthly Challenge
+  Perl Yearly Challenge
+
+My notes: Nested braces may be slightly tricky, first I tried a recursive
+function to find and expand the innermost {}, but that produced the
+right output in a weird order, with duplicates.
+Instead, try a state machine to track the locations of the outer level
+elements {,}.  Extract $before, $after and an array of alternatives @alt,
+then recombine them, until there are no { left.
+
+
+Challenge 2: "Write a script to demonstrate calling a C function. It
+could be any user defined or standard C function."
+
+My notes: Hmm, either XS or Inline::C.  I've never used either:-)
+Wrote simple sqrt routine (algorithm: squaring the rectangle) in C,
+wrote the same in Perl, then used Benchmark to benchmark both versions.

@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+subset binary of Int where { /^<[ 0 1 ]>+$/ };
+
+unit sub MAIN (Int $number, :$verbose);
+
+my $current = $number;
+
+loop
+{
+  $current += $number;
+  say ": Checking $current" if $verbose;
+  if $current ~~ binary
+  {
+    say "Match: $current";
+    exit;
+  }
+}

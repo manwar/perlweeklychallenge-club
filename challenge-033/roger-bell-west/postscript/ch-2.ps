@@ -1,0 +1,30 @@
+/n 11 def
+/scale 25 def
+/fs 12 def
+
+20 650 translate
+
+/Helvetica findfont
+fs scalefont setfont
+
+1 1 n {
+    /x exch def
+    /ns 30 string def
+    x ns cvs
+    x scale mul dup 0 moveto ns show
+    neg 0 exch moveto ns show
+    1 1 x {
+        /y exch def
+        /nv 30 string def
+        x y mul nv cvs pop
+        x scale mul y neg scale mul moveto nv show
+    } for
+} for
+
+0 scale 2 div neg fs 2 div add moveto
+scale n 1 add mul scale 2 div neg fs 2 div add lineto
+scale 2 div fs 2 div add fs moveto
+scale 2 div fs 2 div add scale n 1 add mul neg fs add lineto
+stroke
+
+showpage

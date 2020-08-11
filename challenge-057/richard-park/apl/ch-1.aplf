@@ -1,0 +1,44 @@
+ InvertTree←{
+
+⍝ ⍵: Full binary tree in the format
+⍝ Node number (ID), value, parent
+⍝
+⍝       1
+⍝      /  \
+⍝     2    3
+⍝    / \  / \
+⍝   4   5 6  7
+⍝
+⍝ For example, the above tree in depth-first pre-order traversal
+⍝ n ← 0 1 2 3 4 5 6
+⍝ v ← 1 2 4 5 3 6 7
+⍝ p ← 0 0 1 1 0 4 4
+     (n v p)←⍵
+
+     TreeMatrix←{
+    ⍝ Binary matrix for a full binary tree
+    ⍝ Each row is a binary mask for elements on that row
+    ⍝
+    ⍝ For the example tree:
+    ⍝       v⌿⍤1⍨ TreeMatrix p
+    ⍝ 1 0 0 0
+    ⍝ 2 3 0 0
+    ⍝ 4 5 6 7
+    ⍝
+         ⎕IO←0
+         ⍺←0
+         r←⍵(∨⌿∘.=)⍨,⍺
+         c←⍸r
+         0≡⍺:(↑1(0@0⊢r))⍪(1↓c)∇ ⍵
+         ⍬≡c:⍬⍴⍨0,⍴⍵
+         r⍪(c ∇ ⍵)
+     }
+     InvertValues←{
+     ⍝ Horizontally flip values at each level of the tree
+         ⍵≡⍬⍴⍨0,⊃⌽⍴⍵:⍺       ⍝ No more rows: Return inverted values
+         (⌽@(⍸1⌷⍵)⊢⍺)∇ 1↓⍵   ⍝ Horizontal flip ∇ Recurse remaining levels / rows
+     }
+     iv←v InvertValues TreeMatrix p
+     (n iv p) ⍝ Return inverted tree
+
+ }

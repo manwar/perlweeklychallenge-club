@@ -1,0 +1,36 @@
+#! /usr/bin/env perl6
+
+multi sub MAIN ($word, :$index = "index.txt")
+{
+  for (slurp $index).lines -> $line
+  {
+    my ($entry, $files) = $line.split(":");
+
+    if $word eq $entry
+    {
+      say "«$word» found in: $files";
+      exit;
+    }
+  }
+  say "Not found.";
+}
+
+multi sub MAIN (:$index = "index.txt")
+{
+  my %index;
+  for (slurp $index).lines -> $line
+  {
+    my ($entry, $files) = $line.split(":");
+    %index{$entry} = $files;
+  }
+
+  loop
+  {
+    my $word = prompt("Search for word: ");
+    
+    say %index{$word}
+      ?? "«$word» found in: { %index{$word} }"
+      !! "Not found.";
+  }
+}
+

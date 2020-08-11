@@ -1,0 +1,20 @@
+#! /usr/bin/env perl6
+
+multi sub MAIN ($file where $file.IO && $file.IO.r)
+{
+  my $fh = open $file, :bin;
+  count-blob($fh.read);
+  $fh.close;
+}
+
+sub count-blob ($blob)
+{
+  my @count;
+
+  @count[$_]++ for @$blob;
+
+  for ^@count -> $index
+  {
+    say "$index: { @count[$index] }" if @count[$index];
+  }
+}

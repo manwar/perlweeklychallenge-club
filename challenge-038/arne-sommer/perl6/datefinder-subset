@@ -1,0 +1,24 @@
+#! /usr/bin/env raku
+
+my $string;
+
+subset PerlWeeklyDate of Str where
+  $_.chars == 7 &&
+  $_.substr(0,1) eq '1'|'2' &&
+  ( $string = string2date($_) ) &&
+  try Date.new($string).defined;
+
+multi sub MAIN (PerlWeeklyDate $date)
+{
+  say $string;
+}
+
+multi sub MAIN (Str $invalid)
+{
+  say "Not a valid date.";
+}
+
+sub string2date (Str $string)
+{
+  return "{ $string.substr(0,1) eq '1' ?? '20' !! '19' }{ $string.substr(1,2) }-{ $string.substr(3,2) }-{ $string.substr(5,2) }";
+}

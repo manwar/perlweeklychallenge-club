@@ -1,0 +1,26 @@
+#! /usr/bin/env perl6
+
+sub MAIN (Str $string, :$quote = '"')
+{
+  split-change($string).map({ $quote ~ $_ ~ $quote }).join(", ").say;
+}
+
+sub split-change ($in)
+{
+  gather 
+  {
+    my $out = $in.substr(0,1);
+    for 1 .. $in.chars -> $index
+    {
+      if $out.substr(0,1) eq $in.substr($index,1)
+      {
+        $out ~= $in.substr($index,1);
+      }
+      else
+      {
+        take $out;
+        $out = $in.substr($index,1);
+      }
+    }
+  }
+}

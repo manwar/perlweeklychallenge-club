@@ -1,0 +1,40 @@
+#! /usr/bin/env raku
+
+my $value = 0;
+
+loop
+{
+  my $command = prompt "[$value]: ";
+
+  if    $command eq "q" | "quit"   { last; }
+  elsif $command eq "d" | "double" { double; }
+  elsif $command eq "h" | "half"   { half; }
+  elsif $command eq "c" | "clear"  { clear; }
+  elsif $command ~~ /^(\d)$/       { set($0.Int); }
+  elsif $command eq "help"         { help; }
+}
+
+sub double
+{
+  $value *= 2;
+}
+
+sub half
+{
+  $value /= 2;
+}
+
+sub clear
+{
+  $value = 0;
+}
+
+sub set ($new)
+{
+  $value = $new;
+}
+
+sub help
+{
+  say "Please consult a doctor.";
+}

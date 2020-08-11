@@ -1,0 +1,14 @@
+#! /usr/bin/env raku
+
+my %source =
+  <UK> => "/usr/share/dict/british-english",
+  <US> => "/usr/share/dict/american-english",
+  <DE> => "/usr/share/dict/ngerman";
+
+unit sub MAIN (Str $language where %source{$language}.defined);
+
+my @lines = %source{$language}.IO.lines.grep(* !~~ /\W/);
+
+spurt "dict-$language.txt", $language eq "DE"
+ ?? @lines.join("\n") ~ "\n"
+ !! "A\nI\n" ~ @lines.grep( {.chars > 1 } ).join("\n") ~ "\n";

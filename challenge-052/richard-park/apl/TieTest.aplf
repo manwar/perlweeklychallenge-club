@@ -1,0 +1,10 @@
+ TieTest←{
+⍝ Can there be a tie?
+     ⎕IO←0
+     n←≢⍵             ⍝ Number of coins
+     b←2⊥⍣¯1⍳¯1+2*n   ⍝ Binary with n bits
+     d←(+⌿÷≢)b        ⍝ Division of coins
+     r←n÷⍨(⌈,⌊)n÷2    ⍝ Ratios of coins for 2 players
+     v←b[;⍸d∊r]       ⍝ 0 Valid divisions of n coins between 2 players
+     ∪⍵⊢⌸⍤1⍨⍉v        ⍝ All combinations of coins divided between 2 players
+ }

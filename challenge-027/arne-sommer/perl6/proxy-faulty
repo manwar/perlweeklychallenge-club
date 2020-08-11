@@ -1,0 +1,28 @@
+#! /usr/bin/env perl6
+
+sub memoryvariable is rw
+{
+  my $val;
+  my @hist;
+  Proxy.new(
+        FETCH => method ()
+   	{
+	  $val
+        },
+        STORE => method ($new)
+    	{
+ 	  $val = $new;
+    	  @hist.push( Pair(now.Int => $new) );
+        },
+  );
+}
+
+my $x := memoryvariable;
+
+$x = 10;
+
+$x = 20;
+
+$x -= 5;
+
+say $x;

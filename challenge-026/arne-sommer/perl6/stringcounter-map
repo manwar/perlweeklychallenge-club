@@ -1,0 +1,8 @@
+#! /usr/bin/env perl6
+
+unit sub MAIN (Str $alphabet, Str $string);
+
+say $alphabet.comb.unique.map( { $string.comb.grep(* eq $_ ) } ).sum;
+
+
+

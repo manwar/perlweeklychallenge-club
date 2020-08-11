@@ -1,0 +1,51 @@
+#! /usr/bin/env perl6
+
+constant CR  = 9229.chr; # This is the unicode "C/R" symbol
+constant LF  = 9226.chr; # This is the unicode "L/F" symbol
+constant BOX = 9617.chr; # This is a unicode gray box
+
+multi sub MAIN ($file where $file.IO && $file.IO.r, :$linesize = 10)
+{
+  my $fh = open $file, :bin;
+  say-blob($fh.read, $linesize);
+  $fh.close;
+}
+
+multi sub MAIN ($string, :$linesize = 10)
+{
+  say-blob($string.encode("utf-8"), $linesize);
+}
+
+sub say-blob ($blob, $linesize)
+{
+  my $ascii = "";
+  my $elems = @$blob.elems;
+  my $count = 0;
+  for @$blob -> $byte
+  {
+    $count++;
+    print $byte.fmt("%02X ");
+    if $byte == 10
+    {
+      $ascii ~= CR; 
+    }
+    elsif $byte == 13
+    {
+      $ascii ~= LF; 
+    }
+    else
+    {
+      $ascii ~= 31 < $byte < 127 ?? $byte.chr !! BOX;
+    }
+    if $count == $linesize
+    {
+      say "| $ascii"; $count = 0; $ascii = "";
+    }
+  }
+
+  if $count && $count < $linesize
+  {
+    print "   " x $linesize - $count; # Fill the last line
+    say "| $ascii";
+  }
+}

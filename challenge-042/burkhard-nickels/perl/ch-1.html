@@ -1,0 +1,170 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Perl Weekly Challenge #42 Task #1, Octal Numbers</title>
+<link rel="stylesheet" href="pwc_coloured.css" type="text/css" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body>
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #42 Task #1, Octal Numbers</span></strong></big>
+</td></tr>
+</table>
+
+
+
+<ul id="index">
+  <li><a href="#Perl-Weekly-Challenge-42-Task-1:-Octal-Numbers">Perl Weekly Challenge #42 Task #1: Octal Numbers</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#Definition-Task-1:-Octal-Number-System">Definition Task #1: Octal Number System</a></li>
+  <li><a href="#Sourcecode-for-Perl5-and-Perl6">Sourcecode for Perl5 and Perl6</a></li>
+  <li><a href="#Sourcecode-for-Python">Sourcecode for Python</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<h1 id="Perl-Weekly-Challenge-42-Task-1:-Octal-Numbers">Perl Weekly Challenge #42 Task #1: Octal Numbers</h1>
+
+<p>The octal number is printed with <code>printf</code> or <code>sprintf</code> and the format string <code>%o</code>. I provided two solutions, first with a <code>foreach</code> loop (Perl5) or <code>for</code> loop (Perl6), second with a <code>map</code> on one line.</p>
+
+<p>Following are some possibilities to deal with Octal numbers:</p>
+
+<ul>
+
+<li><p>printf, sprintf and &quot;%o&quot; Print with format string used in this solution.</p>
+
+</li>
+<li><p>foreach(0 .. 50) / for (0 .. 50) (Perl5/Perl6) Loop over values from 1 to 50 in Perl5 and Perl6.</p>
+
+</li>
+<li><p>@result = map { ... } (0 .. 50) Loop over values from 1 to 50 with map function.</p>
+
+</li>
+<li><p>my $number = 0644; Assignment of octal number.</p>
+
+</li>
+<li><p>my $octal = oct(644); Convert scalar to octal number.</p>
+
+</li>
+<li><p>(s)printf(&quot;0%o %d&quot;, $number, $number); Print number as octal and decimal.</p>
+
+</li>
+</ul>
+
+<h2> Download and References </h2>
+<b>Download File:</b><a href="ch-1.pl" download> Perl5 Solution PWC #42 Task #1 ch-1.pl</a><br>
+<b>Download File:</b><a href="ch-1.p6" download> Perl6 Solution PWC #42 Task #1 ch-1.p6</a><br>
+<b>Download File:</b><a href="ch-1.py" download> Python Solution PWC #42 Task #1 ch-1.py</a><br>
+<br>
+
+<h1 id="SYNOPSIS">SYNOPSIS</h1>
+
+<pre><code> # ./ch-1.pl                    - Program execution
+ # ./ch-1.p6                    - Program execution
+ # perldoc ch-1.pod             - POD</code></pre>
+
+<h1 id="Definition-Task-1:-Octal-Number-System">Definition Task #1: Octal Number System</h1>
+
+<p>Write a script to print decimal number 0 to 50 in Octal Number System.</p>
+
+<pre><code> For example:
+ Decimal 0 = Octal 0
+ Decimal 1 = Octal 1
+ Decimal 2 = Octal 2
+ Decimal 3 = Octal 3
+ Decimal 4 = Octal 4
+ Decimal 5 = Octal 5
+ Decimal 6 = Octal 6
+ Decimal 7 = Octal 7
+ Decimal 8 = Octal 10</code></pre>
+
+<p>and so on.</p>
+
+<h1 id="Sourcecode-for-Perl5-and-Perl6">Sourcecode for Perl5 and Perl6</h1>
+
+<p>Most important difference between Perl5 and Perl6 in this code is the loop statement <code>foreach(1 .. 50)</code> in Perl5 and <code>for (1 .. 50)</code> in Perl6. Not only that foreach becomes for, but also the important blank behind the <b>for</b> keyword.</p>
+
+<p>The <code>printf() / sprintf()</code> calls are the same. the <code>map {}, (1 .. 50)</code> is different in the comma behind the block in the Perl6 part.</p>
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Perl5 </div>
+  1 <span class="synPreProc">#!/usr/bin/perl</span>
+  2 
+  3 <span class="synStatement">use strict</span>;
+  4 <span class="synStatement">use warnings</span>;
+  5 
+  6 <span class="synStatement">print</span> <span class="synConstant">&quot;ch-1.pl (Version 1.0) PWC #42 Task #1: Octal Numbers</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>;
+  7 
+  8 <span class="synComment"># Version 1: foreach loop with printf</span>
+  9 <span class="synStatement">foreach</span> (<span class="synConstant">0</span> .. <span class="synConstant">50</span>) { 
+ 10 	<span class="synStatement">printf</span>(<span class="synConstant">&quot;Decimal: %d - Octal: %o</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>,<span class="synIdentifier">$_</span>,<span class="synIdentifier">$_</span>); 
+ 11 }
+ 12 
+ 13 <span class="synComment"># Version 2: map with sprintf</span>
+ 14 <span class="synStatement">print</span> <span class="synStatement">my</span> <span class="synIdentifier">@res</span> = <span class="synStatement">map {</span> <span class="synStatement">sprintf</span>(<span class="synConstant">&quot;Dec %d - Oct %o</span><span class="synSpecial">\n</span><span class="synConstant">&quot;</span>,<span class="synIdentifier">$_</span>,<span class="synIdentifier">$_</span>) <span class="synStatement">}</span> (<span class="synConstant">0</span> .. <span class="synConstant">50</span>);
+</pre>
+</td><td class=code>
+<pre class=code><div class=t> Perl6 </div>
+  1 <span class="synComment">#!/home/chuck/rakudo/bin/perl6</span>
+  2 
+  3 <span class="synPreProc">use</span> strict<span class="synStatement">;</span>
+  4 
+  5 <span class="synIdentifier">print</span> <span class="synSpecial">&quot;</span><span class="synConstant">ch-1.p6 (Version 1.0) PWC #42 Task #1: Octal Numbers</span><span class="synSpecial">\n&quot;</span><span class="synStatement">;</span>
+  6 
+  7 <span class="synComment"># Version 1: foreach loop with printf</span>
+  8 <span class="synStatement">for</span> (<span class="synConstant">0</span> <span class="synStatement">..</span> <span class="synConstant">50</span>) { 
+  9 	<span class="synIdentifier">printf</span>(<span class="synSpecial">&quot;</span><span class="synConstant">Decimal: %d - Octal: %o</span><span class="synSpecial">\n&quot;</span><span class="synStatement">,</span><span class="synIdentifier">$_</span><span class="synStatement">,</span><span class="synIdentifier">$_</span>)<span class="synStatement">;</span> 
+ 10 }
+ 11 
+ 12 <span class="synComment"># Version 2: map with sprintf</span>
+ 13 <span class="synIdentifier">print</span> <span class="synSpecial">my</span> <span class="synIdentifier">@res</span> <span class="synStatement">=</span> <span class="synIdentifier">map</span> { <span class="synIdentifier">sprintf</span>(<span class="synSpecial">&quot;</span><span class="synConstant">Dec %d - Oct %o</span><span class="synSpecial">\n&quot;</span><span class="synStatement">,</span><span class="synIdentifier">$_</span><span class="synStatement">,</span><span class="synIdentifier">$_</span>) }<span class="synStatement">,</span> (<span class="synConstant">0</span> <span class="synStatement">..</span> <span class="synConstant">50</span>)<span class="synStatement">;</span>
+ 14 
+</pre>
+</td></tr></table>
+
+<h1 id="Sourcecode-for-Python">Sourcecode for Python</h1>
+
+<p>In Python I tried to implement the loop and the map way I did in Perl. So below you can see these trials. The <code>for</code> loop is very easy and similar. The <code>map()</code> way seems to be a little bit more complicated than in Perl.</p>
+
+<table class=code><tr><td class=code>
+<pre class=code><div class=t> Python </div>
+  1 <span class="synComment">#!/usr/bin/python</span>
+  2 
+  3 <span class="synPreProc">import</span> array <span class="synStatement">as</span> arr
+  4 
+  5 <span class="synIdentifier">print</span> <span class="synConstant">&quot;ch-1.py (Version 1.0) PWC #42 Task #1: Octal numbers.&quot;</span>
+  6 
+  7 <span class="synStatement">for</span> i <span class="synStatement">in</span> <span class="synIdentifier">range</span>(<span class="synConstant">0</span>,<span class="synConstant">50</span>):
+  8 	<span class="synIdentifier">print</span> <span class="synConstant">&quot;Decimal: &quot;</span>, i, <span class="synConstant">&quot; - Octal: &quot;</span>, <span class="synIdentifier">oct</span>(i)
+  9 
+ 10 
+ 11 <span class="synStatement">def</span> <span class="synIdentifier">print_string</span>(n): 
+ 12 	buf = <span class="synConstant">&quot;Decimal: %d, Octal: %o&quot;</span> % (n, n)
+ 13 	<span class="synStatement">return</span> buf
+ 14   
+ 15 a = <span class="synIdentifier">list</span>(<span class="synIdentifier">range</span>(<span class="synConstant">0</span>,<span class="synConstant">50</span>))
+ 16 x = <span class="synIdentifier">map</span>(print_string, a) 
+ 17 <span class="synComment"># print(list(x)) </span>
+ 18 <span class="synStatement">for</span> e <span class="synStatement">in</span> x: <span class="synIdentifier">print</span> e
+ 19
+</pre>
+</td></tr></table>
+
+<h1 id="AUTHOR">AUTHOR</h1>
+
+<p>Chuck</p>
+
+<table border="0" width="100%" cellspacing="0" cellpadding="3">
+<tr><td class="_podblock_" valign="middle">
+<big><strong><span class="_podblock_">&nbsp;Perl Weekly Challenge #42 Task #1, Octal Numbers</span></strong></big>
+</td></tr>
+</table>
+
+</body>
+
+</html>
+
+

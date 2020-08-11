@@ -1,0 +1,33 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $limit = 50);
+
+for 1 .. $limit -> $current
+{
+  say "$current: with divisors: { divisors($current) }";
+}
+
+sub divisors (Int $number is copy)
+{
+  return (1) if $number == 1;
+  return ($number) if $number.is-prime;
+
+  my @divisors;
+
+  for 2 .. ($number -1) -> $candidate
+  {
+    next unless $candidate.is-prime;
+  
+    while ($number %% $candidate)
+    {
+      @divisors.push: $candidate;
+      $number div= $candidate;
+    }
+    if $number.is-prime
+    {
+      @divisors.push: $number;
+      last;
+    }
+  }
+  return @divisors;
+}

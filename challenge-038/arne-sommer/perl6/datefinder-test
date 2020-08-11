@@ -1,0 +1,39 @@
+#! /usr/bin/env raku
+
+sub wrap ($program, $arg)
+{
+  my $proc = run $program, $arg, :out;
+  return $proc.out.slurp(:close).chomp;
+}
+
+my @programs =
+<
+  ./datefinder-substr
+  ./datefinder-subset
+  ./datefinder-grammar
+  ./datefinder-regex
+>;
+
+my %to-test =
+(
+  '0230120'  => "Not a valid date.",
+  '1230120'  => "2023-01-20", 
+  '1230120s' => "Not a valid date.",
+  '2230120'  => "1923-01-20",
+  '2240229'  => "1924-02-29", 
+  '2230229'  => "Not a valid date.",
+  '111111'   => "Not a valid date.",
+  '111111s'  => "Not a valid date.",
+);
+  
+use Test;
+
+for @programs -> $program
+{
+  for %to-test.keys -> $arg
+  {
+    is(wrap($program, $arg),  %to-test{$arg}, "$program $arg %to-test{$arg}");
+  }
+}
+
+done-testing;

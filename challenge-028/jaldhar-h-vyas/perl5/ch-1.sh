@@ -1,0 +1,1 @@
+perl -E 'say "The file content is ", (-B shift) ? "binary." : "text."'

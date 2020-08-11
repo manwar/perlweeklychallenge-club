@@ -1,0 +1,19 @@
+#! /usr/bin/env perl6
+
+use NCurses;
+
+my $stdscr = initscr() or die "Could not initialize curses";
+
+curs_set(0);
+
+loop
+{
+  print DateTime.now.hh-mm-ss;
+  sleep 1;
+  print "\b \b" x 8;
+}
+
+LEAVE
+{
+  delwin($stdscr) if $stdscr;
+}

@@ -1,0 +1,15 @@
+#! /usr/bin/env raku
+
+my $data = { apple => 3, cherry => 2, banana => 1 };
+
+generate_bar_graph($data);
+
+sub generate_bar_graph ($data)
+{
+  my $max = %($data).keys>>.chars.max;
+
+  for %($data).kv -> $label, $count
+  {
+    say "{ " " x ($max - $label.chars) }$label | { "#" x 4 * $count }"; 
+  }
+}

@@ -1,0 +1,21 @@
+#! /usr/bin/env raku
+
+use lib "lib";
+
+use Number::Roman::OO;
+
+my $a = Number::Roman::OO.new(12);
+my $b = Number::Roman::OO.new("MCM");
+
+say "{ $a.Str } => { $a.Int }";
+say "{ $b.Str } => { $b.Int }";
+
+my $c = $a.add($b); say "{ $c.Str } => { $c.Int }";
+my $d = $c.add(27); say "{ $d.Str } => { $d.Int }";
+
+my $e = $c + $d;   say "{ $e.Str } => { $e.Int }";
+my $f = $d + 999;  say "{ $f.Str } => { $f.Int }";
+
+say "Something" if $a < $b;
+
+say $a;

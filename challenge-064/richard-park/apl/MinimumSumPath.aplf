@@ -1,0 +1,21 @@
+ MinimumSumPath←{
+⍝ Going from top-left to bottom-right in matrix ⍵
+⍝ travelling in single steps either right or down only
+⍝ find the path which has the minimum sum of values for such a path
+⍝
+⍝ ⍵: Numeric matrix
+⍝ ←: (sum)(path_indices)(path_values)
+     ⎕IO←1
+     dpl←¯1+⍴⍵         ⍝ Directional Path Length: Max steps in each direction
+     pl←+/dpl          ⍝ Path Length: Length of valid paths
+     mpn←2⊥⌽0 1/⍨dpl   ⍝ Max Path Number: Max binary number representing a valid path
+     s←↑(1 0)(0 1)                                 ⍝ Steps (down)(right)
+     paths←{⍵⌿⍨(⊃⌽dpl)=+/⍵}⍉(2⊥⍣¯1⊢)(⌊pl÷2)+⍳mpn   ⍝ Valid paths (0 down, 1 right)
+     pi←1 1+⍤1+⍀⍤2⊢s[1+paths;]                     ⍝ Valid path indices
+     pv←(⊃⍵),⍵[↓pi]                                ⍝ Valid path values
+     sum←⌊/+/pv                                    ⍝ Minimum Sum
+     mspi←(⊢⍳⌊/)+/pv                               ⍝ Minimum Sum Path Index
+     path_indices←1 1⍪mspi⌷pi                      ⍝ Minimum Sum Path Indices
+     path_values←mspi⌷pv                           ⍝ Minimum Sum Path Values
+     (sum)(path_indices)(path_values)
+ }

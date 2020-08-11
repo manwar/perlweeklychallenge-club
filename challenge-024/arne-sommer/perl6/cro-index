@@ -1,0 +1,36 @@
+#! /usr/bin/env perl6
+
+use Cro::HTTP::Router;
+use Cro::HTTP::Server;
+
+sub MAIN (*@files where @files.elems >= 1, :$port = 10000)
+{
+  my %index;
+  for @files -> $file
+  {
+    say "Reading file: $file (start)";
+    die "No such file: $file"    unless $file.IO.e;
+    die "Unreadable file: $file" unless $file.IO.r;
+
+    my @words = (slurp $file).split(/<+[\W] - [\-] + [_] >+/);
+    say "Reading file: $file (finished)";
+
+    @words.map({ %index{$_}.{$file} = True });
+  }
+
+  say "Port: $port";
+  
+  my $application = route
+  {
+    get -> 'search', $search
+    {
+      content 'text/plain', "$search: { %index{$search}.keys.join(", ") }\n";
+    }
+  }
+  
+  my Cro::Service $search-app = Cro::HTTP::Server.new: :host<localhost>, :$port, :$application;
+
+  $search-app.start;
+
+  react whenever signal(SIGINT) { $search-app.stop; exit; }
+}

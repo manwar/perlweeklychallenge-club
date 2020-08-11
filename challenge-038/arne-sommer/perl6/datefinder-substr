@@ -1,0 +1,14 @@
+#! /usr/bin/env raku
+
+multi sub MAIN (Str $date where
+  $date.chars == 7 &&
+  $date.substr(0,1) eq '1'|'2' &&
+  try Date.new("{ $date.substr(0,1) eq '1' ?? '20' !! '19' }{ $date.substr(1,2) }-{ $date.substr(3,2) }-{ $date.substr(5,2) }").defined)
+{
+  say "{ $date.substr(0,1) == 1 ?? '20' !! '19' }{ $date.substr(1,2) }-{ $date.substr(3,2) }-{ $date.substr(5,2) }";
+}
+
+multi sub MAIN (Str $invalid)
+{
+  say "Not a valid date.";
+}

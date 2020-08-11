@@ -1,0 +1,7 @@
+ StrobogrammaticNumber←{
+⍝ ←: Numbers between ⍺ and  ⍵ which look the same
+⍝    when rotated 180° e.g. 68089
+     ⎕IO←0
+     n←⍺+⍳1+⍵-⍺
+     n⌿⍨'015__29_86'∘{⍵≡⌽⍺[⍎¨⍵]}¨⍕¨n
+ }

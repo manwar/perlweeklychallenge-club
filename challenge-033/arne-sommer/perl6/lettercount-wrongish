@@ -1,0 +1,9 @@
+#! /usr/bin/env raku
+
+my %result = $*ARGFILES.comb>>.lc.Bag;
+
+for %result.keys.sort -> $key
+{
+  say "$key: %result{$key}";
+}
+

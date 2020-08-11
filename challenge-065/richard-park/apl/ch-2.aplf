@@ -1,0 +1,15 @@
+ PalindromePartition←{
+⍝ For character vector ⍵, print all possible partitions that give palindromes.
+⍝ Return -1 if none found.
+⍝ Partitions should not overlap. For example, for given string “abaab”, the partition “aba” and “baab” would not be valid, since they overlap.
+     ⎕IO←1
+     PPTest←((~' '∊⊢)∧(⌽≡⊢)∧(1<≢))¨   ⍝ No spaces, palindrome, more than 1 char
+     len←≢⍵
+     pvec←1,1↓⍤1⍉2⊥⍣¯1⊢¯1+⍳2*len      ⍝ All partition vectors of length len←≢⍵
+     parts←pvec⊂⍤1⊢⍵                  ⍝ All partition candidates
+     ispal←{⊂⍵/⍨PPTest ⍵}⍤1⊢parts     ⍝ Palindrome partition candidates
+     ispp←{⍵⌿⍨∊0≠⍴¨⍵}∪ispal           ⍝ Remove empty partitions
+     upp←{⍵⌿⍨1=+/⍵∘.(∧/∊)⍵}ispp       ⍝ Remove subset partitions
+     0=⍴upp:¯1                        ⍝ No palindrome partitions
+     upp
+ }

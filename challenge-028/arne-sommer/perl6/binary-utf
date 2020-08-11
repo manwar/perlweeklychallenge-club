@@ -1,0 +1,21 @@
+#! /usr/bin/env perl6
+
+use Data::TextOrBinary;
+
+sub MAIN ($file)
+{
+  if $file.IO.d
+  {
+    say "Directory.";
+  }
+  elsif $file.IO.e
+  {
+    say is-text($file.IO)
+      ?? "Text file."
+      !! "Binary file.";
+  }
+  else
+  {
+    say "File doesn't exist.";
+  }
+}

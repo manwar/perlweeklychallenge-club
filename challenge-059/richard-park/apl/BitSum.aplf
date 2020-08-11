@@ -1,0 +1,8 @@
+ BitSum←{
+⍝ ⍵: List of positive integers
+⍝ ←: Sum of differing bits between binary
+⍝      representations of all unique pairs in ⍵
+     BSP←{+⌿≠⌿⍉2⊥⍣¯1⊢⍺ ⍵}   ⍝ Bit Sum of Pairs
+     bs←+/,∘.BSP⍨⍵          ⍝ The bit sum of all pairs in ⍵
+     bs÷2                   ⍝ Outer product ∘.f double counts
+ }

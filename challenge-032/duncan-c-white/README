@@ -1,0 +1,46 @@
+Challenge 1: "Count instances: Create a script that either reads standard
+input or one or more files specified on the command-line. Count the number
+of times and then print a summary, sorted by the count of each entry.
+
+So with the following input in file example.txt
+
+apple
+banana
+apple
+cherry
+cherry
+apple
+
+the script would display something like:
+
+apple     3
+cherry    2
+banana    1
+
+For extra credit, add a -csv option to your script, which would generate:
+
+apple,3
+cherry,2
+banana,1
+
+My notes: Straightforward use of a hash.
+
+
+Challenge 2: "ASCII bar chart: Write a function that takes a hashref
+where the keys are labels and the values are integer or floating point
+values. Generate a bar graph of the data and display it to stdout.
+
+The input could be something like:
+
+$data = { apple => 3, cherry => 2, banana => 1 };
+generate_bar_graph($data);
+
+And would then generate something like this:
+
+ apple | ############
+cherry | ########
+banana | ####
+
+If you fancy then please try this as well: (a) the function could let you specify whether the chart should be ordered by (1) the labels, or (2) the values.
+
+My notes: easy, especially using a histogram module I wrote recently.
