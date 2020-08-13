@@ -32,7 +32,6 @@ sub leastneigh {
 
     }
     return [@smallkids];
-    #return [0, 7, 0, 3, 3];
 }
 
 print join " ", @{ leastneigh([@A]) };
