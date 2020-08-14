@@ -7,6 +7,9 @@
 #    left of each corresponding index. 
 #    If none found then use 0.
 # Usage: ch-2.pl @A
+# for input: (2, 2, 2, 3, 2, 4), should it be (0, 0, 0, 2, 0, 2) or (0, 2, 2, 2, 2, 2)...?
+# Or, the task statement should be modified as: ... smallest and smaller element to the left of ...
+
 
 use strict;
 use warnings;
