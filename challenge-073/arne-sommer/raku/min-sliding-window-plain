@@ -1,0 +1,5 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $S where * >= 1, *@A);
+
+say "(", (0 .. @A.elems - $S).map({ @A[$_ .. $_ + $S -1].min }).join(", "), ")";
