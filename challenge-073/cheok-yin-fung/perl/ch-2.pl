@@ -8,12 +8,15 @@
 #    If none found then use 0.
 # Usage: ch-2.pl @A
 # for input: (2, 2, 2, 3, 2, 4), should it be (0, 0, 0, 2, 0, 2) or (0, 2, 2, 2, 2, 2)...?
-# Or, the task statement should be modified as: ... smallest and smaller element to the left of ...
+# I choose the former here.
 
+# Or, the task statement should be clarified as: 
+# ... smallest element to the left of ..., while that element is smaller than the indexed number
+# (verbose...)
 
 use strict;
 use warnings;
-#use Test::More tests => 5;
+#use Test::More tests => 6;
 
 my @A;
 
@@ -29,16 +32,18 @@ sub leastneigh {
             push @smallkids, 0;
             $youngest = $num;
         } 
-        else { 
+        elsif ($num > $youngest) { # $num > $youngest 
             push @smallkids, $youngest;
+        } else { # $num == $youngest
+            push @smallkids, 0;
         }
-
     }
     return [@smallkids];
 }
 
 print join " ", @{ leastneigh([@A]) };
 print "\n";
+
 
 =pod
 is_deeply( leastneigh([7, 8, 3, 12, 10]), 
