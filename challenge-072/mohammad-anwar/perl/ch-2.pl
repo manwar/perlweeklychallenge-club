@@ -15,7 +15,7 @@ my $F = $ARGV[0];
 my $A = $ARGV[1];
 my $B = $ARGV[2];
 
-print lines_range($F, $A, $B), "\n";
+lines_range($F, $A, $B);
 
 #
 #
@@ -33,5 +33,5 @@ sub lines_range {
     my @lines = <$F>;
     close($F);
 
-    print $lines[$_] for $A-1..$B-1;
+    print $lines[$_] for --$a..--$b;
 }
