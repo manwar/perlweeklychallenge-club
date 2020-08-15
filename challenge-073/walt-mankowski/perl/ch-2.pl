@@ -33,9 +33,9 @@ my @A = @ARGV;
 my @output = (0);
 my $min = $A[0];
 
-for my $i (1..$#A) {
-    push @output, $min < $A[$i] ? $min : 0;
-    $min = $A[$i] if $A[$i] < $min;
+for my $x (@A[1..$#A]) {
+    push @output, $min < $x ? $min : 0;
+    $min = $x if $x < $min;
 }
 
 say "@output";
