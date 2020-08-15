@@ -3,7 +3,6 @@ use strict;
 use warnings;
 use feature qw(:5.32);
 use experimental qw(signatures);
-use List::Util qw(min);
 
 # TASK #2 › Smallest Neighbour
 # Submitted by: Mohammad S Anwar
@@ -32,9 +31,11 @@ use List::Util qw(min);
 
 my @A = @ARGV;
 my @output = (0);
+my $min = $A[0];
+
 for my $i (1..$#A) {
-    my $min = min @A[0..$i-1];
     push @output, $min < $A[$i] ? $min : 0;
+    $min = $A[$i] if $A[$i] < $min;
 }
 
 say "@output";
