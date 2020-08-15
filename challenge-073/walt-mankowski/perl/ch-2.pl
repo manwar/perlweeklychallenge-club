@@ -31,14 +31,10 @@ use List::Util qw(min);
 # For index 2, the smallest number to the left of $A[2] as compare to 5, in (4, 6) is 4, so we put 4 again.
 
 my @A = @ARGV;
-my @output;
-for my $i (0..$#A) {
-    if ($i == 0) {
-        push @output, 0;
-    } else {
-        my $min = min @A[0..$i-1];
-        push @output, $min < $A[$i] ? $min : 0;
-    }
+my @output = (0);
+for my $i (1..$#A) {
+    my $min = min @A[0..$i-1];
+    push @output, $min < $A[$i] ? $min : 0;
 }
 
 say "@output";
