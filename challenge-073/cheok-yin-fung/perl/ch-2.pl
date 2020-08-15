@@ -32,7 +32,7 @@ sub leastneigh {
             push @smallkids, 0;
             $youngest = $num;
         } 
-        elsif ($num > $youngest) { # $num > $youngest 
+        elsif ($num > $youngest) {
             push @smallkids, $youngest;
         } else { # $num == $youngest
             push @smallkids, 0;
@@ -55,5 +55,5 @@ is_deeply( leastneigh([ 10, 47, 16, 50, 29,  21, 18, 20, 6, 30,  11]),
 is_deeply( leastneigh([2, 3, 5, 7, 11, 13, 17]), 
     [0, 2, 2, 2, 2, 2, 2], "ascending sequences");
 is_deeply( leastneigh([reverse (1..4)]),
-    [ 0 ,0,0,0], "descending first 4 positive integers");
+    [0,0,0,0], "descending first 4 positive integers");
 =cut
