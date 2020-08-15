@@ -30,7 +30,7 @@ sub trailing_zeroes {
     $n *= $_ for 1..$n-1;
 
     # count trailing zeroes
-    $n =~ m/[1-9]?([0]+)/;
+    $n =~ m/[1-9]?([0]+)$/;
 
     return (defined $1)?(length($1)):(0);
 }
