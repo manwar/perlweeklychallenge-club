@@ -1,20 +1,7 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             0,
             12,
@@ -46,11 +33,9 @@
             15,
             12,
             136
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -82,7 +67,8 @@
             4,
             0,
             141
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -120,11 +106,23 @@
          ]
       }
    ],
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-08-15 19:10:38 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-08-15 19:21:29 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -160,8 +158,10 @@
          "Laurent Rosenfeld"
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    }
 }
