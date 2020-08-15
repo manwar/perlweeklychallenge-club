@@ -25,9 +25,9 @@ sub lines_range {
     my ($file, $a, $b) = @_;
 
     die "ERROR: Invalid file [$file].\n"     unless (-e $file && -f _ && -r _ && -T _);
-    die "ERROR: Missing A.\n"                unless defined $A;
-    die "ERROR: Missing B.\n"                unless defined $B;
-    die "ERROR: Invalid range [$A \- $B].\n" unless ($A <= $B);
+    die "ERROR: Missing A.\n"                unless defined $a;
+    die "ERROR: Missing B.\n"                unless defined $b;
+    die "ERROR: Invalid range [$a \- $b].\n" unless ($a <= $b);
 
     open(my $F, "<", $file) || die "ERROR: Failed to open [$!]\n";
     my @lines = <$F>;
