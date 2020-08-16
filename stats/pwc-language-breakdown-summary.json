@@ -1,12 +1,12 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-08-16 16:25:10 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
       "min" : 0,
@@ -14,11 +14,24 @@
          "text" : null
       }
    },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "series" : [
       {
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -26,38 +39,25 @@
             ],
             [
                "Perl",
-               3035
+               3037
             ],
             [
                "Raku",
                1979
             ]
          ],
-         "name" : "Contributions",
          "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "align" : "right",
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "rotation" : -90,
             "style" : {
                "fontSize" : "13px",
                "fontFamily" : "Verdana, sans-serif"
-            }
+            },
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "enabled" : "true",
+            "align" : "right",
+            "rotation" : -90,
+            "format" : "{point.y:.0f}"
          }
       }
-   ],
-   "subtitle" : {
-      "text" : "Last updated at 2020-08-16 16:10:58 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   }
+   ]
 }
