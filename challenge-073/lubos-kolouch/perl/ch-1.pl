@@ -25,7 +25,7 @@ use strict;
 use warnings;
 use List::Util qw/min/;
 
-sub compare_versions {
+sub min_window {
    my ($a_ref, $s) = @_;
 
    my @return_array;
@@ -48,7 +48,7 @@ sub compare_versions {
 
 use Test::More;
 
-is_deeply(\compare_versions([1, 5, 0, 2, 9, 3, 7, 6, 4, 8],3),\[0,0,0,2,3,3,4]);
-is_deeply(\compare_versions([1, 2, 3],4),\[1]);
+is_deeply(\min_window([1, 5, 0, 2, 9, 3, 7, 6, 4, 8],3),\[0,0,0,2,3,3,4]);
+is_deeply(\min_window([1, 2, 3],4),\[1]);
 
 done_testing;
