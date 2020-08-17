@@ -23,9 +23,8 @@ sub MAIN( Str $S where { $S.chars > 2 } ) {
         %counting{ $_ }++ for $S.substr( 0 .. $index ).comb( '', :skip-empty );
         my $fnr = $S.substr( 0 .. $index )
                     .comb( '', :skip-empty )
-                    .reverse
-                    .grep( { %counting{ $_ }:exists && %counting{ $_ } == 1 } )
-                    .first // '#';
+                    .first( { %counting{ $_ }:exists && %counting{ $_ } == 1 } )
+                     // '#';
 
         @result.push: $fnr;
     }
