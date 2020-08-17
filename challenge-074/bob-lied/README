@@ -1,0 +1,65 @@
+Solutions to weekly challenge 72 by Bob Lied.
+
+https://perlweeklychallenge.org/blog/perl-weekly-challenge-072/
+
+This week, I would like to add two personal elements to the problem:
+(1) create a template for perl-vim that sets up these weekly challenges
+(includes Test::More, a skeleton for checking ARGV, and whatever else
+is quickly becoming a pattern; and (2) use a github issue in the submission
+process, just to learn more about using git and github.
+
+* TASK #1 > Trailing Zeroes
+
+** Initial thoughts
+
+Too easy, unless I'm missing something.  The result gets a zero on the end every time
+it's multiplied by 10, and since we're doing factorials, that will happen every time N
+rolls past a multiple of 5.  The answer is int(N/5), I think, but I'll need to convince
+myself completely.
+
+We could make it a little tougher by actually calculating N!, and maybe using Memoize
+as an optimization.  And maybe finding out how high N can be until overflow or waiting time
+make it impractical.
+
+** Post Solution Thoughts
+
+Yep, it was really that easy.  I implemented the factorial using Memoize just
+for fun.  The highest number that didn't roll over to floating point was 20!.
+
+
+** Problem Statement
+
+You are given a positive integer $N (<= 10).
+
+Write a script to print number of trailing zeroes in $N!.
+
+* TASK #2 > Lines Range
+
+** Initial Thoughts
+
+This has come up often enough that I know I've done it in sed and awk; and in
+a pipeline with head and tail.  The flip-flop operator comes to mind, but
+there'll be some experimentation for boundary conditions.  Also some test
+cases for A or B being outside the range of the file or having an empty file.
+
+** Post Solution Thoughts
+
+The hardest part of this turned out to be how to set up tests.  I wanted the
+testing to be self-contained, so I put the test data into __DATA__.  But then
+re-reading that repeatedly for different tests required seeking back to the
+start and also resetting $.  A couple of trips to Google there.
+
+I also wanted to capture the output in a variable and not just print to the
+console.  I knew that a string could be opened as a file handle using a
+reference to the string.  It should have been easy; but I spent a long time
+debugging before I realized that I had typed \&TestResult instead of
+\$TestResult.
+
+
+** Problem Statement
+
+You are given a text file name $file and range $A - $B where $A <= $B.
+
+Write a script to display lines range $A and $B in the given file.
+
+(That's A and B inclusive, from the examples.)
