@@ -1,31 +1,29 @@
 sub MAIN($string) {
     my @fnr-chars = gather {
         for 1..$string.chars -> $i {
-            take fnr($string.substr(0, $i));
+            take fnr($string.substr($i-1, 1));
         }
     }
 
     say @fnr-chars.join;
 }
 
-sub fnr($string) {
+sub fnr($letter) {
     state %seen;
-    state $singles;
-
-    my $letter = $string.substr($string.chars-1, 1);    
+    state $fnr-chars;
 
     %seen{$letter}++;
 
     given %seen{$letter} {
         when 1 {
-            $singles ~= $letter;
+            $fnr-chars ~= $letter;
             return $letter;
         }
         when 2 {
-            my $idx = $singles.index($letter);
-            $singles = $singles.substr(0, $idx) ~ $singles.substr($idx+1);
+            my $idx = $fnr-chars.index($letter);
+            $fnr-chars = $fnr-chars.substr(0, $idx) ~ $fnr-chars.substr($idx+1);
         }
     }
 
-    return $singles.substr($singles.chars-1, 1) // "#";
+    return $fnr-chars.substr($fnr-chars.chars-1, 1) // "#";
 }
