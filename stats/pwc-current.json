@@ -1,113 +1,34 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "Dave Jacoby",
-               "drilldown" : "Dave Jacoby"
-            },
-            {
-               "y" : 5,
-               "name" : "Javier Luque",
-               "drilldown" : "Javier Luque"
-            },
-            {
-               "y" : 4,
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari"
-            },
-            {
-               "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "drilldown" : "Mohammad S Anwar",
-               "name" : "Mohammad S Anwar",
-               "y" : 4
-            },
-            {
-               "y" : 2,
-               "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke"
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Pavel Kuptsov",
-               "name" : "Pavel Kuptsov"
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 4
-            },
-            {
-               "name" : "Shawn Wagner",
-               "drilldown" : "Shawn Wagner",
-               "y" : 2
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 1
-            },
-            {
-               "y" : 2,
-               "name" : "Steven Wilson",
-               "drilldown" : "Steven Wilson"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 074",
-         "colorByPoint" : 1
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2020-08-18 07:44:23 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "Perl Weekly Challenge - 074"
    },
    "drilldown" : {
       "series" : [
          {
             "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Dave Jacoby"
          },
          {
-            "id" : "Javier Luque",
-            "name" : "Javier Luque",
+            "name" : "Jaldhar H. Vyas",
             "data" : [
                [
                   "Perl",
@@ -121,10 +42,28 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Jaldhar H. Vyas"
          },
          {
-            "id" : "Luca Ferrari",
+            "id" : "Javier Luque",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Javier Luque"
+         },
+         {
             "name" : "Luca Ferrari",
             "data" : [
                [
@@ -135,17 +74,18 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari"
          },
          {
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "id" : "Mark Anderson"
          },
          {
             "data" : [
@@ -158,18 +98,18 @@
                   2
                ]
             ],
-            "name" : "Mohammad S Anwar",
-            "id" : "Mohammad S Anwar"
+            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar"
          },
          {
-            "id" : "Niels van Dijke",
-            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
          },
          {
             "name" : "Pavel Kuptsov",
@@ -182,7 +122,6 @@
             ]
          },
          {
-            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West",
             "data" : [
                [
@@ -193,16 +132,17 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West"
          },
          {
+            "id" : "Shawn Wagner",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Shawn Wagner",
             "name" : "Shawn Wagner"
          },
          {
@@ -212,22 +152,105 @@
                   1
                ]
             ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
+            "name" : "Steven Wilson",
+            "id" : "Steven Wilson",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Steven Wilson",
-            "name" : "Steven Wilson"
+            ]
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 074"
-   }
+   "subtitle" : {
+      "text" : "[Champions: 12] Last updated at 2020-08-18 07:48:53 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 074",
+         "data" : [
+            {
+               "name" : "Dave Jacoby",
+               "y" : 2,
+               "drilldown" : "Dave Jacoby"
+            },
+            {
+               "y" : 5,
+               "drilldown" : "Jaldhar H. Vyas",
+               "name" : "Jaldhar H. Vyas"
+            },
+            {
+               "drilldown" : "Javier Luque",
+               "y" : 5,
+               "name" : "Javier Luque"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
+               "y" : 4
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "y" : 2,
+               "name" : "Mark Anderson"
+            },
+            {
+               "name" : "Mohammad S Anwar",
+               "drilldown" : "Mohammad S Anwar",
+               "y" : 4
+            },
+            {
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke",
+               "y" : 2
+            },
+            {
+               "name" : "Pavel Kuptsov",
+               "drilldown" : "Pavel Kuptsov",
+               "y" : 1
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
+            },
+            {
+               "name" : "Shawn Wagner",
+               "drilldown" : "Shawn Wagner",
+               "y" : 2
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            },
+            {
+               "name" : "Steven Wilson",
+               "drilldown" : "Steven Wilson",
+               "y" : 2
+            }
+         ]
+      }
+   ]
 }
