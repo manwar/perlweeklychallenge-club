@@ -27,10 +27,8 @@ int main(int argc, char *argv[]) {
         // now the FNR is either the last element of nr, or #
         if (nr.empty()) 
             out[i] = '#';
-        else {
-            auto p = *(nr.crbegin());
-            out[i] = p;
-        }
+        else
+            out[i] = *(nr.crbegin());
     }
     cout << out << endl;                
 }
