@@ -2,6 +2,7 @@
 #include <iostream>
 #include <set>
 #include <list>
+#include <algorithm>
 
 using namespace std;
 
@@ -21,13 +22,10 @@ int main(int argc, char *argv[]) {
             nr.push_back(c);
         } else {
             // remove c from nr
-            for (auto x = nr.begin(); x != nr.end(); x++)
-                if (*x == c) {
-                    nr.erase(x);
-                    break;
-                }
+            nr.erase(find(nr.cbegin(), nr.cend(), c));
         }
 
+        // now the FNR is either the last element of nr, or #
         if (nr.empty()) 
             out[i] = '#';
         else {
