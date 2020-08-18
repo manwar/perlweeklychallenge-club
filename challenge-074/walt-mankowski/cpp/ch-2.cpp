@@ -20,10 +20,9 @@ int main(int argc, char *argv[]) {
         if (seen.find(c) == seen.end()) {
             seen.insert(c);
             nr.push_back(c);
-        } else {
+        } else
             // remove c from nr
             nr.erase(find(nr.cbegin(), nr.cend(), c));
-        }
 
         // now the FNR is either the last element of nr, or #
         if (nr.empty()) 
