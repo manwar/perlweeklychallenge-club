@@ -26,7 +26,7 @@ main = do
   arg <- getRecord "Challenge #074 - Task #2"
   putStrLn ( "Input: " ++ arg :: [Char] )
   putStr "Output: "
-  print $ findLNR arg
+  putStrLn $ findLNR arg
 
 
 {-
