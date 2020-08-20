@@ -17,10 +17,19 @@
 # Pass 2: "ab"    the FNR is 'b'
 # Pass 3: "aba"   the FNR is 'b'
 # Pass 4: "abab"  the FNR is '#' (all chars repeat)
-# Pass 5: "ababc" then FNR is 'c'
+# Pass 5: "ababc" the FNR is 'c'
+#
+# Note that this example is actually taking the right-most character as
+# the first non-repeater, which is counter-intuitive to the specification.
 
 use strict;
 use warnings;
 
 use lib "lib";
+use FNR qw(firstNonRepeat);
 
+my $S = shift;
+
+die "Need a string" unless $S;
+
+say firstNonRepeat($S);

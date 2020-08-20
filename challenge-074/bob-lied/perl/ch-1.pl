@@ -9,11 +9,17 @@
 #=============================================================================
 # You are given an array of integers of size $N.
 # Write a script to find the majority element.  If none found, then print -1.
-# Majority element in the list is th one that appears more than floor($N/2).
+# Majority element in the list is the one that appears more than floor($N/2).
 
 use strict;
 use warnings;
+use feature qw(say);
 
 use lib "lib";
 use MajorityElement;
 
+my @ARR = @ARGV;
+
+die "Give a list of integers" unless @ARR;
+
+say majorityElement(@ARR);

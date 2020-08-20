@@ -8,7 +8,13 @@ use warnings;
 
 use Test2::V0;
 
-use lib "../lib";
 use FNR;
+
+is( firstNonRepeat('ababc'),
+                   'abb#c',    "Example 1");
+is( firstNonRepeat('xyzzyx'),
+                   'xyzyx#', "Example 2 as given");
+#is( firstNonRepeat('xyzzyx'),
+#                   'xxxxx#', "Example 2 as specified");
 
 done_testing();

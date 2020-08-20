@@ -17,21 +17,18 @@ our @ISA = qw(Exporter);
 our @EXPORT = qw(majorityElement);
 our @EXPORT_OK = qw();
 
-sub new
-{
-    my $class = shift;
-    my $class = ref($class) || $class;
-    my $self = {
-        _name1 = $_[0],
-    };
-    bless $self, $class;
-    return $self;
-}
-
 sub majorityElement
 {
     my (@arr) = @_;
     my $result = -1;
+    my %presence;
+    my $majorityThreshold = int(scalar(@arr)/2);
+
+    # Count the repetitions.
+    $presence{$_}++ foreach @arr;
+
+    # Select the one that passes the threshold.  There can only be one or none.
+    $result = (grep { $presence{$_} > $majorityThreshold } keys %presence)[0] // -1;
 
     return $result;
 }
