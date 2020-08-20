@@ -8,10 +8,10 @@ use v6.d;
 role fnr {
     method sayLNR ( Str:D $str = self.Str ) {
         my @chars = $str.comb;
-        my @candi = @chars.unique;
 
         for 1 .. @chars.elems -> $last-index {
             my $sub-chars = $str.substr( 0, $last-index );
+            my @candi = @sub-chars.unique;
             my $nr-pos =  -1;
             my $nr-char = '#';
             for @candi -> $c {

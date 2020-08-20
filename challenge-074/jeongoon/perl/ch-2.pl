@@ -11,10 +11,10 @@ sub uniq_sorted {
 
 sub printLNR ($) {
     my $str = shift;
-    my @candi = uniq_sorted( split '', $str );
 
     for my $last_idx ( 1 .. length $str ) {
         my $sub_chars = substr $str, 0, $last_idx;
+        my @candi = uniq_sorted( split '', $sub_chars );
 
         my $nr_pos = -1;
         my $nr_chr = '#';
