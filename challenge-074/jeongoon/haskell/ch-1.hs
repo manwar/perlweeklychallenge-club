@@ -70,7 +70,7 @@ main = do
           solution = getMajor (snd ex)
         in do
         -- XXX: even though I didn't intend to make majority number
-        --      randon list could contain a majority number.
+        --      random list still could contain a majority number
         putStr $ "Input: " ++
           (if majorInfoExist then "Major = " ++ show majorNum
            else "*Maybe* No Major" ) ++ ": "
