@@ -1,6 +1,6 @@
 #include <string.h>
 #include <iostream>
-#include <set>
+#include <map>
 #include <list>
 #include <algorithm>
 
@@ -8,7 +8,7 @@ using namespace std;
 
 int main(int argc, char *argv[]) {
     const char *s = argv[1];
-    set<char> seen;
+    map<char,list<char>::const_iterator> seen;
     list<char> nr;
     char *out = new char[strlen(s)+1];
     out[strlen(s)] = '\0';
@@ -18,17 +18,17 @@ int main(int argc, char *argv[]) {
         
         // have we seen c before?
         if (seen.find(c) == seen.end()) {
-            seen.insert(c);
-            nr.push_back(c);
+            nr.push_front(c);
+            seen[c] = nr.cbegin();
         } else
             // remove c from nr
-            nr.erase(find(nr.cbegin(), nr.cend(), c));
+            nr.erase(seen[c]);
 
         // now the FNR is either the last element of nr, or #
         if (nr.empty()) 
             out[i] = '#';
         else
-            out[i] = *(nr.crbegin());
+            out[i] = *(nr.cbegin());
     }
     cout << out << endl;                
 }
