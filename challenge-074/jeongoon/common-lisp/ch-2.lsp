@@ -1,8 +1,8 @@
 ;; 1. sort and delete-duplicates the copy of sequence
 ;; 2. while traversing sublist of original data from the beginning
 ;     a. reverse the sublist
-;;    b. find each chacter from the original datat twice (a)
-;;    c. if the chacter found only once (NR :Not Repeating)
+;;    b. find each character from the original data twice (a)
+;;    c. if the character found only once (NR :Not Repeating)
 ;;       make the pair of (character, length of right hand side result)
 ;;    d. if the length is less than previous one, replace orginal data,
 ;;       else leave it
