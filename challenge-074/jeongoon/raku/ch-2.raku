@@ -8,7 +8,7 @@ use v6.d;
 role fnr {
     method sayLNR ( Str:D $str = self.Str ) {
         my @chars = $str.comb;
-        my @candi = @chars.unique.sort;
+        my @candi = @chars.unique;
 
         for 1 .. @chars.elems -> $last-index {
             my $sub-chars = $str.substr( 0, $last-index );
@@ -17,7 +17,7 @@ role fnr {
             for @candi -> $c {
                 given  $sub-chars.indices( $c ) {
                     .elems == 1 or next;
-                    $nr-pos < .tail and ( $nr-char = $c, $nr-pos  = .tail );
+                    $nr-pos < .tail and ( $nr-char = $c, $nr-pos = .tail );
                 }
             }
             print $nr-char;

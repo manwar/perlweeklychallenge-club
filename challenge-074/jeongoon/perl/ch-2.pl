@@ -6,7 +6,7 @@ use strict; use warnings;
 
 sub uniq_sorted {
     my %mem = ();
-    map { exists $mem{$_} ? () : ($mem{$_} = $_) } sort @_
+    map { exists $mem{$_} ? () : ($mem{$_} = $_) } @_
 }
 
 sub printLNR ($) {
