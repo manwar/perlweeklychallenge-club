@@ -1,65 +1,53 @@
-Solutions to weekly challenge 72 by Bob Lied.
+Solutions to weekly challenge 73 by Bob Lied.
 
-https://perlweeklychallenge.org/blog/perl-weekly-challenge-072/
+https://perlweeklychallenge.org/blog/perl-weekly-challenge-073/
 
-This week, I would like to add two personal elements to the problem:
-(1) create a template for perl-vim that sets up these weekly challenges
-(includes Test::More, a skeleton for checking ARGV, and whatever else
-is quickly becoming a pattern; and (2) use a github issue in the submission
-process, just to learn more about using git and github.
 
-* TASK #1 > Trailing Zeroes
+* TASK #1 > 
 
 ** Initial thoughts
 
-Too easy, unless I'm missing something.  The result gets a zero on the end every time
-it's multiplied by 10, and since we're doing factorials, that will happen every time N
-rolls past a multiple of 5.  The answer is int(N/5), I think, but I'll need to convince
-myself completely.
-
-We could make it a little tougher by actually calculating N!, and maybe using Memoize
-as an optimization.  And maybe finding out how high N can be until overflow or waiting time
-make it impractical.
+A window of an array implies slices.  Minimum of an array implies List::Util::min.
 
 ** Post Solution Thoughts
 
-Yep, it was really that easy.  I implemented the factorial using Memoize just
-for fun.  The highest number that didn't roll over to floating point was 20!.
+Repeatedly doing the scan for minimum is a lot of extra work.  The cost of
+doing an array of 50 with a window of 3 is minimal, but what about an array
+of 100000 with a window of 200?  So much extra work.  I did a second solution
+with indices that didn't actually take slices.  It's also not necessary to
+find the minimum each time:  as we slide the window right, if it's less than
+the minimum, it becomes the new minimum for as long as it's in the window.
+The only time we need to scan for minimum is when the window slides the
+minimum off the left edge.
 
+I used the task as an excuse to build a slightly more structured program,
+with the solution in a module and a separate test file.
 
 ** Problem Statement
+ # You are given an array of integers @A and sliding window size $S.
+ # Write a script to create an array of min from each sliding window.
 
-You are given a positive integer $N (<= 10).
 
-Write a script to print number of trailing zeroes in $N!.
-
-* TASK #2 > Lines Range
+* TASK #2 > Smallest Neighbor
 
 ** Initial Thoughts
 
-This has come up often enough that I know I've done it in sed and awk; and in
-a pipeline with head and tail.  The flip-flop operator comes to mind, but
-there'll be some experimentation for boundary conditions.  Also some test
-cases for A or B being outside the range of the file or having an empty file.
+There's probably a clever solution involving a reduce() operation, but the
+direct solution of scanning and keeping track of the minimum is probably
+going to be the way to go.
 
 ** Post Solution Thoughts
 
-The hardest part of this turned out to be how to set up tests.  I wanted the
-testing to be self-contained, so I put the test data into __DATA__.  But then
-re-reading that repeatedly for different tests required seeking back to the
-start and also resetting $.  A couple of trips to Google there.
-
-I also wanted to capture the output in a variable and not just print to the
-console.  I knew that a string could be opened as a file handle using a
-reference to the string.  It should have been easy; but I spent a long time
-debugging before I realized that I had typed \&TestResult instead of
-\$TestResult.
+The minimum keeps getting smaller as we move from left to right.  Test sets
+with a zero in the data create ambiguous answers, but there's nothing in the
+specification that says we have to do anything about that.  Negative numbers
+work just fine.
 
 
 ** Problem Statement
-
-You are given a text file name $file and range $A - $B where $A <= $B.
-
-Write a script to display lines range $A and $B in the given file.
-
-(That's A and B inclusive, from the examples.)
+# You are given an array of integers @A.
+# Write a script to create an array that represents the smallest element to the
+# left of each corresponding index.  If none found, then use 0.
+# Example 1:
+# Input: @A = (7,8,3,12,10)
+# Output:     (0,7,0, 3, 3)

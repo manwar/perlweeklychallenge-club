@@ -17,10 +17,10 @@ sub MAIN(Str :$file where *.IO.f,
     lines-range($file, $A, $B).join("\n").say;
 }
 
-sub lines-range(Str $file, Int $A, Int $B) {
+sub lines-range(Str $file, Int $A is copy, Int $B is copy) {
 
     my @lines = Empty;
-    for $A-1 .. $B-1 -> $i {
+    for --$A .. --$B -> $i {
         @lines.push: $file.IO.lines[$i];
     }
 
