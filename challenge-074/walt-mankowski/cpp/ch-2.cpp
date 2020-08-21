@@ -1,4 +1,4 @@
-#include <string.h>
+#include <string>
 #include <iostream>
 #include <map>
 #include <list>
@@ -7,13 +7,12 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-    const char *s = argv[1];
+    const string s(argv[1]);
+    string out = string(s.length(), ' ');
     map<char,list<char>::const_iterator> seen;
     list<char> nr;
-    char *out = new char[strlen(s)+1];
-    out[strlen(s)] = '\0';
 
-    for (size_t i = 0; i < strlen(s); i++) {
+    for (size_t i = 0; i < s.length(); i++) {
         const char c = s[i];
         
         // have we seen c before?
