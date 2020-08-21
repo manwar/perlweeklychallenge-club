@@ -45,11 +45,14 @@ for my $c (@c) {
         push @nr, $c;
     } else {
         # remove $c from @nr
-        for my $i (0..$#nr) {
-            if ($nr[$i] eq $c) {
-                splice @nr, $i, 1;
-                last;
+        if ($seen{$c}) {
+            for my $i (0..$#nr) {
+                if ($nr[$i] eq $c) {
+                    splice @nr, $i, 1;
+                    last;
+                }
             }
+            $seen{$c} = 0;
         }
     }
 
