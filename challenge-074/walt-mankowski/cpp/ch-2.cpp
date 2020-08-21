@@ -20,9 +20,13 @@ int main(int argc, char *argv[]) {
         if (seen.find(c) == seen.end()) {
             nr.push_front(c);
             seen[c] = nr.cbegin();
-        } else
+        } else {
             // remove c from nr
-            nr.erase(seen[c]);
+            if (seen[c] != nr.end()) {
+                nr.erase(seen[c]);
+                seen[c] = nr.end();
+            }
+        }
 
         // now the FNR is either the last element of nr, or #
         if (nr.empty()) 
