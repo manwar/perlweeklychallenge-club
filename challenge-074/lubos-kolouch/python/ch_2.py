@@ -34,10 +34,7 @@ def get_fnr(in_str):
         else:
             fnr_queue.remove(char)
 
-        if fnr_queue:
-            result += fnr_queue[-1]
-        else:
-            result += '#'
+        result += fnr_queue[-1] if fnr_queue else '#'
 
     return result
 
