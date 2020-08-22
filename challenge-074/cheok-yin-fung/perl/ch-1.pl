@@ -16,9 +16,7 @@ sub verify {
     my $m = $_[1];
     my $c = 0;
     for (@array) {
-        if ($m==$_) {
-            $c++;
-        }
+        $c++ if $m==$_;
     }
     return ($c > (scalar @array)/2.0 ? 1 : undef);
 }
@@ -32,11 +30,8 @@ sub bm_majority_vote_alg {
             $m = $_;
             $i++
         }
-        elsif ($m == $_) {
-            $i++;
-        } 
         else {
-            $i--;
+            $m == $_ ? $i++ : $i--;
         }
     }
     
