@@ -22,7 +22,7 @@ sub first_non_repeating
 
 		# since we have a couple of non-repeating characters, we get the first one
 		# (the superposition here helps so that we solve this by a simple eq)
-		my $alternatives = superpos(map { $_->value } @non_repeating);
+		my $alternatives = superpos(@non_repeating);
 		return first { $_ eq $alternatives } @split;
 	}
 

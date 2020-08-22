@@ -10,13 +10,10 @@ sub get_majority
 	my $list = superpos(@_);
 
 	# superpositions have a built in statistics module
-	my $majority = $list->stats->most_probable;
+	# the result of most_probable is actually a new superposition, it can have multiple states
+	my ($state) = $list->stats->most_probable->states->@*;
 
-	# majority is actually a new superposition, it can have multiple states
-	return -1 if $majority->states->@* != 1;
-
-	# we now know that this element is certainly a majority, but does it have a proper weight?
-	my $state = $majority->states->[0];
+	# we now know that this element is certainly most frequent, but does it have proper weight?
 	return $state->weight > 0.5 ? $state->value : -1;
 }
 
