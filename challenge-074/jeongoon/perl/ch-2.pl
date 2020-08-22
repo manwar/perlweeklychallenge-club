@@ -4,17 +4,37 @@
 
 use strict; use warnings;
 
-sub uniq_sorted {
-    my %mem = ();
-    map { exists $mem{$_} ? () : ($mem{$_} = $_) } @_
+sub unique {
+    scalar @_ or return ();
+    $_[0], map { $_[0] ne $_ ? $_: () } @_[1..$#_];
 }
 
-sub printLNR ($) {
+# adapted from my own solution in common-lisp which is a bit lengthy
+sub printLNR {
+    my $str = shift;
+    for my $last_idx ( 1 .. length $str ) {
+        my $sub_chars = substr $str, 0, $last_idx;
+        my @candi = unique( split '', $sub_chars );
+
+        my ( $nr_pos, $nr_chr )  = ( -1, '#' );
+
+        for my $c ( @candi ) {
+            next if ( my $pos1 = index $sub_chars, $c ) == -1;
+            next if ( my $pos2 = index $sub_chars, $c, $pos1 + 1 ) != -1;
+            $nr_pos < $pos1 and ( $nr_pos = $pos1, $nr_chr = $c );
+        }
+        print "$nr_chr";
+    }
+    print $/;
+}
+
+# posted on 20th of Aug
+sub printLNR_by_split ($) {
     my $str = shift;
 
     for my $last_idx ( 1 .. length $str ) {
         my $sub_chars = substr $str, 0, $last_idx;
-        my @candi = uniq_sorted( split '', $sub_chars );
+        my @candi = unique( split '', $sub_chars );
 
         my $nr_pos = -1;
         my $nr_chr = '#';
