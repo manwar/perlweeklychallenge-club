@@ -3,7 +3,7 @@ from sys import argv
 s = argv[1]
 seen = {}
 nr = []
-out = []
+out = ''
 
 for c in s:
     # have we seen c before?
@@ -18,6 +18,6 @@ for c in s:
             seen[c] = False
 
     # now the FNR is either the last element of nr, or #
-    out.append(nr[-1] if nr else '#')
+    out += nr[-1] if nr else '#'
 
-print(''.join(out))
+print(out)
