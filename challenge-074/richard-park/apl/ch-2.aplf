@@ -1,0 +1,9 @@
+ FNRCharacter←{
+     FNR←{
+         fnr←⊃⌽' '~⍨,(⊣(⌿⍨)(1=(≢⊢)))⌸⍵   ⍝ Last non-repeating element
+         ' '≡fnr:'#'                     ⍝ No unique elements
+         fnr
+     }
+     FNR¨(↑∘⍵)¨⍳≢⍵  ⍝ "First" Non-Repeating characters
+                    ⍝ In subsets of ⍵ of length 1 to ≢⍵
+ }
