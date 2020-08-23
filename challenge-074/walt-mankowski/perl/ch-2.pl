@@ -35,7 +35,7 @@ my $s = $ARGV[0];
 my @c = split //, $s;
 my %seen;
 my @nr;
-my @out;
+my $out;
 
 for my $c (@c) {
     # have we seen $c before?
@@ -57,7 +57,7 @@ for my $c (@c) {
     }
 
     # now the FNR is either the last element of @nr, or #
-    push @out, @nr ? $nr[-1] : '#';
+    $out .= @nr ? $nr[-1] : '#';
 }
 
-say join '', @out;
+say $out;
