@@ -2,17 +2,6 @@
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "xAxis" : {
       "categories" : [
          "Creewick",
@@ -47,15 +36,21 @@
          "JJ Merelo"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-08-23 08:43:20 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-08-23 08:47:03 GMT"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             23,
@@ -87,9 +82,11 @@
             6,
             2,
             0
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -121,8 +118,7 @@
             0,
             0,
             1
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -160,8 +156,12 @@
          ]
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
