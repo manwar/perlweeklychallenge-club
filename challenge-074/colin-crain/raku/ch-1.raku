@@ -23,7 +23,9 @@
 #       2020 colin crain
 ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ##
 
-
+sub circumfix:<⎣ ⎦>( Numeric $n ) {
+    $n.floor ;
+}
 
 unit sub MAIN (*@A);
 
@@ -32,7 +34,7 @@ my %count;
 %count{$_}++ for @A;
 
 # is count of first elem count larger than half list size?
-my $max = @A.max({%count{$_}});
-say %count{$max} > (@A.elems/2).Int ?? $max !! -1 ;
+my $max = @A.max:{ %count{$_} };
+say %count{$max} > ⎣@A.elems/2⎦ ?? $max !! -1 ;
 
 
