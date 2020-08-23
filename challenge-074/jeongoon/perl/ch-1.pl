@@ -10,7 +10,7 @@ sub get_major (@) {
     @_ == 1 and return $_[0];
 
     my @sorted  = sort @_;
-    my $halflen = int( .5 * @sorted ); # (halflen)gth
+    my $halflen = int .5 * @sorted;     # (halflen)gth
     my $pnum    = shift @sorted;        # (p)revious (num)ber
     my $pcnt    = 1;                    # (p)revious (c)ou(nt)
 

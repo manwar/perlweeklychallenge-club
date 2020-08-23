@@ -7,13 +7,11 @@ use v6.d;
 # solution
 role fnr {
     method sayLNR ( Str:D $str = self.Str ) {
-        my @chars = $str.comb;
-
-        for 1 .. @chars.elems -> $last-index {
+        for 1 .. $str.chars -> $last-index {
             my $sub-chars = $str.substr( 0, $last-index );
             my @candi = @sub-chars.unique;
-            my $nr-pos =  -1;
-            my $nr-char = '#';
+            my ( $nr-pos, $nr-char ) =  ( -1, '#' );
+
             for @candi -> $c {
                 given  $sub-chars.indices( $c ) {
                     .elems == 1 or next;
