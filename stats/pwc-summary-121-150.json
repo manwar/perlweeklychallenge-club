@@ -1,12 +1,23 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-08-23 09:16:44 GMT"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -42,12 +53,9 @@
          "Shahed Nooshmand"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             0,
             0,
@@ -79,8 +87,7 @@
             0,
             6,
             1
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -118,7 +125,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -150,18 +156,12 @@
             0,
             0,
             18
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-08-23 08:47:03 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    }
 }
