@@ -39,7 +39,7 @@ fn doit_inner(c: &[u32], s: u32) -> Vec<Vec<u32>> {
                 vec![]
             };
         }
-        let mut rest = doit(rest, s - first_coin_sum);
+        let mut rest = doit_inner(rest, s - first_coin_sum);
         rest.iter_mut()
             .map(|sub| {
                 let mut v = vec![first_coin; num as usize];
