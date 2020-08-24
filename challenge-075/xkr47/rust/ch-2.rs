@@ -38,7 +38,7 @@ fn print_histogram(a: &[u32]) {
         println!();
     }
     print!("{:>1$}", "_", len);
-    a.iter().for_each(|i| print!("{0:1$}_", "", len));
+    a.iter().for_each(|_| print!("{0:1$}_", "", len));
     println!();
 
     print!("{:1$}", "", len);
