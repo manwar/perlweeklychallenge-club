@@ -1,4 +1,8 @@
 {
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "xAxis" : {
       "categories" : [
          "Jacques Guinnebault",
@@ -33,8 +37,17 @@
          "Laurent Rosenfeld"
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             0,
             12,
@@ -66,8 +79,7 @@
             15,
             12,
             138
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -140,18 +152,8 @@
          "name" : "Blog"
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-08-25 04:54:28 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-08-25 12:20:39 GMT"
    },
    "yAxis" : {
       "min" : 0,
@@ -159,9 +161,7 @@
          "text" : ""
       }
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    }
 }
