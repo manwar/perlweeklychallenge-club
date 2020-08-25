@@ -25,7 +25,7 @@ multi sub make-change( $amount, @coins ) {
             @result.push( [$coin, |@change] );
         }        
     }
-    @result = @result.map( { $_.sort.Array } ).unique( with => &[~~] );
+    @result = @result.map( { $_.sort.reverse.Array } ).unique( with => &[~~] ).sort( { $^a.elems cmp $^b.elems } );
     %change_cache{$amount} = @result;
     return @result;
 }
