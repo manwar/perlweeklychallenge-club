@@ -15,8 +15,8 @@
                "drilldown" : "Mark Anderson"
             },
             {
-               "y" : 2,
                "name" : "Markus Holzer",
+               "y" : 2,
                "drilldown" : "Markus Holzer"
             },
             {
@@ -26,47 +26,49 @@
             },
             {
                "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West",
+               "y" : 4
             },
             {
                "drilldown" : "Simon Green",
                "y" : 3,
                "name" : "Simon Green"
+            },
+            {
+               "name" : "Ulrich Rieke",
+               "drilldown" : "Ulrich Rieke",
+               "y" : 2
             }
          ]
       }
    ],
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2020-08-25 04:49:34 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "tooltip" : {
       "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 075"
@@ -74,6 +76,7 @@
    "drilldown" : {
       "series" : [
          {
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -84,30 +87,30 @@
                   2
                ]
             ],
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari"
+            "name" : "Luca Ferrari"
          },
          {
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Mark Anderson",
             "id" : "Mark Anderson"
          },
          {
             "id" : "Markus Holzer",
-            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Markus Holzer"
          },
          {
+            "id" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -118,10 +121,10 @@
                   2
                ]
             ],
-            "id" : "Mohammad S Anwar",
             "name" : "Mohammad S Anwar"
          },
          {
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -132,12 +135,9 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            "id" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Green",
-            "name" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -147,8 +147,23 @@
                   "Blog",
                   1
                ]
+            ],
+            "name" : "Simon Green",
+            "id" : "Simon Green"
+         },
+         {
+            "id" : "Ulrich Rieke",
+            "name" : "Ulrich Rieke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
             ]
          }
       ]
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2020-08-25 04:54:29 GMT"
    }
 }
