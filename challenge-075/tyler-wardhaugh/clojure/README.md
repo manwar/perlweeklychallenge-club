@@ -13,9 +13,9 @@ Run the project's tests (which are samples from the task descriptions):
 
     $ clojure -A:test:runner
 
-Run Task #1 with input:
+Run Task #1 with input (SUM COIN [COIN]...)
 
-    $ clojure -m tw.weekly.ch-1 8 8 8 7 9
+    $ clojure -m tw.weekly.ch-1 6 1 2 4
 
 Run Task #2 with input:
 
@@ -24,8 +24,6 @@ Run Task #2 with input:
 ## Project Template
 
 I used Sean Corfield's clj-new to generate the project template
-
-    $ clj -A:new app tw.weekly.c75
 
 See [seancorfield/clj-new: Generate new projects based on clj, Boot, or Leiningen Templates!](https://github.com/seancorfield/clj-new) for more information.
 
