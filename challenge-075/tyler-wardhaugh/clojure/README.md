@@ -19,7 +19,7 @@ Run Task #1 with input (SUM COIN [COIN]...)
 
 Run Task #2 with input:
 
-    $ clojure -m tw.weekly.ch-2 "asdjfklsfasdjfklq"
+    $ clojure -m tw.weekly.ch-2 2 1 4 5 3 7
 
 ## Project Template
 
