@@ -9,20 +9,38 @@ sub MAIN (
     Bool :g(:$graph-heights) = False, #=Draw the height histogram first
     *@heights where { $_.all ~~ UInt && $_.elems >= 1 } , #= List of height
 ) {
-    draw-heights( @heights ) if $graph-heights;
-    say calculate-max-rect( @heights );
+    my $rect-details =  calculate-max-rect( @heights );
+    draw-heights( @heights, $rect-details ) if $graph-heights;
+    say $rect-details.area;
 }
 
-sub draw-heights( @heights ) {
+class RectDetails {
+    has Range $.range;
+    has UInt $.height;
+    has UInt $.area;
+}
+
+sub draw-heights( @heights, $rect ) {
     my $max = @heights.max;
     my $width = $max.codes;
     my $bar = '#' x $width;
     my $spc = ' ' x $width;
     my $dsh = '-' x $width;
+    my $rct = 'X' x $width;
     my &spr = -> $x { sprintf( "%{$width}d", $x ) }
+    my &prt = -> $h {
+        -> $k, $v {
+            if ($k ~~ $rect.range) && ($h <= $rect.height) {
+                $v >= $h ?? $rct !! $spc;
+            } else {
+                $v >= $h ?? $bar !! $spc;
+            }
+        };
+    };
     
     for $max...1 -> $h {
-        ( &spr( $h ),  |@heights.map( { $_ >= $h ?? $bar !! $spc } ) ).join(" ").say;
+        my &fnc = &prt($h);
+        ( &spr( $h ),  |@heights.kv.map( &fnc ) ).join(" ").say;
     }
     ( $dsh xx @heights.elems + 1 ).join(" ").say;
     ( $spc, |@heights.map( &spr ) ).join(" ").say;
@@ -31,13 +49,14 @@ sub draw-heights( @heights ) {
 sub calculate-max-rect( @heights ) {
     my $length = @heights.elems - 1;
 
-    my @ranges = ( (0..$length) X (0..$length) ).grep( { $_[0] <= $_[1] } );
+    my @ranges = ( (0..$length) X.. (0..$length) ).grep( { $_.min <= $_.max } );
     my $max = 0;
+    my $result = RectDetails.new( area => 0 );
 
-    for @ranges -> ($s,$e) {
-        my $height = @heights[$s..$e].min;
-        my $area = $height * ($e - $s + 1);
-        $max = $area if $max < $area;
+    for @ranges -> $range {
+        my $height = @heights[$range.list].min;
+        my $area = $height * ($range.max - $range.min + 1);
+        $result = RectDetails.new( :$range, :$height, :$area ) if $result.area < $area;
     }
-    return $max;
+    return $result;
 }
