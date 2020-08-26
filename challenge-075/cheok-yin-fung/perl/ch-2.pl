@@ -63,13 +63,9 @@ sub lrh {
                     $j++;
                 }
             }
-            if ( defined($h) && defined($t)) { if(!exists $areas{"$h,$t"}) {
+            if ( defined($h) && defined($t)) && (!exists $areas{"$h,$t"}) ) {
                 $areas{"$h,$t"} = ($t-$h+1)*($MAX_-$i);
-                # MORE COMMENTS FOR THE FINAL VERSION
-                #    print "line ", $MAX_-$i, ": [$h..$t]", "\n";
-                #    print "         length * $MAX_-$i = ", $areas{"$h,$t"};
-                #  print "\n";          
-            }}
+            }
             $j++;
             
         }
