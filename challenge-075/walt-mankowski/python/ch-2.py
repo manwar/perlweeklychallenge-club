@@ -5,7 +5,7 @@ def print_hist(hist, a, rows, cols):
     for row in range(rows-1, -1, -1):
         print(row+1, end='')
         for col in range(cols):
-            print(f" {'#' if hist[row][col] == 1 else ' '}", end='')
+            print(f" {'#' if hist[row][col] else ' '}", end='')
         print()
 
     print('-', end='')
@@ -22,11 +22,11 @@ a = [int(x) for x in argv[1:]]
 # build the histogram
 rows = max(a)
 cols = len(a)
-hist = np.zeros([rows, cols])
+hist = np.zeros([rows, cols], dtype=bool)
 for row in range(rows):
     for col in range(cols):
         if row < a[col]:
-            hist[row][col] = 1
+            hist[row][col] = True
 print_hist(hist, a, rows, cols)
 
 best_area = 0
