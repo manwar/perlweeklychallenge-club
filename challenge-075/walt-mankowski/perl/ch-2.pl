@@ -104,4 +104,3 @@ sub print_hist($hist, $a, $rows, $cols) {
     printf " %d", $a[$_] for 0..$cols-1;
     print "\n\n";
 }
-
