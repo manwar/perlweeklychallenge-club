@@ -6,7 +6,6 @@ import Data.List (unfoldr)
 import System.Exit (die)
 
 -- solution
-
 getLargestRectArea :: [Int] -> Int
 getLargestRectArea hdata = maximum allPossibleAreas where
   allPossibleAreas =  map calcArea1 [ 0 .. (dataLen - 1) ]
