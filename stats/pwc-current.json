@@ -4,34 +4,32 @@
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2020-08-27 00:22:24 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 075"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 075",
          "data" : [
             {
-               "y" : 4,
+               "drilldown" : "Dr James A. Smith",
+               "name" : "Dr James A. Smith",
+               "y" : 2
+            },
+            {
                "drilldown" : "Luca Ferrari",
+               "y" : 4,
                "name" : "Luca Ferrari"
             },
             {
+               "drilldown" : "Mark Anderson",
                "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
+               "name" : "Mark Anderson"
             },
             {
                "drilldown" : "Markus Holzer",
@@ -40,23 +38,23 @@
             },
             {
                "y" : 4,
-               "drilldown" : "Mohammad S Anwar",
-               "name" : "Mohammad S Anwar"
+               "name" : "Mohammad S Anwar",
+               "drilldown" : "Mohammad S Anwar"
             },
             {
+               "drilldown" : "Roger Bell_West",
                "y" : 4,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
+               "name" : "Roger Bell_West"
             },
             {
-               "name" : "Simon Green",
                "drilldown" : "Simon Green",
-               "y" : 3
+               "y" : 3,
+               "name" : "Simon Green"
             },
             {
-               "y" : 2,
+               "drilldown" : "Simon Proctor",
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "y" : 2
             },
             {
                "y" : 2,
@@ -64,17 +62,28 @@
                "drilldown" : "Ulrich Rieke"
             }
          ],
+         "name" : "Perl Weekly Challenge - 075",
          "colorByPoint" : 1
       }
    ],
-   "xAxis" : {
-      "type" : "category"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "id" : "Dr James A. Smith",
+            "name" : "Dr James A. Smith"
+         },
+         {
             "data" : [
                [
                   "Raku",
@@ -84,7 +93,9 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
          },
          {
             "data" : [
@@ -98,17 +109,17 @@
          },
          {
             "id" : "Markus Holzer",
+            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Markus Holzer"
+            ]
          },
          {
-            "name" : "Mohammad S Anwar",
             "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -121,6 +132,8 @@
             ]
          },
          {
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -130,12 +143,11 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            ]
          },
          {
             "name" : "Simon Green",
+            "id" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -145,40 +157,43 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Simon Green"
+            ]
          },
          {
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "name" : "Simon Proctor",
             "id" : "Simon Proctor"
          },
          {
+            "name" : "Ulrich Rieke",
             "id" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Ulrich Rieke"
+            ]
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2020-08-25 13:09:43 GMT"
+   "legend" : {
+      "enabled" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    }
 }
