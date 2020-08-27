@@ -40,14 +40,14 @@ while (1) {
 
         # rotate "odometer"
         $cnt[-1] = 0;
-        my $j = -2;
-        $cnt[$j]++;
-        while ($j >= -@c && value(\@c, \@cnt) > $s) {
-            $cnt[$j] = 0;
-            $j--;
-            $cnt[$j]++ if $j >= -@c;
+        my $i = -2;
+        $cnt[$i]++;
+        while ($i >= -@c && value(\@c, \@cnt) > $s) {
+            $cnt[$i] = 0;
+            $i--;
+            $cnt[$i]++ if $i >= -@c;
         }
-        last if $j < -@c;
+        last if $i < -@c;
     } else {
         $cnt[-1]++;
     }

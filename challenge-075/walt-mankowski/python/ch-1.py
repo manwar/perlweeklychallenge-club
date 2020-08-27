@@ -15,15 +15,15 @@ while (True):
 
         # rotate "odometer"
         cnt[-1] = 0
-        j = -2
-        cnt[j] += 1
-        while j >= -len(cnt) and np.dot(c, cnt) > s:
-            cnt[j] = 0
-            j -= 1
-            if j >= -len(cnt):
-                cnt[j] += 1
+        i = -2
+        cnt[i] += 1
+        while i >= -len(cnt) and np.dot(c, cnt) > s:
+            cnt[i] = 0
+            i -= 1
+            if i >= -len(cnt):
+                cnt[i] += 1
 
-        if j < -len(cnt):
+        if i < -len(cnt):
             break
     else:
         cnt[-1] += 1
