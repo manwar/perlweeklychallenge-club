@@ -1,18 +1,30 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "James Smith",
+            "name" : "Alex Mauney",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "James Smith"
+            "id" : "Alex Mauney"
+         },
+         {
+            "id" : "James Smith",
+            "name" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          },
          {
             "data" : [
@@ -25,12 +37,12 @@
                   2
                ]
             ],
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari"
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
          },
          {
-            "name" : "Mark Anderson",
             "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
@@ -39,18 +51,18 @@
             ]
          },
          {
+            "id" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Markus Holzer",
             "name" : "Markus Holzer"
          },
          {
-            "name" : "Mohammad S Anwar",
             "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -63,6 +75,8 @@
             ]
          },
          {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -72,13 +86,11 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            ]
          },
          {
-            "name" : "Simon Green",
             "id" : "Simon Green",
+            "name" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -91,14 +103,14 @@
             ]
          },
          {
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Simon Proctor"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          },
          {
             "id" : "Ulrich Rieke",
@@ -112,28 +124,23 @@
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 075",
          "data" : [
             {
-               "name" : "James Smith",
-               "drilldown" : "James Smith",
-               "y" : 2
+               "drilldown" : "Alex Mauney",
+               "y" : 2,
+               "name" : "Alex Mauney"
             },
             {
+               "y" : 2,
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
+            },
+            {
+               "y" : 4,
                "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari",
-               "y" : 4
+               "name" : "Luca Ferrari"
             },
             {
                "y" : 2,
@@ -141,59 +148,67 @@
                "name" : "Mark Anderson"
             },
             {
+               "drilldown" : "Markus Holzer",
                "y" : 2,
-               "name" : "Markus Holzer",
-               "drilldown" : "Markus Holzer"
+               "name" : "Markus Holzer"
             },
             {
-               "name" : "Mohammad S Anwar",
+               "y" : 4,
                "drilldown" : "Mohammad S Anwar",
-               "y" : 4
+               "name" : "Mohammad S Anwar"
             },
             {
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
             },
             {
+               "y" : 3,
                "drilldown" : "Simon Green",
-               "name" : "Simon Green",
-               "y" : 3
+               "name" : "Simon Green"
             },
             {
-               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
-               "y" : 2
+               "y" : 2,
+               "name" : "Simon Proctor"
             },
             {
-               "y" : 2,
                "name" : "Ulrich Rieke",
+               "y" : 2,
                "drilldown" : "Ulrich Rieke"
             }
          ],
+         "name" : "Perl Weekly Challenge - 075",
          "colorByPoint" : 1
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2020-08-27 00:27:52 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
    },
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2020-08-27 00:59:23 GMT"
    },
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 075"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
