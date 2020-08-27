@@ -30,7 +30,6 @@ my @c = @ARGV;
 my @solutions;
 
 my @cnt = map {0} 0..$#c;
-my $i = $#c;
 while (1) {
     my $val = value(\@c, \@cnt);
     if ($val >= $s) {
@@ -40,17 +39,17 @@ while (1) {
         }
 
         # rotate "odometer"
-        $cnt[$#c] = 0;
-        my $j = $#c - 1;
+        $cnt[-1] = 0;
+        my $j = -2;
         $cnt[$j]++;
-        while ($j >= 0 && value(\@c, \@cnt) > $s) {
+        while ($j >= -@c && value(\@c, \@cnt) > $s) {
             $cnt[$j] = 0;
             $j--;
-            $cnt[$j]++;
+            $cnt[$j]++ if $j >= -@c;
         }
-        last if $j < 0;
+        last if $j < -@c;
     } else {
-        $cnt[$#c]++;
+        $cnt[-1]++;
     }
 }
 
