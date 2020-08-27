@@ -97,7 +97,7 @@ sub print_hist($hist, $a, $rows, $cols) {
     }
 
     print "-";
-    print " -" for 0..$cols-1;
+    print " -" x $cols;
     print "\n";
 
     print " ";
