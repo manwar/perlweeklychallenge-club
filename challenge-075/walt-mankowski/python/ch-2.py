@@ -45,5 +45,5 @@ for height in range(1, rows+1):
                     best_height = height
                     best_width = width
 
-print(f'The best rectangle is {best_height} x {best_width} for an aea of {best_area}.')
+print(f'The best rectangle is {best_height} x {best_width} for an area of {best_area}')
 
