@@ -3,7 +3,7 @@
 #
 # Perl Weekly Challenge - 075
 #
-# Task #1: Coins Sum
+# Task #2: Largest Rectangle Histogram
 #
 # https://perlweeklychallenge.org/blog/perl-weekly-challenge-075
 #
@@ -11,12 +11,10 @@
 use strict;
 use warnings;
 use Test::More;
+use List::Util qw(min max);
 
-is coins_sum(prepare("1, 2"),        5), 3;
-is coins_sum(prepare("1, 2, 3"),     5), 5;
-is coins_sum(prepare("1, 2, 4"),     6), 6;
-is coins_sum(prepare("25, 10, 5"),  30), 5;
-is coins_sum(prepare("9, 6, 5, 1"), 11), 6;
+is(largest_rectangle_histogram(prepare("2, 1, 4, 5, 3, 7")), 12, "example 1");
+is(largest_rectangle_histogram(prepare("3, 2, 3, 5, 7, 5")), 15, "example 2");
 
 done_testing;
 
@@ -24,44 +22,88 @@ done_testing;
 #
 # METHODS
 
-sub coins_sum {
-    my ($coins, $sum) = @_;
+sub largest_rectangle_histogram {
+    my ($list) = @_;
 
-    my $size = $#$coins;
-    return 0 if ($size == -1 || $sum <= 0);
+    my $i   = 0;
+    my $max = 0;
+    foreach my $n (@$list) {
 
-    my $matrix;
+        my ($left, $right) = (0, 0);
+        $left  = go_left($i, $list)  if ($i > 0);
+        $right = go_right($i, $list) if ($i <= $#$list);
 
-    # Sum of 0 can be achieved in one possible way.
-    $matrix->[$_][0] = 1 for (0 .. $size+1);
+        my @heights = (@$list)[$i - $left .. $i + $right];
+        my $size    = min(@heights) * @heights;
+        $max = $size if ($size > $max);
 
-    foreach my $i (0 .. $size) {
-
-        foreach my $j (1 .. $sum) {
-
-            my $include_current = 0;
-            my $exclude_current = 0;
-
-            if ($coins->[$i] <= $j) {
-                $include_current = $matrix->[$i][$j - $coins->[$i]];
-            }
-
-            if ($i > 0) {
-                $exclude_current = $matrix->[$i - 1][$j];
-            }
-
-            $matrix->[$i][$j] = $include_current + $exclude_current;
-        }
+        $i++;
     }
 
-    return $matrix->[$size][$sum];
+    return $max;
+}
+
+sub go_left {
+    my ($i, $list) = @_;
+
+    my $c = $list->[$i];
+    my $j = 0;
+    while ($i > 0) {
+        $i--;
+        last if ($list->[$i] < $c);
+        $j++;
+    }
+
+    return $j;
+}
+
+sub go_right {
+    my ($i, $list) = @_;
+
+    my $c = $list->[$i];
+    my $j = 0;
+    while ($i < $#$list) {
+        $i++;
+        last if ($list->[$i] < $c);
+        $j++;
+    }
+
+    return $j;
+}
+
+sub chart {
+    my ($list) = @_;
+
+    my $max   = max(@$list);
+    my $chart = [];
+    my $row   = 1;
+    foreach (1..$max) {
+        my $data = "";
+        foreach my $i (0..$#$list) {
+            if ($row <= $list->[$i]) {
+                $data .= " #";
+            }
+            else {
+                $data .= "  ";
+            }
+        }
+        $row++;
+        push @$chart, sprintf("%d%s", $_, $data);
+    }
+
+    my ($histogram, $line, $size) = ("", "", "  ");
+    $histogram = join "\n", (reverse @$chart);
+    $line .= "_ " for (0..$#$list + 1);
+    $size .= join " ", @$list;
+
+    return join "\n", $histogram, $line, $size;
 }
 
 sub prepare {
-    my ($coins) = @_;
+    my ($list) = @_;
 
-    if (defined $coins) {
-        $coins =~ s/\s//g;
-        return [ split /\,/, $coins ];
+    if (defined $list) {
+        $list =~ s/\s//g;
+        return [ split /\,/, $list ];
     }
 }
