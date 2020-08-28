@@ -12,24 +12,28 @@ sub printHistogram {
     my $hist_max = max(@$histogram);
     my $out_str;
 
+    my $max_len = length($hist_max) + 1;
+    my $total_len = 0;
+
     for my $i (reverse 1..$hist_max) {
-        $out_str = $i;
+        $out_str = sprintf "%${max_len}s", $i;
+        $total_len += length($i);
 
         for my $bar (@$histogram) {
-            $out_str .= $bar >= $i? '#' : ' '
+            $out_str .= $bar >= $i ? sprintf "%${max_len}s", '#' : sprintf "%${max_len}s", ' '
         }
 
         say $out_str;
         
     }
 
-    $out_str = '_';
-    $out_str .= '_' x scalar @$histogram;
+    $out_str = '_' x $max_len;
+    $out_str .= '_' x ($max_len * scalar @$histogram);
 
     say $out_str;
 
-    $out_str = ' ';
-    $out_str .= $_ for (@$histogram);
+    $out_str = ' ' x $max_len;
+    $out_str .= sprintf "%${max_len}s", $_ for (@$histogram);
 
     say $out_str;
 }
