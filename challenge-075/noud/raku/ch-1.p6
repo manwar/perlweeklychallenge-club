@@ -33,7 +33,7 @@ sub coins-sum(@C, $S) {
             }
         }
     }
-    return @ret.unique;
+    return @ret;
 }
 
 coins-sum((1, 2, 4), 6).say;
