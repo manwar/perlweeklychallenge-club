@@ -10,8 +10,7 @@ def largest_rectangle_histogram(items):
 
     subtract1 = lambda n: n-1 if n > 0 else 0
 
-    temp = items
-    temp = temp + [0]  # put a zero at the end for ease
+    temp = items + [0]  # put a zero at the end for ease
 
     histogram = []
     pair = []

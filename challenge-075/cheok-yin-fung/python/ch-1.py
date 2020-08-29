@@ -1,13 +1,10 @@
 # Python3
 # Perl Weekly Challenge #075 Task 1 Coins Sum, Python script
-
-# coins = [1, 2, 3, 5]
-# total = 5
-# --> len(arr_for_dp[total]) == 6
-
-# coins = [1, 2, 3, 4, 5]
-# total = 5
-# --> len(arr_for_dp[total]) == 7
+# task statement: 
+# You are given a set of coins @C, assuming you have 
+# infinite amount of each coin in the set.
+# Write a script to find how many ways you make 
+# sum $S using the coins from the set @C.
 
 def coins_sum(uinput):
     userinput = uinput
@@ -17,8 +14,8 @@ def coins_sum(uinput):
     arr_for_dp = [ [] ]
 
     dp_range = list((range(1,total+1)))
-    print(dp_range)
 
+#initialize the array for dynamic programming
     j = 0
     for i in dp_range:
         if i == coins[j]:
@@ -39,6 +36,7 @@ def coins_sum(uinput):
                     if not(partition_p in arr_for_dp[i]):
                         arr_for_dp[i].append(partition_p.copy())
 
+    #return answer
     return arr_for_dp[total]
 
 

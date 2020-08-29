@@ -5,7 +5,6 @@
 // Write a script to find how many ways you make 
 // sum $S using the coins from the set @C.
 
-
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -29,7 +28,7 @@ public class coinssum {
         }
 
 
-
+// initialize the "ArrayList" for dynamic programming
         ArrayList<Vector>[] arr_for_dp = new ArrayList[total+1];
 
         int j = 0;
@@ -88,3 +87,4 @@ public class coinssum {
 //textbook
 //https://www.w3schools.com/java/java_arraylist.asp
 //https://www.geeksforgeeks.org/array-of-arraylist-in-java/
+//https://www.cis.upenn.edu/~bcpierce/courses/629/jdkdocs/api/java.util.Vector.html
