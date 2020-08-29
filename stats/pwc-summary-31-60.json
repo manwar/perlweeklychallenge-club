@@ -1,16 +1,27 @@
 {
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-08-29 07:09:02 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-08-29 10:32:23 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             102,
             3,
@@ -42,9 +53,11 @@
             0,
             6,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             64,
             0,
@@ -76,11 +89,9 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             20,
             0,
@@ -112,14 +123,10 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
@@ -156,12 +163,5 @@
          "Ian Rifkin",
          "Izifresh"
       ]
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
