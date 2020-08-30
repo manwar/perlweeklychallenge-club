@@ -1,52 +1,71 @@
-Task 1: "Majority Element
+Task 1: "Coins Sum
 
-You are given an array of integers of size $N.
+You are given a set of coins @C, assuming you have infinite amount of each coin in the set.
 
-Write a script to find the majority element. If none found then print -1.
-The majority element in a list is the element, if any, that appears more than
-floor(size_of_list/2) TIMES.
+Write a script to find how many ways you make sum $S using the coins from the set @C.
+Example:
 
-Example 1
+Input:
+    @C = (1, 2, 4)
+    $S = 6
 
-  Input: @A = (1, 2, 2, 3, 2, 4, 2)
-  Output: 2, as 2 appears 4 times in the list - more than floor(7/2)==3 TIMES.
-
-Example 2
-
-  Input: @A = (1, 3, 1, 2, 4, 5)
-  Output: -1 as none of the elements appears more than floor(6/2)==3 TIMES.
+Output: 6
+There are 6 possible ways to make sum 6.
+a) (1, 1, 1, 1, 1, 1)
+b) (1, 1, 1, 1, 2)
+c) (1, 1, 2, 2)
+d) (1, 1, 4)
+e) (2, 2, 2)
+f) (2, 4)
 "
 
-My notes: ok.  Very easy.
+My notes: ok.  Reasonably easy: bag of coins shows what coins we've used,
+at every stage explore 2 paths: 1). add another instance of each possible coin,
+2). don't add another instance..
 
+Task 2: "Largest Rectangle Histogram
 
-Task 2: "FNR Character
+You are given an array of positive numbers @A.
 
-You are given a string $S.
+Write a script to find the largest rectangle histogram created by the given array.
+BONUS: Try to print the histogram as shown in the example, if possible.
 
-Write a script to print the series of first non-repeating character (left -> right) for the given string. Print # if none found.
+Example 1:
 
-Example 1
-  Input: $S = 'ababc'
-  Output: 'abb#c'
-  Pass 1: 'a', the FNR character is 'a'
-  Pass 2: 'ab', the FNR character is 'b'
-  Pass 3: 'aba', the FNR character is 'b'
-  Pass 4: 'abab', no FNR found, hence '#'
-  Pass 5: 'ababc' the FNR character is 'c'
+Input: @A = (2, 1, 4, 5, 3, 7)
 
-Example 2
-  Input: $S = 'xyzzyx'
-  Output: 'xyzyx#'
-  Pass 1: 'x', the FNR character is 'x'
-  Pass 2: 'xy', the FNR character is 'y'
-  Pass 3: 'xyz', the FNR character is 'z'
-  Pass 4: 'xyzz', the FNR character is 'y'
-  Pass 5: 'xyzzy', the FNR character is 'x'
-  Pass 6: 'xyzzyx', no FNR found, hence '#'
-"
+     7           #
+     6           #
+     5       #   #
+     4     # #   #
+     3     # # # #
+     2 #   # # # #
+     1 # # # # # #
+     _ _ _ _ _ _ _
+       2 1 4 5 3 7
 
-My notes: why is the FNR of "ab" (in pass 2) 'b' rather than 'a'?  Last non-repeating
-character would be more like it.  Basically: in each pass, take substr(1,len PASS) and then
-remove each LAST char if it's duplicated earlier in the substring, otherwise that's the FNR.
-If the string is empty, no FNR, print #.
+Looking at the above histogram, the largest rectangle (4 x 3) is formed by columns (4, 5, 3 and 7).
+Output: 12
+
+Example 2:
+
+Input: @A = (3, 2, 3, 5, 7, 5)
+
+     7         #
+     6         #
+     5       # # #
+     4       # # #
+     3 #   # # # #
+     2 # # # # # #
+     1 # # # # # #
+     _ _ _ _ _ _ _
+       3 2 3 5 7 5
+
+Looking at the above histogram, the largest rectangle (3 x 5) is formed by columns (5, 7 and 5).
+Output: 15"
+
+My notes: hmm.. so max(area of all rectangles "in" a histogram).  But what does that mean?
+Hang on: the "graphs" are NOT actually histograms: each is simply the array of values itself.
+So forgot frequency hashes.  The simplest way that I can see is to calculate the area of all
+possible rectangles (where 1 or more adjacent values are at least some minimum height) and
+then to find the maximum of all those.
