@@ -67,7 +67,7 @@ sub go-right(Int $i is copy, $list where .all ~~ Int) returns Int {
     return $j;
 }
 
-sub chart($list where .all ~~ Int) {
+sub chart($list where .all ~~ Int) returns Str {
 
     my $max   = $list.max;
     my $chart = [];
