@@ -42,13 +42,12 @@ sub diagonal-words( @grid-chars,  $up-to-down = True, $left-to-right = True ) {
 sub MAIN( $grid-file-name = 'grid.txt',
           $word-file-name = '/usr/share/dict/words',
           $min-length = 3 ) {
-    say "Searching word from $word-file-name into grid $grid-file-name";
+    say "Searching words from $word-file-name into grid $grid-file-name";
     my @found-words;
 
 
     # get all the lines in the grid lowercase
     my @grid-chars = $grid-file-name.IO.lines.map( *.lc.split( /\s/, :skip-empty ).Array ).Array;
-    say @grid-chars;
 
     my ( @horizontals, @verticals, @diagonals );
     for @grid-chars {
