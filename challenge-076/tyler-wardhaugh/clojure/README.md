@@ -1,25 +1,25 @@
-# tw.weekly.c75
+# tw.weekly.c76
 
 
-The Weekly Challenge - #075 - Tyler Wardhaugh
+The Weekly Challenge - #076 - Tyler Wardhaugh
 
 ## Usage
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -m tw.weekly.c75
+    $ clojure -m tw.weekly.c76
 
 Run the project's tests (which are samples from the task descriptions):
 
     $ clojure -A:test:runner
 
-Run Task #1 with input (SUM COIN [COIN]...)
+Run Task #1 with input
 
-    $ clojure -m tw.weekly.ch-1 6 1 2 4
+    $ clojure -m tw.weekly.ch-1
 
 Run Task #2 with input:
 
-    $ clojure -m tw.weekly.ch-2 2 1 4 5 3 7
+    $ clojure -m tw.weekly.ch-2
 
 ## Project Template
 
