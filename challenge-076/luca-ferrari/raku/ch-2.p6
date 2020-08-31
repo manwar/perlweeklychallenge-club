@@ -74,5 +74,5 @@ sub MAIN( $grid-file-name = 'grid.txt',
                                               || @verticals.grep( * ~~ / $current-word / ) );
     }
 
-    say "Found { @found-words.unique.elems }  words: { @found-words.join( ',' ) }";
+    say "Found { @found-words.elems }  words: { @found-words.join( ',' ) }";
 }
