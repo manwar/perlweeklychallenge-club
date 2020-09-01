@@ -53,7 +53,7 @@ die "ERROR: Missing grid file.\n" unless defined $GRID;
 die "ERROR: Invalid word size [$SIZE].\n"
     unless (($SIZE =~ /^\d+$/) && ($SIZE > 0));
 
-my $words = search_words($GRID, $SIZE);
+my $words = search_words($DICT, $GRID, $SIZE);
 if (keys %$words) {
     print sprintf("\nFound %d unique words:\n%s\n",
           scalar(keys %$words),
@@ -69,16 +69,17 @@ else {
 # METHODS
 
 sub search_words {
-    my ($grid, $size) = @_;
+    my ($dict, $grid, $size) = @_;
 
-    my $words = ();
+    my $words   = ();
+    my $dicts   = fetch_dicts($dict, $size);
     my $puzzles = fetch_puzzles($grid, $size);
     if (scalar @$puzzles) {
         my $total = $#$puzzles + 1;
         my $index = 1;
         foreach my $puzzle (@$puzzles) {
             print sprintf("\rProcessing record %d of %d.", $index++, $total);
-            $words = match_word($DICT, $SIZE, $puzzle, $words);
+            $words = match_word($dicts, $puzzle, $words);
         }
     }
 
@@ -86,14 +87,25 @@ sub search_words {
 }
 
 sub match_word {
-    my ($dictionary, $size, $puzzle, $words) = @_;
+    my ($dictionary, $puzzle, $words) = @_;
 
+    foreach my $word (keys %$dictionary) {
+        $words->{lc $word} = 1 if ($puzzle =~ /$word/i);
+    }
+
+    return $words;
+}
+
+sub fetch_dicts {
+    my ($dictionary, $size) = @_;
+
+    my $words = ();
     open(my $WORDS, "<", $dictionary)
         or die "ERROR: Can't open $dictionary file: $!.\n";
     while (my $word = <$WORDS>) {
         chomp $word;
         next unless (length($word) >= $size);
-        $words->{lc $word} = 1 if $puzzle =~ /$word/i;
+        $words->{lc $word} = 1;
     }
     close $WORDS;
 
