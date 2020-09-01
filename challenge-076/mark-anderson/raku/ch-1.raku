@@ -2,17 +2,56 @@
 
 =begin usage
 
-Usage: raku ch-1.raku 27
+Usage: raku ch-1.raku 121
 
 Output:
 
-2, 2, 23
-3, 5, 19
-3, 7, 17
-3, 11, 13
-5, 11, 11
-5, 5, 17
-7, 7, 13
+ 3  5 113
+ 3 11 107
+ 3 17 101
+ 3 29  89
+ 3 47  71
+ 3 59  59
+ 5  7 109
+ 5 13 103
+ 5 19  97
+ 5 37  79
+ 5 43  73
+ 7 11 103
+ 7 13 101
+ 7 17  97
+ 7 31  83
+ 7 41  73
+ 7 43  71
+ 7 47  67
+ 7 53  61
+ 7  7 107
+11 13  97
+11 31  79
+11 37  73
+11 43  67
+13 19  89
+13 29  79
+13 37  71
+13 41  67
+13 47  61
+17 31  73
+17 37  67
+17 43  61
+19 23  79
+19 29  73
+19 31  71
+19 41  61
+19 43  59
+19 19  83
+23 31  67
+23 37  61
+29 31  61
+31 37  53
+31 43  47
+31 31  59
+37 41  43
+37 37  47
 
 =end usage
 
@@ -36,25 +75,13 @@ sub MAIN(UInt $N where $N > 1) {
 }
 
 sub min-primes(UInt $N, $count) {
-    my @primes = (sieve(2, 2..$N) xx 2).flat;
+    my @primes = ((2..$N).grep(*.is-prime) xx 2).flat;
 
-    return @primes.combinations($count).grep(*.sum == $N)
-                                       .map((*.sort).join(", "))
-                                       .unique;
+    my @results = @primes.combinations($count).grep(*.sum == $N)
+                                              .map(*.sort)
+                                              .unique(with => &[eq]);
 
-    sub sieve($n is copy, @list) {
-        my @primes = @list.grep(* <= $n);
+    my @fmt = map { "%{ @results.map(*[$_]).max.chars }d" }, ^$count;
 
-        @primes.append: @list.grep({ $_ > $n and $_ % $n });
-
-        $n = @primes.first(* > $n);
-
-        if $n**2 <= $N { 
-            sieve($n, @primes);
-        } 
-
-        else {
-            return @primes;
-        }
-    }
+    return @results.map({sprintf(@fmt, $_.Array)});
 }
