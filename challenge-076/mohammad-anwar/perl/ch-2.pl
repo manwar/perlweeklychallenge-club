@@ -53,7 +53,6 @@ die "ERROR: Missing grid file.\n" unless defined $GRID;
 die "ERROR: Invalid word size [$SIZE].\n"
     unless (($SIZE =~ /^\d+$/) && ($SIZE > 0));
 
-#my $puzzles = fetch_puzzles($GRID, $SIZE);
 my $words = search_words($GRID, $SIZE);
 if (keys %$words) {
     print sprintf("\nFound %d unique words:\n%s\n",
