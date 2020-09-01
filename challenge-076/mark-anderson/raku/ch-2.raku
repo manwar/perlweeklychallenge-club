@@ -91,11 +91,17 @@ sub MAIN(Str $grid, Str $word-list, UInt $word-length=5) {
 
             for @strings -> $string { 
                 if $string.contains(uc $word) {
-                    take $word if $word.chars >= $word-length;
-                    my $plural = PL($word);
-                    if $plural.chars >= $word-length and $string.contains(uc $plural) { 
-                        take $plural;
+                    if $word.chars >= $word-length {
+                        take $word;
                     }
+
+                    my $plural = PL($word);
+                    if $plural.chars >= $word-length {
+                        if $string.contains(uc $plural) {
+                            take $plural;
+                        }
+                    }
+                    #last;
                 }
             }
         }
