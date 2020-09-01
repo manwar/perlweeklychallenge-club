@@ -1,89 +1,47 @@
-# Perl Weekly Challenge 075
+# Perl Weekly Challenge 076
 
 Solution by Simon Green.
 
-## TASK #1 › Coins Sum
+## TASK #1 › Prime Sum
 
-The great thing about both of this week's challenges is they require some thought about how to solve them before you type `use strict;` in your editor. Strap in, this is a pretty long README file.
+I'm sure there is a CPAN module that can tell if a number is prime, but where is the fun in that? :) I created a function called `_is_prime` that determines if a number is a prime number. In short it calculate divisibility from `2 .. sqrt($n)`. It returns `0` ('is not a prime') when this happened. Otherwise it returns `1` to indicate the number is a prime.
 
-For the coin toss task, it was obvious that some type of recursive subroutine was required. In this subroutine I pass three values:
+Every positive integer (except 1) has a possible solution. Even numbers are made up of the sum of one or more twos, while odd numbers are made up of the sum of three and zero or more twos. Every prime (except 2 and 3) is the sum of smaller primes. For example, 5 = 2 +3, 7 = 5 + 2, etc.
 
-1. The coins available (`$coins` arrayref)
-2. The coins used so far to make the sum (`$sofar` arrayref)
-3. The amount remaining (`$amount_remaining` number, the target minus the coins used so far)
+With that in mind, the solution to find the least number of prime values to make up a number should be straight forward, as follows:
 
-Within the subroutine, I then went through the coins in order of value which resulted in one of three actions:
-
-1. If the coin is less than the remaining amount, we need more coins. This is achieved by recursively calling the subroutine, adding the current coin the the `$sofar` arrayref and reducing the amount remaining by the coin value.
-2. If the coin is the same as the remaining amount, we've found a combination (`$sofar` plus the current coin), and add that to the `@solutions` array.
-3. If the coin is greater than the remaining amount, we can't use the coins. We can also exit the loop immediately as we know larger coins will also fail to produce a solution.
-
-Some other notes:
-
-- I check that every coin is a positive number. If we had '0' coins or negative coins, the list could be endless.
-- The coins are ordered by value (low to high) and non-unique values are removed. The code would still work if we did have non-unique numbers, but that's just unnecessary.
-- My original tests would return the same solution multiple times with the order reversed. For example, it would return '1, 1, 2' and '1, 2, 1'. To avoid this, I add a check in the recursive subroutine to skip coins less than the last used coin (if any).
-- I could have put the amount and sorted unique list of coins as a global variable rather than using it in subroutine function, but global variable are just evil, mmkay? :P
+* Start with the target number in a `for` loop, and work backwards to 2
+* Skip numbers that are not primes.
+* Take that number from the target. If nothing remains, we have the solution, and can exit the loop. Otherwise, we `redo` the loop with the new target.
+* The only exception is we don't use a prime number than is one less than the remain target. For example if we want to find the solution to the number 8, we can't use '7', as 1 is not a prime number, and we would come to an impossible situation.
 
 ### Examples
 
-    » ./ch-1.pl 1 2 4 6
-    1, 1, 1, 1, 1, 1
-    1, 1, 1, 1, 2
-    1, 1, 2, 2
-    1, 1, 4
-    2, 2, 2
-    2, 4
+    » ./ch-1.pl 9
+    Result is 2, made up of (7,2)
 
-## TASK 2 › Largest Rectangle Histogram
+    » ./ch-1.pl 1000000000
+    Result is 3, made up of (999999937,61,2)
 
-This tasks also involved a bit of thinking before hitting the keyboard. For the first part of the task (calculating the largest rectangle), I used the following methodology:
+## TASK 2 › Word Search
 
-- The largest rectangle will always start at the first column.
-- Using this, I worked through the rows from left to right ( `0` to `@#array`).
-- We now know the start of the rectangle, so we can calculate all the rectangles from this point. To do this, we go through the remaining rows on the right, starting with the current row. We find the minimum value in the array for the selected rows. The size of the rectangle is ($last_row - $first_row + 1 ) × the minimum height.
-- As a bonus, I also record the rows and columns that make up the rectangle, and display this in the result. It handles situations where there is more than one combination that makes up the rectangle.
+This task can be broken into the following sub-tasks:
 
-### Bonus round
-
-Who doesn't like bonus points? :)
-
-The major issue in tackling this part of the task is handling the width of each part of the output. Each column needs to be the length of the highest amount as the first column and last row needs to show the height of each row.
-
-I make extensive use of the [`x` operator](https://perldoc.pl/perlop#Multiplicative), which repeats a scalar or list a specified number of times, and the map and sprintf functions.
-
-The output is broken into three parts.
-
-1. Print the body of the graph. Count from the maximum value to 1, print the number, and then for each row print a '#' character if the value of the row is <= the current count.
-2. Print the row of dashes. This uses the x operator twice.
-3. Finally print the totals as the last row.
-
-Still here? Thanks for reading :)
+1. Read the grid file and turn it to an array of arrays.
+2. Read the word file, and turn that into an hash with the words as keys. The word list in Ubuntu includes words with apostrophes and some non-English characters, so we don't add those to the array. We also only add works 5 characters or longer, as the example does so too.
+3. Create an array of directions pairs (rows and columns). -1 is left/up, 0 is no change and 1 is right/down. For example [-1, 1] is diagonally up and to the right. While [0, -1] is orthogonally to the left.
+4. Work through each row and column as a starting point.
+5. Go through each direction in the array and add letters in the specified direction from the start point until we reach the end of the row or column. If a word is in the word list, add it as a solution.
+6. Sort and unique the solutions, and display all matching words.
 
 ## Examples
+    » ./ch-2.pl example.txt /usr/share/dict/words
+    aimed
+    align
+    antes
 
-    » ./ch-2.pl 2 1 4 5 3 7
-    Largest rectangle histogram is 12 (rows 3 - 6 cols 1 - 3)
+...
 
-    7           #
-    6           #
-    5       #   #
-    4     # #   #
-    3     # # # #
-    2 #   # # # #
-    1 # # # # # #
-    - - - - - - -
-      2 1 4 5 3 7
-
-    » ./ch-2.pl 3 2 3 5 7 5
-    Largest rectangle histogram is 15 (rows 4 - 6 cols 1 - 5)
-    
-    7         #  
-    6         #  
-    5       # # #
-    4       # # #
-    3 #   # # # #
-    2 # # # # # #
-    1 # # # # # #
-    - - - - - - -
-      3 2 3 5 7 5
+    virus
+    viruses
+    wigged
