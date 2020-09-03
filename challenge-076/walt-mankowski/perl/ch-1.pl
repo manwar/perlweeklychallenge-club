@@ -4,6 +4,7 @@ use warnings;
 use feature qw(:5.32);
 use experimental qw(signatures);
 use List::Util qw(sum);
+use Algorithm::Combinatorics qw(combinations_with_repetition);
 
 # TASK #1 › Prime Sum
 # Submitted by: Mohammad S Anwar
@@ -37,38 +38,20 @@ sub primes_upto($n) {
     return grep {$is_prime[$_]} 2..$n;
 }
 
-sub value($c, $cnt) {
-    my $sum = 0;
-    for my $i (0..$#$c) {
-        $sum += $c->[$i] * $cnt->[$i];
-    }
-    return $sum;
-}
-
-sub sums($s, @c) {
+sub sums_goldbach($s, $k, @primes) {
     my @solutions;
+    my $best = 1e300;
 
-    my @cnt = map {0} 0..$#c;
-    while (1) {
-        my $val = value(\@c, \@cnt);
-        if ($val >= $s) {
-            if ($val == $s) {
-                my @tmp = @cnt;
-                push @solutions, \@tmp;
-            }
-
-            # rotate "odometer"
-            $cnt[-1] = 0;
-            my $i = -2;
-            $cnt[$i]++;
-            while ($i >= -@c && value(\@c, \@cnt) > $s) {
-                $cnt[$i] = 0;
-                $i--;
-                $cnt[$i]++ if $i >= -@c;
-            }
-            last if $i < -@c;
-        } else {
-            $cnt[-1]++;
+    my $iter = combinations_with_repetition([0, @primes], $k);
+    while (my $p = $iter->next) {
+        my @digits = grep(!/^0$/, $p->@*);
+        next unless @digits;
+        next unless sum(@digits) == $s;
+        if (@digits < $best) {
+            @solutions = (join " + ", @digits);
+            $best = @digits;
+        } elsif (@digits == $best) {
+            push @solutions, join " + ", @digits;
         }
     }
     return @solutions;
@@ -76,27 +59,8 @@ sub sums($s, @c) {
 
 my $n = shift @ARGV;
 my @primes = primes_upto($n);
-my @solutions = sums($n, @primes);
 say "primes: @primes";
 
-# find indices of best solution
-my $min = 1e300;
-my @best;
-for my $i (0..$#solutions) {
-    my $sum = sum $solutions[$i]->@*;
-    if ($sum < $min) {
-        $min = $sum;
-        @best = ($i);
-    } elsif ($sum == $min) {
-        push @best, $i;
-    }
-}
-
-# print out the solutions
-for my $i (@best) {
-    my @p;
-    for my $j (0..$#primes) {
-        push @p, ($primes[$j]) x $solutions[$i][$j] if $solutions[$i][$j];
-    }
-    say join " + ", @p;
-}
+my $k = $n % 2 == 0 ? 2 : 3;
+my @solutions = sums_goldbach($n, $k, @primes);
+say join "\n", @solutions;
