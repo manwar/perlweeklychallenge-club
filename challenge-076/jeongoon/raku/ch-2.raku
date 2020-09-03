@@ -26,7 +26,7 @@ class GridSizeInfo {
     method all-rows-indices {
         ( 0 .. $!rows-idx ).map(              # for every row index
         -> $ri { my $r = $ri * $!line-len;
-                ( 0 ..^ $!line-len ).map( # for every colum index
+                ( 0 ..^ $!line-len ).map(     # for every colum index
                     -> $c { my $p = $r + $c;
                            $p > $!max-pos and last; $p } ) } );
     }
@@ -125,8 +125,6 @@ sub MAIN (
         where { $grid.IO.r } = '../data/grid.txt',
     Bool :verbose(:$v)             #= verbose message
                              = False,
-    Bool :$intersection            #= alternatively using `intersection'
-                             = False,
 ) {
     $debugging = $v;
 
@@ -140,25 +138,15 @@ sub MAIN (
     }
 
     my @grid-words = $gd.get-all-possible-words;
+    say "Total {@grid-words.elems} word(s) in the grid.\n" if $debugging;
     my $gi = 0;
-
     my @result;
-    if $intersection.not {
-        for  $dict.IO.open.lines -> $dword {
-            given ( $dword cmp @grid-words[$gi] ) {
-                when Same { @result.push($dword); ++$gi; }
-                when More { ++$gi; redo }
-            }
-        }
-    }
-    else {
-        # or probably we can do like below
-        # which seems little bit faster than above. :-\
-        @result = ( $dict.IO.open.lines ∩ @grid-words ).List;
-    }
 
+    @result = ( $dict.IO.open.lines.map(
+                      -> $w { $w.lc } )  ∩ @grid-words ).List;
+
+    say @result.raku if $debugging;
     say "Total {@result.elems} word(s) found.";
-    say @result.raku;
 
     if 0 { # small test for indices: change to 1 to have a look
         # 0  1  2

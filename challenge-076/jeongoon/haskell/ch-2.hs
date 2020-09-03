@@ -1,12 +1,10 @@
 {-# LANGUAGE DeriveGeneric     #-}
 {-# LANGUAGE OverloadedStrings #-}
 import Options.Generic
-import Data.List ( find, findIndex, span, insert
+import Data.List ( find, findIndex, span, insert, intersectBy, sortBy
             ,inits, tails, isPrefixOf, unfoldr )
 import Data.Char ( toLower )
 import System.IO
-import System.Exit (die)
-import Control.Exception
 
 {- tested with:
 ghc ch-2.hs
@@ -113,7 +111,6 @@ bothDirectAllIndices = flatOnce.(map obverseAndReverse).allIndices where
       | otherwise     = [ a, reverse a ]
 
 -- final result of indices
-
 allUsefulCombinationIndices = {-usefulInits.
   -- note: wordTreeGetAllWords generate all subsequence which begins from
   --       the begining so we can skip generating `inits'
@@ -152,59 +149,19 @@ wordTreeFromGridData =
   (foldr (flip wordTreeSaveWord) (Root [])).allUsefulWordsFromGridData
 
 -- comparison
-{- If we create a list from a dictionary by using `readFile'
-we can easily get the result by `intersect'
-but I tried to go little bit further in order to study Haskell
-which is not easy when it comes with unfamiliar context `Monad'...
--}
-nextDictWord :: Handle -> IO (Maybe String)
-nextDictWord dictFh = do
-  eof <- hIsEOF dictFh
-  if eof then return Nothing
-    else do
-    word <- hGetLine dictFh
-    return (Just word)
-
--- there is no standard unfoldM and mapM doesn't look efficient in this case,
--- and have to reset the reading position via (hTell, hSeek) ...
--- so I decided to make own (recursive) function
-grepMatchedWord dictFh gridWords =
-  impli Nothing gridWords [] where
-  impli :: Maybe String -> [String] -> [String]  -> IO [String]
-  impli _ [] matchedWords = return matchedWords
-  impli lastDictWord gWords@(gridWord:gridRestWords) matchedWords =
-    case lastDictWord of
-      Nothing -> do
-        res <- nextDictWord dictFh
-        case res of
-          Nothing        -> return matchedWords -- dictionary finised first
-          Just newDWord  -> impli (Just newDWord) gWords matchedWords
-      Just lastDWord     ->
-        let last_dword = map toLower lastDWord in
-          case (compare last_dword gridWord) of
-            LT -> impli Nothing gWords matchedWords
-            EQ -> impli Nothing gridRestWords (matchedWords ++ [gridWord])
-            GT -> impli lastDictWord gridRestWords matchedWords
+grepMatched dictWords gridWords = impli dictWords gridWords [] where
+  impli _ [] matchedWords = matchedWords
+  impli [] _ matchedWords = matchedWords
+  impli dw@(d:ds) gw@(g:gs) matchedWords =
+    case ((map toLower d) `compare` g) of -- grid words already in lower case
+      LT -> impli ds gw matchedWords
+      EQ -> impli ds gs (matchedWords ++ [d])
+      GT -> impli dw gs matchedWords
 
 defaultGridFile   = "../data/grid.txt"
 --defaultDictionary = "../tinyDict.txt"
 defaultDictionary = "/usr/share/dict/british-english"
 -- via `words' package in Arch Linux
-
-tryOpenDict :: FilePath -> IO (Maybe Handle)
-tryOpenDict dpath =
-  (do
-      fh <- openFile dpath ReadMode
-      return (Just fh)) `catch` openDictHandler
-
-openDictHandler :: IOError -> IO (Maybe Handle)
-openDictHandler e = do
-  putStrLn $ "[ERR] Could not open given dictionary: " ++ (show e)
-  if isPrefixOf (defaultDictionary++":") (show e) then return Nothing -- give up
-  else do
-    putStrLn $ "[INF] Trying to open default dictionary: " ++ defaultDictionary
-    (tryOpenDict defaultDictionary) `catch` openDictHandler
-
 
 -- testing ...
 data Sample = Sample { grid :: Maybe FilePath, dict :: Maybe FilePath }
@@ -221,21 +178,22 @@ main = do
                    Nothing -> defaultDictionary
                    Just dp -> dp
     in do
-    rawData <- readFile gridPath
+    rawData  <- readFile gridPath
+    dictData <- readFile dictPath
+
     putStrLn $ "Grid Contents:\n" ++ rawData
     let gridWords = (wordTreeGetAllWords
                     .wordTreeFromGridData
                     .gridDataFromString) rawData
+        dictWords = sortBy (\a b ->
+                              compare (map toLower a) (map toLower b)
+                           ) $ lines dictData
+        matchedWords = grepMatched dictWords gridWords
       in do
-      maybeDictFh <- tryOpenDict dictPath
-      case maybeDictFh of
-        Nothing -> do
-          putStrLn "[WRN] Dictionary not available: could not match anytying."
-        Just dictFh -> do
-          matchedWords <- grepMatchedWord dictFh gridWords
-          print matchedWords
-          putStrLn $ "\nTotal "
-            ++ (show (length matchedWords)) ++ " word(s) found."
-          hClose dictFh
+      putStrLn $ "Total " ++ (show (length gridWords))
+        ++ " possible words in grid."
+      print matchedWords
+      putStrLn $ "\nTotal "
+        ++ (show (length matchedWords)) ++ " word(s) found."
 
--- ok...
+-- ok ok ...
