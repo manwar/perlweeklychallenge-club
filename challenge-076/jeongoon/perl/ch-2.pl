@@ -11,6 +11,7 @@ perl ch-2.pl --grid <word search grid file path> --dict <dictionary file path>
 =head1 Solution
 
 #. assumption: dictionary already stored in ascending order.
+#  --> this was wrong assumption: I changed the subroutine accordingly.
 
 1. store every possible words in every direction into array (and sorted)
    this words has possibly quite a huge amount of sub sequences
@@ -85,9 +86,12 @@ sub allTopLeftToBottomRightIndices ($$) {
     map { my $b = $_;
           my $col = $b % $lineLen;
           [ $b, map {
-              my $p = $b + $_; $p > $maxPos ? () : $p
-            } (map {$_*($lineLen+1)} 1 .. ($lineLen -$col -1)) ] }
-    ( 0 .. ($lineLen -1), map { $lineLen*$_ } 1 .. $rowsIdx )
+              my $p = $b + $_;
+              ( ($p <= $maxPos) and (($p % $lineLen) > $col) )
+                ? $p : ()
+            } (map {$_*($lineLen+1)} 1 .. $lineLen -1 ) ] }
+      ( 0 .. ($lineLen -1), map { $lineLen*$_ } 1 .. $rowsIdx )
+      # for every starting poin
 }
 
 sub allTopRightToBottomLeftIndices ($$) {
@@ -97,7 +101,9 @@ sub allTopRightToBottomLeftIndices ($$) {
     map { my $b = $_;
           my $col = $b % $lineLen;
           [ $b, map {
-              my $p = $b + $_; $p > $maxPos ? () : $p
+              my $p = $b + $_;
+              ( ($p <= $maxPos) and (($p % $lineLen) < $col) )
+                ? $p: ()
             } (map {$_*($lineLen-1)} 1 .. $col) ] }
     ( 0 .. ($lineLen -1), map { $lineLen*$_ -1 } 2 .. $rowsIdx )
 }
@@ -120,7 +126,7 @@ sub subsequences {
     # against a whole possible line. but... my dictionary contains 127,466 lines
     ( @_ == 1 ) and return [ @_ ];
 
-    [ $_[0] ], map { [ @_[ $$_[0] .. $$_[1] ] ] } combinationsIndex( 2, scalar @_ )
+    [ $_[0] ], map{ [ @_[ $$_[0] .. $$_[1] ] ] } combinationsIndex(2, scalar@_)
 }
 
 sub allSubsequencesIndices { # final summary of indices
@@ -128,6 +134,8 @@ sub allSubsequencesIndices { # final summary of indices
     map { subsequences @$_ }
       map { bothDirection @$_ } allIndices( $maxPos, $lineLen );
 }
+
+say scalar allSubsequencesIndices( 303, 16 );
 
 sub genWordsOrganized {
     my ( $maxPos, $lineLen, $gridString ) = @_;
@@ -141,12 +149,12 @@ sub genWordsOrganized {
                allSubsequencesIndices( $maxPos, $lineLen ) ) );
 }
 
-sub unsafe_readChaos { # unsafe means can throw exception(die)
-    my $chaosPath = shift;
-    -r $chaosPath or ::dprint( "[ERR] $chaosPath: not readable: bye!\n" );
+sub unsafe_slurpFile { # unsafe means can throw exception(die)
+    my $FilePath = shift;
+    -r $FilePath or ::dprint( "[ERR] $FilePath: not readable: bye!\n" );
 
-    open( my $fh, '<', $chaosPath ) or
-        die "could not open chaos: $chaosPath";
+    open( my $fh, '<', $FilePath ) or
+        die "could not open chaos: $FilePath";
 
     local $/ = undef;
     my $data = <$fh>;
@@ -164,54 +172,21 @@ sub prepareGridData ($) {
     $maxPos, $lineLen, (lc $gdata) # finay $gdata is in a linear form
 }
 
-sub unsafe_openDict {
-    my $dictPath = shift;
-    -r $dictPath or die "$dictPath: not readable: bye!";
+sub grepMatchedWordsWithSortedData {
+    my @dictWords = @{$_[0]};
+    my @gridWords = @{$_[1]}; # XXX: this is kinda a copying
 
-    open( my $fh, '<', $dictPath ) or
-        die "could not open dictionary: $dictPath";
-
-    return $fh;
-}
-
-sub getDictWord ($$) {
-    state $lastDictWord;
-    my ( $dfh, $update ) = @_;
-
-    if ( not defined $lastDictWord or $update ) {
-        $lastDictWord = <$dfh>;
-        defined $lastDictWord or return undef;
-        chomp $lastDictWord;
-    }
-    $lastDictWord
-}
-
-sub grepMatchedWords {
-    my $dfh      = shift;
-    my ( $gridWordsOrganized_ref ) = @_;
-    my @gridWords = ( ref $gridWordsOrganized_ref
-                      ? @$gridWordsOrganized_ref
-                      : $$gridWordsOrganized_ref[ 2.. $#_ ] );
-
+    my ( $di, $gi ) = ( 0, 0 );
     my @result;
-    my $update_dict = 1;
-  GRID_WORDS:
-    for ( my $gi = 0; $gi < @gridWords; ) {
-        # note: lc() for sure
-        my $dictWord = lc getDictWord( $dfh, $update_dict );
-        defined $dictWord or last GRID_WORDS;
-        ::dprint "$dictWord vs $gridWords[$gi]\n" if 0;
-        for ( $dictWord cmp $gridWords[$gi] ) {
-            when (-1) {
-                $update_dict = 1;
+    while ( $di <= @dictWords && $gi <= @gridWords ) {
+        ::dprint "$dictWords[$di] vs $gridWords[$gi]\n" if 0;
+        for ( lc $dictWords[$di] cmp $gridWords[$gi] ) { # note: lc
+            when ( -1 ) { ++$di }
+            when (  0 ) {
+                push @result, $dictWords[$di];
+                ++$di, ++$gi;
             }
-            when ( 0) {
-                push @result, $gridWords[$gi];
-                $update_dict = 1; ++$gi;
-            }
-            when ( 1) {
-                $update_dict = 0; ++$gi;
-            }
+            when (  1 ) { ++$gi }
         }
     }
     @result;
@@ -232,10 +207,14 @@ if ( not defined $::gridPath ) {
     ::dprint "[WRN] using default word grid search file: $::gridPath\n";
 }
 
-my $dictFh      = unsafe_openDict(  $::dictPath );
-my $rawGridData = unsafe_readChaos( $::gridPath );
+my $dictData    = unsafe_slurpFile( $::dictPath );
+my $rawGridData = unsafe_slurpFile( $::gridPath );
 
+my @dictOrganized = sort { (lc $a) cmp (lc $b) } ( split "\n", $dictData );
+defined $dictOrganized[-1] or pop @dictOrganized; # XXX
 my @gridWordsOrganized = genWordsOrganized( prepareGridData( $rawGridData ) );
+
+
 
 if ( $::debugging ) {
     my $cnt = scalar @gridWordsOrganized;
@@ -245,10 +224,9 @@ if ( $::debugging ) {
     ::dprint(sprintf("%${wd}d  ",++$i), $_, $/) for @gridWordsOrganized;
 }
 
-my @matchedWords = grepMatchedWords( $dictFh, \@gridWordsOrganized );
+my @matchedWords =
+  grepMatchedWordsWithSortedData( \@dictOrganized, \@gridWordsOrganized );
 
 say "Word Search Grid:\n$rawGridData";
 say "Total: ".(scalar @matchedWords)." word(s) found.";
 say raku_array( @matchedWords );
-
-close $dictFh;
