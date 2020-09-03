@@ -1,21 +1,17 @@
-unit sub MAIN( $fw, $fb );
+unit sub MAIN($words-file, $board-file);
 
-my @w = $fw.IO.lines.sort;
-my @b = $fb.IO.lines( :chomp( False ) ).map: *.subst(' ', '', :g);
-my $c = @b.first.chars;
-my @c = @b.map( |*.comb );
+my @words = $words-file.IO.lines;
+my @board = $board-file.IO.slurp.subst( ' ',:g ).lines;
+my $width = @board.head.chars;
+my @chars = @board.map: |*.comb;
 
-.say for map { | f r $_ }, 0, 90, 45, -45;
+.Str.say for words-in rotated-data.flat.join;
 
-multi r(   0 ) { @c.batch( $c ) }
-multi r(  90 ) { r 0, 0, 0 }
-multi r( -45 ) { r 0, 1, 0 }
-multi r(  45 ) { r 1, 0, 1 }
-multi r( $i, $j, $o ) {
-    map { @c[ $_ + $o, ( $_ + $c + $j ) ... * ] }, ^$c - $i }
+sub words-in( $text ) {
+    $text ~'~'~ $text.flip ~~ m:ex:i/@words/ }
 
-sub f( @b ) {
-    gather for @b>>.join -> $b {
-        for $b, $b.flip -> $l {
-            for $l ~~ m:ex:i/ @w / {
-                take ~$_  }}}}
+sub rotated-data {
+    @chars.batch( $width ), |( (0,0),(0,1),(1,0) ).map: &rotate-data }
+
+sub rotate-data( @offsets ) {
+    (^$width).map: { @chars[ ($_ + @offsets[0]), ($_ + $width + @offsets[1]) ... * ] } }
