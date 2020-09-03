@@ -144,13 +144,11 @@ sub horizontals {
     my $matrix = {};
     foreach my $line (@$data) {
         chomp $line;
-        $line =~ s/\s+/ /g;
+        $line =~ s/\s+//g;
 
         my $l = "";
         my @l = ();
-        foreach my $char (split /\s/,$line) {
-            $char =~ s/^\s+//g;
-            $char =~ s/\s+$//g;
+        foreach my $char (split //,$line) {
             push @l, $char;
             $l .= $char;
         }
