@@ -1,101 +1,43 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2020-09-03 08:50:43 GMT"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Alexander Pankoff",
-               "name" : "Alexander Pankoff",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Andinus",
-               "name" : "Andinus",
-               "y" : 2
-            },
-            {
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 4
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Mohammad S Anwar",
-               "name" : "Mohammad S Anwar"
-            },
-            {
-               "name" : "Myoungjin Jeon",
-               "drilldown" : "Myoungjin Jeon",
-               "y" : 4
-            },
-            {
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
-            },
-            {
-               "name" : "Simon Green",
-               "drilldown" : "Simon Green",
-               "y" : 3
-            },
-            {
-               "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "name" : "Ulrich Rieke",
-               "drilldown" : "Ulrich Rieke",
-               "y" : 1
-            },
-            {
-               "name" : "Yet Ebreo",
-               "drilldown" : "Yet Ebreo",
-               "y" : 1
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 076"
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2020-09-03 07:35:25 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 076"
    },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         }
+         },
+         "borderWidth" : 0
       }
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Alexander Pankoff",
-            "name" : "Alexander Pankoff",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Alexander Pankoff",
+            "id" : "Alexander Pankoff"
          },
          {
             "data" : [
@@ -112,8 +54,8 @@
             "id" : "Andinus"
          },
          {
-            "name" : "Luca Ferrari",
             "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -126,18 +68,18 @@
             ]
          },
          {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
             "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
          },
          {
-            "name" : "Mohammad S Anwar",
             "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -146,8 +88,8 @@
             ]
          },
          {
-            "name" : "Myoungjin Jeon",
             "id" : "Myoungjin Jeon",
+            "name" : "Myoungjin Jeon",
             "data" : [
                [
                   "Perl",
@@ -160,6 +102,8 @@
             ]
          },
          {
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -168,10 +112,12 @@
                [
                   "Raku",
                   2
+               ],
+               [
+                  "Blog",
+                  1
                ]
-            ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            ]
          },
          {
             "data" : [
@@ -184,16 +130,26 @@
                   1
                ]
             ],
-            "id" : "Simon Green",
-            "name" : "Simon Green"
+            "name" : "Simon Green",
+            "id" : "Simon Green"
          },
          {
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
+               ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
+         },
+         {
+            "name" : "Ulrich Rieke",
+            "id" : "Ulrich Rieke",
+            "data" : [
+               [
+                  "Perl",
+                  1
                ]
             ]
          },
@@ -204,30 +160,78 @@
                   1
                ]
             ],
-            "name" : "Ulrich Rieke",
-            "id" : "Ulrich Rieke"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ]
-            ],
-            "name" : "Yet Ebreo",
-            "id" : "Yet Ebreo"
+            "id" : "Yet Ebreo",
+            "name" : "Yet Ebreo"
          }
       ]
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Alexander Pankoff",
+               "name" : "Alexander Pankoff"
+            },
+            {
+               "name" : "Andinus",
+               "y" : 2,
+               "drilldown" : "Andinus"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
+               "y" : 4
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "name" : "Mohammad S Anwar",
+               "drilldown" : "Mohammad S Anwar",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Myoungjin Jeon",
+               "y" : 4,
+               "name" : "Myoungjin Jeon"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West",
+               "y" : 5
+            },
+            {
+               "name" : "Simon Green",
+               "y" : 3,
+               "drilldown" : "Simon Green"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "y" : 2,
+               "name" : "Simon Proctor"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke"
+            },
+            {
+               "drilldown" : "Yet Ebreo",
+               "y" : 1,
+               "name" : "Yet Ebreo"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 076",
+         "colorByPoint" : 1
+      }
+   ],
+   "legend" : {
+      "enabled" : 0
    },
    "chart" : {
       "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
    }
 }
