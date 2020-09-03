@@ -11,9 +11,7 @@ my @A;
 if (@ARGV) {@A = @ARGV;} else {@A = (3, 2, 3, 5, 7, 5);}
 
 sub subtract1 {
-    my @in = @_;
-    my @temp = map { $_ != 0 ? $_-1 : 0 } @in;
-    return @temp;
+    return map { $_ != 0 ? $_-1 : 0 } @_;
 }
 
 sub subtract_to_max {
@@ -63,7 +61,7 @@ sub lrh {
                     $j++;
                 }
             }
-            if ( defined($h) && defined($t)) && (!exists $areas{"$h,$t"}) ) {
+            if ( defined($h) && defined($t) && (!exists $areas{"$h,$t"}) ) {
                 $areas{"$h,$t"} = ($t-$h+1)*($MAX_-$i);
             }
             $j++;
