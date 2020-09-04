@@ -83,7 +83,7 @@ sub read_grid($grid_name) {
         my @c = split //, $line;
         $grid[$row][0] = ' ';
         for my $i (0..$#c) {
-            $grid[$row][$i+1] = $c[$i];
+            $grid[$row][$i+1] = lc $c[$i];
         }
         $grid[$row][$width-1] = ' ';
         $row++;
@@ -105,7 +105,6 @@ sub parse_dict($dict_name, $min_len) {
         chomp $word;
         next unless length($word) >= $min_len;
         next unless $word =~ /^[a-z]+$/;
-        $word =~ tr/a-z/A-Z/;
 
         $words{$word} = 1;
         for my $len (1..length($word)) {
