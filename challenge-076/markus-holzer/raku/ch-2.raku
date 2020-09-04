@@ -11,7 +11,7 @@ sub words-in( $text ) {
     $text ~'~'~ $text.flip ~~ m:ex:i/@words/ }
 
 sub rotated-data {
-    @chars.batch( $width ), |( (0,0),(0,1),(1,0) ).map: &rotate-data }
+    @chars.batch( $width ), |( (0,0), (0,1), (1,0) ).map: &rotate-data }
 
 sub rotate-data( @offsets ) {
     (^$width).map: { @chars[ ($_ + @offsets[0]), ($_ + $width + @offsets[1]) ... * ] } }
