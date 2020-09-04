@@ -1,6 +1,6 @@
-my $N          = 1528;
+my $N = 1528;
 
-my @primes     = (2..^$N)
+my @primes = (2..^$N)
     .grep( *.is-prime );
 
 my @candidates = @primes X @primes;

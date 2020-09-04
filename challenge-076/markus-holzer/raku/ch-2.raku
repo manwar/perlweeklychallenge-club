@@ -1,7 +1,7 @@
 unit sub MAIN($words-file, $board-file);
 
 my @words = $words-file.IO.lines;
-my @board = $board-file.IO.slurp.subst( ' ',:g ).lines;
+my @board = $board-file.IO.slurp.subst( ' ', :g ).lines;
 my $width = @board.head.chars;
 my @chars = @board.map: |*.comb;
 
