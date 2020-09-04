@@ -87,12 +87,20 @@ sub allTopLeftToBottomRightIndices ($$) {
           my $col = $b % $lineLen;
           [ $b, map {
               my $p = $b + $_;
-              ( ($p <= $maxPos) and (($p % $lineLen) > $col) )
+              ( ($p <= $maxPos) # new position not exceed maximum pos(index)
+                and (($p % $lineLen) > $col) ) # 3 -> 9 -> 15(X)
                 ? $p : ()
             } (map {$_*($lineLen+1)} 1 .. $lineLen -1 ) ] }
       ( 0 .. ($lineLen -1), map { $lineLen*$_ } 1 .. $rowsIdx )
-      # for every starting poin
+      # for every starting point
+      # ( 0 .. 4 ),        ( 5, 10, 15 )
 }
+
+#  0  1  2  3  4
+#  5  6  7  8  9   -> example for above and below
+# 10 11 12 13 14
+# 15 16 17
+
 
 sub allTopRightToBottomLeftIndices ($$) {
     my ( $maxPos, $lineLen ) = @_;
@@ -102,10 +110,13 @@ sub allTopRightToBottomLeftIndices ($$) {
           my $col = $b % $lineLen;
           [ $b, map {
               my $p = $b + $_;
-              ( ($p <= $maxPos) and (($p % $lineLen) < $col) )
+              ( ($p <= $maxPos)
+                and (($p % $lineLen) < $col) ) # 2 -> 6 -> 10 -> 14(X)
                 ? $p: ()
             } (map {$_*($lineLen-1)} 1 .. $col) ] }
-    ( 0 .. ($lineLen -1), map { $lineLen*$_ -1 } 2 .. $rowsIdx )
+      ( 0 .. ($lineLen -1), map { $lineLen*$_ -1 } 2 .. $rowsIdx+1 )
+      # for every starting point
+      # ( 0 .. 4 ),         ( 9, 14 )
 }
 
 sub allIndices ($$) { # summary of directions shown above
@@ -126,7 +137,8 @@ sub subsequences {
     # against a whole possible line. but... my dictionary contains 127,466 lines
     ( @_ == 1 ) and return [ @_ ];
 
-    [ $_[0] ], map{ [ @_[ $$_[0] .. $$_[1] ] ] } combinationsIndex(2, scalar@_)
+    (map {[$_]} @_), # : combinations 1 out of @_
+      map{ [ @_[ $$_[0] .. $$_[1] ] ] } combinationsIndex(2, scalar@_)
 }
 
 sub allSubsequencesIndices { # final summary of indices
@@ -135,7 +147,7 @@ sub allSubsequencesIndices { # final summary of indices
       map { bothDirection @$_ } allIndices( $maxPos, $lineLen );
 }
 
-say scalar allSubsequencesIndices( 303, 16 );
+#say scalar allSubsequencesIndices( 303, 16 );
 
 sub genWordsOrganized {
     my ( $maxPos, $lineLen, $gridString ) = @_;
