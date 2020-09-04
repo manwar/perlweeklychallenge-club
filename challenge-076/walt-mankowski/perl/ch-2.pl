@@ -27,18 +27,7 @@ my $grid = read_grid($grid_name);
 my $rows = $grid->@*;
 my $cols = $grid->[0]->@*;
 
-# for my $row ($grid->@*) {
-#     $, = ", ";
-#     say $row->@*;
-# }
-
 my ($words, $prefixes) = parse_dict($dict_name, $MIN_LEN);
-# for my $k (sort keys %$prefixes) {
-#     say $k;
-# }
-# for my $k (sort keys %$words) {
-#     say $k;
-# }
 
 my @dirs = ([ 0,  1], # e
             [-1,  1], # ne
@@ -115,7 +104,6 @@ sub parse_dict($dict_name, $min_len) {
 }
 
 sub search_grid($grid, $row, $col, $dir, $words, $prefixes) {
-#    say "$row $col @$dir";
     my @found;
     my $s = $grid->[$row][$col];
     while (defined $prefixes->{$s}) {
@@ -124,9 +112,6 @@ sub search_grid($grid, $row, $col, $dir, $words, $prefixes) {
         $s .= $grid->[$row][$col];
         push @found, $s if defined $words->{$s};
     }
-    # if (@found) {
-    #     say "found @found";
-    # }
 
     return @found;
 }
