@@ -42,7 +42,6 @@ my @dirs = ([ 0,  1], # e
 my @found;
 for my $row (0..$rows-1) {
     for my $col (0..$cols-1) {
-        next if $grid->[$row][$col] eq ' ';
         for my $dir (@dirs) {
             push @found, search_grid($grid, $row, $col, $dir, $words, $prefixes);
         }
