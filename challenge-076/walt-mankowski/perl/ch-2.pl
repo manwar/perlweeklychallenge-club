@@ -24,16 +24,45 @@ use autodie;
 my $MIN_LEN = 5;
 my ($grid_name, $dict_name) = @ARGV;
 my $grid = read_grid($grid_name);
-for my $row ($grid->@*) {
-    $, = ", ";
-    say $row->@*;
-}
+my $rows = $grid->@*;
+my $cols = $grid->[0]->@*;
+
+# for my $row ($grid->@*) {
+#     $, = ", ";
+#     say $row->@*;
+# }
 
 my ($words, $prefixes) = parse_dict($dict_name, $MIN_LEN);
-for my $k (sort keys %$prefixes) {
-    say $k;
+# for my $k (sort keys %$prefixes) {
+#     say $k;
+# }
+# for my $k (sort keys %$words) {
+#     say $k;
+# }
+
+my @dirs = ([ 0,  1], # e
+            [-1,  1], # ne
+            [-1,  0], # n
+            [-1, -1], # nw
+            [ 0, -1], # w
+            [ 1, -1], # sw
+            [ 1,  0], # s
+            [ 1,  1], # se
+           );
+
+my @found;
+for my $row (0..$rows-1) {
+    for my $col (0..$cols-1) {
+        next if $grid->[$row][$col] eq ' ';
+        for my $dir (@dirs) {
+            push @found, search_grid($grid, $row, $col, $dir, $words, $prefixes);
+        }
+    }
 }
 
+for my $word (sort @found) {
+    say $word;
+}
 
 sub read_grid($grid_name) {
     my @grid;
@@ -75,6 +104,7 @@ sub parse_dict($dict_name, $min_len) {
         chomp $word;
         next unless length($word) >= $min_len;
         next unless $word =~ /^[a-z]+$/;
+        $word =~ tr/a-z/A-Z/;
 
         $words{$word} = 1;
         for my $len (1..length($word)) {
@@ -82,4 +112,21 @@ sub parse_dict($dict_name, $min_len) {
         }
     }
     return (\%words, \%prefixes);
+}
+
+sub search_grid($grid, $row, $col, $dir, $words, $prefixes) {
+#    say "$row $col @$dir";
+    my @found;
+    my $s = $grid->[$row][$col];
+    while (defined $prefixes->{$s}) {
+        $row += $dir->[0];
+        $col += $dir->[1];
+        $s .= $grid->[$row][$col];
+        push @found, $s if defined $words->{$s};
+    }
+    # if (@found) {
+    #     say "found @found";
+    # }
+
+    return @found;
 }
