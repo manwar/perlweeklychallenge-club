@@ -29,6 +29,11 @@ for my $row ($grid->@*) {
     say $row->@*;
 }
 
+my ($words, $prefixes) = parse_dict($dict_name, $MIN_LEN);
+for my $k (sort keys %$prefixes) {
+    say $k;
+}
+
 
 sub read_grid($grid_name) {
     my @grid;
@@ -59,4 +64,22 @@ sub read_grid($grid_name) {
     }
 
     return \@grid;
+}
+
+sub parse_dict($dict_name, $min_len) {
+    my %words;
+    my %prefixes;
+
+    open my $fh, '<', $dict_name;
+    while (my $word = <$fh>) {
+        chomp $word;
+        next unless length($word) >= $min_len;
+        next unless $word =~ /^[a-z]+$/;
+
+        $words{$word} = 1;
+        for my $len (1..length($word)) {
+            $prefixes{substr($word, 0, $len)} = 1;
+        }
+    }
+    return (\%words, \%prefixes);
 }
