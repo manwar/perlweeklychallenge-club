@@ -71,6 +71,7 @@ sub read_grid($grid_name) {
     my $row = 0;
     while (my $line = <$fh>) {
         chomp $line;
+        $line =~ s/ //g;
         if ($width == 0) {
             # make top line
             $width = 2 + length($line);
