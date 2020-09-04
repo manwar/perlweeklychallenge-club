@@ -78,6 +78,9 @@ wigged
 
 =end usage
 
+# My word list doesn't include plurals so if a word matches then 
+# I'll use the below module to check if the plural is in the grid.
+
 use Lingua::EN::Inflect:from<Perl5> 'PL';
 
 sub MAIN(Str $grid, Str $word-list, UInt $word-length=5) {
