@@ -38,14 +38,16 @@ sub primes_upto($n) {
     return grep {$is_prime[$_]} 2..$n;
 }
 
+# find n possibly repeating primes, where n <= k, where the primes add
+# up to s
 sub sums_goldbach($s, $k, @primes) {
     my @solutions;
     my $best = 1e300;
 
     my $iter = combinations_with_repetition([0, @primes], $k);
     while (my $p = $iter->next) {
-        my @digits = grep(!/^0$/, $p->@*);
-        next unless @digits;
+        my @digits = grep(!/^0$/, $p->@*); # remove 0s
+        next unless @digits; # ignore (0,0,0)
         next unless sum(@digits) == $s;
         if (@digits < $best) {
             @solutions = (join " + ", @digits);
