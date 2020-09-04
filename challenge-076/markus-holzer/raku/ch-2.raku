@@ -1,9 +1,8 @@
 unit sub MAIN($words-file, $board-file);
 
 my @words = $words-file.IO.lines;
-my @board = $board-file.IO.slurp.subst( ' ', :g ).lines;
-my $width = @board.head.chars;
-my @chars = @board.map: |*.comb;
+my $width = $board-file.IO.lines.head.chars div 2 + 1;
+my @chars = $board-file.IO.slurp.comb( /\w/ );
 
 .Str.say for words-in rotated-data.flat.join;
 
