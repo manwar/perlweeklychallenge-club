@@ -15,35 +15,34 @@ use Algorithm::Combinatorics qw(combinations);
 my $SUM = $ARGV[0];
 
 print "USAGE: perl $0 <positive_number>\n" and exit unless defined $SUM;
-print prime_sum(find_prime_upto($SUM), $SUM);
+_print(prime_sum(find_prime_upto($SUM), $SUM));
 
 #
 #
 # METHODS
 
+sub _print {
+    my ($prime_sum) = @_;
+
+    foreach (@$prime_sum) {
+        print sprintf("%s\n", join ", ", @$_);
+    }
+}
+
 sub prime_sum {
     my ($primes, $sum) = @_;
 
-    print sprintf("Primes: %s\n", join(", ", @$primes));
     my $prime_sum = [];
     foreach my $i (1 .. $sum) {
         last if ($i > @$primes);
         foreach my $comb (combinations($primes, $i)) {
             my $_sum = 0;
             $_sum += $_ for @$comb;
-            if ($_sum == $sum) {
-                if ((@$prime_sum == 0) || (@$prime_sum > @$comb)) {
-                    $prime_sum = $comb;
-                }
-            }
-
-            if (@$prime_sum) {
-                return sprintf("Prime Sum: %s\n", join ", ", @$prime_sum);
-            }
+            push @$prime_sum, $comb if ($_sum == $sum);
         }
     }
 
-    return "None found.\n";
+    return $prime_sum;
 }
 
 sub find_prime_upto {
