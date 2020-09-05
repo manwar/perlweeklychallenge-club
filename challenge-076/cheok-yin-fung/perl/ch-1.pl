@@ -6,7 +6,7 @@
 # Usage: ch-1.pl $N
 
 # Given the Goldbach's conjecture conjecture is verified 
-# for n < 4 000 000 000 000 000 000 000 000 
+# for n < 4 000 000 000 000 000 000 
 # ( source: mathworld.wolfram.com )
 
 use strict;
@@ -37,7 +37,7 @@ if ($V == 2) {
 }
 
 if ($V == 4) {
-    print "2\nas 2 + 2 = 4.\n";
+    print "2\nas 2 + 2 = 4 and 4 is not a prime.\n";
     exit;
 }
 
@@ -53,6 +53,7 @@ if ($V % 2 == 0) {
     for (keys %oddprime) {
         if ($oddprime{$V-$_}) {
             print "as $_", " + ", $V-$_," = $V.\n" ;
+            last;
         }
     }
 } 
@@ -61,14 +62,18 @@ else {
     if ($oddprime{$V}) {
         print "1\nas $V is a prime.\n";
     } 
-    elsif ($oddprime{$V-2} == 1) {
-            print "2\nas 2 + " ,$V-2, " = $V.\n" ,
+    elsif ($oddprime{$V-2}) {
+            print "2\nas 2 + " ,$V-2, " = $V\nand $V is not a prime.\n" ,
         }
         else {
             print "3\n";
             for (keys %oddprime) {
                 if ($oddprime{$V-3-$_}) {
-                    print "as 3 + $_", " + ", $V-$_-3," = $V.\n";
+                    print "3 + $_", " + ", $V-$_-3," = $V .\n";
+                    print "The answer can't be 1 or 2 because",
+                          " neither ", $V-2 ," nor $V is a prime; and\n", 
+                          " there are no even primes except 2\n",
+                          " (two odd primes sum to an even number).\n";
                     last;
                 }
             }
