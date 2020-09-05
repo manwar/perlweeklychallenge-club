@@ -214,7 +214,6 @@ my $rawGridData = unsafe_slurpFile( $::gridPath );
 
 my @dictOrganized = sort { (lc $a) cmp (lc $b) } ( split "\n", $dictData );
 my @gridWordsOrganized = genWordsOrganized( prepareGridData( $rawGridData ) );
-say $gridWordsOrganized[14174];
 
 if ( $::debugging ) {
     my $cnt = scalar @gridWordsOrganized;
