@@ -61,7 +61,7 @@ impl SearchGrid {
 
         let left_coords = (0..self.height).map(|y| (0isize, y)).collect::<Vec<_>>();
         let top_coords = (0..self.width).map(|x| (x, 0isize)).collect::<Vec<_>>();
-        let bottom_coords = (0..self.width).map(|x| (x, self.height - 1)).collect::<Vec<(isize, isize)>>();
+        let bottom_coords = (0..self.width).map(|x| (x, self.height - 1)).collect::<Vec<_>>();
 
         let mut strings = left_coords.iter().skip(1).map(|coord| self.string_from(coord, (1, -1))).collect::<Vec<String>>();
         strings.extend(left_coords.iter().map(|coord| self.string_from(coord, (1, 0))));
