@@ -11,10 +11,18 @@
 use strict;
 use warnings;
 use Test::More;
+use Test::Deep;
 use Algorithm::Combinatorics qw(combinations);
 
-is(prime_sum(find_prime_upto(9), 9),   "2, 7", "testing prime sum = 9");
-is(prime_sum(find_prime_upto(12), 12), "5, 7", "testing prime sum = 12");
+is_deeply(prime_sum(find_prime_upto(6), 6),
+          [],
+          "testing prime sum = 6");
+is_deeply(prime_sum(find_prime_upto(9), 9),
+          [[2, 7]],
+          "testing prime sum = 9");
+is_deeply(prime_sum(find_prime_upto(12), 12),
+          [[5, 7], [2, 3, 7]],
+          "testing prime sum = 12");
 
 done_testing;
 
@@ -31,19 +39,11 @@ sub prime_sum {
         foreach my $comb (combinations($primes, $i)) {
             my $_sum = 0;
             $_sum += $_ for @$comb;
-            if ($_sum == $sum) {
-                if ((@$prime_sum == 0) || (@$prime_sum > @$comb)) {
-                    $prime_sum = $comb;
-                }
-            }
-
-            if (@$prime_sum) {
-                return join ", ", @$prime_sum;
-            }
+            push @$prime_sum, $comb if ($_sum == $sum);
         }
     }
 
-    return 0;
+    return $prime_sum;
 }
 
 sub find_prime_upto {
