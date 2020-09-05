@@ -78,8 +78,9 @@ impl SearchGrid {
     }
 
     fn string_from(&self, (xstart, ystart): &(isize, isize), (xinc, yinc): (isize, isize)) -> String {
-        let x_coords = (0..self.width).map(|pos| xstart + (xinc * pos));
-        let y_coords = (0..self.height).map(|pos| ystart + (yinc * pos));
+        let max_extent = self.width.max(self.height);
+        let x_coords = (0..max_extent).map(|pos| xstart + (xinc * pos));
+        let y_coords = (0..max_extent).map(|pos| ystart + (yinc * pos));
         x_coords.zip(y_coords)
             .filter(|(x,y)| *x >= 0 && *y >= 0 && *x < self.width && *y < self.height)
             .map(|(x,y)| self.grid[y as usize][x as usize])
