@@ -5,7 +5,7 @@
 # required, whose summation gives you $N.
 # Usage: ch-1.pl $N
 
-# Given the Goldbach's conjecture conjecture is verified 
+# Given the Goldbach's conjecture is verified 
 # for n < 4 000 000 000 000 000 000 
 # ( source: mathworld.wolfram.com )
 
