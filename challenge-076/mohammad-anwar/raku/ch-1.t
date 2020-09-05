@@ -10,6 +10,7 @@
 
 use Test;
 
+is-deeply prime-sum(6).<>,  [],                  "prime sum = 6";
 is-deeply prime-sum(9).<>,  [(2, 7),],           "prime sum = 9";
 is-deeply prime-sum(12).<>, [(5, 7), (2, 3, 7)], "prime sum = 12";
 
