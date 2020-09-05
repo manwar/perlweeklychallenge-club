@@ -184,7 +184,7 @@ sub prepareGridData ($) {
 
 sub grepMatchedWordsRefWithSortedDataRef {
     my $dictWordsRef = $_[0];
-    my $gridWordsRef = $_[1]; # XXX: this is kinda a copying
+    my $gridWordsRef = $_[1];
 
     my ( $di, $gi ) = ( 0, 0 );
     my @result;
