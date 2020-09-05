@@ -61,7 +61,7 @@ impl SearchGrid {
 
         let left_coords = (0..self.height).map(|y| (0isize, y)).collect::<Vec<_>>();
         let top_coords = (0..self.width).map(|x| (x, 0isize)).collect::<Vec<_>>();
-        let bottom_coords = (0..self.width).map(|x| (x, self.height - 1)).collect::<Vec<(isize, isize)>>();
+        let bottom_coords = (0..self.width).map(|x| (x, self.height - 1)).collect::<Vec<_>>();
 
         let mut strings = left_coords.iter().skip(1).map(|coord| self.string_from(coord, (1, -1))).collect::<Vec<String>>();
         strings.extend(left_coords.iter().map(|coord| self.string_from(coord, (1, 0))));
@@ -78,8 +78,9 @@ impl SearchGrid {
     }
 
     fn string_from(&self, (xstart, ystart): &(isize, isize), (xinc, yinc): (isize, isize)) -> String {
-        let x_coords = (0..self.width).map(|pos| xstart + (xinc * pos));
-        let y_coords = (0..self.height).map(|pos| ystart + (yinc * pos));
+        let max_extent = self.width.max(self.height);
+        let x_coords = (0..max_extent).map(|pos| xstart + (xinc * pos));
+        let y_coords = (0..max_extent).map(|pos| ystart + (yinc * pos));
         x_coords.zip(y_coords)
             .filter(|(x,y)| *x >= 0 && *y >= 0 && *x < self.width && *y < self.height)
             .map(|(x,y)| self.grid[y as usize][x as usize])
