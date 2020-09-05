@@ -22,16 +22,15 @@ perl ch-2.pl <word search grid file path> <dictionary file path>
 
 =head1 Comment
 
-this was really heavier solution than I thought it would be.
-5th Sep 2020: change some array -> array ref. to speed up little bit.
+remove some dependencies to speed up.
 
 =cut
 
 use strict; use warnings;
 use v5.14; # state, say
 
-use Getopt::Long qw(:config gnu_compat);
-use Pod::Usage;
+#use Getopt::Long qw(:config gnu_compat);
+#use Pod::Usage;
 use List::MoreUtils qw(uniq);
 use File::Spec;
 use FindBin;
@@ -42,17 +41,6 @@ use CombinationsIndex qw(combinationsIndex);
 BEGIN {
     sub fs { "File::Spec" }
     $::debugging = 0;
-
-    my $help = 0;
-
-    GetOptions( "debug"   => \$::debugging,
-                "grid=s"  => \$::gridPath,
-                "dict=s"  => \$::dictPath,
-                "help"    => \$help,
-        ) or pod2usage(2);
-
-    pod2usage( -exitval => 0, -verbose => 2 ) if $help;
-
 
     our $dprint = sub( @ ) {
         ++$|;
@@ -206,6 +194,9 @@ sub raku_arrayref { "[".(join ", ", @{$_[0]})."]" }
 
 # testing ...
 package main;
+
+$::gridPath = shift @ARGV;
+$::dictPath = shift @ARGV;
 
 if ( not defined $::dictPath ) {
     #$::dictPath  //= fs->catfile( $FindBin::Bin, qw(.. data tinyDict.txt) );
