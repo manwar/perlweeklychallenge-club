@@ -137,10 +137,9 @@ sub allSubsequencesIndices { # final summary of indices
 
 sub genWordsOrganized {
     my ( $maxPos, $lineLen, $gridString ) = @_;
-    my @gridChars = split "", lc $gridString;
+    my @gridChars = split "", $gridString;
 
-    say $gridString;
-    #::dprint "[DBG] the grid string (in lower case):\n$gridString\n\n";
+    ::dprint "[DBG] the grid string (in lower case):\n$gridString\n\n";
     local $" = '';
     sort(
          uniq( map { "@gridChars[@$_]" }
@@ -167,7 +166,7 @@ sub prepareGridData ($) {
     $gdata =~ s/\n//g;
     my $maxPos = (length $gdata) -1;
 
-    $maxPos, $lineLen, (lc $gdata) # finay $gdata is in a linear form
+    $maxPos, $lineLen, (lc $gdata) # final $gdata is in a linear form
 }
 
 sub grepMatchedWordsRefWithSortedDataRef {

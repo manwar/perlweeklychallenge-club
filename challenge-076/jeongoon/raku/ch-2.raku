@@ -33,11 +33,11 @@ class GridSizeInfo {
 
     method all-topleft-bottomright-indices {
         # for every starting point: ex) |(0,1,2), |(3,6,9)
-        ( |(0 ...^ $!line-len),
-          |($!line-len, 2*$!line-len ... $!max-pos) ).map(
+        ( |(0 ..^ $!line-len),
+          |(1 .. $!rows-idx).map( * *$!line-len ) ).map(
             -> $b {
                 my $col = $b % $!line-len;
-                $b, |( $!line-len+1, 2*($!line-len+1) ... $!max-pos ).map(
+                $b, | (1..^$!line-len).map(* * ($!line-len+1) ).map(
                     -> $dt { my $p = $b + $dt;
                             # ex) when 0 -> 4 -> 8 -> 9(X)
                             ( ($p <= $!max-pos) and
@@ -47,11 +47,11 @@ class GridSizeInfo {
 
     method all-topright-bottomleft-indices {
         # for every starting point: ex) |(0,1,2) |(5,8)
-        ( |(0 ...^ $!line-len),
-          |(2*$!line-len-1, 3*$!line-len-1 ... $!max-pos) ).map(
+        ( |(0 ..^ $!line-len),
+          |(2.. $!rows-idx+1).map( * *$!line-len -1 ) ).map(
             -> $b {
                 my $col = $b % $!line-len;
-                $b, |( $!line-len-1, 2*($!line-len-1) ... $!max-pos ).map(
+                $b, | (1 .. $col).map( * *($!line-len-1) ).map(
                     -> $dt { my $p = $b + $dt;
                             # ex) when 1 -> 3 -> 8(X)
                             ( ($p <= $!max-pos) and
