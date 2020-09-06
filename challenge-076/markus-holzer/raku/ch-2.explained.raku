@@ -1,10 +1,10 @@
-unit sub MAIN($words-file, $word-file);
+unit sub MAIN($words-file, $board-file);
 
 my @words = $words-file.IO.lines;
 say "Looking for words:";
 dd @words;
 
-my @chars = $word-file.IO.slurp.comb( /\H/ );
+my @chars = $board-file.IO.slurp.comb( /\H/ );
 say "Searching these characters:";
 dd @chars;
 
