@@ -23,7 +23,8 @@ sub read_grid {
 # Read the dictionary and build a regex that matches all individual
 # words.  Inspired by https://perlmonks.org/?node_id=1179840.
 # Longer matching words take precedence over shorter ones.
-# Overlapping words are not searched for.
+# Overlapping words are not searched for.  This gives less matches
+# than the example.
 sub read_dict {
 	open my $fh, '<', shift;
 
@@ -107,17 +108,15 @@ sub indexing ($$) {
 #
 
 my @grid = read_grid $ARGV[0] // 'ch-2.grid';
-my $needle = read_dict $ARGV[1] // '/usr/share/dict/words';
+my $words = read_dict $ARGV[1] // '/usr/share/dict/words';
 
 local $\ = "\n";
 
 # Apply each indexing to the grid data and match the retrieved strings
 # forward and reversed against the dictionary.
 for my $index (indexing @grid, @{$grid[0]}) {
-		my @haystack =  map {join '', map $grid[$_->[0]][$_->[1]], @$_}
-			$index->();
-		print foreach map /($needle)/g,
-			@haystack, map {scalar reverse} @haystack;
+	print foreach map /($words)/g, map {($_, scalar reverse)}
+		map {join '', map $grid[$_->[0]][$_->[1]], @$_} $index->();
 }
 
 # Result from running the example grid against the local English
@@ -125,19 +124,19 @@ for my $index (indexing @grid, @{$grid[0]}) {
 
 __DATA__
 SUCCORS
-MIDST
-BROAD
-OVARY
-PATNA
-VIRUSES
-GARLIC
-FILCH
 AIMED
 WIGGED
 BURIES
 SOCIALIZING
+MIDST
+BROAD
 GOATS
+OVARY
+PATNA
 MALIGNANT
+VIRUSES
+GARLIC
+FILCH
 BLUNTS
 SHRINES
 HAZARD
@@ -147,12 +146,12 @@ SPASMODIC
 MALLS
 DEPARTED
 LIENS
+RAPED
 QUASHED
+MARGO
 ANTES
 ENTER
 PUDGIEST
-RAPED
-MARGO
 CONSTITUTIONS
 THEOREMS
 AROSE
