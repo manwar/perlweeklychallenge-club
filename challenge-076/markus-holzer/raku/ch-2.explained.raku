@@ -5,6 +5,7 @@ say "Looking for words:";
 dd @words;
 
 my @chars = $board-file.IO.slurp.comb( /\H/ );
+say "Grid:\n", @chars.join;
 say "Searching these characters:";
 dd @chars;
 
