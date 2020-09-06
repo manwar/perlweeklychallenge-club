@@ -1,38 +1,16 @@
 {
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
    "chart" : {
       "type" : "column"
    },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "align" : "right"
-         },
-         "data" : [
-            [
-               "Blog",
-               947
-            ],
-            [
-               "Perl",
-               3189
-            ],
-            [
-               "Raku",
-               2070
-            ]
-         ]
-      }
-   ],
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
    "xAxis" : {
       "type" : "category",
       "labels" : {
@@ -42,22 +20,44 @@
          }
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-09-06 19:35:45 GMT"
    },
    "legend" : {
       "enabled" : "false"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-09-06 18:05:35 GMT"
-   }
+   "series" : [
+      {
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               948
+            ],
+            [
+               "Perl",
+               3189
+            ],
+            [
+               "Raku",
+               2072
+            ]
+         ],
+         "dataLabels" : {
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "y" : 10,
+            "rotation" : -90,
+            "enabled" : "true"
+         }
+      }
+   ]
 }
