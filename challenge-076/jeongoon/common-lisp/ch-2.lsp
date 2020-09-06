@@ -3,6 +3,9 @@
 ;; but I might have a bug it takes more words than my original perl code.
 ;; or maybe this one is correct...
 
+;; tested with:
+;; sbcl --script ch-2.lsp ../data/dict.txt /usr/share/dict/words
+
 (defun get-ridx (mp nc) (floor (/ mp nc)))
 (defun all-columns-linear-indices (max-pos num-col)
   (let* ((row-idx (get-ridx max-pos num-col)))
