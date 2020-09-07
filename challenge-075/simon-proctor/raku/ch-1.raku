@@ -9,10 +9,19 @@ sub MAIN (
     UInt $amount where * > 0, #= Amount to make change of
     *@coins where { .all ~~ Int && .all > 0 }, #= Valid coins
     Bool :v(:$verbose) = False, #= Print the complete list of combinations 
+    Str :p(:$pretty) = "", #= If in verbose mode and set to a value uses this as the coin type (eg 'p' or 'c')
 ) {
     my @change = make-change( $amount, @coins );
     say @change.elems;
-    if $verbose { .join(", ").say for @change }
+    if $verbose {
+        if $pretty {
+            for @change -> @list {
+                @list.Bag.pairs.sort( { $^b.key cmp $^a.key } ).map( { "{$_.value} x {$_.key}{$pretty}" } ).join( ", ").say;
+            }
+        } else {
+            .join(", ").say for @change;
+        }
+    }
 }
 
 my %change_cache;

@@ -1,0 +1,102 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 076
+                            ━━━━━━━━━━━━━━━
+
+
+Table of Contents
+─────────────────
+
+1 Task 1 - Prime Sum
+.. 1.1 Perl
+
+
+
+
+
+1 Task 1 - Prime Sum
+════════════════════
+
+  You are given a number `$N'. Write a script to find the minimum number
+  of prime numbers required, whose summation gives you `$N'.
+
+  • For the sake of this task, please assume 1 is not a prime number.
+
+
+1.1 Perl
+────────
+
+  • Program: [file:perl/ch-1.pl]
+  • Help taken from: [https://stackoverflow.com/a/35756072].
+
+  User input is stored in `$input'.
+  ┌────
+  │ my $input = shift @ARGV;
+  │ chomp $input;
+  └────
+
+  1 is assumed not to be a prime number so we reject numbers less than
+  or equal to 1.
+  ┌────
+  │ die "Invalid input, enter numbers greater than 1.\n" if $input <= 1;
+  └────
+
+  If it's a prime number then the minimum sum is the number itself so we
+  just return it & exit.
+  ┌────
+  │ say $input and exit 0 if is_prime($input) == 1;
+  └────
+
+  If `$input' is even then we loop from 2 to `$input / 2' & check if
+  both `$i' & `$diff' are primes. If both are primes then we have our
+  numbers.
+
+  Eventually we'll find 2 primes to be a sum of even numbers. From
+  WikiPedia, [Goldbach's conjecture] has been shown to hold for all
+  integers less than `4 × 10^18'.
+  ┌────
+  │ if ($input % 2 == 0) {
+  │     foreach my $i (2 ... $input / 2) {
+  │         my $diff = $input - $i;
+  │         say "$i + $diff"
+  │             if is_prime($i) and is_prime($diff);
+  │     }
+  │ }
+  └────
+
+  If the input is odd then we first check if `$input - 2' is a prime, if
+  it is then input is the sum of two primes, 2 & `$input - 2'.
+  ┌────
+  │ elsif (is_prime($input - 2)) {
+  │     say "2 + $input";
+  │ }
+  └────
+
+  If even that doesn't match then the minimum sum will have three
+  numbers. 3 & then we use the same function as for even numbers to find
+  the other two primes.
+  ┌────
+  │ else {
+  │     foreach my $i (2 ... ($input - 3) / 2) {
+  │         my $diff = $input - 3 - $i;
+  │         say "3 + $i + $diff"
+  │             if is_prime($i) and is_prime($diff);
+  │     }
+  │ }
+  └────
+
+  If $num is divisible by any number between 2 & `sqrt($num)' then it's
+  not prime.
+  ┌────
+  │ sub is_prime {
+  │     my $num = shift @_;
+  │
+  │     foreach my $i (2 ... sqrt($num)) {
+  │         return 0 if $num % $i == 0;
+  │     }
+  │     return 1;
+  │ }
+  └────
+
+
+[Goldbach's conjecture]
+https://en.wikipedia.org/wiki/Goldbach%2527s_conjecture

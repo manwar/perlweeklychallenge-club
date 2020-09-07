@@ -1,0 +1,61 @@
+#! /usr/bin/env raku
+
+subset IntTwo of Int where * >= 2;
+
+unit sub MAIN (IntTwo $N, :a(:$all), :l(:$loquacious), :v(:$verbose) = $loquacious || $all);
+
+my @primes = (2 .. $N).grep( *.is-prime ).reverse;
+
+say ": Primes (reverse): { @primes.join(", ") }" if $verbose;
+
+my @result;
+my $shortest = Inf;
+
+recurse(0, (), @primes);
+
+sub recurse ($value is copy, @values is copy, @primes is copy)
+{
+  return if @values.elems > $shortest && ! $all;
+
+  if $value < $N
+  {  
+    while @primes
+    {
+      my $add = @primes[0];
+      
+      if $value + $add <= $N
+      {  
+        my $value2  = $value + $add;
+	my @values2 = @values.clone.push: $add;
+        recurse($value2, @values2, @primes);
+      }
+      @primes.shift;
+    }
+  }
+
+  elsif $value == $N
+  {
+    if @values.elems < $shortest
+    {
+      $shortest = @values.elems;
+      @result   = ();
+      say ":: New Solution: [{ @values.join(", ") }]" if $loquacious;
+    }
+    else
+    {
+      say ":: Added Solution: [{ @values.join(", ") }]" if $loquacious;
+    }
+
+    @result.push: @values;
+  }
+}
+
+if $verbose
+{
+  for @result -> @array
+  {
+    say ": Result: [{ @array.join(", ") }]";
+  }
+}
+
+say @result[0].elems // "";
