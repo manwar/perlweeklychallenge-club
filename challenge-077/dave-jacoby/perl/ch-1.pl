@@ -13,31 +13,36 @@ my $n = 9;
 GetOptions( 'n=i' => \$n );
 croak "n < 1" if $n < 1;
 
-my $x = fib_sum($n);
-my $s = scalar $x->@*;
-my $p = join ' + ', $x->@*;
-say qq{$s as ($n = $p)};
+fib_sum($n);
 
-# 
+#
 sub fib_sum ( $n ) {
     my @fib = reverse fib_list($n);
     my @list = ( [] );
+    my @sums;
     my %no;
 
     while (@list) {
         my $entry = shift @list;
-        my $join = join ',', $entry->@*;
-        next if $no{$join}++;
-
         for my $fib (@fib) {
             next if grep { $_ == $fib } $entry->@*;
-            my $new->@* = sort { $a <=> $b } $fib, $entry->@*;
+            my $new->@* = sort { $b <=> $a } $fib, $entry->@*;
             my $sum = sum0 $new->@*;
+            my $join = join ',', $new->@*;
+            next if $no{$join}++;
             push @list, $new if $sum < $n;
-            return $new if $sum == $n;
+            push @sums, $new if $sum == $n;
         }
     }
-    print 0 && exit;
+
+    if ( scalar @sums ) {
+        for my $sum (@sums) {
+            my $s = scalar $sum->@*;
+            my $p = join ' + ', $sum->@*;
+            say qq{$s as ($n = $p)};
+        }
+    }
+    else { print 0 }
 }
 
 # creates a list of fibonacci values where each value is
