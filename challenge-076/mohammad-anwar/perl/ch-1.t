@@ -1,22 +1,28 @@
 #!/usr/bin/perl
 
 #
-# Perl Weekly Challenge - 075
+# Perl Weekly Challenge - 076
 #
-# Task #1: Coins Sum
+# Task #1: Prime Sum
 #
-# https://perlweeklychallenge.org/blog/perl-weekly-challenge-075
+# https://perlweeklychallenge.org/blog/perl-weekly-challenge-076
 #
 
 use strict;
 use warnings;
 use Test::More;
+use Test::Deep;
+use Algorithm::Combinatorics qw(combinations);
 
-is coins_sum(prepare("1, 2"),        5), 3;
-is coins_sum(prepare("1, 2, 3"),     5), 5;
-is coins_sum(prepare("1, 2, 4"),     6), 6;
-is coins_sum(prepare("25, 10, 5"),  30), 5;
-is coins_sum(prepare("9, 6, 5, 1"), 11), 6;
+is_deeply(prime_sum(find_prime_upto(6), 6),
+          [],
+          "testing prime sum = 6");
+is_deeply(prime_sum(find_prime_upto(9), 9),
+          [[2, 7]],
+          "testing prime sum = 9");
+is_deeply(prime_sum(find_prime_upto(12), 12),
+          [[5, 7], [2, 3, 7]],
+          "testing prime sum = 12");
 
 done_testing;
 
@@ -24,44 +30,54 @@ done_testing;
 #
 # METHODS
 
-sub coins_sum {
-    my ($coins, $sum) = @_;
+sub prime_sum {
+    my ($primes, $sum) = @_;
 
-    my $size = $#$coins;
-    return 0 if ($size == -1 || $sum <= 0);
-
-    my $matrix;
-
-    # Sum of 0 can be achieved in one possible way.
-    $matrix->[$_][0] = 1 for (0 .. $size+1);
-
-    foreach my $i (0 .. $size) {
-
-        foreach my $j (1 .. $sum) {
-
-            my $include_current = 0;
-            my $exclude_current = 0;
-
-            if ($coins->[$i] <= $j) {
-                $include_current = $matrix->[$i][$j - $coins->[$i]];
-            }
-
-            if ($i > 0) {
-                $exclude_current = $matrix->[$i - 1][$j];
-            }
-
-            $matrix->[$i][$j] = $include_current + $exclude_current;
+    my $prime_sum = [];
+    foreach my $i (1 .. $sum) {
+        last if ($i > @$primes);
+        foreach my $comb (combinations($primes, $i)) {
+            my $_sum = 0;
+            $_sum += $_ for @$comb;
+            push @$prime_sum, $comb if ($_sum == $sum);
         }
     }
 
-    return $matrix->[$size][$sum];
+    return $prime_sum;
 }
 
-sub prepare {
-    my ($coins) = @_;
+sub find_prime_upto {
+    my ($sum) = @_;
 
-    if (defined $coins) {
-        $coins =~ s/\s//g;
-        return [ split /\,/, $coins ];
+    die "ERROR: Invalid sum [$sum].\n"
+        unless (($sum =~ /^\d+$/) && ($sum > 0));
+
+    my $range = { map { $_ => 1 } 2..$sum };
+    my $prime = [];
+
+    my $i = 2;
+    while (keys %$range) {
+        push @$prime, $i;
+        ($i, $range) = sieve_of_eratosthenes($i, $range);
+        last unless defined $i;
     }
+
+    return $prime;
+}
+
+#
+#
+# https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes
+
+sub sieve_of_eratosthenes {
+    my ($i, $range) = @_;
+
+    foreach my $j (sort { $a <=> $b } keys %$range) {
+        delete $range->{$j} unless ($j % $i);
+    }
+
+    $i  = (sort { $a <=> $b } keys %$range)[0];
+    $i += 0 if defined $i;
+
+    return ($i, $range);
 }
