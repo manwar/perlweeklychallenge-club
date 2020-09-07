@@ -24,35 +24,55 @@ our @EXPORT = qw(coinSum);
 our @EXPORT_OK = qw();
 
 
-my @Combo;
+my @ComboList;
 
 sub _coinSum
 {
-    my ($target, $denomList, $currentSum, $currentDenom, $comboNum = @_;
+    my ($depth, $target, $coinList, $coin, $combo) = @_;
 
-    return 0 if ( $currentSum > $target );
+    my $diff = $target - $coin;
+    # say " depth=$depth, target = $target, coin = $coin, diff = $diff, list = [ @$coinList ], combo = [ @$combo ]";
 
-    return 1 if ( $currentSum == $target );
 
-    my $count = 0;
-    for my $denom ( @$denomList )
+    if ( $diff == 0 )
     {
-        push @{$Combo[$comboNum]]  $denom;
-        if ( $denom >= $currentDenom )
-        {
-            $comboNum += _coinSum($target, $denomList, $currentSum + $currentDenom, $denom, $comboNum);
-        }
+        push @ComboList, [ @$combo ];
+        # say "FOUND [ @$combo ]";
+        return 0;
     }
-    return $0;
+
+    if ( $diff < 0 )
+    {
+        pop @$combo;
+        # say "TOO FAR";
+        return $diff;
+    }
+
+    my @remainingCoin = sort { $a < $b } grep { $_ <= $diff } @$coinList;
+    for my $denom ( @remainingCoin )
+    {
+        push @$combo, $denom;
+        _coinSum( $depth+1, $diff, \@remainingCoin, $denom, $combo );
+        pop @$combo;
+    }
+
 }
 
 sub coinSum
 {
     my ($sum, @coins) = @_;
+ 
+    # Sort denominations so largest is first.
+    @coins = sort { $a < $b } @coins;
 
-    _coinSum($sum, \@coins, 0, $coins[0], 0);
+    while ( @coins )
+    {
+        # say "TOP: coin = $coins[0]";
+        _coinSum(1, $sum, \@coins, $coins[0], [ $coins[0] ] );
+        shift @coins;
+    }
 
-    return 0;
+    return \@ComboList;
 }
 
 1;

@@ -32,6 +32,8 @@ use strict;
 use warnings;
 use feature qw(say);
 
+use Data::Dumper;
+
 use lib "lib";
 use CoinSum qw(coinSum);
 
@@ -43,7 +45,7 @@ my @C = @ARGV;
 die Usage() unless $S;
 die Usage() unless @C;
 
-# Sort denominations so largest is first.
-@C = sort { $a < $b } @C;
 
-coinSum($S, @C);
+my $result = coinSum($S, @C);
+
+say "[ @$_ ]" foreach @$result;
