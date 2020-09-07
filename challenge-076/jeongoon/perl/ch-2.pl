@@ -2,11 +2,11 @@
 # -*- Mode: cperl; cperl-indent-level:4 tab-width: 8; indent-tabs-mode: nil -*-
 # -*- coding: utf-8 -*-
 
-=pod Word Search
+=pod Word Search (No Options Vesion)
 
 =head1 Usage
 
-perl ch-2.pl --grid <word search grid file path> --dict <dictionary file path>
+perl ch-2.pl <word search grid file path> <dictionary file path>
 
 =head1 Solution
 
@@ -22,13 +22,13 @@ perl ch-2.pl --grid <word search grid file path> --dict <dictionary file path>
 
 =head1 Comment
 
-this was really heavy solution than I thought it would be.
+this was really heavier solution than I thought it would be.
+5th Sep 2020: change some array -> array ref. to speed up little bit.
 
 =cut
 
 use strict; use warnings;
-no warnings "experimental::smartmatch";
-use v5.14; # state, say, switch
+use v5.14; # say;
 
 use Getopt::Long qw(:config gnu_compat);
 use Pod::Usage;
@@ -52,6 +52,7 @@ BEGIN {
         ) or pod2usage(2);
 
     pod2usage( -exitval => 0, -verbose => 2 ) if $help;
+
 
     our $dprint = sub( @ ) {
         ++$|;
@@ -101,7 +102,6 @@ sub allTopLeftToBottomRightIndices ($$) {
 # 10 11 12 13 14
 # 15 16 17
 
-
 sub allTopRightToBottomLeftIndices ($$) {
     my ( $maxPos, $lineLen ) = @_;
     my $rowsIdx = int $maxPos / $lineLen;
@@ -147,12 +147,9 @@ sub allSubsequencesIndices { # final summary of indices
       map { bothDirection @$_ } allIndices( $maxPos, $lineLen );
 }
 
-#say scalar allSubsequencesIndices( 303, 16 );
-
 sub genWordsOrganized {
     my ( $maxPos, $lineLen, $gridString ) = @_;
-    my @allPossibleIndices = allSubsequencesIndices( $maxPos, $lineLen );
-    my @gridChars = split "", lc $gridString;
+    my @gridChars = split "", $gridString;
 
     ::dprint "[DBG] the grid string (in lower case):\n$gridString\n\n";
     local $" = '';
@@ -181,41 +178,42 @@ sub prepareGridData ($) {
     $gdata =~ s/\n//g;
     my $maxPos = (length $gdata) -1;
 
-    $maxPos, $lineLen, (lc $gdata) # finay $gdata is in a linear form
+    $maxPos, $lineLen, (lc $gdata) # final $gdata is in a linear form
 }
 
-sub grepMatchedWordsWithSortedData {
-    my @dictWords = @{$_[0]};
-    my @gridWords = @{$_[1]}; # XXX: this is kinda a copying
+sub grepMatchedWordsRefWithSortedDataRef {
+    my $dictWordsRef = $_[0];
+    my $gridWordsRef = $_[1];
 
     my ( $di, $gi ) = ( 0, 0 );
     my @result;
-    while ( $di <= @dictWords && $gi <= @gridWords ) {
-        ::dprint "$dictWords[$di] vs $gridWords[$gi]\n" if 0;
-        for ( lc $dictWords[$di] cmp $gridWords[$gi] ) { # note: lc
-            when ( -1 ) { ++$di }
-            when (  0 ) {
-                push @result, $dictWords[$di];
-                ++$di, ++$gi;
-            }
-            when (  1 ) { ++$gi }
+    while ( $di < @$dictWordsRef and $gi < @$gridWordsRef ) {
+        ::dprint "$$dictWordsRef[$di] vs $$gridWordsRef[$gi]\n";
+
+        my $cmp = (lc $$dictWordsRef[$di]) cmp $$gridWordsRef[$gi];
+        if ( $cmp == -1 ) { ++$di }
+        elsif ( $cmp == 0 ) {
+            push @result, $$dictWordsRef[$di];
+            ++$di, ++$gi;
         }
+        else { ++$gi }
     }
-    @result;
+    \@result;
 }
 
-sub raku_array { "[".(join ", ", @_)."]" }
+sub raku_arrayref { "[".(join ", ", @{$_[0]})."]" }
 
 # testing ...
 package main;
 
 if ( not defined $::dictPath ) {
-    $::dictPath  //= fs->catfile( $FindBin::Bin, qw(.. data tinyDict.txt) );
+    #$::dictPath  //= fs->catfile( $FindBin::Bin, qw(.. data tinyDict.txt) );
+    $::dictPath = '/usr/share/dict/words';
     ::dprint "[WRN] using default dictionary file: $::dictPath\n";
 }
 
 if ( not defined $::gridPath ) {
-    $::gridPath  //= fs->catfile( $FindBin::Bin, qw(.. data grid.txt) );
+    $::gridPath  = fs->catfile( $FindBin::Bin, qw(.. data grid.txt) );
     ::dprint "[WRN] using default word grid search file: $::gridPath\n";
 }
 
@@ -223,10 +221,7 @@ my $dictData    = unsafe_slurpFile( $::dictPath );
 my $rawGridData = unsafe_slurpFile( $::gridPath );
 
 my @dictOrganized = sort { (lc $a) cmp (lc $b) } ( split "\n", $dictData );
-defined $dictOrganized[-1] or pop @dictOrganized; # XXX
 my @gridWordsOrganized = genWordsOrganized( prepareGridData( $rawGridData ) );
-
-
 
 if ( $::debugging ) {
     my $cnt = scalar @gridWordsOrganized;
@@ -236,9 +231,9 @@ if ( $::debugging ) {
     ::dprint(sprintf("%${wd}d  ",++$i), $_, $/) for @gridWordsOrganized;
 }
 
-my @matchedWords =
-  grepMatchedWordsWithSortedData( \@dictOrganized, \@gridWordsOrganized );
+my $matchedWords =
+  grepMatchedWordsRefWithSortedDataRef( \@dictOrganized, \@gridWordsOrganized );
 
 say "Word Search Grid:\n$rawGridData";
-say "Total: ".(scalar @matchedWords)." word(s) found.";
-say raku_array( @matchedWords );
+say "Total: ".(scalar @$matchedWords)." word(s) found.";
+say raku_arrayref( $matchedWords );

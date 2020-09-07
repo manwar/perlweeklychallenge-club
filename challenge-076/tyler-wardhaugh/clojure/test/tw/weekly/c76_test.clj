@@ -6,8 +6,12 @@
 
 (deftest ch-1
   (testing "Task 1"
-    (is (= 2 (count (find-min-primes-to-sum 9)) (count (find-min-primes-to-sum-brute-force 9))))
-    (is (= 2 (count (find-min-primes-to-sum 34)) (count (find-min-primes-to-sum-brute-force 34))))))
+    (let [n-and-results [[6 2] [9 2] [11 1] [12 2] [51 3]]
+          fns (juxt second (comp count find-min-primes-to-sum first) (comp count find-min-primes-to-sum-brute-force first))
+          results (->> n-and-results
+                       (map fns)
+                       (map #(is (apply = %))))]
+      (dorun results))))
 
 (deftest ch-2
   (testing "Task 2"

@@ -1,5 +1,4 @@
 (ns tw.weekly.ch-2
-  (:require [clojure.edn :as edn])
   (:require [clojure.java.io :as io])
   (:require [clojure.string :as str])
   (:require [clojure.core.matrix :as mat]))
@@ -50,8 +49,8 @@
 (defn -main
   "Run Task 2 with a grid file and a dictionary file, defaulting to the ones in the resources directory."
   [& args]
-  (let [grid-file (or (some-> args first edn/read-string) (io/resource "grid.txt"))
-        dict-file (or (some-> args second edn/read-string) (io/resource "dict.txt"))
+  (let [grid-file (or (some-> args first io/file) (io/resource "grid.txt"))
+        dict-file (or (some-> args second io/file) (io/resource "dict.txt"))
         grid (parse-grid-file grid-file)
         dict (parse-dict-file dict-file)
         words (word-search grid dict)]
