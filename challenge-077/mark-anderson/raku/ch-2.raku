@@ -7,7 +7,7 @@ lonely-X([ <O O X O>,
            <X O O X>,
            <O X O O> ]);
 
-multi lonely-X(@matrix) {
+sub lonely-X(@matrix) {
     my @results = gather {
         for ^@matrix -> $r {
             for ^@matrix[0] -> $c {
