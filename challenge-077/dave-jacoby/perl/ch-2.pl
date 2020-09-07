@@ -6,8 +6,6 @@ use feature qw{ say signatures state };
 no warnings qw{ experimental };
 
 use List::Util qw{ first };
-use JSON;
-my $json = JSON->new->pretty->canonical;
 
 my @input = (
     [ [qw[ O O X ]], [qw[ X O O ]], [qw[ X O O ]], ],
