@@ -24,18 +24,18 @@
   (let [n (mat/dimension-count matrix 1)
         blank-row (vec (repeat (+ n 2) 0))
         step-1 (reduce (fn [mat v] (conj mat (vec (concat [0] v [0])))) [blank-row] matrix)]
-    (conj step-1 blank-row)))
+    (to-array-2d (conj step-1 blank-row))))
 
 (defn find-lonelies
   "Find lonely values in a matrix."
   [matrix]
   (let [[m n] (mat/shape matrix)
-        extended (extend-matrix matrix)
-        canonical-lonely [[0 0 0] [0 1 0] [0 0 0]]]
+        extended (extend-matrix matrix)]
     (for [x (range 1 (inc m))
           y (range 1 (inc n))
+          :when (= 1 (aget extended x y))
           :let [submat (mat/submatrix extended [[(- x 1) 3] [(- y 1) 3]])]
-          :when (mat/e= canonical-lonely submat)]
+          :when (= 1 (mat/esum submat))]
       [x y])))
 
 (defn -main
