@@ -1,10 +1,26 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-09-08 10:24:52 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-09-08 10:37:44 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             15,
             12,
@@ -36,9 +52,11 @@
             7,
             8,
             32
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             4,
             0,
@@ -70,11 +88,9 @@
             0,
             8,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -106,20 +122,13 @@
             4,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "xAxis" : {
       "categories" : [
@@ -154,14 +163,5 @@
          "Nick Logan",
          "Niels van Dijke"
       ]
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
