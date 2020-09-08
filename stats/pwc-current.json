@@ -1,17 +1,10 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2020-09-08 00:54:26 GMT"
+   "xAxis" : {
+      "type" : "category"
    },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
                "name" : "Andrew Shitov",
@@ -24,49 +17,44 @@
                "y" : 2
             },
             {
-               "drilldown" : "Feng Chang",
+               "y" : 2,
                "name" : "Feng Chang",
-               "y" : 2
+               "drilldown" : "Feng Chang"
             },
             {
+               "y" : 2,
                "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
+               "drilldown" : "Mark Anderson"
             },
             {
-               "y" : 4,
+               "y" : 1,
+               "name" : "Mohammad S Anwar",
+               "drilldown" : "Mohammad S Anwar"
+            },
+            {
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West",
+               "y" : 4
             },
             {
+               "y" : 2,
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
+               "name" : "Simon Proctor"
             },
             {
-               "name" : "Walt Mankowski",
                "drilldown" : "Walt Mankowski",
+               "name" : "Walt Mankowski",
                "y" : 3
             }
          ],
-         "name" : "Perl Weekly Challenge - 077",
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 077"
       }
    ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 077"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Andrew Shitov",
+            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -76,19 +64,17 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov"
+            ]
          },
          {
+            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby"
+            "name" : "Dave Jacoby"
          },
          {
             "data" : [
@@ -101,16 +87,28 @@
             "name" : "Feng Chang"
          },
          {
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson"
          },
          {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar"
+         },
+         {
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -120,23 +118,20 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West"
+            ]
          },
          {
-            "id" : "Simon Proctor",
             "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
          },
          {
             "id" : "Walt Mankowski",
-            "name" : "Walt Mankowski",
             "data" : [
                [
                   "Perl",
@@ -146,20 +141,40 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Walt Mankowski"
          }
       ]
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2020-09-08 01:51:09 GMT"
    },
    "legend" : {
       "enabled" : 0
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 077"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    }
 }
