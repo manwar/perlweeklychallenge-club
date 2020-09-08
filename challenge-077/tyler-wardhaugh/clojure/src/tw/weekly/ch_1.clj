@@ -20,7 +20,7 @@
 (defn fibo-sum
   "Find all combinations of Fibonacci Numbers that sum to n, returning nil if none are found."
   [n]
-  (let [fibs (drop 2 (take n (fibo-lazy-seq)))
+  (let [fibs (drop 2 (take-while #(< % n) (fibo-lazy-seq)))
         results (->> fibs
                      combo/subsets
                      (drop 1)       ; remove the empty subset, which is always first
