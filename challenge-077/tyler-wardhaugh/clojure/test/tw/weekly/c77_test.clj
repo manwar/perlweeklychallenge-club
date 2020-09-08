@@ -1,5 +1,5 @@
 (ns tw.weekly.c77-test
-  (:require [clojure.test :refer :all]
+  (:require [clojure.test :refer [deftest is testing with-test]]
             [clojure.java.io :as io]
             [tw.weekly.ch-1 :refer [fibo-sum]]
             [tw.weekly.ch-2 :refer [parse-matrix-file find-lonelies]]))
