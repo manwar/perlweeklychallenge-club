@@ -1,31 +1,33 @@
 #!/usr/bin/env perl
 # vim:set ts=4 sw=4 sts=4 et ai wm=0 nu:
 #=============================================================================
-# ch-2.pl
+# ch-1.pl
 #=============================================================================
 # Copyright (c) 2020, Bob Lied
 #=============================================================================
-# Perl Weekly Challenge 000 Task #1 > xxx
+# Perl Weekly Challenge 000 Task #1 > Prime Sum
+# You are given a number $N.
+# Write a script to find the minimum number of prime numbers required, whose summation gives you $N.
+# For the sake of this task, please assume 1 is not a prime number.
 #=============================================================================
 
 use strict;
 use warnings;
 use v5.30;
 
-us feature qw/ signatures /;
+use feature qw/ signatures /;
 no warnings qw/ experimental::signatures /;
 
+
 use lib "lib";
-use Task1;
+use PrimeSum;
 
-sub Usage { "Usage: $0 args" };
+sub Usage { "Usage: $0 N\n\t2 <= N <= 10000" };
 
-my $arg = shift;
-my @list = @ARGV;
+my $N = shift;
 
-die Usage() unless $arg;
-die Usage() unless @list;
+die Usage() unless $N && $N > 1 && $N <= 10000;
 
-my $task = Task1->new();
-my $result = task->run();
-say $result;
+my $task = PrimeSum->new($N);
+my ($result, $list) = $task->run();
+say "$N ==> $result [ ", join(', ', @$list), " ]";
