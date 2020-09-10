@@ -5,7 +5,7 @@
 #=============================================================================
 # Copyright (c) 2020, Bob Lied
 #=============================================================================
-# Perl Weekly Challenge 000 Task #2 > xxx
+# Perl Weekly Challenge 076 Task #2 > Word Search
 #=============================================================================
 
 use strict;
@@ -16,7 +16,7 @@ us feature qw/ signatures /;
 no warnings qw/ experimental::signatures /;
 
 use lib "lib";
-use Task2;
+use WordSearch;
 
 sub Usage { "Usage: $0 args" };
 
@@ -26,6 +26,6 @@ my @list = @ARGV;
 die Usage() unless $arg;
 die Usage() unless @list;
 
-my $task = Task2->new();
-my $result = task->run();
+my $task = WordSearch->new();
+my $result = WordSearch->run();
 say $result;
