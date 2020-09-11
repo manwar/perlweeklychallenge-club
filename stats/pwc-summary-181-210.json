@@ -1,11 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "xAxis" : {
       "categories" : [
          "Walt Mankowski",
@@ -17,10 +10,15 @@
          "Yozen Hernandez"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2020-09-11 16:35:19 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "yAxis" : {
       "min" : 0,
@@ -30,7 +28,6 @@
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             41,
             73,
@@ -39,7 +36,8 @@
             3,
             81,
             21
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -66,10 +64,12 @@
          "name" : "Blog"
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "chart" : {
+      "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2020-09-11 09:20:12 GMT"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
