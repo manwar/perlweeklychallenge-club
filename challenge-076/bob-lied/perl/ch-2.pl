@@ -5,27 +5,52 @@
 #=============================================================================
 # Copyright (c) 2020, Bob Lied
 #=============================================================================
-# Perl Weekly Challenge 000 Task #2 > xxx
+# Perl Weekly Challenge 076 Task #2 > Word Search
+# Write a script that takes two file names.  The first file would contain word
+# search grid as shown below.  The second file contains list of words, one
+# word per line.  You could even use local dictionary file.
+#
+# Print out a list of all words seen on the grid, looking both orthogonally
+# and diagonally, backwards as well as forwards.
 #=============================================================================
 
 use strict;
 use warnings;
 use v5.30;
 
-us feature qw/ signatures /;
+use feature qw/ signatures /;
 no warnings qw/ experimental::signatures /;
 
+use Getopt::Long;
+
 use lib "lib";
-use Task2;
+use WordSearch;
 
-sub Usage { "Usage: $0 args" };
+sub Usage { "Usage: $0 [-l min-length] grid-file wordlist-file" };
 
-my $arg = shift;
-my @list = @ARGV;
+my $MinLength = 5;
+my $Verbose = 0;
+GetOptions('length=i' => \$MinLength, "verbose!" => \$Verbose);
 
-die Usage() unless $arg;
-die Usage() unless @list;
+my $gridFile = shift;
+my $wordlistFile = shift;
 
-my $task = Task2->new();
-my $result = task->run();
-say $result;
+die Usage() unless $gridFile && $wordlistFile;
+die ( Usage(). " $!" ) unless -r $gridFile;
+die ( Usage(). " $!" ) unless -r $wordlistFile;
+
+die Usage() unless ( $MinLength > 0 && $MinLength < 50 );
+
+my $wordsearch = WordSearch->new();
+$wordsearch->loadGrid($gridFile);
+$wordsearch->loadWordlist($wordlistFile, $MinLength);
+
+my $result = $wordsearch->run();
+
+my $count = $wordsearch->numFound();
+my $foundList = $wordsearch->foundList();
+say "Found $count words of length $MinLength or longer";
+if ( $Verbose )
+{
+    say "[" . ($_+1) ."] $foundList->[$_]" for 0 .. $count-1;
+}
