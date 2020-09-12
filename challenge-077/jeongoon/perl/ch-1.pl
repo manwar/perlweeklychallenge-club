@@ -7,6 +7,7 @@
 =head1 SYNOPSIS
 
 perl ch-1.pl <sum>
+# perl ch-1.pl 99999 # finished within 11 secs on my laptop
 
 =head1 Solution
 
@@ -15,11 +16,11 @@ perl ch-1.pl <sum>
 2. figure out how many ways to express each fibonacci in the combination
    which must be not duplicated or overlaped with other numbers
 
-   ex) 89 -> [ 89 ], [ 55, 34 ], [ 55, 21, 13 ]
-        8 -> [ 8 ] # only one
-        3 -> [ 3 ], [ 2, 1]
+   ex) 89 -> [ 89 ], [ 55, 34 ], [ 55, 21, 13 ] ...
+        8 -> [ 8 ], [ 5, 3 ], [ 5, 2, 1 ]
+        3 -> [ 3 ], [ 2, 1 ]
 
-3. Product all the cases shown above.
+3. Product all the cases shown above with filtering when a fib. duplicated
 
 =head1 About Sub-cases For Each Fibonacci Number
 
@@ -49,13 +50,18 @@ the sequence definitely looks like
       a b c -> a b _ (d e) -> a b _ (d _ (f g)) -> a b _ d _ f _ h i -> ...
  cmp: a b c -> a b c  d e  -> a b c  d e  f g      a b c d e f g h i -> ...
 
+=head1 But We may have not a fibonacci number
+
+Basically... explanation above only works when N is a fibonacci number.
+so I had to fix the codes
+
 =cut
 
 use strict; use warnings;
 use v5.26;
 use Getopt::Long qw(:config gnu_compat);
 use Pod::Usage;
-use List::Util qw{any product};
+use List::Util qw{product};
 
 BEGIN {
     sub fs { "File::Spec" }
@@ -96,11 +102,10 @@ sub rfibs ($) { reverse (fibs shift) }
 #   which includes the fib number itself
 # ex) f(55) -> [55], [34, 21], [34, 13, 8], [34, 13, 5, 3], [34, 13, 5, 2, 1]
 # return as array of arrayref
-# FIXME: need more information about implmentation
 
-sub allCasesSubFibs ($$$) {
+sub allCasesSubFibs ($$) {
     # assume allRevFibsRef is sorted desc.
-    my ( $afib, $allRevFibsRef, $fibsNotToUseRef )  = @_;
+    my ( $afib, $allRevFibsRef )  = @_;
     my @allRevFibs = @{$allRevFibsRef}; # copy: no side effect
 
     my $skip = 0;
@@ -115,17 +120,13 @@ sub allCasesSubFibs ($$$) {
         my @lastFibs = splice( @{[@{$allCases[-1]}]}, # copy
                                0, $#{$allCases[-1]} );
         my @twoFibs = @subfibs[ $fi, $fi+1 ];
-        if ( any { my $bomb = $_;
-                   grep { $bomb eq $_ } @twoFibs } @$fibsNotToUseRef ) {
-            last; # stop here on purpose
-        }
         push @allCases, [ @lastFibs, @twoFibs ];
     }
     @allCases;
 }
 
-sub productCases ($) {
-    my ( $casesRef, @pos, $csr ) = $_[0];
+sub productCases ($$) {
+    my ( $casesRef, $validate_code, @pos, $csr ) = @_[0,1];
     my @cases = @{$casesRef}; # side note: this is copy method
     @pos = (0) x scalar @cases;
     if ( @pos == 1 ) {
@@ -142,9 +143,10 @@ sub productCases ($) {
         if ( $pos[$csr] < @{$cases[$csr]} ) {
             ::dprint "[DBG] $csr: @pos: ",
               (join ",", map { @{$cases[$_][$pos[$_]]} } 0..$#cases ),$/;
-            # add record
-            push @allcases,
-              [ map { @{$cases[$_][$pos[$_]]} } 0..$#cases ];
+
+            my @current_cases = map { $cases[$_][$pos[$_]] } 0..$#cases;
+            $validate_code->( \@current_cases )
+              and push @allcases, [ map { @$_ } @current_cases ]; # flatten
             ++$pos[$csr];
             redo;
         }
@@ -172,17 +174,23 @@ sub productCases ($) {
 # product all cases of each fib numbers
 sub productRevFibCombination ($$) {
     my ( $aRevFibCombiRef, $allRevFibsRef ) = @_;
-    my @fibsNotToUse = @{$aRevFibCombiRef};
 
     my @rcases = map {
-        shift @fibsNotToUse; # remove one by one from ban list
-                             # for shorter comparison
-        my @a = allCasesSubFibs( $_, $allRevFibsRef, \@fibsNotToUse );
+        my @a = allCasesSubFibs( $_, $allRevFibsRef );
         ::dprint( ('[DBG] ', join "|", map{ "[".join( ",", @$_)."]" } @a), $/ );
         [ @a ];
 
     } @$aRevFibCombiRef;
-    productCases \@rcases;
+    productCases \@rcases, sub { # for $validate_code
+        my @cases = @{$_[0]}; # copy
+        my $left_case = shift @cases;
+        my $overlapped = 0;
+        for my $right_case (@cases) {
+            $$left_case[-1] <= $$right_case[0] and ( $overlapped = 1, last );
+            $left_case = $right_case;
+        }
+        not $overlapped;
+    };
 }
 
 sub minRevFibSumCombination ($$);
@@ -218,7 +226,7 @@ sub allCombiFibSum ($) {
 
 if (0) {
     say "@{[rfibs 999]}";
-    say "@$_" for allCasesSubFibs 55, [rfibs(55)], [8,3];
+    say "@$_" for allCasesSubFibs 55, [rfibs(55)];
     say "@$_" for productRevFibCombination ( [89,21,3], [rfibs 55] );
     say "@{[minRevFibSumCombination(150, [rfibs 150])]}";
 }

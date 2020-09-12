@@ -3,7 +3,8 @@
 # vim: set et ts=4 sw=4:
 
 # tested with:
-# raku ch-1.raku 9999
+# raku ch-1.raku 20000
+# `-> 90 case(s) 2.17 secs
 
 use v6.d;
 
@@ -37,7 +38,7 @@ class CombiFibSum {
     # return the all possible ways a fib number can be expressed
     #   which includes the fib number itself
     # ex) f(55)-> [55], [34, 21], [34, 13, 8], [34, 13, 5, 3], [34, 13, 5, 2, 1]
-    method a-fib-subcases( $a-fib, @fibs-not-to-use ) {
+    method a-fib-subcases( $a-fib ) {
         my $beg = Nil;
         my @all-cases;
         for 0 .. self.rfibs.end -> $i { # call .rfibs to ensure to get @!rfibs
@@ -47,10 +48,8 @@ class CombiFibSum {
         @all-cases.push( ( $a-fib,) ); # note: comma required
 
         loop ( my $fi = $beg; $fi+1 < @!rfibs.elems; $fi+=2 ) {
-            my @last-fibs-except-last-fib = @all-cases[*-1][1..*-1];
+            my @last-fibs-except-last-fib = @all-cases[*-1][0..*-2];
             my @two-new-fibs = @!rfibs[$fi, $fi+1];
-            # don't go further on purpose of my solution
-            any(@two-new-fibs) ∈ @fibs-not-to-use and last;
             @all-cases.push( ( |@last-fibs-except-last-fib, |@two-new-fibs ) );
         }
         if $d {
@@ -61,15 +60,15 @@ class CombiFibSum {
     }
 
     method all-fibs-subcases( @rfibs ) {
-        my @ban-list = @rfibs.clone;
-        my $bi = 0; # for ban list indexing
+        #my @ban-list = @rfibs.clone;
+        #my $bi = 0; # for ban list indexing
 
         my @all-fibs-subcases;
         @rfibs.map(
             -> $f {
                 @all-fibs-subcases.push(
-                    self.a-fib-subcases( $f, @ban-list[$bi++ .. *]) );
-            } );
+                    self.a-fib-subcases( $f )
+                 ) } );
 
         dd @all-fibs-subcases if $d;
         @all-fibs-subcases
@@ -104,7 +103,18 @@ class CombiFibSum {
         ~ " {@a-combi.Array.raku}" if $d;
 
         my @all-fibs-subcases = self.all-fibs-subcases( @a-combi );
-        ( [X] @all-fibs-subcases ).map( *.flat );
+        ( [X] @all-fibs-subcases ).
+        map( -> $c
+             {
+                 my $found-duplicated = False;
+                 $c.rotor(2 => -1).
+                 map( -> ($a, $b)
+                      {
+                          $a[*-1] <= $b[0]
+                          and ( $found-duplicated = True, last );
+                      } );
+                 next if $found-duplicated;
+                 $c».List.flat } ); # or collect found a case
     }
 }
 
@@ -124,7 +134,7 @@ sub MAIN (
     } else {
         @all-combi.map(
             -> @a-combi {
-                say @a-combi».List.flat.join(" + ") ~ " = " ~ S;
+                say @a-combi.join(" + ") ~ " = " ~ S;
             } );
         say "Total {@all-combi.elems} case(s) found.";
     }
