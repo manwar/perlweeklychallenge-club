@@ -44,6 +44,11 @@ so I concluded that chaging the fibonacci number into two lower
 fibonacci numbers (right next to the current) until not overlapping
 is the only way to make sub cases.
 
+the sequence definitely looks like
+
+      a b c -> a b _ (d e) -> a b _ (d _ (f g)) -> a b _ d _ f _ h i -> ...
+ cmp: a b c -> a b c  d e  -> a b c  d e  f g      a b c d e f g h i -> ...
+
 =cut
 
 use strict; use warnings;
@@ -181,7 +186,7 @@ sub productRevFibCombination ($$) {
 }
 
 sub minRevFibSumCombination ($$);
-sub minRevFibSumCombination ($$) { # found a case tally the target sum.
+sub minRevFibSumCombination ($$) { # find a case tally the target sum.
     my ( $targetSum, $allRevFibRef ) = @_;
     #my @allRevFib = grep { $_ <= $targetSum } @{$allRevFibRef};
     my @allRevFib = @{$allRevFibRef}; # assuming it's already sieved.
@@ -194,7 +199,6 @@ sub minRevFibSumCombination ($$) { # found a case tally the target sum.
 
         $majorFib == $targetSum and return ($majorFib);
     }
-
 
     my @rest = minRevFibSumCombination( ($targetSum-$majorFib), \@allRevFib );
     ::dprint "[DBG] rest for $majorFib: @rest\n";
