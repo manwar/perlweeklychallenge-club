@@ -18,7 +18,8 @@ getMatrixFromStdin =
   getContents >>= matrixLines >>= return . map parseMatrixLine
   >>= return . map (map (\x -> case toUpper( x!!0 ) of
                            'O' -> 1
-                           'X' -> 0 )) -- convert into integer
+                           'X' -> 0
+                           _   -> 1)) -- convert into integer
   >>= return . filterEmptyRow
   where
     parseMatrixLine = filter (not.isPrefixOf " ").
