@@ -9,6 +9,6 @@ sub stands-alone( $matrix, $x, $y ) {
     state @maybe-neighbours = (-1,-1), (-1,0), (-1,1), (0,-1), (0, 1), (1,-1), (1,0), (1,1);
 
     sub is-neighbour($c) { 
-	$matrix[ $x + $c[0]; $y + $c[1] ] andthen $_ eq "X" }
+        $matrix[ $x + $c[0]; $y + $c[1] ] andthen $_ eq "X" }
 
     @maybe-neighbours.grep( &is-neighbour ) == 0 }
