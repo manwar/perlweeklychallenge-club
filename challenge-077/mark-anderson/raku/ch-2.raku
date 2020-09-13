@@ -9,18 +9,16 @@ lonely-X([ <O O X O>,
 
 sub lonely-X(@matrix) {
     my @results = gather {
-        for ^@matrix -> $r {
-            for ^@matrix[0] -> $c {
-                if @matrix[$r][$c] eq "X" {
-                    take [$r, $c] unless any((@matrix[$r-1][$c-1] // q{}), 
-                                             (@matrix[$r-1][$c  ] // q{}), 
-                                             (@matrix[$r-1][$c+1] // q{}),
-                                             (@matrix[$r  ][$c-1] // q{}), 
-                                             (@matrix[$r  ][$c+1] // q{}), 
-                                             (@matrix[$r+1][$c+1] // q{}),
-                                             (@matrix[$r+1][$c  ] // q{}),
-                                             (@matrix[$r+1][$c-1] // q{})) eq "X";
-                }
+        for ^@matrix X ^@matrix[0] -> ($r, $c) { 
+            if @matrix[$r][$c] eq "X" {
+                take [$r, $c] unless any((@matrix[$r-1][$c-1] // q{}), 
+                                         (@matrix[$r-1][$c  ] // q{}), 
+                                         (@matrix[$r-1][$c+1] // q{}),
+                                         (@matrix[$r  ][$c-1] // q{}), 
+                                         (@matrix[$r  ][$c+1] // q{}), 
+                                         (@matrix[$r+1][$c+1] // q{}),
+                                         (@matrix[$r+1][$c  ] // q{}),
+                                         (@matrix[$r+1][$c-1] // q{})) eq "X";
             }
         }
     }
