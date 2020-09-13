@@ -50,8 +50,7 @@ sub partition {
     my $solution = $args->{solution} // [];
     my $max_n = $args->{max_n} // die 'No max value specified';
 
-
-    my $rem_value = @$solution?  $max_n - sum(@$solution) : $max_n;
+    my $rem_value = @$solution ? $max_n - sum(@$solution) : $max_n;
 
     if ($rem_value == 0) {
         push @solution_arr, [@$solution];
@@ -62,7 +61,7 @@ sub partition {
         next if $all_fibs[$i] > $rem_value;
             
         my @new_arr = (@$solution, $all_fibs[$i]);
-        partition({ idx => $i+1,  max_n => $max_n,solution => \@new_arr });
+        partition({ idx => $i+1, max_n => $max_n, solution => \@new_arr });
     }
     return 1;
 }

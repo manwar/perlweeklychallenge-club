@@ -12,31 +12,34 @@ class LoneX:
         self.matrix = matrix
         self.solution_count = 0
 
+    def check_position(self, pos_x: int, pos_y: int):
+        """ check if the position is lone """
+
+        for d_x in [-1, 0, 1]:
+            for d_y in [-1, 0, 1]:
+                if d_x == d_y == 0:
+                    continue
+
+                if pos_x + d_x < 0 or pos_x + d_x >= len(self.matrix):
+                    continue
+
+                if pos_y + d_y < 0 or pos_y + d_y >= len(self.matrix):
+                    continue
+
+                if self.matrix[pos_x + d_x][pos_y + d_y] == 'X':
+                    return False
+
+        return True
+
     def count_lone(self):
         """ count the occurences of lone X """
 
-        for line_nr, line in enumerate(self.matrix):
-            for col_nr, char in enumerate(line):
+        for pos_x, line in enumerate(self.matrix):
+            for pos_y, char in enumerate(line):
                 if char == "O":
                     continue
 
-                is_lone = True
-                for d_x in [-1, 0, 1]:
-                    for d_y in [-1, 0, 1]:
-                        if d_x == d_y == 0:
-                            continue
-
-                        if line_nr + d_x < 0 or line_nr + d_x >= len(self.matrix):
-                            continue
-
-                        if col_nr + d_y < 0 or col_nr + d_y >= len(self.matrix):
-                            continue
-
-                        if self.matrix[line_nr + d_x][col_nr + d_y] == 'X':
-                            is_lone = False
-                            break
-
-                if is_lone:
+                if self.check_position(pos_x, pos_y):
                     self.solution_count += 1
 
     def get_count(self):
