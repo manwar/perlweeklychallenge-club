@@ -1,13 +1,13 @@
-# tw.weekly.c76
+# tw.weekly.c77
 
 
-The Weekly Challenge - #076 - Tyler Wardhaugh
+The Weekly Challenge - #077 - Tyler Wardhaugh
 
 ## Usage
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -m tw.weekly.c76
+    $ clojure -m tw.weekly.c77
 
 Run the project's tests (which are samples from the task descriptions):
 
@@ -19,7 +19,7 @@ Run Task #1 with input
 
 Run Task #2 with input:
 
-    $ clojure -m tw.weekly.ch-2 GRID_FILE DICT_FILE
+    $ clojure -m tw.weekly.ch-2 MATRIX-FILE
 
 ## Project Template
 

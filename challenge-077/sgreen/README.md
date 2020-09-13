@@ -1,47 +1,47 @@
-# Perl Weekly Challenge 076
+# The Weekly Challenge 077
 
 Solution by Simon Green.
 
-## TASK #1 › Prime Sum
+## TASK #1 › Fibonacci Sum
 
-I'm sure there is a CPAN module that can tell if a number is prime, but where is the fun in that? :) I created a function called `_is_prime` that determines if a number is a prime number. In short it calculate divisibility from `2 .. sqrt($n)`. It returns `0` ('is not a prime') when this happened. Otherwise it returns `1` to indicate the number is a prime.
+One thing I noted with last week's [Prime Sum](https://perlweeklychallenge.org/blog/perl-weekly-challenge-076/#TASK1/) is a few people went straight to the logic of returning 1 if the number is a prime, 2 if it is even or 2 more than a prime or 3 otherwise. While this is correct, I tend to tackle the problem at hand without looking at the quickest way to solve a task. As was the case with this week's solution.
 
-Every positive integer (except 1) has a possible solution. Even numbers are made up of the sum of one or more twos, while odd numbers are made up of the sum of three and zero or more twos. Every prime (except 2 and 3) is the sum of smaller primes. For example, 5 = 2 +3, 7 = 5 + 2, etc.
+The first part of this task was to generate a list of Fibonacci numbers up to and including the required sum. For this I started with an array of 1 and 2, and the added the last two numbers together until we reached or exceed the target figure.
 
-With that in mind, the solution to find the least number of prime values to make up a number should be straight forward, as follows:
+For the main part of the task, I created a stack with all possible solutions. For each fibonnaci number, I added the new number, and added that number to all the existing values in the stack. For example, for values between 5-7, I would add 5 in the first iteration, add 3 and (3.5) in the second, and 2, (2,5), (2,3), (2,3,5) in the third. I discarded any value in the stack that was greater than the target number or the remainder of the stack is greater than the sum of the remaining numbers. In both these cases it would not be possible to find a solution.
 
-* Start with the target number in a `for` loop, and work backwards to 2
-* Skip numbers that are not primes.
-* Take that number from the target. If nothing remains, we have the solution, and can exit the loop. Otherwise, we `redo` the loop with the new target.
-* The only exception is we don't use a prime number than is one less than the remain target. For example if we want to find the solution to the number 8, we can't use '7', as 1 is not a prime number, and we would come to an impossible situation.
+Finally I counted the solutions that matched the target, and displayed the result.
 
 ### Examples
 
-    » ./ch-1.pl 9
-    Result is 2, made up of (7,2)
+    » ./ch-1.pl 6
+    RESULT IS 2
+    5 + 1 = 6
+    3 + 2 + 1 = 6
 
-    » ./ch-1.pl 1000000000
-    Result is 3, made up of (999999937,61,2)
 
-## TASK 2 › Word Search
+    » ./ch-1.pl 1000000
+    RESULT IS 263
+    832040 + 121393 + 46368 + 144 + 55 = 1000000
+    514229 + 317811 + 121393 + 46368 + 144 + 55 = 1000000
+    832040 + 121393 + 28657 + 17711 + 144 + 55 = 1000000
+    514229 + 317811 + 121393 + 28657 + 17711 + 144 + 55 = 1000000
+    ...
 
-This task can be broken into the following sub-tasks:
+## TASK 2 › Lonely X
 
-1. Read the grid file and turn it to an array of arrays.
-2. Read the word file, and turn that into an hash with the words as keys. The word list in Ubuntu includes words with apostrophes and some non-English characters, so we don't add those to the array. We also only add works 5 characters or longer, as the example does so too.
-3. Create an array of directions pairs (rows and columns). -1 is left/up, 0 is no change and 1 is right/down. For example [-1, 1] is diagonally up and to the right. While [0, -1] is orthogonally to the left.
-4. Work through each row and column as a starting point.
-5. Go through each direction in the array and add letters in the specified direction from the start point until we reach the end of the row or column. If a word is in the word list, add it as a solution.
-6. Sort and unique the solutions, and display all matching words.
+This is very similar to the Zero Matrix task from [Challenge 068](https://perlweeklychallenge.org/blog/perl-weekly-challenge-068/), which incidentally was the first challenge I every did. This time we are using 'O' and 'X' instead of '0' and '1'.
 
-## Examples
-    » ./ch-2.pl example.txt /usr/share/dict/words
-    aimed
-    align
-    antes
+Like that task, there are (at least) two ways to solve this challenge. One is to create a shadow grid that masks out the surrounding cells of a 'O' as not being lonely to a 'X'. The other is to calculate if an X is lonely as we evaluate each cell. I choose the later, purely because I did the former in challenge 068.
 
-...
+Once I've parsed the input, I validate that all the rows are the same length. I then go through each cells (rows and then columns). For each cell that is an 'X', I find out if there are any 'X's in the (up to) eight surrounding cells.
 
-    virus
-    viruses
-    wigged
+### Examples
+
+    » ./ch-2.pl "[ O O X ]" "[ X O O ]" "[ X O O ]"
+    Output is 1
+    Matches: row 1 col 3
+
+    » ./ch-2.pl "[ O O X O ]" "[ X O O O ]" "[ X O O X ]" "[ O X O O ]"
+    Output is 2
+    Matches: row 1 col 3, row 3 col 4
