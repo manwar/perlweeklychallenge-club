@@ -20,7 +20,7 @@ my $C = $ARGV[1] || 3;
 die "ERROR: Invalid rows [$R].\n" unless ($R =~ /^\d+$/ && $R >=2 );
 die "ERROR: Invalid cols [$C].\n" unless ($C =~ /^\d+$/ && $C >=2 );
 
-p(find_lonely_x(get_matrix($R, $C)));
+p(find_lonely_x(get_matrix(--$R, --$C)));
 
 #
 #
