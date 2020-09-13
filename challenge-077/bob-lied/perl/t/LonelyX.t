@@ -14,6 +14,10 @@ use Test2::V0;
 use LonelyX;
 
 my $lx = LonelyX->new();
-isa_ok($ls, "LonelyX", "Constructor");
+isa_ok($lx, "LonelyX", "Constructor");
+
+$lx->loadGrid("t/example1.txt");
+is($lx->{_lastRow}, 2, "loadGrid rows");
+is($lx->{_lastCol}, 2, "loadGrid cols");
 
 done_testing();

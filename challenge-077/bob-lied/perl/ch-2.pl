@@ -24,17 +24,26 @@ use v5.30;
 use feature qw/ signatures /;
 no warnings qw/ experimental::signatures /;
 
+use Getopt::Long;
+
 use lib "lib";
 use LonelyX;
 
-sub Usage { "Usage: $0 args" };
+sub Usage { "Usage: $0 path-to-matrix" };
 
-my $arg = shift;
-my @list = @ARGV;
+my $Verbose = 0;
+GetOptions("verbose" => \$Verbose);
 
-die Usage() unless $arg;
-die Usage() unless @list;
+my $path = shift;
 
-my $task = LonelyX->new();
-my $result = $task->run();
+die Usage() unless $path;
+die (Usage() ." ". $!) unless -r $path;
+
+my $lx = LonelyX->new();
+$lx->loadGrid($path);
+$lx->showGrid() if ( $Verbose );
+
+my $result = $lx->run();
 say $result;
+
+$lx->highlight() if ( $Verbose )
