@@ -1,6 +1,6 @@
 unit sub MAIN(UInt $N);
 
-my @fib = (1, 1, * + * ... * + * > $N).unique;
+my @fib = (1, 2, * + * ... $N <= * + *);
 
 my @results = gather {
     for 2..@fib -> $n {
