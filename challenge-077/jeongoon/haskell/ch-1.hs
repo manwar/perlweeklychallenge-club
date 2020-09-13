@@ -4,7 +4,7 @@ import Options.Generic
 import Data.List (findIndex, intersect, intercalate, sortBy, unfoldr)
 
 {- tested with:
-runhaskell 150 # total 8 cases found
+runhaskell 99999 # total 192 case(s) (slower than perl code T.T)
 -}
 -- fib, fib2: credit: https://wiki.haskell.org/The_Fibonacci_sequence
 fib = fst . fib2

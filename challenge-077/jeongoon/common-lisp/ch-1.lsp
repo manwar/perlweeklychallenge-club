@@ -1,4 +1,8 @@
 ;; translated from ch-1.pl
+;; tested with:
+;; sbcl --script ch-1.lsp 99999
+;; (finished under 0.3 seconds)
+;; common-lisp was winner in my implementation
 
 ;; fibonacci number in reverse order upto limit
 (defun rfibs (limit) ;; ignore first number 1 for challenge purpose
