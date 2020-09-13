@@ -1,4 +1,4 @@
-multi sub MAIN(UInt $N where 0 <= $N <= 2) { say $N }
+multi sub MAIN(UInt $N where $N ~~ 1..2) { say $N }
 
 multi sub MAIN(UInt $N) {
     my @fib = (1, 2, * + * ... $N <= * + *);
