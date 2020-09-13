@@ -4,7 +4,7 @@ import Options.Generic
 import Data.List (findIndex, intersect, intercalate, sortBy, unfoldr)
 
 {- tested with:
-runhaskell 150 # total 8 cases found
+runhaskell 99999 # total 192 case(s) (slower than perl code T.T)
 -}
 -- fib, fib2: credit: https://wiki.haskell.org/The_Fibonacci_sequence
 fib = fst . fib2
@@ -25,21 +25,18 @@ fibNumbers n = unfoldr (\(x, i) -> let fn = fib i in
 reversedFibNumbers = sortBy (\a b -> compare b a).fibNumbers
 
 -- find the all cases of a fib number can be expressed
-divideAFib :: Integer -> [Integer] -> [Integer] -> [[Integer]]
-divideAFib f [] fibNumsUsed = divideAFib f (reversedFibNumbers f) fibNumsUsed
-divideAFib f rfibNums fibNumsUsed = -- fibNumUsed cannot be used twice or more
+divideAFib :: Integer -> [Integer] -> [[Integer]]
+divideAFib f [] = divideAFib f (reversedFibNumbers f)
+divideAFib f rfibNums =
   case (findIndex (f==) rfibNums) of
     Nothing   -> [] --  wrong fib number
     Just fidx -> [[f]] -- always include one fib number itself
-                      -- which is not effeceted by fibNumsUsed
                 ++ unfoldr divideAFibInner (fidx, rfibNums, [f])
   where
     divideAFibInner (_, [], _) = Nothing -- only for silence warning message
     divideAFibInner (idx, rfs@(_:rfs'), acc)
       | idx +2 >= length rfs = Nothing
-      | null (intersect nextTwoFibs fibNumsUsed) =
-          Just ( acc', (idx+1, rfs', acc' ) )
-      | otherwise = Nothing
+      | otherwise = Just ( acc', (idx+1, rfs', acc' ) )
       where
         nextTwoFibs = [ rfs !! (idx+1), rfs !! (idx+2) ]
         acc' = (init acc) ++ nextTwoFibs
@@ -49,6 +46,7 @@ rExpandFibCombination rfibNumsCombi [] =
   rExpandFibCombination rfibNumsCombi (reversedFibNumbers (head rfibNumsCombi))
 rExpandFibCombination rfibNumsCombi rAllFibNums =
   -- rfibNumsCombi: expect to get reversed sorted fib numbers
+  filter ((0<).length) $
   unfoldr productExpandedCases ((replicate nof 0),
                                  lastCsr ) -- starting from last (smallest) fib.
   where
@@ -56,7 +54,7 @@ rExpandFibCombination rfibNumsCombi rAllFibNums =
     rcases = unfoldr (\fibs
                         -> if null fibs then Nothing
                           else Just( divideAFib
-                                  (head fibs) rAllFibNums (tail fibs),
+                                  (head fibs) rAllFibNums,
                                   (tail fibs) ) ) rfibNumsCombi
 
     nof = length rfibNumsCombi
@@ -70,9 +68,9 @@ rExpandFibCombination rfibNumsCombi rAllFibNums =
     productExpandedCases :: ([Int], Int) -> Maybe ([Integer], ([Int], Int))
     productExpandedCases (pos, csr)
       | null pos       = Nothing
+      | not isValidCase = Just ( [], (pos', csr') )
       | otherwise      =
-          Just ( ((foldr (++) []).(map rCaseAtCursor)) allNumRange,
-                 (pos', csr') )
+          Just ( (foldr (++) [] rCaseCombi), (pos', csr') )
       where
         (pos', csr') = case nextCsr csr of
                          Nothing -> ([], csr) -- make edge case
@@ -86,6 +84,15 @@ rExpandFibCombination rfibNumsCombi rAllFibNums =
 
         rCaseAtCursor :: Int -> [Integer]
         rCaseAtCursor i = ((rcases!!i)!!(pos!!i))
+        rCaseCombi = map rCaseAtCursor allNumRange
+
+        isValidCase = isValidCaseInner (head rCaseCombi) (tail rCaseCombi)
+          where
+            isValidCaseInner _ [] = True
+            isValidCaseInner leftCase (rightCase:moreRestCases)
+              | (last leftCase) <= (head rightCase) = False
+              | otherwise = isValidCaseInner rightCase moreRestCases
+
 
         fibAtCursorHasMoreCases c = ((length (rcases!!c)) -1) /= pos!!c
 
