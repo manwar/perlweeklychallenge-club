@@ -14,14 +14,12 @@ with my @combinatons = gather combine zeckendorf $N
 sub combine( @Z ) is cached
 {
     my &valid  = -> $result {
-        $result.elems == $result.unique.elems && $result !~~ @Z };
+        $result.elems == $result.unique.elems && $result !~~ @Z }
 
     my &insert = -> $where, $what {
-        my @x = @Z.clone; @x.splice( $where, 1, |$what ); @x };
+        my @x = @Z.clone; @x.splice( $where, 1, |$what ); @x }
 
-    take @Z;
-
-    sink @Z
+    take @Z and sink @Z
         .map( &zeckendorf )
         .kv.map( &insert )
         .grep( &valid )
