@@ -72,3 +72,5 @@ use Test::More;
 is_deeply( find_solutions(6), [[5,1],[3,2,1]]);
 is_deeply( find_solutions(9), [[8,1],[5,3,1]]);
 is_deeply( find_solutions(-19), [[0]]);
+
+done_testing;

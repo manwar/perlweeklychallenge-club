@@ -1,7 +1,7 @@
 #!/bin/env python
-""" Perl Weekly challenge 077 Task 1 """
-""" https://perlweeklychallenge.org/blog/perl-weekly-challenge-077/ """
-""" Solution Lubos Kolouch """
+""" Perl Weekly challenge 077 Task 1
+    https://perlweeklychallenge.org/blog/perl-weekly-challenge-077/
+    Solution Lubos Kolouch """
 
 
 class FibSolver:
