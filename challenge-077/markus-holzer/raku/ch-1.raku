@@ -1,13 +1,22 @@
+#
+# D:\Projekte\Perl6\perlweeklychallenge-club\challenge-077\markus-holzer\raku>raku ch-1.raku 123456789
+# Number of combinations: 3230
+# Calculated in 8.736 seconds
+#
+# Let me know if yours is faster
+# See https://encyclopediaofmath.org/wiki/Zeckendorf_representation
+#
+
 use experimental :cached;
 
 unit sub MAIN( Int $N where * > 0, Bool :$v = False );
 
 my $start = now;
 
-with my @combinatons = gather combine zeckendorf $N
+with my @combinations = gather combine zeckendorf $N
 {
-    say @combinatons.map( *.join( "," ) ).join( "\n" ) if $v;
-    say "# of combinations: {+@combinatons}";
+    say @combinations.map( *.join( "," ) ).join( "\n" ) if $v;
+    say "Number of combinations: {+@combinations}";
     say "Calculated in { sprintf "%.3f", now - $start } seconds"
 }
 
@@ -34,7 +43,7 @@ sub zeckendorf( $n is copy ) is cached
         eager gather for @fib.grep( * < $n ).reverse {
             if $_ <= $n {
                 take $_;
-                $n -= $_; }}}
+                $n -= $_ }}}
 
     $n == 1 ?? 1.List !! do-zeckendorf
 }
