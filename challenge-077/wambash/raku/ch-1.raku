@@ -1,19 +1,20 @@
 #!/usr/bin/env raku
 
-constant @fib := 1,2 , * + * ... *;
+constant @fib := 1, 2, * + * ... *;
 
 multi iter ( Capture $c ( :$sum, :@pos, :@used ) ) {
     \( sum => $sum + @pos.head, pos => @pos.skip, used => (|@used, @pos.head) ),
-    \( |$c, pos => @pos.skip)
+    \( |$c,                     pos => @pos.skip)
 };
 
-multi iter ( Seq(Any) $a  ) {
+multi next-level ( List $a ) {
     $a.map: |*.&iter
 }
 
 
+constant @fib-sum := (\( :0sum, pos => @fib ),), *.&next-level.cache ... *;
+
 sub fib-sum ( $sum ) {
-    state @fib-sum = \( :0sum, pos => @fib ),  *.&iter.cache ... *;
     my $stop-index = @fib.first: * > $sum, :k;
 
     @fib-sum
@@ -25,7 +26,7 @@ sub MAIN ( :$test!, :$log ) {
     use Test;
 
     my $wi = &iter.wrap: {
-        say .<sum>," ",.<used>, " ",.<pos>.cache.head when Capture;
+        say .<sum>, " ", .<used>, " ", .<pos>.cache.head;
         callsame
     } if $log;
 
