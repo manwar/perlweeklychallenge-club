@@ -26,7 +26,7 @@ sub MAIN ( :$test!, :$log ) {
     use Test;
 
     my $wi = &iter.wrap: {
-        say .<sum>, " ", .<used>, " ", .<pos>.cache.head;
+        note .<sum>, " ", .<used>, " ", .<pos>.cache.head;
         callsame
     } if $log;
 
