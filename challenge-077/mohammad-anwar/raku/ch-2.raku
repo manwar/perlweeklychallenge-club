@@ -13,8 +13,7 @@ use v6.d;
 sub MAIN(Int :$R is copy where { $R >= 2 } = 3,
          Int :$C is copy where { $C >= 2 } = 3) {
 
-    my $matrix = get-matrix(--$R, --$C);
-    find-lonely-x($matrix).say;
+    find-lonely-x(get-matrix(--$R, --$C)).say;
 }
 
 #
