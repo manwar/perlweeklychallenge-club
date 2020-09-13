@@ -18,7 +18,7 @@ sub is_position_lone {
             next if $d_x == 0 and $d_y == 0;
 
             next if ( $pos_x + $d_x < 0 ) or ( $pos_x + $d_x >= scalar @$matrix );
-            next if ( $pos_y + $d_y < 0 )  or ( $pos_y + $d_y >= scalar @$matrix );
+            next if ( $pos_y + $d_y < 0 ) or ( $pos_y + $d_y >= scalar @$matrix );
 
             return 0 if $matrix->[ $pos_x + $d_x ][ $pos_y + $d_y ] eq 'X';
         }
