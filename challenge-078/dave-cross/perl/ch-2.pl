@@ -8,10 +8,7 @@ my ($array, $idx) = @ARGV;
 my @array = split /,/, $array;
 my @idx   = split /,/, $idx;
 
-for (@idx) {
-  my @rotated = rotate($_, @array);
-  say '[', join(', ', @rotated), ']';
-}
+say '[', join(', ', rotate($_, @array)), ']' for @idx;
 
 sub rotate {
   my ($idx, @array) = @_;
