@@ -1,13 +1,13 @@
-# tw.weekly.c77
+# tw.weekly.c78
 
 
-The Weekly Challenge - #077 - Tyler Wardhaugh
+The Weekly Challenge - #078 - Tyler Wardhaugh
 
 ## Usage
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -m tw.weekly.c77
+    $ clojure -m tw.weekly.c78.core
 
 Run the project's tests (which are samples from the task descriptions):
 
@@ -15,11 +15,11 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -m tw.weekly.ch-1 N
+    $ clojure -m tw.weekly.c78.t1
 
 Run Task #2 with input:
 
-    $ clojure -m tw.weekly.ch-2 MATRIX-FILE
+    $ clojure -m tw.weekly.c78.t2
 
 ## Project Template
 
