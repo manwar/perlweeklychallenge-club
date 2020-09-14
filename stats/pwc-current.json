@@ -1,17 +1,35 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Alexander Pankoff",
-            "id" : "Alexander Pankoff",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Alexander Pankoff",
+            "name" : "Alexander Pankoff"
          },
          {
+            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -22,7 +40,6 @@
                   1
                ]
             ],
-            "id" : "Andrew Shitov",
             "name" : "Andrew Shitov"
          },
          {
@@ -36,13 +53,23 @@
             ]
          },
          {
-            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Dave Cross",
+            "name" : "Dave Cross"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "James Smith",
             "name" : "James Smith"
          },
          {
@@ -66,92 +93,80 @@
             "name" : "Mark Anderson"
          },
          {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            ]
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 078"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2020-09-14 09:15:26 GMT"
+   "xAxis" : {
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2020-09-14 09:19:53 GMT"
    },
-   "legend" : {
-      "enabled" : 0
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 078"
    },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 078",
+         "colorByPoint" : 1,
          "data" : [
             {
+               "name" : "Alexander Pankoff",
                "y" : 2,
-               "drilldown" : "Alexander Pankoff",
-               "name" : "Alexander Pankoff"
+               "drilldown" : "Alexander Pankoff"
             },
             {
-               "y" : 3,
                "drilldown" : "Andrew Shitov",
+               "y" : 3,
                "name" : "Andrew Shitov"
             },
             {
-               "y" : 1,
                "drilldown" : "Anton Fedotov",
-               "name" : "Anton Fedotov"
+               "name" : "Anton Fedotov",
+               "y" : 1
             },
             {
+               "name" : "Dave Cross",
+               "y" : 2,
+               "drilldown" : "Dave Cross"
+            },
+            {
+               "y" : 2,
                "name" : "James Smith",
-               "drilldown" : "James Smith",
+               "drilldown" : "James Smith"
+            },
+            {
+               "name" : "Jason Messer",
+               "y" : 2,
+               "drilldown" : "Jason Messer"
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
                "y" : 2
             },
             {
-               "drilldown" : "Jason Messer",
                "y" : 2,
-               "name" : "Jason Messer"
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 2,
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 078",
-         "colorByPoint" : 1
+         ]
       }
-   ],
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   }
+   ]
 }
