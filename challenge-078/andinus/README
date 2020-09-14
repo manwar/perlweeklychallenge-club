@@ -1,29 +1,30 @@
                             ━━━━━━━━━━━━━━━
-                             CHALLENGE 077
+                             CHALLENGE 078
                             ━━━━━━━━━━━━━━━
 
 
 Table of Contents
 ─────────────────
 
-1 Task 1 - Fibonacci Sum
+1 Task 1 - Leader Element
 .. 1.1 Perl
+2 Task 2 - Left Rotation
+.. 2.1 Perl
 
 
 
 
 
-1 Task 1 - Fibonacci Sum
-════════════════════════
+1 Task 1 - Leader Element
+═════════════════════════
 
-  You are given a positive integer `$N'.
+  You are given an array @A containing distinct integers.
 
-  Write a script to find the total number of Fibonacci Numbers required
-  to get `$N' on addition. You are NOT allowed to repeat a number. Print
-  0 if none found.
+  Write a script to find all leader elements in the array @A. Print (0)
+  if none found.
 
-  *Note*: This solution is incomplete. Others have pushed complete
-   solutions, look at those.
+  • An element is leader if it is greater than all the elements to its
+    right side.
 
 
 1.1 Perl
@@ -31,22 +32,48 @@ Table of Contents
 
   • Program: [file:perl/ch-1.pl]
 
-  Make a list of all possible sums of `$input'.
+  We take input from `@ARGV', loop over it. And then we loop over the
+  elements at right, goto next if `$arg' is less than `$elm'. This will
+  push all the leader elements to `@leader'.
   ┌────
-  │ my @sums;
-  │ foreach my $num (0 ... $input / 2) {
-  │     my $diff = $input - $num;
-  │     push @sums, [$diff, $num];
+  │ my @leader;
+  │ MAIN: while (my $arg = shift @ARGV) {
+  │     foreach my $elm (@ARGV) {
+  │         next MAIN if $arg < $elm;
+  │     }
+  │     push @leader, $arg;
   │ }
   └────
 
-  Loop over `@sums' & then print those sets which have both `$sums->[0]'
-  & `$sums->[1]' in fibonacci series.
+
+2 Task 2 - Left Rotation
+════════════════════════
+
+  You are given array @A containing positive numbers and @B containing
+  one or more indices from the array @A.
+
+  Write a script to left rotate @A so that the number at the first index
+  of @B becomes the first element in the array. Similary, left rotate @A
+  again so that the number at the second index of @B becomes the first
+  element in the array.
+
+
+2.1 Perl
+────────
+
+  • Program: [file:perl/ch-2.pl]
+
+  Loop over `@B' & then rotate the elements. Same could've been done
+  with Left Rotation, I find this easier to understand.
   ┌────
-  │ sub is_fib { return Math::Fibonacci::isfibonacci(@_) }
+  │ my @A = qw(10 20 30 40 50);
+  │ my @B = qw(3 4);
   │
-  │ foreach (@sums) {
-  │     next unless is_fib($_->[0]) and is_fib($_->[1]);
-  │     say "$_->[0] + $_->[1]";
+  │ foreach (@B) {
+  │     my @tmp = @A;
+  │     foreach (1 ... scalar @tmp - $_) {
+  │         unshift @tmp, pop @tmp;
+  │     }
+  │     print join(', ', @tmp), "\n";
   │ }
   └────
