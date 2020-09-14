@@ -1,63 +1,78 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 078"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 078",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Anton Fedotov",
+               "y" : 1,
+               "drilldown" : "Anton Fedotov"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            }
+         ]
+      }
+   ],
+   "xAxis" : {
+      "type" : "category"
    },
    "legend" : {
       "enabled" : 0
    },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-09-14 06:31:20 GMT"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 078"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2020-09-14 06:37:20 GMT"
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Anton Fedotov",
-            "name" : "Anton Fedotov",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "id" : "Anton Fedotov",
+            "name" : "Anton Fedotov"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
          }
       ]
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 078",
-         "data" : [
-            {
-               "y" : 1,
-               "drilldown" : "Anton Fedotov",
-               "name" : "Anton Fedotov"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ]
+   }
 }
