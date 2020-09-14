@@ -6,5 +6,5 @@ use v6;
 sub MAIN(
     *@a where { .all ~~ Int } #= List of integers 
 ) {
-    @a.kv.map( -> $i, $v { $v >= all(@a[$i..*]) ?? $v !! Empty }).join(", ").say;
+    @a.kv.map( -> $i, $v { $v > all(@a[$i^..*]) ?? $v !! Empty }).join(", ").say;
 }
