@@ -1,34 +1,60 @@
 Solutions by James Smith.
 
-# Challenge 1 - Coins Sum
+# Challenge 1 - leader
 
-This is just begging for a recursive solution.
+There are two solutions to this - the naive one works left to right, but the optimal one runs right to left.
 
 ```perl
-sub csm {
-  my $t = shift;
-  return @{$mem{"$t @_"}||=[map {my $a=$_; $t==$a?[$a]:
-    map {[$a,@{$_}]} csm($t-$a,grep {$a<=$_&&$_<=$t} @_)} @_] };
+sub leader {                            ## Most efficient way is to work backwards on this rather 
+                                        ## than forwards...
+
+  return 0 unless @_;                   ## If nothing passed return 0 as requested.
+
+  my @R = my $max = pop @_;             ## Last one will always be a "leader"...
+  foreach ( reverse @_ ) {              ## Work forward and unshift the value if it is now a leader
+    unshift @R, $max = $_ if $max < $_; ## greater than max value (and update max at the same time)
+  }
+
+  return @R;                            ## Return array of leaders...
 }
 ```
 
 Notes:
 
- * %mem is a memoisation cache as it helps to not need to re-compute higher totals more than once - speeds up searches for large coin sums... not essential but nice to have
+ * This is an O(n) solution where the forward solution is O(n^2);
 
-How it works:
+# Challenge 2 - left rotate
 
- * Loop through all coin values available
-    * if the coin is the same as the amount required return a single array containing that value;
-    * if not remove that from the amount required and call again. For all values returned prepend the coin value to each array in the list
-    * when calling again remove any coins which are less than the "current coin" and greater than the amount required
+This is a simpler challenge as this is something Perl is even better at - rotating an array is just
+an array slice of the array with the indicies itself rotated...
 
-Caveats & assumptions:
+The index rotation is easy:         "offset" .. "size of list", 0 .. ("offset" - 1);
 
- * No input checking is performed - assumes the options passed are all valid and greater than 0;
+So the code reduces to:
 
-# Challenge 2 - Histogram rectangle
+```perl
+sub rotate {
+  my $a = shift;
+  ## First parameter is an arrayref containing the values to be rotated
+  ## Remaining parameters are the offsets for each rotation
 
-Much simpler this time.
+  ## This is a great use of array slicing to achieve what we need
+  ## Indexes go from offset -> size-1 & 0 -> offset-1
+  ## Perl nicely handles the case where the value to the left of
+  ## the double dot is higher than the value to the right
 
-First we get the size of the box (max value) and render chart then we look for the maximum rectangle size - which is computed as the maximum value of the distance between any two points (inclusive)  multiplied by the lowest value in between the two values. (Maxi-min problem)
+  print "  [@{[ @{$a}[ $_..(@{$a}-1), 0..($_-1) ] ]}]\n" foreach @_;
+
+  ## Let us use the @{[ ]} trick to embed content into the print
+  ## statement - this is a very useful and often under used feature
+  ## of perl which makes for simpler code when rendering output...
+  ## this is nice because print "@A" an print @A are subtly different
+  ## with the "@A" putting spaces (default value of $")
+}
+```
+
+Notes:
+
+ * We use Arrayref slice notation @{ $arrayref }[ @index_list ] to do the rotation
+
+ * We use "@{[ ... ]}" string interpolation to insert these values into the output...
