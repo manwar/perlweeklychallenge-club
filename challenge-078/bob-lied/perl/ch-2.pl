@@ -38,7 +38,7 @@ no warnings qw/ experimental::signatures /;
 use Getopt::Long;
 
 use lib "lib";
-use Task2;
+use LeftRotation;
 
 sub Usage { "Usage: $0 args" };
 
@@ -51,6 +51,6 @@ my @list = @ARGV;
 die Usage() unless $arg;
 die Usage() unless @list;
 
-my $task = Task2->new();
+my $task = LeftRotation->new();
 my $result = $task->run();
 say $result;

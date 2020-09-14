@@ -25,7 +25,7 @@ no warnings qw/ experimental::signatures /;
 use Getopt::Long;
 
 use lib "lib";
-use Task1;
+use LeaderElement;
 
 sub Usage { "Usage: $0 args" };
 
@@ -38,6 +38,6 @@ my @list = @ARGV;
 die Usage() unless $arg;
 die Usage() unless @list;
 
-my $task = Task1->new();
+my $task = LeaderElement->new();
 my $result = $task->run();
 say $result;
