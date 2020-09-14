@@ -19,7 +19,7 @@ Run Task #1 with input
 
 Run Task #2 with input:
 
-    $ clojure -m tw.weekly.c78.t2
+    $ clojure -m tw.weekly.c78.t2 "(10 20 30 40 50)" "(3 4)"
 
 ## Project Template
 
