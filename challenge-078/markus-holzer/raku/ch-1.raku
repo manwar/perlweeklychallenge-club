@@ -6,7 +6,7 @@ sub leader-elements( @stuff ) {
     sub find( $that, *@the-rest ) {
         take $that      if $that > all @the-rest;
         find |@the-rest if @the-rest }
-i
+
     +@stuff ?? gather find |@stuff !! 0 }
 
 #
