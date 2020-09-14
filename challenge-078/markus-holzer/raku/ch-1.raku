@@ -1,6 +1,6 @@
 unit sub MAIN( *@numbers where @numbers.all ~~ Int );
 
-say "({ join ", ", leader-elements( @numbers ) })";
+say "({ join ", ", leader-elements @numbers })";
 
 sub leader-elements( @stuff ) {
     sub find( $that, *@the-rest ) {
