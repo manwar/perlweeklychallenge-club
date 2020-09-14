@@ -15,7 +15,7 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -m tw.weekly.c78.t1
+    $ clojure -m tw.weekly.c78.t1 9 10 7 5 6 1
 
 Run Task #2 with input:
 
