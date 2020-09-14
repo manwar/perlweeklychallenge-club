@@ -1,8 +1,7 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "series" : [
       {
@@ -41,6 +40,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             4,
@@ -72,10 +72,10 @@
             0,
             0,
             8
-         ],
-         "name" : "Raku"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             5,
             0,
@@ -107,10 +107,14 @@
             0,
             4,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "xAxis" : {
       "categories" : [
          "Lance Wicks",
@@ -145,23 +149,19 @@
          "Nick Logan"
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-09-14 06:37:20 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-09-14 07:19:11 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "chart" : {
       "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    }
 }
