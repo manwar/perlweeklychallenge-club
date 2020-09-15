@@ -28,7 +28,7 @@ let N  = +fs . readFileSync (0) . toString () . trim ();
 // up to the target number. Store this in FIB.
 //
 let FIB = [1, 2];
-while (FIB [FIB . length - 1] + FIB [FIB . length - 2] < N) {
+while (FIB [FIB . length - 1] + FIB [FIB . length - 2] <= N) {
     FIB . push (FIB [FIB . length - 1] + FIB [FIB . length - 2]);
 }
 

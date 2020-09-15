@@ -36,7 +36,7 @@ chomp (my $N = <>);
 # we cannot duplicate numbers, so we just need one 1.
 #
 my @FIB = (1, 2);
-while ($FIB [-1] + $FIB [-2] < $N) {
+while ($FIB [-1] + $FIB [-2] <= $N) {
     push @FIB => $FIB [-1] + $FIB [-2];
 }
 
