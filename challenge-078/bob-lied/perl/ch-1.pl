@@ -22,22 +22,21 @@ use v5.30;
 use feature qw/ signatures /;
 no warnings qw/ experimental::signatures /;
 
-use Getopt::Long;
-
-use lib "lib";
-use LeaderElement;
+use List::Util qw / all /;
 
 sub Usage { "Usage: $0 args" };
 
-my $Verbose = 0;
-GetOptions('verbose' => \$Verbose);
-
-my $arg = shift;
 my @list = @ARGV;
 
-die Usage() unless $arg;
 die Usage() unless @list;
 
-my $task = LeaderElement->new();
-my $result = $task->run();
-say $result;
+my @answer;
+
+while ( my $leader = shift(@list) )
+{
+    if ( all { $leader > $_ } @list )
+    {
+        push @answer, $leader;
+    }
+}
+say "( @answer )";
