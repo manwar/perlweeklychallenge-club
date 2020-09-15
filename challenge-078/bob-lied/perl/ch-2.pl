@@ -37,20 +37,31 @@ no warnings qw/ experimental::signatures /;
 
 use Getopt::Long;
 
-use lib "lib";
-use LeftRotation;
-
-sub Usage { "Usage: $0 args" };
+sub Usage { qq(Usage: $0 "(a b c d e)" "(x y)" ) };
 
 my $Verbose = 0;
 GetOptions('verbose' => \$Verbose);
 
-my $arg = shift;
-my @list = @ARGV;
+my $A = shift;  # In list form, "10,20,30"
+my $B = shift;  # In list form, "3,4";
 
-die Usage() unless $arg;
-die Usage() unless @list;
+die Usage() unless $A && $B;
 
-my $task = LeftRotation->new();
-my $result = $task->run();
-say $result;
+$A =~ s/[(),]/ /g;
+my @A = split(" ", $A);
+
+$B =~ s/[(),]/ /g;
+my @B = split(" ", $B);
+
+if ( $Verbose )
+{
+    say "\@A = (@A)\n\@B = (@B)";
+}
+
+my $lastA = $#A;
+
+for my $pivot ( @B )
+{
+    my @rot = ( @A[ $pivot .. $lastA], @A[0..$pivot-1] );
+    say "[ @rot ]";
+}
