@@ -1,8 +1,4 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "xAxis" : {
       "categories" : [
          "3ter",
@@ -37,11 +33,17 @@
          "Cheok-Yin Fung"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-09-15 06:50:38 GMT"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -57,7 +59,7 @@
             4,
             1,
             115,
-            9,
+            10,
             0,
             25,
             5,
@@ -73,10 +75,10 @@
             31,
             0,
             62
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -108,11 +110,9 @@
             8,
             6,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -144,24 +144,24 @@
             15,
             0,
             20
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-09-15 07:05:41 GMT"
    }
 }
