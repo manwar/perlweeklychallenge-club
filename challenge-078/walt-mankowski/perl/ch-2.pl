@@ -24,5 +24,5 @@ for my $b (@b) {
 }
 
 sub rotate_by($b, @a) {
-    return $b == 0 ? @a : (@a[$b..$#a], @a[0..$b-1]);
+    return (@a[$b..$#a], @a[0..$b-1]);
 }
