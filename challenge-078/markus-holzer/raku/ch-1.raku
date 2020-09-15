@@ -3,8 +3,8 @@ unit sub MAIN( *@numbers where @numbers.all ~~ Int );
 say "({ join ", ", leader-elements @numbers })";
 
 sub leader-elements( @stuff ) {
-    my $max = 0;
-    reverse @numbers.reverse.grep: -> $n { $n > $max ?? ($max = $n) !! 0 } }
+    my $max = -Inf;
+    reverse ( @stuff.reverse.grep: -> $n { $n > $max && ($max = $n) } ) || 0 }
 
 #sub leader-elements-recursive( @stuff ) {
 #    sub find( $that, *@the-rest ) {
