@@ -1,5 +1,5 @@
 my @A = 10, 20, 30, 40, 50;
-my @B = 3, 13, -2, 0;
+my @B = 3, 13, -2, 0, 5;
 
 say "Builtin";
 dd @A.rotate($_) for @B;
@@ -10,9 +10,12 @@ dd rotate-array-multi( @A, $_ ) for @B;
 say "Selfmade (concise)";
 dd rotate-array-concise( @A, $_ ) for @B;
 
-say "Selfmade (concise)";
-rotate-array-inplace( @A, 3 );
-dd @A;
+say "In-Place";
+for @B {
+    my @a = @A.clone;
+    rotate-array-inplace( @a, $_ );
+    dd @a;
+}
 
 multi rotate-array-multi( @a, $i where $i < 0 ) {
     rotate-array-multi( @a, @a + $i ) }
