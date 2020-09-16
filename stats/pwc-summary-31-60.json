@@ -1,9 +1,11 @@
 {
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             1,
             108,
@@ -35,10 +37,10 @@
             32,
             32,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             70,
@@ -70,11 +72,9 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             22,
@@ -106,11 +106,29 @@
             0,
             4,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-09-16 10:43:23 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-09-16 15:41:01 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -145,23 +163,5 @@
          "Gustavo Chaves",
          "Hauke Dampfling"
       ]
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
    }
 }
