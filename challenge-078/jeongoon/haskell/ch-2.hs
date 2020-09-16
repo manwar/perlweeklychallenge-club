@@ -3,7 +3,7 @@ import Data.List
 import Data.Char (isNumber)
 import Data.Maybe (catMaybes)
 
--- tested with: runhaskell 7 4 2 6 3 / 1 3 4
+-- tested with: runhaskell ch-2.hs 7 4 2 6 3 / 1 3 4
 -- use any non-digit value as a separator between @A and @B
 
 unsafe_mapLeftRotate ls rotates =
