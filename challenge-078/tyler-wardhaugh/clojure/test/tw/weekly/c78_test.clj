@@ -5,8 +5,8 @@
 
 (deftest task-1
   (testing "Task 1, Leader Elements"
-    (is (= (leader-elements [9, 10, 7, 5, 6, 1]) (list 10 7 6 1))
-    (is (= (leader-elements [3 4 5]) (list 5))))))
+    (is (= (leader-elements [9, 10, 7, 5, 6, 1]) (list 10 7 6 1)))
+    (is (= (leader-elements [3 4 5]) (list 5)))))
 
 (deftest task-2
   (testing "Task 2, Left Rotation"
