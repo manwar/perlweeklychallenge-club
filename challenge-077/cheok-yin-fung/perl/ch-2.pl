@@ -11,6 +11,10 @@
 #
 # Test for Official Example 2 : 
 # ch-2.pl 4 4  O O X O X O O O X O O X O X O O
+
+# update on 14th Sep (after the deadline): fix bugs on subrountine detect
+
+
 use strict;
 use warnings;
 
@@ -32,15 +36,12 @@ for my $colnum (1..$m) {
 my @matrix = ( ["O", "O" , "X"], ["X", "O", "O"], 
                   ["X", "O", "O"]) ; #example 1
 ($m, $n) = (3, 3)
-
 my @matrix = ( ["O", "X" , "X", "O"], ["X", "O", "O", "X"], 
                                       ["O", "O", "O", "O"]) ; 
 ($m, $n) = (3, 4);
-
 my @matrix = ( ["O", "X" , "O"], ["X", "O", "O"], 
                ["O", "X", "O" ], ["O", "O", "O"], ["O", "X", "O"]) ; 
 ($m, $n) = (5, 3)
-
 my @matrix = ( ["O", "X" , "O", "O"], ["X", "O", "X", "O"],
                                       ["O", "O", "O","O" ]) ; 
 ($m, $n) = (3, 4);
@@ -50,9 +51,12 @@ print_matrix(\@matrix);
 
 sub detect {
     my $segment = join "", @_;
-    $segment =~ s/XI/II/g;
-    $segment =~ s/IX/II/g;
-    $segment =~ s/XX/II/g;
+#    $segment =~ s/XI/II/g;          # delete on 14th Sep
+#    $segment =~ s/IX/II/g;          # delete on 14th Sep
+#    $segment =~ s/XX/II/g;          # delete on 14th Sep
+    $segment =~ s/XX/II/g;          # add on 14th Sep
+    $segment =~ s/XI/II/g;          # add on 14th Sep
+    $segment =~ s/IX/II/g;          # add on 14th Sep
     return split //, $segment;
 }
 
