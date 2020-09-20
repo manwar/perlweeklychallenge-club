@@ -2,16 +2,4 @@
 
 .say for left-rotate((7, 4, 2, 6, 3), (1, 3, 4));
 
-sub left-rotate(@A, @B) {
-    my @R = @A;
-
-    gather {
-        for @B -> $i {
-            my $k = @R.first(@A[$i], :k);
-
-            @R .= rotate($k);
-
-            take @R;
-        }
-    }
-}
+sub left-rotate(@A, @B) { gather take @A.rotate($_).Array for @B }
