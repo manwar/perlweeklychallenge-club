@@ -60,4 +60,4 @@ multi sub calculate-rain-levels( @heights where { @heights.elems > 2 }, $offset=
     return RainArea.new( range => ( $offset..^($offset+@heights.elems) ), :$area, :$height ); 
 }
 
-multi sub calculate-rain-levels(@,$) {}
+multi sub calculate-rain-levels(@,$) { return Empty}
