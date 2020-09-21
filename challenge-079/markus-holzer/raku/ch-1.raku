@@ -1,8 +1,7 @@
-use experimental :cached;
-
 unit sub MAIN( Int $N );
 
-sub bits( $n ) is cached {
-    $n !%% 2 + bits( $n div 2 ) if $n > 0 || 0 }
+# This is not only the simplest, but also a quite fast solution
+# It only loses (sometimes) to the kernighan algorithm
+# See bench.raku in this directory
 
-say ($N...1).map( &bits ).sum % 1000000007;
+say ($N...1).map( + *.base(2).indices(1) ).sum % 1000000007
