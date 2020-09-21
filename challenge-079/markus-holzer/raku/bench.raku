@@ -1,6 +1,6 @@
 use Bench;
 
-my $N = @*ARGS[0] || 42;
+unit sub MAIN(Int $N = 42);
 
 #say i($N);
 #say r($N);
@@ -24,7 +24,7 @@ sub l {
     state @b = 0, 1, 1, 2, 1, 2, 2, 3, 1, 2, 2, 3, 2, 3, 3, 4;
     $^n == 0 ?? 0 !! @b[ $^n +& 0xf ] + l($^n +> 4) }
 
-Bench.new.timethese( 100000, {
+Bench.new.timethese( 10000, {
     base2-with-indices => { i($N) },
     base2-with-regex   => { r($N) },
     div2-recursive     => { f($N) },
