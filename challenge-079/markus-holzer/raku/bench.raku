@@ -1,6 +1,6 @@
 use Bench;
 
-my $n = @*ARGS[0] || 42;
+my $N = @*ARGS[0] || 42;
 
 #say i($n);
 #say r($n);
@@ -25,8 +25,8 @@ sub l {
     $^n == 0 ?? 0 !! @b[ $^n +& 0xf ] + l($^n +> 4) }
 
 Bench.new.timethese( 100000, {
-    base2-with-indices => { i(42) },
-    base2-with-regex   => { r(42) },
-    div2-recursive     => { f(42) },
-    kernighan          => { k(42) },
-    lookup-recursive   => { l(42) }})
+    base2-with-indices => { i($N) },
+    base2-with-regex   => { r($N) },
+    div2-recursive     => { f($N) },
+    kernighan          => { k($N) },
+    lookup-recursive   => { l($N) }})
