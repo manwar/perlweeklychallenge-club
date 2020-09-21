@@ -34,7 +34,6 @@ say " ", " -" x @ints, "\n  ", @ints.join(" ");
 
 while @ints.join ~~ m:c($pos)/ (\d)(\d+)(\d) <?{ $0 > $1.comb.all < $2 }> / {
     $sum += (($0, $2).min <<->> $1.comb).sum;    
-
     $pos = $/.to - 1;    
 }
 
