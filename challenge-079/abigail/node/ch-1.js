@@ -19,6 +19,9 @@
 //    bits (2 * N + 1) = 2 * bits (N)                + N + 1
 //
 
+
+let BIG_NUM = 1000000007;
+
 //
 // Create an interface to read from STDIN
 //
@@ -30,7 +33,7 @@ const rl = require ('readline') . createInterface ({
 // Read lines of input, calculate the result, and print it.
 //
 rl . on ('line', (line) => {
-    console . log (bits (+line));  // Unary + numifies
+    console . log (bits (+line) % BIG_NUM);  // Unary + numifies
 });
 
 
