@@ -1,0 +1,67 @@
+Task 1: "Fibonacci Sum
+
+You are given a positive integer $N.
+
+Write a script to find out all possible combination of Fibonacci Numbers
+required to get $N on addition.
+
+You are NOT allowed to repeat a number. Print 0 if none found.
+
+Example 1:
+
+Input: $N = 6
+
+Output:
+    1 + 2 + 3 = 6
+    1 + 5 = 6
+
+Example 2:
+
+Input: $N = 9
+
+Output:
+    1 + 8 = 9
+    1 + 3 + 5 = 9
+"
+
+My notes: ok. pretty straightforward, especially after last weeks' first task.
+Not quite so trivial to do efficiently, my solution generates a lot of
+duplicate solutions (hence the dedup() function), and is very slow for large N.
+(See also ch-1a.pl for a tabulation of number of Fibonacci sums for i=1..N)
+
+
+Task 2: "Lonely X
+
+You are given m x n character matrix consists of O and X only.
+
+Write a script to count the total number of X surrounded by O only. Print
+0 if none found.
+
+Example 1:
+
+Input: [ O O X ]
+       [ X O O ]
+       [ X O O ]
+
+Output: 1 as there is only one X at the first row last column surrounded
+by only O.
+
+Example 2:
+
+Input: [ O O X O ]
+       [ X O O O ]
+       [ X O O X ]
+       [ O X O O ]
+
+Output: 2
+
+    a) First  X found at Row 1 Col 3.
+
+    b) Second X found at Row 3 Col 4.
+"
+
+My notes: interesting question, sounds simple but perhaps not quite
+as simple as it sounds.  Especially (obviously) "surrounded by only O"..
+Note that I counted rows and columns from 0, not 1.  So the output I
+generate for the second grid (file grid2) is:
+"2 lonely Xs in grid: [0, 2],[2, 3]"

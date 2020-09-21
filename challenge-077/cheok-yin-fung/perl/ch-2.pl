@@ -50,9 +50,10 @@ print_matrix(\@matrix);
 
 sub detect {
     my $segment = join "", @_;
+    $segment =~ s/XX/II/g;
     $segment =~ s/XI/II/g;
     $segment =~ s/IX/II/g;
-    $segment =~ s/XX/II/g;
+#    $segment =~ s/XX/II/g;   modify after deadline
     return split //, $segment;
 }
 
