@@ -45,7 +45,7 @@ sub bits ($n) {
       }
 }
 
-say bits (<>) % $BIG_NUM;
+say bits ($_) % $BIG_NUM for <>;
 
 
 __END__
