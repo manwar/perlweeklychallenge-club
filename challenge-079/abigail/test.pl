@@ -35,6 +35,7 @@ foreach my $challenge (1, 2) {
                     my $output_exp = ($input =~ s/input/output/r) . ".exp";
                     my $exp        = `cat $output_exp`;
                     my $got        = `$exe ./$solution < $input`;
+                    s/\h+$//gm for $exp, $got;
                     is $got, $exp, $input;
                 }
             }
