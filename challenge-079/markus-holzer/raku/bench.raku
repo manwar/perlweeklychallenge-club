@@ -2,11 +2,11 @@ use Bench;
 
 my $N = @*ARGS[0] || 42;
 
-#say i($n);
-#say r($n);
-#say f($n);
-#say k($n);
-#say l($n);
+#say i($N);
+#say r($N);
+#say f($N);
+#say k($N);
+#say l($N);
 
 sub i {
     +$^n.base(2).indices(1) }
