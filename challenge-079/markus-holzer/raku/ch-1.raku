@@ -6,13 +6,13 @@ my Int $n = $N;
 
 while $n {
     my $a = $t +> 1;
-    my $s = $N +& ( $t - 1);
+    my $s = $N +& ( $t - 1 );
     my $d = ( $N div $t );
 
-    $r += $d * $a;
-    $r += $s - $a + 1 if $s > $a - 1;
-    $t = $t +< 1;
-    $n = $n +> 1;
+    $r  += $d * $a;
+    $r  += 1 + $s - $a if $s > $a - 1;
+    $t +<= 1;
+    $n +>= 1;
 }
 
 say $r % 1000000007;

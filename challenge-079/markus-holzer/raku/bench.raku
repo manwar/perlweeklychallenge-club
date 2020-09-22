@@ -8,8 +8,8 @@ unit sub MAIN(Int $N = 42);
 #say (1..$N).map( &f ).sum;
 #say (1..$N).map( &k ).sum;
 #say ($N...1).map( &l ).sum;
-#say a($N);
-#say b($N);
+say a($N);
+say b($N);
 #exit;
 sub i {
     +$^n.base(2).indices(1) }
@@ -63,13 +63,13 @@ sub b(Int $N)
 
     while $n {
         my $a = $t +> 1;
-        my $s = $N +& ( $t - 1);
+        my $s = $N +& ( $t - 1 );
         my $d = ( $N div $t );
 
-        $r += $d * $a;
-        $r += $s - $a + 1 if $s > $a - 1;
-        $t = $t +< 1;
-        $n = $n +> 1;
+        $r  += $d * $a;
+        $r  += 1 + $s - $a if $s > $a - 1;
+        $t +<= 1;
+        $n +>= 1;
     }
 
     return $r
@@ -83,4 +83,4 @@ Bench.new.timethese( 1000, {
 #    div2-recursive     => { ($N...1).map( &f ).sum },
 #    kernighan          => { ($N...1).map( &k ).sum },
 #    lookup-recursive   => { ($N...1).map( &l ).sum }
-})git
+})
