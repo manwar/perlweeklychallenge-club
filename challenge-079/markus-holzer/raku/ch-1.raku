@@ -1,7 +1,19 @@
-unit sub MAIN( Int $N );
+unit sub MAIN( Int \N );
 
-# This is not only the simplest, but also a quite fast solution
-# It only loses (sometimes) to the kernighan algorithm
-# See bench.raku in this directory
+my Int \t = 2;
+my Int \r = 0;
+my Int \n = N;
 
-say ($N...1).map( + *.base(2).indices(1) ).sum % 1000000007
+while n {
+    my Int \a = t +> 1;
+    my Int \s = N +& ( t - 1 );
+    my Int \d = N div t;
+
+    r := r +  d * a;
+    r := r +  1 + s - a if 1 + s > a;
+    t := t +< 1;
+    n := n +> 1;
+}
+
+
+say r % 1000000007;
