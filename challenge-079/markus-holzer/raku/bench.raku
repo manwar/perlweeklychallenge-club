@@ -55,24 +55,24 @@ sub a($n) {
     $total-bits;
 }
 
-sub b(Int $N)
+sub b(Int \N)
 {
-    my Int $t = 2;
-    my Int $r = 0;
-    my Int $n = $N;
+    my Int \t = 2;
+    my Int \r = 0;
+    my Int \n = N;
 
-    while $n {
-        my $a = $t +> 1;
-        my $s = $N +& ( $t - 1 );
-        my $d = ( $N div $t );
+    while n {
+        my Int \a = t +> 1;
+        my Int \s = N +& ( t - 1 );
+        my Int \d = N div t;
 
-        $r  += $d * $a;
-        $r  += 1 + $s - $a if $s > $a - 1;
-        $t +<= 1;
-        $n +>= 1;
+        r  := r + d * a;
+        r  := r + 1 + s - a if 1 + s > a;
+        t  := t +< 1;
+        n  := n +> 1;
     }
 
-    return $r
+    return r
 }
 
 Bench.new.timethese( 1000, {
