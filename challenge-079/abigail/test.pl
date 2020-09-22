@@ -17,24 +17,46 @@ use experimental 'signatures';
 
 use Test::More;
 
+
 my %languages = (
-    Perl        =>   ["/opt/perl/bin/perl"  => 'pl', 'perl'],
-    JavaScript  =>   ["/usr/local/bin/node" => 'js', 'node'],
+    Perl        =>   {
+        exe     =>   "/opt/perl/bin/perl",
+        ext     =>   "pl",
+    },
+    JavaScript  =>   {
+        exe     =>   "/usr/local/bin/node",
+        ext     =>   "js",
+        dir     =>   "node",
+    },
+    bc          =>   {
+        exe     =>   "/usr/bin/bc",
+        ext     =>   "bc",
+        filter  =>   's/.*/main($&)/',
+    },
 );
 
+my $perl_exe = $languages {Perl} {exe};
 
 foreach my $challenge (1, 2) {
     my @inputs = <input-$challenge-*> or next;
     subtest "Challenge $challenge" => sub {
         foreach my $language (sort keys %languages) {
-            my ($exe, $ext, $dir) = @{$languages {$language}};
+            my $info     = $languages {$language};
+            my $exe      = $$info {exe};
+            my $ext      = $$info {ext};
+            my $dir      = $$info {dir}    // lc $language;
+            my $filter   = $$info {filter} // '';
             my $solution = "$dir/ch-$challenge.$ext";
             next unless -r $solution;
+
             subtest $language => sub {
                 foreach my $input (@inputs) {
                     my $output_exp = ($input =~ s/input/output/r) . ".exp";
                     my $exp        = `cat $output_exp`;
-                    my $got        = `$exe ./$solution < $input`;
+
+                    my $got = `$perl_exe -ple '$filter' $input |\
+                               $exe ./$solution`;
+
                     s/\h+$//gm for $exp, $got;
                     is $got, $exp, $input;
                 }
