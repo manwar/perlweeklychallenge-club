@@ -1,60 +1,45 @@
 Solutions by James Smith.
 
-# Challenge 1 - leader
+# Challenge 1 - Count Set Bits
 
-There are two solutions to this - the naive one works left to right, but the optimal one runs right to left.
+This is a really interesting challenge - there is a really quick naive solution which is to do the
+counting - but that is an O(n log(n)) problem so as n gets large (to values where the modulus
+calculation is required) then this gets very slow.
 
-```perl
-sub leader {                            ## Most efficient way is to work backwards on this rather 
-                                        ## than forwards...
+There is an O(log(n)) solution which means breaking the sums into chunks which are easy to sum.
 
-  return 0 unless @_;                   ## If nothing passed return 0 as requested.
+For the numbers 1 .. (2^n-1) you can see that the sum of the bits is n(2^n)/2
 
-  my @R = my $max = pop @_;             ## Last one will always be a "leader"...
-  foreach ( reverse @_ ) {              ## Work forward and unshift the value if it is now a leader
-    unshift @R, $max = $_ if $max < $_; ## greater than max value (and update max at the same time)
-  }
+[ There are 2^n numbers (including 0) and you can represent number in n bits, and exactly half of the bits are 1 ]
 
-  return @R;                            ## Return array of leaders...
-}
+We can then use this to work out the sums of the bit counts..
+
+First we get a bit representation of "$i+1"
+
+so e.g. for i = 22 - the array is 1 0 1 1 1
+
+Loop through the bits and use the count method above to count the lower bits
+of each group (ignore any where the value in the bit array is 0)
+The higher bits are counted by multiplying the size of the group by the bits
+in the "higher bit" e.g. 16, 20, 22 below... What we note though is that this
+number increases by 1 each time that we loop through the array
+
+So in the example above the chunks become:
+
+```
+ 1..15 - split this into 16 x "0"  & 0..15  - total is 2^4 * 0 + 4(2^4)/2 = 32
+16..19 - split this into  4 x "16" & 0..3   - total is 2^2 * 1 + 2(2^2)/2 =  8
+20..21 - split this into  2 x "20" & 0..1   - total is 2^1 * 2 + 1(2^1)/2 =  5
+22     - split this into  1 x "22" & 0      - total is 2^0 * 3 + 0(2^0)/2 =  3
+                                                                            48
 ```
 
-Notes:
+# Challenge 2 - trapped rain water
 
- * This is an O(n) solution where the forward solution is O(n^2);
+Much simpler challenge this time - we just need to work out how much water is trapped.
+So for any column we need to work out the maximum height of rocks to the left and right
+of the column, if neither of these are higher than the height of the current column no
+water is trapped. Otherwise the amount of water is trapped is the minimum of these two
+values minus the height of the column.
 
-# Challenge 2 - left rotate
-
-This is a simpler challenge as this is something Perl is even better at - rotating an array is just
-an array slice of the array with the indicies itself rotated...
-
-The index rotation is easy:         "offset" .. "size of list", 0 .. ("offset" - 1);
-
-So the code reduces to:
-
-```perl
-sub rotate {
-  my $a = shift;
-  ## First parameter is an arrayref containing the values to be rotated
-  ## Remaining parameters are the offsets for each rotation
-
-  ## This is a great use of array slicing to achieve what we need
-  ## Indexes go from offset -> size-1 & 0 -> offset-1
-  ## Perl nicely handles the case where the value to the left of
-  ## the double dot is higher than the value to the right
-
-  print "  [@{[ @{$a}[ $_..(@{$a}-1), 0..($_-1) ] ]}]\n" foreach @_;
-
-  ## Let us use the @{[ ]} trick to embed content into the print
-  ## statement - this is a very useful and often under used feature
-  ## of perl which makes for simpler code when rendering output...
-  ## this is nice because print "@A" an print @A are subtly different
-  ## with the "@A" putting spaces (default value of $")
-}
-```
-
-Notes:
-
- * We use Arrayref slice notation @{ $arrayref }[ @index_list ] to do the rotation
-
- * We use "@{[ ... ]}" string interpolation to insert these values into the output...
+To enhance the image - I've also added "~~"s to indicate where the water is trapped
