@@ -33,6 +33,11 @@ my %languages = (
         ext     =>   "bc",
         filter  =>   's/.*/main($&)/',
     },
+    awk         =>   {
+        exe     =>   "/usr/bin/awk",
+        ext     =>   "awk",
+        args    =>   ["-f"],
+    },
 );
 
 my $perl_exe = $languages {Perl} {exe};
@@ -41,12 +46,13 @@ foreach my $challenge (1, 2) {
     my @inputs = <input-$challenge-*> or next;
     subtest "Challenge $challenge" => sub {
         foreach my $language (sort keys %languages) {
-            my $info     = $languages {$language};
-            my $exe      = $$info {exe};
-            my $ext      = $$info {ext};
-            my $dir      = $$info {dir}    // lc $language;
-            my $filter   = $$info {filter} // '';
-            my $solution = "$dir/ch-$challenge.$ext";
+            my $info     =   $languages {$language};
+            my $exe      =   $$info {exe};
+            my $ext      =   $$info {ext};
+            my $dir      =   $$info {dir}    // lc $language;
+            my @args     = @{$$info {args} // []};
+            my $filter   =   $$info {filter} // '';
+            my $solution =  "$dir/ch-$challenge.$ext";
             next unless -r $solution;
 
             subtest $language => sub {
@@ -55,7 +61,7 @@ foreach my $challenge (1, 2) {
                     my $exp        = `cat $output_exp`;
 
                     my $got = `$perl_exe -ple '$filter' $input |\
-                               $exe ./$solution`;
+                               $exe @args ./$solution`;
 
                     s/\h+$//gm for $exp, $got;
                     is $got, $exp, $input;
