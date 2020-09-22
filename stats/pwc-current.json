@@ -7,20 +7,73 @@
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 079"
    },
    "legend" : {
       "enabled" : 0
    },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2020-09-22 01:09:51 GMT"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 079",
+         "data" : [
+            {
+               "name" : "Abigail",
+               "drilldown" : "Abigail",
+               "y" : 2
+            },
+            {
+               "name" : "Andrew Shitov",
+               "y" : 1,
+               "drilldown" : "Andrew Shitov"
+            },
+            {
+               "name" : "Dave Cross",
+               "y" : 2,
+               "drilldown" : "Dave Cross"
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Markus Holzer",
+               "name" : "Markus Holzer"
+            },
+            {
+               "drilldown" : "Mohammad S Anwar",
+               "y" : 2,
+               "name" : "Mohammad S Anwar"
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "y" : 2,
+               "name" : "Simon Proctor"
+            },
+            {
+               "name" : "Vinod Kumar K",
+               "y" : 1,
+               "drilldown" : "Vinod Kumar K"
+            }
+         ]
+      }
+   ],
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          },
          "borderWidth" : 0
       }
@@ -28,44 +81,34 @@
    "drilldown" : {
       "series" : [
          {
-            "name" : "Abigail",
-            "id" : "Abigail",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Abigail",
+            "id" : "Abigail"
          },
          {
+            "id" : "Andrew Shitov",
+            "name" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ],
-            "name" : "Andrew Shitov",
-            "id" : "Andrew Shitov"
+            ]
          },
          {
-            "id" : "Dave Cross",
-            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
-         },
-         {
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
+            ],
+            "name" : "Dave Cross",
+            "id" : "Dave Cross"
          },
          {
             "data" : [
@@ -74,17 +117,31 @@
                   2
                ]
             ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
+         },
+         {
             "id" : "Markus Holzer",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
             "name" : "Markus Holzer"
          },
          {
+            "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
                   1
+               ],
+               [
+                  "Raku",
+                  1
                ]
             ],
-            "name" : "Mohammad S Anwar",
             "id" : "Mohammad S Anwar"
          },
          {
@@ -102,86 +159,33 @@
             ]
          },
          {
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Simon Proctor",
             "name" : "Simon Proctor"
          },
          {
+            "id" : "Vinod Kumar K",
+            "name" : "Vinod Kumar K",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "id" : "Vinod Kumar K",
-            "name" : "Vinod Kumar K"
+            ]
          }
       ]
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 079",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Abigail",
-               "name" : "Abigail"
-            },
-            {
-               "name" : "Andrew Shitov",
-               "y" : 1,
-               "drilldown" : "Andrew Shitov"
-            },
-            {
-               "name" : "Dave Cross",
-               "drilldown" : "Dave Cross",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
-            },
-            {
-               "name" : "Markus Holzer",
-               "y" : 2,
-               "drilldown" : "Markus Holzer"
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Mohammad S Anwar",
-               "name" : "Mohammad S Anwar"
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "y" : 4,
-               "name" : "Roger Bell_West"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            },
-            {
-               "name" : "Vinod Kumar K",
-               "drilldown" : "Vinod Kumar K",
-               "y" : 1
-            }
-         ]
-      }
-   ],
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2020-09-21 23:39:16 GMT"
+   "xAxis" : {
+      "type" : "category"
    }
 }
