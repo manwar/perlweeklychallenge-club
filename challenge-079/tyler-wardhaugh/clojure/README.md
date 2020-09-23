@@ -1,13 +1,13 @@
-# tw.weekly.c78
+# tw.weekly.c79
 
 
-The Weekly Challenge - #078 - Tyler Wardhaugh
+The Weekly Challenge - #079 - Tyler Wardhaugh
 
 ## Usage
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -m tw.weekly.c78.core
+    $ clojure -m tw.weekly.c79.core
 
 Run the project's tests (which are samples from the task descriptions):
 
@@ -15,11 +15,22 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -m tw.weekly.c78.t1 9 10 7 5 6 1
+    $ clojure -m tw.weekly.c79.t1 N
 
 Run Task #2 with input:
 
-    $ clojure -m tw.weekly.c78.t2 "(10 20 30 40 50)" "(3 4)"
+    $ clojure -m tw.weekly.c79.t2 A1 A2 A3 [...]
+
+See SVG files in the `resources` directory for the histograms drawn for each of the tests for Task 2:
+
+![2 1 4 1 2 5](resources/t2.test1.svg "[2 1 4 1 2 5]")
+
+![3 1 3 1 1 5](resources/t2.test2.svg "[3 1 3 1 1 5]")
+
+![1 2 3 4 5 4 3 2 1](resources/t2.test3.svg "[1 2 3 4 5 4 3 2 1]")
+
+![4 1 3 1 2 5 10 5 7](resources/t2.test4.svg "[4 1 3 1 2 5 10 5 7]")
+
 
 ## Project Template
 
