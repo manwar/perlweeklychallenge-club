@@ -55,7 +55,7 @@ for my $r (reverse 1 .. $max) {
   while ($line =~ s/#(\s+)#/'#'. 'W' x length($1) . '#'/e) { }
 
 # units this row can trap is the amount of "W"s we have on it
-# feel free to change the tranaliteration operator to tr/W/W/
+# feel free to change the transliteration operator to tr/W/W/
 # to keep an indication of the allocated water units
   $acc_water += $line =~ tr/W/ /;
 
