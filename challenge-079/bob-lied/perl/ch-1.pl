@@ -30,17 +30,15 @@ use Getopt::Long;
 use lib "lib";
 use CountSetBit;
 
-sub Usage { "Usage: $0 args" };
+sub Usage { "Usage: $0 N \t\t# N > 0" };
 
 my $Verbose = 0;
 GetOptions('verbose' => \$Verbose);
 
-my $arg = shift;
-my @list = @ARGV;
+my $N = shift;
 
-die Usage() unless $arg;
-die Usage() unless @list;
+die Usage() unless $N && $N >= 0;
 
-my $task = CountSetBit->new();
+my $task = CountSetBit->new($N);
 my $result = $task->run();
 say $result;

@@ -38,19 +38,25 @@ no warnings qw/ experimental::signatures /;
 use Getopt::Long;
 
 use lib "lib";
-use Task2;
+use TrappedRainWater;
 
-sub Usage { "Usage: $0 args" };
+sub Usage { "Usage: $0 list-of-int-gt-0" };
 
 my $Verbose = 0;
 GetOptions('verbose' => \$Verbose);
 
-my $arg = shift;
-my @list = @ARGV;
+my $list = "@ARGV";
 
-die Usage() unless $arg;
-die Usage() unless @list;
+die Usage() unless $list;
 
-my $task = Task2->new();
+$list =~ s/[(),]/ /g;
+my @list = split(" ", $list);
+
+die Usage() unless grep /\d+/, @list;
+
+my $task = TrappedRainWater->new(\@list);
+$task->show() if $Verbose;
+
 my $result = $task->run();
-say $result;
+$task->show() if $Verbose;
+say "-----\n", $result;
