@@ -49,6 +49,8 @@ perl ch-2.pl [--help] [--no-utf8] [--no-color] <N> <N> <N> [ <N>*... ]
  perl ch-2.pl 2 1 4 1 2 5 6 8 2 1 3 4 8 1 3 2 9 3 7 3
  https://res.cloudinary.com/practicaldev/image/fetch/s--1OVve57x--/c_limit%2Cf_auto%2Cfl_progressive%2Cq_auto%2Cw_880/https://dev-to-uploads.s3.amazonaws.com/i/0mxarixhc6g8oe3bewx1.png
 
+=cut
+
 BEGIN {
     $::utf8   = 1;
     $::colour = 1;
