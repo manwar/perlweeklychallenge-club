@@ -1,6 +1,9 @@
 {
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -36,30 +39,17 @@
          "Robert Van Dam"
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-09-24 18:21:38 GMT"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-09-24 17:55:16 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             7,
             8,
@@ -91,7 +81,8 @@
             0,
             2,
             3
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -163,5 +154,14 @@
             0
          ]
       }
-   ]
+   ],
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   }
 }
