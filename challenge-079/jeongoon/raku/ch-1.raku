@@ -10,7 +10,6 @@ our &naive = {[+] (.base(2).indices(1).elems for ^$_[0]+1)};
 # this is the rule what I found. I guess this is not bad.
 sub sum-a-section ($m) {
     state @K = 1, 3;
-    say "{@K}";
     # summation of the counts of bits between 2**(m) .. 2**(m+1)-1
     @K[$m]:exists ?? @K[$m] !! ( @K[$m] = [+] (1+<$m), |@K[0..$m-1] );
 }
@@ -28,7 +27,6 @@ sub count-set-bits ( UInt \N ) {
     ++$m while $N +>= 1;
 
     $N = N - (1+<$m);
-    say "??? {$N}";
     $sum += sum-upto-power2($m);
     $N == 0 ?? $sum !! $sum + $N + count-set-bits($N);
 }
