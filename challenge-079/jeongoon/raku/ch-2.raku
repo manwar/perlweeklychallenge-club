@@ -53,7 +53,8 @@ given $terri {
             if ( my $right = @T[$x..*].pairs.max( *.value ) ) {
                 @lakes.push( .export-lake( $x+$right.key) );
             }
-            last; # no more useful data: finish up.
+            ( .start, .left ) = $x, @T[$x];
+            ++$x;
         }
     }
 }
