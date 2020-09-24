@@ -28,7 +28,7 @@ sub length_bin($number) {
 
 # Given a number, it calculates the flips of the most-significant-bit number
 # e.g., ms-flips of 13 (1101) returns the number of flips for number 8 (1000)
-sub score($number) {
+sub ms_flips($number) {
     return 1 if $number == 1;
     1 + ( length_bin($number) - 1 ) * 2**( length_bin($number) - 2 );
 }
@@ -49,7 +49,7 @@ sub calculate ( $number, $total = 0 ) {
     my $extra = $total == 0 ? 0 : $number;
 
     # Use tail call optimization
-    @_ = ( next_number($number), $total + score($number) + $extra );
+    @_ = ( next_number($number), $total + ms_flips($number) + $extra );
     goto &calculate;
 }
 
