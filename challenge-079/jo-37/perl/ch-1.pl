@@ -3,11 +3,11 @@
 use Test2::V0;
 no warnings 'recursion';
 use bigint;
+use constant MOD => 1000000007;
 
 # Calculate the sum of 1-bits in all numbers from 0 to n.  Going from 0
 # to n instead of 1 to n does not change the result, but simplifies the
-# calculation.  The modulus to 1000000007 is ignored as a number with
-# that many bits is far beyond anything manageable.
+# calculation.
 sub bitsum {
 	my $n = shift;
 
@@ -33,7 +33,14 @@ sub bitsum {
 	$offset + ($allone == $offset - 1 ? 2 * bitsum($allone) : bitsum($allone) + bitsum($offset - 1));
 }
 
-is bitsum(4), 5, 'first example';
-is bitsum(3), 4, 'second example';
+# Get the modulus.
+sub bitsum_mod {
+	return bitsum(shift) % MOD;
+}
+
+is bitsum_mod(4), 5, 'first example';
+is bitsum_mod(3), 4, 'second example';
+ok +(bitsum(1e9) > MOD), 'large bitsum';
+ok +(bitsum_mod(1e9) < MOD), 'large bitsum with modulus';
 
 done_testing;
