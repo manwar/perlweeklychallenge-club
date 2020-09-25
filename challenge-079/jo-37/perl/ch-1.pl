@@ -3,7 +3,10 @@
 use Test2::V0;
 no warnings 'recursion';
 use bigint;
+use Memoize;
 use constant MOD => 1000000007;
+
+memoize 'bitsum';
 
 # Calculate the sum of 1-bits in all numbers from 0 to n.  Going from 0
 # to n instead of 1 to n does not change the result, but simplifies the
@@ -30,17 +33,18 @@ sub bitsum {
 	# When splitting a full power-of-two part, both sub-parts to be
 	# recursed into are the same.  This leads to a shortcut for at least
 	# half of the calculations.
-	$offset + ($allone == $offset - 1 ? 2 * bitsum($allone) : bitsum($allone) + bitsum($offset - 1));
+	$offset + ($allone == $offset - 1 ?
+		2 * bitsum($allone) :
+		bitsum($allone) + bitsum($offset - 1));
 }
 
-# Get the modulus.
+# Apply the modulus.
 sub bitsum_mod {
-	return bitsum(shift) % MOD;
+	bitsum(shift) % MOD;
 }
 
 is bitsum_mod(4), 5, 'first example';
 is bitsum_mod(3), 4, 'second example';
-ok +(bitsum(1e9) > MOD), 'large bitsum';
-ok +(bitsum_mod(1e9) < MOD), 'large bitsum with modulus';
+is bitsum_mod(77347884), 1, 'silver bullet';
 
 done_testing;
