@@ -5,12 +5,7 @@
 use strict; use warnings;
 use v5.26;
 use bignum;
-use List::Util qw(sum);
 
-# dec2bin
-# credit: https://www.oreilly.com/library/view/perl-cookbook/1565922433/ch02s05.html
-# but don't need to remove zero(es).
-sub dec2bin { unpack "B32", pack("N", $_[0]); }
 sub TruncNum { 1000000007 } # spec
 sub usage {
     say "perl ch-1.pl <N> # where N is positive integer";
@@ -20,6 +15,9 @@ BEGIN {
     eval { defined $ARGV[0] and $ARGV[0] > 0 or die "invalid" };
     $@ and usage(), exit 0;
 }
+
+package older;
+use List::Util qw(sum);
 
 sub sumSection ($) {  # sum of the counts of bits between 2^(m) .. 2^(m+1)-1
     state @K = (1, 3);
@@ -31,6 +29,15 @@ sub sumSection ($) {  # sum of the counts of bits between 2^(m) .. 2^(m+1)-1
 sub sumUptoPow2 ($) { # sum of bits between 0 .. 2^pow
     sum 1, # sumSection doesn't count the last bits of 2^pow
       map { sumSection $_ } 0 .. $_[0]-1
+}
+
+package main;
+
+# there is a simpler way to calculate, which I realised today.
+# but this method is not significantly faster than previous one.
+sub sumUptoPow2 ($) {
+    my $pow = shift;
+    ( $pow * (1 << $pow) >> 1 ) + 1;  # eqv. ($pow * (2**$pow) / 2 ) + 1;
 }
 
 sub countSetBits ($);
