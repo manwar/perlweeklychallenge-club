@@ -5,12 +5,7 @@
 use strict; use warnings;
 use v5.26;
 use bignum;
-use List::Util qw(sum);
 
-# dec2bin
-# credit: https://www.oreilly.com/library/view/perl-cookbook/1565922433/ch02s05.html
-# but don't need to remove zero(es).
-sub dec2bin { unpack "B32", pack("N", $_[0]); }
 sub TruncNum { 1000000007 } # spec
 sub usage {
     say "perl ch-1.pl <N> # where N is positive integer";
@@ -21,16 +16,23 @@ BEGIN {
     $@ and usage(), exit 0;
 }
 
-sub sumSection ($) {  # sum of the counts of bits between 2^(m) .. 2^(m+1)-1
-    state @K = (1, 3);
-    my $m = shift;
+#sub sumSection ($) {  # sum of the counts of bits between 2^(m) .. 2^(m+1)-1
+#    state @K = (1, 3);
+#    my $m = shift;
+#
+#    exists $K[$m] ? $K[$m] : ( $K[$m] = sum( 1<<$m, @K[0..$m-1] ) );
+#}
 
-    exists $K[$m] ? $K[$m] : ( $K[$m] = sum( 1<<$m, @K[0..$m-1] ) );
-}
+#sub sumUptoPow2 ($) { # sum of bits between 0 .. 2^pow
+#    sum 1, # sumSection doesn't count the last bits of 2^pow
+#      map { sumSection $_ } 0 .. $_[0]-1
+#}
 
-sub sumUptoPow2 ($) { # sum of bits between 0 .. 2^pow
-    sum 1, # sumSection doesn't count the last bits of 2^pow
-      map { sumSection $_ } 0 .. $_[0]-1
+# there is a simpler way to calculate, I realised today.
+# but this is not significantly faster than before.
+sub sumUptoPow2 ($) {
+    my $pow = shift;
+    0.5 * $pow * (1 << $pow) + 1;
 }
 
 sub countSetBits ($);
