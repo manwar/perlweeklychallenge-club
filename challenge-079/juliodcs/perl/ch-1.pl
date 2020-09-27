@@ -38,9 +38,7 @@ sub next_number($number) {
 }
 
 sub calculate ( $number, $total = 0 ) {
-    if ( $number == 0 ) {
-        return $total % MODULE;
-    }
+    return $total % MODULE if $number == 0;
 
     # All bits besides the first need extra flips
     # extra flips are equal to the number itself
