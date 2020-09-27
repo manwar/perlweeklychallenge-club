@@ -20,7 +20,7 @@ our &naive = {[+] (.base(2).indices(1).elems for ^$_[0]+1)};
 #    [+] 1, |(sum-a-section($_) for 0..($pow-1));
 #}
 sub sum-upto-power2 ($pow) { # bits sum between 0 .. 2^pow
-    1 + 0.5 * $pow * (1+<$pow);
+    1 + ( $pow * (1+<$pow) ) +> 1
 }
 
 sub count-set-bits ( UInt \N ) {

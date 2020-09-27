@@ -16,23 +16,28 @@ BEGIN {
     $@ and usage(), exit 0;
 }
 
-#sub sumSection ($) {  # sum of the counts of bits between 2^(m) .. 2^(m+1)-1
-#    state @K = (1, 3);
-#    my $m = shift;
-#
-#    exists $K[$m] ? $K[$m] : ( $K[$m] = sum( 1<<$m, @K[0..$m-1] ) );
-#}
+package older;
+use List::Util qw(sum);
 
-#sub sumUptoPow2 ($) { # sum of bits between 0 .. 2^pow
-#    sum 1, # sumSection doesn't count the last bits of 2^pow
-#      map { sumSection $_ } 0 .. $_[0]-1
-#}
+sub sumSection ($) {  # sum of the counts of bits between 2^(m) .. 2^(m+1)-1
+    state @K = (1, 3);
+    my $m = shift;
 
-# there is a simpler way to calculate, I realised today.
-# but this is not significantly faster than before.
+    exists $K[$m] ? $K[$m] : ( $K[$m] = sum( 1<<$m, @K[0..$m-1] ) );
+}
+
+sub sumUptoPow2 ($) { # sum of bits between 0 .. 2^pow
+    sum 1, # sumSection doesn't count the last bits of 2^pow
+      map { sumSection $_ } 0 .. $_[0]-1
+}
+
+package main;
+
+# there is a simpler way to calculate, which I realised today.
+# but this method is not significantly faster than previous one.
 sub sumUptoPow2 ($) {
     my $pow = shift;
-    0.5 * $pow * (1 << $pow) + 1;
+    ( $pow * (1 << $pow) >> 1 ) + 1;  # eqv. ($pow * (2**$pow) / 2 ) + 1;
 }
 
 sub countSetBits ($);
