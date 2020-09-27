@@ -17,8 +17,6 @@ use experimental 'signatures';
 use bigint;
 
 use constant MODULE       => 1000000007;
-use constant W_ACCURATE   => 'Warning: intermediate result > Integer\'last. Result *may* not be accurate!';
-use constant E_ACCURATE   => 'Error: Number cannot be > Integer\'last';
 use constant E_NO_NUMBER  => 'You need to submit a number';
 
 sub length_bin($number) {
