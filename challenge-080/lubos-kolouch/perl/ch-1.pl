@@ -27,13 +27,15 @@ sub get_smallest_missing {
 
     # Not lucky, arr_min is 0, so need to iterate
     # NOTE: the excercise does not say what to do if there is nothing missing
-    # so let's just return min + 1 and ask on Twitter the author :)
+    # so let's just return 0 as per Twitter confirmation 
     
-    while (1) {
+    for (0..scalar @$arr-2) {
         $arr_min++;
 
         return $arr_min unless grep { $_ == $arr_min } @$arr;
     }
+
+    return 0;
 }
 
 use Test::More;
@@ -41,6 +43,6 @@ use Test::More;
 is(get_smallest_missing([5, 2, -2, 0]), 1);
 is(get_smallest_missing([1, 8, -1]), 2);
 is(get_smallest_missing([2, 0, -1]), 1);
-is(get_smallest_missing([2, 0, 1]), 3);
+is(get_smallest_missing([2, 0, 1]), 0);
 
 done_testing;
