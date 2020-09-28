@@ -44,5 +44,6 @@ is(get_smallest_missing([5, 2, -2, 0]), 1);
 is(get_smallest_missing([1, 8, -1]), 2);
 is(get_smallest_missing([2, 0, -1]), 1);
 is(get_smallest_missing([2, 0, 1]), 0);
+is(get_smallest_missing([2, 0, 1, 3, 4, 5]), 0);
 
 done_testing;
