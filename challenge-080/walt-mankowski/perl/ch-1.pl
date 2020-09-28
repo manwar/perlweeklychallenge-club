@@ -11,14 +11,14 @@ use experimental qw(signatures);
 #
 # Write a script to find out the smallest positive number missing.
 
-my %h = map { $_ => 1 } @ARGV;
+my %n = map { $_ => 1 } @ARGV;
 
-my $n = 1;
+my $i = 1;
 while (1) {
-    if (defined $h{$n}) {
-        $n++;
+    if (defined $n{$i}) {
+        $i++;
     } else {
-        say $n;
+        say $i;
         last;
     }
 }
