@@ -10,6 +10,6 @@ use v5.28;
 
 my @N = grep { $_ > 0 } map { int($_) } @ARGV;
 
-my @extra = grep { @N[$_] != @N[$_-1] } (1..@N-1);
+my $extra = grep { @N[$_] != @N[$_-1] } (1..@N-1);
 
-say @N + @extra;
+say @N + $extra;
