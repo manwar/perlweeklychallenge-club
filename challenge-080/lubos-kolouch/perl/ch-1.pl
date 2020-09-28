@@ -14,7 +14,7 @@
 
 use strict;
 use warnings;
-use List::Util qw/min/;
+use List::Util qw/min max/;
 use feature qw/say/;
 
 sub get_smallest_missing {
@@ -29,7 +29,7 @@ sub get_smallest_missing {
     # NOTE: the excercise does not say what to do if there is nothing missing
     # so let's just return 0 as per Twitter confirmation 
     
-    for (0..scalar @$arr-2) {
+    while ($arr_min < max(@$arr)) {
         $arr_min++;
 
         return $arr_min unless grep { $_ == $arr_min } @$arr;
