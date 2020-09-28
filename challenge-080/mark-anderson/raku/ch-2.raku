@@ -1,4 +1,4 @@
-unit sub MAIN(*@ints);
+unit sub MAIN(*@ints where .all ~~ Int);
 
 my $candies = @ints.elems;
 
