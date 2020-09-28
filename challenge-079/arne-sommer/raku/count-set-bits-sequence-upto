@@ -1,0 +1,20 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0, :u(:$upto));
+
+my $csb := gather
+{
+  take "";
+  take 1;
+  state $sum   = 1;
+  state $count = 1;
+  loop
+  {
+    $sum += (++$count).fmt('%b')>>.comb.flat.sum;
+    take $sum;
+  }
+}
+
+$upto
+  ?? ( say "$_ (binary { $_.fmt('%b') }): { $csb[$_] % 1000000007 }" for 1 .. $N )
+  !! say $csb[$N];
