@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0);
+
+my $csb := gather
+{
+  take "";
+  take 1;
+  state $sum   = 1;
+  state $count = 1;
+  loop
+  {
+    $sum += (++$count).fmt('%b')>>.comb.flat.sum;
+    take $sum;
+  }
+}
+
+say $csb[$N] % 1000000007;
