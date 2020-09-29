@@ -29,7 +29,7 @@ sub smallest_positive_number {
         return $n if ($n < $positive_numbers[$i++]);
     }
 
-    return $positive_numbers[-1]+1;
+    return ++$positive_numbers[-1];
 }
 
 sub get_list {
