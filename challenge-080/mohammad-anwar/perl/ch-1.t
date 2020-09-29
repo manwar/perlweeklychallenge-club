@@ -37,8 +37,7 @@ sub smallest_positive_number {
 
     my $i = 0;
     for my $n (1 .. $positive_numbers[-1]) {
-        next if ($n == $positive_numbers[$i++]);
-        return $n;
+        return $n if ($n < $positive_numbers[$i++]);
     }
 
     return $positive_numbers[-1]+1;
