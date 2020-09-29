@@ -62,11 +62,10 @@ sub count_set_bits {
   my $t = my $s = 0;
   while (@q) {
     next unless shift @q;
-    $t += ($s + @q/2)*(1<<@q);
-    $t %= 1000000007;
+    $t += ($s + @q/2) * (1<<@q);
     $s++;
   }
-  return $t;
+  return $t % 1000000007;
 }
 
 sub naive_count_set_bits {
