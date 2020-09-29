@@ -8,19 +8,18 @@
          }
       }
    },
+   "xAxis" : {
+      "type" : "category"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 080"
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "drilldown" : {
       "series" : [
@@ -49,8 +48,8 @@
             "name" : "James Smith"
          },
          {
-            "id" : "Kang-min Liu",
             "name" : "Kang-min Liu",
+            "id" : "Kang-min Liu",
             "data" : [
                [
                   "Perl",
@@ -73,63 +72,53 @@
             ]
          },
          {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
             "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
-         },
-         {
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Markus Holzer",
-            "id" : "Markus Holzer"
+            ]
          },
          {
+            "id" : "Markus Holzer",
+            "name" : "Markus Holzer",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Myoungjin Jeon",
+            "name" : "Myoungjin Jeon",
             "data" : [
                [
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Myoungjin Jeon",
-            "name" : "Myoungjin Jeon"
+            ]
          },
          {
+            "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Niels van Dijke",
-            "name" : "Niels van Dijke"
+            ]
          },
          {
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
                   2
                ],
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West"
-         },
-         {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
-            "data" : [
                [
                   "Raku",
                   2
@@ -141,42 +130,60 @@
                [
                   "Perl",
                   2
+               ]
+            ],
+            "id" : "Shawn Wagner",
+            "name" : "Shawn Wagner"
+         },
+         {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Walt Mankowski",
+            "id" : "Walt Mankowski",
+            "data" : [
+               [
+                  "Perl",
+                  2
                ],
                [
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Walt Mankowski",
-            "id" : "Walt Mankowski"
+            ]
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2020-09-29 06:00:06 GMT"
-   },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 080",
          "data" : [
             {
-               "name" : "Andinus",
                "y" : 4,
+               "name" : "Andinus",
                "drilldown" : "Andinus"
             },
             {
+               "name" : "James Smith",
                "drilldown" : "James Smith",
-               "y" : 2,
-               "name" : "James Smith"
+               "y" : 2
             },
             {
-               "name" : "Kang-min Liu",
                "y" : 4,
-               "drilldown" : "Kang-min Liu"
+               "drilldown" : "Kang-min Liu",
+               "name" : "Kang-min Liu"
             },
             {
-               "y" : 2,
+               "drilldown" : "Lubos Kolouch",
                "name" : "Lubos Kolouch",
-               "drilldown" : "Lubos Kolouch"
+               "y" : 2
             },
             {
                "y" : 2,
@@ -185,28 +192,33 @@
             },
             {
                "drilldown" : "Markus Holzer",
-               "y" : 2,
-               "name" : "Markus Holzer"
+               "name" : "Markus Holzer",
+               "y" : 2
             },
             {
-               "drilldown" : "Myoungjin Jeon",
+               "y" : 1,
                "name" : "Myoungjin Jeon",
-               "y" : 1
+               "drilldown" : "Myoungjin Jeon"
             },
             {
                "name" : "Niels van Dijke",
-               "y" : 2,
-               "drilldown" : "Niels van Dijke"
+               "drilldown" : "Niels van Dijke",
+               "y" : 2
             },
             {
-               "drilldown" : "Roger Bell_West",
+               "y" : 4,
                "name" : "Roger Bell_West",
-               "y" : 4
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Shawn Wagner",
+               "name" : "Shawn Wagner"
             },
             {
                "drilldown" : "Simon Proctor",
-               "y" : 2,
-               "name" : "Simon Proctor"
+               "name" : "Simon Proctor",
+               "y" : 2
             },
             {
                "drilldown" : "Walt Mankowski",
@@ -214,16 +226,19 @@
                "y" : 3
             }
          ],
-         "name" : "Perl Weekly Challenge - 080",
          "colorByPoint" : 1
       }
    ],
-   "xAxis" : {
-      "type" : "category"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 080"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 12] Last updated at 2020-09-29 06:22:04 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
