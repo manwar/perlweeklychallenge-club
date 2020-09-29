@@ -1,7 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
          "data" : [
@@ -39,7 +36,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             95,
@@ -71,9 +67,11 @@
             0,
             0,
             2
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             61,
@@ -105,23 +103,15 @@
             0,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-09-29 04:58:30 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -157,11 +147,21 @@
          "Tyler Limkemann"
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-09-29 04:38:26 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
