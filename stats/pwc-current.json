@@ -1,31 +1,97 @@
 {
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "enabled" : 1,
             "format" : "{point.y}"
-         }
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+         },
+         "borderWidth" : 0
       }
    },
    "tooltip" : {
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 080",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "Andinus",
+               "name" : "Andinus",
+               "y" : 4
+            },
+            {
+               "y" : 2,
+               "name" : "James Smith",
+               "drilldown" : "James Smith"
+            },
+            {
+               "name" : "Kang-min Liu",
+               "y" : 4,
+               "drilldown" : "Kang-min Liu"
+            },
+            {
+               "y" : 2,
+               "name" : "Lubos Kolouch",
+               "drilldown" : "Lubos Kolouch"
+            },
+            {
+               "y" : 2,
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Markus Holzer",
+               "name" : "Markus Holzer",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Mohammad S Anwar",
+               "y" : 2,
+               "name" : "Mohammad S Anwar"
+            },
+            {
+               "name" : "Myoungjin Jeon",
+               "y" : 1,
+               "drilldown" : "Myoungjin Jeon"
+            },
+            {
+               "drilldown" : "Niels van Dijke",
+               "y" : 2,
+               "name" : "Niels van Dijke"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "y" : 4,
+               "name" : "Roger Bell_West"
+            },
+            {
+               "y" : 2,
+               "name" : "Shawn Wagner",
+               "drilldown" : "Shawn Wagner"
+            },
+            {
+               "y" : 2,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "drilldown" : "Walt Mankowski",
+               "y" : 3,
+               "name" : "Walt Mankowski"
+            }
+         ]
+      }
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 13] Last updated at 2020-09-29 06:52:19 GMT"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andinus",
-            "id" : "Andinus",
             "data" : [
                [
                   "Perl",
@@ -35,17 +101,19 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "id" : "Andinus",
+            "name" : "Andinus"
          },
          {
+            "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "James Smith",
-            "name" : "James Smith"
+            ]
          },
          {
             "name" : "Kang-min Liu",
@@ -62,14 +130,14 @@
             ]
          },
          {
-            "id" : "Lubos Kolouch",
-            "name" : "Lubos Kolouch",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Lubos Kolouch",
+            "name" : "Lubos Kolouch"
          },
          {
             "id" : "Mark Anderson",
@@ -92,14 +160,24 @@
             ]
          },
          {
-            "id" : "Myoungjin Jeon",
-            "name" : "Myoungjin Jeon",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar"
+         },
+         {
             "data" : [
                [
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Myoungjin Jeon",
+            "name" : "Myoungjin Jeon"
          },
          {
             "name" : "Niels van Dijke",
@@ -112,8 +190,6 @@
             ]
          },
          {
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -123,7 +199,9 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          },
          {
             "data" : [
@@ -136,8 +214,8 @@
             "name" : "Shawn Wagner"
          },
          {
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
@@ -146,8 +224,6 @@
             ]
          },
          {
-            "name" : "Walt Mankowski",
-            "id" : "Walt Mankowski",
             "data" : [
                [
                   "Perl",
@@ -157,86 +233,25 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Walt Mankowski",
+            "id" : "Walt Mankowski"
          }
       ]
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 080",
-         "data" : [
-            {
-               "y" : 4,
-               "name" : "Andinus",
-               "drilldown" : "Andinus"
-            },
-            {
-               "name" : "James Smith",
-               "drilldown" : "James Smith",
-               "y" : 2
-            },
-            {
-               "y" : 4,
-               "drilldown" : "Kang-min Liu",
-               "name" : "Kang-min Liu"
-            },
-            {
-               "drilldown" : "Lubos Kolouch",
-               "name" : "Lubos Kolouch",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "drilldown" : "Markus Holzer",
-               "name" : "Markus Holzer",
-               "y" : 2
-            },
-            {
-               "y" : 1,
-               "name" : "Myoungjin Jeon",
-               "drilldown" : "Myoungjin Jeon"
-            },
-            {
-               "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke",
-               "y" : 2
-            },
-            {
-               "y" : 4,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Shawn Wagner",
-               "name" : "Shawn Wagner"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Walt Mankowski",
-               "name" : "Walt Mankowski",
-               "y" : 3
-            }
-         ],
-         "colorByPoint" : 1
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 080"
    },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 12] Last updated at 2020-09-29 06:22:04 GMT"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 080"
    },
    "legend" : {
       "enabled" : 0
