@@ -13,7 +13,7 @@
   "Determine the smallest positive integer missing in a sequence (by set difference)."
   [coll]
   (if-let [missing (->> coll
-                        ((juxt #(set (range 1 (inc (apply max %)))) set))
+                        ((juxt #(set (range 1 (+ 2 (apply max %)))) set))
                         (apply set/difference)
                         seq)]
       (apply min missing)
@@ -23,10 +23,11 @@
   "Determine the smallest positive integer missing in a sequence (by sorting)."
   [coll]
   (if-let [sorted (->> coll (filter pos-int?) sort seq)]
-    (->> (map vector (iterate inc 1) sorted)
-         (filter (partial apply not=))
-         (take 1)
-         ffirst)
+    (or  (->> (map vector (iterate inc 1) sorted)
+              (filter (partial apply not=))
+              (take 1)
+              ffirst)
+        (inc (last sorted)))
     1))
 
 (def smallest-missing smallest-missing-by-sorting)
@@ -35,6 +36,4 @@
   "Run Task 1 with a list of integers N, defaulting to the first one given in the examples."
   [& args]
   (let [N (or (some->> args (map edn/read-string)) [5 2 -2 0]) ]
-    (if-let [smallest (smallest-missing N)]
-      (println smallest)
-      (println "No positive integer is missing in the given sequence."))))
+    (println (smallest-missing N))))
