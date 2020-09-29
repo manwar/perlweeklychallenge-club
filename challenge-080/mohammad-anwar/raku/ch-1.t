@@ -34,12 +34,12 @@ done-testing;
 #
 # SUBROUTINE
 
-sub smallest-positive-number(@n where .all ~~ Int) {
+sub smallest-positive-number(@n where .all ~~ Int --> Int) {
 
     my @positive-numbers = @n.sort.grep: { $_ > 0 };
     return 1 unless @positive-numbers.elems;
 
-    my $i = 0;
+    my Int $i = 0;
     (1 .. @positive-numbers.tail).map: -> $n {
         return $n if $n < @positive-numbers[$i++]
     };
