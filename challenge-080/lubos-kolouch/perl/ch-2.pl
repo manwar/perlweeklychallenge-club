@@ -6,7 +6,7 @@
 #        USAGE: ./ch_2.pl  
 #
 #  DESCRIPTION: https://perlweeklychallenge.org/blog/perl-weekly-challenge-080/
-#               Challenge #1
+#               Challenge #2
 #               Count Candies
 #
 #       AUTHOR: Lubos Kolouch
