@@ -27,7 +27,7 @@ done_testing;
 
 #
 #
-# METHODS
+# SUBROUTINE
 
 sub smallest_positive_number {
     my ($arrayref) = @_;
