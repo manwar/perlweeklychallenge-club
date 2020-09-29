@@ -8,7 +8,9 @@
     (is (= (smallest-missing [5 2 -2 0]) 1))
     (is (= (smallest-missing [1 8 -1]) 2))
     (is (= (smallest-missing [2 0 -1]) 1))
-    (is (nil? (smallest-missing [1 2 3])))))
+    (is (= (smallest-missing [-5 -4 -3]) 1))
+    (is (= (smallest-missing [1 2 3 (int 1e7)]) 4))
+    (is (nil? (smallest-missing [1 4 2 3])))))
 
 (deftest task-2
   (testing "Task 2, Count Candies"

@@ -17,6 +17,10 @@ Run Task #1 with input
 
     $ clojure -m tw.weekly.c80.t1 A1 A2 A3 [...]
 
+Benchmark both methods defined in Task #1:
+
+    $ clojure -m tw.weekly.c80.t1-bench
+
 Run Task #2 with input:
 
     $ clojure -m tw.weekly.c80.t2 A1 A2 A3 [...]

@@ -9,14 +9,27 @@
 ;Write a script to find out the smallest positive number missing.
 ;;;;
 
-(defn smallest-missing
-  "Determine the smallest positive integer missing in a sequence."
+(defn smallest-missing-by-set
+  "Determine the smallest positive integer missing in a sequence (by set difference)."
   [coll]
-  (when-let [missing (->> coll
+  (if-let [missing (->> coll
                         ((juxt #(set (range 1 (inc (apply max %)))) set))
                         (apply set/difference)
                         seq)]
-      (apply min missing)))
+      (apply min missing)
+      1))
+
+(defn smallest-missing-by-sorting
+  "Determine the smallest positive integer missing in a sequence (by sorting)."
+  [coll]
+  (if-let [sorted (->> coll (filter pos-int?) sort seq)]
+    (->> (map vector (iterate inc 1) sorted)
+         (filter (partial apply not=))
+         (take 1)
+         ffirst)
+    1))
+
+(def smallest-missing smallest-missing-by-sorting)
 
 (defn -main
   "Run Task 1 with a list of integers N, defaulting to the first one given in the examples."
