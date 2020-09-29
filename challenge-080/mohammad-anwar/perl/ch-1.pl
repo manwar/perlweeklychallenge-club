@@ -10,31 +10,27 @@
 
 use strict;
 use warnings;
-use Data::Dumper;
 
 my $N = $ARGV[0] || "2, 3, 7, 6, 8, -1, -10, 15";
 printf("%s => %d\n", $N, smallest_positive_number(get_list($N)));
 
 #
 #
-# METHODS
+# SUBROUTINES
 
 sub smallest_positive_number {
-    my ($array) = @_;
+    my ($arrayref) = @_;
 
-    my %numbers = ();
-    foreach my $n (@$array) {
-        next unless $n > 0;
-        $numbers{$n} = 1;
-    }
+    my @positive_numbers = sort(grep $_ > 0, @$arrayref);
+    return 1 unless (@positive_numbers);
 
     my $i = 0;
-    foreach my $j (sort {$a <=> $b} keys %numbers) {
-        next if (++$i == $j);
-        return $i;
+    for my $n (1 .. $positive_numbers[-1]) {
+        next if ($n == $positive_numbers[$i++]);
+        return $n;
     }
 
-    return ++$i;
+    return $positive_numbers[-1]+1;
 }
 
 sub get_list {
