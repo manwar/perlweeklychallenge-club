@@ -18,7 +18,7 @@ int missing_n(vector<int> n) {
         if (x > max) max = x;
     }
 
-    for (auto c = 1; c <= max ; c++) {
+    for (auto c = 1; c < max; c++) {
         if (!v[c]) {
             return c;
             break;
