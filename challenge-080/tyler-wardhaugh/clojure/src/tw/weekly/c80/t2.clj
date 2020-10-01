@@ -14,10 +14,8 @@
 (defn count-candies
   "Determine the number of candies needed according to the rules in the task description."
   [coll]
-  (let [xf (comp (map (juxt (fn [[a b _]] (if (> b a) 1 0))
-                            (fn [[_ b c]] (if (> b c) 1 0))))
-                 (map (partial apply + 1)))
-        source (partition 3 1 (repeat ##Inf) (concat [##Inf] coll))]
+  (let [xf (map #(inc (if (apply not= %) 1 0)))
+        source (partition 2 1 (list (last coll)) coll)]
     (transduce xf + source)))
 
 (defn -main

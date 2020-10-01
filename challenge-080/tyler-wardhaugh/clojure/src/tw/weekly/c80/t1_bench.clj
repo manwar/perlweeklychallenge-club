@@ -7,10 +7,13 @@
 (defn -main
   [& _]
   (doseq [t [[1 -2 8] [1 2 3] [1 2 3 (int 1e7)]]]
-    (cl-format true "Benchmarking ~a by-set:~%" t)
-    (cc/quick-bench (t1/smallest-missing-by-set t))
+    (cl-format true "~2%===~a~60,1,0,'=a" t "=")
 
-    (Thread/sleep 1000)
+    (cl-format true "~2%Benchmarking ~a by set-intersection:~%" t)
+    (cc/quick-bench (t1/smallest-missing-by-set-intersection t))
 
-    (cl-format true "Benchmarking ~a by-sorting~%" t)
-    (cc/quick-bench (t1/smallest-missing-by-sorting t))))
+    (cl-format true "~2%Benchmarking ~a by sorting:~%" t)
+    (cc/quick-bench (t1/smallest-missing-by-sorting t))
+
+    (cl-format true "~2%Benchmarking ~a by set-membership:~%" t)
+    (cc/quick-bench (t1/smallest-missing-by-set-membership t))))
