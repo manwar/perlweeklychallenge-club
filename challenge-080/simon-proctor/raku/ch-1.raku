@@ -6,6 +6,6 @@ use v6;
 sub MAIN (
     *@N where { $_.all ~~ Int } #= List of integers
 ) {
-    say (1...*).first( * !~~ any(@N) );
+    say (1...*).first( none(@N) );
     
 }
