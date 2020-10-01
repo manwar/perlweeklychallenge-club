@@ -4,14 +4,10 @@ local t2 = {}
 
 function t2.count_candies(coll)
   local count = #coll
-  local maybe_inc = function(i, j)
-    if (coll[i] > coll[j]) then count = count + 1 end
-  end
 
-  -- sweep left-to-right
-  for i=1,#coll-1 do maybe_inc(i, i+1) end
-  -- sweep right-to-left
-  for i=#coll,2,-1 do maybe_inc(i, i-1) end
+  for i=1,#coll-1 do
+    if (coll[i] ~= coll[i+1]) then count = count + 1 end
+  end
 
   return count
 end
