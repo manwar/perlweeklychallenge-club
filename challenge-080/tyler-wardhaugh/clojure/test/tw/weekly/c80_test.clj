@@ -14,5 +14,6 @@
 
 (deftest task-2
   (testing "Task 2, Count Candies"
-    (is (= (count-candies [1, 2, 2]) 4))
-    (is (= (count-candies [1, 4, 3, 2]) 7))))
+    (is (= (count-candies [1 2 2]) 4))
+    (is (= (count-candies [1 4 3 2]) 7))
+    (is (= (count-candies [2 1 4 3 1 2]) 11))))
