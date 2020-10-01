@@ -7,15 +7,15 @@ The Weekly Challenge - #080 - Tyler Wardhaugh
 
 Run Task 1:
 
-    $
+    $ ./run.lua ch-1 5 2 -2 0
 
 Run Task 2:
 
-    $
+    $ ./run.lua ch-2 1 2 2
 
-Run the project's tests (which are samples from the task descriptions):
+Run the project's tests (all the samples from the task descriptions plus some others):
 
-    $ lua test.lua
+    $ ./test.lua
 
 ## Requirements:
 *   [Lua](https://www.lua.org/) 5.3
