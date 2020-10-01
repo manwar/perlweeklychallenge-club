@@ -9,7 +9,7 @@
 ;Write a script to find out the smallest positive number missing.
 ;;;;
 
-(defn smallest-missing-by-set
+(defn smallest-missing-by-set-intersection
   "Determine the smallest positive integer missing in a sequence (by set difference)."
   [coll]
   (if-let [missing (->> coll
@@ -30,7 +30,15 @@
         (inc (last sorted)))
     1))
 
-(def smallest-missing smallest-missing-by-sorting)
+(defn smallest-missing-by-set-membership
+  "Determine the smallest positive integer missing in a sequence (by set membership)."
+  [coll]
+  (let [scoll (->> coll (filter pos-int?) set)]
+    (->> (iterate inc 1)
+         (remove scoll)
+         first)))
+
+(def smallest-missing smallest-missing-by-set-membership)
 
 (defn -main
   "Run Task 1 with a list of integers N, defaulting to the first one given in the examples."
