@@ -10,10 +10,8 @@ say (@L2R Z @R2L.reverse).map(*.max).sum;
 sub candies(@N) {
     my @candies = 1 xx @N;
 
-    for @N.keys -> $k {
-        FIRST next; 
-
-        if @N[$k-1] < @N[$k] {
+    for @N.keys.skip -> $k {
+        if @N[$k] > @N[$k-1] {
             @candies[$k] = @candies[$k-1] + 1;
         }
     }
