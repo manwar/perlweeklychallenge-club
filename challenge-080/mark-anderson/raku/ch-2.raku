@@ -1,13 +1,22 @@
-unit sub MAIN(*@ints where .all ~~ Int);
+# with help from https://www.youtube.com/watch?v=h6_lIwZYHQw
 
-my $candies = @ints.elems;
+unit sub MAIN(*@N where .all ~~ Int);
 
-@ints.push(Inf);
-@ints.unshift(Inf);
+my @L2R = candies(@N);
+my @R2L = candies(@N.reverse);
 
-for (1..^@ints.end) -> $i {
-    $candies++ if @ints[$i] > @ints[$i-1];
-    $candies++ if @ints[$i] > @ints[$i+1];
+say (@L2R Z @R2L.reverse).map(*.max).sum;
+
+sub candies(@N) {
+    my @candies = 1 xx @N;
+
+    for @N.keys -> $k {
+        FIRST next; 
+
+        if @N[$k-1] < @N[$k] {
+            @candies[$k] = @candies[$k-1] + 1;
+        }
+    }
+
+    @candies;
 }
-
-say $candies;
