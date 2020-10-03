@@ -52,7 +52,7 @@ while (<>) {
     # in an array @N. Initialize the number of candies to the number
     # of candidates.
     #
-    my $candies = my @N = split ' ';
+    my $candies = my @N = split;
 
     #
     # Add a candy of each pair of consecutive candidates with different
