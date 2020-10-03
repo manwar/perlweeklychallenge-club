@@ -1,0 +1,111 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 080
+
+                                Andinus
+                            ━━━━━━━━━━━━━━━
+
+
+Table of Contents
+─────────────────
+
+1 Task 1 - Smallest Positive Number Bits
+.. 1.1 Perl
+2 Task 2 - Count Candies
+.. 2.1 Perl
+
+
+
+
+
+1 Task 1 - Smallest Positive Number Bits
+════════════════════════════════════════
+
+  You are given unsorted list of integers `@N'.
+
+  Write a script to find out the smallest positive number missing.
+
+
+1.1 Perl
+────────
+
+  • Program: [file:perl/ch-1.pl]
+
+  We take input from `@ARGV', sort it & remove all inputs less than 2.
+  We check if the smallest positive number is 2.
+  ┌────
+  │ my @sorted = sort { $a <=> $b } @ARGV;
+  │
+  │ # Print 1 if there are no positive numbers in @sorted.
+  │ print "1\n" and exit 0 if $sorted[$#sorted] < 1;
+  │
+  │ while (my $arg = shift @sorted) {
+  │     next if $arg < 2;
+  │     print "2\n" and exit 0 unless $arg == 2;
+  │     last;
+  │ }
+  └────
+
+  Now we are sure the smallest positive number is not 1 or 2 & `@sorted'
+  doesn't contain any number less than 2, infact it doesn't contain any
+  number less than 3.
+
+  We loop from `3 ... $sorted[$#sorted] + 1' & then over `@sorted'
+  array. The first number from the array is dropped if it's equal to
+  `$num'. If not then `$num' is the smallest positive number, we print
+  it & exit the `MAIN' loop.
+
+  This won't print the smallest positive number if the user passed
+  consecutive set of numbers, we just add `print "$num\n"' at the end to
+  cover this case.
+  ┌────
+  │ MAIN: foreach my $num (3 ... $sorted[$#sorted] + 1) {
+  │     foreach (@sorted) {
+  │         shift @sorted and next MAIN if $num == $_;
+  │         print "$num\n" and last MAIN;
+  │     }
+  │     # Print the last element if it was a continous series of positive
+  │     # numbers.
+  │     print "$num\n";
+  │ }
+  └────
+
+
+2 Task 2 - Count Candies
+════════════════════════
+
+  You are given rankings of `@N' candidates.
+
+  Write a script to find out the total candies needed for all
+  candidates. You are asked to follow the rules below:
+
+  1. You must given at least one candy to each candidate.
+  2. Candidate with higher ranking get more candies than their mmediate
+     neighbors on either side.
+
+
+2.1 Perl
+────────
+
+  • Program: [file:perl/ch-2.pl]
+
+  Giving at least one day to all candidates.
+  ┌────
+  │ my $candies = scalar @ARGV;
+  └────
+
+  Handling first & last index, we do this outside the loop to keep it
+  simple.
+  ┌────
+  │ $candies++ if $ARGV[0] > $ARGV[1];
+  │ $candies++ if $ARGV[$#ARGV] > $ARGV[$#ARGV - 1];
+  └────
+
+  Loop handles rest of the entries.
+  ┌────
+  │ foreach my $index (1 ... $#ARGV - 1) {
+  │     $candies++ if $ARGV[$index] > $ARGV[$index - 1];
+  │     $candies++ if $ARGV[$index] > $ARGV[$index + 1];
+  │ }
+  │
+  │ print "$candies\n";
+  └────

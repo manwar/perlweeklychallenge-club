@@ -26,4 +26,4 @@
         A (or (some->> args rest (map edn/read-string)) [1 5 0 2 9 3 7 6 4 8])]
     (cl-format true "~10a: (~{~a~^ ~}), size = ~d~%~10a: (~{~a~^ ~})~%"
                "Input" A S
-               "Output" (sequence (sliding-min 3) A))))
+               "Output" (sequence (sliding-min S) A))))

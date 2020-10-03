@@ -1,0 +1,38 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@N where @N.elems > 0 && all(@N) ~~ Int && all(@N) > 0);
+
+if @N.elems == 1|2
+{
+  say 0;
+  exit;
+}
+
+my $old-sum = @N.sum;
+my $elems   = @N.elems;
+my @N-new   = @N;
+
+for 0 .. $elems -3 -> $left
+{
+  for $elems -1 ... $left +2 -> $right
+  {
+    my $L = @N-new[$left];
+    my $R = @N-new[$right];
+    my @A = @N-new[$left+1 .. $right-1];
+
+    my $min = min($L, $R);
+
+    if $min > any (@A)
+    {
+      for $left+1 .. $right-1 -> $index
+      {
+         @N-new[$index] = $min if @N-new[$index] < $min;
+      }
+    }
+  }
+}
+
+my $new-sum = @N-new.sum;
+
+say $new-sum - $old-sum;
+

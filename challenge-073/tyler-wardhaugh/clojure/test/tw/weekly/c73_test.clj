@@ -7,6 +7,8 @@
   (testing "Task 1"
     (are [size input output] (= (sequence (sliding-min size) input) output)
          3 [1 5 0 2 9 3 7 6 4 8] (list 0 0 0 2 3 3 4 4)
+         2 (range 4) (range 3)
+         3 (range 10 0 -1) (range 8 0 -1)
          )))
 
 (deftest ch-2
