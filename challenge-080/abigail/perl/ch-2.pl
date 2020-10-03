@@ -26,32 +26,39 @@ use experimental 'lexical_subs';
 #
 # Note:
 #
-#   - Each candidate gets 1, 2, or 3 candies. If a candidates ranking is
-#     higher than each of its neighbours, it gets 3 candies. If its ranking
-#     is higher than only on of its neighbours, it gets 2 candies. Else, it
-#     gets 1 candy.
-#
 #   - It is not given that rankings are positive integers, or even integers.
 #     They may be reals.
+#
+#   - The number of candies handed out is twice the number of candidates
+#     minus 1, minus the number of pairs of consecutive candidates with
+#     the same ranking.
+#
+#     We can easily see this by looking at each consecutive pair of 
+#     candidates. If their rankings are unequal, exactly one of them
+#     gets an extra candy. If the rankings are the same, none of them
+#     gets an extra candy. Since we have N - 1 such pairs, and every
+#     candidate gets at least once candy, the total number of candies
+#     is 2 * N - 1, minus the number of consecutive candidates with the
+#     same ranking.
+#
+#     This, of course, is the same as N plus the number of consecutive
+#     pairs with different rankings.
 #
 
 
 while (<>) {
-    my $candies = 0;
     #
     # Read a line of input, split on whitespace, and put the results
-    # in an array @N.
+    # in an array @N. Initialize the number of candies to the number
+    # of candidates.
     #
-    my @N = split ' ';
+    my $candies = my @N = split ' ';
 
     #
-    # Iterate over the array, and count the candies.
+    # Add a candy of each pair of consecutive candidates with different
+    # rankings.
     #
-    foreach my $i (keys @N) {
-        $candies ++;
-        $candies ++ if $i > 0   && $N [$i] > $N [$i - 1];
-        $candies ++ if $i < $#N && $N [$i] > $N [$i + 1];
-    }
+    $N [$_] == $N [$_ + 1] || $candies ++ for 0 .. @N - 2;
 
     say $candies;
 }
