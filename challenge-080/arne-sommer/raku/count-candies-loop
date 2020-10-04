@@ -1,0 +1,42 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@N where @N.elems > 0 && all(@N) ~~ Int, :v(:$verbose));
+
+my @C = 1 xx @N.elems;
+@N.push: Inf; @N.unshift: Inf;
+@C.push: 0; @C.unshift: 0;
+
+say ": \@N Ranking w/border: { @N.join(", ") }" if $verbose;
+say ": \@C Candies w/border: { @C.join(", ") }" if $verbose;
+
+my $loop = 1;
+
+loop
+{
+  my $changes = 0;
+  for 1 .. @N.end -1 -> $index
+  {
+    if @N[$index] > @N[$index-1] && @C[$index] <= @C[$index-1]
+    {
+      @C[$index]++;
+      $changes++;
+      say ": \@C Candies w/border: { @C.join(", ") } (left)  Iteration:$loop" if $verbose;
+    }
+    if @N[$index] > @N[$index+1] && @C[$index] <= @C[$index+1]
+    {
+      @C[$index]++;
+      $changes++;
+      say ": \@C Candies w/border: { @C.join(", ") } (right) Iteration:$loop" if $verbose;
+    }
+  }
+  last if $changes == 0;
+  $loop++;
+}
+
+if $verbose
+{
+  say ": \@N Ranking: { @N[1..@N.end -1].join(", ") }";
+  say ": \@C Candies: { @C[1..@N.end -1].join(", ") }";
+}
+
+say @C.sum;
