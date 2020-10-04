@@ -1,4 +1,7 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "xAxis" : {
       "categories" : [
          "Robert Van Dam",
@@ -33,23 +36,15 @@
          "Tyler Limkemann"
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
@@ -88,7 +83,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             95,
@@ -120,9 +114,11 @@
             0,
             0,
             2
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             62,
@@ -154,14 +150,18 @@
             0,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-10-04 21:18:47 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-10-04 21:22:14 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
