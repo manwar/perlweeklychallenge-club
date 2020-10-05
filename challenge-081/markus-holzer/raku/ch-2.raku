@@ -10,5 +10,5 @@ my $words = $file
     .Bag
     .classify( *.value );
 
-say join " ", $_, slip sort $words{$_}>>.key
+say "{$_} : {sort $words{$_}>>.key}"
     for sort $words.keys;
