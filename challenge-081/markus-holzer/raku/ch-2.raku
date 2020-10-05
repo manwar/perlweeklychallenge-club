@@ -1,19 +1,14 @@
 unit sub MAIN( $file where $file.IO.f );
 
+my @ignore = <. ! ? " ( ) , 's -->;
+
 my $words = $file
     .IO
     .slurp
-    .subst(/ <[ \. \" \( \) \, ]> | \'s | \-\- /, ' ', :g)
+    .subst( /@ignore/, ' ', :g )
     .words
-    .Bag;
+    .Bag
+    .classify( *.value );
 
-my $freqs = $words
-    .values
-    .sort
-    .squish;
-
-for @$freqs -> $f {
-    say join " ", $f, |$words
-        .grep( *.value == $f )
-        .sort
-        .map: *.key }
+say join " ", $_, slip sort $words{$_}>>.key
+    for sort $words.keys;
