@@ -7,6 +7,6 @@ sub freq-sort($file) {
 
     %h{$_}++ for $file.IO.slurp andthen S:g/<[."(),]>|\'s|\-\-/ /.words;
 
-    gather take "{.key} {|.value.sort}" 
+    gather take "{.key} {.value.sort}" 
                               for %h.classify({.value}, :as{.key}).sort;
 }
