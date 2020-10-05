@@ -8,10 +8,10 @@
 Table of Contents
 ─────────────────
 
-1 Task 1 - Smallest Positive Number Bits
-.. 1.1 Perl
-2 Task 2 - Count Candies
-.. 2.1 Perl
+1. Task 1 - Smallest Positive Number Bits
+.. 1. Perl
+2. Task 2 - Count Candies
+.. 1. Perl
 
 
 
@@ -28,10 +28,19 @@ Table of Contents
 1.1 Perl
 ────────
 
-  • Program: [file:perl/ch-1.pl]
+  • *Bug*: This will fail if inputs are repeated.
 
-  We take input from `@ARGV', sort it & remove all inputs less than 2.
-  We check if the smallest positive number is 2.
+  • Initial version didn't check for `1', I might have assumed that it
+    was accounted for in this line `print "1\n" and exit 0 if
+    $sorted[$#sorted] < 1;'.
+
+  • This was pointed out by <https://octodon.social/@polettix> -
+    <https://tilde.zone/web/statuses/104981669595493301#>
+
+  • Program: <file:perl/ch-1.pl>
+
+  We take input from `@ARGV', sort it & remove all inputs less than 1.
+  We check if the smallest positive number is 1.
   ┌────
   │ my @sorted = sort { $a <=> $b } @ARGV;
   │
@@ -39,17 +48,16 @@ Table of Contents
   │ print "1\n" and exit 0 if $sorted[$#sorted] < 1;
   │
   │ while (my $arg = shift @sorted) {
-  │     next if $arg < 2;
-  │     print "2\n" and exit 0 unless $arg == 2;
+  │     next if $arg < 1;
+  │     print "1\n" and exit 0 unless $arg == 1;
   │     last;
   │ }
   └────
 
-  Now we are sure the smallest positive number is not 1 or 2 & `@sorted'
-  doesn't contain any number less than 2, infact it doesn't contain any
-  number less than 3.
+  Now we are sure the smallest positive number is not 1 & `@sorted'
+  doesn't contain any number less than 2.
 
-  We loop from `3 ... $sorted[$#sorted] + 1' & then over `@sorted'
+  We loop from `2 ... $sorted[$#sorted] + 1' & then over `@sorted'
   array. The first number from the array is dropped if it's equal to
   `$num'. If not then `$num' is the smallest positive number, we print
   it & exit the `MAIN' loop.
@@ -58,7 +66,7 @@ Table of Contents
   consecutive set of numbers, we just add `print "$num\n"' at the end to
   cover this case.
   ┌────
-  │ MAIN: foreach my $num (3 ... $sorted[$#sorted] + 1) {
+  │ MAIN: foreach my $num (2 ... $sorted[$#sorted] + 1) {
   │     foreach (@sorted) {
   │         shift @sorted and next MAIN if $num == $_;
   │         print "$num\n" and last MAIN;
@@ -86,7 +94,7 @@ Table of Contents
 2.1 Perl
 ────────
 
-  • Program: [file:perl/ch-2.pl]
+  • Program: <file:perl/ch-2.pl>
 
   Giving at least one day to all candidates.
   ┌────
