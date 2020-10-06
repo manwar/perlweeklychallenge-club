@@ -1,19 +1,17 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 081"
+   "legend" : {
+      "enabled" : 0
    },
    "chart" : {
       "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
    },
    "plotOptions" : {
       "series" : {
@@ -24,64 +22,37 @@
          "borderWidth" : 0
       }
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 081",
-         "data" : [
-            {
-               "drilldown" : "Mark Anderson",
-               "y" : 2,
-               "name" : "Mark Anderson"
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "y" : 2,
-               "name" : "Niels van Dijke"
-            },
-            {
-               "drilldown" : "Simon Green",
-               "y" : 3,
-               "name" : "Simon Green"
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 2,
-               "drilldown" : "Simon Proctor"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-10-06 05:09:43 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Mark Anderson"
-         },
-         {
-            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Niels van Dijke"
+            "id" : "James Smith",
+            "name" : "James Smith"
+         },
+         {
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          },
          {
             "name" : "Simon Green",
@@ -98,15 +69,59 @@
             ]
          },
          {
+            "id" : "Simon Proctor",
             "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor"
+            ]
          }
       ]
-   }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2020-10-06 05:20:54 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 081"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 081",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 2
+            },
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke",
+               "y" : 2
+            },
+            {
+               "name" : "Simon Green",
+               "drilldown" : "Simon Green",
+               "y" : 3
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 2
+            }
+         ]
+      }
+   ]
 }
