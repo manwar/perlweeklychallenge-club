@@ -1,16 +1,31 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-10-06 13:20:21 GMT"
+   },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             6,
             2,
@@ -42,11 +57,9 @@
             2,
             4,
             38
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -78,7 +91,8 @@
             84,
             2,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -116,17 +130,6 @@
          ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-10-06 06:25:56 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
    "xAxis" : {
       "categories" : [
          "Ian Rifkin",
@@ -160,8 +163,5 @@
          "Khalid",
          "Kian-Meng Ang"
       ]
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
