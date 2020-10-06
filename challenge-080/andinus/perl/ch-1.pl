@@ -6,7 +6,10 @@ use warnings;
 die "usage: ./ch-1.pl [space seperated numbers]\n"
     unless scalar @ARGV;
 
-my @sorted = sort { $a <=> $b } @ARGV;
+my %hash;
+%hash = map { $_ => 1 } @ARGV;
+
+my @sorted = sort { $a <=> $b } keys %hash;
 
 # Print 1 if there are no positive numbers in @sorted.
 print "1\n" and exit 0

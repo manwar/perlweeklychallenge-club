@@ -28,8 +28,6 @@ Table of Contents
 1.1 Perl
 ────────
 
-  • *Bug*: This will fail if inputs are repeated.
-
   • Initial version didn't check for `1', I might have assumed that it
     was accounted for in this line `print "1\n" and exit 0 if
     $sorted[$#sorted] < 1;'.
@@ -40,9 +38,13 @@ Table of Contents
   • Program: <file:perl/ch-1.pl>
 
   We take input from `@ARGV', sort it & remove all inputs less than 1.
-  We check if the smallest positive number is 1.
+  We check if the smallest positive number is 1. We filter repeated
+  inputs using `%hash'.
   ┌────
-  │ my @sorted = sort { $a <=> $b } @ARGV;
+  │ my %hash;
+  │ %hash = map { $_ => 1 } @ARGV;
+  │
+  │ my @sorted = sort { $a <=> $b } keys %hash;
   │
   │ # Print 1 if there are no positive numbers in @sorted.
   │ print "1\n" and exit 0 if $sorted[$#sorted] < 1;
