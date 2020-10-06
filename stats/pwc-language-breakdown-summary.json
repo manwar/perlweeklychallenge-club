@@ -1,35 +1,35 @@
 {
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      },
-      "type" : "category"
+      }
    },
-   "subtitle" : {
-      "text" : "Last updated at 2020-10-06 13:34:35 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
          "name" : "Contributions",
          "dataLabels" : {
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "y" : 10,
             "style" : {
                "fontSize" : "13px",
                "fontFamily" : "Verdana, sans-serif"
             },
+            "format" : "{point.y:.0f}",
             "color" : "#FFFFFF",
+            "align" : "right",
+            "y" : 10,
+            "enabled" : "true",
             "rotation" : -90
          },
          "data" : [
             [
                "Blog",
-               1020
+               1021
             ],
             [
                "Perl",
@@ -42,8 +42,14 @@
          ]
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-10-06 13:58:10 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
@@ -53,11 +59,5 @@
          "text" : null
       },
       "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
    }
 }
