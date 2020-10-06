@@ -1,100 +1,11 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "id" : "James Smith",
-            "name" : "James Smith"
-         },
-         {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Niels van Dijke",
-            "name" : "Niels van Dijke",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Simon Green",
-            "id" : "Simon Green",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ]
-         },
-         {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         }
-      ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2020-10-06 05:20:54 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 081"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 081",
          "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 081",
          "data" : [
             {
                "name" : "James Smith",
@@ -107,21 +18,125 @@
                "y" : 2
             },
             {
+               "drilldown" : "Myoungjin Jeon",
+               "name" : "Myoungjin Jeon",
+               "y" : 1
+            },
+            {
                "name" : "Niels van Dijke",
                "drilldown" : "Niels van Dijke",
                "y" : 2
             },
             {
-               "name" : "Simon Green",
                "drilldown" : "Simon Green",
+               "name" : "Simon Green",
                "y" : 3
             },
             {
+               "y" : 2,
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
+               "name" : "Simon Proctor"
             }
          ]
       }
-   ]
+   ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "James Smith",
+            "id" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
+         },
+         {
+            "name" : "Myoungjin Jeon",
+            "id" : "Myoungjin Jeon",
+            "data" : [
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
+            "name" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Niels van Dijke"
+         },
+         {
+            "id" : "Simon Green",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Simon Green"
+         },
+         {
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Simon Proctor"
+         }
+      ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2020-10-06 05:23:55 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 081"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   }
 }
