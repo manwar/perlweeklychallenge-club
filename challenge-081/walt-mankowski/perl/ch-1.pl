@@ -16,8 +16,9 @@ my ($A, $B) = @ARGV;
 my $max_base_len = min(length($A), length($B));
 
 for my $i (1 .. $max_base_len) {
-    if (is_base(substr($A, 0, $i), $A) && is_base(substr($B, 0, $i), $B)) {
-        say substr($A, 0, $i);
+    my $prefix = substr($A, 0, $i);
+    if (is_base($prefix, $A) && is_base($prefix, $B)) {
+        say $prefix;
     }
 }
 
