@@ -1,29 +1,25 @@
-# tw.weekly.c80
+# tw.weekly.c81
 
 
-The Weekly Challenge - #080 - Tyler Wardhaugh
+The Weekly Challenge - #081 - Tyler Wardhaugh
 
 ## Usage
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -m tw.weekly.c80.core
+    $ clojure -M -m tw.weekly.c81.core
 
 Run the project's tests (which are samples from the task descriptions):
 
-    $ clojure -A:test:runner
+    $ clojure -M:test:runner
 
 Run Task #1 with input
 
-    $ clojure -m tw.weekly.c80.t1 A1 A2 A3 [...]
-
-Benchmark both methods defined in Task #1:
-
-    $ clojure -m tw.weekly.c80.t1-bench
+    $ clojure -M -m tw.weekly.c81.t1 A B
 
 Run Task #2 with input:
 
-    $ clojure -m tw.weekly.c80.t2 A1 A2 A3 [...]
+    $ clojure -M -m tw.weekly.c81.t2 INPUT-FILE
 
 ## Project Template
 
