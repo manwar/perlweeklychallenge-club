@@ -1,5 +1,5 @@
                             ━━━━━━━━━━━━━━━
-                             CHALLENGE 080
+                             CHALLENGE 081
 
                                 Andinus
                             ━━━━━━━━━━━━━━━
@@ -8,104 +8,155 @@
 Table of Contents
 ─────────────────
 
-1 Task 1 - Smallest Positive Number Bits
-.. 1.1 Perl
-2 Task 2 - Count Candies
-.. 2.1 Perl
+1. Task 1 - Common Base String
+.. 1. Perl
+2. Task 2 - Frequency Sort
+.. 1. Perl
 
 
 
 
 
-1 Task 1 - Smallest Positive Number Bits
-════════════════════════════════════════
+1 Task 1 - Common Base String
+═════════════════════════════
 
-  You are given unsorted list of integers `@N'.
+  You are given 2 strings, `$A' and `$B'.
 
-  Write a script to find out the smallest positive number missing.
+  Write a script to find out common base strings in `$A' and `$B'.
+
+        A substring of a string $S is called base string if
+        repeated concatenation of the substring results in the
+        string.
 
 
 1.1 Perl
 ────────
 
-  • Program: [file:perl/ch-1.pl]
+  • Program: <file:perl/ch-1.pl>
 
-  We take input from `@ARGV', sort it & remove all inputs less than 2.
-  We check if the smallest positive number is 2.
+  We will break `$A' & check if any subset of `$A' join to make `$B'. To
+  speed up the process we only break `$A' by common divisors of both
+  `$A' & `$B'.
+
+  I assume that the length of `$B' is greater than `$A' in later parts
+  so we make sure that it's true.
   ┌────
-  │ my @sorted = sort { $a <=> $b } @ARGV;
+  │ my $A = shift @ARGV;
+  │ my $B = shift @ARGV;
   │
-  │ # Print 1 if there are no positive numbers in @sorted.
-  │ print "1\n" and exit 0 if $sorted[$#sorted] < 1;
-  │
-  │ while (my $arg = shift @sorted) {
-  │     next if $arg < 2;
-  │     print "2\n" and exit 0 unless $arg == 2;
-  │     last;
+  │ # We assume length($B) is greater than length($A).
+  │ unless (length($B) > length($A)) {
+  │     my $tmp = $A;
+  │     $A = $B;
+  │     $B = $tmp;
   │ }
   └────
 
-  Now we are sure the smallest positive number is not 1 or 2 & `@sorted'
-  doesn't contain any number less than 2, infact it doesn't contain any
-  number less than 3.
-
-  We loop from `3 ... $sorted[$#sorted] + 1' & then over `@sorted'
-  array. The first number from the array is dropped if it's equal to
-  `$num'. If not then `$num' is the smallest positive number, we print
-  it & exit the `MAIN' loop.
-
-  This won't print the smallest positive number if the user passed
-  consecutive set of numbers, we just add `print "$num\n"' at the end to
-  cover this case.
+  If the strings have different sets of characters then common base
+  string cannot exists so we exit early.
   ┌────
-  │ MAIN: foreach my $num (3 ... $sorted[$#sorted] + 1) {
-  │     foreach (@sorted) {
-  │         shift @sorted and next MAIN if $num == $_;
-  │         print "$num\n" and last MAIN;
+  │ # Check if common base string is even possible.
+  │ my (%chars_in_A, %chars_in_B);
+  │ $chars_in_A{$_} = 1 foreach split //, $A;
+  │ $chars_in_B{$_} = 1 foreach split //, $B;
+  │ foreach my $char (sort keys %chars_in_A) {
+  │     last if exists $chars_in_B{$char} ;
+  │     print "No common base string.\n" and exit 0
+  │ }
+  └────
+
+  Get all the common divisors of `$A' & `$B'.
+  ┌────
+  │ # Get all common divisors.
+  │ my %divisors_of_A = divisors(length($A));
+  │ my %divisors_of_B = divisors(length($B));
+  │ my @common_divisors;
+  │ foreach my $num (sort { $a <=> $b } keys %divisors_of_A) {
+  │     push @common_divisors, $num
+  │         if exists $divisors_of_B{$num};
+  │ }
+  │
+  │ # Returns all divisors of a number.
+  │ sub divisors {
+  │     my $n = shift @_;
+  │     my %divisors;
+  │     foreach my $i ( 1 ... $n){
+  │         if ($n % $i == 0) {
+  │             $divisors{$i} = 1;
+  │         }
   │     }
-  │     # Print the last element if it was a continous series of positive
-  │     # numbers.
-  │     print "$num\n";
+  │     return %divisors;
   │ }
   └────
 
+  We check if any subset of `$A' joins to make `$B'.
+  ┌────
+  │ my @common;
+  │
+  │ foreach my $num (@common_divisors){
+  │     my $tmp;
+  │     my $base = substr($A, 0, $num);
+  │     foreach (1 ... length($B) / $num) {
+  │         $tmp .= $base;
+  │     }
+  │     push @common, $base if $tmp eq $B;
+  │ }
+  │
+  │ print "No common base string.\n" and exit 0
+  │     unless scalar @common;
+  │ print join(', ', @common), "\n";
+  └────
 
-2 Task 2 - Count Candies
-════════════════════════
 
-  You are given rankings of `@N' candidates.
+2 Task 2 - Frequency Sort
+═════════════════════════
 
-  Write a script to find out the total candies needed for all
-  candidates. You are asked to follow the rules below:
+  You are given file named input.
 
-  1. You must given at least one candy to each candidate.
-  2. Candidate with higher ranking get more candies than their mmediate
-     neighbors on either side.
+  Write a script to find the frequency of all the words.
+
+  It should print the result as first column of each line should be the
+  frequency of the the word followed by all the words of that frequency
+  arranged in lexicographical order. Also sort the words in the
+  ascending order of frequency.
+
+  For the sake of this task, please ignore the following in the input
+  file: `. " ( ) , 's --'
 
 
 2.1 Perl
 ────────
 
-  • Program: [file:perl/ch-2.pl]
+  • Program: <file:perl/ch-2.pl>
 
-  Giving at least one day to all candidates.
+  Swap unwanted characters with a space.
   ┌────
-  │ my $candies = scalar @ARGV;
+  │ my $file = path(shift @ARGV)->slurp;
+  │
+  │ $file =~ s/(--|'s)/ /g;
+  │ $file =~ s/[."(),]+/ /g;
+  │ $file =~ s/  / /g;
+  │ $file =~ s/\n/ /g;
   └────
 
-  Handling first & last index, we do this outside the loop to keep it
-  simple.
+  Get frequency of each word.
   ┌────
-  │ $candies++ if $ARGV[0] > $ARGV[1];
-  │ $candies++ if $ARGV[$#ARGV] > $ARGV[$#ARGV - 1];
+  │ my %words;
+  │ foreach my $word (split / /, $file) {
+  │     $words{$word} = 1 and next unless exists $words{$word};
+  │     $words{$word}++;
+  │ }
   └────
 
-  Loop handles rest of the entries.
+  Format the output.
   ┌────
-  │ foreach my $index (1 ... $#ARGV - 1) {
-  │     $candies++ if $ARGV[$index] > $ARGV[$index - 1];
-  │     $candies++ if $ARGV[$index] > $ARGV[$index + 1];
+  │ my %out;
+  │ foreach my $word (sort keys %words) {
+  │     my $freq = $words{$word};
+  │     push @{$out{$freq}}, $word;
   │ }
   │
-  │ print "$candies\n";
+  │ foreach my $freq (sort { $a <=> $b} keys %out) {
+  │     print "$freq ", join(' ', @{$out{$freq}}, "\n");
+  │ }
   └────
