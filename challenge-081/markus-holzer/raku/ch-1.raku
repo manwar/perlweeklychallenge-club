@@ -1,7 +1,7 @@
-unit sub MAIN(Str $A, $B);
+unit sub MAIN( Str $A, $B where $B.chars > $A.chars );
 
-my $chars = ( $A, $B ).max.chars;
-my @chars = ( $A, $B ).min.comb;
+# Custom operator, just for fun
+multi sub infix:<%%>( Str $n, Str $d ) {
+    $n eq $d x $n.chars div $d.chars }
 
-.say for ( [\~] @chars ).grep( -> $part {
-    $part x $chars div $part.chars eq $B })
+.say for grep $B %% *, [\~] $A.comb
