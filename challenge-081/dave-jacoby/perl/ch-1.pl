@@ -36,14 +36,18 @@ sub common_base ( @words ) {
     my %output;
 
     for my $i ( 0 .. length $aa ) {
-        for my $j ( $i + 1 .. length $aa ) {
+        for my $j ( 1 .. ( length $aa ) - $i ) {
             my $aaa = $aa;
             my $bbb = $bb;
             my $sub = substr( $aa, $i, $j );
+            my $pad = ' ' x $i;
             $aaa =~ s/$sub//gmix;
             $bbb =~ s/$sub//gmix;
+            next unless $aaa eq '' && $bbb eq '';
+            # say qq{    $pad$sub\t$aaa\t$bbb};
             $output{$sub} = 1 if $aaa eq '' && $bbb eq '';
         }
+
     }
     say join ', ', keys %output;
 }
