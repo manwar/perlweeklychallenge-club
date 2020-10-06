@@ -2,67 +2,19 @@
    "title" : {
       "text" : "Perl Weekly Challenge - 081"
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "id" : "Simon Green",
-            "name" : "Simon Green"
-         },
-         {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
-         }
-      ]
+   "chart" : {
+      "type" : "column"
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 081",
-         "data" : [
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
-            },
-            {
-               "y" : 3,
-               "drilldown" : "Simon Green",
-               "name" : "Simon Green"
-            },
-            {
-               "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
-            }
-         ],
-         "colorByPoint" : 1
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
-   ],
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
@@ -72,26 +24,89 @@
          "borderWidth" : 0
       }
    },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 081",
+         "data" : [
+            {
+               "drilldown" : "Mark Anderson",
+               "y" : 2,
+               "name" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Niels van Dijke",
+               "y" : 2,
+               "name" : "Niels van Dijke"
+            },
+            {
+               "drilldown" : "Simon Green",
+               "y" : 3,
+               "name" : "Simon Green"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
    "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2020-10-06 05:05:48 GMT"
+      "text" : "[Champions: 4] Last updated at 2020-10-06 05:09:43 GMT"
    },
    "legend" : {
       "enabled" : 0
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Mark Anderson"
+         },
+         {
+            "id" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Niels van Dijke"
+         },
+         {
+            "name" : "Simon Green",
+            "id" : "Simon Green",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Simon Proctor"
+         }
+      ]
    }
 }
