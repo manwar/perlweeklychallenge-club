@@ -17,7 +17,6 @@ $file =~ s/\n/ /g;
 
 my %words;
 foreach my $word (split / /, $file) {
-    $words{$word} = 1 and next unless exists $words{$word};
     $words{$word}++;
 }
 
