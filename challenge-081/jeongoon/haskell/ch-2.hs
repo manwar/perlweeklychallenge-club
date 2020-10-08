@@ -9,7 +9,7 @@ import Data.Map.Strict (Map)
 -}
 
 {- comment:
-   when using Data.Text, it becomes allmost twice faster than regular [Char]
+   when using Data.Text, it becomes almost twice faster than regular [Char]
    complie with: ghc -O2 ch-2
    tested with ./ch-2
 

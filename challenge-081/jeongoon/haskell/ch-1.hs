@@ -1,6 +1,5 @@
 import System.Environment
 import System.Exit
-import Data.List (intercalate)
 
 --commonDivisors :: (Integral a) => [a] -> [a]
 commonDivisors [] = []
@@ -26,4 +25,4 @@ main = do
   strs <- getArgs
   if length strs  < 2
     then die $ "usage: runhaskell ch-1.hs <string> <string>"
-    else putStrLn $ ((intercalate " ").commonBaseStrings) strs
+    else putStrLn $ (unwords.commonBaseStrings) strs
