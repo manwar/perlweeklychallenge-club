@@ -11,4 +11,4 @@ my $words = $file
     .classify( *.value );
 
 say "{$_} : {sort $words{$_}>>.key}"
-    for sort $words.keys;
+    for sort keys $words;
