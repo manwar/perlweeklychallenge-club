@@ -48,3 +48,4 @@ is_deeply(get_common_strings({str1 => 'abcdabcd', str2 => 'abcdabcdabcdabcd'} ),
 is_deeply(get_common_strings({str1 => 'aaa', str2 => 'aa'} ),['a']);
 is_deeply(get_common_strings({str1 => 'abc', str2 => 'aa'} ),['','a']);
 
+done_testing;
