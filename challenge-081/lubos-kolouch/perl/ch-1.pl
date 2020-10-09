@@ -9,15 +9,9 @@
 #  				https://perlweeklychallenge.org/blog/perl-weekly-challenge-081/
 #  				Task 1 - Common base string 
 #
-#      OPTIONS: ---
-# REQUIREMENTS: ---
-#         BUGS: ---
-#        NOTES: ---
-#       AUTHOR: YOUR NAME (), 
-# ORGANIZATION: 
+#       AUTHOR: Lubos Kolouch
 #      VERSION: 1.0
 #      CREATED: 10/09/2020 10:43:10 AM
-#     REVISION: ---
 #===============================================================================
 
 use strict;
