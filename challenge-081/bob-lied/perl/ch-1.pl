@@ -36,11 +36,11 @@ sub Usage { "Usage: $0 astring bstring" };
 my $Verbose = 0;
 GetOptions('verbose' => \$Verbose);
 
-my (@A, @B) = @ARGV;
+my ($A, $B) = @ARGV;
 
 die Usage() unless $A;
 die Usage() unless $B;
 
 my $cbs = CommonBaseString->new($A, $B);
 my $result = $cbs->run();
-say $result;
+say "@$result";

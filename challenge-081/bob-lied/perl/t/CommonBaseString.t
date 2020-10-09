@@ -10,7 +10,17 @@ use warnings;
 use v5.30;
 
 use Test2::V0;
+use lib "lib";
 
-use CommonBaseString;
+use CommonBaseString qw/ commonPrefix /;
+
+is( commonPrefix("abc", "def"), [ ],           "commonPrefix length 0" );
+is( commonPrefix("aaa", "abc"), [ "a" ],       "commonPrefix length 1" );
+is( commonPrefix("aaa", "aac"), [ "a", "aa" ], "commonPrefix length 2" );
+is( commonPrefix("abab", "abababab"), [ "a", "ab", "aba", "abab" ], "commonPrefix 2 possibilities" );
+
+is( CommonBaseString->new("abcdabcd", "abcdabcdabcdabcd")->run, [ "abcd", "abcdabcd" ], "Example 1");
+is( CommonBaseString->new("aaa", "a")->run, [ "a" ], "Example 2");
+
 
 done_testing();
