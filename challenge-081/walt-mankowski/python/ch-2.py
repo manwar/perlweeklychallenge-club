@@ -8,9 +8,7 @@ with open(fname) as f:
     for line in f:
         line = line.rstrip()
         line = re.sub('--', ' ', line)
-        if line == '':
-            continue
-        toks = line.split(' ')
+        toks = line.split()
         for tok in toks:
             tok = re.sub('[."(),]', '', tok);
             tok = re.sub("'s$", '', tok)
