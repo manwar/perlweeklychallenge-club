@@ -1,0 +1,11 @@
+ CommonBaseString←{
+     FindBaseStrings←{
+         ⍺←1
+         ⍺=≢⍵:⍬                                   ⍝ Reached end of string
+         bs←⍺↑⍵                                   ⍝ Base String candidate
+         bs←⍺{(bs←⍺↑⍵)≡,↑∪⍵⊂⍨(⍺↑1)⍴⍨≢⍵:bs ⋄ ⍬}⍵   ⍝ Substring is a base string, else ⍬
+         ⍬≡bs:(⍺+1)∇ ⍵                            ⍝ If no base string, increment substring length and try again
+         (⊂⍬)~⍨bs,⍥⊆(2×⍺)∇ ⍵                      ⍝ Return base string, and check superstrings (,⍨bs)
+     }
+     ⍺∪⍥FindBaseStrings ⍵   ⍝ Common base strings of ⍺ and ⍵
+ }
