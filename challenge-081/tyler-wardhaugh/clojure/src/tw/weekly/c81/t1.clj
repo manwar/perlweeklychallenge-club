@@ -15,6 +15,7 @@
         is-substring (fn [s] (= large (reduce str (-> (quot large-len (count s)) (repeat s)))))]
     (->> (reductions str "" small)
          (drop 1)
+         (filter #(zero? (rem large-len (count %))))
          (filter is-substring))))
 
 (defn -main
