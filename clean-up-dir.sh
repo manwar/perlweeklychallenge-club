@@ -27,6 +27,7 @@ find . -name "*.aplf" -delete
 find . -name "*.lock" -delete
 find . -name "*.toml" -delete
 find . -name "*.json" -delete
+find . -name "*.scala" -delete
 rm -rf abigail/Part1
 rm -rf abigail/Part2
 rm -rf abigail/input-*
