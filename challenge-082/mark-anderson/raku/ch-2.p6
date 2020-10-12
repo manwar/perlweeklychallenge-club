@@ -9,11 +9,11 @@ my @terms := |from-json "terms.json".IO.slurp;
     
 say interleaved($A, $B, $C);
 
-sub interleaved($S1, $S2, $C) {
-    for ($S1, $S2), ($S2, $S1) -> ($A, $B) {
-        for @terms[$A.chars].Array X @terms[$B.chars].Array -> (@A, @B) {
-            return 1 if roundrobin($A.comb.rotor(@A), $B.comb.rotor(@B))
-                                                        .flat.join eq $C;
+sub interleaved($A, $B, $C) {
+    for @terms[$A.chars].Array X @terms[$B.chars].Array -> (@A, @B) {
+        for (($A, $B, @A, @B), ($B, $A, @B, @A)) -> ($S1, $S2, @A1, @A2) {
+            return 1 if roundrobin($S1.comb.rotor(@A1), $S2.comb.rotor(@A2))
+                                                           .flat.join eq $C;
         }
     }
 
