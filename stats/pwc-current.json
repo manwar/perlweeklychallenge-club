@@ -1,111 +1,12 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Andinus",
-            "name" : "Andinus",
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ]
-         },
-         {
-            "name" : "Andrew Shitov",
-            "id" : "Andrew Shitov",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "name" : "Simon Green",
-            "id" : "Simon Green"
-         }
-      ]
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2020-10-13 04:53:49 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 082"
-   },
    "series" : [
       {
          "name" : "Perl Weekly Challenge - 082",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Andinus",
                "name" : "Andinus",
+               "drilldown" : "Andinus",
                "y" : 2
             },
             {
@@ -125,11 +26,125 @@
             },
             {
                "y" : 3,
-               "drilldown" : "Simon Green",
-               "name" : "Simon Green"
+               "name" : "Simon Green",
+               "drilldown" : "Simon Green"
+            },
+            {
+               "drilldown" : "Steven Wilson",
+               "name" : "Steven Wilson",
+               "y" : 1
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
-   ]
+   ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 082"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Andinus",
+            "name" : "Andinus",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
+            "id" : "Andrew Shitov",
+            "name" : "Andrew Shitov",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
+         },
+         {
+            "id" : "Simon Green",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Simon Green"
+         },
+         {
+            "name" : "Steven Wilson",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "id" : "Steven Wilson"
+         }
+      ]
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2020-10-13 05:17:26 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   }
 }
