@@ -1,5 +1,5 @@
                             ━━━━━━━━━━━━━━━
-                             CHALLENGE 081
+                             CHALLENGE 082
 
                                 Andinus
                             ━━━━━━━━━━━━━━━
@@ -8,25 +8,19 @@
 Table of Contents
 ─────────────────
 
-1. Task 1 - Common Base String
-.. 1. Perl
-2. Task 2 - Frequency Sort
+1. Task 1 - Common Factors
 .. 1. Perl
 
 
 
 
 
-1 Task 1 - Common Base String
-═════════════════════════════
+1 Task 1 - Common Factors
+═════════════════════════
 
-  You are given 2 strings, `$A' and `$B'.
+  You are given 2 positive numbers $M and $N.
 
-  Write a script to find out common base strings in `$A' and `$B'.
-
-        A substring of a string $S is called base string if
-        repeated concatenation of the substring results in the
-        string.
+  Write a script to list all common factors of the given numbers.
 
 
 1.1 Perl
@@ -34,42 +28,16 @@ Table of Contents
 
   • Program: <file:perl/ch-1.pl>
 
-  We will break `$A' & check if any subset of `$A' join to make `$B'. To
-  speed up the process we only break `$A' by common divisors of both
-  `$A' & `$B'.
-
-  I assume that the length of `$B' is greater than `$A' in later parts
-  so we make sure that it's true.
+  We loop over all the numbers from `1 ... $M' to get their factors &
+  then just compare it with factors of `$N'. I took this code from
+  Challenge 081's ch-1.pl.
   ┌────
   │ my $A = shift @ARGV;
   │ my $B = shift @ARGV;
   │
-  │ # We assume length($B) is greater than length($A).
-  │ unless (length($B) > length($A)) {
-  │     my $tmp = $A;
-  │     $A = $B;
-  │     $B = $tmp;
-  │ }
-  └────
-
-  If the strings have different sets of characters then common base
-  string cannot exists so we exit early.
-  ┌────
-  │ # Check if common base string is even possible.
-  │ my (%chars_in_A, %chars_in_B);
-  │ $chars_in_A{$_} = 1 foreach split //, $A;
-  │ $chars_in_B{$_} = 1 foreach split //, $B;
-  │ foreach my $char (sort keys %chars_in_A) {
-  │     last if exists $chars_in_B{$char} ;
-  │     print "No common base string.\n" and exit 0
-  │ }
-  └────
-
-  Get all the common divisors of `$A' & `$B'.
-  ┌────
   │ # Get all common divisors.
-  │ my %divisors_of_A = divisors(length($A));
-  │ my %divisors_of_B = divisors(length($B));
+  │ my %divisors_of_A = divisors($A);
+  │ my %divisors_of_B = divisors($B);
   │ my @common_divisors;
   │ foreach my $num (sort { $a <=> $b } keys %divisors_of_A) {
   │     push @common_divisors, $num
@@ -87,76 +55,6 @@ Table of Contents
   │     }
   │     return %divisors;
   │ }
-  └────
-
-  We check if any subset of `$A' joins to make `$B'.
-  ┌────
-  │ my @common;
   │
-  │ foreach my $num (@common_divisors){
-  │     my $tmp;
-  │     my $base = substr($A, 0, $num);
-  │     foreach (1 ... length($B) / $num) {
-  │         $tmp .= $base;
-  │     }
-  │     push @common, $base if $tmp eq $B;
-  │ }
-  │
-  │ print "No common base string.\n" and exit 0
-  │     unless scalar @common;
-  │ print join(', ', @common), "\n";
-  └────
-
-
-2 Task 2 - Frequency Sort
-═════════════════════════
-
-  You are given file named input.
-
-  Write a script to find the frequency of all the words.
-
-  It should print the result as first column of each line should be the
-  frequency of the the word followed by all the words of that frequency
-  arranged in lexicographical order. Also sort the words in the
-  ascending order of frequency.
-
-  For the sake of this task, please ignore the following in the input
-  file: `. " ( ) , 's --'
-
-
-2.1 Perl
-────────
-
-  • Program: <file:perl/ch-2.pl>
-
-  Swap unwanted characters with a space.
-  ┌────
-  │ my $file = path(shift @ARGV)->slurp;
-  │
-  │ $file =~ s/(--|'s)/ /g;
-  │ $file =~ s/[."(),]+/ /g;
-  │ $file =~ s/  / /g;
-  │ $file =~ s/\n/ /g;
-  └────
-
-  Get frequency of each word.
-  ┌────
-  │ my %words;
-  │ foreach my $word (split / /, $file) {
-  │     $words{$word} = 1 and next unless exists $words{$word};
-  │     $words{$word}++;
-  │ }
-  └────
-
-  Format the output.
-  ┌────
-  │ my %out;
-  │ foreach my $word (sort keys %words) {
-  │     my $freq = $words{$word};
-  │     push @{$out{$freq}}, $word;
-  │ }
-  │
-  │ foreach my $freq (sort { $a <=> $b} keys %out) {
-  │     print "$freq ", join(' ', @{$out{$freq}}, "\n");
-  │ }
+  │ print join(', ', @common_divisors), "\n";
   └────
