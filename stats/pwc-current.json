@@ -1,37 +1,4 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 082",
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Andinus",
-               "name" : "Andinus"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
@@ -41,12 +8,45 @@
          }
       }
    },
-   "xAxis" : {
-      "type" : "category"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 082"
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2020-10-13 04:32:33 GMT"
    },
+   "legend" : {
+      "enabled" : 0
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 082",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Andinus",
+               "drilldown" : "Andinus"
+            },
+            {
+               "drilldown" : "Andrew Shitov",
+               "name" : "Andrew Shitov",
+               "y" : 2
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            }
+         ]
+      }
+   ],
    "drilldown" : {
       "series" : [
          {
@@ -60,18 +60,18 @@
                   1
                ]
             ],
-            "id" : "Andinus",
-            "name" : "Andinus"
+            "name" : "Andinus",
+            "id" : "Andinus"
          },
          {
-            "name" : "Andrew Shitov",
             "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Andrew Shitov"
          },
          {
             "data" : [
@@ -80,18 +80,37 @@
                   2
                ]
             ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
+         },
+         {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ]
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2020-10-13 04:28:21 GMT"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 082"
    },
    "chart" : {
       "type" : "column"
    },
-   "legend" : {
-      "enabled" : 0
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
