@@ -1,32 +1,20 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2020-10-13 10:04:09 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 082"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          },
          "borderWidth" : 0
       }
    },
-   "xAxis" : {
-      "type" : "category"
-   },
    "legend" : {
       "enabled" : 0
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
@@ -45,38 +33,8 @@
             "name" : "Andinus"
          },
          {
+            "id" : "Andrew Shitov",
             "name" : "Andrew Shitov",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Andrew Shitov"
-         },
-         {
-            "id" : "E. Choroba",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "name" : "E. Choroba"
-         },
-         {
-            "name" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Mark Anderson"
-         },
-         {
-            "id" : "Markus Holzer",
-            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
@@ -85,16 +43,57 @@
             ]
          },
          {
-            "id" : "Niels van Dijke",
+            "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Niels van Dijke"
+            "id" : "E. Choroba"
          },
          {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Kang-min Liu",
+            "id" : "Kang-min Liu"
+         },
+         {
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Markus Holzer",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Markus Holzer"
+         },
+         {
+            "name" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Niels van Dijke"
+         },
+         {
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -105,11 +104,9 @@
                   2
                ]
             ],
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West"
+            "name" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Green",
             "name" : "Simon Green",
             "data" : [
                [
@@ -120,7 +117,8 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Simon Green"
          },
          {
             "data" : [
@@ -144,20 +142,29 @@
          }
       ]
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 082"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 082",
          "data" : [
             {
-               "y" : 2,
                "drilldown" : "Andinus",
+               "y" : 2,
                "name" : "Andinus"
             },
             {
-               "y" : 2,
                "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov"
+               "name" : "Andrew Shitov",
+               "y" : 2
             },
             {
                "y" : 2,
@@ -165,46 +172,54 @@
                "drilldown" : "E. Choroba"
             },
             {
+               "y" : 2,
+               "name" : "Kang-min Liu",
+               "drilldown" : "Kang-min Liu"
+            },
+            {
                "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson",
                "y" : 2
             },
             {
-               "name" : "Markus Holzer",
                "drilldown" : "Markus Holzer",
+               "name" : "Markus Holzer",
                "y" : 2
             },
             {
-               "y" : 2,
                "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke"
+               "name" : "Niels van Dijke",
+               "y" : 2
             },
             {
-               "y" : 4,
                "drilldown" : "Roger Bell_West",
+               "y" : 4,
                "name" : "Roger Bell_West"
             },
             {
-               "name" : "Simon Green",
                "drilldown" : "Simon Green",
-               "y" : 3
+               "y" : 3,
+               "name" : "Simon Green"
             },
             {
-               "y" : 2,
+               "drilldown" : "Simon Proctor",
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "y" : 2
             },
             {
-               "y" : 1,
+               "drilldown" : "Steven Wilson",
                "name" : "Steven Wilson",
-               "drilldown" : "Steven Wilson"
+               "y" : 1
             }
-         ]
+         ],
+         "name" : "Perl Weekly Challenge - 082",
+         "colorByPoint" : 1
       }
    ],
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2020-10-13 12:44:01 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
