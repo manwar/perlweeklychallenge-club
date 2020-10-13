@@ -1,5 +1,14 @@
 #!/opt/perl/bin/perl
 
+#
+# You are given 2 strings, $A and $B.
+# 
+# Write a script to find out common base strings in $A and $B.
+# 
+#   A substring of a string $S is called base string if repeated
+#   concatenation of the substring results in the string.
+#
+
 use 5.032;
 
 use strict;
@@ -9,27 +18,27 @@ no  warnings 'syntax';
 use experimental 'signatures';
 use experimental 'lexical_subs';
 
-chomp (my $str1 = <>);
-chomp (my $str2 = <>);
+chomp (my $A = <>);
+chomp (my $B = <>);
 
 #
-# Sort the strings by lenght, so $str1 isn't longer than $str2.
+# Sort the strings by lenght, so $A isn't longer than $B.
 #
-($str1, $str2) = ($str2, $str1) if length $str2 < length $str1;
+($A, $B) = ($B, $A) if length $B < length $A;
 
 #
 # Find a substring which cannot be part of either string,
 # nor of its concatenation.
 #
-my $sep = "\x00" x (1 + length ($str1) + length ($str2));
+my $sep = "\x00" x (1 + length ($A) + length ($B));
 
 #
 # Now, use a regular expression to find common base strings.
 #
-$_ = "$str1$sep$str2";
-/^ (.+) \1*     # Find base strings of $str1
+$_ = "$A$sep$B";
+/^ (.+) \1*     # Find base strings of $A
    $sep         # Match the separator
-   \1+ $        # Must be base string for $str2
+   \1+ $        # Must be base string for $B
    (?{say $1})  # Print it
    (*FAIL)      # Backtrack so we can try other base strings.
 /x;

@@ -1,0 +1,19 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($file where $file.IO.e && $file.IO.r = "input.txt");
+
+my $content = $file.IO.slurp.trans(/<[."(),]>/ => ' ').subst("'s", " ", :global).subst("--", " ", :global);
+
+my %freq = $content.words.Bag;
+
+my @freq;
+
+for %freq.keys.sort -> $word
+{
+  @freq[%freq{$word}] ~= $word ~ " "
+}
+
+for @freq.keys -> $freq
+{
+  say "$freq " ~  @freq[$freq] if @freq[$freq];
+}
