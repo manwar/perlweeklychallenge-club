@@ -1,3 +1,3 @@
-# The Weekly Challenge 081
+# The Weekly Challenge 082
 
-Solution by Simon Green. [Blog](https://dev.to/simongreennet/the-weekly-challenge-081-1jje)
+Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-082-3a9d)
