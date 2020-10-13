@@ -50,7 +50,7 @@ foreach my $challenge (1, 2) {
             my $exe      =   $$info {exe};
             my $ext      =   $$info {ext};
             my $dir      =   $$info {dir}    // lc $language;
-            my @args     = @{$$info {args} // []};
+            my @args     = @{$$info {args}   // []};
             my $filter   =   $$info {filter} // '';
             my $solution =  "$dir/ch-$challenge.$ext";
             next unless -r $solution;
