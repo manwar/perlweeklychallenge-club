@@ -60,11 +60,16 @@ foreach my $challenge (1, 2) {
                     my $output_exp = ($input =~ s/input/output/r) . ".exp";
                     my $exp        = `cat $output_exp`;
 
+                    my $name = $input;
+                    if ($exp =~ s/^\s*#\s*(.*)\n//) {
+                        $name = $1;
+                    }
+
                     my $got = `$perl_exe -ple '$filter' $input |\
                                $exe @args ./$solution`;
 
                     s/\h+$//gm for $exp, $got;
-                    is $got, $exp, $input;
+                    is $got, $exp, $name;
                 }
             }
         }
