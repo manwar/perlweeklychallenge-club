@@ -2,21 +2,12 @@
    "chart" : {
       "type" : "column"
    },
+   "subtitle" : {
+      "text" : "Last updated at 2020-10-13 16:56:30 GMT"
+   },
    "series" : [
       {
          "name" : "Contributions",
-         "dataLabels" : {
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "rotation" : -90,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            }
-         },
          "data" : [
             [
                "Blog",
@@ -28,36 +19,45 @@
             ],
             [
                "Raku",
-               2264
+               2276
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "rotation" : -90,
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "enabled" : "true",
+            "color" : "#FFFFFF"
+         }
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2020-10-13 12:44:00 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : null
       }
    },
-   "legend" : {
-      "enabled" : "false"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "legend" : {
+      "enabled" : "false"
    }
 }
