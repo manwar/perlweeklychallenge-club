@@ -72,10 +72,11 @@ my $gcd = stein $M, $N;
 # $f * $p ^ $i, 1 <= $i <= $t to @f. We can then also divide
 # $gcd by $p ^ $t.
 #
-# Note that in the loop below, we try *all* numbers starting from 2,
-# not just primes. But any composite number will have a prime factor
-# smaller than itself, and this will already be divided out of $gcd,
-# so for any composite number $n, $n will never divide $gcd evenly.
+# Note that in the loop below, ideally, we want to check only
+# prime numbers (any composite number will have a prime factor
+# smaller than itself). Since, except for 2 and 3, all prime
+# numbers are of the form 6 * k +/- 1, the loop below checks
+# 2, 3, and then numbers of the form 6 * k +/- 1.
 #
 # Also note that we stop if the current number is larger than the
 # square of $gcd. This means that, at the end of the loop, $gcd may
@@ -112,7 +113,11 @@ while ($p ** 2 <= $gcd) {
         push @factors => map {my $f = $_; map {$f * $p ** $_} 1 .. $t} @factors;
     }
 
-    $p ++;
+    $p += $p     == 2 ? 1
+        : $p     == 3 ? 2
+        : $p % 6 == 1 ? 4
+        :               2;
+
 }
 
 #
