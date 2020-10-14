@@ -18,10 +18,10 @@
   [source]
   (let [cleaner (fn [s] (str/replace s #"(?:[.\"\(\),]|'s|--|\n)" " "))
         splitter (fn [s] (str/split s #" "))
-        xf (comp (mapcat (comp splitter cleaner))
-                 (remove #{""})
-                 (x/by-key identity (x/into []))
-                 (x/by-key (comp count second) first (x/into (sorted-set))))]
+        xf (comp (mapcat (comp splitter cleaner))                 ; wordify
+                 (remove #{""})                                   ; discard empty strings
+                 (x/by-key identity (constantly 1) (x/reduce +))  ; hash (word => count)
+                 (x/by-key second first (x/into (sorted-set))))]  ; invert hash, combine words
     (into (sorted-map) xf source)))
 
 (defn -main

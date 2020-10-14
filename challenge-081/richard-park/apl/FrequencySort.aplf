@@ -1,0 +1,7 @@
+ r←FrequencySort fpath;key;text;words
+ (text encoding newline)←⊃⎕NGET fpath            ⍝ Read text file
+ clean←('[."(),-]' '''s\b'⎕R'')text              ⍝ No punctuation or 's
+ words←(' ',⎕UCS newline)((~∊⍨)⊆⊢)clean          ⍝ Nested vec of char vec
+ (unique count)←{⍺(≢⍵}⌸words                     ⍝ Frequency count of words
+ bynumber←count{⍺(⊃(⊣,' ',⊢)/⍵[⍋⍵])}⌸unique      ⍝ Group words by count (and sort within each grouping)
+ {(⊂⍋⍵)⌷⍵}bynumber                               ⍝ Sort by count

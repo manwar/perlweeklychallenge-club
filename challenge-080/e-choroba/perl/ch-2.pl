@@ -35,7 +35,7 @@ sub count_candies {
             }
         }
     }
-    return @$n + sum(grep defined, @candies)
+    return @$n + sum(@candies)
 }
 
 use Test::More;
@@ -49,6 +49,8 @@ is count_candies([3, 2, 1]), 6;
 is count_candies(
     [1, 9, 10, 10, 0, 8, 9, 6, 2, 8, 0, 1, 3, 3, 1, 10, 1, 3, 8, 8]
 ), 37;
+
+is count_candies([qw[ 1 9 5 2 6 8 9 10 2 5 1 ]]), 25, 'Colin';
 
 done_testing();
 
