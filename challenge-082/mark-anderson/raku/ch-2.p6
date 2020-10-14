@@ -12,8 +12,8 @@ sub is-interleaved($A, $B, $C) {
 
     return 0 unless $C.chars;
 
-    my ($a, $b, $c)                = map { $_.substr: 0, 1 }, ($A, $B, $C);
-    my ($a-rest, $b-rest, $c-rest) = map { $_.substr: 1},     ($A, $B, $C);
+    my ($a, $b, $c)                = map { .substr: 0, 1 }, ($A, $B, $C);
+    my ($a-rest, $b-rest, $c-rest) = map { .substr: 1},     ($A, $B, $C);
 
     return +($a eq $c and is-interleaved($a-rest, $B, $c-rest)) || 
            +($b eq $c and is-interleaved($A, $b-rest, $c-rest));
