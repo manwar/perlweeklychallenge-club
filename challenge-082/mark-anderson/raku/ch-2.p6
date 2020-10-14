@@ -1,21 +1,20 @@
-use JSON::Fast;
+#
+# using the algorithm from 
+# https://www.geeksforgeeks.org/find-if-a-string-is-interleaved-of-two-other-strings-dp-33/
+#
 
-subset Tiny-Str of Str where .chars < 10;
+unit sub MAIN($A, $B, $C where .chars == $A.chars + $B.chars);
 
-#| A.chars < 10, B.chars < 10, C.chars == A.chars + B.chars  
-unit sub MAIN(Tiny-Str $A, Tiny-Str $B, $C where .chars == $A.chars + $B.chars);
+say is-interleaved($A, $B, $C);
 
-my @terms := |from-json "terms.json".IO.slurp;
-    
-say interleaved($A, $B, $C);
+sub is-interleaved($A, $B, $C) {
+    return 1 if [==] ($A.chars, $B.chars, $C.chars, 0);
 
-sub interleaved($A, $B, $C) {
-    for @terms[$A.chars].Array X @terms[$B.chars].Array -> (@A, @B) {
-        for ($A, $B, @A, @B), ($B, $A, @B, @A) -> ($S1, $S2, @A1, @A2) {
-            return 1 if roundrobin($S1.comb.rotor(@A1), $S2.comb.rotor(@A2))
-                                                           .flat.join eq $C;
-        }
-    }
+    return 0 unless $C.chars;
 
-    return 0;
+    my ($a, $b, $c)                = map { .substr: 0, 1 }, ($A, $B, $C);
+    my ($a-rest, $b-rest, $c-rest) = map { .substr: 1 },    ($A, $B, $C);
+
+    return +($a eq $c and is-interleaved($a-rest, $B, $c-rest)) || 
+           +($b eq $c and is-interleaved($A, $b-rest, $c-rest));
 }
