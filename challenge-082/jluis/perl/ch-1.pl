@@ -9,12 +9,14 @@ use 5.010;
 
 if (2 > @ARGV ) {
 	say STDERR qq(you sould pass 2 integer numbers ex : ./ch-1.pl 30 50);
+	exit;
 }
 
 my ($M,$N) = @ARGV;
 
 if (qq($M$N) !~ /^\d+$/xms) {
 	say STDERR qq(only integers are allowed "$M$N");
+	exit;
 }
 
 # by the examples we should discard that any number is a factor of itself 1*n == n and n/n = 1 
@@ -30,9 +32,7 @@ sub factors {
 
 sub comon {
     my @a = factors shift;
-    say join "a",@a;
     my @b = factors shift;
-    say join "b",@b;
     if ($#a == 0 or $#b == 0) {
 	    return ();
     }
@@ -52,4 +52,14 @@ sub comon {
     return (1,@common);
 }    
    
-say join q{,} , comon $M,$N; 
+sub format_list {
+    my $out = "(";
+    while (my $val = shift) {
+            $out .= '"'.$val.'"';
+            $out .= ',' if defined $_[0];
+   }
+   return "$out)";
+}
+
+
+say format_list comon $M,$N; 
