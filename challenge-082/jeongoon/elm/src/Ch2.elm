@@ -1,7 +1,6 @@
-module Ch2 exposing ( .. {-
-                     checkInterleavedString
+module Ch2 exposing ( checkInterleavedString
                     , allPossiblePartitions
-                    , WhichPart-} )
+                    , WhichPart )
 
 import String as S
 import List   as L

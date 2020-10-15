@@ -3,6 +3,10 @@ import System.Exit
 import Data.Maybe (catMaybes)
 import Data.List  (intersect, intercalate)
 
+{- test with:
+runhaskell ch-2.hs XXY XXZ XXXXZY
+-}
+
 data WhichPart = Odd | Even deriving (Show, Eq)
 
 decomposeAsEachOddsEvensWith :: String -> [Int] -> ([String], String, String)
@@ -86,7 +90,7 @@ main = do
   args <- getArgs;
   let sa = args !! 0; sb = args !! 1; sc = args !! 2 in
     if  length args /= 3
-    then die "Usage: runhaskell ch-1.hs <string A> <string B> <string C>"
+    then die "Usage: runhaskell ch-2.hs <string A> <string B> <string C>"
     else
       case allInterleavedCases sa sb sc of
         Left err -> putStrLn $ "0 as " ++ err
