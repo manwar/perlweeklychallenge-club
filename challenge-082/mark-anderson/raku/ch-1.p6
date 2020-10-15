@@ -1,3 +1,3 @@
 unit sub MAIN(UInt $m, UInt $n);
 
-say (1..($m, $n).min).grep(($m, $n).all %% *).join(", ").List;
+say (1..($m gcd $n)).grep(($m, $n).all %% *).join(", ").List;
