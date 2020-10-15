@@ -69,7 +69,7 @@ sps cn origSum isValid parts siblings = -- cn: current number
             moreParts  = {-same as-}testParts
             nextNumber = cn + 1
             lowerCases = sps 1 restSum
-                         isValid moreParts siblings in
+                         isValid moreParts [] in
         if isValid testParts then
             if cn == origSum then
                 -- reach the max: no more next cases
