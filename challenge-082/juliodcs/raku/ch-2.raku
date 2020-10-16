@@ -1,9 +1,10 @@
 #!/usr/bin/env raku
 
-sub interleaved($a, $b, $c is rw) {
-    my ($is_a, $is_b) = 0, 0;
-    $c ~~ s/($a)|$b/{ $0 and ++$is_a or ++$is_b; ｢｣ }/ for ^2;
-    +($c eq ｢｣ && $is_a && $is_b)
+sub interleaved($a is rw, $b is rw, $c is rw) {
+    ($a, $b) .= reverse if $a.chars < $b.chars;
+    my ($has-a, $has-b) = False, False;
+    $c ~~ s/ $a {$has-a = True} | $b {$has-b = True} // for ^2;
+    +($c eq ｢｣ && ($has-a && $has-b || $a eq $b))
 }
 
 say interleaved |@*ARGS;
