@@ -5,12 +5,14 @@ use strict;
 sub common_factors {
     my ($m, $n) = @_;
     ($m, $n) = ($n, $m) if $n < $m;
-    my @r;
-    for my $i (1 .. $m) {
-        push @r, $i if 0 == $m % $i
-                    && 0 == $n % $i;
+    my (@r, @rev_r);
+    for my $i (1 .. sqrt $m) {
+        if (0 == $m % $i) {
+            push @r, $i if 0 == $n % $i;
+            unshift @rev_r, $m / $i if 0 == $n % ($m / $i);
+        }
     }
-    return \@r
+    return [@r, @rev_r]
 }
 
 use Test::More;
