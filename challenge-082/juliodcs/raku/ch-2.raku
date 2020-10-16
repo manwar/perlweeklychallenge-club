@@ -1,9 +1,9 @@
 #!/usr/bin/env raku
 
-sub infix:<≈≈>(Str \x, Str \y) is equiv(&[eq]) returns Bool {
-    x.ords.sort == y.ords.sort
+sub interleaved($a, $b, $c is rw) {
+    my ($is_a, $is_b) = 0, 0;
+    $c ~~ s/($a)|$b/{ $0 and ++$is_a or ++$is_b; ｢｣ }/ for ^2;
+    +($c eq ｢｣ && $is_a && $is_b)
 }
 
-sub MAIN(Str \a, Str \b, Str \c) {
-    say +(a ~ b ≈≈ c)
-}
+say interleaved |@*ARGS;
