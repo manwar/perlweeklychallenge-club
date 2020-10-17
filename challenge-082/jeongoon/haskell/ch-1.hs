@@ -10,7 +10,7 @@ runhaskell ch-1.hs 12 18
 -- from ch-081/ch-1.hs :-]
 --commonDivisors :: (Integral a) => [a] -> [a]
 commonDivisors [] = []
-commonDivisors xs = filter (\cd -> all ((==0).(flip rem) cd) xs) [1..(gcd')]
+commonDivisors xs = filter ((==0).(rem gcd')) ([1..(gcd' `div` 2)] ++ [gcd'])
   where gcd' = foldr1 (\acc x -> gcd acc x) xs
 
 main = do
