@@ -24,7 +24,6 @@ sub InterLeave {
 	my $result = $params->{'result'} // {};
 	my $a = $params->{'a'};
 	my $b = $params->{'b'};
-    my $c = $params->{'c'};
 	my $current = $params->{'current'} // '';
 
 	if (not $a and not $b) {
