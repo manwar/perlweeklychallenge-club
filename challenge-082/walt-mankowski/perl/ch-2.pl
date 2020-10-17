@@ -22,14 +22,11 @@ sub is_interleave($A, $B, $C) {
         return 1;
     }
 
-    my $found = 0;
     if (substr($A, 0, 1) eq substr($C, 0, 1)) {
-        $found = 1;
         return is_interleave(substr($A, 1), $B, substr($C, 1));
     }
     if (substr($B, 0, 1) eq substr($C, 0, 1)) {
-        $found = 1;
         return is_interleave($A, substr($B, 1), substr($C, 1));
     }
-    return 0 unless $found;
+    return 0;
 }
