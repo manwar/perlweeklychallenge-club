@@ -1,12 +1,21 @@
 {
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-10-17 14:42:40 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-10-17 14:36:16 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -80,6 +89,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -111,8 +121,7 @@
             2,
             2,
             1
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
    "yAxis" : {
@@ -154,14 +163,5 @@
          "Kevin Colyer",
          "Khalid"
       ]
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
