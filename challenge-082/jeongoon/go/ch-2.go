@@ -29,6 +29,8 @@ func isInterleaving (A string, B string, C string) bool {
 	for Ai, Bi, Ci := 0, 0, 0 ;; Ci = Ai + Bi {
 		if checkpingPlanB {
 			if Bpin > 0 {
+				// note: it was A[Ai] == B[Bi] == C[Ci]
+				// and tried A already.
 				Bi = Bpin + 1
 				Ai = Apin
 				Apin, Bpin = -1, -1
