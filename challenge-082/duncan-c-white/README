@@ -1,85 +1,82 @@
-Task 1: "Common Base String
+Task 1: "Common Factors
 
-You are given 2 strings, $A and $B.
+You are given 2 positive numbers $M and $N.
 
-Write a script to find out common base strings in $A and $B.
-
-A substring of a string $S is called base string if repeated concatenation
-of the substring results in the string.
+Write a script to list all common factors of the given numbers.
 
 Example 1:
 
 Input:
-    $A = "abcdabcd"
-    $B = "abcdabcdabcdabcd"
+    $M = 12
+    $N = 18
 
 Output:
-    ("abcd", "abcdabcd")
+    (1, 2, 3, 6)
+
+Explanation:
+    Factors of 12: 1, 2, 3, 4, 6
+    Factors of 18: 1, 2, 3, 6, 9
 
 Example 2:
 
 Input:
-    $A = "aaa"
-    $B = "aa"
+    $M = 18
+    $N = 23
 
 Output:
-    ("a")"
+    (1)
 
-My notes: ok.  interesting.  sounds like a job for regex matching
+Explanation:
+    Factors of 18: 1, 2, 3, 6, 9
+    Factors of 23: 1
 
 
-Task 2: "Frequency Sort
+My notes: simple, find factors and then intersect.
 
-You are given file named input.
 
-Write a script to find the frequency of all the words.
+Task 2: "Interleave String
 
-It should print the result as first column of each line should be the
-frequency of the the word followed by all the words of that frequency
-arranged in lexicographical order. Also sort the words in the ascending
-order of frequency.
+You are given 3 strings; $A, $B and $C.
 
-INPUT file
+Write a script to check if $C is created by interleave $A and $B.
 
-West Side Story
+Print 1 if check is success otherwise 0.
+Example 1:
 
-The award-winning adaptation of the classic romantic tragedy "Romeo and
-Juliet". The feuding families become two warring New York City gangs,
-the white Jets led by Riff and the Latino Sharks, led by Bernardo. Their
-hatred escalates to a point where neither can coexist with any form
-of understanding. But when Riff's best friend (and former Jet) Tony
-and Bernardo's younger sister Maria meet at a dance, no one can do
-anything to stop their love. Maria and Tony begin meeting in secret,
-planning to run away. Then the Sharks and Jets plan a rumble under the
-highway--whoever wins gains control of the streets. Maria sends Tony
-to stop it, hoping it can end the violence. It goes terribly wrong,
-and before the lovers know what's happened, tragedy strikes and doesn't
-stop until the climactic and heartbreaking ending.
+Input:
+    $A = "XY"
+    $B = "X"
+    $C = "XXY"
 
-NOTE
+Output: 1
 
-For the sake of this task, please ignore the following in the input file:
+EXPLANATION
 
-. " ( ) , 's --
+"X" (from $B) + "XY" (from $A) = $C
 
-OUTPUT
+Example 2:
 
-1 But City It Jet Juliet Latino New Romeo Side Story Their Then West York
-adaptation any anything at award-winning away become before begin best
-classic climactic coexist control dance do doesn't end ending escalates
-families feuding form former friend gains gangs goes happened hatred
-heartbreaking highway hoping in know love lovers meet meeting neither no
-one plan planning point romantic rumble run secret sends sister streets
-strikes terribly their two under understanding until violence warring
-what when where white whoever wins with wrong younger
+Input:
+    $A = "XXY"
+    $B = "XXZ"
+    $C = "XXXXZY"
 
-2 Bernardo Jets Riff Sharks The by it led tragedy
+Output: 1
 
-3 Maria Tony a can of stop
+EXPLANATION
 
-4 to
+"XX" (from $A) + "XXZ" (from $B) + "Y" (from $A) = $C
 
-9 and the
-"
+Example 3:
 
-My notes: classic.  data structure is freq -> list of words of that frequency.
+Input:
+    $A = "YX"
+    $B = "X"
+    $C = "XXY"
+
+Output: 0
+
+My notes: It's not quite clear what "interleaving" means here, but I'm
+going to assume that it means "take a PREFIX of any length from one string,
+followed by a PREFIX of any length from the other string, then continue
+with the parts of the strings not yet consumed".  Relatively easy.
