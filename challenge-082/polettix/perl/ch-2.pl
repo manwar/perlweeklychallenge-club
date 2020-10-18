@@ -5,22 +5,21 @@ use English qw< -no_match_vars >;
 use experimental qw< postderef signatures >;
 no warnings qw< experimental::postderef experimental::signatures >;
 
-sub is_interleaving ($A, $B, $C) {
-   my ($lA, $lB, $lC) = map { length $_ } ($A, $B, $C);
-   ($lA, $lB, $A, $B) = ($lB, $lA, $B, $A) if $lA > $lB;
-   return 0 if ($lA + $lB != $lC) || ($lB > $lA + 1);
-   my ($fA, $fB) = ($lA == $lB, 1); # can go first?
-   for my $i (0 .. $lB - 1) {
-      my ($cA, $cB) = map { substr $_, $i, 1 } ($A, $B);
-      my $sC = substr $C, 2 * $i, 2;
-      $fA &&= ($sC eq ($cA . $cB));
-      $fB &&= ($sC eq ($cB . $cA));
-      return 0 unless $fA || $fB;
-   }
-   return 1;
+# well... let's recurse!
+sub iir ($A, $B, $C) {
+   return 1 if (length($A) == 0 && $B eq $C)  # only B remained
+      || (length($B) == 0 && $A eq $C)        # only A remained
+      || (length($C) == 0);                   # never reached, paranoia
+   my $cc = substr $C, 0, 1, ''; # chop off first char from $C...
+   return (($cc eq substr $A, 0, 1) && iir(substr($A, 1), $B, $C))
+       || (($cc eq substr $B, 0, 1) && iir(substr($B, 1), $A, $C));
 }
 
-my $A = shift || 'XXY';
-my $B = shift || 'XXZ';
-my $C = shift || 'XXXXZY';
+sub is_interleaving ($A, $B, $C) {
+   return (length($A) + length($B) == length($C)) && iir($A, $B, $C);
+}
+
+my $A = shift || 'XY';
+my $B = shift || 'Z';
+my $C = shift || 'ZXY';
 say is_interleaving($A, $B, $C);
