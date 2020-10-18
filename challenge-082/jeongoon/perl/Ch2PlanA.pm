@@ -9,6 +9,9 @@ use List::Util qw(sum);
 
 our @EXPORT = qw(isInterleaving);
 
+# non-recursive version because I saw so many recursive version already.
+# I couldn't think my own version of recursive method. :-]
+
 sub isInterleaving ($$$) {
     my ( $A, $B, $C ) = @_;
     my ( $Alen, $Blen, $Clen ) = map {length} @_;
@@ -43,7 +46,7 @@ sub isInterleaving ($$$) {
         }
         elsif ( $Bi == $Blen ) { # used $B all
             # but no need to check plan B
-            # just because we are always take 'A' when we have to choose
+            # just because we always take 'A' when we have to choose
             $interleaved = ( substr $A, $Ai ) eq ( substr $C, $Ci )
         }
         else {
@@ -77,3 +80,5 @@ sub isInterleaving ($$$) {
 
     $interleaved
 }
+
+!"yes! no!";
