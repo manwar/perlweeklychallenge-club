@@ -17,63 +17,63 @@ import (
 	"fmt"
 )
 
-func isInterleaving (A string, B string, C string) bool {
+type MaybeIntereaved string
+
+func (C MaybeIntereaved) isInterleavingFrom (A string, B string) bool {
 	Alen, Blen, Clen := len(A), len(B), len(C)
 	if Alen + Blen != Clen {
 		return false
 	}
 
-	Apin, Bpin := -1, -1
+	Apin, Bpin := -1, -1 // if * >= 0, we have plan B
 	checkpingPlanB := false
 
 	for Ai, Bi, Ci := 0, 0, 0 ;; Ci = Ai + Bi {
 		if checkpingPlanB {
-			if Bpin > 0 {
+			if Bpin > -1 {
 				// note: it was A[Ai] == B[Bi] == C[Ci]
 				// and tried A already.
 				Bi = Bpin + 1
 				Ai = Apin
 				Apin, Bpin = -1, -1
 				checkpingPlanB = false
+				Ci = Ai + Bi
 			} else {
 				// there is no plan B ...
 				return false
+
 			}
-			continue
-		} else {
-			if Ci == Clen {
+		}
+
+		if Ci == Clen {
+			return true
+		}
+		if Ai == Alen {
+			if B[Bi:] == string(C[Ci:]) {
 				return true
-			}
-			if Ai == Alen {
-				if B[Bi:] == C[Ci:] {
-					return true
-				} else {
-					checkpingPlanB = true
-					continue
-				}
-			} else if Bi == Blen {
-				return A[Ai:] == C[Ci:]
-			}
-
-			if A[Ai] == B[Bi] {
-
-				if A[Ai] != C[Ci] {
-					checkpingPlanB = true
-				}  else {
-					// remember this node
-					Apin, Bpin = Ai, Bi
-					// try plan A first
-					Ai++
-				}
 			} else {
-
-				if A[Ai] == C[Ci] {
-					Ai++
-				} else if B[Bi] == C[Ci] {
-					Bi++
-				} else {
-					checkpingPlanB = true
-				}
+				checkpingPlanB = true
+				continue
+			}
+		} else if Bi == Blen {
+			return A[Ai:] == string(C[Ci:])
+		}
+		if A[Ai] == B[Bi] {
+			if A[Ai] != C[Ci] {
+				checkpingPlanB = true
+			}  else {
+				// remember this node
+				Apin, Bpin = Ai, Bi
+				// try plan A first
+				Ai++
+			}
+		} else {
+			if A[Ai] == C[Ci] {
+				Ai++
+			} else if B[Bi] == C[Ci] {
+				Bi++
+			} else {
+				checkpingPlanB = true
 			}
 		}
 	}
@@ -91,7 +91,7 @@ func main() {
 	}
 	A, B, C := os.Args[1], os.Args[2], os.Args[3]
 
-	if isInterleaving(A, B, C) {
+	if MaybeIntereaved(C).isInterleavingFrom(A, B) {
 		fmt.Println( "1" )
 	} else {
 		fmt.Println( "0" )
