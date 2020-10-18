@@ -1,3 +1,5 @@
-unit sub MAIN(UInt $m, UInt $n);
+unit sub MAIN(UInt $M, UInt $N);
 
-say (1..($m gcd $n)).grep(($m, $n).all %% *).join(", ").List;
+my $gcd = $M gcd $N;
+
+say (1..$gcd).grep($gcd %% *).join(", ").List;
