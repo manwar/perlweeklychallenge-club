@@ -57,12 +57,18 @@ sub can_interleave {
     || (length $B && substr($B,-1) eq substr($C,-1) && can_interleave($A, substr($B,0,-1), substr($C,0,-1)));
 }
 
+# Tests.
 while (<DATA>) {
     next if /^#/;
     /(\S*)\s*(\S*)\s*(\S*)\s*([01])/;
     my ($A, $B, $C, $expected) = ($1, $2, $3, $4);
 
     $expected == can_interleave($A, $B, $C) || die "Error for (A,B,C)=$A,$B,$C. Expected $expected.";
+}
+
+# Console interface.
+if (@ARGV) {
+    say 0+can_interleave(@ARGV);
 }
 
 __DATA__

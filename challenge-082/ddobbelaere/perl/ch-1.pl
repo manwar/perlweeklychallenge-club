@@ -46,6 +46,7 @@ sub common_factors {
     grep {!($N%$_ || $M%$_)} (1..$M);
 }
 
+# Tests.
 while (<DATA>) {
     next if /^#/;
     /\(([^\)]*)\) \(([^\)]*)\)/;
@@ -54,6 +55,11 @@ while (<DATA>) {
 
     my @actual = common_factors($M, $N);
     @expected ~~ @actual || die "Error for (M,N)=($M,$N). Expected @expected, got @actual.";
+}
+
+# Console interface.
+if (@ARGV) {
+    say join ', ', common_factors(@ARGV);
 }
 
 __DATA__
