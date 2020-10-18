@@ -6,7 +6,11 @@ sub common-factors( +@a ) {
     andthen .grep:  $gcd %% *
 }
 
-multi MAIN (Bool :$test) {
+multi MAIN ( +@a ) {
+    say  common-factors @a;
+}
+
+multi MAIN (Bool :$test!) {
     use Test;
     is common-factors(12, 18), (1,2,3,6);
     is common-factors(18, 23), (1);
