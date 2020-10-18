@@ -67,9 +67,7 @@ while (<DATA>) {
 }
 
 # Console interface.
-if (@ARGV) {
-    say 0+can_interleave(@ARGV);
-}
+say 0+can_interleave(@ARGV) if @ARGV;
 
 __DATA__
 # Test data of the form $A $B $C $output.

@@ -58,9 +58,7 @@ while (<DATA>) {
 }
 
 # Console interface.
-if (@ARGV) {
-    say join ', ', common_factors(@ARGV);
-}
+say join ', ', common_factors(@ARGV) if @ARGV;
 
 __DATA__
 # Test data.
