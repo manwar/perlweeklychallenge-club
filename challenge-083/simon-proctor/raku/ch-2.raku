@@ -21,6 +21,7 @@ sub MAIN ( *@N where { $_.all ~~ UInt } ) {
         next if $s < 0;
         next if $s > $min;
         $min = $s;
+        $min-flips = Inf;
         my $cflips = @f.grep(* < 0).elems;
         next if $cflips > $min-flips;
         $min-flips = $cflips;
