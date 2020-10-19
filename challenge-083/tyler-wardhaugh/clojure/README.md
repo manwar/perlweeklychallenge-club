@@ -1,4 +1,4 @@
-# tw.weekly.c82
+# tw.weekly.c83
 
 
 The Weekly Challenge - #082 - Tyler Wardhaugh
@@ -7,7 +7,7 @@ The Weekly Challenge - #082 - Tyler Wardhaugh
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -M -m tw.weekly.c82.core
+    $ clojure -M -m tw.weekly.c83.core
 
 Run the project's tests (which are samples from the task descriptions):
 
@@ -15,11 +15,11 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -M -m tw.weekly.c82.t1 M N
+    $ clojure -M -m tw.weekly.c83.t1 S
 
 Run Task #2 with input:
 
-    $ clojure -M -m tw.weekly.c82.t2 S1 S2
+    $ clojure -M -m tw.weekly.c83.t2 A1 A2 A3...
 
 ## Project Template
 
