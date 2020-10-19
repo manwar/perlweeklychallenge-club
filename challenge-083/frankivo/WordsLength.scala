@@ -14,8 +14,7 @@ object WordsLength {
         val words = line.split(" ")
 
         words
-            .drop(1)
-            .take(words.length - 2)
+            .slice(1, words.length - 1)
             .mkString
             .length
     }
