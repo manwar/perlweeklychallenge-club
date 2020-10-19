@@ -3,6 +3,7 @@ find . -name "*.t" -delete
 find . -name "*.bc" -delete
 find . -name "*.pl" -delete
 find . -name "*.pm" -delete
+find . -name "*.ml" -delete
 find . -name "*.p6" -delete
 find . -name "*.py" -delete
 find . -name "*.js" -delete
@@ -12,6 +13,7 @@ find . -name "*.rs" -delete
 find . -name "*.rb" -delete
 find . -name "*.sh" -delete
 find . -name "*.awk" -delete
+find . -name "*.adb" -delete
 find . -name "*.kts" -delete
 find . -name "*.exp" -delete
 find . -name "*.elm" -delete
