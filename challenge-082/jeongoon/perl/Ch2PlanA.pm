@@ -26,8 +26,7 @@ sub isInterleaving ($$$) {
         if ( $checkingPlanB ) {
             last if @saved == 0; # there is no plan B ...
 
-            ( $Ai, $Bi ) = @saved;
-            @saved = ();
+            ( $Ai, $Bi ) = @{pop @saved};
             $checkingPlanB = 0; # reset status
         }
         $Ci = $Ai + $Bi;
@@ -45,16 +44,20 @@ sub isInterleaving ($$$) {
             }
         }
         elsif ( $Bi == $Blen ) { # used $B all
-            # but no need to check plan B
-            # just because we always take 'A' when we have to choose
-            $interleaved = ( substr $A, $Ai ) eq ( substr $C, $Ci )
+            if ( (substr $A, $Ai) eq (substr $C, $Ci) ) {
+                # and rest of A is same as rest of C
+                $interleaved = 1
+            }
+            else {
+                ( $checkingPlanB = 1, redo );
+            }
         }
         else {
             my ( $headA, $headB ) = ((substr $A, $Ai, 1), (substr $B, $Bi , 1));
             if ( $headA eq $headB ) {
                 if ( $headA eq ( substr $C, $Ci, 1 ) ) {
                     # save this place
-                    @saved = ( $Ai, ($Bi+1) );
+                    push @saved, [ $Ai, ($Bi+1) ];
                     # then try A (always) first for next case
                     ++$Ai
                 }
@@ -81,4 +84,4 @@ sub isInterleaving ($$$) {
     $interleaved
 }
 
-!"yes! no!";
+!!"yes! no!";
