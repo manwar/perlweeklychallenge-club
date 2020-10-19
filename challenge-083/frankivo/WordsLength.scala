@@ -11,10 +11,9 @@ object WordsLength {
     }
 
     def count(line: String) : Int = {
-        val words = line.split(" ")
-
-        words
-            .slice(1, words.length - 1)
+        line.split(" ")
+            .drop(1)
+            .dropRight(1)
             .mkString
             .length
     }
