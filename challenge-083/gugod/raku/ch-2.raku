@@ -9,7 +9,7 @@ sub flip-elems (@n) {
     for 1..@n.elems - 1 -> $k {
         for @n.combinations($k) -> @c {
             my $s = $sum - 2 * ([+] @c);
-            if 0 <= $s < $min_sum && @c.elems <= @min_combination.elems {
+            if 0 <= $s < $min_sum {
                 @min_combination = @c;
                 $min_sum = $s;
                 $min_k   = $k;
