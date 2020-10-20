@@ -15,13 +15,10 @@ def flipCombination(A):
 
 
 def flipElems(A):
-    minSum = sum(A)
+    minSum = 0
     minCombination = ()
-    for s, c in flipCombination(A):
-        if s < minSum:
-            minSum = s
-            minCombination = c
-        if s == 0:
+    for minSum, minCombination in flipCombination(A):
+        if minSum == 0:
             break
     print(f'>> {minSum} = sum({A}) - 2 * sum({minCombination})')
     return len(minCombination)
