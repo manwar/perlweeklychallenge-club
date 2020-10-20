@@ -1,63 +1,78 @@
 {
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Andrew Shitov",
+            "name" : "Andrew Shitov"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
+         }
+      ]
+   },
    "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-10-20 01:09:36 GMT"
+      "text" : "[Champions: 2] Last updated at 2020-10-20 01:21:13 GMT"
    },
    "series" : [
       {
          "data" : [
             {
+               "y" : 2,
                "name" : "Andrew Shitov",
-               "drilldown" : "Andrew Shitov",
-               "y" : 2
+               "drilldown" : "Andrew Shitov"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
             }
          ],
          "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 083"
       }
    ],
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Andrew Shitov",
-            "id" : "Andrew Shitov",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         }
-      ]
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "chart" : {
       "type" : "column"
    },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
    "legend" : {
       "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "xAxis" : {
-      "type" : "category"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 083"
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
