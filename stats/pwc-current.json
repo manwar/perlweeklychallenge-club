@@ -1,66 +1,89 @@
 {
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "chart" : {
+      "type" : "column"
    },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Andrew Shitov",
+               "y" : 2,
+               "drilldown" : "Andrew Shitov"
+            },
+            {
+               "drilldown" : "Dave Cross",
+               "y" : 2,
+               "name" : "Dave Cross"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "y" : 2,
+               "name" : "Mark Anderson"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "name" : "Simon Green",
+               "y" : 3,
+               "drilldown" : "Simon Green"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "y" : 2,
+               "name" : "Simon Proctor"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 083"
+      }
+   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 083",
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov"
-            },
-            {
-               "name" : "Dave Cross",
-               "drilldown" : "Dave Cross",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "name" : "James Smith",
-               "drilldown" : "James Smith"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
-            },
-            {
-               "y" : 4,
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West"
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 2
-            }
-         ]
-      }
-   ],
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 083"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2020-10-20 02:25:39 GMT"
    },
    "drilldown" : {
       "series" : [
          {
             "name" : "Andrew Shitov",
+            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Andrew Shitov"
+            ]
          },
          {
             "id" : "Dave Cross",
@@ -73,14 +96,14 @@
             "name" : "Dave Cross"
          },
          {
+            "name" : "James Smith",
             "id" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "James Smith"
+            ]
          },
          {
             "name" : "Mark Anderson",
@@ -93,7 +116,7 @@
             "id" : "Mark Anderson"
          },
          {
-            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -104,39 +127,35 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West"
+            "name" : "Roger Bell_West"
          },
          {
+            "name" : "Simon Green",
+            "id" : "Simon Green",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor"
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 083"
-   },
    "legend" : {
       "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2020-10-20 01:36:59 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
    }
 }
