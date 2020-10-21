@@ -1,12 +1,6 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
@@ -14,20 +8,23 @@
    "legend" : {
       "enabled" : "false"
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-10-21 05:35:36 GMT"
+   },
    "series" : [
       {
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "enabled" : "true"
-         },
          "data" : [
             [
                "Blog",
@@ -35,25 +32,28 @@
             ],
             [
                "Perl",
-               3593
+               3595
             ],
             [
                "Raku",
                2305
             ]
          ],
-         "name" : "Contributions"
+         "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10,
+            "align" : "right",
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF"
+         }
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2020-10-20 02:34:03 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "yAxis" : {
       "title" : {
          "text" : null
