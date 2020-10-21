@@ -5,8 +5,11 @@ use warnings;
 
 use Test::More;
 
+is( flip_array( 1 ),         0 );
 is( flip_array( 3,10,8 ),    1 );
 is( flip_array( 12, 2, 10 ), 1 );
+is( flip_array( 12, 1, 10 ), 2 );
+is( flip_array( 10, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ), 1 );
 is( flip_array( 1..20 ),     6 );
 
 done_testing;
@@ -21,7 +24,7 @@ sub flip_array {
   my @array = @_;
   my $sum = 0;
      $sum+=$_ foreach @array; ## Initial "unflipped" sum...
-  my( $flipped, $smallest, $best, $na ) = ( 0, $sum, 0, scalar @array ); ## Initialise counts/running sums...
+  my( $flipped, $smallest, $best, $na ) = ( 0, $sum, $sum, scalar @array ); ## Initialise counts/running sums...
 
   while(1) {
     ($best,$smallest)=($flipped,$sum) if $sum>=0 && $sum < $smallest || $sum == $smallest && $flipped < $best;
