@@ -1,12 +1,8 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "yAxis" : {
       "title" : {
@@ -16,24 +12,24 @@
    "drilldown" : {
       "series" : [
          {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
+            "id" : "Andrew Shitov",
             "name" : "Andrew Shitov",
-            "id" : "Andrew Shitov"
-         },
-         {
             "data" : [
                [
-                  "Perl",
-                  1
+                  "Raku",
+                  2
                ]
-            ],
+            ]
+         },
+         {
+            "id" : "Cristina Heredia",
             "name" : "Cristina Heredia",
-            "id" : "Cristina Heredia"
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ]
          },
          {
             "data" : [
@@ -42,18 +38,18 @@
                   2
                ]
             ],
-            "name" : "Dave Cross",
-            "id" : "Dave Cross"
+            "id" : "Dave Cross",
+            "name" : "Dave Cross"
          },
          {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
             "id" : "James Smith",
-            "name" : "James Smith"
+            "name" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          },
          {
             "data" : [
@@ -62,18 +58,18 @@
                   2
                ]
             ],
-            "name" : "Jose Luis",
-            "id" : "Jose Luis"
+            "id" : "Jose Luis",
+            "name" : "Jose Luis"
          },
          {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
+            "id" : "Lars Thegler",
             "name" : "Lars Thegler",
-            "id" : "Lars Thegler"
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          },
          {
             "data" : [
@@ -82,12 +78,12 @@
                   2
                ]
             ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
          },
          {
-            "name" : "Markus Holzer",
             "id" : "Markus Holzer",
+            "name" : "Markus Holzer",
             "data" : [
                [
                   "Raku",
@@ -96,8 +92,18 @@
             ]
          },
          {
-            "id" : "Roger Bell_West",
+            "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
             "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -110,8 +116,8 @@
             ]
          },
          {
-            "name" : "Shawn Wagner",
             "id" : "Shawn Wagner",
+            "name" : "Shawn Wagner",
             "data" : [
                [
                   "Perl",
@@ -120,8 +126,8 @@
             ]
          },
          {
-            "name" : "Simon Green",
             "id" : "Simon Green",
+            "name" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -134,18 +140,16 @@
             ]
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
-            "name" : "Walt Mankowski",
-            "id" : "Walt Mankowski",
             "data" : [
                [
                   "Perl",
@@ -155,23 +159,16 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Walt Mankowski",
+            "id" : "Walt Mankowski"
          }
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 083"
-   },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 083",
+         "colorByPoint" : 1,
          "data" : [
             {
                "name" : "Andrew Shitov",
@@ -184,9 +181,9 @@
                "y" : 1
             },
             {
+               "drilldown" : "Dave Cross",
                "y" : 2,
-               "name" : "Dave Cross",
-               "drilldown" : "Dave Cross"
+               "name" : "Dave Cross"
             },
             {
                "drilldown" : "James Smith",
@@ -194,13 +191,13 @@
                "y" : 2
             },
             {
-               "drilldown" : "Jose Luis",
+               "y" : 2,
                "name" : "Jose Luis",
-               "y" : 2
+               "drilldown" : "Jose Luis"
             },
             {
-               "y" : 2,
                "name" : "Lars Thegler",
+               "y" : 2,
                "drilldown" : "Lars Thegler"
             },
             {
@@ -210,8 +207,13 @@
             },
             {
                "drilldown" : "Markus Holzer",
+               "name" : "Markus Holzer",
+               "y" : 2
+            },
+            {
                "y" : 2,
-               "name" : "Markus Holzer"
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke"
             },
             {
                "name" : "Roger Bell_West",
@@ -219,9 +221,9 @@
                "drilldown" : "Roger Bell_West"
             },
             {
-               "name" : "Shawn Wagner",
+               "drilldown" : "Shawn Wagner",
                "y" : 2,
-               "drilldown" : "Shawn Wagner"
+               "name" : "Shawn Wagner"
             },
             {
                "drilldown" : "Simon Green",
@@ -230,26 +232,39 @@
             },
             {
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
+               "y" : 2,
+               "name" : "Simon Proctor"
             },
             {
                "drilldown" : "Walt Mankowski",
-               "y" : 3,
-               "name" : "Walt Mankowski"
+               "name" : "Walt Mankowski",
+               "y" : 3
             }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 083"
+         ]
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "type" : "category"
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 083"
+   },
    "subtitle" : {
-      "text" : "[Champions: 13] Last updated at 2020-10-21 06:18:19 GMT"
+      "text" : "[Champions: 14] Last updated at 2020-10-21 06:25:48 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    }
 }
