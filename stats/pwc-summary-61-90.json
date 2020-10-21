@@ -2,13 +2,9 @@
    "chart" : {
       "type" : "column"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             0,
             6,
@@ -40,10 +36,10 @@
             12,
             2,
             2
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -75,11 +71,9 @@
             12,
             12,
             84
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -111,11 +105,16 @@
             0,
             2,
             2
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-10-21 22:28:07 GMT"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "yAxis" : {
       "min" : 0,
@@ -123,12 +122,10 @@
          "text" : ""
       }
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-10-21 22:07:14 GMT"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -163,5 +160,8 @@
          "Kang-min Liu",
          "Kevin Colyer"
       ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    }
 }
