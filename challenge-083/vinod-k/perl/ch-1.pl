@@ -27,7 +27,7 @@ my $count = 0;
 
 foreach my $w ( @taken ) {
     my @n = split //, $w;
-	$count += @n; 
+    $count += @n; 
 }
 
 say "Count : $count";
