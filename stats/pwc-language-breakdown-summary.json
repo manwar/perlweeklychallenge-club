@@ -1,15 +1,30 @@
 {
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "series" : [
       {
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "align" : "right",
+            "enabled" : "true",
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            }
+         },
          "data" : [
             [
                "Blog",
@@ -17,47 +32,32 @@
             ],
             [
                "Perl",
-               3613
+               3615
             ],
             [
                "Raku",
-               2311
+               2313
             ]
          ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "y" : 10,
-            "rotation" : -90,
-            "enabled" : "true"
-         },
          "name" : "Contributions"
       }
    ],
    "subtitle" : {
-      "text" : "Last updated at 2020-10-21 11:23:52 GMT"
+      "text" : "Last updated at 2020-10-21 18:42:12 GMT"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "chart" : {
-      "type" : "column"
+      }
    }
 }
