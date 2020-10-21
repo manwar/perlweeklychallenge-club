@@ -77,7 +77,7 @@ my $word =
 while (<>) {
     chomp;
     s/$word//;
-    s/$word(?=\P{l}*$)//;
+    s/$word(?=\PL*$)//;
     s/\s+//g;
     say length;
 }
