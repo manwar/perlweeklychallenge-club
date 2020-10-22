@@ -7,7 +7,27 @@
 use v6.d;
 
 multi MAIN ($n where * > 0) { say 0 }
+
+# without race
 multi MAIN (*@n where { @n.all ~~ Int and @n.all > 0 }) {
+    my $s = @n.sum;
+    @n.combinations( 1..^ @n ).
+    map(
+        -> \n {
+            with $s - 2 * n.sum { # same as ( $s- n.sum ) - n.sum
+                next if $_ < 0;
+                $_ => n.elems
+            }
+        } ).
+    min.
+    value.
+    say
+}
+
+# tested with: raku jeongoon/raku/ch-2.raku --r 12 7 4 5 6 9 20 12 7 4 5 6 9 20 9 4 2 1 13
+# finished in under 4 seconds on my laptop
+multi MAIN ( Bool:D :$r, *@n where { @n.all ~~ Int and @n.all > 0 }) {
+    $*ERR.say( "using race ..." );
     my $s = @n.sum;
     @n.combinations( 1..^ @n ).
     race( :8degree:500batch ).
@@ -18,7 +38,7 @@ multi MAIN (*@n where { @n.all ~~ Int and @n.all > 0 }) {
                 $_ => n.elems
             }
         } ).
-    race( :8degree:5000batch ).
+    race( :8degree:500batch ).
     min.
     value.
     say
