@@ -101,6 +101,9 @@ func combinationsIndex( M int, N int ) [][]int {
 	return combis
 }
 
+// Comment: I used half length of combination in Perl, Haskell
+// but Go is already fast with full length of combinations. impressive.
+
 func main() {
 	if len(os.Args[1:]) < 1 {
 		usage();
