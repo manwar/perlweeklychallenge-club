@@ -2,6 +2,8 @@
 # -*- Mode: cperl; cperl-indent-level:4 tab-width: 8; indent-tabs-mode: nil -*-
 # -*- coding: utf-8 -*-
 
+# personal-blog: https://dev.to/jeongoon/weekly-challenge-083-task-2-perl-8d0
+
 use strict; use warnings;
 use v5.26;
 use List::Util qw(all sum);
