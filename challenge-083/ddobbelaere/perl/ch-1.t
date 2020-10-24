@@ -1,12 +1,6 @@
 #!/usr/bin/perl
 
 =pod
-TASK #1 › Words Length
-Submitted by: Mohammad S Anwar
-
-You are given a string $S with 3 or more words.
-
-Write a script to find the length of the string except the first and last words ignoring whitespace.
 Example 1:
 
 Input: $S = "The Weekly Challenge"
