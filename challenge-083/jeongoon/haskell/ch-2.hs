@@ -15,7 +15,7 @@ import Combinations (combinations)
 
 answerFlipArray :: (Integral a) => [a] -> Int
 answerFlipArray nums
-  | totalSum == 1 = 0
+  | totalLen == 1 = 0
   | otherwise = answerWith totalSum totalLen numCombis
   where
     totalSum  = sum nums
