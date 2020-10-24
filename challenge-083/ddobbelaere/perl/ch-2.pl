@@ -43,7 +43,7 @@ sub flip_count_minimum_non_negative {
     my $min_sum;
     my $answer;
 
-    for my $sign_bitmask ( 0 .. 2**@A - 1 ) {
+    for my $sign_bitmask ( 0 .. 2**( @A - 1 ) - 1 ) {
         my $num_signs = 0;
         my $sum       = 0;
 
@@ -63,6 +63,8 @@ sub flip_count_minimum_non_negative {
         }
 
         # "Flip signs" if sum is negative.
+        # This reduces the worst case running time by a factor of 2,
+        # as we can assume the sign of the last element is fixed.
         if ( $sum < 0 ) {
             $num_signs = @A - $num_signs;
             $sum *= -1;
