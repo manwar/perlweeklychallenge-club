@@ -30,92 +30,125 @@ use experimental 'lexical_subs';
 # 
 
 #
-# We are opting for a recursive solution. For each element of the set,
-# we try two possibilities: once where the flip the sign of the current
-# number, and once where we do not.
+# We solve this by using a stack of states. Each state means we're at
+# some point processing @$set. We're keeping a running sum, by either
+# adding or substracting the current number. We also keep a best score
+# so far (best sum: smallest non-negative sum; best flips: least amount
+# of flips to reach best sum). Each time we have processed the entire
+# set, we see whether we have a better score. If we haven't reached
+# the end of the set, we push two new states on the stack, one where
+# we add to the running sum, and one where we subtract from the running
+# sum. In the latter case, we increment the number of flips.
 #
-# Our recursive method takes the following parameters:
+# To optimize, if we can early determine we can no longer reach a valid
+# sum (that is, all future choices in this branch lead to negative sums),
+# or if we cannot improve the current best score (that is, all future
+# choices in this branch lead to a sum which is worse than the best sum)
+# we return early, and don't push new states.
 #
-#     - $set:       A reference to the array of numbers, which is assumed to
-#                   sorted (largest number first). We will not modify the
-#                   array, nor pass different arrays. 
-#     - $index:     The index of the current number, 0 when first called.
-#     - $sum:       The current sum. This is the sum of all numbers, where
-#                   the signs of the numbers with index < $index may have
-#                   been flipped, but none of the signs of the numbers with
-#                   index >= $index. When first called, $sum is the sum of
-#                   all numbers in $set.
-#     - $flips:     This is number of numbers with index < $index which have
-#                   been flipped. When first called, this is 0.
-#     - $last_skip: This is the last value for we did NOT flip a sign.
-#                   If the current number equals $last_skip, we will NOT
-#                   recurse for the case the sign of the number is flipped.
-#
-# Recursion stops if any of the following conditions is true:
-#     - $sum < 0.        In that case, no matter which future choices we
-#                        make, we cannot end up with a non-negative sum. So,
-#                        we return undef, signalling a failure.
-#     - $sum == 0.       In this case, if we were to flip any of the signs
-#                        of the future numbers, the sum would become negative.
-#                        So we return the 0, and the number of flips.
-#     - $index >= @$set. We have processed the entire set, and no more
-#                        decisions can be made. So, we return $set and $flips.
-#
-# After recursing twice, we pick the best solution. That is, the one with
-# the least defined sum, and if both cases returns in the same sum, we pick
-# the one with the least amount of flips.
+# As a final optimization, we also put the last number whose sign was
+# flipped into the state. We use this to prevent pushing cases on
+# the stack where the we add the current number, and the current number
+# is equal to the last number whose sign was flipped. This makes that
+# we process runs of equal number far more efficiently, reducing the
+# amount of generated cases from exponential to linear.
 #
 
-use List::Util qw [sum];
 
-sub min_flips;
-sub min_flips ($set, $index     = 0,
-                     $sum       = sum (@$set),
-                     $flips     = 0,
-                     $last_skip = $$set [$index] + 1) {
+#
+# Read the numbers, and sort them.
+#
+my $set = [<> =~ /[0-9]+/g];
+   $set = [sort {$b <=> $a} @$set];
 
-    #
-    # If the sum is less than 0, we don't have a result.
-    #
-    return if $sum < 0;
+#
+# Initialize the best sums and best flips, by using a greedy algorithm.
+#
+my $best_sum   = 0;
+my $best_flips = 0;
 
-    #
-    # We're done if either the sum = 0, or we have exhausted the set.
-    #
-    return ($sum, $flips) if $index >= @$set || $sum == 0;
-
-    #
-    # Recurse twice. Once where we flip the sign of the current number,
-    # and once where we do not.
-    #
-    my ($sum1, $flips1, $sum2, $flips2);
-    ($sum1, $flips1) = min_flips $set, $index + 1,
-                                       $sum - 2 * $$set [$index],
-                                       $flips + 1,
-                                       $last_skip if $$set [$index] != $last_skip;
-    ($sum2, $flips2) = min_flips $set, $index + 1,
-                                       $sum,
-                                       $flips,
-                                       $$set [$index];
-    #
-    # Return the best result. Note that the first recursion may return undef.
-    # The second will never.
-    #
-    return if !defined $sum1 && !defined $sum2;
-    if (defined $sum1 && ($sum1 <  $sum2 ||
-                          $sum1 == $sum2 && $flips1 < $flips2)) {
-        return ($sum1, $flips1)
+foreach my $number (@$set) {
+    if ($best_sum -  $number < 0) {
+        $best_sum += $number;
     }
     else {
-        return ($sum2, $flips2)
+        $best_sum -= $number;
+        $best_flips ++;
     }
 }
 
 #
-# Read the input, sort it, call min_flips, and print the result.
+# Create a list of partial sums:
+#     $$partial_sums [$i[ = sum @$set [$i .. $#$set];
 #
-my $set = [sort {$b <=> $a} <> =~ /[0-9]+/g];
-say +(min_flips $set) [1];
+# That is, each entry in $partial_sums is the sum of the elements in $set
+# starting from the same index, till the end.
+#
+my $partial_sums;
+$$partial_sums [@$set] = 0;
+for (my $i = @$set; $i --;) {
+    $$partial_sums [$i] = $$set [$i] + $$partial_sums [$i + 1];
+}
 
+#
+# @todo will contain 4-tuples [$index, $sum, $flips, $last_flipped],
+# each encoding a state.
+#
+#    - $index:        The current index
+#    - $sum:          Sum of the numbers @$set [0 .. $index - 1], with
+#                     zero of signs flipped.
+#    - $flips:        The number of signs which have been flipped to reach $sum.
+#    - $last_flipped: The last number whose sign we have flipped.
+#
+my @todo = [0, 0, 0, 0];
+while (@todo) {
+    my ($index, $sum, $flips, $last_flipped) = @{pop @todo};
+
+    #
+    # We can't reach a positive sum, so no need to continue this branch.
+    #
+    if ($sum + $$partial_sums [$index] < 0) {
+        next;
+    }
+
+    #
+    # If we can't improve on the current best score, no need to continue.
+    #
+    if ($sum - $$partial_sums [$index] >  $best_sum ||
+        $sum - $$partial_sums [$index] == $best_sum &&
+              $flips + @$set - $index  >= $best_flips) {
+        next;
+    }
+    
+    if ($index >= @$set) {
+        #
+        # We have exhausted the set. Do we have a better result?
+        #
+        if ($sum >= 0 &&
+               ($sum < $best_sum || $sum == $best_sum && $flips < $best_flips)) {
+            #
+            # If so, update the score.
+            #
+            ($best_sum, $best_flips) = ($sum, $flips);
+        }
+        next;
+    }
+
+    #
+    # Push the case where we are subtracting on the stack.
+    #
+    my $number = $$set [$index];
+    push @todo => [$index + 1, $sum - $number, $flips + 1, $number];
+
+    #
+    # Push the case where we are adding on the stack, but
+    # not if the current number equals the last number whose
+    # sign was flipped.
+    #
+    push @todo => [$index + 1, $sum + $number, $flips,     $last_flipped]
+          unless $last_flipped == $number;
+}
+
+say $best_flips;
 
 __END__
