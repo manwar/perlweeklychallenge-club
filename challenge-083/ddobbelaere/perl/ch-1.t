@@ -24,18 +24,15 @@ use v5.30;
 use warnings;
 use utf8::all;
 
-sub count_inner_chars {
-    my ($S) = @_;
-    my @a   = split /\s+/, $S;
-    length join '', splice @a, 1, -1;
+use Test::More tests => 3;
+
+sub test {
+    $_ = `perl ch-1.pl @_`;
+    chomp;
+    return $_;
 }
 
-if (@ARGV) {
-
-    # Console interface.
-    say count_inner_chars("@ARGV");
-}
-else {
-    say "Usage: perl $0 <list of words>";
-    exit 1;
-}
+#<<< Tests.
+is &test("The Weekly Challenge"),                    6;
+is &test("The purpose of our lives is to be happy"), 23;
+is &test("七、 八、 九、 十"),                          4;

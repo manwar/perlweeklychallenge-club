@@ -30,9 +30,6 @@ Flipping the sign of just one element 12 gives the result 0 i.e. (-12) + (2) + (
 
 use v5.30;
 use warnings;
-use experimental 'smartmatch';
-
-use Test::More tests => 4;
 
 # Note: this naive implementation has exponential time complexity (as a function of input vector length)!
 # For a more efficient implementation, see https://www.ijcai.org/Proceedings/09/Papers/096.pdf and https://en.wikipedia.org/wiki/Karmarkar%27s_algorithm.
@@ -83,10 +80,12 @@ sub flip_count_minimum_non_negative {
     return $answer;
 }
 
-# Tests.
-is flip_count_minimum_non_negative( ( 3,   10, 8 ) ),   1;
-is flip_count_minimum_non_negative( ( 12,  2,  10 ) ),  1;
-is flip_count_minimum_non_negative( ( -12, -2, -10 ) ), 1;
+if (@ARGV) {
 
-# The following series has two possible solutions: 2 and 5.
-ok flip_count_minimum_non_negative( ( 1, 2, 3, 4, 5, 6, 9 ) ) ~~ [ 2, 5 ];
+    # Console interface.
+    say flip_count_minimum_non_negative(@ARGV);
+}
+else {
+    say "Usage: perl $0 <list of numbers>";
+    exit 1;
+}
