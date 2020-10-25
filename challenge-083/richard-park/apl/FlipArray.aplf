@@ -1,0 +1,8 @@
+ FlipArray←{
+ ⍝ Number of elements in ⍵ to flip sign, resulting in minimum non-negative sum
+     flips←⍉¯1+2×2⊥⍣¯1⊢¯1+⍳2*≢⍵             ⍝ All possible sign flips
+     sums←+/⍵×⍤1⊢flips                     ⍝ Sums of all flips
+     pos←0≤sums                            ⍝ Positive number mask
+     minflip←(pos⌿flips)⌷⍨(⊢⍳⌊/)pos⌿sums   ⍝ Flip resulting in min non-neg sum
+     +/¯1=minflip                          ⍝ How many elements to flip?
+ }
