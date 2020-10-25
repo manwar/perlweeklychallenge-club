@@ -6,9 +6,9 @@ my $A = gather {
     for @A.keys.combinations(1..@A.end) -> @C {
         my @N = @A;
         @N[@C].map(* *= -1);
-        take [@N.sum, @C.elems, @N] if @N.sum >= 0; 
+        take [@N.sum, @C.elems] if @N.sum >= 0; 
     }
 } 
 
-say $A.classify(*[0]).min.value.
-       classify(*[1]).min.key;
+say $A.classify(*.head).min.value.
+       classify(*.tail).min.key;
