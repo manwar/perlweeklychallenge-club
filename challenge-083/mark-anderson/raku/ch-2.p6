@@ -10,5 +10,5 @@ my $A = gather {
     }
 } 
 
-say $A.classify(*.head).min.value.
-       classify(*.tail).min.key;
+say $A.classify(*.head).min.value
+      .classify(*.tail).min.key;
