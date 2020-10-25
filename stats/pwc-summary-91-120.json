@@ -1,7 +1,18 @@
 {
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-10-25 13:43:46 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -37,9 +48,10 @@
          "Mohammad S Anwar"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
    },
    "series" : [
@@ -79,7 +91,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             2,
             0,
@@ -111,7 +122,8 @@
             0,
             0,
             67
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -149,18 +161,6 @@
          ]
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-10-25 13:13:23 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    }
