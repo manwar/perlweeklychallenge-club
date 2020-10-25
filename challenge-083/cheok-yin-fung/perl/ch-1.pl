@@ -1,4 +1,6 @@
 $_ = <STDIN>;
-/(^\w+\s)((\w+\s*)+)(\s\w+$)/;
-print length $2,"\n";
+/(^\w+\s)([\w\s*]+)(\s\w+$)/;
+$_ = $2;
+s/\s//g;
+print length, "\n";
 
