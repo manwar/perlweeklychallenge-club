@@ -66,7 +66,7 @@ sub combinationsIndex ( $$ ) {
 
     # set initial values ...
     {
-        # each finger can move to right number of ( M-N ) space(s).
+        # each cursor can move to right number of ( M-N ) space(s).
         @room     = ( $M-$N ) x $N;
         @pos      = 0 .. ($N - 1);
         $next_csr = $N - 1; # last cursor at rightmost
@@ -102,14 +102,14 @@ sub combinationsIndex ( $$ ) {
                 # $next_csr to last one
                 @pos[ $next_csr .. ($N-1) ]
                     = map { $pos[$next_csr] + $_ } 1 .. ($N-$next_csr);
-                # note: all these finger has same room when moved
+                # note: all these cursors have the same size of room when moved
                 @room[ $next_csr .. ($N-1) ]
                   = ( $room[ $next_csr ] - 1 ) x        ($N-$next_csr);
 
                 # and make a record
                 push @result, [ @pos ];
 
-                # next finger to move will be ($N-1)
+                # next cursor to move will be ($N-1)
                 # or even if it is not next loop will find anohter
                 $next_csr = ($N-1);
 

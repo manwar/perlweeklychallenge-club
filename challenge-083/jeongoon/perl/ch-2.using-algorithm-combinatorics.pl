@@ -2,15 +2,16 @@
 # -*- Mode: cperl; cperl-indent-level:4 tab-width: 8; indent-tabs-mode: nil -*-
 # -*- coding: utf-8 -*-
 
-# personal-blog: https://dev.to/jeongoon/weekly-challenge-083-task-2-perl-8d0
-
 use strict; use warnings;
 use v5.26;
 use List::Util qw(all sum);
 
+
+use Algorithm::Combinatorics;
+# comment: I don't know why but this version is slow.
+
 use FindBin;
 use lib ( $FindBin::Bin );
-use CombinationsIndex v0.3 qw(combinationsIndex);
 
 sub usage {
     say 'Usage: perl ch-2.pl [-d|--debug] <natural num> ... ', "\n",
@@ -18,8 +19,8 @@ sub usage {
 }
 
 sub combinations ($$$) {
-    my ( $indexCount, $minSelection, $maxSelection ) = @_;
-    map { combinationsIndex( $indexCount, $_ ) }
+    my ( $list, $minSelection, $maxSelection ) = @_;
+    map { Algorithm::Combinatorics::combinations( $list, $_ ) }
       $minSelection .. $maxSelection;
 }
 
@@ -44,8 +45,8 @@ my $halfLen  = int( .5 * @N ); # reduce the combinations in half
 my $minElems = +@N;
 my $minSum  = $totalSum;
 
-for my $combi ( combinations( +@N, 1, $halfLen ) ) {
-    my $aSum = sum @N[ @$combi ];
+for my $combi ( combinations( \@N, 1, $halfLen ) ) {
+    my $aSum = sum @$combi;
     my $bSum = $totalSum - $aSum;
 
     my $curr =
@@ -57,7 +58,7 @@ for my $combi ( combinations( +@N, 1, $halfLen ) ) {
         # $aSum  < $bSum
        [ $bSum - $aSum, scalar @$combi ] )[ $aSum <=> $bSum ];
 
-    print "[sum: $$curr[0], elems: $$curr[1]] with @N[@$combi] ... " if $d;
+    print "[sum: $$curr[0], elems: $$curr[1]] with @$combi ... " if $d;
 
     if ( $$curr[0] > $minSum ) {        # minimum sum not changed
         say "skipped." if $d;

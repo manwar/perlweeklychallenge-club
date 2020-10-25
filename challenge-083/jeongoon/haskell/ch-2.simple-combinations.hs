@@ -3,8 +3,12 @@ import System.Exit
 import Data.Char (isNumber)
 import Data.Maybe (isJust, catMaybes)
 import Data.List (sum)
-import Combinations (combinations)
 
+-- credit: https://wiki.haskell.org/99_questions/Solutions/26
+combinations :: Int -> [a] -> [[a]]
+combinations 0 _ = [[]]
+combinations n xs = [ xs !! i : x | i <- [0..(length xs)-1]
+                                  , x <- combinations (n-1) (drop (i+1) xs) ]
 {- test with:
    runhaskell ch-2.hs 12 7 4 # answer: 12
    runhaskell ch-2.hs 12 7 4 5 6 9 20 12 7 4 5 6 9 20 9 4 2 1 13 8 # answer: 6
@@ -22,7 +26,7 @@ answerFlipArray nums
     totalLen  = length nums
     halfLen   = totalLen `div` 2
     numCombis = (foldr1 (++) .
-                    map (combinations nums))
+                    map (`combinations` nums))
                    [ 1 .. halfLen ]
 
     answerWith _      minElems [] = minElems
