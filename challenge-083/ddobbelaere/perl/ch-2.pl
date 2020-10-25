@@ -14,9 +14,11 @@ Given an array of positive elements, you have to flip the sign of some of its el
 use v5.30;
 use warnings;
 
-# Note: this naive implementation has exponential time complexity (as a function of input vector length)!
-# For a more efficient implementation, see https://www.ijcai.org/Proceedings/09/Papers/096.pdf and https://en.wikipedia.org/wiki/Karmarkar%27s_algorithm.
-# Also note that multiple solutions might exist, but in that case only one possible answer is returned.
+# Note: this naive implementation has exponential time complexity (in terms of the list length)!
+# For heuristic algorithms with lower average running time, see https://www.ijcai.org/Proceedings/09/Papers/096.pdf.
+# However, note that even those have worst case exponential time complexity (in terms of the list length).
+#
+# Also note that multiple solutions might exist, but in that case only one possible solution is returned.
 sub flip_count_minimum_non_negative {
     my @A = @_;
 
