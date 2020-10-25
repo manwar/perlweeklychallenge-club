@@ -7,8 +7,8 @@ use feature qw<say>;
 use List::Util qw<sum>;
 use Scalar::Util qw<looks_like_number>;
 
-if ( @ARGV == 0 || grep { !looks_like_number($_) || $_ < 1 } @ARGV ) {
-    say 'List of positive numbers required.';
+if ( @ARGV < 2 || grep { !looks_like_number($_) || $_ < 1 } @ARGV ) {
+    say 'List of at least 2 positive numbers required.';
     exit 1;
 }
 

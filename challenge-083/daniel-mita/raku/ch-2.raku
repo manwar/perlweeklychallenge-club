@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 
 sub MAIN(
-  *@positive-nums where { .elems > 0 && .all.Rat && .all > 0 }
+  *@positive-nums where { .elems ≥ 2 && .all.Rat && .all > 0 }
   --> Nil
 ) {
   @(
