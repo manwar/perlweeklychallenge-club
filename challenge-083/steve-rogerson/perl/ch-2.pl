@@ -17,7 +17,7 @@ use List::MoreUtils qw{pairwise};
 
 my @NUMBERS = @ARGV;
 
-if ( @NUMBERS == 0 or grep { !looks_like_number($_) || $_ < 0 } @NUMBERS ) {
+if ( @NUMBERS == 0 or grep { !looks_like_number($_) || $_ <= 0 } @NUMBERS ) {
     die "Was expecting a list of positive numbers";
 }
 
