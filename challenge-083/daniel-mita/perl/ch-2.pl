@@ -15,13 +15,14 @@ if ( @ARGV == 0 || grep { !looks_like_number($_) || $_ < 1 } @ARGV ) {
 my @combinations;
 for ( my $i = 0; $i < @ARGV; $i++ ) {
     for ( my $j = $i; $j < @ARGV; $j++ ) {
-        push @combinations, [ @ARGV[ $i .. $j ] ];
+        push @combinations, [ @ARGV[ $i .. $j ] ]
+            if sum( @ARGV[ $i .. $j ] ) <= sum(@ARGV) / 2;
     }
 }
 
 say scalar(
-    @{  [   sort { sum( @{$b} ) <=> sum( @{$a} ) || @{$a} <=> @{$b} }
-            grep { sum( @{$_} ) <= sum(@ARGV) / 2 } @combinations
-        ]->[0]
+    @{  (   sort { sum( @{$b} ) <=> sum( @{$a} ) || @{$a} <=> @{$b} }
+                @combinations
+        )[0]
     }
 );
