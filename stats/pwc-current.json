@@ -1,72 +1,64 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2020-10-26 12:41:21 GMT"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "legend" : {
       "enabled" : 0
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov"
-            },
-            {
-               "name" : "Myoungjin Jeon",
-               "drilldown" : "Myoungjin Jeon",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "y" : 2,
-               "name" : "Niels van Dijke"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "y" : 1,
-               "name" : "Simon Proctor"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 084"
-      }
-   ],
    "drilldown" : {
       "series" : [
          {
             "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Andrew Shitov"
          },
          {
-            "name" : "Myoungjin Jeon",
+            "id" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Dave Cross"
+         },
+         {
             "data" : [
                [
                   "Blog",
                   2
                ]
             ],
-            "id" : "Myoungjin Jeon"
+            "id" : "Myoungjin Jeon",
+            "name" : "Myoungjin Jeon"
          },
          {
-            "id" : "Niels van Dijke",
             "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
@@ -75,33 +67,56 @@
             ]
          },
          {
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          }
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-10-26 12:38:30 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 084"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "xAxis" : {
+      "type" : "category"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 084",
+         "data" : [
+            {
+               "drilldown" : "Andrew Shitov",
+               "name" : "Andrew Shitov",
+               "y" : 2
+            },
+            {
+               "name" : "Dave Cross",
+               "drilldown" : "Dave Cross",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Myoungjin Jeon",
+               "y" : 2,
+               "name" : "Myoungjin Jeon"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke"
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 1
+            }
+         ],
+         "colorByPoint" : 1
       }
-   },
+   ],
    "chart" : {
       "type" : "column"
    }
