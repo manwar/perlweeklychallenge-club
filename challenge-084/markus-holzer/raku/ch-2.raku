@@ -1,3 +1,5 @@
+unit sub MAIN( Bool :$size );
+
 my @matrix[4,8] =
     < 1 1 0 1 1 1 0 1 >,
     < 1 1 0 0 1 1 0 0 >,
@@ -15,5 +17,7 @@ my @s = gather
                     @matrix[$r;$C] &&
                     @matrix[$r;$c] }}}
 
-say +@s;
-"r: {.[0]+1}, c:{.[1]+1}, {.[2]+1}x{.[3]+1}".say for @s; #.sort( *.[2,3] );
+say "Row: {.[0]+1}, Column:{.[1]+1}, Size: {.[2]+1}x{.[3]+1}"
+    for $size ?? @s.sort( *.[2,3] ) !! @s;
+
+say "Total: {+@s}";
