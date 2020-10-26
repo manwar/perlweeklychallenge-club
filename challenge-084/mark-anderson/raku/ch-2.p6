@@ -1,5 +1,5 @@
 use Test;
-plan 5;
+plan 7;
 
 my @matrix;
 
@@ -40,6 +40,21 @@ ok square-count(@matrix) == 2, "Example 4";
 
 ok square-count(@matrix) == 2, "Example 5";
 
+@matrix = < 1 1 1 1 >,
+          < 1 1 1 1 >,
+          < 1 1 1 1 >,
+          < 1 1 1 1 >,
+          < 1 1 1 1 >;
+
+ok square-count(@matrix) == 20, "Example 6";
+
+@matrix = < 1 1 1 1 1 >,
+          < 1 1 1 1 1 >,
+          < 1 1 1 1 1 >,
+          < 1 1 1 1 1 >;
+
+ok square-count(@matrix) == 20, "Example 7";
+
 sub square-count(@matrix) {
     my $count = 0;
 
@@ -48,13 +63,9 @@ sub square-count(@matrix) {
 
         next unless @indices.elems >= 2;
 
-        for @indices.combinations(2) -> @c {
-            my $skip = @c.tail - @c.head;
-
-            if @matrix[$i+$skip][@c.head] and  
-               @matrix[$i+$skip][@c.tail] { 
-                   $count++;
-            }
+        for @indices.combinations(2) -> [$h, $t] {
+            my $skip = $i + $t - $h;
+            $count++ if @matrix[$skip][$h] and @matrix[$skip][$t]; 
         } 
     }
 
