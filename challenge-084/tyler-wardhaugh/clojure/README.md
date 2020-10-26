@@ -1,4 +1,4 @@
-# tw.weekly.c83
+# tw.weekly.c84
 
 
 The Weekly Challenge - #082 - Tyler Wardhaugh
@@ -7,7 +7,7 @@ The Weekly Challenge - #082 - Tyler Wardhaugh
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -M -m tw.weekly.c83.core
+    $ clojure -M -m tw.weekly.c84.core
 
 Run the project's tests (which are samples from the task descriptions):
 
@@ -15,11 +15,11 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -M -m tw.weekly.c83.t1 S
+    $ clojure -M -m tw.weekly.c84.t1 N
 
 Run Task #2 with input:
 
-    $ clojure -M -m tw.weekly.c83.t2 A1 A2 A3...
+    $ clojure -M -m tw.weekly.c84.t2 MATRIX-FILE
 
 ## Project Template
 
