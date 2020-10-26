@@ -8,11 +8,7 @@ my @A[4,4] =
 say $N.abs <=2147483647??$N.subst(/\d+/,*.flip)!!0;
 #2
 my ($h,$w)=@A.shape;
-say +gather for [X] 0..^$h,0..^$w -> ($r,$c) {
+say +gather for [X] 0..^$h,0..^$w -> ($r,$c){
 for $r^..^$h -> $R {
 for $c^..^$w -> $C {
-take $r,$c,$R-$r,$C-$c if
-@A[$R;$C]&&
-@A[$R;$c]&&
-@A[$r;$C]&&
-@A[$r;$c]}}}
+take 1 if @A[$R;$C]&@A[$R;$c]&@A[$r;$C]&@A[$r;$c]}}}
