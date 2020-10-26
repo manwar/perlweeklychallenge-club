@@ -14,7 +14,7 @@ sub ri(Int $s) {
     $r="-$0";
   }
   my int32 $b=Int($r);
-  if ($b ne $r) {
+  if ($b != $r) {
     return 0;
   }
   return $r;
