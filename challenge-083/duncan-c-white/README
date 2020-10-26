@@ -1,82 +1,54 @@
-Task 1: "Common Factors
+Task 1: "Words Length
 
-You are given 2 positive numbers $M and $N.
+You are given a string $S with 3 or more words.
 
-Write a script to list all common factors of the given numbers.
+Write a script to find the length of the string except the first and last words ignoring whitespace.
 
 Example 1:
-
-Input:
-    $M = 12
-    $N = 18
-
-Output:
-    (1, 2, 3, 6)
-
-Explanation:
-    Factors of 12: 1, 2, 3, 4, 6
-    Factors of 18: 1, 2, 3, 6, 9
+	Input: $S = "The Weekly Challenge"
+	Output: 6
 
 Example 2:
+	Input: $S = "The purpose of our lives is to be happy"
+ 	Output: 23
+	ME: WRONG! length(purpose of our lives is to be)==29
 
-Input:
-    $M = 18
-    $N = 23
-
-Output:
-    (1)
-
-Explanation:
-    Factors of 18: 1, 2, 3, 6, 9
-    Factors of 23: 1
+My notes: simple, clearly defined: use the power of regexes.
 
 
-My notes: simple, find factors and then intersect.
+Task 2: "Flip Array
 
+You are given an array @A of positive numbers.
 
-Task 2: "Interleave String
+Write a script to flip the sign of some members of the given array so
+that the sum of the all members is minimum non-negative.
 
-You are given 3 strings; $A, $B and $C.
+Given an array of positive elements, you have to flip the sign of some
+of its elements such that the resultant sum of the elements of array
+should be minimum non-negative(as close to zero as possible). Return
+the minimum no. of elements whose sign needs to be flipped such that
+the resultant sum is minimum non-negative.
 
-Write a script to check if $C is created by interleave $A and $B.
-
-Print 1 if check is success otherwise 0.
 Example 1:
+	Input: @A = (3, 10, 8)
+	Output: 1
 
-Input:
-    $A = "XY"
-    $B = "X"
-    $C = "XXY"
+Explanation:
 
-Output: 1
-
-EXPLANATION
-
-"X" (from $B) + "XY" (from $A) = $C
+Flipping the sign of just one element 10 gives the result 1 i.e. (3) +
+(-10) + (8) = 1
 
 Example 2:
+	Input: @A = (12, 2, 10)
+	Output: 1
 
-Input:
-    $A = "XXY"
-    $B = "XXZ"
-    $C = "XXXXZY"
+Explanation:
 
-Output: 1
+Flipping the sign of just one element 12 gives the result 0 i.e. (-12) +
+(2) + (10) = 0
 
-EXPLANATION
 
-"XX" (from $A) + "XXZ" (from $B) + "Y" (from $A) = $C
-
-Example 3:
-
-Input:
-    $A = "YX"
-    $B = "X"
-    $C = "XXY"
-
-Output: 0
-
-My notes: It's not quite clear what "interleaving" means here, but I'm
-going to assume that it means "take a PREFIX of any length from one string,
-followed by a PREFIX of any length from the other string, then continue
-with the parts of the strings not yet consumed".  Relatively easy.
+My notes: clearly defined, but how to go about this one? several
+possible approaches.  brute force: each element may either be
+negated or not; try all combinations:-)  not very elegant, but does
+the job..
