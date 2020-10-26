@@ -4,8 +4,9 @@ my @A[4,4] =
     < 1 1 0 0 >,
     < 0 1 1 1 >,
     < 1 0 1 1 >;
+#84 solutions fit in a tweet
 #1
-say $N.abs <=2147483647??$N.subst(/\d+/,*.flip)!!0;
+say $N.abs <=2³¹??$N.subst(/\d+/,+*.flip)!!0;
 #2
 my ($h,$w)=@A.shape;
 say +gather for [X] 0..^$h,0..^$w -> ($r,$c){
