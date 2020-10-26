@@ -9,16 +9,16 @@ my @matrix[4,8] =
 my ( $h, $w ) = @matrix.shape;
 
 my @squares = gather
-    for 0..^$h X 0..^$w -> ( $r, $c ) {
+    for 0 ..^ $h X 0 ..^ $w -> ($r, $c) {
         for $r ^..^ $h -> $R {
             for $c ^..^ $w -> $C {
                 take $r, $c, $R-$r, $C-$c if
-                    @matrix[ $R;$C ] &&
-                    @matrix[ $R;$c ] &&
-                    @matrix[ $r;$C ] &&
-                    @matrix[ $r;$c ] }}}
+                    @matrix[ $R; $C ] &&
+                    @matrix[ $R; $c ] &&
+                    @matrix[ $r; $C ] &&
+                    @matrix[ $r; $c ] }}}
 
-@squares = @squares.sort( *.[2,3] )
+@squares = @squares.sort: *.[2,3]
     if $size;
 
 say "Row: {.[0]}, Column:{.[1]}, Size: {.[2]}x{.[3]}"
