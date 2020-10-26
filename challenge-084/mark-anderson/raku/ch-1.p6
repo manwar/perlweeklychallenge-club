@@ -3,8 +3,6 @@
 
 unit sub MAIN(Int $N is copy);
 
-my $sign = $N.sign;
-
-$N = $N.abs.flip * $sign;
+$N = $N.abs.flip * $N.sign;
 
 say $N ~~ -2147483648 .. 2147483647 ?? $N !! 0;
