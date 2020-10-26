@@ -10,9 +10,9 @@ my @s = gather for [X] 0..^$h, 0..^$w -> ($r, $c) {
     # I had no idea min is also an infix until yesterdays review video
     for 1 ..^ ($h min $w) - ($r max $c) -> $o {
         take $r, $c, $o if
-            @matrix[ $r+$o; $c+$o ] &
-            @matrix[ $r+$o; $c ] &
-            @matrix[ $r; $c+$o ] &
+            @matrix[ $r+$o; $c+$o ] &&
+            @matrix[ $r+$o; $c ] &&
+            @matrix[ $r; $c+$o ] &&
             @matrix[ $r; $c] }}
 
 say +@s;
