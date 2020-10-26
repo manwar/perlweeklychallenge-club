@@ -9,7 +9,7 @@ my @matrix[4,8] =
 my ( $h, $w ) = @matrix.shape;
 
 my @squares = gather
-    for [X] 0..^$h, 0..^$w -> ( $r, $c ) {
+    for 0..^$h X 0..^$w -> ( $r, $c ) {
         for $r ^..^ $h -> $R {
             for $c ^..^ $w -> $C {
                 take $r, $c, $R-$r, $C-$c if
