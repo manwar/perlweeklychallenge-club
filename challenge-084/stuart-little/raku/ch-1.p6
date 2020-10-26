@@ -5,4 +5,4 @@ sub rev(Int $nr) {
     !! ($nr.sign.chop ~ $nr.abs.flip);
 }
 
-say rev(@*ARGS[0].Int);
+say rev(@*ARGS[0].EVAL.Int);
