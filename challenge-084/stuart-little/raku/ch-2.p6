@@ -19,3 +19,4 @@ say countsq(@*ARGS.map(*.split('',:skip-empty)));
 # [ 0 1 1 1 ]
 # [ 1 0 1 1 ]
 # 
+
