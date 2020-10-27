@@ -5,6 +5,6 @@ sub reverse-integer (Int $n) {
     return (-2³¹ ≤ $o < 2³¹) ?? $o !! 0;
 }
 
-sub MAIN (Int $n) {
-    say reverse-integer($n);
+for @*ARGS -> $n {
+    say $n ~ " -> " ~ reverse-integer($n.Int);
 }
