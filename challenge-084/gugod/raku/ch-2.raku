@@ -9,16 +9,9 @@ sub find-squares(@matrix) {
 sub squares(@matrix) {
     return (2 .. min(@matrix.elems, @matrix[0].elems)).map(
         -> $s {
-            my @corners = [
-                [0,    0],
-                [$s-1, 0],
-                [0,    $s-1],
-                [$s-1, $s-1],
-            ];
-
             ((0..@matrix.elems-$s) X (0..@matrix[0].elems-$s)).grep(
                 -> @c {
-                    1 == @corners
+                    1 == [[0,0], [$s-1,0], [0,$s-1], [$s-1, $s-1]]
                     .map({ $_ <<+>> @c })
                     .map({ @matrix[ $_[0] ][ $_[1] ] })
                     .all
