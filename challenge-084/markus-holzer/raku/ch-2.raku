@@ -1,27 +1,40 @@
 unit sub MAIN( Bool :$size );
 
-my @matrix[4,8] =
-    < 1 1 0 1 1 1 0 1 >,
-    < 1 1 0 0 1 1 0 0 >,
-    < 0 1 1 1 0 1 1 1 >,
-    < 1 0 1 1 1 0 1 1 >;
+
+#my @matrix[4,4] =
+#    < 0 1 0 1 >,
+#    < 0 0 1 0 >,
+#    < 1 1 0 1 >,
+#    < 1 0 0 1 >;
+
+my @matrix[4,4] =
+    < 1 1 0 1 >,
+    < 1 1 0 0 >,
+    < 0 1 1 1 >,
+    < 1 0 1 1 >;
+
+#my @matrix[4,8] =
+#    < 1 1 0 1 1 1 0 1 >,
+#    < 1 1 0 0 1 1 0 0 >,
+#    < 0 1 1 1 0 1 1 1 >,
+#    < 1 0 1 1 1 0 1 1 >;
+
 
 my ( $h, $w ) = @matrix.shape;
 
 my @squares = gather
-    for 0 ..^ $h X 0 ..^ $w -> ($r, $c) {
-        for $r ^..^ $h -> $R {
-            for $c ^..^ $w -> $C {
-                take $r, $c, $R-$r, $C-$c if
-                    @matrix[ $R; $C ] &&
-                    @matrix[ $R; $c ] &&
-                    @matrix[ $r; $C ] &&
-                    @matrix[ $r; $c ] }}}
+    for 0 .. $h-2 X 0 .. $w-2 -> ( $r, $c ) {
+       for 1 .. -1 + min $h-$r, $w-$c -> $o {
+           take $r, $c, $o if
+                @matrix[ $r+$o; $c+$o ] &&
+                @matrix[ $r+$o; $c ]    &&
+                @matrix[ $r; $c+$o ]    &&
+                @matrix[ $r; $c ]       }}
 
-@squares = @squares.sort: *.[2,3]
+@squares = @squares.sort: *.[ 2, 3 ]
     if $size;
 
-say "Row: {.[0]}, Column:{.[1]}, Size: {.[2]}x{.[3]}"
+say "Row: { .[0] }, Column:{ .[1] }, Size: { .[2] }x{ .[2] }"
     for @squares.map: 1 «+« *;
 
-say "Total: {+@squares}";
+say "Total: { +@squares }";
