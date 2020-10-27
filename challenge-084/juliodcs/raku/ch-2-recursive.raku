@@ -1,6 +1,10 @@
 #! /usr/bin/raku
 
 sub count-squares(\matrix where matrix.elems > 1 && matrix.head.elems > 1) {
+    my \height = matrix.elems;
+    my \width = matrix.head.elems;
+    my \max-square-size = min height, width;
+
     sub all-ones(\y, \x, \size) {
            matrix[ y             ; x             ]
         && matrix[ y + size.pred ; x             ]
@@ -8,18 +12,23 @@ sub count-squares(\matrix where matrix.elems > 1 && matrix.head.elems > 1) {
         && matrix[ y + size.pred ; x + size.pred ]
     }
 
-    my \h = matrix.elems;
-    my \w = matrix.head.elems;
-
-    my $count = 0;
-    for 2 .. min h, w -> \s {
-        for 0 .. h - s -> \y {
-            for 0 .. w - s -> \x {
-                $count++ if all-ones y, x, s;
-            }
-        }
+    multi count-squares(\size where * > max-square-size, \y, \x, \count) {
+        count
     }
-    $count
+
+    multi count-squares(\size, \y where * > height - size, \x, \count) {
+        count-squares size.succ, 0, 0, count
+    }
+
+    multi count-squares(\size, \y, \x where * > width - size, \count) {
+        count-squares size, y.succ, 0, count
+    }
+
+    multi count-squares(\size, \y, \x, \count) {
+        count-squares size, y, x.succ, count + all-ones y, x, size
+    }
+
+    count-squares 2, 0, 0, 0
 }
 
 #############################################################################

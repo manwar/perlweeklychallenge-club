@@ -1,31 +1,29 @@
 use strict;
 use warnings;
-use feature 'say';
+use feature qw(say state);
 use experimental 'signatures';
 
-sub all_ones($matrix, $y, $x, $size) {
-    return $matrix->[$y        ][$x        ]
-        && $matrix->[$y+$size-1][$x        ]
-        && $matrix->[$y        ][$x+$size-1]
-        && $matrix->[$y+$size-1][$x+$size-1];
-}
-
 sub count_squares($matrix) {
-    my $count = 0;
-
     my $h = @{ $matrix };
     my $w = @{ $matrix->[0] };
-    my $square_size = $h < $w ? $h : $w;
+    my $sq_size = $h < $w ? $h : $w;
     
-    for my $s (2 .. $square_size) {
-        for my $y (0 .. $h - $s) {
-            for my $x (0 .. $w - $s) {
-                $count++ if all_ones($matrix, $y, $x, $s);
-            }
-        }
-    }
+    my $_all_ones = sub($y, $x, $size) {
+        return $matrix->[$y        ][$x        ]
+            && $matrix->[$y+$size-1][$x        ]
+            && $matrix->[$y        ][$x+$size-1]
+            && $matrix->[$y+$size-1][$x+$size-1] ? 1 : 0;
+    };
     
-    return $count;
+    my $_count_squares;
+    $_count_squares = sub($size, $y, $x, $acc) {
+        return $size > $sq_size ? $acc
+            :  $y > $h - $size  ? $_count_squares->($size + 1, 0, 0, $acc)
+            :  $x > $w - $size  ? $_count_squares->($size, $y + 1, 0, $acc)
+            :  $_count_squares->($size, $y, $x + 1, $acc + $_all_ones->($y, $x, $size));
+    };
+
+    return $_count_squares->(2, 0, 0, 0);
 }
 
 use Test::More;
