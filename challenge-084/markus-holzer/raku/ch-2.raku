@@ -1,6 +1,5 @@
 unit sub MAIN( Bool :$size );
 
-
 #my @matrix[4,4] =
 #    < 0 1 0 1 >,
 #    < 0 0 1 0 >,
@@ -25,12 +24,12 @@ my ( $h, $w ) = @matrix.shape;
 my @squares = gather
     for 0 .. $h - 2 -> $r {
         for 0 .. $w - 2 -> $c {
-           for 1 .. -1 + min $h-$r, $w-$c -> $o {
-               take $r, $c, $o if
-                    @matrix[ $r+$o; $c+$o ] &&
-                    @matrix[ $r+$o; $c ]    &&
-                    @matrix[ $r; $c+$o ]    &&
-                    @matrix[ $r; $c ]       }}}
+            if @matrix[ $r; $c ] {
+                for 1 .. -1 + min $h - $r, $w - $c -> $o {
+                    take $r, $c, $o if
+                        @matrix[ $r+$o; $c+$o ] &&
+                        @matrix[ $r+$o; $c ]    &&
+                        @matrix[ $r; $c+$o ]    }}}}
 
 @squares = @squares.sort: *.[ 2, 3 ]
     if $size;
