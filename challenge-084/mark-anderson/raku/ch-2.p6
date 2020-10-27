@@ -65,7 +65,8 @@ sub square-count(@matrix) {
 
         for @indices.combinations(2) -> [$h, $t] {
             my $skip = $i + $t - $h;
-            $count++ if @matrix[$skip][$h] and @matrix[$skip][$t]; 
+            next if $skip > @matrix.end;
+            $count++ if all @matrix[$skip][$h, $t];
         } 
     }
 
