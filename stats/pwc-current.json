@@ -1,42 +1,58 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andrew Shitov",
+            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Andrew Shitov"
+            "name" : "Andrew Shitov"
          },
          {
-            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Dave Cross"
+            "name" : "Dave Cross",
+            "id" : "Dave Cross"
          },
          {
             "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "James Smith"
+            ]
          },
          {
+            "id" : "Kang-min Liu",
             "name" : "Kang-min Liu",
             "data" : [
                [
@@ -47,28 +63,37 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Kang-min Liu"
+            ]
          },
          {
             "id" : "Myoungjin Jeon",
+            "name" : "Myoungjin Jeon",
             "data" : [
                [
                   "Blog",
                   2
                ]
-            ],
-            "name" : "Myoungjin Jeon"
+            ]
          },
          {
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Niels van Dijke",
             "id" : "Niels van Dijke"
+         },
+         {
+            "id" : "Philip Hood",
+            "name" : "Philip Hood",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
          },
          {
             "name" : "Roger Bell_West",
@@ -85,55 +110,33 @@
             "id" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Proctor",
             "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
          },
          {
+            "id" : "Stuart Little",
+            "name" : "Stuart Little",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Stuart Little",
-            "id" : "Stuart Little"
+            ]
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2020-10-28 23:30:21 GMT"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 084"
    },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 084",
          "data" : [
             {
                "y" : 2,
@@ -142,8 +145,8 @@
             },
             {
                "drilldown" : "Dave Cross",
-               "name" : "Dave Cross",
-               "y" : 2
+               "y" : 2,
+               "name" : "Dave Cross"
             },
             {
                "drilldown" : "James Smith",
@@ -152,13 +155,13 @@
             },
             {
                "y" : 4,
-               "drilldown" : "Kang-min Liu",
-               "name" : "Kang-min Liu"
+               "name" : "Kang-min Liu",
+               "drilldown" : "Kang-min Liu"
             },
             {
-               "y" : 2,
                "drilldown" : "Myoungjin Jeon",
-               "name" : "Myoungjin Jeon"
+               "name" : "Myoungjin Jeon",
+               "y" : 2
             },
             {
                "y" : 2,
@@ -166,26 +169,38 @@
                "drilldown" : "Niels van Dijke"
             },
             {
-               "drilldown" : "Roger Bell_West",
+               "drilldown" : "Philip Hood",
+               "y" : 2,
+               "name" : "Philip Hood"
+            },
+            {
+               "y" : 4,
                "name" : "Roger Bell_West",
-               "y" : 4
+               "drilldown" : "Roger Bell_West"
             },
             {
-               "y" : 2,
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
+               "name" : "Simon Proctor",
+               "y" : 2
             },
             {
+               "name" : "Stuart Little",
                "y" : 2,
-               "drilldown" : "Stuart Little",
-               "name" : "Stuart Little"
+               "drilldown" : "Stuart Little"
             }
          ],
-         "name" : "Perl Weekly Challenge - 084",
          "colorByPoint" : 1
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 084"
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2020-10-28 23:40:54 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
