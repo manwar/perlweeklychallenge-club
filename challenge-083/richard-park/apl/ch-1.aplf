@@ -1,0 +1,9 @@
+ WordsLength←{
+⍝ Short and sweet
+     WL←{≢∊1↓¯1↓'., '((~∊⍨)⊆⊢)⍵} 
+⍝ More performant on long input strings
+     WL2←',. '∘{≢⍺~⍨⍵{(-⊃⌽⍵)↓(⊃⍵)↓⍺}⊃⍤⍸⍤1⊢(⊢,[0.5]⌽)⍺∊⍨⍵}
+⍝ Regex
+     WL3←{≢⍤('^\w+' '\w+$' '\W'⎕R'')⍵} 
+     WL2 ⍵
+ }

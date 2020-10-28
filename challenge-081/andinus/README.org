@@ -1,0 +1,135 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-2.org
+#+HTML_LINK_UP: ../../writings/
+#+OPTIONS: toc:2
+#+EXPORT_FILE_NAME: index
+#+TITLE: Challenge 081
+
+* Task 1 - Common Base String
+You are given 2 strings, =$A= and =$B=.
+
+Write a script to find out common base strings in =$A= and =$B=.
+
+#+BEGIN_QUOTE
+A substring of a string $S is called base string if repeated
+concatenation of the substring results in the string.
+#+END_QUOTE
+** Perl
+- Program: [[file:perl/ch-1.pl]]
+
+We will break =$A= & check if any subset of =$A= join to make =$B=. To speed
+up the process we only break =$A= by common divisors of both =$A= & =$B=.
+
+I assume that the length of =$B= is greater than =$A= in later parts so we
+make sure that it's true.
+#+BEGIN_SRC perl
+my $A = shift @ARGV;
+my $B = shift @ARGV;
+
+# We assume length($B) is greater than length($A).
+unless (length($B) > length($A)) {
+    my $tmp = $A;
+    $A = $B;
+    $B = $tmp;
+}
+#+END_SRC
+
+If the strings have different sets of characters then common base string
+cannot exists so we exit early.
+#+BEGIN_SRC perl
+# Check if common base string is even possible.
+my (%chars_in_A, %chars_in_B);
+$chars_in_A{$_} = 1 foreach split //, $A;
+$chars_in_B{$_} = 1 foreach split //, $B;
+foreach my $char (sort keys %chars_in_A) {
+    last if exists $chars_in_B{$char} ;
+    print "No common base string.\n" and exit 0
+}
+#+END_SRC
+
+Get all the common divisors of =$A= & =$B=.
+#+BEGIN_SRC perl
+# Get all common divisors.
+my %divisors_of_A = divisors(length($A));
+my %divisors_of_B = divisors(length($B));
+my @common_divisors;
+foreach my $num (sort { $a <=> $b } keys %divisors_of_A) {
+    push @common_divisors, $num
+        if exists $divisors_of_B{$num};
+}
+
+# Returns all divisors of a number.
+sub divisors {
+    my $n = shift @_;
+    my %divisors;
+    foreach my $i ( 1 ... $n){
+        if ($n % $i == 0) {
+            $divisors{$i} = 1;
+        }
+    }
+    return %divisors;
+}
+#+END_SRC
+
+We check if any subset of =$A= joins to make =$B=.
+#+BEGIN_SRC perl
+my @common;
+
+foreach my $num (@common_divisors){
+    my $tmp;
+    my $base = substr($A, 0, $num);
+    foreach (1 ... length($B) / $num) {
+        $tmp .= $base;
+    }
+    push @common, $base if $tmp eq $B;
+}
+
+print "No common base string.\n" and exit 0
+    unless scalar @common;
+print join(', ', @common), "\n";
+#+END_SRC
+* Task 2 - Frequency Sort
+You are given file named input.
+
+Write a script to find the frequency of all the words.
+
+It should print the result as first column of each line should be the
+frequency of the the word followed by all the words of that frequency
+arranged in lexicographical order. Also sort the words in the ascending
+order of frequency.
+
+For the sake of this task, please ignore the following in the input
+file: =. " ( ) , 's --=
+** Perl
+- Program: [[file:perl/ch-2.pl]]
+
+Swap unwanted characters with a space.
+#+BEGIN_SRC perl
+my $file = path(shift @ARGV)->slurp;
+
+$file =~ s/(--|'s)/ /g;
+$file =~ s/[."(),]+/ /g;
+$file =~ s/  / /g;
+$file =~ s/\n/ /g;
+#+END_SRC
+
+Get frequency of each word.
+#+BEGIN_SRC perl
+my %words;
+foreach my $word (split / /, $file) {
+    $words{$word} = 1 and next unless exists $words{$word};
+    $words{$word}++;
+}
+#+END_SRC
+
+Format the output.
+#+BEGIN_SRC perl
+my %out;
+foreach my $word (sort keys %words) {
+    my $freq = $words{$word};
+    push @{$out{$freq}}, $word;
+}
+
+foreach my $freq (sort { $a <=> $b} keys %out) {
+    print "$freq ", join(' ', @{$out{$freq}}, "\n");
+}
+#+END_SRC

@@ -1,3 +1,4 @@
+find . -name "*.c" -delete
 find . -name "*.p" -delete
 find . -name "*.t" -delete
 find . -name "*.bc" -delete
