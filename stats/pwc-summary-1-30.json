@@ -1,16 +1,4 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "xAxis" : {
       "categories" : [
          "3ter",
@@ -46,10 +34,16 @@
       ]
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-10-30 21:01:17 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-10-30 21:06:39 GMT"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -88,7 +82,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -120,7 +113,8 @@
             8,
             6,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "data" : [
@@ -159,9 +153,15 @@
       }
    ],
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
