@@ -30,9 +30,12 @@ use experimental 'lexical_subs';
 #
 # There's a tiny thing to consider. 2,147,483,647 is the largest
 # positive value which fits in a 32-bit signed integer, but the
-# smallest integer which fits is -2,147,483,648. So, if the input
+# smallest integer which fits is -2,147,483,648 [1]. So, if the input
 # is 8463847412, the output should 0, but if the input is -8463847412,
 # the output should be -2147483648.
+#
+# [1] We're assuming 2s-complement integers, which seems to have
+#     been the norm for the past 50 years.
 #
 
 my $MAX = 2_147_483_647;  # Maximum value which fits in a 32-bit signed integer.
