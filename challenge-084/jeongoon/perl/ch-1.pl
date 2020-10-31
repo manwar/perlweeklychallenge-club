@@ -27,7 +27,9 @@ sub filter32Bit ($$;$) {
 sub limitAbs ($$;$) { # $bit is optional
     my ( $s, $n, $bit ) = @_;
     $bit ||= 31;
-    1 << $bit - ($s eq '-')
+    abs         # abs() for sure because if using 32bit variable,
+    (1 << $bit) # that calculation is overflowed already
+    - ( $s ne '-' )
 }
 
 sub reverseIntStr ($) {
