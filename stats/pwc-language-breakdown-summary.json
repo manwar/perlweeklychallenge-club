@@ -1,18 +1,6 @@
 {
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-10-30 23:37:16 GMT"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "xAxis" : {
       "type" : "category",
@@ -23,11 +11,21 @@
          }
       }
    },
-   "legend" : {
-      "enabled" : "false"
-   },
    "series" : [
       {
+         "dataLabels" : {
+            "align" : "right",
+            "y" : 10,
+            "rotation" : -90,
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}"
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -35,29 +33,31 @@
             ],
             [
                "Perl",
-               3700
+               3702
             ],
             [
                "Raku",
                2366
             ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "rotation" : -90,
-            "y" : 10,
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF"
-         }
+         ]
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-10-31 20:44:24 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
