@@ -1,30 +1,21 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
-      }
+      },
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-10-31 20:51:22 GMT"
    },
    "series" : [
       {
-         "dataLabels" : {
-            "align" : "right",
-            "y" : 10,
-            "rotation" : -90,
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "format" : "{point.y:.0f}"
-         },
          "name" : "Contributions",
          "data" : [
             [
@@ -33,31 +24,40 @@
             ],
             [
                "Perl",
-               3702
+               3704
             ],
             [
                "Raku",
                2366
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "rotation" : -90,
+            "align" : "right",
+            "format" : "{point.y:.0f}"
+         }
       }
    ],
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
+      },
+      "min" : 0
    },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-10-31 20:44:24 GMT"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
