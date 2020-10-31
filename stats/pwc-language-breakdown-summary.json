@@ -1,26 +1,19 @@
 {
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-10-31 21:18:34 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "series" : [
       {
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "y" : 10,
-            "rotation" : -90,
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            }
-         },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               1072
+               1073
             ],
             [
                "Perl",
@@ -30,34 +23,41 @@
                "Raku",
                2368
             ]
-         ]
+         ],
+         "name" : "Contributions",
+         "dataLabels" : {
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right",
+            "enabled" : "true",
+            "rotation" : -90
+         }
       }
    ],
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-10-31 21:00:21 GMT"
+      },
+      "type" : "category"
    },
    "legend" : {
       "enabled" : "false"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
    }
 }
