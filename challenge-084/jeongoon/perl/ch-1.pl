@@ -18,18 +18,25 @@ sub filter32Bit ($$;$) {
     $lim_abs ||= limitAbs( $s, $n );
     my $n_with_sigin = $s . $n;
 
-    ( (bless \$n_with_sigin, (($n le $lim_abs) ? Ok : Invalid )), #  0 # eq
-      (bless \$n_with_sigin, Invalid),                            #  1 # gt
-      (bless \$n_with_sigin, Ok),                                 # -1 # lt
-    )[ (length $n) <=> (length $lim_abs) ]
+    map {
+        if ( $_ == 0 ) {         # eq
+            bless \$n_with_sigin, (($n le $lim_abs) ? Ok : Invalid)
+        }
+        elsif ( $_ == 1 ) {     # gt
+            bless \$n_with_sigin, Invalid
+        }
+        else {                  # lt
+            bless \$n_with_sigin, Ok
+        }
+    } ((length $n) <=> (length $lim_abs));
 }
 
 sub limitAbs ($$;$) { # $bit is optional
     my ( $s, $n, $bit ) = @_;
     $bit ||= 31;
-    abs         # abs() for sure because if using 32bit variable,
-    (1 << $bit) # that calculation is overflowed already
-    - ( $s ne '-' )
+    abs(  -abs  # ensure negative value because if variable size is limited,
+          (1 << $bit)  # -> this calculation is overflowed already
+          + ($s ne '-') ) # make (-) value andthen convert it into (+)
 }
 
 sub reverseIntStr ($) {
@@ -53,13 +60,14 @@ say "Sign:  (@{[(($sign) ||= '+')]})"; # like: Sign: (+)
 say "Value: ".$number;
 
 my $lim_abs = limitAbs( $sign, $number );
-my $result = filter32Bit( $sign, $number );
+say "Limt:  ".$lim_abs;
+my ($result) = filter32Bit( $sign, $number, $lim_abs );
 
 if ((ref $result) eq Ok) {
     say "Reversed: " . $$result;
 }
 else {
     say "Reversed: " . $$result;
-    say "However limit value: " . ($sign < 0 ? '-' : ' ').$lim_abs;
+    say "However limit value: " . ($sign eq '-' ? '-' : ' ').$lim_abs;
     say "Therefore: " . (ref $result);
 }
