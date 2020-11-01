@@ -69,9 +69,9 @@ sub showSomethingInGroup ($$$) {
 }
 
 sub showPoints ($) {
-    @_ = ( $_[0], ShowDetails
-                          ->new( name  => 'points',
-                                 attrs => [qw(row col)] ),
+    @_ = ( $_[0], # data (ArrayRef)
+           ShowDetails->new( name  => 'points',
+                             attrs => [qw(row col)] ),
            1 # flattening? yes
          );
     goto &showSomethingInGroup
@@ -91,9 +91,9 @@ sub getHorizLinesFromPoints ($) {
 }
 
 sub showHorizLines ($) {
-    @_ = ( $_[0], ShowDetails
-                          ->new( name  => 'horiz lines',
-                                 attrs => [qw(row begin end)] ),
+    @_ = ( $_[0],
+           ShowDetails->new( name  => 'horiz lines',
+                             attrs => [qw(row begin end)] ),
            1 # flattening? yes
         );
     goto &showSomethingInGroup
@@ -134,14 +134,13 @@ sub getSquaresFromHlines ($) {
                 }
             } 0 .. $#{$hls_r2}
         } 0 .. $#{$hls_r1}
-    } combiIndex2( scalar @hls_at_all_rows ) ]
+    } combiIndex2( scalar @hls_at_all_rows ) ] # return as ArrayRef
 }
 
 sub showSquares ($) {
-    @_ = ( $_[0], ShowDetails
-                          ->new( name  => 'square',
-                                 attrs =>
-                                 [ qw(row_NW col_NW row_SE col_SE) ] ),
+    @_ = ( $_[0],
+           ShowDetails->new( name  => 'square',
+                             attrs => [ qw(row_NW col_NW row_SE col_SE) ] ),
            0 # flattening? no
         );
     goto &showSomethingInGroup
