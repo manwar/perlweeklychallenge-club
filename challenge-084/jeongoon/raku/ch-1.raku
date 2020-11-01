@@ -18,7 +18,7 @@ sub filter32bit( Str $nstr ) {
     my $nstr-abs = S/^0+//   # remove zeroes in the beginging. for better cmp.
                    with $nstr.subst("-","");       # disgard the sign as well.
         say "[FLTR] ",($nstr-abs gt $nstr ?? "-" !! ""),$lstr if $d;
-        $nstr-abs eq "" and 0.return  # when get zero(es) as input
+        $nstr-abs eq "" and 0.return;  # when get zero(es) as input
 
         # better read bottom up
         ($nstr.Int but "0",
