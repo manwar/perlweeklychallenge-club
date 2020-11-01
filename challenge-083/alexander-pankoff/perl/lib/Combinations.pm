@@ -4,19 +4,13 @@ use warnings;
 use feature qw(signatures);
 no warnings 'experimental::signatures';
 
-use Carp qw(croak);
-
 use Exporter qw(import);
 
 our @EXPORT_OK = qw(combinations);
 
 # returns possible combinations of $length elements from @pool.
 sub combinations ( $count, @pool ) {
-    croak "cannot build combinations with $count elements from a list of "
-      . scalar(@pool)
-      . " elements"
-      if $count > @pool;
-    return () if $count == 0;
+    return () if $count == 0 || $count > @pool;
     return map { [$_] } @pool if $count == 1;
 
     my @combinations;
