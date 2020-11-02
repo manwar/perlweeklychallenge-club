@@ -15,7 +15,7 @@ sub triplet-sum(@R) {
     @R.grep(* < 2)
       .combinations(3)
       .map(*.sum)
-      .first(* ~~ 1..2)
+      .first(1 < * < 2)
       .Bool 
       .UInt 
 }
