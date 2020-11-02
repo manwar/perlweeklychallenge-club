@@ -17,7 +17,7 @@ multi MAIN {
                 2**33    => 1;
 
     for @pairs -> $pair {
-        ok uint-log($pair.key) == $pair.value, ($pair).fmt("%10d --> %d")
+        ok uint-log($pair.key) == $pair.value, $pair.fmt("%10d --> %d")
     }
 }
     
