@@ -12,7 +12,9 @@ done_testing;
 
 sub trip_sum {
   for my $i (0.. (@_-3) ) {
+    next unless $_[$i] < 2;          ## For large arrays this might save some time...;
     for my $j ( ($i+1).. (@_-2) ) {
+      next unless $_[$i]+$_[$j] < 2; ## For large arrays this might save some time...;
       for ( ($j+1) .. (@_-1) ) {
         return 1 if 1 < $_[$i]+$_[$j]+$_[$_] && $_[$i]+$_[$j]+$_[$_] < 2;
       }
