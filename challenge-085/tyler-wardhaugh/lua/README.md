@@ -7,11 +7,11 @@ The Weekly Challenge - #084 - Tyler Wardhaugh
 
 Run Task 1:
 
-    $ ./run.lua ch-1 N
+    $ ./run.lua ch-1 A1 A2 A3...
 
 Run Task 2:
 
-    $ ./run.lua ch-2 MATRIX-FILE
+    $ ./run.lua ch-2 N
 
 Run the project's tests (all the samples from the task descriptions plus some others):
 
