@@ -1,4 +1,4 @@
-multi MAIN(*@R where .all ~~ Real) {
+multi MAIN(*@R where { .all ~~ Real and .all > 0 }) {
     say triplet-sum(@R)
 }
  
