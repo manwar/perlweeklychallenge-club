@@ -12,7 +12,7 @@ multi MAIN {
 }
    
 sub triplet-sum(@R) {
-    @R.grep(0 < * < 2)
+    @R.grep(* < 2)
       .combinations(3)
       .map(*.sum)
       .first(1 < * < 2)
