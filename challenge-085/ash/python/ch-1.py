@@ -1,4 +1,4 @@
-#!/usr/bin/env raku
+#!/usr/bin/env python3
 #
 # Task 1 from
 # https://perlweeklychallenge.org/blog/perl-weekly-challenge-085/#TASK1
