@@ -1,0 +1,91 @@
+Task 1: "Reverse Integer
+
+You are given an integer $N.
+
+Write a script to reverse the given integer and print the result. Print
+0 if the result doesn't fit in 32-bit signed integer.
+
+The number 2,147,483,647 is the maximum positive value for a 32-bit
+signed binary integer in computing.
+
+Example 1:
+
+	Input: 1234
+	Output: 4321
+
+Example 2:
+
+	Input: -1234
+	Output: -4321
+
+Example 3:
+
+	Input: 1231230512
+	Output: 0
+
+
+My notes: simple, clearly defined: only tricky bit is the overflow detection
+as Perl **doesn't** use 32bit integers.
+
+
+Task 2: "Find Square
+
+You are given a binary matrix of size m x n (all elements are 1 or 0).
+
+Write a script to find the count of squares having all four corners set as 1.
+
+Example 1:
+
+Input: [ 0 1 0 1 ]
+       [ 0 0 1 0 ]
+       [ 1 1 0 1 ]
+       [ 1 0 0 1 ]
+
+Output: 1
+
+Explanation:
+	There is one square (3x3) in the given matrix with four corners
+	as 1 starts at r=1;c=2.
+
+	[ 1 0 1 ]
+	[ 0 1 0 ]
+	[ 1 0 1 ]
+
+Example 2:
+
+Input: [ 1 1 0 1 ]
+       [ 1 1 0 0 ]
+       [ 0 1 1 1 ]
+       [ 1 0 1 1 ]
+
+Output: 4
+
+Explanation:
+	There is one square (4x4) in the given matrix with four corners
+	as 1 starts at r=1;c=1.
+	There is one square (3x3) in the given matrix with four corners as 1
+	starts at r=1;c=2.
+	There are two squares (2x2) in the given matrix with four corners as
+	1. First starts at r=1;c=1 and second starts at r=3;c=3.
+
+Example 3:
+
+Input: [ 0 1 0 1 ]
+       [ 1 0 1 0 ]
+       [ 0 1 0 0 ]
+       [ 1 0 0 1 ]
+
+Output: 0
+
+My notes: clearly defined, seems straightforward.
+
+Have to define the Input format: CSV rows on command line so example 3 is:
+./ch-2.pl 0,1,0,1 1,0,1,0 0,1,0,0 1,0,0,1
+
+Initially, I found all RECTANGLES inside the matrix, then rejected those that
+weren't SQUARES - before ever checking whether the corner elements were all 1.
+Find that in ch-2-firstattempt.pl
+
+But then I improved that, by directly finding all SQUARES inside the
+matrix, then checked whether their corner elements were all 1.
+This reduces 4 nested loops to 3..
