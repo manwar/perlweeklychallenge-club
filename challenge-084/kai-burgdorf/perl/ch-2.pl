@@ -12,19 +12,14 @@ my @input = ( [ 0, 1, 0, 1 ], [ 0, 0, 1, 0 ], [ 1, 1, 0, 1 ], [ 1, 0, 0, 1 ] );
 #Example 3 - Output: 0
 #my @input = ( [ 0, 1, 0, 1 ], [ 1, 0, 1, 0 ], [ 0, 1, 0, 0 ], [ 1, 0, 0, 1 ] );
 
-my $size    = scalar @{ $input[0] };
 my $squares = 0;
 
-my $r = 0;
-for my $row (@input) {
-    my $c = 0;
-    for my $elem ( @{$row} ) {
-        if ( $elem == 1 ) {
-            $squares += get_squares( $r, $c );
+for my $row ( 0 ... $#input ) {
+    for my $col ( 0 .. $#{ $input[$row] } ) {
+        if ( $input[$row][$col] == 1 ) {
+            $squares += get_squares( $row, $col );
         }
-        $c++;
     }
-    $r++;
 }
 
 print "Output: $squares\n";
@@ -33,13 +28,12 @@ sub get_squares {
     my ( $r, $c ) = @_;
 
     my $square_count = 0;
-    my @row          = @{ $input[$r] };
 
-    for my $top_right ( $c + 1 .. $#row ) {
+    for my $top_right ( $c + 1 .. $#{ $input[$r] } ) {
 
         my $bottom_row = $r + $top_right - $c;
 
-        if (   $bottom_row < $size
+        if (   $bottom_row < scalar @input
             && $input[$r][$top_right] == 1
             && $input[$bottom_row][$c] == 1
             && $input[$bottom_row][$top_right] == 1 )
