@@ -12,6 +12,5 @@ for row in combinations(r, 3):
     if 1 < sum(row) < 2:
         print(1)
         break
-        
 else:
     print(0)
