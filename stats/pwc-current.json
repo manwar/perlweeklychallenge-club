@@ -1,31 +1,30 @@
 {
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2020-11-03 18:05:27 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 085"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
    "xAxis" : {
       "type" : "category"
    },
    "tooltip" : {
-      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 085",
          "data" : [
             {
                "y" : 2,
@@ -33,57 +32,54 @@
                "drilldown" : "James Smith"
             },
             {
+               "drilldown" : "Mark Anderson",
                "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
+               "name" : "Mark Anderson"
+            },
+            {
+               "name" : "Niels van Dijke",
+               "y" : 2,
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
             },
             {
                "y" : 2,
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke"
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
             },
             {
+               "drilldown" : "Stuart Little",
                "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            },
-            {
-               "y" : 2,
-               "name" : "Stuart Little",
-               "drilldown" : "Stuart Little"
+               "name" : "Stuart Little"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 085",
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 085"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "James Smith"
+            "name" : "James Smith"
          },
          {
             "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Mark Anderson"
+            ]
          },
          {
             "id" : "Niels van Dijke",
@@ -96,14 +92,18 @@
             ]
          },
          {
-            "id" : "Simon Proctor",
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
+               [
+                  "Perl",
+                  2
+               ],
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Simon Proctor"
+            ]
          },
          {
             "data" : [
@@ -112,12 +112,31 @@
                   2
                ]
             ],
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
+         },
+         {
             "name" : "Stuart Little",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
             "id" : "Stuart Little"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2020-11-03 17:57:06 GMT"
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    }
 }
