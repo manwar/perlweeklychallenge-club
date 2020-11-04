@@ -29,7 +29,16 @@
 
 
 
-unit sub MAIN (Int $num where $num > 0 = 1729) ;
+# unit sub MAIN (Int $num where $num > 0 = 1729) ;
+#                                 
+# say $num.flip +> 31 > 0 ?? 0 
+#                         !! $num.flip;
+
+unit sub MAIN (Int $num = -1700) ;
                                 
-say $num.flip +> 31 > 0 ?? 0 
-                        !! $num.flip;
+my $sign = $num < 0 ?? -1 !! 1 ;
+my $out  = $sign * $num.abs.flip ;
+
+say -2147483648 <= $out <= 2147483647 ?? $out 
+                                      !! 0;
+
