@@ -60,6 +60,11 @@ LINE: while (<>) {
     # Iterate over all pairs
     #
     for (my $i = 0; $i < @$array; $i ++) {
+        #
+        # If 3 * $$array [$i] >= $MAX, we cannot have any solutions,
+        # as $$array [$j] >= $$array [$i] for $j > $i.
+        #
+        last if 3 * $$array [$i] >= $MAX;
         for (my $j = $i + 1; $j < @$array; $j ++) {
             #
             # If the sum of the first number and twice the second
