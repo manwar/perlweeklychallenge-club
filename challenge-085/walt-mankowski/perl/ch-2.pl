@@ -36,7 +36,7 @@ for my $i (2..round(sqrt($n))) {
 say $res;
 
 sub round($n) {
-    return int($n+0.5);
+    return sprintf "%.0f", $n;
 }
 
 sub is_whole($n, $eps) {
