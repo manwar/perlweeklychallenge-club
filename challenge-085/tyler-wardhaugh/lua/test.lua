@@ -18,3 +18,12 @@ describe("Task 1, Triplet Sum", function()
     assert.are.same(1, t1.find_triplet_sum(big))
   end)
 end)
+
+describe("Task 2, Power of Two Integers", function()
+  local t2 = require'ch-2'
+  it("produces correct results for the examples", function()
+    assert.are.same(1, t2.has_power_expr(8))
+    assert.are.same(0, t2.has_power_expr(15))
+    assert.are.same(1, t2.has_power_expr(125))
+  end)
+end)
