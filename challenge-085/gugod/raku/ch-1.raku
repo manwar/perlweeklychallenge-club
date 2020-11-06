@@ -1,9 +1,9 @@
 my @nums = @*ARGS.map: *.Num;
 
-my @combo = @nums.combinations(3).first({ 1 < .sum < 2 });
+my $so = @nums.combinations(3)o.first({ 1 < .sum < 2 });
 
-if @combo.elems == 3 {
-    say "1 as 1 < { @combo.join(' + ') } < 2";
+if $so {
+    say 1;
 } else {
     say 0;
 }
