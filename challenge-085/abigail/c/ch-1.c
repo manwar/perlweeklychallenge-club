@@ -51,8 +51,9 @@ int cmp (const void * a, const void * b) {
  * The numbers in array are sorted.
  */
 ssize_t bin_search (float * array, float target, size_t min, size_t max) {
-    size_t mid = (min + max) / 2;   /* In C, dividing integers yields an integer *
-                                     * so there is no need for flooring.         */
+    size_t mid = (min + max) / 2;   /* In C, dividing integers yields an *
+                                     * integer, so there is no need for  *
+                                     * flooring.                         */
 
     return min >= max ||
            array [min] >= target ? NOT_FOUND
@@ -83,7 +84,7 @@ int main (void) {
      * Iterate over the input, reading one line at a time
      */
     while ((length = getline (&line, &len, stdin)) != -1) {
-        size_t  size     = 0;            /* Number of floats in array.             */
+        size_t  size     = 0;       /* Number of floats in array.     */
         int     offset;
         float   input;
         char *  line_ptr = line;
@@ -104,8 +105,8 @@ int main (void) {
             if (++ size >= buf_size) {
                 /* Get some more memory. */
                 buf_size = (size_t) floorf (buf_size * BUF_INCREMENT);
-                if ((array = (float *)
-                              realloc (array, buf_size * sizeof (float))) == NULL) {
+                if ((array = (float *) realloc (array,
+                             buf_size * sizeof (float))) == NULL) {
                     fprintf (stderr, "Out of memory\n");
                     return (1);
                 }
@@ -126,8 +127,8 @@ int main (void) {
          * We will iterate over all i, j, with i < j, and for each
          * such pair, use binary search to find whether there is a k.
          *
-         * We can stop searching if we either have a winning triplet (duh),
-         * or if 3 * array [i] >= MAX, since array [i] <= array [j] <= array [k].
+         * We can stop searching if we either have a winning triplet (duh), or
+         * if 3 * array [i] >= MAX, since array [i] <= array [j] <= array [k].
          * For a given i, we can stop searching for a pair j, k when
          * array [i] + 2 * array [j] >= MAX, for the same reason.
          */
