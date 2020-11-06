@@ -36,7 +36,7 @@ my $MIN = 1;
 my $MAX = 2;
 
 #
-# Find the largest number in $array which is smaller $target,
+# Find the largest number in $array which is smaller than $target,
 # with index k, $min <= k < $max, or undef if there is not such a number.
 #
 sub binsearch ($array, $target, $min = 0, $max = @$array) {
