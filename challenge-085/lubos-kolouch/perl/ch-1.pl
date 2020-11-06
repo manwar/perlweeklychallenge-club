@@ -20,18 +20,15 @@ use Math::Combinatorics;
 sub is_triplet_existing {
 	my $in_arr = shift;
 
-	# let's sort the array first
-	my @sorted_arr = sort {$a <=> $b}  @$in_arr;
-
 	# we can exclude any numbers greater than 2, the upper limit
-	@sorted_arr = grep { $_ < 2 } @sorted_arr;
+	my @limited_arr = grep { $_ < 2 } @$in_arr;
 
 	# exit if we don't have at least a triplet left
-	return 0 if scalar @sorted_arr < 3;
+	return 0 if scalar @limited_arr < 3;
 
 	# Create a generator of combinations
 	my $combinat = Math::Combinatorics->new(count => 3,
-                                        	data => [@sorted_arr],
+                                        	data => [@limited_arr],
                                        	);
 
 	# Loop throug the combinator, exit if found a valid combination
