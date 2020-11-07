@@ -15,6 +15,6 @@ multi MAIN (Bool :$test!) {
     done-testing;
 }
 
-multi MAIN (**@r) {
+multi MAIN (*@r) {
     say +so triplet-sum @r
 }
