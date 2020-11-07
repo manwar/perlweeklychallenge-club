@@ -1,24 +1,27 @@
 {
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      },
-      "type" : "category"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
       }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-11-07 21:17:32 GMT"
    },
    "series" : [
       {
+         "dataLabels" : {
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "y" : 10,
+            "enabled" : "true"
+         },
          "name" : "Contributions",
          "data" : [
             [
@@ -27,35 +30,32 @@
             ],
             [
                "Perl",
-               3750
+               3752
             ],
             [
                "Raku",
                2400
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true"
-         }
+         ]
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   "subtitle" : {
+      "text" : "Last updated at 2020-11-07 21:21:38 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "legend" : {
       "enabled" : "false"
