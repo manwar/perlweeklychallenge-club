@@ -1,0 +1,10 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@R where @R.elems > 0 && all(@R) > 0);
+
+say + triplet-sum(@numbers);
+
+sub triplet-sum (@numbers)
+{
+  so 1 < any(@numbers.combinations(3)>>.sum) < 2;
+}
