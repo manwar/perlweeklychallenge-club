@@ -24,10 +24,11 @@
 (defvar *max-power-factor* (isqrt *target*))
 
 (loop for a from *max-power-factor* above 1
-      do(loop for b from (floor (log *target* a)) above 1
-              do(let ((c (expt a b)))
-                  (when (= c *target*)
-                    (format t "1 as ~d^~d = ~d~%" a b *target*)
-                    (quit)))))
+      do(let* ((b (floor (log *target* a)))
+               (c (expt a b)))
+          (when (= c *target*) ;; problem with log precision
+                               ;; need to check directly.
+            (format t "1 as ~d^~d = ~d~%" a b *target*)
+            (quit))))
 
 (format t "0")
