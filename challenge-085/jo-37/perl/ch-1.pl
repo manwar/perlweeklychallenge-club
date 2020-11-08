@@ -242,10 +242,10 @@ is triplet_sum(1.2, 0.4, 0.1, 2.5), T(), 'Example 1';
 is triplet_sum(0.2, 1.5, 0.9, 1.1), F(), 'Example 2';
 is triplet_sum(0.5, 1.1, 0.3, 0.7), T(), 'Example 3';
 
-is triplet_sum(0.1, 0.2, 0.3, 1.1), T(), 'Case 1';
-is triplet_sum(0.3, 0.4, 0.5, 0.6), T(), 'Case 2';
-is triplet_sum(0.2, 0.3, 0.4, 0.83), T(), 'Case 3';
-is triplet_sum(0.55, 0.60, 0.65, 0.83), T(), 'Case 4';
+is triplet_sum(0.1, 0.2, 0.6, 1.4), T(), 'Case 1';
+is triplet_sum(0.1, 0.2, 0.4, 0.6), T(), 'Case 2';
+is triplet_sum(0.1, 0.15, 0.4, 0.7), T(), 'Case 3';
+is triplet_sum(0.55, 0.6, 0.7, 0.8), T(), 'Case 4';
 
 # A carefully crafted, very rare case where the second reduce step
 # actually modifies the list:
