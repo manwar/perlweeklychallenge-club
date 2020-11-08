@@ -12,11 +12,15 @@ opts_spec(
         default(0),
         longflags([number])]
     ]).
-    
+
+/*
+    Ok, I'll admit, this is a pretty silly use of clpfd when
+    a simple logarithm calculation would do the job! Still clpfd 
+    is more fun.
+*/    
 ch_2(N) :-
-    N0 is N - 1,
-    A in 0..N0,    
-    B in 1..N0,
+    A in 0 .. N,    
+    B in 1 .. N,
     N #= A ^ B,
     label([A,B]),
     writeln(1).
