@@ -19,8 +19,9 @@ opts_spec(
     is more fun.
 */    
 ch_2(N) :-
-    A in 0 .. N,    
-    B in 1 .. N,
+    N0 is N - 1,
+    A in 0 .. N0,    
+    B in 1 .. N0,
     N #= A ^ B,
     label([A,B]),
     writeln(1).
