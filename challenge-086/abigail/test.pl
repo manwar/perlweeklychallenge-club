@@ -54,7 +54,7 @@ my $perl_exe = $languages {Perl} {exe};
 foreach my $challenge (1, 2) {
     my ($dbh, $query, $tables_info);   # Only for SQL tests.
 
-    my @inputs = <input-$challenge-*> or next;
+    my @inputs = <t/input-$challenge-*> or next;
     subtest "Challenge $challenge" => sub {
         foreach my $language (sort keys %languages) {
             my $info     =   $languages {$language};
