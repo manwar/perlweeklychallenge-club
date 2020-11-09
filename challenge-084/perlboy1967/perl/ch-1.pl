@@ -20,7 +20,7 @@ die "Please give signed 32 bits integer (- 2^31 <= X <= 2^31 - 1)"
           $1 <=  2**31-1 
   );
 
-my $O = sprintf('%s%s', $2, scalar reverse $3);
+my $O = sprintf('%s%s', $2 eq '-' ? '' : '-', scalar reverse $3);
 
 printf "Input: %d\n", $N;
 printf "Output: %d\n", $O;
