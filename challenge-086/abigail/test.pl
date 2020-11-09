@@ -158,6 +158,12 @@ sub init_sql ($query_file, $tables_file) {
             }
         }
     }
+    #
+    # Does the query have place holders?
+    #
+    if ($query =~ /\?/) {
+        push @info => ["Placeholder"];
+    }
 
     my $dbh = DBI:: -> connect ("dbi:SQLite:dbname=:memory:", "", "",
                                 {RaiseError   =>  1,
@@ -187,11 +193,21 @@ sub test_sql ($dbh, $query, $tables_info, $input) {
 
   TEST:
     while (@input >= @$tables_info) {
+        my $real_query = $query;
         foreach my $table_info (@$tables_info) {
             my ($table, @fields) = @$table_info;
             my $input            = shift @input;
             my @values           = split ' ' => $input;
-            last TEST if @values < @fields;
+            last TEST if @values < @fields && $table ne "Placeholder";
+
+            #
+            # Handle place holder queries
+            #
+            if ($table eq "Placeholder") {
+                $real_query =~ s/\?/shift @values/eg;
+                next;
+            }
+
             #
             # Clear the table
             #
@@ -209,16 +225,17 @@ sub test_sql ($dbh, $query, $tables_info, $input) {
             --
 
             $dbh -> do ($insert, undef, @values);
-
-            #
-            # Run the query. If we have multiple results, join columns
-            # by spaces, and rows by newlines.
-            #
-            my $result = $dbh -> selectall_arrayref ($query);
-
-            $output .= join "\n" => map {join " " => @$_} @$result;
-            $output .= "\n";
         }
+
+
+        #
+        # Run the query. If we have multiple results, join columns
+        # by spaces, and rows by newlines.
+        #
+        my $result = $dbh -> selectall_arrayref ($real_query);
+
+        $output .= join "\n" => map {join " " => @$_} @$result;
+        $output .= "\n";
     }
 
     $output;
