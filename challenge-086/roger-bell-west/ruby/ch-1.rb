@@ -12,14 +12,6 @@ def pti(n,a)
   return 0
 end
 
-#def pti(n,a):
-#    ns=set(n)
-#    for x in ns:
-#        y=x+a
-#        if y in ns:
-#            return 1
-#    return 0
-
 require 'test/unit'
 
 class TestPti < Test::Unit::TestCase
