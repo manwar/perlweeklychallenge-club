@@ -19,7 +19,7 @@ sub pair-diff($A, @N) {
     my $b = bag @N;
 
     if $A == 0 {
-        return $b.values.first(* > 1);
+        return +$b.values.first(* > 1).so;
     }
 
     for $b.keys -> $k {
