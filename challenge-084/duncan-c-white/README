@@ -1,54 +1,91 @@
-Task 1: "Words Length
+Task 1: "Reverse Integer
 
-You are given a string $S with 3 or more words.
+You are given an integer $N.
 
-Write a script to find the length of the string except the first and last words ignoring whitespace.
+Write a script to reverse the given integer and print the result. Print
+0 if the result doesn't fit in 32-bit signed integer.
 
-Example 1:
-	Input: $S = "The Weekly Challenge"
-	Output: 6
-
-Example 2:
-	Input: $S = "The purpose of our lives is to be happy"
- 	Output: 23
-	ME: WRONG! length(purpose of our lives is to be)==29
-
-My notes: simple, clearly defined: use the power of regexes.
-
-
-Task 2: "Flip Array
-
-You are given an array @A of positive numbers.
-
-Write a script to flip the sign of some members of the given array so
-that the sum of the all members is minimum non-negative.
-
-Given an array of positive elements, you have to flip the sign of some
-of its elements such that the resultant sum of the elements of array
-should be minimum non-negative(as close to zero as possible). Return
-the minimum no. of elements whose sign needs to be flipped such that
-the resultant sum is minimum non-negative.
+The number 2,147,483,647 is the maximum positive value for a 32-bit
+signed binary integer in computing.
 
 Example 1:
-	Input: @A = (3, 10, 8)
-	Output: 1
 
-Explanation:
-
-Flipping the sign of just one element 10 gives the result 1 i.e. (3) +
-(-10) + (8) = 1
+	Input: 1234
+	Output: 4321
 
 Example 2:
-	Input: @A = (12, 2, 10)
-	Output: 1
+
+	Input: -1234
+	Output: -4321
+
+Example 3:
+
+	Input: 1231230512
+	Output: 0
+
+
+My notes: simple, clearly defined: only tricky bit is the overflow detection
+as Perl **doesn't** use 32bit integers.
+
+
+Task 2: "Find Square
+
+You are given a binary matrix of size m x n (all elements are 1 or 0).
+
+Write a script to find the count of squares having all four corners set as 1.
+
+Example 1:
+
+Input: [ 0 1 0 1 ]
+       [ 0 0 1 0 ]
+       [ 1 1 0 1 ]
+       [ 1 0 0 1 ]
+
+Output: 1
 
 Explanation:
+	There is one square (3x3) in the given matrix with four corners
+	as 1 starts at r=1;c=2.
 
-Flipping the sign of just one element 12 gives the result 0 i.e. (-12) +
-(2) + (10) = 0
+	[ 1 0 1 ]
+	[ 0 1 0 ]
+	[ 1 0 1 ]
 
+Example 2:
 
-My notes: clearly defined, but how to go about this one? several
-possible approaches.  brute force: each element may either be
-negated or not; try all combinations:-)  not very elegant, but does
-the job..
+Input: [ 1 1 0 1 ]
+       [ 1 1 0 0 ]
+       [ 0 1 1 1 ]
+       [ 1 0 1 1 ]
+
+Output: 4
+
+Explanation:
+	There is one square (4x4) in the given matrix with four corners
+	as 1 starts at r=1;c=1.
+	There is one square (3x3) in the given matrix with four corners as 1
+	starts at r=1;c=2.
+	There are two squares (2x2) in the given matrix with four corners as
+	1. First starts at r=1;c=1 and second starts at r=3;c=3.
+
+Example 3:
+
+Input: [ 0 1 0 1 ]
+       [ 1 0 1 0 ]
+       [ 0 1 0 0 ]
+       [ 1 0 0 1 ]
+
+Output: 0
+
+My notes: clearly defined, seems straightforward.
+
+Have to define the Input format: CSV rows on command line so example 3 is:
+./ch-2.pl 0,1,0,1 1,0,1,0 0,1,0,0 1,0,0,1
+
+Initially, I found all RECTANGLES inside the matrix, then rejected those that
+weren't SQUARES - before ever checking whether the corner elements were all 1.
+Find that in ch-2-firstattempt.pl
+
+But then I improved that, by directly finding all SQUARES inside the
+matrix, then checked whether their corner elements were all 1.
+This reduces 4 nested loops to 3..

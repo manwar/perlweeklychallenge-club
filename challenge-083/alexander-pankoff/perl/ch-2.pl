@@ -7,11 +7,15 @@ use autodie;
 use feature qw(say signatures);
 no warnings 'experimental::signatures';
 
-use Carp qw(croak);
 use List::Util qw(any first sum0);
 use Scalar::Util qw(looks_like_number);
 
 use Pod::Usage;
+
+use FindBin;
+use lib File::Spec->join( $FindBin::RealBin, 'lib' );
+
+use Combinations qw(combinations);
 
 pod2usage(
     -message => "$0: Expects a list of positive numbers",
@@ -36,25 +40,6 @@ sub flip_array(@numbers) {
     }
 
     return 0;
-}
-
-# returns possible combinations of $length elements from @pool.
-sub combinations ( $count, @pool ) {
-    croak "cannot build combinations with $count elements from a list of "
-      . scalar(@pool)
-      . " elements"
-      if $count > @pool;
-    return ()                 if $count == 0;
-    return map { [$_] } @pool if $count == 1;
-
-    my @combinations;
-    while ( @pool && $count <= @pool ) {
-        my $elem             = shift @pool;
-        my @sub_combinations = combinations( $count - 1, @pool );
-        push @combinations, map { [ $elem, @$_, ] } @sub_combinations;
-    }
-
-    return @combinations;
 }
 
 =pod

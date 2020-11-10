@@ -19,7 +19,7 @@ sub main (@) {
     die "You must specify at least one row\n" if scalar(@array) == 0;
     foreach my $row ( 1 .. $#array ) {
         die "Each row must have the same number of colums\n"
-          if scalar( @{ $array[0] } ) != scalar( @{ $array[1] } );
+          if scalar( @{ $array[0] } ) != scalar( @{ $array[$row] } );
     }
 
     my $rows = scalar(@array);
