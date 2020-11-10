@@ -11,10 +11,15 @@ use experimental 'lexical_subs';
 
 
 #
-# Read the puzzle; set unsolved squares to 0.
-# This read any sized sudoku.
+# Read the puzzle; we're liberal in what we accept:
+#    - A sequence of one or more underscores is a square we must solve
+#    - Capital letters 'A' .. 'Z' map to 10 .. 35
+#    - Numbers are taken 'as is'.
 #
-my @sudoku   = map {[map {/_/ ? 0 : $_} /\b(?:_|[1-9][0-9]*)\b/g]} <>;
+my @sudoku   = map {[map {/_/     ? 0
+                        : /[A-Z]/ ? 10 + ord ($_) - ord ('A')
+                        :           $_}
+                      /\b(?:_+|[1-9][0-9]*|[A-Z])\b/g]} <>;
 my $SIZE     = @sudoku;
 my @INDICES  = (0 .. $SIZE - 1);
 my @ELEMENTS = (1 .. $SIZE);
