@@ -12,20 +12,24 @@ use experimental 'lexical_subs';
 
 #
 # Read the puzzle; set unsolved squares to 0.
+# This read any sized sudoku.
 #
-my @sudoku   = map {[map {/_/ ? 0 : $_} /[_1-9]/g]} <>;
+my @sudoku   = map {[map {/_/ ? 0 : $_} /\b(?:_|[1-9][0-9]*)\b/g]} <>;
 my $SIZE     = @sudoku;
 my @INDICES  = (0 .. $SIZE - 1);
 my @ELEMENTS = (1 .. $SIZE);
 my $sqrtSIZE =  sqrt $SIZE;
 
 #
-# Sanity check
+# Sanity checks
 #
 die "Sudoku width not a square\n"
      unless int (sqrt $SIZE) ** 2 == $SIZE;
 die "All rows should be the same length as the columns"
      if grep {@$_ != $SIZE} @sudoku;
+foreach my $row (@sudoku) {
+    die "Elements should not exceed $SIZE" if grep {$_ > $SIZE} @$row;
+}
 
 #
 # Given a square with coordinates ($x, $y), return all the
