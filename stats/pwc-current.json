@@ -1,6 +1,9 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-11-10 06:17:44 GMT"
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "series" : [
       {
@@ -8,26 +11,36 @@
          "name" : "Perl Weekly Challenge - 086",
          "data" : [
             {
-               "y" : 1,
                "drilldown" : "Andrew Shitov",
+               "y" : 1,
                "name" : "Andrew Shitov"
+            },
+            {
+               "y" : 2,
+               "name" : "Simon Green",
+               "drilldown" : "Simon Green"
             }
          ]
       }
    ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "xAxis" : {
       "type" : "category"
    },
    "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2020-11-10 06:25:33 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 086"
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
@@ -38,26 +51,32 @@
          }
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "name" : "Andrew Shitov",
             "id" : "Andrew Shitov"
+         },
+         {
+            "name" : "Simon Green",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Simon Green"
          }
       ]
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
