@@ -1,8 +1,7 @@
 #! /usr/bin/raku
 
-sub power-of-ints($num where * > 0) {
-    my $base := (2 .. $num div 2).first: $num %% * or return False;
-    log($num, $base).round(1/10) == log($num, $base).round
+sub power-of-ints($n where * > 0) {
+    +((2 .. $n div 2).first: $n %% * andthen $n == $_ ** log($n, $_).round)
 }
 
 if (@*ARGS.elems > 0) {
@@ -25,5 +24,9 @@ ok !power-of-ints(4394), '13^3 * 2';
 ok !power-of-ints(100 ** 100), 'Big number';
 ok !power-of-ints(199999), 'Big prime';
 ok  power-of-ints(199999 ** 20), 'Big prime base';
+
+ok !power-of-ints(2 ** 1000 - 4), 'Almost a**b number 1';
+ok !power-of-ints(2 ** 1000 + 4), 'Almost a**b number 2';
+ok  power-of-ints(2 ** 1000), '2 ** 1000';
 
 done-testing;

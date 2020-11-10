@@ -85,7 +85,7 @@ sub read_input($file) {
 
 =head1 NAME
 
-wk-085 ch-2 - Find Squares
+wk-084 ch-2 - Find Squares
 
 =head1 SYNOPSIS
 
