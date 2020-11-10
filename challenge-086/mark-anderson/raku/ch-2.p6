@@ -34,7 +34,6 @@ sub solve(@grid, $row is copy, $col is copy) {
     for 1..9 -> $num {
         if is-safe(@grid, $row, $col, $num) {
             @grid[$row][$col] = $num;
-
             return True if solve(@grid, $row, $col+1); 
         }
 
