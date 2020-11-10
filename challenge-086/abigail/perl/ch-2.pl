@@ -90,7 +90,7 @@ foreach my $x (@INDICES) {
 }
 
 
-
+no warnings 'recursion';
 sub solve ($solved, $unsolved) {
     #
     # If there are no unsolved squares, we return $solved.
