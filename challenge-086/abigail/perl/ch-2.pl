@@ -158,11 +158,12 @@ sub solve ($solved, $unsolved) {
 #
 if (my $r = solve ($solved, $unsolved)) {
     foreach my $x (@INDICES) {
-        print "[ ";
-        foreach my $y (@INDICES) {
-            printf "%d ", $$r {$x, $y};
+        foreach my $i (keys @INDICES) {
+            my $y = $INDICES [$i];
+            print " " if $i;
+            print $$r {$x, $y};
         }
-        print "]\n";
+        print "\n";
     }
 }
 else {
