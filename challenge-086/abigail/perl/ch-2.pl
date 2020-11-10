@@ -156,12 +156,13 @@ sub solve ($solved, $unsolved) {
 #
 # Print the solution, if any.
 #
+my $w = length $SIZE;   # Width of numbers to be printed.
 if (my $r = solve ($solved, $unsolved)) {
     foreach my $x (@INDICES) {
         foreach my $i (keys @INDICES) {
             my $y = $INDICES [$i];
             print " " if $i;
-            print $$r {$x, $y};
+            printf "%${w}d" => $$r {$x, $y};
         }
         print "\n";
     }
