@@ -1,7 +1,30 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2020-11-10 07:19:16 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 086"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
    },
    "legend" : {
@@ -11,87 +34,81 @@
       {
          "data" : [
             {
-               "name" : "Andrew Shitov",
+               "drilldown" : "Andrew Shitov",
                "y" : 1,
-               "drilldown" : "Andrew Shitov"
+               "name" : "Andrew Shitov"
             },
             {
                "y" : 2,
-               "name" : "E. Choroba",
-               "drilldown" : "E. Choroba"
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba"
             },
             {
-               "y" : 1,
                "name" : "Mark Anderson",
+               "y" : 1,
                "drilldown" : "Mark Anderson"
             },
             {
-               "drilldown" : "Philip Hood",
                "name" : "Philip Hood",
-               "y" : 1
+               "y" : 1,
+               "drilldown" : "Philip Hood"
             },
             {
-               "y" : 3,
                "name" : "Roger Bell_West",
+               "y" : 3,
                "drilldown" : "Roger Bell_West"
             },
             {
                "drilldown" : "Simon Green",
-               "name" : "Simon Green",
-               "y" : 2
+               "y" : 2,
+               "name" : "Simon Green"
             },
             {
-               "drilldown" : "Stuart Little",
                "y" : 2,
+               "drilldown" : "Stuart Little",
                "name" : "Stuart Little"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Walt Mankowski",
+               "name" : "Walt Mankowski"
             }
          ],
-         "name" : "Perl Weekly Challenge - 086",
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 086"
       }
    ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 086"
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
+            "id" : "Andrew Shitov",
             "name" : "Andrew Shitov"
          },
          {
-            "name" : "E. Choroba",
             "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "E. Choroba"
          },
          {
-            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "id" : "Mark Anderson"
+            "name" : "Mark Anderson"
          },
          {
             "name" : "Philip Hood",
@@ -118,7 +135,7 @@
             "name" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Green",
+            "id" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -129,33 +146,31 @@
                   1
                ]
             ],
-            "id" : "Simon Green"
+            "name" : "Simon Green"
          },
          {
-            "name" : "Stuart Little",
+            "id" : "Stuart Little",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Stuart Little"
+            "name" : "Stuart Little"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Walt Mankowski",
+            "name" : "Walt Mankowski"
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
    "chart" : {
       "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2020-11-10 07:13:02 GMT"
    }
 }
