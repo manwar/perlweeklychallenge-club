@@ -20,9 +20,7 @@ if solve(@grid, 0, 0) {
 }
 
 sub solve(@grid, $row is copy, $col is copy) {
-    if $row == 8 and $col == 9 {
-        return True;
-    }
+    return True if $row == 8 and $col == 9;
 
     if $col == 9 {
         $row++;
@@ -37,9 +35,7 @@ sub solve(@grid, $row is copy, $col is copy) {
         if is-safe(@grid, $row, $col, $num) {
             @grid[$row][$col] = $num;
 
-            if solve(@grid, $row, $col+1) {
-                return True;
-            }
+            return True if solve(@grid, $row, $col+1); 
         }
 
         @grid[$row][$col] = "_";
