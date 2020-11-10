@@ -1,19 +1,38 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "legend" : {
       "enabled" : 0
    },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 086",
+         "colorByPoint" : 1,
          "data" : [
             {
                "drilldown" : "Andrew Shitov",
-               "y" : 1,
-               "name" : "Andrew Shitov"
+               "name" : "Andrew Shitov",
+               "y" : 1
+            },
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 1
             },
             {
                "y" : 2,
@@ -23,48 +42,32 @@
          ]
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-11-10 06:25:33 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 086"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
+            "name" : "Andrew Shitov",
             "id" : "Andrew Shitov"
          },
          {
-            "name" : "Simon Green",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -75,8 +78,20 @@
                   1
                ]
             ],
+            "name" : "Simon Green",
             "id" : "Simon Green"
          }
       ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2020-11-10 06:32:14 GMT"
    }
 }
