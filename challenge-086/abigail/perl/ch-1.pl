@@ -25,47 +25,35 @@ use experimental 'lexical_subs';
 # pairs of numbers from @N, and see whether their difference
 # equals $A. But that leads to a quadractic algorithm.
 #
-# We can also solve this in O (N log N) time. Wlog, assume $A
-# is non-negative (which we can enforce by doing $A = abs $A).
-# We first sort @N. Then we iterate over @N, and for each
-# $N [i], we use a binary search to find a $N [j], j > i
-# such that $N [j] = $A + $N [i];
+# But we can do this in linear time. For each element $x in @N,
+# check with $A - $x exists in @N. Special care has to be taken
+# in case $A - $x == $x: we have to make sure $x then appears 
+# at least twice in @N.
 #
-# We will be using a similar binary search routine as we
-# used in week 085.
+# If we store the elements of @N in a hash, checking whether
+# number exists in @N can be done in O (1) expected time.
 #
-
-#
-# Return true if $array contain $target, with index >= $min,
-# and index < $max.
-#
-sub binsearch ($array, $target, $min = 0, $max = @$array) {
-    my $mid = int (($min + $max) / 2);
-
-    return $min >= $max              ? 0
-         : $$array [$mid] == $target ? 1
-         : $$array [$mid] >  $target ?
-                     binsearch ($array, $target, $min,     $mid)
-         :           binsearch ($array, $target, $mid + 1, $max)
-}
 
 
 LINE: while (!eof ()) {
     #
-    # Read data
+    # Read data:
+    #   odd  lines are the numbers in @N
+    #   even lines are the differences ($A).
     #
-    my $data   = [sort {$a <=> $b} <> =~ /[0-9]+/g];
-    my $target =  abs <>;
+    my %data;
+    $data {$_} ++ for <> =~ /[0-9]+/g;
+    last if eof ();
+    my $diff = <>;
 
-    #
-    # Iterate over the data, use binary search for a match.
-    #
-    foreach my $i (keys @$data) {
-        if (binsearch $data, $target + $$data [$i], $i + 1) {
+    foreach my $number (keys %data) {
+        my $target = $number - $diff;
+        if ($data {$target} && ($target != $number || $data {$number} > 1)) {
             say 1;
             next LINE;
         }
     }
+
     say 0;
 }
 
