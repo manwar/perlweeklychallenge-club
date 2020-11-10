@@ -22,3 +22,16 @@ while (my $c = $iter->next) {
 
 say $res;
 ```
+
+# Task #2: Sudoku Puzzle
+
+In this task we need to solve a Sudoku puzzle. I used
+[Games::Sudoku::Lite](https://metacpan.org/pod/Games::Sudoku::Lite) to
+solve the puzzle. Now, some might argue that this is cheating, but I
+don't think so. If it's OK to use a combinatorics module to solve task
+1, surely it's also OK to use a Sudoku module to solve task 2!
+
+In fact that's the same conclusion I reached when a Sudoku problem
+came up in [Project Euler](https://projecteuler.net/problem=96). I
+just had to tweak my parsing code a bit from the code I wrote back
+then and I was good to go.
