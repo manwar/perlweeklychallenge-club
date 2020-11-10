@@ -13,7 +13,7 @@ my @sudoku := < _ _ _ 2 6 _ 7 _ 1 >,
               < 7 _ 3 _ 1 8 _ _ _ >;
 
 my @grid = @sudoku.map(*.Array);
-$_.map({ $_ = +$_ if $_ ~~ /\d/ }) for @grid;
+$_.map({ $_ = +$_ if $_ ~~ UInt }) for @grid;
 
 if solve(@grid, 0, 0) {
     .say for @grid;
