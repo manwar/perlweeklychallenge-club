@@ -19,7 +19,8 @@ use experimental 'lexical_subs';
 my @sudoku   = map {[map {/_/     ? 0
                         : /[A-Z]/ ? 10 + ord ($_) - ord ('A')
                         :           $_}
-                      /\b(?:_+|[1-9][0-9]*|[A-Z])\b/g]} <>;
+                      /\b(?:_+|[1-9][0-9]*|[A-Z])\b/g]}
+               grep {/[_1-9A-Z]/} <>;
 my $SIZE     = @sudoku;
 my @INDICES  = (0 .. $SIZE - 1);
 my @ELEMENTS = (1 .. $SIZE);
