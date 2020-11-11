@@ -2,27 +2,34 @@
    "legend" : {
       "enabled" : 0
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
    "drilldown" : {
       "series" : [
          {
             "id" : "Andrew Shitov",
+            "name" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ],
-            "name" : "Andrew Shitov"
-         },
-         {
-            "id" : "Dave Jacoby",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "name" : "Dave Jacoby"
+            ]
          },
          {
             "data" : [
@@ -31,37 +38,47 @@
                   2
                ]
             ],
-            "id" : "E. Choroba",
-            "name" : "E. Choroba"
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby"
          },
          {
-            "id" : "Feng Chang",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "E. Choroba",
+            "id" : "E. Choroba"
+         },
+         {
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Feng Chang"
+            "name" : "Feng Chang",
+            "id" : "Feng Chang"
          },
          {
             "data" : [
                [
                   "Raku",
-                  1
+                  2
                ]
             ],
             "id" : "Mark Anderson",
             "name" : "Mark Anderson"
          },
          {
-            "name" : "Philip Hood",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
+            "name" : "Philip Hood",
             "id" : "Philip Hood"
          },
          {
@@ -79,8 +96,6 @@
             "name" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Green",
-            "id" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -90,7 +105,9 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Simon Green",
+            "id" : "Simon Green"
          },
          {
             "name" : "Stuart Little",
@@ -103,60 +120,34 @@
             ]
          },
          {
+            "id" : "Walt Mankowski",
+            "name" : "Walt Mankowski",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Walt Mankowski",
-            "name" : "Walt Mankowski"
+            ]
          }
       ]
    },
    "chart" : {
       "type" : "column"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2020-11-11 08:05:30 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 086"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 086",
          "data" : [
             {
-               "drilldown" : "Andrew Shitov",
+               "y" : 1,
                "name" : "Andrew Shitov",
-               "y" : 1
+               "drilldown" : "Andrew Shitov"
             },
             {
-               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
                "y" : 2,
-               "name" : "Dave Jacoby"
+               "drilldown" : "Dave Jacoby"
             },
             {
                "y" : 2,
@@ -164,43 +155,52 @@
                "drilldown" : "E. Choroba"
             },
             {
-               "drilldown" : "Feng Chang",
+               "y" : 2,
                "name" : "Feng Chang",
-               "y" : 2
+               "drilldown" : "Feng Chang"
             },
             {
                "drilldown" : "Mark Anderson",
-               "y" : 1,
-               "name" : "Mark Anderson"
+               "name" : "Mark Anderson",
+               "y" : 2
             },
             {
-               "name" : "Philip Hood",
                "y" : 1,
+               "name" : "Philip Hood",
                "drilldown" : "Philip Hood"
             },
             {
+               "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West",
-               "y" : 3,
-               "drilldown" : "Roger Bell_West"
+               "y" : 3
             },
             {
-               "name" : "Simon Green",
                "y" : 2,
+               "name" : "Simon Green",
                "drilldown" : "Simon Green"
             },
             {
-               "name" : "Stuart Little",
                "y" : 2,
+               "name" : "Stuart Little",
                "drilldown" : "Stuart Little"
             },
             {
-               "name" : "Walt Mankowski",
                "y" : 2,
+               "name" : "Walt Mankowski",
                "drilldown" : "Walt Mankowski"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 086",
-         "colorByPoint" : 1
+         ]
       }
-   ]
+   ],
+   "title" : {
+      "text" : "Perl Weekly Challenge - 086"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2020-11-11 08:23:34 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   }
 }
