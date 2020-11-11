@@ -180,7 +180,8 @@ foreach my $x (@INDICES) {
         #
         my $set = (1 << ($clue_count)) - 1;
         foreach my $can_see (sees ($x, $y)) {
-            $set &= ~(1 << ($sudoku [$$can_see [0]] [$$can_see [1]] - 1));
+            my ($see_x, $see_y) = @$can_see;
+            $set &= ~(1 << ($sudoku [$see_x] [$see_y] - 1));
         }
 
         $$unsolved {$x, $y} = $set;
