@@ -70,6 +70,14 @@ die "Too many different clues!" if $clue_count > $SIZE;
 die "Not enough different clues" if $clue_count < $SIZE - 1;
 
 #
+# Can't have a size which exceeds the number of bits in an integer.
+# Typically, bit size will be 32, 64 or 128.
+# This isn't much of a restriction, as a typical 32x32 sudoku will take
+# a very, very long time to calculate.
+#
+die "Sudoku is too big\n" if $SIZE > length sprintf "%b", ~0;
+
+#
 # We may have to come with a missing clue name. This could be
 # a number, or a letter.
 #     - If there are numbers, but 1 is missing, use 1.
@@ -170,14 +178,15 @@ foreach my $x (@INDICES) {
         # Not solved. Out of the elements, record the numbers
         # which cannot be seen from this square.
         #
-        my %set = map {$_ => 1} @ELEMENTS;
+        my $set = (1 << ($clue_count)) - 1;
         foreach my $can_see (sees ($x, $y)) {
-            delete $set {$sudoku [$$can_see [0]] [$$can_see [1]]};
+            $set &= ~(1 << ($sudoku [$$can_see [0]] [$$can_see [1]] - 1));
         }
 
-        $$unsolved {$x, $y} = [keys %set];
+        $$unsolved {$x, $y} = $set;
     }
 }
+
 
 
 no warnings 'recursion';
@@ -188,16 +197,23 @@ sub solve ($solved, $unsolved) {
     return $solved unless keys %$unsolved;
 
     #
-    # Find the (a) square which the least possibilities
+    # Find the (a) square which the least possibilities; this
+    # means finding the set with the least amount of bits set.
     #
-    my ($key) = sort {@{$$unsolved {$a}} <=> @{$$unsolved {$b}} ||
-                                    $a   cmp               $b} keys %$unsolved;
+    my ($key) = map  {$$_ [0]}
+                sort {$$a [1] <=> $$b [1]}
+                map  {[$_, sprintf ("%b", $$unsolved {$_}) =~ y/1/1/]}
+                keys %$unsolved;
     my ($x, $y) = split $; => $key;
+    my $possibilities = $$unsolved {$key};
 
     #
-    # Try each possibility
+    # Guess each possibility for this key.
     #
-    foreach my $guess (@{$$unsolved {$key}}) {
+    foreach my $guess (@ELEMENTS) {
+        my $mask = 1 << ($guess - 1);
+        next unless $possibilities & $mask;
+
         #
         # Create new solved and unsolved structures
         #
@@ -207,10 +223,7 @@ sub solve ($solved, $unsolved) {
         #
         # Copy unsolved
         #
-        my $new_unsolved;
-        foreach my $key (keys %$unsolved) {
-            $$new_unsolved {$key} = [@{$$unsolved {$key}}];
-        }
+        my $new_unsolved = {%$unsolved};
 
         #
         # Delete our guess
@@ -223,9 +236,9 @@ sub solve ($solved, $unsolved) {
         #
         foreach my $can_see (sees ($x, $y)) {
             my ($x, $y) = @$can_see;
-            $$new_unsolved {$x, $y} = [grep {$_ != $guess}
-                                           @{$$new_unsolved {$x, $y}}] 
-                      if $$new_unsolved {$x, $y};
+            if ($$new_unsolved {$x, $y}) {
+                $$new_unsolved {$x, $y} &= ~ $mask;
+            }
         }
 
         #
