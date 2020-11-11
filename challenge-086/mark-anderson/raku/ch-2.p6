@@ -51,9 +51,7 @@ sub is-safe(@grid, $row, $col, $num) {
     my $r = $row - $row mod 3;
     my $c = $col - $col mod 3;
 
-    return False if $num (elem) (@grid[$r  ][$c..$c+2],
-                                 @grid[$r+1][$c..$c+2],
-                                 @grid[$r+2][$c..$c+2]).flat;
+    return False if $num (elem) @grid[$r..$r+2].map(*[$c..$c+2]).flat;
 
     return True;
 }
