@@ -12,15 +12,31 @@ use experimental 'lexical_subs';
 
 #
 # Read the puzzle; we're liberal in what we accept:
-#    - A sequence of one or more underscores is a square we must solve
-#    - Capital letters 'A' .. 'Z' map to 10 .. 35
-#    - Numbers are taken 'as is'.
+#    - A sequence of one or more underscores is a square we must solve.
+#    - Clues can be positive integers, or (single) ASCII capital letters.
 #
-my @sudoku   = map {[map {/_/     ? 0
-                        : /[A-Z]/ ? 10 + ord ($_) - ord ('A')
-                        :           $_}
-                      /\b(?:_+|[1-9][0-9]*|[A-Z])\b/g]}
-               grep {/[_1-9A-Z]/} <>;
+my $clue_count = 0;
+my %clues;
+my @sudoku;
+while (<>) {
+    next unless /[_1-9A-Z]/;  # Ignore lines without clues.
+    my @row;
+    foreach my $clue (/\b(?:_+|[1-9][0-9]*|[A-Z])\b/g) {
+        my $value;
+        if ($clue =~ /_/) {
+            $value = 0;
+        }
+        else {
+            #
+            # Map the clue to a number.
+            # 
+            $value = $clues {$clue} ||= ++ $clue_count;
+        }
+        push @row => $value;
+    }
+    push @sudoku => \@row;
+}
+
 my $SIZE     = @sudoku;
 my @INDICES  = (0 .. $SIZE - 1);
 my @ELEMENTS = (1 .. $SIZE);
@@ -42,8 +58,36 @@ my ($block_x, $block_y) = do {
 #
 die "All rows should be the same length as the columns"
      if grep {@$_ != $SIZE} @sudoku;
-foreach my $row (@sudoku) {
-    die "Elements should not exceed $SIZE" if grep {$_ > $SIZE} @$row;
+#
+# We cannot have more different clues than the size of the sudoku.
+#
+die "Too many different clues!" if $clue_count > $SIZE;
+
+#
+# If we have more than one clue less than $SIZE, the solution
+# cannot be unique.
+#
+die "Not enough different clues" if $clue_count < $SIZE - 1;
+
+#
+# We may have to come with a missing clue name. This could be
+# a number, or a letter. If there are letters, we need the next
+# letter after the last one. Else, we need the first unused number.
+#
+if ($clue_count < $SIZE) {
+    my $clue;
+    if (grep {/[A-Z]/} keys %clues) {
+        my ($max) = sort {$b cmp $a} grep {/[A-Z]/} keys %clues;
+        #
+        # Special case 'Z'
+        #
+        $clue = $max eq 'Z' ? "*" : chr (1 + ord $max);
+    }
+    else {
+        my ($max) = sort {$b <=> $a} keys %clues;
+        $clue = $max + 1;
+    }
+    $clues {$clue} = ++ $clue_count;
 }
 
 #
@@ -166,13 +210,15 @@ sub solve ($solved, $unsolved) {
 #
 # Print the solution, if any.
 #
-my $w = length $SIZE;   # Width of numbers to be printed.
+use List::Util qw [max];
+my $w = max map {length} values %clues;
+my %value2clue = reverse %clues;
 if (my $r = solve ($solved, $unsolved)) {
     foreach my $x (@INDICES) {
         foreach my $i (keys @INDICES) {
             my $y = $INDICES [$i];
             print " " if $i;
-            printf "%${w}d" => $$r {$x, $y};
+            printf "%${w}s" => $value2clue {$$r {$x, $y}};
         }
         print "\n";
     }
