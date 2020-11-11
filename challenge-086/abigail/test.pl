@@ -20,7 +20,8 @@ use DBI;
 
 use Getopt::Long;
 
-GetOptions 'slow'   =>  \my $run_slow_tests,
+GetOptions 'slow'              =>  \my $run_slow_tests,
+           'lang|language=s'   =>  \my @languages,
 ;
 
 
@@ -56,12 +57,15 @@ my %languages = (
 
 my $perl_exe = $languages {Perl} {exe};
 
-foreach my $challenge (1, 2) {
+@languages = sort keys %languages if !@languages;
+my @challenges = @ARGV ? @ARGV : (1, 2);
+
+foreach my $challenge (@challenges) {
     my ($dbh, $query, $tables_info);   # Only for SQL tests.
 
     my @inputs = <t/input-$challenge-*> or next;
     subtest "Challenge $challenge" => sub {
-        foreach my $language (sort keys %languages) {
+        foreach my $language (@languages) {
             my $info     =   $languages {$language};
             my $exe      =   $$info {exe};
             my $ext      =   $$info {ext};
