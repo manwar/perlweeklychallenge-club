@@ -71,22 +71,58 @@ die "Not enough different clues" if $clue_count < $SIZE - 1;
 
 #
 # We may have to come with a missing clue name. This could be
-# a number, or a letter. If there are letters, we need the next
-# letter after the last one. Else, we need the first unused number.
+# a number, or a letter.
+#     - If there are numbers, but 1 is missing, use 1.
+#     - Else, if there are numbers, with a hole, fill in that hole.
+#     - Else, if there are numbers 1 .. $SIZE - 1, but not
+#               $SIZE or higher, use $SIZE.
+#     - Else, if there are letters, but 'A' is missing, use 'A'
+#     - Else, if there are letters, with a hole, fill in that hole.
+#     - Else, if there are letters, use the next letter after the last,
+#             or '*' if the last is 'Z'
+#     - Else, use one more than the highest number.
 #
 if ($clue_count < $SIZE) {
     my $clue;
-    if (grep {/[A-Z]/} keys %clues) {
-        my ($max) = sort {$b cmp $a} grep {/[A-Z]/} keys %clues;
-        #
-        # Special case 'Z'
-        #
-        $clue = $max eq 'Z' ? "*" : chr (1 + ord $max);
+    my @numbers = sort {$a <=> $b} grep {/[0-9]/} keys %clues;
+    my @letters = sort {$a cmp $b} grep {/[A-Z]/} keys %clues;
+
+    if (@numbers) {
+        if ($numbers [0] != 1) {
+            $clue = 1;
+        }
+        else {
+            for (my $i = 0; $i < @numbers - 2; $i ++) {
+                if ($numbers [$i] + 1 != $numbers [$i + 1]) {
+                    $clue = $numbers [$i] + 1;
+                    last;
+                }
+            }
+            if (!$clue && @numbers == $SIZE - 1 &&
+                          $numbers [-1] == $SIZE - 1) {
+                $clue = $SIZE;
+            }
+        }
     }
-    else {
-        my ($max) = sort {$b <=> $a} keys %clues;
-        $clue = $max + 1;
+    if (!$clue && @letters) {
+        if ($letters [0] ne 'A') {
+            $clue = 'A';
+        }
+        else {
+            for (my $i = 0; $i < @letters - 2; $i ++) {
+                if (ord ($letters [$i]) + 1 != ord ($letters [$i + 1])) {
+                    $clue = chr (ord ($letters [$i]) + 1);
+                    last;
+                }
+            }
+            if (!$clue) {
+                $clue = $letters [-1] eq 'Z' ? "*"
+                      : chr (ord ($letters [-1]) + 1);
+            }
+        }
     }
+    $clue //= $numbers [-1] + 1;
+
     $clues {$clue} = ++ $clue_count;
 }
 
