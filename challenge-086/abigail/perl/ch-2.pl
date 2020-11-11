@@ -42,12 +42,12 @@ my @INDICES  = (0 .. $SIZE - 1);
 my @ELEMENTS = (1 .. $SIZE);
 
 #
-# Calculate the block size. For regular shaped sudoku's, this
+# Calculate the box size. For regular shaped sudoku's, this
 # is sqrt ($SIZE) x sqrt ($SIZE). For other sized shaped sudoku's,
-# we find the the nearest values; block will then we wider than
+# we find the the nearest values; box will then we wider than
 # they are high.
 #
-my ($block_x, $block_y) = do {
+my ($box_x, $box_y) = do {
     my $s = int sqrt $SIZE;
     $s -- while $SIZE % $s;
    ($s, $SIZE / $s);
@@ -152,8 +152,8 @@ sub sees ($x, $y) {
                       $i == $x ||                       # Same column
                       $j == $y ||                       # Same row
                                                         # Same box
-                      int ($i / $block_x) == int ($x / $block_x) &&
-                      int ($j / $block_y) == int ($y / $block_y);
+                      int ($i / $box_x) == int ($x / $box_x) &&
+                      int ($j / $box_y) == int ($y / $box_y);
             }
         }
         $out;
