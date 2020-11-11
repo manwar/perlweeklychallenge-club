@@ -23,13 +23,22 @@ my @sudoku   = map {[map {/_/     ? 0
 my $SIZE     = @sudoku;
 my @INDICES  = (0 .. $SIZE - 1);
 my @ELEMENTS = (1 .. $SIZE);
-my $sqrtSIZE =  sqrt $SIZE;
+
+#
+# Calculate the block size. For regular shaped sudoku's, this
+# is sqrt ($SIZE) x sqrt ($SIZE). For other sized shaped sudoku's,
+# we find the the nearest values; block will then we wider than
+# they are high.
+#
+my ($block_x, $block_y) = do {
+    my $s = int sqrt $SIZE;
+    $s -- while $SIZE % $s;
+   ($s, $SIZE / $s);
+};
 
 #
 # Sanity checks
 #
-die "Sudoku width not a square\n"
-     unless int (sqrt $SIZE) ** 2 == $SIZE;
 die "All rows should be the same length as the columns"
      if grep {@$_ != $SIZE} @sudoku;
 foreach my $row (@sudoku) {
@@ -54,8 +63,8 @@ sub sees ($x, $y) {
                       $i == $x ||                       # Same column
                       $j == $y ||                       # Same row
                                                         # Same box
-                      int ($i / $sqrtSIZE) == int ($x / $sqrtSIZE) &&
-                      int ($j / $sqrtSIZE) == int ($y / $sqrtSIZE);
+                      int ($i / $block_x) == int ($x / $block_x) &&
+                      int ($j / $block_y) == int ($y / $block_y);
             }
         }
         $out;
