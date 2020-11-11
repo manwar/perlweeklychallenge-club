@@ -18,6 +18,11 @@ use experimental 'signatures';
 use Test::More;
 use DBI;
 
+use Getopt::Long;
+
+GetOptions 'slow'   =>  \my $run_slow_tests,
+;
+
 
 my %languages = (
     Perl        =>   {
@@ -89,13 +94,28 @@ foreach my $challenge (1, 2) {
 
             subtest $language => sub {
                 foreach my $input (@inputs) {
+                  SKIP: {
                     my $output_exp = ($input =~ s/input/output/r) . ".exp";
                     my $exp        = `cat $output_exp`;
 
                     my $name = $input;
+                    my %pragma;
+
+                    while ($exp =~ s/^\s*#%\s*(.*)\n//) {
+                        my $pragma = $1;
+                        $pragma =~ s/\s+$//;
+                        if (lc $pragma eq "slow") {
+                            $pragma {slow} = 1;
+                            next;
+                        }
+                    }
+
                     if ($exp =~ s/^\s*#\s*(.*)\n//) {
                         $name = $1;
                     }
+
+                    skip "Skipping slow test", 1
+                        if $pragma {slow} && !$run_slow_tests;
 
                     my $got;
                     if ($compiled) {
@@ -111,7 +131,7 @@ foreach my $challenge (1, 2) {
 
                     s/\h+$//gm for $exp, $got;
                     is $got, $exp, $name;
-                }
+                }}
             };
 
             unlink $compiled if $compiled;
