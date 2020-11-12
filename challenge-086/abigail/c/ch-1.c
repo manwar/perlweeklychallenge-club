@@ -55,8 +55,8 @@ int main (void) {
     /* We'll store the numbers in array, which we will reuse for each *
      * line we're processing. We also need to keep track of how much  *
      * memory we have allocated for the array.                        */
-    long * array  = NULL;
-    size_t  buf_size = DEFAULT_BUF_SIZE;
+    long * array    = NULL;
+    size_t buf_size = DEFAULT_BUF_SIZE;
 
     /* The target difference */
     long target;
@@ -73,8 +73,8 @@ int main (void) {
      * even line will be a single integer. We'll do processing
      * after each even line.
      */
-    bool is_even = true;
-    size_t  size = 0;       /* Number of integers in array.     */
+    bool   is_even = true;
+    size_t size    = 0;       /* Number of integers in array.     */
     while ((length = getline (&line, &len, stdin)) != -1) {
         int    offset;
         char * line_ptr = line;
