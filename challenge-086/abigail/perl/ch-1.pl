@@ -44,11 +44,11 @@ LINE: while (!eof ()) {
     my %data;
     $data {$_} ++ for <> =~ /[0-9]+/g;
     last if eof ();
-    my $diff = <>;
+    chomp (my $diff = <>);
 
     foreach my $number (keys %data) {
         my $target = $number - $diff;
-        if ($data {$target} && ($target != $number || $data {$number} > 1)) {
+        if ($data {$target} && ($diff || $data {$number} > 1)) {
             say 1;
             next LINE;
         }
