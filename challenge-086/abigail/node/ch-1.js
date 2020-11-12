@@ -4,7 +4,7 @@
 // empty line to filter out.
 //
 let lines = require      ("fs")
-          . readFileSync (0)               // Read a line.
+          . readFileSync (0)               // Read all.
           . toString     ()                // Turn it into a string.
           . split        ("\n");           // Split on newlines.
 
