@@ -23,7 +23,7 @@
  * is smaller, equal, or larger than the second.
  */
 int cmp (const void * a, const void * b) {
-    int diff = * (int *) a - * (int *) b;
+    long diff = * (long *) a - * (long *) b;
     return  diff < 0 ? -1
          :  diff > 0 ?  1
          :              0;
