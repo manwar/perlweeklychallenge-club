@@ -50,7 +50,6 @@ int main (void) {
     /* Arguments for getline () */
     char *  line    = NULL;
     size_t  len     = 0;
-    ssize_t length  = 0;
 
     /* We'll store the numbers in array, which we will reuse for each *
      * line we're processing. We also need to keep track of how much  *
@@ -75,7 +74,7 @@ int main (void) {
      */
     bool   is_even = true;
     size_t size    = 0;       /* Number of integers in array.     */
-    while ((length = getline (&line, &len, stdin)) != -1) {
+    while (getline (&line, &len, stdin) != -1) {
         int    offset;
         char * line_ptr = line;
 
