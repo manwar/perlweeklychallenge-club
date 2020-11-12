@@ -31,7 +31,7 @@ int cmp (const void * a, const void * b) {
 
 /*
  * Binary search: return true if target is in array,
- * with index i, min < i < max.
+ * with index i, min <= i < max.
  */
 bool bin_search (long * array, long target, size_t min, size_t max) {
     size_t mid = (min + max) / 2;   /* In C, dividing integers yields an *
