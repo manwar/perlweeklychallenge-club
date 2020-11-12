@@ -28,6 +28,12 @@ for (let i = 0; i < lines . length - 1; i += 2) {
     //
     let diff = +lines [i + 1];
 
+    //
+    // For each number in the array, check whether there is
+    // another number so their difference is that target
+    // difference. Special care has to be taken if the target
+    // difference is 0.
+    //
     let winner = 0;
     Object . keys (data) . forEach ((number) => {
         if (!winner) {
