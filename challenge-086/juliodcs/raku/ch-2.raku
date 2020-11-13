@@ -33,7 +33,7 @@ sub solve-sudoku(@sudoku) {
 }
 
 # Returns the indexes to solve, sorted by number of ascending guesses
-# so that we can speed up the process by processing first the numbers
+# so that we can speed up the process by processing first the boxes
 # that have less possible guesses
 sub get-indexes(@sudoku) {
     @sudoku>>.list.flat Z ^81
