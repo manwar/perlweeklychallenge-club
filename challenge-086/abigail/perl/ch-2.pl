@@ -33,6 +33,9 @@ use experimental 'lexical_subs';
 #   trivial to extend it to any NxN sized sudoku. We only restrict
 #   the size to the number of bits in an integer (32, 64, 128, depending
 #   on the platform and compilation options).
+# - For even more fun, we solve "X" sudoku's as well. (An X sudoku has
+#   an additional constraint that the numbers on the diagonal are unique
+#   as well).
 #
 ################################################################################
 
@@ -77,6 +80,16 @@ use experimental 'lexical_subs';
 # fall through to loop, and return false.
 #
 ################################################################################
+
+################################################################################
+#
+# Parse options.
+#
+################################################################################
+
+use Getopt::Long;
+GetOptions "X"   =>  \my $has_x_constraint,
+;
 
 ################################################################################
 #
@@ -252,7 +265,11 @@ sub sees ($x, $y) {
                       $i == $x ||                                # Same column
                       $j == $y ||                                # Same row
                       int ($i / $box_x) == int ($x / $box_x) &&  # Same box
-                      int ($j / $box_y) == int ($y / $box_y);
+                      int ($j / $box_y) == int ($y / $box_y) ||
+                      $has_x_constraint &&             # Same diagonal
+                         (($i == $j && $x == $y) ||      # Main diagonal
+                          ($i + $j == $SIZE - 1 &&       # Anti diagonal
+                           $x + $y == $SIZE - 1));
             }
         }
         $out;
@@ -293,6 +310,7 @@ foreach my $x (@INDICES) {
         $$unsolved {$x, $y} = $set;
     }
 }
+
 
 
 ################################################################################
