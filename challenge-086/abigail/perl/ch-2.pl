@@ -27,9 +27,12 @@ use experimental 'lexical_subs';
 #
 # Note:
 #
+# - We could of course make use of a module which solves Sudoku's,
+#   but what's the point of that?
 # - We are not restricting ourselves to 9x9 sudokus. It's rather
 #   trivial to extend it to any NxN sized sudoku. We only restrict
-#   the size to the number of bits in an integer (32, 64, 128).
+#   the size to the number of bits in an integer (32, 64, 128, depending
+#   on the platform and compilation options).
 #
 ################################################################################
 
