@@ -145,7 +145,7 @@ my @ELEMENTS = (1 .. $SIZE);
 #
 # Calculate the box size. For regular shaped sudoku's, this
 # is sqrt ($SIZE) x sqrt ($SIZE). For other sized shaped sudoku's,
-# we find the the nearest values; box will then we wider than
+# we find the the nearest values; the boxes will then be wider than
 # they are high.
 #
 my ($box_x, $box_y) = do {
