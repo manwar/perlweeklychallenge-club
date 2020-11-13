@@ -104,6 +104,7 @@ foreach my $challenge (@challenges) {
 
                     my $name = $input;
                     my %pragma;
+                    my @options;
 
                     while ($exp =~ s/^\s*#%\s*(.*)\n//) {
                         my $pragma = $1;
@@ -111,6 +112,12 @@ foreach my $challenge (@challenges) {
                         if (lc $pragma eq "slow") {
                             $pragma {slow} = 1;
                             next;
+                        }
+                        if ($pragma =~ /^\s*(\w+):\s*(.*)/) {
+                            my ($key, $value) = ($1, $2);
+                            if (lc $key eq "opt") {
+                                push @options => $value;
+                            }
                         }
                     }
 
@@ -123,14 +130,15 @@ foreach my $challenge (@challenges) {
 
                     my $got;
                     if ($compiled) {
-                        $got = `$perl_exe -ple '$filter' $input | ./$compiled`;
+                        $got = `$perl_exe -ple '$filter' $input |\
+                              ./$compiled @options`;
                     }
                     elsif ($language eq "SQL") {
                         $got = test_sql ($dbh, $query, $tables_info, $input);
                     }
                     else {
                         $got = `$perl_exe -ple '$filter' $input |\
-                                $exe @args ./$source`;
+                                $exe @args ./$source @options`;
                     }
 
                     s/\h+$//gm for $exp, $got;
