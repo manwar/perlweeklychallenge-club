@@ -41,6 +41,10 @@ use experimental 'lexical_subs';
 
 ################################################################################
 #
+# While there are more efficient algorithms (for instance, Donald Knuths
+# "Algorithm X" using a dancing links technique), we're using a 
+# brute force solution. But we're trying to do this in a smart way.
+#
 # We will split the sudoku into two sets. A set of solved cells,
 # and a set of unsolved set. For each solved cell, we store its
 # value; for each unsolved cell, we keep track of what possible
