@@ -2,7 +2,7 @@
 # from a hint at https://www.geeksforgeeks.org/find-a-pair-with-the-given-difference/
 #
 
-multi MAIN($A where * ~~ Int, *@N where .all ~~ Int) {
+multi MAIN(Int $A, *@N where .all ~~ Int) {
     say pair-diff(+$A, @N.map(+*));
 }
 
