@@ -305,7 +305,7 @@ foreach my $x (@INDICES) {
         # That is, anything which isn't somewhere in the same row,
         # column, or box.
         #
-        my $set = (1 << ($clue_count)) - 1;  # All 1's.
+        my $set = (1 << $clue_count) - 1;  # All 1's.
         foreach my $can_see (sees ($x, $y)) {
             my ($see_x, $see_y) = @$can_see;
             $set &= ~(1 << ($sudoku [$see_x] [$see_y] - 1));
