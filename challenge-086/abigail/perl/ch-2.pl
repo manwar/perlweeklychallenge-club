@@ -259,6 +259,8 @@ if ($clue_count < $SIZE) {
 ################################################################################
 
 sub sees ($x, $y) {
+    use Carp;
+    croak unless defined $x && defined $y;
     state $cache;
     $$cache {$x, $y} //= do {
         my $out;
@@ -316,16 +318,58 @@ foreach my $x (@INDICES) {
 }
 
 
+################################################################################
+#
+# Two helper functions:
+#   nr_of_elements: Given a bitfield, return how many elements it represents.
+#   elements:       Given a bitfield, return the elements it represents.
+#
+################################################################################
+
+my sub nr_of_elements ($bitfield) {
+    sprintf ("%b", $bitfield) =~ y/1/1/;
+}
+
+my sub elements ($bitfield) {
+    grep {$bitfield & (1 << ($_ - 1))} @ELEMENTS;
+}
+
+
 
 ################################################################################
 #
-# Recursively solve the sudoku.
+# Recursively solve the sudoku, given a set of solved cells, and a
+# set of unsolved cells.
 #
-# Given a set of solved and unsolved cells, pick a cell with the least
-# number of possibilities left. For each possibility, try this one, and
-# recurse. If any leads to a solution, return this. Else, return false,
-# so we can backtrack.
-# If the set of unsolved cells is empty, we have solved the complete sudoku.
+# o If the set of unsolved cells is empty, we have solved the complete
+#   sudoku, and we can return the set of solved cells.
+#
+# o If we have an unsolved cell with no possibilities left, there is no
+#   solution possible, and we return 1.
+#
+# o If we have cells with one possibility left, then create a todo list
+#   of all cells with one possibility left. Then, for each cell "c" of
+#   the todo list:
+#     - for each other unsolved cell "d" which "c" can see, remove "p"
+#       from its set of possibilities.
+#         + If, afterwards, "d" has no possibility left,
+#           there is no solution.
+#         + If, afterwards, "d" has one possibility left,
+#           add it to the todo list.
+#     - add "c" to the set of solved cells, with value "p"
+#     - remove "c" from the set of unsolved cells, and from the todo list.
+#
+# o Otherwise, pick an unsolved cell "c" with the least number of possibilities 
+#   left (this will be at least two possibilities). 
+#     - for each of its possibilities "p":
+#         +  for each unsolved cell "d" which "c" can see, remove "p"
+#            from its set of possibilites
+#         +  add "c" to the set of solved cells, with value "p"
+#         +  remove "c" from the set of unsolved cells.
+#         +  recurse:
+#            = if there is a solution, return the solution
+#            = else, try the next possibility
+#     - if no possibility leads to a solution, there is no solution.
 #
 # For larger sudoku's, we can reach the "deep recursion" warning, so we
 # silence it.
@@ -340,27 +384,89 @@ sub solve ($solved, $unsolved) {
     return $solved unless keys %$unsolved;
 
     #
-    # Find the (a) square which the least possibilities; this
-    # means finding the set with the least amount of bits set.
+    # Bucketize the set of unsolved cells, by the number
+    # of possibilities left.
     #
-    my ($key) = map  {$$_ [0]}
-                sort {$$a [1] <=> $$b [1]}
-                map  {[$_, sprintf ("%b", $$unsolved {$_}) =~ y/1/1/]}
-                keys %$unsolved;
-    my ($x, $y) = split $; => $key;
-    my $possibilities = $$unsolved {$key};
+    my @buckets;
+    while (my ($key, $value) = each %$unsolved) {
+        push @{$buckets [nr_of_elements $value]} => $key;
+    }
 
     #
-    # Guess each possibility for this key.
+    # No solution possible.
     #
-    foreach my $guess (@ELEMENTS) {
+    return if $buckets [0];
+
+    if (@{$buckets [1] || []}) {
+        #
+        # We have unsolved cells with just one possibility left.
+        #
+        my %todo = map {$_ => 1} @{$buckets [1]};
+
+        #
+        # Make copies of the solved and unsolved structures.
+        #
+        my $new_solved   = {%$solved};
+        my $new_unsolved = {%$unsolved};
+
+        while (keys %todo) {
+            my ($cell) = sort keys %todo;
+            my $mask = $$new_unsolved {$cell};
+            my ($x, $y) = split $; => $cell;
+
+            #
+            # For all unsolved cells which can be seen by this cell
+            # eliminate the value of this cell from its possibilities.
+            # If no possibilities are left, return undef. If one possibility
+            # is left, push onto @todo.
+            #
+            # In any case, move this cell from the set of unsolved cells
+            # to the set of solved cells.
+            #
+            foreach my $can_see (sees ($x, $y)) {
+                my ($x1, $y1) = @$can_see;
+                if ($$new_unsolved {$x1, $y1} &&
+                    $$new_unsolved {$x1, $y1} & $mask) {
+                    $$new_unsolved {$x1, $y1} &= ~ $mask;
+                    my $nr_of_elements =
+                        nr_of_elements $$new_unsolved {$x1, $y1};
+                    return               if $nr_of_elements == 0;
+                    $todo {$x1, $y1} = 1 if $nr_of_elements == 1;
+                }
+            }
+
+            #
+            # Move cell to solved structure, and remove it from %todo.
+            #
+            $$new_solved {$cell} = (elements $mask) [0];
+            delete $$new_unsolved {$cell};
+            delete $todo {$cell};
+        }
+
+        #
+        # Recurse with the new sets
+        #
+        return solve ($new_solved, $new_unsolved);
+    }
+
+    #
+    # Now, find a cell with the least number of possibilities left.
+    # That will be a cell in the first non-empty bucket.
+    #
+    my ($bucket) = grep {$_} @buckets;
+    my  $cell    = $$bucket [0];
+    my ($x, $y)  = split $; => $cell;
+
+    #
+    # Guess each possibility for this cell.
+    #
+    foreach my $guess (elements $$unsolved {$cell}) {
         my $mask = 1 << ($guess - 1);
-        next unless $possibilities & $mask;
 
         #
         # Create new solved unsolved structures, as copies from the given ones.
         #
-        my $new_solved = {%$solved};
+        my $new_solved   = {%$solved};
         my $new_unsolved = {%$unsolved};
 
         #
@@ -371,16 +477,16 @@ sub solve ($solved, $unsolved) {
         #
         # Remove the guess from the set of unsolved cells.
         #
-        delete $$new_unsolved {$key};
+        delete $$new_unsolved {$cell};
 
         #
         # Delete our guess as possibility for each square
         # which can be seen.
         #
         foreach my $can_see (sees ($x, $y)) {
-            my ($x, $y) = @$can_see;
-            if ($$new_unsolved {$x, $y}) {
-                $$new_unsolved {$x, $y} &= ~ $mask;
+            my ($x1, $y1) = @$can_see;
+            if ($$new_unsolved {$x1, $y1}) {
+                $$new_unsolved {$x1, $y1} &= ~ $mask;
             }
         }
 
