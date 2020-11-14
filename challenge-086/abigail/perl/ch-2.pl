@@ -266,8 +266,8 @@ sub sees ($x, $y) {
             foreach my $j (@INDICES) {
                 next if $i == $x && $j == $y;
                 push @$out => [$i, $j] if
-                      $i == $x ||                                # Same column
-                      $j == $y ||                                # Same row
+                      $i == $x ||                                # Same row
+                      $j == $y ||                                # Same column
                       int ($i / $box_x) == int ($x / $box_x) &&  # Same box
                       int ($j / $box_y) == int ($y / $box_y) ||
                       $has_x_constraint &&             # Same diagonal
