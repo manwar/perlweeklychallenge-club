@@ -259,8 +259,6 @@ if ($clue_count < $SIZE) {
 ################################################################################
 
 sub sees ($x, $y) {
-    use Carp;
-    croak unless defined $x && defined $y;
     state $cache;
     $$cache {$x, $y} //= do {
         my $out;
@@ -525,7 +523,7 @@ if (my $r = solve ($solved, $unsolved)) {
     }
 }
 else {
-    say "No solution found\n";
+    say "No solution found.";
 }
 
 
