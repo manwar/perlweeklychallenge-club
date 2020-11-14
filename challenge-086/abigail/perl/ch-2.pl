@@ -480,7 +480,7 @@ sub solve ($solved, $unsolved) {
         delete $$new_unsolved {$cell};
 
         #
-        # Delete our guess as possibility for each square
+        # Delete our guess as possibility for each cell
         # which can be seen.
         #
         foreach my $can_see (sees ($x, $y)) {
