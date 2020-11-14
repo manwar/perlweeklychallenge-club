@@ -65,17 +65,13 @@ sub get-guesses(@sudoku, $y, $x, $last-guess) {
     my @square := get-square @sudoku, $y, $x;
     my @all-nums := (@cross-y, @cross-x, @square).flat.sort.unique.list;
 
-    # This 2 things puzzled me:
-    # 1)
-    #     `grep(-> $guess { 0 == elems @all-nums.grep: * == $guess })`
-    #     is almost twice as fast as:
-    #     `grep({ $_ == none @all-nums })`
-    #
-    # 2) Using `grep(* > $last-guess)` as the first grep, is VERY slow
+    # Using `grep(-> $guess { 0 == elems @all-nums.grep: * == $guess })`
+    # instead of `grep({ $_ == none @all-nums })`
+    # because first is twice as fast
     
     eager (1 .. 9)
         ==> grep(-> $guess { 0 == elems @all-nums.grep: * == $guess })
-        ==> grep(* > $last-guess)
+        ==> grep * > $last-guess
 }
 
 # For a (y,x) pair, it returns all the boxes of its inner square
