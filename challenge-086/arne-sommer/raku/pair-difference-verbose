@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $A, *@N where @N.elems >= 2 && all(@N) ~~ Int, :v(:$verbose));
+
+{ say ": " ~ @$_ ~ " -> " ~ abs([-] @$_) for @N.combinations(2) } if $verbose;
+
+say + so any( @N.combinations(2).map({ abs([-] @$_) }) ) == $A;
