@@ -21,3 +21,4 @@ Run the project's tests (all the samples from the task descriptions plus some ot
 *   [Lua](https://www.lua.org/) 5.3
 *   [LuaRocks](https://luarocks.org/)
 *   [busted](https://olivinelabs.com/busted/) (a unit testing framework)
+*   [Moses](https://yonaba.github.io/Moses/) (a Lua utility-belt library)
