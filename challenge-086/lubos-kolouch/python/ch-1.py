@@ -20,16 +20,14 @@ def is_pair_difference(n: list, a: int):
     """
     # to avoid sorting and/or scanning through all pairs in the array
     # or double nested loop,
-    # I will convert the array to a hash, then check if the
-    # corresponding key exists
+    # I will convert the array to a hash and check it on the fly
     """
 
     hash_keys = {}
     for number in n:
         hash_keys[number] = 1
 
-    for x in hash_keys:
-        if hash_keys.get(x+a, 0):
+        if hash_keys.get(number+a, 0) or hash_keys.get(number-a, 0):
             return 1
     return 0
 

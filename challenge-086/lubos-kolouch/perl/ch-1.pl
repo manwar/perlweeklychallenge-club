@@ -22,18 +22,15 @@ sub is_pair_difference {
 
     # to avoid sorting and/or scanning through all pairs in the array
     # or double nested loop,
-    # I will convert the array to a hash, then check if the
-    # corresponding key exists
+    # I will convert the array to a hash and check while creating it
     
     my $arr = $$data{n};
     my %h;
     for (@$arr) {
-        $h{$_} = 1;
-    }
+		$h{$_} = 1;
 
-    for my $x (keys %h) {
-        return 1 if $h{$x + $$data{a}};
-    }
+        return 1 if ($h{$_ + $$data{a}}) or ($h{$_ - $$data{a}}); 
+	}
 
     return 0;
 }
