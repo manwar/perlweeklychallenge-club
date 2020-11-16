@@ -8,12 +8,11 @@
 (defn pair-difference
   "Find a pair of coll such that their difference equals the target"
   [target coll]
-  (let [freqs (frequencies coll)
-        s (-> freqs keys set)
-        repeater (fn [v] (when v (repeat 2 v)))]
-    (if (zero? target)
-      (->> freqs (filter (fn [[_ v]] (> v 1))) ffirst repeater)
-      (->> s (keep (fn [v] (let [k (+ target v)] (when (s k) [v k])))) first))))
+  (let [xf (if (zero? target)
+             (keep (fn [[k v]] (when (> v 1) k)))
+             (map key))
+        s (into #{} xf (frequencies coll))]
+    (->> s (filter #(s (+ target %))) first)))
 
 (defn -main
   "Run Task 1 with a target A and a list of numbers N, defaulting to the

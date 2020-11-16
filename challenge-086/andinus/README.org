@@ -1,0 +1,48 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-2.org
+#+HTML_LINK_UP: ../../writings/
+#+OPTIONS: toc:2
+#+EXPORT_FILE_NAME: index
+#+DATE: 2020-11-15
+#+TITLE: Challenge 086
+
+* Task 1 - Pair Difference
+You are given an array of integers @N and an integer $A.
+
+Write a script to find find if there exists a pair of elements in the
+array whose difference is $A.
+
+Print 1 if exists otherwise 0.
+** Perl
+- Program: [[file:perl/ch-1.pl]]
+
+@N & $A are taken from stdin, $A is the last argument.
+#+BEGIN_SRC perl
+die "usage: ./ch-1.pl <integers \@N> <integer \$A>\n"
+    unless scalar @ARGV >= 3;
+
+my $A = pop @ARGV;
+my @N = @ARGV;
+#+END_SRC
+
+We just loop over @N over a loop over @N & find the difference. If it's
+equal to =$A= or =-$A= then we print =1= & exit. The first loop is =shift='ing
+the numbers out of array =@N= because we are matching for both =$A= & =-$A= so
+we don't need the number again.
+
+For example, if =@N = [1, 2]= & we don't =shift= in first loop then we'll
+perform 2 subtraction operations: =1 - 2= & =2 - 1= & we won't have to match
+for =-$A= but if we just match for =-$A= then we can use =shift= & we'll only
+have to perform 1 subtraction operation =1 - 2=.
+
+We assume subtraction costs more than matching with =-$A=, that makes this
+more efficient. But it doesn't matter much.
+#+BEGIN_SRC perl
+while (my $int = shift @N) {
+    foreach (@N) {
+        my $diff = $int - $_;
+        print "1\n" and exit 0 if ($diff == $A or $diff == -$A);
+    }
+}
+print "0\n";
+
+#+END_SRC
