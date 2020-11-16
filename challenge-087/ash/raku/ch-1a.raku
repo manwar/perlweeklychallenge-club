@@ -1,6 +1,6 @@
 #!/usr/bin/env raku
 #
-# Task 2 from
+# Task 1 from
 # https://perlweeklychallenge.org/blog/perl-weekly-challenge-087/
 
 my @n = 5, 100, 12, 2, 13, 3, 14, 4;
