@@ -77,13 +77,15 @@ My notes: excuse me!  a sudoku solver from scratch?  that's hard!
 fortunately I had already written a sudoku solver, which did clever
 deductions after working out the possible sets for each cell.  But for
 this, I tried something else: I threw away all the clever deductions
-and wrote a brute force searcher:
-- read the puzzle
-- form the possible sets for each cell
-- eliminate known cells from intersecting rows, columns and boxes
+and wrote a brute force searcher instead:
+- read the puzzle (reused my existing code)
+- form the possible sets for each cell (ditto)
+- eliminate known cells from intersecting rows, columns and boxes (ditto)
 then solve by:
 - finding an unknown cell (r,c) with possible values @possval
-- for each @possval, clone the puzzle, set cell (r,c) to the chosen value and recurse
+- for each @possval, clone the puzzle, set cell (r,c) to the chosen value and recurse,
+  checking for consistency at each stage
 
 But sadly, I couldn't get it to work in the time I'd left myself (2.5 hours) - so
-no submission for that.  I may submit it late if I can get it to work later.
+no submission for that before midnight.  After about 30 minutes more work, I got
+it working - there was a bug in the consistency checker.
