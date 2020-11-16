@@ -1,63 +1,78 @@
 {
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 087",
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            },
+            {
+               "y" : 2,
+               "name" : "Stuart Little",
+               "drilldown" : "Stuart Little"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
+   "xAxis" : {
+      "type" : "category"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge - 087"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Stuart Little",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Stuart Little"
+            "name" : "Simon Proctor"
+         },
+         {
+            "id" : "Stuart Little",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Stuart Little"
          }
       ]
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
    "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-11-16 22:22:31 GMT"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 087",
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Stuart Little",
-               "name" : "Stuart Little"
-            }
-         ]
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
+      "text" : "[Champions: 2] Last updated at 2020-11-16 22:31:10 GMT"
    },
    "chart" : {
       "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
