@@ -1,76 +1,91 @@
 {
+   "title" : {
+      "text" : "Perl Weekly Challenge - 087"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 087",
          "data" : [
+            {
+               "y" : 1,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
             {
                "y" : 2,
                "drilldown" : "Simon Proctor",
                "name" : "Simon Proctor"
             },
             {
-               "y" : 2,
                "name" : "Stuart Little",
-               "drilldown" : "Stuart Little"
+               "drilldown" : "Stuart Little",
+               "y" : 2
             }
          ],
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 087"
       }
    ],
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
    "xAxis" : {
       "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 087"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "name" : "Mark Anderson"
+         },
+         {
+            "name" : "Simon Proctor",
             "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Simon Proctor"
+            ]
          },
          {
-            "id" : "Stuart Little",
+            "name" : "Stuart Little",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Stuart Little"
+            "id" : "Stuart Little"
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2020-11-16 22:33:44 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-11-16 22:31:10 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "legend" : {
       "enabled" : 0
