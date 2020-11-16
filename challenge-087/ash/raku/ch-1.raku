@@ -1,6 +1,6 @@
 #!/usr/bin/env raku
 #
-# Task 2 from
+# Task 1 from
 # https://perlweeklychallenge.org/blog/perl-weekly-challenge-087/
 
 # See also ch-1a.raku for a more straighforward and more efficient solution.
