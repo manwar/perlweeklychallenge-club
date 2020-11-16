@@ -1,85 +1,52 @@
 {
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    },
    "tooltip" : {
-      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+      "followPointer" : 1
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov"
-            },
-            {
-               "y" : 1,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "y" : 1,
-               "name" : "Philip Hood",
-               "drilldown" : "Philip Hood"
-            },
-            {
-               "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "name" : "Stuart Little",
-               "drilldown" : "Stuart Little",
-               "y" : 2
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 087",
-         "colorByPoint" : 1
-      }
-   ],
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "name" : "Andrew Shitov",
             "id" : "Andrew Shitov"
          },
          {
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
+            "name" : "Mark Anderson"
          },
          {
-            "id" : "Philip Hood",
+            "name" : "Philip Hood",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "name" : "Philip Hood"
+            "id" : "Philip Hood"
          },
          {
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor"
          },
          {
@@ -94,13 +61,11 @@
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "legend" : {
+      "enabled" : 0
    },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    },
    "plotOptions" : {
       "series" : {
@@ -111,13 +76,48 @@
          "borderWidth" : 0
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 087"
-   },
-   "legend" : {
-      "enabled" : 0
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 087",
+         "data" : [
+            {
+               "drilldown" : "Andrew Shitov",
+               "name" : "Andrew Shitov",
+               "y" : 2
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "y" : 1,
+               "name" : "Philip Hood",
+               "drilldown" : "Philip Hood"
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 2
+            },
+            {
+               "name" : "Stuart Little",
+               "drilldown" : "Stuart Little",
+               "y" : 2
+            }
+         ]
+      }
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2020-11-16 23:00:28 GMT"
+      "text" : "[Champions: 5] Last updated at 2020-11-16 23:04:01 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 087"
    }
 }
