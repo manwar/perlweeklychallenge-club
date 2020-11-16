@@ -1,93 +1,108 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 087"
+   "legend" : {
+      "enabled" : 0
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 1,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            },
-            {
-               "name" : "Stuart Little",
-               "drilldown" : "Stuart Little",
-               "y" : 2
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 087"
-      }
-   ],
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          }
       }
-   },
-   "xAxis" : {
-      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
+            "id" : "Mark Anderson",
             "name" : "Mark Anderson"
          },
          {
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
-                  2
+                  1
                ]
-            ]
+            ],
+            "id" : "Philip Hood",
+            "name" : "Philip Hood"
          },
          {
-            "name" : "Stuart Little",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Stuart Little"
+            "id" : "Simon Proctor"
+         },
+         {
+            "id" : "Stuart Little",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Stuart Little"
          }
       ]
    },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 087"
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 1
+            },
+            {
+               "name" : "Philip Hood",
+               "y" : 1,
+               "drilldown" : "Philip Hood"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "drilldown" : "Stuart Little",
+               "y" : 2,
+               "name" : "Stuart Little"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 087",
+         "colorByPoint" : 1
+      }
+   ],
    "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2020-11-16 22:33:44 GMT"
+      "text" : "[Champions: 4] Last updated at 2020-11-16 22:46:15 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
+   "chart" : {
+      "type" : "column"
    }
 }
