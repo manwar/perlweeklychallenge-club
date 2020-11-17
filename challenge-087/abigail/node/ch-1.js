@@ -29,13 +29,13 @@
 
 //
 // Read STDIN. Split on newlines, then on whitespace, and turn the results
-// into numbers. Since the input will be newline terminated, we have an
-// empty line to filter out.
+// into numbers.
 //
 let lines = require      ("fs")
           . readFileSync (0)               // Read all.
           . toString     ()                // Turn it into a string.
-          . split        ("\n");           // Split on newlines.
+          . split        ("\n")            // Split on newlines.
+;
 
 
 //
@@ -53,11 +53,10 @@ for (let i = 0; i < lines . length - 1; i ++) {
     }, {});
 
     let best = [0, 0];
-  INNER:
     for (let i = 0; i < array . length; i ++) {
         let low  = array [i];
         if (!set [low]) {
-            continue INNER; // Skip if it's no longer in the set.
+            continue; // Skip if it's no longer in the set.
         }
         let high = low;
         while (set [low - 1]) {
@@ -74,6 +73,10 @@ for (let i = 0; i < lines . length - 1; i ++) {
             set [i] = 0;
         }
     }
+
+    //
+    // Output
+    //
     let str = "";
     for (let i = best [0]; i <= best [1]; i ++) {
         str += i;
