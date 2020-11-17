@@ -39,6 +39,23 @@ no  warnings 'syntax';
 # are just confusing, and don't make for a fun one.
 #
 
+#
+# A naive solution would sort the array, and then look for consecutive
+# sequences. But then you'd have to deal with duplicates (that is,
+# if @N = (2, 7, 3, 9, 4, 8, 4, 5), the solution should be (2, 3, 4, 5)),
+# and, most of all, you'd be inefficient, spending Omega (N log N) time,
+# as sorting the numbers dominates.
+#
+# Instead, we repeatedly pick a random number from our set, and find
+# the longest sequence it is part off. We then compare this sequence
+# to the best found so far, updating the best one if necessary. We then
+# remove the sequence from the set, and if the set isn't empty, we repeat.
+#
+# This is a linear expected time algorithm. Building a hash takes linear
+# time, and then every element is added to a sequence once, and deleted
+# from the hash once. Both operations can be done in constant time.
+#
+
 use experimental 'signatures';
 use experimental 'lexical_subs';
 
@@ -46,41 +63,38 @@ while (<>) {
     #
     # Read in the data
     #
-    my @array = sort {$a <=> $b} /-?[0-9]+/g;
+    my %array = map {$_ => 1} /-?[0-9]+/g;
 
-    #
-    # Special case the empty array
-    #
-#   say (0), next unless @array;
+    my @best = (0, 0);
+    while (%array) {
+        keys %array;                       # Reset iterator.
+        my $low = my $high = each %array;  # Random entry.
+        #
+        # Extend the sequence downwards and upwards as
+        # much as possible.
+        #
+        $low  -- while $array {$low  - 1};
+        $high ++ while $array {$high + 1};
 
-    #
-    # Iterate over the array, track streaks of increasing numbers.
-    # Also track the longest streak, and the index of where the
-    # longest streak ends. Note that we count starting from 0.
-    #
-    my $max_streak = 0;
-    my $max_index  = 0;
-    my $cur_streak = 0;
+        #
+        # Update the best sequence so far.
+        #
+        @best = ($low, $high) if
+                 $low < $high &&   # Exclude sequences of length 1
+                 $high - $low > $best [1] - $best [0];
 
-    for (my $i = 1; $i < @array; $i ++) {
-        if ($array [$i] == $array [$i - 1] + 1) {
-            if (++ $cur_streak > $max_streak) {
-                $max_streak = $cur_streak;
-                $max_index  = $i;
-            }
-        }
-        else {
-            $cur_streak = 0;
-        }
+        #
+        # Delete sequence from set.
+        #
+        delete @array {$low .. $high};
     }
 
     #
-    # Print the longest sequence, except if the longest sequence
-    # has length 1. Then we just print 0.
+    # Print the result.
     #
-    say $max_streak ? join ", " => @array [$max_index - $max_streak ..
-                                           $max_index]
-                    : 0;
+    local $, = ", ";
+    say $best [0] .. $best [1];
 }
+
 
 __END__
