@@ -74,6 +74,18 @@ int main (void) {
         /* Quick sort to sort the array */
         qsort (array, size, sizeof (long), cmp);
 
+        /*
+         * Remove duplicates
+         */
+        size_t i;
+        size_t j;
+        for (i = j = 1; i < size; i ++) {
+            if (array [i] != array [j - 1]) {
+                array [j ++] = array [i];
+            }
+        }
+        size = j;
+
         size_t max_streak = 0;
         size_t max_index  = 0;
         size_t cur_streak = 0;
