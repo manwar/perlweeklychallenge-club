@@ -63,18 +63,18 @@ while (<>) {
     #
     # Read in the data
     #
-    my %array = map {$_ => 1} /-?[0-9]+/g;
+    my %set = map {$_ => 1} /-?[0-9]+/g;
 
     my @best = (0, 0);
-    while (%array) {
-        keys %array;                       # Reset iterator.
-        my $low = my $high = each %array;  # Random entry.
+    while (%set) {
+        keys %set;                       # Reset iterator.
+        my $low = my $high = each %set;  # Random entry.
         #
         # Extend the sequence downwards and upwards as
         # much as possible.
         #
-        $low  -- while $array {$low  - 1};
-        $high ++ while $array {$high + 1};
+        $low  -- while $set {$low  - 1};
+        $high ++ while $set {$high + 1};
 
         #
         # Update the best sequence so far.
@@ -86,7 +86,7 @@ while (<>) {
         #
         # Delete sequence from set.
         #
-        delete @array {$low .. $high};
+        delete @set {$low .. $high};
     }
 
     #
