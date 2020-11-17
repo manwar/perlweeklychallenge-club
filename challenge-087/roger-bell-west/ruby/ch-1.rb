@@ -11,8 +11,11 @@ def lcs(*ns)
       if (w.length > r.length)
         r=w
       end
-      w=Array.new
+      w=[n]
     end
+  end
+  if (w.length > r.length)
+    r=w
   end
   if (r.length > 1)
     return r
@@ -35,6 +38,10 @@ class TestLcs < Test::Unit::TestCase
 
   def test_ex3
     assert_equal([9,10,11],lcs(20, 19, 9, 11, 10))
+  end
+
+  def test_ex4
+    assert_equal([18,19,20],lcs(20, 19, 18, 11, 10))
   end
 
 end

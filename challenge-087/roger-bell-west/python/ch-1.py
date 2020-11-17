@@ -12,7 +12,9 @@ def lcs(n):
         else:
             if (len(w) > len(r)):
                 r=w
-            w=list()
+            w=[n]
+    if (len(w) > len(r)):
+        r=w
     if (len(r)>1):
         return r
     return 0
@@ -29,5 +31,8 @@ class TestLcs(unittest.TestCase):
 
     def test_ex3(self):
         self.assertEqual(lcs((20, 19, 9, 11, 10)),[9,10,11],'example 3')
+
+    def test_ex4(self):
+        self.assertEqual(lcs((20, 19, 18, 11, 10)),[18,19,20],'example 4')
 
 unittest.main()
