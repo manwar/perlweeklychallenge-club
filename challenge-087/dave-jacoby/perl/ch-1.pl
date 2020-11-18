@@ -53,14 +53,9 @@ sub lsc ( @array ) {
         # sequence and the current value is ready to fit into 
         # the current sequence.
 
-        # I feel a little bad for not writing the correct
-        # if without the else, but not _too_ bad.
-        if ( !$zed->[$n][-1] || $i == $zed->[$n][-1] + 1 ) { 
-            # this is intentionally empty
-        }
-        else {
-            $n++;
-        }
+        # thanks to Sawyer X for the more elegent way of
+        # saying if (conditions) {} else { code }
+        ( !$zed->[$n][-1] || $i == $zed->[$n][-1] + 1 ) or $n++;
         push $zed->[$n]->@*, $i;
     }
 
