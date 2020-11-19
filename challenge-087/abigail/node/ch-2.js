@@ -12,12 +12,42 @@
 //
 
 //
-// A naive implementation would be a quartic algorithm. We can do better,
-// using a cubic algorithm.
+// A naive implementation would be a for each pair of points see whether
+// there's a rectangle with 1s, with the pair of points opposite vertices
+// of the array.
 //
-// First, we replace every 1 in the matrix with the number of from the
-// current position to the first 0 below it. We can do this in a single
-// pass, working bottom to top.
+// If done correctly, that leads to an Omega (l^2 * m^2) algorithm,
+// if the size of the input is an l x m matrix. So, Omega (N^2)
+// where N = l * m.
+//
+// But we can do better. We can use an algorithm which runs in
+// O (l * m * min (l, m)) time, or O (N sqrt (N)) time, since
+// min (l, m) <= sqrt (N).
+//
+// Assume the matrix is not wider than it is high (otherwise, first
+// transpose the matrix -- which can be done in O (l * m) time).
+//
+// First, we replace every 1 in the matrix with how many 1's (including
+// the 1 in the current position) it takes the hit the first 0 below it.
+// We can do this in a single pass, working bottom to top.
+//
+// So, the matrix 
+//
+//          0 1 0 1 1
+//          0 1 0 1 1
+//          0 1 1 1 1
+//          1 0 0 1 1
+//          0 0 0 1 1
+//          0 0 1 0 0
+//
+// becomes
+//
+//          0 3 0 5 5
+//          0 2 0 4 4
+//          0 1 1 3 3
+//          1 0 0 2 2
+//          0 0 0 1 1
+//          0 0 1 0 0
 //
 // Then, for each cell (x, y) in the matrix, we scan to the right (in the
 // y direction), until we hit a zero (or the end of the row). For each 
@@ -50,6 +80,19 @@ for (let x = 1; x < matrix . length; x ++) {
         process . stderr . write ("Not all rows are equal!\n");
         process . exit (1);
     }
+}
+
+let X = matrix     . length;
+let Y = matrix [0] . length;
+
+//
+// Transpose if the matrix is wider than it is high.
+//
+let transposed = 0;
+if (X < Y) {
+    matrix = matrix [0] . map ((col, i) => matrix . map (row => row [i]));
+    [X, Y] = [Y, X];
+    transposed = 1;
 }
 
 //
@@ -100,6 +143,9 @@ for (let x = 0; x < matrix . length; x ++) {
 //
 let output = "0";
 if (best [0] * best [1] > 1) {
+    if (transposed) {
+        best = [best [1], best [0]];
+    }
     let row = [... Array (best [1]) . keys ()] . map (_ => 1)   . join (" ");
     output  = [... Array (best [0]) . keys ()] . map (_ => row) . join ("\n");
 }
