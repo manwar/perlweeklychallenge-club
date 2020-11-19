@@ -1,30 +1,35 @@
 
-sub MAIN {
-    say longest-common-sequence([9,1,2,7,8,84]) // 0;
-    say longest-common-sequence([2,1,3,9,7,8,4]) // 0;
+sub MAIN() {
+    say longest-consecutive-sequence([9,1,2,7,8,84]) // 0;
+    say longest-consecutive-sequence([2,1,3,9,7,8,4]) // 0;
+    say longest-consecutive-sequence([2,1,2,3,9,7,8,4]) // 0;
 }
 
-sub longest-common-sequence(@N) {
-    my %G;
-    for @N.sort({ $^a <=> $^b }) -> $n {
-        next if %G{$n}:exists;
-        %G{$n} = %G{$n-1} // $n;
-    }
+sub longest-consecutive-sequence(@N) {
+    my @m = @N.sort({ $^a <=> $^b });
 
-    my $max = 0;
-    my $group;
-    for %G.keys -> $n {
-        my $d = $n - %G{$n};
-        if $d > $max {
-            $max = $d;
-            $group = $n;
+    my $seq_from = @m[0];
+    my $seq_until = @m[0];
+    my $longest_seq_from = @m[0];
+    my $longest_seq_until = @m[0];
+    my $longest_seq_length = 0;
+
+    for 1..@m.end -> $i {
+        my $n = @m[$i];
+        if $n - @m[$i-1] == 0|1 {
+            $seq_until = $n;
+            my $len = $seq_until - $seq_from;
+            if $longest_seq_length < $len {
+                $longest_seq_from   = $seq_from;
+                $longest_seq_until  = $seq_until;
+                $longest_seq_length = $len;
+            }
+        } else {
+            $seq_from  = $n;
+            $seq_until = $n;
         }
     }
 
-    if $max == 0 {
-        return Nil;
-    } else {
-        return %G{$group} ... $group;
-    }
+    return $longest_seq_length == 0 ?? Nil !! [$longest_seq_from...$longest_seq_until];
 }
 
