@@ -29,7 +29,7 @@ my @example4 = < 0 0 1 1 >,
 
 cmp-ok get-max-rectangle(@example1), &[eqv], [[1,1,1,1,1] xx 2], "Example 1";
 
-ok get-max-rectangle(@example2)        ==    0,                  "Example 2";
+ok     get-max-rectangle(@example2)    == 0,                     "Example 2";
 
 cmp-ok get-max-rectangle(@example3), &[eqv], [[1,1,1,1] xx 2],   "Example 3";
 
@@ -46,7 +46,6 @@ sub get-max-rectangle(@matrix) {
         for ^@row -> $i {
             @histogram[$i] = @row[$i] ?? @histogram[$i]+1 !! 0;
         }
-
         get-drawing();
         check-for-rectangles();
     }
