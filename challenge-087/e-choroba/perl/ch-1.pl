@@ -2,8 +2,10 @@
 use warnings;
 use strict;
 
+use List::Util qw{ uniq };
+
 sub longest_consecutive_sequence {
-    my @N = sort { $a <=> $b } @_;
+    my @N = sort { $a <=> $b } uniq(@_);
 
     # To simplify the code, the last number will never be part of the
     # sequence.
@@ -38,7 +40,7 @@ sub longest_consecutive_sequence {
     return [ map [ $_->[0] .. $_->[1] ], @longest ];
 }
 
-use Test::More tests => 6;
+use Test::More tests => 7;
 
 is_deeply longest_consecutive_sequence(100, 4, 50, 3, 2),
     [[2, 3, 4]], 'Example 1';
@@ -53,3 +55,5 @@ is_deeply longest_consecutive_sequence(1, 2, 3, 4, 6, 7, 8, 9, 10),
     [[6, 7, 8, 9, 10]], 'Has shorter';
 is_deeply longest_consecutive_sequence(1, 3, 4, 7, 8),
     [[3, 4], [7, 8]], 'Length 2';
+is_deeply longest_consecutive_sequence(-2, -2, -1, -1, 0, 0, 1, 3),
+    [[-2, -1, 0, 1]], 'Duplicates';
