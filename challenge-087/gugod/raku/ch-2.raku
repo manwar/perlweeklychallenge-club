@@ -36,14 +36,14 @@ sub MAIN() {
     }
 }
 
-sub print-matrix(@M) {
-    for ^@M -> $y {
-        say "[" ~ @M[$y].join(" ") ~ "]";
+sub print-matrix(@matrix) {
+    for ^@matrix -> $y {
+        say "[" ~ @matrix[$y].join(" ") ~ "]";
     }
 }
 
-sub largest-rectangle(@M) {
-    ([^@M] X [^@M[0]])
+sub largest-rectangle(@matrix) {
+    ([^@matrix] X [^@matrix[0]])
     .combinations(2)
     .grep(
         -> ($p, $q) {
@@ -54,13 +54,8 @@ sub largest-rectangle(@M) {
         -> ($p, $q) {
             ($p[0] .. $q[0]).map(
                 -> $y {
-                    ($p[1] .. $q[1]).map(
-                        -> $x {
-                            @M[$y][$x]
-                        }
-                    )
-                }
-            )
+                    @matrix[$y][ $p[1] .. $q[1] ]
+                })
         })
 
     .grep(
@@ -70,6 +65,6 @@ sub largest-rectangle(@M) {
 
     .max(
         -> @m {
-            @m.elems * @m[0].elems
+            @m * @m[0]
         })
 }
