@@ -1,13 +1,13 @@
-# tw.weekly.c86
+# tw.weekly.c87
 
 
-The Weekly Challenge - #086 - Tyler Wardhaugh
+The Weekly Challenge - #087 - Tyler Wardhaugh
 
 ## Usage
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -M -m tw.weekly.c86.core
+    $ clojure -M -m tw.weekly.c87.core
 
 Run the project's tests (which are samples from the task descriptions):
 
@@ -15,11 +15,11 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -M -m tw.weekly.c86.t1 A N1 N2 N3...
+    $ clojure -M -m tw.weekly.c87.t1 N1 N2 N3...
 
 Run Task #2 with input:
 
-    $ clojure -M -m tw.weekly.c86.t2 SUDOKO-FILE 
+    $ clojure -M -m tw.weekly.c87.t2 MATRIX-FILE
 
 ## Project Template
 
