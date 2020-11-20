@@ -3,34 +3,28 @@
       "enabled" : "false"
    },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      },
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-11-20 23:50:41 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "chart" : {
-      "type" : "column"
+      }
    },
    "series" : [
       {
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "align" : "right",
+            "enabled" : "true",
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}"
+         },
          "name" : "Contributions",
          "data" : [
             [
@@ -39,25 +33,31 @@
             ],
             [
                "Perl",
-               3866
+               3868
             ],
             [
                "Raku",
                2501
             ]
-         ],
-         "dataLabels" : {
-            "rotation" : -90,
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true",
-            "y" : 10
-         }
+         ]
       }
-   ]
+   ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-11-20 23:56:51 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   }
 }
