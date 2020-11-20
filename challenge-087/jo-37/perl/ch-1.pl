@@ -1,9 +1,7 @@
 #!/usr/bin/perl
 
-use 5.012;
 use Test2::V0;
 use List::Util qw(reduce uniqnum);
-use Data::Dump;
 
 # Find longest consecutive sequence in a list of integers.  An empty
 # result in boolean context gives zero as requested.
