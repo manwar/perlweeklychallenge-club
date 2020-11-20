@@ -22,6 +22,14 @@ sub MAIN() {
             [ 0, 0, 1, 0, 0, 1 ],
             [ 0, 0, 1, 1, 1, 1 ],
             [ 0, 0, 1, 1, 1, 1 ],
+        ],
+
+        # None
+        [
+            [ 0, 0, 0, 1, 0, 1 ],
+            [ 0, 0, 1, 0, 0, 0 ],
+            [ 1, 0, 0, 0, 0, 1 ],
+            [ 0, 0, 1, 0, 1, 0 ],
         ]
     ];
 
@@ -30,7 +38,13 @@ sub MAIN() {
         print-matrix(@M);
 
         say "Output:";
-        print-matrix( largest-rectangle(@M) );
+        my @m = largest-rectangle(@M);
+
+        if @m[0] == -Inf {
+            say 0;
+        } else {
+            print-matrix( @m );
+        }
 
         say "";
     }
