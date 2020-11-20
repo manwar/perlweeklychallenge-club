@@ -99,8 +99,8 @@ if (X < Y) {
 // Maps the 1s in the matrix to the number of consecutive 1s below
 // it (including this 1 itself).
 //
-for (let x = matrix . length - 2; x >= 0; x --) {
-    for (let y = 0; y < matrix [x] . length; y ++) {
+for (let x = X - 2; x >= 0; x --) {
+    for (let y = 0; y < Y; y ++) {
         matrix [x] [y] = matrix [x]     [y] *
                         (matrix [x + 1] [y] + 1);
     }
@@ -116,8 +116,8 @@ for (let x = matrix . length - 2; x >= 0; x --) {
 // Remember the best one found.
 //
 let best = [0, 0];
-for (let x = 0; x < matrix . length; x ++) {
-    for (let y = 0; y < matrix [x] . length; y ++) {
+for (let x = 0; x < X; x ++) {
+    for (let y = 0; y < Y; y ++) {
         if (matrix [x] [y] == 0) {
             continue;
         }
@@ -125,7 +125,7 @@ for (let x = 0; x < matrix . length; x ++) {
         if (min_depth > best [0] * best [1]) {
             best = [min_depth, 1];
         }
-        for (w = 1; y + w < matrix [x] . length &&
+        for (w = 1; y + w < Y &&
                     matrix [x] [y + w] > 0; w ++) {
             if (matrix [x] [y + w] < min_depth) {
                 min_depth = matrix [x] [y + w];
