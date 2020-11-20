@@ -130,13 +130,16 @@ for (my $x = $X - 2; $x >= 0; $x --) {
                         ($matrix [$x + 1] [$_] + 1)} keys @{$matrix [$x]}];
 }
 
-my $best = [0, 0];
 
+#
+# Find the largest rectangle.
+#
+my $best = [0, 0];
 for (my $x = 0; $x < $X; $x ++) {
     for (my $y = 0; $y < $Y; $y ++) {
         next unless $matrix [$x] [$y];  # Top left is not a 1.
         #
-        # Now, scan to the left, keeping track of the *minimum* value $r
+        # Now, scan to the right, keeping track of the *minimum* value $r
         # in @runs. If 0, we can stop scanning. While scanning track
         # how far we're from $y, and calculate the rectangle covered.
         #
