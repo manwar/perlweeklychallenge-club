@@ -13,7 +13,6 @@ multi sub MAIN {
     cmp-ok get-longest-seq([20, 30, 10, 40, 50]), &[eqv], (),          "Example 2";
 
     cmp-ok get-longest-seq([20, 19, 9, 11, 10]),  &[eqv], (9, 10, 11), "Example 3";
-    
 }
 
 sub get-longest-seq(@n) {
