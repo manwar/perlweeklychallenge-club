@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # The Weekly Challenge - Perl & Raku - 087
 # Task: Longest Consecutive Sequence
-# Usage: ch-2.pl @N
+# Usage: ch-1.pl @N
 
 use strict;
 use warnings;
