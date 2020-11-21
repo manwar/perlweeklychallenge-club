@@ -1,7 +1,7 @@
 multi MAIN(*@n where .all ~~ Int) {
-    my @result = get-longest-seq(@n.map(+*).Array);
+    my @seq = get-longest-seq(@n.map(+*).Array);
 
-    say @result || 0;
+    say @seq ?? @seq.List.raku !! 0;
 }
 
 multi MAIN {
