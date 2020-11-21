@@ -10,7 +10,7 @@ multi MAIN {
 
     cmp-ok get-longest-seq([100, 4, 50, 3, 2]),   &[eqv], (2, 3, 4),   "Example 1";
 
-    cmp-ok get-longest-seq([20, 30, 10, 40, 50]), &[eqv], (),          "Example 2";
+    cmp-ok get-longest-seq([20, 30, 10, 40, 50]), &[eqv], [],          "Example 2";
 
     cmp-ok get-longest-seq([20, 19, 9, 11, 10]),  &[eqv], (9, 10, 11), "Example 3";
 }
@@ -28,5 +28,5 @@ sub get-longest-seq(@n) {
     }
 
     my ($k, $v) = %elems.antipairs.max.kv;
-    $k ?? @n[$v..$k+$v] !! ();
+    $k ?? @n[$v..$k+$v] !! [];
 }
