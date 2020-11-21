@@ -1,10 +1,10 @@
-multi sub MAIN(*@n where .all ~~ Int) {
+multi MAIN(*@n where .all ~~ Int) {
     my @result = get-longest-seq(@n.map(+*).Array);
 
     say @result || 0;
 }
 
-multi sub MAIN {
+multi MAIN {
     use Test;
     plan 3;
 
