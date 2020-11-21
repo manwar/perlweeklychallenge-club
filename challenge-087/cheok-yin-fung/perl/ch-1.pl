@@ -13,17 +13,17 @@ sub long_consec{
     my $max_len = 1;
     my @max_opp;
 
-    my @temp_max_opp = ($list[0]);
+    my @potential_max_opp = ($list[0]);
     for (1..$#list) { 
         if ($list[$_-1] == $list[$_]-1) {
-            push @temp_max_opp, $list[$_];
+            push @potential_max_opp, $list[$_];
         } else
         {
-            if (scalar @temp_max_opp > $max_len) {
-                $max_len = scalar @temp_max_opp;
-                @max_opp = @temp_max_opp;
+            if (scalar @potential_max_opp > $max_len) {
+                $max_len = scalar @potential_max_opp;
+                @max_opp = @potential_max_opp;
             }
-            @temp_max_opp = ($list[$_]);
+            @potential_max_opp = ($list[$_]);
         }
     }
 
