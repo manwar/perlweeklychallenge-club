@@ -40,7 +40,7 @@ sub readContents {
 # return as an ArrayRef of ArrayRef of PointInMat (grouped by row number)
 sub getPointsAtEachRows ($) {
     my $raw_string = shift;
-    my @lines = split( /]\s*/, $raw_string );
+    my @lines = split( /\n|]\s*/, $raw_string );
 
     [ map {
         my ( $r, $c ) = ( $_, 0 );
