@@ -1,50 +1,70 @@
-Task 1: "Triplet Sum
+Task 1: "Longest Consecutive Sequence
 
-You are given an array of real numbers greater than zero.
+You are given an unsorted array of integers @N.
 
-Write a script to find if there exists a triplet (a,b,c) such that 1 <
-a+b+c < 2. Print 1 if you succeed otherwise 0.
+Write a script to find the longest consecutive sequence. Print 0 if no sequence found.
 
 Example 1:
 
-	Input: @R = (1.2, 0.4, 0.1, 2.5)
-	Output: 1 as 1 < 1.2 + 0.4 + 0.1 < 2
+	Input: @N = (100, 4, 50, 3, 2)
+	Output: (2, 3, 4)
 
 Example 2:
 
-	Input: @R = (0.2, 1.5, 0.9, 1.1)
+	Input: @N = (20, 30, 10, 40, 50)
 	Output: 0
 
 Example 3:
 
-	Input: @R = (0.5, 1.1, 0.3, 0.7)
-	Output: 1 as 1 < 0.5 + 1.1 + 0.3 < 2
+	Input: @N = (20, 19, 9, 11, 10)
+	Output: (9, 10, 11)
+"
 
-My notes: simple, I think it means "pick any 3 elements a, b and c from the
-array and determine if any a,b,c triple sums to between 1 and 2", although both
-successful examples show 3 ADJACENT elements a, b and c...
+My notes: clearly defined, sort it first, then walk list looking for sequences
 
 
-Task 2: "Power of Two Integers
+Task 2: "Largest Rectangle
 
-You are given a positive integer $N.
+You are given binary matrix m x n with all values being 0 or 1.
 
-Write a script to find if it can be expressed as a ** b where a > 0 and
-b > 1. Print 1 if you succeed otherwise 0.
+Write a script to find the largest rectangle containing only 1. Print 0 if none found.
 
 Example 1:
 
-Input: 8
-Output: 1 as 8 = 2 ** 3
+Input:
+    [ 0 0 0 1 0 0 ]
+    [ 1 1 1 0 0 0 ]
+    [ 0 0 1 0 0 1 ]
+    [ 1 1 1 1 1 0 ]
+    [ 1 1 1 1 1 0 ]
+
+Output:
+    [ 1 1 1 1 1 ]
+    [ 1 1 1 1 1 ]
 
 Example 2:
 
-Input: 15
+Input:
+    [ 1 0 1 0 1 0 ]
+    [ 0 1 0 1 0 1 ]
+    [ 1 0 1 0 1 0 ]
+    [ 0 1 0 1 0 1 ]
+
 Output: 0
 
 Example 3:
 
-Input: 125
-Output: 1 as 125 = 5 ** 3
+Input:
+    [ 0 0 0 1 1 1 ]
+    [ 1 1 1 1 1 1 ]
+    [ 0 0 1 0 0 1 ]
+    [ 0 0 1 1 1 1 ]
+    [ 0 0 1 1 1 1 ]
 
-My notes: clearly defined, not quite sure how to do it so.. let's brute force
+Output:
+    [ 1 1 1 1 ]
+    [ 1 1 1 1 ]
+"
+
+My notes: clearly defined, I assume that a rectangle has min-width 2,
+min-height 2, brute force: find all rectangles, pick max area
