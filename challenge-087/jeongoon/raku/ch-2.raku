@@ -67,22 +67,24 @@ $*ERR.say;
 
     } ).
 
+
 classify( {.[0].Str}, :as{ .[1] } ).            # group by same point or line
 map( { my ($pts-str, $rows) = $_.kv;
        my $pts = $pts-str.split(/\s+/)>>.Int.Array;     # note: >>.Int required
        next if $pts.elems == 1 == $rows.elems;  # skip if point
 
        my $found = False;
-       ($rows.elems ... 1).                     # try from largest
+       ($rows.elems ... 1).                     # try from largest area
        map( { last if $found;
-              if $rows.combinations( $_ ).lazy.
-              rotor( 2 => -1 ).map( { [-] .reverse } ).all == 1 {
-                  $found = True;
-                  ($pts, $rows)
-              } else {
-                  Empty
-              }
-           }).Slip } )
+              $rows.rotor( $_ => -($_.pred) ).  # check rows are consecutive
+              map( -> $sub-rows
+                   { last if $found;
+                     if $sub-rows.rotor( 2 => -1 ).
+                     map( { [-] .reverse } ).all == 1 {
+                         $found = True;
+                         ($pts.clone, $sub-rows.clone).Slip
+                     }
+                   } ).cache } ).Slip } )
 
 ==> my @candidates;
 
