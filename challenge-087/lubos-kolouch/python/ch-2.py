@@ -24,12 +24,8 @@ def get_rectangle(input_arr):
     # if so, check how far can go in the row and columns
     # if the rectangle is largest, save the dimensions
 
-    for r, row in enumerate(input_arr):
-        if r == len(input_arr) - 1:
-            break
-        for c, item in enumerate(row):
-            if c == len(row) - 1:
-                break
+    for r, row in enumerate(input_arr[:-1]):
+        for c, item in enumerate(row[:-1]):
 
             if item:
                 # print(f"* 1 at {r} {c}")
