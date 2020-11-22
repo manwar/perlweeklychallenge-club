@@ -1,7 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "categories" : [
          "Gustavo Chaves",
@@ -36,26 +33,32 @@
          "Kai Burgdorf"
       ]
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-11-22 04:43:04 GMT"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
    },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-11-22 04:48:45 GMT"
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             32,
             0,
@@ -87,7 +90,8 @@
             1,
             20,
             5
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -159,9 +163,5 @@
             0
          ]
       }
-   ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   }
+   ]
 }

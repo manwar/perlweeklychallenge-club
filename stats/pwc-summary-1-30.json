@@ -1,10 +1,24 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-11-22 04:48:45 GMT"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -22,7 +36,7 @@
             115,
             12,
             0,
-            35,
+            36,
             5,
             129,
             0,
@@ -36,8 +50,7 @@
             31,
             0,
             80
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -57,7 +70,7 @@
             0,
             0,
             2,
-            172,
+            174,
             0,
             96,
             0,
@@ -75,6 +88,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -92,7 +106,7 @@
             0,
             0,
             0,
-            86,
+            87,
             0,
             3,
             0,
@@ -106,30 +120,9 @@
             15,
             0,
             23
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-11-22 04:43:04 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "categories" : [
          "3ter",
@@ -163,5 +156,12 @@
          "Chenyf",
          "Cheok-Yin Fung"
       ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
