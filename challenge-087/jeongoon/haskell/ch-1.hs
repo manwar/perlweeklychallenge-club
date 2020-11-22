@@ -8,7 +8,6 @@ import Data.List (sort, sortBy)
 (only shows one answer)
 -}
 
-
 answerLongestConsecutiveSequence :: [Int] -> [Int]
 answerLongestConsecutiveSequence =
   ( head
