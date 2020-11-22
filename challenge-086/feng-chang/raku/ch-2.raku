@@ -51,7 +51,6 @@ sub solve(@sdk is copy, UInt:D $pos) {
         put @sdk[@rows-index[$_]] for ^9;
         return;
     }
-    
     return if contradict(@sdk);
 
     if @is-uncertain[$pos] {
@@ -66,15 +65,9 @@ sub solve(@sdk is copy, UInt:D $pos) {
 
 multi MAIN($data-file) {
     my @puzzle = $data-file.IO.words;
-    for ^81 -> $i {
-        if @puzzle[$i] eq '_' {
-            @puzzle[$i] = 0;
-            @is-uncertain[$i] = True;
-        } else {
-            @puzzle[$i] .= Int;
-            @is-uncertain[$i] = False;
-        }
-    }
+    @puzzle[$_] = 0 if @puzzle[$_] eq '_' for ^81;
+    @puzzle[$_] .= Int for ^81;
+    @is-uncertain[$_] = @puzzle[$_] == 0 for ^81;
 
     solve(@puzzle, 0);
 }
