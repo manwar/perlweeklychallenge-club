@@ -1,27 +1,4 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
@@ -30,7 +7,16 @@
    "drilldown" : {
       "series" : [
          {
-            "name" : "Roger Bell_West",
+            "id" : "E. Choroba",
+            "name" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -41,10 +27,10 @@
                   2
                ]
             ],
+            "name" : "Roger Bell_West",
             "id" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -55,11 +41,12 @@
                   1
                ]
             ],
-            "id" : "Simon Green"
+            "id" : "Simon Green",
+            "name" : "Simon Green"
          },
          {
-            "id" : "Simon Proctor",
             "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
@@ -74,43 +61,71 @@
                   2
                ]
             ],
-            "name" : "Stuart Little",
-            "id" : "Stuart Little"
+            "id" : "Stuart Little",
+            "name" : "Stuart Little"
          }
       ]
    },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-11-23 18:23:46 GMT"
+      "text" : "[Champions: 5] Last updated at 2020-11-23 19:26:59 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 088"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
          "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 088",
          "data" : [
             {
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 4
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba",
+               "y" : 2
             },
             {
-               "name" : "Simon Green",
+               "y" : 4,
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
+            },
+            {
                "drilldown" : "Simon Green",
+               "name" : "Simon Green",
                "y" : 3
             },
             {
-               "y" : 2,
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Simon Proctor",
+               "y" : 2
             },
             {
-               "drilldown" : "Stuart Little",
+               "y" : 2,
                "name" : "Stuart Little",
-               "y" : 2
+               "drilldown" : "Stuart Little"
             }
-         ]
+         ],
+         "name" : "Perl Weekly Challenge - 088"
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 088"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
