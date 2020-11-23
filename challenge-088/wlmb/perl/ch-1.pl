@@ -7,7 +7,9 @@ use feature qw(say);
 
 say join " ", "Example 1:", array_of_products(5,2,1,4,3);
 say join " ", "Example 2:", array_of_products(2,1,4,3);
-
+# Output:
+# Example 1: 24 60 120 30 40
+# Example 2: 12 24 6 8
 sub array_of_products {
     use PDL; #use the perl data language
     use PDL::NiceSlice;
