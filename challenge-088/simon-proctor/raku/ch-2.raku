@@ -67,7 +67,6 @@ multi sub spiralize( @grid ) {
     |@grid[*-1].reverse,
     |((0^..^@grid.end).reverse.map( { @grid[$_][0] } )),
     |spiralize( center( @grid ) )
-#    @grid
 }
 
 sub center( @grid ) {
