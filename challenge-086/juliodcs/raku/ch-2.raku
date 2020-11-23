@@ -18,12 +18,12 @@ sub solve-sudoku(@sudoku) {
         elsif $guess == 0 && $backtrack {
             # not valid guess and no more guesses to test
             # We give up with this position (we decrement index)
-            @sudoku[$y][$x] = 0;
+            @sudoku[$y;$x] = 0;
             $index--;
         }
         else {
             # valid guess (for now), increase index
-            @sudoku[$y][$x] = $guess;
+            @sudoku[$y;$x] = $guess;
             $backtrack = 0;
             $index++;
         }
@@ -36,14 +36,11 @@ sub solve-sudoku(@sudoku) {
 # so that we can speed up the process by processing first the boxes
 # that have less possible guesses
 sub get-indexes(@sudoku) {
-    @sudoku>>.list.flat Z ^81
+    eager @sudoku>>.list.flat Z ^81
         ==> map({ $^it.tail, count-guesses @sudoku, $^it.tail })
-        ==> grep *.tail > 0
-        ==> sort({ $^a.tail cmp $^b.tail })
+        ==> grep(*.tail > 0)
+        ==> sort(*.tail cmp *.tail)
         ==> map *.head
-        ==> my @indexes;
-
-    @indexes.list
 }
 
 # Translate index to (y, x) matrix positions
@@ -56,7 +53,7 @@ sub get-position($index) {
 sub count-guesses(@sudoku, $index) {
     my ($y, $x) := get-position $index;
 
-    @sudoku[$y][$x] > 0
+    @sudoku[$y;$x] > 0
         ?? 0
         !! elems get-guesses @sudoku, $y, $x, 0
 }
@@ -68,8 +65,12 @@ sub get-guesses(@sudoku, $y, $x, $last-guess) {
     my @square := get-square @sudoku, $y, $x;
     my @all-nums := (@cross-y, @cross-x, @square).flat.sort.unique.list;
 
-    (1 .. 9)
-        ==> grep({ 0 == elems @all-nums.grep: * == $^guess })
+    # Using `grep(-> $guess { 0 == elems @all-nums.grep: * == $guess })`
+    # instead of `grep({ $_ == none @all-nums })`
+    # because first is twice as fast
+    
+    eager (1 .. 9)
+        ==> grep(-> $guess { 0 == elems @all-nums.grep: * == $guess })
         ==> grep * > $last-guess
 }
 
@@ -78,17 +79,17 @@ sub get-square(@sudoku, $inner-y, $inner-x) {
     my $y := $inner-y - $inner-y % 3;
     my $x := $inner-x - $inner-x % 3;
 
-    @sudoku[$y+0][$x+0], @sudoku[$y+0][$x+1], @sudoku[$y+0][$x+2],
-    @sudoku[$y+1][$x+0], @sudoku[$y+1][$x+1], @sudoku[$y+1][$x+2],
-    @sudoku[$y+2][$x+0], @sudoku[$y+2][$x+1], @sudoku[$y+2][$x+2],
+    @sudoku[$y+0;$x+0], @sudoku[$y+0;$x+1], @sudoku[$y+0;$x+2],
+    @sudoku[$y+1;$x+0], @sudoku[$y+1;$x+1], @sudoku[$y+1;$x+2],
+    @sudoku[$y+2;$x+0], @sudoku[$y+2;$x+1], @sudoku[$y+2;$x+2]
 }
 
 # Makes some guess for a box.
 # If we are backtracking, we set a minimum value for the guess
 # (previous box value)
 sub make-guess(@sudoku, $y, $x, $backtrack) {
-    my $min-guess := $backtrack ?? @sudoku[$y][$x] !! 0;
-    my @guesses := get-guesses(@sudoku, $y, $x, $min-guess).list;
+    my $min-guess := $backtrack ?? @sudoku[$y;$x] !! 0;
+    my @guesses := get-guesses @sudoku, $y, $x, $min-guess;
 
     @guesses.elems == 0 ?? 0 !! @guesses.head
 }

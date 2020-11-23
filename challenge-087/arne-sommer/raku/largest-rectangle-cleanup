@@ -1,0 +1,57 @@
+#! /usr/bin/env raku
+
+subset BinaryDigit where /^<[01]>$/;
+
+unit sub MAIN ($rectangle where $rectangle.IO.f && $rectangle.IO.r = 'sample1.txt',
+	       :v(:$verbose));
+
+my @rectangle = $rectangle.IO.lines.map( *.words.grep(BinaryDigit) )>>.Array;
+
+my $rows = @rectangle.elems;
+my $cols = @rectangle[0].elems;
+
+die "All rows must have the same length" unless [==] @(@rectangle)>>.elems;
+
+my $pass = 1;
+my $sum  = @rectangle>>.sum.sum;
+
+LOOP: loop
+{
+  say ": Pass: { $pass++ }" if $verbose;
+
+  for ^$rows -> $row
+  {
+    for ^$cols -> $col 
+    {
+      next if @rectangle[$row][$col] == 0;
+
+      next if box4($row -1, $col -1) || box4($row, $col -1) || 
+              box4($row -1, $col   ) || box4($row, $col   );
+
+     @rectangle[$row][$col] = 0;
+    }
+  }
+
+  my $new-sum = @rectangle>>.sum.sum;
+  last if $new-sum == $sum;
+  $sum = $new-sum;
+}
+
+say @$_ for @rectangle;
+
+sub box4 ($row, $col)
+{
+  say ": box4($row, $col)" if $verbose;
+  my $a = @rectangle[$row  ][$col  ] // return False;
+  my $b = @rectangle[$row+1][$col  ] // return False;
+  my $c = @rectangle[$row  ][$col+1] // return False;
+  my $d = @rectangle[$row+1][$col+1] // return False;
+
+  if $a + $b + $c + $d == 4
+  {
+    say ": - ok" if $verbose;
+    return True;
+  }
+
+  return False;
+}

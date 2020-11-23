@@ -2,6 +2,9 @@
 # -*- Mode: cperl; cperl-indent-level:4 tab-width: 8; indent-tabs-mode: nil -*-
 # -*- coding: utf-8 -*-
 
+# test with:
+# cat *anysudokufile* | perl ch-2.pl
+
 use strict; use warnings;
 use v5.32; # syntax for a < x < b
 
@@ -14,6 +17,23 @@ struct RowCandi => [ rowNum => '$', candidates=> '%',
 
 our $d = 0;
 ++$|;
+
+sub readInputFromStdin () {
+    # identify only [_1-9]
+    my @input = ();
+    while (<STDIN>) {
+        my @line = grep { /[_1-9]/ } split /\b/;
+
+        if ( scalar @line == 9 ) {
+            push @input, [ @line ];
+        }
+        else {
+            warn "something I didn't understand line: $.: $_; -> ignored.";
+        }
+        last if scalar @input == 9;
+    }
+    @input
+}
 
 sub newRowCandi ($$) {
     my ($sketch, $rn) = @_;
@@ -185,6 +205,8 @@ sub getRefWholeSnapshot ($$) {
     } (0..$#{$sketch}) ]
 }
 
+=pod Example
+
 my @P = ( [ qw[_ _ _ 2 6 _ 7 _ 1] ],
           [ qw[6 8 _ _ 7 _ _ 9 _] ],
           [ qw[1 9 _ _ _ 4 5 _ _] ],
@@ -194,6 +216,10 @@ my @P = ( [ qw[_ _ _ 2 6 _ 7 _ 1] ],
           [ qw[_ _ 9 3 _ _ _ 7 4] ],
           [ qw[_ 4 _ _ 5 _ _ 3 6] ],
           [ qw[7 _ 3 _ 1 8 _ _ _] ] );
+
+=cut
+
+my @P = readInputFromStdin();
 
 my $ri;
 my @rowCandidates = ();
