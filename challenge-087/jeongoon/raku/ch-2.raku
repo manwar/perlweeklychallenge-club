@@ -44,29 +44,28 @@ map( -> $ln { next if $ln eq "";                # skip empty line
                  with $ln } );
 
 # confirm input
-$*ERR.say(.Array) for @matrix;
-$*ERR.say;
+#$*ERR.say(.Array) for @matrix;
+#$*ERR.say;
 
 @matrix andthen .kv.map(
     -> $ri, $rw {
         # find all lines which has consecutive element of "1"
         ## a. find cells has value of 1
-        $rw.pairs.grep( { .value eq 1 }, :k ).Slip.
+        my @one-indices = $rw.pairs.grep( { .value eq 1 }, :k );
+
         ## b. make combinations from 1 to elems
-        combinations( 1..* ).                   # one column is *maybe* okay
-                                                # except when the column have
-                                                # one row (-> point)
-        ## c. grep only consecutive points
-        map( -> $cmb {
-                   $cmb.rotor( 2 => -1 ).
-                   map({ [-] .reverse }).       # distance between two points
-                   all == 1                     # are all equal to one.
-        ## d. as ( points array , row index )
-                   ?? ( $cmb, $ri )
-                   !! Empty } ).Array.Slip
-
+       ( 1..$rw.elems ).                        # one column is *maybe* okay
+       map( -> $n                               # except when the column have
+             {                                  # one row (-> point)
+                 @one-indices.rotor( $n => -($n.pred) ).Slip } ).
+       ## c. grep only consecutive points
+       map( -> $cmb {
+                  next if 1 != any(             # skip if
+                      $cmb.rotor( 2 => -1 ).    # distance between two points
+                      map({ [-] .reverse }) );  # are not equal to one
+       ## d. as ( points array , row index )
+                  ( $cmb, $ri ) } ).Slip
     } ).
-
 
 classify( {.[0].Str}, :as{ .[1] } ).            # group by same point or line
 map( { my ($pts-str, $rows) = $_.kv;
@@ -113,3 +112,4 @@ else {
                         ?? "$cv" !! '▨' )} ).Array.say;
     }
 }
+
