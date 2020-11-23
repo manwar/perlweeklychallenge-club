@@ -33,14 +33,12 @@ sub spiral(@step1) {
     my @step4 = ([Z] @step3).reverse;
     my @trips =  [Z] @step1, @step2, @step3, @step4;
     my $elems = @step1.elems * @step1[0].elems;
-    my $c = 0;
     my @result;
 
-    for @trips -> @t {
+    for @trips.kv -> $k, @t {
         for @t -> @step {
-            @result.push: @step[$c..*-$c-2];
+            @result.push: @step[$k..*-$k-2];
         }
-        $c++;
     }
 
     @result = (@result>>.Array).flat[^$elems];
