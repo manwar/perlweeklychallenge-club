@@ -1,7 +1,7 @@
 
 # The Weekly Challenge
 
-The Weekly Challenge - #087 - Tyler Wardhaugh
+The Weekly Challenge - #088 - Tyler Wardhaugh
 
 ## Usage
 
