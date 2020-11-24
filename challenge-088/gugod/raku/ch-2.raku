@@ -1,32 +1,20 @@
-my @directions = [
-    [ 1, 0],  # →
-    [ 0, 1],  # ↓
-    [-1, 0],  # ←
-    [ 0,-1],  # ↑
-];
-
-sub turn ($curdir is rw, @boundary) of Nil  { # ⤵
-    @boundary[$curdir] += ($curdir == 0|3) ?? 1 !! -1;
-    $curdir = ($curdir + 1) % 4;
-    return;
-}
-
-sub next-step (@cursor, $curdir) {
-    @cursor >>+<< @directions[$curdir];
-}
-
-sub inside-boundary(@cursor, @boundary) of Bool {
-    return ((@boundary[3] < @cursor[0] < @boundary[1])
-            and (@boundary[0] < @cursor[1] < @boundary[2]));
-}
 
 sub spiral-matrix (@M) {
-    my $width = @M[0].elems;
-    my $height = @M.elems;
-    my @cursor = [0,0];
+    # Things don'tt change
+    my $width  := @M[0].elems;
+    my $height := @M.elems;
+    my @directions := [
+        [ 1, 0],  # →
+        [ 0, 1],  # ↓
+        [-1, 0],  # ←
+        [ 0,-1],  # ↑
+    ];
 
-    # The index here is arranged in thee way to make it easier to implement turn().
+    # Things change.
+    my @cursor = [0,0];
     my $curdir = 0;
+
+    # The order of boundary is arranged in thee way to make it easier to implement turn().
     my @boundary = [
         -1,      # ↑
         $width,  # →
@@ -34,20 +22,34 @@ sub spiral-matrix (@M) {
         -1,      # ←
     ];
 
-    my @spiral;
-    while inside-boundary(@cursor, @boundary) {
-        @spiral.push(@M[@cursor[1]][@cursor[0]]);
-
-        my @next = next-step(@cursor, $curdir);
-        unless inside-boundary(@next, @boundary) {
-            turn($curdir, @boundary);
-            @next = next-step(@cursor, $curdir);
-        }
-
-        @cursor = @next;
+    my sub turn ($curdir is rw, @boundary) of Nil  { # ⤵
+        @boundary[$curdir] += ($curdir == 0|3) ?? 1 !! -1;
+        $curdir = ($curdir + 1) % 4;
+        return;
     }
 
-    return @spiral;
+    my sub next-step (@cursor, $curdir) {
+        @cursor >>+<< @directions[$curdir];
+    }
+
+    my sub inside-boundary(@cursor, @boundary) of Bool {
+        return ((@boundary[3] < @cursor[0] < @boundary[1])
+                and (@boundary[0] < @cursor[1] < @boundary[2]));
+    }
+
+    return gather {
+        while inside-boundary(@cursor, @boundary) {
+            take @M[@cursor[1]][@cursor[0]];
+
+            my @next = next-step(@cursor, $curdir);
+            unless inside-boundary(@next, @boundary) {
+                turn($curdir, @boundary);
+                @next = next-step(@cursor, $curdir);
+            }
+
+            @cursor = @next;
+        }
+    };
 }
 
 sub print-matrix(@matrix) {
