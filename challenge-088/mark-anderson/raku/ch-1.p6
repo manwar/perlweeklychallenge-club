@@ -14,5 +14,5 @@ multi MAIN {
 }
 
 sub array-of-product(@n) {
-    (^@n).map(-> $i { [*] @n[^$i, $i+1..@n.end].flat }).Array;
+    @n.keys.map(-> $i { [*] @n[^$i, $i+1..@n.end].flat }).Array;
 }
