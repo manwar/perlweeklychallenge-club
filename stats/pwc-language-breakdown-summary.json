@@ -1,27 +1,7 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-11-24 09:37:30 GMT"
-   },
    "series" : [
       {
-         "dataLabels" : {
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "y" : 10,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "color" : "#FFFFFF",
-            "rotation" : -90
-         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -29,18 +9,32 @@
             ],
             [
                "Perl",
-               3909
+               3911
             ],
             [
                "Raku",
                2538
             ]
          ],
-         "name" : "Contributions"
+         "dataLabels" : {
+            "y" : 10,
+            "align" : "right",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "enabled" : "true"
+         }
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
    "xAxis" : {
       "type" : "category",
@@ -50,6 +44,12 @@
             "fontFamily" : "Verdana, sans-serif"
          }
       }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-11-24 19:25:24 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "chart" : {
       "type" : "column"
