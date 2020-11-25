@@ -6,7 +6,7 @@ import Data.List (sort)
 
 {- tested with:
 runhaskell ch-1.hs  1 3 2 -1 -2 -3 6 7 9 1
-1 as 3 -2 = 1
+1 as 3 - 2 = 1
 -}
 
 usageMessage = "Usage: runhaskell ch-1.hs "
@@ -25,17 +25,18 @@ pairDifference target ls = pairdiff target (head sorted) (tail sorted) 1
              EQ -> Just (f, (rst !! i))
 
 main = do
-  ints <- (catMaybes.map (\nStr ->
-                            if (all isNumber nStr) then Just(read nStr :: Int)
-                            else Nothing )) `fmap` getArgs;
-
-  let d = (head ints) in
-
-    if (length ints) < 2
-    then die usageMessage
-    else if d < 0
-         then die usageMessage
-         else case pairDifference d (tail ints) of
-                Nothing    -> putStrLn "0"
-                Just (a,b) -> putStrLn $ "1 as " ++ (show b) ++ " - "
-                  ++ (show a) ++ " = " ++ (show d)
+    (catMaybes.map (\nStr ->
+                      -- poor parser
+                       if (all (`elem` "0123456789+-") nStr)
+                       then Just(read nStr :: Int)
+                       else Nothing )) `fmap` getArgs
+      >>= ( \ints ->
+             let d = (head ints) in
+               if (length ints) < 2
+               then die usageMessage
+               else if d < 0
+               then die usageMessage
+               else case pairDifference d (tail ints) of
+                 Nothing    -> putStrLn "0"
+                 Just (a,b) -> putStrLn $ "1 as " ++ (show b) ++ " - "
+                               ++ (show a) ++ " = " ++ (show d) )
