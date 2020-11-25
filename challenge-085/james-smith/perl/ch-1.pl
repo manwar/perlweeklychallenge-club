@@ -11,7 +11,7 @@ is( trip_sum(qw(0.5 1.1 0.3 0.7)), 1 );
 done_testing;
 
 sub trip_sum {
-  for my $i ( 0 :W.. (@_-3) ) {
+  for my $i ( 0 .. (@_-3) ) {
     next unless $_[$i] < 2;          ## For large arrays this might save some time...;
     for my $j ( ($i+1) .. (@_-2) ) {
       next unless $_[$i]+$_[$j] < 2; ## For large arrays this might save some time...;
