@@ -1,15 +1,15 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2020-11-25 22:16:03 GMT"
    },
    "chart" : {
       "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "yAxis" : {
       "min" : 0,
@@ -17,18 +17,21 @@
          "text" : null
       }
    },
-   "subtitle" : {
-      "text" : "Last updated at 2020-11-25 22:06:35 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "align" : "right"
+         },
          "data" : [
             [
                "Blog",
@@ -40,23 +43,20 @@
             ],
             [
                "Raku",
-               2544
+               2546
             ]
-         ],
-         "dataLabels" : {
-            "align" : "right",
-            "y" : 10,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "rotation" : -90
-         }
+         ]
       }
    ],
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
+   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    }
