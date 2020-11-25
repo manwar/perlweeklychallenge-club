@@ -1,7 +1,12 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -37,28 +42,21 @@
          "Guillermo Ramos"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-11-25 22:55:04 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             1,
             128,
@@ -90,10 +88,10 @@
             3,
             4,
             32
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             87,
@@ -125,8 +123,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -163,5 +160,8 @@
             0
          ]
       }
-   ]
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-11-25 23:19:58 GMT"
+   }
 }
