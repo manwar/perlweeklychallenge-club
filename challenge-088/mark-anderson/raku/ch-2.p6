@@ -1,8 +1,3 @@
-#
-# Abandoning my atrocious solution and going with the  
-# method used by James Smith, Feng Chang, (and possibly others)
-#
-
 use Test;
 plan 4;
 
@@ -32,6 +27,10 @@ cmp-ok spiral(@matrix), &[eqv], [1, 2, 4, 6, 8, 7, 5, 3], "Rows > Cols";
 
 cmp-ok spiral(@matrix), &[eqv], [1, 2, 3, 4, 8, 7, 6, 5], "Cols > Rows";
 
+#
+# Abandoning my atrocious solution and going with the  
+# method used by James Smith, Feng Chang, (and possibly others)
+#
 sub spiral(@matrix) {
     my @r;
 
