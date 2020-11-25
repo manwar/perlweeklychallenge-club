@@ -14,7 +14,7 @@ sub rotate-left (+@n) {
 
 sub spiral-matrix (+@n) {
     \( matrix => @n, spiral => Empty ),  { \( matrix => .<matrix>.skip.&rotate-left, spiral => .<matrix>.head )  } ... !*.<matrix>
-    andthen .map: *.<spiral>
+    andthen .map: |*.<spiral>
 }
 
 multi MAIN (Bool :$test!) {
@@ -38,6 +38,6 @@ multi MAIN (Bool :$test!) {
     );
 
     is-deeply rotate-left(@matrix), $rotated;
-    is spiral-matrix(@matrix),  (1, 2, 3, 6, 9, 8, 7, 4, 5);
-    is spiral-matrix(@matrix2), (1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10);
+    is-deeply spiral-matrix(@matrix),  (1, 2, 3, 6, 9, 8, 7, 4, 5);
+    is-deeply spiral-matrix(@matrix2), (1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10);
 }
