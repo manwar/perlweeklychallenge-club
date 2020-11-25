@@ -40,7 +40,7 @@ sub spiral(@matrix) {
 
         try {@r.push: .pop} for @matrix;
 
-        try @r.append($_) given @matrix.pop.reverse; 
+        try @r.append: $_ given @matrix.pop.reverse; 
 
         try {@r.push: @matrix[$_].shift} for @matrix.end...0; 
     }
