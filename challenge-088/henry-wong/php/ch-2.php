@@ -1,9 +1,13 @@
 <?php
+
+# see http://techieme.in/matrix-rotation/
+
 # 0. take row
 # 1. delete row
 # 2. rotate matrix 90 degrees
 # 3. repeat again till no matrix
 
+# Rotate matrix
 # 1. transpose matrix 
 # 2. reflect horizontal axis 
 
