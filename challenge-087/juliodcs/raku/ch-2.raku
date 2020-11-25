@@ -16,7 +16,7 @@ sub largest-rectangle-v1($matrix) {
     my $max-offset = $matrix.split(/\s+/).head.chars.pred;
     for 0 .. $max-offset -> $offset {
         my $ones = '';
-        for $matrix ~~ m:g/^^ \d**{$offset} (1+) {$ones=$0} (\d*\s+) <?before \d**{$offset} $ones> / {
+        for $matrix ~~ m:g/^^ \d**{$offset} (1+) {$ones=$0} \d*\s+ <?before \d**{$offset} $ones> / {
             $max = $_[0].chars if $max < $_[0].chars
         }
     }
