@@ -11,29 +11,15 @@ sub sudoku_solver($sudoku) {
     my $index = 0;
     while ($index < @indexes) {
         die 'No solution possible' if $index < 0;
-            
+
         my ($y, $x) = get_position($indexes[$index]);
-        
         my $guess = make_guess($sudoku, $y, $x, $backtrack);
-        
-        if ($guess == 0 && !$backtrack) {
-            # not valid guess, We will try with next guess for same index
-            $backtrack = 1;
-        }
-        elsif ($guess == 0 && $backtrack) {
-            # not valid guess and no more guesses to test
-            # We give up with this position (we decrement index)
-            
-            $sudoku->[$y][$x] = 0;
-            $index--;
-        }
-        else {
-            # valid guess (for now), increase index
-            
-            $sudoku->[$y][$x] = $guess;
-            $backtrack = 0;
-            $index++;
-        }
+
+        # If there's a guess, We set it and increase the index
+        # if there's no guess, We clean the box and decrement the index
+        $sudoku->[$y][$x]  = $guess;
+        $backtrack         = !$guess;
+        $index            += $guess ? 1 : -1;
     }
     
     return $sudoku;
