@@ -49,8 +49,9 @@ int main (void) {
     while (getline (&line, &len, stdin) != -1) {
         int    offset;
         char * line_ptr = line;
-        size = 0;     /* Reset size of array */
         number input; /* Each number read from the line */
+
+        size = 0;     /* Reset size of array */
 
         /* Scan the line just read, one number at a time */
         while (sscanf (line_ptr, "%lld%n", &input, &offset) == 1) {
