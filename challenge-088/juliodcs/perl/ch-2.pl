@@ -18,11 +18,6 @@ sub rotator($matrix) {
     [map {my $i = $_;[ map {$_->[$i]} $matrix->@* ]} reverse 0 .. $w - 1]
 }
 
-if (@ARGV > 0) {
-    say join q(, ), Dumper spiral_matrix(\@ARGV);
-    exit 0;
-}
-
 use Test::More;
 
 is_deeply spiral_matrix([
