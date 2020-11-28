@@ -13,12 +13,12 @@ use experimental qw(signatures);
 # all elements of @N except the index $N[i].
 
 my @n = @ARGV;
-my @res = (1) x @ARGV;
+my @m = (1) x @ARGV;
 
 for my $i (0..$#n) {
     for my $j (0..$#n) {
-        $res[$j] *= $n[$i] unless $i == $j;
+        $m[$j] *= $n[$i] unless $i == $j;
     }
 }
 
-say "@res";
+say "@m";
