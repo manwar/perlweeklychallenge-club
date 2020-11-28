@@ -13,7 +13,7 @@ use experimental qw(signatures);
 # all elements of @N except the index $N[i].
 
 my @n = @ARGV;
-my @res = map {1} 0..$#n;
+my @res = (1) x @ARGV;
 
 for my $i (0..$#n) {
     for my $j (0..$#n) {
