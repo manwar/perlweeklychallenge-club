@@ -42,7 +42,9 @@ matrix . forEach (row => {
     }
 });
 
-
+//
+// Set some variables
+//
 let EAST      = 0;
 let SOUTH     = 1;
 let WEST      = 2;
@@ -55,7 +57,9 @@ let max_x     = matrix     . length - 1;
 let min_y     = 0;
 let max_y     = matrix [0] . length - 1;
 
-
+//
+// Spiral down the matrix, putting the results into the string output.
+//
 let output = "";
 while (min_x <= max_x && min_y <= max_y) {
     if (direction == EAST) {
@@ -87,6 +91,6 @@ while (min_x <= max_x && min_y <= max_y) {
 }
 
 //
-// Remove leading ", " and print result
+// Print the result, without the leading ", ".
 //
 process . stdout . write (output . slice (2) + "\n");
