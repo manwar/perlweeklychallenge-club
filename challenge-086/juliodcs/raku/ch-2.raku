@@ -1,9 +1,9 @@
 #! /usr/bin/raku
 
 sub solve-sudoku(@sudoku) {
-    my @indexes := get-indexes(@sudoku);
+    my @indexes := get-indexes @sudoku;
 
-    my $backtrack = 0;
+    my $backtrack = False;
     my $index = 0;
     while $index < @indexes.elems {
         die 'No solution possible' if $index < 0;
@@ -11,22 +11,11 @@ sub solve-sudoku(@sudoku) {
         my ($y, $x) = get-position @indexes[$index];
         my $guess = make-guess @sudoku, $y, $x, $backtrack;
 
-        if $guess == 0 && !$backtrack {
-            # not valid guess, We will try with next guess for same index
-            $backtrack = 1;
-        }
-        elsif $guess == 0 && $backtrack {
-            # not valid guess and no more guesses to test
-            # We give up with this position (we decrement index)
-            @sudoku[$y;$x] = 0;
-            $index--;
-        }
-        else {
-            # valid guess (for now), increase index
-            @sudoku[$y;$x] = $guess;
-            $backtrack = 0;
-            $index++;
-        }
+        # If there's a guess, We set it and increase the index
+        # if there's no guess, We clean the box and decrement the index
+        @sudoku[$y;$x]  = $guess;
+        $backtrack      = not so $guess;
+        $index         += $guess ?? 1 !! -1;
     }
 
     @sudoku
