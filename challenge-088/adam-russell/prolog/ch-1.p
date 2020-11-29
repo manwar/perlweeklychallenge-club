@@ -3,12 +3,11 @@
     Write a script to return an array @M where $M[i] is 
     the product of all elements of @N except the index $N[i].
 */
-
+product_a_b(A, B, P):- 
+    P is A*B.
 list_product([], 1).
-list_product([L|Ls], P) :-
-        foldl(product_, Ls, L, P).
-
-product_(A, B, P) :- P is A*B.
+list_product([H|T], P) :-
+        foldl(product_a_b, T, H, P).
 
 list_products(List, Products):-
     length(List, L0),
