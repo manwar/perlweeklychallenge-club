@@ -28,8 +28,8 @@ cmp-ok spiral(@matrix), &[eqv], [1, 2, 4, 6, 8, 7, 5, 3], "Rows > Cols";
 cmp-ok spiral(@matrix), &[eqv], [1, 2, 3, 4, 8, 7, 6, 5], "Cols > Rows";
 
 #
-# Abandoning my atrocious solution and going with the  
-# method used by James Smith, Feng Chang, (and possibly others)
+# Abandoning my atrocious solution and going with the algorithm  
+# implemented by James Smith, Feng Chang, (and possibly others).
 #
 sub spiral(@matrix) {
     my @r;
@@ -37,11 +37,11 @@ sub spiral(@matrix) {
     while @matrix {
         @r.append: |@matrix.shift; 
 
-        try {@r.push: .pop} for @matrix;
+        try { @r.push: .pop } for @matrix;
 
         try @r.append: $_ given @matrix.pop.reverse; 
 
-        try {@r.push: @matrix[$_].shift} for @matrix.end...0; 
+        try -> $i { @r.push: .[$i].shift } for .end...0 given @matrix; 
     }
 
     @r;
