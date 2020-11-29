@@ -1,4 +1,17 @@
 {
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "xAxis" : {
       "categories" : [
          "Clive Holloway",
@@ -33,20 +46,14 @@
          "Guillermo Ramos"
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-11-29 13:01:41 GMT"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-11-28 17:34:26 GMT"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             128,
@@ -78,9 +85,11 @@
             3,
             4,
             32
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             87,
@@ -112,11 +121,9 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             30,
@@ -148,20 +155,13 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
