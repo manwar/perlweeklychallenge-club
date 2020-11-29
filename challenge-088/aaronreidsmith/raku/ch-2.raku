@@ -4,7 +4,15 @@ subset PositiveInt of Int where { $_ ~~ Int && $_ > 0 }
 
 enum Direction <NORTH EAST SOUTH WEST>;
 
-sub MAIN(*@input where all(@input) ~~ PositiveInt) {
+sub USAGE {
+    print Q:c:to/EOH/;
+    Usage: {$*PROGRAM-NAME} <matrix>
+
+    Example: {$*PROGRAM-NAME} 1 2 3 4 5 6 7 8 9
+EOH
+}
+
+sub MAIN(*@input where all(@input) ~~ PositiveInt && @input.elems > 0) {
     # Ensure our input is exactly square
     my $side-length = @input.elems.sqrt;
     $side-length.Int == $side-length or die "Must be a square matrix";
