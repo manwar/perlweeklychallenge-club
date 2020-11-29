@@ -1,12 +1,12 @@
 import System.Environment
 import System.Exit
-import Data.Char (isNumber)
 import Data.Maybe (catMaybes)
 import Data.List (sort, sortBy)
 
 {- tested with: runhaskell ch-1.hs  1 3 2 -1 -2 -3 6 7 9 1
 (only shows one answer)
 -}
+
 
 answerLongestConsecutiveSequence :: [Int] -> [Int]
 answerLongestConsecutiveSequence =
@@ -22,7 +22,9 @@ answerLongestConsecutiveSequence =
 
 main = do
     (catMaybes.map (\nStr ->
-                       if (all isNumber nStr) then Just(read nStr :: Int)
+                      -- poor parser
+                       if (all (`elem` "0123456789+-") nStr)
+                       then Just(read nStr :: Int)
                        else Nothing )) `fmap` getArgs
       >>= (\nums ->
               if length nums < 1 then
