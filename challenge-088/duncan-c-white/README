@@ -1,70 +1,63 @@
-Task 1: "Longest Consecutive Sequence
+Task 1: "Array of Product
 
-You are given an unsorted array of integers @N.
+You are given an array of positive integers @N.
 
-Write a script to find the longest consecutive sequence. Print 0 if no sequence found.
-
-Example 1:
-
-	Input: @N = (100, 4, 50, 3, 2)
-	Output: (2, 3, 4)
-
-Example 2:
-
-	Input: @N = (20, 30, 10, 40, 50)
-	Output: 0
-
-Example 3:
-
-	Input: @N = (20, 19, 9, 11, 10)
-	Output: (9, 10, 11)
-"
-
-My notes: clearly defined, sort it first, then walk list looking for sequences
-
-
-Task 2: "Largest Rectangle
-
-You are given binary matrix m x n with all values being 0 or 1.
-
-Write a script to find the largest rectangle containing only 1. Print 0 if none found.
+Write a script to return an array @M where $M[i] is the product of all elements of @N except the index $N[i].
 
 Example 1:
 
 Input:
-    [ 0 0 0 1 0 0 ]
-    [ 1 1 1 0 0 0 ]
-    [ 0 0 1 0 0 1 ]
-    [ 1 1 1 1 1 0 ]
-    [ 1 1 1 1 1 0 ]
-
+    @N = (5, 2, 1, 4, 3)
 Output:
-    [ 1 1 1 1 1 ]
-    [ 1 1 1 1 1 ]
+    @M = (24, 60, 120, 30, 40)
+
+    $M[0] = 2 x 1 x 4 x 3 = 24
+    $M[1] = 5 x 1 x 4 x 3 = 60
+    $M[2] = 5 x 2 x 4 x 3 = 120
+    $M[3] = 5 x 2 x 1 x 3 = 30
+    $M[4] = 5 x 2 x 1 x 4 = 40
 
 Example 2:
 
 Input:
-    [ 1 0 1 0 1 0 ]
-    [ 0 1 0 1 0 1 ]
-    [ 1 0 1 0 1 0 ]
-    [ 0 1 0 1 0 1 ]
-
-Output: 0
-
-Example 3:
-
-Input:
-    [ 0 0 0 1 1 1 ]
-    [ 1 1 1 1 1 1 ]
-    [ 0 0 1 0 0 1 ]
-    [ 0 0 1 1 1 1 ]
-    [ 0 0 1 1 1 1 ]
-
+    @N = (2, 1, 4, 3)
 Output:
-    [ 1 1 1 1 ]
-    [ 1 1 1 1 ]
+    @M = (12, 24, 6, 8)
+
+    $M[0] = 1 x 4 x 3 = 12
+    $M[1] = 2 x 4 x 3 = 24
+    $M[2] = 2 x 1 x 3 = 6
+    $M[3] = 2 x 1 x 4 = 8
 "
 
-My notes: clearly defined, I assume that a rectangle has min-width 2,
-min-height 2, brute force: find all rectangles, pick max area
+My notes: clearly defined.  So M[i] is product(all elements)/M[i]
+Hang on! unless M[i]==0 in which it's product(all other elements)
+
+
+Task 2: "Spiral Matrix
+
+You are given m x n matrix of positive integers.
+
+Write a script to print a spiral path throught the matrix as list.
+
+Example 1:
+
+Input:
+    [ 1, 2, 3 ]
+    [ 4, 5, 6 ]
+    [ 7, 8, 9 ]
+Ouput:
+    [ 1, 2, 3, 6, 9, 8, 7, 4, 5 ]
+
+Example 2:
+
+Input:
+    [  1,  2,  3,  4 ]
+    [  5,  6,  7,  8 ]
+    [  9, 10, 11, 12 ]
+    [ 13, 14, 15, 16 ]
+Output:
+    [ 1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10 ]
+"
+
+My notes: clearly defined.  Is "a spiral path" clear?  Think so.
