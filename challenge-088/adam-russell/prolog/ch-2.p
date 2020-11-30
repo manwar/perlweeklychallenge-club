@@ -44,7 +44,6 @@ write_remove_bottom(Matrix, UpdatedMatrix):-
     
 spiral(Matrix):-
     spiral(Matrix, _).
-spiral([], _).    
 spiral(Matrix, UpdatedMatrix):-
     write_remove_top(Matrix, UpdatedMatrix),
     write(","),
@@ -52,8 +51,9 @@ spiral(Matrix, UpdatedMatrix):-
     reverse(RightRemainder, RemainderRight),
     write_remove_bottom(RemainderRight, BottomRemainder), 
     write(","),
-    write_remove_left(BottomRemainder, LeftRemainder), 
-    spiral(LeftRemainder, []).
+    reverse(BottomRemainder, RemainderBottom),
+    write_remove_left(RemainderBottom, LeftRemainder), 
+    spiral(LeftRemainder, _).
 spiral(_, []):-
     write("\b").
     
