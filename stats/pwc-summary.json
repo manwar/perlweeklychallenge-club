@@ -1,17 +1,20 @@
 {
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             0,
@@ -219,7 +222,8 @@
             3,
             41,
             11
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -227,7 +231,7 @@
             0,
             0,
             3,
-            1,
+            2,
             0,
             5,
             0,
@@ -433,11 +437,12 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
             0,
-            0,
+            1,
             4,
             65,
             0,
@@ -640,12 +645,18 @@
             1,
             5,
             10
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
+   "chart" : {
+      "type" : "column"
+   },
    "subtitle" : {
-      "text" : "[Champions: 206] Last updated at 2020-11-30 21:57:16 GMT"
+      "text" : "[Champions: 206] Last updated at 2020-11-30 21:59:45 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "xAxis" : {
       "categories" : [
@@ -856,16 +867,5 @@
          "Yet Ebreo",
          "Yozen Hernandez"
       ]
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
