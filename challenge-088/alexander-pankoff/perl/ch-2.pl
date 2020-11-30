@@ -28,11 +28,10 @@ sub spriral_matrix($matrix) {
     ( $bot, @matrix ) = ( $matrix[-1], @matrix[ 0 ... ( $#matrix - 1 ) ] );
 
     # get left and right side from the remaining rows
-    my @left_side  = map { $_->[0] } @matrix;
     my @right_side = map { $_->[-1] } @matrix;
-
-    # remove left and right side from the matrix
-    @matrix = map { [ @{$_}[ 1 ... ( $#$_ - 1 ) ] ] } @matrix;
+    @matrix = grep { @$_ } map { [ @{$_}[ 0 ... ( $#$_ - 1 ) ] ] } @matrix;
+    my @left_side = map { $_->[0] } @matrix;
+    @matrix = grep { @$_ } map { [ @{$_}[ 1 ... ( $#$_ ) ] ] } @matrix;
 
     return ( @$top, @right_side, reverse( @{ $bot // [] } ),
         reverse(@left_side), spriral_matrix( \@matrix ) );
