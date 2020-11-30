@@ -83,7 +83,12 @@ my %languages = (
         ext     =>   "f90",
         dir     =>   "fortran",
         comp    =>   "/opt/local/bin/gfortran-mp-4.4",
-    }
+    },
+   'Brainfuck'  =>   {
+        ext     =>   "bf",
+        dir     =>   "brainfuck",
+        exe     =>   "$HOME/Bin/brf",
+    },
 
 );
 
