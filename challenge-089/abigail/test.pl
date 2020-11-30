@@ -47,7 +47,7 @@ my %languages = (
         args    =>   ["-f"],
     },
     C           =>   {
-        exe     =>   "/usr/bin/cc",
+        comp    =>   "/usr/bin/cc",
         ext     =>   "c",
         dir     =>   "c",
     },
@@ -79,6 +79,11 @@ my %languages = (
         dir     =>   "csh",
         exe     =>   "/bin/csh",
     },
+    Fortran     =>   {
+        ext     =>   "f90",
+        dir     =>   "fortran",
+        comp    =>   "/opt/local/bin/gfortran-mp-4.4",
+    }
 
 );
 
@@ -96,6 +101,7 @@ foreach my $challenge (@challenges) {
             my $info     =   $languages {$language};
             my $exe      =   $$info {exe};
             my $ext      =   $$info {ext};
+            my $comp     =   $$info {comp};
             my $dir      =   $$info {dir}     // lc $language;
             my @args     = @{$$info {args}    // []};
             my $filter   =   $$info {filter}  // '';
@@ -105,11 +111,11 @@ foreach my $challenge (@challenges) {
             next unless -r $source;
 
             #
-            # C requires special handling. The source needs to be compiled.
+            # Some languages first need to be compiled.
             #
-            if ($language eq "C") {
+            if ($comp) {
                 $compiled = $source =~ s/\.$ext$/.$ext_out/r;
-                system $exe, "-o", $compiled, $source;
+                system $comp, "-o", $compiled, $source;
             }
 
             #
