@@ -24,6 +24,7 @@ GetOptions 'slow'              =>  \my $run_slow_tests,
            'lang|language=s'   =>  \my @languages,
 ;
 
+my $HOME = $ENV {HOME};
 
 my %languages = (
     Perl        =>   {
@@ -53,6 +54,11 @@ my %languages = (
     SQL         =>   {
         ext     =>   "sql",
     },
+   'Befunge-93' =>   {
+        ext     =>   "bf",
+        dir     =>   "befunge-93",
+        exe     =>   "$HOME/Bin/bf",
+   },
 );
 
 my $perl_exe = $languages {Perl} {exe};
