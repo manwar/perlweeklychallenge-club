@@ -148,8 +148,8 @@ foreach my $challenge (@challenges) {
                     while ($exp =~ s/^\s*#%\s*(.*)\n//) {
                         my $pragma = $1;
                         $pragma =~ s/\s+$//;
-                        if (lc $pragma eq "slow") {
-                            $pragma {slow} = 1;
+                        if ($pragma =~ /^\w+$/) {
+                            $pragma {lc $pragma} = 1;
                             next;
                         }
                         if ($pragma =~ /^\s*(\w+):\s*(.*)/) {
@@ -181,6 +181,9 @@ foreach my $challenge (@challenges) {
                     }
 
                     s/\h+$//gm for $exp, $got;
+                    if ($pragma {trim}) {
+                        s/^\h+//gm for $exp, $got;
+                    }
                     is $got, $exp, $name;
                 }}
             };
