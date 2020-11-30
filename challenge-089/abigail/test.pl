@@ -69,6 +69,11 @@ my %languages = (
         dir     =>   "python",
         exe     =>   "/opt/local/bin/python",
     },
+    Ruby        =>   {
+        ext     =>   "rb",
+        dir     =>   "ruby",
+        exe     =>   "/usr/bin/ruby",
+    },
 );
 
 my $perl_exe = $languages {Perl} {exe};
