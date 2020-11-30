@@ -273,10 +273,12 @@ sub test_sql ($dbh, $query, $tables_info, $input) {
         # Run the query. If we have multiple results, join columns
         # by spaces, and rows by newlines.
         #
-        my $result = $dbh -> selectall_arrayref ($real_query);
+        foreach my $query (split /^\s*;\s*$/m => $real_query) {
+            my $result = $dbh -> selectall_arrayref ($query);
+            $output   .= join "\n" => map {join " " => @$_} @$result;
+            $output   .= "\n";
+        }
 
-        $output .= join "\n" => map {join " " => @$_} @$result;
-        $output .= "\n";
         last unless @input;
     }
 
