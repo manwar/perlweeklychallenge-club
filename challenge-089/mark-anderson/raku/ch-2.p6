@@ -7,7 +7,7 @@ use Scalar::History;
 unit sub MAIN(UInt $n where * mod 2);
 #= a positive odd integer
 
-.say for odd-magic-square($n);
+say odd-magic-square($n);
 
 sub odd-magic-square($n) {
     subset Valid of UInt where 0 <= * < $n;

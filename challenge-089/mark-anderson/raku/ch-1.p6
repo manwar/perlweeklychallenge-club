@@ -1,4 +1,4 @@
-multi MAIN(Int $n) {
+multi MAIN(UInt $n where * > 0) { #= greater than 0
     say gcd-sum($n);
 }
 
