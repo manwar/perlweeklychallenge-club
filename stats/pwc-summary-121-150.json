@@ -1,6 +1,23 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-11-30 22:19:58 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-11-30 22:38:23 GMT"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "xAxis" : {
       "categories" : [
@@ -36,13 +53,13 @@
          "Phillip Harris"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             12,
             4,
@@ -74,11 +91,9 @@
             1,
             4,
             8
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -110,7 +125,8 @@
             10,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -147,21 +163,5 @@
             0
          ]
       }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   }
+   ]
 }
