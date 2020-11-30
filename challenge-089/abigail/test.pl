@@ -58,7 +58,12 @@ my %languages = (
         ext     =>   "bf",
         dir     =>   "befunge-93",
         exe     =>   "$HOME/Bin/bf",
-   },
+    },
+    Bash        =>   {
+        ext     =>   "sh",
+        dir     =>   "bash",
+        exe     =>   "/bin/sh",
+    },
 );
 
 my $perl_exe = $languages {Perl} {exe};
