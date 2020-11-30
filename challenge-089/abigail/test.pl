@@ -74,6 +74,12 @@ my %languages = (
         dir     =>   "ruby",
         exe     =>   "/usr/bin/ruby",
     },
+    Csh         =>   {
+        ext     =>   "csh",
+        dir     =>   "csh",
+        exe     =>   "/bin/csh",
+    },
+
 );
 
 my $perl_exe = $languages {Perl} {exe};
