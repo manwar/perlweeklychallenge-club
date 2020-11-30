@@ -10,6 +10,6 @@ multi MAIN {
     ok gcd-sum(4) == 7, "Example 2";
 }
 
-sub gcd-sum(Int $n) {
+sub gcd-sum(UInt $n) {
     sum (1..$n).combinations(2).map(-> ($a, $b) { $a gcd $b });
 }
