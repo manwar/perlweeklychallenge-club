@@ -18,7 +18,7 @@ unit sub MAIN;
 $*ERR.say("Input: (Ctrl-D or Ctrl-Z to finish to input.)");
 my @matrix = do with my @lines = $*IN.lines {
     @lines = @lines.
-    split(/"]" \s* "\n"* | "\n"/).    # split rows by newline or `]'
+    split(/"]" \s* "\n"* || "\n"/).    # split rows by newline or `]'
     map( -> $ln { next if $ln eq "";
                   (S:g/ ^\s+ || '[' || \s+$ // with $ln).
                   split(/\s+/).Array } );
@@ -36,14 +36,16 @@ my @matrix = do with my @lines = $*IN.lines {
 # confirm user input
 my $ww = @matrix>>.List.flat.max(*.chars).chars;
 
-$*ERR.say( "given matrix: " );
-$*ERR.say( .map({sprintf("%*s", $ww, $_)}).Array ) for @matrix;
-$*ERR.say;
+#$*ERR.say( "given matrix: " );
+#$*ERR.say( .map({sprintf("%*s", $ww, $_)}).Array ) for @matrix;
+#$*ERR.say;
 
 sub peel-off( @a ) {
     my ( $re, $ce ) = @a.end, @a[0].end;
 
     my @inside  = @a[ 1 .. $re.pred; 1 .. $ce.pred ] // Empty;
+    @inside .= rotor($ce.pred).map(*.Array) if @inside;
+
     my @outside = @a[ 0; * ];                           # outside of top
 
     for ( [ 1 .. $re;     $ce         ],                # outside of right
@@ -57,7 +59,6 @@ sub peel-off( @a ) {
         last unless all( $rr.elems.so, $cr.elems.so );  # out of range
         @outside.append: @a[$rr[*]; $cr[*]];
     }
-
     @inside, @outside
 }
 
@@ -72,4 +73,4 @@ repeat {
 
 } while ( @mat[0] andthen { .elems > 0} );
 
-@spiral.say;
+@spiral.put;
