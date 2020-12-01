@@ -13,7 +13,7 @@ sub solve-sudoku(@sudoku) {
 
         # If there's a guess, We set it and increase the index
         # if there's no guess, We clean the box and decrement the index
-        @sudoku[$y;$x]  = $guess ?? $guess !! 0;
+        @sudoku[$y;$x]  = $guess;
         $backtrack      = not so $guess;
         $index         += $guess ?? 1 !! -1;
     }

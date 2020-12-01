@@ -27,28 +27,22 @@ cmp-ok spiral(@matrix), &[eqv], [1, 2, 4, 6, 8, 7, 5, 3], "Rows > Cols";
 
 cmp-ok spiral(@matrix), &[eqv], [1, 2, 3, 4, 8, 7, 6, 5], "Cols > Rows";
 
-sub spiral(@step1) {
-    my @step2 = ([Z] @step1).reverse;
-    my @step3 = ([Z] @step2).reverse;
-    my @step4 = ([Z] @step3).reverse;
-    my @trips =  [Z] @step1, @step2, @step3, @step4;
-    my $elems = @step1.elems * @step1[0].elems;
-    my @result;
+#
+# Abandoning my atrocious solution and going with the algorithm  
+# implemented by James Smith, Feng Chang, (and possibly others).
+#
+sub spiral(@matrix) {
+    my @r;
 
-    for @trips.kv -> $k, @t {
-        for @t -> @step {
-            @result.push: @step[$k..*-$k-2];
-        }
+    while @matrix {
+        @r.append: |@matrix.shift; 
+
+        try { @r.push: .pop } for @matrix;
+
+        try @r.append: $_ given @matrix.pop.reverse; 
+
+        try -> $i { @r.push: .[$i].shift } for .end...0 given @matrix; 
     }
 
-    @result = (@result>>.Array).flat[^$elems];
-
-    # handle the case when matrix is 3 X 3, 5 X 5, 7 X 7 
-    # etc. where I can't seem to get the center element :(
-    unless @result[*-1] {
-        my $i = @step1 / 2;
-        @result[*-1] = @step1[$i][$i];
-    }
-
-    @result;
-}
+    @r;
+} 

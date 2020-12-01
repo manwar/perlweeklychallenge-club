@@ -1,59 +1,151 @@
 {
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2020-12-01 06:14:09 GMT"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
    "tooltip" : {
-      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "followPointer" : 1
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "Aaron Smith",
+               "drilldown" : "Aaron Smith",
+               "y" : 3
+            },
+            {
+               "drilldown" : "Clifton Wood",
+               "name" : "Clifton Wood",
+               "y" : 2
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Feng Chang",
+               "name" : "Feng Chang"
+            },
+            {
+               "y" : 2,
+               "name" : "James Smith",
+               "drilldown" : "James Smith"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
+            },
+            {
+               "name" : "Simon Green",
+               "drilldown" : "Simon Green",
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Stuart Little",
+               "name" : "Stuart Little"
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 089",
+         "colorByPoint" : 1
+      }
+   ],
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
+                  2
+               ],
+               [
+                  "Blog",
                   1
                ]
             ],
-            "name" : "Andrew Shitov"
+            "id" : "Aaron Smith",
+            "name" : "Aaron Smith"
          },
          {
+            "id" : "Clifton Wood",
+            "name" : "Clifton Wood",
             "data" : [
                [
-                  "Perl",
+                  "Raku",
                   2
                ]
-            ],
+            ]
+         },
+         {
             "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby"
-         },
-         {
+            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
                   2
+               ],
+               [
+                  "Blog",
+                  1
                ]
-            ],
-            "name" : "Duane Powell",
-            "id" : "Duane Powell"
+            ]
          },
          {
-            "name" : "E. Choroba",
             "data" : [
                [
-                  "Perl",
+                  "Raku",
                   2
                ]
             ],
-            "id" : "E. Choroba"
+            "name" : "Feng Chang",
+            "id" : "Feng Chang"
          },
          {
-            "id" : "James Smith",
             "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -62,57 +154,18 @@
             ]
          },
          {
+            "name" : "Mark Anderson",
             "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Mark Anderson"
-         },
-         {
-            "id" : "Niels van Dijke",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "name" : "Niels van Dijke"
-         },
-         {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "PJ Durai",
-            "id" : "PJ Durai"
-         },
-         {
-            "name" : "Pete Houston",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "id" : "Pete Houston"
-         },
-         {
-            "name" : "Philip Hood",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Philip Hood"
+            ]
          },
          {
             "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -122,12 +175,9 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Roger Bell_West"
+            ]
          },
          {
-            "id" : "Simon Green",
-            "name" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -137,36 +187,14 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Simon Green",
+            "id" : "Simon Green"
          },
          {
             "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Simon Proctor"
-         },
-         {
-            "id" : "Stuart Little",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Stuart Little"
-         },
-         {
-            "id" : "Ulrich Rieke",
-            "name" : "Ulrich Rieke",
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ],
                [
                   "Raku",
                   2
@@ -174,131 +202,32 @@
             ]
          },
          {
+            "id" : "Stuart Little",
+            "name" : "Stuart Little",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Ulrich Rieke",
+            "id" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
                   2
                ],
                [
-                  "Blog",
-                  1
+                  "Raku",
+                  2
                ]
-            ],
-            "name" : "W. Luis Mochan",
-            "id" : "W. Luis Mochan"
+            ]
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "title" : {
-      "text" : "Perl Weekly Challenge - 088"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 16] Last updated at 2020-11-24 20:02:00 GMT"
-   },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 088",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "drilldown" : "Andrew Shitov",
-               "y" : 1,
-               "name" : "Andrew Shitov"
-            },
-            {
-               "drilldown" : "Dave Jacoby",
-               "y" : 2,
-               "name" : "Dave Jacoby"
-            },
-            {
-               "name" : "Duane Powell",
-               "y" : 2,
-               "drilldown" : "Duane Powell"
-            },
-            {
-               "name" : "E. Choroba",
-               "y" : 2,
-               "drilldown" : "E. Choroba"
-            },
-            {
-               "drilldown" : "James Smith",
-               "y" : 2,
-               "name" : "James Smith"
-            },
-            {
-               "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "y" : 2,
-               "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke"
-            },
-            {
-               "drilldown" : "PJ Durai",
-               "name" : "PJ Durai",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Pete Houston",
-               "name" : "Pete Houston",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Philip Hood",
-               "name" : "Philip Hood",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 4
-            },
-            {
-               "drilldown" : "Simon Green",
-               "name" : "Simon Green",
-               "y" : 3
-            },
-            {
-               "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "name" : "Stuart Little",
-               "y" : 2,
-               "drilldown" : "Stuart Little"
-            },
-            {
-               "drilldown" : "Ulrich Rieke",
-               "name" : "Ulrich Rieke",
-               "y" : 3
-            },
-            {
-               "drilldown" : "W. Luis Mochan",
-               "y" : 3,
-               "name" : "W. Luis Mochan"
-            }
-         ]
-      }
-   ]
+      "text" : "Perl Weekly Challenge - 089"
+   }
 }
