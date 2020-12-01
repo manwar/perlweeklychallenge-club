@@ -87,7 +87,7 @@ my %languages = (
    'Brainfuck'  =>   {
         ext     =>   "bf",
         dir     =>   "brainfuck",
-        exe     =>   "$HOME/Bin/brf",
+        exe     =>   "$HOME/Bin/brainfuck",
     },
    'Ook!'       =>   {
         ext     =>   "ook",
