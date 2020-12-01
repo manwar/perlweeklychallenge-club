@@ -55,9 +55,9 @@ my %languages = (
         ext     =>   "sql",
     },
    'Befunge-93' =>   {
-        ext     =>   "bf",
+        ext     =>   "bf93",
         dir     =>   "befunge-93",
-        exe     =>   "$HOME/Bin/bf",
+        exe     =>   "$HOME/Bin/run-language",
     },
     Bash        =>   {
         ext     =>   "sh",
