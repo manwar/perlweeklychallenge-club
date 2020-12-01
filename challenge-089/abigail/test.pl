@@ -103,7 +103,7 @@ my %languages = (
 
 my $perl_exe = $languages {Perl} {exe};
 
-@languages = sort keys %languages if !@languages;
+@languages = sort {lc $a cmp lc $b} keys %languages if !@languages;
 my @challenges = @ARGV ? @ARGV : (1, 2);
 
 foreach my $challenge (@challenges) {
