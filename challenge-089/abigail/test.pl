@@ -89,7 +89,11 @@ my %languages = (
         dir     =>   "brainfuck",
         exe     =>   "$HOME/Bin/brf",
     },
-
+   'Ook!'       =>   {
+        ext     =>   "ook",
+        dir     =>   "ook",
+        exe     =>   "$HOME/Bin/ook",
+    },
 );
 
 my $perl_exe = $languages {Perl} {exe};
