@@ -73,9 +73,9 @@ sub _set_magic_matrix_values_ {
     }
 }
 
-=head2 check_magic_rules
+=head2 magical_matrix
 
-Check if two array refs have at least one equal element (1) or not (0)
+Return an array with valid solutions of magical matrix 3x3
 
 =cut
 
