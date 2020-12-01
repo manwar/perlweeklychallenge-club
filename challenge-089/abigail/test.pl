@@ -49,49 +49,40 @@ my %languages = (
     C           =>   {
         comp    =>   "/usr/bin/cc",
         ext     =>   "c",
-        dir     =>   "c",
     },
     SQL         =>   {
         ext     =>   "sql",
     },
    'Befunge-93' =>   {
         ext     =>   "bf93",
-        dir     =>   "befunge-93",
         exe     =>   "$HOME/Bin/run-language",
     },
     BASIC       =>   {
         ext     =>   "bas",
-        dir     =>   "basic",
         exe     =>   "$HOME/Bin/run-language",
     },
     Bash        =>   {
         ext     =>   "sh",
-        dir     =>   "bash",
         exe     =>   "/bin/sh",
     },
     Python      =>   {
         ext     =>   "py",
-        dir     =>   "python",
         exe     =>   "/opt/local/bin/python",
     },
     Ruby        =>   {
         ext     =>   "rb",
-        dir     =>   "ruby",
         exe     =>   "/usr/bin/ruby",
     },
     Csh         =>   {
         ext     =>   "csh",
-        dir     =>   "csh",
         exe     =>   "/bin/csh",
     },
     Fortran     =>   {
         ext     =>   "f90",
-        dir     =>   "fortran",
         comp    =>   "/opt/local/bin/gfortran-mp-4.4",
     },
    'Brainfuck'  =>   {
         ext     =>   "bf",
-        dir     =>   "brainfuck",
         exe     =>   "$HOME/Bin/brainfuck",
     },
    'Ook!'       =>   {
