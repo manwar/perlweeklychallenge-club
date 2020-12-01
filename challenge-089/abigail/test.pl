@@ -90,6 +90,10 @@ my %languages = (
         dir     =>   "ook",
         exe     =>   "$HOME/Bin/ook",
     },
+    MUMPS       =>   {
+        ext     =>   "mps",
+        exe     =>   "TIO",   # Language::Mumps is really broken
+    },
 );
 
 my $perl_exe = $languages {Perl} {exe};
