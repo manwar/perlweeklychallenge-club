@@ -115,25 +115,30 @@ foreach my $challenge (@challenges) {
             my $compiled;
             next unless -r $source;
 
-            #
-            # Some languages first need to be compiled.
-            #
-            if ($comp) {
-                $compiled = $source =~ s/\.$ext$/.$ext_out/r;
-                system $comp, "-o", $compiled, $source;
-            }
-
-            #
-            # SQL requires requires creating an in-memory database,
-            # and loading some tables. For that, we need a .tables
-            # file. We also read the actual query at this time.
-            #
-            if ($language eq "SQL") {
-                my $tables = $source =~ s/\.\Q$ext\E$/.table/r;
-               ($dbh, $query, $tables_info) = init_sql ($source, $tables);
-            }
-
             subtest $language => sub {
+              SKIP: {
+                if ($exe && $exe eq "TIO") {
+                    skip "No executable present, please use tio.net", 1;
+                }
+
+                #
+                # Some languages first need to be compiled.
+                #
+                if ($comp) {
+                    $compiled = $source =~ s/\.$ext$/.$ext_out/r;
+                    system $comp, "-o", $compiled, $source;
+                }
+
+                #
+                # SQL requires requires creating an in-memory database,
+                # and loading some tables. For that, we need a .tables
+                # file. We also read the actual query at this time.
+                #
+                if ($language eq "SQL") {
+                    my $tables = $source =~ s/\.\Q$ext\E$/.table/r;
+                   ($dbh, $query, $tables_info) = init_sql ($source, $tables);
+                }
+
                 foreach my $output_exp (@outputs) {
                   SKIP: {
                     my $input      = $output_exp =~ s/output/input/r
@@ -191,9 +196,8 @@ foreach my $challenge (@challenges) {
                     }
                     is $got, $exp, $name;
                 }}
-            };
-
-            unlink $compiled if $compiled;
+                unlink $compiled if $compiled;
+            }}
         }
     }
 }
