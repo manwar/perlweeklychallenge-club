@@ -32,24 +32,22 @@ raku ch-2.p6 17
 
 =end usage
 
-use Scalar::History;
-
 unit sub MAIN(UInt $n where * mod 2 = 3); #= a positive odd integer
 
 .say for odd-magic-square($n);
 
 sub odd-magic-square($n) {
     my @matrix = [0 xx $n] xx $n;
-    my $r := Scalar::History.create(1);
-    my $c := Scalar::History.create(($n / 2).floor - 1); 
+    my $r = 1;
+    my $c = ($n / 2).floor - 1; 
 
     for 1..($n**2) -> $num {
         $r = ($r - 1) mod $n;
         $c = ($c + 1) mod $n;
 
         if @matrix[$r][$c] {
-            $r = $r.VAR.get-history.tail + 1;
-            $c = $c.VAR.get-history.tail;
+            $r = ($r + 1) mod $n + 1;
+            $c = ($c - 1) mod $n;
         }
  
         @matrix[$r][$c] = $num;
