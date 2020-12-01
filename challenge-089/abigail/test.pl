@@ -94,6 +94,10 @@ my %languages = (
         ext     =>   "mps",
         exe     =>   "TIO",   # Language::Mumps is really broken
     },
+    Forth       =>   {
+        ext     =>   "fs",
+        exe     =>   "TIO",   # Could no build gforth
+    },
 );
 
 my $perl_exe = $languages {Perl} {exe};
