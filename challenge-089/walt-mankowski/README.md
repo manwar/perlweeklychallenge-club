@@ -1,67 +1,58 @@
 Solutions by Walt Mankowski.
 
-# Task #1: Array of Product
+# Task #1: GCD Sum
 
-For this task we're given an array of positive integers `@n`. We need to create a new array `@m` where `$m[i]` is the product of all elements of `@n` except `$n[i]`.
+For this task we're given a positive integer N. We need to find the sum of the greatest common divisors (GCDs) of all the pairs of integers between 1 and N.
 
-This was easy to solve in Perl. First I initialized `@m` to be an array of all 1s of the same length as `@n`:
+There's a simple recursive formula for the GCD:
 ```perl
-my @m = (1) x @n;
-```
-Then I just used 2 nested loops to compute the result:
-```perl
-for my $i (0..$#n) {
-    for my $j (0..$#n) {
-        $m[$j] *= $n[$i] unless $i == $j;
-    }
+sub gcd($a, $b) {
+    return $b == 0 ? $a : gcd($b, $a % $b);
 }
 ```
-
-# Task 2: Spiral Matrix
-
-For this task we're given an m x n matrix of positive integers. We need to walk around the matrix in a spiral clockwise fashion, starting right across the top row, then down the last column, the left across the bottom row, etc., until we've visited every entry. We need to print out the values in the order we encounter them.
-
-I used a number of state variables to solve this: the current row (`$r`), column (`$c`) and direction (`$dir`), which can be 'n', 's', 'e', or 'w'. The hash `%turn` shows what the new direction is every time we need to turn:
+Once we have that the solution can be easily calculated using 2 nested loops:
 ```perl
-my %turn = (e => 's',
-            s => 'w',
-            w => 'n',
-            n => 'e',
-           );
+my $sum = 0;
+for my $i (1..$n-1) {
+    for my $j ($i+1..$n) {
+        $sum += gcd($j, $i);
+    }
+}
+
+say $sum;
 ```
-`%dir` shows how the row and column should change each move for each direction:
-```perl
-my %dir = (e => [0,1],
-           s => [1,0],
-           w => [0,-1],
-           n => [-1,0],
-          );
-```
-Finally, `%seen` is used to keep track of which cells we've already visited. Its keys are "row,col"; for instance, when we've visited the cell at row=1, col=2, we will indicate this by setting `$seen{"1,2"} = 1;`.
 
-Then we set our initial row and column to 0 and our direction to 'e', and start iterating, storing every value we see in `@res`. We turn when we would otherwise visit a cell we've already seen, or if we under- or overflow the grid. Since we're guaranteed to visit each cell once, we stop when the length of `@res` equals the area of the grid.
+# Task 2: Magical Matrix
+
+For this task we need to create a 3 x 3 magic square; i.e. a matrix where each row, column, and diagonal sums to the same value. We're restricted to the numbers 1-9, so the sums should all be 15.
+
+This is trivial in Matlab and Octave since there's a built in function to create magic squares, so all we need to do is say
+```Matlab
+magic(3)
+```
+
+We have to do a bit more work in Perl, but fortunately there's a simple algorithm for creating these sorts of magic squares called the [Siamese method](https://en.wikipedia.org/wiki/Siamese_method). It works for any m x m magic square where m is odd. Here's the algorithm:
+1. Start with a 1 in the middle column of the top row.
+2. For each subsequent number, try to move to the cell to the northeast (1 row up and 1 column right), wrapping around to the left and bottom when we reach the edge.
+3. If that cell is occupied, move one 1 down (wrapping around to the top if we're on the bottom row) instead of moving to the northeast.
+
+This is easy to do in Perl, and we don't even have to initialize the matrix.
 ```perl
-my @res;
+my @m;
+my $m = 3;
 my $r = 0;
-my $c = 0;
-my $dir = 'e';
+my $c = 1;
 
-while (@res < $rows * $cols) {
-    push @res, $grid->[$r][$c];
-    $seen{"$r,$c"} = 1;
-    my $r1 = $r + $dir{$dir}->[0];
-    my $c1 = $c + $dir{$dir}->[1];
-    if ($r1 < 0 || $r1 >= $rows ||
-        $c1 < 0 || $c1 >= $cols ||
-        defined $seen{"$r1,$c1"}) {
-
-        # turn and recalculate $r1 and $c1
-        $dir = $turn{$dir};
-        $r1 = $r + $dir{$dir}->[0];
-        $c1 = $c + $dir{$dir}->[1];
+# fill in the magic square using the Siamese method
+for my $i (1..9) {
+    $m[$r][$c] = $i;
+    my $r1 = ($r - 1) % $m;
+    my $c1 = ($c + 1) % $m;
+    if (defined $m[$r1][$c1]) {
+        $r = ($r + 1) % $m;
+    } else {
+        $r = $r1;
+        $c = $c1;
     }
-    ($r,$c) = ($r1,$c1);
 }
-
-say "@res";
 ```
