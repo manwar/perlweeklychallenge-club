@@ -98,6 +98,10 @@ my %languages = (
         ext     =>   "fs",
         exe     =>   "TIO",   # Could no build gforth
     },
+    Chef        =>   {
+        ext     =>   "chef",
+        exe     =>   "/opt/perl/bin/chef",
+    },
 );
 
 my $perl_exe = $languages {Perl} {exe};
