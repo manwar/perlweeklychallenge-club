@@ -17,9 +17,9 @@ Run Task #1 with input
 
     $ clojure -M -m tw.weekly.c89.t1 N
 
-Run Task #2 with input:
+Run Task #2:
 
-    $ clojure -M -m tw.weekly.c89.t2 MATRIX-FILE
+    $ clojure -M -m tw.weekly.c89.t2
 
 ## Project Template
 
