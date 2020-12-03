@@ -1,0 +1,5 @@
+SELECT '8 1 6'
+;
+SELECT '3 5 7'
+;
+SELECT '4 9 2'
