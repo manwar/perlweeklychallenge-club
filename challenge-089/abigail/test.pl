@@ -106,6 +106,10 @@ my %languages = (
         ext     =>   "p",
         exe     =>   "TIO",
     },
+    Cobol       =>   {
+        ext     =>   "cb",
+        exe     =>   "TIO",
+    },
 );
 
 my $perl_exe = $languages {Perl} {exe};
