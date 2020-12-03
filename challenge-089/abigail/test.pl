@@ -102,6 +102,10 @@ my %languages = (
         ext     =>   "chef",
         exe     =>   "/opt/perl/bin/chef",
     },
+    Pascal      =>   {
+        ext     =>   "p",
+        exe     =>   "TIO",
+    },
 );
 
 my $perl_exe = $languages {Perl} {exe};
