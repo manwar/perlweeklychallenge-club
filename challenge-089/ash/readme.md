@@ -12,9 +12,9 @@ Implemenations of [Problem 1 of Week 89](https://perlweeklychallenge.org/blog/pe
 1. [Lua](lua/ch-1.lua)
 1. [Scala](scala/ch-1.scala)
 1. [C#](csharp/ch-1.cs)
-1. [Dart](dart.ch-1.dart)
+1. [Dart](dart/ch-1.dart)
 1. [Julia](julia/ch-1.julia)
-1. [D](d/ch-1.d)
+1. [D](d/ch1.d)
 1. [Lisp (SBCL)](lisp/ch-1.lisp)
 
 ## With a custom implementation of GCD
