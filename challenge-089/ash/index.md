@@ -23,7 +23,7 @@ All the programs can be run from the command line and accept the value of `$N` a
 
 1. [Raku](#1-raku)
 1. [Python](#2-python)
-1. [C++ (C++17)](#3-c-++)
+1. [C++ (C++17)](#3-c)
 1. [Perl](#4-perl)
 1. [Ruby](#5-ruby)
 1. [Scala](#6-scala)
