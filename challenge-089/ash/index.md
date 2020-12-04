@@ -246,7 +246,7 @@ To me, languages built on C++ have their specific charm. On one side, it is the 
 Julia is another interesting language that actually has many similarities with Raku. For our today’s need, there’s a built-in `gcd` function that I am happily using. The only unexpected obstacle is, maybe, the need to explicitly refer to the accumulator `s` as to a `global` variable.
 
     # To run:
-    # $ julia ch-1.julia 100
+    # $ julia ch-1.jl 100
     # 13015
 
     n = length(ARGS) == 1 ? parse(Int, ARGS[1]) : 3
