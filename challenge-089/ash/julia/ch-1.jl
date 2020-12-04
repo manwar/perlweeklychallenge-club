@@ -1,5 +1,5 @@
 # To run:
-# $ julia ch-1.julia 100
+# $ julia ch-1.jl 100
 # 13015
 
 n = length(ARGS) == 1 ? parse(Int, ARGS[1]) : 3
