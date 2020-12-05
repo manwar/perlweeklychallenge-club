@@ -21,6 +21,12 @@ Given a positive integer, this script will sum the
 L<GCD|https://en.wikipedia.org/wiki/Greatest_common_divisor> of all possible
 unique pairs between 1 and the inputed positive integer.
 
+=head1 SOLUTION
+
+This solution uses the
+L<Binary GCD algorithm|https://en.wikipedia.org/wiki/Binary_GCD_algorithm> to
+determine the different GCD values.
+
 =head1 AUTHORS
 
 Joel Crosswhite E<lt>joel.crosswhite@ix.netcom.comE<gt>
