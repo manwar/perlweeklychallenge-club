@@ -18,7 +18,7 @@ function mygcd(a, b) result(x)
     end do
 end function
 
-program hello
+program challenge89part1
     integer :: n, x, y, s
 
     character(len=20) :: arg

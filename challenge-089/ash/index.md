@@ -519,7 +519,7 @@ I have a question for you. When did you program in Pascal last time? My answer i
     13015
 *)
 
-program Hello(input, output);
+program Challenge89Part1(input, output);
 
 uses sysutils;
 
@@ -652,7 +652,7 @@ function mygcd(a, b) result(x)
     end do
 end function
 
-program hello
+program challenge89part1
     integer :: n, x, y, s
 
     character(len=20) :: arg
