@@ -1,63 +1,44 @@
-Task 1: "Array of Product
+Task 1: "GCD Sum
 
-You are given an array of positive integers @N.
-
-Write a script to return an array @M where $M[i] is the product of all elements of @N except the index $N[i].
-
-Example 1:
-
-Input:
-    @N = (5, 2, 1, 4, 3)
-Output:
-    @M = (24, 60, 120, 30, 40)
-
-    $M[0] = 2 x 1 x 4 x 3 = 24
-    $M[1] = 5 x 1 x 4 x 3 = 60
-    $M[2] = 5 x 2 x 4 x 3 = 120
-    $M[3] = 5 x 2 x 1 x 3 = 30
-    $M[4] = 5 x 2 x 1 x 4 = 40
-
-Example 2:
-
-Input:
-    @N = (2, 1, 4, 3)
-Output:
-    @M = (12, 24, 6, 8)
-
-    $M[0] = 1 x 4 x 3 = 12
-    $M[1] = 2 x 4 x 3 = 24
-    $M[2] = 2 x 1 x 3 = 6
-    $M[3] = 2 x 1 x 4 = 8
-"
-
-My notes: clearly defined.  So M[i] is product(all elements)/M[i]
-Hang on! unless M[i]==0 in which it's product(all other elements)
-
-
-Task 2: "Spiral Matrix
-
-You are given m x n matrix of positive integers.
-
-Write a script to print a spiral path throught the matrix as list.
+You are given a positive integer $N.
+Write a script to sum GCD of all possible unique pairs between 1 and $N.
 
 Example 1:
 
-Input:
-    [ 1, 2, 3 ]
-    [ 4, 5, 6 ]
-    [ 7, 8, 9 ]
-Ouput:
-    [ 1, 2, 3, 6, 9, 8, 7, 4, 5 ]
+	Input: 3
+	Output: 3
+
+	gcd(1,2) + gcd(1,3) + gcd(2,3)
 
 Example 2:
 
-Input:
-    [  1,  2,  3,  4 ]
-    [  5,  6,  7,  8 ]
-    [  9, 10, 11, 12 ]
-    [ 13, 14, 15, 16 ]
-Output:
-    [ 1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10 ]
+	Input: 4
+	Output: 7
+
+	gcd(1,2) + gcd(1,3) + gcd(1,4) + gcd(2,3) + gcd(2,4) + gcd(3,4)
 "
 
-My notes: clearly defined.  Is "a spiral path" clear?  Think so.
+My notes: very clearly defined.  Haven't used GCDs for a while:-)
+
+
+Task 2: "Magical Matrix
+
+Write a script to display matrix as below with numbers 1 - 9. Please make sure numbers are used once.
+
+[ a b c ]
+[ d e f ]
+[ g h i ]
+
+So that it satisfies the following:
+
+a + b + c = 15
+d + e + f = 15
+g + h + i = 15
+a + d + g = 15
+b + e + h = 15
+c + f + i = 15
+a + e + i = 15
+c + e + g = 15
+"
+
+My notes: clearly defined.  Constraint problem.
