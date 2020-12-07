@@ -12,7 +12,7 @@ sub generate-pairs($a, $b) {
 }
 
 sub MAIN(PositiveInt $A, PositiveInt $B) {
-    say "Input: A: $A, B: $B";
+    say "Input: A=$A, B=$B";
     say "Divide A by 2 (ignoring remainders) until it is 1. Multiply B by 2 as we go:";
     my @pairs = generate-pairs($A, $B);
     say "Then, wherever A is odd, we add the Bs together:";
