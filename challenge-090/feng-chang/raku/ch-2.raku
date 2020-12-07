@@ -2,8 +2,7 @@
 
 sub MAIN(UInt:D $A, UInt:D $B) {
     my ($a, $b) = ($A, $B);
-    my $aw = $a.chars;
-    my $bw = ($b * $a).chars;
+    my ($aw, $bw) = ($a.chars, ($b * $a).chars);
     my @R;
 
     repeat {
@@ -16,6 +15,6 @@ sub MAIN(UInt:D $A, UInt:D $B) {
 
     put '-' x ($aw + $bw + 3);
 
-    my @S = @R.grep({ .[0] !%% 2 }).map({ .[1] });
+    my @S = @R.grep(*.[0] !%% 2).map(*.[1]);
     put @S.join(' + '), ' = ', @S.sum;
 }
