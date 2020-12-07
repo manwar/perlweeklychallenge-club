@@ -1,9 +1,18 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
+      },
+      "min" : 0
    },
    "xAxis" : {
       "categories" : [
@@ -44,6 +53,7 @@
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             11,
             12,
@@ -75,10 +85,10 @@
             7,
             1,
             4
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -110,8 +120,7 @@
             0,
             12,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -149,19 +158,10 @@
          ]
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2020-12-07 20:59:17 GMT"
    },
    "chart" : {
       "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-12-07 04:53:40 GMT"
    }
 }
