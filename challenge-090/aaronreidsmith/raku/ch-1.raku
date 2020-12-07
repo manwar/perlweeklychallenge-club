@@ -7,7 +7,7 @@ subset ValidDna of Str where { $_ ~~ /^^[A|T|G|C]+$$/ }
 sub MAIN($dna where $dna ~~ ValidDna, Bool :rc(:$reverse-complement) = False) {
     my $translated = $dna.trans('ATGC' => 'TACG');
     if $reverse-complement {
-        say "5'-{$translated.reverse}-3'";
+        say "5'-{$translated.flip}-3'";
     } else {
         say "3'-$translated-5'"
     }
