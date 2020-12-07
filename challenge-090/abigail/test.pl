@@ -178,7 +178,10 @@ foreach my $challenge (@challenges) {
                     while ($exp =~ s/^\s*#%\s*(.*)\n//) {
                         my $pragma = $1;
                         $pragma =~ s/\s+$//;
-                        if ($pragma =~ /^\w+$/) {
+                        if ($pragma =~ s/^\@(\S+)\s*//) {
+                            next unless lc ($1) eq lc ($language);
+                        }
+                        if ($pragma =~ /^[-\w]+$/) {
                             $pragma {lc $pragma} = 1;
                             next;
                         }
@@ -213,6 +216,13 @@ foreach my $challenge (@challenges) {
                     s/\h+$//gm for $exp, $got;
                     if ($pragma {trim}) {
                         s/^\h+//gm for $exp, $got;
+                    }
+                    if ($pragma {"swap-pairs"}) {
+                        my @got = split /\n/ => $got;
+                        for (my $i = 0; $i + 1 < @got; $i += 2) {
+                            @got [$i, $i + 1] = @got [$i + 1, $i];
+                        }
+                        $got = join "\n" => @got, "";
                     }
                     is $got, $exp, $name;
                 }}
