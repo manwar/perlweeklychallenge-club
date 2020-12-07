@@ -1,0 +1,1 @@
+raku -e 'say [+] (1 .. @*ARGS[0]).combinations(2).map({ [gcd] @_ });' $@
