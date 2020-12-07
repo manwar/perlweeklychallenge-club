@@ -1,6 +1,15 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
    "subtitle" : {
-      "text" : "Last updated at 2020-12-07 21:36:09 GMT"
+      "text" : "Last updated at 2020-12-07 21:39:45 GMT"
    },
    "legend" : {
       "enabled" : "false"
@@ -8,20 +17,21 @@
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
+         "dataLabels" : {
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "rotation" : -90
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -29,35 +39,25 @@
             ],
             [
                "Perl",
-               4021
+               4023
             ],
             [
                "Raku",
                2655
             ]
-         ],
-         "dataLabels" : {
-            "rotation" : -90,
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "y" : 10
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
    }
 }
