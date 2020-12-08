@@ -2,10 +2,6 @@
 # include <stdlib.h>
 # include <string.h>
 
-/*
- * For challenge description, see ../perl/ch-2.pl
- */
-
 char * tick = "\xE2\x9C\x93";   /* UTF-8 bytes for check mark */
 
 /*

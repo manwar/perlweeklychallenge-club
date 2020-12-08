@@ -9,18 +9,6 @@ no  warnings 'syntax';
 use experimental 'signatures';
 use experimental 'lexical_subs';
 
-#
-# Challenge
-#
-#   Given two positive numbers $A and $B, demonstrate "Ethiopian
-#   Multiplication", using the given numbers.
-#
-
-#
-# "Ethiopian Multiplication" or "Ancient Egyption Multiplication"
-# is nothing more than multiplication in binary.
-#
-
 my $TICK = "\N{CHECK MARK}";
 
 binmode STDOUT, ":utf8";

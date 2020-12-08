@@ -2,10 +2,6 @@
 # include <stdio.h>
 # include <string.h>
 
-/*
- * For challenge description, see ../perl/ch-1.pl
- */
-
 int main (void) {
     char *  line    = NULL;
     size_t  len     = 0;
