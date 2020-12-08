@@ -42,4 +42,5 @@ Write a script to demonstrate
 
 ## Solutions
 * [C](c/ch-2.c)
+* [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
