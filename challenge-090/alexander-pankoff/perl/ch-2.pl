@@ -30,5 +30,5 @@ sub ethopian_mul_chain ( $a, $b ) {
 }
 
 sub odd($x) {
-    $x != ( ( $x >> 1 ) << 1 );
+    $x & 1;
 }
