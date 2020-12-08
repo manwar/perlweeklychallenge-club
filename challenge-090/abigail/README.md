@@ -25,12 +25,12 @@ To get the complementary sequence use the following mapping:
 
 
 ## Solutions
-* AWK
-* bash/sh
-* Befunge-93
-* C
-* Perl
-* SQL (SQLite)
+* [AWK](awk/ch-1.awk)
+* [bash/sh](bash/ch-1.sh)
+* [Befunge-93](befunge-93/ch-1.bf93)
+* [C](c/ch-1.c)
+* [Perl](perl/ch-1.pl)
+* [SQL (SQLite)](sql/ch-1.sql) ([Table definition](sql/ch-1.table))
 
 # Task 2: Ethiopian Multiplication
 
@@ -40,5 +40,5 @@ Write a script to demonstrate
 [Ethiopian Multiplication](https://threesixty360.wordpress.com/2009/06/09/ethiopian-multiplication/) using the given numbers.
 
 ## Solutions
-* C
-* Perl
+* [C](c/ch-2.c)
+* [Perl](perl/ch-2.pl)
