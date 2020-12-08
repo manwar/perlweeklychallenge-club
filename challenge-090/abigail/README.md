@@ -29,6 +29,7 @@ To get the complementary sequence use the following mapping:
 * [bash/sh](bash/ch-1.sh)
 * [Befunge-93](befunge-93/ch-1.bf93)
 * [C](c/ch-1.c)
+* [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 * [SQL (SQLite)](sql/ch-1.sql) ([Table definition](sql/ch-1.table))
 
