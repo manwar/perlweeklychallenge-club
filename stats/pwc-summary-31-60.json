@@ -1,6 +1,12 @@
 {
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-12-07 22:44:57 GMT"
+      "text" : "[Champions: 30] Last updated at 2020-12-08 10:09:20 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "min" : 0,
@@ -8,16 +14,17 @@
          "text" : ""
       }
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             84,
             0,
@@ -49,7 +56,8 @@
             0,
             2,
             3
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -87,7 +95,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             25,
             0,
@@ -119,7 +126,8 @@
             9,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
    "xAxis" : {
@@ -155,13 +163,5 @@
          "Fred Zinn",
          "Freddie B"
       ]
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
