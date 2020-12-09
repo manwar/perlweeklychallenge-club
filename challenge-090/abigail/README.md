@@ -31,6 +31,7 @@ To get the complementary sequence use the following mapping:
 * [C](c/ch-1.c)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
 * [SQL (SQLite)](sql/ch-1.sql) ([Table definition](sql/ch-1.table))
 
 # Task 2: Ethiopian Multiplication
