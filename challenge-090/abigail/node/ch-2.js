@@ -20,7 +20,6 @@ let spacing = "  ";
 // If width is less than the length of n, bad things may happen.
 //
 function format_n (n, width) {
-//  return (indent + n) . substr (-width);
     return ("                      " + n) . substr (-width);
 }
 
