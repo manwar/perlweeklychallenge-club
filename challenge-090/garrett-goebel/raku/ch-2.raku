@@ -1,17 +1,19 @@
 #!/usr/bin/env raku
 
-unit sub MAIN (Int $A where {$A > 0} = 14, Int $B where {$B > 0} = 12);
+unit sub MAIN (
+    Int $A is copy where $A > 0 = 14,
+    Int $B is copy where $B > 0 = 12
+);
 
-my ($a, $b, $r) = ($A, $B, 0); # command line args are immutable
+my Int $r = 0;
+my $format = "%10d & %10d | product: %10d\n";
+$format.printf($A,$B, $r);
 
-say "$a & $b";
-
-if ($a > 1) {
+if ($A > 1) {
     repeat {
-        $r += $b  if $a mod 2;
-        say "{ $a div= 2 } & { $b *= 2 } | r: $r";
-    } while $a > 1;
+        $r += $B  if $A mod 2;
+        $format.printf($A div= 2, $B *= 2, $r);
+    } while $A > 1;
 }
-$r += $b;
-
-say "r: $r";
+$r += $B;
+~(' ' x 24 ~ "| product: %10d\n").printf($r);
