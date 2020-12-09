@@ -9,9 +9,9 @@ use List::Util qw(all);
 
 # receive the two numbers in @ARGV
 die 'Usage: ./ch2.pl number1 number2' unless @ARGV==2;
-my ($x, $y)=@ARGV;
-die 'Expected two non-negative integers'   # check signs
-    unless all {int($_)==$_ && $_>=0} ($x, $y);
+my ($x, $y)= @ARGV; #
+die 'Expected two non-negative integers'   # check they are postitive integers
+    unless all {int($_) eq $_ && $_>=0} ($x, $y); #Use eq to avoid implicit int conversion
 
 my $expected_result=$x*$y;
 my $result=0;
