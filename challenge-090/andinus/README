@@ -1,67 +1,95 @@
                             ━━━━━━━━━━━━━━━
-                             CHALLENGE 086
+                             CHALLENGE 090
 
                                 Andinus
                             ━━━━━━━━━━━━━━━
 
 
-                               2020-11-15
+                               2020-12-08
 
 
 Table of Contents
 ─────────────────
 
-1. Task 1 - Pair Difference
-.. 1. Perl
+1. Task 2 - Ethiopian Multiplication
+.. 1. Raku
 
 
 
 
 
-1 Task 1 - Pair Difference
-══════════════════════════
+1 Task 2 - Ethiopian Multiplication
+═══════════════════════════════════
 
-  You are given an array of integers @N and an integer $A.
+  You are given two positive numbers $A and $B.
 
-  Write a script to find find if there exists a pair of elements in the
-  array whose difference is $A.
-
-  Print 1 if exists otherwise 0.
+  Write a script to demonstrate [Ethiopian Multiplication] using the
+  given numbers.
 
 
-1.1 Perl
+[Ethiopian Multiplication]
+<https://threesixty360.wordpress.com/2009/06/09/ethiopian-multiplication/>
+
+1.1 Raku
 ────────
 
-  • Program: <file:perl/ch-1.pl>
+  • Program: <file:perl/ch-2.raku>
 
-  @N & $A are taken from stdin, $A is the last argument.
+  Start by taking `$A' & `$B' which are defined to be `Int' & positive.
   ┌────
-  │ die "usage: ./ch-1.pl <integers \@N> <integer \$A>\n"
-  │     unless scalar @ARGV >= 3;
-  │
-  │ my $A = pop @ARGV;
-  │ my @N = @ARGV;
+  │ sub MAIN (
+  │     #= positive numbers
+  │     Int $A is copy where * > 0,
+  │     Int $B is copy where * > 0
+  │ ) {
+  │     ...
+  │ }
   └────
 
-  We just loop over @N over a loop over @N & find the difference. If
-  it's equal to `$A' or `-$A' then we print `1' & exit. The first loop
-  is `shift''ing the numbers out of array `@N' because we are matching
-  for both `$A' & `-$A' so we don't need the number again.
+  Here's relevant part from the link that was given above:
+        Start with the two numbers on top. Halve one, ignoring any
+        remainders or fractions, and double the other, stopping
+        when you get to 1.
 
-  For example, if `@N = [1, 2]' & we don't `shift' in first loop then
-  we'll perform 2 subtraction operations: `1 - 2' & `2 - 1' & we won't
-  have to match for `-$A' but if we just match for `-$A' then we can use
-  `shift' & we'll only have to perform 1 subtraction operation `1 - 2'.
+        14 & 12 7 & 24 3 & 48 [See how I ignored the fact that
+        halving 7 leaves 1 left over?] 1 & 96 <— Stop here.
 
-  We assume subtraction costs more than matching with `-$A', that makes
-  this more efficient. But it doesn't matter much.
+        Now look at the numbers on the right. Some are across from
+        an even number: in this case, 12 is across from the
+        original 14. Ignore those, and add the rest. So we’ll add
+        24, 48, and 96, which were across from odd numbers, and
+        get 168. And that’s the product! Isn’t that cool?
+
+  We do the same thing & also print the instructions.
   ┌────
-  │ while (my $int = shift @N) {
-  │     foreach (@N) {
-  │         my $diff = $int - $_;
-  │         print "1\n" and exit 0 if ($diff == $A or $diff == -$A);
+  │ my %sets;
+  │
+  │ say "Ethopian Multiplication.\n";
+  │ say "Start with $A, $B.";
+  │ say "Divide $A by 2 & multiple $B by 2 at each step.";
+  │ say "Continue until $A equals 1. Drop the remainder, both should be Integer.\n";
+  │
+  │ say "$A, $B";
+  │ while True {
+  │     %sets{$A} = $B.Int;
+  │     $A = ($A / 2).Int;
+  │     $B = ($B * 2).Int;
+  │     last if $A < 1;
+  │     say "$A, $B";
+  │ }
+  │
+  │ say "\nNow to find the product, simply add all the numbers on right side of ','.";
+  │ say "But skip those numbers which have an even number on the left side.\n";
+  │
+  │ my Int $product = 0;
+  │ for %sets.sort({.key.Int}).reverse -> $pair {
+  │     if $pair.key % 2 != 0 {
+  │         $product += $pair.value;
+  │         say "- Adding ", $pair.value, " to product.";
+  │     } else {
+  │         say "- Skipping ", $pair.value, " because ", $pair.key, " is even.";
   │     }
   │ }
-  │ print "0\n";
   │
+  │ say "\nProduct: $product";
   └────
