@@ -1,0 +1,23 @@
+#! /usr/bin/env raku
+
+subset PositiveInt of Int where * > 0;
+
+unit sub MAIN (PositiveInt $A is copy, PositiveInt $B is copy, :v(:$verbose));
+
+my $result = 0;
+
+while $A != 1
+{
+  $result += $B unless $A %% 2;
+
+  say ":: $A & $B" if $verbose;
+  
+  $A = $A div 2;
+  $B = $B * 2;
+}
+
+$result += $B unless $A %% 2;
+
+say ":: $A & $B" if $verbose;
+
+say $result;
