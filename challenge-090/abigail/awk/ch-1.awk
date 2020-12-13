@@ -1,8 +1,8 @@
 {
     print length;
-    gsub ("T", "x");
-    gsub ("A", "T");
-    gsub ("x", "A");
+    gsub ("A", "x");
+    gsub ("T", "A");
+    gsub ("x", "T");
     gsub ("G", "y");
     gsub ("C", "G");
     gsub ("y", "C");
