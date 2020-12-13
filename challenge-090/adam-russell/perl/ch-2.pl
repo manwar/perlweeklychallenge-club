@@ -14,7 +14,7 @@ sub ethiopian_multiplication{
         $x = int($x / 2);
         $y = $y * 2;
         push @steps, [$x, $y] if $x % 2 != 0;
-    }until $steps[-1]->[0] == 1 || $steps[-1]->[1] == 1; 
+    }until $steps[-1]->[0] == 1; 
     for my $step (@steps){
         $product += $step->[1];
     } 
