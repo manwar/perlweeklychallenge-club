@@ -8,16 +8,20 @@ use warnings;
 sub ethiopian_multiplication{
     my($a, $b) = @_;
     my @steps;
+    my $product = 0; 
     my ($x, $y) = ($a, $b); 
     do{
         $x = int($x / 2);
         $y = $y * 2;
-print "$x $y\n"; 
-        push @steps, [$x, $y];
+        push @steps, [$x, $y] if $x % 2 != 0;
     }until $steps[-1]->[0] == 1 || $steps[-1]->[1] == 1; 
+    for my $step (@steps){
+        $product += $step->[1];
+    } 
+    return $product; 
 }
 
 MAIN:{
     my($A, $B) = (14, 12);
-    ethiopian_multiplication($A, $B);
+    print "$A x $B = " . ethiopian_multiplication($A, $B) . "\n";
 }
