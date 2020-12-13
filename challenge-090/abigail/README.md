@@ -35,6 +35,8 @@ To get the complementary sequence use the following mapping:
 * [Ruby](ruby/ch-1.rb)
 * [SQL (SQLite)](sql/ch-1.sql) ([Table definition](sql/ch-1.table))
 
+[Blog post](https://wp.me/pcxd30-gf).
+
 # Task 2: Ethiopian Multiplication
 
 You are given two positive numbers `$A` and `$B`.
