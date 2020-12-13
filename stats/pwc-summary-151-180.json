@@ -1,4 +1,9 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
          "name" : "Perl",
@@ -36,7 +41,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -68,9 +72,11 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -102,12 +108,24 @@
             0,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -143,25 +161,7 @@
          "Sol DeMuth"
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2020-12-13 02:11:06 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "chart" : {
-      "type" : "column"
+      "text" : "[Champions: 30] Last updated at 2020-12-13 02:18:05 GMT"
    }
 }
