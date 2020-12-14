@@ -9,8 +9,12 @@
 
 unit sub MAIN(Int $n = 1122234);
 
-print .Str.chars ~ .[0] for $n ~~ m:g/ (\d) $0* /;
-say '';
+# Original variant:
+# print .Str.chars ~ .[0] for $n ~~ m:g/ (\d) $0* /;
+# say '';
+
+# A better option:
+($n ~~ m:g/ (\d) $0* /).map({.Str.chars ~ .[0]}).join.say;
 
 # Output:
 # 21321314
