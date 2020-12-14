@@ -20,7 +20,7 @@ sub count-number(PositiveInt $N) {
     my $result;
 
     for $N ~~ m:g/ (<[1..9]>) $0* / {
-         $result ~= .chars ~ ~.head;
+         $result ~= .chars ~ .head;
     }
 
     $result;
