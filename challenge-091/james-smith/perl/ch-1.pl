@@ -13,6 +13,9 @@ is( read_numbers(   12345 ), 1112131415 );
 done_testing();
 
 sub read_numbers {
-  return $_[0] =~ s{((\d)(\2*))}{(length $1).$2}reg;
+  return $_[0] =~ s{(
+    (\d)  # Any digit [ this becomes \2 / $2
+    (\2*) # Any other copies of the digit
+  )}{(length $1).$2}regex;
 }
 
