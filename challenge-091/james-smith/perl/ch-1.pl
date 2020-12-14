@@ -14,7 +14,7 @@ done_testing();
 
 sub read_numbers {
   return $_[0] =~ s{(
-    (\d)  # Any digit [ this becomes \2 / $2
+    (\d)  # Any digit [ this becomes \2 / $2 ]
     (\2*) # Any other copies of the digit
   )}{(length $1).$2}regex;
 }
