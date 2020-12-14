@@ -57,3 +57,6 @@ from index 0 to reach index 2, followed by one place jump from index
 2 to reach the index 3. once you reached the index 3, you can't go
 any further because you can only jump 0 position further.
 
+
+## Solutions
+* [Perl](perl/ch-2.pl).
