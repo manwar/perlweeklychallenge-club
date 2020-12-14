@@ -20,6 +20,6 @@ $is_stepping_stone{0}++; #initialize
 map {
     my $s=$_;
     $is_stepping_stone{$s}++
-	if any {$_ >=$s-$stones[$s} keys %is_stepping_stone
+	if any {$_ >=$s-$stones[$s]} keys %is_stepping_stone
 } (1..$#stones);
 say $is_stepping_stone{$#stones}//0;
