@@ -27,6 +27,9 @@ as we read "one 2 three 3 two 4 one 5"
 
 as we read "one 1 one 2 one 3 one 4 one 5"
 
+## Solutions
+* [Perl](perl/ch-1.pl).
+
 
 # Task 2: Jump Game
 
