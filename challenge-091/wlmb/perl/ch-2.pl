@@ -21,5 +21,5 @@ foreach(reverse (0..$#stones-1)){ # add stepping stones from left to right
     unshift @stepping_stones, $_ if $stepping_stones[0] <= $_+$stones[$_];
 }
 say $stepping_stones[0]==0
-    ?"1 Success\nPath: " . join "->", @stepping_stones # Notice I n
+    ?"1 Success\nPath: " . join "->", @stepping_stones
     :"0 Failure";
