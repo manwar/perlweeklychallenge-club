@@ -17,7 +17,7 @@ my @stones=@ARGV;
 
 my @stepping_stones;
 push @stepping_stones, $#stones;
-foreach(reverse (0..$#stones-1)){ # add stepping stones from left to right
+foreach(reverse (0..$#stones-1)){ # add stepping stones from right to left
     unshift @stepping_stones, $_ if $stepping_stones[0] <= $_+$stones[$_];
 }
 say $stepping_stones[0]==0
