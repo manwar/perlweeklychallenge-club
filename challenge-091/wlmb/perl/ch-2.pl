@@ -15,11 +15,11 @@ die "Usage: ./ch-2.pl s0 s1 s2...\n\t with sn maximum number of steps from stone
 die "Only non-negative numbers allowed" unless all {isint $_ == 1} @ARGV;
 my @stones=reverse @ARGV;
 
-my %is_stepping_stone;
-$is_stepping_stone{0}++; #initialize
-map {
-    my $s=$_;
-    $is_stepping_stone{$s}++
-	if any {$_ >=$s-$stones[$s]} keys %is_stepping_stone
-} (1..$#stones);
-say $is_stepping_stone{$#stones}//0;
+my @stepping_stones;
+push @stepping_stones, 0;
+foreach(1..$#stones){
+    unshift @stepping_stones, $_ if $stepping_stones[0] >= $_-$stones[$_];
+}
+say $stepping_stones[0]==$#stones # Notice I numbered stones from right to left
+    ?"1 Success\nPath: " . join "->", @stepping_stones # Notice I n
+    :"0 Failure";
