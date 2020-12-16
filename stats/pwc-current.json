@@ -1,78 +1,97 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
    "legend" : {
       "enabled" : 0
    },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2020-12-16 04:06:33 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 091"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
          "data" : [
             {
-               "name" : "Niels van Dijke",
-               "y" : 2,
-               "drilldown" : "Niels van Dijke"
+               "drilldown" : "Andrew Shitov",
+               "y" : 3,
+               "name" : "Andrew Shitov"
             },
             {
-               "drilldown" : "Stuart Little",
+               "drilldown" : "Niels van Dijke",
+               "y" : 2,
+               "name" : "Niels van Dijke"
+            },
+            {
                "name" : "Stuart Little",
+               "drilldown" : "Stuart Little",
                "y" : 2
             }
          ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 091"
+         "name" : "Perl Weekly Challenge - 091",
+         "colorByPoint" : 1
       }
    ],
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Niels van Dijke",
+            "name" : "Andrew Shitov",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Andrew Shitov"
+         },
+         {
+            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Niels van Dijke"
+            "name" : "Niels van Dijke"
          },
          {
+            "id" : "Stuart Little",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Stuart Little",
             "name" : "Stuart Little"
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 091"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-12-16 04:03:59 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    }
 }
