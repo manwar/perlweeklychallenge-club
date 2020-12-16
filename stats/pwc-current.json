@@ -1,8 +1,33 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2020-12-16 04:14:58 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Andrew Shitov",
+            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -13,7 +38,7 @@
                   1
                ]
             ],
-            "id" : "Andrew Shitov"
+            "name" : "Andrew Shitov"
          },
          {
             "id" : "James Smith",
@@ -26,40 +51,61 @@
             "name" : "James Smith"
          },
          {
-            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Niels van Dijke"
+            "id" : "Niels van Dijke"
          },
          {
-            "id" : "Stuart Little",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Simon Green",
+            "name" : "Simon Green"
+         },
+         {
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "id" : "Stuart Little",
             "name" : "Stuart Little"
          }
       ]
    },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 091"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 091",
-         "colorByPoint" : 1,
          "data" : [
             {
                "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov",
-               "y" : 3
+               "y" : 3,
+               "name" : "Andrew Shitov"
             },
             {
-               "name" : "James Smith",
                "drilldown" : "James Smith",
+               "name" : "James Smith",
                "y" : 2
             },
             {
@@ -68,45 +114,18 @@
                "y" : 2
             },
             {
-               "y" : 2,
+               "drilldown" : "Simon Green",
+               "y" : 3,
+               "name" : "Simon Green"
+            },
+            {
                "drilldown" : "Stuart Little",
+               "y" : 2,
                "name" : "Stuart Little"
             }
-         ]
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 091"
       }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2020-12-16 04:11:28 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 091"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   }
+   ]
 }
