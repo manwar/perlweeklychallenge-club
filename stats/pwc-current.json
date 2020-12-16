@@ -1,13 +1,30 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge - 091"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "series" : [
       {
          "data" : [
             {
-               "name" : "Stuart Little",
+               "name" : "Niels van Dijke",
+               "y" : 2,
+               "drilldown" : "Niels van Dijke"
+            },
+            {
                "drilldown" : "Stuart Little",
+               "name" : "Stuart Little",
                "y" : 2
             }
          ],
@@ -15,49 +32,47 @@
          "name" : "Perl Weekly Challenge - 091"
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
-   "legend" : {
-      "enabled" : 0
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Niels van Dijke"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Stuart Little",
+            "name" : "Stuart Little"
+         }
+      ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 091"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2020-12-16 04:03:59 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "chart" : {
       "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Stuart Little",
-            "id" : "Stuart Little",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         }
-      ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2020-12-16 03:49:02 GMT"
    }
 }
