@@ -1,10 +1,17 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Andrew Shitov",
+            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -14,9 +21,21 @@
                   "Blog",
                   1
                ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
             ],
-            "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov"
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby"
          },
          {
             "data" : [
@@ -25,18 +44,18 @@
                   2
                ]
             ],
-            "id" : "E. Choroba",
-            "name" : "E. Choroba"
+            "name" : "E. Choroba",
+            "id" : "E. Choroba"
          },
          {
-            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "James Smith"
+            "name" : "James Smith",
+            "id" : "James Smith"
          },
          {
             "data" : [
@@ -49,26 +68,27 @@
             "name" : "Mark Anderson"
          },
          {
-            "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke"
          },
          {
+            "id" : "Philip Hood",
             "name" : "Philip Hood",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Philip Hood"
+            ]
          },
          {
+            "id" : "Simon Green",
             "name" : "Simon Green",
             "data" : [
                [
@@ -79,32 +99,29 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Simon Green"
+            ]
          },
          {
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "name" : "Simon Proctor",
             "id" : "Simon Proctor"
          },
          {
+            "id" : "Stuart Little",
+            "name" : "Stuart Little",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Stuart Little",
-            "name" : "Stuart Little"
+            ]
          },
          {
-            "name" : "W. Luis Mochan",
-            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -114,30 +131,20 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan"
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "legend" : {
+      "enabled" : 0
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2020-12-16 04:37:17 GMT"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 091",
-         "colorByPoint" : 1,
          "data" : [
             {
                "name" : "Andrew Shitov",
@@ -145,9 +152,14 @@
                "y" : 3
             },
             {
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
+               "y" : 3
+            },
+            {
                "name" : "E. Choroba",
-               "y" : 2,
-               "drilldown" : "E. Choroba"
+               "drilldown" : "E. Choroba",
+               "y" : 2
             },
             {
                "y" : 2,
@@ -155,19 +167,19 @@
                "name" : "James Smith"
             },
             {
+               "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson",
-               "y" : 2,
-               "drilldown" : "Mark Anderson"
+               "y" : 2
             },
             {
                "drilldown" : "Niels van Dijke",
-               "y" : 2,
-               "name" : "Niels van Dijke"
+               "name" : "Niels van Dijke",
+               "y" : 2
             },
             {
-               "name" : "Philip Hood",
                "y" : 2,
-               "drilldown" : "Philip Hood"
+               "drilldown" : "Philip Hood",
+               "name" : "Philip Hood"
             },
             {
                "name" : "Simon Green",
@@ -175,23 +187,31 @@
                "y" : 3
             },
             {
-               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
                "y" : 2
             },
             {
+               "drilldown" : "Stuart Little",
                "name" : "Stuart Little",
-               "y" : 2,
-               "drilldown" : "Stuart Little"
+               "y" : 2
             },
             {
-               "name" : "W. Luis Mochan",
                "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan",
                "y" : 3
             }
-         ]
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 091"
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2020-12-16 04:41:41 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 091"
+   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
@@ -201,10 +221,9 @@
          "borderWidth" : 0
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 091"
-   },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
