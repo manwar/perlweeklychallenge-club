@@ -1,8 +1,7 @@
 
 sub play-jump-game (@N) {
-    my Bool @reachable = @N.map({ False });
-
     # [1]: $reachable[$i] = solution of the sub-problem: $i .. @N.end
+    my Bool @reachable = @N.map({ False });
     @reachable[ @reachable.end ] = True;
 
     # [2]: Solve the lightly bigger sub-problem each time
