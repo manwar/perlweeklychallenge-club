@@ -25,13 +25,18 @@ sub jump {
     my $pos = 0;
     for my $num (@$in_arr) {
         if ($in_arr->[$pos] == 0) {
-            my $back = 0;
+            my $offset = 1;
             # work backwards and stop if we can jump over or at the beginning
-            while ( ($pos >= 0) and ($in_arr->[$pos] + $pos - $back > $pos) ) {
-                $back--;
+            while ($pos - $offset  >= 0) {
+                my $test_pos = $pos - $offset;
+
+                my $elem_at_pos = $in_arr->[$pos - $offset];
+
+                last if ($elem_at_pos + $pos - $offset > $pos);
+                $offset++;
             } 
 
-            return 0 unless $back;
+            return 0 unless $pos - $offset > 0;
         }
         $pos++;
     }
@@ -44,5 +49,5 @@ use Test::More;
 
 is(jump([1, 2, 1, 2]), 1);
 is(jump([2, 1, 1, 0, 2]), 0);
-
+is(jump([2, 1, 2, 0, 2]), 1);
 done_testing;
