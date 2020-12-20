@@ -11,11 +11,11 @@ sub siamese {
 	my $n = shift;
 	my $ord =  2 * $n + 1 ;
 	my $msq = zeroes(long, $ord, $ord)->inplace->setvaltobad(0);
-	my $idx = long $n, 0;
+	my $idx = indx $n, 0;
 	for my $val (1 .. $ord ** 2) {
 		$msq->range($idx, 0, 'periodic') .= $val;
 		say $msq if $::verbose;
-		$idx += $val % $ord ? long(1, -1) : long(0, 1);
+		$idx += $val % $ord ? indx(1, -1) : indx(0, 1);
 	}
 	# Return order, magic constant and magic square
 	($ord, ($ord**3 + $ord) / 2, $msq);
