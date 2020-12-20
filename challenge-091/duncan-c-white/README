@@ -1,40 +1,60 @@
-Task 1: "DNA Sequence
+Task 1: "Count Number
 
-DNA is a long, chainlike molecule which has two strands twisted into
-a double helix. The two strands are made up of simpler molecules
-called nucleotides. Each nucleotide is composed of one of the four
-nitrogen-containing nucleobases cytosine (C), guanine (G), adenine (A)
-and thymine (T).
+You are given a positive number $N.  Write a script to count number and display as you read it.
 
-You are given DNA sequence, GTAAACCCCTTTTCATTTAGACAGATCGACTCCTTATCCATTCTCAGAGATGTGTTGCTGGTCGCCG.
+Example 1:
 
-Write a script to print nucleobase count in the given DNA sequence. Also
-print the complementary sequence where Thymine (T) on one strand is
-always facing an adenine (A) and vice versa; guanine (G) is always facing
-a cytosine (C) and vice versa.
+Input: $N = 1122234
+Output: 21321314
 
-To get the complementary sequence use the following mapping:
+as we read "two 1 three 2 one 3 one 4"
 
-T => A
-A => T
-G => C
-C => G
+Example 2:
+
+Input: $N = 2333445
+Output: 12332415
+
+as we read "one 2 three 3 two 4 one 5"
+
+Example 3:
+
+Input: $N = 12345
+Output: 1112131415
+
+as we read "one 1 one 2 one 3 one 4 one 5"
 "
 
-My notes: very clearly defined, simple to do.
+My notes: not brilliantly clearly defined, but simple to do with a freq hash.
 
 
-Task 2: "Ethiopian Multiplication
+Task 2: "Jump Game
 
-You are given two positive numbers $A and $B.
+You are given an array of positive numbers @N, where value at each index
+determines how far you are allowed to jump further.  Write a script to
+decide if you can jump to the last index. Print 1 if you are able to
+reach the last index otherwise 0.
 
-Write a script to demonstrate 
+Example 1:
 
-https://rosettacode.org/wiki/Ethiopian_multiplication
+	Input: @N = (1, 2, 1, 2)
+	Output: 1
 
-using the given numbers.
+as we jump one place from index 0 and then twoe places from index 1 to
+reach the last index.
+
+Example 2:
+
+	Input: @N = (2,1,1,0,2)
+	Output: 0
+
+it is impossible to reach the last index. as we jump two places from index
+0 to reach index 2, followed by one place jump from index 2 to reach the
+index 3. once you reached the index 3, you can't go any further because
+you can only jump 0 position further.
 "
 
-My notes: clearly defined, once you follow the link and discover what Ethiopian Multiplication is:-)
-Exercise for the interested reader: why does the method work?  It follows directly from how BINARY
-multiplication actually works.
+My notes: does it mean "decide if you can jump to the last index, starting at index 0"?
+all the examples show that, so I'm going to assume that's what it means.  But it
+doesn't say that explicitly - reading at first I thought you would have a
+free choice of where to start, so would have to search "starting at pos 0",
+"starting at pos 1"... etc.  Negative numbers would also make it more interesting.
