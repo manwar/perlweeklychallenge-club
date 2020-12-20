@@ -3,8 +3,16 @@
 # THE WEEKLY CHALLENGE - 091
 # TASK #1: Count Number
 #
-# You are given a positive number $N. Write a script to count number and display as you read it.
-# Numeric recursive solution
+# You are given a positive number $N. Write a script to count number and 
+# display as you read it.
+
+# Numeric recursive solution:
+# A solution without regular expressions, where the last digit is extracted 
+# by the reminder of the division by 10, and the value divided by 10. This
+# process is repeated while the last digit is the same, counting the number 
+# of repetitions. The function then recurses to display the count of the
+# previous digits, and then displays its own count.
+
 use strict;
 use warnings;
 

@@ -5,8 +5,9 @@
 \ determines how far you are allowed to jump further. Write a script to decide 
 \ if you can jump to the last index. Print 1 if you are able to reach the last 
 \ index otherwise 0.
-\ start with table and size on stack
-\   gforth -e '1 2 1 2  4' ch-2.fth
+
+\ Start the script with the table and its size on the stack, e.g.
+\   gforth -e '1 2 1 2  4' ch-2.fs
 
 \ setup: tbl tbl-size
 VALUE tbl-size      \ save table size
@@ -15,6 +16,7 @@ VALUE tbl-size      \ save table size
         tbl-size I - 1- ROLL ,
     LOOP
 ;
+
 CREATE tbl ,values
 
 \ run the table
