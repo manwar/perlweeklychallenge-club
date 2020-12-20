@@ -1,11 +1,18 @@
 \ THE WEEKLY CHALLENGE - 091
 \ TASK #1: Count Number
 \
-\ You are given a positive number $N. Write a script to count number and display as you read it.
-\ N is in the stack, start script with:
-\   gforth -e 12345 ch-1.fth
+\ You are given a positive number $N. Write a script to count number and 
+\ display as you read it.
 
-: count_digit   ( n -- d c n/10^x )     \ count last digit
+\ Start the script with N in the stack, e.g.
+\   gforth -e 12345 ch-1.fs
+
+\ This solution uses the data stack to hold the digit counts, while 
+\ computing them right-to-left, and displays them left-to-right at
+\ the end. A -1 is used as a stack marker, as there cannot be a -1 
+\ digit count.
+
+: count_digit   ( n -- d c n/10^c )     \ count last digit
     DUP 10 MOD 0        ( n d c )
     BEGIN
         ROT 10 /        ( d c n/10 )
@@ -20,9 +27,9 @@
     1 .r
 ;
 
-: read_number_  ( n -- )
+: read_number   ( n -- )
     -1 SWAP             ( -1 n )        \ add -1 as marker
-    BEGIN               ( -1 [d c]... n ) \ decompase each group
+    BEGIN               ( -1 [d c]... n ) \ decompose each group
         count_digit     ( ... d c new-n )
     DUP 0 <= UNTIL      ( -1 [d c]... n )
     DROP
@@ -30,10 +37,7 @@
         out-num out-num \ print count, digit
     DUP 0< UNTIL
     DROP
-;
-
-: read_number   ( n -- )
-    read_number_ CR
+    CR
 ;
 
 read_number BYE
