@@ -23,8 +23,8 @@ sub jump_game {
 	my @maxjump = @_;
 
 	# Convert the given numbers into references to them.  This enables
-	# modificating the original values through array slices.  Transform
-	# only once.
+	# the modification of the original values through array slices.
+	# Transform only once.
 	@maxjump = map \$_, @maxjump unless ref $maxjump[0];
 
 	local $level = ($level // -1) + 1;
