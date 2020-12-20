@@ -18,7 +18,7 @@ multi MAIN {
 sub jump-game(@N) {
     my $last-good-index = @N.end;
 
-    for $last-good-index-1...0 -> $i {
+    for $last-good-index...0 -> $i {
         if @N[$i] >= $last-good-index - $i {
             $last-good-index = $i;
         }
