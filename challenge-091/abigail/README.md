@@ -1,52 +1,64 @@
 Solution by Abigail
 
-# Task 1: DNA Sequence
+# Task 1: Count Number
 
-DNA is a long, chainlike molecule which has two strands twisted
-into a double helix. The two strands are made up of simpler molecules
-called nucleotides. Each nucleotide is composed of one of the four
-nitrogen-containing nucleobases cytosine (C), guanine (G), adenine
-(A) and thymine (T).
+You are given a positive number `$N`.
 
-You are given DNA sequence,
-`GTAAACCCCTTTTCATTTAGACAGATCGACTCCTTATCCATTCTCAGAGATGTGTTGCTGGTCGCCG`.
+Write a script to count number and display as you read it.
 
-Write a script to print nucleiobase count in the given DNA sequence.
-Also print the complementary sequence where Thymine (`T`) on one
-strand is always facing an adenine (`A`) and vice versa; guanine (`G`)
-is always facing a cytosine (`C`) and vice versa.
+### Example 1:
 
-To get the complementary sequence use the following mapping:
+    Input: $N = 1122234
+    Output: 21321314
 
-    T => A
-    A => T
-    G => C
-    C => G
+as we read "two 1 three 2 one 3 one 4"
+
+### Example 2:
+
+    Input: $N = 2333445
+    Output: 12332415
+
+as we read "one 2 three 3 two 4 one 5"
+
+### Example 3:
+
+    Input: $N = 12345
+    Output: 1112131415
+
+as we read "one 1 one 2 one 3 one 4 one 5"
+
+## Solutions
+* [Perl](perl/ch-1.pl).
+
+
+# Task 2: Jump Game
+
+You are given an array of positive numbers @N, where value at each
+index determines how far you are allowed to jump further.
+
+Write a script to decide if you can jump to the last index. Print
+1 if you are able to reach the last index otherwise 0.
+
+### Example 1:
+
+    Input: @N = (1, 2, 1, 2)
+    Output: 1
+
+as we jump one place from index 0 and then twoe places from index
+1 to reach the last index.
+
+### Example 2:
+
+    Input: @N = (2,1,1,0,2)
+    Output: 0
+
+it is impossible to reach the last index. as we jump two places
+from index 0 to reach index 2, followed by one place jump from index
+2 to reach the index 3. once you reached the index 3, you can't go
+any further because you can only jump 0 position further.
 
 
 ## Solutions
-* [AWK](awk/ch-1.awk)
-* [bash/sh](bash/ch-1.sh)
-* [Befunge-93](befunge-93/ch-1.bf93)
-* [C](c/ch-1.c)
-* [Node.js](node/ch-1.js)
-* [Perl](perl/ch-1.pl)
-* [Python](python/ch-1.py)
-* [Ruby](ruby/ch-1.rb)
-* [SQL (SQLite)](sql/ch-1.sql) ([Table definition](sql/ch-1.table))
+* [Perl](perl/ch-2.pl).
 
-[Blog post](https://wp.me/pcxd30-gf).
-
-# Task 2: Ethiopian Multiplication
-
-You are given two positive numbers `$A` and `$B`.
-
-Write a script to demonstrate
-[Ethiopian Multiplication](https://threesixty360.wordpress.com/2009/06/09/ethiopian-multiplication/) using the given numbers.
-
-## Solutions
-* [C](c/ch-2.c)
-* [Node.js](node/ch-2.js)
-* [Perl](perl/ch-2.pl)
-
-[Blog post](https://wp.me/pcxd30-gV)
+[Blog post](https://wp.me/pcxd30-j2).
