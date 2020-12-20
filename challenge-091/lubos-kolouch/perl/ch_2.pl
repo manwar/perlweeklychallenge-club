@@ -1,9 +1,9 @@
 #!/usr/bin/perl 
 #===============================================================================
 #
-#         FILE: ch_1.pl
+#         FILE: ch_2.pl
 #
-#        USAGE: ./ch_1.pl  
+#        USAGE: ./ch_2.pl  
 #
 #  DESCRIPTION: Perl Weekly Challenge #091
 #               Task 2 - Jump Game
