@@ -60,3 +60,5 @@ any further because you can only jump 0 position further.
 
 ## Solutions
 * [Perl](perl/ch-2.pl).
+
+[Blog post](https://wp.me/pcxd30-j2).
