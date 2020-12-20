@@ -1,0 +1,16 @@
+#! /usr/bin/env raku
+
+subset PositiveInt of Int where * > 0;
+
+unit sub MAIN (*@N where @N.elems > 0 && all(@N) ~~ PositiveInt);
+
+my $index = 0;
+
+loop
+{
+  ( say 1; last ) if $index == @N.end;
+
+  @N[$index].defined
+    ?? ( $index += @N[$index] )
+    !! ( say 0; last);
+}
