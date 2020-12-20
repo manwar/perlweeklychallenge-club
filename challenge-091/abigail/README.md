@@ -30,6 +30,7 @@ as we read "one 1 one 2 one 3 one 4 one 5"
 ## Solutions
 * [Perl](perl/ch-1.pl).
 
+[Blog post](https://wp.me/pcxd30-j2).
 
 # Task 2: Jump Game
 
@@ -61,4 +62,4 @@ any further because you can only jump 0 position further.
 ## Solutions
 * [Perl](perl/ch-2.pl).
 
-[Blog post](https://wp.me/pcxd30-j2).
+[Blog post](https://wp.me/pcxd30-jq).
