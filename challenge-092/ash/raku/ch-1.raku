@@ -7,7 +7,8 @@
 
 unit sub MAIN(Str $a, Str $b);
 
-say + [==] ($a.comb.map: *.ord) <<->> ($b.comb.map: *.ord);
+# say + [==] ($a.comb.map: *.ord) <<->> ($b.comb.map: *.ord);
+say + [==] $a.ords <<->> $b.ords;
 
 # Test cases:
 #
