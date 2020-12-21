@@ -14,7 +14,7 @@ while (<>) {
     #
     # The second example will die on this. Because 0 ain't no positive number.
     #
-    die "Not all positive integers" if grep {!/[0-9]/ || !$_} @N;
+    die "Not all positive integers" if grep {/[^0-9]/ || !$_} @N;
     my $index = 0;
     while ($index < @N - 1) {
         #
