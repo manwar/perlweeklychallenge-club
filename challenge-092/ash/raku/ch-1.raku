@@ -5,10 +5,12 @@
 
 # Comments: https://andrewshitov.com/2020/12/21/raku-challenge-week-92-issue-1/
 
-unit sub MAIN(Str $a, Str $b);
+# unit sub MAIN(Str $a, Str $b);
 
 # say + [==] ($a.comb.map: *.ord) <<->> ($b.comb.map: *.ord);
-say + [==] $a.ords <<->> $b.ords;
+# say + [==] $a.ords <<->> $b.ords;
+
+say + [==] [«-»] @*ARGS.map: *.ords;
 
 # Test cases:
 #
