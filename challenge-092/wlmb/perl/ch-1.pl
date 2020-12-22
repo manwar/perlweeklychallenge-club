@@ -15,8 +15,6 @@ my $first_non_isomorphic;
 while(my $string=shift @ARGV){
     $first_non_isomorphic=$string, last
 		unless $first_canon eq canonical_form_of($string);
-#    die "0: $first_string and $string are not isomorphic", exit 1
-#	unless $first_canon eq canonical_form_of($string);
 }
 say $first_non_isomorphic
     ? "0: $first_string and $first_non_isomorphic are not isomorphic"
