@@ -14,10 +14,10 @@ is-deeply insert-interval(
 is-deeply insert-interval(
    (1,9), [(2,3), (7,8)]),         [(1,9),],                "Around";
 
-sub insert-interval($N is copy, @S) {
-    my @result;
-
+sub insert-interval($N, @S) {
     return [$N, |@S] if $N[1] < @S[0;0];
+
+    my @result;
 
     @result.push: @S.shift while @S and @S[0;1] < $N[0];
 
