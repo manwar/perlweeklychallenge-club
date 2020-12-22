@@ -14,18 +14,21 @@ is-deeply insert-interval(
 is-deeply insert-interval(
    (1,9), [(2,3), (7,8)]),         [(1,9),],                 "Around";
 
-sub insert-interval($N is copy, @S) {
+sub insert-interval($N, @S) {
+    @S = sort @S.push: $N;
+
     my @result;
 
-    return [$N, |@S] if $N[1] < @S[0;0];
+    while @S > 1 {
+        if @S[0;1] < @S[1;0] {
+            @result.push: @S.shift;
+        }
 
-    @result.push: @S.shift while @S and @S[0;1] < $N[0];
+        else {
+            @S[1] = (@S[0;0], @S[1;0]).min, (@S[0;1], @S[1;1]).max;
+            @S.shift;
+        }
+    }
 
-    my $head = min @S[0;0], $N[0];
-
-    @S.shift while @S[1] and @S[1;0] <= $N[1];
-
-    my $tail = max @S[0;1], $N[1];
-
-    @result.append: $($head, $tail), |@S[1..*];
+    @result.push: |@S;
 }
