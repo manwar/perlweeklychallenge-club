@@ -10,9 +10,9 @@ is-deeply insert-interval(
 is-deeply insert-interval(
    (10,11), [(1,5), (7,9)]),       [(1,5), (7,9), (10,11)], "Example 3";
 is-deeply insert-interval(
-   (1,2), [(3,4), (7,8)]),         [(1,2), (3,4), (7,8)],    "First";
+   (1,2), [(3,4), (7,8)]),         [(1,2), (3,4), (7,8)],   "First";
 is-deeply insert-interval(
-   (1,9), [(2,3), (7,8)]),         [(1,9),],                 "Around";
+   (1,9), [(2,3), (7,8)]),         [(1,9),],                "Around";
 
 sub insert-interval($N is copy, @S) {
     my @result;
