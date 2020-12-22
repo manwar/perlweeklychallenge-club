@@ -31,6 +31,11 @@ sub iso {
       map { $m{$_}||=$x++ } ## Return letter from cache (or next letter)
       split m{}, $_         ## Split into individual characters
   } @_;
-  return $a eq $b ? 1 : 0;  ## Check to see if generated words are isomorphic
+  return $a eq $b || 0;  ## Check to see if generated words are isomorphic
+}
+
+sub iso_without_comments {
+  my ($a,$b) = map { my ($x,%m)='a'; join '', map { $m{$_}||=$x++ } split m{}, $_ } @_;
+  return $a eq $b || 0;
 }
 
