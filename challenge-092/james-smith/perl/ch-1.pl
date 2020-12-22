@@ -14,21 +14,23 @@ is( iso('add','sum'), 0 );
 done_testing( );
 
 sub iso {
-  my ($a,$b) = @_;
-  my %x;
-  my %y;
-  return 0 unless length $a == length $b;
-  my @b = split m{}, $b;
-  foreach ( split m{}, $a ) {
-    my $t = shift @b;
-    if( exists $x{$_} ) { ## Have we already got a map from 1st letter?
-      return 0 unless $x{$_} eq $t; ## Yes but it doesn't match return...
-    } else {
-      $x{$_} = $t;
-      return 0 if exists $y{$t} && $y{$t} ne $_;
-    }
-    $y{$t} = $_;
-  }
-  return 1;
+  ## This one needs a bit of explanation....
+  ## We are going to normalise the strings - by replacing first chr
+  ## and all its subsequent occurances with 'a', 2nd (different) character
+  ## with 'b' .....
+  ## so above examples we get...
+  ##   abc -> abc   xyz -> abc
+  ##   abb -> abb   xyy -> abb
+  ##   sum -> abc   add -> abb
+  ##   add -> abc   sum -> abc
+
+  my ($a,$b) = map {
+    ## Initialise letter cache and "counter"
+    my ($x,%m)='a';
+    join '',                ## Stitch back the word and return it....
+      map { $m{$_}||=$x++ } ## Return letter from cache (or next letter)
+      split m{}, $_         ## Split into individual characters
+  } @_;
+  return $a eq $b ? 1 : 0;  ## Check to see if generated words are isomorphic
 }
 
