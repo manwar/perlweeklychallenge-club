@@ -1,33 +1,43 @@
 {
-   "subtitle" : {
-      "text" : "Last updated at 2020-12-22 22:38:14 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
    },
    "legend" : {
       "enabled" : "false"
    },
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
+      },
+      "min" : 0
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "y" : 10,
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "enabled" : "true",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}"
+         },
          "data" : [
             [
                "Blog",
@@ -35,28 +45,18 @@
             ],
             [
                "Perl",
-               4150
+               4152
             ],
             [
                "Raku",
                2765
             ]
-         ],
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "y" : 10,
-            "rotation" : -90
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
+   "subtitle" : {
+      "text" : "Last updated at 2020-12-22 22:43:47 GMT"
+   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    }
