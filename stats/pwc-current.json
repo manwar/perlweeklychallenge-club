@@ -1,32 +1,48 @@
 {
+   "legend" : {
+      "enabled" : 0
+   },
    "xAxis" : {
       "type" : "category"
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "series" : [
       {
+         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 092",
          "data" : [
             {
-               "y" : 2,
+               "drilldown" : "Andrew Shitov",
                "name" : "Andrew Shitov",
-               "drilldown" : "Andrew Shitov"
+               "y" : 2
             },
             {
                "y" : 2,
-               "name" : "Stuart Little",
-               "drilldown" : "Stuart Little"
+               "name" : "James Smith",
+               "drilldown" : "James Smith"
+            },
+            {
+               "drilldown" : "Stuart Little",
+               "y" : 2,
+               "name" : "Stuart Little"
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2020-12-22 06:56:40 GMT"
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
@@ -37,7 +53,18 @@
                   1
                ]
             ],
-            "name" : "Andrew Shitov"
+            "name" : "Andrew Shitov",
+            "id" : "Andrew Shitov"
+         },
+         {
+            "id" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "James Smith"
          },
          {
             "data" : [
@@ -46,37 +73,25 @@
                   2
                ]
             ],
-            "id" : "Stuart Little",
-            "name" : "Stuart Little"
+            "name" : "Stuart Little",
+            "id" : "Stuart Little"
          }
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "title" : {
+      "text" : "Perl Weekly Challenge - 092"
    },
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 092"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2020-12-22 06:45:05 GMT"
    }
 }
