@@ -15,7 +15,7 @@ is-deeply insert-interval((2,5),   ((1,2),(3,7),(8,10))), ((1,7),(8,10));
 
 sub insert-interval($N, @S) {
     return $N, |@S if $N[1] < @S[0;0];
-    return |@S, $N if $N[0] > @S[*-1][0];
+    return |@S, $N if $N[0] > @S[*-1][1];
 
     my $h = @S.first({ $N[0] <= .[1] }, :k);
     my $t = @S.first({ $N[1] >= .[0] }, :k:end);
