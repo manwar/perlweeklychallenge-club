@@ -6,10 +6,8 @@ sub MAIN {
 sub isomorphic (Str $A, Str $B) {
     my %trans;
     return False unless $A.chars == $B.chars;
-    for 0..^$A.chars -> $i {
-        my $a = $A.substr($i, 1);
-        my $b = $B.substr($i, 1);
 
+    for $A.comb Z $B.comb -> ($a, $b) {
         if %trans{"ab"}{$a}:exists and %trans{"ab"}{$a} ne $b {
             return False
         }
