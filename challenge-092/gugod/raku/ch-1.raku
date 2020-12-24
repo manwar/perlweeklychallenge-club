@@ -3,14 +3,24 @@ sub MAIN {
     tests;
 }
 
-sub isomorphic (Str $a, Str $b) {
-    return [eqv] ($a, $b).map(
-        -> $s {
-            $s.comb.keys.tail(*-1).map(
-                -> $i { $s.substr($i, 1) eq $s.substr($i-1, 1) }
-            )
+sub isomorphic (Str $A, Str $B) {
+    my %trans;
+    return False unless $A.chars == $B.chars;
+    for 0..^$A.chars -> $i {
+        my $a = $A.substr($i, 1);
+        my $b = $B.substr($i, 1);
+
+        if %trans{"ab"}{$a}:exists and %trans{"ab"}{$a} ne $b {
+            return False
         }
-    );
+        %trans{"ab"}{$a} = $b;
+
+        if %trans{"ba"}{$b}:exists and %trans{"ba"}{$b} ne $a {
+            return False
+        }
+        %trans{"ba"}{$b} = $a;
+    }
+    return True;
 }
 
 sub tests {
@@ -18,7 +28,10 @@ sub tests {
         (True, "abc", "xyz"),
         (True, "abb", "xyy"),
         (True, "look", "moon"),
+        (True, "sum", "abc"),
 
+        (False, "where", "how"),
+        (False, "this", "that"),
         (False, "sum", "add"),
         (False, "sun", "moon"),
         (False, "Moose", "Mouse"),
