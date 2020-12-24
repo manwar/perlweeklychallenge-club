@@ -32,8 +32,7 @@ say is_perfect_power($n);
 
 sub is_perfect_power {
 	my($n) = @_;
-	my $max_factor = sqrt($n)+1;
-	find_primes($max_factor);		# fill list of prime numbers up to sqrt(n)+1
+	find_primes($n);			# fill list of prime numbers up to sqrt(n)
 	for my $prime (@primes) {
 		my $exp = 1;
 		my $power;
@@ -48,15 +47,15 @@ sub is_perfect_power {
 }
 
 sub find_primes {
-	my($max) = @_;
+	my($n) = @_;
 	my $prime = 2;
 	do {
 		push @primes, $prime;
-		for (my $f = $prime*2; $f < $max; $f += $prime) {
+		for (my $f = $prime*2; $f*$f <= $n; $f += $prime) {
 			$sieve[$f] = 1;
 		}
 		do {
 			$prime++
-		} while ($prime < $max && $sieve[$prime]);
-	} while ($prime < $max);
+		} while ($prime*$prime < $n && $sieve[$prime]);
+	} while ($prime*$prime < $n);
 }
