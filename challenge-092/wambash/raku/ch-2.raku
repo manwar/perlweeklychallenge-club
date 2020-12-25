@@ -1,25 +1,17 @@
 #!/usr/bin/env raku
 
-proto ii-next ( Capture $c?, :@in = Empty, :$n, :@out = Empty, Bool :$end = False ) {*};
-
-multi ii-next ( :$n, :@in, :@out  where { $n.max < @in.head.min }  ) {
-     \( out => (|@out, $n, |@in ), end => True )
+multi ii-next ( :$n, :@in = Empty, :@out = Empty, Bool :$end = False ) {
+    when  $n.max < @in.head.min { \( out => (|@out, $n, |@in ), end => True ) }
+    when  @in.head.max < $n.min { \( out => (|@out, @in.head ), :$n, in => @in.skip ) }
+    default                     { \( :@out, n => (@in.head minmax $n), in => @in.skip ) }
 }
 
-multi ii-next ( :$n, :@in, :@out  where { @in.head.max < $n.min }  ) {
-    \( out => (|@out, @in.head ), :$n, in => @in.skip )
-}
-
-multi ii-next ( :$n, :@in, :@out ) {
-    \( :@out, n => (@in.head minmax $n), in => @in.skip )
-}
-
-multi ii-next ( $c, ) {
+multi ii-next ( Capture $c ) {
     samewith |$c
 }
 
 multi insert-interval ( :$n, :@in ) {
-    \(:$n,:@in), &ii-next ... *.<end>
+    \( :$n, :@in ), *.&ii-next ... *.<end>
     andthen .tail.<out>
 }
 
