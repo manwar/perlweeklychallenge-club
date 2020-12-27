@@ -22,6 +22,8 @@ Output: 0
 ### Solutions
 * [Perl](perl/ch-1.pl).
 
+### Blog
+[Blog Post](https://wp.me/pcxd30-jK).
 
 ## Task 2: Insert Interval
 
@@ -39,6 +41,10 @@ Output: (1,2), (3,10)
 
 Input $S = (1,5), (7,9); $N = (10,11)
 Output: (1,5), (7,9), (10,11)
+~~~~
 
 ### Solutions
 * [Perl](perl/ch-2.pl).
+
+### Blog
+[Blog Post](https://wp.me/pcxd30-ka).
