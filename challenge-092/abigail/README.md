@@ -1,65 +1,44 @@
-Solution by Abigail
+# Solution by Abigail
 
-# Task 1: Count Number
+## Task 1: Isomorphic Strings
 
-You are given a positive number `$N`.
+You are given two strings `$A` and `$B`.
 
-Write a script to count number and display as you read it.
+Write a script to check if the given strings are Isomorphic. Print
+`1` if they are otherwise `0`.
 
-### Example 1:
+### Examples
+~~~~
+Input: $A = "abc"; $B = "xyz"
+Output: 1
 
-    Input: $N = 1122234
-    Output: 21321314
+Input: $A = "abb"; $B = "xyy"
+Output: 1
 
-as we read "two 1 three 2 one 3 one 4"
+Input: $A = "sum"; $B = "add"
+Output: 0
+~~~~
 
-### Example 2:
-
-    Input: $N = 2333445
-    Output: 12332415
-
-as we read "one 2 three 3 two 4 one 5"
-
-### Example 3:
-
-    Input: $N = 12345
-    Output: 1112131415
-
-as we read "one 1 one 2 one 3 one 4 one 5"
-
-## Solutions
+### Solutions
 * [Perl](perl/ch-1.pl).
 
-[Blog post](https://wp.me/pcxd30-j2).
 
-# Task 2: Jump Game
+## Task 2: Insert Interval
 
-You are given an array of positive numbers @N, where value at each
-index determines how far you are allowed to jump further.
+You are given a set of sorted non-overlapping intervals and a new interval.
 
-Write a script to decide if you can jump to the last index. Print
-1 if you are able to reach the last index otherwise 0.
+Write a script to merge the new interval to the given set of intervals.
 
-### Example 1:
+### Examples
+~~~~
+Input $S = (1,4), (8,10); $N = (2,6)
+Output: (1,6), (8,10)
 
-    Input: @N = (1, 2, 1, 2)
-    Output: 1
+Input $S = (1,2), (3,7), (8,10); $N = (5,8)
+Output: (1,2), (3,10)
 
-as we jump one place from index 0 and then twoe places from index
-1 to reach the last index.
+Input $S = (1,5), (7,9); $N = (10,11)
+Output: (1,5), (7,9), (10,11)
 
-### Example 2:
-
-    Input: @N = (2,1,1,0,2)
-    Output: 0
-
-it is impossible to reach the last index. as we jump two places
-from index 0 to reach index 2, followed by one place jump from index
-2 to reach the index 3. once you reached the index 3, you can't go
-any further because you can only jump 0 position further.
-
-
-## Solutions
+### Solutions
 * [Perl](perl/ch-2.pl).
-
-[Blog post](https://wp.me/pcxd30-jq).
