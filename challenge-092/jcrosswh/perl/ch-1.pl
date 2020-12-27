@@ -24,7 +24,7 @@ are isomorphic.  It will print 1 if they are otherwise 0.
 
 This solution assumes that if the number of characters in each string is equal,
 then the two strings are isomorphic.  This script works by going though all
-characters, assuming case sensetivity, and determining in each inputed string
+characters, assuming case sensitivity, and determining in each inputed string
 the number of times that character appears.  Internally the script maintains a
 hash that keys on the number of times a character appears, and that key maps to
 an array that captures which characters appeared that number of times.
