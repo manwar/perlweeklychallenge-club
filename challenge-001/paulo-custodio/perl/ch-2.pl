@@ -9,4 +9,4 @@ use strict;
 use warnings;
 use 5.030;
 
-for (1..20) { say(($_%3)==0 && ($_%5)==0 ? "fizzbuzz" : ($_%3)==0 ? "fizz" : ($_%5)==0 ? "buzz" : $_) }
+for (1..20) { say(($_%15)==0 ? "fizzbuzz" : ($_%3)==0 ? "fizz" : ($_%5)==0 ? "buzz" : $_) }
