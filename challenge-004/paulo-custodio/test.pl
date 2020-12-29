@@ -12,22 +12,17 @@ END
 # build list of words for testing
 ok 0==system("aspell -d en dump master | aspell -l en expand > words.txt");
 
-is capture("perl perl/ch-2.pl words.txt world"), <<END;
-w
-o
+is capture("perl perl/ch-2.pl world"), <<END;
 or
 ow
 owl
 old
-l
 lo
 low
 lord
-r
 row
 rd
 rod
-d
 do
 wold
 world
