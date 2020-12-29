@@ -9,14 +9,16 @@ use strict;
 use warnings;
 use 5.030;
 
-@ARGV==2 or die "Usage: ch-2.pl dict letters\n";
-my($dict_file, $letters) = @ARGV;
+@ARGV==1 or die "Usage: ch-2.pl letters\n";
+my($letters) = @ARGV;
 
 $letters = lc($letters);
 
-open(my $fh, "<", $dict_file) or die "open $dict_file: $!\n";
+open(my $fh, "<", "words.txt") or die "open words.txt: $!\n";
 while (<$fh>) {
 	chomp;
+	next if /\W/;
+	next if length($_) < 2;
 	say $_ if matches($_, $letters);
 }
 
