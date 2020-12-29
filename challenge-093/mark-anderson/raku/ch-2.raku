@@ -30,12 +30,11 @@ sub sum-path(Node $node) {
     sub traverse($node, $sum) {
         $node.sum = $node.val + $sum;
 
-        unless $node.left or $node.right { 
-            $result += $node.sum; 
-            return; 
-        }
-        
         traverse($node.left, $node.sum)  if $node.left;
         traverse($node.right, $node.sum) if $node.right;
+
+        unless $node.left or $node.right { 
+            $result += $node.sum; 
+        }
     }
 }
