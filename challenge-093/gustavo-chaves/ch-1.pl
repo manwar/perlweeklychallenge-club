@@ -2,6 +2,7 @@
 
 use 5.030;
 use warnings;
+use Math::BigRat try => 'GMP';
 
 sub max_points {
     my @N = @_;
@@ -16,9 +17,9 @@ sub max_points {
             if ($x0 == $x1) {
                 $colinears += grep {$_->[0] == $x0} @N[$j+1 .. $#N];
             } else {
-                my $A = ($y1 - $y0) / ($x1 - $x0);
-                my $B = $y0 - $A*$x0;
-                $colinears += grep {$_->[1] == $A*$_->[0] + $B} @N[$j+1 .. $#N];
+                my $A = Math::BigRat->new(Math::BigInt->new($y1 - $y0), Math::BigInt->new($x1 - $x0));
+                my $B = Math::BigRat->new($y0)->bsub($A->bmul($x0));
+                $colinears += grep {$A->bmul($_->[0])->badd($B)->beq($_->[1])} @N[$j+1 .. $#N];
             }
             $max_points = $colinears if $colinears > $max_points;
         }
@@ -28,3 +29,4 @@ sub max_points {
 
 say max_points([1,1], [2,2], [3,3]);
 say max_points([1,1], [2,2], [3,1], [1,3], [5,3]);
+say max_points map {[int(rand(10)), int(rand(10))]} 1 .. 30;
