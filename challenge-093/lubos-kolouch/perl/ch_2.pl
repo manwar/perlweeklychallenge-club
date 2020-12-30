@@ -28,22 +28,22 @@ use Moose;
 my $total_sum = 0;
 
 sub sum_paths{
-    my $root = shift;
+    my $self = shift;
 
-    $root->total_value($root->value + $root->total_value);
+    $self->total_value($self->value + $self->total_value);
 
-    if ($root->left) {
-        $root->left->total_value($root->total_value);
-        sum_paths($root->left);
+    if ($self->left) {
+        $self->left->total_value($self->total_value);
+        sum_paths($self->left);
     }
 
-    if ($root->right) {
-        $root->right->total_value($root->total_value);
-        sum_paths($root->right);
+    if ($self->right) {
+        $self->right->total_value($self->total_value);
+        sum_paths($self->right);
     }
 
-    if ((!defined $root->left) and (!defined $root->right)) {
-            $total_sum += $root->total_value;
+    if ((!defined $self->left) and (!defined $self->right)) {
+            $total_sum += $self->total_value;
     }
 
     return $total_sum;
