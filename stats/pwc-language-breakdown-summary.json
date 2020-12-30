@@ -1,35 +1,19 @@
 {
-   "series" : [
-      {
-         "dataLabels" : {
-            "y" : 10,
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "rotation" : -90,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            }
-         },
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               1220
-            ],
-            [
-               "Perl",
-               4240
-            ],
-            [
-               "Raku",
-               2806
-            ]
-         ]
-      }
-   ],
+   "subtitle" : {
+      "text" : "Last updated at 2020-12-30 11:43:52 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
+   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
@@ -39,24 +23,40 @@
          "text" : null
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2020-12-30 11:40:51 GMT"
-   },
    "legend" : {
       "enabled" : "false"
    },
+   "series" : [
+      {
+         "data" : [
+            [
+               "Blog",
+               1220
+            ],
+            [
+               "Perl",
+               4242
+            ],
+            [
+               "Raku",
+               2806
+            ]
+         ],
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "rotation" : -90,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10,
+            "enabled" : "true"
+         },
+         "name" : "Contributions"
+      }
+   ],
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    }
