@@ -1,9 +1,9 @@
 #!/bin/env python
 # ===============================================================================
 #
-#         FILE: ch_2.py
+#         FILE: ch_1.py
 #
-#        USAGE: ./ch_2.py
+#        USAGE: ./ch_1.py
 #
 #  DESCRIPTION: Perl Weekly Challenge #093
 #               https://perlweeklychallenge.org/blog/perl-weekly-challenge-093/
@@ -12,7 +12,9 @@
 #       AUTHOR: Lubos Kolouch
 #      CREATED: 12/30/2020 02:39:16 PM
 # ===============================================================================
+""" Challenge 1 - Max Points """
 from collections import defaultdict
+import pytest
 
 
 def get_max_lines(inp):
@@ -40,5 +42,13 @@ def get_max_lines(inp):
     return max_count + 1
 
 
-assert get_max_lines([[1, 1], [2, 2], [3, 3]]) == 3
-assert get_max_lines([[1, 1], [2, 2], [3, 1], [1, 3], [5, 3]]) == 3
+@pytest.mark.test1
+def test_example1():
+    """ Test the example 1 from the task """
+    assert get_max_lines([[1, 1], [2, 2], [3, 3]]) == 3
+
+
+@pytest.mark.test2
+def test_example2():
+    """ Test the example 2 from the task """
+    assert get_max_lines([[1, 1], [2, 2], [3, 1], [1, 3], [5, 3]]) == 3
