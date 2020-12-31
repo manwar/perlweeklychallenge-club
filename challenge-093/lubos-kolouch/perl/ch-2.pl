@@ -17,6 +17,7 @@ use strict;
 use warnings;
 use Moose;
 
+{
 package Point;
 use Moose;
 
@@ -24,31 +25,39 @@ use Moose;
     has 'left' => (is => 'rw', isa=>'Point');
     has 'right' => (is => 'rw', isa=>'Point');
     has 'total_value' => (is => 'rw', isa=>'Int', default => 0);
-
-my $total_sum = 0;
-
-sub sum_paths{
-    my $self = shift;
-
-    $self->total_value($self->value + $self->total_value);
-
-    if ($self->left) {
-        $self->left->total_value($self->total_value);
-        sum_paths($self->left);
-    }
-
-    if ($self->right) {
-        $self->right->total_value($self->total_value);
-        sum_paths($self->right);
-    }
-
-    if ((!defined $self->left) and (!defined $self->right)) {
-            $total_sum += $self->total_value;
-    }
-
-    return $total_sum;
 }
 
+{
+package SumPath;
+use Moose;
+
+    has 'total_sum' => (is => 'rw', isa => 'Int', default => 0);
+
+    sub sum_paths{
+        my $self = shift;
+        my $root = shift;
+
+        $root->total_value($root->value + $root->total_value);
+
+        if ($root->left) {
+            $root->left->total_value($root->total_value);
+            $self->sum_paths($root->left);
+        }
+
+        if ($root->right) {
+            $root->right->total_value($root->total_value);
+            $self->sum_paths($root->right);
+        }
+
+        if ((!defined $root->left) and (!defined $root->right)) {
+                $self->total_sum($self->total_sum + $root->total_value);
+        }
+
+        return $self->total_sum;
+    }
+}
+
+no Moose;
 use Test::More;
 
 my $root = Point->new( value => 1);
@@ -64,9 +73,9 @@ my $elem2 = Point->new( value => 4);
 $pos->left($elem1);
 $pos->right($elem2);
 
-is(sum_paths($root), 13);
+my $sumpath = SumPath->new;
+is($sumpath->sum_paths($root), 13);
 
-$total_sum = 0;
 $root = Point->new( value => 1);
 $elem1 = Point->new( value => 2);
 $elem2 = Point->new( value => 3);
@@ -86,6 +95,7 @@ $elem2 = Point->new( value => 6);
 $pos->left($elem1);
 $pos->right($elem2);
 
-is(sum_paths($root), 26);
+$sumpath = SumPath->new;
+is($sumpath->sum_paths($root), 26);
 
 done_testing();
