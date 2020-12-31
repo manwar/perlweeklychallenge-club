@@ -17,25 +17,16 @@ sub build-tree(@array, $root is copy = Nil, Int $i = 0) {
     $root;
 }
 
-multi sub challenge(Node $root) {
-    challenge($root, (), 0);
-}
-
-multi sub challenge(Node $root, @path is copy, $path-length is copy) {
+sub challenge(Node $root, @path is copy = ()) {
     my $path-sum = 0;
     with $root {
-        if @path.elems > $path-length {
-            @path[$path-length] = $root.value;
-        } else {
-            @path.push($root.value);
-        }
-        $path-length++;
+        @path.push($root.value);
 
         if !$root.left.defined && !$root.right.defined {
-            $path-sum = @path[^$path-length].sum;
+            $path-sum = @path.sum;
         } else {
-            $path-sum += challenge($root.left, @path, $path-length);
-            $path-sum += challenge($root.right, @path, $path-length);
+            $path-sum += challenge($root.left, @path);
+            $path-sum += challenge($root.right, @path);
         }
     }
     $path-sum;
@@ -52,7 +43,7 @@ multi sub MAIN(Bool :$test) {
     my @tests = (
         (build-tree(('1', '2', 'Nil', '3', '4')), 13),
         (build-tree(('1', '2', '3', '4', 'Nil', '5', '6')), 26),
-        (build-tree(('2', '7', '5', '2', '6', 'Nil', '9', 'Nil', '5', '11', '4', Nil)), 77)
+        (build-tree(('2', '7', '5', '2', '6', 'Nil', '9', 'Nil', '5', '11', '4', 'Nil')), 77)
     );
 
     for @tests -> ($tree, $expected) {
