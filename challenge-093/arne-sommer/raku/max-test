@@ -1,0 +1,16 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Str $string = "(1,1), (2,2), (3,3)", :v(:$verbose));
+
+my @array = $string.EVAL;
+
+say ": Array: { @array.raku }" if $verbose;
+
+my $max = @array>>.max.max;
+my $min = @array>>.min.min;
+
+say ": Min: $min\n: Max: $max" if $verbose;
+
+my @matrix; @array.map({ @matrix[$_[0]][$_[1]] = True });
+
+say ": { @matrix.raku } " if $verbose;
