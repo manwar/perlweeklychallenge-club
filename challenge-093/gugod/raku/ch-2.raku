@@ -1,8 +1,8 @@
 
 class IntBinaryTree {
     has Int $.payload;
-    has $.left-child;
-    has $.right-child;
+    has IntBinaryTree $.left-child;
+    has IntBinaryTree $.right-child;
 }
 
 sub MAIN {
