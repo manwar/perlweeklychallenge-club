@@ -26,6 +26,20 @@ sub most_points_in_line {
     foreach my $j (($i+1)..(@nodes-1)) {
       my $dir = '-';
       my( $dx,$dy) = ( $nodes[$i][0]-$nodes[$j][0], $nodes[$i][1]-$nodes[$j][1] );
+      ## Assumption all points lie on integer points in the plane {tbh
+      ## if this is not the case the challenge is very difficult as rounding
+      ## errors will make it impossible to find truely co-linear points -
+      ## so would have to add some "guestimate" coding to work out what is
+      ## near enough to "co-linear"...
+      ##
+      ## Now - if we divide dx by dy we would end up with decimal values for
+      ## the slope there may be rounding errors in the storage.
+      ##
+      ## To remove this potential we can reduce the fraction to it's simplest
+      ## form - by dividing numerator and denominator by their greatest
+      ## common factor..... {if dx or dy are "0" we just define the "key" to
+      ## be two other symbols} We can then store the direction as "int"-"int"
+      
       if( $dx && $dy ) {
         my $gcd = gcd( $dx,$dy );
         $dir = $dx/$gcd.'-'.$dy/$gcd;
@@ -40,19 +54,15 @@ sub most_points_in_line {
   foreach (values %lines) {
     $max = $_ if $_ > $max;
   }
-  return $max+1;
+  return $max+1; ## We will only pick up points co-linear to best point
+                 ## - so need to add one to include that point...
 }
 
 
 sub gcd {
-  my( $n,$m,$s ) = (@_,1);
-  ($n,$m) = (-$n,-$m) if $n < 0;
-  if( $m < 0 ) {
-    $s = -1;
-    $m = -$m;
-  }
-  ($n,$m) = ($m,$n) if $m>$n;
-  ($n,$m) = ( $m, $n % $m ) while $n % $m;
-  return $m*$s;
+  my( $n,$m ) =( abs $_[0], abs $_[1] );   ## m/n may be -ve so have to make sure +ve
+  ($n,$m) = ($m,$n) if $m>$n;              ## Make sure m < n as well
+  ($n,$m) = ( $m, $n % $m ) while $n % $m; ## Reduces to gcd algorithm we've had before...
+  return $m;
 }
 
