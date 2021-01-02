@@ -17,7 +17,6 @@ sub max-points( @points ) {
 
     for @points.combinations(3) -> ($pi, $pj, $pk) {
         %lines{"$pi - $pj"} //= [$pi, $pj];
-
         my $slope_ij = slope($pi, $pj);
         my $slope_jk = slope($pj, $pk);
 
@@ -32,7 +31,6 @@ sub max-points( @points ) {
     say "# Points: { @points.gist }";
     say "    line with maximum number of poionts: " ~ $maxline.value.gist;
     say "";
-    
 
     return $maxline.value.elems;
 }
