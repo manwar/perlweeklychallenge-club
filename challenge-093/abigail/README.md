@@ -31,6 +31,7 @@ Output: 3
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-1.pl)
 
 
 
@@ -66,3 +67,4 @@ Output: 26
 as sum three paths (1->2->4), (1->3->5) and (1->3->6)
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
