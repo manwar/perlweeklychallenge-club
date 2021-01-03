@@ -1,50 +1,70 @@
 # Solution by Abigail
 
-## Task 1: Isomorphic Strings
+## Task 1: Max Points
 
-You are given two strings `$A` and `$B`.
+You are given set of co-ordinates `@N`.
 
-Write a script to check if the given strings are Isomorphic. Print
-`1` if they are otherwise `0`.
-
-### Examples
-~~~~
-Input: $A = "abc"; $B = "xyz"
-Output: 1
-
-Input: $A = "abb"; $B = "xyy"
-Output: 1
-
-Input: $A = "sum"; $B = "add"
-Output: 0
-~~~~
-
-### Solutions
-* [Perl](perl/ch-1.pl).
-
-### Blog
-[Blog Post](https://wp.me/pcxd30-jK).
-
-## Task 2: Insert Interval
-
-You are given a set of sorted non-overlapping intervals and a new interval.
-
-Write a script to merge the new interval to the given set of intervals.
+Write a script to count maximum points on a straight line when given
+co-ordinates plotted on 2-d plane.
 
 ### Examples
 ~~~~
-Input $S = (1,4), (8,10); $N = (2,6)
-Output: (1,6), (8,10)
+|
+|     x
+|   x
+| x
++ _ _ _ _
 
-Input $S = (1,2), (3,7), (8,10); $N = (5,8)
-Output: (1,2), (3,10)
+Input: (1,1), (2,2), (3,3)
+Output: 3
 
-Input $S = (1,5), (7,9); $N = (10,11)
-Output: (1,5), (7,9), (10,11)
+
+|
+|
+| x       x
+|   x
+| x   x
++ _ _ _ _ _
+
+Input: (1,1), (2,2), (3,1), (1,3), (5,3)
+Output: 3
 ~~~~
 
 ### Solutions
-* [Perl](perl/ch-2.pl).
+* [Perl](perl/ch-1.pl)
 
-### Blog
-[Blog Post](https://wp.me/pcxd30-ka).
+
+
+## Task 2: Sum Path
+
+You are given binary tree containing numbers `0-9` only.
+
+Write a script to sum all possible paths from root to leaf.
+
+### Examples
+~~~~
+Input:
+     1
+    /
+   2
+  / \
+ 3   4
+
+Output: 13
+~~~~
+as sum two paths (1->2->3) and (1->2->4)
+
+~~~~
+Input:
+     1
+    / \
+   2   3
+  /   / \
+ 4   5   6
+
+Output: 26
+~~~~
+as sum three paths (1->2->4), (1->3->5) and (1->3->6)
+
+### Solutions
+* [Perl](perl/ch-2.pl)
