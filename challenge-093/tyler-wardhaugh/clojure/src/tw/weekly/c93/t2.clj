@@ -35,7 +35,7 @@
     (transduce (map (partial reduce +)) + paths)))
 
 (defn -main
-  "Run Task 2 with the given positive integers, defaulting to the example
+  "Run Task 2 with the given tree of integers, defaulting to the example
   given in the explanation page linked from the task description."
   [& args]
   (let [tree (or (some-> args first edn/read-string) DEFAULT-INPUT)]
