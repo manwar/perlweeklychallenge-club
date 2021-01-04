@@ -55,6 +55,7 @@ find . -name "*.json" -delete
 find . -name "*.scala" -delete
 find . -name "*.sql" -delete
 find . -name "*.table" -delete
+find . -name "*.rakumod" -delete
 rm -rf abigail/Part1
 rm -rf abigail/Part2
 rm -rf abigail/t/input-*
