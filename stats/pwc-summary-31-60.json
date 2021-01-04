@@ -1,7 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "categories" : [
          "Chenyf",
@@ -36,12 +33,32 @@
          "Fred Zinn"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-01-04 22:30:33 GMT"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             92,
@@ -73,10 +90,10 @@
             34,
             0,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             6,
             0,
@@ -108,7 +125,8 @@
             0,
             39,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -145,23 +163,5 @@
             0
          ]
       }
-   ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-01-04 18:09:01 GMT"
-   }
+   ]
 }
