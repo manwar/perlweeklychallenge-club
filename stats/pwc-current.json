@@ -1,63 +1,78 @@
 {
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 094",
-         "data" : [
-            {
-               "name" : "Stuart Little",
-               "drilldown" : "Stuart Little",
-               "y" : 2
-            }
-         ]
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 094"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2021-01-04 08:42:02 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Stuart Little",
-            "name" : "Stuart Little"
-         }
-      ]
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "xAxis" : {
+      "type" : "category"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
    },
    "legend" : {
       "enabled" : 0
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 094"
+   },
    "chart" : {
       "type" : "column"
-   }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "James Smith",
+            "name" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Stuart Little",
+            "name" : "Stuart Little",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         }
+      ]
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2021-01-04 09:42:12 GMT"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "Stuart Little",
+               "drilldown" : "Stuart Little"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 094"
+      }
+   ]
 }
