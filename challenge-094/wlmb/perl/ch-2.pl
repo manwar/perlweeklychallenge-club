@@ -15,9 +15,7 @@ has right=>(is=>'ro', required=>1);
 sub flatten {
     my $self=shift;
     return () unless defined $self->value;
-    return $self->value
-	?($self->value, $self->left?$self->left->flatten:(), $self->right?$self->right->flatten:())
-	:();
+    return ($self->value, $self->left?$self->left->flatten:(), $self->right?$self->right->flatten:());
 }
 
 package main;
