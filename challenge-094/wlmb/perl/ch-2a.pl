@@ -31,7 +31,7 @@ foreach(@ARGV){ # for each yaml file
     }
 }
 
-sub build_tree { #Build tree recursively from string representation
+sub build_tree { #Build tree recursively
     my $tree=shift;
     return undef unless defined $tree; #Empty tree
     return Tree->new(value=>$tree, left=>undef, right=>undef) unless ref $tree; # a leave
@@ -39,8 +39,8 @@ sub build_tree { #Build tree recursively from string representation
     die "Not a binary tree\n". Dumper($tree) unless ref $tree eq "HASH";
     my @keys=keys %{$tree};
     die "Not a binary tree\n". Dumper($tree) unless @keys==1;
-    my $value=$keys[0]; # value of node is the key of the hash!
-    my $subtrees=$tree->{$value};
+    my $value=$keys[0]; # Confusingly, value of node is the key of the hash!
+    my $subtrees=$tree->{$value}; # and value of hash is array of subtrees
     die "Not a binary tree\n". Dumper($tree) unless ref $subtrees eq "ARRAY" and @$subtrees==2;
     my ($left,$right)=@$subtrees;
     return Tree->new(value=>$value, left=> build_tree($left), right=>build_tree($right));
