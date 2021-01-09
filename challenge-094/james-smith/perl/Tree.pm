@@ -1,5 +1,17 @@
 package Tree;
 use LL;
+
+## The tree is stored in an array ref
+# The first element is the value of the node
+# The remainder of the array are child sub-trees
+#
+# Methods:
+#  ->add_child( $child_tree )
+#  ->to_ll( $list )           -- convert tree into linked lit ( if list is
+#                                passed then they are added to the end of this list )
+#  ->flatten                  -- flatten list to array.
+#
+
 sub new {
   my $class = shift;
   my $value = shift;
