@@ -19,6 +19,10 @@ while (<>) {
     foreach my $word (/"([^"]+)"/g) {
         #
         # Normalize each word: split into characters, sort them, join them.
+        # Note that we're splitting on characters, not graphemes, nor
+        # do we normalize the input. This may lead to unexpected results
+        # when using accented letters and/or combining characters. But
+        # that's what you get when using poor specifications.
         #
         my $normalized = join "" => sort split // => $word;
         push @{$anagrams {$normalized}} => $word;
