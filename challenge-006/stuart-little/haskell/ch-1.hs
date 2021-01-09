@@ -4,6 +4,7 @@
 
 import System.Environment (getArgs,)
 import Data.List.Extra (groupOn,)
+import Data.List (sort,)
 
 showInterval :: Show a => [a] -> String
 showInterval xs
@@ -14,4 +15,4 @@ showInterval xs
 
 main = do
   args <- getArgs
-  putStrLn $ unwords $ map showInterval $ (map.map) snd $ groupOn fst $ zipWith (\x y -> (y-x,y)) [0..] $ map (read::String->Int) args
+  putStrLn $ unwords $ map showInterval $ (map.map) snd $ groupOn fst $ zipWith (\x y -> (y-x,y)) [0..] $ sort $ map (read::String->Int) args
