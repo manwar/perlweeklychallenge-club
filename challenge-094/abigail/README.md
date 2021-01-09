@@ -24,6 +24,7 @@ Output: [ ("x") ]
 
 
 ### Solutions
+* [Node](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 
 
@@ -54,3 +55,4 @@ Output:
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
