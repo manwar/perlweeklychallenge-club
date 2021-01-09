@@ -38,8 +38,9 @@ END
 END
 	my($in, $out) = @$_;
 
-	is capture("gforth forth/ch-1.fs $in"), $out;
-	is capture(       "basic/ch-1    $in"), $out;
+	is capture("python python/ch-1.py $in"), $out;
+	is capture( "gforth forth/ch-1.fs $in"), $out;
+	is capture(        "basic/ch-1    $in"), $out;
 }	
 
 
@@ -67,11 +68,12 @@ END
 	my($in, $out) = @$_;
 	path($input)->spew($in);
 	
-	is capture(   "perl perl/ch-2.pl < $input"),  "$out\n";
-	is capture("gforth forth/ch-2.fs < $input"),  "$out\n";
-	is capture(           "c/ch-2    < $input"),  "$out\n";
-	is capture(         "cpp/ch-2    < $input"),  "$out\n";
-	is capture(       "basic/ch-2    < $input"),  "$out\n";
+	is capture(    "perl perl/ch-2.pl < $input"),  "$out\n";
+	is capture("python python/ch-2.py < $input"),  "$out\n";
+	is capture( "gforth forth/ch-2.fs < $input"),  "$out\n";
+	is capture(            "c/ch-2    < $input"),  "$out\n";
+	is capture(          "cpp/ch-2    < $input"),  "$out\n";
+	is capture(        "basic/ch-2    < $input"),  "$out\n";
 }
 
 unlink $input;
