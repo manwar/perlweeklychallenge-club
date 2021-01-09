@@ -22,6 +22,7 @@ my $x = Tree->new(1)->add_child(
           Tree->new(3)
         );
 is( (join ' -> ', $x->flatten ), '1 -> 2 -> 4 -> 5 -> 6 -> 7 -> 3' );
+is( (join ' -> ', $x->to_ll->flatten ), '1 -> 2 -> 4 -> 5 -> 6 -> 7 -> 3' );
 
 done_testing();
 
