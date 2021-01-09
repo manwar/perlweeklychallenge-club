@@ -54,15 +54,15 @@ no Moose;
 use Test::More;
 
 # TEST 1
-my $root = Point->new( value => 1);
-my $elem1 = Point->new( value => 2);
+my $root = Point->new(value => 1);
+my $elem1 = Point->new(value => 2);
 
 my $pos = $elem1;
 $root->left($elem1);
 
 $pos = $root->left;
-$elem1 = Point->new( value => 3);
-my $elem2 = Point->new( value => 4);
+$elem1 = Point->new(value => 3);
+my $elem2 = Point->new(value => 4);
 
 $pos->left($elem1);
 $pos->right($elem2);
@@ -73,21 +73,21 @@ is_deeply($arr, [1, 2, 3, 4]);
 
 # TEST 2
 
-$root = Point->new( value => 1);
-$elem1 = Point->new( value => 2);
-$elem2 = Point->new( value => 3);
+$root = Point->new(value => 1);
+$elem1 = Point->new(value => 2);
+$elem2 = Point->new(value => 3);
 $root->left($elem1);
 $root->right($elem2);
 
 $pos = $root->left;
-$elem1 = Point->new( value => 4);
-$elem2 = Point->new( value => 5);
+$elem1 = Point->new(value => 4);
+$elem2 = Point->new(value => 5);
 $pos->left($elem1);
 $pos->right($elem2);
 
 $pos = $pos->right;
-$elem1 = Point->new( value => 6);
-$elem2 = Point->new( value => 7);
+$elem1 = Point->new(value => 6);
+$elem2 = Point->new(value => 7);
 
 $pos->left($elem1);
 $pos->right($elem2);
