@@ -44,11 +44,6 @@ point ...
 
 EOS
 
-# convert points given as x,y,... to a list of array references
-sub get_points {
-    map {[split ',']} @_
-}
-
 # convert @ARGV to point list
 my @points = get_points(@ARGV);
 say 'points: ', pp @points if $verbose;
@@ -56,6 +51,10 @@ say 'points: ', pp @points if $verbose;
 # Process input data
 say scalar max_points_in_line(@points);
 
+# convert points given as x,y,... to a list of array references
+sub get_points {
+    map {[split ',']} @_
+}
 
 # Get the "canonical direction" between two integral points:
 # - nonzero components have no common divisor > 1
@@ -130,8 +129,6 @@ sub max_points_in_line {
 
     @points_in_line;
 }
-
-### main ###
 
 sub run_tests {
     SKIP: {
