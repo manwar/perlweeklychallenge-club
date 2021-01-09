@@ -6,12 +6,8 @@ use warnings;
 use feature qw(say);
 use Test::More;
 
-warn render(group_anagrams(qw(opt bat saw tab pot top was)));
-warn render(group_anagrams(qw(x)));
-
 is( render(group_anagrams(qw(opt bat saw tab pot top was))), '[bat tab] [saw was] [opt pot top]'  );
 is( render(group_anagrams(qw(x))), '[x]');
-
 
 done_testing();
 
