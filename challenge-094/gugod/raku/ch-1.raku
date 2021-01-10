@@ -22,5 +22,5 @@ sub group-anagrams (@S) {
 sub is-anagram (Str $a, Str $b) {
     return False unless $a.chars == $b.chars;
 
-    return $a.comb.sort eq $b.comb.sort
+    return $a.comb.sort eqv $b.comb.sort
 }
