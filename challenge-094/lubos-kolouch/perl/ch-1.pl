@@ -17,8 +17,6 @@
 use strict;
 use warnings;
 
-use Data::Dumper;
-
 
 sub get_anagrams {
     my $what = shift;
