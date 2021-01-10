@@ -16,11 +16,12 @@ for (["1 1  2 2  3 4" 			=> 2],
 	 ["1 1  2 2  3 1  1 3  5 3"	=> 3]) {
 	my($in, $out) = @$_;
 	
-	is capture(   "perl perl/ch-1.pl $in"),  "$out\n";
-	is capture("gforth forth/ch-1.fs $in"),  "$out\n";
-	is capture(           "c/ch-1    $in"),  "$out\n";
-	is capture(         "cpp/ch-1    $in"),  "$out\n";
-	is capture(       "basic/ch-1    $in"), " $out\n";
+	is capture(    "perl perl/ch-1.pl $in"),  "$out\n";
+	is capture("python python/ch-1.py $in"),  "$out\n";
+	is capture( "gforth forth/ch-1.fs $in"),  "$out\n";
+	is capture(            "c/ch-1    $in"),  "$out\n";
+	is capture(          "cpp/ch-1    $in"),  "$out\n";
+	is capture(        "basic/ch-1    $in"), " $out\n";
 }
 
 
@@ -45,11 +46,12 @@ END
 	my($in, $out) = @$_;
 	path($input)->spew($in);
 	
-	is capture(   "perl perl/ch-2.pl < $input"),  "$out\n";
-	is capture("gforth forth/ch-2.fs < $input"),  "$out\n";
-	is capture(           "c/ch-2    < $input"),  "$out\n";
-	is capture(         "cpp/ch-2    < $input"),  "$out\n";
-	is capture(       "basic/ch-2    < $input"), " $out\n";
+	is capture(    "perl perl/ch-2.pl < $input"),  "$out\n";
+	is capture("python python/ch-2.py < $input"),  "$out\n";
+	is capture( "gforth forth/ch-2.fs < $input"),  "$out\n";
+	is capture(            "c/ch-2    < $input"),  "$out\n";
+	is capture(          "cpp/ch-2    < $input"),  "$out\n";
+	is capture(        "basic/ch-2    < $input"), " $out\n";
 }
 
 
