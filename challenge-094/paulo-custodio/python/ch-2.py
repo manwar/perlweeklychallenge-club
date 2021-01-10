@@ -34,8 +34,8 @@ class Node:
 		self.left = None
 		self.right = None
 		
-	def __str__(self):
-		return "(value: {}, left: {}, right: {})" \
+	def __repr__(self):
+		return "Node(value: {}, left: {}, right: {})" \
 				.format(self.value, self.left, self.right)
 
 def read_input():
