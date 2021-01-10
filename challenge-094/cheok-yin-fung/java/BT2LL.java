@@ -1,6 +1,6 @@
 // The Weekly Challenge #094 Task 2
-// ref:*  https://www.geeksforgeeks.org/
-//        inorder-tree-traversal-without-recursion/
+// ref:*  hhttps://www.includehelp.com/data-structure-tutorial/
+//        preorder-traversal-in-binary-tree-iteratively-without-recursion.aspx
 //     *  https://www.journaldev.com/13401/java-stack
 
 import java.util.Scanner;
