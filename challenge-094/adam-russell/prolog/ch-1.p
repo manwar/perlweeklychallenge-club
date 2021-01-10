@@ -1,6 +1,6 @@
 /*
 * You are given a list of strings S.
-* Write a script to group Anagrams together 
+* Write a script to group Anagrams together  
 * in any random order.
 */
 :-initialization(main).

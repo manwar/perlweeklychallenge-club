@@ -4,7 +4,7 @@ use warnings;
 # You are given an array of strings @S.
 # Write a script to group Anagrams together 
 # in any random order.
-##
+##   
 my %letter_factor = (
     e => 2,
     t => 3,

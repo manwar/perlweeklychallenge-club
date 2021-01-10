@@ -1,6 +1,6 @@
 /* 
 * You are given a binary tree. Write a script to 
-* represent the given binary tree as an object and 
+* represent the given binary tree as an object and   
 * flatten it to a linked list object. 
 * Finally, print the linked list object.
 */
@@ -40,6 +40,6 @@ print_list([H|T]):-
     print_list(T).
 
 main:-
-    findall(Path0, dfs(1,[r(1,[2]),r(1,[3]),r(2,[4,5]),r(5,[6,7])], Path0), Paths0),
-    paths_list(Paths0, List),  
+    findall(Path, dfs(1,[r(1,[2]),r(1,[3]),r(2,[4,5]),r(5,[6,7])], Path), Paths),
+    paths_list(Paths, List),  
     print_list(List), halt.
