@@ -1,58 +1,23 @@
 # Solution by Abigail
 
-## Task 1: Group Anagrams
+## [Task 1](https://perlweeklychallenge.org/blog/perl-weekly-challenge-095/#TASK1): 
 
-You are given an array of strings `@S`.
+You are given a number `$N`.
 
-Write a script to group Anagrams together in any random order.
+Write a script to figure out if the given number is Palindrome.
+Print `1` if true otherwise `0`.
 
 ### Examples
+~~~~
+Input: 1221
+Output: 1
 
-#### Example 1
-~~~~
-Input: ("opt", "bat", "saw", "tab", "pot", "top", "was")
-Output: [ ("bat", "tab"),
-          ("saw", "was"),
-          ("top", "pot", "opt") ]
-~~~~
+Input: -101
+Output: 0, since -101 and 101- are not the same.
 
-#### Example 2
+Input: 90
+Output: 0
 ~~~~
-Input: ("x")
-Output: [ ("x") ]
-~~~~
-
 
 ### Solutions
-* [Node](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
-
-
-
-## Task 2: Binary Tree to Linked List
-
-You are given a binary tree.
-
-Write a script to represent the given binary tree as an object and
-flatten it to a linked list object. Finally print the linked list
-object.
-
-### Examples
-
-#### Example 1
-~~~~
-Input:
-    1
-   / \
-  2   3
- / \
-4   5
-   / \
-  6   7
-
-Output:
-    1 -> 2 -> 4 -> 5 -> 6 -> 7 -> 3
-~~~~
-
-### Solutions
-* [Perl](perl/ch-2.pl)
