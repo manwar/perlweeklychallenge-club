@@ -21,3 +21,28 @@ Output: 0
 
 ### Solutions
 * [Perl](perl/ch-1.pl)
+
+
+## [Task 2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-095/#TASK2)
+
+Write a script to demonstrate `Stack` operations like below:
+
+* `push($n)` - add $n to the stack
+* `pop()` - remove the top element
+* `top()` - get the top element
+* `min()` - return the minimum element
+
+### Example
+~~~~
+my $stack = Stack->new;
+$stack->push(2);
+$stack->push(-1);
+$stack->push(0);
+$stack->pop;       # removes 0
+print $stack->top; # prints -1
+$stack->push(0);
+print $stack->min; # prints -1
+~~~~
+
+### Solutions
+* [Perl](perl/ch-2.pl)
