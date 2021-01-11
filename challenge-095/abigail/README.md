@@ -47,4 +47,5 @@ print $stack->min; # prints -1
 ~~~~
 
 ### Solutions
+* [Node](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
