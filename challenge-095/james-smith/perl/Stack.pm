@@ -1,32 +1,34 @@
 package Stack;
 
-## The tree is stored in an array ref
-# The first element is the value of the node
-# The remainder of the array are child sub-trees
+## The stack is just stored as a blessed array.
 #
 # Methods:
-#  ->add_child( $child_tree )
-#  ->to_ll( $list )           -- convert tree into linked lit ( if list is
-#                                passed then they are added to the end of this list )
-#  ->flatten                  -- flatten list to array.
-#
+#  ->push( $value ) -- push value on top of stack (return stack itself)
+#  ->pop( $value )  -- take value off top of stack & return it
+#                      (if stack has no entries return undef/empty value)
+#  ->top( $value )  -- returns the value at the top of the stack
+#                      (if stack has no entries return undef/empty value)
+#  ->min( $value )  -- returns the smallest value in the stack
+#                      (if stack has no entries return undef/empty value)
+
 
 sub new {
   my $class = shift;
   my $self = [];
   bless $self, $class;
+  return $self;
 }
 
 sub push {
   my( $self,$val ) = @_;
-  push @{$self}, $val;
+  CORE::push @{$self}, $val; ## Make clear we are using the core push method
   return $self;
 }
 
 sub pop {
   my $self = shift;
   return unless @{$self};
-  return CORE::pop(@{$self});
+  return CORE::pop(@{$self}); ## Make clear we are using the core pop method
 }
 
 sub top {
