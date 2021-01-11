@@ -20,6 +20,7 @@ Output: 0
 ~~~~
 
 ### Solutions
+* [C](c/ch-1.c)
 * [Node](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 
