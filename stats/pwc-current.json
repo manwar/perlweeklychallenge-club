@@ -1,21 +1,20 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2021-01-12 00:15:27 GMT"
-   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          }
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 095"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2021-01-12 00:28:29 GMT"
    },
    "chart" : {
       "type" : "column"
@@ -23,41 +22,57 @@
    "drilldown" : {
       "series" : [
          {
-            "name" : "James Smith",
             "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ]
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Stuart Little",
+            "id" : "Stuart Little"
          }
       ]
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 095",
+         "data" : [
+            {
+               "drilldown" : "James Smith",
+               "y" : 2,
+               "name" : "James Smith"
+            },
+            {
+               "drilldown" : "Stuart Little",
+               "name" : "Stuart Little",
+               "y" : 2
+            }
+         ]
+      }
+   ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 095"
    },
    "tooltip" : {
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "James Smith",
-               "name" : "James Smith",
-               "y" : 2
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 095"
-      }
-   ]
+   }
 }
