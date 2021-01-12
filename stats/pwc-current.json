@@ -1,46 +1,120 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2021-01-12 11:43:30 GMT"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 095"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 12] Last updated at 2021-01-12 11:47:06 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 095",
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Andrew Shitov",
+               "name" : "Andrew Shitov"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Bartosz Jarzyna",
+               "name" : "Bartosz Jarzyna"
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Flavio Poletti",
+               "name" : "Flavio Poletti"
+            },
+            {
+               "name" : "Gustavo Chaves",
+               "drilldown" : "Gustavo Chaves",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "James Smith",
+               "drilldown" : "James Smith"
+            },
+            {
+               "y" : 4,
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "Pavel Kuptsov",
+               "drilldown" : "Pavel Kuptsov"
+            },
+            {
+               "y" : 2,
+               "name" : "Pete Houston",
+               "drilldown" : "Pete Houston"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            },
+            {
+               "name" : "Stuart Little",
+               "drilldown" : "Stuart Little",
+               "y" : 2
+            },
+            {
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan",
+               "y" : 3
+            }
+         ]
+      }
+   ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Andrew Shitov",
             "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Andrew Shitov"
+            ]
          },
          {
-            "id" : "Flavio Poletti",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Bartosz Jarzyna",
+            "name" : "Bartosz Jarzyna"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -51,29 +125,31 @@
                   2
                ]
             ],
+            "id" : "Flavio Poletti",
             "name" : "Flavio Poletti"
          },
          {
+            "id" : "Gustavo Chaves",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Gustavo Chaves",
             "name" : "Gustavo Chaves"
          },
          {
             "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "James Smith"
+            ]
          },
          {
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -84,18 +160,7 @@
                   2
                ]
             ],
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari"
-         },
-         {
-            "name" : "Niels van Dijke",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "id" : "Niels van Dijke"
+            "id" : "Luca Ferrari"
          },
          {
             "data" : [
@@ -104,18 +169,28 @@
                   2
                ]
             ],
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
+         },
+         {
             "id" : "Pavel Kuptsov",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
             "name" : "Pavel Kuptsov"
          },
          {
             "name" : "Pete Houston",
-            "id" : "Pete Houston",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Pete Houston"
          },
          {
             "name" : "Simon Proctor",
@@ -128,17 +203,16 @@
             "id" : "Simon Proctor"
          },
          {
-            "name" : "Stuart Little",
+            "id" : "Stuart Little",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Stuart Little"
+            "name" : "Stuart Little"
          },
          {
-            "name" : "W. Luis Mochan",
             "id" : "W. Luis Mochan",
             "data" : [
                [
@@ -149,77 +223,18 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "W. Luis Mochan"
          }
       ]
    },
    "legend" : {
       "enabled" : 0
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 095"
+   },
    "xAxis" : {
       "type" : "category"
-   },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 095",
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "Andrew Shitov",
-               "drilldown" : "Andrew Shitov"
-            },
-            {
-               "y" : 4,
-               "name" : "Flavio Poletti",
-               "drilldown" : "Flavio Poletti"
-            },
-            {
-               "y" : 2,
-               "name" : "Gustavo Chaves",
-               "drilldown" : "Gustavo Chaves"
-            },
-            {
-               "drilldown" : "James Smith",
-               "name" : "James Smith",
-               "y" : 2
-            },
-            {
-               "y" : 4,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Pavel Kuptsov",
-               "name" : "Pavel Kuptsov",
-               "y" : 2
-            },
-            {
-               "name" : "Pete Houston",
-               "y" : 2,
-               "drilldown" : "Pete Houston"
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 2,
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "name" : "Stuart Little",
-               "y" : 2,
-               "drilldown" : "Stuart Little"
-            },
-            {
-               "drilldown" : "W. Luis Mochan",
-               "y" : 3,
-               "name" : "W. Luis Mochan"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ]
+   }
 }
