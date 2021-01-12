@@ -1,5 +1,4 @@
 import fileinput
-import re
 
 stack = []
 error = "Stack is empty"
