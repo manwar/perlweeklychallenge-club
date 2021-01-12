@@ -1,6 +1,9 @@
 {
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "xAxis" : {
       "categories" : [
@@ -36,9 +39,19 @@
          "Peter Meszaros"
       ]
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-01-12 23:20:41 GMT"
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             4,
             6,
@@ -70,7 +83,8 @@
             65,
             0,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -108,7 +122,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             1,
             0,
@@ -140,28 +153,15 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-01-12 23:16:58 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "chart" : {
+      "type" : "column"
    }
 }
