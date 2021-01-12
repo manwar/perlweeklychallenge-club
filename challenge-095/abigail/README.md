@@ -20,6 +20,7 @@ Output: 0
 ~~~~
 
 ### Solutions
+* [awk](awk/ch-1.c)
 * [C](c/ch-1.c)
 * [Node](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
@@ -47,6 +48,7 @@ print $stack->min; # prints -1
 ~~~~
 
 ### Solutions
+* [awk](awk/ch-2.awk)
 * [C](c/ch-2.c)
 * [Node](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
