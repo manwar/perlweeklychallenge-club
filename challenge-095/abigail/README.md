@@ -1,58 +1,56 @@
 # Solution by Abigail
 
-## Task 1: Group Anagrams
+## [Task 1](https://perlweeklychallenge.org/blog/perl-weekly-challenge-095/#TASK1): 
 
-You are given an array of strings `@S`.
+You are given a number `$N`.
 
-Write a script to group Anagrams together in any random order.
+Write a script to figure out if the given number is Palindrome.
+Print `1` if true otherwise `0`.
 
 ### Examples
+~~~~
+Input: 1221
+Output: 1
 
-#### Example 1
-~~~~
-Input: ("opt", "bat", "saw", "tab", "pot", "top", "was")
-Output: [ ("bat", "tab"),
-          ("saw", "was"),
-          ("top", "pot", "opt") ]
-~~~~
+Input: -101
+Output: 0, since -101 and 101- are not the same.
 
-#### Example 2
+Input: 90
+Output: 0
 ~~~~
-Input: ("x")
-Output: [ ("x") ]
-~~~~
-
 
 ### Solutions
+* [awk](awk/ch-1.c)
+* [C](c/ch-1.c)
 * [Node](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
 
 
+## [Task 2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-095/#TASK2)
 
-## Task 2: Binary Tree to Linked List
+Write a script to demonstrate `Stack` operations like below:
 
-You are given a binary tree.
+* `push($n)` - add $n to the stack
+* `pop()` - remove the top element
+* `top()` - get the top element
+* `min()` - return the minimum element
 
-Write a script to represent the given binary tree as an object and
-flatten it to a linked list object. Finally print the linked list
-object.
-
-### Examples
-
-#### Example 1
+### Example
 ~~~~
-Input:
-    1
-   / \
-  2   3
- / \
-4   5
-   / \
-  6   7
-
-Output:
-    1 -> 2 -> 4 -> 5 -> 6 -> 7 -> 3
+my $stack = Stack->new;
+$stack->push(2);
+$stack->push(-1);
+$stack->push(0);
+$stack->pop;       # removes 0
+print $stack->top; # prints -1
+$stack->push(0);
+print $stack->min; # prints -1
 ~~~~
 
 ### Solutions
+* [awk](awk/ch-2.awk)
+* [C](c/ch-2.c)
+* [Node](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
