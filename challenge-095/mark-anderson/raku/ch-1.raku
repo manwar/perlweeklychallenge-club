@@ -9,7 +9,7 @@ multi MAIN
     ok palindrome(90)   == 0, "Example 3";
 }
  
-multi MAIN(Str $N where $N ~~ Int) 
+multi MAIN(IntStr $N) 
 {
     say palindrome($N);
 }
