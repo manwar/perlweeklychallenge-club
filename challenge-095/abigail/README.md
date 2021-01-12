@@ -53,3 +53,4 @@ print $stack->min; # prints -1
 * [C](c/ch-2.c)
 * [Node](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
