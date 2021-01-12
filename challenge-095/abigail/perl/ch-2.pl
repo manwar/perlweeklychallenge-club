@@ -9,6 +9,8 @@ no  warnings 'syntax';
 use experimental 'signatures';
 use experimental 'lexical_subs';
 
+use List::Util 'min';
+
 #
 # First off, this is a very strange exercise. "push", "pop" and "top"
 # are bog standard stack operations.
@@ -22,32 +24,10 @@ my $ERROR = "Stack is empty";
 
 my @stack;
 while (<>) {
-    chomp;
-    if    (/^push\s+/p) {push @stack => ${^POSTMATCH}}
-    elsif (/^pop/)      {pop  @stack}
-    elsif (/^top/)      {say  $stack [-1] // $ERROR}
-    elsif (/^min/) {
-        #
-        # Well, since we're asked to demonstrate stack operations
-        # with "min", we won't be using List::Util::min, instead,
-        # we will use a second stack....
-        #
-        my $min;
-        my @other_stack;
-        while (@stack) {
-            my $top = pop @stack;
-            $min = $top if !defined $min || $top < $min;
-            push @other_stack => $top;
-        }
-        say $min // $ERROR;
-        #
-        # Restore the original stack.
-        #
-        push @stack => pop @other_stack while @other_stack;
-    }
-    else {
-        die "Undefined command";
-    }
+    if (/^push\s+(.*)/) {push @stack => $1}
+    if (/^pop/)         {pop  @stack}
+    if (/^top/)         {say  $stack [-1]  // $ERROR}
+    if (/^min/)         {say  min (@stack) // $ERROR}
 }
 
 __END__
