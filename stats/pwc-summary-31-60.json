@@ -1,7 +1,8 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -40,7 +41,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             6,
             0,
@@ -72,7 +72,8 @@
             0,
             39,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "data" : [
@@ -144,24 +145,23 @@
          "Fred Zinn"
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
    "chart" : {
       "type" : "column"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-01-12 11:47:06 GMT"
+      "text" : "[Champions: 30] Last updated at 2021-01-12 11:57:59 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    }
 }
