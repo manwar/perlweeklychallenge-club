@@ -24,6 +24,7 @@ Output: 0
 * [C](c/ch-1.c)
 * [Node](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
 
 
 ## [Task 2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-095/#TASK2)
