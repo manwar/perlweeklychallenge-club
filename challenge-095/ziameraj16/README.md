@@ -1,19 +1,36 @@
 # Java solution by Mohammad Meraj Zia
-# Binary Tree to Linked List
+# Palindrome Number
 
-1. Prepare the tree using the `TreeNode` inner class in the `BinaryTreeToLinkedList`
-2. Call the `preOrderBinaryTreeTraversal()` method to convert the tree elements into a list.
-3. Call `printTreeElementAsList()` to print the list.
-
-## Example
+To compile the code run
 ```java
-TreeNode six = new TreeNode("6", null, null);
-TreeNode seven = new TreeNode("7", null, null);
-TreeNode five = new TreeNode("5", six, seven);
-TreeNode four = new TreeNode("4", null, null);
-TreeNode two = new TreeNode("2", four, five);
-TreeNode three = new TreeNode("3", null, null);
-TreeNode root = new TreeNode("1", two, three);
-binaryTreeToLinkedList.preOrderBinaryTreeTraversal(root);
+javac PalindromeNumber.java
 ```
-
+To run
+```java
+java PalindromeNumber
+```
+## Example
+```bash
+/perlweeklychallenge-club/challenge-095/ziameraj16/java$ javac PalindromeNumber.java
+/perlweeklychallenge-club/challenge-095/ziameraj16/java$ java PalindromeNumber
+Enter the number to check if it is a palindrome
+1234554321
+1
+```
+# Demo Stack
+To compile the code run
+```java
+javac DemoStack.java
+```
+To run
+```java
+java DemoStack
+```
+## Example
+```bash
+To push into stack - `push <number>`
+To pop from the stack - `pop`
+To find the top element - `top`
+To find the minimum element - `min`
+To exit - `exit`
+```
