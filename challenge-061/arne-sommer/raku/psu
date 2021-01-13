@@ -1,0 +1,35 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (:$min = 4,
+               *@list where @list.elems >= $min && all(@list) ~~ Numeric,
+               :$verbose,
+	       :$product);
+
+say ": Minimum number of elements: $min" if $verbose;
+
+my $maximum = -Inf;
+my @max_array;
+
+for 0 .. @list.end - 1 -> $left
+{
+  for $left + 1 .. @list.end -> $right
+  {
+    my @current = @list[$left .. $right];
+    my $product = [*] @current;
+    
+    say ": (L:$left R:$right) -> @current[] ---> $product" if $verbose;
+
+    if $product == $maximum
+    {
+      @max_array.push: @current;
+    }
+    elsif $product > $maximum
+    {
+      $maximum   = $product;
+      @max_array = @current,;
+    }
+  }
+}
+
+print "[*:$maximum] -> " if $product;
+say @max_array.unique(:with(&[eqv]));

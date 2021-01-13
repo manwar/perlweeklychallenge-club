@@ -1,0 +1,48 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (:$verbose);
+
+class BinaryNode
+{
+  has Int        $.value;
+  has BinaryNode $.left;
+  has BinaryNode $.right;
+}
+
+my BinaryNode $tree
+  = BinaryNode.new(value => 5,
+                   left  => BinaryNode.new(value => 4,
+		                           left  => BinaryNode.new(value => 11,
+		                                                   left  => BinaryNode.new(value => 7),
+								   right => BinaryNode.new(value => 2)
+								  )
+		                           ),
+                   right => BinaryNode.new(value => 8,
+		                           left  => BinaryNode.new(value => 13),
+					   right => BinaryNode.new(value => 9,
+		                                                   right => BinaryNode.new(value => 1)
+								  )
+		                           )
+	          );
+
+say $tree, "\n" if $verbose;
+
+traverse($tree, 22, ());
+
+sub traverse ($current, $target-sum, @path is copy)
+{
+  if ($current.left or $current.right)
+  {
+    @path.push: $current;
+
+    traverse($current.left,  $target-sum, @path) if $current.left;
+    traverse($current.right, $target-sum, @path) if $current.right;
+  }
+  else
+  {
+    @path.push: $current;
+    say ": " ~ @path>>.value.join(" -> ") if $verbose;
+    say @path>>.value.join(" -> ") if @path>>.value.sum == $target-sum;
+    return;
+  }
+}

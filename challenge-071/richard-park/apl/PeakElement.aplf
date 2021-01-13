@@ -1,0 +1,7 @@
+ PeakElement←{
+⍝ ⍵: Array
+⍝ A peak cell is a cell which grades higher than its neighbours
+     1=≢⍵:⍵
+     FPMC←{3=2⌷⍋⍋⍵} ⍝ Find Peak Major Cell in group of 3
+     ⍵⌿⍨FPMC⌺3⊢⍵
+ }

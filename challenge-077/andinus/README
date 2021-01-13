@@ -1,0 +1,52 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 077
+                            ━━━━━━━━━━━━━━━
+
+
+Table of Contents
+─────────────────
+
+1 Task 1 - Fibonacci Sum
+.. 1.1 Perl
+
+
+
+
+
+1 Task 1 - Fibonacci Sum
+════════════════════════
+
+  You are given a positive integer `$N'.
+
+  Write a script to find the total number of Fibonacci Numbers required
+  to get `$N' on addition. You are NOT allowed to repeat a number. Print
+  0 if none found.
+
+  *Note*: This solution is incomplete. Others have pushed complete
+   solutions, look at those.
+
+
+1.1 Perl
+────────
+
+  • Program: [file:perl/ch-1.pl]
+
+  Make a list of all possible sums of `$input'.
+  ┌────
+  │ my @sums;
+  │ foreach my $num (0 ... $input / 2) {
+  │     my $diff = $input - $num;
+  │     push @sums, [$diff, $num];
+  │ }
+  └────
+
+  Loop over `@sums' & then print those sets which have both `$sums->[0]'
+  & `$sums->[1]' in fibonacci series.
+  ┌────
+  │ sub is_fib { return Math::Fibonacci::isfibonacci(@_) }
+  │
+  │ foreach (@sums) {
+  │     next unless is_fib($_->[0]) and is_fib($_->[1]);
+  │     say "$_->[0] + $_->[1]";
+  │ }
+  └────

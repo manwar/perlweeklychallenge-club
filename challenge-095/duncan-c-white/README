@@ -1,0 +1,54 @@
+Task 1: "Group Anagrams
+
+You are given an array of strings @S.
+
+Write a script to group sets of Anagrams (containing the same letters), the order of the anagram-sets doesn't matter.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+Example 1:
+
+    Input: ("opt", "bat", "saw", "tab", "pot", "top", "was")
+    Output: [ ("bat", "tab"),
+              ("saw", "was"),
+              ("top", "pot", "opt") ]
+
+Example 2:
+
+    Input: ("x")
+    Output: [ ("x") ]
+"
+
+My notes: yippee!  Good old "Programming Pearls" by Jon Bentley tackled a very similar problem, using SIGNATURES (the sorted bag of letters
+contained in a word) - all anagrams with the same signature form part of the same anagram group.  Ideal data structure time:
+
+"if only we could have a data structure mapping from a signature to a list of all the words with that signature".
+
+Ok, let's build that then: a HoA.
+
+
+Task 2: "Binary Tree to Linked List
+
+You are given a binary tree.
+
+Write a script to represent the given binary tree as an object and flatten it to a linked list object. Finally print the linked list object.
+
+Example:
+
+    Input:
+
+        1
+       / \
+      2   3
+     / \
+    4   5
+       / \
+      6   7
+
+    Output:
+
+        1 -> 2 -> 4 -> 5 -> 6 -> 7 -> 3
+"
+
+My notes: again with the binary trees - no notes on representation, so I'll reuse the one I've used before.
+I think the "flatten to a linked list object" means "perform a pre-order traversal producing a list".

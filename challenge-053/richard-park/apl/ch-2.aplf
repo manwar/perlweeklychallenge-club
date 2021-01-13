@@ -1,0 +1,16 @@
+ VowelStrings←{
+⍝ ⍺: String sequence rules
+     ⍺←('aei' 'ei' 'iaeou' 'oau' 'uoe') ⍝ Default
+⍝ 'a' can only be followed by 'e' and 'i'
+⍝ 'e' can only be followed by 'i'
+⍝ 'i' can only be followed by 'a', 'e', 'o' and 'u'
+⍝ 'o' can only be followed by 'a' and 'u'
+⍝ 'u' can only be followed by 'o' and 'e'
+     (chars rules)←(⊃¨⍺)(⍺)
+⍝ ⍵: String size (1≤⍵)∧(⍵≤≢⍺)
+⍝ ←: All rule-obeying strings of length ⍵
+     Next←{⊃,/(⊆∘.,1↓rules⊃⍨chars⍳(⊃⌽))¨⊆⍵}   ⍝ Rule-following superstring of length (1+≢⍵)
+     superstrings←Next⍣(⍵-1)¨chars            ⍝ Length ⍵ superstrings of each char
+     ⍪↑⊃,/superstrings                        ⍝ Return flat matrix
+⍝ One-liner: ⍪↑⊃,/{⊃,/(⊆∘.,1↓rules⊃⍨chars⍳(⊃⌽))¨⊆⍵}⍣(⍵-1)¨chars
+ }

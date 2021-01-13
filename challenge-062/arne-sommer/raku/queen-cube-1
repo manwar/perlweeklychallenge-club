@@ -1,0 +1,25 @@
+#! /usr/bin/env raku
+
+use lib "lib";
+use QueenCube;
+
+unit sub MAIN
+(
+  $size     = 8,
+  :$id       = 'Q',
+  :$empty    =".",
+  :$queen,
+  :$colour
+);
+
+get-one-solution;
+
+sub get-one-solution
+{
+  my $c = QueenCube.new(size => $size);
+
+  $c.init($empty);
+  $c.queen($id, $queen) if $queen;
+  
+  $c.display($colour);
+}

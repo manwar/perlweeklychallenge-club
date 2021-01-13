@@ -1,0 +1,53 @@
+Solutions to weekly challenge 73 by Bob Lied.
+
+https://perlweeklychallenge.org/blog/perl-weekly-challenge-073/
+
+
+* TASK #1 > 
+
+** Initial thoughts
+
+A window of an array implies slices.  Minimum of an array implies List::Util::min.
+
+** Post Solution Thoughts
+
+Repeatedly doing the scan for minimum is a lot of extra work.  The cost of
+doing an array of 50 with a window of 3 is minimal, but what about an array
+of 100000 with a window of 200?  So much extra work.  I did a second solution
+with indices that didn't actually take slices.  It's also not necessary to
+find the minimum each time:  as we slide the window right, if it's less than
+the minimum, it becomes the new minimum for as long as it's in the window.
+The only time we need to scan for minimum is when the window slides the
+minimum off the left edge.
+
+I used the task as an excuse to build a slightly more structured program,
+with the solution in a module and a separate test file.
+
+** Problem Statement
+ # You are given an array of integers @A and sliding window size $S.
+ # Write a script to create an array of min from each sliding window.
+
+
+* TASK #2 > Smallest Neighbor
+
+** Initial Thoughts
+
+There's probably a clever solution involving a reduce() operation, but the
+direct solution of scanning and keeping track of the minimum is probably
+going to be the way to go.
+
+** Post Solution Thoughts
+
+The minimum keeps getting smaller as we move from left to right.  Test sets
+with a zero in the data create ambiguous answers, but there's nothing in the
+specification that says we have to do anything about that.  Negative numbers
+work just fine.
+
+
+** Problem Statement
+# You are given an array of integers @A.
+# Write a script to create an array that represents the smallest element to the
+# left of each corresponding index.  If none found, then use 0.
+# Example 1:
+# Input: @A = (7,8,3,12,10)
+# Output:     (0,7,0, 3, 3)

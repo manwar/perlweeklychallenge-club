@@ -1,0 +1,39 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($matrix where $matrix.IO.f && $matrix.IO.r = 'example1.txt',
+	       :v(:$verbose));
+
+my @matrix = $matrix.IO.lines.map( *.lc.words.list );
+
+die "Uneven matrix row length" unless [==] @(@matrix)>>.elems;
+die "0 and 1 only" unless all( @matrix>>.List.flat ) eq any( 0, 1 );
+
+my $rows    = @matrix.elems;
+my $cols    = @matrix[0].elems;
+my $matches = 0;
+
+for 0 .. $rows -2 -> $row
+{
+  for 0 .. $cols -2 -> $col
+  {
+     for 1 .. $rows-1 -> $offset
+     {
+       last unless defined @matrix[$row+$offset][$col+$offset];
+       check-box($row, $col, $offset);
+     } 
+  }
+}
+
+say $matches;
+
+sub check-box ($row, $col, $offset)
+{
+  say ": Upper Left: [$row, $col] -> Lower Right: [{ $row+$offset }, { $col+ $offset}]" if $verbose;
+  
+  if @matrix[$row][$col]         == @matrix[$row+$offset][$col] ==
+     @matrix[$row][$col+$offset] == @matrix[$row+$offset][$col+$offset] == 1
+  {
+    $matches++;
+    say ": - is a match" if $verbose;
+  }
+}

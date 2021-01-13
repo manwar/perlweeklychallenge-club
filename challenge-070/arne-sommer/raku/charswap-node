@@ -1,0 +1,38 @@
+#! /usr/bin/env node
+
+var S = process.argv[2] || 'perlandraku';
+var N = S.length;
+var O = process.argv[3] || 4;
+var C = process.argv[4] || 3;
+
+let die = (message) => {
+    console.log(message);
+    process.kill(process.pid);
+};
+
+var OO = parseInt(O);
+
+if (OO != O || O < 1)
+    die('O: Integer >= 1 only');
+
+var CC = parseInt(C);
+
+if (CC != C || C < 1)
+    die('C: Integer >= 1 only');
+
+if (C >= O)
+    die('C: Must be < O');
+
+if (CC + OO > N)
+    die('C + O: Must be <= N');
+
+for (index = 1; index <= CC; index++)
+{
+    S = S.slice(0, index)
+	+ S.charAt(index + OO)
+	+ S.slice(index +1, index + OO)
+	+ S.charAt(index)
+	+ S.slice(index + OO +1);
+}
+
+console.log(S);

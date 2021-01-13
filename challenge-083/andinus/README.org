@@ -1,0 +1,131 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-2.org
+#+HTML_LINK_UP: ../index.html
+#+OPTIONS: toc:2
+#+EXPORT_FILE_NAME: index
+#+DATE: 2020-10-23
+#+TITLE: Challenge 083
+
+* Task 1 - Words Length
+You are given a string $S with 3 or more words.
+
+Write a script to find the length of the string except the first and
+last words ignoring whitespace.
+** Perl
+- Program: [[file:perl/ch-1.pl]]
+
+We split the input by space character & remove the first & last word
+with =shift= & =pop= respectively.
+#+BEGIN_SRC perl
+my @words = split / /, $ARGV[0];
+shift @words;
+pop @words;
+#+END_SRC
+
+Then we loop over =@words= & add the length of each word to =$len= & print
+it.
+#+BEGIN_SRC perl
+my $len;
+$len += length($_) foreach @words;
+
+print $len, "\n";
+#+END_SRC
+* Task 2 - Flip Array
+You are given an array @A of positive numbers.
+
+Write a script to flip the sign of some members of the given array so
+that the sum of the all members is minimum non-negative.
+
+Given an array of positive elements, you have to flip the sign of some
+of its elements such that the resultant sum of the elements of array
+should be minimum non-negative(as close to zero as possible). Return the
+minimum no. of elements whose sign needs to be flipped such that the
+resultant sum is minimum non-negative.
+** Perl
+- Program: [[file:perl/ch-2.pl]]
+
+*Note*: The solution is incomplete.
+
+We start by eliminating possible values, here by value I mean the
+minimum non-negative sum of those numbers.
+
+Input is sorted & stored in =@nums=.
+#+BEGIN_SRC perl
+my @nums = @ARGV;
+@nums = sort { $a <=> $b} @nums;
+#+END_SRC
+
+If the input contains a single number then the answer is =0= because
+flipping nothing will give us the minimum non-negative sum. If the input
+contains 2 numbers then the answer is =1= because flipping the smaller
+number will give us the minimum non-negative sum.
+#+BEGIN_SRC perl
+print "0\n" and exit 0 if scalar @nums == 1;
+print "1\n" and exit 0 if scalar @nums == 2;
+#+END_SRC
+
+The sum of all inputs will be the ceiling for the value. We can
+eliminate more numbers by subtracting rest of the numbers from the
+largest one, for example we subtract [1, 2, 3] from 5 if input is [1, 2,
+3, 5]. We'll get =-1=, just make it positive & we have our new ceiling.
+
+In that example the value has to be 1 or less than 1. The value will be
+one in that case but it's not the answer, for example it would fail in
+[1, 2, 3, 4]. We'll get -2 which we mod to get 2 when the value is 0.
+
+So, if we get a positive number when subtracting the rest from the
+largest one then the number is the value. Because if you make the
+largest one negative then adding the rest will give a negative number so
+the largest one must be positive. And you cannot make any other number
+positive because that'll just increase the sum.
+#+BEGIN_SRC perl
+# Multiplied by 2 because we'll subtract it once.
+my $tmp = 2 * $nums[$#nums];
+$tmp -= $_ foreach @nums;
+#+END_SRC
+
+If the sum is 0 then we just need to flip the largest number to get
+minimum non-negative sum, if it's greater than 0 then we need to flip
+all the numbers except the largest one.
+#+BEGIN_SRC perl
+print "1\n" and exit 0 if $tmp == 0;
+print scalar @nums - 1, "\n" and exit 0 if $tmp > 0;
+#+END_SRC
+
+I haven't yet completed it.
+#+BEGIN_SRC perl
+die "ch-2.pl: cannot solve\n";
+#+END_SRC
+** Further thinking
+The value will always be zero if we have 4n consecutive numbers, where n
+is a natural number. This is true because when we add =pop @input= &
+=shift @input= we get same number & because there were 4n consecutive
+numbers we get even number of same numbers, we can just subtract half of
+same numbers from rest to get 0.
+
+For example, [2, 3, 4, 5]. =5 + 2= equals =3 + 4=, just subtract one set to
+get 0.
+
+I had missed the "minimum number of elements" part. We need minimum
+number of elements with flipped sign to get minimum non-negative sum.
+But that can be solved once we get minimum non-negative sum. What this
+means is that if we have to flip a thousand signs to get the value then
+the solution is thousand but if we get the same value in 10 flips then
+the solution is 10.
+
+Back to minimum non-negative sum. We could just write down all
+permutations & get the value but that's bad solution.
+
+Also, till now I just assumed that the numbers are not repeated because
+it's easy to work around that. We will just keep count of how many
+numbers are repeated & add that to the final count because those numbers
+will cancel themselves. This does affect the set of numbers so this
+might lead us to wrong solution.
+
+Actually that will lead us to the wrong solution, instead of cancelling
+each other some those numbers could be used to bring down the sum close
+to zero. For example, if in [1, 1, 1, 1, 5] we make the 1's cancel each
+other then the value we get is 5 & the answer 2 but that's wrong. We
+could've made the 1's bring down 5 to 1 (=5 -1 -1 -1 -1=) & the value
+would've been 1, the answer 4.
+
+I think I'll leave it there for now.

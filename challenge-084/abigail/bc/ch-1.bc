@@ -1,0 +1,42 @@
+scale=0;
+define main(n) {
+    m = 0;  # Will contain the reversal of n
+    s = 1;  # Sign of n: -1 if n < 0, 1 otherwise.
+
+    #
+    # If n is negative, flip its sign, and remember we did.
+    #
+    if (n < 0) {
+        s = -1;
+        n = -n;
+    }
+
+    #
+    # Reverse n. Repeatedly take its last digit, and concatenate it to m.
+    # Since we don't have string operations in bc, we have to do it this
+    # by division, multiplication and modding by 10.
+    #
+    # Setting scale = 0 effective means we're doing integer division.
+    #
+    while (n) {
+        m = 10 * m + n % 10;
+        n = n / 10;
+    }
+
+    #
+    # If n was negative, the result should be negative as well.
+    #
+    m = m * s;
+
+    #
+    # Return 0 if the result doesn't fit in a 32-bit integer.
+    #
+    if (m < -2147483648 || m > 2147483647) {
+        return (0);
+    }
+
+    #
+    # We're done!
+    #
+    return (m);
+}

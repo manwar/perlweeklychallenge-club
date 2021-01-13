@@ -1,0 +1,6 @@
+ Pmat←{⎕ML←1             ⍝ dfns pmat: Permutation matrix of ⍳⍵.
+     {                   ⍝ perms of ⍳⍵:
+         1≥⍴⍵:↑,↓⍵       ⍝ short vector: done.
+         ↑⍪/⍵,∘∇¨⍵∘~¨⍵   ⍝ items prefix sub-perms of remainder.
+     }⍳⍵                 ⍝ permutations of identity perm.
+ }

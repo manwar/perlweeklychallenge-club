@@ -1,0 +1,17 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * >= 1;
+
+unit sub MAIN (PosInt $N, :v(:$verbose), :u(:$upto));
+
+$upto
+  ?? (1 .. $N).map({ say faculty-of($_) })
+  !! say faculty-of($N);
+
+sub faculty-of ($value)
+{
+  my $faculty = [*] 1 .. $value;
+  say ": $value Faculty: $faculty" if $verbose;
+  $faculty ~~ /(0*)$/;
+  return $0.chars;
+}

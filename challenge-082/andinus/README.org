@@ -1,0 +1,43 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-2.org
+#+HTML_LINK_UP: ../index.html
+#+OPTIONS: toc:2
+#+EXPORT_FILE_NAME: index
+#+TITLE: Challenge 082
+
+* Task 1 - Common Factors
+You are given 2 positive numbers $M and $N.
+
+Write a script to list all common factors of the given numbers.
+** Perl
+- Program: [[file:perl/ch-1.pl]]
+
+We loop over all the numbers from =1 ... $M= to get their factors & then
+just compare it with factors of =$N=. I took this code from Challenge
+081's ch-1.pl.
+#+BEGIN_SRC perl
+my $A = shift @ARGV;
+my $B = shift @ARGV;
+
+# Get all common divisors.
+my %divisors_of_A = divisors($A);
+my %divisors_of_B = divisors($B);
+my @common_divisors;
+foreach my $num (sort { $a <=> $b } keys %divisors_of_A) {
+    push @common_divisors, $num
+        if exists $divisors_of_B{$num};
+}
+
+# Returns all divisors of a number.
+sub divisors {
+    my $n = shift @_;
+    my %divisors;
+    foreach my $i ( 1 ... $n){
+        if ($n % $i == 0) {
+            $divisors{$i} = 1;
+        }
+    }
+    return %divisors;
+}
+
+print join(', ', @common_divisors), "\n";
+#+END_SRC

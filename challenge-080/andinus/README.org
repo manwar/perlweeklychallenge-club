@@ -1,0 +1,94 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-2.org
+#+HTML_LINK_UP: ../index.html
+#+OPTIONS: toc:2
+#+EXPORT_FILE_NAME: index
+#+TITLE: Challenge 080
+
+* Task 1 - Smallest Positive Number Bits
+You are given unsorted list of integers =@N=.
+
+Write a script to find out the smallest positive number missing.
+** Perl
+- Initial version didn't check for =1=, I might have assumed that it was
+  accounted for in this line =print "1\n" and exit 0 if $sorted[$#sorted]
+  < 1;=.
+
+- This was pointed out by [[https://octodon.social/@polettix]] -
+  [[https://tilde.zone/web/statuses/104981669595493301#]]
+
+- Program: [[file:perl/ch-1.pl]]
+
+We take input from =@ARGV=, sort it & remove all inputs less than 1. We
+check if the smallest positive number is 1. We filter repeated inputs
+using =%hash=.
+#+BEGIN_SRC perl
+my %hash;
+%hash = map { $_ => 1 } @ARGV;
+
+my @sorted = sort { $a <=> $b } keys %hash;
+
+# Print 1 if there are no positive numbers in @sorted.
+print "1\n" and exit 0 if $sorted[$#sorted] < 1;
+
+while (my $arg = shift @sorted) {
+    next if $arg < 1;
+    print "1\n" and exit 0 unless $arg == 1;
+    last;
+}
+#+END_SRC
+
+Now we are sure the smallest positive number is not 1 & =@sorted= doesn't
+contain any number less than 2.
+
+We loop from =2 ... $sorted[$#sorted] + 1= & then over =@sorted= array. The
+first number from the array is dropped if it's equal to =$num=. If not
+then =$num= is the smallest positive number, we print it & exit the =MAIN=
+loop.
+
+This won't print the smallest positive number if the user passed
+consecutive set of numbers, we just add =print "$num\n"= at the end to
+cover this case.
+#+BEGIN_SRC perl
+MAIN: foreach my $num (2 ... $sorted[$#sorted] + 1) {
+    foreach (@sorted) {
+        shift @sorted and next MAIN if $num == $_;
+        print "$num\n" and last MAIN;
+    }
+    # Print the last element if it was a continous series of positive
+    # numbers.
+    print "$num\n";
+}
+#+END_SRC
+* Task 2 - Count Candies
+You are given rankings of =@N= candidates.
+
+Write a script to find out the total candies needed for all candidates.
+You are asked to follow the rules below:
+
+1. You must given at least one candy to each candidate.
+2. Candidate with higher ranking get more candies than their mmediate
+   neighbors on either side.
+** Perl
+- Program: [[file:perl/ch-2.pl]]
+
+Giving at least one day to all candidates.
+#+BEGIN_SRC perl
+my $candies = scalar @ARGV;
+#+END_SRC
+
+Handling first & last index, we do this outside the loop to keep it
+simple.
+#+BEGIN_SRC perl
+$candies++ if $ARGV[0] > $ARGV[1];
+$candies++ if $ARGV[$#ARGV] > $ARGV[$#ARGV - 1];
+#+END_SRC
+
+Loop handles rest of the entries.
+#+BEGIN_SRC perl
+foreach my $index (1 ... $#ARGV - 1) {
+    $candies++ if $ARGV[$index] > $ARGV[$index - 1];
+    $candies++ if $ARGV[$index] > $ARGV[$index + 1];
+}
+
+print "$candies\n";
+#+END_SRC

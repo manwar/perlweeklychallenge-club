@@ -1,0 +1,19 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Str $A, Str $B, :v($verbose));
+
+if $A.chars != $B.chars
+{
+  say ": Different length" if $verbose;
+  say 0;
+  exit;
+}
+
+my %A2B = ($A.comb Z $B.comb)>>.hash;
+
+say ": Hash: { %A2B.raku }" if $verbose;
+
+say %A2B.keys.elems == %A2B.values.unique.elems
+  ?? 1
+  !! 0;
+

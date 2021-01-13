@@ -1,0 +1,57 @@
+Task 1: "Diff-K
+
+You are given an array @N of positive integers (sorted) and another non
+negative integer k.
+
+Write a script to find if there exists 2 indices i and j such that A[i]
+- A[j] = k and i != j.
+
+It should print the pairs of indices, if any such pairs exist.
+
+Example:
+
+    @N = (2, 7, 9)
+    $k = 2
+
+Output : 2,1"
+
+My notes: sounds entirely straightforward.
+
+
+Task 2: "Path Sum
+
+You are given a binary tree and a sum, write a script to find if the tree
+has a path such that adding up all the values along the path equals the
+given sum. Only complete paths (from root to leaf node) may be considered
+for a sum.
+
+Example
+
+Given the below binary tree and sum = 22,
+
+          5
+         / \
+        4   8
+       /   / \
+      11  13  9
+     /  \      \
+    7    2      1
+
+For the given binary tree, the partial path sum 5 - 8 - 9 = 22 is not valid.
+
+The script should return the path 5 - 4 - 11 - 2 whose sum is 22.
+"
+
+My notes: Obvious question: how to represent binary tree.  Let's go with..
+a traditional Perl OO self-printing package inline in the main program.
+
+Second question: we'll need to parse a binary tree from the command line,
+so what text format do we want to represent a parsable binary tree on the command line?
+After some thought, decided on (5,(4,(11,l7,l2),n),(8,l13,(9,n,1))) where
+(N,L,R) represents a node with value N, left tree L and right tree R;
+lN represents a leaf with value N
+n represents nil
+
+There's a lot more code for this task 2 than for many, I don't know if
+there's some simpler way of doing it that I'm missing?  Perhaps there's
+a more concrete way of representing a binary tree that supports path summing?

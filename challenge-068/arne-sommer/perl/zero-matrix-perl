@@ -1,0 +1,66 @@
+#! /usr/bin/env perl
+
+use strict;
+use Math::GSL::Matrix;
+use List::Util;
+use feature 'say';
+
+my $input = shift(@ARGV) || die "Please specify a matrix";
+
+my @matrix;
+
+my $col_count;
+my $row_count = 0;
+
+for my $row (split(/\[/, $input))
+{
+  next unless $row;
+  $row =~ tr/\]//d;
+  $row = $1 if $row =~ /^\s*(.*?)\s*$/;
+  my @values = split(/\s+/, $row);
+
+  die "Only '0' and '1' please" unless List::Util::all { $_ eq "0" || $_ eq "1" } @values;
+  
+  $col_count = List::Util::max($col_count, scalar @values);
+
+  push(@matrix, \@values);
+  $row_count++;
+}
+
+my $old = Math::GSL::Matrix->new($row_count, $col_count);
+
+$old->set_row($_, $matrix[$_]) for 0 .. $row_count -1;
+
+my $new  = $old->copy;
+my $rows = $old->rows();
+
+my $columns = $old->cols();
+
+for my $row (0 .. $rows -1)
+{
+  for my $column (0 .. $columns -1)
+  {
+    if ($old->get_elem($row, $column) == 0)
+    {
+      for my $a (0 .. $rows-1)
+      {
+        $new->set_elem($row, $a, 0);
+      }
+      
+      for my $b (0 .. $columns-1)
+      {
+        $new->set_elem($b, $column, 0);
+      }
+    }
+  }
+}
+
+for my $row (0 .. $rows -1)
+{
+  my @values = ();
+  for my $column (0 .. $columns -1)
+  {
+    push(@values, $new->get_elem($row, $column));
+  }
+  say "[", join(", ", @values), "]";
+}

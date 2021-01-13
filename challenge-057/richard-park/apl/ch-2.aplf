@@ -1,0 +1,21 @@
+ ShortestUniquePrefix←{
+⍝ ⍵: Nested list of words 
+⍝ ←: Shortest unique prefixes, not in order
+     I←((⊃⊣)⌷⊢)⍤0 99            ⍝ Select indexer
+     ⍺←1                        ⍝ Prefix length     
+     p←⍺∘↑¨⍵                    ⍝ Prefixes
+     (u c i)←↓⍉{(⍺)(≢⍵)(⍵)}⌸p   ⍝ (Unique Count Indices)
+     um←c=1                     ⍝ Unique prefix mask
+     0=⍴⍵:⍬                     ⍝ All SUPs found: Return empty array
+     0=∨/um:(⍺+1)∇ ⍵            ⍝ No unique prefixes: 
+                                ⍝   increment prefix length
+                                ⍝     ∇ recurse
+     cwi←i⌿⍨um                  ⍝ Completed word indices
+     cw←⍵ I⍨cwi                 ⍝ Completed words
+     up←u⌿⍨um                   ⍝ Unique prefixes
+                                ⍝ Unique prefixes found: 
+                                ⍝   Return unique prefixes,
+                                ⍝     increment prefix length
+                                ⍝       ∇ recurse with remaining words
+     ∨⌿um:(⊃¨up),(⍺+1)∇ ⍵~cw 
+ }

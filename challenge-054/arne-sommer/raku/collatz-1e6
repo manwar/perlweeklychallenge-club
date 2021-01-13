@@ -1,0 +1,45 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $limit = 1_000_000, :$verbose, :$chop = 20);
+
+my %length;
+
+for 1 .. $limit
+{
+  my @list =  collatz($_);
+  %length{@list.elems}.push($_);
+  say "_ $_ -> @list[]" if $verbose;
+}
+
+my $count = 0;
+my $elems;
+
+for %length.keys.sort({ $^b <=> $^a }) -> $l
+{
+  $elems = %length{$l};
+
+  for @$elems
+  {
+    last if $count++ >= $chop;
+    say "{ $count }: Number $_ (with length $l)";
+  }
+}
+
+sub collatz ($start)
+{
+  my $sequence := gather 
+  {
+    take $start;
+    my $prev = $start;
+
+    loop
+    {
+      last if $prev == 1;
+      my $new = $prev %% 2 ?? $prev / 2 !! 3 * $prev + 1;
+      $prev = $new;
+      take $new;
+    }
+  }
+  
+  return $sequence;
+}

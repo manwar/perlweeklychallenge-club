@@ -1,0 +1,13 @@
+ IPv4Partition←{
+⍝ Print every possible valid IPv4 address that can be made by partitioning the input string.
+⍝ For the purpose of this challenge, a valid IPv4 address consists of four “octets” i.e. A, B, C and D, separated by dots (.).
+⍝ Each octet must be between 0 and 255, and must not have any leading zeroes. (e.g., 0 is OK, but 01 is not.)
+     ⍺←4
+     pvec←⍉2⊥⍣¯1⍳¯1+2*≢⍵
+     parts←pvec{(1@1⊢⍺)⊂⍵}⍤1⊢⍵
+     nparts←{0::'' ⋄ ⍕⍎⍵}¨parts
+     octets←nparts⌿⍨⍺=+/''∘≢¨nparts
+     inrange←{0::0 ⋄ n←⍎⍵ ⋄ (0≤n)∧(255≥n)}¨octets
+     validIPv4←octets⌿⍨⍺=+/inrange
+     ↑{⍺,'.',⍵}/⍤1∪⍺↑⍤1⊢validIPv4
+ }

@@ -1,0 +1,6 @@
+ InterleaveString←{
+⍝ Can strings ⍵ be interleaved to form string ⍺?
+     MM←{((≢⍺)⍴⍋⍋⍺⍳⍺⍪⍵)∊(≢⍵)⍴⍋⍋⍺⍳⍵⍪⍺}   ⍝ Multiset membership
+     (∧/⍺ MM∊⍵):⍵(∧/≡⍥,¨)(⍺⌿⍨⊢)¨⍺∘MM¨⍵
+     0
+ }

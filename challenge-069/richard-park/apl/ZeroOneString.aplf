@@ -1,0 +1,10 @@
+ ZeroOneString←{
+⍝ ←: ⍵th number in the series defined as follows
+⍝ (S 0) = '' ⋄ (S 1) = '0' ⋄ (S ⍵) = (S ⍵-1),'0',~⌽S ⍵-1
+     S←{
+         ⍵=0:⍬
+         p←∇ ⍵-1
+         p,0,~⌽p
+     }
+     (⍕S ⍵)~' '
+ }

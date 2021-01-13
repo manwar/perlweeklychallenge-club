@@ -1,0 +1,46 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Str $tree = "1 | 2 3 | 4 5 6 7", :$dashes);
+
+my $space    = $dashes ?? "-" !! " ";
+my @btree    = $tree.split("|");
+my $rows     = @btree.elems;
+my $row      = $rows -1;
+my $count    = 1;
+my $width    = $tree.words>>.chars.max;
+my $indents := (0, { ($_ * 2) +1 } ... *);
+my $indent   = $indents[$row] * $width;
+my $spacing  = 0;
+
+for @btree -> $level
+{
+  state $row    = 1;
+  state $target = 1;
+  my @values = $level.words;
+  die "wrong number of element on row $row: { @values.elems } (should have been $target)"
+    if @values.elems != $target;
+
+  $row++; $target *=2;
+}
+
+for @btree -> $level
+{ 
+  my @values = $level.words;
+
+  print $space x $indent;
+
+  say @values>>.fmt("%-{$width}s").join($space x $spacing);
+
+  last if $row == 0;
+
+  $row--;
+  $spacing = $indent;
+  
+  $indent = $indents[$row] * $width;
+
+  print $space x $indent;
+  my $line = ( "/".fmt("%-{$width}s") ~ $space x $spacing ~ "\\".fmt("%-{$width}s") ~ $space x $spacing) x $count;
+  say $line.trim-trailing;
+  
+  $count *= 2;
+}

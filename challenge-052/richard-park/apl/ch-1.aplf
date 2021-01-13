@@ -1,0 +1,5 @@
+ SteppingNo←{
+⍝ All stepping numbers from ⍺ to ⍵ inclusive
+⍝ 123 is a stepping number; 432 is also; 349 is not.
+     i⌷⍨⊂⍸{1=∧/2-/⍎¨⍕⍵}¨i←⍺+⍳⍵-⍺
+ }

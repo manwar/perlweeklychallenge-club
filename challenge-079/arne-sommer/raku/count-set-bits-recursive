@@ -1,0 +1,16 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0);
+
+say cbs($N) % 1000000007;
+
+multi sub cbs (Int $N)
+{
+  return $N.fmt('%b')>>.comb.flat.sum + cbs($N-1);
+}
+
+multi sub cbs (1)
+{
+  return 1;
+}
+

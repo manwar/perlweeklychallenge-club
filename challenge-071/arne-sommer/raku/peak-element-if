@@ -1,0 +1,32 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * >= 1;
+
+unit sub MAIN (PosInt $N, :$v, :$verbose = $v);
+
+my @array = (1..50).roll($N);
+
+say ": Values: @array[]" if $verbose;
+
+my @peak;
+
+for ^$N-> $index
+{
+  if $index == 0
+  {
+    say ": Checking at index $index: (value: @array[$index], right:@array[$index+1])" if $verbose;
+    @peak.push: @array[$index] if @array[$index] > @array[$index+1];
+  }
+  elsif $index <= $N -2
+  {
+    say ": Checking at index $index: (left:@array[$index-1], value: @array[$index], right:@array[$index+1])" if $verbose;
+    @peak.push: @array[$index] if @array[$index] > @array[$index-1] && @array[$index] > @array[$index+1];
+  }
+  else # if $index == $N -2
+  {
+    say ": Checking at index $index: (left:@array[$index-1], value: @array[$index])" if $verbose;
+    @peak.push: @array[$index] if @array[$index] > @array[$index-1];
+  }
+}
+
+say "[ ", @peak.join(", "), " ]";

@@ -1,0 +1,58 @@
+Task 1: "Invert Tree
+
+You are given a full binary tree of any height, similar to the one below:
+
+       1
+     /   \
+     2    3
+    / \  / \
+    4  5 6  7
+
+Write a script to invert the tree, by mirroring the children of every node, from left to right. The expected output from the tree above would be:
+
+       1
+     /   \
+     3    2
+    / \  / \
+    7  6 5  4
+
+The input can be any sensible machine-readable binary tree format of your choosing, and the output should be the same format.
+
+BONUS
+
+In addition to the above, you may wish to pretty-print your binary tree in a human readable text-based format similar to the above."
+
+
+My notes: Let's reuse the same binary tree representation and input format as last time.  That's the bulk of the problem.
+
+The "flip-left-right" algorithm looks very simple.  Not sure why "full"
+is stressed, AFAIK any obvious algorithm for this would deal with any
+binary tree.  In Haskell, it's as simple as:
+
+fliplr e = e
+fliplr leaf(n) = leaf(n)
+fliplr node(n,l,r) = node(n, fliplr(r), fliplr(l))
+
+The bonus is MUCH the most difficult part, as best layout may be slightly
+subjective, and it wasn't immediately clear exactly what spacing is needed
+at each level.  An obvious alternative would be to use GraphViz to
+draw the directed graph (our tree), I did that first and it worked fine,
+but in this version I attempt the fullblown ASCII art layout..  new:
+decided to generalise it to deal properly with non-full binary trees too,
+ie. missing elements.
+
+
+Task 2: "Shortest Unique Prefix
+
+Write a script to find the shortest unique prefix for each each word in the given list. The prefixes will not necessarily be of the same length.
+
+Sample Input
+
+ [ "alphabet", "book", "carpet", "cadmium", "cadeau", "alpine" ]
+
+Expected Output
+
+ [ "alph", "b", "car", "cadm", "cade", "alpi" ]
+"
+
+My notes: sounds entirely straightforward.

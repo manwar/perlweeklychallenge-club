@@ -1,0 +1,1 @@
+perl6 -e '@*ARGS[(0 ..^ @*ARGS.elems).grep({ @*ARGS[$_] > all @*ARGS[$_ + 1, ]:v; })].join(q{, }).say;' $@

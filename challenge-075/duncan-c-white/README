@@ -1,0 +1,71 @@
+Task 1: "Coins Sum
+
+You are given a set of coins @C, assuming you have infinite amount of each coin in the set.
+
+Write a script to find how many ways you make sum $S using the coins from the set @C.
+Example:
+
+Input:
+    @C = (1, 2, 4)
+    $S = 6
+
+Output: 6
+There are 6 possible ways to make sum 6.
+a) (1, 1, 1, 1, 1, 1)
+b) (1, 1, 1, 1, 2)
+c) (1, 1, 2, 2)
+d) (1, 1, 4)
+e) (2, 2, 2)
+f) (2, 4)
+"
+
+My notes: ok.  Reasonably easy: bag of coins shows what coins we've used,
+at every stage explore 2 paths: 1). add another instance of each possible coin,
+2). don't add another instance..
+
+Task 2: "Largest Rectangle Histogram
+
+You are given an array of positive numbers @A.
+
+Write a script to find the largest rectangle histogram created by the given array.
+BONUS: Try to print the histogram as shown in the example, if possible.
+
+Example 1:
+
+Input: @A = (2, 1, 4, 5, 3, 7)
+
+     7           #
+     6           #
+     5       #   #
+     4     # #   #
+     3     # # # #
+     2 #   # # # #
+     1 # # # # # #
+     _ _ _ _ _ _ _
+       2 1 4 5 3 7
+
+Looking at the above histogram, the largest rectangle (4 x 3) is formed by columns (4, 5, 3 and 7).
+Output: 12
+
+Example 2:
+
+Input: @A = (3, 2, 3, 5, 7, 5)
+
+     7         #
+     6         #
+     5       # # #
+     4       # # #
+     3 #   # # # #
+     2 # # # # # #
+     1 # # # # # #
+     _ _ _ _ _ _ _
+       3 2 3 5 7 5
+
+Looking at the above histogram, the largest rectangle (3 x 5) is formed by columns (5, 7 and 5).
+Output: 15"
+
+My notes: hmm.. so max(area of all rectangles "in" a histogram).  But what does that mean?
+Hang on: the "graphs" are NOT actually histograms: each is simply the array of values itself.
+So forgot frequency hashes.  The simplest way that I can see is to calculate the area of all
+possible rectangles (where 1 or more adjacent values are at least some minimum height) and
+then to find the maximum of all those.

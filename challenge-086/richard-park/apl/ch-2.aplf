@@ -1,0 +1,26 @@
+ Sudoku←{
+⍝ Solve numeric 9×9 matrix sudoku puzzle
+⍝ Only works if there is 1 solution
+⍝ For more competent solvers, see https://dfns.dyalog.com/n_sudoku.htm
+     sc←{⍵~⍨⍳9}¨1 1↓⊂⍤⊢⌺(2 2⍴3)⊢0⍪0⍪0,0,⍵ ⍝ Possible in subcells
+     r←{⊂⍵~⍨⍳9}⍤1⊢⍵                       ⍝ Possible in rows
+     c←{⊂⍵~⍨⍳9}⍤1⍉⍵                       ⍝ Possible in columns
+     cells←{                              ⍝ Initial contention map
+         ⊃∩/(sc⌷⍨1 4 7⍸⍵),(r⌷⍨⊃⍵),c⌷⍨⊃⌽⍵
+     }¨⍳9 9
+     cells←⍵[⍸0≠⍵]@(⍸0≠⍵)⊢cells           ⍝ Fill with known values
+     Fill←{cells←⍵
+         {
+             v←cells⊃⍨⊂⍵
+             v~←∊c⌿⍨1=≢¨c←cells[(⊃⍵);(⍳9)~⊃⌽⍵]
+             v~∊c⌿⍨1=≢¨c←cells[(⍳9)~⊃⍵;⊃⌽⍵]
+         }¨⍳9 9
+     }
+     solved←⊃¨Fill⍣≡cells                   ⍝ Eliminate impossibilities
+     PDE←{((≢⍺)⍴⍋⍋⍺⍳⍺⍪⍵)∊(≢⍵)⍴⍋⍋⍺⍳⍵⍪⍺}
+     rows←∧/,(⍳9)PDE⍤1⊢solved
+     columns←∧/,(⍳9)PDE⍤1⍉solved
+     cells←∧/,0 1 0↓1↓{(⍳9)PDE,⍵}⌺(2 2⍴3)⊢0⍪0⍪0,0,solved
+     rows∧columns∧cells:solved
+     'Could not solve'
+ }

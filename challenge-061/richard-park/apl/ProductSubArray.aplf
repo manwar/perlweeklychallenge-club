@@ -1,0 +1,10 @@
+ ProductSubArray←{
+⍝ Given a list of 4 or more numbers, write a script to find the contiguous sublist that has the maximum product.
+     array←⍵
+     length←≢⍵
+     4>length:'⍵ must be a numeric list of length ≥ 4'⎕SIGNAL 11
+     csa←↑array∘{{⊂⍵}⌺⍵⊢⍺}¨⍳length
+     products←×/¨csa
+     max←⌈/,products
+     ((,products)⍳max)⊃(,csa)
+ }

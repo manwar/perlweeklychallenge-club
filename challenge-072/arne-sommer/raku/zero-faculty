@@ -1,0 +1,13 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * >= 1;
+
+unit sub MAIN (PosInt $N, :v(:$verbose));
+
+my $faculty = [*] 1 .. $N;
+
+say ": $N Faculty: $faculty" if $verbose;
+
+$faculty ~~ /(0*)$/;
+
+say $0.chars;

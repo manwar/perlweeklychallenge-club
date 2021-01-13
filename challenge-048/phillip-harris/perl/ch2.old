@@ -1,0 +1,23 @@
+#!/usr/bin/perl
+
+#Palindrome Dates
+#Write a script to print all Palindrome Dates between 2000 and 2999.
+#The format of date is mmddyyyy. For example, the first one was on
+#October 2, 2001 as it is represented as 10022001.
+
+use DateTime;
+
+$dt = DateTime->new(
+    year  => 2000,
+    month => 1,
+    day   => 1,
+);
+
+until ( $md . $yr eq "12312999" ) {
+    $md = sprintf( "%02d%02d", $dt->month, $dt->day );
+    $yr = $dt->year;
+    if ( $md eq reverse($yr) ) { print "$md$yr\n" }
+    $dt->add( days => 1 );
+}
+
+print "DONE!";

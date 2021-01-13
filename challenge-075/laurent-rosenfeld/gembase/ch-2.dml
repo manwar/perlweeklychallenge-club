@@ -1,0 +1,91 @@
+PROCEDURE_FORM MAIN (#p1)
+    #array(0) = 0
+    if (#p1 = "") #p1 = "2,1,4,5,3,7"
+    ! Splits the input CSV into an #array of #count values (1-based index).
+    ! Arrays are global variables and cannot be passed as function parameters
+    #count = csv_split(#array, #p1)
+    #largest = 0
+    #best_i = 0
+    #best_j = 0
+    perform LARGEST_RECT(#count, #largest, #best_i, #best_j)
+    #msg = "Largest rectangle is between indices " & #best_i - 1 & " and " & #best_j - 1 &&
+            ". Area is " & #largest & "."
+    error /text_only  (#msg)
+    perform DRAW_HISTO (#count)
+END_FORM
+
+PROCEDURE_FORM LARGEST_RECT (#nb_items, #largest_area, #best_i, #best_j)
+    #i = 1
+    while (#i < #nb_items)
+        #j = #i + 1
+        while (#j <= #nb_items)
+            #k = #i
+            #min = #array(#k)
+            ! finding the minimal height within the index range
+            while (#k <= #j)
+                if (#array(#k) < #min) #min = #array(#k)
+                #k = #k + 1
+            end_while
+            #area = (#j - #i + 1) * #min
+            if (#area > #largest_area)
+                #largest_area = #area
+                #best_i = #i
+                #best_j = #j
+            end_if
+            #j = #j + 1
+        end_while
+        #i = #i + 1
+end_while
+END_FORM
+
+PROCEDURE_FORM DRAW_HISTO (#nb_items)
+    #i = 1
+    #max_val = #array(#i)
+    while (#i <= #nb_items)
+        if (#array(#i) > #max_val) #max_val = #array(#i)
+        #i = #i + 1
+    end_while
+    #i = 1
+    #line = ""
+    while (#i <= #nb_items)
+        #line = #line & "  " & #array(#i)
+        #i = #i + 1
+    end_while
+    error /text_only  #line
+    #i = 1
+    #line = ""
+    while (#i <= #nb_items)
+        #line = #line & "  -"
+        #i = #i + 1
+    end_while
+    error /text_only  #line
+    #ordinate = #max_val
+    while (#ordinate >= 1)
+        #line = #ordinate
+        #i = 1
+        while (#i <= #nb_items)
+            if (#array(#i) >= #ordinate)
+                #line = #line & " # "
+            else
+                #line = #line & "   "
+            end_if
+            #i = #i + 1
+        end_while
+        error /text_only  #line
+        #ordinate = #ordinate - 1
+    end_while
+    #line = ""
+    #i = 1
+    while (#i <= #nb_items)
+        #line = #line & "  ="
+        #i = #i + 1
+    end_while
+    error /text_only  #line
+    #line = ""
+    #i = 1
+    while (#i <= #nb_items)
+        #line = #line & "  " & #array(#i)
+        #i = #i + 1
+    end_while
+    error /text_only  #line
+END_FORM

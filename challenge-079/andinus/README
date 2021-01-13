@@ -1,0 +1,45 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 079
+
+                                Andinus
+                            ━━━━━━━━━━━━━━━
+
+
+Table of Contents
+─────────────────
+
+1. Task 1 - Count Set Bits
+.. 1. Perl
+
+
+
+
+
+1 Task 1 - Count Set Bits
+═════════════════════════
+
+  You are given a positive number $N.
+
+  Write a script to count the total numbrer of set bits of the binary
+  representations of all numbers from 1 to $N and return
+  `$total_count_set_bit % 1000000007'.
+
+
+1.1 Perl
+────────
+
+  • Program: <file:perl/ch-1.pl>
+
+  We loop from `1 ... $input', convert each `$num' to binary & count the
+  set bits & add them to `$set_bits'.
+  ┌────
+  │ my $input = shift @ARGV;
+  │
+  │ my $set_bits;
+  │ foreach my $num (1 ... $input) {
+  │     my $binary = sprintf "%b", $num;
+  │     my $count = $binary =~ tr/1//;
+  │     $set_bits += $count;
+  │ }
+  │ print $set_bits % 1000000007, "\n";
+  └────

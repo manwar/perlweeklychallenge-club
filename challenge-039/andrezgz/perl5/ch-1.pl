@@ -49,7 +49,7 @@ while(<$fh>){
             delete $log{$in};
             $add = 0;
         }
-        elsif ($new_in ge $in && $new_in lt $log{$in} && $new_out gt $log{$in}) {
+        elsif ($new_in ge $in && $new_in le $log{$in} && $new_out gt $log{$in}) {
             # extends out-time for an existent period
             $log{$in} = $new_out;
             $add = 0;

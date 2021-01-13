@@ -1,0 +1,5 @@
+ MajorityElement←{
+     me←(∪⍵)⌿⍨((≢⊢)⌸⍵)>(⌊2÷⍨≢⍵)   ⍝ Majority major cell
+     (,0)≡⍴me:¯1                  ⍝ No majority major cell
+     me
+ }

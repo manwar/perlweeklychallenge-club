@@ -1,0 +1,92 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * >= 1;
+
+unit sub MAIN (PosInt $N, :$v, :$verbose = :$v, :$limit = 50);
+
+class LinkedElement
+{
+  has $.value is rw;
+  has $.next  is rw;
+
+  method print-list
+  {
+    print self.value;
+    if self.next
+    {
+      print " -> ";
+      self.next.print-list;
+    }
+    else
+    {
+      print "\n";
+    }
+  }
+
+  method list-length
+  {
+    my $length = 1;
+
+    my $current = self.next;
+
+    while ($current)
+    {
+      $current = $current.next;
+      $length++;
+    }
+    return $length;
+  }
+}
+
+my $length = (1..$limit).pick;
+
+my $head;
+my $current;
+
+for 1..$length -> $value
+{
+  my $new = LinkedElement.new(value => $value);
+
+  if $current
+  {
+    $current.next = $new;
+    $current = $current.next;
+  }
+  else # Initially
+  {
+    $head = $new;
+    $current = $head;
+  }
+}
+
+$head.print-list;
+
+say "Length: ", $head.list-length if $verbose;
+
+remove-element($head, $N);
+
+$head
+  ?? $head.print-list
+  !! say "[]";
+
+
+sub remove-element ($list is rw, $from-the-end)
+{
+  my $length = $list.list-length;
+
+  if $from-the-end > $length
+  {
+    $list = $list.next;
+  }
+  else
+  {
+    my $current = $list;
+
+    for 1 .. ($length - $from-the-end -1)
+    {
+      $current = $current.next;
+    }
+    
+    $current.next = $current.next.next;
+  }
+}

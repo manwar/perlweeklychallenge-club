@@ -1,0 +1,30 @@
+#! /usr/bin/env raku
+
+use lib "lib";
+
+use Number::Roman :to, :from;
+
+multi MAIN (Str $first, "+", Str $second)
+{
+  say to-roman( from-roman($first) + from-roman($second) );
+}
+
+multi MAIN (Str $first, "-", Str $second)
+{
+  say to-roman( from-roman($first) - from-roman($second) );
+}
+
+multi MAIN (Str $first, '*', Str $second)
+{
+  say to-roman( from-roman($first) * from-roman($second) );
+}
+
+multi MAIN (Str $first, 'x', Str $second)
+{
+  say to-roman( from-roman($first) * from-roman($second) );
+}
+
+multi MAIN (Str $first, "/", Str $second)
+{
+  say to-roman(Int( from-roman($first) / from-roman($second)) );
+}

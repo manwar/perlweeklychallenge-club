@@ -1,0 +1,13 @@
+ FindNumbers←{
+⍝ ⍺: An integer x and real number y
+⍝ ⍵: Numeric array
+⍝ ←: All numbers with digits made by
+⍝    concatenating elements in ⍵,
+⍝    which have exactly x digits
+⍝    and a value less than y
+     (x y)←⍺
+     l←¯1+x              ⍝ Power of 10 with x digits
+     c←,∘.,⍨⍵            ⍝ All possible concatenations of ⍵
+     n←10∘⊥¨c            ⍝ In base 10
+     n⌿⍨((10*l)>n)≠n<y   ⍝ ←
+ }

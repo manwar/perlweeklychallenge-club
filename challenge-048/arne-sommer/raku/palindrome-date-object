@@ -1,0 +1,11 @@
+#! /usr/bin/env raku
+
+my $date = Date.new('2000-01-01',
+   formatter => { sprintf "%02d%02d%04d", .month, .day, .year });
+
+while $date.year < 3000
+{
+  say $date if $date.Str eq $date.Str.flip;
+
+  $date .= succ;
+}

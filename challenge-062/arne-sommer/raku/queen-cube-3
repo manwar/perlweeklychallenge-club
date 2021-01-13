@@ -1,0 +1,35 @@
+#! /usr/bin/env raku
+
+use lib "lib";
+use QueenCube;
+
+unit sub MAIN
+(
+  $size     = 8,
+  :$id       = 'Q',
+  :$empty    =".",
+  :$queen,
+  :$colour,
+  :$newlines
+);
+
+get-one-solution;
+
+sub get-one-solution
+{
+  my $c = QueenCube.new(size => $size);
+
+  $c.init($empty);
+  
+  if $queen
+  {
+    $c.queen($id, $_) for $queen.words;
+  }
+  
+  $newlines
+    ?? $c.display-with-newlines($colour, $newlines)
+    !! $c.display($colour);
+  
+  my $count = $c.number-of-queens;
+  say "Number of Queens: ", $count if $count > 1;
+}

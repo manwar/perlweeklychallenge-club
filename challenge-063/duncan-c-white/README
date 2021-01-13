@@ -1,0 +1,56 @@
+Task 1: "Last Word
+
+Define sub last_word($string, $regexp) that returns the last word
+matching $regexp found in the given string, or undef if the string does
+not contain a word matching $regexp.
+
+For this challenge, a "word" is defined as any character sequence
+consisting of non-whitespace characters (\S) only. That means punctuation
+and other symbols are part of the word.
+
+The $regexp is a regular expression. Take care that the regexp can only
+match individual words! See the Examples for one way this can break if
+you are not careful.
+
+Examples
+
+last_word('  hello world',                qr/[ea]l/);      # 'hello'
+last_word("Don't match too much, Chet!",  qr/ch.t/i);      # 'Chet!'
+last_word("spaces in regexp won't match", qr/in re/);      #  undef
+last_word( join(' ', 1..1e6),             qr/^(3.*?){3}/); # '399933'
+"
+
+My notes: cool question. Will have a go!
+
+
+Task 2: "Rotate String
+
+Given a word made up of an arbitrary number of x and y characters, that
+word can be rotated as follows: For the ith rotation (starting at i =
+1), i % length(word) characters are moved from the front of the string to
+the end. Thus, for the string xyxx, the initial (i = 1) % 4 = 1 character
+(x) is moved to the end, forming yxxx. On the second rotation, (i = 2) %
+4 = 2 characters (yx) are moved to the end, forming xxyx, and so on. See
+below for a complete example.
+
+Your task is to write a function that takes a string of xs and ys and
+returns the minimum non-zero number of rotations required to obtain
+the original string. You may show the individual rotations if you wish,
+but that is not required.
+
+Example
+
+Input: $word = 'xyxx';
+
+Rotation 1: you get yxxx by moving x to the end.
+Rotation 2: you get xxyx by moving yx to the end.
+Rotation 3: you get xxxy by moving xxy to the end.
+Rotation 4: you get xxxy by moving nothing as 4 % length(xyxx) == 0.
+Rotation 5: you get xxyx by moving x to the end.
+Rotation 6: you get yxxx by moving xx to the end.
+Rotation 7: you get xyxx by moving yxx to the end which is same as the given word.
+
+Output: 7
+"
+
+My notes: sounds like fun.  Nice question.

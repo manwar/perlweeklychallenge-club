@@ -1,0 +1,23 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $a is copy, $b is copy, :$verbose);
+
+($a, $b) = ($b, $a) if $b > $a;
+
+my $a2 = $a.base(2);
+  
+my $length = $a2.chars;
+
+my $b2 = $b.fmt('%0' ~ $length ~ 'b');
+
+my $c2 = ($a +^ $b).fmt('%0' ~ $length ~ 'b');
+
+if $verbose
+{
+  say ": $a2 ($a)";
+  say ": $b2 ($b)";
+  say ": $c2 -> ", $c2.comb.sum;
+}
+
+say $c2.comb.sum;
+

@@ -1,0 +1,53 @@
+Solutions to weekly challenge 74 by Bob Lied.
+
+https://perlweeklychallenge.org/blog/perl-weekly-challenge-074/
+
+* TASK #1 > Majority Element
+
+** Initial thoughts
+
+This is going to be an exercise in hashes and grep.
+
+** Post Solution Thoughts
+
+Use a hash to count to count elements, then use grep with a code block to select the match.
+
+** Problem Statement
+
+You are given an array of integers of size $N.
+Write a script to find the majority element. If none found then print -1.
+Majority element in the list is the one that appears more than floor(size_of_list/2).
+
+
+
+* TASK #2 > FNR Character
+
+** Initial Thoughts
+
+The specification is a little odd and doesn't match the example.  But, OK, whatever.
+Similar to the first task, another hash to count occurrences and grep to find the answers.
+
+** Post Solution Thoughts
+
+Going through the string could be either done with substr one character at a time,
+or splitting the string into an array of characters.  Finding the first char could be
+a search through the character positions, or a sort and picking off the first element.
+Sort is the easy answer, but I'm always wary of scaling.  Like in many of these
+problems, it's not an issue for "reasonable" strings, but could become a performance
+question if the strings were a thousand or a million times bigger.
+
+
+** Problem Statement
+
+You are given a string $S.
+
+Write a script to print the series of first non-repeating character
+(left -> right) for the given string. Print # if none found.
+Example 1
+Input: $S = ‘ababc’
+Output: ‘abb#c’
+Pass 1: “a”, the FNR character is ‘a’
+Pass 2: “ab”, the FNR character is ‘b’
+Pass 3: “aba”, the FNR character is ‘b’
+Pass 4: “abab”, no FNR found, hence ‘#’
+Pass 5: “ababc” the FNR character is ‘c’

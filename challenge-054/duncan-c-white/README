@@ -1,0 +1,56 @@
+Task 1: "kth Permutation Sequence
+
+Write a script to accept two integers n (>=1) and k (>=1). It should
+print the kth permutation of n integers. For more information, please
+follow the wiki page 
+
+	https://en.wikipedia.org/wiki/Permutation#k-permutations_of_n
+
+(in summary: 'in other words, these k-permutations of n are the different
+ordered arrangements of a k-element subset of an n-set (sometimes called
+variations or 'arrangements' in the older literature.')
+
+For example, n=3 and k=4, the possible permutation sequences are listed below:
+
+123
+132
+213
+231
+312
+321
+
+The script should print the 4th permutation sequence 231.
+"
+
+My notes: The wiki definition describes a LIST of all k-from-n partial
+permutations, whereas the example shows something different: generate a
+single permutation: the Kth complete permutation sequence of 1..N.  So
+ignore the wiki, and go with the example.  Obvious method: generate all
+permutations of 1..N in the above order, then pick the Kth one.  But can
+we directly generate the Kth permutation?  After a bit of thought: yes we can.
+
+
+Task 2: "Collatz Conjecture
+
+It is thought that the following sequence will always reach 1:
+
+    $n = $n / 2 when $n is even
+    $n = 3*$n + 1 when $n is odd
+
+For example, if we start at 23, we get the following sequence:
+
+	23 -> 70 -> 35 -> 106 -> 53 -> 160 -> 80 -> 40 -> 20 -> 10 -> 5 -> 16 -> 8 -> 4 -> 2 -> 1
+
+Write a function that finds the Collatz sequence for any positive
+integer. Notice how the sequence itself may go far above the
+original starting number.
+
+Extra Credit
+
+Have your script calculate the sequence length for all starting numbers
+up to 1000000 (1e6), and output the starting number and sequence length
+for the longest 20 sequences."
+
+My notes: Sounds interesting!  For the extra credit question, you can find the
+"longest 20 sequences for N up to 1e6" output in ch-2:-100000.output.  The
+longest sequence is of length 351.

@@ -1,0 +1,51 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Str $intervals = '[2,7], [3,9], [10,12], [15,19], [18,22]', :$verbose);
+
+my @intervals = $intervals.split(/\,\s+/);
+
+say ": @intervals[]" if $verbose;
+
+my @numbers;
+
+for @intervals -> $current
+{
+  die "$current: Not an interval" unless $current ~~ /^\[(\d+)\,(\d+)\]$/;
+
+  my $from = $0.Int;
+  my $to   = $1.Int;
+
+  die "Illegal interval: $from > $to" if $from > $to;
+
+  @numbers.append($from .. $to);
+}
+
+say ": @numbers[]"  if $verbose;
+
+my @sorted = @numbers.sort.squish;
+
+say ": @sorted[]" if $verbose;
+
+my @res = gather
+{
+  my $start = @sorted.shift;
+  my $end   = $start;
+  
+  while @sorted
+  {
+    if @sorted[0] == $end +1
+    {
+      $end++;
+      @sorted.shift;
+    }
+    else
+    {
+      take "[$start,$end]";
+      $start = $end = @sorted.shift;
+    }
+  }
+  take "[$start,$end]";
+
+}
+
+say @res.join(", ");

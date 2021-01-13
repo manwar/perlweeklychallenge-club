@@ -1,0 +1,91 @@
+Task 1: "Pair Difference
+
+You are given an array of integers @N and an integer $A.
+
+Write a script to find find if there exists a pair of elements in the
+array whose difference is $A.  Print 1 if exists otherwise 0.
+
+Example 1:
+
+	Input: @N = (10, 8, 12, 15, 5) and $A = 7
+	Output: 1 as 15 - 8 = 7
+
+Example 2:
+
+	Input: @N = (1, 5, 2, 9, 7) and $A = 6
+	Output: 1 as 7 - 1 = 6
+
+Example 3:
+
+	Input: @N = (10, 30, 20, 50, 40) and $A = 15
+	Output: 0
+
+My notes: simple and straightforward: try all pairs of elements looking
+for abs(x-y)==A
+
+
+Task 2: "Sudoku Puzzle
+
+You are given Sudoku puzzle (9x9).
+
+Write a script to complete the puzzle and must respect the following rules:
+a) Each row must have the numbers 1-9 occuring just once.
+b) Each column must have the numbers 1-9 occuring just once.
+c) The numbers 1-9 must occur just once in each of the 9 sub-boxes (3x3) of the grid.
+
+Example:
+
+[ _ _ _ 2 6 _ 7 _ 1 ]
+[ 6 8 _ _ 7 _ _ 9 _ ]
+[ 1 9 _ _ _ 4 5 _ _ ]
+[ 8 2 _ 1 _ _ _ 4 _ ]
+[ _ _ 4 6 _ 2 9 _ _ ]
+[ _ 5 _ _ _ 3 _ 2 8 ]
+[ _ _ 9 3 _ _ _ 7 4 ]
+[ _ 4 _ _ 5 _ _ 3 6 ]
+[ 7 _ 3 _ 1 8 _ _ _ ]
+
+Output:
+
+[ 4 3 5 2 6 9 7 8 1 ]
+[ 6 8 2 5 7 1 4 9 3 ]
+[ 1 9 7 8 3 4 5 6 2 ]
+[ 8 2 6 1 9 5 3 4 7 ]
+[ 3 7 4 6 8 2 9 1 5 ]
+[ 9 5 1 7 4 3 6 2 8 ]
+[ 5 1 9 3 2 6 8 7 4 ]
+[ 2 4 8 9 5 7 1 3 6 ]
+[ 7 6 3 4 1 8 2 5 9 ]
+
+As the above puzzle respect the 3 rules including 9-sub-boxes as shown below:
+
+[ 4 3 5 ] [ 2 6 9 ] [ 7 8 1 ]
+[ 6 8 2 ] [ 5 7 1 ] [ 4 9 3 ]
+[ 1 9 7 ] [ 8 3 4 ] [ 5 6 2 ]
+
+[ 8 2 6 ] [ 1 9 5 ] [ 3 4 7 ]
+[ 3 7 4 ] [ 6 8 2 ] [ 9 1 5 ]
+[ 9 5 1 ] [ 7 4 3 ] [ 6 2 8 ]
+
+[ 5 1 9 ] [ 3 2 6 ] [ 8 7 4 ]
+[ 2 4 8 ] [ 9 5 7 ] [ 1 3 6 ]
+[ 7 6 3 ] [ 4 1 8 ] [ 2 5 9 ]
+
+
+My notes: excuse me!  a sudoku solver from scratch?  that's hard!
+
+fortunately I had already written a sudoku solver, which did clever
+deductions after working out the possible sets for each cell.  But for
+this, I tried something else: I threw away all the clever deductions
+and wrote a brute force searcher instead:
+- read the puzzle (reused my existing code)
+- form the possible sets for each cell (ditto)
+- eliminate known cells from intersecting rows, columns and boxes (ditto)
+then solve by:
+- finding an unknown cell (r,c) with possible values @possval
+- for each @possval, clone the puzzle, set cell (r,c) to the chosen value and recurse,
+  checking for consistency at each stage
+
+But sadly, I couldn't get it to work in the time I'd left myself (2.5 hours) - so
+no submission for that before midnight.  After about 30 minutes more work, I got
+it working - there was a bug in the consistency checker.

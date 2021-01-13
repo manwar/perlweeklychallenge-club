@@ -1,0 +1,22 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@N where @N.elems > 0 && all(@N) ~~ Int, :v(:$verbose));
+
+my @C;
+
+say ": Ranking: { @N.join(", ") }" if $verbose;
+
+(0..@N.end).map({ @C[$_] = candy-count($_) });
+
+say ": Candies: { @C.join(", ") }" if $verbose;
+
+say @C.sum;
+
+sub candy-count ($index)
+{
+  my $count = 1;
+  $count++ if $index > 0      && @N[$index] > @N[$index-1];
+  $count++ if $index < @N.end && @N[$index] > @N[$index+1];
+
+  return $count;
+}

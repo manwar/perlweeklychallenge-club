@@ -1,0 +1,9 @@
+#! /usr/bin/env raku
+
+sub MAIN ($string, *@words where @words.elems > 0)
+{
+  for @words.permutations -> @candidate
+  {
+    say @candidate.map({ "\"$_\"" }).join(", ") if @candidate.join eq $string;
+  }
+}
