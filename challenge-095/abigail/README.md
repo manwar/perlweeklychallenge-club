@@ -26,6 +26,9 @@ Output: 0
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 
+### Blog
+[Perl Weekly Challenge 95, Part 1](https://wp.me/pcxd30-kq)
+
 
 ## [Task 2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-095/#TASK2)
 
