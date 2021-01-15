@@ -57,3 +57,6 @@ print $stack->min; # prints -1
 * [Node](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
+
+### Blog
+[Perl Weekly Challenge 95, Part 2](https://wp.me/pcxd30-ld)
