@@ -1,13 +1,13 @@
 
 # The Weekly Challenge
 
-The Weekly Challenge - #091 - Tyler Wardhaugh
+The Weekly Challenge - #095 - Tyler Wardhaugh
 
 ## Usage
 
 Run Task 1:
 
-    $ ./run.lua ch-1 S1 S2 S3...
+    $ ./run.lua ch-1 N
 
 Run Task 2:
 
