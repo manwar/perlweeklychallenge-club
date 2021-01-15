@@ -1,6 +1,9 @@
 BEGIN {
-    size  = 0
     error = "Stack is empty"
+}
+
+{
+    size = length (stack)
 }
 
 /^push/ {
@@ -10,15 +13,14 @@ BEGIN {
     # second argument -- an array. Note that arrays are indexed 1-based.
     #
     split($0, a, / +/)
-    stack [size += 1] = a [2]
+    stack [size + 1] = a [2]
 }
 
 /^pop/  {
     #
-    # Popping just means reducing the size of the stack by 1.
-    # Don't let it go below 0.
+    # Remove the last element from the stack.
     #
-    size = size ? size - 1 : 0
+    delete stack [size]
 }
 
 /^top/  {
