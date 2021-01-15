@@ -12,7 +12,7 @@ int main (void) {
         struct node * next;
     };
 
-    struct node * stack;
+    struct node * stack = NULL;
 
     while (getline (&line, &len, stdin) != -1) {
         /*
