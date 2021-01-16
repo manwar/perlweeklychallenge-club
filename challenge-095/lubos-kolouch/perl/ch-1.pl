@@ -29,6 +29,7 @@ use Test::More;
 
 is(is_palindrome(1221), 1, 'Test 1221');
 is(is_palindrome(-101), 0, 'Test -101');
+is(is_palindrome(90), 0, 'Test 90');
 is(is_palindrome('00001221'), 1, 'Test 00001221');
 
 done_testing;
