@@ -5,8 +5,6 @@ use warnings;
 ##
 use Stack;
 
-use Data::Dump q/pp/;
-
 my $stack = new Stack();
 $stack->push(2);
 $stack->push(-1);

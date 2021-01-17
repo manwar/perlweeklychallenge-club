@@ -19,11 +19,11 @@ sub is_palindrome{
         }while(@digits);
         return true;
     }
-    do{
+    while(@digits != 1){
         my $a = shift @digits;
         my $b = pop @digits;
         return false if $a != $b;
-    }while(@digits != 1);
+    };
     return true;
 }
 
