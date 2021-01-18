@@ -58,6 +58,8 @@ Operation 2: replace 'u' with 'o'
 ~~~~
 
 ### Solutions
+* [AWK](awk/ch-2.awk)
+* [C](c/ch-2.c)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 
