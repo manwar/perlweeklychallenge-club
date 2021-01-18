@@ -2,7 +2,7 @@
 # Perl weekly challenge 094
 # Task 2: Binary tree to linked list.
 #
-# See https:/wlmb.github.io/2020/01/04/PWC94/#task-1-binary-tree-to-linked-list
+# See https:/wlmb.github.io/2021/01/04/PWC94/#task-1-binary-tree-to-linked-list
 use v5.12;
 use Text::Balanced qw(extract_bracketed extract_multiple);
 
