@@ -24,8 +24,7 @@ sub LevenshteinDistance ($first, $second) {
     for (my $i = 0; $i <= length ($first); $i ++) {
         for (my $j = 0; $j <= length ($second); $j ++) {
             $$distance [$i] [$j] =
-                $j == 0 ? $i
-              : $i == 0 ? $j
+                $i == 0 || $j == 0 ? $i + $j
               : min ($$distance [$i - 1] [$j]     + 1,
                      $$distance [$i]     [$j - 1] + 1,
                      $$distance [$i - 1] [$j - 1] + 
