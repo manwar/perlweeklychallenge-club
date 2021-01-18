@@ -58,6 +58,7 @@ Operation 2: replace 'u' with 'o'
 ~~~~
 
 ### Solutions
+* [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
