@@ -4,7 +4,7 @@
             [tw.weekly.c94.t2 :refer [flatten-tree]]))
 
 (deftest task-1
-  (testing "Task 1, Max Points"
+  (testing "Task 1, Group Anagrams"
     (is (= #{ #{"bat", "tab"},
               #{"saw", "was"},
               #{"top", "pot", "opt"}}

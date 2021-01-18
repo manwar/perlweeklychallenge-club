@@ -1,18 +1,55 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
    "xAxis" : {
       "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       }
    },
-   "chart" : {
-      "type" : "column"
+   "series" : [
+      {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "rotation" : -90,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right",
+            "y" : 10,
+            "color" : "#FFFFFF"
+         },
+         "data" : [
+            [
+               "Blog",
+               1262
+            ],
+            [
+               "Perl",
+               4392
+            ],
+            [
+               "Raku",
+               2876
+            ]
+         ]
+      }
+   ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-01-18 00:05:52 GMT"
    },
    "yAxis" : {
       "min" : 0,
@@ -20,44 +57,7 @@
          "text" : null
       }
    },
-   "series" : [
-      {
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "rotation" : -90,
-            "enabled" : "true",
-            "y" : 10
-         },
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               1232
-            ],
-            [
-               "Perl",
-               4282
-            ],
-            [
-               "Raku",
-               2828
-            ]
-         ]
-      }
-   ],
-   "legend" : {
-      "enabled" : "false"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-01-05 07:12:28 GMT"
+   "chart" : {
+      "type" : "column"
    }
 }

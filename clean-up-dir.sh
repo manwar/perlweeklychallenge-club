@@ -45,9 +45,11 @@ find . -name "*.cpp" -delete
 find . -name "*.clj" -delete
 find . -name "*.lua" -delete
 find . -name "*.tcl" -delete
+find . -name "*.ini" -delete
 find . -name "*.raku" -delete
 find . -name "*.fish" -delete
 find . -name "*.swift" -delete
+find . -name "*.janet" -delete
 find . -name "*.aplf" -delete
 find . -name "*.lock" -delete
 find . -name "*.toml" -delete
