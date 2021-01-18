@@ -57,7 +57,7 @@ printf "Calls: %d, hits: %d (%0.2f%%), misses: %d (%0.2f%%)\n",
 ##   '^' - delete
 ##   ' ' - SNP/modify
 ##
-## We can convert this to an edit distance by counting all the non-"."s
+## We can convert this to an edit distance by counting all the non-"|"s
 ## In perl we do this with tr/^v /^v / which returns the number of
 ## matches in scalar form. See {_edit_dist - function}
 ##
