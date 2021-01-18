@@ -6,7 +6,7 @@ use warnings;
 use feature qw(say);
 use Test::More;
 
-my ($calls,$misses,%cache) = (0,0);
+my ($calls,$misses,%cache,%cache_x) = (0,0);
 
 my %examples = (
  'fred,bob' => 4,
@@ -26,6 +26,7 @@ foreach my $words (sort keys %examples ) {
   print "\n";
   print render_alignment($s1,$s2);
   is( edit_distance($s1,$s2), $examples{$words} );
+  is( edit_distance_simple($s1,$s2), $examples{$words} );
 }
 
 done_testing();
@@ -130,4 +131,23 @@ sub render_alignment {
     $top, $a, _edit_dist($a), $bot;
 }
 
+#### Optimal code - without the alignment string....
+# Reduction to a single line
+# We can use sort here as it is relatively fast anyay
+# o/w could load in List::Util - but I think overall this will
+# be quicker!
+
+sub edit_distance_simple {
+  my( $s, $t ) = @_;
+  return $cache_x{"$s\t$t"}||=
+     $t eq q()          ? length $s
+   : $s eq q()          ? length $t
+   : (ord $s == ord $t) ? edit_distance(substr($s,1),substr($t,1))
+   :                      1+(sort { $a <=> $b }
+                            edit_distance(substr($s,1),$t),
+                            edit_distance($s,substr$t,1),
+                            edit_distance(substr($s,1),substr $t,1)
+                          )[0]
+   ;
+}
 
