@@ -31,16 +31,25 @@ foreach my $words (sort keys %examples ) {
 done_testing();
 
 printf "Calls: %d, hits: %d (%0.2f%%), misses: %d (%0.2f%%)\n",
-  $calls, $calls-$misses, ($calls-$misses)/$calls*100, $misses, $misses/$calls*100;
+  $calls,
+  $calls-$misses, ($calls-$misses)/$calls*100,
+  $misses,        $misses/$calls*100;
 
-## To be able to make "nicer" output - rather than just keeping track of the
-## edit distance of substrings - we will actually keep the alignment of the
-## two words as a string of "operations" whether they be Indels or SNPs.
-## {One of my background is working with genomic data and this can be thought
-## of as a simple alignment algorithm - and so I think of the three operations
-## as Indels {inserts/deletes - remembering an insert into one sequence is
-## just the same as a delete from the other} and SNPs - or single nucleotide
-## polymorphisms.
+## Notes:
+## --------------------------------------------------------------------
+##
+## I'm just going to add "Another day job challenge!"
+##
+## To be able to make "nicer" output - rather than just keeping track
+## of the edit distance of substrings - we will actually keep the
+## alignment of the two words as a string of "operations" whether they
+## be Indels or SNPs.
+##
+## {One of my background is working with genomic data and this can be
+## thought of as a simple alignment algorithm - and so I think of the
+## three operations as Indels {inserts/deletes - remembering an insert
+## into one sequence is just the same as a delete from the other} and
+## SNPs - or single nucleotide polymorphisms.
 ##
 ## The simple alignment string representation we will use consists of:
 ##   '|' - the letters are the same;
@@ -49,17 +58,28 @@ printf "Calls: %d, hits: %d (%0.2f%%), misses: %d (%0.2f%%)\n",
 ##   ' ' - SNP/modify
 ##
 ## We can convert this to an edit distance by counting all the non-"."s
-## In perl we do this with tr/^v /^v / which returns the number of matches
-## in scalar form. See {_edit_dist - function}
+## In perl we do this with tr/^v /^v / which returns the number of
+## matches in scalar form. See {_edit_dist - function}
 ##
 ## Finally we include a nice way to render the alignment {edits}
 ## By showing the two words with appropriate inserts in each word
 ## and indicate where the letters match in each word via a the
 ## alignment string in the middle
 ##
-## Additional note - we "memoise" the alignment function - as it will be
-## called with the same subseq of letters following different paths
+## Additional note - we "memoise" the alignment function - as it will
+## be called with the same subseq of letters following different paths
 ## through the two sequences. This increases performance...
+##
+## From a "genomic" point of view this is known as the basis of the
+## Smith-Waterman local alignment algorithm. Although Smith-Waterman
+## has other features - including variable "penalties" for each type
+## of edit {inserts, deletes, modifications}. Even having different
+## penalties for certain changes {this is also similar to how typing
+## correction software works - with assuming adjacent key typos are
+## more likely.
+##
+## See:
+##  * https://en.wikipedia.org/wiki/Smith%E2%80%93Waterman_algorithm
 
 sub edit_distance {
   return _edit_dist( alignment_string( @_ ) );
@@ -71,10 +91,16 @@ sub alignment_string {
   my $key = "$s\t$t";
   return $cache{$key} if exists $cache{$key};
   $misses++;
-  return $cache{$key}||='' if $t eq q() && $s eq q(); ## Both strings are empty so reached end!
-  return $cache{$key}||='^' x length $s if $t eq q(); ## Exhausted t so all edits are now deletes...
-  return $cache{$key}||='v' x length $t if $s eq q(); ## Exhausted s so all edits are now inserts...
-  return $cache{$key}||='|' . alignment_string( substr($s,1), substr($t,1) ) if ord $s == ord $t;
+  ## Both strings are empty so reached end!
+  return $cache{$key}||=''              if $t eq q() && $s eq q();
+  ## Exhausted t so all edits are now deletes...
+  return $cache{$key}||='^' x length $s if $t eq q();
+  ## Exhausted s so all edits are now inserts...
+  return $cache{$key}||='v' x length $t if $s eq q();
+  ## First letters are the same so we just prepend the
+  ## match symbol (|) and continue...
+  return $cache{$key}||='|'.alignment_string(substr($s,1),substr($t,1))
+                                        if ord $s == ord $t;
 
   ## We now have three choices - "insert", "delete" or "SNP"
   my($d,$i,$m) = (
@@ -88,14 +114,14 @@ sub alignment_string {
     : ( _edit_dist( $i ) < _edit_dist( $m ) ? $i : $m );
 }
 
-sub _edit_dist {
+sub _edit_dist { ## Count inserts(v), deletes(^) & mis-matches( )
   return $_[0] =~ tr/^v /^v /;
 }
 
 sub render_alignment {
   my( $s, $t ) = @_;
   my $a = alignment_string( $s, $t );
-  my( $top, $bot ) = ('','','');
+  my( $top, $bot ) = ( '','' );
   foreach ( split m{}, $a ) {
     $top .= $_ eq 'v' ? '-' : substr $s, 0, 1, '';
     $bot .= $_ eq '^' ? '-' : substr $t, 0, 1, '';
