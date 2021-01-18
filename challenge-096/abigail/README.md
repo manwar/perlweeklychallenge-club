@@ -1,62 +1,60 @@
 # Solution by Abigail
 
-## [Task 1](https://perlweeklychallenge.org/blog/perl-weekly-challenge-095/#TASK1): 
+## [Reverse Words](https://perlweeklychallenge.org/blog/perl-weekly-challenge-096/#TASK1)
 
-You are given a number `$N`.
+You are given a string `$S`.
 
-Write a script to figure out if the given number is Palindrome.
-Print `1` if true otherwise `0`.
+Write a script to reverse the order of words in the given string.
+The string may contain leading/trailing spaces. The string may have
+more than one space between words in the string. Print the result
+without leading/trailing spaces and there should be only one space
+between words.
 
 ### Examples
 ~~~~
-Input: 1221
-Output: 1
+Input: $S = "The Weekly Challenge"
+Output: "Challenge Weekly The"
 
-Input: -101
-Output: 0, since -101 and 101- are not the same.
-
-Input: 90
-Output: 0
+Input: $S = "    Perl and   Raku are  part of the same family  "
+Output: "family same the of part are Raku and Perl"
 ~~~~
 
 ### Solutions
-* [awk](awk/ch-1.c)
-* [C](c/ch-1.c)
-* [Node](node/ch-1.js)
+* [AWK](awk/ch-1.awk)
+* [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
-* [Python](python/ch-1.py)
 
 ### Blog
-[Perl Weekly Challenge 95, Part 1](https://wp.me/pcxd30-kq)
 
 
-## [Task 2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-095/#TASK2)
+## [Edit Distance](https://perlweeklychallenge.org/blog/perl-weekly-challenge-096/#TASK2)
 
-Write a script to demonstrate `Stack` operations like below:
+You are given two strings `$S1` and `$S2`.
 
-* `push($n)` - add $n to the stack
-* `pop()` - remove the top element
-* `top()` - get the top element
-* `min()` - return the minimum element
+Write a script to find out the minimum operations required to convert
+`$S1` into `$S2`. The operations can be insert, remove or replace a
+character. Please check out [Wikipedia
+page](https://en.wikipedia.org/wiki/Edit_distance) for more information.
 
 ### Example
 ~~~~
-my $stack = Stack->new;
-$stack->push(2);
-$stack->push(-1);
-$stack->push(0);
-$stack->pop;       # removes 0
-print $stack->top; # prints -1
-$stack->push(0);
-print $stack->min; # prints -1
+Input: $S1 = "kitten"; $S2 = "sitting"
+Output: 3
+
+Operation 1: replace 'k' with 's'
+Operation 2: replace 'e' with 'i'
+Operation 3: insert 'g' at the end
+~~~~
+
+~~~~
+Input: $S1 = "sunday"; $S2 = "monday"
+Output: 2
+
+Operation 1: replace 's' with 'm'
+Operation 2: replace 'u' with 'o'
 ~~~~
 
 ### Solutions
-* [awk](awk/ch-2.awk)
-* [C](c/ch-2.c)
-* [Node](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
-* [Python](python/ch-2.py)
 
 ### Blog
-[Perl Weekly Challenge 95, Part 2](https://wp.me/pcxd30-ld)
