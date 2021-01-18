@@ -51,7 +51,7 @@ my ($i, $j)=($from_size, $to_size);
 while($i>0 || $j>0){
     my $operation=$operations->[$i][$j];
     if($operation eq 'k'){
-	unshift @operations, "Keep $from[$i-1]";
+	unshift @operations, "(Keep $from[$i-1])";
 	--$i;
 	--$j;
 	next;
@@ -72,7 +72,7 @@ while($i>0 || $j>0){
 	--$i;
 	next;
     }
-    die "Wrong operation!";
+    die "Wrong operation!"; # Shouldn't happen
 }
 
 say "Inputs: \"$from\" -> \"$to\"\nOutput: $total_cost\n";
