@@ -1,78 +1,93 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          },
          "borderWidth" : 0
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 096"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Andrew Shitov",
             "name" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ]
+            ],
+            "id" : "Andrew Shitov"
          },
          {
-            "id" : "Stuart Little",
+            "name" : "Ben Davies",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Stuart Little"
+            "id" : "Ben Davies"
+         },
+         {
+            "name" : "Stuart Little",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Stuart Little"
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 096"
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2021-01-19 07:26:41 GMT"
    },
    "series" : [
       {
          "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 096",
          "data" : [
             {
                "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov",
-               "y" : 1
+               "y" : 1,
+               "name" : "Andrew Shitov"
+            },
+            {
+               "name" : "Ben Davies",
+               "y" : 2,
+               "drilldown" : "Ben Davies"
             },
             {
                "name" : "Stuart Little",
-               "drilldown" : "Stuart Little",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Stuart Little"
             }
-         ]
+         ],
+         "name" : "Perl Weekly Challenge - 096"
       }
    ],
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-01-19 07:18:02 GMT"
+   "legend" : {
+      "enabled" : 0
    }
 }
