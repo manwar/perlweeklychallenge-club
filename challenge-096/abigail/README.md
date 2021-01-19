@@ -27,7 +27,7 @@ Output: "family same the of part are Raku and Perl"
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
-* [Ruby](ruby/ch-1.py)
+* [Ruby](ruby/ch-1.rb)
 
 ### Blog
 
@@ -66,5 +66,6 @@ Operation 2: replace 'u' with 'o'
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
+* [Ruby](ruby/ch-2.rb)
 
 ### Blog
