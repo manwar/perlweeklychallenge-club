@@ -1,9 +1,70 @@
 {
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 096"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "id" : "Andrew Shitov",
+            "name" : "Andrew Shitov"
+         },
+         {
+            "id" : "Ben Davies",
+            "name" : "Ben Davies",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "James Smith",
+            "name" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Stuart Little",
+            "id" : "Stuart Little",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         }
+      ]
    },
    "plotOptions" : {
       "series" : {
@@ -16,8 +77,6 @@
    },
    "series" : [
       {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 096",
          "data" : [
             {
                "y" : 1,
@@ -26,83 +85,39 @@
             },
             {
                "y" : 2,
-               "drilldown" : "Ben Davies",
-               "name" : "Ben Davies"
+               "name" : "Ben Davies",
+               "drilldown" : "Ben Davies"
             },
             {
+               "drilldown" : "James Smith",
                "y" : 2,
+               "name" : "James Smith"
+            },
+            {
                "name" : "Simon Proctor",
+               "y" : 2,
                "drilldown" : "Simon Proctor"
             },
             {
-               "y" : 2,
                "name" : "Stuart Little",
+               "y" : 2,
                "drilldown" : "Stuart Little"
             }
-         ]
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 096"
       }
    ],
+   "legend" : {
+      "enabled" : 0
+   },
    "xAxis" : {
       "type" : "category"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 096"
-   },
    "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2021-01-19 07:33:53 GMT"
+      "text" : "[Champions: 5] Last updated at 2021-01-19 07:43:27 GMT"
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov",
-            "data" : [
-               [
-                  "Raku",
-                  1
-               ]
-            ]
-         },
-         {
-            "name" : "Ben Davies",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Ben Davies"
-         },
-         {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
-         },
-         {
-            "id" : "Stuart Little",
-            "name" : "Stuart Little",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         }
-      ]
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "chart" : {
+      "type" : "column"
    }
 }
