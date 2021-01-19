@@ -1,17 +1,4 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 096"
-   },
    "drilldown" : {
       "series" : [
          {
@@ -25,14 +12,14 @@
             "name" : "Andrew Shitov"
          },
          {
-            "id" : "Ben Davies",
-            "name" : "Ben Davies",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Ben Davies",
+            "name" : "Ben Davies"
          },
          {
             "id" : "James Smith",
@@ -45,6 +32,16 @@
             ]
          },
          {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
+         },
+         {
             "id" : "Simon Proctor",
             "name" : "Simon Proctor",
             "data" : [
@@ -55,69 +52,87 @@
             ]
          },
          {
-            "name" : "Stuart Little",
-            "id" : "Stuart Little",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Stuart Little",
+            "name" : "Stuart Little"
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "series" : [
       {
          "data" : [
             {
                "y" : 1,
-               "name" : "Andrew Shitov",
-               "drilldown" : "Andrew Shitov"
+               "drilldown" : "Andrew Shitov",
+               "name" : "Andrew Shitov"
             },
             {
-               "y" : 2,
+               "drilldown" : "Ben Davies",
                "name" : "Ben Davies",
-               "drilldown" : "Ben Davies"
+               "y" : 2
             },
             {
+               "name" : "James Smith",
                "drilldown" : "James Smith",
-               "y" : 2,
-               "name" : "James Smith"
+               "y" : 2
             },
             {
-               "name" : "Simon Proctor",
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 2
+            },
+            {
                "y" : 2,
+               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor"
             },
             {
-               "name" : "Stuart Little",
                "y" : 2,
+               "name" : "Stuart Little",
                "drilldown" : "Stuart Little"
             }
          ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 096"
+         "name" : "Perl Weekly Challenge - 096",
+         "colorByPoint" : 1
       }
    ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
    "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2021-01-19 07:43:27 GMT"
+      "text" : "[Champions: 6] Last updated at 2021-01-19 07:50:36 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 096"
    },
    "chart" : {
       "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
