@@ -20,8 +20,8 @@ Output: "family same the of part are Raku and Perl"
 ~~~~
 
 ### Solutions
-* [C](c/ch-1.c)
 * [AWK](awk/ch-1.awk)
+* [C](c/ch-1.c)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
@@ -62,5 +62,6 @@ Operation 2: replace 'u' with 'o'
 * [C](c/ch-2.c)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
 
 ### Blog
