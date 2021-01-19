@@ -21,6 +21,7 @@ Output: "family same the of part are Raku and Perl"
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
+* [bash](sh/ch-1.sh)
 * [C](c/ch-1.c)
 * [lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
