@@ -6,7 +6,8 @@
 . toString     ()                // Turn it into a string.
 . split        ("\n")            // Split on newlines.
 . filter       (_ => _ . length) // Filter out empty lines.
-. map          (_ => console . log (LevenshteinDistance (_ . split (/\s+/))))
+. map          (_ => console . log (LevenshteinDistance (_ . trim () 
+                                                           . split (/\s+/))))
 ;
 
 //
