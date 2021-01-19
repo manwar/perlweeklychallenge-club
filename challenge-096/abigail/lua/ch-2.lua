@@ -33,6 +33,16 @@ function LevenshteinDistance (first, second)
                 )
             end
         end
+
+        --
+        -- We only need the previous row, so we can return the
+        -- memory of rows before that. This reduces the memory
+        -- usage from O (n * m) to O (min (n, m))
+        --
+        if i > 0
+        then
+            distances [i - 1] = nil
+        end
     end
     return distances [n] [m]
 end
