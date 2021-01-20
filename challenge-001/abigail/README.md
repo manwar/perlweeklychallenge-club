@@ -17,8 +17,7 @@ Write a script to replace the character `e` with `E` in the string
 * [Python](python/ch-1.py)
 
 
-## [Challenge #2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-001
-/#challenge-2)
+## [Challenge #2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-001/#challenge-2)
 
 Write a one-liner to solve the *FizzBuzz* problem and print the
 numbers `1` through `20`. However, any number divisible by `3` should
