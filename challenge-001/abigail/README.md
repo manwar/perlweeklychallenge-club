@@ -6,6 +6,11 @@ Write a script to replace the character `e` with `E` in the string
 `"Perl Weekly Challenge"`. Also print the number of times the character
 `e` is found in the string.
 
+### Note
+We will not be assuming a fixed string. Instead, we read from STDIN,
+and for each line read, we change the 'e' characters to 'E', and
+count the number of time we encountered an 'e'.
+
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
