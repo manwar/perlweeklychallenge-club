@@ -11,6 +11,7 @@ Write a script to replace the character `e` with `E` in the string
 * [C](c/ch-1.c)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
 
 
 ## [Challenge #2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-001
