@@ -9,6 +9,7 @@ Write a script to replace the character `e` with `E` in the string
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [C](c/ch-1.c)
+* [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 
 
