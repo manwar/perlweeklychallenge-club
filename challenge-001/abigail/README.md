@@ -7,6 +7,7 @@ Write a script to replace the character `e` with `E` in the string
 `e` is found in the string.
 
 ### Solutions
+* [Perl](perl/ch-1.pl)
 
 
 ## [Challenge #2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-001
