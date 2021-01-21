@@ -17,7 +17,7 @@ do
      #
      # Iterate over the words backwards, and print them.
      #
-     for   ((i = ${#words[@]} - 1; i >= 0; i --));
+     for  ((i = ${#words[@]} - 1; i >= 0; i --));
      do   printf "%s" ${words[$i]}
           #
           # Print a newline after the final word; otherwise,
