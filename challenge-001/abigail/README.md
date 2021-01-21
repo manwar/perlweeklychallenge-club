@@ -43,3 +43,4 @@ upper boad from STDIN.
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
+* [Ruby](ruby/ch-2.rb)
