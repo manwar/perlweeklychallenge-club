@@ -31,4 +31,9 @@ be replaced by the word `fizz` and any divisible by `5` by the word
 `buzz` Those numbers that are both divisible by `3` and `5` become
 `fizzbuzz`.
 
+### Note
+We will not be assuming a fixed upper bound. Instead, we read the
+upper boad from STDIN.
+
 ### Solutions
+* [Perl](perl/ch-2.pl)
