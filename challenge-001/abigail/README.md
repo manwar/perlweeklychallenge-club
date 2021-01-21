@@ -37,4 +37,5 @@ upper boad from STDIN.
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
+* [C](c/ch-2.c)
 * [Perl](perl/ch-2.pl)
