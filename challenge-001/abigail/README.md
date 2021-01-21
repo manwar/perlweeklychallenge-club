@@ -37,6 +37,7 @@ upper boad from STDIN.
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
+* [Bash](bash/ch-2.sh)
 * [C](c/ch-2.c)
 * [lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
