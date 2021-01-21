@@ -36,4 +36,5 @@ We will not be assuming a fixed upper bound. Instead, we read the
 upper boad from STDIN.
 
 ### Solutions
+* [AWK](awk/ch-2.awk)
 * [Perl](perl/ch-2.pl)
