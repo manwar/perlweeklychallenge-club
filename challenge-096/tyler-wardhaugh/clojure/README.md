@@ -1,13 +1,13 @@
-# tw.weekly.c92
+# tw.weekly.c96
 
 
-The Weekly Challenge - #092 - Tyler Wardhaugh
+The Weekly Challenge - #096 - Tyler Wardhaugh
 
 ## Usage
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -M -m tw.weekly.c92.core
+    $ clojure -M -m tw.weekly.c96.core
 
 Run the project's tests (which are samples from the task descriptions):
 
@@ -15,11 +15,11 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -M -m tw.weekly.c92.t1 A B
+    $ clojure -M -m tw.weekly.c96.t1 S
 
 Run Task #2:
 
-    $ clojure -M -m tw.weekly.c92.t2 N S
+    $ clojure -M -m tw.weekly.c96.t2 S1 S2
 
 ## Project Template
 
