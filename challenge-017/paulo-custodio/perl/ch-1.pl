@@ -23,6 +23,9 @@ use strict;
 use warnings;
 use 5.030;
 
+use Memoize;
+memoize 'A';
+
 sub A {
 	no warnings 'recursion';
 	my($m, $n) = @_;
