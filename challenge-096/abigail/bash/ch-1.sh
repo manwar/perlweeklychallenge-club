@@ -1,3 +1,13 @@
+#!/bin/sh
+
+#
+# See ../README.md
+#
+
+#
+# Run as: bash ch-1.sh < input-file
+#
+
 #
 # Read in a line from STDIN, split it on whitespace,
 # put the result into an array 'words'

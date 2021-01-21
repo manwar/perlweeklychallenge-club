@@ -1,6 +1,13 @@
+#!/usr/local/bin/node
+
 //
-// Read STDIN. Split on newlines, filter out empty lines, then call "main".
+// See ../README.md
 //
+
+//
+// Run as: node ch-2.js < input-file
+//
+
   require      ("fs")
 . readFileSync (0)               // Read all.
 . toString     ()                // Turn it into a string.

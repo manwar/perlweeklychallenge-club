@@ -1,10 +1,16 @@
+#!/usr/bin/ruby
+
+#
+# See ../README.md
+#
+
+#
+# Run as: ruby ch-2.rb < input-file
+#
+
 def LevenshteinDistance (first, second)
     n = first  . length
     m = second . length
-    if n < m
-        first, second = second, first
-        n,     m      = m,      n
-    end
     distances = []
     for i in 0 .. n do
         distances [i] = []

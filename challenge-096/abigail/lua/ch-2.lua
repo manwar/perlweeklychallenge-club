@@ -1,3 +1,13 @@
+#!/opt/local/bin/lua
+
+--
+-- See ../README.md
+--
+
+--
+-- Run as: lua ch-2.lua < input-file
+--
+
 --
 -- This is an implementation of the Wagner Fischer algorithm, which
 -- calculates the Levenshtein distance.
@@ -7,11 +17,6 @@
 function LevenshteinDistance (first, second)
     local n = first  : len ()
     local m = second : len ()
-    if n < m
-    then
-        first, second = second, first
-        n,     m      = m,      n
-    end
     distances = {}
     for i = 0, n do
         distances [i] = {}
@@ -37,7 +42,7 @@ function LevenshteinDistance (first, second)
         --
         -- We only need the previous row, so we can return the
         -- memory of rows before that. This reduces the memory
-        -- usage from O (n * m) to O (min (n, m))
+        -- usage from Theta (n * m) to O (n + m)
         --
         if i > 0
         then

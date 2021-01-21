@@ -1,4 +1,12 @@
+#!/opt/perl/bin/perl
 
+#
+# See ../README.md
+#
+
+#
+# Run as: perl ch-2.pl < input-file
+#
 
 use 5.032;
 
@@ -18,8 +26,6 @@ use List::Util 'min';
 # See https://en.wikipedia.org/wiki/Wagner%E2%80%93Fischer_algorithm
 #
 sub LevenshteinDistance ($first, $second) {
-   ($first, $second) = ($second, $first) if length ($first) <
-                                            length ($second);
     my $distance;
     for (my $i = 0; $i <= length ($first); $i ++) {
         for (my $j = 0; $j <= length ($second); $j ++) {
@@ -33,7 +39,7 @@ sub LevenshteinDistance ($first, $second) {
         }
         #
         # We only need the previous row; this reduces the memory
-        # from O (N * M) to O (min (N, M)), where N and M are the
+        # from Theta (N * M) to O (N + M), where N and M are the
         # lengths of the input strings.
         #
         undef $$distance [$i - 1] if $i;
