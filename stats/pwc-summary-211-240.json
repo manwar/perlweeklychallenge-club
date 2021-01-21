@@ -1,9 +1,4 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "xAxis" : {
       "categories" : [
          "William West",
@@ -15,15 +10,21 @@
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-01-21 22:13:12 GMT"
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             3,
             3,
             81,
             21
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -44,9 +45,6 @@
          "name" : "Blog"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2021-01-21 02:22:38 GMT"
-   },
    "yAxis" : {
       "min" : 0,
       "title" : {
@@ -54,10 +52,12 @@
       }
    },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
