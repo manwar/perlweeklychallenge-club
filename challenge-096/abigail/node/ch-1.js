@@ -8,9 +8,6 @@
 // Run as: node ch-1.js < input-file
 //
 
-//
-// Read STDIN. Split on newlines, filter out empty lines, then call "main".
-//
   require      ("fs")
 . readFileSync (0)               // Read all.
 . toString     ()                // Turn it into a string.
