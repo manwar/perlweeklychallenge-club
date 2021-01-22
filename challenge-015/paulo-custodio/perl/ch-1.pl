@@ -19,7 +19,32 @@
 use strict;
 use warnings;
 use 5.030;
-use Math::Prime::Util 'next_prime';
+
+# check if number is prime
+sub is_prime {
+	my($n) = @_;
+
+    return 0 if $n <= 1;
+    return 1 if $n <= 3;
+    
+    return 0 if ($n % 2)==0 || ($n % 3)==0;
+    
+    for (my $i = 5; $i*$i <= $n; $i += 6) {
+		return 0 if ($n % $i)==0 || ($n % ($i+2))==0;
+	}
+    
+    return 1;
+}
+
+# next prime
+sub next_prime {
+	my($n) = @_;
+	
+	return 2 if $n <= 1;
+	my $p = $n;
+	1 while !is_prime(++$p);
+	return $p;
+}
 
 sub prime_iter {
 	my($strong) = @_;
