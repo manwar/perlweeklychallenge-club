@@ -20,6 +20,17 @@ use experimental 'lexical_subs';
 use List::Util 'min';
 
 #
+# The challenge isn't quite clear on whether we should output a number
+# (the minimal number of operations required), or the actual operations.
+# The examples show both -- but separated by a blank line. Previous
+# challenges typically use a blank line to separate the required output
+# from the explaination on why that it is the correct answer.
+#
+# We're opting to only print the number of operations, not the actual
+# operations.
+#
+
+#
 # This is an implementation of the Wagner Fischer algorithm, which
 # calculates the Levenshtein distance.
 #
