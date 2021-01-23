@@ -13,7 +13,7 @@
 . toString     ()                // Turn it into a string.
 . split        ("\n")            // Split on newlines.
 . filter       (_ => _ . length) // Filter out empty lines.
-. map          (_ => console . log (LevenshteinDistance (_ . trim () 
+. map          (_ => console . log (LevenshteinDistance (_ . trim ()
                                                            . split (/\s+/))))
 ;
 
@@ -35,7 +35,7 @@ function LevenshteinDistance (strings) {
     for (let i = 0; i <= N; i ++) {
         distance [i] = [];
         for (let j = 0; j <= M; j ++) {
-            distance [i] [j] = 
+            distance [i] [j] =
                 i == 0 || j == 0 ? i + j
               : Math . min (distance [i - 1] [j]     + 1,
                             distance [i]     [j - 1] + 1,
