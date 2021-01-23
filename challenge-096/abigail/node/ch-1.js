@@ -15,3 +15,4 @@ require ('readline')
                         . split   (/\s+/)   // Split on white space
                         . reverse ()        // Reverse the words
                         . join    (" ")))   // And join them again.
+;
