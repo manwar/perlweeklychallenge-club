@@ -1,15 +1,18 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
    "chart" : {
       "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-01-23 22:46:27 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "legend" : {
       "enabled" : "false"
@@ -19,11 +22,22 @@
    },
    "series" : [
       {
-         "name" : "Contributions",
+         "dataLabels" : {
+            "align" : "right",
+            "y" : 10,
+            "enabled" : "true",
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}"
+         },
          "data" : [
             [
                "Blog",
-               1274
+               1276
             ],
             [
                "Perl",
@@ -34,30 +48,16 @@
                2901
             ]
          ],
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "y" : 10,
-            "align" : "right",
-            "rotation" : -90
-         }
+         "name" : "Contributions"
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-01-23 22:04:09 GMT"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    }
 }
