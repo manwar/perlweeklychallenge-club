@@ -41,7 +41,7 @@ operations.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[Perl Weekly Challenge 96; Reverse Words](https://wp.me/pcxd30-mj)
+[Perl Weekly Challenge 96: Reverse Words](https://wp.me/pcxd30-mj)
 
 
 ## [Edit Distance](https://perlweeklychallenge.org/blog/perl-weekly-challenge-096/#TASK2)
