@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 # THE WEEKLY CHALLENGE - 091
 # TASK #1: Count Number

@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 # Challenge 090
 # TASK #2 › Ethiopian Multiplication
