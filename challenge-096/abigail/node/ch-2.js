@@ -1,13 +1,17 @@
+#!/usr/local/bin/node
+
 //
-// Read STDIN. Split on newlines, filter out empty lines, then call "main".
+// See ../README.md
 //
-  require      ("fs")
-. readFileSync (0)               // Read all.
-. toString     ()                // Turn it into a string.
-. split        ("\n")            // Split on newlines.
-. filter       (_ => _ . length) // Filter out empty lines.
-. map          (_ => console . log (LevenshteinDistance (_ . trim () 
-                                                           . split (/\s+/))))
+
+//
+// Run as: node ch-2.js < input-file
+//
+
+require ('readline')
+. createInterface ({input: process . stdin})   
+. on ('line', _ => console . log (LevenshteinDistance (_ . trim () 
+                                                         . split (/\s+/))))
 ;
 
 //
