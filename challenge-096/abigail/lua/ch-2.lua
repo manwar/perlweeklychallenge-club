@@ -17,13 +17,13 @@
 function LevenshteinDistance (first, second)
     local n = first  : len ()
     local m = second : len ()
-    distances = {}
+    distance = {}
     for i = 0, n do
-        distances [i] = {}
+        distance [i] = {}
         for j = 0, m do
             if i == 0 or j == 0
             then
-                distances [i] [j] = i + j
+                distance [i] [j] = i + j
             else
                 local cost = 1
                 if string . sub (first,  i, i) ==
@@ -31,10 +31,10 @@ function LevenshteinDistance (first, second)
                 then
                     cost = 0
                 end
-                distances [i] [j] = math . min (
-                    distances [i - 1] [j]     + 1,
-                    distances [i]     [j - 1] + 1,
-                    distances [i - 1] [j - 1] + cost
+                distance [i] [j] = math . min (
+                    distance [i - 1] [j]     + 1,
+                    distance [i]     [j - 1] + 1,
+                    distance [i - 1] [j - 1] + cost
                 )
             end
         end
@@ -46,10 +46,10 @@ function LevenshteinDistance (first, second)
         --
         if i > 0
         then
-            distances [i - 1] = nil
+            distance [i - 1] = nil
         end
     end
-    return distances [n] [m]
+    return distance [n] [m]
 end
 
 
