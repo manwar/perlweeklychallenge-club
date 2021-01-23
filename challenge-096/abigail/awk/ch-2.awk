@@ -1,3 +1,13 @@
+#!/usr/bin/awk
+
+#
+# See ../README.md
+#
+
+#
+# Run as: awk -f ch-2.awk < input-file
+#
+
 #
 # Return the minimum of 3 values
 #

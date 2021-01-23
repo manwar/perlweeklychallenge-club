@@ -1,3 +1,13 @@
+#!/opt/local/bin/python
+
+#
+# See ../README.md
+#
+
+#
+# Run as: python ch-2.py < input-file
+#
+
 import fileinput
 
 def LevenshteinDistance (first, second):

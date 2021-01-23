@@ -19,17 +19,29 @@ Input: $S = "    Perl and   Raku are  part of the same family  "
 Output: "family same the of part are Raku and Perl"
 ~~~~
 
+### Notes
+
+The challenge isn't quite clear on whether we should output a number
+(the minimal number of operations required), or the actual operations.
+The examples show both -- but separated by a blank line. Previous
+challenges typically use a blank line to separate the required output
+from the explaination on why that it is the correct answer.
+
+We're opting to only print the number of operations, not the actual
+operations.
+
 ### Solutions
 * [AWK](awk/ch-1.awk)
-* [bash](sh/ch-1.sh)
+* [Bash](sh/ch-1.sh)
 * [C](c/ch-1.c)
-* [lua](lua/ch-1.lua)
+* [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Perl Weekly Challenge 96: Reverse Words](https://wp.me/pcxd30-mj)
 
 
 ## [Edit Distance](https://perlweeklychallenge.org/blog/perl-weekly-challenge-096/#TASK2)
@@ -62,10 +74,11 @@ Operation 2: replace 'u' with 'o'
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [C](c/ch-2.c)
-* [lua](lua/ch-2.lua)
+* [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
+[Perl Weekly Challenge 96: Edit Distance](https://wp.me/pcxd30-n7)

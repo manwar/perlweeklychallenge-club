@@ -1,3 +1,11 @@
+/*
+ * See ../README.md
+ */
+
+/*
+ * Run as: cc -o ch-2.o ch-2.c; ch-2.o < input-file
+ */
+
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
@@ -20,19 +28,6 @@ size_t min3 (size_t a, size_t b, size_t c) {
 size_t LevenshteinDistance (char * first,  size_t n,
                             char * second, size_t m) {
       
-    /*
-     * If 'first' is the shorter string, swap the two strings.
-     * This reduces the memory usage.
-     */
-    if (n < m) {
-        char * tmp = first;
-        size_t t   = n;
-        first  = second;
-        second = tmp;
-        n      = m;
-        m      = t;
-    }
-
     size_t ** distance;
     if ((distance = malloc ((n + 1) * sizeof (size_t *))) == NULL) {
         fprintf (stderr, "Out of memory\n");
@@ -54,7 +49,7 @@ size_t LevenshteinDistance (char * first,  size_t n,
             /*
              * We only need the previous row; freeing the memory of rows
              * we no longer need, reduces the memory usage from
-             * Theta (n * m) to O (min (n, m))
+             * Theta (n * m) to O (n + m)
              */
             free (distance [i - 1]);
         }

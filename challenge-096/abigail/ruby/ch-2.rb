@@ -1,28 +1,34 @@
+#!/usr/bin/ruby
+
+#
+# See ../README.md
+#
+
+#
+# Run as: ruby ch-2.rb < input-file
+#
+
 def LevenshteinDistance (first, second)
     n = first  . length
     m = second . length
-    if n < m
-        first, second = second, first
-        n,     m      = m,      n
-    end
-    distances = []
+    distance = []
     for i in 0 .. n do
-        distances [i] = []
+        distance [i] = []
         for j in 0 .. m do
-            distances [i] [j] = i == 0 || j == 0 ? i + j
-                    : [distances [i - 1] [j]     + 1,
-                       distances [i]     [j - 1] + 1,
-                       distances [i - 1] [j - 1] +
+            distance [i] [j] = i == 0 || j == 0 ? i + j
+                    : [distance [i - 1] [j]     + 1,
+                       distance [i]     [j - 1] + 1,
+                       distance [i - 1] [j - 1] +
                           (first [i - 1] == second [j - 1] ? 0 : 1)] . min
         end
         #
         # Release memory
         #
         if i > 1
-            distances [i - 1] = nil
+            distance [i - 1] = nil
         end
     end
-    return distances [n] [m]
+    return distance [n] [m]
 end
 
 ARGF . each_line do |_|

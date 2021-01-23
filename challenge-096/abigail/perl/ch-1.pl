@@ -1,5 +1,13 @@
 #!/opt/perl/bin/perl
 
+#
+# See ../README.md
+#
+
+#
+# Run as: perl ch-1.pl < input-file
+#
+
 use 5.032;
 
 use strict;
