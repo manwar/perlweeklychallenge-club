@@ -22,7 +22,6 @@ use warnings;
 use 5.030;
 use Math::Combinatorics;
 use List::Util 'sum';
-use Math::Prime::Util 'primes';
 
 my($N) = shift;
 
@@ -35,13 +34,51 @@ else {
 }
 
 
+# check if number is prime
+sub is_prime {
+	my($n) = @_;
+
+    return 0 if $n <= 1;
+    return 1 if $n <= 3;
+    
+    return 0 if ($n % 2)==0 || ($n % 3)==0;
+    
+    for (my $i = 5; $i*$i <= $n; $i += 6) {
+		return 0 if ($n % $i)==0 || ($n % ($i+2))==0;
+	}
+    
+    return 1;
+}
+
+# next prime
+sub next_prime {
+	my($n) = @_;
+	
+	return 2 if $n <= 1;
+	my $p = $n;
+	1 while !is_prime(++$p);
+	return $p;
+}
+
+# get all primes up to N
+sub primes {
+	my($n) = @_;
+	my $p = 2;
+	my @primes;
+	while ($p <= $n) {
+		push @primes, $p;
+		$p = next_prime($p);
+	}
+	return @primes;
+}
+
 # check all combinations for the shortest that adds up to N
 sub find_set {
 	my($n) = @_;
 
 	# get all primes up to N, 1 not included; 
 	# append primes 2 and 3 to be able to solve special cases 4 and 6
-	my @primes = (@{primes($n)}, 2, 3);
+	my @primes = (primes($n), 2, 3);
 
 	my @solution;
 	for my $k (1 .. scalar(@primes)) {
