@@ -140,18 +140,10 @@ sub cost ($repl) {
 }
 
 # Find the minimum in an N-dim piddle together with the corresponding
-# index.  Though this looks complicated, it is very efficient.
-sub min_ind ($min) {
-    my (@index, $index);
-
-    # Reduce dimension by projection via minimum down to zero (getting
-    # to the global minimum as a scalar) and record the index piddle for
-    # each dimension.
-    ($min, undef, $index[@index]) = $min->minmaximum while $min->dims;
-
-    # Expand the target index bottom-up from the record by successively
-    # applying the so far built index to the next higher dimension index.
-    $index = $_->indexND($index)->glue(0, $index) for reverse @index;
+# index.
+sub min_ind ($pdl) {
+	my $min = min $pdl;
+	my $index = whichND($pdl == $min)->slice(',(0)');
 
     ($min, $index);
 }
