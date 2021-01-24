@@ -14,6 +14,7 @@ We cannot have a number with just 0's, as that would not be a positive number.
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
 * [bc](bc/ch-1.bc)
+* [Befunge-93](befunge-93/ch-1.bf93)
 * [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
