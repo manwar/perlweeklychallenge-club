@@ -36,4 +36,6 @@ one number per line. Programs will use an option, -t (to base 35), or
 -f (from base 35) to indicate which direction to go.
 
 ### Solutions
+* [AWK](awk/ch-2.awk)
+* [Node](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
