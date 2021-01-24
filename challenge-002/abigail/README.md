@@ -32,5 +32,8 @@ in case you needed some background.
 
 ### Note
 We will be reading numbers from STDIN, and writing the results to STDOUT,
-one number per line. We'll use a prefix (T/F) to indicate whether the
-number needs to be translated To of From base35.
+one number per line. Programs will use an option, -t (to base 35), or 
+-f (from base 35) to indicate which direction to go.
+
+### Solutions
+* [Perl](perl/ch-2.pl)
