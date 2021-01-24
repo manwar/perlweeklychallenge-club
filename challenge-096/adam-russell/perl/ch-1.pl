@@ -10,7 +10,7 @@ sub reverse_words{
     if(@{$words}){
         my $word = $words->[0];
         my $a = reverse_words([@{$words}[1 .. (@{$words} - 1)]]);
-        push @{$a}, $word;
+        $a->[@{$a}] = $word;
         return $a;
     }
     return [];

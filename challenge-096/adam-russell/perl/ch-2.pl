@@ -6,6 +6,9 @@ use warnings;
 # required to convert $S1 into $S2. The operations 
 # can be insert, remove or replace a character.
 ##
+use Memoize;
+memoize("edit_distance");
+
 sub edit_distance{
     my($s, $t) = @_;
     if(length($s) == 0){
