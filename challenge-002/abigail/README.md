@@ -10,6 +10,17 @@ one number per line.
 
 We cannot have a number with just 0's, as that would not be a positive number.
 
+### Solutions
+* [AWK](awk/ch-1.awk)
+* [Bash](bash/ch-1.sh)
+* [bc](bc/ch-1.bc)
+* [C](c/ch-1.c)
+* [Lua](lua/ch-1.lua)
+* [Node.js](node/ch-1.js)
+* [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
+* [Ruby](ruby/ch-1.rb)
+
 ## [Challenge #2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-002/#challenge-2)
 
 Write a script that can convert integers to and from a base35
