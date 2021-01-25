@@ -37,5 +37,6 @@ one number per line. Programs will use an option, -t (to base 35), or
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
+* [Lua](lua/ch-2.lua)
 * [Node](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
