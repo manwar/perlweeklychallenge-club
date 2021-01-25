@@ -7,7 +7,7 @@
  */
 
 /*
- * Run as: cc -o ch-1.o cc-1.c; ./ch-1.o < input-file
+ * Run as: cc -o ch-1.o ch-1.c; ./ch-1.o < input-file
  */
 
 int main (void) {
