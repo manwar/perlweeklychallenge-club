@@ -13,7 +13,7 @@ sub MAIN( Str $S = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG",
 
     %cipher{ @alphabet[ $_ ] } = @alphabet.rotate( $N * -1  )[ $_ ] for ^@alphabet.elems;
 
-    say "Encoding $S";
-    print %cipher{ $_ }:exists ?? %cipher{ $_ } !! $_ for $S.uc.comb;
-    say "\ndone";
+    my @encoded;
+    @encoded.push: %cipher{ $_ }:exists ?? %cipher{ $_ } !! $_ for $S.uc.comb;
+    "Encoded string for text\n$S\nis\n{ @encoded.join('') }\n".say
 }
