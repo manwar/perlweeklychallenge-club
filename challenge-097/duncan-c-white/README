@@ -1,0 +1,58 @@
+Task 1: "Reverse Words
+
+You are given a string $S.
+
+Write a script to reverse the order of words in the given string. The
+string may contain leading/trailing spaces. The string may have more
+than one space between words in the string. Print the result without
+leading/trailing spaces and there should be only one space between words.
+
+Example 1:
+
+	Input: $S = "The Weekly Challenge"
+	Output: "Challenge Weekly The"
+
+Example 2:
+
+	Input: $S = "    Perl and   Raku are  part of the same family  "
+	Output: "family same the of part are Raku and Perl"
+"
+
+My notes: looks straightforward.
+
+
+Task 2: "Edit Distance
+
+You are given two strings $S1 and $S2.
+
+Write a script to find out the minimum operations required to convert
+$S1 into $S2. The operations can be insert, remove or replace a
+character. Please check out 
+https://en.wikipedia.org/wiki/Edit_distance
+for more information.
+
+Example 1:
+
+	Input: $S1 = "kitten"; $S2 = "sitting"
+	Output: 3
+
+	Operation 1: replace 'k' with 's'
+	Operation 2: replace 'e' with 'i'
+	Operation 3: insert 'g' at the end
+
+Example 2:
+
+	Input: $S1 = "sunday"; $S2 = "monday"
+	Output: 2
+
+	Operation 1: replace 's' with 'm'
+	Operation 2: replace 'u' with 'o'
+"
+
+My notes: reading the Wikipedia page, the naive recursive implementation
+sounds good enough to me, even though it's hideously inefficent.
+The various iterative versions sound clever, especially the one which
+only stores two rows, but I can't be bothered.
+
+(note that there are several CPAN modules which do this, but solving a
+Perl Challenge by "use Text::Levenshtein" seems like cheating).
