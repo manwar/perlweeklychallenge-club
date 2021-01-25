@@ -17,11 +17,19 @@ done_testing();
 
 sub min_flips {
   ## Golf mode on...
+  ##
+  ## This was to use this to serve as an example of perl idioms that other programmers
+  ## may find it difficult to understand - and so I tried to put as many of them in relatively
+  ## short function....
+  ##
+  ## One statement functions are a lovely perl concept - even if they can get a bit difficult
+  ## to read....
+  ##
   return [
     map { local $/ =
-            local $\ = ( $_[0] ^ ( substr $_[0], $_, $_[1]) x (length($_[0])/$_[1]) ) =~ tr/\x01/\x01/,
-            !$_ || $_ < $/ ? $\ : $/,
-        }
+      local $\ = ( $_[0] ^ ( substr $_[0], $_, $_[1]) x (length($_[0])/$_[1]) ) =~ tr/\x01/\x01/,
+      !$_ || $_ < $/ ? $\ : $/,
+    }
     map { $_*$_[1] }
     0 .. ( length($_[0])/$_[1] - 1 )
   ]->[-1];
