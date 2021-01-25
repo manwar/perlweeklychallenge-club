@@ -40,3 +40,5 @@ one number per line. Programs will use an option, -t (to base 35), or
 * [Lua](lua/ch-2.lua)
 * [Node](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
+* [Ruby](ruby/ch-2.by)
