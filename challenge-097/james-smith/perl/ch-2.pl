@@ -11,8 +11,6 @@ is( min_flips('10110111', 4), 2 );
 is( min_flips('101100100',3), 1 );
 is( min_flips('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
 
-use Data::Dumper;
-
 done_testing();
 
 sub min_flips {
