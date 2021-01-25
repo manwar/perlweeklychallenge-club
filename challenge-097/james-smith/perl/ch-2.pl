@@ -8,22 +8,48 @@ use Test::More;
 
 is( min_flips('101100101',3), 1 );
 is( min_flips('10110111', 4), 2 );
-is( min_flips('101100100',4), 1 );
+is( min_flips('101100100',3), 1 );
 is( min_flips('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
+
+use Data::Dumper;
 
 done_testing();
 
 sub min_flips {
-  my( $str, $n, @parts ) = @_;;
-  my $min = length $str;
-  push @parts, substr $str,0,$n,'' while length $str;
-  foreach my $r (@parts) {
-    my $t = 0;
-    foreach my $s (@parts) {
-      $t += ($s^$r) =~ tr/\x01/\x01/;
-    }
-    $min = $t if $t < $min;
-  }
-  return $min;
+  ## Golf mode on...
+  return [
+    map { local $/ =
+            local $\ = ( $_[0] ^ ( substr $_[0], $_, $_[1]) x (length($_[0])/$_[1]) ) =~ tr/\x01/\x01/,
+            !$_ || $_ < $/ ? $\ : $/,
+        }
+    map { $_*$_[1] }
+    0 .. (length($_[0])/$_[1]-1)
+  ]->[-1];
+  ## We could use variales here - but playing with localised special variables is fun!
+  ## $/ <- minimum value
+  ## $\ <- value for given chunk....
+  ##
+  ## The inner map + range combination returns a list of ids of the form 0, $n, 2*$n until the
+  ## end of the array, we use this to chunk the array up for comparison
+  ##
+  ## Inside the end map - we first string "xor" the string with the repeated chunk of the array.
+  ## so e.g. for the first example this becomes:
+  ##   '101100101' ^ '101'.'101'.'101'
+  ##   '101100101' ^ '100'.'100'.'100'
+  ##   '101100101' ^ '101'.'101'.'101'
+  ## if the symbols match you get a value \x00, when they don't match you get value \x01
+  ## so we then count the \x01's using tr... and store in $\
+  ##
+  ## Next if it is the first chunk OR the value of $\ is less than the current min ($/)
+  ## We set $/ to $\ otherwise we leave it as $/
+  ##
+  ## The resultant array consists of the running minimum in the examples
+  ## for ex 1: it is [1,1,1]
+  ## for ex 2: it is [1,1]
+  ## for ex 3: it is [2,1,1]
+  ##
+  ## We need the last value of this so we wrap the list into an array ref and take the last element
+  ##
+  ## [ list... ]->[-1];
 }
 
