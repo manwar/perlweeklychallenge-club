@@ -39,14 +39,14 @@ unlink($in);
 done_testing;
 
 sub capture {
-	my($cmd) = @_;
-	my $out = `$cmd`;
-	$out =~ s/[ \t\v\f\r]*\n/\n/g;
-	return $out;
+    my($cmd) = @_;
+    my $out = `$cmd`;
+    $out =~ s/[ \t\v\f\r]*\n/\n/g;
+    return $out;
 }
 
 sub spew {
-	my($file, $text) = @_;
-	open(my $fh, ">", $file) or die "write $file: $!\n";
-	print $fh $text;
+    my($file, $text) = @_;
+    open(my $fh, ">", $file) or die "write $file: $!\n";
+    print $fh $text;
 }

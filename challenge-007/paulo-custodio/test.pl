@@ -34,27 +34,27 @@ for ([50, <<END]) {
 48
 50
 END
-	my($in, $out) = @$_;
-	
-	is capture(    "perl perl/ch-1.pl $in"), $out;
-	is capture("python python/ch-1.py $in"), $out;
+    my($in, $out) = @$_;
+
+    is capture(    "perl perl/ch-1.pl $in"), $out;
+    is capture("python python/ch-1.py $in"), $out;
 }
 
 
 for (["cold warm", <<END]) {
 ("cold", "cord", "card", "ward", "warm")
 END
-	my($in, $out) = @$_;
-	
-	is capture(    "perl perl/ch-2.pl $in"), $out;
-	is capture("python python/ch-2.py $in"), $out;
+    my($in, $out) = @$_;
+
+    is capture(    "perl perl/ch-2.pl $in"), $out;
+    is capture("python python/ch-2.py $in"), $out;
 }
 
 done_testing;
 
 sub capture {
-	my($cmd) = @_;
-	my $out = `$cmd`;
-	$out =~ s/[ \t\v\f\r]*\n/\n/g;
-	return $out;
+    my($cmd) = @_;
+    my $out = `$cmd`;
+    $out =~ s/[ \t\v\f\r]*\n/\n/g;
+    return $out;
 }

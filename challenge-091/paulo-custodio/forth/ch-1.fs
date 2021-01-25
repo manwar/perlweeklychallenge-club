@@ -1,15 +1,15 @@
 \ THE WEEKLY CHALLENGE - 091
 \ TASK #1: Count Number
 \
-\ You are given a positive number $N. Write a script to count number and 
+\ You are given a positive number $N. Write a script to count number and
 \ display as you read it.
 
 \ Start the script with N in the stack, e.g.
 \   gforth -e 12345 ch-1.fs
 
-\ This solution uses the data stack to hold the digit counts, while 
+\ This solution uses the data stack to hold the digit counts, while
 \ computing them right-to-left, and displays them left-to-right at
-\ the end. A -1 is used as a stack marker, as there cannot be a -1 
+\ the end. A -1 is used as a stack marker, as there cannot be a -1
 \ digit count.
 
 : count_digit   ( n -- d c n/10^c )     \ count last digit
@@ -33,7 +33,7 @@
         count_digit     ( ... d c new-n )
     DUP 0 <= UNTIL      ( -1 [d c]... n )
     DROP
-    BEGIN 
+    BEGIN
         out-num out-num \ print count, digit
     DUP 0< UNTIL
     DROP

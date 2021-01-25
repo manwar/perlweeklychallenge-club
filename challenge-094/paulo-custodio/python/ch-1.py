@@ -5,11 +5,11 @@
 # TASK #1 > Group Anagrams
 # Submitted by: Mohammad S Anwar
 # You are given an array of strings @S.
-# 
+#
 # Write a script to group Anagrams together in any random order.
-# 
+#
 # An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
-# 
+#
 # Example 1:
 #     Input: ("opt", "bat", "saw", "tab", "pot", "top", "was")
 #     Output: [ ("bat", "tab"),
@@ -42,7 +42,7 @@ def solve():
         if key not in map:
             map[key] = []
         map[key] += [arg]
-        
+
     print_map(map)
-    
+
 solve()

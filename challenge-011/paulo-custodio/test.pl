@@ -5,7 +5,7 @@ use warnings;
 use 5.030;
 use Test::More;
 
-is capture("perl perl/ch-1.pl"), 	"-40\n";
+is capture("perl perl/ch-1.pl"),    "-40\n";
 
 is capture("perl perl/ch-2.pl 1"), <<END;
 [[1]]
@@ -39,9 +39,8 @@ END
 done_testing;
 
 sub capture {
-	my($cmd) = @_;
-	my $out = `$cmd`;
-	$out =~ s/[ \r\t]*\n/\n/g;
-	return $out;
+    my($cmd) = @_;
+    my $out = `$cmd`;
+    $out =~ s/[ \r\t]*\n/\n/g;
+    return $out;
 }
-

@@ -22,8 +22,8 @@ is capture("perl perl/ch-2.pl 3O98t1WpEZ73CNmQviecrnyiWrnqRhWNLy"), "0\n";
 done_testing;
 
 sub capture {
-	my($cmd) = @_;
-	my $out = `$cmd`;
-	$out =~ s/[ \t\v\f\r]*\n/\n/g;
-	return $out;
+    my($cmd) = @_;
+    my $out = `$cmd`;
+    $out =~ s/[ \t\v\f\r]*\n/\n/g;
+    return $out;
 }
