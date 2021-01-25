@@ -23,7 +23,7 @@ sub min_flips {
             !$_ || $_ < $/ ? $\ : $/,
         }
     map { $_*$_[1] }
-    0 .. (length($_[0])/$_[1]-1)
+    0 .. ( length($_[0])/$_[1] - 1 )
   ]->[-1];
   ## We could use variales here - but playing with localised special variables is fun!
   ## $/ <- minimum value
