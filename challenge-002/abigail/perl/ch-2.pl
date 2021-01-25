@@ -25,17 +25,19 @@ die "Need exactly one of -t or -f" unless $to_base xor $from_base;
 
 my $BASE = 35;
 
-my @digits = (0 .. 9, 'A' .. 'Y');
-my %to;
-@to {keys @digits} = @digits;
-my %from = reverse %to;
-
+my %digits;
+$digits {$_} = $_ for 0 .. 9;
+foreach my $n (10 .. $BASE - 1) {
+    my $ch = chr (65 + $n - 10);
+    $digits {$ch} = $n;
+    $digits {$n}  = $ch;
+}
 
 sub to_base ($number) {
     my $out = "";
     while ($number) {
-        $out    = $to {$number % $BASE} . $out;
-        $number = int ($number / $BASE);
+        $out    = $digits {$number % $BASE} . $out;
+        $number = int     ($number / $BASE);
     }
     $out || "0";
 }
@@ -45,7 +47,7 @@ sub from_base ($number) {
     while (length $number) {
         my $digit = substr $number, 0, 1, "";
         $out *= $BASE;
-        $out += $from {$digit};
+        $out += $digits {$digit};
     }
     $out;
 }
