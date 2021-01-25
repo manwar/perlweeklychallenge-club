@@ -14,10 +14,10 @@ use 5.030;
 use List::Util 'max';
 
 sub center {
-	my(@lines) = @_;
-	my $max_len = max(map {length($_)} @lines);
-	@lines = map {$_ = " " x (($max_len-length($_))/2) . $_} @lines;
-	return @lines;
+    my(@lines) = @_;
+    my $max_len = max(map {length($_)} @lines);
+    @lines = map {$_ = " " x (($max_len-length($_))/2) . $_} @lines;
+    return @lines;
 }
 
 my @lines = center(@ARGV);

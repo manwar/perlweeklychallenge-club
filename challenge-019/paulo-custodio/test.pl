@@ -129,10 +129,10 @@ is capture("perl perl/ch-1.pl"), <<END;
 END
 
 path("input.txt")->spew(<<END);
-In the beginning God created the heavens and the earth. Now the earth was formless and empty, 
+In the beginning God created the heavens and the earth. Now the earth was formless and empty,
 darkness was over the surface of the deep, and the Spirit of God was hovering over the waters.
 And God said, "Let there be light," and there was light. God saw that the light was good, and
-he separated the light from the darkness. God called the light "day," and the darkness he called "night." 
+he separated the light from the darkness. God called the light "day," and the darkness he called "night."
 And there was evening, and there was morning-the first day.
 END
 
@@ -151,8 +151,8 @@ unlink "input.txt";
 done_testing;
 
 sub capture {
-	my($cmd) = @_;
-	my $out = `$cmd`;
-	$out =~ s/[ \t\v\f\r]*\n/\n/g;
-	return $out;
+    my($cmd) = @_;
+    my $out = `$cmd`;
+    $out =~ s/[ \t\v\f\r]*\n/\n/g;
+    return $out;
 }

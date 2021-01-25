@@ -8,11 +8,11 @@
 # element with high priority is served before an element with low priority.
 # Please check this wiki page for more informations. It should serve the
 # following operations:
-# 
+#
 # is_empty: check whether the queue has no elements.
 # insert_with_priority: add an element to the queue with an associated priority.
 # pull_highest_priority_element: remove the element from the queue that has the
-# highest priority, and return it. If two elements have the same priority, 
+# highest priority, and return it. If two elements have the same priority,
 # then return element added first.
 
 use strict;
@@ -20,54 +20,54 @@ use warnings;
 use 5.030;
 
 # implement a Priority-queue as an ordered list of [priority, list of elements]
-{ 
-	package PQueue;
-	
-	sub new {
-		my($class) = @_;
-		return bless [], $class;
-	}
-	
-	sub is_empty {
-		my($self) = @_;
-		return @$self == 0;
-	}
-	
-	sub insert {
-		my($self, $pri, $elem) = @_;
-		if ($self->is_empty) {					# special case: empty
-			push @{$self}, [$pri, [$elem]];
-		}
-		elsif ($pri < $self->[0][0]) {			# special case: lowest
-			unshift @{$self}, [$pri, [$elem]];
-		}
-		elsif ($pri > $self->[-1][0]) {			# special case: highest
-			push @{$self}, [$pri, [$elem]];
-		}
-		else {
-			for my $i (0 .. $#{$self}) {		# traverse list, search for position
-				if ($self->[$i][0] == $pri) {	# same priority
-					push @{$self->[$i][1]}, $elem;
-					return;
-				}
-				elsif ($self->[$i][0] > $pri) {	# higher
-					splice @$self, $i, 0, [$pri, [$elem]];
-					return;
-				}
-			}
-			die "not reached";
-		}
-	}
+{
+    package PQueue;
 
-	sub pull {
-		my($self) = @_;
-		return if $self->is_empty;
-		my $elem = shift @{$self->[-1][1]};
-		if (@{$self->[-1][1]}==0) {				# bucket now empty
-			pop @$self;
-		}
-		return $elem;
-	}
+    sub new {
+        my($class) = @_;
+        return bless [], $class;
+    }
+
+    sub is_empty {
+        my($self) = @_;
+        return @$self == 0;
+    }
+
+    sub insert {
+        my($self, $pri, $elem) = @_;
+        if ($self->is_empty) {                  # special case: empty
+            push @{$self}, [$pri, [$elem]];
+        }
+        elsif ($pri < $self->[0][0]) {          # special case: lowest
+            unshift @{$self}, [$pri, [$elem]];
+        }
+        elsif ($pri > $self->[-1][0]) {         # special case: highest
+            push @{$self}, [$pri, [$elem]];
+        }
+        else {
+            for my $i (0 .. $#{$self}) {        # traverse list, search for position
+                if ($self->[$i][0] == $pri) {   # same priority
+                    push @{$self->[$i][1]}, $elem;
+                    return;
+                }
+                elsif ($self->[$i][0] > $pri) { # higher
+                    splice @$self, $i, 0, [$pri, [$elem]];
+                    return;
+                }
+            }
+            die "not reached";
+        }
+    }
+
+    sub pull {
+        my($self) = @_;
+        return if $self->is_empty;
+        my $elem = shift @{$self->[-1][1]};
+        if (@{$self->[-1][1]}==0) {             # bucket now empty
+            pop @$self;
+        }
+        return $elem;
+    }
 }
 
 use Test::More;
