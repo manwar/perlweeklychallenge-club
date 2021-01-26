@@ -14,7 +14,7 @@ use experimental 'lexical_subs';
 #
 
 #
-# Run as: perl ch-1.pl -s TIMES < input-file
+# Run as: perl ch-1.pl -s SHIFT < input-file
 #
 
 use Getopt::Long;
