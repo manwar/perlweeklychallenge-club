@@ -26,6 +26,7 @@ to indicate the left shift.
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [Lua](lua/ch-1.lua)
 * [C](c/ch-1.c)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
