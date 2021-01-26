@@ -1,14 +1,11 @@
-#!/usr/bin/perl
+#!/usr/bin/env python
 
 # Challenge 002
 #
 # Challenge #1
 # Write a script or one-liner to remove leading zeros from positive numbers.
 
-use strict;
-use warnings;
-use 5.030;
+import sys
+import re
 
-my($N) = @ARGV;
-$N =~ s/^0+(\d)/$1/;
-say $N;
+print(re.sub(r"^0+(\d)", r"\1", sys.argv[1]))
