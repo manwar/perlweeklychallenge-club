@@ -19,7 +19,12 @@ Plaintext:  THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
 Ciphertext: QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD
 ~~~~
 
+### Note
+We will be reading the plain text from STDIN, and use an option (-s)
+to indicate the left shift.
+
 ### Solutions
+* [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
