@@ -30,8 +30,8 @@ END
 done_testing;
 
 sub capture {
-	my($cmd) = @_;
-	my $out = `$cmd`;
-	$out =~ s/[ \t\v\f\r]*\n/\n/g;
-	return $out;
+    my($cmd) = @_;
+    my $out = `$cmd`;
+    $out =~ s/[ \t\v\f\r]*\n/\n/g;
+    return $out;
 }

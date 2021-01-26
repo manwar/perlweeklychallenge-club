@@ -11,14 +11,14 @@ use warnings;
 use 5.030;
 
 sub num_diff_digits {
-	my($n) = @_;
-	my %digits;
-	while ($n > 0) {
-		my $digit = $n % 10;
-		$digits{$digit}++;
-		$n = int($n/10);
-	}
-	return scalar(keys %digits);
+    my($n) = @_;
+    my %digits;
+    while ($n > 0) {
+        my $digit = $n % 10;
+        $digits{$digit}++;
+        $n = int($n/10);
+    }
+    return scalar(keys %digits);
 }
 
 my $diff_digits = shift || 5;

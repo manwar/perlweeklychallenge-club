@@ -12,8 +12,8 @@ is capture("perl perl/ch-2.pl"), "262537412640768743.999999999999250072597198185
 done_testing;
 
 sub capture {
-	my($cmd) = @_;
-	my $out = `$cmd`;
-	$out =~ s/[ \t\v\f\r]*\n/\n/g;
-	return $out;
+    my($cmd) = @_;
+    my $out = `$cmd`;
+    $out =~ s/[ \t\v\f\r]*\n/\n/g;
+    return $out;
 }
