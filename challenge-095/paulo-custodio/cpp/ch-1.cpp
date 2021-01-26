@@ -21,28 +21,28 @@ Output: 0
 #include <iostream>
 
 int is_palindrome(int n) {
-	// negative numbers are not palindromes
-	if (n < 0)
-		return 0;
-	
-	// find highest power of 10 < n
-	int p10 = 1;
-	while (n > p10*10)
-		p10 *= 10;
-	
-	// remove highest and lowest digits until number is <10
-	while (n >= 10) {
-		if (n % 10 != n / p10) 
-			return 0;
-		n = (n % p10) / 10;		// remove high and low digits
-		p10 = p10 / 100;
-	}
-	
-	// if number is less than 10, it is a palindrome
-	return 1;
+    // negative numbers are not palindromes
+    if (n < 0)
+        return 0;
+
+    // find highest power of 10 < n
+    int p10 = 1;
+    while (n > p10*10)
+        p10 *= 10;
+
+    // remove highest and lowest digits until number is <10
+    while (n >= 10) {
+        if (n % 10 != n / p10)
+            return 0;
+        n = (n % p10) / 10;     // remove high and low digits
+        p10 = p10 / 100;
+    }
+
+    // if number is less than 10, it is a palindrome
+    return 1;
 }
 
 int main(int argc, char* argv[]) {
-	if (argc==2)
-		std::cout << is_palindrome(atoi(argv[1])) << std::endl;
+    if (argc==2)
+        std::cout << is_palindrome(atoi(argv[1])) << std::endl;
 }
