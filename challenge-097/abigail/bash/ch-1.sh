@@ -9,6 +9,11 @@
 #
 
 #
+# Disable pathname expansion
+#
+set -f
+
+#
 # Read the option
 #
 while getopts "s:" name
