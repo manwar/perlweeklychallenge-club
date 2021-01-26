@@ -24,6 +24,7 @@ We will be reading the plain text from STDIN, and use an option (-s)
 to indicate the left shift.
 
 ### Solutions
+* [Bash](bash/ch-1.sh)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 
