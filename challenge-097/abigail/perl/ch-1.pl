@@ -14,13 +14,19 @@ use experimental 'lexical_subs';
 #
 
 #
-# Run as: perl ch-1.pl < input-file
+# Run as: perl ch-1.pl -t TIMES < input-file
 #
+
+use Getopt::Long;
+
+GetOptions 't=i'  =>  \my $times;
+
+die "-t option required" unless defined $times;
+
+$times %= 26;
 
 while (<>) {
     chomp;
-    my ($times, $plain) = split ' ', $_, 2;
-    $times %= 26;
-    $plain =~ y/A-Z/ZA-Y/ for 1 .. $times;
-    say $plain;
+    s/([A-Z])/my $ch = ord ($1) - $times; $ch += 26 if $ch < 65; chr $ch/eg;
+    say;
 }
