@@ -30,6 +30,7 @@ to indicate the left shift.
 * [C](c/ch-1.c)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
 
 ### Blog
 
