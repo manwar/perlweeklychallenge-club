@@ -30,7 +30,6 @@
 use strict;
 use warnings;
 use 5.030;
-use List::Util 'min';
 
 # avoid repeated recursive calls of lev_dist
 # for the Example 1 reduces from 29737 to 56 calls!
@@ -57,4 +56,12 @@ sub lev_dist {
             lev_dist(substr($a, 1), substr($b, 1))+$ch1_diff    # substitution
         );
     }
+}
+
+sub min {
+	my($min, @a) = @_;
+	for (@a) {
+		$min = $_ if $min > $_;
+	}
+	return $min;
 }

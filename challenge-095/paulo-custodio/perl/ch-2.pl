@@ -27,13 +27,20 @@ use 5.030;
 
 {
     package Stack;
-    use List::Util;
 
     sub new     { my($class) = @_;      return bless [], $class; }
     sub push    { my($self, $n) = @_;   push @$self, $n; }
     sub pop     { my($self) = @_;       pop  @$self; }
     sub top     { my($self) = @_;       return $self->[-1]; }
-    sub min     { my($self) = @_;       return List::Util::min(@$self); }
+    sub min     { my($self) = @_;       return min_(@$self); }
+	
+	sub min_ {
+		my($min, @a) = @_;
+		for (@a) {
+			$min = $_ if $min > $_;
+		}
+		return $min;
+	}
 }
 
 my $stack = Stack->new;

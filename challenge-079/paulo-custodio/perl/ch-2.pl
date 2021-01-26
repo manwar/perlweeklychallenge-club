@@ -39,7 +39,6 @@
 use strict;
 use warnings;
 use 5.030;
-use List::Util 'max', 'sum';
 
 @ARGV or die "Usage: ch-2.pl list\n";
 my @N = @ARGV;
@@ -70,4 +69,18 @@ sub draw_hist {
         push @hist, $line;
     }
     return @hist;
+}
+
+sub max {
+	my($max, @a) = @_;
+	for (@a) {
+		$max = $_ if $max < $_;
+	}
+	return $max;
+}
+
+sub sum {
+	my($sum, @a) = @_;
+	$sum += $_ for @a;
+	return $sum;
 }

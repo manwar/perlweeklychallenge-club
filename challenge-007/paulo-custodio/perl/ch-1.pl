@@ -9,7 +9,6 @@
 use strict;
 use warnings;
 use 5.030;
-use List::Util 'sum';
 
 sub solve {
     my($max) = @_;
@@ -18,6 +17,13 @@ sub solve {
         say $n if $n % $sum == 0;
     }
 }
+
+sub sum {
+	my($sum, @a) = @_;
+	$sum += $_ for @a;
+	return $sum;
+}
+
 
 my $max = shift || 50;
 solve($max);

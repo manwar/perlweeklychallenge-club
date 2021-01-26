@@ -12,7 +12,6 @@
 use strict;
 use warnings;
 use 5.030;
-use List::Util 'all';
 
 say "(", join(", ", map {$_=qq("$_")} longest_substr(@ARGV)), ")";
 
@@ -28,7 +27,7 @@ sub longest_substr {
                 next if $longest_len > $len;                # prune search
                 my $substr = substr($str, $s, $len);
                 next if $longest{$str};                     # prune search
-                if (all {/$substr/} @strs) {                # matches all
+                if (all(sub {/$substr/}, @strs)) {          # matches all
                     if ($longest_len == $len) {
                         $longest{$substr}=1;
                     }
@@ -41,4 +40,10 @@ sub longest_substr {
         }
     }
     return sort keys %longest;
+}
+
+sub all {
+	my($sub, @a) = @_;
+	for (@a) { return if !$sub->($_); }
+	return 1;
 }
