@@ -45,12 +45,12 @@ for ([  "0" =>   "0"],
     is capture(  "gforth forth/ch-2.fs  -r $out"), "$in\n";
     is capture( "python python/ch-2.py     $in "), "$out\n";
     is capture( "python python/ch-2.py  -r $out"), "$in\n";
-    is capture(            "c/ch-2         $in "), "$out\n";
-    is capture(            "c/ch-2      -r $out"), "$in\n";
-    is capture(          "cpp/ch-2         $in "), "$out\n";
-    is capture(          "cpp/ch-2      -r $out"), "$in\n";
-#   is capture(        "basic/ch-2         $in "), "$out\n";
-#   is capture(        "basic/ch-2      -r $out"), "$in\n";
+    is capture(             "c/ch-2        $in "), "$out\n";
+    is capture(             "c/ch-2     -r $out"), "$in\n";
+    is capture(           "cpp/ch-2        $in "), "$out\n";
+    is capture(           "cpp/ch-2     -r $out"), "$in\n";
+    is capture(         "basic/ch-2        $in "), "$out\n";
+    is capture(         "basic/ch-2     -r $out"), "$in\n";
 }
 
 done_testing;
