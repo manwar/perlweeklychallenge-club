@@ -8,6 +8,7 @@ numbers. For more information, please check this
 
 
 ### Solutions
+* [Perl](perl/ch-1.pl)
 
 
 ## [Challenge #2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-003/#challenge-2)
