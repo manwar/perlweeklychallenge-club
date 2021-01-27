@@ -8,6 +8,7 @@ numbers. For more information, please check this
 
 
 ### Solutions
+* [AWK](awk/ch-1.awk)
 * [Perl](perl/ch-1.pl)
 
 
