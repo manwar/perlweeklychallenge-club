@@ -32,13 +32,14 @@ int main (int argc, char ** argv) {
     }
 
     while ((strlen = getline (&line, &len, stdin)) != -1) {
-        strlen --;                    /* We don't care about the newline */
-        int len = strlen / sections;  /* Section length                  */
+        strlen --;                      /* We don't care about the newline */
+        int s_len = strlen / sections;  /* Section length                  */
         int sum = 0;
-        for (int i = 0; i < len; i ++) {
+        for (int i = 0; i < s_len; i ++) {
             int zeros = 0;
             for (int j = 0; j < sections; j ++) {
-                if (line [j * len + i] == '0') {
+                int index = j * s_len + i;
+                if (line [index] == '0') {
                     zeros ++;
                 }
             }
