@@ -18,7 +18,7 @@ then sections = arg [2] + 0
 end
 
 if sections < 0
-then io . stderr : write ("Requires a '-s SECTION' option\n")
+then io . stderr : write ("Requires a '-s SECTIONS' option\n")
      os . exit (1)
 end
 
