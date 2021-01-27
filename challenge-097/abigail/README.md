@@ -43,6 +43,26 @@ You are given a binary string `$B` and an integer `$S`.
 Write a script to split the binary string `$B` of size `$S` and then
 find the minimum number of flips required to make it all the same.
 
+### Notes
+We will be reading the strings from STDIN. The number of sections
+will be passed in as an option: -s SECTIONS.
+
+To calculate the mininim number of flips required, note that we
+can calculate the number of flips for each position independently;
+that is, flipping a bit at position $i doesn't influence how the
+number of flips required for position $j, if $i != $j.
+
+For each position $i, we either need to flip all the 0s to 1s,
+or all the 1s to 0s. To minimize the number of flips, we count
+the number of 0s in each position, and compare that with the
+number of 1s in that position. Then we take the minimum of 0s
+and 1s, and sum this for all positions.
+
+There is no need to split the input string into chunks,
+we can leave it as is. The $i-th character of the $j-th section
+is as position $j * $s_len + $i, where $s_len is the length
+of a section.
+
 ### Examples
 #### Example 1
 ~~~~
