@@ -25,13 +25,13 @@ BEGIN {
     # Split the string into individual letters, use 
     # indexing to get the ith letter of the jth section
     #
-    split ($0, letters, "")
     sum = 0
-    l = length($0) / sections  # Length of a section
-    for (i = 0; i < l; i ++) {
+    s_len = length ($0) / sections  # Length of a section
+    for (i = 0; i < s_len; i ++) {
         zeros = 0;    # Count the zeros on position i
         for (j = 0; j < sections; j ++) {
-            if (letters [j * l + i + 1] == "0") {
+            indx = j * s_len + i + 1     # Can't use 'index' as a variable
+            if (substr ($0, indx, 1) == "0") {
                 zeros ++
             }
         }
