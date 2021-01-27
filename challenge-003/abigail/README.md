@@ -11,6 +11,7 @@ numbers. For more information, please check this
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
 * [C](c/ch-1.c)
+* [Lua](lua/lua-1.lua)
 * [Perl](perl/ch-1.pl)
 
 
