@@ -14,6 +14,7 @@ numbers. For more information, please check this
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
 
 
 ## [Challenge #2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-003/#challenge-2)
