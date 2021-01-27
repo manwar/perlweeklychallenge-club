@@ -21,7 +21,6 @@ use strict;
 use warnings;
 use 5.030;
 use Math::Combinatorics;
-use List::Util 'sum';
 
 my($N) = shift;
 
@@ -93,4 +92,10 @@ sub find_set {
         }
     }
     return @solution;
+}
+
+sub sum {
+	my($sum, @a) = @_;
+	$sum += $_ for @a;
+	return $sum;
 }

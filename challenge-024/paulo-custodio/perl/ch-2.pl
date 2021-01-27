@@ -25,8 +25,6 @@ use DBD::SQLite;
 use Path::Tiny;
 use constant DBFILE => "index.db3";
 
-use Data::Dump 'dump';
-
 # Create database if index does not exist
 BEGIN {
     if (! -f DBFILE) {

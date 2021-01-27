@@ -10,7 +10,6 @@ use strict;
 use warnings;
 use 5.030;
 use Math::Trig;
-use List::Util 'sum';
 
 say mean(@ARGV);
 
@@ -30,4 +29,10 @@ sub mean {
     # convert back to degrees
     $a = rad2deg($a);
     return $a;
+}
+
+sub sum {
+	my($sum, @a) = @_;
+	$sum += $_ for @a;
+	return $sum;
 }
