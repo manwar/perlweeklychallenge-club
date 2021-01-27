@@ -6,6 +6,18 @@ are less or equal to `5`. They are also called Hamming/Regular/Ugly
 numbers. For more information, please check this
 [wikipedia](https://en.wikipedia.org/wiki/Regular_number).
 
+### Notes
+We are going to generate all numbers `n = 2^i * 3^j * 5^k`, with
+`i >= 0`, `j >= 0`, `k >= 0`, and `n <= MAX`, where `MAX` is read
+from `STDIN`. No other numbers are generated.
+
+We are *not* going to generate the numbers `n` in
+numerical order. Instead, if we have two numbers `n1 = 2^i1 * 3^j1 * 5^k1`,
+and `n2 = 2^i2 * 3^j2 * 5^k2`, then `n1` is generated before `n2`, iff
+
+    i1 <  i2                         ||
+    i1 == i2 && j1 <  j2             ||
+    i1 == i2 && j1 == j2 && k1 <  k2
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
