@@ -39,4 +39,5 @@ rows from the command line. The Pascal Triangle should have at least
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [C](c/ch-2.c)
+* [Lua](lua/ch-2.lua)
 * [Perl](perl/ch-2.pl)
