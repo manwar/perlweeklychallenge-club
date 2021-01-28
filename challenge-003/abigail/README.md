@@ -37,3 +37,4 @@ rows from the command line. The Pascal Triangle should have at least
 [wikipedia](https://en.wikipedia.org/wiki/Pascal%27s_triangle) page.
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
