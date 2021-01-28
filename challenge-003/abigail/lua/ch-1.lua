@@ -9,16 +9,16 @@
 --
 
 for max in io . lines () do
-    max = tonumber (max)
-    base2 = 1
+    local max = tonumber (max)
+    local base2 = 1
     --
     -- Lua doesn't have a for (expr; expr; expr) syntax.
     -- This is missed here.
     --
     while base2 <= max do
-        base3 = base2
+        local base3 = base2
         while base3 <= max do
-            base5 = base3
+            local base5 = base3
             while base5 <= max do
                 print (base5)
                 base5 = base5 * 5
