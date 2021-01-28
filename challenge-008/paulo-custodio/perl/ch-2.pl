@@ -20,11 +20,11 @@ sub center {
 }
 
 sub max {
-	my($max, @a) = @_;
-	for (@a) {
-		$max = $_ if $max < $_;
-	}
-	return $max;
+    my($max, @a) = @_;
+    for (@a) {
+        $max = $_ if $max < $_;
+    }
+    return $max;
 }
 
 

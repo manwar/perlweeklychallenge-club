@@ -71,7 +71,3 @@ my @sq = square($a,$b,$c);
 for (@sq) {
     print "[ ", join(" ", @$_), " ]\n";
 }
-
-
-
-
