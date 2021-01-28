@@ -7,6 +7,7 @@ of your script. Say, if your script size is `10`, it should print
 `3.141592653`.
 
 ### Solutions
+* [C](c/ch-1.c)
 * [Perl](perl/ch-1.pl)
 
 
