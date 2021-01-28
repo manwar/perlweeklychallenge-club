@@ -17,28 +17,30 @@ use experimental 'lexical_subs';
 # Run as: perl ch-2.pl < input-file
 #
 
-chomp (my $rows = <>);
-
-#
-# 0-th row
-#
-my @row = (1);
-say "@row";
-
-foreach (1 .. $rows) {
-    #
-    # Calculate the next row from the current row
-    #
-    my @new = map {($_ == 0    ? 0 : $row [$_ - 1]) +
-                   ($_ == @row ? 0 : $row [$_])} 0 .. @row;
+while (my $rows = <>) {
+    chomp $rows;
 
     #
-    # Print
+    # 0-th row
     #
-    say "@new";
+    my @row = (1);
+    say "@row";
 
-    #
-    # New row becomes current row
-    #
-    @row = @new;
+    foreach (1 .. $rows) {
+        #
+        # Calculate the next row from the current row
+        #
+        my @new = map {($_ == 0    ? 0 : $row [$_ - 1]) +
+                       ($_ == @row ? 0 : $row [$_])} 0 .. @row;
+
+        #
+        # Print
+        #
+        say "@new";
+
+        #
+        # New row becomes current row
+        #
+        @row = @new;
+    }
 }
