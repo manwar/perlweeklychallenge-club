@@ -1,63 +1,21 @@
 # Java solution
-## Reverse Words
+## Caesar Cipher
 
 To compile the code run
 ```java
-javac ReverseWords.java
+javac CaesarCipher.java
 ```
 To run
 ```java
-java ReverseWords
+java CaesarCipher
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-096/ziameraj16/java$ javac ReverseWords.java
-/perlweeklychallenge-club/challenge-096/ziameraj16/java$ java ReverseWords
-Enter the string
-    Perl and   Raku are  part of the same family
-Reversed string is: family same the of part are Raku and Perl
-/perlweeklychallenge-club/challenge-096/ziameraj16/java$
+/perlweeklychallenge-club/challenge-097/ziameraj16/java$ javac CaesarCipher.java
+/perlweeklychallenge-club/challenge-097/ziameraj16/java$ java CaesarCipher
+Enter a string
+THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
+Enter offset
+3
+Output: QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD
 ```
-## Edit Distance
-To compile the code run
-```java
-javac EditDistance.java
-```
-To run
-```java
-java EditDistance
-```
-### Example
-```bash
-/perlweeklychallenge-club/challenge-096/ziameraj16/java$ vi EditDistance.java
-/perlweeklychallenge-club/challenge-096/ziameraj16/java$ javac EditDistance.java
-/perlweeklychallenge-club/challenge-096/ziameraj16/java$ java EditDistance
-Enter first word
-kitten
-Enter second word
-sitting
-Output: 3
-```
-
-# Kotlin Solution
-## Reverse Words
-```bash
-/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$ kotlinc ReverseWordsKotlin.kt
-/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$ kotlin ReverseWordsKotlin
-Enter the string
-    Perl and   Raku are  part of the same family
-Reversed string is: family same the of part are Raku and Perl
-/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$
-```
-## Edit Distance
-```bash
-/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$ kotlinc EditDistanceKotlin.kt
-/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$ kotlin EditDistanceKotlin
-Enter first word
-sunday
-Enter second word
-monday
-Output: 2
-/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$
-```
-
