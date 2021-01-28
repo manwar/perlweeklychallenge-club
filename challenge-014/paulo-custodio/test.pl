@@ -39,6 +39,7 @@ Victoria = VIRGIN ISLANDS + CONNECTICUT + OREGON + IOWA
 Vineland = VIRGIN ISLANDS + NEBRASKA + LOUISIANA + NORTH DAKOTA
 END
 
+unlink "words.txt";
 done_testing;
 
 

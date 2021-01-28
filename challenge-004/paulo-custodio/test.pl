@@ -30,6 +30,7 @@ word
 END
 
 
+unlink "words.txt";
 done_testing;
 
 sub capture {
