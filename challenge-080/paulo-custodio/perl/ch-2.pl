@@ -2,7 +2,7 @@
 
 # Challenge 081
 #
-# TASK #2 › Count Candies
+# TASK #2 â€º Count Candies
 # Submitted by: Mohammad S Anwar
 # You are given rankings of @N candidates.
 #
@@ -41,7 +41,7 @@ sub candies {
 }
 
 sub sum {
-    my($sum, @a) = @_;
-    $sum += $_ for @a;
-    return $sum;
+	my($sum, @a) = @_;
+	$sum += $_ for @a;
+	return $sum;
 }

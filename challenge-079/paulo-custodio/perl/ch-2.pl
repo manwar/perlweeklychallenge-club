@@ -72,15 +72,15 @@ sub draw_hist {
 }
 
 sub max {
-    my($max, @a) = @_;
-    for (@a) {
-        $max = $_ if $max < $_;
-    }
-    return $max;
+	my($max, @a) = @_;
+	for (@a) {
+		$max = $_ if $max < $_;
+	}
+	return $max;
 }
 
 sub sum {
-    my($sum, @a) = @_;
-    $sum += $_ for @a;
-    return $sum;
+	my($sum, @a) = @_;
+	$sum += $_ for @a;
+	return $sum;
 }

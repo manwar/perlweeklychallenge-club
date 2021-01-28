@@ -85,19 +85,19 @@ sub jaro_winkler_distance {
 }
 
 sub min {
-    my($min, @a) = @_;
-    for (@a) {
-        $min = $_ if $min > $_;
-    }
-    return $min;
+	my($min, @a) = @_;
+	for (@a) {
+		$min = $_ if $min > $_;
+	}
+	return $min;
 }
 
 sub max {
-    my($max, @a) = @_;
-    for (@a) {
-        $max = $_ if $max < $_;
-    }
-    return $max;
+	my($max, @a) = @_;
+	for (@a) {
+		$max = $_ if $max < $_;
+	}
+	return $max;
 }
 
 

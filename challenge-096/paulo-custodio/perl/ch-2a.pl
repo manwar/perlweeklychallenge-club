@@ -59,9 +59,9 @@ sub lev_dist {
 }
 
 sub min {
-    my($min, @a) = @_;
-    for (@a) {
-        $min = $_ if $min > $_;
-    }
-    return $min;
+	my($min, @a) = @_;
+	for (@a) {
+		$min = $_ if $min > $_;
+	}
+	return $min;
 }
