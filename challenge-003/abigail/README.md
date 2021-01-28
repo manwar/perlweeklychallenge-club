@@ -41,4 +41,5 @@ rows from the command line. The Pascal Triangle should have at least
 * [AWK](awk/ch-2.awk)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
+* [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
