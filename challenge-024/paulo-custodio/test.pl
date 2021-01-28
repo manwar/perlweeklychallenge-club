@@ -49,6 +49,11 @@ imagination  The Raven.txt
 END
 
 
+unlink "index.db3",
+       'The Masque of the Red Death.txt',
+       'The Fall of the House of Usher.txt',
+       'The Cask of Amontillado.txt',
+       'The Raven.txt';
 done_testing;
 
 sub capture {
