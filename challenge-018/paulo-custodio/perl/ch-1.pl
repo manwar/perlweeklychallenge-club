@@ -43,7 +43,7 @@ sub longest_substr {
 }
 
 sub all {
-	my($sub, @a) = @_;
-	for (@a) { return if !$sub->($_); }
-	return 1;
+    my($sub, @a) = @_;
+    for (@a) { return if !$sub->($_); }
+    return 1;
 }
