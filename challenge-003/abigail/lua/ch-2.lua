@@ -8,17 +8,19 @@
 -- Run as: lua ch-2.lua < input-file
 --
 
---
--- Create and print row 0
---
-local row = {1}
-print "1"
 
 --
 -- Iterate over the input
 --
 for line in io . lines () do
     local rows = tonumber (line)
+
+    --
+    -- Create and print row 0
+    --
+    local row = {1}
+    print "1"
+
     local r
     for r = 1, rows do
         -- 
