@@ -5,7 +5,7 @@
 #
  
 #
-# Run as: ruby ch-1.rb < input-file
+# Run as: ruby ch-2.rb < input-file
 #
 
 ARGF . each_line do |_|
