@@ -7,6 +7,7 @@ of your script. Say, if your script size is `10`, it should print
 `3.141592653`.
 
 ### Solutions
+* [Perl](perl/ch-1.pl)
 
 
 ## [Challenge 2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-004/#challenge-2)
