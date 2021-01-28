@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env python
 
 # Challenge 001
 #
@@ -7,9 +7,7 @@
 # ‘Perl Weekly Challenge’. Also print the number of times the character ‘e’
 # is found in the string.
 
-use strict;
-use warnings;
-use 5.030;
+import sys
 
-my $s = @ARGV ? "@ARGV" : "Perl Weekly Challenge";
-say(($s =~ tr/e/E/), " ", $s);
+str = " ".join(sys.argv[1:])
+print(str.count('e'), str.replace('e', 'E'))

@@ -5,10 +5,30 @@ use warnings;
 use Test::More;
 use 5.030;
 
-is capture("perl perl/ch-1.pl"),        "5 PErl WEEkly ChallEngE\n";
-is capture("gforth forth/ch-1.fs"),     "5 PErl WEEkly ChallEngE\n";
+my $LUA = ($^O eq 'msys') ? "lua.exe" : "lua";
 
-my $expected = <<END;
+run("gcc     c/ch-1.c   -o     c/ch-1");
+run("g++   cpp/ch-1.cpp -o   cpp/ch-1");
+run("fbc basic/ch-1.bas -o basic/ch-1");
+
+for (["Perl Weekly Challenge" => "5 PErl WEEkly ChallEngE"],
+     ["Champion"              => "0 Champion"]) {
+    my($in, $out) = @$_;
+
+    is capture(     "$LUA lua/ch-1.lua $in"), "$out\n";
+    is capture(    "perl perl/ch-1.pl  $in"), "$out\n";
+    is capture( "gforth forth/ch-1.fs  $in"), "$out\n";
+    is capture("python python/ch-1.py  $in"), "$out\n";
+    is capture(            "c/ch-1     $in"), "$out\n";
+    is capture(          "cpp/ch-1     $in"), "$out\n";
+    is capture(        "basic/ch-1     $in"), "$out\n";
+}
+
+run("gcc     c/ch-2.c   -o     c/ch-2");
+run("g++   cpp/ch-2.cpp -o   cpp/ch-2");
+run("fbc basic/ch-2.bas -o basic/ch-2");
+
+for ([20 => <<END]) {
 1
 2
 fizz
@@ -30,10 +50,16 @@ fizz
 19
 buzz
 END
+    my($in, $out) = @$_;
 
-is capture("perl perl/ch-2.pl"), $expected;
-is capture("gforth forth/ch-2.fs"), $expected;
-
+    is capture(     "$LUA lua/ch-2.lua $in"), $out;
+    is capture(    "perl perl/ch-2.pl  $in"), $out;
+    is capture( "gforth forth/ch-2.fs  $in"), $out;
+    is capture("python python/ch-2.py  $in"), $out;
+    is capture(            "c/ch-2     $in"), $out;
+    is capture(          "cpp/ch-2     $in"), $out;
+    is capture(        "basic/ch-2     $in"), $out;
+}
 
 done_testing;
 
@@ -42,4 +68,9 @@ sub capture {
     my $out = `$cmd`;
     $out =~ s/[ \t\v\f\r]*\n/\n/g;
     return $out;
+}
+
+sub run {
+    my($cmd) = @_;
+    ok 0==system($cmd), $cmd;
 }
