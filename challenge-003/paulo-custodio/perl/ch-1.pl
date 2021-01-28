@@ -3,12 +3,21 @@
 # Challenge 003
 #
 # Challenge #1
-# Create a script to generate 5-smooth numbers, whose prime divisors are less or equal to 5. They are also called Hamming/Regular/Ugly numbers. For more information, please check this wikipedia.
+# Create a script to generate 5-smooth numbers, whose prime divisors are less
+# or equal to 5. They are also called Hamming/Regular/Ugly numbers. For more
+# information, please check this wikipedia.
 
 use strict;
 use warnings;
 use 5.030;
-use List::Util 'min';
+
+sub min {
+    my($min, @a) = @_;
+    for (@a) {
+        $min = $_ if $min > $_;
+    }
+    return $min;
+}
 
 # return an iterator to generate the sequence
 # the sequence is a merge of all multiples of 2, 3 and 5

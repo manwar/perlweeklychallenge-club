@@ -2,7 +2,7 @@
 
 # Challenge 081
 #
-# TASK #2 › Count Candies
+# TASK #2 â€º Count Candies
 # Submitted by: Mohammad S Anwar
 # You are given rankings of @N candidates.
 #
