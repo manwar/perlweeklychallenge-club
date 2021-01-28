@@ -22,6 +22,7 @@ and `n2 = 2^i2 * 3^j2 * 5^k2`, then `n1` is generated before `n2`, iff
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [bc](bc/ch-1.bc)
 * [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
