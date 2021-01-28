@@ -33,14 +33,14 @@ use 5.030;
     sub pop     { my($self) = @_;       pop  @$self; }
     sub top     { my($self) = @_;       return $self->[-1]; }
     sub min     { my($self) = @_;       return min_(@$self); }
-	
-	sub min_ {
-		my($min, @a) = @_;
-		for (@a) {
-			$min = $_ if $min > $_;
-		}
-		return $min;
-	}
+
+    sub min_ {
+        my($min, @a) = @_;
+        for (@a) {
+            $min = $_ if $min > $_;
+        }
+        return $min;
+    }
 }
 
 my $stack = Stack->new;

@@ -51,5 +51,3 @@ sub scan_base {
     $n = -$n if $negative;
     return $n;
 }
-
-

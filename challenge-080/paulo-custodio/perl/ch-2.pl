@@ -41,7 +41,7 @@ sub candies {
 }
 
 sub sum {
-	my($sum, @a) = @_;
-	$sum += $_ for @a;
-	return $sum;
+    my($sum, @a) = @_;
+    $sum += $_ for @a;
+    return $sum;
 }

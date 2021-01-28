@@ -47,4 +47,3 @@ function bit_flips(bits, n)
 end
 
 io.write(bit_flips(arg[1], arg[2]),"\n")
-
