@@ -11,7 +11,6 @@
 use strict;
 use warnings;
 use 5.030;
-use List::Util 'max';
 
 sub center {
     my(@lines) = @_;
@@ -19,6 +18,15 @@ sub center {
     @lines = map {$_ = " " x (($max_len-length($_))/2) . $_} @lines;
     return @lines;
 }
+
+sub max {
+    my($max, @a) = @_;
+    for (@a) {
+        $max = $_ if $max < $_;
+    }
+    return $max;
+}
+
 
 my @lines = center(@ARGV);
 say join "\n", @lines;

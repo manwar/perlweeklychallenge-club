@@ -30,9 +30,6 @@
 use strict;
 use warnings;
 use 5.030;
-use List::Util 'min';
-
-use Data::Dump 'dump';
 
 wag_fis_dist(@ARGV);
 
@@ -111,4 +108,12 @@ sub wag_fis_dist {
             die $min_dir;
         }
     }
+}
+
+sub min {
+    my($min, @a) = @_;
+    for (@a) {
+        $min = $_ if $min > $_;
+    }
+    return $min;
 }

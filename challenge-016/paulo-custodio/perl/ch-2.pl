@@ -14,7 +14,6 @@
 #
 #     1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
 #     3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy
-use Data::Dump 'dump';
 
 use strict;
 use warnings;

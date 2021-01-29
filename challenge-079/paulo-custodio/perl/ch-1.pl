@@ -56,7 +56,6 @@
 use strict;
 use warnings;
 use 5.030;
-use List::Util 'sum';
 
 @ARGV==1 or die "Usage: ch-1.pl N\n";
 say(sum(map {bit_count($_)} 1..$ARGV[0])  % 1000000007);
@@ -69,4 +68,10 @@ sub bit_count {
         $n >>= 1;
     }
     return $count;
+}
+
+sub sum {
+    my($sum, @a) = @_;
+    $sum += $_ for @a;
+    return $sum;
 }

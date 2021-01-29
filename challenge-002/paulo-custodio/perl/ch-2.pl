@@ -3,26 +3,28 @@
 # Challenge 002
 #
 # Challenge #2
-# Write a script that can convert integers to and from a base35 representation, using the characters 0-9 and A-Y. Dave Jacoby came up with nice description about base35, in case you needed some background.
+# Write a script that can convert integers to and from a base35
+# representation, using the characters 0-9 and A-Y. Dave Jacoby came up
+# with nice description about base35, in case you needed some background.
 
 use strict;
 use warnings;
 use 5.030;
-use Getopt::Std;
 
 my @digits = ('0'..'9','A'..'Z');
 
 our $opt_r;
-(getopts('r') && @ARGV==1) or die "Usage: ch-2.pl [-r] number\n";
+($opt_r = 1, shift) if @ARGV && $ARGV[0] eq '-r';
+@ARGV==1 or die "Usage: ch-2.pl [-r] number\n";
 if ($opt_r) {
-    say scan_base($ARGV[0], 35);
+    say scan_number($ARGV[0], 35);
 }
 else {
-    say print_base($ARGV[0], 35);
+    say format_number($ARGV[0], 35);
 }
 
 
-sub print_base {
+sub format_number {
     my($n, $base) = @_;
     my $negative = ($n < 0);
     $n = abs($n);
@@ -36,7 +38,7 @@ sub print_base {
     return $output;
 }
 
-sub scan_base {
+sub scan_number {
     my($str, $base) = @_;
     my $n = 0;
     my $negative;
@@ -51,5 +53,3 @@ sub scan_base {
     $n = -$n if $negative;
     return $n;
 }
-
-

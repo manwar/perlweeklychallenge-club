@@ -15,8 +15,6 @@ use strict;
 use warnings;
 use 5.030;
 
-use Data::Dump 'dump';
-
 sub decode_triplets {
     my($hex) = @_;
     my $c = chr(hex($hex));

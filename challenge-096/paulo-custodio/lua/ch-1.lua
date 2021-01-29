@@ -24,7 +24,7 @@ for i=1,#arg do text = text..arg[i].." "; end
 -- spit by spaces, store in reverse order
 words = {}
 for word in string.gmatch(text, "([^%s]+)") do
-	table.insert(words, 1, word)
+    table.insert(words, 1, word)
 end
 
 io.write(table.concat(words, " "), "\n")
