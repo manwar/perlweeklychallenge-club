@@ -32,13 +32,12 @@ BEGIN {
 }
 
 {
-    split($0, letters, "")
     out = ""
     #
     # Iterate over the individual letters, shifting capital letters
     #
     for (i = 1; i <= length (letters); i ++) {
-        char = letters [i]
+        char = substr ($0, i, 1)
         if (ord [char]) {
             n = ord [char] - shift
             if (n < ORD_A) {
