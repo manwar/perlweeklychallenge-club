@@ -17,16 +17,23 @@ use experimental 'lexical_subs';
 # Run as: perl ch-1.pl -s SHIFT < input-file
 #
 
+my $NR_OF_LETTERS = 26;
+my $ORD_A         = ord ('A');
+
 use Getopt::Long;
 
 GetOptions 's=i'  =>  \my $shift;
 
-die "-s option required" unless defined $shift;
+die "-s SHIFT option required" unless defined $shift;
 
-$shift %= 26;
+$shift %= $NR_OF_LETTERS;
 
 while (<>) {
     chomp;
-    s/([A-Z])/my $ch = ord ($1) - $shift; $ch += 26 if $ch < 65; chr $ch/eg;
+    s {([A-Z])}
+      {   my $ch = ord ($1) - $shift;
+          $ch += $NR_OF_LETTERS if $ch < $ORD_A;
+          chr $ch
+      }eg;
     say;
 }
