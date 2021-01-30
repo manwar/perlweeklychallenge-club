@@ -34,6 +34,7 @@ to indicate the left shift.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Perl Weekly Challenge 97: Ceasar Cipher](https://wp.me/pcxd30-nW)
 
 
 ## [Binary Substrings](https://perlweeklychallenge.org/blog/perl-weekly-challenge-097/#TASK2)
