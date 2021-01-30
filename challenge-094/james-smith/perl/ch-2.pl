@@ -10,12 +10,12 @@ use Tree;
 
 my $x = Tree->new(1)->add_child(
           Tree->new(2)->add_child(
-            Tree->new(4)->add_child(
-              Tree->new(5)->add_child(
-                Tree->new(6)
-              )->add_child(
-                Tree->new(7)
-              )
+            Tree->new(4)
+          )->add_child(
+            Tree->new(5)->add_child(
+              Tree->new(6)
+            )->add_child(
+              Tree->new(7)
             )
           )
         )->add_child(
