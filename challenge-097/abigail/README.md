@@ -96,3 +96,4 @@ of a section.
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
+[Perl Weekly Challenge 97: Binary Substrings](https://wp.me/pcxd30-pi)
