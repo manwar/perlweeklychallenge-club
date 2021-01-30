@@ -30,6 +30,9 @@ die "-s option required" unless defined $sections && $sections > 0;
 # is as position $j * $s_len + $i, where $s_len is the length
 # of a section.
 #
+# (We'll just split into substring, and then ignore them, just to
+#  satisfy the condition).
+#
 # To calculate the minimum number of flips, for each position $i, we
 # calculate the number of 0s there are on the $i-th positions of
 # each section. Given the number of 0s, we can calculate the number
@@ -44,6 +47,11 @@ die "-s option required" unless defined $sections && $sections > 0;
 while (<>) {
     chomp;
     my $s_len = length () / $sections;
+    {
+        # Split into substrings, then ignore them as they aren't needed.
+        my $pat = ".{$s_len}";
+        my @substrings = /$pat/g;
+    }
     my $sum = 0;
     for my $i (0 .. $s_len - 1) {
         my $zeros = 0;
