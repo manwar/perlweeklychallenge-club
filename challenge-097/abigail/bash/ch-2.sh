@@ -5,7 +5,7 @@
 #
 
 #
-# Run as: bash ch-2.sh -s SECTIONS < input-file
+# Run as: bash ch-2.sh -s SIZE < input-file
 #
 
 #
@@ -18,7 +18,7 @@ set -f
 #
 while getopts "s:" name
 do  if [ "$name" = "s" ]
-    then sections=$OPTARG
+    then size=$OPTARG
     fi
 done
 
@@ -28,12 +28,12 @@ done
 # and calculate the number of 1s. Sum the minimum of those numbers.
 #
 while read line
-do    s_len=$((${#line} / $sections))
+do    sections=$((${#line} / $size))
       sum=0
-      for ((i = 0; i < s_len; i ++))
+      for ((i = 0; i < size; i ++))
       do   zeros=0
            for ((j = 0; j < sections; j ++))
-           do    index=$(($j * $s_len + $i))
+           do    index=$(($j * $size + $i))
                  if   [ "${line:$index:1}" == "0" ]
                  then zeros=$(($zeros + 1))
                  fi

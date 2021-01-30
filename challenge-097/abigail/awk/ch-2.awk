@@ -5,7 +5,7 @@
 #
 
 #
-# Run as: awk -f ch-2.awk -s SECTIONS < input-file
+# Run as: awk -f ch-2.awk -s SIZE < input-file
 #
 
 BEGIN {
@@ -14,7 +14,7 @@ BEGIN {
     #
     for (i = 1; i < ARGC; i ++) {
         if (ARGV [i] == "-s") {
-            sections = ARGV [i + 1]
+            size = ARGV [i + 1]
         }
     }
     ARGC = 0
@@ -26,11 +26,11 @@ BEGIN {
     # indexing to get the ith letter of the jth section
     #
     sum = 0
-    s_len = length ($0) / sections  # Length of a section
-    for (i = 0; i < s_len; i ++) {
+    sections = length ($0) / size
+    for (i = 0; i < size; i ++) {
         zeros = 0;    # Count the zeros on position i
         for (j = 0; j < sections; j ++) {
-            indx = j * s_len + i + 1     # Can't use 'index' as a variable
+            indx = j * size + i + 1     # Can't use 'index' as a variable
             if (substr ($0, indx, 1) == "0") {
                 zeros ++
             }
