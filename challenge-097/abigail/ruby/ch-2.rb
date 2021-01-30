@@ -5,22 +5,19 @@
 #
  
 #
-# Run as: ruby ch-2.rb -s SECTIONS < input-file
+# Run as: ruby ch-2.rb -s SIZE < input-file
 #
 
 require 'optparse'
 
-NR_OF_LETTERS = 26
-
-
 #
 # Parse and validate options
 #
-params   = ARGV . getopts ('s:')
-sections = params ["s"] ? params ["s"] . to_i : -1
+params = ARGV . getopts ('s:')
+size   = params ["s"] ? params ["s"] . to_i : -1
 
-if sections < 0
-    STDERR . puts "Requires a -s SECTIONS option"
+if size < 0
+    STDERR . puts "Requires a -s SIZE option"
     exit 1
 end
 
@@ -30,12 +27,12 @@ end
 # and calculate the number of 1s. Sum the minimum of those numbers.
 #
 ARGF . each_line do |line|
-     s_len = (line . length - 1) / sections
+     sections = (line . length - 1) / size
      sum = 0
-     for i in 0 .. s_len - 1 do
+     for i in 0 .. size - 1 do
          zeros = 0
          for j in 0 .. sections - 1 do
-             index = j * s_len + i
+             index = j * size + i
              if   line [index, 1] == "0"
              then zeros += 1
              end

@@ -5,7 +5,7 @@
 //
 
 //
-// Run as: node ch-2.js -s SECTIONS < input-file
+// Run as: node ch-2.js -s SIZE < input-file
 //
 
 const NR_OF_LETTERS = 26
@@ -20,7 +20,7 @@ const argv = require ('yargs')
 . demandOption ('s')
 . argv;
 
-const sections = argv . s
+const size = argv . s
 
 //
 // Iterate over the input
@@ -28,18 +28,18 @@ const sections = argv . s
 require ('readline')
 . createInterface ({input: process . stdin})   
 . on ('line', _ => {
-    let sum   = 0
-    let s_len = _ . length / sections  // Length of a segment
+    let sum      = 0
+    let sections = _ . length / size
     //
     // Iterate over the positions
     //
-    for (let i = 0; i < s_len; i ++) {
+    for (let i = 0; i < size; i ++) {
         //
         // Count the number of zeros in a specific position
         //
         let zeros = 0
         for (let j = 0; j < sections; j ++) {
-            let index = j * s_len + i;
+            let index = j * size + i;
             if  (_ . substring (index, index + 1) == "0") {
                 zeros ++
             }

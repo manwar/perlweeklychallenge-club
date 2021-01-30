@@ -5,7 +5,7 @@
 #
 
 #
-# Run as python ch-2.py -s SECTIONS < input-file
+# Run as python ch-2.py -s SIZE < input-file
 #
 
 import fileinput
@@ -15,16 +15,16 @@ import getopt
 #
 # Parse and validate options
 #
-shift = -1
+size = -1
 opts, args = getopt . getopt (sys . argv [1:], 's:')
 for opt, val in opts:
     if opt == "-s":
-        sections = int (val)
+        size = int (val)
 
 sys . argv [1:] = []
 
-if sections < 0:
-    sys . stderr . write ("Argument -s SECTIONS is required\n")
+if size < 0:
+    sys . stderr . write ("Argument -s SIZE is required\n")
     sys . exit (1)
 
 #
@@ -32,12 +32,12 @@ if sections < 0:
 # and calculate the number of 1s. Sum the minimum of those numbers.
 #
 for line in fileinput . input ():
-    s_len = len (line) / sections
+    sections = len (line) / size
     sum = 0
-    for i in range (s_len):
+    for i in range (size):
         zeros = 0
         for j in range (sections):
-            index = j * s_len + i
+            index = j * size + i
             if line [index : index + 1] == "0":
                 zeros += 1
         ones = sections - zeros

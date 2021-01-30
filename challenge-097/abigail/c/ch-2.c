@@ -9,7 +9,7 @@
  */
 
 /*
- * Run as: cc -o ch-2.o ch-2.c; ./ch-2.o -s SECTIONS < input-file
+ * Run as: cc -o ch-2.o ch-2.c; ./ch-2.o -s SIZE < input-file
  */
 
 int main (int argc, char ** argv) {
@@ -17,28 +17,28 @@ int main (int argc, char ** argv) {
     size_t  len      = 0;
     size_t  strlen;
     int     ch;
-    int     sections = -1;
+    int     size = -1;
 
     while ((ch = getopt (argc, argv, "s:")) != -1) {
         switch (ch) {
             case 's':
-                sections = atoi (optarg);
+                size = atoi (optarg);
                 break;
         }
     }
-    if (sections < 0) {
-        fprintf (stderr, "Requires an -s SECTIONS parameter\n");
+    if (size < 0) {
+        fprintf (stderr, "Requires an -s SIZE parameter\n");
         exit (1);
     }
 
     while ((strlen = getline (&line, &len, stdin)) != -1) {
         strlen --;                      /* We don't care about the newline */
-        int s_len = strlen / sections;  /* Section length                  */
+        int sections = strlen / size; 
         int sum = 0;
-        for (int i = 0; i < s_len; i ++) {
+        for (int i = 0; i < size; i ++) {
             int zeros = 0;
             for (int j = 0; j < sections; j ++) {
-                int index = j * s_len + i;
+                int index = j * size + i;
                 if (line [index] == '0') {
                     zeros ++;
                 }
