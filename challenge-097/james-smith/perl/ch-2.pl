@@ -71,14 +71,15 @@ done_testing();
 ##        just have to have the same length as our original string -
 ##        by performing a perl "string multiplication" x
 ##
-##    * map { [ $_->[0], ( $_[0] ^ $_->[1] ) =~ y/\x01/\x01/ ] } -
+##    * map { [ $_->[0], ( $_[0] ^ $_->[1] ) =~ y/\1/\1/ ] } -
 ##        count the flips. Two perlisms here - we can use xor operator
 ##        ^ on strings to xor the binary values of each string.
 ##        y/../../ - the translate operator returns the number of
 ##        substitutions it makes - in this case we are substituting
 ##        the ASCII character with decimal a hex value of "01"... when
-##        the strings are same the byte value of the xor is 0 or "\x00"
-##        and when they are different the value is 1 or "\x01"
+##        the strings are same the byte value of the xor is 0 or as
+##        a character "\0" and when they are different the value is 1
+##        or as a characther "\1"
 ##
 ##    * map { $/ = !$_->[0] || $_->[1] < $/ ? $_->[1] : $/ } - finally
 ##        we keep the running total of the minimum value - Now this is
@@ -95,32 +96,41 @@ done_testing();
 ##
 ##  * And we return this value.
 
+
 sub min_flips {
   ## Golf mode on...
-  return[
+  [
     local$/,
     local$\=length($_[0])/$_[1],
     map{$/=!$_->[0]||$_->[1]<$/?$_->[1]:$/}
-    map{[$_->[0],($_[0]^$_->[1])=~y/\x01/\x01/]}
+    map{[$_->[0],($_[0]^$_->[1])=~y/\1/\1/]}
     map{[$_->[0],$_->[1]x$\]}
     map{[$_,substr$_[0],$_,$_[1]]}
     map{$_*$_[1]}
     0..$\-1
-  ]->[-1];
+  ]->[-1]
 }
+
+## Now as a one liner [all 213 cha....
+
+sub mf_1{[local$/,local$\=length($_[0])/$_[1],map{$/=!$_->[0]||$_->[1]<$/?$_->[1]:$/}map{[$_->[0],($_[0]^$_->[1])=~y/\1/\1/]}map{[$_->[0],$_->[1]x$\]}map{[$_,substr$_[0],$_,$_[1]]}map{$_*$_[1]}0..$\-1]->[-1]}
+
+sub mf_1wrap{[local$/,local$\=length($_[0])/$_[1],map{$/=!$_->[0]||$_->
+[1]<$/?$_->[1]:$/}map{[$_->[0],($_[0]^$_->[1])=~y/\1/\1/]}map{[$_->[0],
+$_->[1]x$\]}map{[$_,substr$_[0],$_,$_[1]]}map{$_*$_[1]}0..$\-1]->[-1]}
 
 ## With the white space back in..
 
 sub min_flips_more_readable {
   return [
-    local $/,
-    local $\= length($_[0]) / $_[1],
+    local $/,                                            # Accumulator for min value
+    local $\ = length($_[0]) / $_[1],                    # No of blocks
 
-    map { $/ = !$_->[0] || $_->[1] < $/ ? $_->[1] : $/     }
-    map { [ $_->[0], ( $_[0] ^ $_->[1] ) =~ y/\x01/\x01/ ] }
-    map { [ $_->[0], $_->[1] x $\                        ] }
-    map { [ $_,      substr $_[0], $_, $_[1]             ] }
-    map { $_ * $_[1]                                       }
-    0 .. $\ - 1
-  ]->[-1];
+    map { $/ = !$_->[0] || $_->[1] < $/ ? $_->[1] : $/ } # Update min if first block OR value < min
+    map { [ $_->[0], ( $_[0] ^ $_->[1] ) =~ y/\1/\1/ ] } # Get number of flipped letters
+    map { [ $_->[0], $_->[1] x $\                    ] } # Repeat sub-block so same length as string
+    map { [ $_,      substr $_[0], $_, $_[1]         ] } # Get "nth" sub-block
+    map { $_ * $_[1]                                   } # Convert index to start location
+    0 .. $\ - 1                                          # Block indexes...
+  ]->[ -1 ];                                             # Get last value from list {minimum}
 }
