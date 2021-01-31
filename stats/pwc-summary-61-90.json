@@ -1,6 +1,7 @@
 {
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             3,
@@ -32,8 +33,7 @@
             1,
             11,
             81
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -71,7 +71,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -103,12 +102,20 @@
             0,
             0,
             5
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -144,8 +151,8 @@
          "Joelle Maslak"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-01-31 19:15:53 GMT"
    },
    "yAxis" : {
       "min" : 0,
@@ -153,15 +160,8 @@
          "text" : ""
       }
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-01-31 19:11:44 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    }
 }
