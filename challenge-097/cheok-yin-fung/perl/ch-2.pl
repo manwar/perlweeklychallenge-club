@@ -30,20 +30,17 @@ for my $str (@substring) {
     }
 }
 
-my $votingresult = '';
 my $num_of_filps = 0;
 
 for my $i (0..$S-1) {
     my $partial_result = 0;
     if ( $voting[$i] > ( ($num_of_substrings-1)/2 ) ) {
-        $partial_result = 1; 
         $num_of_filps += $num_of_substrings - $voting[$i];
     } 
     else {
         $num_of_filps += $voting[$i];
     }    
 
-    $votingresult .= $partial_result; 
 }
 
 print "Number of Filps: ";
