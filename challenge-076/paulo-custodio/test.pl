@@ -26,7 +26,7 @@ is capture("perl perl/ch-2.pl grid.txt words.txt"), <<END;
 aimed, align, antes, arose, ashed, blunt, blunts, broad, buries, clove, cloven, constitution, constitutions, croon, depart, departed, enter, filch, garlic, goats, grieve, grieves, hazard, liens, malign, malignant, malls, midst, ought, ovary, parted, pudgiest, quash, quashed, raped, ruses, shrine, shrines, social, socializing, spasm, spasmodic, succor, succors, theorem, theorems, virus, viruses, wigged
 END
 
-
+unlink "words.txt";
 done_testing;
 
 sub capture {

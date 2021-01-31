@@ -17,8 +17,6 @@ use strict;
 use warnings;
 use 5.030;
 
-use Data::Dump 'dump';
-
 # extract a common prefix, if one exists
 sub extract_common_prefix {
     my($paths) = @_;

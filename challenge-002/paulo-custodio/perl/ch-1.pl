@@ -10,5 +10,5 @@ use warnings;
 use 5.030;
 
 my($N) = @ARGV;
-$N =~ s/^0+//;
+$N =~ s/^0+(\d)/$1/;
 say $N;

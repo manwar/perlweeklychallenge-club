@@ -19,8 +19,6 @@ use warnings;
 use 5.030;
 use Locale::US;
 
-use Data::Dump 'dump';
-
 my $u = Locale::US->new;
 my @codes = $u->all_state_codes;        # all states two letter codes
 my $codes = join("|", @codes);          # regex to match any codes

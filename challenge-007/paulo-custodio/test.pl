@@ -50,6 +50,7 @@ END
     is capture("python python/ch-2.py $in"), $out;
 }
 
+unlink "words.txt";
 done_testing;
 
 sub capture {

@@ -9,10 +9,6 @@
 use strict;
 use warnings;
 use 5.030;
-use List::Util 'max', 'min';
-
-
-use Data::Dump 'dump';
 
 sub jaro_similarity {
     my($s1, $s2) = @_;
@@ -87,5 +83,22 @@ sub jaro_winkler_distance {
     my($s1, $s2) = @_;
     return 1-jaro_winkler_similarity($s1,$s2);
 }
+
+sub min {
+    my($min, @a) = @_;
+    for (@a) {
+        $min = $_ if $min > $_;
+    }
+    return $min;
+}
+
+sub max {
+    my($max, @a) = @_;
+    for (@a) {
+        $max = $_ if $max < $_;
+    }
+    return $max;
+}
+
 
 say jaro_winkler_distance(@ARGV);

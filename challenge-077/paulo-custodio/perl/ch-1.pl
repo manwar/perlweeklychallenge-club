@@ -28,7 +28,6 @@ use strict;
 use warnings;
 use 5.030;
 use Math::Combinatorics;
-use List::Util 'sum';
 
 my($N) = shift;
 
@@ -58,4 +57,10 @@ sub compute_fib {
     while ($fib[-1] < $target) {
         push @fib, $fib[-1]+$fib[-2];
     }
+}
+
+sub sum {
+    my($sum, @a) = @_;
+    $sum += $_ for @a;
+    return $sum;
 }

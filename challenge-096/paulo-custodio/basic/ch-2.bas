@@ -84,7 +84,9 @@ sub wag_fish_dist(a as string, b as string)
         ' search shortest path in priority SE, E, S
         if i < len(a) and j < len(b) then
             dr = SE: delta = d(i+1,j+1) - d(i,j)
-            min_dr = dr: min_delta = delta
+            if delta < min_delta then
+                min_dr = dr: min_delta = delta
+            end if
         end if
         if j < len(b) then
             dr = E: delta = d(i,j+1) - d(i,j)

@@ -2,7 +2,7 @@
 
 # Challenge 081
 #
-# TASK #2 › Count Candies
+# TASK #2 â€º Count Candies
 # Submitted by: Mohammad S Anwar
 # You are given rankings of @N candidates.
 #
@@ -26,7 +26,6 @@
 use strict;
 use warnings;
 use 5.030;
-use List::Util 'sum';
 
 say candies(@ARGV);
 
@@ -39,4 +38,10 @@ sub candies {
         $candy[$i]++ if $N[$i] > ($i<$#N ? $N[$i+1] : $N[$i]);
     }
     return sum(@candy);
+}
+
+sub sum {
+    my($sum, @a) = @_;
+    $sum += $_ for @a;
+    return $sum;
 }
