@@ -10,7 +10,7 @@ s := stdin nextLine.
 
 "s := 'The Weekly Challenge'."
 parts := s substrings.
-parts := parts reverse copy. 
+parts := parts reverse. 
 
 t := parts first.
 parts := parts allButFirst.
