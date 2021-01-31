@@ -9,6 +9,7 @@
 //
 
 const NR_OF_LETTERS = 26
+const ORD_A         = "A" . charCodeAt (0)
 
 //
 // Parse input
@@ -28,7 +29,7 @@ const shift = argv . s
 function shift_char (char, shift) {
     if (char . match (/[A-Z]/)) {
         let n = char . charCodeAt (0) - (shift % NR_OF_LETTERS)
-        if (n < 65) {
+        if (n < ORD_A) {
            n = n + NR_OF_LETTERS
         }
         return String . fromCharCode (n)

@@ -1,5 +1,4 @@
 # Solution by Abigail
-
 ## [Ceasar Cipher](https://perlweeklychallenge.org/blog/perl-weekly-challenge-097/#TASK1)
 
 You are given string `$S` containing alphabets `A..Z` only and a number `$N`.
@@ -34,6 +33,7 @@ to indicate the left shift.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Perl Weekly Challenge 97: Ceasar Cipher](https://wp.me/pcxd30-nW)
 
 
 ## [Binary Substrings](https://perlweeklychallenge.org/blog/perl-weekly-challenge-097/#TASK2)
@@ -66,8 +66,8 @@ Binary Substrings:
 ~~~~
 
 ### Notes
-We will be reading the strings from STDIN. The number of sections
-will be passed in as an option: -s SECTIONS.
+We will be reading the strings from STDIN. The length of each sub string
+will be passed in as an option: -s SIZE.
 
 To calculate the mininim number of flips required, note that we
 can calculate the number of flips for each position independently;
@@ -96,3 +96,4 @@ of a section.
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
+[Perl Weekly Challenge 97: Binary Substrings](https://wp.me/pcxd30-pi)
