@@ -10,7 +10,7 @@ unit sub MAIN();
 # This script will read and print out itself by the number of characters
 # that you tell it to until it's stopped or runs out of text.
 
-# Note that characters include Uncide ones like £€æßðđŋŧ¶«»¢“”ŋŧ←ħ
+# Note that characters include Unicode ones like £€æßðđŋŧ¶«»¢“”ŋŧ←ħ
 # This is cool.
 
 # Get our filehandle. $?FILE is the current file so we open a read only handle to it.
