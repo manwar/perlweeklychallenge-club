@@ -13,7 +13,7 @@ unit sub MAIN();
 # Note that characters include Uncide ones like £€æßðđŋŧ¶«»¢“”ŋŧ←ħ
 # This is cool.
 
-# Get out filehandle
+# Get our filehandle. $?FILE is the current file so we open a read only handle to it.
 my $handle = $?FILE.IO.open( :r );
 
 # Give some opening sprawl
