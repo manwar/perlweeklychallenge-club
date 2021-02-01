@@ -22,7 +22,7 @@ say "Self referential code is fun right?";
 # While we have a truthy input
 while ( my $val = prompt( "How many characters should I print? " ) ) {
     my $rval = $val.Int();
-    if ( $rval ~~ $val ) {
+    if ( $rval && $rval ~~ $val ) {
         if ( $rval < 0 ) {
             if ( $handle.tell() >= $rval.abs ) {
                 $handle.seek($rval, SeekFromCurrent );
