@@ -21,26 +21,23 @@ say "Self referential code is fun right?";
 
 # While we have a truthy input
 while ( my $val = prompt( "How many characters should I print? " ) ) {
-    my $rval = $val.Int();
-    # If $rval couldn't be cast to an Int it's a Failure which is Boolean false
-    # If it was a number then we check it matches the value (to catch floating points).
-    if ( $rval && $rval ~~ $val ) {
+    if ( $val ~~ Int ) {
         # Allow for negative read back.
-        if ( $rval < 0 ) {
+        if ( $val < 0 ) {
             # If we would read back to beyond the start just reset it.
-            if ( $handle.tell() >= $rval.abs ) {
-                $handle.seek($rval, SeekFromCurrent );
+            if ( $handle.tell() >= $val.abs ) {
+                $handle.seek($val, SeekFromCurrent );
             } else {
                 $handle.seek(0, SeekFromBeginning );
             }
         }
-        my $res = $handle.readchars($rval.abs);
+        my $res = $handle.readchars($val.abs);
         # I thought about reading back displaying backwards but... not instead it
         # pulls the pointer back and rereads
         say $res;
         # If we got back less code points than we asked for (note not bytes)
         # we are done.
-        if $res.codes != $rval.abs {
+        if $res.codes != $val.abs {
             say "That's all folks";
             last;
         }
