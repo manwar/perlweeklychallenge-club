@@ -1,27 +1,24 @@
 #!raku
 
-
-sub MAIN( ) {
-    my @N = 1,2,3,4, 7;
-    my $N = 6;
-    say "Array { @N } searching for $N";
+# Get an array of integers, the last value is the need to search for
+# while all the other values are the array to search into.
+# For example:
+# ch-2.p6 1 2 3 7 8 9 5
+# means
+# @N = 1,2,3,7,8,9
+# $N = 5
+sub MAIN( *@values where { @values.grep: * ~~ Int } ) {
+    my @N = @values[0 .. *-2 ];
+    my $N = @values[ *-1 ];
+#    say "Array { @N } searching for $N";
 
     # get the index if the element is there
-    given @N.grep: $N, :k { .say && exit if $_ }
+    given @N.grep( $N, :k ).first { .say && exit if $_ }
 
-    # if here the element is not there
-    # for @N.List.kv -> $k, $v {
-    #     if ( $v > $N ) {
-    #         @N = |@N[ 0 .. $k - 1 ], $N, |@N[ $k .. * ];
-    #         "Insert value $N at index $k".say;
-    #     }
-    # }
-
-
-    given @N.grep: { $_ > $N }, :k {
+    # if here the key is not there, let's see where to insert
+    given @N.grep( { $_ >= $N }, :k ).first {
         @N = |@N[ 0 .. $_ - 1 ], $N, |@N[ $_ .. * ];
-        "Insert value $N at index $_".say;
-        exit;
+        .say && exit;
     }
 
 }
