@@ -17,7 +17,7 @@ sub insert_pos {
   my( $t, $l, $val ) = (0,@_);
 
   ## Repeat unless we have got to end of list or the new entry is greater than val
-  $t++ while ($t < @{$l}) && ($l->[$t] < $val);
+  $t++ while $t < @{$l} && $l->[$t] < $val;
 
   ## If we are after the end of the list (to avoid warning) OR
   ## If we haven't found the entry then we use splice to insert it
