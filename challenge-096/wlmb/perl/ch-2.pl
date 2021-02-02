@@ -2,7 +2,7 @@
 # Perl weekly challenge 096
 # Task 2: Edit distance.
 # Calculate the number of editions required to edit a string and convert it into another.
-# See https:/wlmb.github.io/2021/01/11/PWC096/#task-2-edit-distance
+# See https://wlmb.github.io/2021/01/11/PWC096/#task-2-edit-distance
 
   use warnings;
   use strict;

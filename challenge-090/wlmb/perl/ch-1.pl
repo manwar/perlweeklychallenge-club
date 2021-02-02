@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # For sequences of DNA get nucleotide counts and its complement
-# See https:/wlmb.github.io/2020/12/07/PWC90/#task-1-dna-sequence
+# See https://wlmb.github.io/2020/12/07/PWC90/#task-1-dna-sequence
 use strict;
 use warnings;
 use v5.10;

@@ -2,7 +2,7 @@
 # Perl weekly challenge 097
 # Task 1: Binary substrings
 #
-# See https:/wlmb.github.io/2021/01/25/PWC097/#task-2-binary-substrings
+# See https://wlmb.github.io/2021/01/25/PWC097/#task-2-binary-substrings
 use warnings;
 use strict;
 use v5.12;

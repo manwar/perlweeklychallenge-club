@@ -3,7 +3,7 @@
 # Task 1: Reverse words
 # Print words in reverse order separated by one space
 # Remove all non-word characters
-# See https:/wlmb.github.io/2021/01/18/PWC096/#task-1-reverse-words
+# See https://wlmb.github.io/2021/01/18/PWC096/#task-1-reverse-words
 
 use warnings;
 use strict;
