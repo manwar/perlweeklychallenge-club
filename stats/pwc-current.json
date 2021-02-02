@@ -1,19 +1,33 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Dave Cross",
+            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Dave Cross"
+            "name" : "Dave Cross"
          },
          {
-            "name" : "Dave Jacoby",
             "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -41,13 +55,13 @@
          },
          {
             "name" : "Gustavo Chaves",
-            "id" : "Gustavo Chaves",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Gustavo Chaves"
          },
          {
             "name" : "James Smith",
@@ -74,24 +88,38 @@
             "id" : "Luca Ferrari"
          },
          {
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "id" : "Mark Anderson"
          },
          {
             "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Stuart Little",
+            "id" : "Stuart Little"
          }
       ]
    },
@@ -99,82 +127,73 @@
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 098"
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2021-02-02 09:18:12 GMT"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 098",
          "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 098",
          "data" : [
             {
                "drilldown" : "Dave Cross",
-               "name" : "Dave Cross",
-               "y" : 2
+               "y" : 2,
+               "name" : "Dave Cross"
             },
             {
-               "y" : 3,
                "drilldown" : "Dave Jacoby",
+               "y" : 3,
                "name" : "Dave Jacoby"
             },
             {
+               "name" : "Flavio Poletti",
                "drilldown" : "Flavio Poletti",
-               "y" : 4,
-               "name" : "Flavio Poletti"
-            },
-            {
-               "name" : "Gustavo Chaves",
-               "drilldown" : "Gustavo Chaves",
-               "y" : 2
-            },
-            {
-               "drilldown" : "James Smith",
-               "y" : 2,
-               "name" : "James Smith"
-            },
-            {
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
                "y" : 4
             },
             {
                "y" : 2,
+               "drilldown" : "Gustavo Chaves",
+               "name" : "Gustavo Chaves"
+            },
+            {
+               "name" : "James Smith",
+               "y" : 2,
+               "drilldown" : "James Smith"
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "y" : 4,
+               "name" : "Luca Ferrari"
+            },
+            {
                "drilldown" : "Mark Anderson",
+               "y" : 2,
                "name" : "Mark Anderson"
             },
             {
-               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
                "y" : 2,
-               "name" : "Simon Proctor"
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "name" : "Stuart Little",
+               "drilldown" : "Stuart Little",
+               "y" : 4
             }
          ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2021-02-02 09:13:31 GMT"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
