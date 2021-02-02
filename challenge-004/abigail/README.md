@@ -6,6 +6,20 @@ Write a script to output the same number of PI digits as the size
 of your script. Say, if your script size is `10`, it should print
 `3.141592653`.
 
+### Notes
+We're going to encode the digits (after the decimal dot) in groups
+of 9 in base-91. 9 base-10 digits need 5 base-91 digits. We represent
+the base-91 digits as ASCII characters, from '#' (0) to '~' (90).
+Now, '#' to '~' covers a range of 92; however, when encoding, we
+will be skipping '\'. Choosing a range from '#' to '~' while skipping
+'\' means we can easily use this in double quoted strings (for languages
+which don't do interpolation).
+
+This gives a reduction of 44% (9 decimals encoded in 5 characters). By 
+using 3242 digits of Pi, we decidate 1800 characters to the encoding
+of Pi, which gives us plenty of room to write code to do the decoding
+and printing. We may even need to filler comments to make it all work out.
+
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [C](c/ch-1.c)
