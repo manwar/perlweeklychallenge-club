@@ -2,7 +2,7 @@
 # Perl weekly challenge 095
 # Task 2: Demo stack.
 # Demonstrate Stack operations.
-# See https:/wlmb.github.io/2021/01/11/PWC95/#task-2-demo-stack
+# See https://wlmb.github.io/2021/01/11/PWC95/#task-2-demo-stack
 package Stack;
 use List::Util;
 use v5.12;

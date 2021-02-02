@@ -2,7 +2,7 @@
 # Perl weekly challenge 098
 # Task 1: Read N characters
 #
-# See https:/wlmb.github.io/2021/02/01/PWC098/#task-1-read-n-characters
+# See https://wlmb.github.io/2021/02/01/PWC098/#task-1-read-n-characters
 use warnings;
 use strict;
 use v5.12;
