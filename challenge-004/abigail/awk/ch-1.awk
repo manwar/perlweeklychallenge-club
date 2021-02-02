@@ -9,39 +9,66 @@
 #
 
 BEGIN {
-    for (o = 35; o < 35 + 60; o ++) {
+    for (o = 0; o <= 127; o ++) {
         c = sprintf ("%c", o)
-        ord [c] = o - 35
+        ord [c] = o
     }
-    # Pi, encoded in base-60
-    l = "$T2/ZF.CU[H=&:\\X*^)?$KCV+Z@7<-*@+\\@'*H$J@;#SA3Y^.(OG7<':]P.6"   \
-        "-DVB4B'02VUR$/;J?2)A4L^C)XC'?S).0\\8M-S[=,X-\\@DP^+4:J5,*&UN[G"   \
-        "(LNP32+DU2*L&JN-0N'W.;/P&@2II.(W0FOW'>#*[U(UDI?%$N7OIQ#60<YD"     \
-        ",6(LL)#SNX#4)3JI%#/9Z<M7.RKT#G-+^Q/K#+ODLP)3M''/$QS(2V/)?A$E"     \
-        "'2'4AG*;;QJ0$.*WCX-C.PW^&^FCZS#\\>6[J+'-NC2%<A7/'.>KD,L-KB>?C"    \
-        "/IQ2[%(K#Q0U.&ON.E+0>B5\\%>+S3I*U1KH\\#LG9C[&Q/^W&-X854=,VQA5W"   \
-        "##=5*V(T28+%-#P12M,OMV+.,?.4./$X572$%XEAI8(^-O%4$8'QOJ+VU+*2"     \
-        "(;0L#.%O3E^7.)LFG8*LB@M\\)+,:WK)K108X)<S+UH&TR3(V#Q(8?S%'.^\\J"   \
-        ")>L:-Z'>KE-=(?)20P'5'J-F&9)=I$,*Z#(0-'UB8=*D7GL:-?1NSH,VP5LN"     \
-        "*LGZ2'&LWN$0$@?7RN.7TMOF/&:L%]%:7U+W%/*-$)$K6;JR+A*:5@%Q^>0,"     \
-        "'X[LF7$9/S4N&F->G$)VXSD3-F&1^/#>17M,+W9@3%&7E6;V&/L.FW-O*OPV"     \
-        "*-,B>9(U<@MJ)C/.?B+T>2AZ.=#X&&-AT9,))8*0*F#QG784#/XKBK/J[;=W"     \
-        ".%5\\R2+.E40A)&=:W9/47DX,)#VQFO/,$Z9^,\\Q^$.#B0VB'*^#\\;O&6X\\?C" \
-        "/##QF%.DG=LO,K96%T+@=LGN-?W9IB&2AK(#'EFPDO,I<XL&.P;%<=#C[S\\^"    \
-        "+N6R=8+-OWG\\%Q^'^W(XW[:U&KT/M<*,U,N&-[44:+*CWCP[.LFZV6,J<4@2"    \
-        "'*SP\\@./VIQG#51T'<)<*;)]'?A'2[+.@U\\))]H$U<)JU#@4)#DP34,[4@=K"   \
-        "-@^DX8*Y-0JW%0J5ZR,52=,'%C3X@+%'A<=0)P@L@**:%I.+(I9#7J#\\&/W0"    \
-        "(UY>73.(B=&Z+[,1A,.V8F&'&A5'%9*5[X)6#I,T7X)#.7B=&A*Q=5*TEZJN"     \
-        "-IVV%Q-?A0YZ'^K@CK/0C\\\\9&0W%8V,A=QY[$'YU1Q&>YT#;%BICA9%MCT\\N"  \
-        "#W%8'9%H7N%<#G8J/4.-^M*3(H78?*)#ZQ32,ALV@T$)S@'(/S9?5;-%&X&@"
+    first_ord = ord ["\""] + 1
+    skip_ord  = ord ["\\"]
+    last_ord  = ord ["~"]
+    range     = last_ord - first_ord
+    in_size   = 5
+    out_size  = 9
+    line = "%(uP7+Y`ME)gy(7')v?;%s^qc(Mj1}16idp'ONGs'2m.o,1HLY'}~P61@@Y-" \
+           "*O/.v,Jc~D+ttA'&EPjR(zXxD$dr,M$P=-f*YQqe,GIZ`0x5oL1(mpl17en`" \
+           ")Q$ge,L6_5.I;hj%yy6n,L_t')dtyy)[ugS&-3(c&lC:a&~8SP#+iis+WR&8" \
+           "*Y;V3/+JD@-J>7u0$Nh<#2&:@+#=`/*YtP-0t8uf+tf/V&yjx>+]S=&%d}7z" \
+           "0YXa9$SOyt$*mzv1&X(W(.{0G-Vya`0a}KI0pQD2,nV0:,WE0+#?F[>(iMb}" \
+           "%k(tB/UO0m.8R'x%Vys_-|IgL.y-n6(v[*#+<w,K&ph2o.LfLw.'YJB%SI/r" \
+           "-RGB[0/yKw);ml1+SlKv.UDG6&jY3_#=Nry$t6Ng/YXEe%A)of.>/-J1#[`]" \
+           "&*M<M1Uqt]#f=#g-a$q{$Gn<,#CLb7((C*0,D]yd&c4OS#Ql2h%gd7>#'1wg" \
+           "-}+B}*jWDi)/2&k,h|/)+eu-3)9{mU-`:]M/YF$a.O0SF0{~2C.EjkZ&>|lD" \
+           "#%UmL+w)$V&14Ty0arq+%xnAo/XX/y0_=Bl/)f*}'Gc88'GV;X1RG~<+gJ8p" \
+           "&^E~A'/3N=*R2|j&SgD@-0St?*jL@'-ZsbD$+_hy.#HkF0cO_[#t0wL-8._r" \
+           "#0)@p#4(ha+lyD6,[|1w%_K//+c2#j.4xl2)SpX=.>)gp$R)ZP,IS%@,}%#J" \
+           "*1zj[,sIw#%6pwl%D'fk#Bx6'%4?.0&c9'?#R7P|&ZJ;M&q6q&&|h9?0LVI}" \
+           "(2lq>#/G+<,Bv`l+U'K?'2i}q+,J8W/7dU++X(l51R>#T&)fV0'I%FC%HHkt" \
+           "%{(NN&Kn$]*<Aur/2kmb+:Wu&)7%WR/W[BH)+.]`/~B$S.WE~n,J_v]%-h'|" \
+           "%RrIs.:wg4)KQ#G*~I)7%=m]x$z.?F/F:I#*]Lg2(h&,J*}tu6/WWEX+>e0," \
+           "$K`U.%bSL*&dG^f,lN@.+jGbU.g8,s&FwUP$9p3S/)f(4,y><Y0vnKH(:}m~" \
+           "#y7eZ%~4^<1C|Ju$sQ)x0ko[G1)z8e&)U,+'N'y9,)LJT0k+B7-H5gh0z,~X" \
+           "0E:/(.0dlN1&/Rn/[|SL1RLl=)|BoK$K~@E$0j%D)oW$^+bQyn.~]>{*/L)t" \
+           "-Oi$Y*&I1x1Kyk#$}~i|)^4uG%|&sU)XNR-,PLl/.lmT'&_~it-16U9-B~A[" \
+           "(}s.a0~]Zj*<*~%-~N27%$O,*/a,,c%<#@60On3z0~3@B13UOG/A^&K,GRHi" \
+           ",S_:*&9I{_$nCM9&U^*9)WmPj+$TL8.]WpP)CWDR$u#7])K/Bi+,[B9(0~a&" \
+           "&=aag,L-UG#HoAx/=@p,&ux{:0($3X*[J<4,eh{E1F&tE$cGo.&C}15*:u{Z" \
+           ",:*H^'f,=~$,z%B)WZbL$DjA;/oFKa%.>ig/^o.90e/P=*Auex0TD}p/hncA" \
+           "/%d87#/u19,r&sM(A+4V0%4u$.}F+P0o|4e.g(<[#5y<J++`sn,C6]p-t;&]" \
+           "*wEcH.YA#C.|Tl$(2g>y*]3@5%II741/XZ>)Lm6e0``3L%.JF[+Z?8b(tj7C" \
+           "'S/z}#vS|i)S9[=*/nCG)PMaY-{pML);vN?%kRcr#*.Tg,x;42'(1w.0dA)S" \
+           ")-us%.#1$R-rkwf%m%B-(ctK8+4Sn^%*C1Y-wqsr%eNg11%$De&&07q+%1>-" \
+           "+mCl2%)V#w%#y:[,?t*D$64`9.U+{`-SBX-+gi/o)0B$q#V$tW+#lmM)';EH" \
+           "%yFPZ/Gy(~,dl@h)A&ju-Co2,-du++)[Awk&wE}p*H;._.[]4W+Eb7K#iiKB"
     printf ("3.")
-    for (i = 1; i <= length (l); i += 6) {
+    format = "%0" out_size "d"
+    for (i = 1; i <= length (line); i += in_size) {
         out = 0
-        for (j = i; j < i + 6; j ++) {
-            out *= 60
-            out += ord [substr (l, j, 1)]
+        for (j = i; j < i + in_size; j ++) {
+            out *= range
+            n = ord [substr (line, j, 1)]
+            if (n >= skip_ord) {
+                n --
+            }
+            out += n - first_ord
         }
-        printf (out)
+        printf (format, out)
     }
     printf ("\n")
 }
+
+#
+#  FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER
+#  FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER?
+#  FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER
+#  FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER!
+#
