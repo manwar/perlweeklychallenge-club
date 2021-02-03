@@ -1,13 +1,13 @@
-# tw.weekly.c96
+# tw.weekly.c98
 
 
-The Weekly Challenge - #096 - Tyler Wardhaugh
+The Weekly Challenge - #098 - Tyler Wardhaugh
 
 ## Usage
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -M -m tw.weekly.c96.core
+    $ clojure -M -m tw.weekly.c98.core
 
 Run the project's tests (which are samples from the task descriptions):
 
@@ -15,11 +15,11 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -M -m tw.weekly.c96.t1 S
+    $ clojure -M -m tw.weekly.c98.t1 FILE N
 
-Run Task #2:
+Run Task #2 with input:
 
-    $ clojure -M -m tw.weekly.c96.t2 S1 S2
+    $ clojure -M -m tw.weekly.c98.t2 NS N
 
 ## Project Template
 
@@ -29,7 +29,7 @@ See [seancorfield/clj-new: Generate new projects based on clj, Boot, or Leininge
 
 ## License
 
-Copyright © 2020 Tyler Wardhaugh
+Copyright © 2021 Tyler Wardhaugh
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
