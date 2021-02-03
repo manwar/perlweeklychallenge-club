@@ -10,6 +10,7 @@ use Test::More tests => 3;
   my $fn='';
   sub readN {
     my $fnn=shift;
+    my $siz=shift;
     if ($fnn ne $fn) {
       $fn=$fnn;
       if (defined $fh) {
@@ -21,8 +22,8 @@ use Test::More tests => 3;
       open $fh,'<',$fn;
     }
     my $buf;
-    my $l=read ($fh,$buf,4);
-    if ($l < 4) {
+    my $l=read ($fh,$buf,$siz);
+    if ($l < $siz) {
       close $fh;
       undef $fh;
       $fn='';
@@ -31,6 +32,6 @@ use Test::More tests => 3;
   }
 }
 
-is(readN('input.txt'),'1234','example 1');
-is(readN('input.txt'),'5678','example 2');
-is(readN('input.txt'),'90','example 3');
+is(readN('input.txt',4),'1234','example 1');
+is(readN('input.txt',4),'5678','example 2');
+is(readN('input.txt',4),'90','example 3');

@@ -4,7 +4,7 @@ use Test;
 
 plan 3;
 
-sub readN($fnn) {
+sub readN($fnn,$siz) {
   state $fh=0;
   state $fn='';
   if ($fnn ne $fn) {
@@ -17,8 +17,8 @@ sub readN($fnn) {
   unless ($fh) {
     $fh=$fn.IO.open;
   }
-  my $buf=$fh.read(4).decode;
-  if ($buf.chars < 4) {
+  my $buf=$fh.read($siz).decode;
+  if ($buf.chars < $siz) {
     $fh.close;
     $fh=0;
     $fn='';
@@ -26,6 +26,6 @@ sub readN($fnn) {
   return $buf;
 }
 
-is(readN('input.txt'),'1234','example 1');
-is(readN('input.txt'),'5678','example 2');
-is(readN('input.txt'),'90','example 3');
+is(readN('input.txt',4),'1234','example 1');
+is(readN('input.txt',4),'5678','example 2');
+is(readN('input.txt',4),'90','example 3');
