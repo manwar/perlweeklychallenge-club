@@ -9,13 +9,20 @@ object SearchInsertPosition {
         Example(Seq(11, 13, 15, 17), 19, 4)
     )
 
-    def Search(exp: Example) : Boolean = {
-        true
+    def searchExisting(A: Array[Int], N: Int) : Int = A.indexOf(N)
+
+    def check(exp: Example) : Boolean = {
+        Seq(
+            searchExisting(exp.A.toArray, exp.N),
+            0
+        )
+            .filterNot(_ == -1)
+            .head == exp.E
     }
 
     def main(args: Array[String]): Unit = {
         examples
-        .map(Search)
+        .map(check)
         .foreach(println)
     }
 }
