@@ -6,6 +6,43 @@ You are given file `$FILE`.
 Create subroutine `readN($FILE, $number)` returns the first `n`-characters
 and moves the pointer to the (`n+1`)th character.
 
+### Notes
+
+What a poorly defined challenge.
+
+> You are given a file
+
+What does that mean? Do we get the content? A file handle?
+A file descriptor? A file name?
+
+The example (but not the challenge itself), suggest we're getting
+a file name. Ok, but....:
+
+> moves the pointer
+
+What pointer? File handles/descriptors point to something, so
+then it can be argued we should leave the file handle open, 
+pointing to a place in the file. But we have just established we
+are *not getting* a file handle -- we're getting a file name.
+So, what pointer are we talking about?
+
+What on earth are we supposed to do?
+
+Are we supposed to create a file handle, and keep file handle open?
+Should we just slurp in the file content, and keep a pointer
+to what we have returned?
+
+What should happen if we call `readN` with different files, interleaved?
+Keep track of where we are for each file? Restart if called with `file1`,
+then `file2`, and then `file1` again?
+
+Our implementation will be a real stab in the dark -- we've no idea what
+we are supposed to do.
+
+### Input
+Our program will read lines from standard input; each line consists
+of a filename and an amount of characters to read, separated by whitespace.
+
 ### Example
 ~~~~
 Input: Suppose the file (input.txt) contains "1234567890"
