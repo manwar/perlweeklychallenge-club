@@ -53,6 +53,7 @@ Output:
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-1.pl)
 
 ### Blog
 
@@ -89,6 +90,17 @@ Input: @N = (11, 13, 15, 17) and $N = 19
 Output: 4 since the target 19 is missing and should be placed at the index 4.
 ~~~~
 
+### Notes
+We could write a binary search to find the target number in the
+array. This is tempting, as a binary search take O (log N). But
+this is futile. We're also asked to add the target element to the
+array (if not found), and adding an element in the middle of an
+array takes linear time. So, worst case, we're already spending
+linear time. (And to read the array, we're spending linear time
+anyway).
+
+
 ### Solutions
+* [Perl](perl/ch-2.pl)
 
 ### Blog
