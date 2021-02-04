@@ -16,53 +16,61 @@ Output:
     print readN("input.txt", 4); # returns "90"
 */
 
+#include <algorithm>
+#include <array>
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <memory>
-#include <unordered_map>
+#include <cassert>
 #include <cstring>
 
 // store list of open files
 class Files {
 public:
-    Files() {}
-    virtual ~Files() {
-        for (auto& it : files)
-            delete it.second;
-    }
-
     std::string readN(const std::string filename, int n) {
-        std::ifstream* ifs = add_file(filename);
-        char* buffer = new char [n+1];
-        memset(buffer, 0, n+1);
-        ifs->read(buffer, n);
+        std::ifstream& ifs = add_file(filename);
+        char* buffer = new char[n + 1];
+        memset(buffer, 0, n + 1);
+        ifs.read(buffer, n);
         auto text = std::string(buffer);
         delete[] buffer;
         return text;
     }
 
 private:
-    std::unordered_map<std::string, std::ifstream*> files;
+    // store std::ifstream in a pre-aloocated array as storing pointers to
+	// std::ifstream in an unordered_map was causing a heap corruption in 
+	// GCC - probably a compiler/stdlib bug
+    static const int MAX_FILES = 20;
+    std::array<std::ifstream, MAX_FILES> files;
+    std::array<std::string, MAX_FILES> filenames;
+    size_t num_files{ 0 };
 
-    std::ifstream* add_file(const std::string filename) {
-        auto found = files.find(filename);
-        if (found != files.end())           // found in map
-            return found->second;
-        else {                              // not found, must create new entry
-            auto ifs = new std::ifstream(filename);
-            if (!ifs->is_open()) {
+    std::ifstream& add_file(const std::string filename) {
+        auto end = filenames.begin() + num_files;
+        auto found = std::find(filenames.begin(), end, filename);
+        if (found != end) {   // found in filename
+            size_t i = std::distance(filenames.begin(), found);
+            return files[i];
+        }
+        else {                                      // not found, must create new entry
+            if (num_files >= MAX_FILES) {
+                std::cerr << "too many files" << std::endl;
+                exit(EXIT_FAILURE);
+            }
+            filenames[num_files] = filename;
+            files[num_files].open(filename);
+            if (!files[num_files].is_open()) {
                 std::cerr << "open file " << filename << " failed" << std::endl;
                 exit(EXIT_FAILURE);
             }
-            files.emplace(filename, ifs);
-            return ifs;
+            return files[num_files++];
         }
     }
 };
 
 int main(int argc, char* argv[]) {
     Files f;
-    for (int i = 1; i+1 < argc; i+=2)
-        std::cout << f.readN(argv[i], atoi(argv[i+1])) << std::endl;
+    for (int i = 1; i + 1 < argc; i += 2)
+        std::cout << f.readN(argv[i], atoi(argv[i + 1])) << std::endl;
 }

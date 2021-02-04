@@ -64,6 +64,3 @@ do while command(i+1)<>""
     print readN(command(i), val(command(i+1)))
     i=i+2
 loop
-
-
-
