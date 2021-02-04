@@ -28,6 +28,7 @@ and printing. We may even need to filler comments to make it all work out.
 * [Node.js](node/ch-1.node)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
+* [Ruby](ruby/ch-1.rb)
 
 
 ## [Challenge 2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-004/#challenge-2)
