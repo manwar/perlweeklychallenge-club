@@ -9,11 +9,11 @@ object SearchInsertPosition {
         Example(Seq(11, 13, 15, 17), 19, 4)
     )
 
-    def searchExisting(A: Array[Int], N: Int) : Int = A.indexOf(N)
+    def searchExisting(A: Seq[Int], N: Int) : Int = A.indexOf(N)
 
     def check(exp: Example) : Boolean = {
         Seq(
-            searchExisting(exp.A.toArray, exp.N),
+            searchExisting(exp.A, exp.N),
             0
         )
             .filterNot(_ == -1)
