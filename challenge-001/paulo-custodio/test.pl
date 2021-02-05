@@ -1,73 +1,135 @@
 #!/usr/bin/perl
 
+# run tests described in t/test-N.yaml
+
 use strict;
 use warnings;
-use Test::More;
 use 5.030;
+use Test::More;
+use Path::Tiny;
+use YAML::Tiny;
 
-my $LUA = ($^O eq 'msys') ? "lua.exe" : "lua";
+our $EXE = $^O =~ /MSWin32|msys/ ? ".exe" : "";
 
-run("gcc     c/ch-1.c   -o     c/ch-1");
-run("g++   cpp/ch-1.cpp -o   cpp/ch-1");
-run("fbc basic/ch-1.bas -o basic/ch-1");
+# hack so that output redirection works in msys
+our $LUA = $^O eq "msys" ? "lua.exe" : "lua";
 
-for (["Perl Weekly Challenge" => "5 PErl WEEkly ChallEngE"],
-     ["Champion"              => "0 Champion"]) {
-    my($in, $out) = @$_;
+our %LANG = (
+    ada     => 'adb',
+    awk     => 'awk',
+    basic   => 'bas',
+    c       => 'c',
+    cpp     => 'cpp',
+    forth   => 'fs',
+    lua     => 'lua',
+    perl    => 'pl',
+    python  => 'py',
+);
 
-    is capture(     "$LUA lua/ch-1.lua $in"), "$out\n";
-    is capture(    "perl perl/ch-1.pl  $in"), "$out\n";
-    is capture( "gforth forth/ch-1.fs  $in"), "$out\n";
-    is capture("python python/ch-1.py  $in"), "$out\n";
-    is capture(            "c/ch-1     $in"), "$out\n";
-    is capture(          "cpp/ch-1     $in"), "$out\n";
-    is capture(        "basic/ch-1     $in"), "$out\n";
+# filter tests if languages given on command line
+our %TESTS;
+if (!@ARGV) {
+    %TESTS = %LANG;
+}
+else {
+    $TESTS{$_}=1 for @ARGV;
 }
 
-run("gcc     c/ch-2.c   -o     c/ch-2");
-run("g++   cpp/ch-2.cpp -o   cpp/ch-2");
-run("fbc basic/ch-2.bas -o basic/ch-2");
+for my $lang (grep {-d} sort keys %LANG) {
+    next unless $TESTS{$lang};
+    for my $prog (path($lang)->children(qr/\.$LANG{$lang}$/)) {
+        $prog->basename =~ /^ch[-_](.*)\.$LANG{$lang}$/ or die $prog;
+        my $task = $1;
 
-for ([20 => <<END]) {
-1
-2
-fizz
-4
-buzz
-fizz
-7
-8
-fizz
-buzz
-11
-fizz
-13
-14
-fizzbuzz
-16
-17
-fizz
-19
-buzz
-END
-    my($in, $out) = @$_;
+        # compile if needed
+        my $exec = build($lang, $prog);
 
-    is capture(     "$LUA lua/ch-2.lua $in"), $out;
-    is capture(    "perl perl/ch-2.pl  $in"), $out;
-    is capture( "gforth forth/ch-2.fs  $in"), $out;
-    is capture("python python/ch-2.py  $in"), $out;
-    is capture(            "c/ch-2     $in"), $out;
-    is capture(          "cpp/ch-2     $in"), $out;
-    is capture(        "basic/ch-2     $in"), $out;
+        for my $test (path("t")->children(qr/test-$task\.yaml$/)) {
+            # execute each test from test-N.yaml
+            my $yaml = YAML::Tiny->read($test);
+            for my $doc (@$yaml) {
+                for my $spec (@$doc) {
+                    # run setup code
+                    ok eval($spec->{setup}), $spec->{setup} if $spec->{setup};
+                    $@ and die $@;
+
+                    # build test command line
+                    my $cmd = "$exec ".($spec->{args} // "");
+                    chomp($cmd);
+                    if($spec->{input}) {
+                        path("in.txt")->spew($spec->{input});
+                        $cmd .= " < in.txt";
+                    }
+                    if ($spec->{output}) {
+                        path("out_exp.txt")->spew($spec->{output});
+                        $cmd .= " > out.txt";
+                    }
+
+                    # run test
+                    run($cmd);
+
+                    # compare output
+                    if ($spec->{output}) {
+                        run("diff -w out_exp.txt out.txt");
+                    }
+
+                    # run cleaup code
+                    if (Test::More->builder->is_passing) {
+                        ok eval($spec->{cleanup}), $spec->{cleanup} if $spec->{cleanup};
+                        $@ and die $@;
+                        unlink("in.txt", "out.txt", "out_exp.txt");
+                    }
+                    else {
+                        die "tests failed\n";   # to give chance to examine output
+                    }
+                }
+            }
+        }
+    }
 }
 
 done_testing;
 
-sub capture {
-    my($cmd) = @_;
-    my $out = `$cmd`;
-    $out =~ s/[ \t\v\f\r]*\n/\n/g;
-    return $out;
+# compile if needed, return executable line
+sub build {
+    my($lang, $prog) = @_;
+    my $exe = ($prog =~ s/\.\w+/$EXE/r);
+    my $prog_wo_ext = ($prog =~ s/\.\w+//r);
+    my $prog_base = path($prog)->basename;
+    for ($lang) {
+        if (/ada/) {
+            run("cd ada; gnatmake $prog_base"); # gnatmake builds only if needed
+            return $exe;
+        }
+        if (/awk/) {
+            return "gawk -f $prog";
+        }
+        if (/basic/) {
+            run("fbc $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            return $exe;
+        }
+        if (/^c$/) {
+            run("gcc $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            return $exe;
+        }
+        if (/cpp/) {
+            run("g++ $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            return $exe;
+        }
+        if (/forth/) {
+            return "gforth $prog";
+        }
+        if (/lua/) {
+            return "$LUA $prog";
+        }
+        if (/perl/) {
+            return "perl $prog";
+        }
+        if (/python/) {
+            return "python $prog";
+        }
+        die "unsupported language $lang";
+    }
 }
 
 sub run {
