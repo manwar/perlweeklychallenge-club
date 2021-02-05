@@ -1,25 +1,31 @@
 {
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "series" : [
       {
+         "name" : "Contributions",
          "dataLabels" : {
+            "align" : "right",
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "enabled" : "true",
             "style" : {
                "fontSize" : "13px",
                "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "y" : 10
+            }
          },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -31,13 +37,16 @@
             ],
             [
                "Raku",
-               2947
+               2949
             ]
          ]
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2021-02-05 02:10:34 GMT"
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
       "title" : {
@@ -45,19 +54,10 @@
       },
       "min" : 0
    },
-   "legend" : {
-      "enabled" : "false"
+   "subtitle" : {
+      "text" : "Last updated at 2021-02-05 07:29:36 GMT"
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
