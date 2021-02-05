@@ -21,15 +21,15 @@ Output:
 files = {}
 
 function readN(filename, n)
-    file = files[filename]
+    local file = files[filename]
 
     if file == nil then         -- file not yet open
         file = io.open(filename, "r")
         files[filename] = file
     end
-    text = ""
+    local text = ""
     for i=1,n do
-        c = file:read(1)
+        local c = file:read(1)
         if c ~= nil then
             text = text..c
         end

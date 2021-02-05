@@ -30,8 +30,8 @@ the index 4.
 
 -- search for index of element, insert in array if not found
 function search_insert(nums, n)
-    b = 1
-    t = #nums
+    local b = 1
+    local t = #nums
     if t < b then               -- empty
         table.insert(nums, n)
         return 0
@@ -42,7 +42,7 @@ function search_insert(nums, n)
         table.insert(nums, n)
         return #nums-1
     else
-        m = math.floor((t+b)/2)
+        local m = math.floor((t+b)/2)
         while b+1 < t do        -- bisect loop
             if n == nums[m] then
                 return m-1
