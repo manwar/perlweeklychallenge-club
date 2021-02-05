@@ -39,8 +39,8 @@ public:
 
 private:
     // store std::ifstream in a pre-aloocated array as storing pointers to
-	// std::ifstream in an unordered_map was causing a heap corruption in 
-	// GCC - probably a compiler/stdlib bug
+    // std::ifstream in an unordered_map was causing a heap corruption in
+    // GCC - probably a compiler/stdlib bug
     static const int MAX_FILES = 20;
     std::array<std::ifstream, MAX_FILES> files;
     std::array<std::string, MAX_FILES> filenames;
