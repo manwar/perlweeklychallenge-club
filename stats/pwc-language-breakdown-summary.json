@@ -1,13 +1,19 @@
 {
-   "subtitle" : {
-      "text" : "Last updated at 2021-02-05 07:33:52 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "rotation" : -90,
+            "y" : 10,
+            "enabled" : "true"
+         },
          "data" : [
             [
                "Blog",
@@ -15,35 +21,17 @@
             ],
             [
                "Perl",
-               4551
+               4553
             ],
             [
                "Raku",
                2949
             ]
-         ],
-         "dataLabels" : {
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true"
-         }
+         ]
       }
    ],
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
       "min" : 0,
@@ -51,13 +39,25 @@
          "text" : null
       }
    },
-   "legend" : {
-      "enabled" : "false"
+   "subtitle" : {
+      "text" : "Last updated at 2021-02-05 07:56:17 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
    }
 }
