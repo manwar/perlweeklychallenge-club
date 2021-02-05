@@ -103,6 +103,7 @@ anyway).
 
 
 ### Solutions
+* [Bash](bash/ch-2.sh)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
