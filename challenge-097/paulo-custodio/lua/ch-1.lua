@@ -22,7 +22,7 @@ Ciphertext: QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD
 --]]
 
 function caesar(n, text)
-    text = string.upper(text)
+    local text = string.upper(text)
     local cipher = ""
 
     for i=1, #text do

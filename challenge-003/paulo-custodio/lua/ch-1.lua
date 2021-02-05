@@ -16,7 +16,7 @@ seq5 = {1}
 
 function next_hamming()
     -- get the smallest of the queue heads
-    n = math.min(seq2[1], seq3[1], seq5[1])
+    local n = math.min(seq2[1], seq3[1], seq5[1])
 
     -- shift used multiples
     if n == seq2[1] then table.remove(seq2, 1); end
