@@ -55,6 +55,7 @@ Output:
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [C](c/ch-1.ch)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
