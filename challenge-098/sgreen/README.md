@@ -1,3 +1,3 @@
-# The Weekly Challenge 097
+# The Weekly Challenge 098
 
-Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-097-3ag8)
+Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-098-235h)
