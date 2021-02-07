@@ -8,10 +8,7 @@ is readN("input.txt", 4), "90";
 
 sub readN($FILE, $number) 
 {
-    my $fh = open $FILE, :r;
-    my $head = $fh.readchars: $number;
-    my $tail = $fh.slurp;
-    $fh.close;
-    $FILE.IO.spurt: $tail;
-    return $head;
+    state %fh;
+    %fh{$FILE} = open $FILE unless %fh{$FILE};
+    %fh{$FILE}.readchars: $number;
 }
