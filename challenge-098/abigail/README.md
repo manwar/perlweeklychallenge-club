@@ -1,99 +1,110 @@
 # Solution by Abigail
-## [Ceasar Cipher](https://perlweeklychallenge.org/blog/perl-weekly-challenge-097/#TASK1)
+## [Read N-characters](https://perlweeklychallenge.org/blog/perl-weekly-challenge-098/#TASK1)
 
-You are given string `$S` containing alphabets `A..Z` only and a number `$N`.
+You are given file `$FILE`.
 
-Write a script to encrypt the given string `$S` using Caesar Cipher with
-left shift of size `$N`.
+Create subroutine `readN($FILE, $number)` returns the first `n`-characters
+and moves the pointer to the (`n+1`)th character.
+
+### Notes
+
+What a poorly defined challenge.
+
+> You are given a file
+
+What does that mean? Do we get the content? A file handle?
+A file descriptor? A file name?
+
+The example (but not the challenge itself), suggest we're getting
+a file name. Ok, but....:
+
+> moves the pointer
+
+What pointer? File handles/descriptors point to something, so
+then it can be argued we should leave the file handle open, 
+pointing to a place in the file. But we have just established we
+are *not getting* a file handle -- we're getting a file name.
+So, what pointer are we talking about?
+
+What on earth are we supposed to do?
+
+Are we supposed to create a file handle, and keep file handle open?
+Should we just slurp in the file content, and keep a pointer
+to what we have returned?
+
+What should happen if we call `readN` with different files, interleaved?
+Keep track of where we are for each file? Restart if called with `file1`,
+then `file2`, and then `file1` again?
+
+Our implementation will be a real stab in the dark -- we've no idea what
+we are supposed to do.
+
+### Input
+Our program will read lines from standard input; each line consists
+of a filename and an amount of characters to read, separated by whitespace.
 
 ### Example
 ~~~~
-Input: $S = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", $N = 3
-Output: "QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD"
-
-Plain:    ABCDEFGHIJKLMNOPQRSTUVWXYZ
-Cipher:   XYZABCDEFGHIJKLMNOPQRSTUVW
-
-Plaintext:  THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
-Ciphertext: QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD
+Input: Suppose the file (input.txt) contains "1234567890"
+Output:
+    print readN("input.txt", 4); # returns "1234"
+    print readN("input.txt", 4); # returns "5678"
+    print readN("input.txt", 4); # returns "90"
 ~~~~
-
-### Note
-We will be reading the plain text from STDIN, and use an option (-s)
-to indicate the left shift.
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
-* [Lua](lua/ch-1.lua)
-* [C](c/ch-1.c)
-* [Node.js](node/ch-1.js)
+* [C](c/ch-1.ch)
 * [Perl](perl/ch-1.pl)
-* [Python](python/ch-1.py)
-* [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[Perl Weekly Challenge 97: Ceasar Cipher](https://wp.me/pcxd30-nW)
 
 
-## [Binary Substrings](https://perlweeklychallenge.org/blog/perl-weekly-challenge-097/#TASK2)
+## [Search Insert Position](https://perlweeklychallenge.org/blog/perl-weekly-challenge-098/#TASK2)
 
-You are given a binary string `$B` and an integer `$S`.
+You are given a sorted array of distinct integers `@N` and a target `$N`.
 
-Write a script to split the binary string `$B` of size `$S` and then
-find the minimum number of flips required to make it all the same.
+Write a script to return the index of the given target if found
+otherwise place the target in the sorted array and return the index.
 
 ### Examples
 #### Example 1
 ~~~~
-Input: $B = "101100101" $S = 3
-Output: 1
-
-Binary Substrings:
-    "101": 0 flip
-    "100": 1 flip to make it "101"
-    "101": 0 flip
+Input: @N = (1, 2, 3, 4) and $N = 3
+Output: 2 since the target 3 is in the array at the index 2.
 ~~~~
 
 #### Example 2
 ~~~~
-Input $B = "10110111", $S = 4
-Output: 2
+Input: @N = (1, 3, 5, 7) and $N = 6
+Output: 3 since the target 6 is missing and should be placed at the index 3.
+~~~~
 
-Binary Substrings:
-    "1011": 0 flip
-    "0111": 2 flips to make it "1011"
+#### Example 3
+~~~~
+Input: @N = (12, 14, 16, 18) and $N = 10
+Output: 0 since the target 10 is missing and should be placed at the index 0.
+~~~~
+
+#### Example 4
+~~~~
+Input: @N = (11, 13, 15, 17) and $N = 19
+Output: 4 since the target 19 is missing and should be placed at the index 4.
 ~~~~
 
 ### Notes
-We will be reading the strings from STDIN. The length of each sub string
-will be passed in as an option: -s SIZE.
+We could write a binary search to find the target number in the
+array. This is tempting, as a binary search take O (log N). But
+this is futile. We're also asked to add the target element to the
+array (if not found), and adding an element in the middle of an
+array takes linear time. So, worst case, we're already spending
+linear time. (And to read the array, we're spending linear time
+anyway).
 
-To calculate the mininim number of flips required, note that we
-can calculate the number of flips for each position independently;
-that is, flipping a bit at position $i doesn't influence how the
-number of flips required for position $j, if $i != $j.
-
-For each position $i, we either need to flip all the 0s to 1s,
-or all the 1s to 0s. To minimize the number of flips, we count
-the number of 0s in each position, and compare that with the
-number of 1s in that position. Then we take the minimum of 0s
-and 1s, and sum this for all positions.
-
-There is no need to split the input string into chunks,
-we can leave it as is. The $i-th character of the $j-th section
-is as position $j * $s_len + $i, where $s_len is the length
-of a section.
 
 ### Solutions
-* [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
-* [C](c/ch-2.c)
-* [Lua](lua/ch-2.lua)
-* [Node](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
-* [Python](python/ch-2.py)
-* [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[Perl Weekly Challenge 97: Binary Substrings](https://wp.me/pcxd30-pi)
