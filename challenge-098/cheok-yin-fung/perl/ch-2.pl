@@ -29,13 +29,6 @@ sub set_order { $_[0]->{_order} = $_[1]; }
 sub set_leftchild { $_[0]->{_leftchild} = $_[1]; }
 sub set_rightchild { $_[0]->{_rightchild} = $_[1]; }
 
-sub create_tree_from_ordered_array {
-    my $self = $_[0];
-    my @sorted_stuff = @{$_[1]};
-    $self->insert(\@sorted_stuff, 0, $#sorted_stuff);
-    return $self;
-}
-
 sub search {
     my $aRoot = $_[0];
     my $target = $_[1];
