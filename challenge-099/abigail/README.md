@@ -17,13 +17,11 @@ Input: $S = "abcde" $P = "a*e"
 Output: 1
 ~~~~
 
-
 #### Example 2
 ~~~~
 Input: $S = "abcde" $P = "a*d"
 Output: 0
 ~~~~
-
 
 #### Example 3
 ~~~~
@@ -31,12 +29,15 @@ Input: $S = "abcde" $P = "?b*d"
 Output: 0
 ~~~~
 
-
 #### Example 4
 ~~~~
 Input: $S = "abcde" $P = "a*c?e"
 Output: 1
 ~~~~
+
+### Notes
+* We will be reading from standard input, one task perl line. We will
+  assume the string and pattern are separated by a space.
 
 
 ## [Unique Subsequence](https://perlweeklychallenge.org/blog/perl-weekly-challenge-099/#TASK2)
