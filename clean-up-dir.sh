@@ -6,7 +6,9 @@ find . -name "*.pl" -delete
 find . -name "*.st" -delete
 find . -name "*.pm" -delete
 find . -name "*.bqn" -delete
+find . -name "*.adk" -delete
 find . -name "*.bash" -delete
+find . -name "*.yaml" -delete
 find . -name "*.d" -delete
 find . -name "*.dart" -delete
 find . -name "*.f95" -delete
