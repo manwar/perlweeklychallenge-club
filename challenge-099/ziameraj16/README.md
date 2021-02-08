@@ -37,3 +37,22 @@ Enter string to match
 abcde
 Output: 1
 ```
+## Kotlin Solution
+
+To compile the code run
+```java
+kotlinc PatternMatcherKotlin.kt
+```
+To run
+```java
+kotlin PatternMatcherKotlin
+```
+### Example
+```bash
+/perlweeklychallenge-club/challenge-099/ziameraj16/kotlin$ kotlin PatternMatcherKotlin
+Enter regex pattern
+a.*e
+Enter string to match
+abcde
+Output: 1
+```
