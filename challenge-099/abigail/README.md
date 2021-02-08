@@ -40,6 +40,7 @@ Output: 1
   assume the string and pattern are separated by a space.
 
 ### Solutions
+* [AWK](awk/ch-1.awk)
 * [Perl](perl/ch-1.pl)
 
 
