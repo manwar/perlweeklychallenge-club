@@ -39,6 +39,9 @@ Output: 1
 * We will be reading from standard input, one task perl line. We will
   assume the string and pattern are separated by a space.
 
+### Solutions
+* [Perl](perl/ch-1.pl)
+
 
 ## [Unique Subsequence](https://perlweeklychallenge.org/blog/perl-weekly-challenge-099/#TASK2)
 
@@ -68,3 +71,12 @@ Output: 3
     2: [lo] ndo [n]
     3: [l] ond [on]
 ~~~~
+### Notes
+* We will be reading from standard input, one task perl line. We will
+  assume the string and pattern are separated by a space.
+
+### Solutions
+* Perl
+    * [Using regular expressions](perl/ch-2.pl)
+    * [Recursive counting](perl/ch-2a.pl)
+
