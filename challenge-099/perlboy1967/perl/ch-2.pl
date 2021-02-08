@@ -45,11 +45,13 @@ foreach my $cCount (1 .. $l) {
     my $re2 = sprintf("%s(?<s%d>.*?)", 
                   join('', map { sprintf("(?<s%d>.*?)(?<t%d>$_)", $i++, $i++) } @substrings),
                   $i);
-    
+
+    # Find all matching combinations    
     while ($S =~ m#$re2#g) {
       my %m = %+;
       my ($pre,$post) = ($`, $');
 
+      # Build the 'evidence' string
       my @s;
       foreach my $k (keys %+) {
         if ($k =~ m#^(.)(\d+)#) { 
