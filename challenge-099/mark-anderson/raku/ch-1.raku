@@ -9,5 +9,5 @@ is pattern-match("abcde", "a*c?e"), 1;
 
 sub pattern-match($S, $P is copy) 
 {
-    so $S ~~ / ^ <{ $P.trans: ["?", "*"] => [".", ".*"] }> $ / andthen .Int;
+    ($S ~~ / ^ <{ $P.trans: ["?", "*"] => [".", ".*"] }> $ /).Bool.UInt;
 }
