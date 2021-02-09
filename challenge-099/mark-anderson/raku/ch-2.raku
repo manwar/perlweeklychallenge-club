@@ -2,10 +2,10 @@
 use Test;
 plan 2;
 
-is unique-subsequence("littleit", "lit"), 5;
-is unique-subsequence("london",   "lon"), 3;
+is unique-subsequences("littleit", "lit"), 5;
+is unique-subsequences("london",   "lon"), 3;
 
-sub unique-subsequence($S, $T) 
+sub unique-subsequences($S, $T) 
 {
     +($S ~~ m:ex/ <{ $T.comb.join(" .* ") }> /);
 }
