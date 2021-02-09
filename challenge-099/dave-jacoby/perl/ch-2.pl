@@ -11,6 +11,7 @@ use List::Util qw{ uniq };
 my @arr;
 push @arr, [ 'littleit', 'lit' ];
 push @arr, [ 'london',   'lon' ];
+push @arr, [ 'abracadabra',   'abra' ];
 
 for my $n (@arr) {
     my @p = unique_sub( $n->@* );
@@ -53,8 +54,6 @@ sub display_sub ( $string, $key ) {
     for my $i ( 0 .. length $string ) {
         my $l = substr( $string, $i, 1 );
         my $k = $key{$i} || 0;
-        my $L = $k ? uc $l : $l;
-        # $output .= $L;
 
         $output .= ' [' if $state == 0 && $k == 1;
         $output .= '] ' if $state == 1 && $k == 0;

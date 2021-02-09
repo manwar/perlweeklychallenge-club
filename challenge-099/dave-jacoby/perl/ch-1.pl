@@ -21,8 +21,26 @@ for my $n (@arr) {
 
 sub pattern_match ( $S, $P ) {
     my $pattern = $P;
-    $pattern =~ s/\*/.*/g;
-    $pattern =~ s/\?/.?/g;
+
+    # this was my first pass on this part
+    # $pattern =~ s/\*/.*/g;
+    # $pattern =~ s/\?/.?/g;  
+    #
+    # a comment from Jonas Berlin (xkr47) 
+    # made me reconsider. By the rules of the
+    # task, ? is ONE character and * is MANY 
+    # CHARACTERS, but in Perl's regular 
+    # expressions, .? is ZERO OR ONE CHARACTER
+    # and .* is ZERO OR MORE CHARACTERS
+    # to get ONE OR MORE CHARACTERS, we instead
+    # use .+ and to get ONE CHARACTER, we use .
+    # 
+    # but of course, we need to match the WHOLE
+    # string, so we're matching the beginning (^)
+    # and the end ($)
+
+    $pattern =~ s/\*/.+/g;
+    $pattern =~ s/\?/./g;  
     $pattern = qq{^$pattern\$};
     return $S =~ /$pattern/mix ? 1 : 0;
 }
