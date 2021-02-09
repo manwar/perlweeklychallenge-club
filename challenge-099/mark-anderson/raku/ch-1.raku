@@ -9,5 +9,5 @@ is pattern-match("abcde", "a*c?e"), 1;
 
 sub pattern-match($S, $P) 
 {
-    ($S ~~ / ^ <{ $P.trans: ["?", "*"] => [".", ".*"] }> $ /).Bool.UInt;
+    ($S ~~ / ^ <{ $P.trans: <? *> => <. .*> }> $ /).Bool.UInt;
 }
