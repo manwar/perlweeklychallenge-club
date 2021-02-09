@@ -7,5 +7,5 @@ is unique-subsequence("london",   "lon"), 3;
 
 sub unique-subsequence($S, $T) 
 {
-    +($S ~~ m:ex/<{ $T.comb.join(" .* ") }>/);
+    +($S ~~ m:ex/ <{ $T.comb.join(" .* ") }> /);
 }
