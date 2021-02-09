@@ -1,24 +1,4 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2021-02-09 23:18:28 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
    "drilldown" : {
       "series" : [
          {
@@ -36,8 +16,20 @@
             ]
          },
          {
-            "name" : "Simon Green",
-            "id" : "Simon Green",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -47,11 +39,13 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Simon Green",
+            "id" : "Simon Green"
          },
          {
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
@@ -75,46 +69,71 @@
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 099"
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2021-02-09 23:27:19 GMT"
    },
    "series" : [
       {
          "name" : "Perl Weekly Challenge - 099",
-         "colorByPoint" : 1,
          "data" : [
             {
                "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 4
+               "y" : 4,
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "y" : 3,
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            },
+            {
                "name" : "Simon Green",
+               "y" : 3,
                "drilldown" : "Simon Green"
             },
             {
-               "y" : 2,
                "drilldown" : "Simon Proctor",
+               "y" : 2,
                "name" : "Simon Proctor"
             },
             {
                "drilldown" : "Stuart Little",
-               "name" : "Stuart Little",
-               "y" : 4
+               "y" : 4,
+               "name" : "Stuart Little"
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
-   ]
+   ],
+   "title" : {
+      "text" : "Perl Weekly Challenge - 099"
+   }
 }
