@@ -7,7 +7,7 @@ is pattern-match("abcde", "a*d"),   0;
 is pattern-match("abcde", "?b*d"),  0;
 is pattern-match("abcde", "a*c?e"), 1;
 
-sub pattern-match($S, $P is copy) 
+sub pattern-match($S, $P) 
 {
     ($S ~~ / ^ <{ $P.trans: ["?", "*"] => [".", ".*"] }> $ /).Bool.UInt;
 }
