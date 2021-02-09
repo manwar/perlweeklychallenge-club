@@ -9,7 +9,6 @@ is pattern-match("abcde", "a*c?e"), 1;
 
 sub pattern-match($S, $P is copy) 
 {
-    $P ~~ s:g/ \? / .  /;
-    $P ~~ s:g/ \* / .* /;
+    $P .= trans: ["?", "*"] => [".", ".*"];
     so $S ~~ / ^ <$P> $ / andthen .Int;
 }
