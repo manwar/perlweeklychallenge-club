@@ -12,19 +12,22 @@ fn main() {
 }
 
 fn do_match(text: &str, pattern: &str) -> bool {
-    if pattern.is_empty() {
-        text.is_empty()
-    } else {
-        match pattern.chars().next().unwrap() {
-            '*' =>
-                do_match(text, &pattern[1..]) ||
-                (!text.is_empty() && do_match(&text[1..], pattern)),
-            '?' =>
-                !text.is_empty() && do_match(&text[1..], &pattern[1..]),
-            ch =>
-                text.chars().next() == Some(ch) && do_match(&text[1..], &pattern[1..])
+    fn inner(text: &[char], pattern: &[char]) -> bool {
+        if pattern.is_empty() {
+            text.is_empty()
+        } else {
+            match pattern[0] {
+                '*' =>
+                    inner(text, &pattern[1..]) ||
+                        (!text.is_empty() && inner(&text[1..], pattern)),
+                '?' =>
+                    !text.is_empty() && inner(&text[1..], &pattern[1..]),
+                ch =>
+                    text.get(0) == Some(&ch) && inner(&text[1..], &pattern[1..])
+            }
         }
     }
+    inner(&text.chars().collect::<Vec<char>>(), &pattern.chars().collect::<Vec<char>>())
 }
 
 #[cfg(test)]
@@ -78,5 +81,10 @@ mod tests {
     #[test]
     fn do_test14() {
         assert_eq!(do_match("a", "*?"), true);
+    }
+
+    #[test]
+    fn do_test15() {
+        assert_eq!(do_match("få", "f*"), true);
     }
 }
