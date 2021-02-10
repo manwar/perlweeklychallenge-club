@@ -41,6 +41,7 @@ Output: 1
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
+* [C](c/ch-1.c)
 * Perl
     * [Using regular expressions](perl/ch-1.pl)
     * [Recursion](perl/ch-1a.pl)
