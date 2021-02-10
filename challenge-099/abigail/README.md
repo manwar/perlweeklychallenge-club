@@ -41,7 +41,9 @@ Output: 1
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
-* [Perl](perl/ch-1.pl)
+* Perl
+    * [Using regular expressions](perl/ch-1.pl)
+    * [Recursion](perl/ch-1a.pl)
 
 
 ## [Unique Subsequence](https://perlweeklychallenge.org/blog/perl-weekly-challenge-099/#TASK2)
