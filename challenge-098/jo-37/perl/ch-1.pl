@@ -51,7 +51,7 @@ EOS
 
 binmode STDOUT, ':utf8';
 
-/^\d+$/ and say readN($a, $_) and next or $a = $_ for @ARGV;
+/^\d+$/ and say readN($a, $_) or $a = $_ for @ARGV;
 
 
 ### Implementation
