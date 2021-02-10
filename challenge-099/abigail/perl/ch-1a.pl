@@ -55,6 +55,7 @@ sub matches ($string, $pattern) {
         #
         # If we have exhausted the pattern, we have a match
         # if, and only if, we have exhausted the string.
+        #
         return length ($string) ? 0 : 1;
     }
     if (!length $string) {
@@ -62,6 +63,7 @@ sub matches ($string, $pattern) {
         # If we have exhausted the string, then if the pattern
         # starts with '*', we consume the '*' and recurse.
         # Else, the match fails.
+        #
         return $first_pattern eq '*' ? matches ($string, substr ($pattern, 1))
                                      : 0;
     }
