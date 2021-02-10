@@ -79,6 +79,7 @@ Output: 3
   assume the string and pattern are separated by a space.
 
 ### Solutions
+* [AWK](awk/ch-2.awk)
 * Perl
     * [Using regular expressions](perl/ch-2.pl)
     * [Recursive counting](perl/ch-2a.pl)
