@@ -90,4 +90,5 @@ Output: 3
 * Perl
     * [Using regular expressions](perl/ch-2.pl)
     * [Recursive counting](perl/ch-2a.pl)
+* [Python](python/ch-2.py)
 
