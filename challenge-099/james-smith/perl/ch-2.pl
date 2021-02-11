@@ -36,29 +36,30 @@ done_testing();
 
 sub uniq_subseq {
   my( $str, $sub ) = @_;
-  my $f = substr $sub,0,1,'';
+  my $f = substr $sub, 0, 1, q();
   return scalar @{[ $str =~ m{$f}g ]} if $sub eq q();
   my $res = 0;
-  $res += uniq_subseq($str,$sub) while $str=~s{.*?$f}{};
+  $res += uniq_subseq( $str, $sub ) while $str=~s{.*?$f}{};
   return $res;
 }
 
-say '';
-print join "\n", display_uniq_subseq( 'littleit', 'lit' ),'','';
-print join "\n", display_uniq_subseq( 'london', 'lon' ),'','';
-print join "\n", display_uniq_subseq( 'abcabcabc', 'abc' ),'','';
+say q();
+
+print join "\n", display_uniq_subseq( 'littleit',  'lit' ), q(), q();
+print join "\n", display_uniq_subseq( 'london',    'lon' ), q(), q();
+print join "\n", display_uniq_subseq( 'abcabcabc', 'abc' ), q(), q();
 
 sub display_uniq_subseq {
-  my( $str, $sub, $prev ) = (@_,'');
+  my( $str, $sub, $prev ) = ( @_, q() ); ## adding q() means previous is defined in first loop....
 
-  return ($prev =~s{\]\[}{}gr).$str if $sub eq ''; ## If we have exhausted the substring we return the previous part (by collapse []s)
+  return ($prev =~s{\]\[}{}gr).$str if $sub eq q(); ## If we have exhausted the substring we return the previous part (by collapse []s)
 
-  my( $r, $t, @res ) = ( '\A(.*?)('.(substr $sub,0,1,'').')', q() ); ## regex collects anything before the matched letter & the matched letter
+  my( $r, $t, @res ) = ( '\A(.*?)('.(substr $sub, 0, 1, q()).')', q() ); ## regex collects anything before the matched letter & the matched letter
 
   while( $str =~ s{$r}{} ) {
     my($a,$b) = ($1,$2);
-    push @res, display_uniq_subseq( $str,$sub,$prev.$a.'['.$b.']' );
-    $prev .= $a.$b; ## put the match onto the previous string, and look for subsequent match.
+    push @res, display_uniq_subseq( $str, $sub, $prev.$a.'['.$b.']' );
+    $prev .= $a.$b; ## put the match onto the previous string, and continue to next match
   }
   return @res;
 }
@@ -67,10 +68,10 @@ sub uniq_subseq_cache {
   my( $str, $sub ) = @_;
   my $k = "$str-$sub";
   return $c->{$k} if exists $c->{$k};
-  my $f = substr $sub,0,1,'';
+  my $f = substr $sub, 0, 1, q();
   return $c->{$k} = scalar @{[ $str =~ m{$f}g ]} if $sub eq q();
   my $res = 0;
-  $res += uniq_subseq($str,$sub) while $str=~s{.*?$f}{};
+  $res += uniq_subseq( $str, $sub ) while $str=~s{.*?$f}{};
   return $c->{$k} = $res;
 }
 
