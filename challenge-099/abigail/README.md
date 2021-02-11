@@ -84,6 +84,7 @@ Output: 3
 * [AWK](awk/ch-2.awk)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
+* [Node.js](node/ch-2.js)
 * Perl
     * [Using regular expressions](perl/ch-2.pl)
     * [Recursive counting](perl/ch-2a.pl)
