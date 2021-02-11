@@ -43,6 +43,7 @@ Output: 1
 * [AWK](awk/ch-1.awk)
 * [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
+* [Node.js](node/ch-1.js)
 * Perl
     * [Using regular expressions](perl/ch-1.pl)
     * [Recursion](perl/ch-1a.pl)
