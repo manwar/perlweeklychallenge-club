@@ -43,6 +43,26 @@ sub uniq_subseq {
   return $res;
 }
 
+say '';
+print join "\n", display_uniq_subseq( 'littleit', 'lit' ),'','';
+print join "\n", display_uniq_subseq( 'london', 'lon' ),'','';
+print join "\n", display_uniq_subseq( 'abcabcabc', 'abc' ),'','';
+
+sub display_uniq_subseq {
+  my( $str, $sub, $prev ) = (@_,'');
+
+  return ($prev =~s{\]\[}{}gr).$str if $sub eq ''; ## If we have exhausted the substring we return the previous part (by collapse []s)
+
+  my( $r, $t, @res ) = ( '\A(.*?)('.(substr $sub,0,1,'').')', q() ); ## regex collects anything before the matched letter & the matched letter
+
+  while( $str =~ s{$r}{} ) {
+    my($a,$b) = ($1,$2);
+    push @res, display_uniq_subseq( $str,$sub,$prev.$a.'['.$b.']' );
+    $prev .= $a.$b; ## put the match onto the previous string, and look for subsequent match.
+  }
+  return @res;
+}
+
 sub uniq_subseq_cache {
   my( $str, $sub ) = @_;
   my $k = "$str-$sub";
