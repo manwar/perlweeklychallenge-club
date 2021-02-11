@@ -48,6 +48,7 @@ Output: 1
     * [Using regular expressions](perl/ch-1.pl)
     * [Recursion](perl/ch-1a.pl)
 * [Python](python/ch-1.py)
+* [Ruby](ruby/ch-1.rb)
 
 
 ## [Unique Subsequence](https://perlweeklychallenge.org/blog/perl-weekly-challenge-099/#TASK2)
