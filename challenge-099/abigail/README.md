@@ -86,6 +86,7 @@ Output: 3
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
+* [Bash](bash/ch-2.sh)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
