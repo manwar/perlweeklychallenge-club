@@ -46,4 +46,5 @@ The sets of letters are read from standard input.
 
 ### Solutions
 * [GNU AWK](awk/ch-2.gawk)
+* [Bash](bash/ch-2.sh)
 * [Perl](perl/ch-2.pl)
