@@ -3,10 +3,8 @@
 use strict;
 
 use warnings;
-use feature qw(say);
+use feature qw(say state);
 use Test::More;
-
-my $c ={};
 
 is( uniq_subseq('littleit','lit'),    5 );
 is( uniq_subseq('london','lon'),      3 );
@@ -35,12 +33,11 @@ is( uniq_subseq_cache('abcabcabcabcabcabcabcabcabc','abc'),165 );
 done_testing();
 
 sub uniq_subseq {
-  my( $str, $sub ) = @_;
-  my $f = substr $sub, 0, 1, q();
-  return scalar @{[ $str =~ m{$f}g ]} if $sub eq q();
-  my $res = 0;
-  $res += uniq_subseq( $str, $sub ) while $str=~s{.*?$f}{};
-  return $res;
+  my( $result, $haystack, $needle ) = ( 0, @_ );
+  my $first = substr $needle, 0, 1, q();
+  return scalar @{[ $haystack =~ m{$first}g ]} if $needle eq q();
+  $result += uniq_subseq( $haystack, $needle ) while $haystack=~s{.*?$first}{};
+  return $result;
 }
 
 say q();
@@ -50,28 +47,27 @@ print join "\n", display_uniq_subseq( 'london',    'lon' ), q(), q();
 print join "\n", display_uniq_subseq( 'abcabcabc', 'abc' ), q(), q();
 
 sub display_uniq_subseq {
-  my( $str, $sub, $prev ) = ( @_, q() ); ## adding q() means previous is defined in first loop....
+  my( $haystack, $needle, $prev ) = ( @_, q() ); ## adding q() means previous is defined in first loop....
 
-  return ($prev =~s{\]\[}{}gr).$str if $sub eq q(); ## If we have exhausted the substring we return the previous part (by collapse []s)
+  return ($prev =~s{\]\[}{}gr).$haystack if $needle eq q(); ## If we have exhausted the substring we return the previous part (by collapse []s)
 
-  my( $r, $t, @res ) = ( '\A(.*?)('.(substr $sub, 0, 1, q()).')', q() ); ## regex collects anything before the matched letter & the matched letter
+  my( $regexp, @result ) = ( '\A(.*?)('.(substr $needle, 0, 1, q()).')' ); ## regex collects anything before the matched letter & the matched letter
 
-  while( $str =~ s{$r}{} ) {
-    my($a,$b) = ($1,$2);
-    push @res, display_uniq_subseq( $str, $sub, $prev.$a.'['.$b.']' );
-    $prev .= $a.$b; ## put the match onto the previous string, and continue to next match
+  while( $haystack =~ s{$regexp}{} ) {
+    my($pre_match,$match) = ($1,$2);
+    push @result, display_uniq_subseq( $haystack, $needle, $prev.$pre_match.'['.$match.']' );
+    $prev .= $pre_match.$match; ## put the match onto the previous string, and continue to next match
   }
-  return @res;
+  return @result;
 }
 
 sub uniq_subseq_cache {
-  my( $str, $sub ) = @_;
-  my $k = "$str-$sub";
-  return $c->{$k} if exists $c->{$k};
-  my $f = substr $sub, 0, 1, q();
-  return $c->{$k} = scalar @{[ $str =~ m{$f}g ]} if $sub eq q();
-  my $res = 0;
-  $res += uniq_subseq( $str, $sub ) while $str=~s{.*?$f}{};
-  return $c->{$k} = $res;
+  state $cache;
+  my( $result, $cache_key, $haystack, $needle ) = ( 0, "$_[0]-$_[1]", @_ );
+  my $first = substr $needle, 0, 1, q();
+  return $cache->{$cache_key} if exists $cache->{$cache_key};
+  return $cache->{$cache_key} = scalar @{[ $haystack =~ m{$first}g ]} if $needle eq q();
+  $result += uniq_subseq_cache( $haystack, $needle ) while $haystack=~s{.*?$first}{};
+  return $cache->{$cache_key} = $result;
 }
 
