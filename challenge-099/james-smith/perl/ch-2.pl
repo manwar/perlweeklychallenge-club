@@ -35,10 +35,9 @@ is( uniq_subseq_cache('abcabcabcabcabcabcabcabcabc','abc'),165 );
 done_testing();
 
 sub uniq_subseq {
-  my( $str, $sub ) = @_;
+  my( $res, $str, $sub ) = ( 0, @_ );
   my $f = substr $sub, 0, 1, q();
   return scalar @{[ $str =~ m{$f}g ]} if $sub eq q();
-  my $res = 0;
   $res += uniq_subseq( $str, $sub ) while $str=~s{.*?$f}{};
   return $res;
 }
@@ -65,13 +64,11 @@ sub display_uniq_subseq {
 }
 
 sub uniq_subseq_cache {
-  my( $str, $sub ) = @_;
-  my $k = "$str-$sub";
-  return $c->{$k} if exists $c->{$k};
+  my( $res, $k, $str, $sub ) = ( 0, "$_[0]-$_[1]", @_ );
   my $f = substr $sub, 0, 1, q();
+  return $c->{$k} if exists $c->{$k};
   return $c->{$k} = scalar @{[ $str =~ m{$f}g ]} if $sub eq q();
-  my $res = 0;
-  $res += uniq_subseq( $str, $sub ) while $str=~s{.*?$f}{};
+  $res += uniq_subseq_cache( $str, $sub ) while $str=~s{.*?$f}{};
   return $c->{$k} = $res;
 }
 
