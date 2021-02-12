@@ -1,7 +1,7 @@
 
 # The Weekly Challenge
 
-The Weekly Challenge - #096 - Tyler Wardhaugh
+The Weekly Challenge - #099 - Tyler Wardhaugh
 
 ## Usage
 
@@ -10,11 +10,11 @@ Ensure requirements are satified (ideally in venv):
 
 Run Task 1:
 
-    $ ./ch1.py S
+    $ ./ch1.py S P
 
 Run Task 2:
 
-    $ ./ch2.py S1 S2
+    $ ./ch2.py S T
 
 Run the project's tests (all the samples from the task descriptions plus some others):
 
