@@ -40,5 +40,10 @@ each letter only once (though there can be duplicates and you can
 use each of them once), you don't have to use all the letters.
 (Disclaimer: The challenge was proposed by Scimon Proctor)
 
+### Notes
+We will assume the word list is passed in with a '-f' parameter.
+The sets of letters are read from standard input.
+
 ### Solutions
+* [GNU AWK](awk/ch-2.gawk)
 * [Perl](perl/ch-2.pl)
