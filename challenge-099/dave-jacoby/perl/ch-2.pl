@@ -6,22 +6,21 @@ use utf8;
 use feature qw{say state signatures };
 no warnings qw{experimental};
 
-use List::Util qw{ uniq };
-
 my @arr;
-push @arr, [ 'littleit', 'lit' ];
-push @arr, [ 'london',   'lon' ];
-push @arr, [ 'abracadabra',   'abra' ];
+
+push @arr, [ 'littleit',    'lit' ];
+push @arr, [ 'london',      'lon' ];
+push @arr, [ 'abracadabra', 'abra' ];
+push @arr, [ 'mississippi', 'miss' ];
 
 for my $n (@arr) {
     my @p = unique_sub( $n->@* );
-    say ' ';
+    say '';
     for my $o (@p) {
         state $c = 0;
         $c++;
         my $string = display_sub( $n->[0], $o );
         say qq{  $c:  $string };
-
     }
 }
 
@@ -29,25 +28,31 @@ sub unique_sub ( $S, $T, $p = 0, $q = 0, $done = undef ) {
     if ( $p > length $S ) { return }
     $done //= [];
     my @output;
-    my $l1 = substr $S, $p, 1;
-    my $l2 = substr $T, $q, 1;
+    my $l   = length $T;
+    my $l1  = substr $S, $p, 1;
+    my $l2  = substr $T, $q, 1;
     my $key = join '.', $done->@*;
 
-    if ( $q == length $T ) {
-        push @output, $key;
-    }
+    # THE CASE OF NO MATCH
     my $copy->@* = $done->@*;
     push @output, unique_sub( $S, $T, $p + 1, $q, $copy );
-    if ( $l1 eq $l2 ) {
-        push $copy->@*, $p;
-        push @output, unique_sub( $S, $T, $p + 1, $q + 1, $copy );
+
+    # THE CASE OF MATCH
+    if ( $l1 eq $l2 ) {    # is a match
+        if ( $q < $l ) {    # is not a complete match
+            push $copy->@*, $p;
+            push @output, unique_sub( $S, $T, $p + 1, $q + 1, $copy );
+        }
+        elsif ( $l == $q ) {    # is a complete match
+            push @output, $key;
+        }
     }
-    return uniq sort @output;
+    return sort @output;
 }
 
 sub display_sub ( $string, $key ) {
-    my @key = split /\D/, $key;
-    my %key = map { $_ => 1 } @key;
+    my @key   = split /\D/, $key;
+    my %key   = map { $_ => 1 } @key;
     my $state = 0;
     my $output;
 
