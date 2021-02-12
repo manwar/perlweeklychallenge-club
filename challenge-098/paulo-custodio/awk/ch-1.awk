@@ -31,7 +31,7 @@ function readN(filename, read_len) {
 
 BEGIN {
     for (i = 1; i < ARGC - 1; i += 2) {
-        text = readN(ARGV[i], ARGV[i+1]);
+        text = readN(ARGV[i], ARGV[i+1])
         print text
     }
     exit 0
