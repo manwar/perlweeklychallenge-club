@@ -41,3 +41,4 @@ use each of them once), you don't have to use all the letters.
 (Disclaimer: The challenge was proposed by Scimon Proctor)
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
