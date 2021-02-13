@@ -132,11 +132,11 @@ sub min_flips {
   ]->[-1]
 }
 
-sub mf_1{[local$\=local$/=length$_[0],$\/=$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1];}
-## Now as a one liner [all 157 characters]
+sub mf_1{[local$\=local$/=length$_[0],$\/=$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1]}
+## Now as a one liner [all 156 characters] - 146 inside the curly braces..
 
 sub mf_2{[local$\=local$/=length$_[0],$\/=$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_
-)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1];}
+)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1]}
 
 ## With the white space back in..
 
