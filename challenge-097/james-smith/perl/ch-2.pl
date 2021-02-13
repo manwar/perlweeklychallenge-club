@@ -34,12 +34,12 @@ is( mf_3('101100100100101',3), 2 );
 is( mf_3('101101',3), 0 );
 is( mf_3('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
 
-is( mf_g('101100101',3), 1 );
-is( mf_g('10110111', 4), 2 );
-is( mf_g('100101100',3), 1 );
-is( mf_g('101100100100101',3), 2 );
-is( mf_g('101101',3), 0 );
-is( mf_g('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
+is( mf('101100101',3), 1 );
+is( mf('10110111', 4), 2 );
+is( mf('100101100',3), 1 );
+is( mf('101100100100101',3), 2 );
+is( mf('101101',3), 0 );
+is( mf('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
 
 is( min_flips_more_readable('101100101',3), 1 );
 is( min_flips_more_readable('10110111', 4), 2 );
@@ -152,11 +152,13 @@ sub mf_1{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)
 sub mf_2{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)
 =~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1]}
 
-## Golf extra (less readable!) [at 125 characters] - 115 inside the curly braces..
+## Golf extra (less readable!) [at 112 characters] - 104 inside the curly braces..
 ## but side effects as no longer localise $/ & $\
-sub mf_g{[$/=length$_[0],$\=$//$_[1],map{$/=$_<$/?$_:$/}map{
-($_[0]^substr($_[0],$_*$_[1],$_[1])x$\)=~y/\1/\1/}0..$\-1]->
-[-1]}
+## Note as $a/$b are used in sort - you don't need to my them even though we are using strict...
+
+sub mf{(($a,$b)=@_,$/=length$a,$\=$//$b,
+map{$/=$_<$/?$_:$/}map{($a^substr($a,$_*
+$b,$b)x$\)=~y/\1//}0..$\-1)[-1]}
 
 sub mf_3{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?
 $_:$/}map{($_[0]^$_)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_
