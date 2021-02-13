@@ -27,6 +27,20 @@ is( mf_2('101100100100101',3), 2 );
 is( mf_2('101101',3), 0 );
 is( mf_2('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
 
+is( mf_3('101100101',3), 1 );
+is( mf_3('10110111', 4), 2 );
+is( mf_3('100101100',3), 1 );
+is( mf_3('101100100100101',3), 2 );
+is( mf_3('101101',3), 0 );
+is( mf_3('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
+
+is( mf_g('101100101',3), 1 );
+is( mf_g('10110111', 4), 2 );
+is( mf_g('100101100',3), 1 );
+is( mf_g('101100100100101',3), 2 );
+is( mf_g('101101',3), 0 );
+is( mf_g('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
+
 is( min_flips_more_readable('101100101',3), 1 );
 is( min_flips_more_readable('10110111', 4), 2 );
 is( min_flips_more_readable('100101100',3), 1 );
@@ -126,30 +140,36 @@ sub min_flips {
     map{$/=$_<$/?$_:$/}
     map{($_[0]^$_)=~y/\1/\1/}
     map{$_ x$\}
-    map{substr$_[0],$_,$_[1]}
-    map{$_*$_[1]}
+    map{substr$_[0],$_*$_[1],$_[1]}
     0..$\-1
   ]->[-1]
 }
 
-sub mf_1{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1]}
+sub mf_1{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_*$_[1],$_[1]}0..$\-1]->[-1]}
 
-## Now as a one liner [all 155 characters] - 145 inside the curly braces..
+## Now as a one liner [all 148 characters] - 138 inside the curly braces..
 
 sub mf_2{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)
 =~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1]}
 
+## Golf extra (less readable!) [at 135 characters] - 125 inside the curly braces..
+sub mf_g{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?
+$_:$/}map{($_[0]^substr($_[0],$_*$_[1],$_[1])x$\)=~y/\1/\1/}
+0..$\-1]->[-1]}
+
+sub mf_3{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?
+$_:$/}map{($_[0]^$_)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_
+*$_[1],$_[1]}0..$\-1]->[-1]}
 ## With the white space back in..
 
 sub min_flips_more_readable {
   return [
-    local $/ = length($_[0]),            # Minimum value (bounded above by length)
-    local $\ = $/ / $_[1],               # No of blocks
-    map { $/ = $_ < $/ ? $_ : $/     }   # Update min if first block OR value < min
-    map { ( $_[0] ^ $_ ) =~ y/\1/\1/ }   # Get number of flipped letters
-    map { $_ x $\                    }   # Repeat sub-block so same length as string
-    map { substr $_[0], $_, $_[1]    }   # Get "nth" sub-block
-    map { $_ * $_[1]                 }   # Convert index to start location
-    0 .. $\ - 1                          # Block indexes...
-  ]->[ -1 ];                             # Get last value from list {minimum}
+    local $/ = length($_[0]),               # Minimum value (bounded above by length)
+    local $\ = $/ / $_[1],                  # No of blocks
+    map { $/ = $_ < $/ ? $_ : $/          } # Update min if first block OR value < min
+    map { ( $_[0] ^ $_ ) =~ y/\1/\1/      } # Get number of flipped letters
+    map { $_ x $\                         } # Repeat sub-block so same length as string
+    map { substr $_[0], $_ * $_[1], $_[1] } # Get "nth" sub-block
+    0 .. $\ - 1                             # Block indexes...
+  ]->[-1]
 }
