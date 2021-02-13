@@ -13,6 +13,27 @@ is( min_flips('101100100100101',3), 2 );
 is( min_flips('101101',3), 0 );
 is( min_flips('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
 
+is( mf_1('101100101',3), 1 );
+is( mf_1('10110111', 4), 2 );
+is( mf_1('100101100',3), 1 );
+is( mf_1('101100100100101',3), 2 );
+is( mf_1('101101',3), 0 );
+is( mf_1('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
+
+is( mf_2('101100101',3), 1 );
+is( mf_2('10110111', 4), 2 );
+is( mf_2('100101100',3), 1 );
+is( mf_2('101100100100101',3), 2 );
+is( mf_2('101101',3), 0 );
+is( mf_2('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
+
+is( min_flips_more_readable('101100101',3), 1 );
+is( min_flips_more_readable('10110111', 4), 2 );
+is( min_flips_more_readable('100101100',3), 1 );
+is( min_flips_more_readable('101100100100101',3), 2 );
+is( min_flips_more_readable('101101',3), 0 );
+is( min_flips_more_readable('0000000100100011010001010110011110001001101010111100110111101111',4), 32 );
+
 done_testing();
 
 ##  As the first problem was a good one for applying "Golfing"
@@ -57,7 +78,7 @@ done_testing();
 ##        locations ($_ is the value of the element of variable that
 ##        the map function is processing
 ##
-##    * map { [ $_, substr$_[0],$_,$_[1] ] } - this grabs the
+##    * map { substr$_[0],$_,$_[1] } - this grabs the
 ##        substring for the nth block - but keeps the start location
 ##        as we will need it later... Here we see a map returning an
 ##        arrayref - in subsequent requests - $_->[0] is the start
@@ -67,11 +88,11 @@ done_testing();
 ##        You have to be careful here as $_[0] and $_->[0] look similar
 ##        but are different
 ##
-##    * map { [ $_->[0], $_->[1] x $\ ] } - this maps the string we
+##    * map { $_ x $\ } - this maps the string we
 ##        just have to have the same length as our original string -
 ##        by performing a perl "string multiplication" x
 ##
-##    * map { [ $_->[0], ( $_[0] ^ $_->[1] ) =~ y/\1/\1/ ] } -
+##    * map { ( $_[0] ^ $_ ) =~ y/\1/\1/ } -
 ##        count the flips. Two perlisms here - we can use xor operator
 ##        ^ on strings to xor the binary values of each string.
 ##        y/../../ - the translate operator returns the number of
@@ -81,7 +102,7 @@ done_testing();
 ##        a character "\0" and when they are different the value is 1
 ##        or as a characther "\1"
 ##
-##    * map { $/ = !$_->[0] || $_->[1] < $/ ? $_->[1] : $/ } - finally
+##    * map { $/ = $_ < $/ ? $_ : $/ } - finally
 ##        we keep the running total of the minimum value - Now this is
 ##        why we kept the start of the block around - as the first
 ##        time through the loop we have to define the minimum - if
@@ -100,37 +121,34 @@ done_testing();
 sub min_flips {
   ## Golf mode on...
   [
-    local$/,
-    local$\=length($_[0])/$_[1],
-    map{$/=!$_->[0]||$_->[1]<$/?$_->[1]:$/}
-    map{[$_->[0],($_[0]^$_->[1])=~y/\1/\1/]}
-    map{[$_->[0],$_->[1]x$\]}
-    map{[$_,substr$_[0],$_,$_[1]]}
+    local$\=local$/=length$_[0],
+    $\/=$_[1],
+    map{$/=$_<$/?$_:$/}
+    map{($_[0]^$_)=~y/\1/\1/}
+    map{$_ x$\}
+    map{substr$_[0],$_,$_[1]}
     map{$_*$_[1]}
     0..$\-1
   ]->[-1]
 }
 
-## Now as a one liner [all 213 cha....
+sub mf_1{[local$\=local$/=length$_[0],$\/=$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1];}
+## Now as a one liner [all 157 characters]
 
-sub mf_1{[local$/,local$\=length($_[0])/$_[1],map{$/=!$_->[0]||$_->[1]<$/?$_->[1]:$/}map{[$_->[0],($_[0]^$_->[1])=~y/\1/\1/]}map{[$_->[0],$_->[1]x$\]}map{[$_,substr$_[0],$_,$_[1]]}map{$_*$_[1]}0..$\-1]->[-1]}
-
-sub mf_1wrap{[local$/,local$\=length($_[0])/$_[1],map{$/=!$_->[0]||$_->
-[1]<$/?$_->[1]:$/}map{[$_->[0],($_[0]^$_->[1])=~y/\1/\1/]}map{[$_->[0],
-$_->[1]x$\]}map{[$_,substr$_[0],$_,$_[1]]}map{$_*$_[1]}0..$\-1]->[-1]}
+sub mf_2{[local$\=local$/=length$_[0],$\/=$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_
+)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1];}
 
 ## With the white space back in..
 
 sub min_flips_more_readable {
   return [
-    local $/,                                            # Accumulator for min value
-    local $\ = length($_[0]) / $_[1],                    # No of blocks
-
-    map { $/ = !$_->[0] || $_->[1] < $/ ? $_->[1] : $/ } # Update min if first block OR value < min
-    map { [ $_->[0], ( $_[0] ^ $_->[1] ) =~ y/\1/\1/ ] } # Get number of flipped letters
-    map { [ $_->[0], $_->[1] x $\                    ] } # Repeat sub-block so same length as string
-    map { [ $_,      substr $_[0], $_, $_[1]         ] } # Get "nth" sub-block
-    map { $_ * $_[1]                                   } # Convert index to start location
-    0 .. $\ - 1                                          # Block indexes...
-  ]->[ -1 ];                                             # Get last value from list {minimum}
+    local $\ = local $/ = length($_[0]), # Minimum value (bounded above by length)
+    $\/=$_[1],                           # No of blocks
+    map { $/ = $_ < $/ ? $_ : $/     }   # Update min if first block OR value < min
+    map { ( $_[0] ^ $_ ) =~ y/\1/\1/ }   # Get number of flipped letters
+    map { $_ x $\                    }   # Repeat sub-block so same length as string
+    map { substr $_[0], $_, $_[1]    }   # Get "nth" sub-block
+    map { $_ * $_[1]                 }   # Convert index to start location
+    0 .. $\ - 1                          # Block indexes...
+  ]->[ -1 ];                             # Get last value from list {minimum}
 }
