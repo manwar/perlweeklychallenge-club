@@ -152,10 +152,11 @@ sub mf_1{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)
 sub mf_2{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)
 =~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1]}
 
-## Golf extra (less readable!) [at 135 characters] - 125 inside the curly braces..
-sub mf_g{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?
-$_:$/}map{($_[0]^substr($_[0],$_*$_[1],$_[1])x$\)=~y/\1/\1/}
-0..$\-1]->[-1]}
+## Golf extra (less readable!) [at 125 characters] - 115 inside the curly braces..
+## but side effects as no longer localise $/ & $\
+sub mf_g{[$/=length$_[0],$\=$//$_[1],map{$/=$_<$/?$_:$/}map{
+($_[0]^substr($_[0],$_*$_[1],$_[1])x$\)=~y/\1/\1/}0..$\-1]->
+[-1]}
 
 sub mf_3{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?
 $_:$/}map{($_[0]^$_)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_
