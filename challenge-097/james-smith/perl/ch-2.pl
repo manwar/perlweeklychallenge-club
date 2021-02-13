@@ -121,8 +121,8 @@ done_testing();
 sub min_flips {
   ## Golf mode on...
   [
-    local$\=local$/=length$_[0],
-    $\/=$_[1],
+    local$/=length$_[0],
+    local$\=$//$_[1],
     map{$/=$_<$/?$_:$/}
     map{($_[0]^$_)=~y/\1/\1/}
     map{$_ x$\}
@@ -132,18 +132,19 @@ sub min_flips {
   ]->[-1]
 }
 
-sub mf_1{[local$\=local$/=length$_[0],$\/=$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1]}
-## Now as a one liner [all 156 characters] - 146 inside the curly braces..
+sub mf_1{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1]}
 
-sub mf_2{[local$\=local$/=length$_[0],$\/=$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_
-)=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1]}
+## Now as a one liner [all 155 characters] - 145 inside the curly braces..
+
+sub mf_2{[local$/=length$_[0],local$\=$//$_[1],map{$/=$_<$/?$_:$/}map{($_[0]^$_)
+=~y/\1/\1/}map{$_ x$\}map{substr$_[0],$_,$_[1]}map{$_*$_[1]}0..$\-1]->[-1]}
 
 ## With the white space back in..
 
 sub min_flips_more_readable {
   return [
-    local $\ = local $/ = length($_[0]), # Minimum value (bounded above by length)
-    $\/=$_[1],                           # No of blocks
+    local $/ = length($_[0]),            # Minimum value (bounded above by length)
+    local $\ = $/ / $_[1],               # No of blocks
     map { $/ = $_ < $/ ? $_ : $/     }   # Update min if first block OR value < min
     map { ( $_[0] ^ $_ ) =~ y/\1/\1/ }   # Get number of flipped letters
     map { $_ x $\                    }   # Repeat sub-block so same length as string
