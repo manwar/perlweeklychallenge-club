@@ -50,17 +50,18 @@ for my $lang (grep {-d} sort keys %LANG) {
             for my $doc (@$yaml) {
                 for my $spec (@$doc) {
                     # run setup code
-                    ok eval($spec->{setup}), $spec->{setup} if $spec->{setup};
+                    ok eval($spec->{setup}), $spec->{setup} 
+                        if defined($spec->{setup});
                     $@ and die $@;
 
                     # build test command line
                     my $cmd = "$exec ".($spec->{args} // "");
                     chomp($cmd);
-                    if($spec->{input}) {
+                    if(defined($spec->{input})) {
                         path("in.txt")->spew($spec->{input});
                         $cmd .= " < in.txt";
                     }
-                    if ($spec->{output}) {
+                    if (defined($spec->{output})) {
                         path("out_exp.txt")->spew($spec->{output});
                         $cmd .= " > out.txt";
                     }
@@ -69,13 +70,14 @@ for my $lang (grep {-d} sort keys %LANG) {
                     run($cmd);
 
                     # compare output
-                    if ($spec->{output}) {
+                    if (defined($spec->{output})) {
                         run("diff -w out_exp.txt out.txt");
                     }
 
                     # run cleaup code
                     if (Test::More->builder->is_passing) {
-                        ok eval($spec->{cleanup}), $spec->{cleanup} if $spec->{cleanup};
+                        ok eval($spec->{cleanup}), $spec->{cleanup} 
+                            if defined($spec->{cleanup});
                         $@ and die $@;
                         unlink("in.txt", "out.txt", "out_exp.txt");
                     }
@@ -102,7 +104,7 @@ sub build {
             return $exe;
         }
         if (/awk/) {
-            return "gawk -f $prog";
+            return "gawk -f $prog --";
         }
         if (/basic/) {
             run("fbc $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
