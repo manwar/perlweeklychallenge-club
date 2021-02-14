@@ -1,6 +1,6 @@
 #!/usr/bin/gawk
 
-# TASK #2 › Unique Subsequence
+# TASK #2 > Unique Subsequence
 # Submitted by: Mohammad S Anwar
 # You are given two strings $S and $T.
 #
@@ -27,24 +27,24 @@
 function count_subsequences(s, t) {
     while (1) {
         if (t=="") {            # t is empty, matched
-            return 1
+            return 1;
         }
         else if (s=="") {       # s is empty, did not match
-            return 0
+            return 0;
         }
         else if (substr(s,1,1) == substr(t,1,1)) {  # same char,
                                                     # check two paths matching
                                                     # and not matching
             return count_subsequences(substr(s,2), substr(t,2)) \
-                 + count_subsequences(substr(s,2), t)
+                 + count_subsequences(substr(s,2), t);
         }
         else {                  # different char, keep pattern
-            s = substr(s,2)
+            s = substr(s,2);
         }
     }
 }
 
 BEGIN {
-    print count_subsequences(ARGV[1], ARGV[2])
-    exit 0
+    print count_subsequences(ARGV[1], ARGV[2]);
+    exit 0;
 }

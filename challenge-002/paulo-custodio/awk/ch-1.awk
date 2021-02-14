@@ -6,10 +6,10 @@
 # Write a script or one-liner to remove leading zeros from positive numbers.
 
 BEGIN {
-    num = ARGV[1]
+    num = ARGV[1];
     if (match(num, /^0*([0-9]+)/, capture))
-        print capture[1]
+        print capture[1];
     else
-        print num
-    exit 0
+        print num;
+    exit 0;
 }

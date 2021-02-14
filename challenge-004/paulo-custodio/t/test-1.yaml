@@ -1,0 +1,9 @@
+- setup:
+  cleanup:
+  args:     eval{-s $prog}
+  input:
+  output:   |
+            |eval{
+            |   use Math::BigFloat;
+            |   Math::BigFloat->bpi(-s $prog)."\n";
+            |}
