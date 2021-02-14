@@ -152,3 +152,5 @@ sub value_or_eval {
     $@ and die "eval '$str' failed: $@";
     return $value;
 }
+
+1;

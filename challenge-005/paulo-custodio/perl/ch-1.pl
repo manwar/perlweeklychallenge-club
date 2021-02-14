@@ -3,10 +3,10 @@
 # Challenge 005
 #
 # Challenge #1
-# Write a program which prints out all anagrams for a given word. For more information about Anagram, please check this wikipedia page.
+# Write a program which prints out all anagrams for a given word. For more
+# information about Anagram, please check this wikipedia page.
 # create a hash of all words in dictionary where key is sorted list of letters
 # therefore two anagrams have the same key
-
 
 use strict;
 use warnings;
