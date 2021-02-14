@@ -1,16 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-02-14 04:05:41 GMT"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
    "xAxis" : {
       "categories" : [
          "Burkhard Nickels",
@@ -48,13 +36,29 @@
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-02-14 04:23:07 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             31,
             0,
-            101,
+            103,
             0,
             1,
             149,
@@ -82,7 +86,8 @@
             0,
             46,
             0
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -120,6 +125,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             15,
             0,
@@ -151,17 +157,11 @@
             0,
             45,
             9
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
