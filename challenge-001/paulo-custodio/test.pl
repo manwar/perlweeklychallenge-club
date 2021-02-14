@@ -62,6 +62,7 @@ for my $lang (grep {-d} sort keys %LANG) {
                         $cmd .= " < in.txt";
                     }
                     if (defined($spec->{output})) {
+                        $spec->{output} =~ s/^\|//mg;       # delete initial bar
                         path("out_exp.txt")->spew($spec->{output});
                         $cmd .= " > out.txt";
                     }

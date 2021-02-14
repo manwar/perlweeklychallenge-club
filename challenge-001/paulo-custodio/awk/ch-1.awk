@@ -7,8 +7,7 @@
 # ‘Perl Weekly Challenge’. Also print the number of times the character ‘e’
 # is found in the string.
 
-function join(array, start, end, sep,    result, i)
-{
+function join(array, start, end, sep,    result, i) {
     if (sep == "")
        sep = " "
     else if (sep == SUBSEP) # magic value
@@ -19,9 +18,10 @@ function join(array, start, end, sep,    result, i)
     return result
 }
 
-function alen(a, i) {
-    for(i in a);
-    return i
+function alen(a, i, k) {
+    k = 0
+    for(i in a) k++
+    return k
 }
 
 BEGIN {
