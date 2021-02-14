@@ -40,7 +40,8 @@ sub findSubstrings {
     push @startpositions, pos $longword ;
       }
 #we look for the rest of the chunks from every position in @startpositions
-      $regex = "\.\+\?" ; #at least one character after the first chunk, greedily
+      $regex = "\.\+\?" ; #at least one character after the first chunk,
+      #non-greedily
       for my $i (1 .. $len - 1 ) {
     $regex .= "$chunks->[ $i ]" ;
     if ( $i != $len - 1 ) {
