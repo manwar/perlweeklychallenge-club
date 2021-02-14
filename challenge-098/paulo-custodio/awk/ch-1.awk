@@ -2,7 +2,7 @@
 
 # Challenge 098
 #
-# TASK #1 › Read N-characters
+# TASK #1 > Read N-characters
 # Submitted by: Mohammad S Anwar
 # You are given file $FILE.
 #
@@ -18,21 +18,20 @@
 
 # read next N chars from file
 function readN(filename, read_len) {
-    skip_len = 0
-    if (read_files[filename]) {
-        skip_len = read_files[filename]
-    }
-    read_files[filename] = skip_len + read_len
+    skip_len = 0;
+    if (read_files[filename])
+        skip_len = read_files[filename];
+    read_files[filename] = skip_len + read_len;
 
-    dd = "dd if=" filename " status=none bs=1 skip=" skip_len " count=" read_len
-    dd | getline text
-    return text
+    dd = "dd if=" filename " status=none bs=1 skip=" skip_len " count=" read_len;
+    dd | getline text;
+    return text;
 }
 
 BEGIN {
     for (i = 1; i < ARGC - 1; i += 2) {
-        text = readN(ARGV[i], ARGV[i+1])
-        print text
+        text = readN(ARGV[i], ARGV[i+1]);
+        print text;
     }
-    exit 0
+    exit 0;
 }

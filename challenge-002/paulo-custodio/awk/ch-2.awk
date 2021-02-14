@@ -9,55 +9,55 @@
 
 function format_number(n, base,    negative, output, d) {
     if (n < 0) {
-        negative = 1
+        negative = 1;
         n = -n
     }
     else {
-        negative = 0
+        negative = 0;
     }
 
     output = ""
     do {
-        d = n % base
-        n = int(n / base)
-        output = substr(digits, d+1, 1) output
+        d = n % base;
+        n = int(n / base);
+        output = substr(digits, d+1, 1) output;
     } while (n > 0)
 
     if (negative)
-        output = "-" output
+        output = "-" output;
 
-    return output
+    return output;
 }
 
 function scan_number(str, base,    n, negative, ch, d) {
     n = 0;
     if (sub(/^-/, "", str))
-        negative = 1
+        negative = 1;
     else
-        negative = 0
+        negative = 0;
 
     while (str != "") {
-        ch = toupper(substr(str, 1, 1))
-        str = substr(str, 2)
-        d = index(digits, ch) - 1
+        ch = toupper(substr(str, 1, 1));
+        str = substr(str, 2);
+        d = index(digits, ch) - 1;
         if (d < 0 || d >= base) {
-            print "cannot parse '" str "'"
-            exit(1)
+            print "cannot parse '" str "'";
+            exit(1);
         }
-        n = base * n + d
+        n = base * n + d;
     }
     if (negative)
-        n = -n
-    return n
+        n = -n;
+    return n;
 }
 
 BEGIN {
-    BASE = 35
-    digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    BASE = 35;
+    digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
     if (ARGV[1] == "-r")
-        print scan_number(ARGV[2], 35)
+        print scan_number(ARGV[2], 35);
     else
-        print format_number(ARGV[1], 35)
+        print format_number(ARGV[1], 35);
     exit 0
 }

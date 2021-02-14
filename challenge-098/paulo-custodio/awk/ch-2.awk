@@ -2,7 +2,7 @@
 
 # Challenge 098
 #
-# TASK #2 › Search Insert Position
+# TASK #2 > Search Insert Position
 # Submitted by: Mohammad S Anwar
 # You are given a sorted array of distinct integers @N and a target $N.
 #
@@ -27,22 +27,21 @@
 
 # print contents of array (nums, nums_size)
 function print_array() {
-    sep = ""
+    sep = "";
     printf "("
     for (i=0; i<nums_size; i++) {
-        printf sep nums[i]
-        sep = ", "
+        printf sep nums[i];
+        sep = ", ";
     }
-    print ")"
+    print ")";
 }
 
 # insert an element in (nums, nums_size), shifting all other positions up
 function insert(p, n) {
-    nums_size++
-    for (i=nums_size-1; i>p; i--) {
-        nums[i] = nums[i-1]
-    }
-    nums[p] = n
+    nums_size++;
+    for (i=nums_size-1; i>p; i--)
+        nums[i] = nums[i-1];
+    nums[p] = n;
 }
 
 # use bisect method to search for position
@@ -52,7 +51,7 @@ function search_insert(n) {
         return 0;
     }
     else if (n < nums[0]) {         # before first
-        insert(0, n)
+        insert(0, n);
         return 0;
     }
     else if (n > nums[nums_size-1]) {# after last
@@ -60,33 +59,33 @@ function search_insert(n) {
         return nums_size-1;
     }
     else {                          # bisect
-        bot = 0; top = nums_size
-        mid = int((top + bot) / 2)
+        bot = 0; top = nums_size;
+        mid = int((top + bot) / 2);
         while (bot+1 < top) {
             if (n == nums[mid])
                 return mid;
             else if (n < nums[mid])
-                top = mid
+                top = mid;
             else
-                bot = mid
+                bot = mid;
             mid = int((top + bot) / 2)
         }
 
         # not found, insert at mid+1
-        insert(mid+1, n)
-        return mid+1
+        insert(mid+1, n);
+        return mid+1;
     }
 }
 
 BEGIN {
-    n = ARGV[1]
-    nums_size = 0       # nums[] size
+    n = ARGV[1];
+    nums_size = 0;       # nums[] size
 
     for (i = 2; i < ARGC; i++) {
-        nums[nums_size++] = ARGV[i]
+        nums[nums_size++] = ARGV[i];
     }
-    p = search_insert(n)
-    print p
-    print_array()
-    exit 0
+    p = search_insert(n);
+    print p;
+    print_array();
+    exit 0;
 }

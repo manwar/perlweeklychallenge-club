@@ -35,14 +35,17 @@ else {
     $TESTS{$_}=1 for @ARGV;
 }
 
+# to be used in eval{} in the tests
+use vars qw( $prog $exec);
+
 for my $lang (grep {-d} sort keys %LANG) {
     next unless $TESTS{$lang};
-    for my $prog (path($lang)->children(qr/\.$LANG{$lang}$/)) {
+    for $prog (path($lang)->children(qr/\.$LANG{$lang}$/)) {
         $prog->basename =~ /^ch[-_](.*)\.$LANG{$lang}$/ or die $prog;
         my $task = $1;
 
         # compile if needed
-        my $exec = build($lang, $prog);
+        $exec = build($lang, $prog);
 
         for my $test (path("t")->children(qr/test-$task\.yaml$/)) {
             # execute each test from test-N.yaml
@@ -55,15 +58,17 @@ for my $lang (grep {-d} sort keys %LANG) {
                     $@ and die $@;
 
                     # build test command line
-                    my $cmd = "$exec ".($spec->{args} // "");
+                    my $cmd = "$exec ".value_or_eval($spec->{args});
                     chomp($cmd);
+
+                    # input
                     if(defined($spec->{input})) {
-                        path("in.txt")->spew($spec->{input});
+                        path("in.txt")->spew(value_or_eval($spec->{input}));
                         $cmd .= " < in.txt";
                     }
                     if (defined($spec->{output})) {
                         $spec->{output} =~ s/^\|//mg;       # delete initial bar
-                        path("out_exp.txt")->spew($spec->{output});
+                        path("out_exp.txt")->spew(value_or_eval($spec->{output}));
                         $cmd .= " > out.txt";
                     }
 
@@ -139,3 +144,13 @@ sub run {
     my($cmd) = @_;
     ok 0==system($cmd), $cmd;
 }
+
+sub value_or_eval {
+    my($str) = @_;
+    $str //= "";
+    my $value = ($str =~ /^eval\b/) ? eval($str) : $str;
+    $@ and die "eval '$str' failed: $@";
+    return $value;
+}
+
+1;
