@@ -18,4 +18,5 @@ BEGIN {
     }
     pi = substr(pi, 1, size+1)
     print pi;
+    exit 0;
 }
