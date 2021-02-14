@@ -15,18 +15,18 @@ function format_number(n, base,    negative, output, d) {
     else {
         negative = 0
     }
-    
+
     output = ""
     do {
         d = n % base
         n = int(n / base)
         output = substr(digits, d+1, 1) output
     } while (n > 0)
-    
+
     if (negative)
         output = "-" output
-    
-    return output        
+
+    return output
 }
 
 function scan_number(str, base,    n, negative, ch, d) {
@@ -35,7 +35,7 @@ function scan_number(str, base,    n, negative, ch, d) {
         negative = 1
     else
         negative = 0
-    
+
     while (str != "") {
         ch = toupper(substr(str, 1, 1))
         str = substr(str, 2)
@@ -47,14 +47,14 @@ function scan_number(str, base,    n, negative, ch, d) {
         n = base * n + d
     }
     if (negative)
-        n = -n 
+        n = -n
     return n
 }
 
 BEGIN {
     BASE = 35
     digits = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    
+
     if (ARGV[1] == "-r")
         print scan_number(ARGV[2], 35)
     else

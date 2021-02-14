@@ -50,7 +50,7 @@ for my $lang (grep {-d} sort keys %LANG) {
             for my $doc (@$yaml) {
                 for my $spec (@$doc) {
                     # run setup code
-                    ok eval($spec->{setup}), $spec->{setup} 
+                    ok eval($spec->{setup}), $spec->{setup}
                         if defined($spec->{setup});
                     $@ and die $@;
 
@@ -76,7 +76,7 @@ for my $lang (grep {-d} sort keys %LANG) {
 
                     # run cleaup code
                     if (Test::More->builder->is_passing) {
-                        ok eval($spec->{cleanup}), $spec->{cleanup} 
+                        ok eval($spec->{cleanup}), $spec->{cleanup}
                             if defined($spec->{cleanup});
                         $@ and die $@;
                         unlink("in.txt", "out.txt", "out_exp.txt");
