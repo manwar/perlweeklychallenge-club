@@ -52,7 +52,6 @@ sub fun_time_readable {
     }
     {
       sprintf '%02d:%02d%s',
-
         ( $1%12 || ($3?0:12) ) + ( 'pm' eq $3 ? 12 : 0 ),
           ## Get hour modulo 12..
           ## If were in 24 hour clock we need to convert
