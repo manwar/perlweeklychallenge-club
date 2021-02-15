@@ -23,11 +23,10 @@ done_testing();
 sub triangle_sum {
   my @tri = @_;
   while(@tri>1) {
-    ## Strip off base of triangle...
+      ## Strip off base of triangle...
     my $b = pop @tri;
-    ## Update new last line by adding smallest of it's "children"
-    $tri[-1][$_] += $b->[ $b->[$_] < $b->[$_+1] ? $_ : $_ + 1 ]
-      foreach 0..@tri-1;
+      ## Update new last line by adding smallest of it's "children"
+    $tri[-1][$_] += $b->[$b->[$_]<$b->[$_+1]?$_:$_+1] for 0..@tri-1;
   }
   return $tri[0][0];
 }
