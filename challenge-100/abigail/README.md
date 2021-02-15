@@ -18,6 +18,7 @@ Output: 07:15 pm or 07:15pm
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-1.pl)
 
 ### Blog
 
