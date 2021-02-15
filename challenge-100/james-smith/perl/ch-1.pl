@@ -36,7 +36,7 @@ done_testing();
 ## Just split so slightly more readable and fits on 72 char lines
 
 sub fun_time { $_[0]=~s{(\d+):(\d+)\s*(\wm|)}{sprintf'%02d:%02d%s',
-  ($1%12||($3?0:12))+('pm'eq$3?12:0),$2,$3?'':$1>11?'pm':'am'}re; }
+  ($1%12||(12*!$3))+12*('pm'eq$3),$2,$3?'':$1>11?'pm':'am'}re; }
 
 ## This is more readable version with notes...
 sub fun_time_readable {
@@ -55,7 +55,7 @@ sub fun_time_readable {
     }
     {
       sprintf '%02d:%02d%s',
-        ( $1%12 || ($3?0:12) ) + ( 'pm' eq $3 ? 12 : 0 ),
+        ( $1%12 || (12*!$3) ) + 12*('pm'eq$3),
           ## Get hour modulo 12..
           ## From 24hr to 12hr clock we need to convert 00:?? to 12:??
           ## From 12hr to 24hr clock it is pm we then need to add 12...
