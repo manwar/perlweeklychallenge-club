@@ -34,19 +34,21 @@ done_testing();
 
 ## 72 chars ############################################################
 sub fun_time {
-  $_[0]=~s{\A(\d+):(\d+)\s*([ap]?m?)\Z}{sprintf'%02d:%02d%s',
+  $_[0]=~s{\A(\d+):(\d+)\s*([ap]m|)\Z}{sprintf'%02d:%02d%s',
     ($1%12||($3?0:12))+('pm'eq$3?12:0),$2,$3?'':$1>11?'pm':'am'}regx;
 }
 
 sub fun_time_readable {
   return $_[0] =~
     s{
-      \A (\d+) : (\d+) \s* ( [ap]?m? ) \Z
-        ## Split into 3 parts - we cheat a bit with the
-        ## third capture ([ap]m)? may have been better
-        ## but then $3 isn't always defined...
-        ## could do ((?:[ap]m)?) but that would have
-        ## been longer....
+      \A (\d+) : (\d+) \s* ( [ap]m | ) \Z
+        ## Split into 3 parts. The first reaction to the
+        ## am/pm bit is to use ([ap]m)? but this means
+        ## that the 3rd capture variable $3 is sometimes
+        ## undefined - better is to use ([ap]m|) which
+        ## matches the same way but $3 is now an empty
+        ## string not undefined when we have a 24 hour
+        ## clock time
     }
     {
       sprintf '%02d:%02d%s',
