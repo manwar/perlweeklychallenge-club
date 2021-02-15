@@ -35,7 +35,7 @@ done_testing();
 ## 72 chars ############################################################
 sub fun_time {
   $_[0]=~s{\A(\d+):(\d+)\s*([ap]m|)\Z}{sprintf'%02d:%02d%s',
-    ($1%12||($3?0:12))+('pm'eq$3?12:0),$2,$3?'':$1>11?'pm':'am'}regx;
+    ($1%12||($3?0:12))+('pm'eq$3?12:0),$2,$3?'':$1>11?'pm':'am'}re;
 }
 
 sub fun_time_readable {
@@ -64,6 +64,6 @@ sub fun_time_readable {
           ## If we are converting from 12hr clock the third
           ## string is empty - if not and the time is <12
           ## we return am o/w return pm
-    }regx;
+    }rex;
 }
 
