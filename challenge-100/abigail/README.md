@@ -74,5 +74,6 @@ The minimum path sum from top to bottom: 3 + 1 + 2 + 1 = 7
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
 
 ### Blog
