@@ -18,6 +18,8 @@ Output: 07:15 pm or 07:15pm
 ~~~~
 
 ### Solutions
+* [GNU AWK](awk/ch-1.gawk)
+* [Befunge-93](befunge-93/ch-1.bf93)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
@@ -74,6 +76,7 @@ The minimum path sum from top to bottom: 3 + 1 + 2 + 1 = 7
 ~~~~
 
 ### Solutions
+* [AWK](awk/ch-2.awk)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
