@@ -39,14 +39,16 @@ object FunTime {
         makeTime(hour, parsed._2)
     }
 
+    def convert(time: String) : String = {
+        if (("(am|pm)$".r findFirstIn time).isDefined)
+            to24H(time)
+        else
+            to12H(time)
+    }
+
     def main(args: Array[String]): Unit = {
         examples
-            .map(e => {
-                if (("(am|pm)$".r findFirstIn e).isDefined)
-                    to24H(e)
-                else
-                    to12H(e)
-            })
+            .map(convert)
             .foreach(println)
     }
 }
