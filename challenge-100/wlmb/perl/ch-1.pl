@@ -13,7 +13,7 @@ sub usage {
     Converts time between 12 and 24 hour formats
     Usage;
        ./ch-1.pl time1 time2 ...
-       Each argument must have the format hh:mm:ss ampm
+       Each argument must have the format "hh:mm:ss ampm"
        where the minutes and seconds are optional and
        ampm is either am or pm or null.
        If ampm is given, the hour should be not greater than 12 nor

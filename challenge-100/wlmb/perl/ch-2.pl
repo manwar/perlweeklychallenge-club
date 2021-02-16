@@ -25,13 +25,12 @@ my @next_row=(0)x@{$rows[-1]};
 my $cost;
 my @choices;
 foreach my $current_row(reverse @rows){ # move upwards
-    my @current_row=pairwise {$a+$b} @$current_row, @next_row; #
+    my @current_row=pairwise {$a+$b} @$current_row, @next_row; #get totalcost for each element
     $cost=$current_row[0],last if @current_row==1; # done?
     # Find best choices for each index of the row above
-    @next_row=map {min ($current_row[$_], $current_row[$_+1])} (0..@current_row-2);
-    # and register their indices
-    my @chosen_indices=map {$next_row[$_]==$current_row[$_]?$_:$_+1} (0..@current_row-2);
-    # Build a triangle of chosen indices
+    my @chosen_indices=map {$current_row[$_]<=$current_row[$_+1]?$_:$_+1}(0..@current_row-2);
+    @next_row=@current_row[@chosen_indices];
+    # Build a triangle of chosen indices for later display
     unshift @choices, [@chosen_indices];
 }
 #print input triangle and optimal cost
