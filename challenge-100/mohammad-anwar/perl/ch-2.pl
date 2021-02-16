@@ -14,11 +14,7 @@ sub sum {
     my ($t) = @_;
 
     my $i = 0;
-    my $s = [@{shift @$t}];
-    push @$s, ($_->[$i] > $_->[$i+1])?($i+=2 and $_->[--$i]):($_->[$i]) for @$t;
-
-    my $sum = 0;
-    $sum += $_ for @$s;
-
-    return $sum;
+    my $s = (@{shift @$t})[0];
+    $s += ($_->[$i] > $_->[$i+1])?($i+=2 and $_->[--$i]):($_->[$i]) for @$t;
+    return $s;
 }
