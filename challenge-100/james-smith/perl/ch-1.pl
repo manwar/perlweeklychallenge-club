@@ -32,9 +32,9 @@ is( fun_time( '12:00 pm' ), '12:00' );
 
 done_testing();
 
-## 72 chars #############################################################
-#000000000111111111122222222223333333333444444444455555555556
-#123456789012345678901234567890123456789012345678901234567890
+## 72 chars ############################################################
+#00000000111111111122222222223333333333444444444455555555556
+#23456789012345678901234567890123456789012345678901234567890
 
 ## Just split so slightly more readable and fits on 60 char lines
 
@@ -58,13 +58,19 @@ sub fun_time {
     }
     {
       sprintf '%02d:%02d%s',
-        ( $1%12 || (12*!$3) ) + 12*('pm'eq$3),
+        ( $1 % 12 || ( 12 * ! $3 ) ) + 12 * ( 'pm' eq $3 ),
           ## Get hour modulo 12..
           ## From 24hr to 12hr clock we need to convert 00:?? to 12:??
           ## From 12hr to 24hr clock it is pm we then need to add 12...
+          ## Note we use the "yoda condition" for the equals
+          ##   'pm'eq$3
+          ## as this is a byte shorter than the more usual way of
+          ## writing inequalitys
+          ##   $3 eq'pm'
+          ## as we don't need a space between the $3 & the eq...
         $2,
           ## The minutes is the easy bit just copy..
-        $3 ? '' : $1>11 ? 'pm' : 'am'
+        $3 ? '' : $1 < 12 ? 'am' : 'pm'
           ## If we are converting from 12hr clock the third string is
           ## empty - if not and the time is <12 we return am o/w  pm
     }rex;
