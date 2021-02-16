@@ -6,7 +6,8 @@
 # 
 # Write a script to find the minimum path sum from top to bottom.
 # 
-# When you are on index i on the current row then you may move to either index i or index i + 1 on the next row.
+# When you are on index i on the current row then you may move to either 
+# index i or index i + 1 on the next row.
 # 
 # Example 1:
 # Input: Triangle = [ [1], [2,4], [6,4,9], [5,1,7,2] ]
@@ -71,11 +72,11 @@ sub min_sum {
 
 sub min_sum_1 {
     my($sum, $r, $c, $triangle) = @_;
+    $sum += $triangle->[$r][$c];
     if ($r == $#$triangle) {                # bottom row
-        return $sum + $triangle->[$r][$c];
+        return $sum;
     }
     else {
-        $sum += $triangle->[$r][$c];
         my $sum1 = min_sum_1($sum, $r+1, $c,   $triangle);
         my $sum2 = min_sum_1($sum, $r+1, $c+1, $triangle);
         return $sum1<$sum2 ? $sum1 : $sum2;
