@@ -5,9 +5,12 @@ object FunTime {
         "08:24am",
         "09:39 am",
         "08:24",
-        "20:24",
-        "13:37",
+        "11:59",
+        "12:00",
+        "12:01",
         "12:34",
+        "13:37",
+        "20:24",
         "18:04"
     )
 
@@ -21,7 +24,12 @@ object FunTime {
     }
 
     def to12H(time: String): String = {
-       time
+       val parsed = getTime(time)
+       
+       val suffix = if (parsed._1 < 12) "am" else "pm"
+       val hour = if (parsed._1 > 12) parsed._1 - 12 else parsed._1
+
+       makeTime(hour, parsed._2, suffix)
     }
 
     def to24H(time: String): String = {
