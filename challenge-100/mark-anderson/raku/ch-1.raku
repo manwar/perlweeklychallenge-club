@@ -1,3 +1,5 @@
+#!/usr/bin/env raku
+
 use DateTime::Format;
 use Time::Piece:from<Perl5>;
 use Test;
