@@ -39,9 +39,9 @@ done_testing();
 ## We assume that the minute portion will be two digits after the
 ## ":" then we don't need to check it....
 
-## 112 bytes total - 104 inside the curly braces..
+## 111 bytes total - 103 inside the curly braces..
 
-sub ft{pop=~s{(\d+)(:..)\s*(.m|)}{sprintf'%02d%s%s',
+sub ft{pop=~s{(.+)(:..)\s*(.m|)}{sprintf'%02d%s%s',
 ($1%12||(12*!$3))+12*('pm'eq$3),$2,$3?'':$1<12?'am':'pm'}re}
 
 ## This is more readable version with notes...
@@ -51,7 +51,7 @@ sub fun_time {
     ## in our golfdom....
     s{
         ## Split into 3 parts, $1 - hours, $2 - minutes & $3 - am/pm
-      (\d+) (:..) \s* ( .m | )
+      (.+) (:..) \s* ( .m | )
         ## We assume all strings are valid - so we don't have to anchor
         ## at both ends or worry what the 12hr clock sufficies are
         ## am/pm and .m is shorter than [ap]m
