@@ -1,17 +1,17 @@
 
 # The Weekly Challenge
 
-The Weekly Challenge - #097 - Tyler Wardhaugh
+The Weekly Challenge - #098 - Tyler Wardhaugh
 
 ## Usage
 
-Run Task 1:
+Run Task 1 with input:
 
-    $ ./run.lua ch-1 S N
+    $ ./run.lua ch-1 FILE N
 
 Run Task 2:
 
-    $ ./run.lua ch-2 B S
+    $ ./run.lua ch-2
 
 Run the project's tests (all the samples from the task descriptions plus some others):
 

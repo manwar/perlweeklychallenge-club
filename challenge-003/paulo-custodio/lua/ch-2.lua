@@ -10,7 +10,7 @@ information about Pascal Triangle, check this wikipedia page.
 --]]
 
 function draw_pascal(rows)
-    data = {1}
+    local data = {1}
     for row=1,rows do
         -- print current row
         for col=1,rows-row do io.write(" "); end
@@ -18,7 +18,7 @@ function draw_pascal(rows)
         io.write("\n")
 
         -- compute next row
-        nxt = {1}
+        local nxt = {1}
         for col=1,row-1 do
             table.insert(nxt, data[col] + data[col+1])
         end

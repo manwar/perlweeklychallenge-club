@@ -5,6 +5,6 @@
 
 $_ = $ARGV[0];
 s/(\s)+/ /g ; 
-@a = reverse split / /, $_; 
-print join " ", @a; 
+@a = reverse split / /, $_;
+print join " ", @a;
 print "\n"

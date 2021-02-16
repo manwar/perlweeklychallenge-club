@@ -11,16 +11,17 @@ use strict;
 use warnings;
 use 5.030;
 
+use constant { BASE => 35 };
 my @digits = ('0'..'9','A'..'Z');
 
 our $opt_r;
 ($opt_r = 1, shift) if @ARGV && $ARGV[0] eq '-r';
 @ARGV==1 or die "Usage: ch-2.pl [-r] number\n";
 if ($opt_r) {
-    say scan_number($ARGV[0], 35);
+    say scan_number($ARGV[0], BASE);
 }
 else {
-    say format_number($ARGV[0], 35);
+    say format_number($ARGV[0], BASE);
 }
 
 
