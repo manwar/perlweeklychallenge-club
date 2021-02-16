@@ -24,5 +24,5 @@ multi fun-time($T)
 
 multi fun-time($T where .ends-with("am"|"pm", :i)) 
 {
-    Time::Piece.strptime("$T", "%r").strftime("%R");
+    Time::Piece.strptime($T, "%r").strftime("%R");
 }
