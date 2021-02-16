@@ -6,6 +6,18 @@ use warnings;
 use feature qw(say);
 use Test::More;
 
+is( ft( '05:15pm' ), '17:15' );
+is( ft( '05:15 pm' ), '17:15' );
+is( ft( '17:15' ), '05:15pm' );
+is( ft( '05:15am' ), '05:15' );
+is( ft( '05:15 am' ), '05:15' );
+is( ft( '05:15' ), '05:15am' );
+is( ft( '00:00' ), '12:00am' );
+is( ft( '12:00' ), '12:00pm' );
+is( ft( '24:00' ), '12:00pm' );
+is( ft( '12:00 am' ), '00:00' );
+is( ft( '12:00 pm' ), '12:00' );
+
 is( fun_time( '05:15pm' ), '17:15' );
 is( fun_time( '05:15 pm' ), '17:15' );
 is( fun_time( '17:15' ), '05:15pm' );
@@ -18,28 +30,19 @@ is( fun_time( '24:00' ), '12:00pm' );
 is( fun_time( '12:00 am' ), '00:00' );
 is( fun_time( '12:00 pm' ), '12:00' );
 
-is( fun_time_readable( '05:15pm' ), '17:15' );
-is( fun_time_readable( '05:15 pm' ), '17:15' );
-is( fun_time_readable( '17:15' ), '05:15pm' );
-is( fun_time_readable( '05:15am' ), '05:15' );
-is( fun_time_readable( '05:15 am' ), '05:15' );
-is( fun_time_readable( '05:15' ), '05:15am' );
-is( fun_time_readable( '00:00' ), '12:00am' );
-is( fun_time_readable( '12:00' ), '12:00pm' );
-is( fun_time_readable( '24:00' ), '12:00pm' );
-is( fun_time_readable( '12:00 am' ), '00:00' );
-is( fun_time_readable( '12:00 pm' ), '12:00' );
-
 done_testing();
 
-## 72 chars ############################################################
-## Just split so slightly more readable and fits on 72 char lines
+## 72 chars #############################################################
+#000000000111111111122222222223333333333444444444455555555556
+#123456789012345678901234567890123456789012345678901234567890
 
-sub fun_time { $_[0]=~s{(\d+):(\d+)\s*(\wm|)}{sprintf'%02d:%02d%s',
-  ($1%12||(12*!$3))+12*('pm'eq$3),$2,$3?'':$1>11?'pm':'am'}re; }
+## Just split so slightly more readable and fits on 60 char lines
+
+sub ft{$_[0]=~s{(\d+):(\d+)\s*(\wm|)}{sprintf'%02d:%02d%s',
+($1%12||(12*!$3))+12*('pm'eq$3),$2,$3?'':$1<12?'am':'pm'}re}
 
 ## This is more readable version with notes...
-sub fun_time_readable {
+sub fun_time {
   return $_[0] =~
     s{
         ## Split into 3 parts, $1 - hours, $2 - minutes & $3 - am/pm
