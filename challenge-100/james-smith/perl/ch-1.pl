@@ -37,13 +37,15 @@ done_testing();
 #23456789012345678901234567890123456789012345678901234567890
 
 ## Just split so slightly more readable and fits on 60 char lines
-
-sub ft{$_[0]=~s{(\d+):(\d+)\s*(\wm|)}{sprintf'%02d:%02d%s',
+## Not nasty hack - we pop rather than shift as it saves 2 bytes!
+sub ft{pop=~s{(\d+):(\d+)\s*(\wm|)}{sprintf'%02d:%02d%s',
 ($1%12||(12*!$3))+12*('pm'eq$3),$2,$3?'':$1<12?'am':'pm'}re}
 
 ## This is more readable version with notes...
 sub fun_time {
-  return $_[0] =~
+  return pop =~
+    ## Note the nasty hack we pop rather than shift - that saves 2 bytes
+    ## in our golfdom....
     s{
         ## Split into 3 parts, $1 - hours, $2 - minutes & $3 - am/pm
       (\d+) : (\d+) \s* ( \wm | )
