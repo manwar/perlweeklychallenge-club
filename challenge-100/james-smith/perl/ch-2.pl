@@ -87,5 +87,6 @@ sub display_sum {
       } 0..$a ),
       "\n"
     } 0..@_-1 ),
-    "\nMinimum path: ",(join ' -> ', map { $_[$_][$route[$_]] } 0..@_-1 ),' ; Total: ',$b->[0],"\n\n";
+    "\nMinimum path: ",(join ' -> ', map {
+       $_[$_][$route[$_]] } 0..@_-1 ),' ; Total: ',$b->[0],"\n\n";
 }
