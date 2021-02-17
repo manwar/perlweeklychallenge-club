@@ -8,11 +8,13 @@ use Test::More;
 
 is( triangle_sum( [1],[2,4],[6,4,9],[5,1,7,2] ),  8 );
 is( triangle_sum( [3],[3,1],[5,2,3],[4,3,1,3] ),  7 );
+is( triangle_sum( [3],[3,1],[3,8,9],[4,3,1,3] ), 12 );
 is( triangle_sum( [2],[3,7],[8,5,6],[6,1,9,3] ), 11 );
 is( triangle_sum( [3],[6,4],[5,2,7],[9,1,8,6] ), 10 );
 
 is( triangle_sum_1point5_liner( [1],[2,4],[6,4,9],[5,1,7,2] ),  8 );
 is( triangle_sum_1point5_liner( [3],[3,1],[5,2,3],[4,3,1,3] ),  7 );
+is( triangle_sum_1point5_liner( [3],[3,1],[3,8,9],[4,3,1,3] ), 12 );
 is( triangle_sum_1point5_liner( [2],[3,7],[8,5,6],[6,1,9,3] ), 11 );
 is( triangle_sum_1point5_liner( [3],[6,4],[5,2,7],[9,1,8,6] ), 10 );
 
@@ -20,6 +22,7 @@ done_testing();
 
 display_sum( [1],[2,4],[6,4,9],[5,1,7,2] );
 display_sum( [3],[3,1],[5,2,3],[4,3,1,3] );
+display_sum( [3],[3,1],[3,8,9],[4,3,1,3] );
 display_sum( [2],[3,7],[8,5,6],[6,1,9,3] );
 display_sum( [3],[6,4],[5,2,7],[9,1,8,6] );
 
