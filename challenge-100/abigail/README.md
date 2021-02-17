@@ -19,6 +19,7 @@ Output: 07:15 pm or 07:15pm
 
 ### Solutions
 * [GNU AWK](awk/ch-1.gawk)
+* [Bash](bash/ch-1.sh)
 * [Befunge-93](befunge-93/ch-1.bf93)
 * [Perl](perl/ch-1.pl)
 
