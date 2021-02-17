@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env python
 
 # TASK #1 > Fun Time
 # Submitted by: Mohammad S Anwar
@@ -16,16 +16,13 @@
 # Input: 19:15
 # Output: 07:15 pm or 07:15pm
 
-use strict;
-use warnings;
-use 5.030;
-use Time::Piece;
+import re;
+import sys;
+import datetime;
 
-@ARGV==1 or die "Usage: ch-1.pl time\n";
-my $time = shift =~ s/\s+//gr;
-if ($time =~ /AM|PM/i) {
-    say Time::Piece->strptime($time, "%I:%M%P")->strftime("%H:%M");
-}
-else {
-    say Time::Piece->strptime($time, "%H:%M")->strftime("%I:%M%P");
-}
+if re.search(r'am|pm', sys.argv[1], re.I):
+	t = datetime.datetime.strptime(sys.argv[1], "%I:%M%p")
+	print(t.strftime("%H:%M"))
+else:
+	t = datetime.datetime.strptime(sys.argv[1], "%H:%M")
+	print(t.strftime("%I:%M%p").lower())
