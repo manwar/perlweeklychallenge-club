@@ -21,6 +21,7 @@ Output: 07:15 pm or 07:15pm
 * [GNU AWK](awk/ch-1.gawk)
 * [Bash](bash/ch-1.sh)
 * [Befunge-93](befunge-93/ch-1.bf93)
+* [C](c/ch-1.c)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
