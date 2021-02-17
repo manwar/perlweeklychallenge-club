@@ -62,17 +62,21 @@ sub triangle_sum_1point5_liner {
 
 ## A subroutine to display the triangle indicating the route!
 sub display_sum {
-  my @tri = map{ [@{$_}] } @_; ## Deep copy the triangle as the search is destructive
-  my @route; ## For each node in the "current" bottom row, the route is the list
-             ## of indecies of the child nodes that make up the "optimal" path
-             ## use implicit my on $b....
+  my @tri = map{ [@{$_}] } @_; ## Deep copy the triangle as the
+                               ## search is destructive
+  my @route; ## For each node in the "current" bottom row, the route
+             ## is the list of indecies of the child nodes that make
+             ## up the "optimal" path
+             ## We use the implicit my on $b
   while(@{$b = pop @tri}>1) {
     ($tri[-1][$_],$route[$_]) = $b->[$_]<$b->[$_+1]
       ? ( $tri[-1][$_] + $b->[$_],   [$_,  @{$route[$_  ]||[]}] )
-      : ( $tri[-1][$_] + $b->[$_+1], [$_+1,@{$route[$_+1]||[]}] ) foreach 0..@tri-1;
+      : ( $tri[-1][$_] + $b->[$_+1], [$_+1,@{$route[$_+1]||[]}] )
+    foreach 0..@tri-1;
   }
-  @route = (0,@{$route[0]}); ## We need to add the top node index (always 0)
-                             ## At the same time we can just take the first (only)
+  @route = (0,@{$route[0]}); ## We need to add the top node index
+                             ## (always 0), at the same time we can
+                             ##  just take the first (only)
                              ## path out of the 2d route matrix;
   print ## Assume all cell numbers are single digits...
     '',
