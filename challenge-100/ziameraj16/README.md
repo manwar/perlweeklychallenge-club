@@ -1,58 +1,27 @@
-# Pattern Match
+# Triangle Sum
 ## Java Solution
 
 To compile the code run
 ```java
-javac PatternMatcher.java
+javac TriangleSum.java
 ```
 To run
 ```java
-java PatternMatcher
+java TriangleSum
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-099/ziameraj16$ javac PatternMatcher.java
-/perlweeklychallenge-club/challenge-099/ziameraj16$ java PatternMatcher
-Enter regex pattern
-a.*e
-Enter string to match
-abcde
-Output: 1
-/perlweeklychallenge-club/challenge-099/ziameraj16$ java PatternMatcher
-Enter regex pattern
-a.*d
-Enter string to match
-abcde
-Output: 0
-/perlweeklychallenge-club/challenge-099/ziameraj16$ java PatternMatcher
-Enter regex pattern
-.?b.*d
-Enter string to match
-abcde
-Output: 0
-/perlweeklychallenge-club/challenge-099/ziameraj16$ java PatternMatcher
-Enter regex pattern
-a.*c.?e
-Enter string to match
-abcde
-Output: 1
-```
-## Kotlin Solution
-
-To compile the code run
-```java
-kotlinc PatternMatcherKotlin.kt
-```
-To run
-```java
-kotlin PatternMatcherKotlin
-```
-### Example
-```bash
-/perlweeklychallenge-club/challenge-099/ziameraj16/kotlin$ kotlin PatternMatcherKotlin
-Enter regex pattern
-a.*e
-Enter string to match
-abcde
-Output: 1
+/perlweeklychallenge-club/challenge-100/ziameraj16/java$ javac TriangleSum.java
+/perlweeklychallenge-club/challenge-100/ziameraj16/java$ java TriangleSum
+Enter number of rows in the triangle
+4
+Enter comma separated elements of line 1
+1
+Enter comma separated elements of line 2
+2,4
+Enter comma separated elements of line 3
+6,4,9
+Enter comma separated elements of line 4
+5,1,7,2
+Output: 8
 ```
