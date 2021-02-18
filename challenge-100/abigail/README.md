@@ -22,6 +22,7 @@ Output: 07:15 pm or 07:15pm
 * [Bash](bash/ch-1.sh)
 * [Befunge-93](befunge-93/ch-1.bf93)
 * [C](c/ch-1.c)
+* [Lua](lua/ch-1.lua)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
