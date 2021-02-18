@@ -22,4 +22,3 @@ Run the project's tests (all the samples from the task descriptions plus some ot
 
 ## Requirements:
 *   [Python 3](https://www.python.org/)
-*   [NumPy](https://numpy.org/)
