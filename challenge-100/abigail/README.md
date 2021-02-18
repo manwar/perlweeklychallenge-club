@@ -82,6 +82,7 @@ The minimum path sum from top to bottom: 3 + 1 + 2 + 1 = 7
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
 * [C](c/ch-2.c)
+* [Lua](lua/ch-2.lua)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
