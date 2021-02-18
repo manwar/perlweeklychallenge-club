@@ -17,7 +17,7 @@ use experimental 'lexical_subs';
 # Run as: perl ch-2.pl < input-file
 #
 
-my @nums = map {[/[0-9]+/g]} <>;
+my @nums = map {[/-?[0-9]+/g]} <>;
 
 #
 # Calculate the minimum path bottom to top
