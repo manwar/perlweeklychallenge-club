@@ -85,13 +85,11 @@ procedure ch_2 is
 
     -- variables
     Nums : Vector;
-    I, N, Pos : Integer;
+    N, Pos : Integer;
 begin
     N := Integer'Value(CL.Argument(1));
-    I := 2;
-    while I <= CL.Argument_Count loop
+    for I in 2 .. CL.Argument_Count loop
         Nums.Append(Integer'Value(CL.Argument(I)));
-        I := I + 1;
     end loop;
     Pos := search_insert(Nums, N);
     Put_Line(Trim(Integer'Image(Pos), Ada.Strings.Left));
