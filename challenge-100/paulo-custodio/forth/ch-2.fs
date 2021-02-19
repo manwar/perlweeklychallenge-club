@@ -3,25 +3,25 @@
 \ TASK #2 > Triangle Sum
 \ Submitted by: Mohammad S Anwar
 \ You are given triangle array.
-\ 
+\
 \ Write a script to find the minimum path sum from top to bottom.
-\ 
-\ When you are on index i on the current row then you may move to either 
+\
+\ When you are on index i on the current row then you may move to either
 \ index i or index i + 1 on the next row.
-\ 
+\
 \ Example 1:
 \ Input: Triangle = [ [1], [2,4], [6,4,9], [5,1,7,2] ]
 \ Output: 8
-\ 
+\
 \ Explanation: The given triangle
-\ 
+\
 \             1
 \            2 4
 \           6 4 9
 \          5 1 7 2
-\ 
+\
 \ The minimum path sum from top to bottom:  1 + 2 + 4 + 1 = 8
-\ 
+\
 \              [1]
 \            [2]  4
 \            6 [4] 9
@@ -29,16 +29,16 @@
 \ Example 2:
 \ Input: Triangle = [ [3], [3,1], [5,2,3], [4,3,1,3] ]
 \ Output: 7
-\ 
+\
 \ Explanation: The given triangle
-\ 
+\
 \             3
 \            3 1
 \           5 2 3
 \          4 3 1 3
-\ 
+\
 \ The minimum path sum from top to bottom: 3 + 1 + 2 + 1 = 7
-\ 
+\
 \              [3]
 \             3  [1]
 \            5 [2] 3
@@ -78,7 +78,7 @@ CREATE triangle max-height DUP * CELLS ALLOT
 
 \ parse and store triangle
 : parse-triangle        ( -- )
-    -1 TO last-row 
+    -1 TO last-row
     BEGIN NEXT-ARG DUP 0> WHILE
         parse-line
     REPEAT 2DROP
@@ -90,7 +90,7 @@ CREATE triangle max-height DUP * CELLS ALLOT
     row col triangle[] @ sum + TO sum
     row last-row = IF
         sum
-    ELSE 
+    ELSE
         sum row 1+ col    RECURSE       \ compute left sum
         sum row 1+ col 1+ RECURSE       \ comppute right sum
         MIN

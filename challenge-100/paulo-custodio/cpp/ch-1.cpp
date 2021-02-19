@@ -72,7 +72,7 @@ std::istream& operator>>(std::istream& is, Time& time) {
 
     // get optional am|pm
     std::string ampm;
-    is >> ampm; 
+    is >> ampm;
 
     // convert from 12 to 24 format
     if (!ampm.empty()) {

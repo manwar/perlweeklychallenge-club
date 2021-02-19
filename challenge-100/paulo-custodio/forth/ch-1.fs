@@ -3,11 +3,11 @@
 \ TASK #1 > Fun Time
 \ Submitted by: Mohammad S Anwar
 \ You are given a time (12 hour / 24 hour).
-\ 
+\
 \ Write a script to convert the given time from 12 hour format to 24 hour format and vice versa.
-\ 
+\
 \ Ideally we expect a one-liner.
-\ 
+\
 \ Example 1:
 \ Input: 05:15 pm or 05:15pm
 \ Output: 17:15
@@ -24,7 +24,7 @@
     AGAIN
 ;
 
-\ parse a time string, return number of minutes since midnight 
+\ parse a time string, return number of minutes since midnight
 \ and true if it was in AM/PM format
 : parse-time        { str len -- hours minutes f-am-pm }
     0 0 { hours minutes }
@@ -54,12 +54,12 @@
 : print12       { hours minutes -- }
     FALSE { pm }                    \ assume AM
 
-    hours DUP 12 > IF 
+    hours DUP 12 > IF
         DROP hours 12 - TO hours TRUE TO pm ELSE
-    DUP 12 = IF 
+    DUP 12 = IF
         DROP TRUE TO pm ELSE
     DUP 0= IF
-        DROP 12 TO HOURS 
+        DROP 12 TO HOURS
     ELSE DROP THEN THEN THEN
 
     hours minutes print24
