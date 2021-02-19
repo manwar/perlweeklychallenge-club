@@ -1,7 +1,5 @@
 #!/usr/bin/gawk
 
-# Challenge 100
-# 
 # TASK #2 > Triangle Sum
 # Submitted by: Mohammad S Anwar
 # You are given triangle array.
