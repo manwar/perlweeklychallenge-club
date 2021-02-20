@@ -1,6 +1,4 @@
 /*
-Challenge 100
-
 TASK #1 > Fun Time
 Submitted by: Mohammad S Anwar
 You are given a time (12 hour / 24 hour).
@@ -74,7 +72,7 @@ std::istream& operator>>(std::istream& is, Time& time) {
 
     // get optional am|pm
     std::string ampm;
-    is >> ampm; 
+    is >> ampm;
 
     // convert from 12 to 24 format
     if (!ampm.empty()) {

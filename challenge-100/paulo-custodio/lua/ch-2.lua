@@ -7,7 +7,7 @@ You are given triangle array.
 
 Write a script to find the minimum path sum from top to bottom.
 
-When you are on index i on the current row then you may move to either 
+When you are on index i on the current row then you may move to either
 index i or index i + 1 on the next row.
 
 Example 1:
@@ -48,32 +48,32 @@ The minimum path sum from top to bottom: 3 + 1 + 2 + 1 = 7
 
 triangle = {}
 
-function add_row(row, text) 
-	rows = row
-	table.insert(triangle, {})
-	for i=1, row do
-		local s, e = string.find(text, "(%d+)")
-		local n = tonumber(string.sub(text, s, e))
-		text = string.sub(text, e+1, -1)
-		table.insert(triangle[row], n)
-	end
+function add_row(row, text)
+    rows = row
+    table.insert(triangle, {})
+    for i=1, row do
+        local s, e = string.find(text, "(%d+)")
+        local n = tonumber(string.sub(text, s, e))
+        text = string.sub(text, e+1, -1)
+        table.insert(triangle[row], n)
+    end
 end
 
 function min_sum(sum, row, col)
-	sum = sum or 0
-	row = row or 1
-	col = col or 1
-	sum = sum + triangle[row][col]
-	if row == rows then
-		return sum
-	else
-		local sum1 = min_sum(sum, row+1, col)
-		local sum2 = min_sum(sum, row+1, col+1)
-		return math.min(sum1, sum2)
-	end
+    sum = sum or 0
+    row = row or 1
+    col = col or 1
+    sum = sum + triangle[row][col]
+    if row == rows then
+        return sum
+    else
+        local sum1 = min_sum(sum, row+1, col)
+        local sum2 = min_sum(sum, row+1, col+1)
+        return math.min(sum1, sum2)
+    end
 end
-		
+
 for i=1, #arg do
-	add_row(i, arg[i])
+    add_row(i, arg[i])
 end
 io.write(min_sum(), "\n")
