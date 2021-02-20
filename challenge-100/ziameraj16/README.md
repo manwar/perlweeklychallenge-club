@@ -1,3 +1,50 @@
+# Fun Time
+## Java Solution
+
+To compile the code run
+```java
+javac FunTime.java
+```
+To run
+```java
+java FunTime
+```
+### Example
+```bash
+/perlweeklychallenge-club/challenge-100/ziameraj16/java$ javac FunTime.java
+/perlweeklychallenge-club/challenge-100/ziameraj16/java$ java FunTime
+Enter time
+05:15 pm
+Output: 17:15
+/perlweeklychallenge-club/challenge-100/ziameraj16/java$ java FunTime
+Enter time
+05:15pm
+Output: 17:15
+/perlweeklychallenge-club/challenge-100/ziameraj16/java$ java FunTime
+Enter time
+12:00 am
+Output: 00:00
+/perlweeklychallenge-club/challenge-100/ziameraj16/java$ java FunTime
+Enter time
+12:00 pm
+Output: 12:00
+/perlweeklychallenge-club/challenge-100/ziameraj16/java$ java FunTime
+Enter time
+19:15
+Output: 07:15pm
+/perlweeklychallenge-club/challenge-100/ziameraj16/java$ java FunTime
+Enter time
+00:00
+Output: 12:00am
+/perlweeklychallenge-club/challenge-100/ziameraj16/java$ java FunTime
+Enter time
+01:00
+Output: 01:00am
+/perlweeklychallenge-club/challenge-100/ziameraj16/java$ java FunTime
+Enter time
+12:00
+Output: 12:00pm
+```
 # Triangle Sum
 ## Java Solution
 
