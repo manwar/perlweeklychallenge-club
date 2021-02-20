@@ -33,15 +33,13 @@
          "Francis Whittle"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "chart" : {
       "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-02-20 08:36:34 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
    },
    "yAxis" : {
       "title" : {
@@ -121,6 +119,7 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             15,
             0,
@@ -152,14 +151,15 @@
             0,
             47,
             9
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-02-20 10:50:20 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
