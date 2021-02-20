@@ -14,7 +14,7 @@ is( ft( '05:15 am' ), '05:15' );
 is( ft( '05:15' ), '05:15am' );
 is( ft( '00:00' ), '12:00am' );
 is( ft( '12:00' ), '12:00pm' );
-is( ft( '24:00' ), '12:00pm' );
+is( ft( '24:00' ), '12:00am' );
 is( ft( '12:00 am' ), '00:00' );
 is( ft( '12:00 pm' ), '12:00' );
 
@@ -26,7 +26,7 @@ is( fun_time( '05:15 am' ), '05:15' );
 is( fun_time( '05:15' ), '05:15am' );
 is( fun_time( '00:00' ), '12:00am' );
 is( fun_time( '12:00' ), '12:00pm' );
-is( fun_time( '24:00' ), '12:00pm' );
+is( fun_time( '24:00' ), '12:00am' );
 is( fun_time( '12:00 am' ), '00:00' );
 is( fun_time( '12:00 pm' ), '12:00' );
 
@@ -39,10 +39,10 @@ done_testing();
 ## We assume that the minute portion will be two digits after the
 ## ":" then we don't need to check it....
 
-## 110 bytes total - 102 inside the curly braces..
+## 113 bytes total - 105 inside the curly braces..
 
 sub ft{pop=~s/(.+)(:..)\s*(.m|)/sprintf'%02d%s%s',
-($1%12||(12*!$3))+12*('pm'eq$3),$2,$3?'':$1<12?'am':'pm'/re}
+($1%12||(12*!$3))+12*('pm'eq$3),$2,$3?'':$1%24<12?'am':'pm'/re}
 
 ## This is more readable version with notes...
 sub fun_time {
@@ -77,7 +77,7 @@ sub fun_time {
           ## as we don't need a space between the $3 & the eq...
         $2,
           ## The minutes is the easy bit just copy..
-        $3 ? '' : $1 < 12 ? 'am' : 'pm'
+        $3 ? '' : $1 < 12 || $1 == 24 ? 'am' : 'pm'
           ## If we are converting from 12hr clock the third string is
           ## empty - if not and the time is <12 we return am otherwise pm
     /rex;
