@@ -16,7 +16,7 @@
 use strict;
 use warnings;
 
-sub min_sum {
+sub min_sums {
     my $what = shift;
 
     #
@@ -54,7 +54,7 @@ sub min_sum {
 }
 use Test::More;
 
-is( min_sum( [ [1], [ 2, 4 ], [ 6, 4, 9 ], [ 5, 1, 7, 2 ] ] ), 8 );
-is( min_sum( [ [3], [3,1], [5,2,3], [4,3,1,3] ] ), 7 );
+is( min_sums( [ [1], [ 2, 4 ], [ 6, 4, 9 ], [ 5, 1, 7, 2 ] ] ), 8 );
+is( min_sums( [ [3], [3,1], [5,2,3], [4,3,1,3] ] ), 7 );
 
 done_testing;
