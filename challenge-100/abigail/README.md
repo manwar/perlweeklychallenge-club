@@ -29,6 +29,7 @@ Output: 07:15 pm or 07:15pm
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Perl Weekly Challenge 100: Fun Time](https://wp.me/pcxd30-qr)
 
 
 ## [Triangle Sum](https://perlweeklychallenge.org/blog/perl-weekly-challenge-100/#TASK2)
@@ -92,3 +93,4 @@ The minimum path sum from top to bottom: 3 + 1 + 2 + 1 = 7
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
+[Perl Weekly Challenge 100: Triangle Sum](https://wp.me/pcxd30-qP)
