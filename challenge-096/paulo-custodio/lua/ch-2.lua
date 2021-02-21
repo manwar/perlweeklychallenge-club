@@ -24,9 +24,6 @@ Challenge 096
 #
 # Operation 1: replace 's' with 'm'
 # Operation 2: replace 'u' with 'o'
-
-# NOTE: the  Wagner-Fischer Distance algorithm builds a table of distances
-#       from which the operations can be deduced
 --]]
 
 function wag_fis_dist(a, b)
@@ -57,60 +54,7 @@ function wag_fis_dist(a, b)
     end
 
     -- distance is in lower bottom cell
-    io.write(d[#a][#b], "\n")
-
-    -- traverse the minimum path
-    local i, j, step = 0, 0, 0
-    while i < #a or j < #b do
-        local dir, delta, min_dir, min_delta = 0,0,0,#a+#b
-
-        -- search shortest path in priority SE, E, S
-        if i < #a and j < #b then
-            dir, delta = 'SE', d[i+1][j+1] - d[i][j]
-            if delta < min_delta then min_dir, min_delta = dir, delta; end
-        end
-        if j < #b then
-            dir, delta = 'E', d[i][j+1] - d[i][j]
-            if delta < min_delta then min_dir, min_delta = dir, delta; end
-        end
-        if i < #a then
-            dir, delta = 'S', d[i+1][j] - d[i][j]
-            if delta < min_delta then min_dir, min_delta = dir, delta; end
-        end
-
-        -- apply shortest path and show steps
-        if min_dir == 'SE' then
-            i, j = i+1, j+1
-            if string.sub(a,i,i) ~= string.sub(b,j,j) then
-                step = step+1
-                io.write("Operation ", step, ": replace '",
-                         string.sub(a,i,i), "' with '",
-                         string.sub(b,j,j), "'\n")
-            end
-        elseif min_dir == 'E' then
-            j = j+1
-            step = step+1
-            if j == #b then
-                io.write("Operation ", step, ": insert '",
-                         string.sub(b,j,j), "' at end\n")
-            else
-                io.write("Operation ", step, ": insert '",
-                         string.sub(b,j,j), "' at position ", j, "\n")
-            end
-        elseif min_dir == 'S' then
-            i = i+1
-            step = step+1
-            if i == #a then
-                io.write("Operation ", step, ": insert '",
-                         string.sub(a,i,i), "' at end\n")
-            else
-                io.write("Operation ", step, ": insert '",
-                         string.sub(a,i,i), "' at position ", i, "\n")
-            end
-        else
-            assert(false, "invalid direction")
-        end
-    end
+    return d[#a][#b]
 end
 
-wag_fis_dist(arg[1], arg[2])
+io.write(wag_fis_dist(arg[1], arg[2]), "\n")
