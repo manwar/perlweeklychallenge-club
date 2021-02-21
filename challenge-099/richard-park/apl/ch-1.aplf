@@ -1,0 +1,23 @@
+ PatternMatch←{
+⍝ Slow iterative pattern matcher
+     ⎕←⍺ ⍵
+     greedy←1  ⍝ Find last match after wild sequence
+     ⍺≡'':⍵≡'' ⍝ End of pattern, end of string?
+     check←⊃⍺
+⍝ Match char?
+     check≡⊃⍵:(1↓⍺)∇ 1↓⍵
+⍝ Wild card single?
+     check≡'?':(1↓⍺)∇ 1↓⍵
+⍝ Wild card sequence?
+     check≢'*':0
+⍝ Find location of next match
+     i←⍵⍳2⊃⍺
+     ig←1+(≢⍵)-(⌽⍵)⍳2⊃⍺
+     drop←(1+greedy)⊃i ig
+     i≤≢⍵:(2↓⍺)∇(drop↓⍵)
+     0
+⍝ Edge cases:
+ ⍝ is it greedy? 'l*n' → 'london'
+ ⍝ is ** invalid or redundant?
+ ⍝ is *? ?* invalid or redundant?
+ }

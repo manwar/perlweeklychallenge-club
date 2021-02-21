@@ -22,9 +22,6 @@ Output: 2
 
 Operation 1: replace 's' with 'm'
 Operation 2: replace 'u' with 'o'
-
-NOTE: the  Wagner-Fischer Distance algorithm builds a table of distances
-        from which the operations can be deduced
 */
 
 #include <algorithm>
@@ -38,9 +35,7 @@ int min3(int a, int b, int c) {
     return std::min(a, std::min(b, c));
 }
 
-enum class Dir { None, E, S, SE };
-
-void wag_fis_dist(const std::string& a, const std::string& b) {
+int wag_fis_dist(const std::string& a, const std::string& b) {
     size_t len_a = a.size();
     size_t len_b = b.size();
 
@@ -71,73 +66,7 @@ void wag_fis_dist(const std::string& a, const std::string& b) {
     }
 
     // distance is in lower bottom cell
-    std::cout << d[len_a][len_b] << std::endl;
-
-    // traverse the minimum path
-    size_t i = 0, j = 0, step = 0;
-    while (i < len_a || j < len_b) {
-        Dir min_dir = Dir::None, dir;
-        int min_delta = INT_MAX, delta;
-
-        // search shortest path in priority SE, E, S
-        if (i < len_a && j < len_b) {
-            dir = Dir::SE;
-            delta = d[i+1][j+1] - d[i][j];
-            if (delta < min_delta) {
-                min_dir = dir;
-                min_delta = delta;
-            }
-        }
-
-        if (j < len_b) {
-            dir = Dir::E;
-            delta = d[i][j+1] - d[i][j];
-            if (delta < min_delta) {
-                min_dir = dir;
-                min_delta = delta;
-            }
-        }
-
-        if (i < len_a) {
-            dir = Dir::S;
-            delta = d[i+1][j] - d[i][j];
-            if (delta < min_delta) {
-                min_dir = dir;
-                min_delta = delta;
-            }
-        }
-
-        // apply shortest path and show steps
-        switch (min_dir) {
-        case Dir::SE:
-            i++; j++;
-            if (a[i-1] != b[j-1]) {
-                std::cout << "Operation " << ++step << ": replace '"
-                          << a[i-1] << "' with '" << b[j-1] << "'" << std::endl;
-            }
-            break;
-        case Dir::E:
-            j++;
-            if (j == len_b)
-                std::cout << "Operation " << ++step << ": insert '"
-                          << b[j-1] << "' at end" << std::endl;
-            else
-                std::cout << "Operation " << ++step << ": insert '"
-                          << b[j-1] << "' at position " << j << std::endl;
-            break;
-        case Dir::S:
-            i++;
-            if (i == len_a)
-                std::cout << "Operation " << ++step << ": delete '"
-                          << a[i-1] << "' at end" << std::endl;
-            else
-                std::cout << "Operation " << ++step << ": delete '"
-                          << a[i-1] << "' at position " << i << std::endl;
-            break;
-        default:
-            assert(0);
-        }
-    }
+    return d[len_a][len_b];
 }
 
 int main(int argc, char* argv[]) {
@@ -146,5 +75,5 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
 
-    wag_fis_dist(argv[1], argv[2]);
+    std::cout << wag_fis_dist(argv[1], argv[2]) << std::endl;
 }

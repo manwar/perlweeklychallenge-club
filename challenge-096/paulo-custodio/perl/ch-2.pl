@@ -24,14 +24,11 @@
 # Operation 1: replace 's' with 'm'
 # Operation 2: replace 'u' with 'o'
 
-# NOTE: the  Wagner-Fischer Distance algorithm builds a table of distances
-#       from which the operations can be deduced
-
 use strict;
 use warnings;
 use 5.030;
 
-wag_fis_dist(@ARGV);
+say wag_fis_dist(@ARGV);
 
 sub wag_fis_dist {
     my($a, $b) = @_;
@@ -59,55 +56,7 @@ sub wag_fis_dist {
     }
 
     # distance is in lower bottom cell
-    say $d[length($a)][length($b)];
-
-    # traverse the minimum path
-    my($i, $j, $step) = (0,0,0);
-    while ($i < length($a) || $j < length($b)) {
-        my($min_dir, $min_delta) = ('', 1e10);
-        my($dir, $delta);
-
-        # search shortest path in priority SE, E, S
-        if ($i < length($a) && $j < length($b)) {
-            ($dir, $delta) = ("SE", $d[$i+1][$j+1] - $d[$i][$j]);
-            ($min_dir, $min_delta) = ($dir, $delta) if $delta < $min_delta;
-        }
-
-        if ($j < length($b)) {
-            ($dir, $delta) = ("E", $d[$i][$j+1] - $d[$i][$j]);
-            ($min_dir, $min_delta) = ($dir, $delta) if $delta < $min_delta;
-        }
-
-        if ($i < length($a)) {
-            ($dir, $delta) = ("S", $d[$i+1][$j] - $d[$i][$j]);
-            ($min_dir, $min_delta) = ($dir, $delta) if $delta < $min_delta;
-        }
-
-        # apply shortest path and show steps
-        if ($min_dir eq "SE") {
-            ($i, $j) = ($i+1, $j+1);
-            my $from = substr($a,$i-1,1);
-            my $to = substr($b,$j-1,1);
-            if ($from ne $to) {
-                say "Operation ", ++$step, ": replace '$from' with '$to'";
-            }
-        }
-        elsif ($min_dir eq "E") {
-            ($i, $j) = ($i, $j+1);
-            my $add = substr($b,$j-1,1);
-            say "Operation ", ++$step, ": insert '$add' ",
-                ($j==length($b)) ? "at end" : "at position $j";
-        }
-        elsif ($min_dir eq "S") {
-            ($i, $j) = ($i+1, $j);
-            my $del = substr($a,$i-1,1);
-            say "Operation ", ++$step, ": delete '$del' ",
-                ($i==length($a)) ? "at end" : "at position $i";
-        }
-        else {
-            die $min_dir;
-        }
-    }
+    return $d[length($a)][length($b)];
 }
 
 sub min {

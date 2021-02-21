@@ -3,11 +3,12 @@
 # TASK #1 > Fun Time
 # Submitted by: Mohammad S Anwar
 # You are given a time (12 hour / 24 hour).
-# 
-# Write a script to convert the given time from 12 hour format to 24 hour format and vice versa.
-# 
+#
+# Write a script to convert the given time from 12 hour format to 24 hour format
+# and vice versa.
+#
 # Ideally we expect a one-liner.
-# 
+#
 # Example 1:
 # Input: 05:15 pm or 05:15pm
 # Output: 17:15

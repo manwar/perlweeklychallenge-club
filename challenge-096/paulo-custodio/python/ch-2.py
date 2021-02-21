@@ -24,9 +24,6 @@
 # Operation 1: replace 's' with 'm'
 # Operation 2: replace 'u' with 'o'
 
-# NOTE: the  Wagner-Fischer Distance algorithm builds a table of distances
-#       from which the operations can be deduced
-
 import sys
 
 def wag_fis_dist(a, b):
@@ -52,50 +49,7 @@ def wag_fis_dist(a, b):
                           d[i-1][j-1]+subst_cost)   # substitution
 
     # distance is in lower bottom cell
-    print(d[len(a)][len(b)])
-
-    # traverse the minimum path
-    i, j, step = 0, 0, 0
-    while i < len(a) or j < len(b):
-        min_dir, min_delta = '', 1e10
-
-        # search shortest path in priority SE, E, S
-        if i < len(a) and j < len(b):
-            dir, delta = "SE", d[i+1][j+1] - d[i][j]
-            if delta < min_delta:
-                min_dir, min_delta = dir, delta
-
-        if j < len(b):
-            dir, delta = "E", d[i][j+1] - d[i][j]
-            if delta < min_delta:
-                min_dir, min_delta = dir, delta
-
-        if i < len(a):
-            dir, delta = "S", d[i+1][j] - d[i][j]
-            if delta < min_delta:
-                min_dir, min_delta = dir, delta
-
-        # apply shortest path and show steps
-        if min_dir == "SE":
-            i, j = i+1, j+1
-            frm, to = a[i-1], b[j-1]
-            if frm != to:
-                step += 1
-                print(f"Operation {step}: replace '{frm}' with '{to}'")
-        elif min_dir == "E":
-            i, j = i, j+1
-            add = b[j-1]
-            step += 1
-            at = "at end" if j == len(b) else f"at position {j}"
-            print(f"Operation {step}: insert '{add}' {at}")
-        elif min_dir == "S":
-            i, j = i+1, j
-            dl = a[i-1]
-            step += 1
-            at = "at end" if i == len(a) else f"at position {i}"
-            print(f"Operation {step}: delete '{dl}' {at}")
-        else:
-            assert 0
+    return d[len(a)][len(b)]
 
 a, b = tuple(sys.argv[1:3])
-wag_fis_dist(a, b)
+print(wag_fis_dist(a, b))
