@@ -1,25 +1,15 @@
 {
    "subtitle" : {
-      "text" : "Last updated at 2021-02-21 19:17:50 GMT"
+      "text" : "Last updated at 2021-02-21 19:43:04 GMT"
    },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
    },
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "format" : "{point.y:.0f}"
-         },
          "data" : [
             [
                "Blog",
@@ -27,37 +17,47 @@
             ],
             [
                "Perl",
-               4706
+               4708
             ],
             [
                "Raku",
                3025
             ]
-         ]
+         ],
+         "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10,
+            "enabled" : "true"
+         }
       }
    ],
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "xAxis" : {
       "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       }
    },
    "legend" : {
       "enabled" : "false"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
+   "chart" : {
+      "type" : "column"
    }
 }
