@@ -140,10 +140,8 @@ say $fh gen_datatype( $posexpr, $extra );
 close($fh);
 
 my $api = q(
-API = F( string lit, string name )	"F'$1'->$2"
-    or L( string lit, string name )	"L'$1'->$2"
+API = A( string lit, posexpr at, string name ) 	"A'$1' $2->$3"
     or M( string lit, posexpr atorafter, string name )	"M'$1' $2->$3"
-    or A( string lit, posexpr at, string name ) 	"A'$1' $2->$3"
     or T( posexpr pe1, string op, posexpr pe2 )		"T$1$2$3"
     or C( posexpr pe1, posexpr pe2)			"C $1 $2"
 );
@@ -160,10 +158,11 @@ sub setdebug { my($d) = @_; $debug = $d; }
 #	Die screaming if parsing fails.
 #	For example, the pattern a*e is represented by the
 #	following api string:
-#		F'a'->a,L'e'->e,Te>a-1,C a+1 e-1
+#		A'a' 0->a,A'e' slen-1->e,Te>a-1,C a+1 e-1
+#	(where slen is a runtime variable representing the length of
+#	the target string these APIs would eventually operate on).
+#
 #	The individual api forms are:
-#		F'str'->name
-#		L'str'->name
 #		M'str' posexpr->name
 #		A'str' posexpr->name
 #		Tposexpr ('>'|'='|'>=') posexpr
@@ -176,28 +175,8 @@ sub parse ($)
 	my @result;
 	while( $input )
 	{
-		# F'str'->name
-		if( $input =~ s/^F\s*// )
-		{
-			$input =~ s/^'([^']+)'\s*->\s*(\w+)// ||
-				die "bad input $input in F..\n";
-			my $api = API->F($1, $2);
-			say "debug: parsed api $api, rest input $input"
-				if $debug;
-			push @result, $api;
-		}
-		# L'str'->name
-		elsif( $input =~ s/^L\s*// )
-		{
-			$input =~ s/^'([^']+)'\s*->\s*(\w+)// ||
-				die "bad input $input in L..\n";
-			my $api = API->L($1, $2);
-			say "debug: parsed api $api, rest input $input"
-				if $debug;
-			push @result, $api;
-		}
 		# M'str' posexpr->name
-		elsif( $input =~ s/^M\s*// )
+		if( $input =~ s/^M\s*// )
 		{
 			$input =~ s/^'([^']+)'\s+// ||
 				die "bad input $input in M..\n";
@@ -260,7 +239,7 @@ sub parse ($)
 		}
 		$input =~ s/^\s*,\s*//;
 	}
-	die "bad input $input, non empty but not F|L|M|T|C..\n" if $input;
+	die "bad input $input, non empty but not M|T|C..\n" if $input;
 	return @result;
 }
 %;

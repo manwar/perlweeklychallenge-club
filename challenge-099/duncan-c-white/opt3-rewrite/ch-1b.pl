@@ -35,13 +35,15 @@
 # I've invented "Abstract Pattern Instructions (APIs)", and am writing an
 # interpreter for them in order to do the matching.  To make life interesting,
 # let's also capture the matching text for each '?' and '*'.  I've got this
-# working; see API.pm and PosExpr.pm too..
+# working; see API.pm and PosExpr.pm too..  This proves that "interpreting a
+# list of APIs" will do pattern matching.
 #
-# Of course, for a full solution, I also need to work out how to translate
-# our patterns into a list of APIs.  But I haven't done that yet.  So,
-# this is an incomplete proof-of-concept, that "interpreting a list of APIs"
-# will do pattern matching, even if I don't yet know how to build the api list
-# from a pattern.
+# Next, I need to work out how to translate our patterns into a list of APIs.
+# I have some ideas, and notes, but not a full method worked out.
+# I think the first concept is: divide the pattern up into "fixed size islands"
+# containing string literals and adjacent '?'s, i.e. anything but a '*'A,
+# separated by patches of sea: each seapatch is a single '*'
+# [NB: '**' and '*(?)+*' have already been ruled out, detected and trapped]
 #
 # Note: I also added a test suite (the above examples) with --test.
 # 
@@ -53,21 +55,17 @@ use feature 'say';
 use Function::Parameters;
 use Data::Dumper;
 
-use lib qw(.);
-use API;
-use PosExpr;
-use Interpreter qw(interprete);
+our $debug=0;
+our $test=0;
 
-my $debug=0;
-my $test=0;
+use lib qw(.);
+use PatternMatch qw(patternmatch);
 
 die "Usage: pattern-match [--test] [--debug]\n".
-    "Or...  pattern-match [--debug] S csvlist(API)\n"
+    "Or...  pattern-match [--debug] S P\n"
 	unless GetOptions( "debug" => \$debug, "test" => \$test )
-	    && ($test && @ARGV==0 || !$test && @ARGV>=2);
-API::setdebug( $debug );
-PosExpr::setdebug( $debug );
-Interpreter::setdebug( $debug );
+	    && ($test && @ARGV==0 || !$test && @ARGV==2);
+PatternMatch::setdebug( $debug );
 
 if( $test )
 {
@@ -75,11 +73,9 @@ if( $test )
 	exit 0;
 }
 
-my( $s, @apistr ) = @ARGV;
-my @api = API::parse( join(',',@apistr) );
-say "apis:";
-say join("\n", map { "  $_" } @api );
-my( $matched, @matchtext ) = patmatch( $s, @api );
+my( $s, $pat ) = @ARGV;
+
+my( $matched, @matchtext ) = patternmatch( $s, $pat );
 say "Output: $matched";
 if( $matched )
 {
@@ -91,37 +87,17 @@ if( $matched )
 
 
 #
-# my( $matched, @matchtext ) = patmatch( $s, @api );
-#	Pattern match @api against $s, returning ( 1, @matchtext ) iff it
-#	matches the whole of $s, ( 0 ) otherwise.  Basically this is an
-#	Interpreter for the list @api.
-#
-sub patmatch
-{
-	my( $s, @api ) = @_;
-	say "patmatch: matching api rules against $s" if $debug;
-	my %pos;
-	$pos{"slen"} = length($s);
-	my @mt;
-	my $match = interprete( $s, \@api, \%pos, \@mt );
-	return ( $match, @mt );
-}
-
-
-#
 # dotests();
 #	Do a load of tests.
 #
 sub dotests
 {
 	eval "use Test::More"; die $@ if $@;
-	eval "use TestPE qw(pe_tests)"; die $@ if $@;
-	eval "use TestMatch qw(match_tests)"; die $@ if $@;
+	eval "use TestPatternMatch qw(match_tests)"; die $@ if $@;
 
-	TestMatch::setdebug($debug);
+	TestPatternMatch::setdebug( $debug );
 
-	pe_tests();
-	match_tests( \&patmatch );
+	match_tests();
 
 	done_testing();
 }

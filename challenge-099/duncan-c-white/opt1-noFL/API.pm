@@ -1,10 +1,8 @@
 package API;
 
 # automatically generated implementation of recursive data type
-# API	=	F(string lit,string name)
-#	or	L(string lit,string name)
+# API	=	A(string lit,posexpr at,string name)
 #	or	M(string lit,posexpr atorafter,string name)
-#	or	A(string lit,posexpr at,string name)
 #	or	T(posexpr pe1,string op,posexpr pe2)
 #	or	C(posexpr pe1,posexpr pe2)
 
@@ -18,49 +16,25 @@ use overload 'eq' => \&streq;
 
 
 
-# API->F: Constructor or get method, use:
-#   my $obj = API->F($lit, $name) OR
-#   my ($lit, $name) = $obj->F
-sub F ($;$$)
+# API->A: Constructor or get method, use:
+#   my $obj = API->A($lit, $at, $name) OR
+#   my ($lit, $at, $name) = $obj->A
+sub A ($;$$$)
 {
-	my( $thing, $lit, $name ) = @_;	
-	if( @_ == 3 )		# constructor
+	my( $thing, $lit, $at, $name ) = @_;	
+	if( @_ == 4 )		# constructor
 	{
-		die "API->F: classname $thing is not 'API'\n"
+		die "API->A: classname $thing is not 'API'\n"
 			unless $thing eq "API";
-		return bless ["F", $lit, $name], "API";
+		return bless ["A", $lit, $at, $name], "API";
 	} else			# get method
 	{	
-		die "API->F: $thing is not a API\n"
+		die "API->A: $thing is not a API\n"
 			unless ref($thing) eq "API";
 		my @x = @$thing;
 		my $t = shift @x;
-		die "API->F: malformed object $thing\n"
-			unless @x == 2 && $t eq "F";
-		return @x;
-	}
-}
-
-
-# API->L: Constructor or get method, use:
-#   my $obj = API->L($lit, $name) OR
-#   my ($lit, $name) = $obj->L
-sub L ($;$$)
-{
-	my( $thing, $lit, $name ) = @_;	
-	if( @_ == 3 )		# constructor
-	{
-		die "API->L: classname $thing is not 'API'\n"
-			unless $thing eq "API";
-		return bless ["L", $lit, $name], "API";
-	} else			# get method
-	{	
-		die "API->L: $thing is not a API\n"
-			unless ref($thing) eq "API";
-		my @x = @$thing;
-		my $t = shift @x;
-		die "API->L: malformed object $thing\n"
-			unless @x == 2 && $t eq "L";
+		die "API->A: malformed object $thing\n"
+			unless @x == 3 && $t eq "A";
 		return @x;
 	}
 }
@@ -85,30 +59,6 @@ sub M ($;$$$)
 		my $t = shift @x;
 		die "API->M: malformed object $thing\n"
 			unless @x == 3 && $t eq "M";
-		return @x;
-	}
-}
-
-
-# API->A: Constructor or get method, use:
-#   my $obj = API->A($lit, $at, $name) OR
-#   my ($lit, $at, $name) = $obj->A
-sub A ($;$$$)
-{
-	my( $thing, $lit, $at, $name ) = @_;	
-	if( @_ == 4 )		# constructor
-	{
-		die "API->A: classname $thing is not 'API'\n"
-			unless $thing eq "API";
-		return bless ["A", $lit, $at, $name], "API";
-	} else			# get method
-	{	
-		die "API->A: $thing is not a API\n"
-			unless ref($thing) eq "API";
-		my @x = @$thing;
-		my $t = shift @x;
-		die "API->A: malformed object $thing\n"
-			unless @x == 3 && $t eq "A";
 		return @x;
 	}
 }
@@ -185,8 +135,6 @@ sub as_string ($)
 	# specific printing rules
 	return "A'$x[0]' $x[1]->$x[2]" if $t eq 'A';
 	return "C $x[0] $x[1]" if $t eq 'C';
-	return "F'$x[0]'->$x[1]" if $t eq 'F';
-	return "L'$x[0]'->$x[1]" if $t eq 'L';
 	return "M'$x[0]' $x[1]->$x[2]" if $t eq 'M';
 	return "T$x[0]$x[1]$x[2]" if $t eq 'T';
 
@@ -217,10 +165,11 @@ sub setdebug { my($d) = @_; $debug = $d; }
 #	Die screaming if parsing fails.
 #	For example, the pattern a*e is represented by the
 #	following api string:
-#		F'a'->a,L'e'->e,Te>a-1,C a+1 e-1
+#		A'a' 0->a,A'e' slen-1->e,Te>a-1,C a+1 e-1
+#	(where slen is a runtime variable representing the length of
+#	the target string these APIs would eventually operate on).
+#
 #	The individual api forms are:
-#		F'str'->name
-#		L'str'->name
 #		M'str' posexpr->name
 #		A'str' posexpr->name
 #		Tposexpr ('>'|'='|'>=') posexpr
@@ -233,28 +182,8 @@ sub parse ($)
 	my @result;
 	while( $input )
 	{
-		# F'str'->name
-		if( $input =~ s/^F\s*// )
-		{
-			$input =~ s/^'([^']+)'\s*->\s*(\w+)// ||
-				die "bad input $input in F..\n";
-			my $api = API->F($1, $2);
-			say "debug: parsed api $api, rest input $input"
-				if $debug;
-			push @result, $api;
-		}
-		# L'str'->name
-		elsif( $input =~ s/^L\s*// )
-		{
-			$input =~ s/^'([^']+)'\s*->\s*(\w+)// ||
-				die "bad input $input in L..\n";
-			my $api = API->L($1, $2);
-			say "debug: parsed api $api, rest input $input"
-				if $debug;
-			push @result, $api;
-		}
 		# M'str' posexpr->name
-		elsif( $input =~ s/^M\s*// )
+		if( $input =~ s/^M\s*// )
 		{
 			$input =~ s/^'([^']+)'\s+// ||
 				die "bad input $input in M..\n";
@@ -317,7 +246,7 @@ sub parse ($)
 		}
 		$input =~ s/^\s*,\s*//;
 	}
-	die "bad input $input, non empty but not F|L|M|T|C..\n" if $input;
+	die "bad input $input, non empty but not M|T|C..\n" if $input;
 	return @result;
 }
 

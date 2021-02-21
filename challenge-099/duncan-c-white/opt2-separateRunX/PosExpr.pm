@@ -128,6 +128,7 @@ sub streq ($$)
 
 
 
+use Data::Dumper;
 
 my $debug = 0;
 sub setdebug { my($d) = @_; $debug = $d; }

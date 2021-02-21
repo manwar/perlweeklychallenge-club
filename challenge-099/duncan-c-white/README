@@ -47,15 +47,15 @@ in $s into a variable called l".  Another API might be "T l>2", meaning
 pos 1 to char pos l-1".
 
 Then I wrote an API-interpreter for them.  Of course, this has to handle
-the general match API (see API.pm and ch-1a.pl for details) which can match
-in multiple places - requiring us to try each possible place, and backtrack.
+the general match API (see Interpreter.pm, API.pm and ch-1a.pl for details)
+which can match in multiple places - requiring us to try each possible place
+recursively.
 
 The API-interpreter successfully does pattern matching, as shown by
 "./ch-1a.pl -t" passing all tests.  So this is a successful proof of concept.
 
-But as yet I have not attempted to translate our patterns such as 'a*c?e'
-into lists of API calls.
-
+Up to the submission deadline, this was all I managed to achieve.  See the
+bottom of this README for an update..
 
 Task 2: "Unique Subsequence
 
@@ -91,3 +91,52 @@ into a Task-1-style pattern, so lit becomes *l*i*t* and figuring out
 how many different ways that pattern can apply.  But as $T has no meta-chars,
 an easy approach may be possible (locate all positions in $S where head($T)
 appears, for each of them recursively match subtr($S,pos+1) against tail($T))
+
+
+Return to Task 1 after the deadline
+
+After the deadline had passed, I spent quite a long time working out
+how to translate our patterns such as 'a*c?e' into lists of API calls.
+See Translate.pm and ch-1b.pl for the details of what I did.  This half
+of the problem was much harder than the Interpreter.
+
+I then invested some more time optimising the Interpreter+Translator:
+
+opt1-noFL:
+	Here I realised that "First" (match @ 0) and "Last" (match @ end of
+	the string) were special cases, and removed them, thus removing over
+	100 lines of Perl without any harm.
+
+opt2-separateRunX:
+	I started thinking about merging the Translator and Interpreter,
+	here I split out the Interpreter operations for At, Match, Test and
+	Capture into separate functions thinking this might make it easier
+	to move bits of the Interpreter into the Translator.  It might have
+	helped with At, Test and Capture, but Match has to try matching at
+	several different places, backtracking, and the structure of this
+	would be entirely different in a merged T+I.  So this was a dead end.
+
+opt3-rewrite:
+	Here I bit the bullet, and started working out from scratch (reusing
+	snippets of code from both Translator and Interpreter) how to do an
+	integrated Pattern Match.  I got very bogged down in captures and
+	backtracking, before eventually realising that working out which
+	substrings to capture should be completely postponed until after the
+	match was complete.  All that it needed was to know how many fixed width
+	islands (sequences of string literals and '?'s) there were, and
+	for each island, the starting position in the string we were matching
+	against where that island had matched.  All the captures could be
+	worked out from there.  It took two solid evenings work, but eventually
+	it worked fine.  See PatternMatch.pm, Tuple.pm (reused ADT) and so on.
+	This approach completely abandons the API instructions, the PosExpr
+	module and the concept of an interpreter for them.
+
+	It's considerably shorter, and most likely faster (although I haven't
+	benchmarked them).
+
+Is it more elegant?  I'm not sure.  There was a great elegance about the
+concept of an Abstract Pattern Instruction, with a front end compiling a
+pattern into a list of APIs, and a back end interpreting them to perform
+the pattern match.  On the other hand, there was a certain elegance about
+the concept of fixed width islands, either matched at a fixed location,
+or matched floating about, and the startpos array.
