@@ -28,13 +28,13 @@ is min-triangle-sum([
 < 6 71 28 75 94 48 37 10 23 51  6 48 53 18 74 98 15>,
 <27  2 92 23  8 71 76 84 15 52 92 63 81 10 44 10 69 93>]), 475;
 
-sub min-triangle-sum(@triangle) 
+sub min-triangle-sum(@t) 
 {
-    my @a = (flat roundrobin @triangle[1]<>, @triangle[0]<>).rotor(2 => -1);
-    my ($head, $tail) = @a.shift.sum, @a.pop.sum;
-    my @mid = map -> $a, $b { $a.sum min $b.sum }, @a;
-    shift @triangle; 
-    @triangle[0] = [$head, |@mid, $tail];
-    min-triangle-sum(@triangle) if @triangle > 1;
-    @triangle[0].min;
+    for ^@t.end 
+    {
+        @t[$_+1] = (flat roundrobin [Inf, |@t[$_], Inf], flat @t[$_+1])
+                   .rotor(2 => -1).map(*.sum min *.sum); 
+    }
+
+    @t[*-1].min;
 }
