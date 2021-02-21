@@ -22,9 +22,6 @@ Output: 2
 
 Operation 1: replace 's' with 'm'
 Operation 2: replace 'u' with 'o'
-
-NOTE: the  Wagner-Fischer Distance algorithm builds a table of distances
-        from which the operations can be deduced
 */
 
 #include <assert.h>
@@ -51,7 +48,7 @@ int min3(int a, int b, int c) {
 
 enum { DIR_NONE, DIR_E, DIR_S, DIR_SE };
 
-void wag_fis_dist(const char* a, const char* b) {
+int wag_fis_dist(const char* a, const char* b) {
     int len_a = strlen(a);
     int len_b = strlen(b);
 
@@ -80,78 +77,14 @@ void wag_fis_dist(const char* a, const char* b) {
     }
 
     // distance is in lower bottom cell
-    printf("%d\n", d[len_a][len_b]);
-
-    // traverse the minimum path
-    int i = 0, j = 0, step = 0;
-    while (i < len_a || j < len_b) {
-        int min_dir = DIR_NONE, min_delta = INT_MAX;
-        int dir, delta;
-
-        // search shortest path in priority SE, E, S
-        if (i < len_a && j < len_b) {
-            dir = DIR_SE;
-            delta = d[i+1][j+1] - d[i][j];
-            if (delta < min_delta) {
-                min_dir = dir;
-                min_delta = delta;
-            }
-        }
-
-        if (j < len_b) {
-            dir = DIR_E;
-            delta = d[i][j+1] - d[i][j];
-            if (delta < min_delta) {
-                min_dir = dir;
-                min_delta = delta;
-            }
-        }
-
-        if (i < len_a) {
-            dir = DIR_S;
-            delta = d[i+1][j] - d[i][j];
-            if (delta < min_delta) {
-                min_dir = dir;
-                min_delta = delta;
-            }
-        }
-
-        // apply shortest path and show steps
-        switch (min_dir) {
-        case DIR_SE:
-            i++; j++;
-            if (a[i-1] != b[j-1]) {
-                printf("Operation %d: replace '%c' with '%c'\n",
-                       ++step, a[i-1], b[j-1]);
-            }
-            break;
-        case DIR_E:
-            j++;
-            if (j == len_b)
-                printf("Operation %d: insert '%c' at end\n",
-                       ++step, b[j-1]);
-            else
-                printf("Operation %d: insert '%c' at position %d\n",
-                       ++step, b[j-1], j);
-            break;
-        case DIR_S:
-            i++;
-            if (i == len_a)
-                printf("Operation %d: delete '%c' at end\n",
-                       ++step, a[i-1]);
-            else
-                printf("Operation %d: delete '%c' at position %d\n",
-                       ++step, a[i-1], i);
-            break;
-        default:
-            assert(0);
-        }
-    }
+    int ret_value = d[len_a][len_b];
 
     // free memory
     for (int i = 0; i <= len_a; i++)
         free(d[i]);
     free(d);
+    
+    return ret_value;
 }
 
 int main(int argc, char* argv[]) {
@@ -160,5 +93,5 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
 
-    wag_fis_dist(argv[1], argv[2]);
+    printf("%d\n", wag_fis_dist(argv[1], argv[2]));
 }

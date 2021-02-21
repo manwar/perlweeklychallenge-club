@@ -23,9 +23,6 @@
 \
 \ Operation 1: replace 's' with 'm'
 \ Operation 2: replace 'u' with 'o'
-\
-\ NOTE: the  Wagner-Fischer Distance algorithm builds a table of distances
-\       from which the operations can be deduced
 
 
 \ collect arguments - strings a and b
@@ -85,69 +82,9 @@ len_a 1+ len_b 1+ * CELLS ALLOT
 : .num              ( n -- )
     0 U.R ;
 
-\ output step
-0 VALUE step
-: show_operation    ( -- )
-    step 1+ TO step
-    ." Operation " step .num ." : " ;
-
-\ traverse minimum path
-: traverse_path ( -- )
-    0 0 { i j }                     \ starting point
-    BEGIN i len_a < j len_b < OR WHILE
-        0 { min_dir } len_a len_b + { min_delta }
-        0 { dir } 0 { delta }
-
-        \ search shortest path in priority SE (D), E, S
-        i len_a < j len_b < AND IF
-            'D' TO dir
-            i 1+ j 1+ d[] @  i j d[] @  -  TO delta
-            delta min_delta < IF
-                dir TO min_dir
-                delta TO min_delta
-            THEN
-        THEN
-
-        j len_b < IF
-            'E' TO dir
-            i j 1+ d[] @  i j d[] @  -  TO delta
-            delta min_delta < IF
-                dir TO min_dir
-                delta TO min_delta
-            THEN
-        THEN
-
-        i len_a < IF
-            'S' TO dir
-            i 1+ j d[] @  i j d[] @  -  TO delta
-            delta min_delta < IF
-                dir TO min_dir
-                delta TO min_delta
-            THEN
-        THEN
-
-        \ apply shortest path and show steps
-        min_dir 'D' = IF
-            i 1+ TO i
-            j 1+ TO j
-            i a[]@ j b[]@ <> IF
-                show_operation ." replace '" i a[]@ EMIT ." ' with '" j b[]@ EMIT ." '" CR
-            THEN
-        ELSE min_dir 'E' = IF
-            j 1+ TO j
-            show_operation ." insert '" j b[]@ EMIT ." ' at "
-            j len_b = IF ." end" ELSE ." position " j .num THEN CR
-        ELSE min_dir 'S' = IF
-            i 1+ TO i
-            show_operation ." delete '" i a[]@ EMIT ." ' at "
-            j len_b = IF ." end" ELSE ." position " i .num THEN CR
-        THEN THEN THEN
-    REPEAT ;
-
-: wag_fis_dist  ( -- )
+: wag_fis_dist  ( -- n )
     clear_d init_source init_target flood_fill
-    len_a len_b d[] @ . CR          \ show distance
-    traverse_path ;
+    len_a len_b d[] @ ;
 
-wag_fis_dist
+wag_fis_dist .num CR
 BYE

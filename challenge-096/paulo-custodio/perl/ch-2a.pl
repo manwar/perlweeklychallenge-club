@@ -24,9 +24,6 @@
 # Operation 1: replace 's' with 'm'
 # Operation 2: replace 'u' with 'o'
 
-# NOTE: the Levenshtein Distance algorithm only computes distance, does not output
-#       the edit steps
-
 use strict;
 use warnings;
 use 5.030;
