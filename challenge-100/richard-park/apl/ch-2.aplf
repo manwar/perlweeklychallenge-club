@@ -1,0 +1,10 @@
+ TriangleSum←{
+     ⍺←0
+     row←⊃⍵
+     2≥≢row:(⍺+row)∇ 1↓⍵
+     0∊⍴⍵:⍺
+     coeffs←1,1,⍨2⍴⍨¯2+≢row
+     k←coeffs/⍳≢row
+     sums←+⌿↑(⍺⌿⍨2⍴⍨≢⍺)(coeffs/row)
+     ⌊/(k{⌊/⍵}⌸sums)∇ 1↓⍵
+ }
