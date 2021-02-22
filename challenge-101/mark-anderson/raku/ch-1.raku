@@ -1,11 +1,12 @@
 #!/usr/bin/env raku
 
 use Test;
-plan 5;
+plan 6;
 
 is-deeply pack-a-spiral(1..4),  [[4, 3], [1, 2]];
 is-deeply pack-a-spiral(1..6),  [[6, 5, 4], [1, 2, 3]];
 is-deeply pack-a-spiral(1..12), [[9, 8, 7, 6], [10, 11, 12, 5], [1, 2, 3, 4]];
+is-deeply pack-a-spiral(1..17), [[1..17],];
 is-deeply pack-a-spiral(1..143),
 [
 [ 35,  34,  33,  32,  31,  30,  29,  28,  27,  26,  25,  24,  23], 
@@ -47,7 +48,7 @@ sub pack-a-spiral(@A is copy)
 
 sub tightest-factor($n)
 {
-    return 1 if $n.is-prime;
+    return $n if $n.is-prime;
     my $s = sqrt($n);
     return $s if $s.narrow ~~ UInt;
     my @f = grep { $n %% $_ }, 2..$n/2;
