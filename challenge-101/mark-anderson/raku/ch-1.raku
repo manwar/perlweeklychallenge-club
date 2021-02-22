@@ -40,7 +40,7 @@ is-deeply pack-a-spiral(1..144),
 
 sub pack-a-spiral(@A is copy)
 {
-    my $f = tightest-factor(@A.elems);
+    my $f = tightest-factor(+@A);
     my @k = @A.keys.rotor($f);
     @k = spiral(@k.map(*.Array).Array);
     @A[@k] = @A;
@@ -52,8 +52,8 @@ sub tightest-factor($n)
     return $n if $n.is-prime;
     my $s = sqrt($n);
     return $s if $s.narrow ~~ UInt;
-    my @f = grep { $n %% $_ }, 2..$n/2;
-    return @f[@f/2];
+    my @f = grep { $n %% $_ }, 2..$n div 2;
+    return @f[+@f div 2];
 }
 
 #
