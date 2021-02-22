@@ -19,14 +19,16 @@ palindrome_odd([H|T]):-
     palindrome_odd(L).   
 
 palindrome(N):-
-    N > 0, 
+    current_prolog_flag(max_integer, MAX_INTEGER),
+    between(1, MAX_INTEGER, N),
     number_chars(N, C), 
     length(C, Length), 
     M is Length mod 2,
     M == 0,
     palindrome_even(C).   
 palindrome(N):-
-    N > 0, 
+    current_prolog_flag(max_integer, MAX_INTEGER),
+    between(1, MAX_INTEGER, N),  
     number_chars(N, C), 
     length(C, Length), 
     M is Length mod 2,

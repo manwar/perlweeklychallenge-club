@@ -18,6 +18,7 @@ is( is_palindrome_array(90),   0 );
 
 done_testing();
 
+say is_palindrome_array($_,2), is_palindrome_array($_,3), is_palindrome_array($_,4), is_palindrome_array($_,6),' ',$_ foreach 6..1000000;
 ## I will provide two solutions here...
 
 ## (1) The first one just treating the two numbers as strings and
@@ -38,10 +39,11 @@ sub is_palindrome_rev {
 ##        shift/pop trick as it will compare digit with undef;
 
 sub is_palindrome_array {
-  my $n = shift;
+  my($n,$radix) = @_;
+  $radix||=10;
   return 0 if $n < 0;
-  my @digits  = $n%10;
-  push @digits, $n%10 while $n = int ($n/10);
+  my @digits  = $n%$radix;
+  push @digits, $n%$radix while $n = int ($n/$radix);
   while( @digits>1 ) {
     return 0 if shift @digits != pop @digits;
   }

@@ -37,8 +37,8 @@ sub max_colinear_points {
     my @coord = @_;
     my @nw_line_char = sort {$a<=>$b} map {$_->[0]+$_->[1]} @coord;
     my @ne_line_char = sort {$a<=>$b} map {$_->[0]-$_->[1]} @coord;
-    my @ver_line_char = sort {$a<=>$b} map {$_->[1]} @coord;
-    my @hor_line_char = sort {$a<=>$b} map {$_->[0]} @coord;
+    my @ver_line_char = sort {$a<=>$b} map {$_->[0]} @coord;  # see  
+    my @hor_line_char = sort {$a<=>$b} map {$_->[1]} @coord;  # Remark
 
     print "\n";
     return max  max_points(@nw_line_char),max_points(@ne_line_char),
@@ -50,3 +50,6 @@ ok (max_colinear_points([3,5],[2,4],[3,4],[4,4],[1,3],[2,3],[3,3],
     [4,3],[5,3],[2,2],[3,2],[4,2],[3,1]) == 5,  "Test Case diamond " );
 
 ok (max_colinear_points([1,1],[2,2],[3,3]) == 3, "Example 1");
+
+# Remark:
+# Interchange the ->[0] and ->[1] in correct order; 31st Jan 2021

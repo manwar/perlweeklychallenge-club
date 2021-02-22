@@ -1,0 +1,30 @@
+- setup:    0==system("aspell -d en dump master | aspell -l en expand > words.txt");
+  cleanup:
+  args:     binary
+  input:
+  output:   |
+            |binary
+            |brainy
+- setup:
+  cleanup:
+  args:     live
+  input:
+  output:   |
+            |evil
+            |levi
+            |live
+            |veil
+            |vile
+- setup:
+  cleanup:  unlink "words.txt";
+  args:     casper
+  input:
+  output:   |
+            |capers
+            |crapes
+            |parsec
+            |pacers
+            |recaps
+            |scrape
+            |spacer
+            |casper

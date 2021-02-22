@@ -2,7 +2,7 @@
 # Perl weekly challenge 092
 # Task 1: Isomorphic strings.
 # Test if two or more strings are isomorphic
-# See https:/wlmb.github.io/2020/12/22/PWC92/#task-1-isomorphic-strings
+# See https://wlmb.github.io/2020/12/22/PWC92/#task-1-isomorphic-strings
 use warnings;
 use strict;
 use v5.10;

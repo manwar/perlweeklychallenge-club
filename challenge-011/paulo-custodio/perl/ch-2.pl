@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 # Challenge 011
 #
@@ -14,9 +14,9 @@ use 5.030;
 my $size = shift || 4;
 my @i;
 for my $r (0..$size-1) {
-	for my $c (0..$size-1) {
-		$i[$r][$c] = ($r==$c) ? 1 : 0;
-	}
+    for my $c (0..$size-1) {
+        $i[$r][$c] = ($r==$c) ? 1 : 0;
+    }
 }
 
 # print matrix

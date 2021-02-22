@@ -12,13 +12,13 @@ different word or phrase, typically using all the original letters exactly
 once.
 
 Example 1:
-	Input: ("opt", "bat", "saw", "tab", "pot", "top", "was")
-	Output: [ ("bat", "tab"),
-			  ("saw", "was"),
-			  ("top", "pot", "opt") ]
+    Input: ("opt", "bat", "saw", "tab", "pot", "top", "was")
+    Output: [ ("bat", "tab"),
+              ("saw", "was"),
+              ("top", "pot", "opt") ]
 Example 2:
-	Input: ("x")
-	Output: [ ("x") ]
+    Input: ("x")
+    Output: [ ("x") ]
 */
 
 #include <algorithm>
@@ -28,44 +28,44 @@ Example 2:
 #include <string>
 
 std::string make_key(const std::string& str) {
-	std::string out{ str };
-	std::sort(out.begin(), out.end());
-	return out;
+    std::string out{ str };
+    std::sort(out.begin(), out.end());
+    return out;
 }
 
 int main(int argc, char* argv[]) {
-	std::map<std::string, std::list<std::string>> map;		// maps keys to lists of words
+    std::map<std::string, std::list<std::string>> map;      // maps keys to lists of words
 
-	for (int i = 1; i < argc; i++) {
-		auto key = make_key(argv[i]);
-		auto found = map.find(key);
-		if (found == map.end()) {			// not found, create new item
-			std::list<std::string> list;
-			list.push_back(argv[i]);
-			map[key] = list;
-		}
-		else {								// append to existing item
-			found->second.push_back(argv[i]);
-		}
-	}
+    for (int i = 1; i < argc; i++) {
+        auto key = make_key(argv[i]);
+        auto found = map.find(key);
+        if (found == map.end()) {           // not found, create new item
+            std::list<std::string> list;
+            list.push_back(argv[i]);
+            map[key] = list;
+        }
+        else {                              // append to existing item
+            found->second.push_back(argv[i]);
+        }
+    }
 
-	std::cout << "[ ";
-	bool first1 = true;
-	for (auto& it1 : map) {
-		if (!first1)
-			std::cout << "," << std::endl << "  ";
-		first1 = false;
+    std::cout << "[ ";
+    bool first1 = true;
+    for (auto& it1 : map) {
+        if (!first1)
+            std::cout << "," << std::endl << "  ";
+        first1 = false;
 
-		std::cout << "(";
-		bool first2 = true;
-		for (auto& it2 : it1.second) {
-			if (!first2) 
-				std::cout << ", ";
-			first2 = false;
+        std::cout << "(";
+        bool first2 = true;
+        for (auto& it2 : it1.second) {
+            if (!first2)
+                std::cout << ", ";
+            first2 = false;
 
-			std::cout << "\"" << it2 << "\"";
-		}
-		std::cout << ")";
-	}
-	std::cout << " ]" << std::endl;
+            std::cout << "\"" << it2 << "\"";
+        }
+        std::cout << ")";
+    }
+    std::cout << " ]" << std::endl;
 }

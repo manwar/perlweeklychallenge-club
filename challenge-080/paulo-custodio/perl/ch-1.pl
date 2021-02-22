@@ -1,13 +1,13 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 # Challenge 081
-# 
+#
 # TASK #1 › Smallest Positive Number
 # Submitted by: Mohammad S Anwar
 # You are given unsorted list of integers @N.
-# 
+#
 # Write a script to find out the smallest positive number missing.
-# 
+#
 # Example 1:
 # Input: @N = (5, 2, -2, 0)
 # Output: 1
@@ -26,9 +26,9 @@ say missing(@ARGV);
 
 
 sub missing {
-	my @N = sort grep {$_ > 0} @_;	# filter only positive numbers and sort
-	for (0 .. $#N) {				# find missing sequence
-		return $_+1 if $N[$_] != $_+1;
-	}
-	return scalar(@N)+1;
+    my @N = sort grep {$_ > 0} @_;  # filter only positive numbers and sort
+    for (0 .. $#N) {                # find missing sequence
+        return $_+1 if $N[$_] != $_+1;
+    }
+    return scalar(@N)+1;
 }

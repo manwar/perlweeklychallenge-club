@@ -1,3 +1,3 @@
-# The Weekly Challenge 095
+# The Weekly Challenge 096
 
-Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-095-2jkl)
+No solution this week. Back next week.

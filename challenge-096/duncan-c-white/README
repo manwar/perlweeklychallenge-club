@@ -1,49 +1,58 @@
-Task 1: "Palindrome Number
+Task 1: "Reverse Words
 
-You are given a number $N.
-Write a script to figure out if the given number is Palindrome.
-Print 1 if true otherwise 0.
+You are given a string $S.
+
+Write a script to reverse the order of words in the given string. The
+string may contain leading/trailing spaces. The string may have more
+than one space between words in the string. Print the result without
+leading/trailing spaces and there should be only one space between words.
 
 Example 1:
 
-	Input: 1221
-	Output: 1
+	Input: $S = "The Weekly Challenge"
+	Output: "Challenge Weekly The"
 
 Example 2:
 
-	Input: -101
-	Output: 0, since -101 and 101- are not the same.
-
-Example 3:
-
-	Input: 90
-	Output: 0
+	Input: $S = "    Perl and   Raku are  part of the same family  "
+	Output: "family same the of part are Raku and Perl"
 "
 
-My notes: sounds trivial.  N == join(reverse(split(N)))
+My notes: looks straightforward.
 
 
-Task 2: "Demo Stack
+Task 2: "Edit Distance
 
-Write a script to demonstrate Stack operations like below:
+You are given two strings $S1 and $S2.
 
-push($n) - add $n to the stack
-pop() - remove the top element
-top() - get the top element
-min() - return the minimum element
+Write a script to find out the minimum operations required to convert
+$S1 into $S2. The operations can be insert, remove or replace a
+character. Please check out 
+https://en.wikipedia.org/wiki/Edit_distance
+for more information.
 
-Example:
+Example 1:
 
-my $stack = Stack->new;
-$stack->push(2);
-$stack->push(-1);
-$stack->push(0);
-$stack->pop;       # removes 0
-print $stack->top; # prints -1
-$stack->push(0);
-print $stack->min; # prints -1
+	Input: $S1 = "kitten"; $S2 = "sitting"
+	Output: 3
+
+	Operation 1: replace 'k' with 's'
+	Operation 2: replace 'e' with 'i'
+	Operation 3: insert 'g' at the end
+
+Example 2:
+
+	Input: $S1 = "sunday"; $S2 = "monday"
+	Output: 2
+
+	Operation 1: replace 's' with 'm'
+	Operation 2: replace 'u' with 'o'
 "
 
-My notes: ok so by "script" we mean "Perl class".  Very easy to do,
-but I wonder what ch-2.pl does - contains the above example I guess.
-On second thought, let's inline the Stack module into ch-2.pl..
+My notes: reading the Wikipedia page, the naive recursive implementation
+sounds good enough to me, even though it's hideously inefficent.
+The various iterative versions sound clever, especially the one which
+only stores two rows, but I can't be bothered.
+
+(note that there are several CPAN modules which do this, but solving a
+Perl Challenge by "use Text::Levenshtein" seems like cheating).

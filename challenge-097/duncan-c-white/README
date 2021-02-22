@@ -1,0 +1,103 @@
+Task 1: "Caesar Cipher
+
+You are given string $S containing alphabets A..Z only and a number $N.
+
+Write a script to encrypt the given string $S using Caesar Cipher with
+left shift of size $N.
+
+Example
+
+	Input: $S = "THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG", $N = 3
+	Output: "QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD"
+
+	Plain:    ABCDEFGHIJKLMNOPQRSTUVWXYZ
+	Cipher:   XYZABCDEFGHIJKLMNOPQRSTUVW
+
+	Plaintext:  THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
+	Ciphertext: QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD
+
+"
+
+My notes: ah, the good old Caesar cipher, aka rotN..  easy.
+
+
+Task 2: "Binary Substrings
+
+You are given a binary string $B and an integer $S.
+
+Write a script to split the binary string $B of size $S and then find
+the minimum number of flips required to make it all the same.
+
+Example 1:
+
+	Input: $B = "101100101" $S = 3
+	Output: 1
+
+	Binary Substrings:
+	    "101": 0 flip
+	    "100": 1 flip to make it "101"
+	    "101": 0 flip
+
+Example 2:
+
+	Input $B = "10110111" $S = 4
+	Output: 2
+
+	Binary Substrings:
+	    "1011": 0 flip
+	    "0111": 2 flips to make it "1011"
+"
+
+My notes:  hmm.. this could be specified a LOT more clearly.  bad phrasing!
+and the examples don't completely clarify what we're supposed to do.
+The first task is obvious: split BS into "length S" chunks - that's trivial..
+
+But then what we do with the chunks is not quite clear - both examples seem
+to show taking the first chunk as the "goal to reach" and then all we
+do is to find out the maximum number of bits that have to be flipped to turn
+any of the OTHER chunks into the goal-chunk.  But what's special about the
+first chunk?  Also, if we do that, where does the word "minimum" come in?
+
+I wonder whether it means, instead:
+- try each distinct chunk as the goal chunk, for each such goal, find the
+  maximum number of bits that have to be flipped to turn chunkN into the
+  goalchunk, AND THEN FIND THE MINIMUM OF ALL THOSE MAXIMUMS.
+
+I'm going to assume that it's the latter..  Update: having coded it, yes,
+this can produce different answers than "first chunk is the goal".
+The following example demonstrates the difference:
+
+Example dcw-1:
+	Input: $B = "000101011111" $S = 3
+	Output: 2
+
+	Binary Substrings:
+	000
+	101
+	011
+	111
+
+ If 000 is the goal, then we'd work out how many bits have to be
+ flipped in each of the other substrings to reach 000, getting:
+	Binary Substrings:
+	000: 0 flips to teach 000
+	101: 2 flips to teach 000
+	011: 2 flips to teach 000
+	111: 3 flips to teach 000
+ max those is 3.
+
+ But if 101 is the goal, we'd have:
+	Binary Substrings:
+	000: 2 flips to teach 101
+	101: 0 flips to teach 101
+	011: 2 flips to teach 101
+	111: 1 flip to teach 101
+ let's abbreviate that as: goal: 101: flips=2,0,2,1
+ max those is 2.
+
+ If 011 is the goal, we get flips=2,2,0,1, max 2.
+
+ Finally, if 111 is the goal, we get flips=3,1,1,0, max 3
+
+ So the MINIMUM of all those maximums is: min(3,2,2,3) = 2.
+ That's the answer!

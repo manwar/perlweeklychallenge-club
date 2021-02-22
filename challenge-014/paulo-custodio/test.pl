@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 use strict;
 use warnings;
@@ -39,12 +39,13 @@ Victoria = VIRGIN ISLANDS + CONNECTICUT + OREGON + IOWA
 Vineland = VIRGIN ISLANDS + NEBRASKA + LOUISIANA + NORTH DAKOTA
 END
 
+unlink "words.txt";
 done_testing;
 
 
 sub capture {
-	my($cmd) = @_;
-	my $out = `$cmd`;
-	$out =~ s/[ \r\t]*\n/\n/g;
-	return $out;
+    my($cmd) = @_;
+    my $out = `$cmd`;
+    $out =~ s/[ \r\t]*\n/\n/g;
+    return $out;
 }

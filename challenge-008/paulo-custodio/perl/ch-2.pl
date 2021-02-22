@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 # Challenge 008
 #
@@ -11,14 +11,22 @@
 use strict;
 use warnings;
 use 5.030;
-use List::Util 'max';
 
 sub center {
-	my(@lines) = @_;
-	my $max_len = max(map {length($_)} @lines);
-	@lines = map {$_ = " " x (($max_len-length($_))/2) . $_} @lines;
-	return @lines;
+    my(@lines) = @_;
+    my $max_len = max(map {length($_)} @lines);
+    @lines = map {$_ = " " x (($max_len-length($_))/2) . $_} @lines;
+    return @lines;
 }
+
+sub max {
+    my($max, @a) = @_;
+    for (@a) {
+        $max = $_ if $max < $_;
+    }
+    return $max;
+}
+
 
 my @lines = center(@ARGV);
 say join "\n", @lines;

@@ -3,13 +3,13 @@
 ' TASK #1 › Group Anagrams
 ' Submitted by: Mohammad S Anwar
 ' You are given an array of strings @S.
-' 
+'
 ' Write a script to group Anagrams together in any random order.
-' 
-' An Anagram is a word or phrase formed by rearranging the letters of a 
-' different word or phrase, typically using all the original letters exactly 
+'
+' An Anagram is a word or phrase formed by rearranging the letters of a
+' different word or phrase, typically using all the original letters exactly
 ' once.
-' 
+'
 ' Example 1:
 '     Input: ("opt", "bat", "saw", "tab", "pot", "top", "was")
 '     Output: [ ("bat", "tab"),
@@ -23,7 +23,7 @@
 Type ListNodeType
     value as String
     nxt as ListNodeType Ptr
-End Type 
+End Type
 
 Type ListType
     head as ListNodeType Ptr
@@ -88,7 +88,7 @@ Function map_add_key(Byref map as MapType, key as String) as ListType Ptr
         map.head = node
         map.tail = node
         node->key = key
-        map_add_key = @node->values 
+        map_add_key = @node->values
     Else
         node = map.head
         Do While node <> 0
@@ -98,13 +98,13 @@ Function map_add_key(Byref map as MapType, key as String) as ListType Ptr
             End If
             node = node->nxt
         Loop
-        
+
         ' not found
         node = Callocate(1, Sizeof(MapNodeType))
         node->key = key
         map.tail->nxt = node
         map.tail = node
-        map_add_key = @node->values 
+        map_add_key = @node->values
     End If
 End Function
 
@@ -143,7 +143,7 @@ End Sub
 Function sort_string(Byval s as String) as String
     dim i as Integer, j as Integer, min_i as Integer
     dim c as String
-    
+
     for i=0 to len(s)-1
         min_i=i
         for j=i+1 to len(s)
@@ -151,7 +151,7 @@ Function sort_string(Byval s as String) as String
                 min_i=j
             End If
         Next j
-        
+
         ' swap
         c=Mid(s,i,1)
         Mid(s,i,1)=Mid(s,min_i,1)

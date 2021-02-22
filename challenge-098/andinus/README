@@ -1,0 +1,58 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 098
+
+                                Andinus
+                            ━━━━━━━━━━━━━━━
+
+
+                               2021-02-02
+
+
+Table of Contents
+─────────────────
+
+1. Task 1 - Read N-characters
+.. 1. Raku
+
+
+
+
+
+1 Task 1 - Read N-characters
+════════════════════════════
+
+  You are given file `$FILE'.
+
+  Create subroutine `readN($FILE, $number)' returns the first
+  n-characters and moves the pointer to the `(n+1)th' character.
+
+
+1.1 Raku
+────────
+
+  • Program: <file:raku/ch-1.raku>
+
+  `readN' is defined as such:
+  ┌────
+  │ sub readN (
+  │     IO $file, Int $chars --> Str
+  │ ) {
+  │     ...
+  │ }
+  └────
+
+  The pointer index is stored in a state array (`%pointers'). It's
+  stores the pointer separately for each file. It's initialized with 0.
+  ┌────
+  │ # %pointers stores the pointer index.
+  │ state Int %pointers;
+  │ %pointers{$file} = 0 without %pointers{$file};
+  └────
+
+  The pointer is updated & required string is returned.
+  ┌────
+  │ with %pointers{$file} -> $idx {
+  │     %pointers{$file} += $chars;
+  │     return $file.slurp.substr($idx, $chars);
+  │ }
+  └────

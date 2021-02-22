@@ -1,36 +1,63 @@
-# Java solution by Mohammad Meraj Zia
-# Palindrome Number
+# Java solution
+## Reverse Words
 
 To compile the code run
 ```java
-javac PalindromeNumber.java
+javac ReverseWords.java
 ```
 To run
 ```java
-java PalindromeNumber
+java ReverseWords
 ```
-## Example
+### Example
 ```bash
-/perlweeklychallenge-club/challenge-095/ziameraj16/java$ javac PalindromeNumber.java
-/perlweeklychallenge-club/challenge-095/ziameraj16/java$ java PalindromeNumber
-Enter the number to check if it is a palindrome
-1234554321
-1
+/perlweeklychallenge-club/challenge-096/ziameraj16/java$ javac ReverseWords.java
+/perlweeklychallenge-club/challenge-096/ziameraj16/java$ java ReverseWords
+Enter the string
+    Perl and   Raku are  part of the same family
+Reversed string is: family same the of part are Raku and Perl
+/perlweeklychallenge-club/challenge-096/ziameraj16/java$
 ```
-# Demo Stack
+## Edit Distance
 To compile the code run
 ```java
-javac DemoStack.java
+javac EditDistance.java
 ```
 To run
 ```java
-java DemoStack
+java EditDistance
 ```
-## Example
+### Example
 ```bash
-To push into stack - `push <number>`
-To pop from the stack - `pop`
-To find the top element - `top`
-To find the minimum element - `min`
-To exit - `exit`
+/perlweeklychallenge-club/challenge-096/ziameraj16/java$ vi EditDistance.java
+/perlweeklychallenge-club/challenge-096/ziameraj16/java$ javac EditDistance.java
+/perlweeklychallenge-club/challenge-096/ziameraj16/java$ java EditDistance
+Enter first word
+kitten
+Enter second word
+sitting
+Output: 3
 ```
+
+# Kotlin Solution
+## Reverse Words
+```bash
+/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$ kotlinc ReverseWordsKotlin.kt
+/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$ kotlin ReverseWordsKotlin
+Enter the string
+    Perl and   Raku are  part of the same family
+Reversed string is: family same the of part are Raku and Perl
+/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$
+```
+## Edit Distance
+```bash
+/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$ kotlinc EditDistanceKotlin.kt
+/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$ kotlin EditDistanceKotlin
+Enter first word
+sunday
+Enter second word
+monday
+Output: 2
+/perlweeklychallenge-club/challenge-096/ziameraj16/kotlin$
+```
+
