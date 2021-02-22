@@ -38,6 +38,7 @@ find . -name "*.rs" -delete
 find . -name "*.rb" -delete
 find . -name "*.sh" -delete
 find . -name "*.awk" -delete
+find . -name "*.gawk" -delete
 find . -name "*.php" -delete
 find . -name "*.adb" -delete
 find . -name "*.kts" -delete
