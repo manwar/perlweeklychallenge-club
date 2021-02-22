@@ -57,7 +57,8 @@ sub tightest-factor($n)
 #
 #| code from challenge 88
 #
-sub spiral(@matrix) {
+sub spiral(@matrix) 
+{
     my @r;
 
     while @matrix 
