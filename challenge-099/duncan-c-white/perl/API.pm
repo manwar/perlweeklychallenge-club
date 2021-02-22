@@ -4,8 +4,9 @@ package API;
 # API	=	F(string lit,string name)
 #	or	L(string lit,string name)
 #	or	M(string lit,posexpr atorafter,string name)
+#	or	A(string lit,posexpr at,string name)
 #	or	T(posexpr pe1,string op,posexpr pe2)
-#	or	C(int mn,posexpr pe1,posexpr pe2)
+#	or	C(posexpr pe1,posexpr pe2)
 
 
 use strict;
@@ -89,6 +90,30 @@ sub M ($;$$$)
 }
 
 
+# API->A: Constructor or get method, use:
+#   my $obj = API->A($lit, $at, $name) OR
+#   my ($lit, $at, $name) = $obj->A
+sub A ($;$$$)
+{
+	my( $thing, $lit, $at, $name ) = @_;	
+	if( @_ == 4 )		# constructor
+	{
+		die "API->A: classname $thing is not 'API'\n"
+			unless $thing eq "API";
+		return bless ["A", $lit, $at, $name], "API";
+	} else			# get method
+	{	
+		die "API->A: $thing is not a API\n"
+			unless ref($thing) eq "API";
+		my @x = @$thing;
+		my $t = shift @x;
+		die "API->A: malformed object $thing\n"
+			unless @x == 3 && $t eq "A";
+		return @x;
+	}
+}
+
+
 # API->T: Constructor or get method, use:
 #   my $obj = API->T($pe1, $op, $pe2) OR
 #   my ($pe1, $op, $pe2) = $obj->T
@@ -114,16 +139,16 @@ sub T ($;$$$)
 
 
 # API->C: Constructor or get method, use:
-#   my $obj = API->C($mn, $pe1, $pe2) OR
-#   my ($mn, $pe1, $pe2) = $obj->C
-sub C ($;$$$)
+#   my $obj = API->C($pe1, $pe2) OR
+#   my ($pe1, $pe2) = $obj->C
+sub C ($;$$)
 {
-	my( $thing, $mn, $pe1, $pe2 ) = @_;	
-	if( @_ == 4 )		# constructor
+	my( $thing, $pe1, $pe2 ) = @_;	
+	if( @_ == 3 )		# constructor
 	{
 		die "API->C: classname $thing is not 'API'\n"
 			unless $thing eq "API";
-		return bless ["C", $mn, $pe1, $pe2], "API";
+		return bless ["C", $pe1, $pe2], "API";
 	} else			# get method
 	{	
 		die "API->C: $thing is not a API\n"
@@ -131,7 +156,7 @@ sub C ($;$$$)
 		my @x = @$thing;
 		my $t = shift @x;
 		die "API->C: malformed object $thing\n"
-			unless @x == 3 && $t eq "C";
+			unless @x == 2 && $t eq "C";
 		return @x;
 	}
 }
@@ -158,11 +183,12 @@ sub as_string ($)
 	@x = map { "$_" } @x;
 	
 	# specific printing rules
-	return "C $x[0] $x[1] $x[2]" if $t eq 'C';
-	return "F '$x[0]' -> $x[1]" if $t eq 'F';
-	return "L '$x[0]' -> $x[1]" if $t eq 'L';
-	return "M '$x[0]' $x[1] -> $x[2]" if $t eq 'M';
-	return "T $x[0]$x[1]$x[2]" if $t eq 'T';
+	return "A'$x[0]' $x[1]->$x[2]" if $t eq 'A';
+	return "C $x[0] $x[1]" if $t eq 'C';
+	return "F'$x[0]'->$x[1]" if $t eq 'F';
+	return "L'$x[0]'->$x[1]" if $t eq 'L';
+	return "M'$x[0]' $x[1]->$x[2]" if $t eq 'M';
+	return "T$x[0]$x[1]$x[2]" if $t eq 'T';
 
 	# general case
 	my $args = join( ',', @x );
@@ -189,16 +215,17 @@ sub setdebug { my($d) = @_; $debug = $d; }
 #	Parse $input, a string containing a comma-separated sequence
 #	of Abstract Pattern Instructions, return the list of apis.
 #	Die screaming if parsing fails.
-#	For example, matching the pattern a*e is represented by the
+#	For example, the pattern a*e is represented by the
 #	following api string:
-#	F'a'->pa,L'e'->plast,Tplast>pa-1,C0 pa+1 plast-1
+#		F'a'->a,L'e'->e,Te>a-1,C a+1 e-1
 #	The individual api forms are:
 #		F'str'->name
 #		L'str'->name
 #		M'str' posexpr->name
-#		Tposexpr ('>'|'=') posexpr
-#		C\d+ posexpr [posexpr]
-#	where posexpr = \d+ or name or name '+'|'-' \d+
+#		A'str' posexpr->name
+#		Tposexpr ('>'|'='|'>=') posexpr
+#		C posexpr [posexpr]
+#	where posexpr = \d+ or name or name '+'|'-' \d+ (see module PosExpr)
 #
 sub parse ($)
 {
@@ -241,12 +268,28 @@ sub parse ($)
 				if $debug;
 			push @result, $api;
 		}
-		# Tposexpr ('>'|'=') posexpr
+		# A'str' posexpr->name
+		elsif( $input =~ s/^A\s*// )
+		{
+			$input =~ s/^'([^']+)'\s+// ||
+				die "bad input $input in A..\n";
+			my $str = $1;
+			(my $pe,$input) = PosExpr::parse($input);
+			die "bad input $input in A$str $pe...\n"
+				unless $input =~ s/^\s*->\s*(\w+)//;
+			my $pname = $1;
+			my $api = API->A($str, $pe, $pname);
+			say "debug: parsed api $api, rest input $input"
+				if $debug;
+			push @result, $api;
+		}
+		# Tposexpr ('>'|'='|'>=') posexpr
 		elsif( $input =~ s/^T\s*// )
 		{
 			(my $pe,$input) = PosExpr::parse($input);
-			$input =~ s/^(>|=)// ||
-				die "bad input $input in T$pe, > or = expected\n";
+			$input =~ s/^(>=|>|=)// ||
+				die "bad input $input in T$pe, ".
+				    "'>','=' or '>=' expected\n";
 			my $op = $1;
 			(my $pe2,$input) = PosExpr::parse($input);
 			my $api = API->T($pe, $op, $pe2);
@@ -254,12 +297,9 @@ sub parse ($)
 				if $debug;
 			push @result, $api;
 		}
-		# C\d+ posexpr [posexpr]
+		# C posexpr [posexpr]
 		elsif( $input =~ s/^C\s*// )
 		{
-			$input =~ s/^(\d+)\s*// ||
-				die "bad input $input in C.. integer expected\n";
-			my $mn = $1;
 			(my $pe,$input) = PosExpr::parse($input);
 			$input =~ s/^\s*//;
 
@@ -270,7 +310,7 @@ sub parse ($)
 			{
 				($pe2,$input) = PosExpr::parse($input);
 			}
-			my $api = API->C($mn, $pe, $pe2);
+			my $api = API->C($pe, $pe2);
 			say "debug: parsed api $api, rest input $input"
 				if $debug;
 			push @result, $api;

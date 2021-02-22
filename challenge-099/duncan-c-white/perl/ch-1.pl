@@ -99,14 +99,17 @@ sub dotests
 # format of each test: S:P:result
 my @tests = (
 	"abcde:a*e:1",
+	"abcde:ab*e:1",
+	"abcde:abc*e:1",
+	"abcde:abcd*e:1",
+	"abcde:abcde*e:0",
 	"abcde:a*d:0",
 	"abcde:?b*d:0",
 	"abcde:a*c?e:1",
 	"hellotherehowareyou:*ll*u:1",	# mine own exemplar..
 );
 
-	say "dotests() entry" if $debug;
-	say "dotests(): tests=". Dumper(\@tests) if $debug;
+	#say "dotests(): tests=". Dumper(\@tests) if $debug;
 	foreach my $test (@tests)
 	{
 		say "test $test" if $debug;

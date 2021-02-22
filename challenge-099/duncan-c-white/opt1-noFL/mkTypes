@@ -12,6 +12,7 @@ PosExpr = I( int n )	"$1"
 );
 
 my $extra = q!
+use Data::Dumper;
 
 my $debug = 0;
 sub setdebug { my($d) = @_; $debug = $d; }
@@ -38,10 +39,65 @@ sub parse ($)
 	my $name = $1;
 	if( $input =~ s/^([\+-])\s*(\d+)\s*// )
 	{
-		return ( PosExpr->NO($name,$1,$2), $input );
+		if( $2 == 0 )
+		{
+			return ( PosExpr->N($name), $input );
+		} else
+		{
+			return ( PosExpr->NO($name,$1,$2), $input );
+		}
 	}
 	return ( PosExpr->N($name), $input );
 }
+
+#
+# my $pe = simpleparse($str);
+#	Parse a position expression out of $str.  Fail if there's
+#	anything left over.
+#
+sub simpleparse ($)
+{
+	my( $str ) = @_;
+	my($pe,$leftover) = parse($str);
+	die "PosExpr->simpleparse($str): left over $leftover after pe $pe\n"
+		if $leftover;
+	return $pe;
+}
+
+
+#
+# my $newpe = $pe->add($n);
+#	Arithmetic on PosExprs: add $n (an integer)
+#	to $pe, giving $newpe.
+#
+sub add
+{
+	my( $self, $n ) = @_;
+	return $self if $n==0;
+	if( $self->kind eq 'I' )
+	{
+		my $x = $self->I;
+		return PosExpr->I( $x+$n );
+	} elsif( $self->kind eq "N" )
+	{
+		my $name = $self->N;
+		my $op = $n>0?'+':'-';
+		$n = abs($n);
+		return PosExpr->NO( $name, $op, $n );
+	} else
+	{
+		# .. NO( string name, char op, int n )
+		my( $name, $op, $x ) = $self->NO;
+		$x = -$x if $op eq '-';
+		$op = '+';
+		$x += $n;
+		return PosExpr->N( $name ) if $x==0;
+		$op = '-' if $x<0;
+		$x = abs($x);
+		return PosExpr->NO( $name, $op, $x );
+	}
+}
+
 
 #
 # my $pos = $pe->eval($poshash);
@@ -84,11 +140,10 @@ say $fh gen_datatype( $posexpr, $extra );
 close($fh);
 
 my $api = q(
-API = F( string lit, string name )	"F '$1' -> $2"
-    or L( string lit, string name )	"L '$1' -> $2"
-    or M( string lit, posexpr atorafter, string name )	"M '$1' $2 -> $3"
-    or T( posexpr pe1, string op, posexpr pe2 )		"T $1$2$3"
-    or C( int mn, posexpr pe1, posexpr pe2)		"C $1 $2 $3"
+API = A( string lit, posexpr at, string name ) 	"A'$1' $2->$3"
+    or M( string lit, posexpr atorafter, string name )	"M'$1' $2->$3"
+    or T( posexpr pe1, string op, posexpr pe2 )		"T$1$2$3"
+    or C( posexpr pe1, posexpr pe2)			"C $1 $2"
 );
 
 $extra = q%
@@ -101,16 +156,18 @@ sub setdebug { my($d) = @_; $debug = $d; }
 #	Parse $input, a string containing a comma-separated sequence
 #	of Abstract Pattern Instructions, return the list of apis.
 #	Die screaming if parsing fails.
-#	For example, matching the pattern a*e is represented by the
+#	For example, the pattern a*e is represented by the
 #	following api string:
-#	F'a'->pa,L'e'->plast,Tplast>pa-1,C0 pa+1 plast-1
+#		A'a' 0->a,A'e' slen-1->e,Te>a-1,C a+1 e-1
+#	(where slen is a runtime variable representing the length of
+#	the target string these APIs would eventually operate on).
+#
 #	The individual api forms are:
-#		F'str'->name
-#		L'str'->name
 #		M'str' posexpr->name
-#		Tposexpr ('>'|'=') posexpr
-#		C\d+ posexpr [posexpr]
-#	where posexpr = \d+ or name or name '+'|'-' \d+
+#		A'str' posexpr->name
+#		Tposexpr ('>'|'='|'>=') posexpr
+#		C posexpr [posexpr]
+#	where posexpr = \d+ or name or name '+'|'-' \d+ (see module PosExpr)
 #
 sub parse ($)
 {
@@ -118,28 +175,8 @@ sub parse ($)
 	my @result;
 	while( $input )
 	{
-		# F'str'->name
-		if( $input =~ s/^F\s*// )
-		{
-			$input =~ s/^'([^']+)'\s*->\s*(\w+)// ||
-				die "bad input $input in F..\n";
-			my $api = API->F($1, $2);
-			say "debug: parsed api $api, rest input $input"
-				if $debug;
-			push @result, $api;
-		}
-		# L'str'->name
-		elsif( $input =~ s/^L\s*// )
-		{
-			$input =~ s/^'([^']+)'\s*->\s*(\w+)// ||
-				die "bad input $input in L..\n";
-			my $api = API->L($1, $2);
-			say "debug: parsed api $api, rest input $input"
-				if $debug;
-			push @result, $api;
-		}
 		# M'str' posexpr->name
-		elsif( $input =~ s/^M\s*// )
+		if( $input =~ s/^M\s*// )
 		{
 			$input =~ s/^'([^']+)'\s+// ||
 				die "bad input $input in M..\n";
@@ -153,12 +190,28 @@ sub parse ($)
 				if $debug;
 			push @result, $api;
 		}
-		# Tposexpr ('>'|'=') posexpr
+		# A'str' posexpr->name
+		elsif( $input =~ s/^A\s*// )
+		{
+			$input =~ s/^'([^']+)'\s+// ||
+				die "bad input $input in A..\n";
+			my $str = $1;
+			(my $pe,$input) = PosExpr::parse($input);
+			die "bad input $input in A$str $pe...\n"
+				unless $input =~ s/^\s*->\s*(\w+)//;
+			my $pname = $1;
+			my $api = API->A($str, $pe, $pname);
+			say "debug: parsed api $api, rest input $input"
+				if $debug;
+			push @result, $api;
+		}
+		# Tposexpr ('>'|'='|'>=') posexpr
 		elsif( $input =~ s/^T\s*// )
 		{
 			(my $pe,$input) = PosExpr::parse($input);
-			$input =~ s/^(>|=)// ||
-				die "bad input $input in T$pe, > or = expected\n";
+			$input =~ s/^(>=|>|=)// ||
+				die "bad input $input in T$pe, ".
+				    "'>','=' or '>=' expected\n";
 			my $op = $1;
 			(my $pe2,$input) = PosExpr::parse($input);
 			my $api = API->T($pe, $op, $pe2);
@@ -166,12 +219,9 @@ sub parse ($)
 				if $debug;
 			push @result, $api;
 		}
-		# C\d+ posexpr [posexpr]
+		# C posexpr [posexpr]
 		elsif( $input =~ s/^C\s*// )
 		{
-			$input =~ s/^(\d+)\s*// ||
-				die "bad input $input in C.. integer expected\n";
-			my $mn = $1;
 			(my $pe,$input) = PosExpr::parse($input);
 			$input =~ s/^\s*//;
 
@@ -182,14 +232,14 @@ sub parse ($)
 			{
 				($pe2,$input) = PosExpr::parse($input);
 			}
-			my $api = API->C($mn, $pe, $pe2);
+			my $api = API->C($pe, $pe2);
 			say "debug: parsed api $api, rest input $input"
 				if $debug;
 			push @result, $api;
 		}
 		$input =~ s/^\s*,\s*//;
 	}
-	die "bad input $input, non empty but not F|L|M|T|C..\n" if $input;
+	die "bad input $input, non empty but not M|T|C..\n" if $input;
 	return @result;
 }
 %;

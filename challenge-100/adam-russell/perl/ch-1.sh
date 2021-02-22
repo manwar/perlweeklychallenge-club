@@ -1,1 +1,1 @@
-perl -E 'shift=~/(\d+):(\d\d\s*(am|pm))/; $h=($1 < 12)?$1 + 12: $1; print "$h:$2\n"' "05:15 pm"
+perl -e 'shift=~/(\d+):(\d\d\s*((am|pm)))/;if($1 < 12 && $3 eq "pm"){$h = $1 + 12}elsif($1 > 12 && $3 eq "pm"){$h = "0" . ($1 - 12)}else{$h = $1}print "$h:$2\n"' "17:15 pm"
