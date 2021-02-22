@@ -57,18 +57,18 @@ sub tightest-factor($n)
 }
 
 #
-#| code from challenge 88
+# code from challenge 88
 #
-sub spiral(@matrix) 
+sub spiral(@m) 
 {
     my @r;
 
-    while @matrix 
+    while @m 
     {
-        @r.append: |@matrix.shift; 
-        try { @r.push: .pop } for @matrix;
-        try @r.append: $_ given @matrix.pop.reverse; 
-        try -> $i { @r.push: .[$i].shift } for .end...0 given @matrix; 
+        @r.append: |@m.shift; 
+        try { @r.push: .pop } for @m;
+        try @r.append: $_ given @m.pop.reverse; 
+        try -> $i { @r.push: .[$i].shift } for .end...0 given @m; 
     }
 
     @r;
