@@ -99,5 +99,6 @@ Output: 1 because (0,0) is on the edge connecting B and C.
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-1.pl)
 
 ### Blog
