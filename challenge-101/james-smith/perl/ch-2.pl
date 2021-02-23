@@ -23,9 +23,9 @@ sub winding_number {
   ## crosses the +ve axis (adding or subtracking 1 depending on the
   ## direction) - this boils down to the algorithm below..
 
-  my @pts = @_;
-  my ($a,$b,$wn) = @pts[-2,-1],0;
-  while( my($x,$y) = splice @pts,0,2 ) {
+  my ( $a, $b, $wn ) = @_[ -2, -1 ], 0;
+
+  while( my($x,$y) = splice @_, 0, 2 ) {
     $wn += $a<=0 ? $y>0  && $a*$y-$x*$b >  0 ?  1 : 0
                  : $y<=0 && $a*$y-$x*$b <= 0 ? -1 : 0;
     ($a,$b)=($x,$y);
