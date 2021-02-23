@@ -37,21 +37,10 @@ is-deeply pack-a-spiral(1..144),
 ( 1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12)
 );
 
-sub tightest-factor($n) 
-{
-    my @factors;
-          
-    for 1..sqrt($n) -> $i 
-    {
-        @factors.push: $n div $i if $n %% $i; 
-    }
-
-    @factors.tail;
-}
-
 sub pack-a-spiral(@list is copy) 
 {
-    my $factor = tightest-factor(+@list);
+    my $factor = .tail given gather take +@list div $_ if +@list %% $_ 
+                 for 1..sqrt(+@list); 
 
     my @matrix = @list.keys.rotor($factor).map(*.Array);
     my @keys;
