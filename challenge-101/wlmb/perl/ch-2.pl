@@ -11,7 +11,7 @@ use List::Util qw(all any pairs);
 use Scalar::Util qw(looks_like_number);
 
 sub usage {
-    say "./ch-1.pl x1 y1 x2 y2 x3 y3\nChecks if origin in triangle (x1,y1)(x2,y2)(x3,y3)";
+    say "./ch-2.pl x1 y1 x2 y2 x3 y3\nChecks if origin in triangle (x1,y1)(x2,y2)(x3,y3)";
     exit 1;
 }
 
