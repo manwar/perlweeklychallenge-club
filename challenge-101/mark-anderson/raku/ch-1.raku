@@ -46,7 +46,7 @@ sub tightest-factor($n)
         @factors.push: ($i, $n div $i) if $n %% $i; 
     }
 
-    @factors.sort({.[1] - .[0]}).head.tail;
+    @factors.tail.tail;
 }
 
 sub pack-a-spiral(@list is copy) 
