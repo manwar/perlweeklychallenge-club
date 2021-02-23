@@ -43,10 +43,10 @@ sub tightest-factor($n)
           
     for 1..sqrt($n) -> $i 
     {
-        @factors.push: ($i, $n div $i) if $n %% $i; 
+        @factors.push: $n div $i if $n %% $i; 
     }
 
-    @factors.tail.tail;
+    @factors.tail;
 }
 
 sub pack-a-spiral(@list is copy) 
