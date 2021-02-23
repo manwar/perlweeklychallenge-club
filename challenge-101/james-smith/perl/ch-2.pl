@@ -30,6 +30,6 @@ sub winding_number {
                  : $y<=0 && $a*$y-$x*$b <= 0 ? -1 : 0;
     ($a,$b)=($x,$y);
   }
-  return $wn?1:0;
+  return $wn%2;
 }
 
