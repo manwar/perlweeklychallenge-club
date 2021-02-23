@@ -43,10 +43,7 @@ sub tightest-factor($n)
           
     for 1..sqrt($n) -> $i 
     {
-        if $n %% $i 
-        {
-           @factors.push: ($i, $n div $i);
-        }
+        @factors.push: ($i, $n div $i) if $n %% $i; 
     }
 
     @factors.sort({.[1] - .[0]}).head.tail;
