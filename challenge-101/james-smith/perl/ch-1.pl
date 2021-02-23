@@ -15,16 +15,14 @@ sub print_spiral {
 }
 
 sub pack_spiral {
-  my $rows = 1;
 
   ## Get the value for columns & rows which have the smallest gap
   ## but still multiply to size of array (we choose rows to be
   ## no greater than columns as printing is neater - but for no
   ## other reason...
 
-  $rows = @_%$_ ? $rows : $_ foreach 2 .. sqrt @_;
-
-  my ($cols,$r,$c,@out) = (@_/$rows,$rows-1,-1);
+  my( $rows ) = reverse grep { ! (@_ % $_) } 1 .. sqrt @_;
+  my( $cols, $r, $c, @out ) = ( @_/$rows, $rows-1, -1 );
 
   ## We start bottom left...
   ## because we use pre-inc we actually start 1 to the left of it!
