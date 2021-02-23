@@ -39,7 +39,7 @@ is-deeply pack-a-spiral(1..144),
 
 sub pack-a-spiral(@list is copy) 
 {
-    my $factor = .tail given map { if +@list %% $_ { +@list div $_ }}, 
+    my $factor = .tail given map { +@list div $_ if +@list %% $_ }, 
                  1..sqrt(+@list); 
 
     my @matrix = @list.keys.rotor($factor).map(*.Array);
