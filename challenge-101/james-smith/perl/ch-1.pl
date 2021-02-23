@@ -21,7 +21,7 @@ sub pack_spiral {
   ## no greater than columns as printing is neater - but for no
   ## other reason...
 
-  my( $rows ) = reverse grep { ! (@_ % $_) } 1 .. sqrt @_;
+  my( $rows )               = reverse grep { ! (@_ % $_) } 1 .. sqrt @_;
   my( $cols, $r, $c, @out ) = ( @_/$rows, $rows-1, -1 );
 
   ## We start bottom left...
@@ -32,7 +32,7 @@ sub pack_spiral {
   while( @_ ) {                                      # do until empty
     $out[ $r ][ ++$c ] = shift foreach 1 .. $cols--; # >>
     $out[ --$r ][ $c ] = shift foreach 1 .. --$rows; # ^^
-    last unless @_;                                  # exit if empty
+    last                       unless  @_;           # exit if empty
     $out[ $r ][ --$c ] = shift foreach 1 .. $cols--; # <<
     $out[ ++$r ][ $c ] = shift foreach 1 .. --$rows; # vv
   }
