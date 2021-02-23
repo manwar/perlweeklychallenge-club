@@ -39,10 +39,10 @@ is-deeply pack-a-spiral(1..144),
 
 sub pack-a-spiral(@list is copy) 
 {
-    my @f = grep { +@list %% $_ }, 2..+@list div 2;
-    my $f = @f[+@f div 2] // +@list;
+    my @factors = grep { +@list %% $_ }, 2..+@list div 2;
+    my $factor = @factors[+@factors div 2] // +@list;
 
-    my @matrix = @list.keys.rotor($f).map(*.Array);
+    my @matrix = @list.keys.rotor($factor).map(*.Array);
     my @keys;
 
     while @matrix
@@ -54,5 +54,5 @@ sub pack-a-spiral(@list is copy)
     }
 
     @list[@keys] = @list;
-    @list.rotor($f);
+    @list.rotor($factor);
 }
