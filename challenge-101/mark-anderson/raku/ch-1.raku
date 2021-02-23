@@ -39,8 +39,8 @@ is-deeply pack-a-spiral(1..144),
 
 sub pack-a-spiral(@list is copy) 
 {
-    my $factor = .tail given gather take +@list div $_ if +@list %% $_ 
-                 for 1..sqrt(+@list); 
+    my $factor = .tail given map { if +@list %% $_ { +@list div $_ }}, 
+                 1..sqrt(+@list); 
 
     my @matrix = @list.keys.rotor($factor).map(*.Array);
     my @keys;
