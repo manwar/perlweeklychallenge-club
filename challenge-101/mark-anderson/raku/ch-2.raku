@@ -5,7 +5,7 @@
 use Test;
 plan 3;
 
-nok contains-origin((1, 1), ( 0, 2), ( 0,  3));
+nok contains-origin((0, 1), ( 1, 2), ( 2,  2));
 ok  contains-origin((1, 1), (-1, 1), ( 0, -3));
 ok  contains-origin((0, 1), ( 2, 0), (-6,  0));
 
