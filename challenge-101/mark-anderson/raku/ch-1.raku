@@ -58,10 +58,10 @@ sub pack-a-spiral(@list is copy)
 
     while @matrix
     {
-        @keys.append:   @matrix.pop.flat;
-        try @keys.push: @matrix[$_].pop for @matrix.end...0;
-        try @keys.push: |@matrix.shift.reverse;
-        try @keys.push: @matrix[$_].shift for ^@matrix;
+        @keys.append:     @matrix.pop.flat;
+        try @keys.push:   @matrix[$_].pop for @matrix.end...0;
+        try @keys.append: @matrix.shift.flat.reverse;
+        try @keys.push:   @matrix[$_].shift for ^@matrix;
     }
 
     @list[@keys] = @list;
