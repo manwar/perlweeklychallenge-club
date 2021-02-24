@@ -103,6 +103,7 @@ Output: 1 because (0,0) is on the edge connecting B and C.
 * [Bash](bash/ch-2.sh)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
+* [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
