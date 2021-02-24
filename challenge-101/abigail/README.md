@@ -105,5 +105,6 @@ Output: 1 because (0,0) is on the edge connecting B and C.
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
 
 ### Blog
