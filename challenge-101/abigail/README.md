@@ -62,6 +62,7 @@ or
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-1.pl)
 
 ### Blog
 
