@@ -10,11 +10,16 @@ Ensure requirements are satified (ideally in venv):
 
 Run Task 1:
 
-    $ ./ch1.py T
+    $ ./ch1.py COLL
+    # e.g.:
+    $ ./ch-1.py "[1, 2, 3, 4, 5, 6]"
+
 
 Run Task 2:
 
-    $ ./ch2.py T
+    $ ./ch2.py POINTS
+    # e.g.:
+    $ ./ch2.py "[[0, 1], [2,0], [-6, 0]]"
 
 Run the project's tests (all the samples from the task descriptions plus some others):
 
