@@ -71,11 +71,11 @@ sub inner_origin {
     say "min/max det: $min_d/$max_d" if $verbose;
 
     # If determinants have different signs, the origin is outside the
-    # triangle.
+    # polygon.
     return 0 if $min_d < 0 && $max_d > 0;
 
     # If there is at least one nonzero determinant and there are no
-    # differing signs, the origin is located inside the triangle (or on
+    # differing signs, the origin is located inside the polygon (or on
     # its border).
     return 1 if $min_d >= 0 && $max_d > 0 || $min_d < 0 && $max_d <= 0;
 
