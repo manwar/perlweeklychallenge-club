@@ -9,8 +9,8 @@ our ($tests, $examples, $verbose);
 
 run_tests() if $tests || $examples;	# does not return
 
-die <<EOS unless @ARGV == 6;
-usage: $0 [-examples] [-tests] [-verbose] [--] [x1 y1 x2 y2 x3 y3]
+die <<EOS unless @ARGV > 2 && !(@ARGV % 2); 
+usage: $0 [-examples] [-tests] [-verbose] [--] [x1 y1 ...  xn yn]
 
 -examples
     run the examples from the challenge
@@ -21,8 +21,9 @@ usage: $0 [-examples] [-tests] [-verbose] [--] [x1 y1 x2 y2 x3 y3]
 -verbose
     enable trace output
 
-x1 ... y3
-    coordinates of the triangle's corners
+x1 ... yn
+    coordinates of the polygon's corners. At least two corners must be
+    specified.
 
 EOS
 
@@ -34,30 +35,38 @@ say inner_origin(pairs @ARGV);
 
 ### Implementation
 
-# Check if the origin [0, 0] is inside a given triangle or on its
-# border.  The triangle is specified by the coordinates of its corners
-# and may be degenerated: The corners may be located on a common line
+# Check if the origin [0, 0] is inside a given polygon or on its
+# border.  The polygon is specified by the coordinates of its corners
+# and may be degenerated: Corners may be located on a common line
 # and need not be distinct.
 # Two consecutive checks are performed:
 # 1) Origin orientation:
-#    The coordinates of each pair of the triangle's corners form a 2x2
+#    The coordinates of each pair of the polygon's corners form a 2x2
 #    matrix.  The sign of the corresponding determinant signals if the
 #    origin is left or right of the directed edge connecting these
-#    points.  If the origin is an inner point, all three orientations
+#    points.  If the origin is an inner point, all orientations
 #    must agree, whereas an outer point will show different signs.
 # 2) Axis projection:
-#    If the three given points are collinear, all determinants are zero
+#    If the given points are collinear, all determinants are zero
 #    and cannot be used as an indicator for "inner" and "outer".  In
 #    that case the projection of the points onto the x and y axes reveal
 #    the location of the origin inside or outside of the line segment.
+#
+# Note: After I finished the task for triangles, it appeared that a
+# small change would extend the solution to polygons.  So here it is.
 sub inner_origin {
-    # Convert coordinate pairs to a 3x2 piddle.
+    # Convert coordinate pairs to a nx2 piddle.
     my $p = pdl(@_)->xchg(0,1)->sever;
     say "coords:$p" if $verbose;
 
-    # Get the minimum and the maximum of the three matrices'
-    # determinants formed by the point pairs.
-    my ($min_d, $max_d) = $p->range([[0, 0], [1, 0], [2, 0]], 2, 'p')
+    # Create a piddle holding the indices of the first coordinate of
+    # all points.
+    my $indx = append sequence(indx, 1, $p->dim(0)),
+        zeroes(indx, 1, $p->dim(0));
+
+    # Get the minimum and the maximum of the matrices' determinants
+    # formed by the point pairs.
+    my ($min_d, $max_d) = $p->range($indx, 2, 'p')
         ->reorder(1, 2, 0)->determinant->minmax;
     say "min/max det: $min_d/$max_d" if $verbose;
 
@@ -110,6 +119,12 @@ sub run_tests {
         is inner_origin([0, 0], [0, 0], [1, 1]), T(), 'two points at origin';
         is inner_origin([0, 0], [0, 0], [0, 0]), T(), 'single point at origin';
         is inner_origin([1, 2], [1, 2], [1, 2]), F(), 'single point off origin';
+
+        # Beyond triangles:
+        is inner_origin([[-1, -1], [1, -1], [1, 1], [-1, 1]]), T(),
+            '4-gon around origin';
+        is inner_origin([[1, 0], [2, 0], [3, 1], [2, 2], [1, 2], [0, 1]]),
+            F(), '6-gon off origin';
 	}
 
     done_testing;
