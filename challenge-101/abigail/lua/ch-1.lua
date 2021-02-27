@@ -76,7 +76,7 @@ for i = 1, #elements do
     then if   y <= min_y
          then turn =  1
               x = x + 1
-              min_x = min_x - 1
+              min_x = min_x + 1
          else y = y - 1
          end
     end
