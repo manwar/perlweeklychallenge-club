@@ -41,10 +41,10 @@ say inner_origin(pairs @ARGV);
 # and need not be distinct.
 # Two consecutive checks are performed:
 # 1) Origin orientation:
-#    The coordinates of each pair of the polygon's corners form a 2x2
-#    matrix.  The sign of the corresponding determinant signals if the
-#    origin is left or right of the directed edge connecting these
-#    points.  If the origin is an inner point, all orientations
+#    For each edge of the polygon (as a cycle), the coordinates of
+#    its corners form a 2x2 matrix.  The sign of the corresponding
+#    determinant signals if the origin is left or right of the
+#    (directed) edge. If the origin is an inner point, all orientations
 #    must agree, whereas an outer point will show different signs.
 # 2) Axis projection:
 #    If the given points are collinear, all determinants are zero
