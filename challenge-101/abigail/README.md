@@ -109,6 +109,7 @@ Output: 1 because (0,0) is on the edge connecting B and C.
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [Befunge-93](befunge-93/ch-2.bf93)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
