@@ -1,3 +1,3 @@
-# The Weekly Challenge 100
+# The Weekly Challenge 101
 
-Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-100-4lf6)
+Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-101-jeo)
