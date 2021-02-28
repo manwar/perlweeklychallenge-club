@@ -37,3 +37,25 @@ Enter third coordinates
 -6,0
 Output: 1
 ```
+
+## Kotlin Solution
+To compile the code run
+```java
+kotlinc OriginContainingTriangleKotlin.kt
+```
+To run
+```java
+kotlin OriginContainingTriangleKotlin
+```
+### Example
+```bash
+/perlweeklychallenge-club/challenge-101/ziameraj16/kotlin$ kotlinc OriginContainingTriangleKotlin.kt
+/perlweeklychallenge-club/challenge-101/ziameraj16/kotlin$ kotlin OriginContainingTriangleKotlin
+Enter first coordinates
+0,1
+Enter second coordinates
+2,0
+Enter third coordinates
+-6,0
+Output: 1
+```
