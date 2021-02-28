@@ -119,3 +119,4 @@ Output: 1 because (0,0) is on the edge connecting B and C.
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
+[Perl Weekly Challenge 101: Origin-containing Triangle](https://wp.me/pcxd30-s8)
