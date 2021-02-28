@@ -37,12 +37,13 @@ is-deeply pack-a-spiral(1..144),
 ( 1,   2,   3,   4,   5,   6,   7,   8,   9,  10,  11,  12)
 );
 
+#
+# not exactly the most efficient solution...
+#
 sub pack-a-spiral(@list is copy) 
 {
-    my $factor = .tail given map { +@list div $_ if @list %% $_ }, 
-                 1..sqrt(@list); 
-
-    my @matrix = @list.keys.rotor($factor).map(*.Array);
+    my $cols   = +@list div (1..sqrt(@list).floor).first(@list %% *, :end);
+    my @matrix =  @list.keys.rotor($cols).map(*.Array);
     my @keys;
 
     while @matrix
@@ -54,5 +55,5 @@ sub pack-a-spiral(@list is copy)
     }
 
     @list[@keys] = @list;
-    @list.rotor($factor);
+    @list.rotor($cols);
 }
