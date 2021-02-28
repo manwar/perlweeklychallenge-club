@@ -42,7 +42,7 @@ is-deeply pack-a-spiral(1..144),
 #
 sub pack-a-spiral(@list is copy) 
 {
-    my $cols = +@list div (1..sqrt(@list).floor).first(@list %% *, :end);
+    my $cols   = +@list div (1..sqrt(@list).floor).first(@list %% *, :end);
     my @matrix = @list.keys.rotor($cols).map(*.Array);
     my @keys;
 
