@@ -1,12 +1,4 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
       "min" : 0,
       "title" : {
@@ -15,6 +7,7 @@
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             31,
             0,
@@ -46,8 +39,7 @@
             0,
             48,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -85,6 +77,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             15,
             0,
@@ -116,15 +109,15 @@
             0,
             47,
             9
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-02-28 06:07:09 GMT"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-02-28 22:36:04 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -160,8 +153,15 @@
          "Francis Whittle"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
