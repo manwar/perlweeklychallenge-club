@@ -1,22 +1,21 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
       "title" : {
          "text" : ""
       },
       "min" : 0
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-02-28 05:24:25 GMT"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
    },
    "series" : [
       {
@@ -55,7 +54,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -87,10 +85,10 @@
             10,
             3,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -122,7 +120,8 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
    "xAxis" : {
@@ -159,9 +158,10 @@
          "Sergio Iglesias"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-02-28 05:30:15 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
