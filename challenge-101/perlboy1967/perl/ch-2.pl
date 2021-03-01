@@ -7,8 +7,7 @@
 #
 # Author: Niels 'PerlBoy' van Dijke
 #
-# Source used for solution:
-#  https://www.wisfaq.nl/show3archive.asp?id=12256&j=2003
+# Algorithm used: sum of all angles in a 'circle' makes 360 degrees
 
 use v5.16;
 use strict;
