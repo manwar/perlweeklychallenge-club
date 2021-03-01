@@ -24,6 +24,7 @@ my %triangles = (
   'Example 1' => [0,1,1,0,2,2],
   'Example 2' => [1,1,-1,1,0,-3],
   'Example 3' => [0,1,2,0,-6,0],
+  'Example 4' => [-1,0,0,0,0,1],
 );
 
 foreach my $c (sort keys %triangles) {
@@ -50,6 +51,10 @@ sub calcZAngle($$$$) {
 
 sub originInsideTriangle (@) {
   my ($x1,$y1,$x2,$y2,$x3,$y3) = @_;
+
+  return 1 if ($x1 == 0 and $y1 == 0);
+  return 1 if ($x2 == 0 and $y2 == 0);
+  return 1 if ($x3 == 0 and $y3 == 0);
 
   # calculate angles:
   # AzB, BzC and AzC
