@@ -72,6 +72,7 @@ or
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Perl Weekly Challenge 101: Pack a Spiral](https://wp.me/pcxd30-r7)
 
 
 ## [Origin-containing Triangle](https://perlweeklychallenge.org/blog/perl-weekly-challenge-101/#TASK2)
@@ -118,3 +119,4 @@ Output: 1 because (0,0) is on the edge connecting B and C.
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
+[Perl Weekly Challenge 101: Origin-containing Triangle](https://wp.me/pcxd30-s8)

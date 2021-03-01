@@ -157,7 +157,7 @@ int main (void) {
          * Free allocated memory
          */
         free (widths);
-        for (x = 0; x < height; x ++) {
+        for (size_t x = 0; x < height; x ++) {
             free (matrix [x]);
         }
         free (matrix);

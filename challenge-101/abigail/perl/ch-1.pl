@@ -19,20 +19,6 @@ use List::Util 'max';
 # Run as: perl ch-1.pl < input-file
 #
 
-#
-# This is a really hard problem to do efficiently, as it involves
-# factorizing numbers. And if we can do that efficiently, we can
-# break many public key encryption schemes, including RSA.
-#
-# We do, however, use a simplistic method to find the optimal width
-# and height for the matrix, by starting at the square root of the
-# number of elements, and trying each number (while counting down)
-# till we have found a divisor. 
-#
-# This is O (sqrt (N)), where N is the number of elements.
-# However, we're already spending linear time reading the input.
-#
-
 my $RIGHT = 0;
 my $UP    = 1;
 my $LEFT  = 2;
@@ -47,7 +33,7 @@ my @elements = split ' ' => scalar <>;
 #
 # Find optimal sizes: width $w and height $h
 # We start at the square root, and count downwards till we
-# have a divider.
+# have a divider. 
 #
 my $h = int sqrt @elements;
 for (; @elements % $h;) {
