@@ -1,0 +1,122 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 100
+
+                                Andinus
+                            ━━━━━━━━━━━━━━━
+
+
+                               2021-02-20
+
+
+Table of Contents
+─────────────────
+
+Task 1 - Fun Time
+.. Raku
+
+
+
+
+
+Task 1 - Fun Time
+═════════════════
+
+  You are given a time (12 hour / 24 hour).
+
+  Write a script to convert the given time from 12 hour format to 24
+  hour format and vice versa.
+
+  Ideally we expect a one-liner.
+
+
+Raku
+────
+
+  • Program: <file:raku/ch-1.raku>
+
+  One should use `DateTime' module to solve this but that is not fun so
+  we solve it the wrong way!
+
+  The program will accept any string as `$time'. We do the format check
+  later.
+
+  ┌────
+  │ #| convert 12-hour formatted time to 24-hour format and vice-versa
+  │ unit sub MAIN (
+  │     Str $time, #= time (format: 05:15pm or "05:15 pm" or 17:00)
+  │ );
+  └────
+
+  The grammar `Time' will parse `$time' to give us meaningful
+  information required to do the task.
+
+  ⁃ `hour' & `minute' match any digit ranging from 00 to 99
+  ⁃ `meridiem' matches either /am/ or /pm/
+
+  ⁃ Note: This grammar will consider "99:99" as a valid timestamp.
+
+  ┌────
+  │ grammar Time {
+  │     token TOP { <hour> ':' <minute> ' '? <meridiem>? }
+  │     token hour { \d ** 1..2 }
+  │     token minute { \d ** 1..2 }
+  │     token meridiem { ['am'|'pm'] }
+  │ }
+  └────
+
+  We parse `$time' with `Time' grammar. If `meridiem' is set then it
+  must be 12-hour format time, otherwise it'll be 24-hour format time.
+
+  ┌────
+  │ # Match for time format.
+  │ if Time.parse($time) -> $m {
+  │     given $m<meridiem> {
+  │         ...
+  │     }
+  │ } else {
+  │     note "Wrong format!";
+  │     exit 1;
+  │ }
+  └────
+
+  For "am" we just check if the hour is 12, if so then we print it as
+  "00" otherwise just print the hour.
+
+  ┌────
+  │ when 'am' {
+  │     printf "%02d:%02d\n",
+  │     $m<hour> == 12 ?? "00" !! $m<hour>,
+  │     $m<minute>;
+  │ }
+  └────
+
+  If the hour is < 12 then we print `hour + 12' otherwise just print the
+  hour.
+
+  ┌────
+  │ when 'pm' {
+  │     printf "%02d:%02d\n",
+  │     $m<hour> < 12 ?? $m<hour> + 12 !! $m<hour>,
+  │     $m<minute>;
+  │ }
+  └────
+
+  If the hour is 0 then print 12 otherwise check if it's > 12, if so
+  then print `hour - 12' otherwise just print the hour.
+
+  23 -> 11
+        greater than 12
+  00 -> 12
+        equal to 0
+  12 -> 12
+        neither equal to 0, nor greater than 12
+
+  If the hour is < 12 then print "am" otherwise print "pm".
+
+  ┌────
+  │ default {
+  │     printf "%02d:%02d%s\n",
+  │     $m<hour> == 0 ?? "12" !! $m<hour> > 12 ?? $m<hour> - 12 !! $m<hour>,
+  │     $m<minute>, $m<hour> < 12 ?? "am" !! "pm";
+  │ }
+  └────
