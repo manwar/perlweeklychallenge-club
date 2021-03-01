@@ -15,6 +15,8 @@ for more information about it.
 (c) 9 digits: 281089082
 ~~~~
 
+### Solutions
+* [Perl](perl/ch-1.pl)
 
 
 ## [Hash-counting String](https://perlweeklychallenge.org/blog/perl-weekly-challenge-102/#TASK2)
