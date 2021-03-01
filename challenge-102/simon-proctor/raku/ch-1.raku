@@ -22,7 +22,7 @@ multi sub MAIN(
 
 multi sub square(Int $ where * <= 0) returns Bool { False }
 
-multi sub square(Int \i) returns Bool { i.sqrt == i.sqrt.Int; }
+multi sub square(Int \i) returns Bool { my \s = i.sqrt; s == s.Int; }
 
 sub rare(Int \r) returns Bool {
     my \f = r.flip;
