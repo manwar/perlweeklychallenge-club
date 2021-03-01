@@ -16,6 +16,7 @@ for more information about it.
 ~~~~
 
 ### Solutions
+* [AWK](awk/ch-1.awk)
 * [Perl](perl/ch-1.pl)
 
 
