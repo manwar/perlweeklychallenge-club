@@ -1,21 +1,12 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-03-02 00:15:53 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
-      },
-      "type" : "category"
+      }
    },
    "chart" : {
       "type" : "column"
@@ -26,8 +17,33 @@
       },
       "min" : 0
    },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-03-02 00:48:45 GMT"
+   },
    "series" : [
       {
+         "dataLabels" : {
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "enabled" : "true",
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            }
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -39,25 +55,9 @@
             ],
             [
                "Raku",
-               3068
+               3070
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "align" : "right",
-            "rotation" : -90,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "enabled" : "true"
-         },
-         "name" : "Contributions"
+         ]
       }
-   ],
-   "legend" : {
-      "enabled" : "false"
-   }
+   ]
 }
