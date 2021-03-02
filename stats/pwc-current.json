@@ -1,20 +1,20 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-03-02 01:25:50 GMT"
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Simon Proctor",
-            "data" : [
-               [
-                  "Raku",
-                  1
-               ]
-            ],
-            "id" : "Simon Proctor"
-         },
-         {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -24,16 +24,70 @@
                   "Raku",
                   2
                ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
             ],
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
+         },
+         {
+            "name" : "Stuart Little",
             "id" : "Stuart Little",
-            "name" : "Stuart Little"
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ]
          }
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 4,
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "y" : 1,
+               "name" : "Simon Proctor"
+            },
+            {
+               "drilldown" : "Stuart Little",
+               "y" : 4,
+               "name" : "Stuart Little"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 102"
+      }
+   ],
+   "title" : {
+      "text" : "Perl Weekly Challenge - 102"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2021-03-02 03:10:56 GMT"
    },
    "plotOptions" : {
       "series" : {
@@ -43,40 +97,5 @@
          },
          "borderWidth" : 0
       }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 102"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 1,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            },
-            {
-               "name" : "Stuart Little",
-               "y" : 4,
-               "drilldown" : "Stuart Little"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 102"
-      }
-   ]
+   }
 }
