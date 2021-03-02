@@ -45,9 +45,9 @@ done_testing();
 
 sub hash_count_string {
   my ( $s, $n ) = ( '', @_ );
-  do {
-    return $s    if $n   == length $s;
-    return "#$s" if $n-1 == length $s;
-  } while $s = ($n-length $s) ."#$s";
+
+  ( $s, $n ) = ( $n.'#'.$s, $n-1-length $n ) while $n > 1;
+
+  return ( $n? '#' : '' ).$s;
 }
 
