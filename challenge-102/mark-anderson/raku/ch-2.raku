@@ -37,13 +37,9 @@ sub hash-string(UInt $n where $n > 0) is cached
 {
     given $n 
     {
-        when 1 { "#"   }
-        when 2 { "2#"  }
-        when 3 { "#3#" }
-        default 
-        {
-            my $next = $n - $n.chars - 1;
-            hash-string($next) ~ $n ~ "#";    
-        }
+        when 1  { "#"                                        }
+        when 2  { "2#"                                       }
+        when 3  { "#3#"                                      }
+        default { hash-string($n - $n.chars - 1) ~ $n ~ "#"  }
     }
 }    
