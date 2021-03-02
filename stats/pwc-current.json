@@ -1,78 +1,82 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2021-03-02 01:25:50 GMT"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor"
          },
          {
-            "name" : "Stuart Little",
-            "id" : "Stuart Little",
             "data" : [
+               [
+                  "Perl",
+                  2
+               ],
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Stuart Little",
+            "name" : "Stuart Little"
          }
       ]
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 102"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 1
-            },
-            {
-               "y" : 2,
-               "name" : "Stuart Little",
-               "drilldown" : "Stuart Little"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 102",
-         "colorByPoint" : 1
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-03-02 01:17:51 GMT"
    },
    "tooltip" : {
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 102"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "chart" : {
       "type" : "column"
-   }
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 1,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            },
+            {
+               "name" : "Stuart Little",
+               "y" : 4,
+               "drilldown" : "Stuart Little"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 102"
+      }
+   ]
 }
