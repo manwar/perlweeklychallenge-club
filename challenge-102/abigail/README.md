@@ -15,6 +15,39 @@ for more information about it.
 (c) 9 digits: 281089082
 ~~~~
 
+### Notes
+
+There is no simple efficient algorithm for spitting out rare numbers;
+at least not one which can be easily found online.
+
+The code fragments in the OEIS only give code to check whether a 
+number is a rare number, and they don't suggest anything other
+than "try all numbers" if you want to find all of the numbers of a
+certain length. 
+
+Shyam writes: [*I have developed a computer program in Fortran to
+calculate Rare numbers. In fact with refinement of the code over
+the years, the program has been made so powerful that all numbers
+up to 10^14 can be just checked for Rare numbers in less than a
+minute on Pentium III PC. In few hours I have been able to check
+up to 10^18.*](https://www.primepuzzles.net/conjectures/conj_023.htm)
+but he does not publish his code.
+
+Richard Guy writes [*Here are three problems that have come to light
+recently, each of which can consume unlimited amounts of computer time,
+perhaps without revealing anything
+significant*.](https://www.jstor.org/stable/2325149?seq=1)
+The rare numbers are one of the three problems.
+
+So, we just include a [list of all know rare numbers,
+up to 10^22](https://oeis.org/A035519/b035519.txt) 
+and preprocess them so they're bucketed to length. Then it's just
+a matter of reading the desired length, and printing the appropriate
+entry (or the empty string if no rare numbers of that length exist).
+There are only 124 known rare numbers, so preprocessing is very
+feasible.
+
+
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
