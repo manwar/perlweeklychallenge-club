@@ -22,6 +22,7 @@ for more information about it.
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
 
 
 ## [Hash-counting String](https://perlweeklychallenge.org/blog/perl-weekly-challenge-102/#TASK2)
