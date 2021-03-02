@@ -28,13 +28,15 @@ my @results = <
 #3#5#7#9#12#15#18#21#
 >;
 
-for 1..21 {
+for 1..21 
+{
     is hash-string($_), @results[$_-1];
 }
 
 sub hash-string(UInt $n where $n > 0) is cached
 {
-    given $n {
+    given $n 
+    {
         when 1
         {
             "#";
