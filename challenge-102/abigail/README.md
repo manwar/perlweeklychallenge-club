@@ -83,3 +83,6 @@ such length-`N` string.
 (d) "#3#5#7#10#" is the string of length 10
 (e) "2#4#6#8#11#14#" is the string of length 14
 ~~~~
+
+### Solutions
+* [Perl](perl/ch-2.pl)
