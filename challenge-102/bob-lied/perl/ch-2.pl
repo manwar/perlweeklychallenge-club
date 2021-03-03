@@ -1,11 +1,11 @@
 #!/usr/bin/env perl
 # vim:set ts=4 sw=4 sts=4 et ai wm=0 nu:
 #=============================================================================
-# ch-1.pl
+# ch-2.pl
 #=============================================================================
 # Copyright (c) 2021, Bob Lied
 #=============================================================================
-# Perl Weekly Challenge 102 Task #1 Hash-counting string
+# Perl Weekly Challenge  02 Task #3 Hash-counting string
 # You are given a positive integer $N.
 # Write a script to produce Hash-counting string of that length.
 #
