@@ -44,10 +44,8 @@ done_testing();
 ## If you have a single gap just prefix by "#"
 
 sub hash_count_string {
-  my ( $s, $n ) = ( '', @_ );
-
-  ( $s, $n ) = ( $n.'#'.$s, $n-1-length $n ) while $n > 1;
-
+  my ( $s, $n ) = ( '',      @_            );
+     ( $s, $n ) = ( "$n#$s", $n-1-length$n ) while $n > 1;
   return '#'x$n.$s;
 }
 
