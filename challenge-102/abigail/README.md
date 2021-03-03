@@ -51,6 +51,7 @@ feasible.
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [BASIC](basic/ch-1.bas)
 * [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)

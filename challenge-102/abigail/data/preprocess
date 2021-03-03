@@ -24,6 +24,7 @@ my @bs = sort {$a <=> $b} grep {$buckets [$_]} keys @buckets;
 
 open my $awk_h,    ">", "rn.awk"   or die "open rn.awk: $!";
 open my $bash_h,   ">", "rn.sh"    or die "open rn.sh: $!";
+open my $basic_h,  ">", "rn.bas"   or die "open rn.bas: $!";
 open my $c_h,      ">", "rn.c"     or die "open rn.c: $!";
 open my $lua_h,    ">", "rn.lua"   or die "open rn.lua: $!";
 open my $node_h,   ">", "rn.js"    or die "open rn.js: $!";
@@ -31,8 +32,11 @@ open my $perl_h,   ">", "rn.pl"    or die "open rn.pl: $!";
 open my $python_h, ">", "rn.py"    or die "open rn.py: $!";
 open my $ruby_h,   ">", "rn.rb"    or die "open rn.rb: $!";
 
+my  $basic_ln = 1000;
+
 say $awk_h      "BEGIN {";
 say $bash_h     "declare -a rare_numbers\n";
+say $basic_h    "$basic_ln INPUT length\n\n";
 say $c_h        "char * rare_numbers [23];\n";
 say $c_h        "int main () {";
 say $lua_h      "rare_numbers = {}\n";
@@ -63,6 +67,14 @@ foreach my $bs (0 .. 22) {
     print  $bash_h join "\\\n" =>
                    map {qq {"$_\\n"}} @{$buckets [$bs]};
     print  $bash_h "\n";
+
+    #
+    # BASIC
+    #
+    for my $rn (@{$buckets [$bs]}) {
+        printf $basic_h qq {%03d IF length = %2d THEN PRINT %24s\n}
+                     =>    ($basic_ln += 10), $bs, qq {"$rn"}
+    }
 
     #
     # C
