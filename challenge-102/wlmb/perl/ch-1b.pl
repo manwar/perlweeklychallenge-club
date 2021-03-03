@@ -23,7 +23,8 @@ for my $N(@ARGV){
 	    next A if $x>$max;
 	    my $y=join '', reverse split '', $x;
 	    next B unless $y==($a**2-$b**2)/2;
-	    say "$x $y $a $b";
+	    my ($s, $d)=($x+$y, $x-$y);
+	    say "N=$N\tx=$x\ty=$y\tx+y=$s=", sqrt($s),"**2\tx-y=$d=",sqrt($d),"**2";
       }
   }
 }
