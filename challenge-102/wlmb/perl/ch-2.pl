@@ -11,12 +11,8 @@ foreach my $length(@ARGV){
     my $remaining=$length;
     my @pieces;
     while($remaining>0){
-	unshift @pieces, hash_string($remaining);
+	unshift @pieces, $remaining==1?"#":"$remaining#";
 	$remaining-=length $pieces[0];
     }
     say "Length: $length\tString: ", join '', @pieces;
-}
-sub hash_string {
-    my $N=shift;
-    return $N==1? "#": "$N#";
 }
