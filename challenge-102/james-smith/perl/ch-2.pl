@@ -48,6 +48,6 @@ sub hash_count_string {
 
   ( $s, $n ) = ( $n.'#'.$s, $n-1-length $n ) while $n > 1;
 
-  return ( $n? '#' : '' ).$s;
+  return '#'x$n.$s;
 }
 
