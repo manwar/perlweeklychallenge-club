@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 # Perl weekly challenge 102
 # Task 1: Rare numbers
-# Slightly faster through a reduction of the search space, but more elaborate.
+# Faster by breaking the number at the middle.
 use strict;
 use warnings;
 use v5.12;
