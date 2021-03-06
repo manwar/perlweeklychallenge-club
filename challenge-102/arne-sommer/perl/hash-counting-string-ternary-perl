@@ -1,0 +1,21 @@
+#! /usr/bin/env perl
+
+use strict;
+use feature 'say';
+
+my $N = shift(@ARGV) // die 'Please specify $N';
+
+die '$N is not a positive integer' unless $N =~ /^[1-9][0-9]*$/;
+
+my $position = $N;
+my $string   = "";
+
+while ($position > 0)
+{
+  my $prefix = $position != 1 ? $position . '#' : '#';
+
+  $string = $prefix . $string;
+  $position -= length($prefix);
+}
+
+say $string;
