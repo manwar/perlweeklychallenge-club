@@ -51,3 +51,4 @@ The sets of letters are read from standard input.
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Pyton](python/ch-2.py)
