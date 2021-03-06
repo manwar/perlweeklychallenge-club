@@ -52,3 +52,4 @@ The sets of letters are read from standard input.
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 * [Pyton](python/ch-2.py)
+* [Ruby](ruby/ch-2.rb)
