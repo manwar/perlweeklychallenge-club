@@ -59,6 +59,9 @@ feasible.
 * [Python](python/ch-1.py)
 * [Ruby](ruby/ch-1.rb)
 
+### Blog
+[Perl Weekly Challenge 102: Rare Numbers](https://wp.me/pcxd30-t7)
+
 
 ## [Hash-counting String](https://perlweeklychallenge.org/blog/perl-weekly-challenge-102/#TASK2)
 
