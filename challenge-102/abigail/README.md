@@ -98,3 +98,6 @@ such length-`N` string.
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
 * [Ruby](ruby/ch-2.rb)
+
+### Blog
+[Perl Weekly Challenge 102: Hash-counting String](https://wp.me/pcxd30-tZ)
