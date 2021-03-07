@@ -1,104 +1,54 @@
-Task 1: "Pack a Spiral
-Submitted by: Stuart Little
+Task 1: "Rare Numbers
 
-You are given an array @A of items (integers say, but they can be anything).
+You are given a positive integer $N.
 
-Your task is to pack that array into an MxN matrix spirally
-counterclockwise, as tightly as possible.
+Write a script to generate all Rare numbers of size $N if exists. Please
+read http://www.shyamsundergupta.com/rare.htm for more information about it.
 
-'Tightly' means the absolute value |M-N| of the difference has to be as
-small as possible.
+Examples
 
-Example 1:
-
-	Input: @A = (1,2,3,4)
-
-	Output:
-
-	    4 3
-	    1 2
-
-Since the given array is already a 1x4 matrix on its own, but that's
-not as tight as possible. Instead, you'd spiral it counterclockwise into
-
-    4 3
-    1 2
-
-Example 2:
-
-	Input: @A = (1..6)
-
-	Output:
-
-	    6 5 4
-	    1 2 3
-
-	or
-
-	    5 4
-	    6 3
-	    1 2
-
-	Either will do as an answer, because they're equally tight.
-
-Example 3:
-
-	Input: @A = (1..12)
-
-	Output:
-
-	       9  8  7 6
-	      10 11 12 5
-	       1  2  3 4
-
-	or
-
-	       8  7 6
-	       9 12 5
-	      10 11 4
-	       1  2 3
+(a) 2 digits: 65
+(b) 6 digits: 621770
+(c) 9 digits: 281089082
 "
 
-My notes: ok, interesting question.  First, need to find "tightest" MxN
-where abs(M-N) is minimum, easy.  Second, need to build MxN array via
-a "counterclockwise spiral starting at bottom corner".  Not trivial, but
-should be relatively easy.   Hmmm.. actually, I can't see a particularly
-quick and easy way, I'm sure I'm missing something.
+My notes: ok, interesting question.  In summary: R (a +ve no) is a Rare No
+iff R + reverse(R) and R - reverse(R) are both perfect squares.
+So: generate and test time.
+
+SEE ALSO OptimizingTask1 for an account of a series of profiling-driven
+optimizations that I made to speed up finding rare numbers.  Overall, my
+fastest version ran approx 18 times faster than the original.
 
 
-Task 2: "Origin-containing Triangle
-Submitted by: Stuart Little
 
-You are given three points in the plane, as a list of six co-ordinates:
-A=(x1,y1), B=(x2,y2) and C=(x3,y3).
+Task 2: "Hash-counting String
 
-Write a script to find out if the triangle formed by the given three
-co-ordinates contain origin (0,0).
+You are given a positive integer $N.
 
-Print 1 if found otherwise 0.
+Write a script to produce Hash-counting string of that length.
 
-Example 1:
+The definition of a hash-counting string is as follows:
 
-	Input: A=(0,1), B=(1,0) and C=(2,2)
+- the string consists only of digits 0-9 and hashes, '#'
 
-	Output: 0 because that triangle does not contain (0,0).
+- there are no two consecutive hashes: '##' does not appear in your string
+- the last character is a hash
+- the number immediately preceding each hash (if it exists) is the position
+  of that hash in the string, with the position being counted up from 1
 
-Example 2:
+It can be shown that for every positive integer N there is exactly one
+such length-N string.
 
-	Input: A=(1,1), B=(-1,1) and C=(0,-3)
+Examples:
 
-	Output: 1 because that triangle contains (0,0) in its interior.
-
-Example 3:
-
-	Input: A=(0,1), B=(2,0) and C=(-6,0)
-
-	Output: 1 because (0,0) is on the edge connecting B and C.
+	(a) "#" is the counting string of length 1
+	(b) "2#" is the counting string of length 2
+	(c) "#3#" is the string of length 3
+	(d) "#3#5#7#10#" is the string of length 10
+	(e) "2#4#6#8#11#14#" is the string of length 14
 "
 
-My notes: oh, God.  Geometry.  I hate geometry.  Intuitively I've no
-idea how to do this, so need to Google for solutions.  Many different
-ways, vectors, cross products, etc.  Easiest to understand is from
-www.geeksforgeeks.org/check-whether-a-given-point-lies-inside-a-triangle-or-not/
-and it seems to work (even it compares areas with "==").  Hmm, this seems
-easier than Task 1!
+My notes: ok, weird.  Can we directly generate the single
+hash-counting-string of length N?  I think we can..  Turns out to be easy.
+
