@@ -1,3 +1,5 @@
+-- Challenge 102
+-- 
 -- TASK #2 › Hash-counting String
 -- Submitted by: Stuart Little
 -- 

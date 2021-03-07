@@ -1,6 +1,8 @@
 #!/usr/bin/env lua
 
 --[[
+Challenge 101
+
 TASK #2 › Origin-containing Triangle
 Submitted by: Stuart Little
 You are given three points in the plane, as a list of six co-ordinates: 
