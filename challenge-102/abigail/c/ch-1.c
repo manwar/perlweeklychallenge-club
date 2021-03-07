@@ -10,13 +10,12 @@
  * Run as: cc -o ch-1.o ch-1.c; ./ch-1.o < input-file
  */
 
-# define NR_OF_KNOWN_RARE_NUMBERS  124
 # define MAX_RARE_NUMBER_LENGTH     22
 
 /*
  * Create a list of all known rare numbers.
  */
-char * rare_numbers [23];
+char * rare_numbers [MAX_RARE_NUMBER_LENGTH + 1];
 
 int main () {
     rare_numbers [ 0] =                       NULL;

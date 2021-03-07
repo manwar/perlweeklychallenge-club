@@ -59,6 +59,9 @@ feasible.
 * [Python](python/ch-1.py)
 * [Ruby](ruby/ch-1.rb)
 
+### Blog
+[Perl Weekly Challenge 102: Rare Numbers](https://wp.me/pcxd30-t7)
+
 
 ## [Hash-counting String](https://perlweeklychallenge.org/blog/perl-weekly-challenge-102/#TASK2)
 
@@ -68,7 +71,7 @@ Write a script to produce Hash-counting string of that length.
 
 The definition of a hash-counting string is as follows:
 - the string consists only of digits 0-9 and hashes, `'#'`.
-- there are no two consecutive hashes: `"##"z does not appear in your string
+- there are no two consecutive hashes: `"##"` does not appear in your string
 - the last character is a hash
 - the number immediately preceding each hash (if it exists) is the position
   of that hash in the string, with the position being counted up from 1
@@ -95,3 +98,6 @@ such length-`N` string.
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
 * [Ruby](ruby/ch-2.rb)
+
+### Blog
+[Perl Weekly Challenge 102: Hash-counting String](https://wp.me/pcxd30-tZ)
