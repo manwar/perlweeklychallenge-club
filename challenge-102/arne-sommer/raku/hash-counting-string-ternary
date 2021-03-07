@@ -1,0 +1,16 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0);
+
+my $position = $N;
+my $string   = "";
+
+while ($position > 0)
+{
+  my $prefix = $position != 1 ?? $position ~ '#' !! '#';
+
+  $string = $prefix ~ $string;
+  $position -= $prefix.chars;
+}
+
+say $string;
