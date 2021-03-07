@@ -1,7 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
          "name" : "Perl",
@@ -74,7 +71,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -106,9 +102,21 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-03-07 08:24:02 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Pavel Starikov",
@@ -143,25 +151,17 @@
          "Sergio Iglesias"
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-03-07 08:07:49 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
