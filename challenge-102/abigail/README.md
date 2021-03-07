@@ -51,6 +51,7 @@ feasible.
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [BASIC](basic/ch-1.bas)
 * [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
@@ -87,6 +88,7 @@ such length-`N` string.
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [Befunge-93](befunge-93/ch-2.bf93)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
