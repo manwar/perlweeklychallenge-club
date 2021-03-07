@@ -53,7 +53,8 @@ if ($single) {
 # n + r = x², n - r = y² => n = (x² + y²)/2, r = (x² - y²)/2.
 # Iterating over pairs of squares having a half-sum within the given
 # interval [low, high).  This is not the fastest solution, but it has a
-# fun factor.
+# fun factor.  See ch-1a.pl for a forward implementation that runs about
+# 20% faster.
 # It must hold x ≡ y mod 2 for an even square sum, leading to
 # x + y ≡ 0 mod 2 and x - y ≡ 0 mod 2. From
 # r = (x² - y²)/2 = (x + y)(x - y)/2
