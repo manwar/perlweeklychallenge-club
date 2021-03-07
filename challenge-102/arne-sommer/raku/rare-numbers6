@@ -1,0 +1,27 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0, :v(:$verbose));
+
+my $lower = 1 ~ 0 x ($N -1);
+my $upper = 9 x $N;
+
+say ": Range: $lower - $upper" if $verbose;
+
+for $lower .. $upper -> $number
+{
+  my $reverse  = $number.flip.Int;
+
+  my $add      = $number + $reverse;
+  next if $add < 0;
+
+  my $subtract = $number - $reverse;
+  next if $subtract < 0;
+
+  my $add-sqrt = $add.sqrt;
+
+  if $add-sqrt.Int == $add-sqrt
+  { 
+    my $sub-sqrt = $subtract.sqrt;
+    say $number if $sub-sqrt.Int == $sub-sqrt;
+  }
+}

@@ -1,0 +1,21 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0);
+
+my $rns = (1..Inf).grep( *.&is-rare );
+
+say $rns[^$N];
+
+sub is-rare ($number)
+{
+  my $reverse  = $number.flip;
+  my $add      = $number + $reverse;
+  my $subtract = $number - $reverse;
+
+  return False if any($add, $subtract) < 0;
+
+  my $add-sqrt = $add.sqrt;
+  my $sub-sqrt = $subtract.sqrt;
+
+  return $add.sqrt.Int == $add.sqrt && $sub-sqrt.Int == $sub-sqrt;
+}

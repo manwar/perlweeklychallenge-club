@@ -6,7 +6,8 @@
 # Submitted by: Mohammad S Anwar
 # You are given two strings $A and $B.
 #
-# Write a script to check if the given strings are Isomorphic. Print 1 if they are otherwise 0.
+# Write a script to check if the given strings are Isomorphic. Print 1 if they
+# are otherwise 0.
 #
 # Example 1:
 # Input: $A = "abc"; $B = "xyz"
