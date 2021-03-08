@@ -2,8 +2,27 @@
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "align" : "right",
+            "color" : "#FFFFFF"
+         },
          "data" : [
             [
                "Blog",
@@ -11,53 +30,34 @@
             ],
             [
                "Perl",
-               4827
+               4829
             ],
             [
                "Raku",
                3094
             ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "align" : "right",
-            "y" : 10,
-            "color" : "#FFFFFF"
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
+   "subtitle" : {
+      "text" : "Last updated at 2021-03-08 15:04:53 GMT"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
       },
-      "min" : 0
+      "type" : "category"
    },
    "legend" : {
       "enabled" : "false"
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-03-08 14:27:27 GMT"
+   "chart" : {
+      "type" : "column"
    }
 }
