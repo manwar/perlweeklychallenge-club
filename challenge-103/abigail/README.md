@@ -50,6 +50,7 @@ output.
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
+* [Bash](bash/ch-1.sh)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
