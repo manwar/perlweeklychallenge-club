@@ -52,7 +52,9 @@ output.
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
 * [C](c/ch-1.c)
+* [Lua](lua/ch-1.lua)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
 
 ### Blog
 
