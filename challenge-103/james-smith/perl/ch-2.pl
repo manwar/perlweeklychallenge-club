@@ -29,8 +29,7 @@ sub position {
 
   ## Get the position through the current cycle...
 
-  my $position =            1000 * ($now-$start) -
-       $tot_duration * int( 1000 * ($now-$start) / $tot_duration );
+  my $position =  1000 * ($now-$start) % $tot_duration;
 
   ## Now find which episode that is at that time...
 
