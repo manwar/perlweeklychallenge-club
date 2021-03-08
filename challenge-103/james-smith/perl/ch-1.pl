@@ -20,9 +20,9 @@ done_testing();
 
 sub year_name {
   return join q( ),
-    qw( Yang   Yin                             )[  $_[0]    %2  ],
-    qw( Metal  Water   Wood   Fire  Earth      )[ ($_[0]/2) %5  ],
+    qw( Yang   Yin                             )[  $_[0]    %  2 ],
+    qw( Metal  Water   Wood   Fire  Earth      )[ ($_[0]/2) %  5 ],
     qw( Monkey Rooster Dog    Pig   Rat   Ox
-        Tiger  Rabbit  Dragon Snake Horse Goat )[  $_[0]    %12 ],
+        Tiger  Rabbit  Dragon Snake Horse Goat )[  $_[0]    % 12 ],
 }
 
