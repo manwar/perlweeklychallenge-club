@@ -55,6 +55,7 @@ output.
 * [Lua](lua/ch-1.lua)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
+* [Ruby](ruby/ch-1.rb)
 
 ### Blog
 
