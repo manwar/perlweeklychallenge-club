@@ -41,6 +41,13 @@ Input: 1938
 Output: Earth Tiger
 ~~~~
 
+### Notes
+We will actually output a three part string; beside the animal and element
+cycles, we also output the yin/yang cycle.
+
+We will be reading years from standard input, writing results to standard
+output.
+
 ### Solutions
 
 ### Blog
