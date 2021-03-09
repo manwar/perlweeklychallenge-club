@@ -40,6 +40,6 @@
     CR
 ;
 
-NEXT-ARG S>NUMBER? 0= THROW DROP	( N )
-read_number 
+NEXT-ARG S>NUMBER? 0= THROW DROP    ( N )
+read_number
 BYE

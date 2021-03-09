@@ -1,15 +1,15 @@
 #!/usr/bin/perl
 
 # Challenge 101
-# 
+#
 # TASK #2 › Origin-containing Triangle
 # Submitted by: Stuart Little
-# You are given three points in the plane, as a list of six co-ordinates: 
+# You are given three points in the plane, as a list of six co-ordinates:
 # A=(x1,y1), B=(x2,y2) and C=(x3,y3).
-# 
-# Write a script to find out if the triangle formed by the given three 
+#
+# Write a script to find out if the triangle formed by the given three
 # co-ordinates contain origin (0,0).
-# 
+#
 # Print 1 if found otherwise 0.
 
 use strict;

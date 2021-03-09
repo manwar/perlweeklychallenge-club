@@ -1,25 +1,25 @@
 #!/usr/bin/env python
 
 # Challenge 102
-# 
+#
 # TASK #2 > Hash-counting String
 # Submitted by: Stuart Little
-# 
+#
 # You are given a positive integer $N.
-# 
+#
 # Write a script to produce Hash-counting string of that length.
-# 
+#
 # The definition of a hash-counting string is as follows:
 # - the string consists only of digits 0-9 and hashes, '#'
 # - there are no two consecutive hashes: '##' does not appear in your string
 # - the last character is a hash
-# - the number immediately preceding each hash (if it exists) is the position 
+# - the number immediately preceding each hash (if it exists) is the position
 # of that hash in the string, with the position being counted up from 1
-# 
-# It can be shown that for every positive integer N there is exactly one such 
+#
+# It can be shown that for every positive integer N there is exactly one such
 # length-N string.
 # Examples:
-# 
+#
 # (a) "#" is the counting string of length 1
 # (b) "2#" is the counting string of length 2
 # (c) "#3#" is the string of length 3
@@ -29,16 +29,16 @@
 import sys
 
 def hash_counting(n):
-	out = ''
-	i = n
-	while i>0:
-		p = i
-		out = '#'+out
-		i -= 1
-		while i>0 and p!=0:
-			out = str(p % 10)+out
-			i -= 1
-			p = int(p/10)
-	return out
+    out = ''
+    i = n
+    while i>0:
+        p = i
+        out = '#'+out
+        i -= 1
+        while i>0 and p!=0:
+            out = str(p % 10)+out
+            i -= 1
+            p = int(p/10)
+    return out
 
 print(hash_counting(int(sys.argv[1])))

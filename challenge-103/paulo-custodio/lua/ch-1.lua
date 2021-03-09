@@ -7,7 +7,7 @@ TASK #1 › Chinese Zodiac
 Submitted by: Mohammad S Anwar
 You are given a year $year.
 
-Write a script to determine the Chinese Zodiac for the given year $year. 
+Write a script to determine the Chinese Zodiac for the given year $year.
 Please check out wikipage for more information about it.
 
 The animal cycle: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey,

@@ -14,10 +14,10 @@ The definition of a hash-counting string is as follows:
 - the string consists only of digits 0-9 and hashes, '#'
 - there are no two consecutive hashes: '##' does not appear in your string
 - the last character is a hash
-- the number immediately preceding each hash (if it exists) is the position 
+- the number immediately preceding each hash (if it exists) is the position
 of that hash in the string, with the position being counted up from 1
 
-It can be shown that for every positive integer N there is exactly one such 
+It can be shown that for every positive integer N there is exactly one such
 length-N string.
 Examples:
 
@@ -29,18 +29,18 @@ Examples:
 --]]
 
 function hash_counting(n)
-	local out, i = '', n
-	while i > 0 do
-		p = i
-		out = '#'..out
-		i = i - 1
-		while i > 0 and p ~= 0 do
-			out = tostring(p % 10)..out
-			i = i - 1
-			p = math.floor(p / 10)
-		end
-	end
-	return out
+    local out, i = '', n
+    while i > 0 do
+        p = i
+        out = '#'..out
+        i = i - 1
+        while i > 0 and p ~= 0 do
+            out = tostring(p % 10)..out
+            i = i - 1
+            p = math.floor(p / 10)
+        end
+    end
+    return out
 end
 
 print(hash_counting(tonumber(arg[1])))

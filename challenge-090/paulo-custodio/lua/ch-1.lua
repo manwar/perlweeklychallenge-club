@@ -20,9 +20,9 @@ facing a cytosine (C) and vice versa.
 --]]
 
 function complement(seq)
-	local trans = {T = "A", A = "T", G = "C", C = "G"}
-	local compl = string.gsub(seq, "[TAGC]", trans)
-	return compl
+    local trans = {T = "A", A = "T", G = "C", C = "G"}
+    local compl = string.gsub(seq, "[TAGC]", trans)
+    return compl
 end
 
 seq = arg[1]

@@ -74,5 +74,5 @@ def intervals_str(intervals):
         if i<len(intervals)-1:
             out += ', '
     return out
-    
+
 print(intervals_str(add_intervals()))

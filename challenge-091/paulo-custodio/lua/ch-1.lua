@@ -14,14 +14,14 @@ results and show them.
 --]]
 
 function count_number(n)
-	local inp, out = tostring(n), ''
-	while (inp ~= '') do
-		local digit = string.match(inp, "^%d")
-		local digits = string.match(inp, "^"..digit.."+")
-		out = out..tostring(#digits)..digit
-		inp = string.sub(inp, #digits+1)
-	end
-	return out
+    local inp, out = tostring(n), ''
+    while (inp ~= '') do
+        local digit = string.match(inp, "^%d")
+        local digits = string.match(inp, "^"..digit.."+")
+        out = out..tostring(#digits)..digit
+        inp = string.sub(inp, #digits+1)
+    end
+    return out
 end
 
 print(count_number(tonumber(arg[1])))

@@ -13,15 +13,15 @@
 0 VALUE tbl-size      \ save table size
 
 \ collect_args, append them to heap
-: collect_args 	( -- )
-	0 TO tbl-size
-	BEGIN NEXT-ARG DUP 0> WHILE
-		S>NUMBER? 0= THROW DROP	,
-		tbl-size 1+ TO tbl-size
-	REPEAT
+: collect_args  ( -- )
+    0 TO tbl-size
+    BEGIN NEXT-ARG DUP 0> WHILE
+        S>NUMBER? 0= THROW DROP ,
+        tbl-size 1+ TO tbl-size
+    REPEAT
 ;
 
-CREATE tbl 
+CREATE tbl
 collect_args
 
 \ run the table

@@ -1,18 +1,18 @@
 #!/usr/bin/perl
 
 # Challenge 103
-# 
+#
 # TASK #1 › Chinese Zodiac
 # Submitted by: Mohammad S Anwar
 # You are given a year $year.
-# 
-# Write a script to determine the Chinese Zodiac for the given year $year. 
+#
+# Write a script to determine the Chinese Zodiac for the given year $year.
 # Please check out wikipage for more information about it.
-# 
+#
 # The animal cycle: Rat, Ox, Tiger, Rabbit, Dragon, Snake, Horse, Goat, Monkey,
 # Rooster, Dog, Pig.
 # The element cycle: Wood, Fire, Earth, Metal, Water.
-# 
+#
 # Example 1:
 #     Input: 2017
 #     Output: Fire Rooster

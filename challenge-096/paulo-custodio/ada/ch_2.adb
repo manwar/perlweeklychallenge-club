@@ -44,7 +44,7 @@ procedure ch_2 is
                 d(i, j) := 0;
             end loop;
         end loop;
-        
+
         -- source prefixes can be transformed into empty string by dropping chars
         for i in a'Range loop
             d(i, a'First-1) := i;
@@ -54,7 +54,7 @@ procedure ch_2 is
         for j in b'Range loop
             d(b'First-1, j) := j;
         end loop;
-        
+
         -- flood-fill the rest of the table
         for j in b'Range loop
             for i in a'Range loop
@@ -68,11 +68,11 @@ procedure ch_2 is
                                        d(i-1, j-1)+subst_cost)); -- substitution
             end loop;
         end loop;
-        
+
         -- distance is in lower bottom cell
         return d(a'Last, b'Last);
     end wag_fish_dist;
-    
+
 begin
     Integer_IO.Put(wag_fish_dist(CL.Argument(1), CL.Argument(2)), 0);
     Put_Line("");

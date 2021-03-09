@@ -67,10 +67,10 @@ playlist_file = arg[3]
 playlist = {}
 playlist_total_secs = 0
 for line in io.lines(playlist_file) do
-	local ms, title = line:match('%s*(.-),%s*"(.-)"')
-	local secs = math.floor(tonumber(ms)/1000+0.5)
-	table.insert(playlist, { secs, title })
-	playlist_total_secs = playlist_total_secs + secs
+    local ms, title = line:match('%s*(.-),%s*"(.-)"')
+    local secs = math.floor(tonumber(ms)/1000+0.5)
+    table.insert(playlist, { secs, title })
+    playlist_total_secs = playlist_total_secs + secs
 end
 
 -- compute location
@@ -79,19 +79,19 @@ playlist_secs = total_secs % playlist_total_secs
 
 -- find current track
 for k, v in pairs(playlist) do
-	local secs, title = v[1], v[2]
-	if playlist_secs < secs then 			-- playing this title
-		io.write(title, "\n")
-		
-		local hh = math.floor(playlist_secs / 3600)
-		playlist_secs = playlist_secs % 3600
-		local mm = math.floor(playlist_secs / 60)
-		playlist_secs = playlist_secs % 60
-		local ss = playlist_secs
-		
-		io.write(string.format("%02d:%02d:%02d", hh, mm, ss), "\n")
-		break
-	else
-		playlist_secs = playlist_secs - secs
-	end
+    local secs, title = v[1], v[2]
+    if playlist_secs < secs then            -- playing this title
+        io.write(title, "\n")
+
+        local hh = math.floor(playlist_secs / 3600)
+        playlist_secs = playlist_secs % 3600
+        local mm = math.floor(playlist_secs / 60)
+        playlist_secs = playlist_secs % 60
+        local ss = playlist_secs
+
+        io.write(string.format("%02d:%02d:%02d", hh, mm, ss), "\n")
+        break
+    else
+        playlist_secs = playlist_secs - secs
+    end
 end
