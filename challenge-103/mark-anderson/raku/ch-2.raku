@@ -1,10 +1,12 @@
 #!/usr/bin/env raku
 
-say what's-playing(1606134123, 1606134123+1708, "filelist.csv");
-say what's-playing(1606134123, 1606134123+1709, "filelist.csv");
-say what's-playing(1606134123, 1606134123+1710, "filelist.csv");
-say what's-playing(1606134123, 1606134123+1711, "filelist.csv");
-say what's-playing(1606134123, 1606134123+1712, "filelist.csv");
+my $start = 1606134123;
+
+say what's-playing($start, $start+1708, "filelist.csv");
+say what's-playing($start, $start+1709, "filelist.csv");
+say what's-playing($start, $start+1710, "filelist.csv");
+say what's-playing($start, $start+1711, "filelist.csv");
+say what's-playing($start, $start+1712, "filelist.csv");
 
 sub what's-playing($start is copy, $current, $file)
 {
@@ -17,7 +19,7 @@ sub what's-playing($start is copy, $current, $file)
         if $start >= $current 
         {
            my $pos = $t - ($start - $current);
-           return $f ~ "\n" ~ DateTime.new(Instant.from-posix($pos)).hh-mm-ss;
+           return $f ~ "\n" ~ DateTime.new($pos).hh-mm-ss;
         }
     }
 }

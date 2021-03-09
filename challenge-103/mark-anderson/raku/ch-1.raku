@@ -15,7 +15,7 @@ is zodiac(2017), "Fire Rooster";
 is zodiac(2021), "Metal Ox";
 is zodiac(2025), "Wood Snake";
 
-sub zodiac(UInt $year is copy) 
+sub zodiac($year is copy) 
 {
     $year -= 1900;
 
