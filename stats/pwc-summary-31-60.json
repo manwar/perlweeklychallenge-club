@@ -1,12 +1,4 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
    "xAxis" : {
       "categories" : [
          "Burkhard Nickels",
@@ -41,18 +33,22 @@
          "Francis Whittle"
       ]
    },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-03-09 21:02:33 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             31,
             0,
@@ -84,10 +80,10 @@
             0,
             50,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             8,
             6,
@@ -119,8 +115,7 @@
             4,
             0,
             39
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -158,10 +153,15 @@
          ]
       }
    ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-03-09 21:11:32 GMT"
    }
 }
