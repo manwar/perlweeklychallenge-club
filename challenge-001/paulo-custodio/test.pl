@@ -20,6 +20,7 @@ our %LANG = (
     basic   => 'bas',
     c       => 'c',
     cpp     => 'cpp',
+    d       => 'd',
     forth   => 'fs',
     lua     => 'lua',
     perl    => 'pl',
@@ -122,6 +123,10 @@ sub build {
         }
         if (/cpp/) {
             run("g++ $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            return $exe;
+        }
+        if (/^d$/) {
+            run("cd d; dmd $prog_base") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
         if (/forth/) {

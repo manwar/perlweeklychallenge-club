@@ -1,11 +1,11 @@
-\ THE WEEKLY CHALLENGE - 091
+#! /usr/bin/env gforth
+
+\ Challenge 091
+\
 \ TASK #1: Count Number
 \
 \ You are given a positive number $N. Write a script to count number and
 \ display as you read it.
-
-\ Start the script with N in the stack, e.g.
-\   gforth -e 12345 ch-1.fs
 
 \ This solution uses the data stack to hold the digit counts, while
 \ computing them right-to-left, and displays them left-to-right at
@@ -40,4 +40,6 @@
     CR
 ;
 
-read_number BYE
+NEXT-ARG S>NUMBER? 0= THROW DROP    ( N )
+read_number
+BYE

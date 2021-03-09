@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 # Challenge 100
-# 
+#
 # TASK #2 > Triangle Sum
 # Submitted by: Mohammad S Anwar
 # You are given triangle array.
@@ -71,6 +71,3 @@ def min_sum():
 
 parse(sys.argv[1:])
 print(min_sum())
-
-
-

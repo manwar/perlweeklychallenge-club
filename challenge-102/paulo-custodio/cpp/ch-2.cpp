@@ -49,6 +49,6 @@ int main(int argc, char* argv[]) {
         std::cerr << "Usage: ch-1 N" << std::endl;
         return EXIT_FAILURE;
     }
-    else 
+    else
         std::cout << hash_count(atoi(argv[1])) << std::endl;
 }
