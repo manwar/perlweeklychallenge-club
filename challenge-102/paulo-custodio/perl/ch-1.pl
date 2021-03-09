@@ -25,7 +25,7 @@ print_rare($N);
 sub print_rare {
 	my($n) = @_;
 	for my $r (10**($n-1) .. 10**($n)-1) {
-		my $r1=0+(join('', reverse split('', $r)));
+		my $r1 = reverse $r;
 		if (perfect_square($r+$r1)) {
 			if ($r>=$r1) {
 				if (perfect_square($r-$r1)) {
