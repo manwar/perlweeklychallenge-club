@@ -1,3 +1,5 @@
+-- Challenge 100
+--
 -- TASK #1 > Fun Time
 -- Submitted by: Mohammad S Anwar
 -- You are given a time (12 hour / 24 hour).

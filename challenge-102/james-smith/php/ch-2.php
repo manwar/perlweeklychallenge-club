@@ -14,9 +14,7 @@ foreach( range(1,20) as $_ ) {
 
 function hash_count_string($n) {
   $s = '';
-  do {
-    if( $n   == strlen($s) ) return $s;
-    if( $n-1 == strlen($s) ) return "#$s";
-  } while( $s = ($n-strlen($s)) ."#$s" );
+  while($n>1) list($s,$n) = ["$n#$s",$n-1-strlen($n)];
+  return ( $n? '#' : '' ).$s;
 }
 

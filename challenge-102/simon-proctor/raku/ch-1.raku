@@ -22,7 +22,13 @@ multi sub MAIN(
 
 multi sub square(Int $ where * <= 0) returns Bool { False }
 
-multi sub square(Int \i) returns Bool { my \s = i.sqrt; s == s.Int; }
+my %square-cache;
+my \lock = Lock.new;
+multi sub square(Int \i --> Bool) {
+    lock.protect: {
+        %square-cache{i} //= i.sqrt.narrow ~~ Int
+    }
+}
 
 sub rare(Int \r) returns Bool {
     my \f = r.flip;
