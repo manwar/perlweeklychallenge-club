@@ -42,7 +42,7 @@ done_testing();
 ## 113 bytes total - 105 inside the curly braces..
 
 sub ft{pop=~s/(.+)(:..)\s*(.m|)/sprintf'%02d%s%s',
-($1%12||(12*!$3))+12*('pm'eq$3),$2,$3?'':$1%24<12?'am':'pm'/re}
+  ($1%12||(12*!$3))+12*('pm'eq$3),$2,$3?'':$1%24<12?'am':'pm'/re}
 
 ## This is more readable version with notes...
 sub fun_time {
