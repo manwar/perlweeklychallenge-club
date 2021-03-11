@@ -153,6 +153,7 @@ sub run {
 sub value_or_eval {
     my($str) = @_;
     $str //= "";
+    $str =~ s/^\|//gm;
     my $value = ($str =~ /^eval\b/) ? eval($str) : $str;
     $@ and die "eval '$str' failed: $@";
     return $value;
