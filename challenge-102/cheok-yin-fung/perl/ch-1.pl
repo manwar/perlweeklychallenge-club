@@ -55,3 +55,17 @@ for my $k ($bN..$eN) {
 # reasonable time for length = 7 ,
 # be patient for length = 8 (one term, which is palindromic)
 # over 2 min and killed for length = 9 ...
+
+=pod
+// add on March 8th
+$ time perl ch-1.pl 9
+200040002
+204060402
+242484242
+281089082
+291080192
+
+real	10m21.188s
+user	10m19.621s
+sys	0m0.084s
+=cut
