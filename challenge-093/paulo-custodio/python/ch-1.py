@@ -6,7 +6,8 @@
 # Submitted by: Mohammad S Anwar
 # You are given set of co-ordinates @N.
 #
-# Write a script to count maximum points on a straight line when given co-ordinates plotted on 2-d plane.
+# Write a script to count maximum points on a straight line when given 
+# co-ordinates plotted on 2-d plane.
 #
 # Example 1:
 # |
