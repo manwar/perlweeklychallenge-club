@@ -8,10 +8,10 @@ Submitted by: Stuart Little
 
 You are given an array @A of items (integers say, but they can be anything).
 
-Your task is to pack that array into an MxN matrix spirally counterclockwise, 
+Your task is to pack that array into an MxN matrix spirally counterclockwise,
 as tightly as possible.
 
-‘Tightly’ means the absolute value |M-N| of the difference has to be as small 
+‘Tightly’ means the absolute value |M-N| of the difference has to be as small
 as possible.
 --]]
 
@@ -44,7 +44,7 @@ function build_empty_rectangle(m, n)
     local rect = {}
     for r=1, m do
         rect[r] = {}
-        for c=1, n do 
+        for c=1, n do
             rect[r][c] = ""
         end
     end
@@ -67,7 +67,7 @@ function spiral(numbers)
             i = i + 1
             c = c + 1
         end
-        c = c - 1 
+        c = c - 1
         r = r - 1
         -- go North
         while r >= 1 do
@@ -77,7 +77,7 @@ function spiral(numbers)
             i = i + 1
             r = r - 1
         end
-        r = r + 1 
+        r = r + 1
         c = c - 1
         -- go West
         while c >= 1 do
@@ -87,7 +87,7 @@ function spiral(numbers)
             i = i + 1
             c = c - 1
         end
-        c = c + 1 
+        c = c + 1
         r = r + 1
         -- go South
         while r <= m do
@@ -97,13 +97,13 @@ function spiral(numbers)
             i = i + 1
             r = r + 1
         end
-        r = r - 1 
+        r = r - 1
         c = c + 1
     end
-    
+
     -- print result
     for r=1, m do
-        for c=1, n do 
+        for c=1, n do
             io.write(rect[r][c])
         end
         io.write("\n")

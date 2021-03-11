@@ -1,19 +1,19 @@
 -- Challenge 101
--- 
+--
 -- TASK #1 › Pack a Spiral
 -- Submitted by: Stuart Little
--- 
+--
 -- -- You are given an array @A of items (integers say, but they can be anything).
--- 
--- Your task is to pack that array into an MxN matrix spirally counterclockwise, 
+--
+-- Your task is to pack that array into an MxN matrix spirally counterclockwise,
 -- as tightly as possible.
--- 
--- ‘Tightly’ means the absolute value |M-N| of the difference has to be as small 
+--
+-- ‘Tightly’ means the absolute value |M-N| of the difference has to be as small
 -- as possible.
 
 with Ada.Command_Line;
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
-with Ada.Text_IO; use Ada.Text_IO; 
+with Ada.Text_IO; use Ada.Text_IO;
 
 procedure ch_1 is
     -- command line arguments
@@ -27,7 +27,7 @@ procedure ch_1 is
     number_rect : array(1 .. CL.Argument_Count, 1 .. CL.Argument_Count) of Integer;
     width, height : Integer;
     field_width : Integer := 1;
-    
+
     -- collect from command line
     procedure collect_numbers is
     begin
@@ -38,7 +38,7 @@ procedure ch_1 is
             end if;
         end loop;
     end collect_numbers;
-    
+
     -- get smallest rectangle
     procedure smallest_rect(width, height : out Integer) is
     begin
@@ -63,7 +63,7 @@ procedure ch_1 is
                 number_rect(i, j) := -1;
             end loop;
         end loop;
-        
+
         idx := number_list'First;
         row := height;
         col := 1;
@@ -77,7 +77,7 @@ procedure ch_1 is
             end loop;
             col := col - 1;
             row := row - 1;
-            
+
             -- go North
             while row >= 1 loop
                 exit when number_rect(row, col) >= 0;
@@ -87,7 +87,7 @@ procedure ch_1 is
             end loop;
             row := row + 1;
             col := col - 1;
-            
+
             -- go West
             while col >= 1 loop
                 exit when number_rect(row, col) >= 0;
@@ -97,7 +97,7 @@ procedure ch_1 is
             end loop;
             col := col + 1;
             row := row + 1;
-            
+
             -- go South
             while row <= height loop
                 exit when number_rect(row, col) >= 0;
@@ -109,7 +109,7 @@ procedure ch_1 is
             col := col + 1;
         end loop;
     end pack_numbers;
-    
+
     -- print the rectangle
     procedure print_rect(width, heigth : Integer) is
     begin
@@ -120,7 +120,7 @@ procedure ch_1 is
             Put_Line("");
         end loop;
     end print_rect;
-    
+
 begin
     collect_numbers;
     smallest_rect(width, height);

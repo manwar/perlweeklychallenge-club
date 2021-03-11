@@ -1,4 +1,7 @@
-\ THE WEEKLY CHALLENGE - 091
+#! /usr/bin/env gforth
+
+\ Challenge 091
+\
 \ TASK #2: Jump Game
 \
 \ You are given an array of positive numbers @N, where value at each index
@@ -6,18 +9,20 @@
 \ if you can jump to the last index. Print 1 if you are able to reach the last
 \ index otherwise 0.
 
-\ Start the script with the table and its size on the stack, e.g.
-\   gforth -e '1 2 1 2  4' ch-2.fs
 
-\ setup: tbl tbl-size
-VALUE tbl-size      \ save table size
-: ,values
-    tbl-size 0 DO
-        tbl-size I - 1- ROLL ,
-    LOOP
+0 VALUE tbl-size      \ save table size
+
+\ collect_args, append them to heap
+: collect_args  ( -- )
+    0 TO tbl-size
+    BEGIN NEXT-ARG DUP 0> WHILE
+        S>NUMBER? 0= THROW DROP ,
+        tbl-size 1+ TO tbl-size
+    REPEAT
 ;
 
-CREATE tbl ,values
+CREATE tbl
+collect_args
 
 \ run the table
 : run ( -- f )
