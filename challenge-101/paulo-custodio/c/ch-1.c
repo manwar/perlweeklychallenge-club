@@ -6,10 +6,10 @@ Submitted by: Stuart Little
 
 You are given an array @A of items (integers say, but they can be anything).
 
-Your task is to pack that array into an MxN matrix spirally counterclockwise, 
+Your task is to pack that array into an MxN matrix spirally counterclockwise,
 as tightly as possible.
 
-‘Tightly’ means the absolute value |M-N| of the difference has to be as small 
+‘Tightly’ means the absolute value |M-N| of the difference has to be as small
 as possible.
 */
 
@@ -60,7 +60,7 @@ int** make_empty_rect(int width, int height) {
 }
 
 void free_rect(int**rect, int height) {
-    for (int r = 0; r < height; r++) 
+    for (int r = 0; r < height; r++)
         free(rect[r]);
     free(rect);
 }
@@ -124,6 +124,6 @@ int main(int argc, char* argv[]) {
         fputs("Usage: ch-1 N...", stderr);
         exit(EXIT_FAILURE);
     }
-    else 
+    else
         spiral(--argc, ++argv);
 }

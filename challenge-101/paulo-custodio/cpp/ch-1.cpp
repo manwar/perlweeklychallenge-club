@@ -6,10 +6,10 @@ Submitted by: Stuart Little
 
 You are given an array @A of items (integers say, but they can be anything).
 
-Your task is to pack that array into an MxN matrix spirally counterclockwise, 
+Your task is to pack that array into an MxN matrix spirally counterclockwise,
 as tightly as possible.
 
-‘Tightly’ means the absolute value |M-N| of the difference has to be as small 
+‘Tightly’ means the absolute value |M-N| of the difference has to be as small
 as possible.
 */
 
@@ -20,7 +20,7 @@ as possible.
 int numbers_width;
 
 std::vector<int> collect_numbers(int argc, char* argv[]) {
-	std::vector<int> numbers;
+    std::vector<int> numbers;
     for (int i = 0; i < argc; i++) {
         numbers.push_back(atoi(argv[i]));
         if (numbers[i] >= 1000 && numbers_width < 4) numbers_width = 4;
@@ -43,20 +43,20 @@ void smallest_rect(int n, int& width, int& height) {
 }
 
 std::vector<std::vector<int>> make_empty_rect(int width, int height) {
-	std::vector<std::vector<int>> rect;
+    std::vector<std::vector<int>> rect;
     for (int r = 0; r < height; r++) {
-		rect.push_back({});
+        rect.push_back({});
         for (int c = 0; c < width; c++)
             rect[r].push_back(-1);
     }
     return rect;
 }
 
-void fill_spiral(std::vector<std::vector<int>>& rect, 
-			     std::vector<int>& numbers) {
-	int width  = static_cast<int>(rect[0].size());
-	int height = static_cast<int>(rect.size());
-	int count  = static_cast<int>(numbers.size());
+void fill_spiral(std::vector<std::vector<int>>& rect,
+                 std::vector<int>& numbers) {
+    int width  = static_cast<int>(rect[0].size());
+    int height = static_cast<int>(rect.size());
+    int count  = static_cast<int>(numbers.size());
     int i = 0;
     int r = height - 1;
     int c = 0;
@@ -92,8 +92,8 @@ void fill_spiral(std::vector<std::vector<int>>& rect,
 }
 
 void print_spiral(std::vector<std::vector<int>>& rect) {
-	int width  = static_cast<int>(rect[0].size());
-	int height = static_cast<int>(rect.size());
+    int width  = static_cast<int>(rect[0].size());
+    int height = static_cast<int>(rect.size());
     for (int r = 0; r < height; r++) {
         for (int c = 0; c < width; c++)
             std::cout << std::setw(numbers_width + 1) << rect[r][c];
@@ -115,6 +115,6 @@ int main(int argc, char* argv[]) {
         std::cerr << "Usage: ch-1 N..." << std::endl;
         exit(EXIT_FAILURE);
     }
-    else 
+    else
         spiral(--argc, ++argv);
 }

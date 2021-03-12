@@ -1,23 +1,23 @@
 -- Challenge 102
--- 
+--
 -- TASK #1 › Rare Numbers
 -- Submitted by: Mohammad S Anwar
--- 
+--
 -- You are given a positive integer $N.
--- 
--- Write a script to generate all Rare numbers of size $N if exists. Please 
+--
+-- Write a script to generate all Rare numbers of size $N if exists. Please
 -- checkout the page for more information about it.
 -- Examples
--- 
+--
 -- (a) 2 digits: 65
 -- (b) 6 digits: 621770
 -- (c) 9 digits: 281089082
 
 with Ada.Command_Line;
-with Ada.Strings.Fixed; 
+with Ada.Strings.Fixed;
  use Ada.Strings.Fixed;
-with Ada.Text_IO; 
- use Ada.Text_IO; 
+with Ada.Text_IO;
+ use Ada.Text_IO;
 with Ada.Numerics.Generic_Elementary_Functions;
 
 procedure ch_1 is
@@ -29,8 +29,8 @@ procedure ch_1 is
 
     -- Sqrt
     package Value_Functions is new Ada.Numerics.Generic_Elementary_Functions(Float);
-    use Value_Functions;    
-    
+    use Value_Functions;
+
     -- convert 1234 to 4321
     function invert_number(a0 : Integer) return integer is
         a : Integer := a0;
@@ -54,7 +54,7 @@ procedure ch_1 is
             return False;
         end if;
     end is_perfect_square;
-    
+
     -- print all rare numbers with n digits
     procedure print_rare_numbers(n : Integer) is
         r1 : Integer;
@@ -71,7 +71,7 @@ procedure ch_1 is
             end if;
         end loop;
     end print_rare_numbers;
-                        
+
 begin
     print_rare_numbers(Integer'Value(CL.Argument(1)));
 end ch_1;

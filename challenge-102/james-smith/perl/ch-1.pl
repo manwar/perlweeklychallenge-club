@@ -41,10 +41,10 @@ sub rare_numbers {
     my $x = shift;
     return () if $F[$x%9]; ## Digit sum is wrong...
     my $y = reverse $x;
-    return () if $x == $y; ## Musn't be the same back and forth
-    return $y if $x<$y && is_sq($x+$y) && is_sq($y-$x);
+    return () if $x == $y || ! is_sq($x+$y); ## Musn't be the same back and forth
+    return $y if $x<$y && is_sq($y-$x);
+    return $x if $y<$x && is_sq($x-$y);
     ## Check both ways round!
-    return $x if $y<$x && is_sq($x+$y) && is_sq($x-$y);
     return ();
   }
 
