@@ -125,5 +125,6 @@ Output:
 ### Solutions
 * [Lua](lua/ch-2.lua)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
 
 ### Blog
