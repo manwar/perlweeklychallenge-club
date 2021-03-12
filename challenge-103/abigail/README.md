@@ -123,7 +123,7 @@ Output:
 ~~~~
 
 ### Solutions
-* [Lua](lua/ch-1.lua)
+* [Lua](lua/ch-2.lua)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
