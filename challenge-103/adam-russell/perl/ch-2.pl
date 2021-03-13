@@ -50,7 +50,7 @@ sub now_playing{
             my $hours = int($position/3600);
             my $minutes = int(($position % 3600) / 60);
             my $seconds = int(($position % 3600) % 60);
-            $position = $hours . ":" . $minutes . ":" . $seconds;    
+            $position = sprintf("%02d", $hours) . ":" . sprintf("%02d", $minutes) . ":" . sprintf("%02d", $seconds);    
             return ($song, $position);  
         }   
     }  
