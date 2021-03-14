@@ -1,0 +1,23 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $year, :c(:$chinese));
+
+my @animals   = <Rat Ox Tiger Rabbit Dragon Snake Horse Goat Monkey Rooster Dog Pig>;
+my @elements  = <Yang/Wood Yin/Wood Yang/Fire Yin/Fire Yang/Earth Yin/Earth Yang/Metal Yin/Metal Yang/Water Yin/Water>;
+
+my %chinese   = ( Rat         => '子',   Ox         => '丑',   Tiger       => '寅',   Rabbit     => '卯',
+                  Dragon      => '辰',   Snake      => '巳',   Horse       => '午',   Goat       => '未',
+	          Monkey      => '申',   Rooster    => '酉',   Dog         => '戌',   Pig        => '亥',	     
+                 'Yang/Wood'  => '甲',  'Yin/Wood'  => '乙',  'Yang/Fire'  => '丙',  'Yin/Fire'  => '丁',
+	         'Yang/Earth' => '戊',  'Yin/Earth' => '己',  'Yang/Metal' => '庚',  'Yin/Metal' => '辛',
+	         'Yang/Water' => '壬',  'Yin/Water' => '癸');
+
+my $animals   = @animals.elems;
+my $elements  = @elements.elems;
+
+my $base-year = 1924;
+my $year-diff = $year - $base-year;
+
+say $chinese
+?? "{ %chinese{ @elements[ $year-diff % $elements] } } { %chinese{ @animals[ $year-diff % $animals] } }" 
+!! "{ @elements[ $year-diff % $elements] } { @animals[ $year-diff % $animals] }";
