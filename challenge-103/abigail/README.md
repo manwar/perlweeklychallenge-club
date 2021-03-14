@@ -60,6 +60,7 @@ output.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Perl Weekly Challenge 103: Chinese Zodiac](https://wp.me/pcxd30-uS)
 
 
 ## [What's playing?](https://perlweeklychallenge.org/blog/perl-weekly-challenge-103/#TASK2)
@@ -133,3 +134,4 @@ Output:
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
+[Perl Weekly Challenge 103: What's playing?](https://wp.me/pcxd30-v6)
