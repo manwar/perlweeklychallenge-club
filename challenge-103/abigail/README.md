@@ -1,57 +1,57 @@
 # Solution by Abigail
-## [Rare Numbers](https://perlweeklychallenge.org/blog/perl-weekly-challenge-102/#TASK1)
+## [Chinese Zodiac](https://perlweeklychallenge.org/blog/perl-weekly-challenge-103/#TASK1)
 
+You are given a year `$year`.
 
-You are given a positive integer `$N`.
-
-Write a script to generate all Rare numbers of size `$N` if exists.
-Please checkout [the page](http://www.shyamsundergupta.com/rare.htm)
+Write a script to determine the *Chinese Zodiac* for the given year
+$year. Please check out [wikipage](https://en.wikipedia.org/wiki/Chinese_zodiac)
 for more information about it.
 
+The animal cycle:
+* Rat
+* Ox
+* Tiger
+* Rabbit
+* Dragon
+* Snake
+* Horse
+* Goat
+* Monkey
+* Rooster
+* Dog
+* Pig
+
+The element cycle:
+* Wood
+* Fire
+* Earth
+* Metal
+* Water
+
 ### Examples
+#### Example 1
 ~~~~
-(a) 2 digits: 65
-(b) 6 digits: 621770
-(c) 9 digits: 281089082
+Input: 2017
+Output: Fire Rooster
+~~~~
+
+#### Example 2
+~~~~
+Input: 1938
+Output: Earth Tiger
 ~~~~
 
 ### Notes
+We will actually output a three part string; beside the animal and element
+cycles, we also output the yin/yang cycle.
 
-There is no simple efficient algorithm for spitting out rare numbers;
-at least not one which can be easily found online.
-
-The code fragments in the OEIS only give code to check whether a 
-number is a rare number, and they don't suggest anything other
-than "try all numbers" if you want to find all of the numbers of a
-certain length. 
-
-Shyam writes: [*I have developed a computer program in Fortran to
-calculate Rare numbers. In fact with refinement of the code over
-the years, the program has been made so powerful that all numbers
-up to 10^14 can be just checked for Rare numbers in less than a
-minute on Pentium III PC. In few hours I have been able to check
-up to 10^18.*](https://www.primepuzzles.net/conjectures/conj_023.htm)
-but he does not publish his code.
-
-Richard Guy writes [*Here are three problems that have come to light
-recently, each of which can consume unlimited amounts of computer time,
-perhaps without revealing anything
-significant*.](https://www.jstor.org/stable/2325149?seq=1)
-The rare numbers are one of the three problems.
-
-So, we just include a [list of all know rare numbers,
-up to 10^22](https://oeis.org/A035519/b035519.txt) 
-and preprocess them so they're bucketed to length. Then it's just
-a matter of reading the desired length, and printing the appropriate
-entry (or the empty string if no rare numbers of that length exist).
-There are only 124 known rare numbers, so preprocessing is very
-feasible.
-
+We will be reading years from standard input, writing results to standard
+output.
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
-* [BASIC](basic/ch-1.bas)
+* [Befunge-93](befunge-93/ch-1.bf93)
 * [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
@@ -60,38 +60,72 @@ feasible.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[Perl Weekly Challenge 102: Rare Numbers](https://wp.me/pcxd30-t7)
+[Perl Weekly Challenge 103: Chinese Zodiac](https://wp.me/pcxd30-uS)
 
 
-## [Hash-counting String](https://perlweeklychallenge.org/blog/perl-weekly-challenge-102/#TASK2)
+## [What's playing?](https://perlweeklychallenge.org/blog/perl-weekly-challenge-103/#TASK2)
+Working from home, you decided that on occasion you wanted some
+background noise while working. You threw together a network streamer
+to continuously loop through the files and launched it in a tmux
+(or screen) session, giving it a directory tree of files to play.
+During the day, you connected an audio player to the stream, listening
+through the workday, closing it when done.
 
-You are given a positive integer `$N`.
+For weeks you connect to the stream daily, slowly noticing a gradual
+drift of the media. After several weeks, you take vacation. When
+you return, you are pleasantly surprised to find the streamer still
+running. Before connecting, however, if you consider the puzzle of
+determining which track is playing.
 
-Write a script to produce Hash-counting string of that length.
+After looking at a few modules to read info regarding the media, a
+quick bit of coding gave you a file list. The file list is in a
+simple CSV format, each line containing two fields: the first the
+number of milliseconds in length, the latter the media's title (this
+example is of several episodes available from the MercuryTheatre.info):
 
-The definition of a hash-counting string is as follows:
-- the string consists only of digits 0-9 and hashes, `'#'`.
-- there are no two consecutive hashes: `"##"` does not appear in your string
-- the last character is a hash
-- the number immediately preceding each hash (if it exists) is the position
-  of that hash in the string, with the position being counted up from 1
-
-It can be shown that for every positive integer `N` there is exactly one
-such length-`N` string.
-
-### Examples
 ~~~~
-(a) "#" is the counting string of length 1
-(b) "2#" is the counting string of length 2
-(c) "#3#" is the string of length 3
-(d) "#3#5#7#10#" is the string of length 10
-(e) "2#4#6#8#11#14#" is the string of length 14
+1709363,"Les Miserables Episode 1: The Bishop (broadcast date: 1937-07-23)"
+1723781,"Les Miserables Episode 2: Javert (broadcast date: 1937-07-30)"
+1723781,"Les Miserables Episode 3: The Trial (broadcast date: 1937-08-06)"
+1678356,"Les Miserables Episode 4: Cosette (broadcast date: 1937-08-13)"
+1646043,"Les Miserables Episode 5: The Grave (broadcast date: 1937-08-20)"
+1714640,"Les Miserables Episode 6: The Barricade (broadcast date: 1937-08-27)"
+1714640,"Les Miserables Episode 7: Conclusion (broadcast date: 1937-09-03)"
+~~~~
+
+For this script, you can assume to be provided the following information:
+* the value of `$^T` (`$BASETIME`) of the streamer script,
+* the value of `time()`, and
+* a CSV file containing the media to play consisting of the length in
+  milliseconds and an identifier for the media (title, filename, or other).
+
+Write a program to output which file is currently playing. For
+purposes of this script, you may assume gapless playback, and format
+the output as you see fit.
+
+Optional: Also display the current position in the media as a time-like value.
+
+### Example
+~~~~
+Input: 3 command line parameters: start time, current time, file name
+
+    # Streamer start time: Tue Nov 24 12:22:03 2020
+    1606134123
+
+    # Current time:        Mon Mar  1 09:34:36 2021
+    1614591276
+
+    # filelist.csv
+
+Output:
+
+    "Les Miserables Episode 1: The Bishop (broadcast date: 1937-07-23)"
+    00:17:33
 ~~~~
 
 ### Solutions
-* [AWK](awk/ch-2.awk)
+* [GNU AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
-* [Befunge-93](befunge-93/ch-2.bf93)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
@@ -100,4 +134,4 @@ such length-`N` string.
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[Perl Weekly Challenge 102: Hash-counting String](https://wp.me/pcxd30-tZ)
+[Perl Weekly Challenge 103: What's playing?](https://wp.me/pcxd30-v6)
