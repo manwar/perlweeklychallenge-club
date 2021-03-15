@@ -29,6 +29,7 @@ even handle a single if statement. A single print statement is enough.
 * [Cobol](cobol/ch-1.cb)
 * [Forth](forth/ch-1.fs)
 * [Fortran](fortran/ch-1.f90)
+* [Go](go/ch-1.go)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
