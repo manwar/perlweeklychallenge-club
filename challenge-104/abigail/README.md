@@ -32,9 +32,11 @@ even handle a single if statement. A single print statement is enough.
 * [Go](go/ch-1.go)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
+* [Pascal](perl/ch-1.p)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 * [Ruby](ruby/ch-1.rb)
+* [SQL](sql/ch-1.sql)
 
 ### Blog
 
