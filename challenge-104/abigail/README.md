@@ -22,6 +22,7 @@ even handle a single if statement. A single print statement is enough.
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [Basic](basic/ch-1.bas)
 * [Befunge-93](befunge-93/ch-1.bf93)
 * [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
