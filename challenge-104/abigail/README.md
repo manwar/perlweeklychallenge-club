@@ -35,6 +35,7 @@ even handle a single if statement. A single print statement is enough.
 * [Pascal](perl/ch-1.p)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
+* [Tcl](tcl/ch-1.tcl)
 * [Ruby](ruby/ch-1.rb)
 * [SQL](sql/ch-1.sql)
 
@@ -55,13 +56,14 @@ c) The player who picks the last token wins the game
 ~~~~
 
 ### Notes
-This is *not* the NIM game. In the NIM game, you have multiple sets
+This is *not* the well known NIM game. In the NIM game, you have multiple sets
 of tokens, and on each turn, a player picks a set, and removes any
 non-zero number of of tokens from the set. Typically, the player
 picking the last token loses.
 
-The game as given is a win for the second player, who will win on
-the third move.
+The game as given is sometimes also known as the NIM game, but it better
+known as the subtraction game. With the given parameters and perfect
+play, the second player always wins on the third move.
 
 ### Solutions
 * [Perl](perl/ch-2.pl)
