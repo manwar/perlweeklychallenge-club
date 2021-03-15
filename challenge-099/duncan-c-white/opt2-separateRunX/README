@@ -1,0 +1,11 @@
+Here, in the Interpreter, I have extracted the code for
+executing each Abstract Pattern Instruction into a
+separate runXXX() function [runAt(), runMatch(), runTest()
+and runCapture()].
+
+I vaguely thought of this as preparation for integrating
+the Translator and Interpreter later.
+
+HOWEVER, in fact it's not terribly useful, because the
+integration will be much more intertwined - specifically
+because runMatch() calls interprete() recursively.

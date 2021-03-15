@@ -3,8 +3,12 @@ find . -name "*.p" -delete
 find . -name "*.t" -delete
 find . -name "*.bc" -delete
 find . -name "*.pl" -delete
+find . -name "*.st" -delete
 find . -name "*.pm" -delete
+find . -name "*.bqn" -delete
+find . -name "*.adk" -delete
 find . -name "*.bash" -delete
+find . -name "*.yaml" -delete
 find . -name "*.d" -delete
 find . -name "*.dart" -delete
 find . -name "*.f95" -delete
@@ -34,6 +38,7 @@ find . -name "*.rs" -delete
 find . -name "*.rb" -delete
 find . -name "*.sh" -delete
 find . -name "*.awk" -delete
+find . -name "*.gawk" -delete
 find . -name "*.php" -delete
 find . -name "*.adb" -delete
 find . -name "*.kts" -delete
@@ -45,9 +50,11 @@ find . -name "*.cpp" -delete
 find . -name "*.clj" -delete
 find . -name "*.lua" -delete
 find . -name "*.tcl" -delete
+find . -name "*.ini" -delete
 find . -name "*.raku" -delete
 find . -name "*.fish" -delete
 find . -name "*.swift" -delete
+find . -name "*.janet" -delete
 find . -name "*.aplf" -delete
 find . -name "*.lock" -delete
 find . -name "*.toml" -delete

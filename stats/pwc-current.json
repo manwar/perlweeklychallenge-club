@@ -2,50 +2,6 @@
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Jacoby",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "name" : "Dave Jacoby"
-         },
-         {
-            "name" : "E. Choroba",
-            "id" : "E. Choroba",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Gustavo Chaves",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "id" : "Gustavo Chaves"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "id" : "James Smith",
-            "name" : "James Smith"
-         },
-         {
             "name" : "Luca Ferrari",
             "data" : [
                [
@@ -60,20 +16,6 @@
             "id" : "Luca Ferrari"
          },
          {
-            "id" : "Roger Bell_West",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Roger Bell_West"
-         },
-         {
             "name" : "Simon Proctor",
             "data" : [
                [
@@ -84,116 +26,76 @@
             "id" : "Simon Proctor"
          },
          {
-            "id" : "Stuart Little",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Stuart Little"
-         },
-         {
-            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
                   2
                ],
                [
-                  "Blog",
-                  1
+                  "Raku",
+                  2
                ]
             ],
-            "id" : "W. Luis Mochan"
+            "id" : "Stuart Little",
+            "name" : "Stuart Little"
          }
       ]
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "xAxis" : {
       "type" : "category"
    },
    "title" : {
-      "text" : "Perl Weekly Challenge - 094"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "text" : "Perl Weekly Challenge - 103"
    },
    "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2021-01-05 07:12:28 GMT"
+      "text" : "[Champions: 3] Last updated at 2021-03-08 15:04:53 GMT"
    },
-   "legend" : {
-      "enabled" : 0
-   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Luca Ferrari",
+               "y" : 4,
+               "name" : "Luca Ferrari"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 1,
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "name" : "Stuart Little",
+               "y" : 4,
+               "drilldown" : "Stuart Little"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 103"
+      }
+   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 094",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "name" : "Dave Jacoby",
-               "drilldown" : "Dave Jacoby",
-               "y" : 3
-            },
-            {
-               "y" : 2,
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
-            },
-            {
-               "name" : "Gustavo Chaves",
-               "y" : 2,
-               "drilldown" : "Gustavo Chaves"
-            },
-            {
-               "name" : "James Smith",
-               "y" : 2,
-               "drilldown" : "James Smith"
-            },
-            {
-               "name" : "Luca Ferrari",
-               "y" : 4,
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
-            },
-            {
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 1
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Stuart Little",
-               "name" : "Stuart Little"
-            },
-            {
-               "name" : "W. Luis Mochan",
-               "drilldown" : "W. Luis Mochan",
-               "y" : 3
-            }
-         ]
-      }
-   ]
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   }
 }

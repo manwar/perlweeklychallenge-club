@@ -1,9 +1,9 @@
 \ THE WEEKLY CHALLENGE - 091
 \ TASK #2: Jump Game
 \
-\ You are given an array of positive numbers @N, where value at each index 
-\ determines how far you are allowed to jump further. Write a script to decide 
-\ if you can jump to the last index. Print 1 if you are able to reach the last 
+\ You are given an array of positive numbers @N, where value at each index
+\ determines how far you are allowed to jump further. Write a script to decide
+\ if you can jump to the last index. Print 1 if you are able to reach the last
 \ index otherwise 0.
 
 \ Start the script with the table and its size on the stack, e.g.

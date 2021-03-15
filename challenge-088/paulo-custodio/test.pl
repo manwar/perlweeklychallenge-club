@@ -48,21 +48,21 @@ spew($in, <<END);
 [  9, 10, 11, 12 ]
 [ 13, 14, 15, 16 ]
 END
-is capture("perl perl/ch-2.pl <$in"), 
-	"[ 1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10 ]\n";
+is capture("perl perl/ch-2.pl <$in"),
+    "[ 1, 2, 3, 4, 8, 12, 16, 15, 14, 13, 9, 5, 6, 7, 11, 10 ]\n";
 
 unlink($in);
 done_testing;
 
 sub capture {
-	my($cmd) = @_;
-	my $out = `$cmd`;
-	$out =~ s/[ \t\v\f\r]*\n/\n/g;
-	return $out;
+    my($cmd) = @_;
+    my $out = `$cmd`;
+    $out =~ s/[ \t\v\f\r]*\n/\n/g;
+    return $out;
 }
 
 sub spew {
-	my($file, $text) = @_;
-	open(my $fh, ">", $file) or die "write $file: $!\n";
-	print $fh $text;
+    my($file, $text) = @_;
+    open(my $fh, ">", $file) or die "write $file: $!\n";
+    print $fh $text;
 }

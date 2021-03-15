@@ -2,7 +2,7 @@
 # Perl weekly challenge 093
 # Task 1: Max points.
 # Find maximum number of points on a line
-# See https:/wlmb.github.io/2020/12/28/PWC93/#task-1-max-points
+# See https://wlmb.github.io/2020/12/28/PWC93/#task-1-max-points
 use warnings;
 use strict;
 use v5.10;

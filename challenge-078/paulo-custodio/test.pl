@@ -5,10 +5,10 @@ use warnings;
 use Test::More;
 use 5.030;
 
-is capture("perl perl/ch-1.pl 9 10 7 5 6 1"), 	"(10, 7, 6, 1)\n";
-is capture("perl perl/ch-1.pl 3  4 5"), 		"(5)\n";
-is capture("perl perl/ch-1.pl "), 				"(0)\n";
-is capture("perl perl/ch-1.pl 0 0 0 0 0"),		"(0)\n";
+is capture("perl perl/ch-1.pl 9 10 7 5 6 1"),   "(10, 7, 6, 1)\n";
+is capture("perl perl/ch-1.pl 3  4 5"),         "(5)\n";
+is capture("perl perl/ch-1.pl "),               "(0)\n";
+is capture("perl perl/ch-1.pl 0 0 0 0 0"),      "(0)\n";
 
 is capture("perl perl/ch-2.pl '10 20 30 40 50' '3 4'"), <<END;
 [40 50 10 20 30]
@@ -32,8 +32,8 @@ END
 done_testing;
 
 sub capture {
-	my($cmd) = @_;
-	my $out = `$cmd`;
-	$out =~ s/[ \t\v\f\r]*\n/\n/g;
-	return $out;
+    my($cmd) = @_;
+    my $out = `$cmd`;
+    $out =~ s/[ \t\v\f\r]*\n/\n/g;
+    return $out;
 }

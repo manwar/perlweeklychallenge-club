@@ -1,0 +1,1 @@
+perl -E 'say join q{ }, (reverse @ARGV);' $@

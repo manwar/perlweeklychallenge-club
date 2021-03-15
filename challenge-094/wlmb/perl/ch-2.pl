@@ -2,7 +2,7 @@
 # Perl weekly challenge 094
 # Task 2: Binary tree to linked list.
 #
-# See https:/wlmb.github.io/2020/01/04/PWC94/#task-1-binary-tree-to-linked-list
+# See https://wlmb.github.io/2021/01/04/PWC94/#task-1-binary-tree-to-linked-list
 use v5.12;
 use Text::Balanced qw(extract_bracketed extract_multiple);
 
@@ -15,9 +15,7 @@ has right=>(is=>'ro', required=>1);
 sub flatten {
     my $self=shift;
     return () unless defined $self->value;
-    return $self->value
-	?($self->value, $self->left?$self->left->flatten:(), $self->right?$self->right->flatten:())
-	:();
+    return ($self->value, $self->left?$self->left->flatten:(), $self->right?$self->right->flatten:());
 }
 
 package main;
@@ -25,7 +23,7 @@ foreach(@ARGV){
     # remove unnecesary commas
     tr/,//d;
     my $tree=build_tree($_);
-    die "Empty tree" unless defined $tree;
+    say("Empty tree"), next unless defined $tree;
     my @values=$tree->flatten;
     say join '->', @values;
 }

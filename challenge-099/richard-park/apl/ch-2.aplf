@@ -1,0 +1,10 @@
+ UniqueSubsequence←{
+⍝ Recursive to find unique subsequences
+⍝ matching ⍵ located in ⍺
+⍝ For each of ⊃⍵ in ⍺:
+ ⍝ For each next appearing after it
+  ⍝ And so on...
+     0=≢⍵:1
+     +/∊((⍸⍺∊⊃⍵)↓¨⊂⍺)∇¨⊂1↓⍵
+
+ }

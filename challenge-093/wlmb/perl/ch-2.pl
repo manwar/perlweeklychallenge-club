@@ -2,7 +2,7 @@
 # Perl weekly challenge 093
 # Task 2: Sum path.
 # Sum all possible paths from the root to the leafs.
-# See https:/wlmb.github.io/2020/12/28/PWC93/#task-2-sum-path
+# See https://wlmb.github.io/2020/12/28/PWC93/#task-2-sum-path
 use warnings;
 use strict;
 use v5.10;

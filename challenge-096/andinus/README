@@ -1,0 +1,95 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 090
+
+                                Andinus
+                            ━━━━━━━━━━━━━━━
+
+
+                               2020-12-08
+
+
+Table of Contents
+─────────────────
+
+1. Task 2 - Ethiopian Multiplication
+.. 1. Raku
+
+
+
+
+
+1 Task 2 - Ethiopian Multiplication
+═══════════════════════════════════
+
+  You are given two positive numbers $A and $B.
+
+  Write a script to demonstrate [Ethiopian Multiplication] using the
+  given numbers.
+
+
+[Ethiopian Multiplication]
+<https://threesixty360.wordpress.com/2009/06/09/ethiopian-multiplication/>
+
+1.1 Raku
+────────
+
+  • Program: <file:perl/ch-2.raku>
+
+  Start by taking `$A' & `$B' which are defined to be `Int' & positive.
+  ┌────
+  │ sub MAIN (
+  │     #= positive numbers
+  │     Int $A is copy where * > 0,
+  │     Int $B is copy where * > 0
+  │ ) {
+  │     ...
+  │ }
+  └────
+
+  Here's relevant part from the link that was given above:
+        Start with the two numbers on top. Halve one, ignoring any
+        remainders or fractions, and double the other, stopping
+        when you get to 1.
+
+        14 & 12 7 & 24 3 & 48 [See how I ignored the fact that
+        halving 7 leaves 1 left over?] 1 & 96 <— Stop here.
+
+        Now look at the numbers on the right. Some are across from
+        an even number: in this case, 12 is across from the
+        original 14. Ignore those, and add the rest. So we’ll add
+        24, 48, and 96, which were across from odd numbers, and
+        get 168. And that’s the product! Isn’t that cool?
+
+  We do the same thing & also print the instructions.
+  ┌────
+  │ my %sets;
+  │
+  │ say "Ethopian Multiplication.\n";
+  │ say "Start with $A, $B.";
+  │ say "Divide $A by 2 & multiple $B by 2 at each step.";
+  │ say "Continue until $A equals 1. Drop the remainder, both should be Integer.\n";
+  │
+  │ say "$A, $B";
+  │ while True {
+  │     %sets{$A} = $B.Int;
+  │     $A = ($A / 2).Int;
+  │     $B = ($B * 2).Int;
+  │     last if $A < 1;
+  │     say "$A, $B";
+  │ }
+  │
+  │ say "\nNow to find the product, simply add all the numbers on right side of ','.";
+  │ say "But skip those numbers which have an even number on the left side.\n";
+  │
+  │ my Int $product = 0;
+  │ for %sets.sort({.key.Int}).reverse -> $pair {
+  │     if $pair.key % 2 != 0 {
+  │         $product += $pair.value;
+  │         say "- Adding ", $pair.value, " to product.";
+  │     } else {
+  │         say "- Skipping ", $pair.value, " because ", $pair.key, " is even.";
+  │     }
+  │ }
+  │
+  │ say "\nProduct: $product";
+  └────

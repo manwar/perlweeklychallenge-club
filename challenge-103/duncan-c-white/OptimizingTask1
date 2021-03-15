@@ -1,0 +1,50 @@
+tried some optimizations of task 1 (rare numbers).  All times are for n==8 or 9
+I used Devel::NYTProf to profile each version, then made small optimizations,
+then reprofiled.  See "run.sh" for how to run a particular version through
+the profiler, generate the report, and copy it into a web-accessible directory
+for viewing:
+
+ch-1.pl:	the original, not optimized
+	time(8):	0:34.31
+	time(9):        5:56:10
+
+ch-1a.pl:	observation from rare numbers webpage ("Properties of.."
+		section): rare numbers start with even top digit
+	time(8):   0:24.46
+	time(9):   4:10.61
+
+ch-1b.pl:	only consider rare numbers starting with even top digit..
+	time(8):   0:15.35 
+	time(9):   2:44.34
+
+ch-1c.pl: 	lots of optimizations, especially 3 separate rare block
+		functions: rareblock(), rareblock05() and rareblock2378().
+	time(8):   0:06.35
+	time(9):   1:06.64
+
+ch-1d.pl: lots more optimizations, especially: rather than generate x and
+		test x%10 == d, generate y (1/10th the range) and make
+		x = 10y + d: 1/10th the work, but same x's as before
+	time(8):   0:03.92
+	time(9):   0:40.21
+
+ch-1e.pl: inlined israre() into the slowest rareblock2378() func
+	time(8):   0:03.39
+	time(9):   0:34.49
+
+ch-1f.pl: inlined israre() into the next slowest rareblock05() func
+	time(8):   0:03.12
+	time(9):   0:31.47
+
+ch-1g.pl: inlined israre() into the last rareblock() func
+	time(8):   0:02.94
+	time(9):   0:28.79
+
+ch-1h.pl: inlined perfectsquare() everywhere
+	time(8):   0:02.15
+	time(9):   0:21.20
+
+ch-1i.pl: reintroduced israre() but with two inlined calls to perfectsquare()
+	sweet spot: clear, shows problem structure nicely, plus pretty fast
+	time(8):   0:03.23
+	time(9):   0:32.34

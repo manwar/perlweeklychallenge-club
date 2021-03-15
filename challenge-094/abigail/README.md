@@ -1,70 +1,58 @@
 # Solution by Abigail
 
-## Task 1: Max Points
+## Task 1: Group Anagrams
 
-You are given set of co-ordinates `@N`.
+You are given an array of strings `@S`.
 
-Write a script to count maximum points on a straight line when given
-co-ordinates plotted on 2-d plane.
+Write a script to group Anagrams together in any random order.
 
 ### Examples
+
+#### Example 1
 ~~~~
-|
-|     x
-|   x
-| x
-+ _ _ _ _
-
-Input: (1,1), (2,2), (3,3)
-Output: 3
-
-
-|
-|
-| x       x
-|   x
-| x   x
-+ _ _ _ _ _
-
-Input: (1,1), (2,2), (3,1), (1,3), (5,3)
-Output: 3
+Input: ("opt", "bat", "saw", "tab", "pot", "top", "was")
+Output: [ ("bat", "tab"),
+          ("saw", "was"),
+          ("top", "pot", "opt") ]
 ~~~~
+
+#### Example 2
+~~~~
+Input: ("x")
+Output: [ ("x") ]
+~~~~
+
 
 ### Solutions
+* [Node](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 
 
 
-## Task 2: Sum Path
+## Task 2: Binary Tree to Linked List
 
-You are given binary tree containing numbers `0-9` only.
+You are given a binary tree.
 
-Write a script to sum all possible paths from root to leaf.
+Write a script to represent the given binary tree as an object and
+flatten it to a linked list object. Finally print the linked list
+object.
 
 ### Examples
+
+#### Example 1
 ~~~~
 Input:
-     1
-    /
-   2
-  / \
- 3   4
+    1
+   / \
+  2   3
+ / \
+4   5
+   / \
+  6   7
 
-Output: 13
+Output:
+    1 -> 2 -> 4 -> 5 -> 6 -> 7 -> 3
 ~~~~
-as sum two paths (1->2->3) and (1->2->4)
-
-~~~~
-Input:
-     1
-    / \
-   2   3
-  /   / \
- 4   5   6
-
-Output: 26
-~~~~
-as sum three paths (1->2->4), (1->3->5) and (1->3->6)
 
 ### Solutions
 * [Perl](perl/ch-2.pl)

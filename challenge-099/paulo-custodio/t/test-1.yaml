@@ -1,0 +1,34 @@
+- setup:
+  cleanup:
+  args:     abcde "a*e"
+  input:
+  output:   |
+            1
+
+- setup:
+  cleanup:
+  args:     abcde "a*d"
+  input:
+  output:   |
+            0
+
+- setup:
+  cleanup:
+  args:     abcde "?b*d"
+  input:
+  output:   |
+            0
+
+- setup:
+  cleanup:
+  args:     abcde "a*c?e"
+  input:
+  output:   |
+            1
+
+- setup:
+  cleanup:
+  args:     abcdef "a*c?e"
+  input:
+  output:   |
+            0

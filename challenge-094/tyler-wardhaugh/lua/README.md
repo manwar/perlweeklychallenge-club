@@ -7,11 +7,11 @@ The Weekly Challenge - #091 - Tyler Wardhaugh
 
 Run Task 1:
 
-    $ ./run.lua ch-1 N
+    $ ./run.lua ch-1 S1 S2 S3...
 
 Run Task 2:
 
-    $ ./run.lua ch-2 N1 N2 N3...
+    $ ./run.lua ch-2
 
 Run the project's tests (all the samples from the task descriptions plus some others):
 

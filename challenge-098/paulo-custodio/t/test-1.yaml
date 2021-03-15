@@ -1,0 +1,38 @@
+- setup:    >
+            path('input1.txt')->spew('1234567890');
+            path('input2.txt')->spew('abcdefghij');
+
+  cleanup:
+  args:     >
+            input1.txt 4
+            input1.txt 4
+            input1.txt 4
+
+  input:
+  output:   |
+            1234
+            5678
+            90
+
+- setup:
+  cleanup:  unlink(qw( input1.txt input2.txt ));
+  args:     >
+            input1.txt 3
+            input2.txt 3
+            input1.txt 3
+            input2.txt 3
+            input1.txt 3
+            input2.txt 3
+            input1.txt 3
+            input2.txt 3
+
+  input:
+  output:   |
+            123
+            abc
+            456
+            def
+            789
+            ghi
+            0
+            j

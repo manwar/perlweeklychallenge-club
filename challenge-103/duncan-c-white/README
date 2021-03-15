@@ -1,0 +1,54 @@
+Task 1: "Rare Numbers
+
+You are given a positive integer $N.
+
+Write a script to generate all Rare numbers of size $N if exists. Please
+read http://www.shyamsundergupta.com/rare.htm for more information about it.
+
+Examples
+
+(a) 2 digits: 65
+(b) 6 digits: 621770
+(c) 9 digits: 281089082
+"
+
+My notes: ok, interesting question.  In summary: R (a +ve no) is a Rare No
+iff R + reverse(R) and R - reverse(R) are both perfect squares.
+So: generate and test time.
+
+SEE ALSO OptimizingTask1 for an account of a series of profiling-driven
+optimizations that I made to speed up finding rare numbers.  Overall, my
+fastest version ran approx 18 times faster than the original.
+
+
+
+Task 2: "Hash-counting String
+
+You are given a positive integer $N.
+
+Write a script to produce Hash-counting string of that length.
+
+The definition of a hash-counting string is as follows:
+
+- the string consists only of digits 0-9 and hashes, '#'
+
+- there are no two consecutive hashes: '##' does not appear in your string
+- the last character is a hash
+- the number immediately preceding each hash (if it exists) is the position
+  of that hash in the string, with the position being counted up from 1
+
+It can be shown that for every positive integer N there is exactly one
+such length-N string.
+
+Examples:
+
+	(a) "#" is the counting string of length 1
+	(b) "2#" is the counting string of length 2
+	(c) "#3#" is the string of length 3
+	(d) "#3#5#7#10#" is the string of length 10
+	(e) "2#4#6#8#11#14#" is the string of length 14
+"
+
+My notes: ok, weird.  Can we directly generate the single
+hash-counting-string of length N?  I think we can..  Turns out to be easy.
+

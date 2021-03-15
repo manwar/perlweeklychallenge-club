@@ -2,7 +2,7 @@
 # Perl weekly challenge 092
 # Task 2: Insert interval.
 # Make a sorted list of non-overlapping intervals by adding or merging new intervals.
-# See https:/wlmb.github.io/2020/12/22/PWC92/#task-2-insert-interval
+# See https://wlmb.github.io/2020/12/22/PWC92/#task-2-insert-interval
 use warnings;
 use strict;
 use v5.10;

@@ -1,0 +1,39 @@
+#+SETUPFILE: ~/.emacs.d/org-templates/level-2.org
+#+HTML_LINK_UP: ../index.html
+#+OPTIONS: toc:2
+#+EXPORT_FILE_NAME: index
+#+DATE: 2021-02-02
+#+TITLE: Challenge 098
+
+* Task 1 - Read N-characters
+You are given file =$FILE=.
+
+Create subroutine =readN($FILE, $number)= returns the first n-characters
+and moves the pointer to the =(n+1)th= character.
+** Raku
+- Program: [[file:raku/ch-1.raku]]
+
+=readN= is defined as such:
+#+BEGIN_SRC raku
+sub readN (
+    IO $file, Int $chars --> Str
+) {
+    ...
+}
+#+END_SRC
+
+The pointer index is stored in a state array (=%pointers=). It's stores
+the pointer separately for each file. It's initialized with 0.
+#+BEGIN_SRC raku
+# %pointers stores the pointer index.
+state Int %pointers;
+%pointers{$file} = 0 without %pointers{$file};
+#+END_SRC
+
+The pointer is updated & required string is returned.
+#+BEGIN_SRC raku
+with %pointers{$file} -> $idx {
+    %pointers{$file} += $chars;
+    return $file.slurp.substr($idx, $chars);
+}
+#+END_SRC

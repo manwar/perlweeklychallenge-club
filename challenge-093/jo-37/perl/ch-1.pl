@@ -1,10 +1,10 @@
-#!/usr/bin/perl
+#!/usr/bin/perl -s
 
 use v5.16;
 use Math::Utils qw(gcd flipsign);
 use List::Util qw(none first);
 use List::MoreUtils 'pairwise';
-use Data::Dump 'pp';
+use Data::Dump qw(dd pp);
 use Carp;
 use Test2::V0;
 use experimental qw(signatures postderef);
@@ -20,8 +20,41 @@ use experimental qw(signatures postderef);
 # representation of points.  This implementation is independent of the
 # vector space's dimension in use.  Any dimension > 0 may be used.
 
-$::selftest = 0;
-$::verbose = 1;
+our ($selftest, $tests, $examples, $verbose);
+
+run_tests() if $selftest || $tests || $examples; # does not return
+
+say(<<EOS), exit unless @ARGV;
+usage: $0 [-examples] [-tests] [-selftest] [-verbose] [point ...]
+
+-examples
+   run the examples from the challenge
+ 
+-tests
+   run some tests
+
+-selftest
+   run some self-tests
+
+-verbose
+   enable trace output
+
+point ...
+   coordinates of points in the form "x,y,..."
+
+EOS
+
+# convert @ARGV to point list
+my @points = get_points(@ARGV);
+say 'points: ', pp @points if $verbose;
+
+# Process input data
+say scalar max_points_in_line(@points);
+
+# convert points given as x,y,... to a list of array references
+sub get_points {
+    map {[split ',']} @_
+}
 
 # Get the "canonical direction" between two integral points:
 # - nonzero components have no common divisor > 1
@@ -88,58 +121,70 @@ sub max_points_in_line {
                 @points_in_line = $dirs{$dir}->@*;
 
                 say "max at ", pp($p), " in direction ($dir): ",
-                     pp @points_in_line if $::verbose;
+                     pp @points_in_line if $verbose;
             }
         }
     }
-    say 'points in line: ', pp @points_in_line if $::verbose;
+    say 'points in line: ', pp @points_in_line if $verbose;
 
     @points_in_line;
 }
 
-### main ###
+sub run_tests {
+    SKIP: {
+        skip "self test", 5 unless $selftest;
 
-SKIP: {
-    skip "self test", 5 unless $::selftest;
+        is canon_dir([1, 2], [19, 14]), '3,2', 'normalize';
+        is canon_dir([19, 14], [1, 2]), '3,2', 'switch orientation';
+        is canon_dir([1, 3], [1, -7]), '0,1', 'parallel to y';
+        is canon_dir([3, 11], [-2, 11]), '1,0', 'parallel to x';
+        like dies {canon_dir([1, 1], [1, 1])}, qr/identical/, 'same point';
+    }
 
-    is canon_dir([1, 2], [19, 14]), '3,2', 'normalize';
-    is canon_dir([19, 14], [1, 2]), '3,2', 'switch orientation';
-    is canon_dir([1, 3], [1, -7]), '0,1', 'parallel to y';
-    is canon_dir([3, 11], [-2, 11]), '1,0', 'parallel to x';
-    like dies {canon_dir([1, 1], [1, 1])}, qr/identical/, 'same point';
+    SKIP: {
+        skip "examples", 2 unless $examples;
+        # The result in scalar context gives the number of points as requested.
+        is scalar(max_points_in_line [1,1], [2,2], [3,3]),
+            3, 'Example 1';
+        is scalar(max_points_in_line [1,1], [2,2], [3,1], [1,3], [5,3]),
+            3, 'Example 2';
+    }
+
+    SKIP: {
+        skip "tests" unless $tests;
+        is [max_points_in_line [0, 1], [0, 2], [0, 3], [0, 4], [1, 0],
+            [1, 1], [1, 2]],
+            [[0, 1], [0, 2], [0, 3], [0, 4]], 'parallel to y';
+
+        is [max_points_in_line [0, 1], [0, 2], [0, 3], [0, 4], [1, 0],
+            [1, 1], [1, 2], [2, 0], [3, 0], [4, 0], [5, 0]],
+            [[1, 0], [2, 0], [3, 0], [4, 0], [5, 0]], 'parallel to x';
+
+        is scalar(max_points_in_line [5, 3], [8, 8], [14, 18], [23, 33],
+            [-7, -17]),
+            5, 'all lined up';
+
+        is [max_points_in_line [1, 1], [2, 2]], [[1, 1], [2, 2]],
+            'two points';
+        is [max_points_in_line [1, 1]], [[1, 1]], 'single point';
+        is [max_points_in_line], [], 'no point';
+
+        # Create a parabola.
+        my @parabola = map [$_, $_ * ($_ - 1) / 2], 0 .. 10;
+        say 'parabola: ', pp @parabola if $verbose;
+        is scalar(max_points_in_line @parabola), 2,
+            'no more than two points in line on a parabola';
+
+        # 3-dimensional example
+        my @threedim = ([0, 0, 0], [0, 0, 2], [0, 2, 0], [2, 0, 2],
+            [1, 1, 1]);
+        is scalar(max_points_in_line @threedim), 3, 'points in 3d';
+
+        # Degenerated 1-d example
+        is scalar(max_points_in_line [2], [3], [5]), 3, 'points in 1d';
+    }
+
+    done_testing;
+
+    exit;
 }
-
-# The result in scalar context gives the number of points as requested.
-is scalar(max_points_in_line [1,1], [2,2], [3,3]), 3,
-    'Example 1';
-is scalar(max_points_in_line [1,1], [2,2], [3,1], [1,3], [5,3]), 3,
-    'Example 2';
-
-is [max_points_in_line [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 1], [1, 2]],
-    [[0, 1], [0, 2], [0, 3], [0, 4]], 'parallel to y';
-
-is [max_points_in_line [0, 1], [0, 2], [0, 3], [0, 4], [1, 0], [1, 1], [1, 2],
-    [2, 0], [3, 0], [4, 0], [5, 0]],
-    [[1, 0], [2, 0], [3, 0], [4, 0], [5, 0]], 'parallel to x';
-
-is scalar(max_points_in_line [5, 3], [8, 8], [14, 18], [23, 33], [-7, -17]),
-    5, 'all lined up';
-
-is [max_points_in_line [1, 1], [2, 2]], [[1, 1], [2, 2]], 'two points';
-is [max_points_in_line [1, 1]], [[1, 1]], 'single point';
-is [max_points_in_line], [], 'no point';
-
-# Create a parabola.
-my @parabola = map [$_, $_ * ($_ - 1) / 2], 0 .. 10;
-say 'parabola: ', pp @parabola if $::verbose;
-is scalar(max_points_in_line @parabola), 2,
-    'no more than two points in line on a parabola';
-
-# 3-dimensional example
-my @threedim = ([0, 0, 0], [0, 0, 2], [0, 2, 0], [2, 0, 2], [1, 1, 1]);
-is scalar(max_points_in_line @threedim), 3, 'points in 3d';
-
-# Degenerated 1-d example
-is scalar(max_points_in_line [2], [3], [5]), 3, 'points in 1d';
-
-done_testing;

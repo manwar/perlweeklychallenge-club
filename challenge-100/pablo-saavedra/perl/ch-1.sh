@@ -1,0 +1,1 @@
+(($h, $m) = ($ARGV[0] =~  /(\d+?):(\d+)/)) ? $' =~ /pm/ ? printf "%02d:%02d", $h + 12 , $m : ($' !~ /am/ ? ($h >= 12 ? printf "%02d:%02d pm", $h - 12 , $m : printf "%02d:%02d am", $h, $m) : printf "%02d:%02d pm", $h, $m) : print ":(";

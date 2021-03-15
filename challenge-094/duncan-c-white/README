@@ -1,72 +1,54 @@
-Task 1: "Max Points
+Task 1: "Group Anagrams
 
-You are given set of co-ordinates @N.
+You are given an array of strings @S.
 
-Write a script to count maximum points on a straight line when given co-ordinates plotted on 2-d plane.
+Write a script to group sets of Anagrams (containing the same letters), the order of the anagram-sets doesn't matter.
 
-Example 1:
-
-	|
-	|     x
-	|   x
-	| x
-	+ _ _ _ _
-
-	Input: (1,1), (2,2), (3,3)
-	Output: 3
-
-Example 2:
-
-	|
-	|
-	| x       x
-	|   x
-	| x   x
-	+ _ _ _ _ _
-
-	Input: (1,1), (2,2), (3,1), (1,3), (5,3)
-	Output: 3
-"
-
-My notes: hmm.. I can't see an obvious way to do this cleanly.  Some thought needed.
-Perhaps try every pair of points, make a line, then check all remaining points to
-see if they're on that same line?  Sounds like quite a lot of work.  Also, how does
-one element of @N store an (X,Y) point?
-
-
-Task 2: "Sum Path
-
-You are given binary tree containing numbers 0-9 only.
-
-Write a script to sum all possible paths from root to leaf.
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
 
 Example 1:
 
-	Input:
-	     1
-	    /
-	   2
-	  / \
-	 3   4
-
-	Output: 13
-	as sum two paths (1->2->3) and (1->2->4)
+    Input: ("opt", "bat", "saw", "tab", "pot", "top", "was")
+    Output: [ ("bat", "tab"),
+              ("saw", "was"),
+              ("top", "pot", "opt") ]
 
 Example 2:
 
-	Input:
-	     1
-	    / \
-	   2   3
-	  /   / \
-	 4   5   6
-
-	Output: 26
-	as sum three paths (1->2->4), (1->3->5) and (1->3->6)
+    Input: ("x")
+    Output: [ ("x") ]
 "
 
-My notes: interesting.  No notes on how to represent binary tree, or how
-to input it from the command line, but I think we did this in an earlier task.
-Oh yes, challenge 56 was also about path summing over binary trees, but that time
-we were looking for a specific path sum, whereas now we're summing all the path sums..
-so let's reuse most of that mechanism.
+My notes: yippee!  Good old "Programming Pearls" by Jon Bentley tackled a very similar problem, using SIGNATURES (the sorted bag of letters
+contained in a word) - all anagrams with the same signature form part of the same anagram group.  Ideal data structure time:
+
+"if only we could have a data structure mapping from a signature to a list of all the words with that signature".
+
+Ok, let's build that then: a HoA.
+
+
+Task 2: "Binary Tree to Linked List
+
+You are given a binary tree.
+
+Write a script to represent the given binary tree as an object and flatten it to a linked list object. Finally print the linked list object.
+
+Example:
+
+    Input:
+
+        1
+       / \
+      2   3
+     / \
+    4   5
+       / \
+      6   7
+
+    Output:
+
+        1 -> 2 -> 4 -> 5 -> 6 -> 7 -> 3
+"
+
+My notes: again with the binary trees - no notes on representation, so I'll reuse the one I've used before.
+I think the "flatten to a linked list object" means "perform a pre-order traversal producing a list".

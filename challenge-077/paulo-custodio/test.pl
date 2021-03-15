@@ -28,20 +28,20 @@ is capture("perl perl/ch-1.pl 100"), <<END;
 END
 
 is capture("perl perl/ch-2.pl ".
-				"OOX ".
-				"XOO ".
-				"XOO "), "1\n";
+                "OOX ".
+                "XOO ".
+                "XOO "), "1\n";
 is capture("perl perl/ch-2.pl ".
-				"OOXO ".
-				"XOOO ".
-				"XOOX ".
-				"OXOO "), "2\n";
+                "OOXO ".
+                "XOOO ".
+                "XOOX ".
+                "OXOO "), "2\n";
 
 done_testing;
 
 sub capture {
-	my($cmd) = @_;
-	my $out = `$cmd`;
-	$out =~ s/[ \t\v\f\r]*\n/\n/g;
-	return $out;
+    my($cmd) = @_;
+    my $out = `$cmd`;
+    $out =~ s/[ \t\v\f\r]*\n/\n/g;
+    return $out;
 }

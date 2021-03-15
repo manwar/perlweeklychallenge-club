@@ -1,18 +1,6 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
       "min" : 0,
@@ -22,42 +10,54 @@
    },
    "series" : [
       {
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "rotation" : -90,
-            "enabled" : "true",
-            "y" : 10
-         },
          "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "align" : "right",
+            "color" : "#FFFFFF"
+         },
          "data" : [
             [
                "Blog",
-               1232
+               1381
             ],
             [
                "Perl",
-               4282
+               4829
             ],
             [
                "Raku",
-               2828
+               3094
             ]
          ]
       }
    ],
+   "subtitle" : {
+      "text" : "Last updated at 2021-03-08 15:04:53 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
+   },
    "legend" : {
       "enabled" : "false"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-01-05 07:12:28 GMT"
+   "chart" : {
+      "type" : "column"
    }
 }

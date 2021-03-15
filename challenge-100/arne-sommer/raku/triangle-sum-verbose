@@ -1,0 +1,61 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Str $tree = "1 | 2 4 | 6 4 9 | 5 1 7 2", :v(:$verbose), :c(:$colour), :h(:$html-colour));
+
+class TrianglePath
+{
+  has Int $.sum;
+  has     @.path;
+}
+
+constant ansi-blue  = "\e[44m";
+constant ansi-green = "\e[42m";
+constant ansi-red   = "\e[101m";
+constant ansi-stop  = "\e[0m";
+
+constant html-blue  = '<span class="text-light bg-primary">';
+constant html-green = '<span class="text-light bg-success">';
+constant html-red   = '<span class="text-light bg-danger">';
+constant html-stop  = '</span>';
+
+my @tree   = $tree.split("|")>>.words;
+my $width  = $tree.split("|")>>.words>>.chars>>.max.max;
+my $height = @tree.elems;
+
+my @solutions;
+
+traverse(0, 0, 0, ());
+
+sub traverse($row, $col, $sum is copy, @path is copy)
+{
+  @path.push: $col;
+  $sum += @tree[$row][$col];
+  
+  if @tree[$row+1]
+  {
+    traverse($row+1, $col,   $sum, @path);
+    traverse($row+1, $col+1, $sum, @path);
+  }
+  else
+  {
+    say ": Sum: $sum. Path (as indices on the rows): { @path.raku }" if $verbose;
+    @solutions.push: TrianglePath.new(sum => $sum, path => @path);
+  }
+}
+
+my $first = @solutions.sort({$^a.sum <=> $^b.sum }).first;
+
+if $colour | $html-colour
+{
+  my $start = $html-colour ?? html-green !! ansi-green;
+  my $stop  = $html-colour ?? html-stop  !! ansi-stop;
+
+  for ^@tree.elems -> $row
+  {
+    say ": "
+      ~ (" " x $width * ($height - $row -1))
+      ~ (^@tree[$row].elems).map({ $_ eq $first.path[$row] ?? $start ~ @tree[$row][$_].fmt("%{$width}d") ~ $stop !! (@tree[$row][$_].fmt("%{$width}d")) }).join(" " x $width); 
+  }
+}
+
+say $first.sum;
