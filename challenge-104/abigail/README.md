@@ -26,6 +26,7 @@ even handle a single if statement. A single print statement is enough.
 * [Befunge-93](befunge-93/ch-1.bf93)
 * [bc](bc/ch-1.bc)
 * [C](c/ch-1.c)
+* [Forth](forth/ch-1.fs)
 * [Fortran](fortran/ch-1.f90)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
