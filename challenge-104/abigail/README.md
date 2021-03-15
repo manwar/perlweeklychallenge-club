@@ -64,5 +64,6 @@ The game as given is a win for the second player, who will win on
 the third move.
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
 
 ### Blog
