@@ -32,11 +32,13 @@ subtest 'fusc' => sub {
 done_testing();
 
 ## Print the requested string....
-say join ' ',fusc_seq(50);
+say join ' ',map { fusc($_) } 1..50;
+say join ' ',map { $_ } fusc_seq(50);
+say join ' ',fusc_seq_cache(50);
 
 sub fusc {
   my $n = shift;
-  (fusc_seq($n))[$n-1];
+  return $n ? (fusc_seq($n))[$n-1] : '';
 }
 
 sub fusc_seq {
