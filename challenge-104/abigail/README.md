@@ -20,6 +20,9 @@ fixed number of numbers, we don't need do any calculations, or
 even handle a single if statement. A single print statement is enough.
 
 ### Solutions
+* [AWK](awk/ch-1.awk)
+* [Bash](bash/ch-1.sh)
+* [C](c/ch-1.c)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
