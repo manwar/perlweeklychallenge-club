@@ -20,6 +20,7 @@ our %LANG = (
     basic   => 'bas',
     c       => 'c',
     cpp     => 'cpp',
+    d       => 'd',
     forth   => 'fs',
     lua     => 'lua',
     perl    => 'pl',
@@ -124,6 +125,10 @@ sub build {
             run("g++ $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
+        if (/^d$/) {
+            run("cd d; dmd $prog_base") if (!-f $exe || -M $exe > -M $prog);
+            return $exe;
+        }
         if (/forth/) {
             return "gforth $prog";
         }
@@ -148,6 +153,7 @@ sub run {
 sub value_or_eval {
     my($str) = @_;
     $str //= "";
+    $str =~ s/^\|//gm;
     my $value = ($str =~ /^eval\b/) ? eval($str) : $str;
     $@ and die "eval '$str' failed: $@";
     return $value;

@@ -2,17 +2,17 @@
 --
 -- TASK #2 › Origin-containing Triangle
 -- Submitted by: Stuart Little
--- You are given three points in the plane, as a list of six co-ordinates: 
+-- You are given three points in the plane, as a list of six co-ordinates:
 -- A=(x1,y1), B=(x2,y2) and C=(x3,y3).
--- 
--- Write a script to find out if the triangle formed by the given three 
+--
+-- Write a script to find out if the triangle formed by the given three
 -- co-ordinates contain origin (0,0).
--- 
+--
 -- Print 1 if found otherwise 0.
 
 with Ada.Command_Line;
 with Ada.Strings.Fixed; use Ada.Strings.Fixed;
-with Ada.Text_IO; use Ada.Text_IO; 
+with Ada.Text_IO; use Ada.Text_IO;
 
 procedure ch_2 is
     -- command line arguments
@@ -24,21 +24,21 @@ procedure ch_2 is
     type point is record
         x, y : Float;
     end record;
-    
+
     P : array (1 .. 3) of point;
     P0 : point;
 
     function point_in_triangle(P0, P1, P2, P3 : Point) return Integer is
-    
+
         function sign(P1, P2, P3 : Point) return Float is
         begin
-            return (P1.x - P3.x) * (P2.y - P3.y) 
+            return (P1.x - P3.x) * (P2.y - P3.y)
                  - (P2.x - P3.x) * (P1.y - P3.y);
         end sign;
-        
+
         d : array(1..3) of Float;
         has_neg, has_pos : Boolean;
-        
+
     begin
         d(1) := sign(P0, P1, P2);
         d(2) := sign(P0, P2, P3);
@@ -53,7 +53,7 @@ procedure ch_2 is
             return 0;
         end if;
     end point_in_triangle;
-    
+
 begin
     -- read points
     for i in 1 .. 3 loop

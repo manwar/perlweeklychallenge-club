@@ -1,16 +1,16 @@
 #!/usr/bin/perl
 
 # Challenge 101
-# 
+#
 # TASK #1 › Pack a Spiral
 # Submitted by: Stuart Little
-# 
+#
 # You are given an array @A of items (integers say, but they can be anything).
-# 
-# Your task is to pack that array into an MxN matrix spirally counterclockwise, 
+#
+# Your task is to pack that array into an MxN matrix spirally counterclockwise,
 # as tightly as possible.
-# 
-# ‘Tightly’ means the absolute value |M-N| of the difference has to be as small 
+#
+# ‘Tightly’ means the absolute value |M-N| of the difference has to be as small
 # as possible.
 
 use strict;
@@ -44,13 +44,13 @@ sub smallest_rect {
 
 sub spiral {
     my($m, $n, @list) = @_;
-    
+
     # find max width of elements
     my $width = 1;
     for (@list) {
         $width = length($_) if length($_) > $width;
     }
-    
+
     # build rectangle
     my @rect;
     my $r = $m; my $c = 1;
@@ -80,6 +80,6 @@ sub spiral {
         }
         $r--; $c++;
     }
-    
+
     return @rect;
 }

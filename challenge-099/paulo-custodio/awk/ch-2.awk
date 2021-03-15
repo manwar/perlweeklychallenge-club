@@ -1,7 +1,7 @@
 #!/usr/bin/gawk
 
 # Challenge 099
-# 
+#
 # TASK #2 > Unique Subsequence
 # Submitted by: Mohammad S Anwar
 # You are given two strings $S and $T.

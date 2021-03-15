@@ -55,7 +55,7 @@ procedure ch_1 is
         SB.Trim(out_text, Ada.Strings.Both);
         return To_String(out_text);
     end reverse_string;
-        
+
 begin
     Put_Line(reverse_string(join_args));
 end ch_1;

@@ -1,23 +1,23 @@
 #!/usr/bin/env python
 
 # Challenge 101
-# 
+#
 # TASK #1 > Pack a Spiral
 # Submitted by: Stuart Little
-# 
+#
 # You are given an array @A of items (integers say, but they can be anything).
-# 
-# Your task is to pack that array into an MxN matrix spirally counterclockwise, 
+#
+# Your task is to pack that array into an MxN matrix spirally counterclockwise,
 # as tightly as possible.
-# 
-# 'Tightly' means the absolute value |M-N| of the difference has to be as small 
+#
+# 'Tightly' means the absolute value |M-N| of the difference has to be as small
 # as possible.
 
 import sys
 import math
 
 def spiral(numbers):
-    
+
     # find max width of elements, convert to int
     def max_width(numbers):
         num_width = 1
@@ -46,7 +46,7 @@ def spiral(numbers):
     # build spiral rectangle
     num_width = max_width(numbers)
     m, n = build_rect(numbers)
-    
+
     r, c = m, 1
     i = 0
     while (i < len(numbers)):
@@ -57,7 +57,7 @@ def spiral(numbers):
             rect[r][c] = ("{:"+str(num_width+1)+"d}").format(numbers[i])
             i += 1
             c += 1
-        c -= 1 
+        c -= 1
         r -= 1
         # go North
         while (r >= 1):
@@ -66,7 +66,7 @@ def spiral(numbers):
             rect[r][c] = ("{:"+str(num_width+1)+"d}").format(numbers[i])
             i += 1
             r -= 1
-        r += 1 
+        r += 1
         c -= 1
         # go West
         while (c >= 1):
@@ -75,7 +75,7 @@ def spiral(numbers):
             rect[r][c] = ("{:"+str(num_width+1)+"d}").format(numbers[i])
             i += 1
             c -= 1
-        c += 1 
+        c += 1
         r += 1
         # go South
         while (r <= m):
@@ -84,7 +84,7 @@ def spiral(numbers):
             rect[r][c] = ("{:"+str(num_width+1)+"d}").format(numbers[i])
             i += 1
             r += 1
-        r -= 1 
+        r -= 1
         c += 1
 
     for r in range (1, m+1):

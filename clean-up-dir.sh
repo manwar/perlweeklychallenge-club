@@ -17,6 +17,7 @@ find . -name "*.jl" -delete
 find . -name "*.kt" -delete
 find . -name "*.lisp" -delete
 find . -name "*.pas" -delete
+find . -name "*.csv" -delete
 find . -name "*.bf93" -delete
 find . -name "*.bf" -delete
 find . -name "*.chef" -delete
