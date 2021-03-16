@@ -39,6 +39,7 @@ even handle a single if statement. A single print statement is enough.
 * [Tcl](tcl/ch-1.tcl)
 * [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
+* [Scheme](scheme/ch-1.scm)
 * [SQL](sql/ch-1.sql)
 
 ### Blog
