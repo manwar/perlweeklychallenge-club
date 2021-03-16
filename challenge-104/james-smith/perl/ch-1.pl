@@ -24,23 +24,27 @@ my @K = (0, 1, 1, 2, 1, 3, 2, 3, 1, 4, 3, 5, 2, 5, 3, 4, 1, 5,
          19, 8, 21, 13, 18, 5, 17, 12, 19);
 
 subtest 'fusc' => sub {
-  is( fusc($_),               $K[$_]             ) foreach 0..@K-1;
+  is( fusc($_),
+      $K[$_] )                   foreach 0..@K-1;
   done_testing();
 };
 
 subtest 'fusc_cache' => sub {
-  is( fusc($_),               $K[$_]             ) foreach 0..@K-1;
+  is( fusc($_),
+      $K[$_] )                   foreach 0..@K-1;
   done_testing();
 };
 
 ## Test all 3 subroutines..
 subtest 'fusc_seq' => sub {
-  is( join(' ',fusc_seq($_)), join ' ',@K[0..$_-1] ) foreach 0..@K-1;
+  is( join(' ',fusc_seq($_)),
+      join ' ',@K[0..$_-1] )     foreach 0..@K-1;
   done_testing();
 };
 
 subtest 'fusc_seq_cache' => sub {
-  is( join(' ',fusc_seq_cache($_)), join ' ',@K[0..$_-1] ) foreach reverse 0..@K-1;
+  is( join(' ',fusc_seq_cache($_)),
+      join ' ',@K[0..$_-1] )     foreach reverse 0..@K-1;
   done_testing();
 };
 
@@ -55,19 +59,19 @@ say join ' ',      fusc_seq_cache(     50);
 ## Recursive solution....
 
 sub fusc {
-  my $n = int shift; ## We int here in case parameter passed in
-                     ## isn't an integer (and saves us "int"ing
-                     ## in the function calls themselves)
-                     ## Both look the floor $n/2 value, but when
-                     ## odd also looks at ceil $n/2.
-  return $n<2 ? $n : fusc($n/2) + ( $n%2 ? fusc($n/2+1) : 0 );
+  my $n = shift; ## Both look the floor $n/2 value, but when
+                 ## odd also looks at ceil $n/2.
+                 ## We use bit shift operators to do the
+                 ## divide by 2 so it automatically does the
+                 ## floor (and ceiling by adding 1)
+  return $n<2 ? $n : fusc($n>>1) + ( $n&1 ? fusc(1+$n>>1) : 0 );
 }
 
 sub fusc_cache {     ## Same method but with cache
-  my $n = int shift;
+  my $n = shift;
   state @cache;
   return $cache[$n] ||= $n<2 ? $n :
-    fusc_cache($n/2) + ( $n%2 ? fusc_cache($n/2+1) : 0 );
+    fusc_cache($n>>1) + ( $n&1 ? fusc_cache(1+$n>>1) : 0 );
 }
 
 ## Sequence non recursive version!
@@ -80,20 +84,22 @@ sub fusc_seq {
                      ## defined as we are pushing two at a time...
 
   ## We can simplify the code by pushing two entries onto the list each
-  ## time...
+  ## time..., saves us doing the divide by 2 when we don't need to!
   push @seq, $seq[$_]+$seq[$_+1], $seq[$_+1] foreach 1..$n/2-1;
 
   ## and if odd we just remove the last one we added...
-  pop @seq unless $n%2;
+  pop @seq unless $n&1;
   return @seq;
 }
 
-## Added ac caching version - this time we remember the list using a
+## Added a caching version - this time we remember the list using a
 ## state variable - and use array slice operator to return the part
 ## required (if cache bigger than requested sequence)
 sub fusc_seq_cache {
   my $n = shift;
   state  @seq = (0,1,1);
+  ## Expand the cache if we need to get sequence for larger n....
+  ## { note we start from @seq/2 in the loop }
   push   @seq, $seq[$_]+$seq[$_+1], $seq[$_+1] foreach @seq/2..$n/2-1;
   return @seq[0..$n-1];
 }
