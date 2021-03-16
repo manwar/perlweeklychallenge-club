@@ -18,7 +18,7 @@ loop
     {
         if $player eq "Machine" 
         { 
-            $heap mod 4 || 1 
+            $heap mod 4 || (1..min(3, $heap)).pick; 
         }
         else 
         {
