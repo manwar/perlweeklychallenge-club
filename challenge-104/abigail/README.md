@@ -20,7 +20,9 @@ fixed number of numbers, we don't need do any calculations, or
 even handle a single if statement. A single print statement is enough.
 
 ### Solutions
-* [AWK](awk/ch-1.awk)
+* AWK
+    * [Simple](awk/ch-1.awk)
+    * [Calculated](awk/ch-1a.awk)
 * [Bash](bash/ch-1.sh)
 * [Basic](basic/ch-1.bas)
 * [Befunge-93](befunge-93/ch-1.bf93)
