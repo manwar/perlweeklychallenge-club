@@ -3,8 +3,7 @@
 # with help from
 # https://www.futurelearn.com/info/courses/recreational-math/0/steps/43529
 
-my @players = (<Human Machine>, <Machine Human>)[<0 1>.pick];
-   @players = flat @players xx 6;
+my @players = (<Human Machine> xx 6).flat.Array.rotate(<0 1>.pick);
 
 say "{@players.head} chooses first\n";
 
