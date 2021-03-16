@@ -24,12 +24,12 @@ loop
     $heap -= $tokens;
 }
 
-multi choose($str where * eq "Machine")
+multi choose(\player where * eq "Machine")
 {
     $heap mod 4 || 1;
 }
 
-multi choose($str where * eq "Human")
+multi choose(\player where * eq "Human")
 {
     my $tokens = 0;
                                 
