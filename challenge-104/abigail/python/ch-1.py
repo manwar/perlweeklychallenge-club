@@ -5,7 +5,7 @@
 #
 
 #
-# Run as python ch-1.py
+# Run as: python ch-1.py
 #
 
 print ("0 1 1 2 1 3 2 3 1 4 3 5 2 5 3 4 1 5 4 7 3 8 5 7 2 7 " +
