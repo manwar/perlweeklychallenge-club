@@ -44,6 +44,7 @@ the solution.
 * Perl
     * [Simple](perl/ch-1.pl)
     * [Calculated](perl/ch-1a.pl)
+* [PHP](php/ch-1.php)
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
