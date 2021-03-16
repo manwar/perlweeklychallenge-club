@@ -80,6 +80,8 @@ known as the subtraction game. With the given parameters and perfect
 play, the second player always wins on the third move.
 
 ### Solutions
+* [AWK](awk/ch-2.awk)
+* [Bash](bash/ch-2.sh)
 * [C](c/ch-2.c)
 * [Perl](perl/ch-2.pl)
 
