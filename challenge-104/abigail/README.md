@@ -36,11 +36,11 @@ even handle a single if statement. A single print statement is enough.
 * [Pascal](perl/ch-1.p)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
-* [Tcl](tcl/ch-1.tcl)
 * [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
 * [Scheme](scheme/ch-1.scm)
 * [SQL](sql/ch-1.sql)
+* [Tcl](tcl/ch-1.tcl)
 
 ### Blog
 
