@@ -48,6 +48,7 @@ the solution.
 * [PHP](php/ch-1.php)
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
+* [Rexx](rexx/ch-1.rexx)
 * [Ruby](ruby/ch-1.rb)
 * [Scheme](scheme/ch-1.scm)
 * [SQL](sql/ch-1.sql)
