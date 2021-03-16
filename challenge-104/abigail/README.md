@@ -79,6 +79,7 @@ known as the subtraction game. With the given parameters and perfect
 play, the second player always wins on the third move.
 
 ### Solutions
+* [C](c/ch-2.c)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
