@@ -14,11 +14,10 @@ int tokens   = 12;
 int max_take =  3;
 
 int main (void) {
-    int moves   = tokens / (max_take + 1);
     char * line = NULL;
     size_t cap  = 0;
 
-    for (int move = 0; move < moves;) {
+    while (tokens > 0) {
         printf ("How many tokens do you take? (%2d token%s are left) ",
                  tokens, tokens == 1 ? "" : "s");
 
@@ -29,7 +28,6 @@ int main (void) {
                 printf ("Computer takes %d token%s\n",
                          takes, takes == 1 ? "" : "s");
                 tokens -= (max_take + 1);
-                move ++;
             }
         }
     }

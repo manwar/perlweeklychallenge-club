@@ -50,7 +50,7 @@ $| = 1;
 
 my $tokens   = 12;
 my $max_take =  3;
-for (1 .. ($tokens / ($max_take + 1))) {
+while ($tokens > 0) {
     printf "How many tokens do you take? (%2d token%s are left) " =>
                     $tokens, $tokens == 1 ? "" : "s";
     chomp (my $t = <>);
