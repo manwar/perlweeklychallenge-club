@@ -3,9 +3,10 @@
 # with help from
 # https://www.futurelearn.com/info/courses/recreational-math/0/steps/43529
 
-my $players = (<Human Machine>, <Machine Human>)[<0 1>.pick];
+my @players = (<Human Machine>, <Machine Human>)[<0 1>.pick];
+   @players = flat @players xx 6;
 
-say "{$players.head} chooses first\n";
+say "{@players.head} chooses first\n";
 
 my $heap = 12;
 
@@ -15,11 +16,11 @@ loop
 
     say "heap = $heap\n";
 
-    my $i = $++ mod 2;
+    my $player = shift @players;
 
-    my $tokens = choose($players[$i]);
+    my $tokens = choose($player);
 
-    say "$players[$i] chose $tokens\n";
+    say "$player chose $tokens\n";
 
     $heap -= $tokens;
 }
