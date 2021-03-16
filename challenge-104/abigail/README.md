@@ -27,6 +27,7 @@ even handle a single if statement. A single print statement is enough.
 * [bc](bc/ch-1.bc)
 * [C](c/ch-1.c)
 * [Cobol](cobol/ch-1.cb)
+* [C-shell](csh/ch-1.csh)
 * [Forth](forth/ch-1.fs)
 * [Fortran](fortran/ch-1.f90)
 * [Go](go/ch-1.go)
