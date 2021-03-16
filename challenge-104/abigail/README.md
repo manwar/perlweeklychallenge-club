@@ -37,6 +37,7 @@ even handle a single if statement. A single print statement is enough.
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 * [Tcl](tcl/ch-1.tcl)
+* [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
 * [SQL](sql/ch-1.sql)
 
