@@ -18,6 +18,9 @@ when n is odd: fusc(n) = fusc((n-1)/2) + fusc((n+1)/2)
 This challenge is beyond simple. Since we're asked to generate a
 fixed number of numbers, we don't need do any calculations, or
 even handle a single if statement. A single print statement is enough.
+This makes it easy to create solutions in many languages. In some,
+we also have an alternative solution, where we actually calculate
+the solution.
 
 ### Solutions
 * AWK
@@ -35,6 +38,7 @@ even handle a single if statement. A single print statement is enough.
 * [Go](go/ch-1.go)
 * [Java](java/ch-1.java)
 * [Lua](lua/ch-1.lua)
+* [m4](m4/ch-1.m4)
 * [Node.js](node/ch-1.js)
 * [Pascal](perl/ch-1.p)
 * Perl
