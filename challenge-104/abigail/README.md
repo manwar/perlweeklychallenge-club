@@ -35,7 +35,9 @@ even handle a single if statement. A single print statement is enough.
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
 * [Pascal](perl/ch-1.p)
-* [Perl](perl/ch-1.pl)
+* Perl
+    * [Simple](perl/ch-1.pl)
+    * [Calculated](perl/ch-1a.pl)
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
