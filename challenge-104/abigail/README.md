@@ -83,6 +83,7 @@ play, the second player always wins on the third move.
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
 * [C](c/ch-2.c)
+* [Lua](lua/ch-2.lua)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
