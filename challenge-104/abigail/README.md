@@ -86,5 +86,6 @@ play, the second player always wins on the third move.
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
 
 ### Blog
