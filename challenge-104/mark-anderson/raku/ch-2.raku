@@ -3,7 +3,7 @@
 # with help from
 # https://www.futurelearn.com/info/courses/recreational-math/0/steps/43529
 
-my @players = (<Human Machine> xx 6).flat.Array.rotate(<0 1>.pick);
+my @players = <Human Machine>.rotate(<0 1>.pick);
 
 say "{@players.head} chooses first\n";
 
@@ -12,16 +12,12 @@ my $heap = 12;
 loop 
 {
     last unless $heap;
-
     say "heap = $heap\n";
-
-    my $player = shift @players;
-
+    my $player = @players.head;
     my $tokens = choose($player);
-
     say "$player chose $tokens\n";
-
     $heap -= $tokens;
+    @players .= rotate(1);
 }
 
 multi choose(\player where * eq "Machine")
