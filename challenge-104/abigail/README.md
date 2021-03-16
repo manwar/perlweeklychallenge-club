@@ -40,6 +40,7 @@ the solution.
 * [Lua](lua/ch-1.lua)
 * [m4](m4/ch-1.m4)
 * [Node.js](node/ch-1.js)
+* [OCaml](ocaml/ch-1.ml)
 * [Pascal](perl/ch-1.p)
 * Perl
     * [Simple](perl/ch-1.pl)
