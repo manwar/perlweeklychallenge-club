@@ -46,7 +46,7 @@ class nim
             say "heap = $.heap\n";
             my $player = @.players.head;
             my $tokens = $player.play($.heap);
-            say "{$player.name} chose $tokens\n";
+            say $player.name ~ " chose $tokens\n";
             $.heap -= $tokens;
             @.players .= rotate(1);
         }
