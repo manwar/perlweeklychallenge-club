@@ -33,8 +33,9 @@ class player
 
 class nim
 {
-    has $.heap is rw;
     has @.players;
+    has $.heap is rw;
+    has $!tokens;
 
     method play
     {
@@ -44,10 +45,9 @@ class nim
         {
             last unless $.heap;
             say "heap = $.heap\n";
-            my $player = @.players.head;
-            my $tokens = $player.play($.heap);
-            say $player.name ~ " chose $tokens\n";
-            $.heap -= $tokens;
+            $!tokens = @.players.head.play($.heap);
+            say @.players.head.name ~ " chose $!tokens\n";
+            $.heap -= $!tokens;
             @.players .= rotate(1);
         }
         
