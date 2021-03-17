@@ -30,7 +30,9 @@ the solution.
 * [Basic](basic/ch-1.bas)
 * [Befunge-93](befunge-93/ch-1.bf93)
 * [bc](bc/ch-1.bc)
-* [C](c/ch-1.c)
+* C
+    * [Simple](c/ch-1.c)
+    * [Calculated](c/ch-1a.c)
 * [Cobol](cobol/ch-1.cb)
 * [C-shell](csh/ch-1.csh)
 * [Erlang](erlang/ch-1.erl)
