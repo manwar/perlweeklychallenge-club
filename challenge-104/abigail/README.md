@@ -33,6 +33,7 @@ the solution.
 * [C](c/ch-1.c)
 * [Cobol](cobol/ch-1.cb)
 * [C-shell](csh/ch-1.csh)
+* [Erlang](erlang/ch-1.erl)
 * [Forth](forth/ch-1.fs)
 * [Fortran](fortran/ch-1.f90)
 * [Go](go/ch-1.go)
