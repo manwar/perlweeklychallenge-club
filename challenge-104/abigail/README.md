@@ -92,6 +92,7 @@ After the third move, we print that the computer has won.
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [BASIC](basic/ch-2.bas)
 * [Befunge-93](befunge/ch-2.bf93)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
