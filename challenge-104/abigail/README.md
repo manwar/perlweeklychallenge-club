@@ -104,6 +104,7 @@ After the third move, we print that the computer has won.
 * [Befunge-93](befunge/ch-2.bf93)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
+* [Pascal](pascal/ch-2.p)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
 * [Ruby](ruby/ch-2.rb)
