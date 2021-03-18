@@ -33,7 +33,7 @@ use experimental 'lexical_subs';
 # tokens, the game is a win for player 2.
 #
 # In fact, with perfect play, there are only 27 possible games -- and
-# the all have the second player win at the third move.
+# they all have the second player win at the third move.
 #
 # If the first player takes t tokens, than the second player takes 4 - t
 # tokens. Then, after the first move, 8 tokens are left; after the second
