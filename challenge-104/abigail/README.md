@@ -46,7 +46,9 @@ the solution.
     * [Simple](lua/ch-1.lua)
     * [Calculated](lua/ch-1a.lua)
 * [m4](m4/ch-1.m4)
-* [Node.js](node/ch-1.js)
+* Node.js
+    * [Simple](node/ch-1.js)
+    * [Calculated](node/ch-1a.js)
 * [OCaml](ocaml/ch-1.ml)
 * [Pascal](perl/ch-1.p)
 * Perl
