@@ -53,7 +53,9 @@ the solution.
     * [Simple](perl/ch-1.pl)
     * [Calculated](perl/ch-1a.pl)
 * [PHP](php/ch-1.php)
-* [Python](python/ch-1.py)
+* Python
+    * [Simple](python/ch-1.py)
+    * [Calculated](python/ch-1a.py)
 * [R](r/ch-1.r)
 * [Rexx](rexx/ch-1.rexx)
 * [Ruby](ruby/ch-1.rb)
