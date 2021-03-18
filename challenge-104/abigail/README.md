@@ -111,6 +111,7 @@ After the third move, we print that the computer has won.
 * [Pascal](pascal/ch-2.p)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
+* [R](r/ch-2.r)
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
