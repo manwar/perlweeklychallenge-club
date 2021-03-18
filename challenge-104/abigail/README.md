@@ -92,7 +92,7 @@ play, the second player always wins on the third move.
 In each of the three moves, we ask the player how many tokens she wants
 take, showing the current number of tokens. We keep asking the question
 until the player gives a valid answer (1, 2, or 3). The computer takes
-3, 2, or 1 takes, and we subtract 4 from the number of tokens.
+3, 2, or 1 tokens, and we subtract 4 from the number of tokens.
 
 After the third move, we print that the computer has won.
 
