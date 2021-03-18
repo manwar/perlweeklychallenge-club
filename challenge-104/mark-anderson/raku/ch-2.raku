@@ -43,15 +43,15 @@ class nim
 
         loop 
         {
-            last unless $.heap;
             say "heap = $.heap\n";
             $!tokens = @.players.head.play($.heap);
             say @.players.head.name ~ " chose $!tokens\n";
             $.heap -= $!tokens;
+            last unless $.heap;
             @.players .= rotate(1);
         }
         
-        say @.players.tail.name ~ " is the winner";
+        say @.players.head.name ~ " is the winner";
     }
 
     submethod TWEAK 
