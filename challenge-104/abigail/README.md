@@ -26,7 +26,9 @@ the solution.
 * AWK
     * [Simple](awk/ch-1.awk)
     * [Calculated](awk/ch-1a.awk)
-* [Bash](bash/ch-1.sh)
+* Bash
+    * [Simple](bash/ch-1.sh)
+    * [Calculated](bash/ch-1a.sh)
 * [Basic](basic/ch-1.bas)
 * [Befunge-93](befunge-93/ch-1.bf93)
 * [bc](bc/ch-1.bc)
