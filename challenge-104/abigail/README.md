@@ -42,7 +42,9 @@ the solution.
 * [Fortran](fortran/ch-1.f90)
 * [Go](go/ch-1.go)
 * [Java](java/ch-1.java)
-* [Lua](lua/ch-1.lua)
+* Lua
+    * [Simple](lua/ch-1.lua)
+    * [Calculated](lua/ch-1a.lua)
 * [m4](m4/ch-1.m4)
 * [Node.js](node/ch-1.js)
 * [OCaml](ocaml/ch-1.ml)
