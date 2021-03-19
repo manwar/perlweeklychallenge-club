@@ -1,26 +1,40 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 104"
    },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-03-19 04:36:37 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 104",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Alexander Karelas",
                "drilldown" : "Alexander Karelas",
+               "name" : "Alexander Karelas",
                "y" : 2
+            },
+            {
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
+               "y" : 3
             },
             {
                "drilldown" : "James Smith",
@@ -33,46 +47,46 @@
                "y" : 4
             },
             {
-               "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
                "y" : 2
             },
             {
+               "y" : 5,
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 5
+               "drilldown" : "Roger Bell_West"
             },
             {
-               "drilldown" : "Simon Proctor",
                "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
                "y" : 2
             },
             {
-               "name" : "Stuart Little",
+               "y" : 4,
                "drilldown" : "Stuart Little",
-               "y" : 4
+               "name" : "Stuart Little"
             }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 104"
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-03-19 04:32:08 GMT"
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Alexander Karelas",
+            "name" : "Alexander Karelas",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Alexander Karelas",
-            "id" : "Alexander Karelas"
+            ]
          },
          {
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -82,11 +96,24 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "James Smith",
-            "id" : "James Smith"
+            ]
          },
          {
+            "name" : "James Smith",
+            "id" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
+            "name" : "Luca Ferrari",
             "id" : "Luca Ferrari",
             "data" : [
                [
@@ -97,8 +124,7 @@
                   "Blog",
                   2
                ]
-            ],
-            "name" : "Luca Ferrari"
+            ]
          },
          {
             "data" : [
@@ -129,14 +155,14 @@
             "id" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
             "id" : "Stuart Little",
@@ -154,20 +180,13 @@
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
    }
 }
