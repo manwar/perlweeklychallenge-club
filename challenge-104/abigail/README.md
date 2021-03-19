@@ -1,137 +1,117 @@
 # Solution by Abigail
-## [Chinese Zodiac](https://perlweeklychallenge.org/blog/perl-weekly-challenge-103/#TASK1)
+## [FUSC Sequence](https://perlweeklychallenge.org/blog/perl-weekly-challenge-104/#TASK1)
 
-You are given a year `$year`.
+Write a script to generate first 50 members of FUSC Sequence. Please
+refer to [OEIS](https://oeis.org/A002487) for more information._
 
-Write a script to determine the *Chinese Zodiac* for the given year
-$year. Please check out [wikipage](https://en.wikipedia.org/wiki/Chinese_zodiac)
-for more information about it.
+The sequence defined as below:
 
-The animal cycle:
-* Rat
-* Ox
-* Tiger
-* Rabbit
-* Dragon
-* Snake
-* Horse
-* Goat
-* Monkey
-* Rooster
-* Dog
-* Pig
-
-The element cycle:
-* Wood
-* Fire
-* Earth
-* Metal
-* Water
-
-### Examples
-#### Example 1
 ~~~~
-Input: 2017
-Output: Fire Rooster
-~~~~
-
-#### Example 2
-~~~~
-Input: 1938
-Output: Earth Tiger
+fusc(0) = 0
+fusc(1) = 1
+for n > 1:
+when n is even: fusc(n) = fusc(n / 2),
+when n is odd: fusc(n) = fusc((n-1)/2) + fusc((n+1)/2)
 ~~~~
 
 ### Notes
-We will actually output a three part string; beside the animal and element
-cycles, we also output the yin/yang cycle.
-
-We will be reading years from standard input, writing results to standard
-output.
+This challenge is beyond simple. Since we're asked to generate a
+fixed number of numbers, we don't need do any calculations, or
+even handle a single if statement. A single print statement is enough.
+This makes it easy to create solutions in many languages. In some,
+we also have an alternative solution, where we actually calculate
+the solution.
 
 ### Solutions
-* [AWK](awk/ch-1.awk)
-* [Bash](bash/ch-1.sh)
+* AWK
+    * [Simple](awk/ch-1.awk)
+    * [Calculated](awk/ch-1a.awk)
+* Bash
+    * [Simple](bash/ch-1.sh)
+    * [Calculated](bash/ch-1a.sh)
+* [Basic](basic/ch-1.bas)
 * [Befunge-93](befunge-93/ch-1.bf93)
-* [C](c/ch-1.c)
-* [Lua](lua/ch-1.lua)
-* [Node.js](node/ch-1.js)
-* [Perl](perl/ch-1.pl)
-* [Python](python/ch-1.py)
-* [Ruby](ruby/ch-1.rb)
+* [bc](bc/ch-1.bc)
+* C
+    * [Simple](c/ch-1.c)
+    * [Calculated](c/ch-1a.c)
+* [Cobol](cobol/ch-1.cb)
+* [C-shell](csh/ch-1.csh)
+* [Erlang](erlang/ch-1.erl)
+* [Forth](forth/ch-1.fs)
+* [Fortran](fortran/ch-1.f90)
+* [Go](go/ch-1.go)
+* [Java](java/ch-1.java)
+* Lua
+    * [Simple](lua/ch-1.lua)
+    * [Calculated](lua/ch-1a.lua)
+* [m4](m4/ch-1.m4)
+* Node.js
+    * [Simple](node/ch-1.js)
+    * [Calculated](node/ch-1a.js)
+* [OCaml](ocaml/ch-1.ml)
+* [Pascal](perl/ch-1.p)
+* Perl
+    * [Simple](perl/ch-1.pl)
+    * [Calculated](perl/ch-1a.pl)
+* [PHP](php/ch-1.php)
+* Python
+    * [Simple](python/ch-1.py)
+    * [Calculated](python/ch-1a.py)
+* [R](r/ch-1.r)
+* [Rexx](rexx/ch-1.rexx)
+* Ruby
+    * [Simple](ruby/ch-1.rb)
+    * [Calculated](ruby/ch-1a.rb)
+* [Scheme](scheme/ch-1.scm)
+* [SQL](sql/ch-1.sql)
+* [Tcl](tcl/ch-1.tcl)
 
 ### Blog
-[Perl Weekly Challenge 103: Chinese Zodiac](https://wp.me/pcxd30-uS)
 
 
-## [What's playing?](https://perlweeklychallenge.org/blog/perl-weekly-challenge-103/#TASK2)
-Working from home, you decided that on occasion you wanted some
-background noise while working. You threw together a network streamer
-to continuously loop through the files and launched it in a tmux
-(or screen) session, giving it a directory tree of files to play.
-During the day, you connected an audio player to the stream, listening
-through the workday, closing it when done.
+## [NIM Game](https://perlweeklychallenge.org/blog/perl-weekly-challenge-104/#TASK2)
+Write a script to simulate the NIM Game.
 
-For weeks you connect to the stream daily, slowly noticing a gradual
-drift of the media. After several weeks, you take vacation. When
-you return, you are pleasantly surprised to find the streamer still
-running. Before connecting, however, if you consider the puzzle of
-determining which track is playing.
+It is played between 2 players. For the purpose of this task, let
+assume you play against the machine.
 
-After looking at a few modules to read info regarding the media, a
-quick bit of coding gave you a file list. The file list is in a
-simple CSV format, each line containing two fields: the first the
-number of milliseconds in length, the latter the media's title (this
-example is of several episodes available from the MercuryTheatre.info):
-
+There are 3 simple rules to follow:
 ~~~~
-1709363,"Les Miserables Episode 1: The Bishop (broadcast date: 1937-07-23)"
-1723781,"Les Miserables Episode 2: Javert (broadcast date: 1937-07-30)"
-1723781,"Les Miserables Episode 3: The Trial (broadcast date: 1937-08-06)"
-1678356,"Les Miserables Episode 4: Cosette (broadcast date: 1937-08-13)"
-1646043,"Les Miserables Episode 5: The Grave (broadcast date: 1937-08-20)"
-1714640,"Les Miserables Episode 6: The Barricade (broadcast date: 1937-08-27)"
-1714640,"Les Miserables Episode 7: Conclusion (broadcast date: 1937-09-03)"
+a) You have 12 tokens
+b) Each player can pick 1, 2 or 3 tokens at a time
+c) The player who picks the last token wins the game
 ~~~~
 
-For this script, you can assume to be provided the following information:
-* the value of `$^T` (`$BASETIME`) of the streamer script,
-* the value of `time()`, and
-* a CSV file containing the media to play consisting of the length in
-  milliseconds and an identifier for the media (title, filename, or other).
+### Notes
+This is *not* the well known NIM game. In the NIM game, you have multiple sets
+of tokens, and on each turn, a player picks a set, and removes any
+non-zero number of of tokens from the set. Typically, the player
+picking the last token loses.
 
-Write a program to output which file is currently playing. For
-purposes of this script, you may assume gapless playback, and format
-the output as you see fit.
+The game as given is sometimes also known as the NIM game, but it better
+known as the subtraction game. With the given parameters and perfect
+play, the second player always wins on the third move.
 
-Optional: Also display the current position in the media as a time-like value.
+In each of the three moves, we ask the player how many tokens she wants
+take, showing the current number of tokens. We keep asking the question
+until the player gives a valid answer (1, 2, or 3). The computer takes
+3, 2, or 1 tokens, and we subtract 4 from the number of tokens.
 
-### Example
-~~~~
-Input: 3 command line parameters: start time, current time, file name
+After the third move, we print that the computer has won.
 
-    # Streamer start time: Tue Nov 24 12:22:03 2020
-    1606134123
-
-    # Current time:        Mon Mar  1 09:34:36 2021
-    1614591276
-
-    # filelist.csv
-
-Output:
-
-    "Les Miserables Episode 1: The Bishop (broadcast date: 1937-07-23)"
-    00:17:33
-~~~~
 
 ### Solutions
-* [GNU AWK](awk/ch-2.awk)
+* [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [BASIC](basic/ch-2.bas)
+* [Befunge-93](befunge/ch-2.bf93)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
-* [Node.js](node/ch-2.js)
+* [Pascal](pascal/ch-2.p)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
+* [R](r/ch-2.r)
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[Perl Weekly Challenge 103: What's playing?](https://wp.me/pcxd30-v6)
