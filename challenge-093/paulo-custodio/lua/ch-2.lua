@@ -54,15 +54,15 @@ end
 function parse_subtree(lines, row, col)
     local tree = {}
     tree.value = tonumber(ch(lines,row,col))
-    
+
     if ch(lines, row + 1, col - 1) == '/' then
         tree.left = parse_subtree(lines, row + 2, col - 2)
     end
-    
+
     if ch(lines, row + 1, col + 1) == '\\' then
         tree.right = parse_subtree(lines, row + 2, col + 2)
     end
-    
+
     return tree
 end
 
@@ -75,7 +75,7 @@ end
 -- return the subtree path len
 function add_subtree_paths(node, cur_len, total_len)
     cur_len = cur_len + node.value
-    if node.left then 
+    if node.left then
         total_len = add_subtree_paths(node.left, cur_len, total_len)
     end
     if node.right then
@@ -84,7 +84,7 @@ function add_subtree_paths(node, cur_len, total_len)
     if not node.left and not node.right then
         total_len = total_len + cur_len
     end
-    
+
     return total_len
 end
 

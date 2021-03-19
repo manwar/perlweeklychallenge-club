@@ -7,7 +7,7 @@ TASK #1 > Max Points
 Submitted by: Mohammad S Anwar
 You are given set of co-ordinates @N.
 
-Write a script to count maximum points on a straight line when given 
+Write a script to count maximum points on a straight line when given
 co-ordinates plotted on 2-d plane.
 
 Example 1:
@@ -41,7 +41,7 @@ function get_points()
         local x = tonumber(arg[i])
         local y = tonumber(arg[i+1])
         table.insert(P, {x,y})
-    end 
+    end
     return P
 end
 
@@ -54,7 +54,7 @@ function in_line(pi, pj, pk)
     dyl = pj[2] - pi[2];
 
     cross = dxc * dyl - dyc * dxl;
-    
+
     return cross == 0 and true or false
 end
 
@@ -73,7 +73,7 @@ function max_in_line(P)
             max_count = math.max(max_count, count)
         end
     end
-    
+
     return max_count
 end
 
