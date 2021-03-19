@@ -64,6 +64,7 @@ the solution.
     * [Simple](ruby/ch-1.rb)
     * [Calculated](ruby/ch-1a.rb)
 * [Scheme](scheme/ch-1.scm)
+* [sed](sed/ch-1.sed)
 * [SQL](sql/ch-1.sql)
 * [Tcl](tcl/ch-1.tcl)
 
