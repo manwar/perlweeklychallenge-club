@@ -15,7 +15,7 @@
 ;;; Recursive method playing the game. As argument it gets the number
 ;;; of tokens left. It plays a single move, then calls itself with
 ;;; the updated number of moves. If the number of tokens left is 0,
-;;; the method simply returns.
+;;; the method claims victory and returns.
 ;;;
 ;;; If the player inputs an invalid number of tokens (too many, not
 ;;; enough, not an integer), the method calls itself with the same
@@ -46,9 +46,8 @@
             )
             (play tokens)
         )
+        (display "Computer wins\n")
     )
 )
 
 (play tokens)
-
-(display "Computer wins\n")
