@@ -1,63 +1,63 @@
 {
    "series" : [
       {
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "y" : 10
-         },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               1398
+               1402
             ],
             [
                "Perl",
-               4882
+               4884
             ],
             [
                "Raku",
                3124
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "rotation" : -90
+         },
+         "name" : "Contributions"
       }
    ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-03-19 05:11:21 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      }
+      },
+      "type" : "category"
    },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+      },
+      "min" : 0
    },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2021-03-19 04:40:39 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
-   "legend" : {
-      "enabled" : "false"
    }
 }
