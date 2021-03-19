@@ -8,27 +8,30 @@
          }
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-03-19 03:27:49 GMT"
+   "chart" : {
+      "type" : "column"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2021-03-19 03:35:27 GMT"
    },
    "series" : [
       {
          "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 4,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
+               "name" : "Alexander Karelas",
+               "y" : 2,
+               "drilldown" : "Alexander Karelas"
             },
             {
-               "drilldown" : "Simon Proctor",
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
+               "y" : 4
+            },
+            {
                "y" : 2,
-               "name" : "Simon Proctor"
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
             }
          ],
          "name" : "Perl Weekly Challenge - 104"
@@ -37,8 +40,34 @@
    "legend" : {
       "enabled" : 0
    },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 104"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "drilldown" : {
       "series" : [
+         {
+            "id" : "Alexander Karelas",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Alexander Karelas"
+         },
          {
             "name" : "Luca Ferrari",
             "id" : "Luca Ferrari",
@@ -54,29 +83,15 @@
             ]
          },
          {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
+            ]
          }
       ]
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 104"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
