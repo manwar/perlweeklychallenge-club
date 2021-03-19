@@ -3,7 +3,7 @@
 #
 
 #
-# Run as: Rscript ch-2.r < input-file
+# Run as: Rscript ch-2.r
 #
 
 input <- file ('stdin', 'r')

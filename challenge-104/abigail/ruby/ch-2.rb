@@ -5,7 +5,7 @@
 #
  
 #
-# Run as: ruby ch-2.rb < input-file
+# Run as: ruby ch-2.rb
 #
 
 tokens   = 12

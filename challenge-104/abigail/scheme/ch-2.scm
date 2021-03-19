@@ -3,7 +3,7 @@
 ;;;
 
 ;;;
-;;; Run as: guile --no-auto-compile ch-2.scm < input-file
+;;; Run as: guile --no-auto-compile ch-2.scm
 ;;;
 
 (use-modules (ice-9 format))
