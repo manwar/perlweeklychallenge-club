@@ -1,72 +1,83 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-03-19 03:41:17 GMT"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-03-19 03:35:27 GMT"
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Alexander Karelas",
+               "drilldown" : "Alexander Karelas",
                "y" : 2,
-               "drilldown" : "Alexander Karelas"
+               "name" : "Alexander Karelas"
             },
             {
-               "drilldown" : "Luca Ferrari",
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 3
+            },
+            {
                "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
                "y" : 4
             },
             {
                "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
             }
          ],
+         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 104"
       }
    ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 104"
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Alexander Karelas",
             "id" : "Alexander Karelas",
             "data" : [
                [
                   "Perl",
                   2
                ]
+            ]
+         },
+         {
+            "id" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
             ],
-            "name" : "Alexander Karelas"
+            "name" : "James Smith"
          },
          {
             "name" : "Luca Ferrari",
@@ -84,14 +95,22 @@
          },
          {
             "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
          }
       ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
