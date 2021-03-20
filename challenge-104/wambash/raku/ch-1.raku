@@ -1,5 +1,4 @@
 #!/usr/bin/env raku
-#!/usr/bin/env raku
 
 my @fusc = (^∞).map: *.&fusc ;
 multi fusc( 0 --> 0 ) {}

@@ -1,5 +1,4 @@
 #!/usr/bin/env raku
-use v6;
 
 sub random ( $tokens ) {
     (1..3).pick min $tokens
