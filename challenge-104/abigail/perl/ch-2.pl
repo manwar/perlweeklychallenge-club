@@ -14,7 +14,7 @@ use experimental 'lexical_subs';
 #
 
 #
-# Run as: perl ch-2.pl < input-file
+# Run as: perl ch-2.pl
 #
 
 #

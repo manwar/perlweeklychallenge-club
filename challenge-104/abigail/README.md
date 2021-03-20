@@ -64,6 +64,7 @@ the solution.
     * [Simple](ruby/ch-1.rb)
     * [Calculated](ruby/ch-1a.rb)
 * [Scheme](scheme/ch-1.scm)
+* [sed](sed/ch-1.sed)
 * [SQL](sql/ch-1.sql)
 * [Tcl](tcl/ch-1.tcl)
 
@@ -113,5 +114,6 @@ After the third move, we print that the computer has won.
 * [Python](python/ch-2.py)
 * [R](r/ch-2.r)
 * [Ruby](ruby/ch-2.rb)
+* [Scheme](scheme/ch-2.scm)
 
 ### Blog

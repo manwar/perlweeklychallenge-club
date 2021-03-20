@@ -5,7 +5,7 @@
 #
 
 #
-# Run as: bash ch-2.sh < input-file
+# Run as: bash ch-2.sh
 #
 
 tokens=12

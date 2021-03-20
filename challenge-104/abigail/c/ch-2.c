@@ -7,7 +7,7 @@
  */
 
 /*
- * Run as: cc -o ch-2.o ch-2.c; ./ch-2.o < input-file
+ * Run as: cc -o ch-2.o ch-2.c; ./ch-2.o
  */
 
 int tokens   = 12;
