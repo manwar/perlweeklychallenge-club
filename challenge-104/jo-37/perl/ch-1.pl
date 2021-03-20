@@ -48,6 +48,8 @@ if ($fusc) {
 # Non-recursive implementation of fusc according to
 # http://oeis.org/A002487
 sub fusc ($n) {
+    # Interestingly, without the modulus this would produce the
+    # respective Fibonacci number.
     reduce {$a += $b % 2} 0, map binomial($_, $n - $_ - 1),
         ceil(($n - 1) / 2) .. $n - 1;
 }
