@@ -33,6 +33,7 @@ int main (void) {
     }
 
     printf ("Computer wins\n");
+    free (line);
 
     return (0);
 }

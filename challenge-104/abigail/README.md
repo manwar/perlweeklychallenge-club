@@ -69,7 +69,7 @@ the solution.
 * [Tcl](tcl/ch-1.tcl)
 
 ### Blog
-
+[Perl Weekly Challenge 104: FUSC Sequence](https://wp.me/pcxd30-vx)
 
 ## [NIM Game](https://perlweeklychallenge.org/blog/perl-weekly-challenge-104/#TASK2)
 Write a script to simulate the NIM Game.
@@ -117,3 +117,4 @@ After the third move, we print that the computer has won.
 * [Scheme](scheme/ch-2.scm)
 
 ### Blog
+[Perl Weekly Challenge 104: NIM Game](https://wp.me/pcxd30-w5)

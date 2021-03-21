@@ -19,7 +19,7 @@ while tokens > 0 do
     if 1 <= take && take <= max_take
     then takes = max_take + 1 - take
          printf "Computer takes %d token%s\n", takes, takes == 1 ? "" : "s"
-         tokens -= 4
+         tokens -= (max_take + 1)
     end
 end
 
