@@ -3,6 +3,7 @@
 use v5.16;
 use Test2::V0;
 use Math::Prime::Util 'binomial';
+use Math::Utils 'ceil';
 use List::Util 'reduce';
 use experimental 'signatures';
 
@@ -34,7 +35,7 @@ EOS
 
 ### Input and Output
 
-my $n = shift || 50;
+my $n = shift // 50;
 if ($fusc) {
     say "fusc($n)=" x !!$verbose, fusc($n);
 } else {
@@ -47,8 +48,12 @@ if ($fusc) {
 # Non-recursive implementation of fusc according to
 # http://oeis.org/A002487
 sub fusc ($n) {
-    reduce {$a += $b % 2} 0, map binomial($_, $n - $_ - 1), 0 .. $n - 1;
+    # Interestingly, without the modulus this would produce the
+    # respective Fibonacci number.
+    reduce {$a += $b % 2} 0, map binomial($_, $n - $_ - 1),
+        ceil(($n - 1) / 2) .. $n - 1;
 }
+
 
 ### Tests
 
