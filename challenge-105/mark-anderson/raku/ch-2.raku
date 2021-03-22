@@ -70,5 +70,5 @@ sub name-game($X)
     "$X, $X, bo-"      ~ ($first eq "b" ?? "" !! "b") ~ $Y ~ ",", 
     "Bonana-fanna fo-" ~ ($first eq "f" ?? "" !! "f") ~ $Y,
     "Fee fi mo-"       ~ ($first eq "m" ?? "" !! "m") ~ $Y,
-    $X ~ "!"; 
+    "$X!"; 
 }
