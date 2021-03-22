@@ -64,13 +64,7 @@ is name-game("Marsha"),  chomp q:to/END/;
 
 sub name-game($X)
 {
-    my $vowels     = rx/ <[AEIOUaeiou]>+ /;
-
-    my $consonants = rx/ <[A..Za..z]-[AEIOUaeiou]>+ /;
-
-    my $start = $X ~~ / ^ [$vowels|$consonants] /;
-
-    my $Y = $start ~~ $consonants ?? $X.subst($start, "") !! lc $X;
+    my $Y = lc $X ~~ / :i <[aeiou]>+ \w+ $ /;
 
     my $first = lc $X.substr: 0, 1;
 
