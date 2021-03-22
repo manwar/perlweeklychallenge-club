@@ -61,9 +61,11 @@ is name-game("Marsha"),  chomp q:to/END/;
 
 sub name-game($X)
 {
-    my $Y = lc $X ~~ / :i <[aeiou]> \w+ $ /;
+    my $x = lc $X;
 
-    my $first = lc $X.substr: 0, 1;
+    my $Y = $x ~~ / <[aeiou]> \w+ $ /;
+
+    my $first = $x.substr: 0, 1;
 
     .join: "\n" given 
 
