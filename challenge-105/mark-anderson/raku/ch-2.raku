@@ -4,7 +4,7 @@
 # or second syllable so I'm just testing for consonants and vowels.
 
 use Test;
-plan 4;
+plan 7;
 
 is name-game("Katie"),   chomp q:to/END/; 
                          Katie, Katie, bo-batie,
@@ -34,6 +34,27 @@ is name-game("Shirley"), chomp q:to/END/;
                          Shirley!
                          END
 
+is name-game("Billy"),   chomp q:to/END/;
+                         Billy, Billy, bo-illy,
+                         Bonana-fanna fo-filly
+                         Fee fi mo-milly
+                         Billy!
+                         END
+
+is name-game("Fred"),    chomp q:to/END/;
+                         Fred, Fred, bo-bed,
+                         Bonana-fanna fo-ed
+                         Fee fi mo-med
+                         Fred!
+                         END
+
+is name-game("Marsha"),  chomp q:to/END/;
+                         Marsha, Marsha, bo-barsha,
+                         Bonana-fanna fo-farsha
+                         Fee fi mo-arsha
+                         Marsha!
+                         END
+
 sub name-game($X)
 {
     my $vowels     = rx/ <[AEIOUaeiou]>+ /;
@@ -44,8 +65,12 @@ sub name-game($X)
 
     my $Y = $start ~~ $consonants ?? $X.subst($start, "") !! lc $X;
 
-    .join("\n") given "$X, $X, bo-b"      ~ $Y ~ ",", 
-                      "Bonana-fanna fo-f" ~ $Y,
-                      "Fee fi mo-m"       ~ $Y,
-                      $X ~ "!"; 
+    my $first = lc $X.substr: 0, 1;
+
+    .join("\n") given 
+
+    "$X, $X, bo-"      ~ ($first eq "b" ?? "" !! "b") ~ $Y ~ ",", 
+    "Bonana-fanna fo-" ~ ($first eq "f" ?? "" !! "f") ~ $Y,
+    "Fee fi mo-"       ~ ($first eq "m" ?? "" !! "m") ~ $Y,
+    $X ~ "!"; 
 }
