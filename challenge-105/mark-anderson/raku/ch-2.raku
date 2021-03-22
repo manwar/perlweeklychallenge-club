@@ -1,6 +1,6 @@
 #!/usr/bin/env raku
 
-# I have no idea how to test whether the emphasis is on the first 
+# I have no idea how to test whether the stress is on the first 
 # or second syllable so I'm just testing for consonants and vowels.
 
 use Test;
