@@ -12,5 +12,5 @@ is nth-root(5, 34),     2.02;
 
 sub nth-root($n, $k) 
 {
-   $k.roots($n).first.fmt("%.2f") + 0;
+    $k.roots($n).first.fmt("%.2f") + 0;
 }
