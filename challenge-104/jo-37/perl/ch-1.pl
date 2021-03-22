@@ -74,10 +74,6 @@ sub fusc ($n) {
 # fraction.
 # See https://en.wikipedia.org/wiki/Calkin%E2%80%93Wilf_tree
 # Coefficients are in reversed order here.
-#
-# No performance or memory issues with this approach:
-# ./ch-1.pl -single -cws -verbose 9223372036854775808
-# works like a charm: fusc_from_cws(2**63)=1
 sub fusc_from_cws ($n) {
     # This doesn't work for zero.
     return 0 unless $n;
