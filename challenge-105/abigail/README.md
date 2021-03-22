@@ -17,6 +17,9 @@ Output: 2.02
 ~~~~
 
 ### Solutions
+* [AWK](awk/ch-1.awk)
+* [C](c/ch-1.c)
+* [Perl](perl/ch-1.pl)
 
 ### Blog
 
