@@ -9,6 +9,12 @@ no  warnings 'syntax';
 use experimental 'signatures';
 use experimental 'lexical_subs';
 
+#
+# Run as: perl ch-2.pl
+#
+
+binmode STDERR, ":utf8" or die "bimode: $!";
+
 die << "--";
 This challenge is impossible. This is a children's game, played
 with children who cannot read or write yet. The song is entirely
