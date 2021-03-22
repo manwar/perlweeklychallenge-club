@@ -13,7 +13,6 @@ is name-game("Katie"),   chomp q:to/END/;
                          Katie!
                          END
 
-
 is name-game("Charles"), chomp q:to/END/;
                          Charles, Charles, bo-barles,
                          Bonana-fanna fo-farles
