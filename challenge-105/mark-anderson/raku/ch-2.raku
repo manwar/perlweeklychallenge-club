@@ -65,7 +65,7 @@ sub name-game($X)
 
     my $first = lc $X.substr: 0, 1;
 
-    .join("\n") given 
+    .join: "\n" given 
 
     "$X, $X, bo-"      ~ ($first eq "b" ?? "" !! "b") ~ $Y ~ ",", 
     "Bonana-fanna fo-" ~ ($first eq "f" ?? "" !! "f") ~ $Y,
