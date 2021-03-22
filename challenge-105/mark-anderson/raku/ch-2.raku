@@ -4,7 +4,7 @@
 # or second syllable so I'm just testing for consonants and vowels.
 
 use Test;
-plan 7;
+plan 8;
 
 is name-game("Katie"),   chomp q:to/END/; 
                          Katie, Katie, bo-batie,
@@ -13,12 +13,6 @@ is name-game("Katie"),   chomp q:to/END/;
                          Katie!
                          END
 
-is name-game("Aaron"),   chomp q:to/END/;
-                         Aaron, Aaron, bo-baaron,
-                         Bonana-fanna fo-faaron
-                         Fee fi mo-maaron
-                         Aaron!
-                         END
 
 is name-game("Charles"), chomp q:to/END/;
                          Charles, Charles, bo-barles,
@@ -32,6 +26,20 @@ is name-game("Shirley"), chomp q:to/END/;
                          Bonana-fanna fo-firley
                          Fee fi mo-mirley
                          Shirley!
+                         END
+
+is name-game("Arnold"),  chomp q:to/END/;
+                         Arnold, Arnold, bo-barnold,
+                         Bonana-fanna fo-farnold
+                         Fee fi mo-marnold
+                         Arnold!
+                         END
+
+is name-game("Aaron"),   chomp q:to/END/;
+                         Aaron, Aaron, bo-baaron,
+                         Bonana-fanna fo-faaron
+                         Fee fi mo-maaron
+                         Aaron!
                          END
 
 is name-game("Billy"),   chomp q:to/END/;
