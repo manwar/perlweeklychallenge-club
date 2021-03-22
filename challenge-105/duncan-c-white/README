@@ -1,0 +1,38 @@
+Task 1: "FUSC Sequence
+
+Write a script to generate first 50 members of FUSC Sequence. Please
+refer to http://oeis.org/A002487 for more information.
+
+The sequence defined as below:
+
+	fusc(0) = 0
+	fusc(1) = 1
+
+for n > 1:
+	when n is even: fusc(n) = fusc(n / 2),
+	when n is odd: fusc(n) = fusc((n-1)/2) + fusc((n+1)/2)
+"
+
+My notes: looks like a case for Memoize to make this highly recursive
+function efficient.  No, turns out it's quite efficient, so we don't
+even need Memoize!
+
+
+Task 2: "NIM Game
+
+Write a script to simulate the NIM Game.
+
+It is played between 2 players. For the purpose of this task, let assume
+you play against the machine.
+
+There are 3 simple rules to follow:
+
+a) You have 12 tokens
+b) Each player can pick 1, 2 or 3 tokens at a time
+c) The player who picks the last token wins the game
+"
+
+My notes: damn!  I was really looking forward to this, but THAT'S NOT
+NIM!  That's a similar "simple take away game" as described here:
+https://www.cs.cmu.edu/afs/cs/academic/class/15859-f01/www/notes/comb.pdf
+(although that starts with 21 tokens, not 12).

@@ -4,9 +4,17 @@ find . -name "*.t" -delete
 find . -name "*.bc" -delete
 find . -name "*.pl" -delete
 find . -name "*.st" -delete
+find . -name "*.m4" -delete
 find . -name "*.pm" -delete
+find . -name "*.r" -delete
+find . -name "*.scm" -delete
+find . -name "*.dml" -delete
+find . -name "*.dot" -delete
+find . -name "*.rexx" -delete
+find . -name "*.sed" -delete
 find . -name "*.bqn" -delete
 find . -name "*.adk" -delete
+find . -name "*.erl" -delete
 find . -name "*.bash" -delete
 find . -name "*.yaml" -delete
 find . -name "*.d" -delete
