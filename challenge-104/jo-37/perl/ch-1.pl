@@ -57,7 +57,7 @@ if ($single) {
 
 # Non-recursive implementation of fusc according to
 # http://oeis.org/A002487 as the number of odd elements in the diagonal
-# of Pascal's triangle.  Drawback of this implementations: rather large
+# of Pascal's triangle.  Drawback of this implementation: rather large
 # numbers are involved and lots of memory are wasted.
 sub fusc ($n) {
     # Interestingly, without the modulus this would produce the
@@ -85,9 +85,9 @@ sub fusc_from_cws ($n) {
     # in Wikipedia.
     push @rle, 0 unless $n % 2;
 
-    # Return the numerator from the calculated continued fraction. The
-    # identity value in this case is 'inf' as the reciprocal of zero.
-    # Performing rational arithmetics.
+    # Return the numerator from the rational number corresponding to the
+    # continued fraction. The identity value in this case is 'inf' as
+    # the reciprocal of zero.  Performing rational arithmetics.
     (reduce {1 / $a + $b} Math::BigRat->new('inf'), @rle)->numerator;
 }
 
