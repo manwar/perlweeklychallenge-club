@@ -85,14 +85,10 @@ sub fusc_from_cws ($n) {
     # in Wikipedia.
     push @rle, 0 unless $n % 2;
 
-    # Convert the first element of @rle to Math::BigRat, thus enabling
-    # BigRat math for the evaluation of the continued fraction.
-    $rle[0] = Math::BigRat->new($rle[0]);
-
-    # Return the numerator from the calculated continued
-    # fraction.
-    (reduce {1 / $a + $b} @rle)->numerator;
-
+    # Return the numerator from the calculated continued fraction. The
+    # identity value in this case is 'inf' as the reciprocal of zero.
+    # Performing rational arithmetics.
+    (reduce {1 / $a + $b} Math::BigRat->new('inf'), @rle)->numerator;
 }
 
 
