@@ -1,66 +1,21 @@
 {
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 3,
-               "drilldown" : "Dave Jacoby",
-               "name" : "Dave Jacoby"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
-            },
-            {
-               "drilldown" : "James Smith",
-               "name" : "James Smith",
-               "y" : 2
-            },
-            {
-               "y" : 4,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
-            },
-            {
-               "name" : "Stuart Little",
-               "drilldown" : "Stuart Little",
-               "y" : 4
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 105",
-         "colorByPoint" : 1
-      }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-03-24 07:28:36 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 105"
-   },
-   "legend" : {
-      "enabled" : 0
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Abigail",
+            "name" : "Abigail",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
             "id" : "Dave Jacoby",
-            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -70,31 +25,31 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Dave Jacoby"
          },
          {
-            "id" : "E. Choroba",
+            "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "E. Choroba"
+            "id" : "E. Choroba"
          },
          {
-            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "James Smith"
+            "name" : "James Smith",
+            "id" : "James Smith"
          },
          {
             "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -104,19 +59,21 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Luca Ferrari"
          },
          {
-            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson"
+            "name" : "Mark Anderson"
          },
          {
+            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West",
             "data" : [
                [
@@ -127,10 +84,10 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Roger Bell_West"
+            ]
          },
          {
+            "id" : "Stuart Little",
             "data" : [
                [
                   "Perl",
@@ -141,29 +98,87 @@
                   2
                ]
             ],
-            "name" : "Stuart Little",
-            "id" : "Stuart Little"
+            "name" : "Stuart Little"
          }
       ]
-   },
-   "xAxis" : {
-      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    },
-   "chart" : {
-      "type" : "column"
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 105",
+         "data" : [
+            {
+               "drilldown" : "Abigail",
+               "y" : 2,
+               "name" : "Abigail"
+            },
+            {
+               "name" : "Dave Jacoby",
+               "y" : 3,
+               "drilldown" : "Dave Jacoby"
+            },
+            {
+               "y" : 2,
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "y" : 2,
+               "name" : "James Smith",
+               "drilldown" : "James Smith"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "y" : 4,
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
+               "drilldown" : "Stuart Little",
+               "name" : "Stuart Little",
+               "y" : 4
+            }
+         ]
+      }
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-03-24 08:12:14 GMT"
    },
    "tooltip" : {
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 105"
    }
 }
