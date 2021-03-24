@@ -19,6 +19,10 @@
 # So: generate and test time.  This is the simple version, almost no
 # optimisations.
 # 
+# SEE ALSO OptimizingTask1 for an account of a series of profiling-driven
+# optimizations that I made to speed up finding rare numbers.  Overall, my
+# fastest version ran approx 18 times faster than the original.
+#
 
 use strict;
 use warnings;
