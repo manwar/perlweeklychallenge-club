@@ -4,7 +4,7 @@ use v5.16;
 use Test2::V0 '!float';
 use Math::Prime::Util 'binomial';
 use List::Util 'reduce';
-use Math::ContinuedFraction;
+use Math::BigRat;
 use PDL; # Just for ceil and rle
 use experimental 'signatures';
 
@@ -57,8 +57,8 @@ if ($single) {
 
 # Non-recursive implementation of fusc according to
 # http://oeis.org/A002487 as the number of odd elements in the diagonal
-# of Pascal's triangle.  Drawback of this implementations: rather large
-# numbers are involved.
+# of Pascal's triangle.  Drawback of this implementation: rather large
+# numbers are involved and lots of memory are wasted.
 sub fusc ($n) {
     # Interestingly, without the modulus this would produce the
     # respective Fibonacci number.
@@ -73,23 +73,22 @@ sub fusc ($n) {
 # binary representation of n as the coefficients of a continued
 # fraction.
 # See https://en.wikipedia.org/wiki/Calkin%E2%80%93Wilf_tree
+# Coefficients are in reversed order here.
 sub fusc_from_cws ($n) {
     # This doesn't work for zero.
     return 0 unless $n;
+
     # Get the rle of the binary representation.  Using PDL here as I
     # didn't find an easier way.
-    my @rle = grep $_,
-        (rle(byte reverse split //, sprintf '%b', $n))[0]->list;
-    # Prepend a zero if the binary number ends in zero.  See the example
+    my @rle = grep $_, (rle(byte split //, sprintf '%b', $n))[0]->list;
+    # Append a zero if the binary number ends in zero.  See the example
     # in Wikipedia.
-    unshift @rle, 0 unless $n % 2;
-    # A bit tricky: Math::ContinuedFraction seems to require a trailing
-    # zero.
-    push @rle, 0;
+    push @rle, 0 unless $n % 2;
 
-    # Return the numerator of the normalization of the continued
-    # fraction.
-    (Math::ContinuedFraction->new(\@rle)->convergent)[0];
+    # Return the numerator from the rational number corresponding to the
+    # continued fraction. The identity value in this case is 'inf' as
+    # the reciprocal of zero.  Performing rational arithmetics.
+    (reduce {1 / $a + $b} Math::BigRat->new('inf'), @rle)->numerator;
 }
 
 
