@@ -20,5 +20,12 @@ use strict;
 use warnings;
 use 5.030;
 
+use constant ROUND_FACTOR => 10000;
+
 my($n, $k) = @ARGV;
-say $k ** (1/$n);
+say round($k ** (1/$n));
+
+sub round {
+    my($n) = @_;
+    return int($n*ROUND_FACTOR+0.5)/ROUND_FACTOR;
+}
