@@ -27,6 +27,7 @@ Output: 2.02
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 * [Ruby](ruby/ch-1.rb)
+* [Scheme](scheme/ch-1.scm)
 * [SQL](sql/ch-1.sql)
 
 ### Blog
