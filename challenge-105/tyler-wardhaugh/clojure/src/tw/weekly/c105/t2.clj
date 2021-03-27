@@ -21,7 +21,7 @@
   [name]
   (let [[head & tail] (str/upper-case name)
         head' (if (VOWELS head) "" head)
-        tail' (str/join (if (VOWELS head) (conj head tail) tail))]
+        tail' (str/join (if (VOWELS head) name tail))]
     (cl-format nil NAME-FMT-STR
                name
                (if (= \B head') tail' (str \B tail'))
