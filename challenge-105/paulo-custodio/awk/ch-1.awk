@@ -16,7 +16,13 @@
 # Input: $N = 5, $k = 34
 # Output: 2.02
 
+
+function round(n) {
+    ROUND_FACTOR = 10000
+    return int(n*ROUND_FACTOR+0.5)/ROUND_FACTOR;
+}
+
 BEGIN {
-    print ARGV[2] ^ (1 / ARGV[1]);
+    print round(ARGV[2] ^ (1 / ARGV[1]));
     exit 0;
 }

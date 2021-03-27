@@ -18,7 +18,7 @@ Input: $N = 5, $k = 34
 Output: 2.02
 */
 
-scale = 16
+scale = 4
 
 /* A function to return the integer part of x */
 define i(x) {
@@ -38,6 +38,10 @@ define p(x,y) {
     return ( e( y * l(x) ) )
 }
 
+define round(n) {
+    return i(n*10000+0.5)/10000
+}
+
 n = read();
 k = read();
-print p(k, (1/n)), "\n";
+print round(p(k, (1/n))), "\n";
