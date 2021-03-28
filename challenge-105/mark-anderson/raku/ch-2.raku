@@ -65,12 +65,10 @@ sub name-game($X)
 
     my $Y = $x ~~ / <[aeiou]> \w+ $ /;
 
-    my $first = $x.substr: 0, 1;
+    .join("\n") given 
 
-    .join: "\n" given 
-
-    "$X, $X, bo-"      ~ ($first eq "b" ?? "" !! "b") ~ $Y ~ ",", 
-    "Bonana-fanna fo-" ~ ($first eq "f" ?? "" !! "f") ~ $Y,
-    "Fee fi mo-"       ~ ($first eq "m" ?? "" !! "m") ~ $Y,
+    "$X, $X, bo-"      ~ ($x.starts-with("b") ?? "" !! "b") ~ $Y ~ ",", 
+    "Bonana-fanna fo-" ~ ($x.starts-with("f") ?? "" !! "f") ~ $Y,
+    "Fee fi mo-"       ~ ($x.starts-with("m") ?? "" !! "m") ~ $Y,
     "$X!"; 
 }
