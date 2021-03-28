@@ -1,7 +1,45 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2021-03-28 21:56:28 GMT"
-   },
+   "series" : [
+      {
+         "data" : [
+            30,
+            65,
+            123,
+            1,
+            3,
+            3,
+            86,
+            21
+         ],
+         "name" : "Perl"
+      },
+      {
+         "data" : [
+            0,
+            0,
+            0,
+            0,
+            0,
+            3,
+            21,
+            0
+         ],
+         "name" : "Raku"
+      },
+      {
+         "name" : "Blog",
+         "data" : [
+            15,
+            16,
+            0,
+            0,
+            0,
+            1,
+            6,
+            14
+         ]
+      }
+   ],
    "xAxis" : {
       "categories" : [
          "W. Luis Mochan",
@@ -14,66 +52,28 @@
          "Yozen Hernandez"
       ]
    },
-   "series" : [
-      {
-         "name" : "Perl",
-         "data" : [
-            30,
-            65,
-            123,
-            1,
-            3,
-            3,
-            86,
-            21
-         ]
-      },
-      {
-         "name" : "Raku",
-         "data" : [
-            0,
-            0,
-            0,
-            0,
-            0,
-            3,
-            21,
-            0
-         ]
-      },
-      {
-         "data" : [
-            15,
-            16,
-            0,
-            0,
-            0,
-            1,
-            6,
-            14
-         ],
-         "name" : "Blog"
-      }
-   ],
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-03-28 22:55:19 GMT"
    }
 }
