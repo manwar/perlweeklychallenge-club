@@ -23,9 +23,11 @@ Output: 2.02
 * [Fortran](fortran/ch-1.f90)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
+* [Pascal](pascal/ch-1.p)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 * [Ruby](ruby/ch-1.rb)
+* [Scheme](scheme/ch-1.scm)
 * [SQL](sql/ch-1.sql)
 
 ### Blog
