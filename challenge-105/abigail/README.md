@@ -31,6 +31,7 @@ Output: 2.02
 * [SQL](sql/ch-1.sql)
 
 ### Blog
+[Perl Weekly Challenge 105: Nth Root](https://wp.me/pcxd30-xl)
 
 ## [The Name Game](https://perlweeklychallenge.org/blog/perl-weekly-challenge-105/#TASK2)
 
