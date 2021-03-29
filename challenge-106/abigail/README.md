@@ -1,53 +1,50 @@
 # Solution by Abigail
-## [Nth root](https://perlweeklychallenge.org/blog/perl-weekly-challenge-105/#TASK1)
+## [Maximum Gap](https://perlweeklychallenge.org/blog/perl-weekly-challenge-106/#TASK1)
 
-You are given positive numbers `$N` and `$k`.
+You are given an array of integers `@N`.
 
-Write a script to find out the `$N`th root of `$k`. For more information,
-please take a look at the
-[wiki page](https://en.wikipedia.org/wiki/Nth_root#Computing_principal_roots).
+Write a script to display the maximum difference between two
+successive elements once the array is sorted.
+
+If the array contains only `1` element then display `0`.
 
 ### Examples
 ~~~~
-Input: $N = 5, $k = 248832
-Output: 12
+Input: @N = (2, 9, 3, 5)
+Output: 4
 
-Input: $N = 5, $k = 34
-Output: 2.02
+Input: @N = (1, 3, 8, 2, 0)
+Output: 5
+
+Input: @N = (5)
+Output: 0
 ~~~~
 
 ### Solutions
-* [AWK](awk/ch-1.awk)
-* [bc](bc/ch-1.bc)
-* [C](c/ch-1.c)
-* [Fortran](fortran/ch-1.f90)
-* [Lua](lua/ch-1.lua)
-* [Node.js](node/ch-1.js)
-* [Pascal](pascal/ch-1.p)
-* [Perl](perl/ch-1.pl)
-* [Python](python/ch-1.py)
-* [Ruby](ruby/ch-1.rb)
-* [Scheme](scheme/ch-1.scm)
-* [SQL](sql/ch-1.sql)
 
 ### Blog
-[Perl Weekly Challenge 105: Nth Root](https://wp.me/pcxd30-xl)
+[]()
 
-## [The Name Game](https://perlweeklychallenge.org/blog/perl-weekly-challenge-105/#TASK2)
+## [Decimal String](https://perlweeklychallenge.org/blog/perl-weekly-challenge-106/#TASK2)
 
-You are given a `$name`.
+You are given numerator and denominator i.e. `$N` and `$D`.
 
-Write a script to display the lyrics to the Shirley Ellis song The
-Name Game. Please checkout the
-[wiki page](https://en.wikipedia.org/wiki/The_Name_Game) for more information.
+Write a script to convert the fraction into decimal string. If the
+fractional part is recurring then put it in parenthesis.
 
-### Notes
-We're not playing.
+### Examples
+~~~~
+Input: $N = 1, $D = 3
+Output: "0.(3)"
 
-This is a childrens game. How to perform the song depends on how a name
-is *pronounced* -- not written. Depending on language, region, and 
-parential preference, names written identically can be pronounced differently.
+Input: $N = 1, $D = 2
+Output: "0.5"
+
+Input: $N = 5, $D = 66
+Output: "0.0(75)"
+~~~~
 
 ### Solutions
 
 ### Blog
+[]()
