@@ -24,6 +24,7 @@ Output: 0
 * [GNU AWK](awk/ch-1.gawk)
 * [Bash](perl/ch-1.sh)
 * [C](c/ch-1.c)
+* [Lua](lua/ch-1.lua)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
