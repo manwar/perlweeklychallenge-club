@@ -22,6 +22,7 @@ Output: 0
 
 ### Solutions
 * [GNU AWK](awk/ch-1.gawk)
+* [Bash](perl/ch-1.sh)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
