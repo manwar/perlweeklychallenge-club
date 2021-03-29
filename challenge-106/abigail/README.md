@@ -25,6 +25,7 @@ Output: 0
 * [Bash](perl/ch-1.sh)
 * [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
+* [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
