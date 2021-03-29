@@ -21,6 +21,7 @@ Output: 0
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-1.pl)
 
 ### Blog
 []()
