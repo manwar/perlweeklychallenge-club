@@ -1,4 +1,9 @@
 find . -name "*.c" -delete
+find . -name "*.d" -delete
+find . -name "*.dart" -delete
+find . -name "*.vb" -delete
+find . -name "*.nim" -delete
+find . -name "*.julia" -delete
 find . -name "*.p" -delete
 find . -name "*.t" -delete
 find . -name "*.bc" -delete
