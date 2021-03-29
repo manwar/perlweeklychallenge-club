@@ -3,7 +3,6 @@
 sub MAIN( Int $D, Int $N where { $N != 0 } ) {
     my @values = ( $D / $N ).base-repeating( 10 );
 
-    print @values[ 0 ];
-    print '(%s)'.sprintf: @values[ 1 ] if ( @values[ 1 ] );
-    put '';
+    @values[ 0 ].say and exit if ( ! @values[  1 ] );
+    '%s(%s)'.sprintf( @values ).say;
 }
