@@ -53,6 +53,7 @@ Output: "0.0(75)"
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
 
 ### Blog
 []()
