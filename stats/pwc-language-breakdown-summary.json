@@ -1,19 +1,35 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-03-30 00:59:35 GMT"
    },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "enabled" : "true",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "align" : "right"
+         },
          "data" : [
             [
                "Blog",
-               1421
+               1423
             ],
             [
                "Perl",
@@ -21,43 +37,27 @@
             ],
             [
                "Raku",
-               3165
+               3167
             ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "y" : 10,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "rotation" : -90,
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF"
-         }
+         ]
       }
    ],
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-03-30 00:56:21 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
       },
-      "min" : 0
+      "type" : "category"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "chart" : {
       "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
