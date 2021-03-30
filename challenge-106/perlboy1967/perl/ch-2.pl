@@ -22,7 +22,7 @@ die "\$N must be smaller than \$D ($D, $N)"
   unless ($N < $D);
 
 printf "Input: \$N = %d, \$D = %d\n", $N, $D;
-printf "Output: %s\n", decimalString($N, $D);
+printf "Output: %d/%d = %s\n", $N, $D, decimalString($N, $D);
 
 
 sub decimalString {
@@ -40,15 +40,15 @@ sub decimalString {
   do {
     $n = $r;
 
-    while ($n < $d and int($n/$d) < 1) {
+    while ($n < $d) {
       $n .= '0';
-      $result .= '0' if (int($n/$d) < 1);
+      $result .= '0' if ($n < $d);
     }
 
     push(@{$rSeen{$n}}, length($result));
 
     $result .= int($n/$d)
-      unless (scalar(@{$rSeen{$n}}) > 1);
+      if (scalar(@{$rSeen{$n}}) < 2);
 
     $r = $n % $d;
 
@@ -57,9 +57,9 @@ sub decimalString {
   # Non repetitative division?
   return "0.$result" if ($r == 0);
 
-  if ($result =~ m#0$#) { 
-    $rSeen{$n}[0]--;
-    $rSeen{$n}[1]--;
+  if ($result =~ m#([0]+)$#) { 
+    $rSeen{$n}[0] -= length($1);
+    $rSeen{$n}[1] -= length($1);
   }
 
   return sprintf('0.%s(%s)', 
