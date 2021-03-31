@@ -93,6 +93,7 @@ Wikipedia](https://en.wikipedia.org/wiki/Repeating_decimal).
 
 ### Solutions
 * [AWK](perl/ch-2.awk)
+* [Bash](bash/ch-2.sh)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
