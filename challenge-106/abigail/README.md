@@ -94,6 +94,7 @@ Wikipedia](https://en.wikipedia.org/wiki/Repeating_decimal).
 ### Solutions
 * [AWK](perl/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [C](c/ch-2.c)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
