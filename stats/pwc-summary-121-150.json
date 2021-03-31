@@ -1,6 +1,9 @@
 {
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-03-31 12:03:44 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -36,26 +39,19 @@
          "Pavel Kuptsov"
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "chart" : {
+      "type" : "column"
    },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-03-31 08:33:31 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
+      },
+      "min" : 0
    },
    "series" : [
       {
@@ -129,6 +125,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -160,8 +157,11 @@
             0,
             1,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
-   ]
+   ],
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   }
 }
