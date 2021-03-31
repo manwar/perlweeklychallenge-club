@@ -1,22 +1,8 @@
-package main
+package ch106
 
-import (
-	"fmt"
-	"os"
-	"sort"
-	"strconv"
-)
+import "sort"
 
-func main() {
-	numbers := make(sort.IntSlice, 0, len(os.Args)-1)
-	for _, v := range os.Args[1:] {
-		n, err := strconv.Atoi(v)
-		if err != nil {
-			fmt.Println(err)
-			os.Exit(1)
-		}
-		numbers = append(numbers, n)
-	}
+func MaximumGap(numbers sort.IntSlice) int {
 	sort.Sort(numbers)
 	var maxGap int
 	for i := 0; i < len(numbers)-1; i++ {
@@ -25,5 +11,5 @@ func main() {
 			maxGap = diff
 		}
 	}
-	fmt.Println(maxGap)
+	return maxGap
 }

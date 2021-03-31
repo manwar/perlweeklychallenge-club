@@ -1,26 +1,12 @@
-package main
+package ch106
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 )
 
-func getIntArg(i int) int {
-	if i >= len(os.Args) {
-		fmt.Println("Not enough arguments")
-		os.Exit(1)
-	}
-	v, err := strconv.Atoi(os.Args[i])
-	if err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-	return v
-}
-
 type PerioDec struct {
-	digits       []int
+	digits      []int
 	periodicIdx int
 }
 
@@ -40,10 +26,7 @@ func (d PerioDec) String() (s string) {
 	return
 }
 
-func main() {
-	n := getIntArg(1)
-	d := getIntArg(2)
-
+func DecimalString(n, d int) string {
 	dec := PerioDec{periodicIdx: -1}
 	numeratorIdxs := make(map[int]int)
 
@@ -72,5 +55,5 @@ func main() {
 
 	}
 
-	fmt.Println(dec)
+	return dec.String()
 }
