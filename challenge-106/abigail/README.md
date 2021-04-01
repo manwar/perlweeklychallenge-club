@@ -98,6 +98,7 @@ Wikipedia](https://en.wikipedia.org/wiki/Repeating_decimal).
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
 
 ### Blog
 []()
