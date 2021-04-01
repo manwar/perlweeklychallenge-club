@@ -1,0 +1,43 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+our $DEBUG = 0;
+
+my $F = $ARGV[0];
+
+my $reviewers = get_reviewer_stats($F);
+show_count($reviewers);
+
+#
+#
+# METHODS
+
+sub get_reviewer_stats {
+    my ($file) = @_;
+
+    my $reviewers = {};
+    open(my $I, '<', $file) or die "$!\n";
+    while(my $r = <$I>) {
+        chomp $r;
+        my($x, $y, $z) = split /\:/, $r, 3;
+
+        $z =~ s/^\s+//g;
+        $x =~ /\-(\d+)\./;
+
+        push @{$reviewers->{$z}}, $1;
+        print "$x: $y: $1: $z\n" if $DEBUG;
+    }
+    close($I);
+
+    return $reviewers;
+}
+
+sub show_count {
+    my ($reviewers) = @_;
+
+    foreach my $auth (sort keys %$reviewers) {
+        print "$auth: ", scalar(@{$reviewers->{$auth}}), "\n";
+    }
+}
