@@ -1,42 +1,37 @@
-# Nth Root
+# Maximum Gap
 ## Java Solution
 
 To compile the code run
 ```java
-javac NthRoot.java
+javac MaximumGap.java
 ```
 To run
 ```java
-java NthRoot
+java MaximumGap
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-105/ziameraj16/java$ javac NthRoot.java
-/perlweeklychallenge-club/challenge-105/ziameraj16/java$ java NthRoot
-Enter value of N
-5
-Enter value of k
-248832
-12.00
+/perlweeklychallenge-club/challenge-106/ziameraj16/java$ javac MaximumGap.java
+/perlweeklychallenge-club/challenge-106/ziameraj16/java$ java MaximumGap
+Enter comma separated values
+2,9,3,5
+4
 ```
-
 ## Kotlin Solution
 
 To compile the code run
 ```java
-kotlinc NthRoot.kt
+kotlinc MaximumGap.kt
 ```
 To run
 ```java
-kotlin NthRoot
+kotlin MaximumGap
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-105/ziameraj16/kotlin$ kotlinc NthRoot.kt
-/perlweeklychallenge-club/challenge-105/ziameraj16/kotlin$ kotlin NthRoot
-Enter value of N
+/perlweeklychallenge-club/challenge-106/ziameraj16/kotlin$ kotlinc MaximumGapKotlin.kt
+/perlweeklychallenge-club/challenge-106/ziameraj16/kotlin$ kotlin MaximumGapKotlin
+Enter comma separated values
+1,3,8,2,0
 5
-Enter value of k
-34
-2.02
 ```
