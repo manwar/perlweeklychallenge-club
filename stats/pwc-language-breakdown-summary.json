@@ -1,12 +1,19 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
-   },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "y" : 10,
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "color" : "#FFFFFF"
+         },
          "data" : [
             [
                "Blog",
@@ -14,50 +21,43 @@
             ],
             [
                "Perl",
-               4982
+               4984
             ],
             [
                "Raku",
                3178
             ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "rotation" : -90
-         }
+         ]
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
-   "subtitle" : {
-      "text" : "Last updated at 2021-04-03 22:48:09 GMT"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
    "legend" : {
       "enabled" : "false"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
+   "chart" : {
+      "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
+   "subtitle" : {
+      "text" : "Last updated at 2021-04-03 22:51:15 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
