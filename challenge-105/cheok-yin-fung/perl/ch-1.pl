@@ -13,7 +13,7 @@ my $pow = 1;
 my $N = int $ARGV[0];
 my $k = $ARGV[1];
 
-print "WARN: Recommend to take the result from Newton's method if two methods dispute";
+print "WARN: Recommend to take the result from Newton's method if two methods dispute\n";
 print "WARN: N is large; probably dispute between two methods \n"
     if $N > 9;         # parameter chosen by testing
 print "WARN: N is too large; probably inaccurate result(s) \n" 
