@@ -23,7 +23,7 @@
     }
 
     #
-    # Sor the array; for numeric values, this sorts numerically.
+    # Sort the array; for numeric values, this sorts numerically.
     #
     asort(N)
 
