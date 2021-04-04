@@ -18,6 +18,11 @@ use experimental 'lexical_subs';
 #
 
 #
+# We are assuming the input consists of pairs of non-negative 
+# integers, with the denominator greater than 0.
+#
+
+#
 # To determine the repeating digits of a fraction, it's very tempting
 # to use sprintf with a large amount of digits, and see what repeats.
 # But Perl isn't precise enough even for small numbers to do so.
@@ -32,7 +37,6 @@ use experimental 'lexical_subs';
 # Furthermore, if we increase the precision, we find that all decimals
 # after the 70th, are 0.
 #
-
 
 #
 # We're creation the decimal expansion of the fraction $N / $D

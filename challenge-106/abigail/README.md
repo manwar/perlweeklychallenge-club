@@ -54,6 +54,9 @@ Output: "0.0(75)"
 
 ### Notes
 
+We are assuming the numerator is non-negative, and the denominator
+is positive. Dealing with signs is left as an exercise to the reader.
+
 We're creation the decimal expansion of the fraction `$N / $D`
 by performing long division.
 
