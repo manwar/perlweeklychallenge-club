@@ -1,0 +1,42 @@
+#! /usr/bin/env raku
+
+multi sub MAIN (*@N where @N.elems == 1, :v($verbose))
+{
+  say 0;
+}
+
+multi sub MAIN (*@N where @N.elems > 1 && all(@N) ~~ Int, :v($verbose))
+{
+  my @pairs = all-pairs(@N.sort, $verbose);
+
+  say ": Pairs: { @pairs.raku }" if $verbose;
+
+  say @pairs>>.reduce(&difference).max;
+}
+
+sub all-pairs (@list is copy, $verbose)
+{
+  my $first = @list.shift;
+  my $second;
+  my @result;
+
+  while (@list)
+  {
+    $second = @list.shift;
+
+    @result.push: ($first.Int => $second.Int);
+
+    say ": Added Pair: $first -> $second" if $verbose;
+
+    $first = $second;
+  }
+
+  return @result;
+}
+
+sub difference (Pair $p)
+{
+  return abs( $p.key - $p.value );
+}
+
+
