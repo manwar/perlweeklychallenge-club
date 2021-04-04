@@ -105,4 +105,4 @@ Wikipedia](https://en.wikipedia.org/wiki/Repeating_decimal).
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[]()
+[Perl Weekly Challenge 106: Decimal String](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-106-2.html)
