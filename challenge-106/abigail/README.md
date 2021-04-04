@@ -31,7 +31,7 @@ Output: 0
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[]()
+[Perl Weekly Challenge 106: Maximum Gap](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-106-1.html)
 
 ## [Decimal String](https://perlweeklychallenge.org/blog/perl-weekly-challenge-106/#TASK2)
 
