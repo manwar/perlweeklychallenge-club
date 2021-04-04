@@ -31,7 +31,7 @@ Output: 0
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[]()
+[Perl Weekly Challenge 106: Maximum Gap](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-106-1.html)
 
 ## [Decimal String](https://perlweeklychallenge.org/blog/perl-weekly-challenge-106/#TASK2)
 
@@ -53,6 +53,9 @@ Output: "0.0(75)"
 ~~~~
 
 ### Notes
+
+We are assuming the numerator is non-negative, and the denominator
+is positive. Dealing with signs is left as an exercise to the reader.
 
 We're creation the decimal expansion of the fraction `$N / $D`
 by performing long division.
@@ -102,4 +105,4 @@ Wikipedia](https://en.wikipedia.org/wiki/Repeating_decimal).
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[]()
+[Perl Weekly Challenge 106: Decimal String](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-106-2.html)
