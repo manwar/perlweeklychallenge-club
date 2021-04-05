@@ -1,41 +1,30 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 107",
          "data" : [
             {
+               "drilldown" : "Mark Anderson",
                "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
+               "name" : "Mark Anderson"
             },
             {
-               "drilldown" : "Mohammad S Anwar",
-               "y" : 1,
-               "name" : "Mohammad S Anwar"
+               "y" : 2,
+               "name" : "Mohammad S Anwar",
+               "drilldown" : "Mohammad S Anwar"
             }
          ],
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 107"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-04-05 07:12:02 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 107"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
       }
@@ -43,34 +32,45 @@
    "drilldown" : {
       "series" : [
          {
+            "name" : "Mark Anderson",
             "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Mark Anderson"
+            ]
          },
          {
+            "name" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
-                  1
+                  2
                ]
-            ],
-            "id" : "Mohammad S Anwar",
-            "name" : "Mohammad S Anwar"
+            ]
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 107"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2021-04-05 09:44:52 GMT"
    },
    "tooltip" : {
-      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "followPointer" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "chart" : {
       "type" : "column"
