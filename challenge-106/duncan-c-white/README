@@ -1,48 +1,47 @@
-Task 1: "Nth root
+Task 1: "Maximum Gap
 
-You are given positive numbers $N and $k.
+You are given an array of integers @N.
 
-Write a script to find out the $Nth root of $k. For more information,
-please take a look at
-https://en.wikipedia.org/wiki/Nth_root#Computing_principal_roots
-
-Example
-
-	Input: $N = 5, $k = 248832
-	Output: 12
-
-	Input: $N = 5, $k = 34
-	Output: 2.02
-"
-
-My notes: ok, dull but easy, using the Newton-Raphson Method.
-
-
-Task 2: "The Name Game
-
-You are given a $name.
-
-Write a script to display the lyrics to the Shirley Ellis song The Name
-Game. Please checkout https://en.wikipedia.org/wiki/The_Name_Game
-for more information.
+Write a script to display the maximum difference between two successive
+elements once the array is sorted.
+If the array contains only 1 element then display 0.
 
 Example
 
-  Input: $name = "Katie"
-  Output:
+	Input: @N = (2, 9, 3, 5)
+	Output: 4
 
-    Katie, Katie, bo-batie,
-    Bonana-fanna fo-fatie
-    Fee fi mo-matie
-    Katie!
+	Input: @N = (1, 3, 8, 2, 0)
+	Output: 5
+
+	Input: @N = (5)
+	Output: 0
 "
 
-My notes: wtf?  are we reduced to ill-defined childhood rhymes now?
-use simple rules:
-- remove first consonant from name if the first letter is a consonant,
-- otherwise leave the name alone.
-- if the removed consonant was b, f or m, then (respectively) bo-b
-  becomes bo-, fo-f becomes fo-, and mo-m becomes mo-
-- ignore the "no indication what to do with names like Anita where the stress
-  falls on a later syllable" problem, as that was in one cover version, so
-  I claim it's not part of the official rules.
+My notes: should be easy.
+
+
+Task 2: "Decimal String
+
+You are given numerator and denominator i.e. $N and $D.
+
+Write a script to convert the fraction into decimal string. If the
+fractional part is recurring then put it in parenthesis.
+
+Example
+
+	Input: $N = 1, $D = 3
+	Output: "0.(3)"
+
+	Input: $N = 1, $D = 2
+	Output: "0.5"
+
+	Input: $N = 5, $D = 66
+	Output: "0.0(75)"
+"
+
+My notes: the recurring bit is of course the core of this problem.
+How to do it?  Refreshing my memory with some examples of long
+division (sad), I realise that if we've seen the remainder before
+the recurring part is from where we saw that remainder before to
+the end of the digits produced.
