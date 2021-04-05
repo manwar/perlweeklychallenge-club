@@ -27,6 +27,7 @@ the definition of Self-descriptive Number is
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-1.pl)
 
 ### Blog
 
