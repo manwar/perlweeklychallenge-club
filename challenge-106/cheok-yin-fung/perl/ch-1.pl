@@ -29,7 +29,7 @@ sub max_ind {
 
 sub selection_sort {
     swap_arr_N(0, max_ind(@N));
-    for my $i (1..$#N-1) {
+    for my $i (1..$#N) {
         swap_arr_N($i, $i+max_ind(@N[$i..$#N]));
         my $dif = $N[$i-1] - $N[$i];
         $max_dif = $dif if $dif > $max_dif;
