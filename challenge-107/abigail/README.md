@@ -1,108 +1,64 @@
 # Solution by Abigail
-## [Maximum Gap](https://perlweeklychallenge.org/blog/perl-weekly-challenge-106/#TASK1)
+## [Self-descriptive Numbers](https://perlweeklychallenge.org/blog/perl-weekly-challenge-107/#TASK1)
 
-You are given an array of integers `@N`.
+Write a script to display the first three self-descriptive numbers.
+As per [wikipedia](https://en.wikipedia.org/wiki/Self-descriptive_number),
+the definition of Self-descriptive Number is
 
-Write a script to display the maximum difference between two
-successive elements once the array is sorted.
+> In mathematics, a self-descriptive number is an integer `m` that in a
+> given base `b` is `b` digits long in which each digit `d` at position `n`
+> (the most significant digit being at position 0 and the least
+> significant at position `b - 1`) counts how many instances of
+> digit `n` are in `m`.
 
-If the array contains only `1` element then display `0`.
-
-### Examples
+### Example
 ~~~~
-Input: @N = (2, 9, 3, 5)
-Output: 4
+ 1210 is a four-digit self-descriptive number:
 
-Input: @N = (1, 3, 8, 2, 0)
-Output: 5
+    position 0 has value 1 i.e. there is only one 0 in the number
+    position 1 has value 2 i.e. there are two 1 in the number
+    position 2 has value 1 i.e. there is only one 2 in the number
+    position 3 has value 0 i.e. there is no 3 in the number
+~~~~
 
-Input: @N = (5)
-Output: 0
+### Output
+~~~~
+    1210, 2020, 21200
 ~~~~
 
 ### Solutions
-* [GNU AWK](awk/ch-1.gawk)
-* [Bash](perl/ch-1.sh)
-* [C](c/ch-1.c)
-* [Lua](lua/ch-1.lua)
-* [Node.js](node/ch-1.js)
-* [Perl](perl/ch-1.pl)
-* [Python](python/ch-1.py)
-* [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[Perl Weekly Challenge 106: Maximum Gap](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-106-1.html)
 
-## [Decimal String](https://perlweeklychallenge.org/blog/perl-weekly-challenge-106/#TASK2)
+## [List Methods](https://perlweeklychallenge.org/blog/perl-weekly-challenge-107/#TASK2)
 
-You are given numerator and denominator i.e. `$N` and `$D`.
+Write a script to list methods of a package/class.
 
-Write a script to convert the fraction into decimal string. If the
-fractional part is recurring then put it in parenthesis.
-
-### Examples
+### Example
+Given the package:
 ~~~~
-Input: $N = 1, $D = 3
-Output: "0.(3)"
+package Calc;
 
-Input: $N = 1, $D = 2
-Output: "0.5"
+use strict;
+use warnings;
 
-Input: $N = 5, $D = 66
-Output: "0.0(75)"
+sub new { bless {}, shift; }
+sub add { }
+sub mul { }
+sub div { }
+
+1;
 ~~~~
-
-### Notes
-
-We are assuming the numerator is non-negative, and the denominator
-is positive. Dealing with signs is left as an exercise to the reader.
-
-We're creation the decimal expansion of the fraction `$N / $D`
-by performing long division.
-
-First, we calculate the part before the decimal point, by
-doing integer division of `$N / $D`.
-We're then left to do division of `$N' / $D`, where `$N'` initially
-is `$N % $D`.
-We then repeatedly find new digits by calculating the integer
-division of `(10 * $N' / $D)` (which gives us a new digit in the
-decimal expansion), and then setting `$N' = 10 * $N' % $D`.
-The fraction will have a finite decimal expansion if during the
-process `$N'` becomes `0`. Otherwise, it repeats, and it repeats
-as soon as have a `$N'` which we've already seen. By the pidgeon
-hole principle, this cannot take more then $D steps.
-To calculate the repeating part, we keep track of how far we
-were in calculating the expansion for which `$N'`.
-
+Output:
 ~~~~
-     22/7     \0.318
-        0                      int (7 / 22) == 0, so 0 before decimal point
-        --
-        7                      N =       N  % D
-        66                     3 * D
-        --
-         4                     N = (10 * N) % D   <--+
-         22                    1 * D                 |
-         --                                          |  Same, so '18'
-         18                    N = (10 * N) % D      |  is the repeating
-         176                   8 * D                 |  part
-         ---                                         |
-           4                   N = (10 * N) % D   <--+
+BEGIN
+mul
+div
+new
+add
 ~~~~
-
-This implementation is based on the [one given on
-Wikipedia](https://en.wikipedia.org/wiki/Repeating_decimal).
-
 
 ### Solutions
-* [AWK](perl/ch-2.awk)
-* [Bash](bash/ch-2.sh)
-* [C](c/ch-2.c)
-* [Lua](lua/ch-2.lua)
-* [Node.js](node/ch-2.js)
-* [Perl](perl/ch-2.pl)
-* [Python](python/ch-2.py)
-* [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[Perl Weekly Challenge 106: Decimal String](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-106-2.html)
+
