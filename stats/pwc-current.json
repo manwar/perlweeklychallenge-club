@@ -1,68 +1,80 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "legend" : {
+      "enabled" : 0
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-04-05 12:11:34 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 107",
          "data" : [
             {
-               "y" : 2,
+               "drilldown" : "James Smith",
+               "name" : "James Smith",
+               "y" : 2
+            },
+            {
                "drilldown" : "Mark Anderson",
+               "y" : 2,
                "name" : "Mark Anderson"
             },
             {
+               "name" : "Mohammad S Anwar",
                "y" : 2,
-               "drilldown" : "Mohammad S Anwar",
-               "name" : "Mohammad S Anwar"
+               "drilldown" : "Mohammad S Anwar"
             },
             {
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
             }
          ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 107"
+         "colorByPoint" : 1
       }
    ],
+   "title" : {
+      "text" : "Perl Weekly Challenge - 107"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-04-05 12:53:24 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Mark Anderson"
-         },
-         {
-            "name" : "Mohammad S Anwar",
-            "id" : "Mohammad S Anwar",
+            "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ]
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar"
          },
          {
             "data" : [
@@ -75,23 +87,26 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          }
       ]
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
-   "legend" : {
-      "enabled" : 0
+   "xAxis" : {
+      "type" : "category"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 107"
-   },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
