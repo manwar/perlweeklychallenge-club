@@ -7,6 +7,10 @@ use Test::More;
 use Test::Deep;
 
 is_deeply( top_self_descriptive(3), [ 1210, 2020, 21200 ] );
+is( self_descriptive(1210),  1 );
+is( self_descriptive(2020),  1 );
+is( self_descriptive(21200), 1 );
+is( self_descriptive(10000), 0 );
 
 done_testing;
 
@@ -18,7 +22,7 @@ sub top_self_descriptive {
     my @d = ();
 
     while ($i < $c) {
-        if (is_self_descriptive($n)) {
+        if (self_descriptive($n)) {
             $i++;
             push @d, $n;
         }
@@ -28,7 +32,7 @@ sub top_self_descriptive {
     return \@d;
 }
 
-sub is_self_descriptive {
+sub self_descriptive {
     my ($n) = @_;
 
     my @n = split //, $n;
