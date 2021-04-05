@@ -12,7 +12,8 @@ die 'Use: ./ch-2.pl package [other package] [...]' unless @ARGV;
 foreach my $package(@ARGV){
     eval "require $package";
     die $@ if $@;
+    say "Methods of $package";
     foreach my $key(sort keys %{"${package}::"}){
-	say $key if defined &{"${package}::$key"};
+	say "\t$key" if defined &{"${package}::$key"};
     }
 }
