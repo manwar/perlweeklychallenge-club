@@ -47,6 +47,7 @@ the definition of Self-descriptive Number is
 * [Pascal](pascal/ch-1.pl)
 * [Perl](perl/ch-1.pl)
 * [PHP](php/ch-1.pl)
+* [PostScript](postscript/ch-1.ps)
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
 * [Rexx](rexx/ch-1.rexx)
