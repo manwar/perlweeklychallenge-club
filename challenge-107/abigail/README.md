@@ -46,8 +46,15 @@ the definition of Self-descriptive Number is
 * [OCaml](ocaml/ch-1.ml)
 * [Pascal](pascal/ch-1.pl)
 * [Perl](perl/ch-1.pl)
+* [PHP](php/ch-1.pl)
 * [Python](python/ch-1.py)
+* [R](r/ch-1.r)
+* [Rexx](rexx/ch-1.rexx)
 * [Ruby](ruby/ch-1.rb)
+* [Scheme](scheme/ch-1.scm)
+* [sed](sed/ch-1.sed)
+* [SQL](sql/ch-1.sql)
+* [Tcl](tcl/ch-1.tcl)
 
 ### Blog
 
