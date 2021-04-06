@@ -19,6 +19,7 @@ use     Calc_Use;
 ## import method added to the class... (and so get the same
 ## list of fns as in the question)
 
-say "Calc_Require:\n",join "\n  ", sort keys %Calc_Require::;
-say "Calc_Use:\n",join "\n  ", sort keys %Calc_Use::;
+say join "\n  ",'Calc_Require:', sort keys %Calc_Require::;
+say '';
+say join "\n  ",'Calc_Use:',     sort keys %Calc_Use::;
 
