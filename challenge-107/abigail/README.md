@@ -88,6 +88,7 @@ add
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
 
 ### Blog
 
