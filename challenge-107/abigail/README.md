@@ -119,6 +119,7 @@ program, as there is no useful code to write to generate the numbers.
 * [Tcl](tcl/ch-1.tcl)
 
 ### Blog
+[Perl Weekly Challenge 107: Self-descriptive Numbers](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-107-1.html)
 
 ## [List Methods](https://perlweeklychallenge.org/blog/perl-weekly-challenge-107/#TASK2)
 
