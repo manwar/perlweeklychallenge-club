@@ -57,3 +57,10 @@ foreach my $symbol (keys %$symbol_table) {
 # One piece of madness is enough.
 #
 say "BEGIN" if $$symbol_table {BEGIN};
+
+#
+# Note that if the module contains an AUTOLOAD method, one could argue
+# the module contains any possible method. We decide to not do that.
+#
+
+__END__
