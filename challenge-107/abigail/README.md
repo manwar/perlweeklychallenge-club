@@ -153,4 +153,5 @@ add
 * [Perl](perl/ch-2.pl)
 
 ### Blog
+[Perl Weekly Challenge 107: List Methods](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-107-2.html)
 
