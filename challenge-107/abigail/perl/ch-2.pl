@@ -41,6 +41,10 @@ my $symbol_table = do {no strict 'refs'; \%{$module . "::"}};
 # which symbols have a code ref entry in the type glob.
 # (The symbol table maps symbols to type globs).
 #
+# Note that this only gives use the global methods, no lexical
+# subroutines are found that way. Which is ok, as lexical
+# subroutines are bound to their lexical scope - not the package.
+#
 foreach my $symbol (keys %$symbol_table) {
        say $symbol  if *{$$symbol_table {$symbol}} {CODE};
 }
@@ -56,7 +60,7 @@ foreach my $symbol (keys %$symbol_table) {
 # We will *NOT* do the same for END, INIT, CHECK, nor UNITCHECK.
 # One piece of madness is enough.
 #
-say "BEGIN" if $$symbol_table {BEGIN};
+say "BEGIN" if $$symbol_table {BEGIN} && !*{$$symbol_table {BEGIN}} {CODE};
 
 #
 # Note that if the module contains an AUTOLOAD method, one could argue
