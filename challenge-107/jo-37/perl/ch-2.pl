@@ -1,7 +1,9 @@
-#!/usr/bin/perl -s -T
+#!/usr/bin/perl -s
 
 use v5.16;
 use Test2::V0;
+use List::Util 'uniq';
+use File::Spec;
 use lib '.';
 
 our ($tests, $examples);
@@ -18,7 +20,7 @@ usage: $0 [-examples] [-tests] [package...]
     run some tests
 
 package...
-    "require"s <package> and lists the subs therein.
+    list subs provided by <package> 
     Call "$0 Calc" for the task's example.
 
 EOS
@@ -27,45 +29,56 @@ EOS
 ### Input and Output
 
 for (@ARGV) {
-    # Untaint input.  Allow "::" and "'" as package separators.
-    next unless /^( (?&PKG) (?: (?: :: | ' ) (?&PKG) )* )$
-        (?(DEFINE) (?<PKG> [_[:alpha:]] [[:word:]]*))/x;
-    my $package = $1;
-
-    eval "require $package";
-    die $@ if $@;
-
-    say "\n$package:";
-    say for sort @{list_methods($package)};
+    say "\n$_:";
+    say for sort @{list_methods($_)};
 }
 
 
 ### Implementation
 
-# Not a solution, but an approximation:
-#
-# Inspecting the package's symbol table to solve the task, though this
-# approach cannot lead to a proper solution.  The five specially named
-# code blocks "BEGIN" etc. have an empty CODE slot in their symbol
-# table's entry.  This makes them indistinguishable from any other entry
-# *not* referencing a sub.  Specifically, an undefined but used
-# package-global scalar-only variable looks exactly the same.  See
-# example "Foo".
-# For the sake of simplicity assuming the existence of a special block
-# if there is a symbol table entry with such a name.  This may lead to
-# false positives if a variable or a format with the name of a special
-# block is in use.  Heuristics based on the content of other slots would
-# make things even worse: In addition to the inevitable false positives
-# this would produce false negatives.
-#
-sub list_methods {
-    # Get a reference to the package's symbol table.  Using a symbolic
-    # ref to simplify matters.
-    my $symtab = do {no strict 'refs'; *{shift . '::'}{HASH}};
+# B::Concise reports all subs including the special blocks BEGIN etc.
+# when called with
+# -stash=<pgk>,BEGIN,...
+# But it reports B::Concise's BEGIN blocks, too.  So these need to be
+# identified and skipped.  There's a "nextstate" entry following a
+# special block entry identifying the package it belongs to.  
 
-    [grep {
-        *{$symtab->{$_}}{CODE} || /^(?:BEGIN|UNITCHECK|CHECK|INIT|END)$/;
-    } keys %{$symtab}];
+sub list_methods {
+    my $pkg = shift;
+    # The names of special blocks.
+    my @specials = qw(BEGIN UNITCHECK CHECK INIT END);
+    # The same as a regexp.
+    my $special_re = sub {local $" = '|'; qr(@_)}->(@specials);
+
+    # Suppress "syntax OK" written to STDERR.
+    no warnings 'once';
+    open STDERR_SAVE, '>&2' or die 'cannot duplicate STDERR';
+    close STDERR;
+
+    my @meth;
+    my $concise;
+    {
+        local $" = ',';
+        open $concise, '-|',
+           "$^X -Mlib=. -MO=Concise,-stash=$pkg,@specials -e ''"
+            or die 'cannot open Concise pipe';
+    }
+
+    my $special;
+    while (<$concise>) {
+        # Forget special block on entry to the next block/sub.
+        undef $special if /^(?:$special_re|FUNC)/;
+        # Found a sub inside the package.
+        push @meth, $1 if /^FUNC: \*${pkg}::(\w+)/;
+        # Found a special block.
+        $special = $1 if /^($special_re)\s/;
+        # Special block belongs to the package.
+        push @meth, $special if $special && /<;> nextstate\($pkg/;
+    }
+    close $concise;
+    open STDERR, '>&STDERR_SAVE' or die 'cannot restore STDERR';
+
+    [uniq @meth];
 }
 
 
@@ -75,7 +88,6 @@ sub run_tests {
     SKIP: {
         skip "examples" unless $examples;
 
-        require Calc;
         is list_methods('Calc'), bag {item 'BEGIN'; item 'mul';
             item 'div'; item 'new'; item 'add'; end},
             'example';
@@ -88,30 +100,10 @@ sub run_tests {
             bag {item 'foo_bar'; item 'INIT'; end},
             'every possible slot is in use';
 
-        is list_methods('Foo'), bag {item 'foo'; item 'BEGIN'; end},
-            'false positive';
+        is list_methods('Foo'), bag {item 'foo'; item 'bar'; end},
+            'no special block';
 	}
 
     done_testing;
     exit;
 }
-
-
-package Foo::Bar;
-
-sub foo_bar {}
-our @array;
-our %hash;
-INIT {
-    our $scalar = 1;
-    *FH = *STDIN{IO};
-}
-() = *FH;
-format FORMAT =
-. 
-
-
-package Foo;
-
-sub foo {}
-our $BEGIN;
