@@ -1,48 +1,65 @@
-Task 1: "Nth root
+Task 1: "Self-descriptive Numbers
 
-You are given positive numbers $N and $k.
+Write a script to display the first three self-descriptive numbers. As per wikipedia, the definition of Self-descriptive Number is
 
-Write a script to find out the $Nth root of $k. For more information,
-please take a look at
-https://en.wikipedia.org/wiki/Nth_root#Computing_principal_roots
+    In mathematics, a self-descriptive number is an integer m that in a
+    given base b is b digits long in which each digit d at position n (the
+    most significant digit being at position 0 and the least significant
+    at position b-1) counts how many instances of digit n are in m.
+
+For example:
+
+ 1210 is a four-digit self-descriptive number:
+
+    position 0 has value 1 i.e. there is only one 0 in the number
+    position 1 has value 2 i.e. there are two 1 in the number
+    position 2 has value 1 i.e. there is only one 2 in the number
+    position 3 has value 0 i.e. there is no 3 in the number
+
+Output
+
+    1210, 2020, 21200
+
+WARNING: I realised just before the launch this task was also part of the week
+43 and contributed by Laurent Rosenfeld. It is too late to change now. Feel
+free to share your previous solutions if you took part in the week 43
+already. I should have been more carefull, sorry.
+"
+
+My notes: well, as it happened I skipped task 43, so let's have a go.  The
+important thing is: number of digits == base, which puts extra constraints
+on the digits.  So try bases b = 2.. try all base b numbers for "self-
+descriptiveness" and then and stop after finding the first N self-descriptive
+numbers.  Let's take N as a command line input for generality, default 3.
+
+
+Task 2: "List Methods
+
+Write a script to list methods of a package/class.
 
 Example
 
-	Input: $N = 5, $k = 248832
-	Output: 12
+package Calc;
 
-	Input: $N = 5, $k = 34
-	Output: 2.02
+use strict;
+use warnings;
+
+sub new { bless {}, shift; }
+sub add { }
+sub mul { }
+sub div { }
+
+1;
+
+Output
+
+BEGIN
+mul
+div
+new
+add
 "
 
-My notes: ok, dull but easy, using the Newton-Raphson Method.
-
-
-Task 2: "The Name Game
-
-You are given a $name.
-
-Write a script to display the lyrics to the Shirley Ellis song The Name
-Game. Please checkout https://en.wikipedia.org/wiki/The_Name_Game
-for more information.
-
-Example
-
-  Input: $name = "Katie"
-  Output:
-
-    Katie, Katie, bo-batie,
-    Bonana-fanna fo-fatie
-    Fee fi mo-matie
-    Katie!
-"
-
-My notes: wtf?  are we reduced to ill-defined childhood rhymes now?
-use simple rules:
-- remove first consonant from name if the first letter is a consonant,
-- otherwise leave the name alone.
-- if the removed consonant was b, f or m, then (respectively) bo-b
-  becomes bo-, fo-f becomes fo-, and mo-m becomes mo-
-- ignore the "no indication what to do with names like Anita where the stress
-  falls on a later syllable" problem, as that was in one cover version, so
-  I claim it's not part of the official rules.
+My notes: hmm, introspection.  I genuinely can't remember how to do this
+without a but of googling.  Isn't there a symbol table hash per package,
+that Memoize manipulates?  Ah yes: the stash containing typeglobs.
