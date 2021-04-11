@@ -1,3 +1,3 @@
-# The Weekly Challenge 106
+# The Weekly Challenge 107
 
-Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-106-1cn7)
+Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-107-hm2)
