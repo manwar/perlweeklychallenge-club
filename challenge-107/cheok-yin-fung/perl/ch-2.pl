@@ -8,15 +8,19 @@
 # ---
 # Usage:  ch-2.pl [complete name of the script]
 
+
 die "Please input Perl scripts you want to check.\n" if !defined($ARGV[0]);
 
 my $program = $ARGV[0];
 
 open(SCRIPT, $program) or die "Fail to read $program\n";
 
-while (<SCRIPT>) {
-    if ( /sub(\s+)(\&|\w)(\w*)/ ) {
-        print $2.$3 . "\n"; 
+my %hash;
+
+while (my $line = <SCRIPT>) {
+    while ( $line =~ /sub(\s+)(\&|\w)(\w*)/g ) {
+        print $2.$3."\n";
     } 
 }
 
+#ref: https://stackoverflow.com/questions/9156149/perl-match-one-pattern-multiple-times-in-the-same-line-delimited-by-unknown-cha
