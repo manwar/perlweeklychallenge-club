@@ -3,8 +3,6 @@
 use v5.16;
 use Test2::V0;
 use List::Util 'uniq';
-use File::Spec;
-use lib '.';
 
 our ($tests, $examples);
 
