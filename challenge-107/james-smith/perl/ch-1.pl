@@ -88,10 +88,12 @@ perl -E '($c-join"",map{0+@{[$c=~/($_)/g]}}0..-1+length$c)||++$n&&say$c while++$
 perl -E '($c-join"",map{0+(@Q=$c=~/($_)/g)}0..-1+length$c)||++$n&&say$c while++$c&&$n<3'
 =cut
 
-## You will note so slightly different tricks here...
-## (Mainly because we haven't enabled strict!!)
+## You will notice we are using slightly different tricks here...
+## (Mainly we can do these because we haven't enabled strict!! something
+## you rarely do in Perl 1-liners...)
 ##
-## * We use -E this enables more modern perl features - including say!
+## * We use -E (rather than -e) this enables more modern perl features
+##   - including usefully say!
 ##
 ## * We don't collect results - and we just keep a counter - this time
 ##     we use || and && in the "logic"...
@@ -106,9 +108,10 @@ perl -E '($c-join"",map{0+(@Q=$c=~/($_)/g)}0..-1+length$c)||++$n&&say$c while++$
 ##
 ## * We show a different trick to count the elements of the list.
 ##
-##   Rather than using the scalar @{[ ]} trick to convert it to
-##     an array we store it in a variable which makes it an array
-##     we can then get the length of the array.
+##   We can use another trick other than the scalar @{[ ]} trick to
+##     convert the list into an array. we store it in an array
+##     variable which makes it we can then get the length of the
+##     array (we just ignore the array!)
 ##
 ##   As we are keeping the code short - we can replace the keyword
 ##     scalar with a simple 0+ which forces the array to be converted
@@ -116,7 +119,9 @@ perl -E '($c-join"",map{0+(@Q=$c=~/($_)/g)}0..-1+length$c)||++$n&&say$c while++$
 ##
 ## * To gain another character as the equality is numeric we can
 ##     rewrite if($a==$b) { f() } as ($a-$b)||f().
+##
 ##   $a-$b is non-zero (true) if $a!=$b so we can rewrite:
+##   $a-$b is zero (false)    if $a==$b so we can rewrite:
 ##
 ##       if( $a == $b ) { f() }
 ##
@@ -127,3 +132,10 @@ perl -E '($c-join"",map{0+(@Q=$c=~/($_)/g)}0..-1+length$c)||++$n&&say$c while++$
 ##   which we know we mentioned we could rewrite as:
 ##
 ##       ($a-$b) || f()
+##
+##   The brackets are important o/w this evaluates to:
+##
+##       $a-($b||f())
+##
+##   which isn't what we want...
+##

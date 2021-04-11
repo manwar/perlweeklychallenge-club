@@ -22,4 +22,17 @@ use     Calc_Use;
 say join "\n  ",'Calc_Require:', sort keys %Calc_Require::;
 say '';
 say join "\n  ",'Calc_Use:',     sort keys %Calc_Use::;
+say '';
+
+## If we want to hide the "fake" methods (import/BEGIN) we
+## can use grep/can to do so
+
+say join "\n  ",'Calc_Require:', sort
+                                 grep {Calc_Require->can($_)}
+                                 keys %Calc_Require::;
+say '';
+say join "\n  ",'Calc_Use:',     sort
+                                 grep {Calc_Use->can($_)}
+                                 keys %Calc_Use::;
+say '';
 
