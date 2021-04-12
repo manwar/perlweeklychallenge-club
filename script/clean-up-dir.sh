@@ -3,11 +3,14 @@ find . -name "*.d" -delete
 find . -name "*.dart" -delete
 find . -name "*.vb" -delete
 find . -name "*.nim" -delete
+find . -name "*.jpg" -delete
+find . -name "*.mod" -delete
 find . -name "*.julia" -delete
 find . -name "*.p" -delete
 find . -name "*.t" -delete
 find . -name "*.bc" -delete
 find . -name "*.pl" -delete
+find . -name "*.ps" -delete
 find . -name "*.st" -delete
 find . -name "*.m4" -delete
 find . -name "*.pm" -delete
