@@ -5,6 +5,7 @@ Write a script to declare a variable or constant and print it's
 location in the memory.
 
 ### Solutions
+* [C](c/ch-1.c)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
