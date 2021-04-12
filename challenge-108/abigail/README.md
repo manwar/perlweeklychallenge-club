@@ -28,6 +28,7 @@ more informations.
               `{b}{a,c,d}`, `{c}{a,b,d}`, `{d}{a,b,c}`
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
 
 ### Blog
 
