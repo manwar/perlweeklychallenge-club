@@ -32,8 +32,9 @@ sub bell {
     return [[[1]]] if $n==1;
     my $previous=bell($n-1);
     my @with_new_set=map {[@$_, [$n]]} @$previous;
-    my @with_new_element=map {[map {[@$_, $n]} @$_ ]} @$previous;
-    my @with_new_element=map {my @sets=@$_; map {[@sets[0..$_-1], [@{$sets[$_]}, $n], @sets[$_+1..@sets-1]]} (0..@sets-1)} @$previous;
+    my @with_new_element=map {
+	my @sets=@$_; map {[@sets[0..$_-1], [@{$sets[$_]}, $n], @sets[$_+1..@sets-1]]}
+	(0..@sets-1)} @$previous;
     my @current=(@with_new_set, @with_new_element);
     return [@current];
 }
