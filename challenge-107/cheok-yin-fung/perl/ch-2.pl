@@ -15,8 +15,6 @@ my $program = $ARGV[0];
 
 open(SCRIPT, $program) or die "Fail to read $program\n";
 
-my %hash;
-
 while (my $line = <SCRIPT>) {
     while ( $line =~ /sub(\s+)(\&|\w)(\w*)/g ) {
         print $2.$3."\n";
