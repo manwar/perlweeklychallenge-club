@@ -1,24 +1,4 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2021-04-13 17:03:27 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
@@ -26,63 +6,75 @@
    },
    "series" : [
       {
+         "name" : "Perl Weekly Challenge - 108",
          "data" : [
             {
-               "drilldown" : "Aaron Smith",
                "y" : 3,
+               "drilldown" : "Aaron Smith",
                "name" : "Aaron Smith"
             },
             {
+               "y" : 1,
                "drilldown" : "Cheok-Yin Fung",
-               "name" : "Cheok-Yin Fung",
-               "y" : 1
+               "name" : "Cheok-Yin Fung"
             },
             {
                "drilldown" : "Jorg Sommrey",
-               "name" : "Jorg Sommrey",
-               "y" : 2
+               "y" : 2,
+               "name" : "Jorg Sommrey"
             },
             {
-               "drilldown" : "Luca Ferrari",
                "name" : "Luca Ferrari",
-               "y" : 4
+               "y" : 4,
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
                "y" : 2
             },
             {
                "y" : 5,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
             },
             {
-               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
                "y" : 1,
-               "drilldown" : "Simon Proctor"
+               "name" : "Simon Proctor"
             },
             {
+               "y" : 4,
                "drilldown" : "Stuart Little",
-               "name" : "Stuart Little",
-               "y" : 4
+               "name" : "Stuart Little"
             },
             {
+               "name" : "Ulrich Rieke",
+               "y" : 4,
+               "drilldown" : "Ulrich Rieke"
+            },
+            {
+               "y" : 3,
                "drilldown" : "W. Luis Mochan",
-               "name" : "W. Luis Mochan",
-               "y" : 3
+               "name" : "W. Luis Mochan"
             }
          ],
-         "name" : "Perl Weekly Challenge - 108",
          "colorByPoint" : 1
       }
    ],
-   "xAxis" : {
-      "type" : "category"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Aaron Smith",
             "data" : [
                [
                   "Raku",
@@ -93,18 +85,17 @@
                   1
                ]
             ],
-            "name" : "Aaron Smith",
             "id" : "Aaron Smith"
          },
          {
+            "name" : "Cheok-Yin Fung",
+            "id" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "id" : "Cheok-Yin Fung",
-            "name" : "Cheok-Yin Fung"
+            ]
          },
          {
             "data" : [
@@ -113,8 +104,8 @@
                   2
                ]
             ],
-            "name" : "Jorg Sommrey",
-            "id" : "Jorg Sommrey"
+            "id" : "Jorg Sommrey",
+            "name" : "Jorg Sommrey"
          },
          {
             "name" : "Luca Ferrari",
@@ -131,18 +122,16 @@
             ]
          },
          {
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "id" : "Mark Anderson"
          },
          {
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -156,7 +145,9 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          },
          {
             "name" : "Simon Proctor",
@@ -169,6 +160,7 @@
             ]
          },
          {
+            "id" : "Stuart Little",
             "data" : [
                [
                   "Perl",
@@ -179,10 +171,24 @@
                   2
                ]
             ],
-            "id" : "Stuart Little",
             "name" : "Stuart Little"
          },
          {
+            "name" : "Ulrich Rieke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Ulrich Rieke"
+         },
+         {
+            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -193,15 +199,28 @@
                   1
                ]
             ],
-            "id" : "W. Luis Mochan",
-            "name" : "W. Luis Mochan"
+            "id" : "W. Luis Mochan"
          }
       ]
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 108"
    },
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2021-04-13 18:47:19 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
    "chart" : {
       "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
