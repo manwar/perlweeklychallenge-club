@@ -5,9 +5,9 @@ use warnings;
 
 # PART 1
 
-my $var = 'Perl Weekly Challenge';
+my $var = '000012340000';
 print "Before:: $var\n";
-my $repCount = $var =~ s/e/E/g;
+my $repCount = $var =~ s/^0+//g;
 print "After :: $var\n";
-print "Pattern matched:: $repCount\n";
+print "char Replaced:: $repCount\n";
 
