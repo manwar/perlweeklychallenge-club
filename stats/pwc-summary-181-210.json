@@ -1,15 +1,19 @@
 {
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-04-14 11:18:56 GMT"
+   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-04-14 11:02:02 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
@@ -83,7 +87,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -115,9 +118,18 @@
             0,
             3,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "xAxis" : {
       "categories" : [
          "Sean Meininger",
@@ -151,17 +163,5 @@
          "Veesh Goldman",
          "Vinod Kumar K"
       ]
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
    }
 }
