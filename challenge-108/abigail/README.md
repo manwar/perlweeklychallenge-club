@@ -6,7 +6,10 @@ location in the memory.
 
 ### Solutions
 * [C](c/ch-1.c)
+* [Fortran](fortran/ch-1.f90)
+* [Go](go/ch-1.go)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
 
 ### Blog
 
