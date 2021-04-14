@@ -33,6 +33,7 @@ more informations.
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [bc](bc/ch-2.bc)
 * [Befunge-93][befunge-93/ch-2.bf93]
 * [Perl](perl/ch-2.pl)
 
