@@ -1,4 +1,4 @@
-# Solutions by Abigail
+# Solutions by Asbigail
 ## [Locate Memory](https://perlweeklychallenge.org/blog/perl-weekly-challenge-108/#TASK1)
 
 Write a script to declare a variable or constant and print it's
@@ -32,6 +32,8 @@ more informations.
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
+* [Bash](bash/ch-2.sh)
+* [Befunge-93][befunge-93/ch-2.bf93]
 * [Perl](perl/ch-2.pl)
 
 ### Blog
