@@ -6,32 +6,40 @@
 # Task 2 - Bell Numbers
 #
 # Author: Niels 'PerlBoy' van Dijke
+#
+# Using the 'Bell triangle' algorithm
 
 use v5.16;
 use strict;
 use warnings;
 
-my @bn = (1);
+# To have integer results over nB > 26 on my machine:
+use bigint;
 
-# Using the 'Bell triangle' algorithm
+my $nB = shift // 10;
 
-my $bnT = [[1]];
+my @bn = (1,1);
+my @bnT = map {[$_]} @bn;
 
-foreach my $bTRidx (1..8) {
-  my $prevTRdim = scalar(@{$bnT->[$bTRidx-1]});
+if ($nB > 2) {
+  foreach (2 .. $nB-1) {
+    # Add row
+    push(@bnT,[0]);
 
-  # Copy
-  $bnT->[$bTRidx][0] = $bnT->[$bTRidx-1][$prevTRdim-1];
-  foreach my $bTCidx (1 .. $prevTRdim) {
+    # Copy
+    $bnT[-1][0] = $bnT[-2][-1];
+    foreach (1 .. scalar(@{$bnT[-2]})) {
+      # Add
+      $bnT[-1][$_] =  
+        $bnT[-2][$_-1] +  
+        $bnT[-1][$_-1];
+    }
 
-    # Add
-    $bnT->[$bTRidx][$bTCidx] =  
-      $bnT->[$bTRidx-1][$bTCidx-1] +  
-      $bnT->[$bTRidx][$bTCidx-1];
-  }
-
-  push(@bn, $bnT->[-1][-1]);
-} 
+    push(@bn,$bnT[-1][-1]);
+    shift(@bnT);
+  } 
+}
 
 # Print
-printf "%s\n", join(' ',1,@bn);
+my $i = 0;
+printf "%s\n", join("\n",map{++$i; "$i: $_"} @bn[0 .. $nB-1]);
