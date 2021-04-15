@@ -11,14 +11,14 @@ use v5.16;
 use strict;
 use warnings;
 
-my @bn = (1);
+my @bn = 1;
 
 # Using the 'Bell triangle' algorithm
 
 my $bnT = [[1]];
-my $bTRidx = 1;
 
-while (scalar(@bn) < 10) {
+foreach my $bTRidx (1..10) {
+
   my $prevTRdim = scalar(@{$bnT->[$bTRidx-1]});
 
   # Copy
@@ -29,11 +29,8 @@ while (scalar(@bn) < 10) {
     $bnT->[$bTRidx][$bTCidx] =  
       $bnT->[$bTRidx-1][$bTCidx-1] +  
       $bnT->[$bTRidx][$bTCidx-1];
-
-    push(@bn, $bnT->[$bTRidx][$bTCidx]);
-    last if (scalar(@bn) >= 10);
   }
-  $bTRidx++;
+  push(@bn, $bnT->[$bTRidx][-1]);
 } 
 
 # Print
