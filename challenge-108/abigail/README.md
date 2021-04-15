@@ -44,6 +44,7 @@ more informations.
 * [Fortran](fortran/ch-2.f90)
 * [Go](go/ch-2.go)
 * [Java](java/ch-2.java)
+* [Lua](lua/ch-2.lua)
 * [m4](m4/ch-2.m4)
 * [Ocaml](ocaml/ch-2.ml)
 * [Pascal](pascal/ch-2.p)
