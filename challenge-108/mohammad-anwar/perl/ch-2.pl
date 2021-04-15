@@ -7,7 +7,7 @@ use Test::More;
 use Test::Deep;
 
 is_deeply( gen_bell_numbers(10),
-           [ 1, 1, 2, 5, 15, 52, 203, 877, 4140, 21147] );
+           [ 1, 1, 2, 5, 15, 52, 203, 877, 4140, 21147 ] );
 
 done_testing;
 
