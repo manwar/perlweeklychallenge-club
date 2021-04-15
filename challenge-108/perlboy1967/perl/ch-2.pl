@@ -1,9 +1,9 @@
 #!/usr/bin/perl
 
 # Perl Weekly Challenge - 108
-# - https://perlweeklychallenge.org/blog/perl-weekly-challenge-108/#TASK1
+# - https://perlweeklychallenge.org/blog/perl-weekly-challenge-108/#TASK2
 #
-# Task 1 - Bell Numbers
+# Task 2 - Bell Numbers
 #
 # Author: Niels 'PerlBoy' van Dijke
 
