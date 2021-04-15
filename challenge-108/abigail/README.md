@@ -42,6 +42,7 @@ more informations.
 * [Erlang](erlang/ch-2.erl)
 * [Forth](forth/ch-2.fs)
 * [Fortran](fortran/ch-2.f90)
+* [Go](go/ch-2.go)
 * [Java](java/ch-2.java)
 * [m4](m4/ch-2.m4)
 * [Ocaml](ocaml/ch-2.ml)
