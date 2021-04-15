@@ -17,7 +17,7 @@ my @bn = 1;
 
 my $bnT = [[1]];
 
-foreach my $bTRidx (1..10) {
+foreach my $bTRidx (1..9) {
   my $prevTRdim = scalar(@{$bnT->[$bTRidx-1]});
 
   # Copy
