@@ -11,13 +11,13 @@ use v5.16;
 use strict;
 use warnings;
 
-my @bn = 1;
+my @bn = (1);
 
 # Using the 'Bell triangle' algorithm
 
 my $bnT = [[1]];
 
-foreach my $bTRidx (1..9) {
+foreach my $bTRidx (1..8) {
   my $prevTRdim = scalar(@{$bnT->[$bTRidx-1]});
 
   # Copy
@@ -34,4 +34,4 @@ foreach my $bTRidx (1..9) {
 } 
 
 # Print
-printf "%s\n", join(' ',@bn);
+printf "%s\n", join(' ',1,@bn);
