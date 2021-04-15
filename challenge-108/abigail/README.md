@@ -8,6 +8,7 @@ location in the memory.
 * [C](c/ch-1.c)
 * [Fortran](fortran/ch-1.f90)
 * [Go](go/ch-1.go)
+* [Pascal](pascal/ch-1.p)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 
@@ -55,6 +56,7 @@ more informations.
 * [Python](python/ch-2.py)
 * [R](r/ch-2.r)
 * [Rexx](rexx/ch-2.rexx)
+* [Ruby](ruby/ch-2.rb)
 * [Scheme](scheme/ch-2.scm)
 * [sed](sed/ch-2.sed)
 * [SQL](sql/ch-2.sql)
