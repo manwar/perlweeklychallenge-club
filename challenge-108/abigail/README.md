@@ -46,6 +46,7 @@ more informations.
 * [Java](java/ch-2.java)
 * [Lua](lua/ch-2.lua)
 * [m4](m4/ch-2.m4)
+* [Node.js](node/ch-2.js)
 * [Ocaml](ocaml/ch-2.ml)
 * [Pascal](pascal/ch-2.p)
 * [Perl](perl/ch-2.pl)
