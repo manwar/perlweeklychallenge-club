@@ -35,6 +35,7 @@ more informations.
 * [Bash](bash/ch-2.sh)
 * [bc](bc/ch-2.bc)
 * [Befunge-93][befunge-93/ch-2.bf93]
+* [C](c/ch-2.c)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
