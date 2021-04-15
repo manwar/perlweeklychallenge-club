@@ -52,6 +52,7 @@ more informations.
 * [Perl](perl/ch-2.pl)
 * [PHP](php/ch-2.php)
 * [PostScript](postscript/ch-2.ps)
+* [Python](python/ch-2.py)
 * [R](r/ch-2.r)
 * [Rexx](rexx/ch-2.rexx)
 * [Scheme](scheme/ch-2.scm)
