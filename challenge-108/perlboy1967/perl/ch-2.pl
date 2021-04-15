@@ -18,7 +18,6 @@ my @bn = 1;
 my $bnT = [[1]];
 
 foreach my $bTRidx (1..10) {
-
   my $prevTRdim = scalar(@{$bnT->[$bTRidx-1]});
 
   # Copy
@@ -30,7 +29,8 @@ foreach my $bTRidx (1..10) {
       $bnT->[$bTRidx-1][$bTCidx-1] +  
       $bnT->[$bTRidx][$bTCidx-1];
   }
-  push(@bn, $bnT->[$bTRidx][-1]);
+
+  push(@bn, $bnT->[-1][-1]);
 } 
 
 # Print
