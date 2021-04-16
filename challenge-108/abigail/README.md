@@ -12,6 +12,7 @@ location in the memory.
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
+* [Ruby](ruby/ch-1.rb)
 
 ### Blog
 
