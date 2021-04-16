@@ -15,6 +15,7 @@ location in the memory.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Locate Memory](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-108-1.html)
 
 
 ## [Bell Numbers](https://perlweeklychallenge.org/blog/perl-weekly-challenge-108/#TASK2)
