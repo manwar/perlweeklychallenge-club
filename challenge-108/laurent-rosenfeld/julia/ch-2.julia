@@ -1,0 +1,13 @@
+max = 10
+tr = zeros(Int32, max, max)
+tr[1, 1] = 1
+results = ones(Int32, max)
+for row = 2:max
+    res = tr[row - 1, row - 1]
+    tr[row, 1] = res
+    results[row] = res
+    for i = 2:row
+        tr[row, i] = tr[row, i-1] + tr[row - 1, i-1]
+    end
+end
+for n in results print("$n ") end
