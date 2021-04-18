@@ -3,7 +3,7 @@ use warnings;
 ##
 # Write a script to display the first 10 Bell Numbers.
 ##
-sub bell{
+sub bell_triangle{
     my($n) = @_; 
     my @bell_numbers = ([]);
     $bell_numbers[0]->[0] = 1;
@@ -18,6 +18,6 @@ sub bell{
 
 MINA:{
     for my $b (0 .. 9){  
-        print "B_$b: " . bell($b) . "\n";  
+        print "B_$b: " . bell_triangle($b) . "\n";  
     } 
 }
