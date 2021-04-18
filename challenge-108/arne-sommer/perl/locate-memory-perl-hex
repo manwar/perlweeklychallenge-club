@@ -1,0 +1,21 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+
+use feature 'say';
+
+my $str = 'A';
+my $int = 1299;
+my @array = qw/A 1299/;
+
+say get_hex_value(\$str);
+say get_hex_value(\$int);
+say get_hex_value(\@array);
+
+sub get_hex_value
+{
+    my $string = shift;
+    $string =~ /(0x[a-f\d]+)/;
+    return $1;
+}
