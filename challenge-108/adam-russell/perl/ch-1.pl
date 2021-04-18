@@ -14,11 +14,11 @@ my $stderr = capture_stderr {
 $stderr =~ m/at\s(0x.*\n).*/;
 $address = $1;  
 chomp($address);
-print $address . "\n"; 
+print "Address of constant A: $address\n"; 
 $stderr = capture_stderr {
     Dump($a)
 };
 $stderr =~ m/at\s(0x.*\n).*/;
 $address = $1;  
 chomp($address);
-print $address . "\n"; 
+print "Address of \$a: $address\n"; 
