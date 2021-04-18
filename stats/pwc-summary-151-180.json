@@ -1,7 +1,4 @@
 {
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
    "xAxis" : {
       "categories" : [
          "Pavel Kuptsov",
@@ -36,10 +33,12 @@
          "Sangeet Kar"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-04-18 15:58:54 GMT"
    },
    "yAxis" : {
       "min" : 0,
@@ -47,11 +46,17 @@
          "text" : ""
       }
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "chart" : {
       "type" : "column"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             7,
             0,
@@ -83,11 +88,9 @@
             54,
             10,
             10
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -119,9 +122,11 @@
             0,
             0,
             10
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -153,15 +158,10 @@
             1,
             4,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-04-18 15:40:09 GMT"
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    }
 }
