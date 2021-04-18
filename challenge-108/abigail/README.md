@@ -66,4 +66,5 @@ more informations.
 * [Tcl](tcl/ch-2.tcl)
 
 ### Blog
+[Bell Numbers](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-108-2.html)
 
