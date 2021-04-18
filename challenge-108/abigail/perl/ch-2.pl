@@ -40,11 +40,9 @@ if ($type == $TYPE_PLAIN) {
 elsif ($type == $TYPE_FETCH) {
     use OEIS;
     $, = ", ";
-    say oeis (110 => 10)
+    say oeis (110 => $COUNT)
 }
 elsif ($type == $TYPE_COMPUTE) {
-    my $COUNT = 10;
-
     #
     # Create Bell triangle (See https://en.wikipedia.org/wiki/Bell_triangle)
     # The Bell numbers (starting from the second one), are on the
