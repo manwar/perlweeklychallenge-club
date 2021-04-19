@@ -1,17 +1,20 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-04-19 22:10:08 GMT"
    },
    "chart" : {
       "type" : "column"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "xAxis" : {
       "type" : "category"
    },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 109",
-         "colorByPoint" : 1,
          "data" : [
             {
                "y" : 2,
@@ -19,24 +22,24 @@
                "drilldown" : "E. Choroba"
             },
             {
-               "y" : 2,
+               "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
+               "y" : 2
             },
             {
-               "y" : 1,
                "name" : "Mohammad S Anwar",
+               "y" : 1,
                "drilldown" : "Mohammad S Anwar"
             },
             {
+               "y" : 4,
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "drilldown" : "Roger Bell_West"
             },
             {
-               "drilldown" : "Simon Green",
                "name" : "Simon Green",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Simon Green"
             },
             {
                "y" : 2,
@@ -44,59 +47,56 @@
                "drilldown" : "Simon Proctor"
             },
             {
-               "y" : 3,
+               "y" : 4,
+               "name" : "Stuart Little",
+               "drilldown" : "Stuart Little"
+            },
+            {
+               "drilldown" : "W. Luis Mochan",
                "name" : "W. Luis Mochan",
-               "drilldown" : "W. Luis Mochan"
+               "y" : 3
             }
-         ]
+         ],
+         "name" : "Perl Weekly Challenge - 109",
+         "colorByPoint" : 1
       }
    ],
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "legend" : {
+      "enabled" : 0
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 109"
    },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-04-19 17:30:27 GMT"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
    },
    "drilldown" : {
       "series" : [
          {
             "id" : "E. Choroba",
-            "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "E. Choroba"
          },
          {
-            "name" : "Mark Anderson",
             "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Mark Anderson"
          },
          {
             "data" : [
@@ -105,12 +105,10 @@
                   1
                ]
             ],
-            "name" : "Mohammad S Anwar",
-            "id" : "Mohammad S Anwar"
+            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar"
          },
          {
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -120,27 +118,43 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          },
          {
+            "id" : "Simon Green",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Simon Green",
-            "id" : "Simon Green"
+            "name" : "Simon Green"
          },
          {
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            "id" : "Simon Proctor"
+         },
+         {
+            "id" : "Stuart Little",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Stuart Little"
          },
          {
             "name" : "W. Luis Mochan",
@@ -157,5 +171,10 @@
             ]
          }
       ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
