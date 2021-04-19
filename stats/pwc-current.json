@@ -1,92 +1,82 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2021-04-19 22:10:08 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 2,
                "name" : "E. Choroba",
+               "y" : 2,
                "drilldown" : "E. Choroba"
             },
             {
-               "drilldown" : "Mark Anderson",
+               "name" : "Flavio Poletti",
+               "drilldown" : "Flavio Poletti",
+               "y" : 4
+            },
+            {
                "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
                "y" : 2
             },
             {
                "name" : "Mohammad S Anwar",
-               "y" : 1,
-               "drilldown" : "Mohammad S Anwar"
+               "drilldown" : "Mohammad S Anwar",
+               "y" : 1
             },
             {
-               "y" : 4,
                "name" : "Roger Bell_West",
+               "y" : 4,
                "drilldown" : "Roger Bell_West"
             },
             {
                "name" : "Simon Green",
-               "y" : 2,
-               "drilldown" : "Simon Green"
+               "drilldown" : "Simon Green",
+               "y" : 2
             },
             {
                "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
             },
             {
-               "y" : 4,
                "name" : "Stuart Little",
+               "y" : 4,
                "drilldown" : "Stuart Little"
             },
             {
-               "drilldown" : "W. Luis Mochan",
                "name" : "W. Luis Mochan",
+               "drilldown" : "W. Luis Mochan",
                "y" : 3
             }
          ],
-         "name" : "Perl Weekly Challenge - 109",
-         "colorByPoint" : 1
+         "name" : "Perl Weekly Challenge - 109"
       }
    ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 109"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "E. Choroba"
+            "name" : "E. Choroba",
+            "id" : "E. Choroba"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "name" : "Flavio Poletti",
+            "id" : "Flavio Poletti"
          },
          {
             "id" : "Mark Anderson",
@@ -99,16 +89,18 @@
             "name" : "Mark Anderson"
          },
          {
+            "id" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "id" : "Mohammad S Anwar",
             "name" : "Mohammad S Anwar"
          },
          {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -118,32 +110,29 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            ]
          },
          {
-            "id" : "Simon Green",
+            "name" : "Simon Green",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Simon Green"
+            "id" : "Simon Green"
          },
          {
+            "id" : "Simon Proctor",
             "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor"
+            ]
          },
          {
-            "id" : "Stuart Little",
             "data" : [
                [
                   "Perl",
@@ -154,11 +143,11 @@
                   2
                ]
             ],
-            "name" : "Stuart Little"
+            "name" : "Stuart Little",
+            "id" : "Stuart Little"
          },
          {
             "name" : "W. Luis Mochan",
-            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -168,13 +157,43 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "W. Luis Mochan"
          }
       ]
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2021-04-19 22:12:49 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 109"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
    }
 }
