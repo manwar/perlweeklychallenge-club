@@ -1,6 +1,16 @@
 #!/usr/bin/env raku
 
-say (1..20).map({ divisors-sum($_) - 1 - $_ }).join(", ");
+say (1..20).map(&chowla).join(", ");
+
+multi chowla($n where * == 1)
+{
+    0
+}
+
+multi chowla($n)
+{
+    divisors-sum($n) - 1 - $n;
+}
 
 sub divisors-sum($n)
 {
