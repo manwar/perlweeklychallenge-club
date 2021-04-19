@@ -1,50 +1,18 @@
-# Self Descriptive Number
+# Chowla Numbers
 ## Java Solution
 
 To compile the code run
 ```java
-javac SelfDescriptiveNumber.java
+javac ChowlaNumbers.java
 ```
 To run
 ```java
-java SelfDescriptiveNumber
+java ChowlaNumbers
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-107/ziameraj16/java$ javac SelfDescriptiveNumber.java
-/perlweeklychallenge-club/challenge-107/ziameraj16/java$ java SelfDescriptiveNumber
-1210
-2020
-21200
+/perlweeklychallenge-club/challenge-109/ziameraj16/java$ javac ChowlaNumbers.java
+/perlweeklychallenge-club/challenge-109/ziameraj16/java$ java ChowlaNumbers
+0, 0, 0, 2, 0, 5, 0, 6, 3, 7, 0, 15, 0, 9, 8, 14, 0, 20, 0, 21
 ```
 
-# List Methods
-## Java Solution
-
-To compile the code run
-```java
-javac ListMethods.java
-```
-To run
-```java
-java ListMethods
-```
-### Example
-```bash
-/perlweeklychallenge-club/challenge-107/ziameraj16/java$ javac ListMethods.java
-/perlweeklychallenge-club/challenge-107/ziameraj16/java$ java ListMethods
-Enter class name with package - e.g. 'java.util.List'
-java.lang.Object
-finalize
-wait
-wait
-wait
-equals
-toString
-hashCode
-getClass
-clone
-notify
-notifyAll
-registerNatives
-```
