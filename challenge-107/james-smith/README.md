@@ -71,7 +71,7 @@ I wouldn't do this in "normal" code as I think it can get confusing `$x && f()` 
 especially if `f()` has implicit side effects as here.
 
 If we don't want to capture the values - but just display the results - we can drop this into a perl 1-liner on the
-command liner.
+command line.
 
 ```
 perl -E '($c-join"",map{0+@{[$c=~/($_)/g]}}0..-1+length$c)||++$n&&say$c while++$c&&$n<3'
@@ -90,15 +90,15 @@ you rarely do in Perl 1-liners...)
 
  * We don't collect results - and we just keep a counter - this time we use `||` and `&&` in the "logic"...
 
- * We know `++$n` is always going to be true (it starts of explicitly) and so we always run `say$c` if we get to the `++$n`..
+ * We know `++$n` is always going to be true (it starts off explicitly as `0` so in the condition it is going to be `1, 2, 3, ...`) and so we always run `say$c` if we get to the `++$n`...
 
- * Note here - this is a place where it is important to choose `++$n` rather than the more common `$n++`, as the first evaluates to `0` the first time it is invoked - meaning we would skip the first answer...
+ * **Note here** - this is a place where it is important to choose `++$n` rather than the more common `$n++`, as the latter evaluates to `0` the first time it is invoked - meaning we would skip the first answer...
 
  * We show a different trick to count the elements of the list.
 
-   * We can use another trick other than the scalar `@{[ ]}` trick to convert the list into an array. we store it in an array variable which makes it we can then get the length of the array (we just ignore the array!)
+   * We can use another trick other than the scalar `@{[ ]}` trick to convert the list into an array. We store it in an array variable which forces to an array rather than a last - we can then get the length of the array (we just throw the array away!)
 
-   * As we are keeping the code short - we can replace the keyword scalar with a simple `0+` which forces the array to be converted into a scalar (and hence returns the length)
+   * As we are keeping the code short - we can replace the keyword `scalar` with a simple `0+` which forces the array to be converted into a scalar (and hence returns its length)
 
    * To gain another character as the equality is numeric we can rewrite `if($a==$b) { f() }` as `($a-$b)||f()`.
 
