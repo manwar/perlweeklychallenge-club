@@ -1,93 +1,108 @@
 {
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 109",
-         "data" : [
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Mohammad S Anwar",
-               "y" : 1,
-               "name" : "Mohammad S Anwar"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            }
-         ],
-         "colorByPoint" : 1
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
-   ],
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mark Anderson"
          },
          {
-            "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
+            "name" : "Mohammad S Anwar",
             "id" : "Mohammad S Anwar"
          },
          {
+            "id" : "Simon Green",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Simon Green"
+         },
+         {
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor"
          }
       ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 109"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-04-19 16:26:10 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 109",
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "y" : 1,
+               "name" : "Mohammad S Anwar",
+               "drilldown" : "Mohammad S Anwar"
+            },
+            {
+               "y" : 2,
+               "name" : "Simon Green",
+               "drilldown" : "Simon Green"
+            },
+            {
+               "y" : 2,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            }
+         ]
       }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-04-19 16:21:03 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 109"
-   }
+   ]
 }
