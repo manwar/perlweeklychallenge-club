@@ -2,21 +2,11 @@
 
 say (1..20).map(&chowla).join(", ");
 
-multi chowla($n where * == 1)
-{
-    0
-}
-
-multi chowla($n)
-{
-    divisors-sum($n) - 1 - $n;
-}
-
-sub divisors-sum($n)
+sub chowla($n)
 {
     .unique.sum given gather 
     {
-        for 1..$n.sqrt -> $i
+        for 2..$n.sqrt -> $i
         {
             if $n %% $i
             {
