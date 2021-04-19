@@ -1,10 +1,20 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-04-19 16:08:55 GMT"
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "series" : [
       {
@@ -70,7 +80,7 @@
             4,
             1,
             0,
-            118,
+            120,
             1,
             30,
             87
@@ -78,6 +88,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -109,23 +120,15 @@
             0,
             10,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-04-19 16:18:22 GMT"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "xAxis" : {
       "categories" : [
@@ -160,8 +163,5 @@
          "Mark Senn",
          "Markus Holzer"
       ]
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
