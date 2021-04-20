@@ -15,7 +15,7 @@ COUNT   = 20
 
 def divisor_sum (n)
     sum = 0
-    for i in 2 .. n - 1
+    for i in 2 .. n / 2
         if   n % i == 0
         then sum += i
         end

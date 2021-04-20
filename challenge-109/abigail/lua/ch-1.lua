@@ -15,7 +15,7 @@ local COUNT   = 20
 
 function divisor_sum (n)
     local sum = 0
-    for i = 2, n - 2 do
+    for i = 2, n / 2 do
         if   n % i == 0 
         then sum = sum + i
         end

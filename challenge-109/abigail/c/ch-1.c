@@ -20,7 +20,7 @@ typedef int number;  /* Change if we want large numbers */
 
 number divisor_sum (number n) {
     number sum = 0;
-    for (number i = 2; i < n; i ++) {
+    for (number i = 2; i <= n / 2; i ++) {
         if (!(n % i)) {
             sum += i;
         }

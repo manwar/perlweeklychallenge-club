@@ -47,5 +47,5 @@ elsif ($type == $TYPE_COMPUTE) {
     # calculate the first 20 numbers, we don't have to care about
     # efficiency.
     #
-    say map {my $n = $_; sum0 grep {!($n % $_)} 2 .. $_ - 1} 1 .. $COUNT;
+    say map {my $n = $_; sum0 grep {!($n % $_)} 2 .. $_ / 2} 1 .. $COUNT;
 }

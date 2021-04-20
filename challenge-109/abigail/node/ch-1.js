@@ -15,7 +15,7 @@ let COUNT   = 20
 
 function divisor_sum (n) {
     let sum = 0
-    for (let i = 2; i < n; i ++) {
+    for (let i = 2; i <= Math . floor (n / 2); i ++) {
         if (n % i == 0) {
             sum += i
         }
