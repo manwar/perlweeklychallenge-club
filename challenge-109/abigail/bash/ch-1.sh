@@ -13,6 +13,7 @@ set -f
 COUNT=20
 
 function divisor_sum () {
+    local n=$1
     sum=0
     local i
     for ((i = 2; i < n; i ++))
