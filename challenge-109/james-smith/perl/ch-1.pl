@@ -15,12 +15,8 @@ done_testing();
 
 sub my_function {
   sub chowla {
-    my ($n,$t) = ($_[0],0);
-    return map( { $t+=$_ || () }
-           map { ( $_ && !($n%$_) ) ? $_ : () }
-           2..($n-1)
-           ),
-           $t;
+    my ($t,$n) = (0,@_);
+    return ( map { (($n%$_) || ($t+=$_)) && () } 2..$n-1 ), $t;
   }
 }
 
