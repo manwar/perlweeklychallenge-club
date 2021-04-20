@@ -15,14 +15,16 @@ use warnings;
 
 use List::Util qw(sum0);
 
+use Test::More;
+use Test::Deep;
+
 # Prototype(s)
 sub chowlaNumber($);
 
-my $N = shift @ARGV // 20;
+cmp_deeply ([map {chowlaNumber($_)} 1 .. 20],
+            [0,0,0,2,0,5,0,6,3,7,0,15,0,9,8,14,0,20,0,21]);
 
-printf "First %d Chowla numbers: %s\n",
-       $N, join(',', map { chowlaNumber($_) } 1 .. $N);
-
+done_testing;
 
 
 sub chowlaNumber($) {
