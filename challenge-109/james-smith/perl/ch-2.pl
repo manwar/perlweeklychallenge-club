@@ -133,10 +133,10 @@ sub four_square_non_unique {
       my $f = splice @n3,$j,1;
       foreach my $k ( 0..@n3-1 ) {
         next if (my $n = $t + $b + (my $d = $n3[$k]) + $f) & 3;
-        my ( $c, $e ) = ( (my $a = $n/4-$b) - $d, (my $g = $n/4-$f) - $d );
-        next if $check ne "@{[ sort $a,$b,$c,$d,$e,$f,$g ]}" ||
-                exists $res{ my $key = "@{[ $a,$b,$c,$d,$e,$f,$g ]}" };
-        $res{$key} = [ $a, $b, $c, $d, $e, $f, $g ];
+        my @R = ($n/4-$b,$b,$n/4-$b-$d,$d,$n/4-$f-$d,$f,$n/4-$f);
+        next if exists $res{ my $key = "@R" };
+        next if $check ne "@{[ sort @R ]}";
+        $res{$key} = \@R;
       }
     }
   }
