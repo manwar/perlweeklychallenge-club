@@ -19,7 +19,7 @@ is( chowla_for($_), $answer[ $_ ] ) foreach 1..20;
 done_testing();
 
 ## We will quickly run benchmarking...
-## This suggests the for loop to be approximately 40-50%
+## This suggests the for loop to be approximately 40%
 ## faster than the map solution...
 ## It is also 9 characters shorter...
 
@@ -30,15 +30,15 @@ cmpthese(1_000_000, {
 
 ##
 ##        Rate  Map  For
-## Map 38670/s   -- -33%
-## For 57670/s  49%   --
+## Map 59524/s   -- -26%
+## For 79936/s  34%   --
 ##
 
 sub chowla_map {
   my ($t,$n) = (0,@_);
 ## First attempt - the one-liner is to write this as a map,
 ## we add $t at the end which is the value returned
-  ( map { (($n%$_) || ($t+=$_)) && () } 2..$n-1 ), $t;
+  ( map { (($n%$_) || ($t+=$_)) && () } 2..$n>>1 ), $t;
 }
 
 sub chowla_for {
@@ -56,7 +56,7 @@ sub chowla_for {
   ##      ($condition)||($fun())
   ##  * in perl `foreach` and `for` are synonymous - so we can shorten
 
-  ($n%$_)||($t+=$_) for 2..$n-1;
+  ($n%$_)||($t+=$_) for 2..$n>>1;
 
   ## Now a quick "shortening" - if there is no specific return
   ## statement - we can just omit the return in the last statement...
