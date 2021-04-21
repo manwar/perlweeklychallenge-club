@@ -6,10 +6,10 @@
 sub choowla( Int $n ) {
     # get all divisors
 
-    my @divisors;
-    for 2 .. $n / 2 {
-        @divisors.push: $_ if $n %% $_;
-    }
+    my @divisors.push: $_ if $n %% $_ for 2 .. $n / 2;
+    # for 2 .. $n / 2 {
+    #     @divisors.push: $_ if $n %% $_;
+    # }
 
     return [+] @divisors;
 }
