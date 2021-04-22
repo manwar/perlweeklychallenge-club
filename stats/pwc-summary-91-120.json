@@ -1,4 +1,8 @@
 {
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "xAxis" : {
       "categories" : [
          "John Barrett",
@@ -33,30 +37,14 @@
          "Markus Holzer"
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-04-22 09:40:55 GMT"
+   },
    "chart" : {
       "type" : "column"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-04-22 09:29:00 GMT"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             7,
             0,
@@ -88,9 +76,11 @@
             1,
             0,
             8
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             3,
@@ -122,8 +112,7 @@
             1,
             30,
             87
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -161,7 +150,18 @@
          ]
       }
    ],
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
