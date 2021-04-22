@@ -1,17 +1,17 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             0,
             0,
@@ -43,8 +43,7 @@
             8,
             114,
             3
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -82,6 +81,7 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -113,16 +113,22 @@
             0,
             0,
             1
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-04-22 15:19:28 GMT"
+      "text" : "[Champions: 30] Last updated at 2021-04-22 15:30:41 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -157,11 +163,5 @@
          "Paulo Custodio",
          "Pavel Jurca"
       ]
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
    }
 }
