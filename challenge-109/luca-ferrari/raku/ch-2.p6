@@ -1,7 +1,7 @@
 #!raku
 
 
-sub MAIN(  *@nums where { @nums.grep( * ~~ Int ).elems == @nums.elems && @nums.elems == 7 } ) {
+multi sub MAIN(  *@nums where { @nums.grep( * ~~ Int ).elems == @nums.elems && @nums.elems == 7 } ) {
     my @letters = 'a' .. 'g';
     my @solutions;
 
@@ -27,4 +27,9 @@ sub MAIN(  *@nums where { @nums.grep( * ~~ Int ).elems == @nums.elems && @nums.e
 
     say $_ for @solutions;
 
+}
+
+
+multi sub MAIN() {
+    MAIN( <1 2 3 4 5 6 7> );
 }
