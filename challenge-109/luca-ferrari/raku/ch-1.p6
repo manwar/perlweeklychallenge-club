@@ -14,6 +14,7 @@ sub choowla( Int $n where { $n > 0 } ) {
 }
 
 sub MAIN( Int $limit = 20 ) {
-    my @choowla-numbers.push: choowla( $_ ) for 1 .. $limit;
-    @choowla-numbers.join( ',' ).say;
+    # my @choowla-numbers.push: choowla( $_ ) for 1 .. $limit;
+    # @choowla-numbers.join( ',' ).say;
+    @( choowla( $_ ) for 1 .. $limit ).join( ',' ).say;
 }
