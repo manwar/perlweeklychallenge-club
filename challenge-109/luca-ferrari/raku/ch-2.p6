@@ -2,7 +2,7 @@
 
 
 sub MAIN(  *@nums where { @nums.grep( * ~~ Int ).elems == @nums.elems && @nums.elems == 7 } ) {
-    my @letters = <a b c d e f g>;
+    my @letters = 'a' .. 'g';
     my @solutions;
 
     # permutate all numbers to find out the correct sum
@@ -13,14 +13,14 @@ sub MAIN(  *@nums where { @nums.grep( * ~~ Int ).elems == @nums.elems && @nums.e
 
         # compute the sums
         my @sums;
-        @sums.push: [+] %squares<a b>;
-        @sums.push: [+] %squares<b c d>;
-        @sums.push: [+] %squares<d e f>;
-        @sums.push: [+] %squares<f g>;
+        @sums.push: [+] %squares{ 'a' .. 'b' };
+        @sums.push: [+] %squares{ 'b' .. 'd' };
+        @sums.push: [+] %squares{ 'd' .. 'f' };
+        @sums.push: [+] %squares{ 'f' .. 'g' };
 
 
         # if the first sum is equal to all the others, push this solution
-        @solutions.push: %squares if @sums[ 0 ] == all @sums;
+        @solutions.push: %squares if @sums[ 0 ] == all @sums[ 1 .. * ];
     }
 
 
