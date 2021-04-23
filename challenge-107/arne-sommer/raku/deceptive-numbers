@@ -1,0 +1,20 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($count);
+
+my $seq := gather
+{
+  my $index = 3;
+
+  loop
+  {
+    unless $index.is-prime
+    {
+      take $index if (10 ** ($index -1)) % (9 * $index) == 1;
+    }
+ 
+    $index++;
+  }
+} 
+
+say $seq[^$count];

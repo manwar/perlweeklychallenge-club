@@ -1,0 +1,13 @@
+PROCEDURE_FORM ROOT (#in)
+    if (#in = "")
+        #input = 248832
+    else
+        #input = #in
+    end_if
+    #i = 1
+    while(#i <= 10)
+        #root = #input ^ (1.0/#i)
+        error /text_only (mask("!-@@", #i) & mask("!-@@@@@@@@@@0.@@@", #root))
+        #i = #i + 1
+    end_while
+END_FORM

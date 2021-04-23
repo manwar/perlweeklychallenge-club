@@ -1,0 +1,4 @@
+tests = [17, 2, 9, 3, 5]
+sorted = sort(tests)
+gaps = map(i -> sorted[i] - sorted[i - 1], 2:length(sorted))
+@printf("Max gap is %i", maximum(gaps))

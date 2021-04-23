@@ -1,0 +1,22 @@
+ DecimalString←{
+⍝ Not optimal in any sense other than this was fairly quick to write
+⍝ Return decimal representation, parenthesising decimals if repeating
+     div←⍺÷⍵
+     (n d)←(,÷∨)∘1⊢div   ⍝ Numerator and denominator reduced
+     r←×≢2 5~⍨∊{⍵⌿⍨2=≢⍸(⊢=⌊)⍵÷⍳⍵}¨(∪⊢∨⍳)d ⍝ Does the decimal repeat indefinitely?
+     ∊⍕¨(⌊div)('.')({'(',⍵,')'}⍣r⊢(2↓∪¯1↓⍣r⊢⍕1|div))
+⍝ Examples
+⍝       1 DecimalString 3
+⍝ 0.(3)
+⍝       1 DecimalString 2
+⍝ 0.5
+⍝       10 DecimalString 132
+⍝ 0.(75)
+⍝       1 DecimalString 24
+⍝ 0.(416)
+⍝       1 DecimalString 26
+⍝ 0.(384615)
+⍝       1 DecimalString 25
+⍝ 0.4
+
+ }

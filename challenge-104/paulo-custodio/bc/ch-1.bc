@@ -1,0 +1,38 @@
+#!/usr/bin/bc -q
+
+/*
+Challenge 104
+
+TASK #1 › FUSC Sequence
+Submitted by: Mohammad S Anwar
+Write a script to generate first 50 members of FUSC Sequence. Please refer to
+OEIS for more information.
+
+The sequence defined as below:
+
+fusc(0) = 0
+fusc(1) = 1
+for n > 1:
+when n is even: fusc(n) = fusc(n / 2),
+when n is odd: fusc(n) = fusc((n-1)/2) + fusc((n+1)/2)
+*/
+
+scale = 0
+
+define fusc(n) {
+    if (n==0) return 0;
+    if (n==1) return 1;
+    if ((n % 2)==0) {
+        return fusc(n/2);
+    } else {
+        return fusc((n-1)/2) + fusc((n+1)/2);
+    }
+}
+
+num = read();
+for (i=0; i<num; i++) {
+    print fusc(i), " ";
+}
+print "\n";
+
+quit;

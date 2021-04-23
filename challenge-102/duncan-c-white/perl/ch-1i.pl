@@ -63,6 +63,9 @@ fun israre( $x )
 	$n = $x-$r;
 	$s = int(sqrt($n));
 	return 0 unless $n == $s * $s;
+
+	# we have a rare number!
+	return 1;
 }
 
 
