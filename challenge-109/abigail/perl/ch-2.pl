@@ -98,40 +98,54 @@ while (<>) {
     my @numbers = split;
 
     #
-    # Find all differences
+    # For each of the numbers n present in @numbers, find all pairs
+    # of numbers whose difference equals n. We will have a data structure
+    # '%differences' keyed by the numbers in @numbers; values are
+    # two element arrays of *indices*, where the differences of the
+    # numbers with those indices are the key.
     #
-    my %differences;
+    my %differences = map {$_ => []} @numbers;
+
+    #
+    # Find all the differences, and store them in %differences.
+    # We do *not* need to store any pair whose difference is
+    # not in @numbers.
+    #
     for (my $x = 0; $x < @numbers; $x ++) {
         for (my $y = $x + 1; $y < @numbers; $y ++) {
             my $diff = $numbers [$x] - $numbers [$y];
-            push @{$differences { $diff}} => [$x, $y];
-            push @{$differences {-$diff}} => [$y, $x];
+            push @{$differences { $diff}} => [$x, $y] if $differences { $diff};
+            push @{$differences {-$diff}} => [$y, $x] if $differences {-$diff};
         }
     }
 
     #
-    # Now, iterate over the numbers, and see if there 
-    # is a number matching two differences, with all
-    # indices being different.
+    # Now, iterate over the numbers d in @numbers, with index d_i, and for
+    # each d, iterate over all pairs of differences equal to d. Only consider
+    # pairs where all indices are different, and different from d_i.
     #
     for (my $d_i = 0; $d_i < @numbers; $d_i ++) {
         my $d = $numbers [$d_i];
-        #
-        # Find the pairs whose difference is $d. If we don't have
-        # at least two pairs where neither number is $d, this
-        # cannot be a solution.
-        #
-        my @diffs = grep {$$_ [0] != $d_i && $$_ [1] != $d_i}
-                          @{$differences {$d} || []};
-
-        next unless @diffs >= 2;
+        my @diffs = @{$differences {$d}};
 
         #
         # Now, find two pairs where all indices are different.
         #
         for (my $x = 0; $x < @diffs; $x ++) {
+            #
+            # Ignore a difference involving d_i.
+            #
+            next if $diffs [$x] [0] == $d_i ||
+                    $diffs [$x] [1] == $d_i;   
             for (my $y = $x + 1; $y < @diffs; $y ++) {
-                next if $diffs [$x] [0] == $diffs [$y] [0] ||
+                #
+                # Second difference cannot involve the number at d_i,
+                # and the indices involved in the second difference
+                # must be different from the first difference.
+                #
+                next if $diffs [$y] [0] == $d_i            ||
+                        $diffs [$y] [1] == $d_i            ||   
+                        $diffs [$x] [0] == $diffs [$y] [0] ||
                         $diffs [$x] [0] == $diffs [$y] [1] ||
                         $diffs [$x] [1] == $diffs [$y] [0] ||
                         $diffs [$x] [1] == $diffs [$y] [1];
