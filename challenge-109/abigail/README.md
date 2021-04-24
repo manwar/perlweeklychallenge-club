@@ -44,6 +44,8 @@ It is defined as:
 
 ### Blog
 
+[Chowla Numbers](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-109-1.html)
+
 
 ## [Four Squares Puzzle](https://perlweeklychallenge.org/blog/perl-weekly-challenge-109/#TASK2)
 
@@ -98,6 +100,7 @@ Output:
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
+* [Ruby](ruby/ch-2.rb)
 
 ### Blog
 
