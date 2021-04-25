@@ -1,70 +1,106 @@
 # Solutions by Asbigail
-## [Locate Memory](https://perlweeklychallenge.org/blog/perl-weekly-challenge-108/#TASK1)
+## [Chowla Numbers](https://perlweeklychallenge.org/blog/perl-weekly-challenge-109/#TASK1)
 
-Write a script to declare a variable or constant and print it's
-location in the memory.
+Write a script to generate first 20 Chowla Numbers, named after,
+Sarvadaman D. S. Chowla, a London born Indian American mathematician.
+It is defined as:
+
+    C(n) = (sum of divisors of n) - 1 - n
+
+### Output
+
+    0, 0, 0, 2, 0, 5, 0, 6, 3, 7, 0, 15, 0, 9, 8, 14, 0, 20, 0, 21
 
 ### Solutions
+* [AWK](awk/ch-1.awk)
+* [Bash](bash/ch-1.sh)
+* [BASIC](basic/ch-1.bas)
+* [bc](bc/ch-1.bc)
+* [Befunge-93][befunge-93/ch-1.bf93]
 * [C](c/ch-1.c)
+* [Cobol](cobol/ch-1.cb)
+* [Csh](csh/ch-1.csh)
+* [Erlang](erlang/ch-1.erl)
+* [Forth](forth/ch-1.fs)
 * [Fortran](fortran/ch-1.f90)
 * [Go](go/ch-1.go)
+* [Java](java/ch-1.java)
+* [Lua](lua/ch-1.lua)
+* [m4](m4/ch-1.m4)
+* [Node.js](node/ch-1.js)
+* [Ocaml](ocaml/ch-1.ml)
 * [Pascal](pascal/ch-1.p)
 * [Perl](perl/ch-1.pl)
+* [PHP](php/ch-1.php)
+* [PostScript](postscript/ch-1.ps)
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
+* [Rexx](rexx/ch-1.rexx)
 * [Ruby](ruby/ch-1.rb)
+* [Scheme](scheme/ch-1.scm)
+* [sed](sed/ch-1.sed)
+* [SQL](sql/ch-1.sql)
+* [Tcl](tcl/ch-1.tcl)
 
 ### Blog
-[Locate Memory](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-108-1.html)
+
+[Chowla Numbers](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-109-1.html)
 
 
-## [Bell Numbers](https://perlweeklychallenge.org/blog/perl-weekly-challenge-108/#TASK2)
+## [Four Squares Puzzle](https://perlweeklychallenge.org/blog/perl-weekly-challenge-109/#TASK2)
 
-Write a script to display top 10 Bell Numbers. Please refer to
-[wikipedia page](https://en.wikipedia.org/wiki/Bell_number) for
-more informations.
+You are given four squares as below with numbers named `a`, `b`,
+`c`, `d`, `e`, `f`, `g`.
+
+              (1)                    (3)
+        ╔══════════════╗      ╔══════════════╗
+        ║              ║      ║              ║
+        ║      a       ║      ║      e       ║
+        ║              ║ (2)  ║              ║  (4)
+        ║          ┌───╫──────╫───┐      ┌───╫─────────┐
+        ║          │   ║      ║   │      │   ║         │
+        ║          │ b ║      ║ d │      │ f ║         │
+        ║          │   ║      ║   │      │   ║         │
+        ║          │   ║      ║   │      │   ║         │
+        ╚══════════╪═══╝      ╚═══╪══════╪═══╝         │
+                   │       c      │      │      g      │
+                   │              │      │             │
+                   │              │      │             │
+                   └──────────────┘      └─────────────┘
+
+Write a script to place the given unique numbers in the square box
+so that sum of numbers in each box is the same.
 
 ### Example
-* `B_0 = 1`, as you can only have one partition of zero element set
-* `B_1 = 1`, as you can only have one partition of one element set {a}.
-* `B_2 = 2`, `{a}{b}`, `{a,b}`.
-* `B_3 = 5`, `{a}{b}{c}`, `{a,b}{c}`, `{a}{b,c}`, `{a,c}{b}`, `{a,b,c}`.
-* `B_4 = 15`, `{a}{b}{c}{d}`, `{a,b,c,d}`, `{a,b}{c,d}`, `{a,c}{b,d}`,
-              `{a,d}{b,c}`, `{a,b}{c}{d}`, `{a,c}{b}{d}`, `{a,d}{b}{c}`,
-              `{b,c}{a}{d}`, `{b,d}{a}{c}`, `{c,d}{a}{b}`, `{a}{b,c,d}`,
-              `{b}{a,c,d}`, `{c}{a,b,d}`, `{d}{a,b,c}`
+
+~~~~
+Input: 1,2,3,4,5,6,7
+
+Output:
+
+    a = 6
+    b = 4
+    c = 1
+    d = 5
+    e = 2
+    f = 3
+    g = 7
+
+    Box 1: a + b = 6 + 4 = 10
+    Box 2: b + c + d = 4 + 1 + 5 = 10
+    Box 3: d + e + f = 5 + 2 + 3 = 10
+    Box 4: f + g = 3 + 7 = 10
+~~~~
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
-* [BASIC](basic/ch-2.bas)
-* [bc](bc/ch-2.bc)
-* [Befunge-93][befunge-93/ch-2.bf93]
 * [C](c/ch-2.c)
-* [Cobol](cobol/ch-2.cb)
-* [Csh](csh/ch-2.csh)
-* [Erlang](erlang/ch-2.erl)
-* [Forth](forth/ch-2.fs)
-* [Fortran](fortran/ch-2.f90)
-* [Go](go/ch-2.go)
-* [Java](java/ch-2.java)
 * [Lua](lua/ch-2.lua)
-* [m4](m4/ch-2.m4)
 * [Node.js](node/ch-2.js)
-* [Ocaml](ocaml/ch-2.ml)
-* [Pascal](pascal/ch-2.p)
 * [Perl](perl/ch-2.pl)
-* [PHP](php/ch-2.php)
-* [PostScript](postscript/ch-2.ps)
 * [Python](python/ch-2.py)
-* [R](r/ch-2.r)
-* [Rexx](rexx/ch-2.rexx)
 * [Ruby](ruby/ch-2.rb)
-* [Scheme](scheme/ch-2.scm)
-* [sed](sed/ch-2.sed)
-* [SQL](sql/ch-2.sql)
-* [Tcl](tcl/ch-2.tcl)
 
 ### Blog
-[Bell Numbers](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-108-2.html)
 
