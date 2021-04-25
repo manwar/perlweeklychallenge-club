@@ -103,4 +103,5 @@ Output:
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
+[Four Squares Puzzle](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-109-2.html)
 
