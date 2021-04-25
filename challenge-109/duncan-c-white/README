@@ -1,56 +1,65 @@
-Task 1: "Locate Memory
+Task 1: "Chowla Numbers
 
-Write a script to declare a variable or constant and print it's location in
-the memory.
+Write a script to generate first 20 Chowla Numbers, named after,
+Sarvadaman D. S. Chowla, a London born Indian American mathematician. It
+is defined as:
+
+C(n) = sum of divisors of n except 1 and n
+
+NOTE: Updated the above definition as suggested by Abigail [2021/04/19 18:40].
+
+Output:
+
+0, 0, 0, 2, 0, 5, 0, 6, 3, 7, 0, 15, 0, 9, 8, 14, 0, 20, 0, 21
 "
 
-My notes: umm, does this just mean "use \ and %p", or something more subtle?
+My notes: easy and fun.
 
 
-Task 2: "Bell Numbers
+Task 2: "Four Squares Puzzle
 
-Write a script to display top 10 Bell Numbers. Please refer to
+You are given four squares as below with numbers named a,b,c,d,e,f,g.
 
-https://en.wikipedia.org/wiki/Bell_number
+              (1)                    (3)
+        ===============     ===============
+        |             |     |             |
+        |     a       |     |     e       |
+        |             |(2)  |             | (4)
+        |         ---------------     --------------
+        |         |   |     |   |     |   |        |
+        |         | b |     | d |     | f |        |
+        |         |   |     |   |     |   |        |
+        |         |   |     |   |     |   |        |
+        ==========|====     ====|==========        |
+                  |      c      |     |     g      |
+                  |             |     |            |
+                  |             |     |            |
+                  ---------------     --------------
 
-for more informations.
+Write a script to place the given unique numbers in the square box so
+that sum of numbers in each box is the same.
 
-Example:
+Example
 
-B0: 1 as you can only have one partition of zero element set
+Input: 1,2,3,4,5,6,7
 
-B1: 1 as you can only have one partition of one element set {a}.
+Output:
 
-B2: 2
+    a = 6
+    b = 4
+    c = 1
+    d = 5
+    e = 2
+    f = 3
+    g = 7
 
-   {a}{b}
-   {a,b}
-
-B3: 5
-
-   {a}{b}{c}
-   {a,b}{c}
-   {a}{b,c}
-   {a,c}{b}
-   {a,b,c}
-
-B4: 15
-
-   {a}{b}{c}{d}
-   {a,b,c,d}
-   {a,b}{c,d}
-   {a,c}{b,d}
-   {a,d}{b,c}
-   {a,b}{c}{d}
-   {a,c}{b}{d}
-   {a,d}{b}{c}
-   {b,c}{a}{d}
-   {b,d}{a}{c}
-   {c,d}{a}{b}
-   {a}{b,c,d}
-   {b}{a,c,d}
-   {c}{a,b,d}
-   {d}{a,b,c}
+    Box 1: a + b = 6 + 4 = 10
+    Box 2: b + c + d = 4 + 1 + 5 = 10
+    Box 3: d + e + f = 5 + 2 + 3 = 10
+    Box 4: f + g = 3 + 7 = 10
 "
 
-My notes: Bell's triangle has a simple algorithm; let's use that!
+My notes: sounds simple enough.  Find a,b,c,d,e,f st a+b = b+c+d = d+e+f = f+g
+Of course, we'll need to try all permutations of the values given.  There
+are lots of CPAN modules (eg. Algorithm::Permute), but here I decided to
+generate the permutations myself via Rosetta Stone code..
