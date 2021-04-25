@@ -30,8 +30,9 @@ $prolog = new AI::Prolog($prolog);
 $prolog->query("sums_in_squares([1,2,3,4,5,6,7], Squares).");
 
 my $result;
+print join("\t", "a" .. "g") . "\n";  
 while ($result = $prolog->results()){
-    print join(",", @{$result->[2]}) . "\n";
+    print join("\t", @{$result->[2]}) . "\n";
 }
 
 __DATA__

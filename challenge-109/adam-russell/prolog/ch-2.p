@@ -21,6 +21,22 @@
 
 :-initialization(main).
 
+print_with_tab([H|[]]):-
+    write(H), nl.
+print_with_tab([H|T]):-
+    write(H),
+    write('\t'),
+    print_with_tab(T).
+
+print_values([]).
+print_values([H|T]):-
+    print_with_tab(H), 
+    print_values(T).
+
+print_solutions(Solutions):-
+    print_with_tab([a, b, c, d, e, f, g]),
+    print_values(Solutions).  
+
 all_unique(_, []).
 all_unique(L, [V|T]) :-
     fd_exactly(1, L, V),
@@ -63,4 +79,4 @@ sums_in_squares_fd(Numbers, [A, B, C, D, E, F, G]):-
     
 main:-
     setof(S, sums_in_squares_fd([1,2,3,4,5,6,7], S), Squares),
-    write(Squares).
+    print_solutions(Squares).
