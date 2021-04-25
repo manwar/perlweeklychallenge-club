@@ -1,43 +1,21 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-04-25 13:07:52 GMT"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               1495
-            ],
-            [
-               "Perl",
-               5142
-            ],
-            [
-               "Raku",
-               3271
-            ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true",
-            "rotation" : -90,
-            "color" : "#FFFFFF"
-         }
-      }
-   ],
-   "subtitle" : {
-      "text" : "Last updated at 2021-04-25 13:03:41 GMT"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "xAxis" : {
       "labels" : {
@@ -48,16 +26,38 @@
       },
       "type" : "category"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
+   "series" : [
+      {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "enabled" : "true",
+            "y" : 10
+         },
+         "data" : [
+            [
+               "Blog",
+               1495
+            ],
+            [
+               "Perl",
+               5144
+            ],
+            [
+               "Raku",
+               3271
+            ]
+         ]
       }
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "chart" : {
-      "type" : "column"
+   ],
+   "legend" : {
+      "enabled" : "false"
    }
 }
