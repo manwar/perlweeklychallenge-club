@@ -41,6 +41,7 @@ We therefore conclude the examples just contain random spaces, and we
 can completly ignore any white space in the input.
 
 ### Solutions
+[Perl](perl/ch-1.pl)
 
 ### Blog
 
