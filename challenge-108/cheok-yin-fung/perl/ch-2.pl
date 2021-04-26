@@ -5,6 +5,12 @@
 # Usage: $ ch-1.pl N
 #        first N Bell numbers with the 0th case
 
+# formula used in this script, essentially a rotten version of:
+# > a(n) = Sum_{i=1..P(n)} (n!/(Product_{j=1..p(i)}p(i,j)!)) * (1/(Product_{j=1..d(i)} m(i,j)!))
+# > - Thomas Wieder, May 18 2005 
+# For details, see http://oeis.org/A000110
+
+
 use strict;
 use warnings;
 use Integer::Partition;
@@ -13,10 +19,10 @@ use Integer::Partition;
 # n_C_r
 sub combin {
     my ($n, $r) = ($_[0], $_[1]);
-    my $a = 1;
+    my $ans = 1;
     $a *= $_ for ($n-$r+1..$n);
     $a /= $_ for (1..$r);
-    return $a;
+    return $ans;
 }
 
 sub factorial {
@@ -59,7 +65,7 @@ sub dup {
     for (1..$#arr) {
         if ($preced != $arr[$_]) {
             $ans *= factorial($dup_term) if $dup_term != 1;
-                             # the if clause, saves a of bit time
+                             # the if clause, saves a bit of time
             $preced = $arr[$_];
             $dup_term = 1;
         }
