@@ -1,0 +1,11 @@
+ FourSquaresPuzzle←{
+⍝ https://perlweeklychallenge.org/blog/perl-weekly-challenge-109/#TASK1
+⍝ ⍺: Groups of indices of numbers in ⍵ which share squares
+⍝ ⍵: Numbers to be distributed
+     ⍵≢⍥≢∪∊⍺:'Invalid input. There must be enough numbers to distribute'
+⍝ Example:
+⍝ (1 2)(2 3 4)(4 5 6)(6 7) FourSquaresPuzzle ⍳7
+     permutations←p⌷⍨⊂⍸1=≢¨(⊂∪)⍤1+/p←⍺⌷⍤0 99⍤1⊢⍵[pmat≢⍵]
+     selection←(⍴⍴(0∘≠×≠)∘,)↑⍺   ⍝ Mask to select from each matrix in permutations
+     ∊⍤¯1⊢selection⊂⍤(⊢⍤⌿)⍤1⍤99 ¯1⊢permutations
+ }
