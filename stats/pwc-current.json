@@ -1,8 +1,24 @@
 {
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -13,31 +29,46 @@
                   2
                ]
             ],
-            "name" : "Luca Ferrari"
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
          },
          {
+            "id" : "Mark Anderson",
             "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Mark Anderson"
+            ]
          },
          {
+            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Niels van Dijke",
             "name" : "Niels van Dijke"
          },
          {
-            "name" : "Stuart Little",
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
             "id" : "Stuart Little",
+            "name" : "Stuart Little",
             "data" : [
                [
                   "Perl",
@@ -51,43 +82,20 @@
          }
       ]
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 110"
    },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2021-04-26 16:10:19 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
+   "legend" : {
+      "enabled" : 0
    },
    "series" : [
       {
          "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 4,
+               "drilldown" : "Luca Ferrari",
                "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
+               "y" : 4
             },
             {
                "drilldown" : "Mark Anderson",
@@ -95,22 +103,33 @@
                "y" : 2
             },
             {
-               "drilldown" : "Niels van Dijke",
                "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke",
                "y" : 2
             },
             {
-               "name" : "Stuart Little",
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
                "y" : 4,
+               "name" : "Stuart Little",
                "drilldown" : "Stuart Little"
             }
          ],
          "name" : "Perl Weekly Challenge - 110"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2021-04-26 16:42:51 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
