@@ -29,6 +29,17 @@ nnnn nnnnnnnnnn
 (44) 1148820341
 ~~~~
 
+### Notes
+The examples show we should not take the specification as a specification;
+just a rough guideline. According to the specification, 
+" +44 1148820341" fails the criteria not once, but twice: it contains
+a leading space (not allowed in the specification), and it has only a
+single space between the '+44' part and the rest, where the specification
+requires two.
+
+We therefore conclude the examples just contain random spaces, and we
+can completly ignore any white space in the input.
+
 ### Solutions
 
 ### Blog
