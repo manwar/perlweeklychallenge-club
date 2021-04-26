@@ -1,18 +1,22 @@
-# Chowla Numbers
+# Valid Phone Numbers
 ## Java Solution
 
 To compile the code run
 ```java
-javac ChowlaNumbers.java
+javac ValidPhoneNumbers.java
 ```
 To run
 ```java
-java ChowlaNumbers
+java ValidPhoneNumbers
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-109/ziameraj16/java$ javac ChowlaNumbers.java
-/perlweeklychallenge-club/challenge-109/ziameraj16/java$ java ChowlaNumbers
-0, 0, 0, 2, 0, 5, 0, 6, 3, 7, 0, 15, 0, 9, 8, 14, 0, 20, 0, 21
+/perlweeklychallenge-club/challenge-110/ziameraj16/java$ javac ValidPhoneNumbers.java
+/perlweeklychallenge-club/challenge-110/ziameraj16/java$ java ValidPhoneNumbers
+Enter full file path
+/Users/ziameraj16/a.txt
+0044 1148820341
+ +44 1148820341
+(44) 1148820341
 ```
 
