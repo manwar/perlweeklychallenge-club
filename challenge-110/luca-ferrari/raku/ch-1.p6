@@ -2,9 +2,15 @@
 
 
 sub MAIN( Str $file-name = 'phone.txt' ) {
-    my @regexps = rx / ^ \s* <[+]> \d ** 2 \s+ \d ** 10 $ /
-                , rx / ^ \s* <[(]> \d ** 2 <[)]> \s+ \d ** 10 $ /
-                , rx / ^ \s* \d ** 4 \s+ \d ** 10 $ /;
+    my $phone-regexp  = rx/ \d ** 10 /;
+    my $prefix-regexp = rx/
+             <[+]> \d ** 2
+             || <[(]> \d ** 2 <[)]>
+             || \d ** 4
+    /;
 
-    say $_ if $_ ~~ any @regexps for $file-name.IO.lines;
+
+    my $phone-rx = rx / ^ \s* $prefix-regexp \s+ $phone-regexp $ /;
+
+    $_.say if $_ ~~ $phone-rx for $file-name.IO.lines;
 }
