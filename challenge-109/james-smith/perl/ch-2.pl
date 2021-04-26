@@ -67,8 +67,6 @@ say '';
 sub sep  { say '------------------------------------------------------------------------'; }
 sub show { say "@{$_}" foreach @{$_[0]}; }
 
-sub four_square {
-
 ## For a start we make the observation that
 ##
 ## $a + 2$b + $c + 2$d + $e + 2$f + $g = $n * 4 where $n is the total of a square
@@ -94,6 +92,7 @@ sub four_square {
 ##
 ## We push any valid results to the array
 
+sub four_square {
   my ($t,@n1,@res) = (0,@_);
   $t+=$_ foreach @n1;
   foreach my $b (        @n1 ) {
@@ -110,7 +109,6 @@ sub four_square {
   return \@res;
 }
 
-sub four_square_non_unique {
 ## Now let us make no assumption about the numbers...
 ## We choose 3 from the list...
 ## We then compute n (and check for no remainder)
@@ -123,6 +121,7 @@ sub four_square_non_unique {
 ##            will end up with 2 entries in the list
 ##            where you swap the equivalent values...
 
+sub four_square_non_unique {
   my ($t,$check,@n1,%res) = (0,"@{[sort @_]}",@_);
   $t+=$_ foreach @n1;
   foreach my $i ( 0..@n1-1 ) {

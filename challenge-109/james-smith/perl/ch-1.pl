@@ -34,15 +34,13 @@ cmpthese(1_000_000, {
 ## For 79936/s  34%   --
 ##
 
-sub chowla_map {
-  my ($t,$n) = (0,@_);
 ## First attempt - the one-liner is to write this as a map,
 ## we add $t at the end which is the value returned
+sub chowla_map {
+  my ($t,$n) = (0,@_);
   ( map { (($n%$_) || ($t+=$_)) && () } 2..$n>>1 ), $t;
 }
 
-sub chowla_for {
-  my($t,$n)=(0,@_);
 
   ## This time we won't write this as a nasty map/reduce solution...
   ##
@@ -55,12 +53,12 @@ sub chowla_for {
   ##    can be rewritten as:
   ##      ($condition)||($fun())
   ##  * in perl `foreach` and `for` are synonymous - so we can shorten
-
-  ($n%$_)||($t+=$_) for 2..$n>>1;
-
-  ## Now a quick "shortening" - if there is no specific return
+  ## Finally a quick "shortening" - if there is no specific return
   ## statement - we can just omit the return in the last statement...
 
+sub chowla_for {
+  my($t,$n)=(0,@_);
+  ($n%$_)||($t+=$_) for 2..$n>>1;
   $t;
 }
 
