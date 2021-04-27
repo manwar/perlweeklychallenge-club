@@ -228,3 +228,52 @@ sub transpose_seek {
 
     * We then use the regex trick to get the first column of the data.
 
+  * Memory usage:
+    * This script does not load the file all in one go - so really needs a lot less memory
+      (vs more disc accesses). It is linear in the number of lines, e.g. for the 1000 line file we load in
+      roughly 1Mb of data at a time, and the memory usage is roughly 1.3Mb.
+    * Note this is `O(n)` as well as if the rows get longer then the number of bytes used does not increase.
+
+### Some information about speed/memory etc...
+
+The following are timings on a single core, 2G RAM, 4G swap machine:
+
+| Method/size | Time (s) | Kbytes | resident | shared |
+| ----------- | -------: | -----: | -------: | -----: |
+| Seek small  | 0.001 | 16016| 7836| 5228 |
+| Regex small | 0.000 | 16016| 7836| 5228 |
+| Split small | 0.000 | 16016| 7836| 5228 |
+| Seek 1000   | 1.346 | 17388| 9320| 5228 |
+| Seek 2000   | 5.841 | 18848| 10636| 5228 |
+| Seek 5000   | 54.208 | 23044| 14972| 5228 |
+| Regex 1000  | 1.293 | 25492| 17288| 5228 |
+| Seek 30000  | 3003.220 | 57312| 43948| 2720 |
+| Regex 2000  | 9.040 | 63896| 51376| 3140 |
+| Split 1000  | 0.934 | 105784| 93100| 3204 |
+| Regex 5000  | 130.411 | 260432| 248016| 3204 |
+| Split 2000  | 6.780 | 362028| 349388| 3204 |
+| Split 5000  | 527.614 | 2153576| 1423468| 2764 |
+
+The size is the number of rows/columns - so the "1000" file has 1000 rows and 1000 columns (+row/column labels).
+
+File sizes:
+
+| name  | size | row size |
+| ----- | -----: | ----: |
+| small | 61 bytes | 12 |
+|  1000 | 6.6 Mbytes | 6.7K |
+|  2000 | 27 Mbytes | 13.5K |
+|  5000 | 165 Mbytes | 33.6K |
+| 30000 | 5.8 Gbytes | 201.0K |
+
+If we look at the timings by method we can see that for the smaller files the `split` is
+the most efficient {but the difference is relatively small}. But as the file size increases
+then it soon becomes the least efficient:
+
+| Size   | Split | Regex | Seek |
+| -----: | ----: | ----: | ----: |
+| small  | **0.000** | 0.000 | *0.001* |
+| 1000   | **0.934** | 1.293 | *1.346* |
+| 2000   | 6.890 | *9.040* | **5.841** |
+| 5000   | *527.614* | 130.411 | **54.208** |
+| 30000  | - | - | **3003.220** |
