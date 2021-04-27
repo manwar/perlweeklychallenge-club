@@ -229,10 +229,13 @@ sub transpose_seek {
     * We then use the regex trick to get the first column of the data.
 
   * Memory usage:
+
     * This script does not load the file all in one go - so really needs a lot less memory
       (vs more disc accesses). It is linear in the number of lines, e.g. for the 1000 line file we load in
       roughly 1Mb of data at a time, and the memory usage is roughly 1.3Mb.
     * Note this is `O(n)` as well as if the rows get longer then the number of bytes used does not increase.
+    * Having played a bit - the sweet spot of `$BYTES` lies somewhere between 1K and 2K. Smaller makes the
+      regex in the split more efficient, larger reduces the file IO overhead.
 
 ### Some information about speed/memory etc...
 
