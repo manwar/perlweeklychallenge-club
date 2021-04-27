@@ -8,7 +8,7 @@ use Data::Dumper;
 use Const::Fast qw(const);
 use Time::HiRes qw(time);
 const my $FN_TINY  => 'in.txt';
-#const my $FN2 => 'in-large.txt';
+#const my $FN_SMALL => 'in-large.txt';
 const my $FN_SMALL   => 'in-1000.txt';
 const my $FN_MEDIUM  => 'in-2000.txt';
 const my $FN_LARGE   => 'in-5000.txt';
@@ -37,19 +37,19 @@ select(STDOUT); $| = 1;
 
 my $t0;
 
-   $t0 = time; transpose_seek(  $FN,  'seek-small'  ); say 'Seek small  ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_regex( $FN,  'regex-small' ); say 'Regex small ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_split( $FN,  'split-small' ); say 'Split small ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_seek(  $FN2, 'seek-1000'   ); say 'Seek 1000   ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_seek(  $FN3, 'seek-2000'   ); say 'Seek 2000   ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_seek(  $FN4, 'seek-5000'   ); say 'Seek 5000   ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_regex( $FN2, 'regex-1000'  ); say 'Regex 1000  ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_seek(  $FN5, 'seek-30000'  ); say 'Seek 30000  ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_regex( $FN3, 'regex-2000'  ); say 'Regex 2000  ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_split( $FN2, 'split-1000'  ); say 'Split 1000  ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_regex( $FN4, 'regex-5000'  ); say 'Regex 5000  ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_split( $FN3, 'split-2000'  ); say 'Split 2000  ',time-$t0,' ',get_statm_info();
-   $t0 = time; transpose_split( $FN4, 'split-5000'  ); say 'Split 5000  ',time-$t0,' ',get_statm_info();
+   $t0 = time; transpose_seek(  $FN_TINY,    'seek-small'  ); say 'Seek small    - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_regex( $FN_TINY,    'regex-small' ); say 'Regex small   - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_split( $FN_TINY,    'split-small' ); say 'Split small   - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_seek(  $FN_SMALL,   'seek-1000'   ); say 'Seek 1000     - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_seek(  $FN_MEDIUM,  'seek-2000'   ); say 'Seek 2000     - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_seek(  $FN_LARGE,   'seek-5000'   ); say 'Seek 5000     - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_regex( $FN_SMALL,   'regex-1000'  ); say 'Regex 1000    - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_seek(  $FN_MASSIVE, 'seek-30000'  ); say 'Seek 30000    - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_regex( $FN_MEDIUM,  'regex-2000'  ); say 'Regex 2000    - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_split( $FN_SMALL,   'split-1000'  ); say 'Split 1000    - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_regex( $FN_LARGE,   'regex-5000'  ); say 'Regex 5000    - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_split( $FN_MEDIUM,  'split-2000'  ); say 'Split 2000    - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
+   $t0 = time; transpose_split( $FN_LARGE,   'split-5000'  ); say 'Split 5000    - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
 
 sub transpose_split {
   open my $fh, '<', $_[0];
@@ -98,7 +98,7 @@ sub get_statm_info {
   if( open(_INFO,"</proc/$$/statm") ){
     my @info = split(/\s+/,<_INFO>);
     close(_INFO);
-    return sprintf 'Size: %d, Resident: %d, Shared: %d', $info[0]*4, $info[1]*4, $info[2]*4;
+    return sprintf 'Size: %8d, Resident: %8d, Shared: %8d', $info[0]*4, $info[1]*4, $info[2]*4;
   }
   return '-';
 }
