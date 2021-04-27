@@ -293,13 +293,13 @@ The size is the number of rows/columns - so the "1000" file has 1000 rows and 10
 
 File sizes:
 
-| name         | size       | row size |
-| ------------ | ---------: | -------: |
-| in-small.txt |   61 bytes |       12 |
-|  in-1000.txt | 6.6 Mbytes |     6.7K |
-|  in-2000.txt |  27 Mbytes |    13.5K |
-|  in-5000.txt | 165 Mbytes |    33.6K |
-| in-30000.txt | 5.8 Gbytes |   201.0K |
+| name         | rows   | columns | size       | row size |
+| ------------ | -----: | ------: | ---------: | -------: |
+| in-small.txt |      5 |       3 |  61  bytes |       12 |
+|  in-1000.txt |  1,001 |   1,001 | 6.6 Mbytes |     6.7K |
+|  in-2000.txt |  2,001 |   2,001 |  27 Mbytes |    13.5K |
+|  in-5000.txt |  5,001 |   5,001 | 165 Mbytes |    33.6K |
+| in-30000.txt | 30,001 |  30,001 | 5.8 Gbytes |   201.0K |
 
 If we look at the timings by method we can see that for the smaller files the `split` is
 the most efficient {but the difference is relatively small}. But as the file size increases
