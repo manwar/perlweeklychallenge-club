@@ -2,81 +2,36 @@
    "xAxis" : {
       "type" : "category"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 110"
-   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 110",
-         "data" : [
-            {
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari",
-               "y" : 4
-            },
-            {
-               "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Mohammad S Anwar",
-               "name" : "Mohammad S Anwar"
-            },
-            {
-               "y" : 2,
-               "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke"
-            },
-            {
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
-            },
-            {
-               "name" : "Stuart Little",
-               "drilldown" : "Stuart Little",
-               "y" : 4
-            },
-            {
-               "drilldown" : "Ulrich Rieke",
-               "name" : "Ulrich Rieke",
-               "y" : 4
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-04-26 18:31:14 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "id" : "Flavio Poletti",
+            "name" : "Flavio Poletti"
+         },
+         {
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -87,41 +42,41 @@
                   2
                ]
             ],
-            "name" : "Luca Ferrari"
+            "id" : "Luca Ferrari"
          },
          {
             "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Mark Anderson"
+            ]
          },
          {
-            "name" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Mohammad S Anwar"
+            "name" : "Mohammad S Anwar"
          },
          {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
             "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke"
+            "id" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          },
          {
-            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -134,7 +89,7 @@
             ]
          },
          {
-            "id" : "Stuart Little",
+            "name" : "Stuart Little",
             "data" : [
                [
                   "Perl",
@@ -145,11 +100,10 @@
                   2
                ]
             ],
-            "name" : "Stuart Little"
+            "id" : "Stuart Little"
          },
          {
             "id" : "Ulrich Rieke",
-            "name" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -159,11 +113,76 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Ulrich Rieke"
          }
       ]
    },
    "legend" : {
       "enabled" : 0
-   }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 110"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-04-27 10:36:30 GMT"
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Flavio Poletti",
+               "name" : "Flavio Poletti",
+               "y" : 4
+            },
+            {
+               "y" : 4,
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "y" : 2,
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Mohammad S Anwar",
+               "y" : 2,
+               "name" : "Mohammad S Anwar"
+            },
+            {
+               "y" : 2,
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "y" : 4,
+               "name" : "Roger Bell_West"
+            },
+            {
+               "y" : 4,
+               "name" : "Stuart Little",
+               "drilldown" : "Stuart Little"
+            },
+            {
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke",
+               "y" : 4
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 110"
+      }
+   ]
 }
