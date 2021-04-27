@@ -173,19 +173,20 @@ sub transpose_seek {
   
     * The push/while line slurping in data
 
-      We user `while <$fh>` here rather than `foreach` as `while` doesn't accumulate
+      We use `while <$fh>` here rather than `foreach` as `while` doesn't accumulate
       data into an array, where as `foreach <$fh>` does, saving memory.
 
-``` perl
-while( <$fh> ) {
-  push ( @pos, [$prev+$BYTES,tell $fh,substr $_,0,$BYTES]) &&
-       (
-         ($pos[-1][0]>$pos[-1][1]) && ($pos[-1][0]=$pos[-1][1]),
-         $prev=tell $fh
-       ) 
-}
-```
-      This uses a lot of ***1-liner*** tricks - first of all we push the start, end and first
+      ``` perl
+      while( <$fh> ) {
+        push ( @pos, [$prev+$BYTES,tell $fh,substr $_,0,$BYTES]) &&
+             (
+               ($pos[-1][0]>$pos[-1][1]) && ($pos[-1][0]=$pos[-1][1]),
+               $prev=tell $fh
+             );
+      }
+      ```
+
+    * This uses a lot of ***1-liner*** tricks - first of all we push the start, end and first
       `$BYTES` bytes into the @pos array. This always evaluates to true, so we run the second
       bracketed statement. This (a) sets the start of the next block to the end of this current
       line if we have overshot, and then (b) updates the `$prev` value so we know where the
@@ -193,24 +194,24 @@ while( <$fh> ) {
     
     * Now let us look at the 2nd while loop (outer)...
 
-``` perl
-  while( $pos[0][0] < $pos[0][1] || length $pos[0][2] ) {
+      ``` perl
+        while( $pos[0][0] < $pos[0][1] || length $pos[0][2] ) {
 
-  }
-```
+        }
+      ```
       This is checking that (a) we haven't run out of data to be retrieved for the first and
       (b) haven't run out of data we have already retrieved.
 
       
     * Finally the 3rd while loop (inner)... 
 
-``` perl
-      while( $_->[2] !~ m{,} && $_->[0] < $_->[1] ) {
-        seek $fh, $_->[0], 0;
-        read $fh, $_->[2], $_->[1]-$_->[0] > $BYTES ? $BYTES : $_->[1]-$_->[0], length $_->[2];
-        $_->[0] = tell $fh;
-      } 
-```
+      ``` perl
+            while( $_->[2] !~ m{,} && $_->[0] < $_->[1] ) {
+              seek $fh, $_->[0], 0;
+              read $fh, $_->[2], $_->[1]-$_->[0] > $BYTES ? $BYTES : $_->[1]-$_->[0], length $_->[2];
+              $_->[0] = tell $fh;
+            } 
+      ```
       In this loop we see if the row does not contain a comma AND there is data left... If this is the
       case we have to retrieve more data from the file. We do this by first `seek`ing to the location
       in the file that we need to get data from. We then retrieve the either $BYTES `bytes` of data (or
