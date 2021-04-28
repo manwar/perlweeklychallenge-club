@@ -165,12 +165,15 @@ If we get to the end of the line we only retrieve the number of bytes left in th
 ``` perl
 sub transpose_seek {
   my($prev,@pos) = (0);
+
   open my $fh,  '<', $_[0];
   open my $ofh, '>', $_[1];
+
   ## Loop through the file and get the start/end position of each line,
   ## and the first $BYTES characters of each line...
+
   push ( @pos, [$prev+$BYTES,tell $fh,substr $_,0,$BYTES]) &&
-       ( ($pos[-1][0]>$pos[-1][1]) && ($pos[-1][0]=$pos[-1][1]), $prev=tell $fh) while <$fh>;
+       ( $prev=tell $fh ) while <$fh>;
 
   ## While we still have "columns" loop through each row and grab the first
   ## entry and output results.
@@ -180,13 +183,16 @@ sub transpose_seek {
     foreach(@pos) {
       while( $_->[2] !~ m{,} && $_->[0] < $_->[1] ) {
         seek $fh, $_->[0], 0;
-        read $fh, $_->[2], $_->[1]-$_->[0] > $BYTES ? $BYTES : $_->[1]-$_->[0], length $_->[2];
-        $_->[0] = tell $fh;
+        read $fh,
+             $_->[2],         ## "Buffer"
+             $_->[1]-$_->[0] > $BYTES ? $BYTES : $_->[1]-$_->[0],
+             length $_->[2];  ## Length of "Buffer" so text gets added to end
+        $_->[0]+=$BYTES;
       }
       $_->[2] =~ s{^([^,\r\n]+)[,\r\n]*}{};
       push @line, $1;
     }
-    say ${$ofh} join q(,), @line;
+    say {$ofh} join q(,), @line;
   }
 }
 ```
