@@ -12,10 +12,7 @@ open(my $fh, '<:encoding(utf8)', $FILE)
 while (my $row = <$fh>) {
     chomp $row;
 
-    if ( ($row =~ /\+\d{2}\s\d{10}/)   ||
-         ($row =~ /\d{4}\s\d{10}/)     ||
-         ($row =~ /\(\d{2}\)\s\d{10}/)
-       ) {
+    if ( $row =~ / ( \+\d{2} | \(\d{2}\) | \d{4} ) \s \d{10} /x ) {
         print "$row\n";
     }
 }
