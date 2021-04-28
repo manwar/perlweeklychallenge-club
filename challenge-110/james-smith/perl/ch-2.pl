@@ -58,7 +58,7 @@ sub transpose_split {
   close $fh;
   ## Generate transpose
   open $fh, '>', $_[1];
-  say {$fh} join ',', map {shift @{$_} } @in while @{$in[0]};        
+  say {$fh} join ',', map {shift @{$_} } @in while @{$in[0]};
   close $fh;
 }
 
@@ -89,7 +89,7 @@ sub transpose_seek {
   ## entry and output results.
 
   while( $pos[0][0] < $pos[0][1] || length $pos[0][2] ) {
-    my @line;
+    my $j='';
     foreach(@pos) {
       ## Grab extra data for the row if we have got an incomplete
       ## field {missing a "," and still data to read}
@@ -101,9 +101,11 @@ sub transpose_seek {
                               ## added to end
         $_->[0]+=$BYTES;
       }
-      push @line, $_->[2] =~ s{^([^,\r\n]+)[,\r\n]*}{};
+      $_->[2] =~ s{^([^,\r\n]+)[,\r\n]*}{};
+      print {$ofh} $j,$1;
+      $j||=',';
     }
-    say {$ofh} join q(,), @line;
+    say {$ofh} '';
   }
 }
 
