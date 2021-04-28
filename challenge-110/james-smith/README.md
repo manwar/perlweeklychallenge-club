@@ -217,10 +217,7 @@ sub transpose_seek {
       ``` perl
       while( <$fh> ) {
         push ( @pos, [$prev+$BYTES,tell $fh,substr $_,0,$BYTES]) &&
-             (
-               ($pos[-1][0]>$pos[-1][1]) && ($pos[-1][0]=$pos[-1][1]),
-               $prev=tell $fh
-             );
+             ( $prev=tell $fh );
       }
       ```
 
@@ -247,31 +244,34 @@ sub transpose_seek {
             while( $_->[2] !~ m{,} && $_->[0] < $_->[1] ) {
               seek $fh, $_->[0], 0;
               read $fh, $_->[2], $_->[1]-$_->[0] > $BYTES ? $BYTES : $_->[1]-$_->[0], length $_->[2];
-              $_->[0] = tell $fh;
+              $_->[0] += $BYTES;
             } 
       ```
       In this loop we see if the row does not contain a comma AND there is data left... If this is the
       case we have to retrieve more data from the file. We do this by first `seek`ing to the location
       in the file that we need to get data from. We then retrieve the either $BYTES `bytes` of data (or
       all the data left for the row {if it is less than `$BYTES` bytes.}
-      We then update the location for that particular row (using `tell`).
+      We then update the location for that particular row (by adding `$BYTES` we can ignore the fact
+      that we overshot.
 
       Note also we use the 4 parameter version of read.
 
          `read $fh, $buffer, $bytes, $offset`
      
       By adding the offset - we can easily append this content onto the end of our buffer string. We have
-      to use length `$_->[2]` as you can use -ve indecies to read into the buffer with an offset from the
+      to use `length $_->[2]` as you can use -ve indecies to read into the buffer with an offset from the
       end - but this only works for -1, -2 etc not "-0".
 
-    * We then use the regex trick to get the first column of the data.
+    * We then use the regex trick in 2b to get the first column of the data.
 
   * Memory usage:
 
     * This script does not load the file all in one go - so really needs a lot less memory
       (vs more disc accesses). It is linear in the number of lines, e.g. for the 1000 line file we load in
       roughly 1Mb of data at a time, and the memory usage is roughly 1.3Mb.
+
     * Note this is `O(n)` as well as if the rows get longer then the number of bytes used does not increase.
+
     * Having played a bit - the sweet spot of `$BYTES` lies somewhere between 1K and 2K. Smaller makes the
       regex in the split more efficient, larger reduces the file IO overhead.
 
@@ -279,25 +279,29 @@ sub transpose_seek {
 
 The following are timings on a single core, 2G RAM, 4G swap machine:
 
-| Method/size | Time (s) | Kbytes  | resident | shared |
-| ----------- | -------: | -----:  | -------: | -----: |
-| Seek small  |    0.001 |   16016 |     7836 |   5228 |
-| Regex small |    0.000 |   16016 |     7836 |   5228 |
-| Split small |    0.000 |   16016 |     7836 |   5228 |
-| Seek 1000   |    1.346 |   17388 |     9320 |   5228 |
-| Seek 2000   |    5.841 |   18848 |    10636 |   5228 |
-| Seek 5000   |   54.208 |   23044 |    14972 |   5228 |
-| Regex 1000  |    1.293 |   25492 |    17288 |   5228 |
-| Seek 30000  | 3003.220 |   57312 |    43948 |   2720 |
-| Regex 2000  |    9.040 |   63896 |    51376 |   3140 |
-| Split 1000  |    0.934 |  105784 |    93100 |   3204 |
-| Regex 5000  |  130.411 |  260432 |   248016 |   3204 |
-| Split 2000  |    6.780 |  362028 |   349388 |   3204 |
-| Split 5000  |  527.614 | 2153576 |  1423468 |   2764 |
+**Timings:**
+
+We list these in order of "memory consumption"...
+
+| Method/size | Time (s)  | Kbytes    | resident  | shared |
+| ----------- | --------: | --------: | --------: | -----: |
+| Seek small  |     0.000 |    16,016 |     7,836 |  5,228 |
+| Regex small |     0.000 |    16,016 |     7,836 |  5,228 |
+| Split small |     0.000 |    16,016 |     7,836 |  5,228 |
+| Seek 1000   |     1.346 |    17,388 |     9,320 |  5,228 |
+| Seek 2000   |     5.841 |    18,848 |    10,636 |  5,228 |
+| Seek 5000   |    54.208 |    23,044 |    14,972 |  5,228 |
+| Regex 1000  |     1.293 |    25,492 |    17,288 |  5,228 |
+| Seek 30000  | 3,003.220 |    57,312 |    43,948 |  2,720 |
+| Regex 2000  |     9.040 |    63,896 |    51,376 |  3,140 |
+| Split 1000  |     0.934 |   105,784 |    93,100 |  3,204 |
+| Regex 5000  |   130.411 |   260,432 |   248,016 |  3,204 |
+| Split 2000  |     6.780 |   362,028 |   349,388 |  3,204 |
+| Split 5000  |   527.614 | 2,153,576 | 1,423,468 |  2,764 |
 
 The size is the number of rows/columns - so the "1000" file has 1000 rows and 1000 columns (+row/column labels).
 
-File sizes:
+**File sizes:**
 
 | name         | rows   | columns | size       | row size |
 | ------------ | -----: | ------: | ---------: | -------: |
@@ -311,10 +315,12 @@ If we look at the timings by method we can see that for the smaller files the `s
 the most efficient {but the difference is relatively small}. But as the file size increases
 then it soon becomes the least efficient:
 
-| Size   | Split       | Regex       | Seek         |
-| -----: | ----------: | ----------: | -----------: |
-| small  |   **0.000** |     0.000   |     *0.001*  |
-| 1000   |   **0.934** |     1.293   |     *1.346*  |
-| 2000   |     6.890   |    *9.040*  |    **5.841** |
-| 5000   |  *527.614*  |   130.411   |   **54.208** |
-| 30000  |         -   |         -   | **3003.220** |
+**Comparisons:**
+
+| Size   | Split       | Regex       | Seek          |
+| -----: | ----------: | ----------: | ------------: |
+| small  |   **0.000** |     0.000   |      *0.000*  |
+| 1000   |   **0.934** |     1.293   |      *1.346*  |
+| 2000   |     6.890   |    *9.040*  |     **5.841** |
+| 5000   |  *527.614*  |   130.411   |    **54.208** |
+| 30000  |         -   |         -   | **3,003.220** |
