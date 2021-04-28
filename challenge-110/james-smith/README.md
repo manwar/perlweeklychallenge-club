@@ -302,6 +302,8 @@ We list these in order of "memory consumption"...
 
 The size is the number of rows/columns - so the "1000" file has 1000 rows and 1000 columns (+row/column labels).
 
+As a "guestimate" for the 30,000 x 30,000 case for which the seek solution use roughly 50Mb, the regex solution would use 7GB memory and the split method would use about 75GB memory... Both these are more memory+swap than the machine that I'm using has!
+
 **File sizes:**
 
 | name         | rows   | columns | size       | row size |
