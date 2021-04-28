@@ -41,14 +41,14 @@ We therefore conclude the examples just contain random spaces, and we
 can completly ignore any white space in the input.
 
 ### Solutions
-[AWK](awk/ch-1.awk)
-[Bash](bash/ch-1.sh)
-[C](c/ch-1.c)
-[Lua](lua/ch-1.lua)
-[Node.js](node/ch-1.js)
-[Perl](perl/ch-1.pl)
-[Python](python/ch-1.py)
-[Ruby](ruby/ch-1.rb)
+* [AWK](awk/ch-1.awk)
+* [Bash](bash/ch-1.sh)
+* [C](c/ch-1.c)
+* [Lua](lua/ch-1.lua)
+* [Node.js](node/ch-1.js)
+* [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
+* [Ruby](ruby/ch-1.rb)
 
 ### Blog
 
