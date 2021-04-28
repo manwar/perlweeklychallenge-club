@@ -78,12 +78,12 @@ sub transpose_seek {
 
   open my $fh,  '<', $_[0];
   open my $ofh, '>', $_[1];
-  
+
   ## Loop through the file and get the start/end position of each line,
   ## and the first $BYTES characters of each line...
 
-  push ( @pos, [$prev+$BYTES,tell $fh,substr $_,0,$BYTES]) &&
-       ( $prev=tell $fh ) while <$fh>;
+  ( push @pos, [ $prev+$BYTES, tell $fh, substr $_, 0, $BYTES] ) &&
+    ( $prev = tell $fh ) while <$fh>;
 
   ## While we still have "columns" loop through each row and grab the first
   ## entry and output results.
@@ -91,16 +91,17 @@ sub transpose_seek {
   while( $pos[0][0] < $pos[0][1] || length $pos[0][2] ) {
     my @line;
     foreach(@pos) {
+      ## Grab extra data for the row if we have got an incomplete
+      ## field {missing a "," and still data to read}
       while( $_->[2] !~ m{,} && $_->[0] < $_->[1] ) {
         seek $fh, $_->[0], 0;
-        read $fh,
-             $_->[2],         ## "Buffer"
+        read $fh, $_->[2],    ## "Buffer"
              $_->[1]-$_->[0] > $BYTES ? $BYTES : $_->[1]-$_->[0],
-             length $_->[2];  ## Length of "Buffer" so text gets added to end
+             length $_->[2];  ## Length of "Buffer" so text gets
+                              ## added to end
         $_->[0]+=$BYTES;
       }
-      $_->[2] =~ s{^([^,\r\n]+)[,\r\n]*}{};
-      push @line, $1;
+      push @line, $_->[2] =~ s{^([^,\r\n]+)[,\r\n]*}{};
     }
     say {$ofh} join q(,), @line;
   }
