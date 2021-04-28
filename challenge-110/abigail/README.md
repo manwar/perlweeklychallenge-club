@@ -76,6 +76,7 @@ sex,m,m,f,f
 
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
 
 ### Blog
 
