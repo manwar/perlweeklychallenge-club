@@ -28,8 +28,20 @@ use experimental 'lexical_subs';
 # can completly ignore any white space in the input.
 # 
 
+#
+# To check for valid phone numbers, we will do the following:
+#    - Remove all whitespace
+#    - Replace a leading '+' by '00'
+#    - Replace a leading '(NN)' by '0000'
+#
+# The number is valid, if and only if we are left with exactly 14 digits.
+#
+
 while (<>) {
-    print if s/\s+//gr =~ /^ (?: \+\d{12} | \(\d{2}\)\d{10} | \d{14} )$/ax
+    print if s{\s+}           {}gr     # Remove white space
+          =~ s{^\+}           {00}r    # Replace leading + with 00
+          =~ s{^\([0-9]{2}\)} {0000}r  # Replace leading (NN) with 0000
+          =~  /^[0-9]{14}$/            # Check if 14 digits are left
 }
 
 
