@@ -52,18 +52,22 @@ my $t0;
    $t0 = time; transpose_split( $FN_LARGE,   'split-5000'  ); say 'Split 5000    - Time: ',sprintf('%13.6f',time-$t0),' ',get_statm_info();
 
 sub transpose_split {
+  ## Slurp into array
   open my $fh, '<', $_[0];
-  my @in =  map { chomp;[ split /,/ ] } <$fh>;                 ## Slurp into array
+  my @in =  map { chomp;[ split /,/ ] } <$fh>;
   close $fh;
+  ## Generate transpose
   open $fh, '>', $_[1];
-  say {$fh} join ',', map {shift @{$_} } @in while @{$in[0]};        ## Generate transpose;
+  say {$fh} join ',', map {shift @{$_} } @in while @{$in[0]};        
   close $fh;
 }
 
 sub transpose_regex {
+  ## Slurp into array
   open my $fh, '<', $_[0];
-  my @in = <$fh>;                                              ## Slurp into array
+  my @in = <$fh>;
   close $fh;
+  ## Generate transpose
   open $fh, '>', $_[1];
   say {$fh} join ',', map { s{^(.*?)[,\r\n]+}{}; $1 } @in while $in[0];
   close $fh;
@@ -71,34 +75,48 @@ sub transpose_regex {
 
 sub transpose_seek {
   my($prev,@pos) = (0);
-  open my $fh, '<', $_[0];
+
+  open my $fh,  '<', $_[0];
   open my $ofh, '>', $_[1];
-  ## Loop through the file and get the start/end of each line
-  push (@pos, [$prev+$BYTES,tell $fh,substr $_,0,$BYTES]) && (($pos[-1][0]>$pos[-1][1])&&($pos[-1][0]=$pos[-1][1]), $prev=tell $fh) while <$fh>;
+  
+  ## Loop through the file and get the start/end position of each line,
+  ## and the first $BYTES characters of each line...
+
+  push ( @pos, [$prev+$BYTES,tell $fh,substr $_,0,$BYTES]) &&
+       ( $prev=tell $fh ) while <$fh>;
+
+  ## While we still have "columns" loop through each row and grab the first
+  ## entry and output results.
 
   while( $pos[0][0] < $pos[0][1] || length $pos[0][2] ) {
     my @line;
     foreach(@pos) {
       while( $_->[2] !~ m{,} && $_->[0] < $_->[1] ) {
         seek $fh, $_->[0], 0;
-        read $fh, $_->[2], $_->[1]-$_->[0] > $BYTES ? $BYTES : $_->[1]-$_->[0], length $_->[2];
-        $_->[0] = tell $fh;
+        read $fh,
+             $_->[2],         ## "Buffer"
+             $_->[1]-$_->[0] > $BYTES ? $BYTES : $_->[1]-$_->[0],
+             length $_->[2];  ## Length of "Buffer" so text gets added to end
+        $_->[0]+=$BYTES;
       }
       $_->[2] =~ s{^([^,\r\n]+)[,\r\n]*}{};
       push @line, $1;
     }
-    say ${$ofh} join q(,), @line;
+    say {$ofh} join q(,), @line;
   }
 }
 
 sub get_statm_info {
+  ## Support function gets the in memory size of the current process
+  ## we use this to show how efficient memory usage is...
   my $error = '';
   my $ref = {};
 
   if( open(_INFO,"</proc/$$/statm") ){
     my @info = split(/\s+/,<_INFO>);
     close(_INFO);
-    return sprintf 'Size: %8d, Resident: %8d, Shared: %8d', $info[0]*4, $info[1]*4, $info[2]*4;
+    return sprintf 'Size: %8d, Resident: %8d, Shared: %8d',
+      $info[0]*4, $info[1]*4, $info[2]*4;
   }
   return '-';
 }
