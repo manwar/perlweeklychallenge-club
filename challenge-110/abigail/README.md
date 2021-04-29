@@ -80,6 +80,7 @@ sex,m,m,f,f
 * [Bash](bash/ch-2.ch)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
+* [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
