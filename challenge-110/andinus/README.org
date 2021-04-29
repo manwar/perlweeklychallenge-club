@@ -1,102 +1,102 @@
-#+title: Challenge 100
-#+date: 2021-02-20
-#+options: toc:2
+#+title: Challenge 110
+#+date: 2021-04-29
 #+html_link_up: ../index.html
 #+export_file_name: index
 #+setupfile: ~/.emacs.d/org-templates/level-2.org
 
-* Task 1 - Fun Time
+* Task 1 - Valid Phone Numbers
 
-You are given a time (12 hour / 24 hour).
+You are given a text file.
 
-Write a script to convert the given time from 12 hour format to 24 hour
-format and vice versa.
+Write a script to display all valid phone numbers in the given text file.
 
-Ideally we expect a one-liner.
+Acceptable Phone Number Formats:
+#+begin_src
++nn  nnnnnnnnnn
+(nn) nnnnnnnnnn
+nnnn nnnnnnnnnn
+#+end_src
+
+Input File:
+#+begin_src
+0044 1148820341
+ +44 1148820341
+  44-11-4882-0341
+(44) 1148820341
+  00 1148820341
+#+end_src
+
+Output:
+#+begin_src
+0044 1148820341
+ +44 1148820341
+(44) 1148820341
+#+end_src
 
 ** Raku
 
 - Program: [[file:raku/ch-1.raku]]
 
-One should use ~DateTime~ module to solve this but that is not fun so we
-solve it the wrong way!
+~PhoneNumber~ grammar parses each entry one by one. ~country-code~ handles
+the 3 cases for country codes & ~number~ handles the other part.
 
-The program will accept any string as ~$time~. We do the format check later.
-
-#+begin_src raku
-#| convert 12-hour formatted time to 24-hour format and vice-versa
-unit sub MAIN (
-    Str $time, #= time (format: 05:15pm or "05:15 pm" or 17:00)
-);
-#+end_src
-
-The grammar ~Time~ will parse ~$time~ to give us meaningful information
-required to do the task.
-
-+ ~hour~ & ~minute~ match any digit ranging from 00 to 99
-+ ~meridiem~ matches either /am/ or /pm/
-
-+ *Note*: This grammar will consider "99:99" as a valid timestamp.
+We just loop over every entry & print it if it's a valid phone number.
 
 #+begin_src raku
-grammar Time {
-    token TOP { <hour> ':' <minute> ' '? <meridiem>? }
-    token hour { \d ** 1..2 }
-    token minute { \d ** 1..2 }
-    token meridiem { ['am'|'pm'] }
+grammar PhoneNumber {
+    token TOP { \s* <country-code> \s+ <number> }
+    token country-code { '+' \d \d | '(' \d \d ')' | \d ** 4 }
+    token number { \d ** 10 }
+}
+
+for $file.IO.lines -> $entry {
+    say $entry if PhoneNumber.parse($entry);
 }
 #+end_src
 
-We parse ~$time~ with ~Time~ grammar. If ~meridiem~ is set then it must be
-12-hour format time, otherwise it'll be 24-hour format time.
+* Task 2 - Transpose File
 
-#+begin_src raku
-# Match for time format.
-if Time.parse($time) -> $m {
-    given $m<meridiem> {
-        ...
-    }
-} else {
-    note "Wrong format!";
-    exit 1;
-}
+You are given a text file.
+
+Write a script to transpose the contents of the given file.
+
+Input File:
+#+begin_src
+name,age,sex
+Mohammad,45,m
+Joe,20,m
+Julie,35,f
+Cristina,10,f
 #+end_src
 
-For "am" we just check if the hour is 12, if so then we print it as "00"
-otherwise just print the hour.
-
-#+begin_src raku
-when 'am' {
-    printf "%02d:%02d\n",
-    $m<hour> == 12 ?? "00" !! $m<hour>,
-    $m<minute>;
-}
+Output:
+#+begin_src
+name,Mohammad,Joe,Julie,Cristina
+age,45,20,35,10
+sex,m,m,f,f
 #+end_src
 
-If the hour is < 12 then we print =hour + 12= otherwise just print the
-hour.
+** Raku
+
+- Program: [[file:raku/ch-2.raku]]
+
+~.IO.lines~ part creates a list of lines in the files, then we split it at
+",". ~zip~ then returns a list which is formatted the way we want it to
+be.
+
+From the documentation: https://docs.raku.org/routine/zip
+#+begin_quote
+Creates a supply that emits combined values as soon as there is a new
+value seen on all of the supplies.
+
+zip iterates through each of the input lists synchronously, 'Zipping'
+them together, so that elements are grouped according to their input
+list index, in the order that the lists are provided.
+#+end_quote
+
+We then join the entries with ",", loop over the formatted lines & print
+them.
 
 #+begin_src raku
-when 'pm' {
-    printf "%02d:%02d\n",
-    $m<hour> < 12 ?? $m<hour> + 12 !! $m<hour>,
-    $m<minute>;
-}
-#+end_src
-
-If the hour is 0 then print 12 otherwise check if it's > 12, if so then
-print =hour - 12= otherwise just print the hour.
-
-+ 23 -> 11 :: greater than 12
-+ 00 -> 12 :: equal to 0
-+ 12 -> 12 :: neither equal to 0, nor greater than 12
-
-If the hour is < 12 then print "am" otherwise print "pm".
-
-#+begin_src raku
-default {
-    printf "%02d:%02d%s\n",
-    $m<hour> == 0 ?? "12" !! $m<hour> > 12 ?? $m<hour> - 12 !! $m<hour>,
-    $m<minute>, $m<hour> < 12 ?? "am" !! "pm";
-}
+.say for zip($file.IO.lines.map(*.split(","))).map(*.join(","));
 #+end_src
