@@ -2,7 +2,7 @@
 
 sub transpose-csv-lines (@lines) {
     @lines
-    andthen .map: *.split: /\,/
+    andthen .map: *.split: ','
     andthen zip $_, with => sub (+@a) is assoc<list> { @a.join: ',' }
 }
 
