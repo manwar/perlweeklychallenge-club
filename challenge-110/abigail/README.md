@@ -79,6 +79,7 @@ sex,m,m,f,f
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.ch)
 * [C](c/ch-2.c)
+* [Lua](lua/ch-2.lua)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
