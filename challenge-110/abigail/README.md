@@ -76,6 +76,8 @@ sex,m,m,f,f
 
 
 ### Solutions
+* [AWK](awk/ch-2.awk)
+* [Bash](bash/ch-2.ch)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
