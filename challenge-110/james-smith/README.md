@@ -172,8 +172,8 @@ sub transpose_seek {
   ## Loop through the file and get the start/end position of each line,
   ## and the first $BYTES characters of each line...
 
-  push ( @pos, [$prev+$BYTES,tell $fh,substr $_,0,$BYTES]) &&
-       ( $prev=tell $fh ) while <$fh>;
+  ( push @pos, [ $prev+$BYTES, tell $fh, substr $_, 0, $BYTES] ) &&
+    ( $prev = tell $fh ) while <$fh>;
 
   ## While we still have "columns" loop through each row and grab the first
   ## entry and output results.
@@ -181,16 +181,17 @@ sub transpose_seek {
   while( $pos[0][0] < $pos[0][1] || length $pos[0][2] ) {
     my @line;
     foreach(@pos) {
+      ## Grab extra data for the row if we have got an incomplete
+      ## field {missing a "," and still data to read}
       while( $_->[2] !~ m{,} && $_->[0] < $_->[1] ) {
         seek $fh, $_->[0], 0;
-        read $fh,
-             $_->[2],         ## "Buffer"
+        read $fh, $_->[2],    ## "Buffer"
              $_->[1]-$_->[0] > $BYTES ? $BYTES : $_->[1]-$_->[0],
-             length $_->[2];  ## Length of "Buffer" so text gets added to end
+             length $_->[2];  ## Length of "Buffer" so text gets
+                              ## added to end
         $_->[0]+=$BYTES;
       }
-      $_->[2] =~ s{^([^,\r\n]+)[,\r\n]*}{};
-      push @line, $1;
+      push @line, @[$_->[2] =~ s{^([^,\r\n]+)[,\r\n]*}{}];
     }
     say {$ofh} join q(,), @line;
   }
@@ -285,21 +286,23 @@ We list these in order of "memory consumption"...
 
 | Method/size | Time (s)  | Kbytes    | resident  | shared |
 | ----------- | --------: | --------: | --------: | -----: |
-| Seek small  |     0.000 |    16,016 |     7,836 |  5,228 |
-| Regex small |     0.000 |    16,016 |     7,836 |  5,228 |
-| Split small |     0.000 |    16,016 |     7,836 |  5,228 |
-| Seek 1000   |     1.346 |    17,388 |     9,320 |  5,228 |
-| Seek 2000   |     5.841 |    18,848 |    10,636 |  5,228 |
-| Seek 5000   |    54.208 |    23,044 |    14,972 |  5,228 |
-| Regex 1000  |     1.293 |    25,492 |    17,288 |  5,228 |
-| Seek 30000  | 3,003.220 |    57,312 |    43,948 |  2,720 |
-| Regex 2000  |     9.040 |    63,896 |    51,376 |  3,140 |
-| Split 1000  |     0.934 |   105,784 |    93,100 |  3,204 |
-| Regex 5000  |   130.411 |   260,432 |   248,016 |  3,204 |
-| Split 2000  |     6.780 |   362,028 |   349,388 |  3,204 |
-| Split 5000  |   527.614 | 2,153,576 | 1,423,468 |  2,764 |
+| Seek small  |     0.000 |    16,024 |     7,836 |  5,228 |
+| Regex small |     0.000 |    16,024 |     7,836 |  5,228 |
+| Split small |     0.000 |    16,024 |     7,836 |  5,228 |
+| Seek 1000   |     1.277 |    17,196 |     9,320 |  5,228 |
+| Seek 2000   |     5.132 |    18,612 |    10,636 |  5,228 |
+| Seek 5000   |    39.498 |    22,308 |    14,208 |  5,228 |
+| Regex 1000  |     1.181 |    24,868 |    17,288 |  5,228 |
+| Seek 30000  | 2,537.705 |    53,364 |    43,948 |  2,720 |
+| Regex 2000  |    10.596 |    58,160 |    51,376 |  3,140 |
+| Split 1000  |     1.054 |   103,620 |    93,100 |  3,204 |
+| Regex 5000  |   128.589 |   258,056 |   248,016 |  3,204 |
+| Split 2000  |     4.490 |   360,036 |   349,388 |  3,204 |
+| Split 5000  |   598.668 | 2,151,664 | 1,423,468 |  2,764 |
 
 The size is the number of rows/columns - so the "1000" file has 1000 rows and 1000 columns (+row/column labels).
+
+As a "guestimate" for the 30,000 x 30,000 case for which the seek solution use roughly 50Mb, the regex solution would use 7GB memory and the split method would use about 75GB memory... Both these are more memory+swap than the machine that I'm using has!
 
 **File sizes:**
 
