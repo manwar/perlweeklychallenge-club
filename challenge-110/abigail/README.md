@@ -51,6 +51,7 @@ can completly ignore any white space in the input.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Perl Weekly Challenge 110: Valid Phone Numbers](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-110-1.html)
 
 ## [Transpose File](https://perlweeklychallenge.org/blog/perl-weekly-challenge-110/#TASK2)
 
