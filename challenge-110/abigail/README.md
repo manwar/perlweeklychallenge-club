@@ -87,4 +87,5 @@ sex,m,m,f,f
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
+[Perl Weekly Challenge 110: Transpose File](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-110-2.html)
 
