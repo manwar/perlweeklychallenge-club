@@ -17,16 +17,19 @@ for my $field (@{$csv_file}) {
 }
 
 for my $i (0..$old_max_num_col-1) {
-    print $csv_file->[0]->[$i];
+    print_item($csv_file->[0]->[$i]);
     for my $k (1..$old_num_row-1) {
         print ",";
-        my $item = $csv_file->[$k]->[$i];
-        if (defined($item)) {
-            print "\"" if $item  =~ /,/;
-            print $item;
-            print "\"" if $item  =~ /,/;
-        }
+        print_item($csv_file->[$k]->[$i]);
     }
     print "\n";
 }
 
+sub print_item {
+    my $item = $_[0];
+    if (defined($item)) {
+        print "\"" if $item  =~ /,/;
+        print $item;
+        print "\"" if $item  =~ /,/;
+    }
+}
