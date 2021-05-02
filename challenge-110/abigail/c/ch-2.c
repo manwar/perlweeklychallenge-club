@@ -77,7 +77,6 @@ int main (void) {
         printf ("\n");
     }
 
-
     free (text);
     return (0);
 }
