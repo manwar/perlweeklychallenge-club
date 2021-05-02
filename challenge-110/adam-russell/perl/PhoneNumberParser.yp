@@ -1,0 +1,46 @@
+%token SPACE DIGIT OPEN CLOSE PLUS
+%%
+
+phone_number: prefix SPACE area_exchange_subscriber
+;
+
+prefix: DIGIT DIGIT DIGIT DIGIT
+    | OPEN DIGIT DIGIT CLOSE
+    | PLUS DIGIT DIGIT
+;   
+
+area_exchange_subscriber: DIGIT DIGIT DIGIT DIGIT DIGIT DIGIT DIGIT DIGIT DIGIT DIGIT
+;
+
+%%
+
+sub lexer{
+    my($parser) = @_;
+    $parser->YYData->{INPUT} or return('', undef);
+    ##
+    # send tokens to parser
+    ##
+    for($parser->YYData->{INPUT}){
+        s/^(\s)// and return ("SPACE", $1);
+        s/^(\d)// and return ("DIGIT", $1);
+        s/^(\()// and return ("OPEN", $1);
+        s/^(\))// and return ("CLOSE", $1);
+        s/^(\+)// and return ("PLUS", $1);
+    }  
+}
+
+sub error{
+    exists $_[0]->YYData->{ERRMSG}
+    and do{
+        print $_[0]->YYData->{ERRMSG};
+            return;
+    };
+    print "syntax error\n"; 
+}
+
+sub parse{
+    my($self, $input) = @_;
+    $self->YYData->{INPUT} = $input;
+    my $result = $self->YYParse(yylex => \&lexer, yyerror => \&error);
+    return $result;  
+}
