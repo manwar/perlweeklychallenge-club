@@ -162,38 +162,31 @@ of the first column. But if we can't find a comma OR the end of the line - we re
 
 If we get to the end of the line we only retrieve the number of bytes left in that line.
 
-``` perl
+```perl
 sub transpose_seek {
-  my($prev,@pos) = (0);
+  my ( $prev, @pos ) = ( 0 );
 
   open my $fh,  '<', $_[0];
-  open my $ofh, '>', $_[1];
-
-  ## Loop through the file and get the start/end position of each line,
-  ## and the first $BYTES characters of each line...
-
-  ( push @pos, [ $prev+$BYTES, tell $fh, substr $_, 0, $BYTES] ) &&
+  ( push @pos, [ $prev+$BYTES, tell $fh, substr $_, 0, $BYTES ] ) &&
     ( $prev = tell $fh ) while <$fh>;
 
-  ## While we still have "columns" loop through each row and grab the first
-  ## entry and output results.
-
+  open my $ofh, '>', $_[1];
   while( $pos[0][0] < $pos[0][1] || length $pos[0][2] ) {
-    my @line;
-    foreach(@pos) {
-      ## Grab extra data for the row if we have got an incomplete
-      ## field {missing a "," and still data to read}
+    my $j = '';
+    foreach( @pos ) {
       while( $_->[2] !~ m{,} && $_->[0] < $_->[1] ) {
-        seek $fh, $_->[0], 0;
-        read $fh, $_->[2],    ## "Buffer"
+        seek $fh, $_->[0], 0;  ## 0 = from start of file!
+        read $fh,
+             $_->[2],
              $_->[1]-$_->[0] > $BYTES ? $BYTES : $_->[1]-$_->[0],
-             length $_->[2];  ## Length of "Buffer" so text gets
-                              ## added to end
-        $_->[0]+=$BYTES;
+             length $_->[2];
+        $_->[0] += $BYTES;
       }
-      push @line, @[$_->[2] =~ s{^([^,\r\n]+)[,\r\n]*}{}];
+      $_->[2] =~ s{^([^,\r\n]+)[,\r\n]*}{};
+      print {$ofh} $j, $1;
+      $j ||= ',';
     }
-    say {$ofh} join q(,), @line;
+    say {$ofh} '';
   }
 }
 ```
@@ -271,10 +264,17 @@ sub transpose_seek {
       (vs more disc accesses). It is linear in the number of lines, e.g. for the 1000 line file we load in
       roughly 1Mb of data at a time, and the memory usage is roughly 1.3Mb.
 
-    * Note this is `O(n)` as well as if the rows get longer then the number of bytes used does not increase.
+    * Rather than pushing to an array for the output, we print immediately. We use a prefix `$j` which
+      starts with the value `''` so that we don't print a comma before the first entry, and changes to
+      `','` after the first column (the only time `$js` is "false"). Printing every entry doesn't affect
+      IO performance as the output is buffered until the print buffer is full - so both methods take the
+      same time - except the array method uses subtly more memory.
+
+    * Note this is `O(n)` as well as if the rows get longer then the number of bytes used per line does
+      not increase.
 
     * Having played a bit - the sweet spot of `$BYTES` lies somewhere between 1K and 2K. Smaller makes the
-      regex in the split more efficient, larger reduces the file IO overhead.
+      regex in the `split` more efficient, larger reduces the (read) file IO overhead.
 
 ### Some information about speed/memory etc...
 
@@ -291,9 +291,9 @@ We list these in order of "memory consumption"...
 | Split small |     0.000 |    16,024 |     7,836 |  5,228 |
 | Seek 1000   |     1.277 |    17,196 |     9,320 |  5,228 |
 | Seek 2000   |     5.132 |    18,612 |    10,636 |  5,228 |
-| Seek 5000   |    39.498 |    22,308 |    14,208 |  5,228 |
+| Seek 5000   |    35.422 |    22,236 |    14,396 |  5,436 |
 | Regex 1000  |     1.181 |    24,868 |    17,288 |  5,228 |
-| Seek 30000  | 2,537.705 |    53,364 |    43,948 |  2,720 |
+| Seek 30000  | 2,390.686 |    53,228 |    40,332 |  2,968 |
 | Regex 2000  |    10.596 |    58,160 |    51,376 |  3,140 |
 | Split 1000  |     1.054 |   103,620 |    93,100 |  3,204 |
 | Regex 5000  |   128.589 |   258,056 |   248,016 |  3,204 |
@@ -318,12 +318,20 @@ If we look at the timings by method we can see that for the smaller files the `s
 the most efficient {but the difference is relatively small}. But as the file size increases
 then it soon becomes the least efficient:
 
-**Comparisons:**
+**Timing comparisons:**
+
+These are based on a single run of the script. When run multiple times the seek for 2000,
+can be faster than the split for 2000. Fastest script is in **bold**, slowest in *italics*.
+Only the seek method is used for the largest file as the Split/Regex models which cause
+the script to fail with an out of memory issue.
 
 | Size   | Split       | Regex       | Seek          |
 | -----: | ----------: | ----------: | ------------: |
 | small  |   **0.000** |     0.000   |      *0.000*  |
 | 1000   |   **0.934** |     1.293   |      *1.346*  |
-| 2000   |     6.890   |    *9.040*  |     **5.841** |
-| 5000   |  *527.614*  |   130.411   |    **54.208** |
-| 30000  |         -   |         -   | **3,003.220** |
+| 2000   |   **4.490** |    *9.040*  |       5.132   |
+| 5000   |  *527.614*  |   130.411   |    **35.442** |
+| 30000  |         -   |         -   | **2,390.686** |
+
+The efficiency of the seek method for larger files is almost certainly to do with the
+improved memory management.
