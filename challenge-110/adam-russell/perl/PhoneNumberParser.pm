@@ -26,13 +26,13 @@ sub new {
 [
 	{#State 0
 		ACTIONS => {
-			'OPEN' => 2,
+			'OPEN' => 1,
 			'DIGIT' => 5,
-			'PLUS' => 1
+			'PLUS' => 3
 		},
 		GOTOS => {
-			'prefix' => 4,
-			'phone_number' => 3
+			'phone_number' => 4,
+			'prefix' => 2
 		}
 	},
 	{#State 1
@@ -42,17 +42,17 @@ sub new {
 	},
 	{#State 2
 		ACTIONS => {
-			'DIGIT' => 7
+			'SPACE' => 7
 		}
 	},
 	{#State 3
 		ACTIONS => {
-			'' => 8
+			'DIGIT' => 8
 		}
 	},
 	{#State 4
 		ACTIONS => {
-			'SPACE' => 9
+			'' => 9
 		}
 	},
 	{#State 5
@@ -68,18 +68,18 @@ sub new {
 	{#State 7
 		ACTIONS => {
 			'DIGIT' => 12
+		},
+		GOTOS => {
+			'area_exchange_subscriber' => 13
 		}
 	},
 	{#State 8
-		DEFAULT => 0
+		ACTIONS => {
+			'DIGIT' => 14
+		}
 	},
 	{#State 9
-		ACTIONS => {
-			'DIGIT' => 13
-		},
-		GOTOS => {
-			'area_exchange_subscriber' => 14
-		}
+		DEFAULT => 0
 	},
 	{#State 10
 		ACTIONS => {
@@ -87,20 +87,20 @@ sub new {
 		}
 	},
 	{#State 11
-		DEFAULT => -4
-	},
-	{#State 12
 		ACTIONS => {
 			'CLOSE' => 16
 		}
 	},
-	{#State 13
+	{#State 12
 		ACTIONS => {
 			'DIGIT' => 17
 		}
 	},
-	{#State 14
+	{#State 13
 		DEFAULT => -1
+	},
+	{#State 14
+		DEFAULT => -4
 	},
 	{#State 15
 		ACTIONS => {
@@ -182,7 +182,7 @@ sub new {
     bless($self,$class);
 }
 
-#line 15 "perl\PhoneNumberParser.yp"
+#line 15 "PhoneNumberParser.yp"
 
 
 sub lexer{
