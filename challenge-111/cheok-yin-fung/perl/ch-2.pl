@@ -47,5 +47,5 @@ sub update_max {
 # result: aegilops, with length = 9
 
 # for most common 1000 English words:
-# accept, almost, effort,  with length = 7
+# accept, almost, effort,  with length = 6
 
