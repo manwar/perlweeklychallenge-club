@@ -1,65 +1,52 @@
-Task 1: "Chowla Numbers
+Task 1: "Valid Phone Numbers
 
-Write a script to generate first 20 Chowla Numbers, named after,
-Sarvadaman D. S. Chowla, a London born Indian American mathematician. It
-is defined as:
+You are given a text file.
 
-C(n) = sum of divisors of n except 1 and n
+Write a script to display all valid phone numbers in the given text file.
+Acceptable Phone Number Formats
 
-NOTE: Updated the above definition as suggested by Abigail [2021/04/19 18:40].
++nn  nnnnnnnnnn
+(nn) nnnnnnnnnn
+nnnn nnnnnnnnnn
+
+Input File
+
+0044 1148820341
+ +44 1148820341
+  44-11-4882-0341
+(44) 1148820341
+  00 1148820341
+
+Output
+
+0044 1148820341
+ +44 1148820341
+(44) 1148820341
+"
+
+My notes: as the valid formats are fixed, just a load of regexes.
+Would have been more interesting if the formats were inputs too.
+
+
+Task 2: "Transpose File
+
+You are given a text file.
+
+Write a script to transpose the contents of the given file.
+Input File
+
+name,age,sex
+Mohammad,45,m
+Joe,20,m
+Julie,35,f
+Cristina,10,f
 
 Output:
 
-0, 0, 0, 2, 0, 5, 0, 6, 3, 7, 0, 15, 0, 9, 8, 14, 0, 20, 0, 21
+name,Mohammad,Joe,Julie,Cristina
+age,45,20,35,10
+sex,m,m,f,f
 "
 
-My notes: easy and fun.
-
-
-Task 2: "Four Squares Puzzle
-
-You are given four squares as below with numbers named a,b,c,d,e,f,g.
-
-              (1)                    (3)
-        ===============     ===============
-        |             |     |             |
-        |     a       |     |     e       |
-        |             |(2)  |             | (4)
-        |         ---------------     --------------
-        |         |   |     |   |     |   |        |
-        |         | b |     | d |     | f |        |
-        |         |   |     |   |     |   |        |
-        |         |   |     |   |     |   |        |
-        ==========|====     ====|==========        |
-                  |      c      |     |     g      |
-                  |             |     |            |
-                  |             |     |            |
-                  ---------------     --------------
-
-Write a script to place the given unique numbers in the square box so
-that sum of numbers in each box is the same.
-
-Example
-
-Input: 1,2,3,4,5,6,7
-
-Output:
-
-    a = 6
-    b = 4
-    c = 1
-    d = 5
-    e = 2
-    f = 3
-    g = 7
-
-    Box 1: a + b = 6 + 4 = 10
-    Box 2: b + c + d = 4 + 1 + 5 = 10
-    Box 3: d + e + f = 5 + 2 + 3 = 10
-    Box 4: f + g = 3 + 7 = 10
-"
-
-My notes: sounds simple enough.  Find a,b,c,d,e,f st a+b = b+c+d = d+e+f = f+g
-Of course, we'll need to try all permutations of the values given.  There
-are lots of CPAN modules (eg. Algorithm::Permute), but here I decided to
-generate the permutations myself via Rosetta Stone code..
+My notes: simple to state.  Basically read into 2-D array and transpose
+array.
