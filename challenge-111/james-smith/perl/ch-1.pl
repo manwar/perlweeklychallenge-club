@@ -14,23 +14,32 @@ my $matrix = [
   [ 45, 47, 48, 49, 50 ],
 ];
 
-is( find_value( 35, $matrix ), 0 );
-is( find_value( 39, $matrix ), 1 );
-is( find_value(  3, $matrix ), 1 );
-is( find_value(  8, $matrix ), 0 );
-is( find_value( 23, $matrix ), 1 );
-is( find_value( 41, $matrix ), 0 );
+## Create a test set - numbers from -10 to 60...
+my %TEST_SET = map { $_ => 0 } (-10..60);
+## Set all to 0 and then set all in matrix to 1
+$TEST_SET{$_} = 1 foreach map { @{$_} } @{$matrix};
+
+is( find_val( 35, $matrix ), 0 );
+is( find_val( 39, $matrix ), 1 );
+is( find_val(  3, $matrix ), 1 );
+is( find_val(  8, $matrix ), 0 );
+is( find_val( 23, $matrix ), 1 );
+is( find_val( 41, $matrix ), 0 );
+
+## Full test set! Try all numbers from -10 to 60
+## { either side of the list! }
+is( find_val( $_, $matrix ), $TEST_SET{$_} )
+  foreach sort {$a<=>$b} keys %TEST_SET;
 
 done_testing();
 
-sub find_value {
-  my( $value, $m, @list ) = ( $_[0], 0, map { @{$_} } @{$_[1]} );
-     ( $m = @list >> 1          )
-  && ( $list[$m] == $value      )
-  ?  ( return 1                 )
-  :  ( $list[$m] > $value       )
-  ?  ( @list = @list[0 .. $m-1] )
-  :  ( splice @list, 0, $m      ) while @list>1;
-  return 0;
+sub find_val {
+  my( $val, $m, @list ) = ( $_[0], 0, map { @{$_} } @{$_[1]} );
+
+    $list[ $m = @list >> 1 ] == $val ? ( return 1            )
+  : $list[ $m              ] >  $val ? ( splice @list, $m    )
+  :                                    ( splice @list, 0, $m )
+    while @list>1;
+  return @list && $list[0] == $val ? 1 : 0;
 }
 
