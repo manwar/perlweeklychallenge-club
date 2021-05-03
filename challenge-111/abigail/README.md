@@ -50,6 +50,7 @@ to standard output. In case of ties, we print the first one found.
 
 
 ### Solutions
+* [GNU AWK](awk/ch-2.gawk)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
