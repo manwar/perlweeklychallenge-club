@@ -51,6 +51,7 @@ can completly ignore any white space in the input.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Perl Weekly Challenge 110: Valid Phone Numbers](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-110-1.html)
 
 ## [Transpose File](https://perlweeklychallenge.org/blog/perl-weekly-challenge-110/#TASK2)
 
@@ -77,7 +78,7 @@ sex,m,m,f,f
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
-* [Bash](bash/ch-2.ch)
+* [Bash](bash/ch-2.sh)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
@@ -86,4 +87,5 @@ sex,m,m,f,f
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
+[Perl Weekly Challenge 110: Transpose File](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-110-2.html)
 

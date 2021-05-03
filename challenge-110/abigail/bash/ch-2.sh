@@ -14,7 +14,7 @@ declare -a out
 #
 # Read in the data, add each field to the appropriate output string
 #
-IFS=","
+IFS=,
 while read -a chunks
 do    for   ((i = 0; i < ${#chunks[@]}; i ++))
       do    out[$i]=${out[$i]}${chunks[$i]},
