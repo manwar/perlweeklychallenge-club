@@ -122,8 +122,6 @@ public class NBoxesJavaFX extends Application
             group.getChildren().add(shape[i]);
         }
 
-        Rectangle shape1 = new Rectangle();
-
         Text[] text = new Text[M];
         Font font = Font.font("verdana", FontWeight.BOLD, FontPosture.REGULAR, 15); 
         for (int j=0; j<M; j++) {
