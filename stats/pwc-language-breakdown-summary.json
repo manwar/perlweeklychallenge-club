@@ -1,4 +1,7 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "legend" : {
       "enabled" : "false"
    },
@@ -8,17 +11,8 @@
          "text" : null
       }
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
+   "subtitle" : {
+      "text" : "Last updated at 2021-05-03 01:51:48 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
@@ -26,38 +20,44 @@
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "enabled" : "true",
+            "color" : "#FFFFFF"
+         },
          "data" : [
             [
                "Blog",
-               1522
+               1524
             ],
             [
                "Perl",
-               5204
+               5206
             ],
             [
                "Raku",
                3308
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "enabled" : "true",
-            "rotation" : -90
-         }
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2021-05-03 01:46:28 GMT"
-   },
    "chart" : {
       "type" : "column"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
    }
 }
