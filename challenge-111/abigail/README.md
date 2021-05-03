@@ -53,6 +53,7 @@ to standard output. In case of ties, we print the first one found.
 * [GNU AWK](awk/ch-2.gawk)
 * [C](c/ch-2.c)
 * [Lua](lua/ch-2.lua)
+* [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
