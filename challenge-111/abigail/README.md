@@ -52,6 +52,7 @@ to standard output. In case of ties, we print the first one found.
 ### Solutions
 * [GNU AWK](awk/ch-2.gawk)
 * [C](c/ch-2.c)
+* [Lua](lua/ch-2.lua)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
