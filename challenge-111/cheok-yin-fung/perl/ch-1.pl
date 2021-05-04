@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 # The Weekly Challenge 111
-# Task 1 Search  Matrix
+# Task 1 Search Matrix
+# Usage: ch-1.pl [number looking for]
 use strict;
 use warnings;
 
@@ -23,7 +24,7 @@ for (my $i=0; $i < scalar @my_seq ;$i++) {
         $h += $my_seq[$i];
     } elsif ($target < $list25[$h]) {
         $h -= $my_seq[$i];
-    } elsif ($target == $list25[$h]) {
+    } else {               # $target == $list25[$h]
         print "1\n";
         exit;
     }
