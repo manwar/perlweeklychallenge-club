@@ -31,6 +31,7 @@ make use of the fact the input is sorted. For the majority of
 languages, the fact input is sorted does not offer additional benefits.
 
 ### Solutions
+* [AWK](awk/ch-1.awk)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
