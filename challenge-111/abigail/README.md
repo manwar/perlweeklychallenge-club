@@ -38,6 +38,7 @@ languages, the fact input is sorted does not offer additional benefits.
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
+* [Ruby](ruby/ch-1.rb)
 
 ### Blog
 
