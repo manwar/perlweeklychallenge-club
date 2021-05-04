@@ -5,14 +5,20 @@ use strict;
 use warnings;
 use feature qw(say);
 
-## These are the dictionary's supplied by Ubuntu.
+## Ubuntu supplies a number of different dictionaries
+## I have installed all four of the english (UK)
+## dictionaries that are available - a summary of the
+## number of words is listed below. This does include
+## a large number of real names and words containing
+## hyphen's and apostrophies
 ##
-##   Name:    # words
-##   -------  -------
-##   small:    50,790
-##   large:   166,828
-##   huge:    344,861
-##   insane:  654,299
+##   Name:    # words # trimmed
+##   -------  ------- ---------
+##   small:    50,790    39,781
+##   large:   166,828   113,695
+##   huge:    344,861   245,593
+##   insane:  654,299   427,891
+##
 
 say longest( '/usr/share/dict/british-english-small'  );
 say longest( '/usr/share/dict/british-english-large'  );
@@ -63,20 +69,21 @@ sub longest_no_comments {
 ## Two (billowy & beefily) are common in the "huge" list
 ## The other two 7 letter words are:
 ##
-##   chikors - An alternative spelling of chukars - A
-##             species of partridge native to central
-##             Asia (Alectoris chukar).
+##   chikors  - An alternative spelling of chukars - A
+##              species of partridge native to central
+##              Asia (Alectoris chukar).
 ##
-##   dikkops - (From afrikaans) A bird of the family
-##             Burhinidae. The stone curlew, thick-knee
-##             Comes from dik-kop or thick head
+##   dikkops  - (From afrikaans) A bird of the family
+##              Burhinidae. The stone curlew, thick-knee.
+##              Comes from dik-kop or thick head
 ##
 ## Finally the 8 letter word in the insane diction is:
 ##
 ##   aegilops - a genus of Eurasian and North American
 ##              plants in the grass family, Poaceae.
-##              They are known generally as goatgrasses.
+##              They are known generally as goat grasses.
 ##              Some species are known as invasive weeds
 ##              in parts of North America.
+##
 
 

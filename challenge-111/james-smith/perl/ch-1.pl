@@ -43,6 +43,12 @@ sub find_val {
   ## If it matches we return 1 o/w we throw the middle value and
   ## the other half of the list - by using splice...
 
+  ## Note rather than dividing by 2 to get the mid point of the
+  ## list we instead use the bit shift operator ">>" this
+  ## also has the effect of taking the integer value of the
+  ## result so instead of having to do int(3/2) you can just
+  ## write 3>>1 to get the whole number (1)
+
     $list[ $m = @list >> 1 ] == $val ? ( return 1              )
   : $list[ $m              ] >  $val ? ( splice @list, $m      )
   :                                    ( splice @list, 0, $m+1 )
@@ -56,5 +62,14 @@ sub find_val {
 
   ## The latter occurs when the true value happens at the start of
   ## list either at initially or after one of the splices...
+}
+
+sub find_val_no_comments {
+  my( $val, $m, @list ) = ( $_[0], 0, map { @{$_} } @{$_[1]} );
+    $list[ $m = @list >> 1 ] == $val ? ( return 1              )
+  : $list[ $m              ] >  $val ? ( splice @list, $m      )
+  :                                    ( splice @list, 0, $m+1 )
+    while @list>1;
+  return @list && $list[0] == $val ? 1 : 0;
 }
 
