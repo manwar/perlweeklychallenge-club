@@ -16,30 +16,45 @@ my $matrix = [
 
 ## Create a test set - numbers from -10 to 60...
 my %TEST_SET = map { $_ => 0 } (-10..60);
-## Set all to 0 and then set all in matrix to 1
+
+## Set all to 0, and then iterate through the
+## elements of the matrix and set the numbers
+## in the list to 1....
+
 $TEST_SET{$_} = 1 foreach map { @{$_} } @{$matrix};
 
+## Run the original PWC test examples...
 is( find_val( 35, $matrix ), 0 );
 is( find_val( 39, $matrix ), 1 );
-is( find_val(  3, $matrix ), 1 );
-is( find_val(  8, $matrix ), 0 );
-is( find_val( 23, $matrix ), 1 );
-is( find_val( 41, $matrix ), 0 );
 
-## Full test set! Try all numbers from -10 to 60
-## { either side of the list! }
+## Now run our full test set - from -10 to 60. This covers
+## all cases within the list and a few either side...
+
 is( find_val( $_, $matrix ), $TEST_SET{$_} )
   foreach sort {$a<=>$b} keys %TEST_SET;
 
 done_testing();
 
 sub find_val {
+  ## Flatten the array provided into a list...
   my( $val, $m, @list ) = ( $_[0], 0, map { @{$_} } @{$_[1]} );
 
-    $list[ $m = @list >> 1 ] == $val ? ( return 1            )
-  : $list[ $m              ] >  $val ? ( splice @list, $m    )
-  :                                    ( splice @list, 0, $m )
+  ## We trim the list depending on the value of the middle point
+  ## If it matches we return 1 o/w we throw the middle value and
+  ## the other half of the list - by using splice...
+
+    $list[ $m = @list >> 1 ] == $val ? ( return 1              )
+  : $list[ $m              ] >  $val ? ( splice @list, $m      )
+  :                                    ( splice @list, 0, $m+1 )
     while @list>1;
+
+  ## We stop when we get to a list of either 0 or 1 entries.
+  ## If the list has length 0 then we return 0
+  ## If it has one element we return whether or not it is the value
+
   return @list && $list[0] == $val ? 1 : 0;
+
+  ## The latter occurs when the true value happens at the start of
+  ## list either at initially or after one of the splices...
 }
 
