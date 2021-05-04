@@ -2,9 +2,40 @@
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
+   "series" : [
+      {
+         "dataLabels" : {
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "align" : "right",
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "enabled" : "true"
+         },
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               1531
+            ],
+            [
+               "Perl",
+               5216
+            ],
+            [
+               "Raku",
+               3316
+            ]
+         ]
+      }
+   ],
    "xAxis" : {
       "labels" : {
          "style" : {
@@ -14,8 +45,8 @@
       },
       "type" : "category"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
       "title" : {
@@ -24,40 +55,9 @@
       "min" : 0
    },
    "subtitle" : {
-      "text" : "Last updated at 2021-05-04 05:56:13 GMT"
+      "text" : "Last updated at 2021-05-04 06:02:54 GMT"
    },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "enabled" : "true",
-            "rotation" : -90
-         },
-         "data" : [
-            [
-               "Blog",
-               1531
-            ],
-            [
-               "Perl",
-               5214
-            ],
-            [
-               "Raku",
-               3314
-            ]
-         ]
-      }
-   ]
+   "chart" : {
+      "type" : "column"
+   }
 }

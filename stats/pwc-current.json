@@ -26,72 +26,91 @@
             "id" : "Luca Ferrari"
          },
          {
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mark Anderson"
+         },
+         {
+            "id" : "Stuart Little",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Stuart Little"
          }
       ]
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba"
+            },
+            {
+               "y" : 4,
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "y" : 4,
+               "name" : "Stuart Little",
+               "drilldown" : "Stuart Little"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 111",
+         "colorByPoint" : 1
+      }
+   ],
+   "xAxis" : {
+      "type" : "category"
    },
    "legend" : {
       "enabled" : 0
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 111",
-         "data" : [
-            {
-               "drilldown" : "E. Choroba",
-               "y" : 2,
-               "name" : "E. Choroba"
-            },
-            {
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 4
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "y" : 2,
-               "name" : "Mark Anderson"
-            }
-         ]
-      }
-   ],
    "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-05-04 05:56:13 GMT"
+      "text" : "[Champions: 4] Last updated at 2021-05-04 06:02:54 GMT"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 111"
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
