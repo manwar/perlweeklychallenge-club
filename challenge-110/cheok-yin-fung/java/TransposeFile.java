@@ -53,7 +53,7 @@ public class TransposeFile
             System.out.println(e.getMessage());
             System.exit(0);
         } catch (IndexOutOfBoundsException e) {
-            System.out.println("Usage: java Transpose [CSV file]");
+            System.out.println("Usage: java TransposeFile [CSV file]");
             System.exit(0);
         } catch (Exception e) {
             System.out.println("Error(s) in input file.");
