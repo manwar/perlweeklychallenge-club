@@ -39,8 +39,7 @@ sub findLongestOrderedWords($) {
   for my $word (sort { length($b) <=> length($a) } grep /^[a-z]+$/,@inWords) {
     my $wlen = length($word);
     if (!defined $wlenMax or $wlenMax == $wlen) {
-      # Use unpack as it is slightly faster than split(//)
-      if ($word eq join('',sort unpack '(A1)*',$word)) {
+      if ($word eq join('',sort split '',$word)) {
         push(@words, $word);
         $wlenMax = $wlen;
       }
