@@ -36,6 +36,7 @@ languages, the fact input is sorted does not offer additional benefits.
 * [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
+* [Pascal](pascal/ch-1.p)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 * [Ruby](ruby/ch-1.rb)
