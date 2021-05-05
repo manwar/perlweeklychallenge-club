@@ -89,10 +89,13 @@ is( find_val_grep_map( 35, $matrix ), 0 );
 is( find_val_grep_map( 39, $matrix ), 1 );
 is( find_val_dnf(      35, $matrix ), 0 );
 is( find_val_dnf(      39, $matrix ), 1 );
+is( find_val_dnf_x(      35, $matrix ), 0 );
+is( find_val_dnf_x(      39, $matrix ), 1 );
 
 ## Now run our full test set - from -10 to 60. This covers
 ## all cases within the list and a few either side...
 
+is( find_val_dnf_x(    $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 is( find_val_dnf(      $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 is( find_val_search(   $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 is( find_val_map_grep( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
@@ -100,7 +103,8 @@ is( find_val_grep_map( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 
 done_testing();
 
-cmpthese(10_000, {
+cmpthese(100_000, {
+  q(X)             => sub { find_val_dnf_x(    $_, $matrix ) foreach @KEYS; },
   q(Don't flatten) => sub { find_val_dnf(      $_, $matrix ) foreach @KEYS; },
   'Flatten'        => sub { flatten(           $_, $matrix ) foreach @KEYS; },
   'Search'         => sub { find_val_search(   $_, $matrix ) foreach @KEYS; },
@@ -116,6 +120,20 @@ sub find_val_dnf {
            ? ( $v < $m->[1][0] ? 0 : $v < $m->[2][0] ? 1 : 2 )
            : ( $v < $m->[4][0] ? 3 : 4                       )
          ]};
+}
+sub find_val_dnf_x {
+  my($v,$m) = @_;
+  my $t;
+  return $v < $m->[0][0] || $v > $m->[4][4]
+       ? 0
+       : ( $t = $m->[ $v < $m->[3][0]
+           ? ( $v < $m->[1][0] ? 0 : $v < $m->[2][0] ? 1 : 2 )
+           : ( $v < $m->[4][0] ? 3 : 4                       )
+         ] ) &&
+         ( return $v == $t->[2] ? 1 :
+                  $v < $t->[2] ?
+                  (( $v == $t->[0] || $v == $t->[1] ) ? 1 : 0) :
+                  (( $v == $t->[4] || $v == $t->[3] ) ? 1 : 0) );
 }
 
 sub flatten {
