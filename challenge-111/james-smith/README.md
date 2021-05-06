@@ -91,14 +91,14 @@ Notes:
     the array - this highlights how efficient each algorithm is (and can be)
   
   * So we see that the map_grep solution is 50% more efficient than the search
-    algorith (this is true for all search method algorithms which flatten
+    algorithm (this is true for all search method algorithms which flatten
     the array first);
 
 ## Not flattening array
 
 As we have a limit on performance with the flattening operation. To
-improve efficiency we will need to consider a different approach: **To
-not flatten!**
+improve efficiency we will need to consider a different approach: **Which
+therefore must not flatten!**
 
 ### Do not flatten - find the row containing the number
 
@@ -239,13 +239,14 @@ cmpthese(100_000, {
 
 ## Addendum - using hash keys
 
-As some people had used hash slices to solve this problem - I thought I
-would look into this to. I added the following function:
+As some people have used hash slices to solve this problem - I thought I
+would look into this to -- Colin thought this would help in the perl
+review! I've added the following function:
 
 ```perl
 sub find_val_hash {
   my %list;
-  @list{ map { @{$_} } @{$_[1]} } = ();
+  @list{ map { @{$_} } @{$_[1]} } = (); ## Quickest 
   return exists $list{$_[0]} ? 1: 0;
 }
 ```
@@ -274,9 +275,9 @@ the same speed or slightly slower.
 | Grep-Map    |  5,328/s  |   162%  |    8%  |      --  |    -27%  |      *-32%* |    *-36%* |  -73%  |   -77%  |
 | Map-Grep    |  7,252/s  |   256%  |   47%  |     36%  |      --  |       *-8%* |    *-13%* |  -64%  |   -69%  |
 | *Flatten-@* | *7,855/s* |  *286%* |  *60%* |    *47%* |     *8%* |        *--* |     *-6%* | *-61%* |  *-66%* |
-| *Flatten*   | *8,361/s* |  *311%* |  *70%* |    57%   |    *15%* |        *6%* |      *--* | *-58%* |  *-64%* |
-| DNF         | 20,080/s  |   887%  |  308%  |   277%   |    177%  |      *156%* |    *140%* |    --  |   -13%  |
-| Optimal     | 23,095/s  | 1,035%  |  370%  |   333%   |    218%  |      *194%* |    *176%* |   15%  |    --   |
+| *Flatten*   | *8,361/s* |  *311%* |  *70%* |    *57%* |    *15%* |        *6%* |      *--* | *-58%* |  *-64%* |
+| DNF         | 20,080/s  |   887%  |  308%  |    277%  |    177%  |      *156%* |    *140%* |    --  |   -13%  |
+| Optimal     | 23,095/s  | 1,035%  |  370%  |    333%  |    218%  |      *194%* |    *176%* |   15%  |    --   |
 
 # Challenge 2 - Ordered Letters
 
