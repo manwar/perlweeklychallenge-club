@@ -1,10 +1,12 @@
+# Perl Weekly Challenge #111
+
 # Challenge 1 - Search Matrix
 
-You are given 5x5 matrix filled with integers such that each row is sorted from left to
+**You are given 5x5 matrix filled with integers such that each row is sorted from left to
 right and the first integer of each row is greater than the last integer of the previous
-row.
+row.**
 
-Write a script to find a given integer in the matrix using an efficient search algorithm.
+**Write a script to find a given integer in the matrix using an efficient search algorithm.**
 
 ## Solution to challenge 1
 
@@ -35,7 +37,6 @@ sub find_val_search {
   : $list[ $m              ] >  $val ? ( splice @list, $m      )
   :                                    ( splice @list, 0, $m+1 )
     while @list>1;
-
   return @list && $list[0] == $val ? 1 : 0;
 }
 ```
@@ -235,14 +236,55 @@ cmpthese(100_000, {
 });
 ```
 
+## Addendum - using hash keys
+
+As some people had used hash slices to solve this problem - I thought I
+would look into this to. I added the following function:
+
+```perl
+sub find_val_hash {
+  my %list;
+  @list{ map { @{$_} } @{$_[1]} } = ();
+  return exists $list{$_[0]} ? 1: 0;
+}
+```
+
+which converts the nested arrayref into an array for the keys of `%list`
+and then returns 1 if the value of a key in the hash. Like other methods
+this throws away the fact that the array is originally sorted...
+
+Looking at performance - this is approximately 53% slower than the search
+algorithm, and therefore less than a tenth of the speed of the optimal
+solution.
+
+## Addendum - passing an array rather than an arrayref
+
+I quickly checked to see if by passing the matrix as an array rather than
+an arrayref was any faster - one less derefernce - but it is not - it
+appears to be the same speed +/- 2%. In most cases it appears to be
+the same speed or slightly slower.
+
+## Final timing run with additional two methods in...
+
+| Method      |     Rate  | Hash    | Search | Grep-Map | Map-Grep | *Flatten-@* | *Flatten* | DNF    | Optimal |
+| ----------- | --------: | ------: | -----: | -------: | -------: | ----------: | --------: | -----: | ------: |
+| Hash        |  2,035/s  |     --  |  -59%  |    -62%  |    -72%  |      *-74%* |    *-76%* |  -90%  |   -91%  |
+| Search      |  4,916/s  |   142%  |    --  |     -8%  |    -32%  |      *-37%* |    *-41%* |  -76%  |   -79%  | 
+| Grep-Map    |  5,328/s  |   162%  |    8%  |      --  |    -27%  |      *-32%* |    *-36%* |  -73%  |   -77%  |
+| Map-Grep    |  7,252/s  |   256%  |   47%  |     36%  |      --  |       *-8%* |    *-13%* |  -64%  |   -69%  |
+| *Flatten-@* | *7,855/s* |  *286%* |  *60%* |    *47%* |     *8%* |        *--* |     *-6%* | *-61%* |  *-66%* |
+| *Flatten*   | *8,361/s* |  *311%* |  *70%* |    57%   |    *15%* |        *6%* |      *--* | *-58%* |  *-64%* |
+| DNF         | 20,080/s  |   887%  |  308%  |   277%   |    177%  |      *156%* |    *140%* |    --  |   -13%  |
+| Optimal     | 23,095/s  | 1,035%  |  370%  |   333%   |    218%  |      *194%* |    *176%* |   15%  |    --   |
+
 # Challenge 2 - Ordered Letters
 
-Given a word, you can sort its letters alphabetically (case insensitive).
+**Given a word, you can sort its letters alphabetically (case insensitive).
 For example, “beekeeper” becomes “beeeeekpr” and “dictionary” becomes
-“acdiinorty”.
+“acdiinorty”.**
 
-Write a script to find the longest English words that don’t change when
-their letters are sorted.
+**Write a script to find the longest English words that don’t change when
+their letters are sorted.**
 
 ## Dictionaries available
 
@@ -365,6 +407,7 @@ british-english-huge - max length 7 - 4 words
 british-english-insane - max length 8 - 1 word
 
   aegilops
+
 ```
 
 ## Some definitions...
@@ -374,4 +417,3 @@ All the 6 letter words and billowy and beefily are quite common words, but there
  * **chikors** - An alternative spelling of chukars - A species of partridge native to central Asia (*Alectoris chukar*).
  * **dikkops** - A bird of the family Burhinidae. The stone curlew, thick-knee. (From afrikaans) *dik*-*kop* or thick head
  * **aegilops** - A genus of Eurasian and North American plants in the grass family, Poaceae. They are known generally as goat grasses. Some species are known as invasive weeds in parts of North America.
-
