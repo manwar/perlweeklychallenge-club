@@ -71,6 +71,8 @@ my $matrix = [
   [ 45, 47, 48, 49, 50 ],
 ];
 
+my @M = @{$matrix};
+
 ## Create a test set - numbers from -10 to 60...
 my %TEST_SET = map { $_ => 0 } (my @KEYS = -10..60);
 
@@ -81,31 +83,40 @@ my %TEST_SET = map { $_ => 0 } (my @KEYS = -10..60);
 $TEST_SET{$_} = 1 foreach map { @{$_} } @{$matrix};
 
 ## Run the original PWC test examples...
-is( find_val_search(   35, $matrix ), 0 );
-is( find_val_search(   39, $matrix ), 1 );
-is( find_val_map_grep( 35, $matrix ), 0 );
-is( find_val_map_grep( 39, $matrix ), 1 );
-is( find_val_grep_map( 35, $matrix ), 0 );
-is( find_val_grep_map( 39, $matrix ), 1 );
-is( find_val_dnf(      35, $matrix ), 0 );
-is( find_val_dnf(      39, $matrix ), 1 );
+is( find_val_search(      35, $matrix ), 0 );
+is( find_val_search(      39, $matrix ), 1 );
+is( find_val_hash(        35, $matrix ), 0 );
+is( find_val_hash(        39, $matrix ), 1 );
+is( find_val_map_grep(    35, $matrix ), 0 );
+is( find_val_map_grep(    39, $matrix ), 1 );
+is( find_val_grep_map(    35, $matrix ), 0 );
+is( find_val_grep_map(    39, $matrix ), 1 );
+is( find_val_dnf(         35, $matrix ), 0 );
+is( find_val_dnf(         39, $matrix ), 1 );
+is( find_val_dnf_optimal( 35, $matrix ), 0 );
+is( find_val_dnf_optimal( 39, $matrix ), 1 );
 
 ## Now run our full test set - from -10 to 60. This covers
 ## all cases within the list and a few either side...
 
-is( find_val_dnf(      $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
-is( find_val_search(   $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
-is( find_val_map_grep( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
-is( find_val_grep_map( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_dnf_optimal(    $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_dnf(            $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_search(         $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_hash(           $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_map_grep(       $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_grep_map(       $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 
 done_testing();
 
-cmpthese(10_000, {
-  q(Don't flatten) => sub { find_val_dnf(      $_, $matrix ) foreach @KEYS; },
-  'Flatten'        => sub { flatten(           $_, $matrix ) foreach @KEYS; },
-  'Search'         => sub { find_val_search(   $_, $matrix ) foreach @KEYS; },
-  'Grep-Map'       => sub { find_val_grep_map( $_, $matrix ) foreach @KEYS; },
-  'Map-Grep'       => sub { find_val_map_grep( $_, $matrix ) foreach @KEYS; },
+cmpthese(100_000, {
+  q(Optimal)  => sub { find_val_dnf_optimal(    $_, $matrix ) foreach @KEYS; },
+  q(DNF)      => sub { find_val_dnf(            $_, $matrix ) foreach @KEYS; },
+  'Flatten'   => sub { flatten(                 $_, $matrix ) foreach @KEYS; },
+  'Flatten-@' => sub { flatten_array(           $_, @M      ) foreach @KEYS; },
+  'Hash'      => sub { find_val_hash(           $_, $matrix ) foreach @KEYS; },
+  'Search'    => sub { find_val_search(         $_, $matrix ) foreach @KEYS; },
+  'Grep-Map'  => sub { find_val_grep_map(       $_, $matrix ) foreach @KEYS; },
+  'Map-Grep'  => sub { find_val_map_grep(       $_, $matrix ) foreach @KEYS; },
 });
 
 sub find_val_dnf {
@@ -117,10 +128,36 @@ sub find_val_dnf {
            : ( $v < $m->[4][0] ? 3 : 4                       )
          ]};
 }
+sub find_val_dnf_optimal {
+  my($v,$m) = @_;
+  my $t;
+  return $v < $m->[0][0] || $v > $m->[4][4]
+       ? 0
+       : ( $t = $m->[ $v < $m->[3][0]
+           ? ( $v < $m->[1][0] ? 0 : $v < $m->[2][0] ? 1 : 2 )
+           : ( $v < $m->[4][0] ? 3 : 4                       )
+         ] ) &&
+         ( return $v == $t->[2] ? 1 :
+                  $v < $t->[2] ?
+                  (( $v == $t->[0] || $v == $t->[1] ) ? 1 : 0) :
+                  (( $v == $t->[4] || $v == $t->[3] ) ? 1 : 0) );
+}
+
+sub flatten_array {
+  shift @_;
+  my @list = map { @{$_} } @_;
+  return 1;
+}
 
 sub flatten {
   my @list = map { @{$_} } @{$_[1]};
   return 1;
+}
+
+sub find_val_hash {
+  my %list;
+  @list{ map { @{$_} } @{$_[1]} } = ();
+  return exists $list{$_[0]} ? 1: 0;
 }
 
 sub find_val_map_grep {
