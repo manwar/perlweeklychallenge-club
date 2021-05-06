@@ -1,5 +1,13 @@
 # Perl Weekly Challenge #111
 
+You can find more information about this weeks, and previous weeks challenges at:
+
+  https://perlweeklychallenge.org/
+
+If you are not already doing the challenge - it is a good place to practise your
+**perl** or **raku**. If it is not **perl** or **raku** you develop in - you can
+submit solutions in whichever language you feel comfortable with.
+
 # Challenge 1 - Search Matrix
 
 **You are given 5x5 matrix filled with integers such that each row is sorted from left to
