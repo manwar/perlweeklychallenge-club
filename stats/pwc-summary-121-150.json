@@ -1,16 +1,11 @@
 {
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
-   },
-   "chart" : {
-      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             0,
@@ -42,9 +37,11 @@
             8,
             114,
             3
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             3,
             2,
@@ -76,8 +73,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -115,15 +111,6 @@
          "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "xAxis" : {
       "categories" : [
          "Martin Barth",
@@ -158,10 +145,23 @@
          "Pavel Jurca"
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-05-06 20:15:10 GMT"
+      "text" : "[Champions: 30] Last updated at 2021-05-06 20:18:25 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    }
 }
