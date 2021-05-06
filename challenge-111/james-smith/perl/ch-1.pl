@@ -72,6 +72,9 @@ my $matrix = [
 ];
 
 my @M = @{$matrix};
+my $F = [ map { @{$_} } @M ];
+my $H = {};
+@{$H}{@{$F}}=();
 
 ## Create a test set - numbers from -10 to 60...
 my %TEST_SET = map { $_ => 0 } (my @KEYS = -10..60);
@@ -87,14 +90,19 @@ is( find_val_search(      35, $matrix ), 0 );
 is( find_val_search(      39, $matrix ), 1 );
 is( find_val_hash(        35, $matrix ), 0 );
 is( find_val_hash(        39, $matrix ), 1 );
+is( find_val_hash_pre(    35, $H ), 0 );
+is( find_val_hash_pre(    39, $H ), 1 );
 is( find_val_map_grep(    35, $matrix ), 0 );
 is( find_val_map_grep(    39, $matrix ), 1 );
 is( find_val_grep_map(    35, $matrix ), 0 );
 is( find_val_grep_map(    39, $matrix ), 1 );
+is( find_val_grep_pre(    35, $F ), 0 );
+is( find_val_grep_pre(    39, $F ), 1 );
 is( find_val_dnf(         35, $matrix ), 0 );
 is( find_val_dnf(         39, $matrix ), 1 );
 is( find_val_dnf_optimal( 35, $matrix ), 0 );
 is( find_val_dnf_optimal( 39, $matrix ), 1 );
+
 
 ## Now run our full test set - from -10 to 60. This covers
 ## all cases within the list and a few either side...
@@ -114,6 +122,8 @@ cmpthese(100_000, {
   'Flatten'   => sub { flatten(                 $_, $matrix ) foreach @KEYS; },
   'Flatten-@' => sub { flatten_array(           $_, @M      ) foreach @KEYS; },
   'Hash'      => sub { find_val_hash(           $_, $matrix ) foreach @KEYS; },
+  'Hash-%'    => sub { find_val_hash_pre(       $_, $H      ) foreach @KEYS; },
+  'Grep-@'    => sub { find_val_grep_pre(       $_, $F      ) foreach @KEYS; },
   'Search'    => sub { find_val_search(         $_, $matrix ) foreach @KEYS; },
   'Grep-Map'  => sub { find_val_grep_map(       $_, $matrix ) foreach @KEYS; },
   'Map-Grep'  => sub { find_val_map_grep(       $_, $matrix ) foreach @KEYS; },
@@ -160,6 +170,10 @@ sub find_val_hash {
   return exists $list{$_[0]} ? 1: 0;
 }
 
+sub find_val_hash_pre {
+  return exists $_[1]{$_[0]} ? 1: 0;
+}
+
 sub find_val_map_grep {
   my($v,$m)=@_;
   return 0 + map { grep { $_ == $v } @{$_} } @{$m};
@@ -168,6 +182,11 @@ sub find_val_map_grep {
 sub find_val_grep_map {
   my($v,$m)=@_;
   return 0 + grep { $_ == $v } map { @{$_} } @{$m};
+}
+
+sub find_val_grep_pre {
+  my($v,$m)=@_;
+  return 0 + grep { $_ == $v } @{$m};
 }
 
 sub find_val_search {

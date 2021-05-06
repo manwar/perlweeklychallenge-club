@@ -244,7 +244,7 @@ cmpthese(100_000, {
 });
 ```
 
-## Addendum - using hash keys
+## Addendum 1 - using hash keys
 
 As some people have used hash slices to solve this problem - I thought I
 would look into this to -- Colin thought this would help in the perl
@@ -266,7 +266,7 @@ Looking at performance - this is approximately 53% slower than the search
 algorithm, and therefore less than a tenth of the speed of the optimal
 solution.
 
-## Addendum - passing an array rather than an arrayref
+## Addendum 2 - passing an array rather than an arrayref
 
 I quickly checked to see if by passing the matrix as an array rather than
 an arrayref was any faster - one less derefernce - but it is not - it
@@ -285,6 +285,42 @@ the same speed or slightly slower.
 | *Flatten*   | *8,361/s* |  *311%* |  *70%* |    *57%* |    *15%* |        *6%* |      *--* | *-58%* |  *-64%* |
 | DNF         | 20,080/s  |   887%  |  308%  |    277%  |    177%  |      *156%* |    *140%* |    --  |   -13%  |
 | Optimal     | 23,095/s  | 1,035%  |  370%  |    333%  |    218%  |      *194%* |    *176%* |   15%  |    --   |
+
+## Addendum 3 - caching "flattening"
+
+Optimizations like these are great if you are in the middle of a tight loop and calling the function a number
+of times - if this is the same matrix each time - we may get some performance boosts by pre-flattening the matrix.
+
+I've included two more functions "Grep-@" & "Hash-%" which replicate "Grep-Map" and "Hash" to show how this can
+speed things up.. The compute on the fly hash is the slowest method - but pre-cacheing the hash is 30 times faster,
+the pre-flattened array speeds up the grep - but only by a factor of 2 and so is still only half the speed of
+the *do not flatten* versions.
+
+**Note:** The second parameter in each of these is the respective flattened arrayref or hashref.
+
+```perl
+sub find_val_grep_pre {
+  my($v,$m)=@_;
+  return 0 + grep { $_ == $v } @{$m};
+}
+
+sub find_val_hash_pre {
+  return exists $_[1]{$_[0]} ? 1: 0;
+}
+```
+
+| Method      |     Rate  | Hash    | Search  | GrepMap | MapGrep | *Flat* | *Flat@* | **Grep@** | DNF    | Opt | **Hash%** |
+| ----------- | --------: | ------: | ------: | -------: | -------: | --------: | ----------: | ---------: | -----: | ------: | ----------: |
+| Hash        |  1,932/s  |     --  |   -60%  |    -64%  |    -73%  |    *-77%* |      *-77%* |  **-82%**  |-90%  |   -92%  |  **-97%** |
+| Search      |  4,824/s  |   150%  |     --  |    -10%  |    -33%  |    *-42%* |      *-43%* |  **-55%**  |-76%  |   -79%  |  **-92%** |
+| Grep-Map    |  5,388/s  |   179%  |    12%  |      --  |    -25%  |    *-36%* |      *-36%* |  **-50%**  |-73%  |   -77%  |  **-91%** |
+| Map-Grep    |  7,189/s  |   272%  |    49%  |     33%  |      --  |    *-14%* |      *-15%* |  **-33%**  |-64%  |   -69%  | **-88%** |
+| Flatten     | *8,389/s* |  *334%* |   *74%* |    *56%* |    *17%* |      *--* |       *-1%* |  -22%  | *-58%*  |   *-63%*  |  ***-86%*** |
+| Flatten-@   | *8,432/s* |  *337%* |   *75%* |    *56%* |    *17%* |      *1%* |        *--* |  -22%  | *-58%*  |   *-63%*  |  ***-86%*** |
+| **Grep-@**  | **10,764/s** | **457%** | **123%** | **100%**  | **50%** | ***28%*** | ***28%*** |    **--** | -46%  |   **-53%**  |  **-82%** |
+| DNF         | 20,080/s  |   940%  |   316%  |    273%  |    179%  |    *139%* |      *138%* |   **87%**  |  --  | -12%  |  **-67%** |
+| Optimal     | 22,936/s  | 1,087%  |   375%  |    326%  |    219%  |    *173%* |      *172%* |  **113%**  | 14%  |   --  |   **-62%** |
+| **Hash-%**  | **60,976/s**  | **3,057%**  | **1,164%**  |  **1,032%**  |    **748%** |    ***627%*** |      ***623%*** |  **466%**  | **204%**  |   **166%**  |    **--** |
 
 # Challenge 2 - Ordered Letters
 
