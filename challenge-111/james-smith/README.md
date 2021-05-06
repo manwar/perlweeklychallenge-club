@@ -389,27 +389,37 @@ sub longest_no_comments {
 
 Here are the results for each of the four databases:
 
-```
-british-english-small - max length 6 - 21 words
-
-  abhors accent accept access accost almost
-  begins bellow billow cellos chills chilly
-  chimps chintz choosy choppy effort floors
-  floppy glossy knotty
-
-british-english-large - max length 7 - 1 word
-
-  billowy
-
-british-english-huge - max length 7 - 4 words
-
-  beefily billowy chikors dikkops
-
-british-english-insane - max length 8 - 1 word
-
-  aegilops
-
-```
+ * `british-english-small`: max length 6 - 21 words
+   * abhors
+   * accent
+   * accept
+   * access
+   * accost
+   * almost
+   * begins
+   * bellow
+   * billow
+   * cellos
+   * chills
+   * chilly
+   * chimps
+   * chintz
+   * choosy
+   * choppy
+   * effort
+   * floors
+   * floppy
+   * glossy
+   * knotty
+* `british-english-large`: max length 7 - 1 word
+   * billowy
+* `british-english-huge`: max length 7 - 4 words
+   * beefily
+   * billowy
+   * chikors
+   * dikkops
+* `british-english-insane`: max length 8 - 1 word
+   * aegilops
 
 ## Some definitions...
 
