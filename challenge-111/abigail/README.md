@@ -30,6 +30,9 @@ Only for language lacking hashes/maps/dictionaries/tables, we will
 make use of the fact the input is sorted. For the majority of
 languages, the fact input is sorted does not offer additional benefits.
 
+For Perl, we make two implementations: one based on a hash, the
+other using binary search.
+
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
