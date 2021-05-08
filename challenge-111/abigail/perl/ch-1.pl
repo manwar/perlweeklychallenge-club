@@ -14,7 +14,7 @@ use experimental 'lexical_subs';
 #
 
 #
-# Run as: perl ch-1.pl < input-file
+# Run as: perl ch-1.pl [bsearch] < input-file
 #
 
 #
@@ -29,22 +29,72 @@ use experimental 'lexical_subs';
 # Perhaps the intend was a subroutine which takes a matrix and a target
 # number, but that was not what is being asked. The challenge explicitly
 # asks for *a script*, which means we have to spend a linear amount of 
-# time reading data anyway. So, that's what you get.
+# time reading data anyway.
 #
-# The only part where we use the fact we are given a matrix is for the
-# input: the first five lines are assumed to contain the matrix. The
-# rest of the input is taken as numbers to search for.
+# Just to cover our bases, we'll do two implementation. Without arguments,
+# we'll do that fast, hash bases, implementation. If the program is
+# given the 'bsearch' argument, we will make use of a subroutine which
+# takes a 2-d matrix and a target number as parameters, and which uses
+# a bog standard binary search implementation to find out whether the
+# target exists.
 #
 
 my $MATRIX_SIZE = 5;
 
-#
-# Read in a matrix of data
-#
-my %matrix;
-@matrix {<> =~ /-?[0-9]+/g} = () for 1 .. $MATRIX_SIZE; 
+my $HASH    = 0;
+my $BSEARCH = 1;
 
-#
-# Print 0/1 depending on whether the given number is in the matrix or not.
-#
-chomp, say exists $matrix {$_} || 0 while <>
+my $TYPE = $HASH;
+   $TYPE = $BSEARCH if @ARGV && $ARGV [0] eq "bsearch";
+
+@ARGV = ();
+
+if ($TYPE == $HASH) {
+    #
+    # Read in a matrix of data
+    #
+    my %matrix;
+    @matrix {<> =~ /-?[0-9]+/g} = () for 1 .. $MATRIX_SIZE; 
+
+    #
+    # Print 0/1 depending on whether the given number is in the matrix or not.
+    #
+    chomp, say exists $matrix {$_} || 0 while <>;
+
+    exit;
+}
+
+if ($TYPE == $BSEARCH) {
+    #
+    # Use binary search to find a target value into a sorted set.
+    #
+    my sub bsearch ($matrix, $target) {
+        my ($min, $max) = (0, $MATRIX_SIZE * $MATRIX_SIZE);
+        while ($min < $max) {
+            use integer;
+            my $mid = ($min + $max) / 2;
+            #
+            # To map a 1-d coordinate c to a 2-d pair x, y, we use
+            # x = floor (c / size), y = c % size.
+            # 
+            my $cmp = $$matrix [$mid / $MATRIX_SIZE]
+                               [$mid % $MATRIX_SIZE] <=> $target;
+            if    ($cmp < 0) {$min = $mid + 1}
+            elsif ($cmp > 0) {$max = $mid}
+            else  {return 1}
+        }
+        return (0)
+    }
+
+    #
+    # Read in the matrix
+    #
+    my $matrix = [map {[<> =~ /-?[0-9]+/g]} 1 .. $MATRIX_SIZE];
+
+    #
+    # Check for existence for the rest of the data
+    #
+    say bsearch ($matrix, $_) for <>;
+
+    exit;
+}
