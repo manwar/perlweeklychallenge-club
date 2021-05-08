@@ -78,11 +78,9 @@ my $H = {};
 
 ## Create a test set - numbers from -10 to 60...
 my %TEST_SET = map { $_ => 0 } (my @KEYS = -10..60);
-
 ## Set all to 0, and then iterate through the
 ## elements of the matrix and set the numbers
 ## in the list to 1....
-
 $TEST_SET{$_} = 1 foreach map { @{$_} } @{$matrix};
 
 ## Run the original PWC test examples...
@@ -102,11 +100,14 @@ is( find_val_dnf(         35, $matrix ), 0 );
 is( find_val_dnf(         39, $matrix ), 1 );
 is( find_val_dnf_optimal( 35, $matrix ), 0 );
 is( find_val_dnf_optimal( 39, $matrix ), 1 );
+is( find_val_general_dnf( 35, $matrix ), 0 );
+is( find_val_general_dnf( 39, $matrix ), 1 );
 
 
 ## Now run our full test set - from -10 to 60. This covers
 ## all cases within the list and a few either side...
 
+is( find_val_general_dnf(    $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 is( find_val_dnf_optimal(    $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 is( find_val_dnf(            $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 is( find_val_search(         $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
@@ -117,6 +118,7 @@ is( find_val_grep_map(       $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 done_testing();
 
 cmpthese(100_000, {
+  q(GenDNF)   => sub { find_val_general_dnf(    $_, $matrix ) foreach @KEYS; },
   q(Optimal)  => sub { find_val_dnf_optimal(    $_, $matrix ) foreach @KEYS; },
   q(DNF)      => sub { find_val_dnf(            $_, $matrix ) foreach @KEYS; },
   'Flatten'   => sub { flatten(                 $_, $matrix ) foreach @KEYS; },
@@ -128,6 +130,16 @@ cmpthese(100_000, {
   'Grep-Map'  => sub { find_val_grep_map(       $_, $matrix ) foreach @KEYS; },
   'Map-Grep'  => sub { find_val_map_grep(       $_, $matrix ) foreach @KEYS; },
 });
+
+sub find_val_general_dnf {
+  my($v,$m)=@_;
+  return 0 if$v<$m->[0][0]||$v>$m->[-1][-1];
+  my($n,$l,$r)=(0,0,@{$m}-1);
+  $v>$m->[$n=($l+$r)>>1][-1]?($l=$n+1):($r=$n)while$r!=$l;
+  my($s,$e)=(0,@{$l=$m->[$l]}-1);
+  ($v==$l->[$n=($s+$e)>>1])?(return 1):$v>$l->[$n]?($s=$n+1):($e=$n-1)while$s<$e;
+  $s==$e&&$v==$l->[$s]?1:0;
+}
 
 sub find_val_dnf {
   my($v,$m) = @_;
