@@ -27,6 +27,7 @@ It is defined as:
 * [Java](java/ch-1.java)
 * [Lua](lua/ch-1.lua)
 * [m4](m4/ch-1.m4)
+* [MIXX](mmix/ch-1.mms)
 * [Node.js](node/ch-1.js)
 * [Ocaml](ocaml/ch-1.ml)
 * [Pascal](pascal/ch-1.p)
