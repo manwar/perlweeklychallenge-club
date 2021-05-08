@@ -10,7 +10,7 @@
 
 local MATRIX_SIZE = 5
 
-matrix = {}
+local matrix = {}
 
 -- 
 -- Read in the matrix
@@ -24,7 +24,7 @@ end
 -- whether the number is present in the matrix or not.
 --
 while true do
-    target = io . read ("*number")
+    local target = io . read ("*number")
     if   target == nil then break end
     if   matrix [target]
     then print (1)
