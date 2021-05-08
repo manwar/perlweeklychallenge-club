@@ -42,7 +42,7 @@ function bsearch (matrix: matrix_type; target: Longint) : Integer;
                 min     := mid + 1;
             end
             else begin
-                max     := mid - 1;
+                max     := mid;
             end
         end
     end;
