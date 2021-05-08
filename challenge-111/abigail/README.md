@@ -45,6 +45,7 @@ other using binary search.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Perl Weekly Challenge 111: Search Matrix](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-111-1.html)
 
 ## [Ordered Letters](https://perlweeklychallenge.org/blog/perl-weekly-challenge-111/#TASK2)
 
