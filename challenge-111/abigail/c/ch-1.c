@@ -13,7 +13,7 @@
 # define MATRIX_SIZE 5
 # define NR_OF_ELEMENTS (MATRIX_SIZE * MATRIX_SIZE)
 
-static int compare (const void *a, const void *b) {
+static int compare (const void * a, const void * b) {
     return * (int *) a - * (int *) b;
 }
 
