@@ -10,8 +10,6 @@ use warnings;
 use boolean;      
 use constant MATRIX_SIZE => 5;   
 
-use Data::Dump q/pp/;  
-
 sub matrix_search{
     my($matrix, $search) = @_;
     unless(@{$matrix} == 1){  
