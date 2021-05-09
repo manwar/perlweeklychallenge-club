@@ -97,6 +97,7 @@ my $tests = {
   'DNF'        => sub { find_val_dnf(           $_, $matrix ) foreach @KEYS; },
   'DNFOpt'     => sub { find_val_dnf_optimal(   $_, $matrix ) foreach @KEYS; },
   'DNFGen'     => sub { find_val_general_dnf(   $_, $matrix ) foreach @KEYS; },
+  'Binary'     => sub { find_val_binary(        $_, $matrix ) foreach @KEYS; },
 
   'Hash'       => sub { find_val_hash(          $_, $matrix ) foreach @KEYS; },
   'Flatten@'   => sub { flatten_array(           $_, @M      ) foreach @KEYS; },
@@ -109,6 +110,9 @@ my $tests = {
   'preGrep'    => sub { find_val_grep_pre(       $_, $A      ) foreach @KEYS; },
 };
 
+is( find_val_binary( 35, $matrix ), 0 );
+is( find_val_binary( 39, $matrix ), 1 );
+is( find_val_binary( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 is( find_val_any_any_naive( 35, $matrix ), 0 );
 is( find_val_any_any_naive( 39, $matrix ), 1 );
 is( find_val_any_any_naive( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
@@ -180,6 +184,19 @@ sub find_val_general_dnf {
   $v>$m->[$n=($l+$r)>>1][-1]?($l=$n+1):($r=$n)while$r!=$l;
   ($l,$r)=(0,@{$m=$m->[$l]}-1);
   ($v==$m->[$n=($l+$r)>>1])?(return 1):$v>$m->[$n]?($l=$n+1):($r=$n-1)while$l<=$r;
+  return 0;
+}
+
+sub find_val_binary {
+  my($v,$m)=@_;
+  return 0 if$v<$m->[0][0]||$v>$m->[-1][-1];
+  my $size = @{$m};
+  my($v2,$n,$l,$r)=(0,0,0,$size*$size-1);
+  while($l<=$r) {
+    $n=($l+$r)>>1;
+    return 1 if $v == ($v2 = $m->[$n/$size][$n%$size]);
+    $v>$v2?($l=$n+1):($r=$n-1);
+  }
   return 0;
 }
 
