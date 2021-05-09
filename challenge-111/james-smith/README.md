@@ -64,14 +64,29 @@ sub find_val_grep_map {
 
 Uses `grep` on each sub array to return either an
 empty array or an array containing the match.
-We then use `map` to combine the arrays.
+We then use `grep` to further filter these results
+for existances of the array.
 
 The resultant array will have length `0` or `1`.
 
 ```perl
-sub find_val_map_grep {
+sub find_val_grep_grep {
   my($v,$m)=@_;
-  return 0 + map { grep { $_ == $v } @{$_} } @{$m};
+  return 0 + grep { grep { $_ == $v } @{$_} } @{$m};
+}
+```
+
+Now to avoid as many of the `grep`s as possible we can do two things. First check the
+number is in the range of the matrix - this skips the outer `grep` for some values and
+secondly - check the value is in the range for each line you are looping over.... This
+leads us to:
+
+```perl
+sub find_val_grep_grep_ext {
+  my($v,$m)=@_;
+  return $v<$m->[0][0] || $v > $m->[-1][-1]
+       ? 0
+       : 0 + grep { $v>=$_->[0] && $v<=$_->[-1] && grep { $_ == $v } @{$_} } @{$m};
 }
 ```
 ## Efficiency
@@ -79,27 +94,32 @@ sub find_val_map_grep {
 We use `cmpthese` to compare the performance...
 
 Our methods are:
-  * `find_val_search`
-  * `find_val_grep_map`
-  * `find_val_map_grep`
+  * **Search**:   `find_val_search`
+  * **GrepMap**:  `find_val_grep_map`
+  * **GrepGrep**: `find_val_grep_grep`
+  * **GrepExt**: `find_val_grep_grep_ext`
+  * **Flatten**:  just flattens the array - basic benchmark to compare efficiency to that function....
 
 Timings using `Benchmark::cmpthese`
 
-|           |   Rate   | Search | Grep-Map | Map-Grep | *Flatten* |
-| --------- | -------: | -----: | -------: | -------: | --------: |
-| Search    |  4,859/s |     -- |     -10% |     -33% |    *-42%* |
-| Grep-Map  |  5,394/s |    11% |       -- |     -25% |    *-36%* |
-| Map-Grep  |  7,210/s |    48% |      34% |       -- |    *-14%* |
-| *Flatten* |  8,418/s |  *73%* |    *56%* |    *17%* |       --* |
+|           |   Rate    | Search | GrepMap | GrepGrep | *Flatten* | GrepExt |
+| --------- | --------: | -----: | ------: | -------: | --------: | ------: |
+| Search    |  4,857/s  |    --  |   -3%   |    -34%  |  *-42%*   |  -68%   |
+| GrepMap   |  4,995/s  |    3%  |    --   |    -32%  |  *-40%*   |  -67%   |
+| GrepGrep  |  7,391/s  |   52%  |   48%   |      --  |  *-11%*   |  -52%   |
+| *Flatten* | *8,326/s* |  *71%* |  *67%*  |    *13%* |   *--*    | *-46%*  |
+| GrepExt   | 15,337/s  |  216%  |  207%   |    108%  |   *84%*   |   --    |
+
 
 Notes:
 
-  * *Flatten* is for comparison only - it actually does nothing other than flatten
-    the array - this highlights how efficient each algorithm is (and can be)
-  
-  * So we see that the map_grep solution is 50% more efficient than the search
+  *  *Flatten* is for comparison only - it actually does nothing other than flatten
+     the array - this highlights how efficient each algorithm is (and can be)
+ 
+  * So we see that the grep_grep solution is nearly 60% more efficient than the search
     algorithm (this is true for all search method algorithms which flatten
-    the array first);
+    the array first), add the filtering to the outer grep - this becomes faster than
+    flatten - and around 3 times the speed of search.
 
 ## Not flattening array
 
@@ -162,24 +182,59 @@ sub find_val_dnf_optimal {
          ] ) &&
          ( return $v == $t->[2] ? 1 :
                   $v < $t->[2] ?
-                  (( $v == $t->[0] || $v == $t->[1] ) ? 1 : 0) :
-                  (( $v == $t->[4] || $v == $t->[3] ) ? 1 : 0) );
+                  ( $v == $t->[0] || $v == $t->[1] ? 1 : 0) :
+                  ( $v == $t->[4] || $v == $t->[3] ? 1 : 0) );
 }
 ```
 
+### Do not flatten - generalised solution
+
+ * Above we used the information that we are supplied with a 5x5 matrix
+   if the matrix is an arbitrary size we can change the two loops to
+   use a binary search algorithm.
+   
+ * Notes:
+
+    * We use `($l+$r)>>1` to find the mid point - this is more efficient
+      than using `int(($l+$r)/2)`; Bit-shift operators are useful if you
+      are multiplying or dividing by 2.
+
+    * The loops differ slightly because one is looking for an entry which
+      is within a range - the other for a specific value. The differencs
+      you will note are (1) the first loop do `$r=$n` where in the
+      second we do `$r=$n-1` - as the first is a range based search the
+      second an exact match; (2) The second loop checks for equality before
+      the binary search check - and returns 1 if true. The end eheck also
+      becomes $l<=$r as $r becomes less than $l when we have missed the
+      entry.
+
+```perl
+sub find_val_general_dnf {
+  my($v,$m)=@_;
+  return 0 if$v<$m->[0][0]||$v>$m->[-1][-1];
+  my($n,$l,$r)=(0,0,@{$m}-1);
+  $v>$m->[$n=($l+$r)>>1][-1]?($l=$n+1):($r=$n)while$r!=$l;
+  ($l,$r)=(0,@{$m=$m->[$l]}-1);
+  ($v==$m->[$n=($l+$r)>>1])?(return 1):$v>$m->[$n]?($l=$n+1):($r=$n-1)while$l<=$r;
+  return 0;
+}
+```
 Timings using `Benchmark::cmpthese`
 
-|           |   Rate   | Search | Grep-Map | Map-Grep | *Flatten* | DNF    | DNF Opt |
-| --------- | -------: | -----: | -------: | -------: | --------: | -----: | ------: |
-| Search    |  4,859/s |     -- |     -10% |     -33% |    *-42%* |   -76% |    -79% |
-| Grep-Map  |  5,394/s |    11% |       -- |     -25% |    *-36%* |   -73% |    -77% |
-| Map-Grep  |  7,210/s |    48% |      34% |       -- |    *-14%* |   -64% |    -69% |
-| *Flatten* |  8,418/s |  *73%* |    *56%* |    *17%* |      *--* | *-59%* |  *-63%* |
-| DNF       | 20,284/s |   317% |     276% |     181% |    *141%* |    --  |    -12% |
-| DNF_opt   | 22,989/s |   373% |     326% |     219% |    *173%* |    13% |      -- |
+|           |   Rate    | Search | GrepMap | GrepGrep | *Flatten* | DNFGen | GrepExt | DNF    | DNFOpt |
+| --------- | --------: | -----: | ------: | -------: | --------: | -----: | ------: | -----: | -----: |
+| Search    |  4,316/s  |    --  |   -20%  |    -41%  |   *-47%*  |  -64%  |  -71%   |  -79%  |  -81%  |
+| GrepMap   |  5,391/s  |   25%  |     --  |    -26%  |   *-34%*  |  -55%  |  -64%   |  -73%  |  -76%  |
+| GrepGrep  |  7,310/s  |   69%  |    36%  |      --  |   *-10%*  |  -39%  |  -52%   |  -64%  |  -68%  |
+| *Flatten* | *8,123/s* |  *88%* |   *51%* |   *11%*  |     *--*  | *-33%* | *-46%*  | *-60%* | *-65%* |
+| DNFGen    | 12,063/s  |  179%  |   124%  |     65%  |    *48%*  |    --  |  -20%   |  -40%  |  -47%  |
+| GrepExt   | 15,106/s  |  250%  |   180%  |    107%  |    *86%*  |   25%  |    --   |  -25%  |  -34%  |
+| DNF       | 20,161/s  |  367%  |   274%  |    176%  |   *148%*  |   67%  |   33%   |    --  |  -12%  |
+| DNFOpt    | 22,883/s  |  430%  |   324%  |    213%  |   *182%*  |   90%  |   51%   |   14%  |   --   |
 
-We can see that this "optimal method" is somewhere betwen 4.5 and 5 times more efficient
-than the "search" function.
+We can see that this "optimal method" is about 5 times more efficient than the "search"
+function we originally tried - even the generic double binary search is abour 2.5 times as
+efficient than the binary search over the flattened matrix.
 
 ## Test script
 
@@ -194,6 +249,8 @@ use warnings;
 use feature qw(say);
 use Test::More;
 use Benchmark qw(cmpthese);
+
+my $N = @ARGV ? $ARGV[0] : 100_000;
 
 my $matrix = [
   [  1,  2,  3,  5,  7 ],
@@ -214,34 +271,35 @@ $TEST_SET{$_} = 1 foreach map { @{$_} } @{$matrix};
 ## Run the original PWC test examples...
 is( find_val_search(      35, $matrix ), 0 );
 is( find_val_search(      39, $matrix ), 1 );
-is( find_val_map_grep(    35, $matrix ), 0 );
-is( find_val_map_grep(    39, $matrix ), 1 );
-is( find_val_grep_map(    35, $matrix ), 0 );
-is( find_val_grep_map(    39, $matrix ), 1 );
-is( find_val_dnf(         35, $matrix ), 0 );
-is( find_val_dnf(         39, $matrix ), 1 );
-is( find_val_dnf_optimal( 35, $matrix ), 0 );
-is( find_val_dnf_optimal( 39, $matrix ), 1 );
+
+is( find_val_grep_grep(    35, $matrix ), 0 );
+is( find_val_grep_grep(    39, $matrix ), 1 );
+#...
+#...
+#...
+is( find_val_find_val_dnf_optimal(    35, $matrix ), 0 );
+is( find_val_find_val_dnf_optimal(    39, $matrix ), 1 );
 
 ## Now run our full test set - from -10 to 60. This covers
 ## all cases within the list and a few either side...
 
-is( find_val_dnf_optimal( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
-is( find_val_dnf(         $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 is( find_val_search(      $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
-is( find_val_map_grep(    $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
-is( find_val_grep_map(    $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_grep_grep(   $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+#...
+#...
+#...
+is( find_val_dnf_optimal( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 
 done_testing();
 
-cmpthese(100_000, {
-  q(DNF_opt)  => sub { find_val_dnf_optimal( $_, $matrix ) foreach @KEYS; },
-  q(DNF)      => sub { find_val_dnf(         $_, $matrix ) foreach @KEYS; },
-  'Flatten'   => sub { flatten(              $_, $matrix ) foreach @KEYS; },
+cmpthese( $N, {
   'Search'    => sub { find_val_search(      $_, $matrix ) foreach @KEYS; },
-  'Grep-Map'  => sub { find_val_grep_map(    $_, $matrix ) foreach @KEYS; },
-  'Map-Grep'  => sub { find_val_map_grep(    $_, $matrix ) foreach @KEYS; },
-});
+  'GrepGrep'  => sub { find_val_grep_grep(   $_, $matrix ) foreach @KEYS; },
+  #...
+  #...
+  #...
+  'DNFOpt'    => sub { find_val_dnf_optimal( $_, $matrix ) foreach @KEYS; },
+} );
 ```
 
 ## Addendum 1 - using hash keys
@@ -270,23 +328,47 @@ solution.
 
 I quickly checked to see if by passing the matrix as an array rather than
 an arrayref was any faster - one less derefernce - but it is not - it
-appears to be the same speed +/- 2%. In most cases it appears to be
-the same speed or slightly slower.
+appears to be roughtly the same and speed sometimes faster.
 
-## Final timing run with additional two methods in...
+```perl
+sub flatten_array {
+  shift @_;
+  my @list = map { @{$_} } @_;
+  return 1;
+}
+```
 
-| Method      |     Rate  | Hash    | Search | Grep-Map | Map-Grep | *Flatten-@* | *Flatten* | DNF    | Optimal |
-| ----------- | --------: | ------: | -----: | -------: | -------: | ----------: | --------: | -----: | ------: |
-| Hash        |  2,035/s  |     --  |  -59%  |    -62%  |    -72%  |      *-74%* |    *-76%* |  -90%  |   -91%  |
-| Search      |  4,916/s  |   142%  |    --  |     -8%  |    -32%  |      *-37%* |    *-41%* |  -76%  |   -79%  | 
-| Grep-Map    |  5,328/s  |   162%  |    8%  |      --  |    -27%  |      *-32%* |    *-36%* |  -73%  |   -77%  |
-| Map-Grep    |  7,252/s  |   256%  |   47%  |     36%  |      --  |       *-8%* |    *-13%* |  -64%  |   -69%  |
-| *Flatten-@* | *7,855/s* |  *286%* |  *60%* |    *47%* |     *8%* |        *--* |     *-6%* | *-61%* |  *-66%* |
-| *Flatten*   | *8,361/s* |  *311%* |  *70%* |    *57%* |    *15%* |        *6%* |      *--* | *-58%* |  *-64%* |
-| DNF         | 20,080/s  |   887%  |  308%  |    277%  |    177%  |      *156%* |    *140%* |    --  |   -13%  |
-| Optimal     | 23,095/s  | 1,035%  |  370%  |    333%  |    218%  |      *194%* |    *176%* |   15%  |    --   |
+## Addendum 3 - using `List::Util` methods
 
-## Addendum 3 - caching "flattening"
+Just out of interest to compare the core `map` and `grep` against the various `List::Util` functions `first`/`any`, I've added 3 more functions:
+
+```perl
+sub find_val_list_util {
+  my($v,$m) = @_;
+  my $t =  first { $_->[-1] >= $v } @{$m};
+  return ($t && any { $v == $_ } @{$t}) ? 1 : 0;
+}
+
+sub find_val_any_any {
+  my($v,$m) = @_;
+  return (any { $v>=$_->[0] && $v <=$_->[-1] && (any { $_ == $v } @{$_}) } @{$m}) ? 1 : 0;
+}
+
+sub find_val_any_any_naive {
+  my($v,$m) = @_;
+  return (any { any { $_ == $v } @{$_} } @{$m}) ? 1 : 0;
+}
+```
+
+The last one is similar to the `grep - grep` method above but uses `any` - now in theory this
+should be faster as `any` stops at the first occcurance - but as `grep` is core and `any` is
+not there will be a performance penalty - especially for such a small set of values.
+
+To speed things upw ithe add a check to see if the value is inside the row greater/equal to the
+first value and less than/equal to the last value. This makes a big difference.
+
+
+## Addendum 4 - caching the "flattening"
 
 Optimizations like these are great if you are in the middle of a tight loop and calling the function a number
 of times - if this is the same matrix each time - we may get some performance boosts by pre-flattening the matrix.
@@ -309,18 +391,62 @@ sub find_val_hash_pre {
 }
 ```
 
-| Method      |     Rate  | Hash    | Search  | GrepMap | MapGrep | *Flat* | *Flat@* | **Grep@** | DNF    | Opt | **Hash%** |
-| ----------- | --------: | ------: | ------: | -------: | -------: | --------: | ----------: | ---------: | -----: | ------: | ----------: |
-| Hash        |  1,932/s  |     --  |   -60%  |    -64%  |    -73%  |    *-77%* |      *-77%* |  **-82%**  |-90%  |   -92%  |  **-97%** |
-| Search      |  4,824/s  |   150%  |     --  |    -10%  |    -33%  |    *-42%* |      *-43%* |  **-55%**  |-76%  |   -79%  |  **-92%** |
-| Grep-Map    |  5,388/s  |   179%  |    12%  |      --  |    -25%  |    *-36%* |      *-36%* |  **-50%**  |-73%  |   -77%  |  **-91%** |
-| Map-Grep    |  7,189/s  |   272%  |    49%  |     33%  |      --  |    *-14%* |      *-15%* |  **-33%**  |-64%  |   -69%  | **-88%** |
-| Flatten     | *8,389/s* |  *334%* |   *74%* |    *56%* |    *17%* |      *--* |       *-1%* |  -22%  | *-58%*  |   *-63%*  |  ***-86%*** |
-| Flatten-@   | *8,432/s* |  *337%* |   *75%* |    *56%* |    *17%* |      *1%* |        *--* |  -22%  | *-58%*  |   *-63%*  |  ***-86%*** |
-| **Grep-@**  | **10,764/s** | **457%** | **123%** | **100%**  | **50%** | ***28%*** | ***28%*** |    **--** | -46%  |   **-53%**  |  **-82%** |
-| DNF         | 20,080/s  |   940%  |   316%  |    273%  |    179%  |    *139%* |      *138%* |   **87%**  |  --  | -12%  |  **-67%** |
-| Optimal     | 22,936/s  | 1,087%  |   375%  |    326%  |    219%  |    *173%* |      *172%* |  **113%**  | 14%  |   --  |   **-62%** |
-| **Hash-%**  | **60,976/s**  | **3,057%**  | **1,164%**  |  **1,032%**  |    **748%** |    ***627%*** |      ***623%*** |  **466%**  | **204%**  |   **166%**  |    **--** |
+| Method      | Rate         | Hash      | AANaive   | Search    | GrepMap   | AnyAny    | ListUtil  | GrepGrep  | *Flatten*  | *Flatten@* | **preGrep** | DNFGen   | GrepExt  | DNF      | DNFOpt   | **preHash** |
+| ----------- | -----------: | --------: | --------: | --------: | --------: | --------: | --------: | --------: | ---------: | ---------: | ----------: | -------: | -------: | -------: | -------: | ---------:  |
+| Hash        |    2,019/s   |      --   |    -26%   |    -59%   |    -63%   |    -67%   |    -69%   |    -73%   |   *-76%*   |   *-76%*   |   **-82%**  |   -83%   |   -87%   |   -90%   |   -91%   |   **-98%**  | 
+| AANaive     |    2,714/s   |     34%   |      --   |    -44%   |    -50%   |    -56%   |    -58%   |    -64%   |   *-68%*   |   *-68%*   |   **-75%**  |   -78%   |   -82%   |   -87%   |   -88%   |   **-97%**  | 
+| Search      |    4,873/s   |    141%   |     80%   |      --   |    -10%   |    -20%   |    -24%   |    -35%   |   *-42%*   |   *-42%*   |   **-56%**  |   -60%   |   -68%   |   -76%   |   -79%   |   **-94%**  | 
+| GrepMap     |    5,435/s   |    169%   |    100%   |     12%   |      --   |    -11%   |    -15%   |    -27%   |   *-35%*   |   *-36%*   |   **-51%**  |   -55%   |   -64%   |   -73%   |   -76%   |   **-94%**  | 
+| AnyAny      |    6,127/s   |    204%   |    126%   |     26%   |     13%   |      --   |     -5%   |    -18%   |   *-27%*   |   *-27%*   |   **-44%**  |   -50%   |   -60%   |   -70%   |   -73%   |   **-93%**  | 
+| ListUtil    |    6,427/s   |    218%   |    137%   |     32%   |     18%   |      5%   |      --   |    -14%   |   *-24%*   |   *-24%*   |   **-42%**  |   -47%   |   -58%   |   -68%   |   -72%   |   **-92%**  | 
+| GrepGrep    |    7,452/s   |    269%   |    175%   |     53%   |     37%   |     22%   |     16%   |      --   |   *-11%*   |   *-12%*   |   **-32%**  |   -39%   |   -51%   |   -63%   |   -68%   |   **-91%**  | 
+| *Flatten*   |    8,418/s*  |   *317%*  |   *210%*  |    *73%*  |    *55%*  |    *37%*  |    *31%*  |    *13%*  |     *--*   |    *-0%*   |  ***-24%*** |  *-31%*  |  *-45%*  |  *-58%*  |  *-63%*  |  ***-90%*** | 
+| *Flatten@*  |    8,446/s*  |   *318%*  |   *211%*  |    *73%*  |    *55%*  |    *38%*  |    *31%*  |    *13%*  |     *0%*   |     *--*   |  ***-23%*** |  *-31%*  |  *-45%*  |  *-58%*  |  *-63%*  |  ***-90%*** | 
+| **preGrep** | **11,013/s** |  **446%** |  **306%** |  **126%** |  **103%** |   **80%** |   **71%** |   **48%** |  ***31%*** |  ***30%*** |     **--**  | **-10%** | **-28%** | **-46%** | **-52%** |   **-87%**  | 
+| DNFGen      |   12,195/s   |    504%   |    349%   |    150%   |    124%   |     99%   |     90%   |     64%   |    *45%*   |    *44%*   |    **11%**  |     --   |   -20%   |   -40%   |   -47%   |   **-86%**  | 
+| GrepExt     |   15,244/s   |    655%   |    462%   |    213%   |    180%   |    149%   |    137%   |    105%   |    *81%*   |    *80%*   |    **38%**  |    25%   |     --   |   -25%   |   -34%   |   **-82%**  | 
+| DNF         |   20,243/s   |    903%   |    646%   |    315%   |    272%   |    230%   |    215%   |    172%   |   *140%*   |   *140%*   |    **84%**  |    66%   |    33%   |     --   |   -12%   |   **-76%**  | 
+| DNFOpt      |   22,936/s   |   1036%   |    745%   |    371%   |    322%   |    274%   |    257%   |    208%   |   *172%*   |   *172%*   |   **108%**  |    88%   |    50%   |    13%   |     --   |   **-73%**  | 
+| **preHash** | **84,746/s** | **4098%** | **3022%** | **1639%** | **1459%** | **1283%** | **1219%** | **1037%** | ***907%*** | ***903%*** |   **669%**  | **595%** | **456%** | **319%** | **269%** |     **--**  |
+
+## Summary...
+
+So as we can see our **DNFOpt** (`find_val_dnf_optimal`) method is the optimal method running at approx 1,700,000 calculations per second, followed by the unoptimized **DNF** (`find_val_dnf`) method at approximately 1,500,000 caclulations per second - these are both optimized to know the matrix is 5x5.
+
+Interestingly the fastest method (without explicitly coding for 5x5) is the optimized version of the `grep`x`grep` of the **GrepExt** (`find_val_grep_grep_ext`) method at approximately 1,100,000 calculations per second. This slighlty nudges out the generic form of the nested binary search **DNFGen** (`find_val_general_dnf`) method at 900,000 calculations per second.
+
+Other things to note..:
+  * `grep`x`grep` method **GrepGrep** (`find_val_grep_grep`) is faster than all the versions using `List::Util` using `any` and `first` by approximately 15%, actually comparing like for like with **AANaive** (`find_val_any_any_naive`) is 2.75 times faster... I guess this is because `grep` is built in... There may be a sweet point where this changes as the matrix gets large though.
+  * The worst methods are: **Hash** (`find_val_hash`), **AANaive** (`find_val_any_any_naive`) and **Search** (`find_val_search`) at approximately 150,000, 200,000 and 350,000 calculations per second.
+  * The range between best and worst is an order of magnitude.
+  * I haven't included in this summary the two **preGrep** and **preHash** methods - which pre-flatten the matrix - and note that the **preHash** method is the fastest by far - nearly 4 times faster than are *best* method **DNFOpt**, even though the **Hash** method was worse (the ration of the two hash methods is approximately 40:1). This shows that if it is possible to cache some part of the calculation it can greatly improve performance if called lots of time.
+  * All these comparisons are based on the 5x5 matrix in the question - and relative speeds may change as the matrix dimensions get larger.
+
+** Quick extra addendum
+
+I've added another method which implements a binary search across the unflattened matrix - by effectively flattening the matrix and a 0..n location back into x,y-coorinates...
+
+```perl
+sub find_val_binary {
+  my($v,$m)=@_;
+  return 0 if$v<$m->[0][0]||$v>$m->[-1][-1];
+  my $size = @{$m};
+  my($v2,$n,$l,$r)=(0,0,0,$size*$size-1);
+  while($l<=$r) {
+    $n=($l+$r)>>1;
+    return 1 if $v == ($v2 = $m->[$n/$size][$n%$size]);
+    $v>$v2?($l=$n+1):($r=$n-1);
+  }
+  return 0;
+}
+```
+
+Interestingly this is approximately 25% slower than the **DNFGen** method... I would think because of the two *division operations* when getting the matrix value.
+
+|        |    Rate | Binary | DNFGen |
+| ------ | ------: | -----: | -----: |
+| Binary |  9200/s |     -- |   -25% |
+| DNFGen | 12225/s |    33% |     -- |
 
 # Challenge 2 - Ordered Letters
 
@@ -391,8 +517,7 @@ sub longest {
   open my $fh, q(<), $_[0];
   my @max = (0);
      (chomp)         ## Remove newline character
-  #&& !/\W/           ## Remove words with non-alpha chars
-  && !/[^a-z]/       ## Remove words starting with a capital
+  && !/[^a-z]/       ## Remove non-lower case characters
   && ( $max[0] <= length $_ )
                      ## Remove words that are too short
   && ( $_ eq join q(), sort split //, $_ )

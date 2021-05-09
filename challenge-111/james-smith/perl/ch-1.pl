@@ -6,6 +6,8 @@ use warnings;
 use feature qw(say);
 use Test::More;
 use Benchmark qw(cmpthese);
+use List::Util qw(any first);
+
 
 ## Today's is an interesting challenge ... to check to
 ## see if a value is in the matrix....
@@ -26,7 +28,7 @@ use Benchmark qw(cmpthese);
 ##                    the flattened array
 ##  find_grep_map   - use grep to compare the value
 ##                    on the flattened array
-##  find_map_grep   - foreach row use grep to compare
+##  find_grep_grep  - foreach row use grep to compare
 ##                    values, and join these together
 ##                    with map
 ##
@@ -42,7 +44,7 @@ use Benchmark qw(cmpthese);
 ## does nothing other than flatten the array - this
 ## highlights how efficient each algorithm is
 ##
-## So we see that the map_grep solution is 50% more
+## So we see that the grep_grep solution is 50% more
 ## efficient than the search algorith (this is true
 ## for all search method algorithms which flatten
 ## the array first);
@@ -63,6 +65,7 @@ use Benchmark qw(cmpthese);
 ## matrix by using map in some way...
 ##
 
+my $N = @ARGV ? $ARGV[0] : 100_000;
 my $matrix = [
   [  1,  2,  3,  5,  7 ],
   [  9, 11, 15, 19, 20 ],
@@ -72,62 +75,130 @@ my $matrix = [
 ];
 
 my @M = @{$matrix};
-my $F = [ map { @{$_} } @M ];
+my $A = [ map { @{$_} } @M ];
 my $H = {};
-@{$H}{@{$F}}=();
+@{$H}{@{$A}}=();
 
 ## Create a test set - numbers from -10 to 60...
 my %TEST_SET = map { $_ => 0 } (my @KEYS = -10..60);
-
 ## Set all to 0, and then iterate through the
 ## elements of the matrix and set the numbers
 ## in the list to 1....
-
 $TEST_SET{$_} = 1 foreach map { @{$_} } @{$matrix};
 
-## Run the original PWC test examples...
-is( find_val_search(      35, $matrix ), 0 );
-is( find_val_search(      39, $matrix ), 1 );
-is( find_val_hash(        35, $matrix ), 0 );
-is( find_val_hash(        39, $matrix ), 1 );
-is( find_val_hash_pre(    35, $H ), 0 );
-is( find_val_hash_pre(    39, $H ), 1 );
-is( find_val_map_grep(    35, $matrix ), 0 );
-is( find_val_map_grep(    39, $matrix ), 1 );
-is( find_val_grep_map(    35, $matrix ), 0 );
-is( find_val_grep_map(    39, $matrix ), 1 );
-is( find_val_grep_pre(    35, $F ), 0 );
-is( find_val_grep_pre(    39, $F ), 1 );
-is( find_val_dnf(         35, $matrix ), 0 );
-is( find_val_dnf(         39, $matrix ), 1 );
+
+my $tests = {
+  'Search'     => sub { find_val_search (       $_, $matrix ) foreach @KEYS; },
+  'GrepGrep'   => sub { find_val_grep_grep(      $_, $matrix ) foreach @KEYS; },
+  'GrepMap'    => sub { find_val_grep_map(      $_, $matrix ) foreach @KEYS; },
+  'GrepExt'    => sub { find_val_grep_grep_ext( $_, $matrix ) foreach @KEYS; },
+  'Flatten'    => sub { flatten(                 $_, $matrix ) foreach @KEYS; },
+
+  'DNF'        => sub { find_val_dnf(           $_, $matrix ) foreach @KEYS; },
+  'DNFOpt'     => sub { find_val_dnf_optimal(   $_, $matrix ) foreach @KEYS; },
+  'DNFGen'     => sub { find_val_general_dnf(   $_, $matrix ) foreach @KEYS; },
+  'Binary'     => sub { find_val_binary(        $_, $matrix ) foreach @KEYS; },
+
+  'Hash'       => sub { find_val_hash(          $_, $matrix ) foreach @KEYS; },
+  'Flatten@'   => sub { flatten_array(           $_, @M      ) foreach @KEYS; },
+
+  'ListUtil'   => sub { find_val_list_util(     $_, $matrix ) foreach @KEYS; },
+  'AnyAny'     => sub { find_val_any_any(       $_, $matrix ) foreach @KEYS; },
+  'AANaive'    => sub { find_val_any_any_naive( $_, $matrix ) foreach @KEYS; },
+
+  'preHash'    => sub { find_val_hash_pre(       $_, $H      ) foreach @KEYS; },
+  'preGrep'    => sub { find_val_grep_pre(       $_, $A      ) foreach @KEYS; },
+};
+
+is( find_val_binary( 35, $matrix ), 0 );
+is( find_val_binary( 39, $matrix ), 1 );
+is( find_val_binary( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_any_any_naive( 35, $matrix ), 0 );
+is( find_val_any_any_naive( 39, $matrix ), 1 );
+is( find_val_any_any_naive( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_list_util( 35, $matrix ), 0 );
+is( find_val_list_util( 39, $matrix ), 1 );
+is( find_val_list_util( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_any_any( 35, $matrix ), 0 );
+is( find_val_any_any( 39, $matrix ), 1 );
+is( find_val_any_any( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_hash_pre( 35, $H ), 0 );
+is( find_val_hash_pre( 39, $H ), 1 );
+is( find_val_hash_pre( $_, $H ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_grep_pre( 35, $A ), 0 );
+is( find_val_grep_pre( 39, $A ), 1 );
+is( find_val_grep_pre( $_, $A ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_search( 35, $matrix ), 0 );
+is( find_val_search( 39, $matrix ), 1 );
+is( find_val_search( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_hash( 35, $matrix ), 0 );
+is( find_val_hash( 39, $matrix ), 1 );
+is( find_val_hash( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_grep_grep( 35, $matrix ), 0 );
+is( find_val_grep_grep( 39, $matrix ), 1 );
+is( find_val_grep_grep( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_grep_grep_ext( 35, $matrix ), 0 );
+is( find_val_grep_grep_ext( 39, $matrix ), 1 );
+is( find_val_grep_grep_ext( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_grep_map( 35, $matrix ), 0 );
+is( find_val_grep_map( 39, $matrix ), 1 );
+is( find_val_grep_map( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_dnf( 35, $matrix ), 0 );
+is( find_val_dnf( 39, $matrix ), 1 );
+is( find_val_dnf( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 is( find_val_dnf_optimal( 35, $matrix ), 0 );
 is( find_val_dnf_optimal( 39, $matrix ), 1 );
+is( find_val_dnf_optimal( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
+is( find_val_general_dnf( 35, $matrix ), 0 );
+is( find_val_general_dnf( 39, $matrix ), 1 );
+is( find_val_general_dnf( $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 
-
-## Now run our full test set - from -10 to 60. This covers
-## all cases within the list and a few either side...
-
-is( find_val_dnf_optimal(    $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
-is( find_val_dnf(            $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
-is( find_val_search(         $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
-is( find_val_hash(           $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
-is( find_val_map_grep(       $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
-is( find_val_grep_map(       $_, $matrix ), $TEST_SET{$_} ) foreach @KEYS;
 
 done_testing();
+cmpthese( $N, $tests );
 
-cmpthese(100_000, {
-  q(Optimal)  => sub { find_val_dnf_optimal(    $_, $matrix ) foreach @KEYS; },
-  q(DNF)      => sub { find_val_dnf(            $_, $matrix ) foreach @KEYS; },
-  'Flatten'   => sub { flatten(                 $_, $matrix ) foreach @KEYS; },
-  'Flatten-@' => sub { flatten_array(           $_, @M      ) foreach @KEYS; },
-  'Hash'      => sub { find_val_hash(           $_, $matrix ) foreach @KEYS; },
-  'Hash-%'    => sub { find_val_hash_pre(       $_, $H      ) foreach @KEYS; },
-  'Grep-@'    => sub { find_val_grep_pre(       $_, $F      ) foreach @KEYS; },
-  'Search'    => sub { find_val_search(         $_, $matrix ) foreach @KEYS; },
-  'Grep-Map'  => sub { find_val_grep_map(       $_, $matrix ) foreach @KEYS; },
-  'Map-Grep'  => sub { find_val_map_grep(       $_, $matrix ) foreach @KEYS; },
-});
+sub find_val_grep_grep_ext {
+  my($v,$m)=@_;
+  return $v<$m->[0][0] || $v > $m->[-1][-1] ? 0 : 0 + grep { $v>=$_->[0] && $v<=$_->[-1] && grep { $_ == $v } @{$_} } @{$m};
+}
+
+sub find_val_list_util {
+  my($v,$m) = @_;
+  my $t =  first { $_->[-1] >= $v } @{$m};
+  return ($t && any { $v == $_ } @{$t}) ? 1 : 0;
+}
+
+sub find_val_any_any {
+  my($v,$m) = @_;
+  return (any { $v>=$_->[0] && $v <=$_->[-1] && (any { $_ == $v } @{$_}) } @{$m}) ? 1 : 0;
+}
+sub find_val_any_any_naive {
+  my($v,$m) = @_;
+  return (any { any { $_ == $v } @{$_} } @{$m}) ? 1 : 0;
+}
+
+sub find_val_general_dnf {
+  my($v,$m)=@_;
+  return 0 if$v<$m->[0][0]||$v>$m->[-1][-1];
+  my($n,$l,$r)=(0,0,@{$m}-1);
+  $v>$m->[$n=($l+$r)>>1][-1]?($l=$n+1):($r=$n)while$r!=$l;
+  ($l,$r)=(0,@{$m=$m->[$l]}-1);
+  ($v==$m->[$n=($l+$r)>>1])?(return 1):$v>$m->[$n]?($l=$n+1):($r=$n-1)while$l<=$r;
+  return 0;
+}
+
+sub find_val_binary {
+  my($v,$m)=@_;
+  return 0 if$v<$m->[0][0]||$v>$m->[-1][-1];
+  my $size = @{$m};
+  my($v2,$n,$l,$r)=(0,0,0,$size*$size-1);
+  while($l<=$r) {
+    $n=($l+$r)>>1;
+    return 1 if $v == ($v2 = $m->[$n/$size][$n%$size]);
+    $v>$v2?($l=$n+1):($r=$n-1);
+  }
+  return 0;
+}
 
 sub find_val_dnf {
   my($v,$m) = @_;
@@ -149,8 +220,8 @@ sub find_val_dnf_optimal {
          ] ) &&
          ( return $v == $t->[2] ? 1 :
                   $v < $t->[2] ?
-                  (( $v == $t->[0] || $v == $t->[1] ) ? 1 : 0) :
-                  (( $v == $t->[4] || $v == $t->[3] ) ? 1 : 0) );
+                  ( $v == $t->[0] || $v == $t->[1] ? 1 : 0) :
+                  ( $v == $t->[4] || $v == $t->[3] ? 1 : 0) );
 }
 
 sub flatten_array {
@@ -174,9 +245,9 @@ sub find_val_hash_pre {
   return exists $_[1]{$_[0]} ? 1: 0;
 }
 
-sub find_val_map_grep {
+sub find_val_grep_grep {
   my($v,$m)=@_;
-  return 0 + map { grep { $_ == $v } @{$_} } @{$m};
+  return 0 + grep { grep { $_ == $v } @{$_} } @{$m};
 }
 
 sub find_val_grep_map {
