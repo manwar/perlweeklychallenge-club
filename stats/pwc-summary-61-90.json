@@ -1,8 +1,4 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "xAxis" : {
       "categories" : [
          "Fred Zinn",
@@ -37,12 +33,20 @@
          "Joelle Maslak"
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             3,
@@ -74,7 +78,8 @@
             1,
             11,
             81
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -148,7 +153,7 @@
       }
    ],
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-05-08 21:42:38 GMT"
+      "text" : "[Champions: 30] Last updated at 2021-05-09 09:37:22 GMT"
    },
    "yAxis" : {
       "title" : {
@@ -156,12 +161,7 @@
       },
       "min" : 0
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    }
 }
