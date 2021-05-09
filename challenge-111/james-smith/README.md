@@ -422,9 +422,9 @@ Other things to note..:
   * I haven't included in this summary the two **preGrep** and **preHash** methods - which pre-flatten the matrix - and note that the **preHash** method is the fastest by far - nearly 4 times faster than are *best* method **DNFOpt**, even though the **Hash** method was worse (the ration of the two hash methods is approximately 40:1). This shows that if it is possible to cache some part of the calculation it can greatly improve performance if called lots of time.
   * All these comparisons are based on the 5x5 matrix in the question - and relative speeds may change as the matrix dimensions get larger.
 
-** Quick extra addendum **
+** Quick extra addendum
 
-Added another method which implements a binary search across the unflattened matrix - by effectively flattening the matrix and a 0..n location back into x,y-coorinates...
+I've added another method which implements a binary search across the unflattened matrix - by effectively flattening the matrix and a 0..n location back into x,y-coorinates...
 
 ```perl
 sub find_val_binary {
