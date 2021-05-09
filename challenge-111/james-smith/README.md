@@ -420,7 +420,34 @@ Other things to note..:
   * The worst methods are: **Hash** (`find_val_hash`), **AANaive** (`find_val_any_any_naive`) and **Search** (`find_val_search`) at approximately 150,000, 200,000 and 350,000 calculations per second.
   * The range between best and worst is an order of magnitude.
   * I haven't included in this summary the two **preGrep** and **preHash** methods - which pre-flatten the matrix - and note that the **preHash** method is the fastest by far - nearly 4 times faster than are *best* method **DNFOpt**, even though the **Hash** method was worse (the ration of the two hash methods is approximately 40:1). This shows that if it is possible to cache some part of the calculation it can greatly improve performance if called lots of time.
- 
+  * All these comparisons are based on the 5x5 matrix in the question - and relative speeds may change as the matrix dimensions get larger.
+
+** Quick extra addendum **
+
+Added another method which implements a binary search across the unflattened matrix - by effectively flattening the matrix and a 0..n location back into x,y-coorinates...
+
+```perl
+sub find_val_binary {
+  my($v,$m)=@_;
+  return 0 if$v<$m->[0][0]||$v>$m->[-1][-1];
+  my $size = @{$m};
+  my($v2,$n,$l,$r)=(0,0,0,$size*$size-1);
+  while($l<=$r) {
+    $n=($l+$r)>>1;
+    return 1 if $v == ($v2 = $m->[$n/$size][$n%$size]);
+    $v>$v2?($l=$n+1):($r=$n-1);
+  }
+  return 0;
+}
+```
+
+Interestingly this is approximately 25% slower than the **DNFGen** method... I would think because of the two *division operations* when getting the matrix value.
+
+|        |    Rate | Binary | DNFGen |
+| ------ | ------: | -----: | -----: |
+| Binary |  9200/s |     -- |   -25% |
+| DNFGen | 12225/s |    33% |     -- |
+
 # Challenge 2 - Ordered Letters
 
 **Given a word, you can sort its letters alphabetically (case insensitive).
