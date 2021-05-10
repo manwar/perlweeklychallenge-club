@@ -39,5 +39,5 @@ while (<>) {
     # Remove trailing slashes
     s !/+$!!;
 
-    say;
+    say $_ || '/';
 }
