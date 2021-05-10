@@ -121,7 +121,7 @@ multi MAIN(UInt $u)
     .say for $seq;
 }    
 
-sub stairs($u) 
+sub stairs(UInt $u) 
 {
     my $head = ('100' x $u).substr(0, $u).parse-base(2);
     my $tail = ('110' x $u).substr(0, $u).parse-base(2); 
