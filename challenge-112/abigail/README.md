@@ -40,6 +40,7 @@ Output: "/a"
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
+* [Ruby](ruby/ch-1.rb)
 
 ### Blog
 
@@ -62,5 +63,6 @@ This is just finding the `$n + 1` Fibonacci number.
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
+* [Ruby](ruby/ch-1.rb)
 
 ### Blog
