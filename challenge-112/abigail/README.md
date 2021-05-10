@@ -34,6 +34,7 @@ Output: "/a"
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
+* [Bash](bash/ch-1.sh)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
@@ -51,6 +52,7 @@ This is just finding the `$n + 1` Fibonacci number.
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
+* [Bash](bash/ch-2.sh)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
