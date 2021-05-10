@@ -1,7 +1,14 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -22,6 +29,7 @@
          "Dave Cross",
          "Dave Jacoby",
          "David Kayal",
+         "David Schwartz",
          "Denis Yurashku",
          "Dieter Dobbelaere",
          "Donald Hunter",
@@ -33,26 +41,12 @@
          "Fabrizio Poggi",
          "Feng Chang",
          "Finley",
-         "Flavio Poletti",
-         "Francis Whittle"
+         "Flavio Poletti"
       ]
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-05-09 21:39:45 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             31,
             0,
@@ -71,6 +65,7 @@
             50,
             176,
             4,
+            2,
             0,
             6,
             0,
@@ -82,12 +77,11 @@
             8,
             22,
             0,
-            70,
-            0
-         ],
-         "name" : "Perl"
+            70
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             8,
             6,
@@ -108,6 +102,7 @@
             0,
             0,
             0,
+            0,
             8,
             10,
             0,
@@ -117,10 +112,8 @@
             0,
             87,
             4,
-            0,
-            39
-         ],
-         "name" : "Raku"
+            0
+         ]
       },
       {
          "data" : [
@@ -142,6 +135,7 @@
             62,
             0,
             0,
+            0,
             1,
             7,
             0,
@@ -152,16 +146,22 @@
             0,
             0,
             0,
-            69,
-            9
+            69
          ],
          "name" : "Blog"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-05-10 05:01:32 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
