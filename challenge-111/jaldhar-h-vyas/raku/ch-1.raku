@@ -17,7 +17,7 @@ sub MAIN() {
         }
     }
 
-    for 0 .. 4 -> $i {
+    for 0 ..^ @matrix.elems -> $i {
         print $i ?? q{        } !! 'matrix: ';
         say q{[ }, @matrix[$i].map({ sprintf("%2d", $_)}).join(q{, }), q{ ]};
     }
