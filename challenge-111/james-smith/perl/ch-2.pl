@@ -25,10 +25,10 @@ say longest( '/usr/share/dict/british-english-large'  );
 say longest( '/usr/share/dict/british-english-huge'   );
 say longest( '/usr/share/dict/british-english-insane' );
 
-say longest_no_comments( '/usr/share/dict/british-english-small'  );
-say longest_no_comments( '/usr/share/dict/british-english-large'  );
-say longest_no_comments( '/usr/share/dict/british-english-huge'   );
-say longest_no_comments( '/usr/share/dict/british-english-insane' );
+#say longest_no_comments( '/usr/share/dict/british-english-small'  );
+#say longest_no_comments( '/usr/share/dict/british-english-large'  );
+#say longest_no_comments( '/usr/share/dict/british-english-huge'   );
+#say longest_no_comments( '/usr/share/dict/british-english-insane' );
 
 sub longest {
   open my $fh, q(<), $_[0];
