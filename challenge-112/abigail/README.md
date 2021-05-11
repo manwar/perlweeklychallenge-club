@@ -62,6 +62,7 @@ This is just finding the `$n + 1` Fibonacci number.
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-2.pl)
+* [Pascal](pascal/ch-2.p)
 * [Python](python/ch-2.py)
 * [Ruby](ruby/ch-1.rb)
 
