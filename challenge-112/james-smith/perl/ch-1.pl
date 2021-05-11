@@ -66,6 +66,6 @@ sub canonical_path {
 sub canonical_path_compact {
 $a=1,@_=grep{!/^\.?$/}split/\//,shift;
 $_[$a]ne'..'?$a++:$a?splice@_,--$a,2:shift while$a<@_;
-'/'.join'/',@_;
+'/'.join'/',@_
 }
 
