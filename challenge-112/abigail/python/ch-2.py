@@ -5,17 +5,14 @@
 #
 
 #
-# Run as: python ch-1.py < input-file
+# Run as: python ch-2.py < input-file
 #
 
 import fileinput
+from math import sqrt
 
-cache = {0: 1, 1: 1}
-
-def fib (n):
-    if not n in cache:
-        cache [n] = fib (n - 1) + fib (n - 2)
-    return (cache [n])
+SQRT5 = sqrt (5)
+PHI   = (1 + SQRT5) / 2
 
 for line in fileinput . input ():
-    print (fib (int (line)))
+    print (round (pow (PHI, int (line) + 1) / SQRT5))

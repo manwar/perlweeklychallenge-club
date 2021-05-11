@@ -18,7 +18,20 @@ use experimental 'lexical_subs';
 #
 
 #
-# This is just the Fibonacci numbers...
+# This is just the Fibonacci numbers. For a staircase of n steps,
+# we need F_(n + 1), where F_n is the nearest integer to
 #
-sub f ($n) {state $c = {0 => 1, 1 => 1}; $$c {$n} //= f ($n - 1) + f ($n - 2)}
-say f ($_) for <>;
+#         n
+#      phi
+#      ----
+#       1/2
+#      5
+#                         1/2
+#                    1 + 5
+# where phi equals   --------  (the golden ratio).
+#                       2
+# 
+#
+my $SQRT5 = sqrt (5);
+my $PHI   = (1 + $SQRT5) / 2;
+say int (1 / 2 + $PHI ** ($_ + 1) / $SQRT5) for <>;

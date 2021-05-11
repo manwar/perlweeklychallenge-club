@@ -8,13 +8,11 @@
 // Run as: node ch-2.js < input-file
 //
 
-let cache = {0: 1, 1: 1}
-
-function fib (n) {
-    cache [n] = cache [n] || fib (n - 1) + fib (n - 2)
-    return cache [n]
-}
+let SQRT5 = Math . sqrt (5)
+let PHI   = (1 + SQRT5) / 2
 
   require ('readline')
 . createInterface ({input: process . stdin})   
-. on ('line', _ => console . log (fib (+ _)))
+. on ('line', _ => console . log (
+    Math . round (Math . pow (PHI, +_ + 1) / SQRT5)
+))

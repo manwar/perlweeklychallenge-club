@@ -5,20 +5,12 @@
 --
 
 --
--- Run as: lua ch-1.lua < input-file
+-- Run as: lua ch-2.lua < input-file
 --
 
-local cache = {}
-cache [0] = 1
-cache [1] = 1
-
-function fib (n)
-    if cache [n] == nil
-    then cache [n] = fib (n - 1) + fib (n - 2)
-    end
-    return cache [n]
-end
+local SQRT5 = math . sqrt (5)
+local PHI   = (1 + SQRT5) / 2
 
 for line in io . lines () do
-    print (fib (tonumber (line)))
+    print (math . floor (0.5 + PHI ^ (tonumber (line) + 1) / SQRT5))
 end

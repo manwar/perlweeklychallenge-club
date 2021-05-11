@@ -9,17 +9,10 @@
 #
 
 BEGIN {
-    cache [0] = 1
-    cache [1] = 1
-}
-
-function fib (n) {
-    if (!(n in cache)) {
-        cache [n] = fib(n - 1) + fib(n - 2)
-    }
-    return cache [n]
+    SQRT5 = sqrt (5)
+    PHI   = (1 + SQRT5) / 2
 }
 
 {
-    print fib($1)
+    print int (0.5 + PHI ^ ($1 + 1) / SQRT5)
 }
