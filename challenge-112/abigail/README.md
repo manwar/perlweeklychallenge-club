@@ -64,6 +64,7 @@ This is just finding the `$n + 1` Fibonacci number.
 * [Perl](perl/ch-2.pl)
 * [Pascal](pascal/ch-2.p)
 * [Python](python/ch-2.py)
-* [Ruby](ruby/ch-1.rb)
+* [Ruby](ruby/ch-2.rb)
+* [Scheme](scheme/ch-2.scm)
 
 ### Blog
