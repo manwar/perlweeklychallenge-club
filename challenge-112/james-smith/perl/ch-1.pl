@@ -64,9 +64,9 @@ sub canonical_path {
 }
 
 sub canonical_path_compact {
-my($p,@d)=(1,grep {''ne$_&&'.'ne$_}split/\//,shift);
-$d[$p]ne'..'?$p++:$p?splice@d,--$p,2:shift@d while$p<@d;
-'/'.join'/',@d;
+$a=1,@_=grep {''ne$_&&'.'ne$_}split/\//,shift;
+$_[$a]ne'..'?$a++:$a?splice@_,--$a,2:shift while$a<@_;
+'/'.join'/',@_;
 }
 
 
