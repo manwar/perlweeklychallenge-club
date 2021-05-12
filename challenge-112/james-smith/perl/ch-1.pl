@@ -41,8 +41,41 @@ use Benchmark qw(cmpthese);
 ##     * canonical_path_fast     - replace one of the regex with equality checks
 ##     * canonical_path_fastest  - replace other regex with substr/rindex
 ##
-
+## Timings for these:
+## 
+##               Rate @-sh $-s'st $-sh @-2l @-cd $-cd @-fa $-fa $-f'st
+## @-short    17483/s   --   -15% -16% -28% -29% -33% -37% -38%   -58%
+## $-shortest 20534/s  17%     --  -1% -15% -17% -21% -26% -27%   -51%
+## $-short    20833/s  19%     1%   -- -14% -15% -20% -25% -26%   -50%
+## @-2loops   24213/s  38%    18%  16%   --  -2%  -7% -13% -14%   -42%
+## @-code     24631/s  41%    20%  18%   2%   --  -5% -11% -12%   -41%
+## $-code     25907/s  48%    26%  24%   7%   5%   --  -7%  -8%   -38%
+## @-fast     27778/s  59%    35%  33%  15%  13%   7%   --  -1%   -33%
+## $-fast     28090/s  61%    37%  35%  16%  14%   8%   1%   --   -33%
+## $-fastest  41667/s 138%   103% 100%  72%  69%  61%  50%  48%     --
 ##
+## What we see is:
+##  * that the string code is fractionally faster than
+##    the array code, but by only 1-5%
+##  * using compact "1-liner" code can be approximately 7-8%
+##    faster.
+##  * but using less regex's and replacing them with
+##    eq/ne for comparisons and `substr`/`rindex` for
+##    replacement/trimming improves the speed the most.
+##     * approx 35% for removing the comparison regex for checking
+##       `' '` or `'.'` and replacing with two `eq`/`ne`
+##     * approx 50% for removing the substitute of the string
+##       from the last `'/'` to the end of the string, with `rindex`
+##       and the the four parameter version of `subst`.
+##     * combining the two seems to double the performance
+##
+## Conclusion
+##
+## So short code is interesting - but is not by a long shot the
+## most efficient especially in respect of converting regexes into
+## `substr`/`index`/`rindex`, even if we keep it to a 1-liner.
+##
+
 my @examples = (
   [ '/a/',                   '/a',     'Remove trailing slash (empty trailing dir)' ],
   [ '//a',                   '/a',     'Remove empty dir as start' ],
