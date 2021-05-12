@@ -1,24 +1,28 @@
 {
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Abigail",
+            "name" : "Abigail",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Abigail"
+            "id" : "Abigail"
          },
          {
-            "id" : "Dave Jacoby",
-            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -28,26 +32,28 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby"
          },
          {
-            "name" : "E. Choroba",
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "E. Choroba"
+            "name" : "E. Choroba"
          },
          {
-            "name" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "name" : "Feng Chang",
             "id" : "Feng Chang"
          },
          {
@@ -65,14 +71,14 @@
             "id" : "Flavio Poletti"
          },
          {
-            "id" : "James Smith",
-            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "James Smith",
+            "id" : "James Smith"
          },
          {
             "id" : "Luca Ferrari",
@@ -90,13 +96,13 @@
          },
          {
             "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Mark Anderson"
          },
          {
             "id" : "Roger Bell_West",
@@ -113,7 +119,6 @@
             ]
          },
          {
-            "id" : "Stuart Little",
             "name" : "Stuart Little",
             "data" : [
                [
@@ -124,7 +129,8 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Stuart Little"
          },
          {
             "data" : [
@@ -142,36 +148,50 @@
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2021-05-12 09:44:09 GMT"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 112"
    },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 112",
          "data" : [
             {
                "drilldown" : "Abigail",
-               "y" : 2,
-               "name" : "Abigail"
+               "name" : "Abigail",
+               "y" : 2
             },
             {
-               "name" : "Dave Jacoby",
+               "drilldown" : "Dave Jacoby",
                "y" : 3,
-               "drilldown" : "Dave Jacoby"
+               "name" : "Dave Jacoby"
             },
             {
                "y" : 2,
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba"
             },
             {
-               "y" : 2,
                "drilldown" : "Feng Chang",
+               "y" : 2,
                "name" : "Feng Chang"
             },
             {
+               "name" : "Flavio Poletti",
                "y" : 4,
-               "drilldown" : "Flavio Poletti",
-               "name" : "Flavio Poletti"
+               "drilldown" : "Flavio Poletti"
             },
             {
                "drilldown" : "James Smith",
@@ -179,59 +199,39 @@
                "name" : "James Smith"
             },
             {
-               "name" : "Luca Ferrari",
                "y" : 4,
+               "name" : "Luca Ferrari",
                "drilldown" : "Luca Ferrari"
             },
             {
-               "y" : 2,
                "drilldown" : "Mark Anderson",
+               "y" : 2,
                "name" : "Mark Anderson"
             },
             {
+               "y" : 4,
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "drilldown" : "Roger Bell_West"
             },
             {
-               "name" : "Stuart Little",
                "drilldown" : "Stuart Little",
-               "y" : 4
+               "y" : 4,
+               "name" : "Stuart Little"
             },
             {
                "drilldown" : "Ulrich Rieke",
                "y" : 2,
                "name" : "Ulrich Rieke"
             }
-         ],
-         "name" : "Perl Weekly Challenge - 112",
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 112"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "xAxis" : {
       "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2021-05-12 08:36:57 GMT"
    }
 }
