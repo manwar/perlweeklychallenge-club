@@ -58,6 +58,7 @@ This is just finding the `$n + 1` Fibonacci number.
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [Befunge-93](befunge-93/ch-2.bf93)
 * [C](c/ch-2.c)
 * [Go](go/ch-2.go)
 * [Java](java/ch-2.java)
