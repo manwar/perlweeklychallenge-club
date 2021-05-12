@@ -11,17 +11,39 @@ java CanonicalPath
 ```
 ### Example
 ```bash
-~/study/github/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
+/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
 Enter a string
 /a/
 /a
-~/study/github/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
+/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
 Enter a string
 /a/b//c/
 /a/b/c
-~/study/github/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
+/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
 Enter a string
 /a/b/c/../..
 /a
-~/study/github/perlweeklychallenge-club/challenge-112/ziameraj16/java$
+```
+
+# Climb Stairs
+## Java Solution
+
+To compile the code run
+```java
+javac ClimbStairs.java
+```
+To run
+```java
+java ClimbStairs
+```
+### Example
+```bash
+/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java ClimbStairs
+Enter total number of stairs
+3
+3
+/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java ClimbStairs
+Enter total number of stairs
+4
+5
 ```
