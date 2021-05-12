@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use feature qw(say);
 use Test::More;
+use Benchmark qw(cmpthese);
 
 ## Please note there is an ambiguity in the question - when then path contains no
 ## files - as it cannot start with a '/' and not end with a '/' - so we have
@@ -19,68 +20,139 @@ use Test::More;
 ##
 ## then it will always end without a "/";
 
-is( canonical_path_array('/a/'),                   '/a',     'Remove trailing slash (empty trailing dir)' );
-is( canonical_path_array('//a'),                   '/a',     'Remove empty dir as start' );
-is( canonical_path_array('/a/b//c/'),              '/a/b/c', 'Remove empty dir "//"' );
-is( canonical_path_array('/a/./b/./c/'),           '/a/b/c', 'Remove "." dir ...' );
-is( canonical_path_array('/a/b/c/../..'),          '/a',     'Two ".." together at end' );
-is( canonical_path_array('/a/b/../c/..'),          '/a',     'Two ".." separated (one in middle)' );
-is( canonical_path_array('/a/../b/../c/./.'),      '/c',     'Two ".." separated (both in middle)' );
-is( canonical_path_array('/a/b/../../c'),          '/c',     'Two ".." together in middle' );
-is( canonical_path_array('/a/../b/../c/..'),       '',       'Same no of ".." as dir' );
-is( canonical_path_array('/a/b/c/../../..'),       '',       'Same no of ".." as dir - all at end' );
-is( canonical_path_array('/a/../b/../c/../../..'), '',       'More ".." than dirs' );
-is( canonical_path_array('/../../../a/'),          '/a',     '".." at start, no other ".."' );
-is( canonical_path_array('/../../a/../c/.'),       '/c',     '".." at start, other ".."' );
+## We will look at some different versions of the code
+## Whether we use an array or string to accumulate the resultant path
+## Whether we use "readable" code or Perl hacks and tricks
+## To see what aspects of our code makes it faster or slower
+##
+## Methods:
+##   * "Long form" Perl...
+##     * canonical_path_double - Using a double loop
+##     * canonical_path_array  - Using backtracking instead of inner loop
+##     * canonical_path_string - Use a string as the accumulator and mapping
+##
+##   * "One-liner" perl {arrays}
+##     * canonical_path_compact     - short version of array code
+##     * canonical_path_compact_opt - optimized version of above - 1-less regex
+##
+##   * "One-liner" perl {strings}
+##     * canonical_path_shortest - most compact method
+##     * canonical_path_short    - compact method
+##     * canonical_path_fast     - replace one of the regex with equality checks
+##     * canonical_path_fastest  - replace other regex with substr/rindex
+##
+## Timings for these:
+## 
+##               Rate @-sh $-s'st $-sh @-2l @-cd $-cd @-fa $-fa $-f'st
+## @-short    17483/s   --   -15% -16% -28% -29% -33% -37% -38%   -58%
+## $-shortest 20534/s  17%     --  -1% -15% -17% -21% -26% -27%   -51%
+## $-short    20833/s  19%     1%   -- -14% -15% -20% -25% -26%   -50%
+## @-2loops   24213/s  38%    18%  16%   --  -2%  -7% -13% -14%   -42%
+## @-code     24631/s  41%    20%  18%   2%   --  -5% -11% -12%   -41%
+## $-code     25907/s  48%    26%  24%   7%   5%   --  -7%  -8%   -38%
+## @-fast     27778/s  59%    35%  33%  15%  13%   7%   --  -1%   -33%
+## $-fast     28090/s  61%    37%  35%  16%  14%   8%   1%   --   -33%
+## $-fastest  41667/s 138%   103% 100%  72%  69%  61%  50%  48%     --
+##
+## What we see is:
+##  * that the string code is fractionally faster than
+##    the array code, but by only 1-5%
+##  * using compact "1-liner" code can be approximately 7-8%
+##    faster.
+##  * but using less regex's and replacing them with
+##    eq/ne for comparisons and `substr`/`rindex` for
+##    replacement/trimming improves the speed the most.
+##     * approx 35% for removing the comparison regex for checking
+##       `' '` or `'.'` and replacing with two `eq`/`ne`
+##     * approx 50% for removing the substitute of the string
+##       from the last `'/'` to the end of the string, with `rindex`
+##       and the the four parameter version of `subst`.
+##     * combining the two seems to double the performance
+##
+## Conclusion
+##
+## So short code is interesting - but is not by a long shot the
+## most efficient especially in respect of converting regexes into
+## `substr`/`index`/`rindex`, even if we keep it to a 1-liner.
+##
 
-is( canonical_path_string('/a/'),                   '/a',     'Remove trailing slash (empty trailing dir)' );
-is( canonical_path_string('//a'),                   '/a',     'Remove empty dir as start' );
-is( canonical_path_string('/a/b//c/'),              '/a/b/c', 'Remove empty dir "//"' );
-is( canonical_path_string('/a/./b/./c/'),           '/a/b/c', 'Remove "." dir ...' );
-is( canonical_path_string('/a/b/c/../..'),          '/a',     'Two ".." together at end' );
-is( canonical_path_string('/a/b/../c/..'),          '/a',     'Two ".." separated (one in middle)' );
-is( canonical_path_string('/a/../b/../c/./.'),      '/c',     'Two ".." separated (both in middle)' );
-is( canonical_path_string('/a/b/../../c'),          '/c',     'Two ".." together in middle' );
-is( canonical_path_string('/a/../b/../c/..'),       '',       'Same no of ".." as dir' );
-is( canonical_path_string('/a/b/c/../../..'),       '',       'Same no of ".." as dir - all at end' );
-is( canonical_path_string('/a/../b/../c/../../..'), '',       'More ".." than dirs' );
-is( canonical_path_string('/../../../a/'),          '/a',     '".." at start, no other ".."' );
-is( canonical_path_string('/../../a/../c/.'),       '/c',     '".." at start, other ".."' );
+my @examples = (
+  [ '/a/',                   '/a',     'Remove trailing slash (empty trailing dir)' ],
+  [ '//a',                   '/a',     'Remove empty dir as start' ],
+  [ '/a/b//c/',              '/a/b/c', 'Remove empty dir "//"' ],
+  [ '/a/./b/./c/',           '/a/b/c', 'Remove "." dir ...' ],
+  [ '/a/b/c/../..',          '/a',     'Two ".." together at end' ],
+  [ '/a/b/../c/..',          '/a',     'Two ".." separated (one in middle)' ],
+  [ '/a/../b/../c/./.',      '/c',     'Two ".." separated (both in middle)' ],
+  [ '/a/b/../../c',          '/c',     'Two ".." together in middle' ],
+  [ '/a/../b/../c/..',       '',       'Same no of ".." as dir' ],
+  [ '/a/b/c/../../..',       '',       'Same no of ".." as dir - all at end' ],
+  [ '/a/../b/../c/../../..', '',       'More ".." than dirs' ],
+  [ '/../../../a/',          '/a',     '".." at start, no other ".."' ],
+  [ '/../../a/../c/.',       '/c',     '".." at start, other ".."' ],
+);
 
-is( canonical_path('/a/'),                   '/a',     'Remove trailing slash (empty trailing dir)' );
-is( canonical_path('//a'),                   '/a',     'Remove empty dir as start' );
-is( canonical_path('/a/b//c/'),              '/a/b/c', 'Remove empty dir "//"' );
-is( canonical_path('/a/./b/./c/'),           '/a/b/c', 'Remove "." dir ...' );
-is( canonical_path('/a/b/c/../..'),          '/a',     'Two ".." together at end' );
-is( canonical_path('/a/b/../c/..'),          '/a',     'Two ".." separated (one in middle)' );
-is( canonical_path('/a/../b/../c/./.'),      '/c',     'Two ".." separated (both in middle)' );
-is( canonical_path('/a/b/../../c'),          '/c',     'Two ".." together in middle' );
-is( canonical_path('/a/../b/../c/..'),       '',       'Same no of ".." as dir' );
-is( canonical_path('/a/b/c/../../..'),       '',       'Same no of ".." as dir - all at end' );
-is( canonical_path('/a/../b/../c/../../..'), '',       'More ".." than dirs' );
-is( canonical_path('/../../../a/'),          '/a',     '".." at start, no other ".."' );
-is( canonical_path('/../../a/../c/.'),       '/c',     '".." at start, other ".."' );
-
-is( canonical_path_compact('/a/'),                   '/a',     'Remove trailing slash (empty trailing dir)' );
-is( canonical_path_compact('//a'),                   '/a',     'Remove empty dir as start' );
-is( canonical_path_compact('/a/b//c/'),              '/a/b/c', 'Remove empty dir "//"' );
-is( canonical_path_compact('/a/./b/./c/'),           '/a/b/c', 'Remove "." dir ...' );
-is( canonical_path_compact('/a/b/c/../..'),          '/a',     'Two ".." together at end' );
-is( canonical_path_compact('/a/b/../c/..'),          '/a',     'Two ".." separated (one in middle)' );
-is( canonical_path_compact('/a/../b/../c/./.'),      '/c',     'Two ".." separated (both in middle)' );
-is( canonical_path_compact('/a/b/../../c'),          '/c',     'Two ".." together in middle' );
-is( canonical_path_compact('/a/../b/../c/..'),       '',       'Same no of ".." as dir' );
-is( canonical_path_compact('/a/b/c/../../..'),       '',       'Same no of ".." as dir - all at end' );
-is( canonical_path_compact('/a/../b/../c/../../..'), '',       'More ".." than dirs' );
-is( canonical_path_compact('/../../../a/'),          '/a',     '".." at start, no other ".."' );
-is( canonical_path_compact('/../../a/../c/.'),       '/c',     '".." at start, other ".."' );
+## Code examples..
+is( canonical_path_double(      $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_array(       $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_string(      $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+## One liners (array)...
+is( canonical_path_compact(     $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_compact_opt( $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+## One liners (string)...
+is( canonical_path_shortest(    $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_short(       $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_fast(        $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_fastest(     $_->[0]), $_->[1], $_->[2] ) foreach @examples;
 
 done_testing();
 
+cmpthese( 100_000, {
+## Code
+  '@-2loops'   => sub { canonical_path_double(      $_->[0] ) foreach @examples },
+  '$-code'     => sub { canonical_path_string(      $_->[0] ) foreach @examples },
+  '@-code'     => sub { canonical_path_array(       $_->[0] ) foreach @examples },
+## Array 1-liner
+  '@-fast'     => sub { canonical_path_compact_opt( $_->[0] ) foreach @examples },
+  '@-short'    => sub { canonical_path_compact(     $_->[0] ) foreach @examples },
+## String 1-liner
+  '$-short'    => sub { canonical_path_short(       $_->[0] ) foreach @examples },
+  '$-shortest' => sub { canonical_path_shortest(    $_->[0] ) foreach @examples },
+  '$-fast'     => sub { canonical_path_fast(        $_->[0] ) foreach @examples },
+  '$-fastest'  => sub { canonical_path_fastest(     $_->[0] ) foreach @examples },
+});
+
+sub canonical_path_double {
+  ## This was my original function, basically loop until you find a ".."
+  ## process it;
+  ## Then restart the loop if you have removed the ".."
+  ## This is one of the few times that labels are useful allowing
+  ## to jump out of the inner loop and go to the next iteration of
+  ## the outer loop...
+  ## We then use "last" to jump out of the outer loop once no '..'s are
+  ## found except in the first position...
+  my $directory_path = shift;
+  my @directory_names   = grep { $_ ne '' &&  ## Remove "empty" directory names
+                                 $_ ne '.' }   ## Remove directories with name "."
+                          split m{/},          ## Split path into directories
+                          $directory_path;
+
+  OUTER: while(1) {
+    foreach (1..$#directory_names) {
+      next unless $directory_names[$_] eq '..';
+      splice @directory_names,$_-1,2;
+      next OUTER;
+    }
+    last;
+  }
+  shift @directory_names if @directory_names && $directory_names[0] eq '..';
+  return join '/','',@directory_names;
+}
+
 sub canonical_path_array {
   my $directory_path = shift;
-  my @directory_names   = grep { $_ ne ''  }   ## Remove "empty" directory names
-                          grep { $_ ne '.' }   ## Remove directories with name "."
+  my @directory_names   = grep { $_ ne '' &&   ## Remove "empty" directory names
+                                 $_ ne '.' }   ## Remove directories with name "."
                           split m{/},          ## Split path into directories
                           $directory_path;
 
@@ -120,7 +192,15 @@ sub canonical_path_array {
 }
 
 sub canonical_path_compact {
+## Make shorted by using regex and ternarys
 $a=1,@_=grep{!/^\.?$/}split/\//,shift;
+$_[$a]ne'..'?$a++:$a?splice@_,--$a,2:shift while$a<@_;
+join'/','',@_
+}
+
+sub canonical_path_compact_opt {
+## Remove the regex in the grep and use ternarys...
+$a=1,@_=grep{''ne$_&&'.'ne$_}split/\//,shift;
 $_[$a]ne'..'?$a++:$a?splice@_,--$a,2:shift while$a<@_;
 join'/','',@_
 }
@@ -157,10 +237,57 @@ sub canonical_path_string {
 }
 
 
-sub canonical_path {
+sub canonical_path_short {
+## Converting if statements into ternary operators
+## Shorter by using regex rather than, interpolation
+## and `$` rather than `/Z`
 $a='';
-/^\.?$/?0:'..'ne$_?$a.="/$_":$a=~s{/[^/]+$}{}
-for split/\//,shift;
+/^\.?$/?0:'..'ne$_?$a.="/$_":$a=~s{/[^/]+$}{} for split/\//,shift;
+$a
+}
+
+
+sub canonical_path_shortest {
+## only ternary - use `x` to add/not add the path
+## depending on whether the directory name is "."
+## or //. This is the shortest script in terms of
+## bytes - but also the slowest string version.
+$a='';
+'..'ne$_?$a.="/$_"x!/^\.?$/:$a=~s{/[^/]+$}{} for split/\//,shift;
+$a
+}
+
+
+sub canonical_path_fast {
+## Skip the regex for ''/'.' and replace with compares
+$a='';
+'.'ne$_&&''ne$_&&('..'ne$_?$a.="/$_":$a=~s{/[^/]+$}{})for split/\//,shift;
+$a
+}
+
+
+sub canonical_path_fastest {
+## we avoid regular expressions here by using `rindex` - to look
+## for the last slash in the string and removing it along with
+## the characters after it.
+## We use the 4 parameter version of `substr` here. This replaces
+## the substring that is found with this fourth parameter.
+##
+## `substr $string, $offset, $length, $replace`
+##
+## There is a catch here - that the 3rd parameter has to
+## set the length of string to be removed (or `-n`) if you want
+## it to be to the end - but this only works if `n > 0` so there
+## is no simple way to remove everything to the end of the
+## string - to do this we have to specify a length greate than
+## all possible lenghts. We can use "~0" which is the
+## 1s-complement of 0 - which gives the largest +ve perl integer
+## In this case - 18,446,744,073,709,551,615. This is approx
+## 16 EB (Exabytes) - I think that should be enough!
+##
+## This appears
+$a='';
+'.'ne$_&&''ne$_&&('..'ne$_?$a.='/'.$_:substr$a,rindex($a,'/'),~0,'')for split/\//,shift;
 $a
 }
 
