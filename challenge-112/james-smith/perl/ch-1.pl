@@ -87,7 +87,6 @@ cmpthese( 100_000, {
   '$-shortest' => sub { canonical_path_shortest(    $_->[0] ) foreach @examples },
   '$-fast'     => sub { canonical_path_fast(        $_->[0] ) foreach @examples },
   '$-fastest'  => sub { canonical_path_fastest(     $_->[0] ) foreach @examples },
-  'A'  => sub { a(     $_->[0] ) foreach @examples },
 });
 
 sub canonical_path_double {
