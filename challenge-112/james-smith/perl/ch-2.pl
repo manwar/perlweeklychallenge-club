@@ -14,18 +14,22 @@ close $fh;
 
 my $N = @ARGV     ? $ARGV[0] : 30;
 my $I = @ARGV > 1 ? $ARGV[1] : 100_000;
+my $cache;
 
-is(climb(            $_), $ans[$_] ) foreach 1..$N;
-is(climb_fib(        $_), $ans[$_] ) foreach 1..$N;
-is(climb_fib_1liner( $_), $ans[$_] ) foreach 1..$N;
+is(climb(                   $_), $ans[$_] ) foreach 1..$N;
+is(climb_fib(               $_), $ans[$_] ) foreach 1..$N;
+is(climb_fib_1liner(        $_), $ans[$_] ) foreach 1..$N;
+is(climb_fib_global(        $_), $ans[$_] ) foreach 1..$N;
+is(climb_fib_1liner_global( $_), $ans[$_] ) foreach 1..$N;
 
 done_testing();
 
 cmpthese($I,{
-  'climb' => sub { climb(            $_ ) foreach 0..$N; },
-  'fib-g' => sub { climb_fib_global( $_ ) foreach 0..$N; },
-  'fib-1' => sub { climb_fib_1liner( $_ ) foreach 0..$N; },
-  'fib'   => sub { climb_fib(        $_ ) foreach 0..$N; },
+  'climb'  => sub { climb(            $_ ) foreach 0..$N; },
+  'fib'    => sub { climb_fib(        $_ ) foreach 0..$N; },
+  'fib-g'  => sub { climb_fib_global( $_ ) foreach 0..$N; },
+  'fib-1'  => sub { climb_fib_1liner( $_ ) foreach 0..$N; },
+  'fib-1g' => sub { climb_fib_1liner_global( $_ ) foreach 0..$N; },
 });
 
 ## Once we look at the formula for climb - we
@@ -42,9 +46,9 @@ cmpthese($I,{
 ## temporarily
 
 sub climb {
-  my @climb = (1,1);
-  @climb = ($climb[1],$climb[0]+$climb[1]) foreach 2..$_[0];
-  return $climb[1];
+  my($a,$b) = (1,1);
+  ($a,$b) = ($b,$a+$b) foreach 2..$_[0];
+  return $b;
 }
 
 my $p;
@@ -59,6 +63,9 @@ sub climb_fib {
 }
 
 sub climb_fib_1liner {
-  return int(0.001 + (($p = ((1+sqrt 5)/2)**($_[0]+1)) - ($_[0]&1?1:-1)/$p)*sqrt 0.2);
+  return int(0.001 + (($a = ((1+sqrt 5)/2)**($_[0]+1)) - ($_[0]&1?1:-1)/$a)*sqrt 0.2);
 }
 
+sub climb_fib_1liner_global {
+  return int(0.001 + (($p = ((1+sqrt 5)/2)**($_[0]+1)) - ($_[0]&1?1:-1)/$p)*sqrt 0.2);
+}
