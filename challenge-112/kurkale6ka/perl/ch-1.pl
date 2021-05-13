@@ -19,3 +19,25 @@ s#/\.?(?=(/|$))##gn;
 # { redo if s#/([^/]+/)?\Q..##n }
 
 say $_||'/'
+
+__DATA__
+
+Human readable version without regexes
+
+# one-liner:
+# -E'for(split/\//,pop){/^\.$/&&next;if(/^\.\.$/){pop@path}else{push@path,$_ if length}}say"/",join"/",@path'
+
+my @path;
+
+foreach (split m#/#, shift)
+{
+   next if $_ eq '.';
+
+   if ($_ eq '..') {
+      pop @path;
+   } else {
+      push @path, $_ if length;
+   }
+}
+
+say '/', join '/', @path;
