@@ -329,7 +329,7 @@ $a
 my $s;
 sub canonical_path_global {
 $s='';
-'.'ne$_&&''ne$_&&('..'ne$_?$s.='/'.$_:substr$s,rindex($s,'/'),~0,'')for split/\//,shift;
+'.'ne$_&&''ne$_&&('..'ne$_?$s.='/'.$_:substr$s,rindex($s,'/'),~0,'')for split'/',shift;
 $s
 }
 ```
@@ -400,4 +400,125 @@ most efficient especially in respect of converting regexes into
 `substr`/`index`/`rindex`, allocation of variables, even if we
 keep it to a 1-liner.
 
-# Challenge 2 - Ordered Letters
+*e.g.* with the short code - we see the optimal short string code is
+twice as efficient as the shortest version - and only about 33% longer.
+
+One of the interesting things is that there is some discussion that
+avoiding concatenating strings by pushing them into an array and
+joining them is supposedly faster than just concatenating.... This
+seems to prove otherwise.. So don't assume everything you read - but
+check it yourself!
+
+# Challenge 2 - Climb Stairs
+
+You are given `$n` steps to climb - Write a script to find out the
+distinct ways to climb to the top. You are allowed to climb either
+1 or 2 steps at a time.
+
+## Assumption
+
+Although not clear - I just assumed that the response was a single
+numeric value.
+
+## Solution
+
+We first note that the formula for number of steps climbed can be
+seen to be.
+
+  `count_n = count_(n-1) + count_(n-2)`
+
+As the last step is either a 1-step (when there are therefore `count_(n-1)`
+options to get to that step) or 2-step (when there are therefore `count_(n-2)`
+options to get to that step)...
+
+This is a recognisable formula - it is just a fibonnaci sequence.
+
+## Brute force solution
+
+We could use a recursive method to get the fibonnaci values out - but
+that would have function call overheads - rather we can use just two
+variables to store the sequence, we define `$a` & `$b` to both be `1`
+and then each iteration through we set `$a` to `$b` and `$b` to the sum
+of `$a` & `$b`. We just then return the last value of `$b`.
+
+```perl
+sub climb {
+  my($a,$b) = (1,1);
+  ($a,$b) = ($b,$a+$b) foreach 2..$_[0];
+  return $b;
+}
+```
+
+This uses one of the nice features of perl in the fact that you can
+assign to more than one variable with the same statement, you often
+see this when you flip two values over.
+
+Classically you would write:
+
+```perl
+my $t = $a;
+$a = $b;
+$b = $t;
+```
+but you in perl can write this as:
+```perl
+($a,$b)=($b,$a);
+```
+without the need of the additionaly (temporary) variable.
+
+## Mathematical formula solution
+
+There is a formula for the `n`th fibonacci number which is:
+
+```
+fn = phi^n - 1/(-phi)^n
+     ------------------
+         sqrt 5
+```
+
+Where `phi` is the golden ratio or 1.618,033,988 == (1+sqrt 5)/2, this
+number crops up in many different places from art to nature.
+
+To speed up the calculation we compute `(phi^n)` and to get the second
+value we note that this can be written as `(-1)^n/(phi^n)`. So we only
+need to calculate `(phi^n)` once. Also we note `(-1)^n` can be
+rewritten as (n&1)||-1;
+
+I offer a number of different versions of this calculation... Each
+one gets slightly faster... really depending on whether we define
+the variable in the return statement or define it separately and
+whether we use a local or global variable...
+
+```perl
+sub climb_fib {
+  my $q = ((1 + sqrt 5)/2)**($_[0]+1);
+  return int(0.001+ ($q - ($_[0]&1?1:-1)/$q)*sqrt 0.2);
+}
+
+sub climb_fib_1liner {
+  return int(0.001 + (($a = ((1+sqrt 5)/2)**($_[0]+1)) - ($_[0]&1?1:-1)/$a)*sqrt 0.2);
+}
+
+sub climb_fib_global {
+  $p = ((1 + sqrt 5)/2)**($_[0]+1);
+  return int(0.001+ ($p - ($_[0]&1?1:-1)/$p)*sqrt 0.2);
+}
+
+sub climb_fib_1liner_global {
+  return int(0.001 + (($p = ((1+sqrt 5)/2)**($_[0]+1)) - ($_[0]&1?1:-1)/$p)*sqrt 0.2);
+}
+```
+
+For up to 50 steps then we note that the `climb_fib` function is about
+6-7 times faster than the original `climb` function, by using the 1-liner
+and global tricks this gets to about 7-8 times the speed.
+
+|        |     Rate | climb |   fib | fib-1 | fib-g | fib1g |
+| ------ | -------: | ----: | ----: | ----: | ----: | ----: |
+| climb  |  7,933/s |    -- |  -85% |  -86% |  -86% |  -87% |
+| fib    | 52,770/s |  565% |    -- |   -6% |   -8% |  -11% |
+| fib-1  | 56,180/s |  608% |    6% |    -- |   -3% |   -5% |
+| fib-g  | 57,637/s |  627% |    9% |    3% |    -- |   -3% |
+| fib-1g | 59,347/s |  648% |   12% |    6% |    3% |    -- |
+
+
