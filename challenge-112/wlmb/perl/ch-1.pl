@@ -13,7 +13,7 @@ for my $input(@ARGV){ #provide paths in @ARGV
     my $path=$input;
     $path = "$cwd/$path" unless $path=~m{^/}; # relative -> absolute path
     $path.="/"; #add temporal trailing slash as guard
-    while($path=~s{//}{/}){}; # remove //
+    while($path=~s{//}{/}){}; # remove all //
     while($path=~s{/\./}{/}){}; # remove all /.
     while($path=~s{/[^/]+?/\.\./}{/}){}; # remove all /dir/..
     while($path=~s{^/(\.\./)+}{/}){}; # remove all leading  /..
