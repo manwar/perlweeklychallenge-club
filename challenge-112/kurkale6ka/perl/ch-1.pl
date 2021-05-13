@@ -20,7 +20,7 @@ s#/\.?(?=(/|$))##gn;
 
 say $_||'/'
 
-__DATA__
+__END__
 
 Human readable version without regexes
 
