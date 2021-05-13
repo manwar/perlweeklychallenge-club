@@ -156,7 +156,7 @@ it or remove them if we come across a "`..`".
     or "`.`".
 
 ```perl
-sub canonical_path_string_fast {
+sub canonical_path_string {
   my $path = shift;
   my @directories    = split m{/}, $path;
   my $canonical_path = '';
@@ -271,7 +271,8 @@ $a=1,@_=grep{''ne$_&&'.'ne$_}split/\//,shift;
 $_[$a]ne'..'?$a++:$a?splice@_,--$a,2:shift while$a<@_;
 join'/','',@_
 }
-
+```
+```perl
 sub canonical_path_compact {
 ## Make shorted by using regex and ternarys
 $a=1,@_=grep{!/^\.?$/}split/\//,shift;
@@ -302,25 +303,29 @@ $a='';
 '..'ne$_?$a.="/$_"x!/^\.?$/:$a=~s#/[^/]+$## for split'/',shift;
 $a
 }
-
+```
+```perl
 sub canonical_path_short {
 $a='';
 /^\.?$/?0:'..'ne$_?$a.="/$_":$a=~s#/[^/]+$## for split'/',shift;
 $a
 }
-
+```
+```perl
 sub canonical_path_fast {
 $a='';
 '.'ne$_&&''ne$_&&('..'ne$_?$a.="/$_":$a=~s#/[^/]+$##)for split'/',shift;
 $a
 }
-
+```
+```perl
 sub canonical_path_fastest {
 $a='';
 '.'ne$_&&''ne$_&&('..'ne$_?$a.='/'.$_:substr$a,rindex($a,'/'),~0,'')for split'/',shift;
 $a
 }
-
+```
+```perl
 my $s;
 sub canonical_path_global {
 $s='';
