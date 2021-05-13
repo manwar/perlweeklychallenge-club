@@ -3,10 +3,11 @@
 use strict;
 
 use warnings;
-use feature qw(say);
+use feature qw(say state);
 use Test::More;
 use Benchmark qw(cmpthese);
 
+##
 ## Please note there is an ambiguity in the question - when then path contains no
 ## files - as it cannot start with a '/' and not end with a '/' - so we have
 ## to make a choice do we return '/' or do we return ''.
@@ -19,7 +20,12 @@ use Benchmark qw(cmpthese);
 ## $parent_dir.canonical_path('/');
 ##
 ## then it will always end without a "/";
-
+##
+##
+##
+## Performance of different methods
+## ================================
+##
 ## We will look at some different versions of the code
 ## Whether we use an array or string to accumulate the resultant path
 ## Whether we use "readable" code or Perl hacks and tricks
@@ -27,9 +33,10 @@ use Benchmark qw(cmpthese);
 ##
 ## Methods:
 ##   * "Long form" Perl...
-##     * canonical_path_double - Using a double loop
-##     * canonical_path_array  - Using backtracking instead of inner loop
-##     * canonical_path_string - Use a string as the accumulator and mapping
+##     * canonical_path_double      - Using a double loop
+##     * canonical_path_array       - Using backtracking instead of inner loop
+##     * canonical_path_string      - Use a string as the accumulator and mapping
+##     * canonical_path_string_fast - As above - but using substr/rindex
 ##
 ##   * "One-liner" perl {arrays}
 ##     * canonical_path_compact     - short version of array code
@@ -40,40 +47,46 @@ use Benchmark qw(cmpthese);
 ##     * canonical_path_short    - compact method
 ##     * canonical_path_fast     - replace one of the regex with equality checks
 ##     * canonical_path_fastest  - replace other regex with substr/rindex
+##     * canonical_path_global   - as fastest but with global variable...
 ##
 ## Timings for these:
-## 
-##               Rate @-sh $-s'st $-sh @-2l @-cd $-cd @-fa $-fa $-f'st
-## @-short    17483/s   --   -15% -16% -28% -29% -33% -37% -38%   -58%
-## $-shortest 20534/s  17%     --  -1% -15% -17% -21% -26% -27%   -51%
-## $-short    20833/s  19%     1%   -- -14% -15% -20% -25% -26%   -50%
-## @-2loops   24213/s  38%    18%  16%   --  -2%  -7% -13% -14%   -42%
-## @-code     24631/s  41%    20%  18%   2%   --  -5% -11% -12%   -41%
-## $-code     25907/s  48%    26%  24%   7%   5%   --  -7%  -8%   -38%
-## @-fast     27778/s  59%    35%  33%  15%  13%   7%   --  -1%   -33%
-## $-fast     28090/s  61%    37%  35%  16%  14%   8%   1%   --   -33%
-## $-fastest  41667/s 138%   103% 100%  72%  69%  61%  50%  48%     --
+##
+##                    Rate @-sh $-st $-sh @-2l @-cf @-ft $-cd $-fa $-cf $-ft $-gl
+## @-shortest     17,483/s   -- -21% -22% -29% -30% -37% -38% -43% -52% -59% -59%
+## $-shortest     22,026/s  26%   --  -2% -11% -11% -21% -21% -28% -40% -48% -49%
+## $-short        22,472/s  29%   2%   --  -9% -10% -20% -20% -26% -39% -47% -48%
+## @-code-2loop   24,631/s  41%  12%  10%   --  -1% -12% -12% -19% -33% -42% -43%
+## @-code-fastest 24,876/s  42%  13%  11%   1%   -- -11% -11% -18% -32% -42% -42%
+## @-fastest      27,933/s  60%  27%  24%  13%  12%   --  -0%  -8% -24% -35% -35%
+## $-code-fast    28,011/s  60%  27%  25%  14%  13%   0%   --  -8% -24% -34% -35%
+## $-fast         30,488/s  74%  38%  36%  24%  23%   9%   9%   -- -17% -29% -29%
+## $-code-fastest 36,765/s 110%  67%  64%  49%  48%  32%  31%  21%   -- -14% -15%
+## $-fastest      42,735/s 144%  94%  90%  74%  72%  53%  53%  40%  16%   --  -1%
+## $-global-fast  43,103/s 147%  96%  92%  75%  73%  54%  54%  41%  17%   1%   --
 ##
 ## What we see is:
-##  * that the string code is fractionally faster than
-##    the array code, but by only 1-5%
-##  * using compact "1-liner" code can be approximately 7-8%
+##  * that the string code is faster than the array code,
+##    by around 20-40%
+##  * using compact "1-liner" code can be approximately 10%
 ##    faster.
 ##  * but using less regex's and replacing them with
 ##    eq/ne for comparisons and `substr`/`rindex` for
 ##    replacement/trimming improves the speed the most.
-##     * approx 35% for removing the comparison regex for checking
+##     * approx 25-30% for removing the comparison regex for checking
 ##       `' '` or `'.'` and replacing with two `eq`/`ne`
-##     * approx 50% for removing the substitute of the string
+##     * approx 30-40% for removing the substitute of the string
 ##       from the last `'/'` to the end of the string, with `rindex`
 ##       and the the four parameter version of `subst`.
-##     * combining the two seems to double the performance
+##     * combining the two seems to double the performance!
+##  * switching from local to global variables gets a minor
+##    gain (about 1%) again due to memory management.
 ##
 ## Conclusion
 ##
 ## So short code is interesting - but is not by a long shot the
 ## most efficient especially in respect of converting regexes into
-## `substr`/`index`/`rindex`, even if we keep it to a 1-liner.
+## `substr`/`index`/`rindex`, allocation of variables, even if we
+## keep it to a 1-liner.
 ##
 
 my @examples = (
@@ -96,6 +109,7 @@ my @examples = (
 is( canonical_path_double(      $_->[0]), $_->[1], $_->[2] ) foreach @examples;
 is( canonical_path_array(       $_->[0]), $_->[1], $_->[2] ) foreach @examples;
 is( canonical_path_string(      $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_string_fast( $_->[0]), $_->[1], $_->[2] ) foreach @examples;
 ## One liners (array)...
 is( canonical_path_compact(     $_->[0]), $_->[1], $_->[2] ) foreach @examples;
 is( canonical_path_compact_opt( $_->[0]), $_->[1], $_->[2] ) foreach @examples;
@@ -104,22 +118,25 @@ is( canonical_path_shortest(    $_->[0]), $_->[1], $_->[2] ) foreach @examples;
 is( canonical_path_short(       $_->[0]), $_->[1], $_->[2] ) foreach @examples;
 is( canonical_path_fast(        $_->[0]), $_->[1], $_->[2] ) foreach @examples;
 is( canonical_path_fastest(     $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_global(      $_->[0]), $_->[1], $_->[2] ) foreach @examples;
 
 done_testing();
 
 cmpthese( 100_000, {
 ## Code
-  '@-2loops'   => sub { canonical_path_double(      $_->[0] ) foreach @examples },
-  '$-code'     => sub { canonical_path_string(      $_->[0] ) foreach @examples },
-  '@-code'     => sub { canonical_path_array(       $_->[0] ) foreach @examples },
+  '@-2l' => sub { canonical_path_double(      $_->[0] ) foreach @examples },
+  '$-cd' => sub { canonical_path_string(      $_->[0] ) foreach @examples },
+  '@-cf' => sub { canonical_path_array(       $_->[0] ) foreach @examples },
+  '$-cf' => sub { canonical_path_string_fast( $_->[0] ) foreach @examples },
 ## Array 1-liner
-  '@-fast'     => sub { canonical_path_compact_opt( $_->[0] ) foreach @examples },
-  '@-short'    => sub { canonical_path_compact(     $_->[0] ) foreach @examples },
+  '@-ft' => sub { canonical_path_compact_opt( $_->[0] ) foreach @examples },
+  '@-sh' => sub { canonical_path_compact(     $_->[0] ) foreach @examples },
 ## String 1-liner
-  '$-short'    => sub { canonical_path_short(       $_->[0] ) foreach @examples },
-  '$-shortest' => sub { canonical_path_shortest(    $_->[0] ) foreach @examples },
-  '$-fast'     => sub { canonical_path_fast(        $_->[0] ) foreach @examples },
-  '$-fastest'  => sub { canonical_path_fastest(     $_->[0] ) foreach @examples },
+  '$-sh' => sub { canonical_path_short(       $_->[0] ) foreach @examples },
+  '$-st' => sub { canonical_path_shortest(    $_->[0] ) foreach @examples },
+  '$-fa' => sub { canonical_path_fast(        $_->[0] ) foreach @examples },
+  '$-ft' => sub { canonical_path_fastest(     $_->[0] ) foreach @examples },
+  '$-gl' => sub { canonical_path_global(      $_->[0] ) foreach @examples },
 });
 
 sub canonical_path_double {
@@ -236,6 +253,30 @@ sub canonical_path_string {
   return $canonical_path;
 }
 
+sub canonical_path_string_fast {
+  my $path = shift;
+  my @directories    = split m{/},               ## Split path into directory names
+                       $path;
+
+  my $canonical_path = '';                       ## Initialize canonical path
+
+  foreach my $directory_name ( @directories ) {  ## For each directory we
+    next if $directory_name eq '';               ## Remove "empty" directory names
+    next if $directory_name eq '.';              ## Remove directories named "."
+                                                 ## (current directory)
+    if( $directory_name eq q(..) ) {             ## look to see if it is
+                                                 ## ..;
+      substr $canonical_path,
+             rindex( $canonical_path, '/' ),
+             ~0, '';                             ## If so remove parent directory
+                                                 ## if one is set....
+    } else {
+      $canonical_path .= q(/) . $directory_name; ## add directory name to end
+    }
+  }
+  return $canonical_path;
+}
+
 
 sub canonical_path_short {
 ## Converting if statements into ternary operators
@@ -265,7 +306,6 @@ $a='';
 $a
 }
 
-
 sub canonical_path_fastest {
 ## we avoid regular expressions here by using `rindex` - to look
 ## for the last slash in the string and removing it along with
@@ -284,11 +324,22 @@ sub canonical_path_fastest {
 ## 1s-complement of 0 - which gives the largest +ve perl integer
 ## In this case - 18,446,744,073,709,551,615. This is approx
 ## 16 EB (Exabytes) - I think that should be enough!
-##
-## This appears
+
 $a='';
 '.'ne$_&&''ne$_&&('..'ne$_?$a.='/'.$_:substr$a,rindex($a,'/'),~0,'')for split/\//,shift;
 $a
+}
+
+my $s;
+
+sub canonical_path_global {
+## Minor speed up by using a global variable - this
+## is I think due to memory allocation for variables
+## this can be something useful to know in very tight
+## loops...
+$s='';
+'.'ne$_&&''ne$_&&('..'ne$_?$s.='/'.$_:substr$s,rindex($s,'/'),~0,'')for split/\//,shift;
+$s
 }
 
 
