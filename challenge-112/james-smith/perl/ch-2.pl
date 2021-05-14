@@ -3,7 +3,7 @@
 use strict;
 
 use warnings;
-use feature qw(say);
+use feature qw(say state);
 use Test::More;
 use Benchmark qw(cmpthese);
 
@@ -15,16 +15,23 @@ close $fh;
 my $N = @ARGV     ? $ARGV[0] : 30;
 my $I = @ARGV > 1 ? $ARGV[1] : 100_000;
 my $cache;
+my @glob_cache = (1,1);
 
 is(climb(            $_), $ans[$_] ) foreach 0..$N;
+is(climb_cache(      $_), $ans[$_] ) foreach 0..$N;
+is(climb_cache_glob( $_), $ans[$_] ) foreach 0..$N;
 is(climb_fib(        $_), $ans[$_] ) foreach 0..$N;
 is(climb_fib_1liner( $_), $ans[$_] ) foreach 0..$N;
 is(climb_fib_approx( $_), $ans[$_] ) foreach 0..$N;
+is(climb_lookup(     $_), $ans[$_] ) foreach 0..$N;
 
 done_testing();
 
 cmpthese($I,{
   'climb'  => sub { climb(            $_ ) foreach 0..$N; },
+  'cache'  => sub { climb_cache(      $_ ) foreach 0..$N; },
+  'g-cch'  => sub { climb_cache_glob( $_ ) foreach 0..$N; },
+  'look'   => sub { climb_lookup(     $_ ) foreach 0..$N; },
   'fib'    => sub { climb_fib(        $_ ) foreach 0..$N; },
   'fib-1'  => sub { climb_fib_1liner( $_ ) foreach 0..$N; },
   'fib-a'  => sub { climb_fib_approx( $_ ) foreach 0..$N; },
@@ -56,6 +63,17 @@ sub climb {
   return $b;
 }
 
+sub climb_cache {
+  state @cache = (1,1);
+  $cache[$_]=$cache[$_-1]+$cache[$_-2] foreach @cache .. $_[0];
+  return $cache[$_[0]];
+}
+
+sub climb_cache_glob {
+  $glob_cache[$_]=$glob_cache[$_-1]+$glob_cache[$_-2] foreach @glob_cache .. $_[0];
+  return $glob_cache[$_[0]];
+}
+
 sub climb_fib {
   my $q = ((1 + sqrt 5)/2)**($_[0]+1);
   return int(0.001+ ($q - ($_[0]&1?1:-1)/$q)*sqrt 0.2);
@@ -67,4 +85,8 @@ sub climb_fib_1liner {
 
 sub climb_fib_approx {
   return int(0.4 + (0.5+sqrt 1.25)**($_[0]+1)*sqrt 0.2);
+}
+
+sub climb_lookup {
+  return $ans[$_[0]];
 }
