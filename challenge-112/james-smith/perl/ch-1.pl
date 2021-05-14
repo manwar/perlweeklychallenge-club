@@ -283,7 +283,7 @@ sub canonical_path_short {
 ## Shorter by using regex rather than, interpolation
 ## and `$` rather than `/Z`
 $a='';
-/^\.?$/?0:'..'ne$_?$a.="/$_":$a=~s{/[^/]+$}{} for split/\//,shift;
+/^\.?$/?0:'..'ne$_?$a.="/$_":$a=~s#/[^/]+$## for split'/',shift;
 $a
 }
 
@@ -294,7 +294,7 @@ sub canonical_path_shortest {
 ## or //. This is the shortest script in terms of
 ## bytes - but also the slowest string version.
 $a='';
-'..'ne$_?$a.="/$_"x!/^\.?$/:$a=~s{/[^/]+$}{} for split/\//,shift;
+'..'ne$_?$a.="/$_"x!/^\.?$/:$a=~s#/[^/]+$## for split'/',shift;
 $a
 }
 
@@ -302,7 +302,7 @@ $a
 sub canonical_path_fast {
 ## Skip the regex for ''/'.' and replace with compares
 $a='';
-'.'ne$_&&''ne$_&&('..'ne$_?$a.="/$_":$a=~s{/[^/]+$}{})for split/\//,shift;
+'.'ne$_&&''ne$_&&('..'ne$_?$a.="/$_":$a=~s#/[^/]+$##)for split'/',shift;
 $a
 }
 
@@ -326,7 +326,7 @@ sub canonical_path_fastest {
 ## 16 EB (Exabytes) - I think that should be enough!
 
 $a='';
-'.'ne$_&&''ne$_&&('..'ne$_?$a.='/'.$_:substr$a,rindex($a,'/'),~0,'')for split/\//,shift;
+'.'ne$_&&''ne$_&&('..'ne$_?$a.='/'.$_:substr$a,rindex($a,'/'),~0,'')for split'/',shift;
 $a
 }
 
@@ -338,7 +338,7 @@ sub canonical_path_global {
 ## this can be something useful to know in very tight
 ## loops...
 $s='';
-'.'ne$_&&''ne$_&&('..'ne$_?$s.='/'.$_:substr$s,rindex($s,'/'),~0,'')for split/\//,shift;
+'.'ne$_&&''ne$_&&('..'ne$_?$s.='/'.$_:substr$s,rindex($s,'/'),~0,'')for split'/',shift;
 $s
 }
 
