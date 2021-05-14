@@ -466,13 +466,41 @@ but you in perl can write this as:
 ```
 without the need of the additionaly (temporary) variable.
 
+## Building a cache using state or global variables - or pre-computing
+
+If the call is being made repeatedly we can cache results - either
+using a "`state`" variable within the function or a "`global`" variable.
+
+```perl
+sub climb_cache {
+  state @cache = (1,1);
+  $cache[$_]=$cache[$_-1]+$cache[$_-2] foreach @cache .. $_[0];
+  return $cache[$_[0]];
+}
+
+my @glob_cache = (1,1);
+sub climb_cache_glob {
+  $glob_cache[$_]=$glob_cache[$_-1]+$glob_cache[$_-2] foreach @glob_cache .. $_[0];
+  return $glob_cache[$_[0]];
+}
+```
+
+Finally we look at the cache check overhead by pre-computing the values into 
+a cache and then run:
+
+```perl
+sub climb_lookup {
+  return $ans[$_[0]];
+}
+```
+
 ## Mathematical formula solution
 
-There is a formula for the `n`th fibonacci number which is:
+There is Binet's formula for the `n`th fibonacci number which is:
 
 ```
-fn = phi^n - 1/(-phi)^n
-     ------------------
+     phi^n - 1/(-phi)^n
+fn = ------------------
          sqrt 5
 ```
 
@@ -482,12 +510,15 @@ number crops up in many different places from art to nature.
 To speed up the calculation we compute `(phi^n)` and to get the second
 value we note that this can be written as `(-1)^n/(phi^n)`. So we only
 need to calculate `(phi^n)` once. Also we note `(-1)^n` can be
-rewritten as (n&1)||-1;
+rewritten as `n&1?1:-1`;
 
-I offer a number of different versions of this calculation... Each
-one gets slightly faster... really depending on whether we define
-the variable in the return statement or define it separately and
-whether we use a local or global variable...
+In reality we don't even need to do this last trick, the contribution
+to the sum of '(-1)^n/(phi^n)/sqrt 5' is going to be less than `0.5`
+for all `n>=0` we can just reduce the formula to the first part to
+
+```
+fn = floor  (phi^n/sqrt 5)
+```
 
 ```perl
 sub climb_fib {
@@ -499,26 +530,35 @@ sub climb_fib_1liner {
   return int(0.001 + (($a = ((1+sqrt 5)/2)**($_[0]+1)) - ($_[0]&1?1:-1)/$a)*sqrt 0.2);
 }
 
-sub climb_fib_global {
-  $p = ((1 + sqrt 5)/2)**($_[0]+1);
-  return int(0.001+ ($p - ($_[0]&1?1:-1)/$p)*sqrt 0.2);
-}
-
-sub climb_fib_1liner_global {
-  return int(0.001 + (($p = ((1+sqrt 5)/2)**($_[0]+1)) - ($_[0]&1?1:-1)/$p)*sqrt 0.2);
+sub climb_fib_approx {
+  return int(0.4 + (0.5+sqrt 1.25)**($_[0]+1)*sqrt 0.2);
 }
 ```
 
-For up to 50 steps then we note that the `climb_fib` function is about
-6-7 times faster than the original `climb` function, by using the 1-liner
-and global tricks this gets to about 7-8 times the speed.
+## Analysis and conclusion
 
-|        |     Rate | climb |   fib | fib-1 | fib-g | fib1g |
-| ------ | -------: | ----: | ----: | ----: | ----: | ----: |
-| climb  |  7,933/s |    -- |  -85% |  -86% |  -86% |  -87% |
-| fib    | 52,770/s |  565% |    -- |   -6% |   -8% |  -11% |
-| fib-1  | 56,180/s |  608% |    6% |    -- |   -3% |   -5% |
-| fib-g  | 57,637/s |  627% |    9% |    3% |    -- |   -3% |
-| fib-1g | 59,347/s |  648% |   12% |    6% |    3% |    -- |
+The following are data for computing all values up to "50 steps".
+
+|       |      Rate |  climb |   fib | fib-1 | cache | g-cch | fib-a | look  |
+| ----- |  -------: |  ----: | ----: | ----: | ----: | ----: | ----: | ----: |
+| climb |   7,145/s |     -- |  -86% |  -88% |  -89% |  -89% |  -92% |  -96% |
+| fib   |  52,854/s |   640% |    -- |   -8% |  -16% |  -21% |  -39% |  -72% |
+| fib-1 |  57,208/s |   701% |    8% |    -- |   -9% |  -14% |  -34% |  -70% |
+| cache |  62,657/s |   777% |   19% |   10% |    -- |   -6% |  -28% |  -67% |
+| g-cch |  66,489/s |   831% |   26% |   16% |    6% |    -- |  -23% |  -65% |
+| fib-a |  86,505/s | 1,111% |   64% |   51% |   38% |   30% |    -- |  -54% |
+| look  | 189,394/s | 2,551% |  258% |  231% |  202% |  185% |  119% |    -- |
 
 
+ * Using "Binet's" formula we see we get approx `8x` the speed of
+   the original `climb` function.
+ * Using the approximation to Binet's formulate we see we get a factor
+   of about `12x` speed up.
+ * Using the cache seems to give about a `9x` speed gain - the `global`
+   variable version is better than the `state` version.
+ * Interestingly if you pre-compute the cache then the speed gain is
+   over `25x` to the original and `3x` times the speed of the basic
+   cache function - this is probably due to the overhead of checking
+   to see if the number is already in the cache.
+
+So some food for thought on how to best handle calls within tight loops.
