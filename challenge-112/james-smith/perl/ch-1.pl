@@ -39,8 +39,9 @@ use Benchmark qw(cmpthese);
 ##     * canonical_path_string_fast - As above - but using substr/rindex
 ##
 ##   * "One-liner" perl {arrays}
-##     * canonical_path_compact     - short version of array code
-##     * canonical_path_compact_opt - optimized version of above - 1-less regex
+##     * canonical_path_compact      - short version of array code
+##     * canonical_path_compact_opt  - optimized version of above - 1-less regex
+##     * canonical_path_compact_glob - as opt but with global var
 ##
 ##   * "One-liner" perl {strings}
 ##     * canonical_path_shortest - most compact method
@@ -51,22 +52,23 @@ use Benchmark qw(cmpthese);
 ##
 ## Timings for these:
 ##
-##                    Rate @-sh $-st $-sh @-2l @-cf @-ft $-cd $-fa $-cf $-ft $-gl
-## @-shortest     17,483/s   -- -21% -22% -29% -30% -37% -38% -43% -52% -59% -59%
-## $-shortest     22,026/s  26%   --  -2% -11% -11% -21% -21% -28% -40% -48% -49%
-## $-short        22,472/s  29%   2%   --  -9% -10% -20% -20% -26% -39% -47% -48%
-## @-code-2loop   24,631/s  41%  12%  10%   --  -1% -12% -12% -19% -33% -42% -43%
-## @-code-fastest 24,876/s  42%  13%  11%   1%   -- -11% -11% -18% -32% -42% -42%
-## @-fastest      27,933/s  60%  27%  24%  13%  12%   --  -0%  -8% -24% -35% -35%
-## $-code-fast    28,011/s  60%  27%  25%  14%  13%   0%   --  -8% -24% -34% -35%
-## $-fast         30,488/s  74%  38%  36%  24%  23%   9%   9%   -- -17% -29% -29%
-## $-code-fastest 36,765/s 110%  67%  64%  49%  48%  32%  31%  21%   -- -14% -15%
-## $-fastest      42,735/s 144%  94%  90%  74%  72%  53%  53%  40%  16%   --  -1%
-## $-global-fast  43,103/s 147%  96%  92%  75%  73%  54%  54%  41%  17%   1%   --
-##
+##                 Rate @-sh $-st $-sh @&2l $&fa $-fa @&ft $&ft @-ft @-gl $-ft $-gl
+## @-short     20,877/s   --  -6%  -8% -15% -25% -32% -38% -43% -45% -45% -50% -51%
+## $-shortest  22,124/s   6%   --  -2% -10% -21% -28% -34% -40% -41% -42% -47% -48%
+## $-short     22,573/s   8%   2%   --  -8% -19% -27% -33% -39% -40% -41% -46% -47%
+## @-&-2loop   24,631/s  18%  11%   9%   -- -12% -20% -26% -33% -35% -35% -41% -42%
+## $-&-fast    27,933/s  34%  26%  24%  13%   --  -9% -16% -24% -26% -27% -34% -35%
+## $-fast      30,769/s  47%  39%  36%  25%  10%   --  -8% -17% -18% -19% -27% -28%
+## @-&-fastest 33,445/s  60%  51%  48%  36%  20%   9%   --  -9% -11% -12% -20% -22%
+## $-&-fastest 36,900/s  77%  67%  63%  50%  32%  20%  10%   --  -2%  -3% -12% -14%
+## @-fastest   37,736/s  81%  71%  67%  53%  35%  23%  13%   2%   --  -1% -10% -12%
+## @-global    38,168/s  83%  73%  69%  55%  37%  24%  14%   3%   1%   --  -9% -11%
+## $-fastest   42,017/s 101%  90%  86%  71%  50%  37%  26%  14%  11%  10%   --  -2%
+## $-global    42,735/s 105%  93%  89%  74%  53%  39%  28%  16%  13%  12%   2%   --
+
 ## What we see is:
-##  * that the string code is faster than the array code,
-##    by around 20-40%
+##  * that the optimized string code is faster than the array code,
+##    by around 12-15%
 ##  * using compact "1-liner" code can be approximately 10%
 ##    faster.
 ##  * but using less regex's and replacing them with
@@ -79,7 +81,7 @@ use Benchmark qw(cmpthese);
 ##       and the the four parameter version of `subst`.
 ##     * combining the two seems to double the performance!
 ##  * switching from local to global variables gets a minor
-##    gain (about 1%) again due to memory management.
+##    gain (about 1-2%) again due to memory management.
 ##
 ## Conclusion
 ##
@@ -106,37 +108,38 @@ my @examples = (
 );
 
 ## Code examples..
-is( canonical_path_double(      $_->[0]), $_->[1], $_->[2] ) foreach @examples;
-is( canonical_path_array(       $_->[0]), $_->[1], $_->[2] ) foreach @examples;
-is( canonical_path_string(      $_->[0]), $_->[1], $_->[2] ) foreach @examples;
-is( canonical_path_string_fast( $_->[0]), $_->[1], $_->[2] ) foreach @examples;
-## One liners (array)...
-is( canonical_path_compact(     $_->[0]), $_->[1], $_->[2] ) foreach @examples;
-is( canonical_path_compact_opt( $_->[0]), $_->[1], $_->[2] ) foreach @examples;
-## One liners (string)...
-is( canonical_path_shortest(    $_->[0]), $_->[1], $_->[2] ) foreach @examples;
-is( canonical_path_short(       $_->[0]), $_->[1], $_->[2] ) foreach @examples;
-is( canonical_path_fast(        $_->[0]), $_->[1], $_->[2] ) foreach @examples;
-is( canonical_path_fastest(     $_->[0]), $_->[1], $_->[2] ) foreach @examples;
-is( canonical_path_global(      $_->[0]), $_->[1], $_->[2] ) foreach @examples;
-
+is( canonical_path_double(       $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_array(        $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_string(       $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_string_fast(  $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+### One liners (array)...
+is( canonical_path_compact(      $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_compact_opt(  $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_compact_glob( $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+### One liners (string)...
+is( canonical_path_shortest(     $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_short(        $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_fast(         $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_fastest(      $_->[0]), $_->[1], $_->[2] ) foreach @examples;
+is( canonical_path_global(       $_->[0]), $_->[1], $_->[2] ) foreach @examples;
 done_testing();
 
 cmpthese( 100_000, {
 ## Code
-  '@-2l' => sub { canonical_path_double(      $_->[0] ) foreach @examples },
-  '$-cd' => sub { canonical_path_string(      $_->[0] ) foreach @examples },
-  '@-cf' => sub { canonical_path_array(       $_->[0] ) foreach @examples },
-  '$-cf' => sub { canonical_path_string_fast( $_->[0] ) foreach @examples },
+  '@&2l' => sub { canonical_path_double(       $_->[0] ) foreach @examples },
+  '$&fa' => sub { canonical_path_string(       $_->[0] ) foreach @examples },
+  '@&ft' => sub { canonical_path_array(        $_->[0] ) foreach @examples },
+  '$&ft' => sub { canonical_path_string_fast(  $_->[0] ) foreach @examples },
 ## Array 1-liner
-  '@-ft' => sub { canonical_path_compact_opt( $_->[0] ) foreach @examples },
-  '@-sh' => sub { canonical_path_compact(     $_->[0] ) foreach @examples },
+  '@-sh' => sub { canonical_path_compact(      $_->[0] ) foreach @examples },
+  '@-ft' => sub { canonical_path_compact_opt(  $_->[0] ) foreach @examples },
+  '@-gl' => sub { canonical_path_compact_glob( $_->[0] ) foreach @examples },
 ## String 1-liner
-  '$-sh' => sub { canonical_path_short(       $_->[0] ) foreach @examples },
-  '$-st' => sub { canonical_path_shortest(    $_->[0] ) foreach @examples },
-  '$-fa' => sub { canonical_path_fast(        $_->[0] ) foreach @examples },
-  '$-ft' => sub { canonical_path_fastest(     $_->[0] ) foreach @examples },
-  '$-gl' => sub { canonical_path_global(      $_->[0] ) foreach @examples },
+  '$-st' => sub { canonical_path_shortest(     $_->[0] ) foreach @examples },
+  '$-sh' => sub { canonical_path_short(        $_->[0] ) foreach @examples },
+  '$-fa' => sub { canonical_path_fast(         $_->[0] ) foreach @examples },
+  '$-ft' => sub { canonical_path_fastest(      $_->[0] ) foreach @examples },
+  '$-gl' => sub { canonical_path_global(       $_->[0] ) foreach @examples },
 });
 
 sub canonical_path_double {
@@ -168,58 +171,37 @@ sub canonical_path_double {
 
 sub canonical_path_array {
   my $directory_path = shift;
-  my @directory_names   = grep { $_ ne '' &&   ## Remove "empty" directory names
-                                 $_ ne '.' }   ## Remove directories with name "."
-                          split m{/},          ## Split path into directories
-                          $directory_path;
-
-  my $pointer = 1;                             ## Initialize pointer to 1
-
-  while( $pointer < @directory_names ) {       ## Keep going till the pointer is
-                                               ## after the end of the list...
-
-    if( $directory_names[$pointer] eq '..' ) { ## If we have a ".." name
-                                               ## then this means we have to
-                                               ## remove it from the list,
-                                               ## along with it's parent...
-
-      if( $pointer > 0 ) {                     ## If it is not at the start of
-        splice @directory_names, $pointer - 1, 2;  ## the list - we remove it
-                                               ## and it's parent directory
-
-        $pointer --;                           ## We back-track one-space as
-                                               ## what would have been the next
-                                               ## entry has moved backwards to
-                                               ## spaces..
-      } else {
-        shift @directory_names;                ## If it is at the start of the
-                                               ## list we remove it.
-                                               ## No need to back track as the
-                                               ## next entry is now in this
-                                               ## location
-      }
-    } else {                                   ## Finally if the name isn't ".."
-      $pointer ++;                             ## We just go onto the next path
-                                               ## element
+  my @parts          = split m{/}, $directory_path;
+  my @directory_names;
+  foreach my $part ( @parts ) {
+    next if $part eq '';
+    next if $part eq '.';
+    if($part eq '..' ) {
+      pop @directory_names;
+    } else {
+      push @directory_names,$part;
     }
   }
-
-  return join '/','', @directory_names;        ## The final stage is to return
-                                               ## the path "joined" together
+  return join '/','',@directory_names;
 }
 
 sub canonical_path_compact {
-## Make shorted by using regex and ternarys
-$a=1,@_=grep{!/^\.?$/}split/\//,shift;
-$_[$a]ne'..'?$a++:$a?splice@_,--$a,2:shift while$a<@_;
-join'/','',@_
+  my @d=();
+  /^\.?$/||('..'eq$_?pop@d:push@d,$_)for split/\//,shift;
+  return join'/','',@d;
+}
+
+my @g;
+sub canonical_path_compact_glob {
+  @g=();
+  ''ne$_&&'.'ne$_&&('..'eq$_?pop@g:push@g,$_)for split/\//,shift;
+  return join'/','',@g;
 }
 
 sub canonical_path_compact_opt {
-## Remove the regex in the grep and use ternarys...
-$a=1,@_=grep{''ne$_&&'.'ne$_}split/\//,shift;
-$_[$a]ne'..'?$a++:$a?splice@_,--$a,2:shift while$a<@_;
-join'/','',@_
+  my @d=();
+  ''ne$_&&'.'ne$_&&('..'eq$_?pop@d:push@d,$_)for split/\//,shift;
+  return join'/','',@d;
 }
 
 ## This is the "nice version" of the string based method for
@@ -341,5 +323,6 @@ $s='';
 '.'ne$_&&''ne$_&&('..'ne$_?$s.='/'.$_:substr$s,rindex($s,'/'),~0,'')for split'/',shift;
 $s
 }
+
 
 
