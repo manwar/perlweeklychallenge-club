@@ -103,38 +103,27 @@ sub canonical_path_double {
 }
 ```
 
-### Array - 1-loop with backtracking
+### Array - 1-loop
 
-To avoid the double loop - we can use back-tracking so that when we
-find a "`..`" instead of restarting the loop we just step back one
-entry in the array - we see `$pointer--` after the `splice`
-statement below.
-
- * If `$pointer == 0` then the `..` is at the start of the directory
-   list so we just remove it (we can't go back beyond the root
-   directory).
+We don't need to use a double loop - we can just treat
+the resultant array as a queue either pulling "`..`" or
+pushing (not "` `" or "`.`") onto the queue.
 
 ```perl
 sub canonical_path_array {
   my $directory_path = shift;
-  my @directory_names   = grep { $_ ne '' &&
-                                 $_ ne '.' }
-                          split m{/},
-                          $directory_path;
-  my $pointer = 1;
-  while( $pointer < @directory_names ) {
-    if( $directory_names[$pointer] eq '..' ) {
-      if( $pointer > 0 ) {
-        splice @directory_names, $pointer - 1, 2;
-        $pointer --;
-      } else {
-        shift @directory_names;
-      }
+  my @parts          = split m{/}, $directory_path;
+  my @directory_names;
+  foreach my $part ( @parts ) {
+    next if $part eq '';
+    next if $part eq '.';
+    if($part eq '..' ) {
+      pop @directory_names;
     } else {
-      $pointer ++;
+      push @directory_names, $part;
     }
   }
-  return join '/','', @directory_names;
+  return join '/','',@directory_names;
 }
 ```
 
@@ -142,7 +131,8 @@ sub canonical_path_array {
 
 Rather than store the parts in a list - we use a string to store
 this canonical path - and we either add directories to the end of
-it or remove them if we come across a "`..`".
+it or remove them if we come across a "`..`", in a similar way to
+the `push`/`pop` that we used above.
 
   * We achieve the former - by just concatenating a "`/`" and the
     name to the end of the string.
@@ -241,43 +231,37 @@ the `if else` blocks.
 As well as using ternaries to make the code shorter - we use a few
 other of our "shortening" tricks:
 
- * We use variable `$a` as this is a variable we don't need to `my`.
-
- * We also store the split path name in `@_`, this has two advantages:
-   we don't need to `my` it and secondly - we can just use `shift`
-   without using a variable in the while loop - as `shift` in a
-   function shifts off `@_`
-
  * We use **yoda** comparisons ( `"value" eq $variable` ) rather tha
    the more normal `$variable eq "value"` as it means we can save a
    byte { `$var eq''` vs `''eq$var` } as we don't need the extra space.
 
  * We re-order the if/else so that the we unravel it into an:
-   `if() { } ifelse() {} else {}` format which is better for
-   nested ternaries - even if it may seen to be less readable.
-
- * In the code above we separated the `$pointer - 1` in the `splice`
-   line with the `$pointer--` in the next line to back-track. We can
-   use `--$pointer` to achieve this all within the splice statement.
+   `if() { } elsif() {} else {}` format which is better for
+   nested ternaries - even if it may seenm to be less readable.
 
  * To futher shorten the code in `canonical_path_compact` we
-   replace the `grep` clause with a regular expression which is
+   replace the filtering clause with a regular expression which is
    7-bytes shorter.
 
 ```perl
+
 sub canonical_path_compact_opt {
-## Remove the regex in the grep and use ternarys...
-$a=1,@_=grep{''ne$_&&'.'ne$_}split/\//,shift;
-$_[$a]ne'..'?$a++:$a?splice@_,--$a,2:shift while$a<@_;
-join'/','',@_
+  my @d=();
+  ''ne$_&&'.'ne$_&&('..'eq$_?pop@d:push@d,$_)for split/\//,shift;
+  join'/','',@d;
 }
-```
-```perl
+
+my @g;
+sub canonical_path_compact_glob {
+  @g=();
+  ''ne$_&&'.'ne$_&&('..'eq$_?pop@g:push@g,$_)for split/\//,shift;
+  join'/','',@g;
+}
+
 sub canonical_path_compact {
-## Make shorted by using regex and ternarys
-$a=1,@_=grep{!/^\.?$/}split/\//,shift;
-$_[$a]ne'..'?$a++:$a?splice@_,--$a,2:shift while$a<@_;
-join'/','',@_
+  my @d=();
+  /^\.?$/||('..'eq$_?pop@d:push@d,$_)for split/\//,shift;
+  return join'/','',@d;
 }
 ```
 
@@ -350,8 +334,9 @@ To see what aspects of our code makes it faster or slower
    * `canonical_path_string`      - Use a string as the accumulator and mapping
    * `canonical_path_string_fast` - As above - but using substr/rindex
  * "One-liner" perl {arrays}
-   * `canonical_path_compact`     - short version of array code
-   * `canonical_path_compact_opt` - optimized version of above - 1-less regex
+   * `canonical_path_compact`      - short version of array code
+   * `canonical_path_compact_opt`  - optimized version of above - 1-less regex
+   * `canonical_path_compact_glob` - as above but with global variable
  * "One-liner" perl {strings}
    * `canonical_path_shortest` - most compact method
    * `canonical_path_short`    - compact method
@@ -361,24 +346,26 @@ To see what aspects of our code makes it faster or slower
 
 ### Performance of each method:
 
-|                |     Rate | @-st | $-st | $-sh | @-2l | @-cf | @-ft | $-cd | $-fa | $-cf | $-ft | $-gl |
-| -------------- | -------: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| @-shortest     | 17,483/s |   -- | -21% | -22% | -29% | -30% | -37% | -38% | -43% | -52% | -59% | -59% | 
-| $-shortest     | 22,026/s |  26% |   -- |  -2% | -11% | -11% | -21% | -21% | -28% | -40% | -48% | -49% | 
-| $-short        | 22,472/s |  29% |   2% |   -- |  -9% | -10% | -20% | -20% | -26% | -39% | -47% | -48% | 
-| @-code-2loop   | 24,631/s |  41% |  12% |  10% |   -- |  -1% | -12% | -12% | -19% | -33% | -42% | -43% | 
-| @-code-fastest | 24,876/s |  42% |  13% |  11% |   1% |   -- | -11% | -11% | -18% | -32% | -42% | -42% | 
-| @-fastest      | 27,933/s |  60% |  27% |  24% |  13% |  12% |   -- |  -0% |  -8% | -24% | -35% | -35% | 
-| $-code-fast    | 28,011/s |  60% |  27% |  25% |  14% |  13% |   0% |   -- |  -8% | -24% | -34% | -35% | 
-| $-fast         | 30,488/s |  74% |  38% |  36% |  24% |  23% |   9% |   9% |   -- | -17% | -29% | -29% | 
-| $-code-fastest | 36,765/s | 110% |  67% |  64% |  49% |  48% |  32% |  31% |  21% |   -- | -14% | -15% | 
-| $-fastest      | 42,735/s | 144% |  94% |  90% |  74% |  72% |  53% |  53% |  40% |  16% |   -- |  -1% | 
-| $-global-fast  | 43,103/s | 147% |  96% |  92% |  75% |  73% |  54% |  54% |  41% |  17% |   1% |   -- |
+|              |    Rate  | @-sh | $-st | $-sh | @&2l | $&fa | $-fa | @&ft | $&ft | @-ft | @-gl | $-ft | $-gl |
+| ------------ | -------- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
+| @-short      | 20,877/s |   -- |  -6% |  -8% | -15% | -25% | -32% | -38% | -43% | -45% | -45% | -50% | -51% |
+| $-shortest   | 22,124/s |   6% |   -- |  -2% | -10% | -21% | -28% | -34% | -40% | -41% | -42% | -47% | -48% |
+| $-short      | 22,573/s |   8% |   2% |   -- |  -8% | -19% | -27% | -33% | -39% | -40% | -41% | -46% | -47% |
+| @-&-2-loop   | 24,631/s |  18% |  11% |   9% |   -- | -12% | -20% | -26% | -33% | -35% | -35% | -41% | -42% |
+| $-&-fast     | 27,933/s |  34% |  26% |  24% |  13% |   -- |  -9% | -16% | -24% | -26% | -27% | -34% | -35% |
+| $-fast       | 30,769/s |  47% |  39% |  36% |  25% |  10% |   -- |  -8% | -17% | -18% | -19% | -27% | -28% |
+| @-&-fastest  | 33,445/s |  60% |  51% |  48% |  36% |  20% |   9% |   -- |  -9% | -11% | -12% | -20% | -22% |
+| $-&-fastest  | 36,900/s |  77% |  67% |  63% |  50% |  32% |  20% |  10% |   -- |  -2% |  -3% | -12% | -14% |
+| @-fastest    | 37,736/s |  81% |  71% |  67% |  53% |  35% |  23% |  13% |   2% |   -- |  -1% | -10% | -12% |
+| @-global     | 38,168/s |  83% |  73% |  69% |  55% |  37% |  24% |  14% |   3% |   1% |   -- |  -9% | -11% |
+| $-fastest    | 42,017/s | 101% |  90% |  86% |  71% |  50% |  37% |  26% |  14% |  11% |  10% |   -- |  -2% |
+| $-global     | 42,735/s | 105% |  93% |  89% |  74% |  53% |  39% |  28% |  16% |  13% |  12% |   2% |   -- |
+
 
 ### Summary
 What we see is:
- * that the string code is faster than the array code,
-   by around 20-40%
+ * that the optimized string code is faster than the array code,
+   by around 12-15%
  * using compact "1-liner" code can be approximately 10%
    faster.
  * but using less regex's and replacing them with
@@ -391,7 +378,7 @@ What we see is:
       and the the four parameter version of `substr`.
     * combining the two seems to double the performance!
   * switching from local to global variables gets a minor
-    gain (about 1%) again due to memory management.
+    gain (about 1-2%) again due to memory management.
 
 ## Conclusion
 
@@ -491,7 +478,7 @@ a cache and then run:
 ```perl
 sub climb_lookup {
   return $ans[$_[0]];
-}
+} 
 ```
 
 ## Mathematical formula solution
