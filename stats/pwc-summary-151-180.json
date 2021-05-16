@@ -2,8 +2,15 @@
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             114,
             3,
@@ -35,8 +42,7 @@
             113,
             59,
             54
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -74,7 +80,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             1,
@@ -106,14 +111,21 @@
             0,
             33,
             1
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -149,19 +161,7 @@
          "Saif Ahmed"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-05-16 06:40:36 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "text" : "[Champions: 30] Last updated at 2021-05-16 06:43:32 GMT"
    }
 }
