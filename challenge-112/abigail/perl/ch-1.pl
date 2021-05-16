@@ -19,25 +19,17 @@ use experimental 'lexical_subs';
 
 while (<>) {
     chomp;
+    my @parts = split /\/+/;
+    my @parts2;
 
-    # Remove duplicate slashes
-    s !/\K/+!!g;
+    foreach my $part (@parts) {
+        next if $part eq "." || $part eq "";
+        if ($part eq "..") {
+            pop @parts2;
+            next;
+        }
+        push @parts2 => $part;
+    }
 
-    # Add a trailing slash; this makes it easier to deal
-    # with the cases below.
-    $_ .= "/";
-
-    # Remove single period
-    s !/\.(?=/)!!g;
-
-    # Remove double period
-    1 while s !/[^/]+/\.\.(?=/)!!;
-
-    # Remove any leading /../
-    1 while s !^/\.\./!/!;
-
-    # Remove trailing slashes
-    s !/+$!!;
-
-    say $_ || '/';
+    say "/" . join "/" => @parts2;
 }
