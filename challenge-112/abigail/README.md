@@ -43,6 +43,7 @@ Output: "/a"
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Perl Weekly Challenge 112: Canonical Path](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-112-1.html)
 
 ## [Climb Stairs](https://perlweeklychallenge.org/blog/perl-weekly-challenge-112/#TASK2)
 
@@ -72,3 +73,4 @@ This is just finding the `$n + 1` Fibonacci number.
 * [Scheme](scheme/ch-2.scm)
 
 ### Blog
+[Perl Weekly Challenge 112: Climb Stairs](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-112-2.html)
