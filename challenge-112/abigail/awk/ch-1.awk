@@ -9,7 +9,7 @@
 #
 
 BEGIN {
-    FS="/"   # So we split into directory parts
+    FS = "/"   # So we split into directory parts
 }
 
 {
