@@ -1,44 +1,49 @@
-# Valid Phone Numbers
+# Canonical Path
 ## Java Solution
 
 To compile the code run
 ```java
-javac ValidPhoneNumbers.java
+javac CanonicalPath.java
 ```
 To run
 ```java
-java ValidPhoneNumbers
+java CanonicalPath
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-110/ziameraj16/java$ javac ValidPhoneNumbers.java
-/perlweeklychallenge-club/challenge-110/ziameraj16/java$ java ValidPhoneNumbers
-Enter full file path
-/Users/ziameraj16/a.txt
-0044 1148820341
- +44 1148820341
-(44) 1148820341
+/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
+Enter a string
+/a/
+/a
+/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
+Enter a string
+/a/b//c/
+/a/b/c
+/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
+Enter a string
+/a/b/c/../..
+/a
 ```
 
-# Transpose File
+# Climb Stairs
 ## Java Solution
 
 To compile the code run
 ```java
-javac TransposeFile.java
+javac ClimbStairs.java
 ```
 To run
 ```java
-java TransposeFile
+java ClimbStairs
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-110/ziameraj16/java$ javac TransposeFile.java
-/perlweeklychallenge-club/challenge-110/ziameraj16/java$ java TransposeFile
-Enter full file path
-/Users/ziameraj16/a.txt
-name,Mohammad,Joe,Julie,Cristina
-age,45,20,35,10
-sex,m,m,f,f
+/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java ClimbStairs
+Enter total number of stairs
+3
+3
+/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java ClimbStairs
+Enter total number of stairs
+4
+5
 ```
-

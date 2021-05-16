@@ -1,24 +1,15 @@
 {
-   "subtitle" : {
-      "text" : "Last updated at 2021-05-10 16:41:48 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
    },
    "chart" : {
       "type" : "column"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
       "min" : 0,
@@ -28,35 +19,44 @@
    },
    "series" : [
       {
-         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               1562
+            ],
+            [
+               "Perl",
+               5307
+            ],
+            [
+               "Raku",
+               3368
+            ]
+         ],
          "dataLabels" : {
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "enabled" : "true",
             "style" : {
                "fontFamily" : "Verdana, sans-serif",
                "fontSize" : "13px"
             },
+            "enabled" : "true",
             "align" : "right",
-            "format" : "{point.y:.0f}"
+            "rotation" : -90,
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF"
          },
-         "data" : [
-            [
-               "Blog",
-               1548
-            ],
-            [
-               "Perl",
-               5270
-            ],
-            [
-               "Raku",
-               3351
-            ]
-         ]
+         "name" : "Contributions"
       }
    ],
+   "subtitle" : {
+      "text" : "Last updated at 2021-05-16 21:47:29 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
    "legend" : {
       "enabled" : "false"
    }
