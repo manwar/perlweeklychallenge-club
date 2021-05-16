@@ -45,7 +45,7 @@ sub fib {
 my @fib = (0, 1);
 sub fib_memo {
 	my $n = shift;
-	$calls++;
+	#$calls++;
 	if ($n > $#fib){
 		# oddity of perl, this works!
 		# normally, we would have to store new calculated value in a temporary
@@ -99,9 +99,79 @@ sub climb {
 #print "$test[3]\n";
 #print "$test[10]\n";
 
+# helper function
+#sub push_to_copy{
+#	my $elt, @arr = @_;
+#	
+#}
+
+# Okay so now I have to work on outputing the path like in the sample
+# Based on the counting solution, I know f(n) = f(n-1) + f(n-2)
+# So we just need to take the last step
+# Add a 1 to end of f(n-1) paths
+# Add a 2 to end of f(n-2) paths
+# Going to try to memoize this
+
+# Pushes a value on each array stored within the reference based in
+sub push2each{
+        my ($val, @arefs) = @_;
+        my @arrs;
+        foreach (@arefs){
+		# Make a copy by creating a new array based on the value of the reference
+                my @cp = @{$_};
+                push @cp, $val;
+		# push a reference!
+                push @arrs, \@cp;
+        }
+        return @arrs;
+}
+
+# Contains the paths for climb n-1 stairs
+# Used for memoizing
+my @paths = (
+        [[1]],
+        [[1,1], [2]]
+);
+
+# Memoized climb subroutine
+# NOTE: This takes a ton of memory
+# TODO: Look into alternate ways to represent the sequence of steps
+# 	e.g., store the indices where the number of steps change?
+sub climb_paths{
+        my $n = shift;
+	--$n; #index is offset! n = 1 path stored at index 0
+        if($n > $#paths){
+                my @new_paths = push2each(1, @{climb_paths($n-1)});
+                push @new_paths, push2each(2, @{climb_paths($n-2)});
+                $paths[$n] = \@new_paths;
+        }
+        return $paths[$n];
+}
+
+# Print's all of the arrays stored in a refence passed in
+sub print_paths{
+	my $pref = shift;
+	foreach my $aref (@{$pref}){
+		print "\t[@{$aref}]\n";
+	}
+}
+
+# Calculate and print the paths to climb n stairs
+# Do this up to $n = 5 because the output becomes too long 
+# and the method chews up a lot of memory
 my $count = 0;
-for (1 .. 100){
+for (1 .. 5){
+	my $ref = climb_paths $_;
+	$count = @{$ref};
+	print "n = $_ => $count ways:\n";
+	print_paths $ref;
+}
+
+# Switch to the method that counts the number of ways (without determine
+# the sequence of steps to compute faster and with less memory)
+print "Switching to count only method, omitting the sequences...\n";
+for (6 .. 100){
 	$count = climb $_;
-	print "climb($_) = $count with $calls funcalls\n";
-	$calls = 0;
+	print "n = $_ => $count ways\n" # with $calls funcalls\n";
+	#$calls = 0;
 }

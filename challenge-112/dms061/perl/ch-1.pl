@@ -13,7 +13,7 @@ use warnings;
 # - The path does not end with a trailing '/'.
 #- The path only contains the directories on the path from the root directory to the target file or directory
 
-my $path = "test/dog/cat/../phoenix/../t/"; #"/a/b//c/../..";
+my $path = "/elephant/dog/cat/../phoenix/../mouse/"; #"/a/b//c/../..";
 my @stack = ();
 # Build the canonical path by extracting directory names and storing them on a stack 
 # unless we encounter a .., in which case we pop an element off the stack
@@ -31,5 +31,6 @@ foreach ($path =~ m{/([^/]+)}g){
 		push @stack, "$_";
 	}
 }
+print "Path to parse: $path\n";
 my $canon_path = "/".join "/", @stack;
-print "$canon_path\n";
+print "Canonical path: $canon_path\n";
