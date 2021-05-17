@@ -16,20 +16,28 @@ my $N = @ARGV     ? $ARGV[0] : 30;
 my $I = @ARGV > 1 ? $ARGV[1] : 100_000;
 my $cache;
 my @glob_cache = (1,1);
+my @str_cache  = (1,1);
+#is(climb_cache_str(  $_), $ans[$_] ) foreach 0..1000; done_testing(); exit;
 
+#if(0){
 is(climb(            $_), $ans[$_] ) foreach 0..$N;
+is(climb_str(        $_), $ans[$_] ) foreach 0..$N;
 is(climb_cache(      $_), $ans[$_] ) foreach 0..$N;
 is(climb_cache_glob( $_), $ans[$_] ) foreach 0..$N;
+is(climb_cache_str(  $_), $ans[$_] ) foreach 0..$N;
 is(climb_fib(        $_), $ans[$_] ) foreach 0..$N;
 is(climb_fib_1liner( $_), $ans[$_] ) foreach 0..$N;
 is(climb_fib_approx( $_), $ans[$_] ) foreach 0..$N;
 is(climb_lookup(     $_), $ans[$_] ) foreach 0..$N;
 
 done_testing();
+#}
 
 cmpthese($I,{
   'climb'  => sub { climb(            $_ ) foreach 0..$N; },
+  'clim$'  => sub { climb_str(        $_ ) foreach 0..$N; },
   'cache'  => sub { climb_cache(      $_ ) foreach 0..$N; },
+  'cach$'  => sub { climb_cache_str(  $_ ) foreach 0..$N; },
   'g-cch'  => sub { climb_cache_glob( $_ ) foreach 0..$N; },
   'look'   => sub { climb_lookup(     $_ ) foreach 0..$N; },
   'fib'    => sub { climb_fib(        $_ ) foreach 0..$N; },
@@ -63,10 +71,33 @@ sub climb {
   return $b;
 }
 
+sub climb_str {
+  my($a,$b) = (1,1);
+  ($a,$b) = ($b,str_add($a,$b)) foreach 2..$_[0];
+  return $b;
+}
+
 sub climb_cache {
   state @cache = (1,1);
   $cache[$_]=$cache[$_-1]+$cache[$_-2] foreach @cache .. $_[0];
   return $cache[$_[0]];
+}
+
+sub str_add {
+  my ( $a, $b ) = map { [split m{}, reverse $_] } @_;
+  my $c = '';
+  my $x = 0;
+  while( @{$a} || @{$b} || $x ) {
+    my $t = (shift @{$a}||0) + (shift @{$b}||0) + $x;
+    $c = ($t%10).$c;
+    $x = $t>9?1:0;
+  }
+  return $c;
+}
+
+sub climb_cache_str {
+  $str_cache[$_] = str_add($str_cache[$_-1],$str_cache[$_-2]) foreach @str_cache .. $_[0];
+  return $str_cache[$_[0]];
 }
 
 sub climb_cache_glob {
