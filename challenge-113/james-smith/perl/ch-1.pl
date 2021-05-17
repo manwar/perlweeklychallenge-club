@@ -5,39 +5,17 @@ use strict;
 use warnings;
 use feature qw(say);
 use Test::More;
+use Benchmark qw(cmpthese);
 
-is( represent( 25,  8), 0 );
-is( represent( 25,  7), 0 );
-is( represent( 24,  7), 1 );
-is( represent( 24,  0), 0 );
-is( represent( 10,  0), 1 );
-is( represent( 28,  8), 1 );
-is( represent( 26,  8), 1 );
-is( represent( 16,  8), 0 );
-is( represent( 441, 9), 1 );
-is( represent( 431, 9), 0 );
+my @ex = ( [25,8,0], [25,7,0], [24,7,1], [24,0,0], [10,0,1], [28,8,1], [26,8,1], [16,8,0], [441,9,1], [431,9,0] );
+
+is( represent( $_->[0], $_->[1]), $_->[2] ) foreach @ex;
+
 done_testing();
 
 sub represent {
-  my( $n, $d ) = @_;
-  ## Get the smallest number when multipled by $d
-  ## that would have the same last digit as $m...
-  ## or undef if there is no such digit {happens
-  ## when $d is in 0,2,5 and the last digit is
-  ## not 0, even or 5/0 respectively...
-
-  my ($k) = grep { ($_*$d)%10 == $n%10 } 0..9;
-
-  ## If $k is defined we still need to check to
-  ## see if $n is large enough for $k distinct
-  ## numbers to add up to it..
-  ##
-  ## In this case
-  ##    $n >= $d + 1$d + 2$d .. ($k-1)$d
-  ## or $n >= $d$k + 10 (0 + 1 + 2 + ... $k-1);
-  ## or $n >= $d$k + 10 * $k * ($k-1)/2;
-  ##    $n >= $k ( $d + 5 * $k - 5 );
-
-  return defined $k && $n >= $k*(5*$k-5+$d) ? 1 : 0
+  my($t,$n,$d) = (0,@_);
+  1+($t+=$_*10+$d) && $n>=$t && ($n%10 == $t%10) && return 1 for 0..9;
+  return 0;
 }
 
