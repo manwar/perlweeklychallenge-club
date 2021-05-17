@@ -37,21 +37,9 @@ foreach my $test (@tests) {
 
 done_testing;
 
-for my $d (1 .. 9) {
-  print STDERR "d:$d\n";
-  for my $i (1 .. 100000) {
-    printf "($i,$d)\n" if (x($i,$d) == $i);
-    print STDERR '.' if ($i % 1000 == 0);
-  }
-  print STDERR "\n";
-}
-
 sub isRepresentInteger($$) {
   my ($n,$d) = @_;
 
   return ($n == sum0(grep /$d/, ($d .. $n)) ? 1 : 0);
 }
 
-sub x {
-  return sum0(grep /$_[1]/, ($_[1] .. $_[0]));
-}
