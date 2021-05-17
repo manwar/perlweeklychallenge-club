@@ -10,5 +10,5 @@ is represent-integer(24, 7), 1, 'Example 2';
 
 sub represent-integer(UInt $N, UInt $D)
 {
-    +($N, * - $D ... * <= $D).first(*.index: $D).so;
+    +($N, * - $D ... * <= $D).first(*.contains: $D).so;
 }
