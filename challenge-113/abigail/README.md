@@ -55,6 +55,7 @@ Output: 1
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
+* [Bash](bash/ch-2.sh)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
