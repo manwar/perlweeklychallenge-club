@@ -8,8 +8,7 @@ class Node {
 
     method sum() {
         my $sum = $!value;
-        $sum += $!left.sum if ( $!left );
-        $sum += $!right.sum if ( $!right );
+        $sum += $_.sum if ( $_ ) for ( $!left, $!right );
         return $sum;
     }
 
