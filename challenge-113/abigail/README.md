@@ -18,6 +18,7 @@ Output: 1
 ~~~~
 
 ### Solutions
+* [Perl](perl/ch-1.pl)
 
 ### Blog
 
@@ -52,5 +53,6 @@ Output: 1
 
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
 
 ### Blog
