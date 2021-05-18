@@ -16,7 +16,7 @@ for example, \$ ch-2.pl 2 3 5 x 7
    \\
     7
 FOO
-    unless defined($ARGV[0]) && consistency(@ARGV);
+    unless consistency(@ARGV);
 
 my @tree = map { $_ eq 'x' ? undef : $_ } @ARGV;
 
@@ -36,7 +36,7 @@ print_pretty_tree(@tree);
 
 sub consistency {
     my @t = @_;
-    return 0 if $t[0] !~ /^\d+$/ && $t[0] ne 'x';
+    return 0 if !defined($t[0]) || ($t[0] !~ /^\d+$/ && $t[0] ne 'x');
     for my $ind (1..$#t) { 
         if ($t[$ind] =~ /^\d+$/) {
             if ($t[($ind-1)/2] eq 'x') {
