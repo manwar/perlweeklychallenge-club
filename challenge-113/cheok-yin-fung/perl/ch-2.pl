@@ -84,5 +84,5 @@ sub tree_build {        # use for print_pretty_tree
     my %leaf = ( "v" => $t[$ind] );
     $leaf{"l"} = tree_build(\@t, $ind*2+1) if defined($t[$ind*2+1]);
     $leaf{"r"} = tree_build(\@t, $ind*2+2) if defined($t[$ind*2+2]);
-    return \@t, $ind, \%leaf;
+    return \%leaf;
 }
