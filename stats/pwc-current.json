@@ -1,29 +1,72 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-05-18 09:04:39 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 113",
-         "colorByPoint" : 1,
          "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
             {
                "name" : "James Smith",
                "y" : 2,
                "drilldown" : "James Smith"
             },
             {
-               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
                "y" : 2,
-               "name" : "Mark Anderson"
+               "drilldown" : "Mark Anderson"
             },
             {
-               "drilldown" : "Simon Green",
                "y" : 3,
+               "drilldown" : "Simon Green",
                "name" : "Simon Green"
             }
-         ]
+         ],
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 113"
       }
    ],
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 113"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "drilldown" : {
       "series" : [
+         {
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
          {
             "name" : "James Smith",
             "data" : [
@@ -45,6 +88,7 @@
             "name" : "Mark Anderson"
          },
          {
+            "id" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -55,43 +99,14 @@
                   1
                ]
             ],
-            "id" : "Simon Green",
             "name" : "Simon Green"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-05-18 08:53:23 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "chart" : {
       "type" : "column"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
    "xAxis" : {
       "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 113"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
    }
 }
