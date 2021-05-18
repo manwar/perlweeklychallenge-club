@@ -9,7 +9,7 @@
 #
 
 BEGIN {
-    split ("0 1 2 1 0 2 6 3 8", l)
+    split ("0 1 2 1 0 2 6 3 8", tens)
 }
 
 {
@@ -20,9 +20,9 @@ BEGIN {
         print 1
         next
     }
-    for (i = 1; i <= l [D]; i ++) {
+    for (i = 1; i <= tens [D]; i ++) {
         T = N - 10 * i - D
-        if ((T >= 0) && (T % D == 0)) {
+        if (T >= 0 && T % D == 0) {
             print 1
             next
         }

@@ -72,6 +72,7 @@ use experimental 'lexical_subs';
 
 my @l = ([], [],       [1],      [1 .. 2], [1],
          [], [1 .. 2], [1 .. 6], [1 .. 3], [1 .. 8]);
+my @tens = (0, 0, 1, 2, 1, 0, 2, 6, 3, 8);
 
 MAIN: while (<>) {
     my ($N, $D) = /[0-9]+/g;
@@ -80,8 +81,8 @@ MAIN: while (<>) {
         say  1;
         next MAIN;
     }
-    for my $l (@{$l [$D]}) {
-        my $T = $N - 10 * $l - $D;
+    for (my $i = 1; $i <= $tens [$D]; $i ++) {
+        my $T = $N - 10 * $i - $D;
         if ($T >= 0 && $T % $D == 0) {
             say  1;
             next MAIN;
