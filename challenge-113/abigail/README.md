@@ -20,6 +20,7 @@ Output: 1
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [C](c/ch-1.c)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
@@ -57,6 +58,7 @@ Output: 1
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [C](c/ch-1.c)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
