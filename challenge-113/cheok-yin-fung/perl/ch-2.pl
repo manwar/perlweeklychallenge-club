@@ -43,8 +43,8 @@ sub consistency {
                 return 0;
             }
         } 
-        else {
-            return 0 if $t[$ind] ne 'x';
+        elsif ($t[$ind] ne 'x') {
+            return 0;
         }
     }
     return 1;
@@ -62,8 +62,6 @@ sub print_tree {
     }
     print "\n";
 }
-
-
 
 
 sub print_pretty_tree {
