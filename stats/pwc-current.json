@@ -1,22 +1,55 @@
 {
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "drilldown" : {
       "series" : [
          {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
             "name" : "Ben Davies",
-            "id" : "Ben Davies"
+            "id" : "Ben Davies",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
          },
          {
-            "name" : "Dave Jacoby",
             "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "James Smith",
+            "id" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
                   2
                ]
             ]
@@ -28,28 +61,22 @@
                   2
                ]
             ],
-            "name" : "James Smith",
-            "id" : "James Smith"
-         },
-         {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
             "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke",
+            "id" : "Niels van Dijke"
+         },
+         {
             "data" : [
                [
                   "Perl",
                   2
+               ],
+               [
+                  "Raku",
+                  2
                ]
-            ]
+            ],
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          },
          {
             "data" : [
@@ -67,76 +94,68 @@
          }
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 113",
-         "data" : [
-            {
-               "drilldown" : "Ben Davies",
-               "name" : "Ben Davies",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Dave Jacoby",
-               "y" : 2,
-               "name" : "Dave Jacoby"
-            },
-            {
-               "drilldown" : "James Smith",
-               "y" : 2,
-               "name" : "James Smith"
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 2,
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "name" : "Niels van Dijke",
-               "y" : 2,
-               "drilldown" : "Niels van Dijke"
-            },
-            {
-               "y" : 3,
-               "name" : "Simon Green",
-               "drilldown" : "Simon Green"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
    "xAxis" : {
       "type" : "category"
    },
    "legend" : {
       "enabled" : 0
    },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 113",
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Ben Davies",
+               "name" : "Ben Davies"
+            },
+            {
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
+               "y" : 2
+            },
+            {
+               "drilldown" : "James Smith",
+               "name" : "James Smith",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
+               "name" : "Simon Green",
+               "drilldown" : "Simon Green",
+               "y" : 3
+            }
+         ]
+      }
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2021-05-18 09:34:07 GMT"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge - 113"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2021-05-18 09:28:36 GMT"
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
