@@ -212,10 +212,9 @@ The code itself is quite simple to look at...
 ```perl
 sub walk {
   my( $self, $fn, $global, $local, $dir ) = @_;
-  my ($v,$l,$r) = @{$self};
   $local = $fn->( $self, $global, $local, $dir||'' );
-  $self->left->walk(  $fn, $global, $local, 'left'  ) if defined $self->has_left;
-  $self->right->walk( $fn, $global, $local, 'right' ) if defined $self->has_right;
+  $self->left->walk(  $fn, $global, $local, 'left'  ) if $self->has_left;
+  $self->right->walk( $fn, $global, $local, 'right' ) if $self->has_right;
   return;
 }
 ```
