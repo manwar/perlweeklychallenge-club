@@ -67,7 +67,9 @@ solutions...
 ```perl
 sub represent {
   my( $t, $n, $d ) = ( 0, @_ );
-  return 1 if $n >= 10 * ( $d || 10 );
+  ## Type 2 solutions...
+  return 1 if $n >= 10 *A ( $d || 10 );
+  ## Type 1 solutions...
   $n >= ( $t += $_ * 10 + $d ) &&
     ( $n % 10 == $t % 10 ) && return 1 for 0..3;
   0;
@@ -80,11 +82,13 @@ variable and the `for` loop by "unrolling" the loop as below...
 ```perl
 sub represent_unrolled {
   my( $n, $d ) = @_;
-  $n >= 10 * ( $d || 10 )                      ||
-  $n >= $d                && $n%10 == $d       ||
-  $n >= 2*$d+10           && !( ($n-2*$d)%10 ) ||
-  $n >= 3*$d+30           && !( ($n-3*$d)%10 ) ||
-  $n >= 4*$d+60           && !( ($n-4*$d)%10 ) ? 1 : 0;
+  ## Type 2 solutions...
+  $n >= 10 * ( $d || 10 )            ||
+  ## Type 1 solutions...
+  $n >=   $d    && $n%10 == $d       ||
+  $n >= 2*$d+10 && !( ($n-2*$d)%10 ) ||
+  $n >= 3*$d+30 && !( ($n-3*$d)%10 ) ||
+  $n >= 4*$d+60 && !( ($n-4*$d)%10 ) ? 1 : 0;
 }
 ```
 
