@@ -21,6 +21,37 @@ sub new {
   bless $self, $class;
 }
 
+sub value {
+  my $self = shift;
+  return $self->[0];
+}
+
+sub left {
+  my $self = shift;
+  return $self->[1];
+}
+
+sub right {
+  my $self = shift;
+  return $self->[2];
+}
+
+sub has_left {
+  my $self = shift;
+  return defined $self->[1];
+}
+
+sub has_right {
+  my $self = shift;
+  return defined $self->[2];
+}
+
+sub update {
+  my( $self, $val ) = @_;
+  $self->[0] = $val;
+  return $self;
+}
+
 sub add_child_left {
   my( $self,$child ) = @_;
   $self->[1] = $child;
@@ -35,10 +66,9 @@ sub add_child_right {
 
 sub walk {
   my( $self, $fn, $global, $local, $dir ) = @_;
-  my ($v,$l,$r) = @{$self};
   $local = $fn->( $self, $global, $local, $dir||'' );
-  $l->walk( $fn, $global, $local, 'left' ) if defined $l;
-  $r->walk( $fn, $global, $local, 'right' ) if defined $r;
+  $self->left->walk(  $fn, $global, $local, 'left'  ) if $self->has_left;
+  $self->right->walk( $fn, $global, $local, 'right' ) if $self->has_right;
   return;
 }
 
@@ -48,7 +78,7 @@ sub flatten {
   my $arrayref = [];
   $self->walk( sub {
     my($node,$global) = @_;
-    push @{$global}, $dump_fn->( $node->[0] );
+    push @{$global}, $dump_fn->( $node->value );
   }, $arrayref );
   return @{$arrayref};
 }
@@ -58,7 +88,7 @@ sub dump {
   $dump_fn ||= sub { $_[0] };
   $self->walk( sub {
     my( $node, $global, $local, $dir ) = @_;
-    say join '', $local||'', $dir eq 'left' ? '<' : $dir eq 'right' ? '>' : ' ', ' ', $dump_fn->($node->[0]);
+    say join '', $local||'', $dir eq 'left' ? '<' : $dir eq 'right' ? '>' : ' ', ' ', $dump_fn->($node->value);
     return $local .= '  ';
   }, {}, '', '' );
   return;
@@ -70,11 +100,11 @@ sub clone {
   my $clone = {};
   $self->walk( sub { my( $node, $global, $local, $dir ) = @_;
     if(exists $global->{'tree'} ) {
-      my $child = BinaryTree->new( $clone_fn->( $node->[0] ) );
+      my $child = BinaryTree->new( $clone_fn->( $node->value ) );
       $dir eq 'left' ? $local->add_child_left( $child ) : $local->add_child_right( $child );
       return $child;
     }
-    $global->{'tree'} = BinaryTree->new( $clone_fn->( $node->[0] ) );
+    $global->{'tree'} = BinaryTree->new( $clone_fn->( $node->value ) );
     return $global->{'tree'};
   }, $clone );
   return $clone->{'tree'};

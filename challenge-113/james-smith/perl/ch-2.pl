@@ -59,6 +59,11 @@ is( "@{[ $x->flatten ]}", '1 2 4 7 3 5 6' );
 is( "@{[ $y->flatten ]}", '27 26 24 21 25 23 22' );
 say '';
 
+## I've also implemented a true binary tree - the difference
+## is that we explicitly have a left and right node.
+## The "add_child" has been split into add_child_left &
+## add_child_right.
+
 $x = BinaryTree->new(1)
                ->add_child_left(
        BinaryTree->new(2)
@@ -90,20 +95,20 @@ added into the class implemented by walk
 ';
 
 say 'Dump $x';
-$x->dump( sub { "[$_[0]]"; } );
+$x->dump;
 say '';
 say 'Clone $x as $y';
 $y = $x->clone;
 say 'Dump $y (clone of $x)';
-$y->dump( sub { "[$_[0]]"; } );
+$y->dump;
 say '';
 say 'Now get total value and adjust each node... for $y';
 my $glob = { 'total' => 0 };
-$y->walk( sub { my( $node, $global ) = @_; $global->{'total'} += $node->[0];             }, $glob );
-$y->walk( sub { my( $node, $global ) = @_; $node->[0] = $global->{'total'} - $node->[0]; }, $glob );
+$y->walk( sub { my( $node, $global ) = @_; $global->{'total'} += $node->value;                 }, $glob );
+$y->walk( sub { my( $node, $global ) = @_; $node->update( $global->{'total'} - $node->value ); }, $glob );
 say '';
 say 'Dump $y (clone of $x)';
-$y->dump( sub { "[$_[0]]"; } );
+$y->dump;
 say '';
 
 say 'Running tests';
