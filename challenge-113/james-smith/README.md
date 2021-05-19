@@ -12,7 +12,7 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-113/james-smith/perl
 
-# Challenge 1 - epresent Integer
+# Challenge 1 - Represent Integer
 
 **You are given a positive integer `$N` and a digit `$D`. Write a script to
 check if $N can be represented as a sum of positive integers having `$D` at
