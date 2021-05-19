@@ -38,5 +38,6 @@ unit sub MAIN() {
         R => BIT(3,
           L => BIT(5),
           R => BIT(6)));
-    say $bit.map: $bit.sum - *;
+    my Int:D $sum = $bit.sum;
+    say $bit.map: $sum - *;
 }
