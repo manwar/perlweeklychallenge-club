@@ -36,6 +36,8 @@ $x->walk( sub { my( $node, $global, $local ) = @_;
   $global->{'tree'} = Tree->new( $node->[0] );
   return $global->{'tree'};
 }, $clone  );
+say;
+say 'Original tree code';
 
 my $y = $clone->{'tree'};
 say '';
@@ -57,13 +59,18 @@ is( "@{[ $x->flatten ]}", '1 2 4 7 3 5 6' );
 is( "@{[ $y->flatten ]}", '27 26 24 21 25 23 22' );
 say '';
 
-$x = BinaryTree->new(1)->add_child_left(
-          BinaryTree->new(2)->add_child_left(
-            BinaryTree->new(4)->add_child_right( BinaryTree->new(7) )
-          )
-        )->add_child_right(
-          BinaryTree->new(3)->add_child_left( BinaryTree->new(5))->add_child_right( BinaryTree->new(6) )
-        );
+$x = BinaryTree->new(1)
+               ->add_child_left(
+       BinaryTree->new(2)
+                 ->add_child_left(
+         BinaryTree->new(4)
+                   ->add_child_right( BinaryTree->new(7) )
+       )
+     )->add_child_right(
+       BinaryTree->new(3)
+                 ->add_child_left(  BinaryTree->new(5) )
+                 ->add_child_right( BinaryTree->new(6) )
+     );
 
 
 ## Generate clone of $x, and compute the total of all the nodes...
@@ -76,8 +83,12 @@ $x = BinaryTree->new(1)->add_child_left(
 
 $y;
 
+say '
+Now using the binary specific code - with clone/dump/flatten methods
+added into the class implemented by walk
 
-say '';
+';
+
 say 'Dump $x';
 $x->dump( sub { "[$_[0]]"; } );
 say '';
