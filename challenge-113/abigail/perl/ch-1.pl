@@ -70,8 +70,6 @@ use experimental 'lexical_subs';
 #
 # These are all the ls < $D so that $D does not divide 10 * l.
 
-my @l = ([], [],       [1],      [1 .. 2], [1],
-         [], [1 .. 2], [1 .. 6], [1 .. 3], [1 .. 8]);
 my @tens = (0, 0, 1, 2, 1, 0, 2, 6, 3, 8);
 
 MAIN: while (<>) {

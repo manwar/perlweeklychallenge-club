@@ -14,7 +14,7 @@ use experimental 'lexical_subs';
 #
 
 #
-# Run as: perl ch-1.pl < input-file
+# Run as: perl ch-2.pl < input-file
 #
 
 #
@@ -34,6 +34,6 @@ use experimental 'lexical_subs';
 use List::Util qw [sum];
 
 while (<>) {
-    my $sum = sum my @num = /[0-9]+/g;
+    my $sum = sum my @num = /-?[0-9]+/g;
     say join " " => map {$sum - $_} @num;
 }
