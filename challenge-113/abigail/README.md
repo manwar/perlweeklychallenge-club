@@ -25,6 +25,7 @@ Output: 1
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
+* [Ruby](ruby/ch-1.rb)
 
 ### Blog
 
@@ -66,5 +67,6 @@ Output: 1
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
+* [Ruby](ruby/ch-2.rb)
 
 ### Blog
