@@ -13,8 +13,8 @@ role BTree[::T] {
         self.new: |args
     }
 
-    multi method sum(::?ROLE:U: --> 0)     { }
-    multi method sum(::?ROLE:D: --> Int:D) { $!value + $!left.sum + $!right.sum }
+    multi method sum(::?ROLE:U: --> 0)         { }
+    multi method sum(::?ROLE:D: --> Numeric:D) { $!value + $!left.sum + $!right.sum }
 
     multi method map(::?ROLE:U: &f --> ::?ROLE:U) { self }
     multi method map(::?ROLE:D: &f --> ::?ROLE:D) { self.new: f($!value), L => $!left.map(&f), R => $!right.map(&f) }
@@ -38,5 +38,6 @@ unit sub MAIN() {
         R => BIT(3,
           L => BIT(5),
           R => BIT(6)));
-    say $bit.map: $bit.sum - *;
+    my Int:D $sum = $bit.sum;
+    say $bit.map: $sum - *;
 }
