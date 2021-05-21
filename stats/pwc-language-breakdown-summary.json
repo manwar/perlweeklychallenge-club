@@ -1,25 +1,15 @@
 {
+   "subtitle" : {
+      "text" : "Last updated at 2021-05-21 21:53:35 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2021-05-19 13:30:58 GMT"
-   },
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "enabled" : "true",
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "rotation" : -90
-         },
          "data" : [
             [
                "Blog",
@@ -27,35 +17,45 @@
             ],
             [
                "Perl",
-               5334
+               5336
             ],
             [
                "Raku",
                3382
             ]
-         ]
+         ],
+         "name" : "Contributions",
+         "dataLabels" : {
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "rotation" : -90,
+            "y" : 10,
+            "enabled" : "true",
+            "format" : "{point.y:.0f}"
+         }
       }
    ],
-   "legend" : {
-      "enabled" : "false"
-   },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
-      },
-      "type" : "category"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
       "title" : {
          "text" : null
       },
       "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
