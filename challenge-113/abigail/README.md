@@ -28,6 +28,8 @@ Output: 1
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
+[Perl Weekly Challenge 113: Represent
+Integer](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-113-1.html)
 
 ## [Recreate Binary Tree](https://perlweeklychallenge.org/blog/perl-weekly-challenge-113/#TASK2)
 
