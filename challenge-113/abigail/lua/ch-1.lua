@@ -8,29 +8,35 @@
 -- Run as: lua ch-1.lua < input-file
 --
 
-local tens = {0, 1, 2, 1, 0, 2, 6, 3, 8}
+--     
+-- For a description of the algorithm, and the proof why this is correct:
+-- https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-113-1.html
+--  
+
+local gcds = {1, 2, 1, 2, 5, 2, 1, 2, 1}
 
 for  line in io . lines () do
      local _, _, N, D = line : find ("([0-9]+)%s+([0-9])")
      N = tonumber (N)
      D = tonumber (D)
-     local D10 = 10 * D
      if   D == 0
-     then D10 = 100
+     then if   N >= 100 or N % 10 == 0
+          then print (1)
+          else print (0)
+          end
+          goto end_loop
      end
-     if   (N >= D10) or (D == 0 and N % 10 == 0)
-                     or (D >  0 and N % D  == 0)
+
+     if   N >= D * 10
      then print (1)
           goto end_loop
      end
  
-     if   D > 0
-     then for  i = 1, tens [D]
-          do   local T = N - 10 * i - D
-               if  T >= 0 and T % D == 0
-               then print (1)
-                    goto end_loop
-               end
+     for  i = 0, D / gcds [D] - 1
+     do   local T = N - 10 * i - D
+          if   T >= 0 and T % D == 0
+          then print (1)
+               goto end_loop
           end
      end
 

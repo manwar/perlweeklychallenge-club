@@ -11,23 +11,31 @@
  * Run as: cc -o ch-1.o ch-1.c; ./ch-1.o < input-file
  */
 
+/*     
+ * For a description of the algorithm, and the proof why this is correct:
+ * https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-113-1.html
+ */ 
+
 typedef long long number;
 typedef short     digit;
 
-unsigned short tens [] = {0, 0, 1, 2, 1, 0, 2, 6, 3, 8};
+unsigned short gcds [] = {0, 1, 2, 1, 2, 5, 2, 1, 2, 1};
 
 int main (void) {
     number N;
     digit  D;
 
     while (scanf ("%lld %hd", &N, &D) == 2) {
-        digit D10 = D == 0 ? 100 : 10 * D;
-        if (N >= D10 || (N % (D ? D : 10) == 0)) {
+        if (D == 0) {
+            printf ("%d\n", N >= 100 || N % 10 == 0 ? 1 : 0);
+            continue;
+        }
+        if (N >= D * 10) {
             printf ("1\n");
             continue;
         }
         bool valid = false;
-        for (unsigned short i = 1; i <= tens [D]; i ++) {
+        for (unsigned short i = 0; i < D / gcds [D]; i ++) {
             number T = N - 10 * i - D;
             if (T >= 0 && T % D == 0) {
                 printf ("1\n");

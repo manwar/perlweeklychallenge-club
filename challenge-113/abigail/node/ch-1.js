@@ -8,18 +8,26 @@
 // Run as: node ch-1.js < input-file
 //
 
-let tens = [0, 0, 1, 2, 1, 0, 2, 6, 3, 8];
+//     
+// For a description of the algorithm, and the proof why this is correct:
+// https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-113-1.html
+//  
+
+let gcds = [0, 1, 2, 1, 2, 5, 2, 1, 2, 1];
 
 require ('readline')
 . createInterface ({input: process . stdin})   
 . on ('line', _ => {
     let [N, D] = _ . split (/\s+/) . map (_ => +_)
-    let D10 = D == 0 ? 100 : 10 * D
-    if (N >= D10 || (N % (D == 0 ? 10 : D) == 0)) {
+    if (D == 0) {
+        console . log (N >= 100 || N % 10 == 0 ? 1 : 0)
+        return
+    }
+    if (N >= D * 10) {
         console . log (1)
         return
     }
-    for (let i = 1; i <= tens [D]; i ++) {
+    for (let i = 0; i < D / gcds [D]; i ++) {
         let T = N - 10 * i - D
         if (T >= 0 && T % D == 0) {
             console . log (1)

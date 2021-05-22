@@ -8,20 +8,29 @@
 # Run as: python ch-1.py < input-file
 #
 
+#     
+# For a description of the algorithm, and the proof why this is correct:
+# https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-113-1.html
+#  
+
 import fileinput
 
-tens = [0, 0, 1, 2, 1, 0, 2, 6, 3, 8]
+gcds = [0, 1, 2, 1, 2, 5, 2, 1, 2, 1]
 
 for line in fileinput . input ():
     (N, D) = line . split ();
     N = int (N)
     D = int (D)
-    D10 = 100 if D == 0 else 10 * D
-    if N >= D10 or (D == 0 and N % 10 == 0) or (D > 0 and N % D == 0):
+    if D == 0:
+        print (1 if N >= 100 or N % 10 == 0 else 0)
+        continue
+
+    if N >= D * 10:
         print (1)
         continue
+
     done = False
-    for i in range (1, tens [D] + 1):
+    for i in range (0, D // gcds [D]):
         T = N - 10 * i - D
         if T >= 0 and T % D == 0:
             print (1)
