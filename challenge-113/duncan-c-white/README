@@ -1,63 +1,52 @@
-Task 1: "Canonical Path
+Task 1: "Represent Integer
 
-You are given a string path, starting with a slash '/'.
+You are given a positive integer $N and a digit $D.
 
-Write a script to convert the given absolute path to the simplified canonical path.
-
-In a Unix-style file system:
-
-- A period '.' refers to the current directory
-- A double period '..' refers to the directory up a level
-- Multiple consecutive slashes ('//') are treated as a single slash '/'
-
-The canonical path format:
-
-- The path starts with a single slash '/'.
-- Any two directories are separated by a single slash '/'.
-- The path does not end with a trailing '/'.
-- The path only contains the directories on the path from the root
-  directory to the target file or directory
+Write a script to check if $N can be represented as a sum of positive
+integers having $D at least once. If check passes print 1 otherwise 0.
 
 Example
 
-Input: "/a/"
-Output: "/a"
+Input: $N = 25, $D = 7
+Output: 0 as there are 2 numbers between 1 and 25 having the digit 7
+i.e. 7 and 17. If we add up both we don't get 25.
 
-Input: "/a/b//c/"
-Output: "/a/b/c"
-
-Input: "/a/b/c/../.."
-Output: "/a"
+Input: $N = 24, $D = 7
+Output: 1
 "
 
-My notes: ok, I like this.  Pretty straightforward, but a nice practical problem.
+My notes: sounds very simple.  sum ( grep contains 7 )
 
 
-Task 2: "Climb Stairs
+Task 2: "Recreate Binary Tree
 
-You are given $n steps to climb
+You are given a Binary Tree.
 
-Write a script to find out the distinct ways to climb to the top. You
-are allowed to climb either 1 or 2 steps at a time.
+Write a script to replace each node of the tree with the sum of all the remaining nodes.
 
 Example
+Input Binary Tree
 
-Input: $n = 3
-Output: 3
+        1
+       / \
+      2   3
+     /   / \
+    4   5   6
+     \
+      7
 
-    Option 1: 1 step + 1 step + 1 step
-    Option 2: 1 step + 2 steps
-    Option 3: 2 steps + 1 step
+Output Binary Tree
 
-Input: $n = 4
-Output: 5
-
-    Option 1: 1 step + 1 step + 1 step + 1 step
-    Option 2: 1 step + 1 step + 2 steps
-    Option 3: 2 steps + 1 step + 1 step
-    Option 4: 1 step + 2 steps + 1 step
-    Option 5: 2 steps + 2 steps
+        27
+       /  \
+      26  25
+     /   /  \
+    24  23  22
+     \
+     21
 "
 
-My notes: looks pretty straightforward, although may not generate the options
-in the same order.
+My notes: so each node's value becomes sum(allnodes) - that node's value
+Very tempting to view this as an ascii art -> ascii art problem, last time
+we did a similar tree question, I spent a lot of time building the tree
+structure, and getting nice layout from print_tree..
