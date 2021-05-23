@@ -1,35 +1,20 @@
 # Solutions by Abigail
-## [Canonical Path](https://perlweeklychallenge.org/blog/perl-weekly-challenge-112/#TASK1)
+## [Represent Integer](https://perlweeklychallenge.org/blog/perl-weekly-challenge-113/#TASK1)
 
-> You are given a string path, starting with a slash `/`.
+> You are given a positive integer `$N` and a digit `$D`.
 >
-> Write a script to convert the given absolute path to the simplified
-> canonical path.
->
-> In a Unix-style file system:
->
-> * A period `.` refers to the current directory.
-> * A double period `..` refers to the directory up a level.
-> * Multiple consecutive slashes (`//`) are treated as a single slash `/`.
->
-> The canonical path format:
->
-> * The path starts with a single slash `/`.
-> * Any two directories are separated by a single slash `/`.
-> * The path does not end with a trailing `/`.
-> * The path only contains the directories on the path from the root
->   directory to the target file or directory
+> Write a script to check if `$N` can be represented as a sum
+> of positive integers having `$D` at least once. If check passes
+> print `1` otherwise `0`.
 
 ### Example
 ~~~~
-Input: "/a/"
-Output: "/a"
+Input: $N = 25, $D = 7
+Output: 0 as there are 2 numbers between 1 and 25 having the digit 7
+        i.e. 7 and 17. If we add up both we don't get 25.
 
-Input: "/a/b//c/"
-Output: "/a/b/c"
-
-Input: "/a/b/c/../.."
-Output: "/a"
+Input: $N = 24, $D = 7
+Output: 1
 ~~~~
 
 ### Solutions
@@ -43,34 +28,47 @@ Output: "/a"
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[Perl Weekly Challenge 112: Canonical Path](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-112-1.html)
+[Perl Weekly Challenge 113: Represent
+Integer](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-113-1.html)
 
-## [Climb Stairs](https://perlweeklychallenge.org/blog/perl-weekly-challenge-112/#TASK2)
+## [Recreate Binary Tree](https://perlweeklychallenge.org/blog/perl-weekly-challenge-113/#TASK2)
 
-> You are given `$n` steps to climb
->
-> Write a script to find out the distinct ways to climb to the top.
-> You are allowed to climb either 1 or 2 steps at a time.
+> You are given a Binary Tree.
+> 
+> Write a script to replace each node of the tree with the sum of
+> all the remaining nodes
 
-### Notes
-This is just finding the `$n + 1` Fibonacci number.
+### Example
+#### Input
+~~~~
+        1
+       / \
+      2   3
+     /   / \
+    4   5   6
+     \
+      7
+~~~~
+#### Output
+~~~~
+        27
+       /  \
+      26  25
+     /   /  \
+    24  23  22
+     \
+     21
+~~~~
 
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
-* [Befunge-93](befunge-93/ch-2.bf93)
 * [C](c/ch-2.c)
-* [Go](go/ch-2.go)
-* [Java](java/ch-2.java)
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
-* [Pascal](pascal/ch-2.p)
 * [Python](python/ch-2.py)
-* [R](r/ch-2.r)
 * [Ruby](ruby/ch-2.rb)
-* [Scheme](scheme/ch-2.scm)
 
 ### Blog
-[Perl Weekly Challenge 112: Climb Stairs](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-112-2.html)
