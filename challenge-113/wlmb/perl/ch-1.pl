@@ -11,23 +11,22 @@ use POSIX qw(floor);
 
 my ($N, $D)=@ARGV; #get arguments from command line.
     die "Usage: ./ch-1.pl positive-integer digit"
-    unless defined $N and defined $D and $N>=0 and $D=~m/^\d$/ and $N==floor $N;
-my $next=subsets(grep {m/$D/} (1..$N));
-while(my @subset=$next->()){
-    say("Inputs: N=$N D=$D: Output: 1 as $N=", join "+", @subset), exit
-	if sum0(@subset)==$N;
-}
-say "Inputs: N=$N D=$D: Output: 0";
+    unless defined $N and defined $D and $N>=0
+           and $D=~m/^\d$/ and $N==floor $N;
+my @set=reverse grep {m/$D/} (1..$N); # ordered set from large to small.
+my @answer=find($N,@set);
+say("Inputs: N=$N D=$D: Output: ",
+    @answer? "1 as $N=". join("+", @answer):"0");
 
-sub subsets {
-    my @set=@_;
-    my $subset_counter=2**@set; # Total number of subsets
-    my $done=0;
-    sub {
-	return () if $done;
-	--$subset_counter;
-	$done=1, return () unless $subset_counter;
-	my @subset=grep {defined $_} map {$subset_counter&(1<<$_)?$set[$_]:undef} 0..@set-1;
-	return @subset;
+
+sub find {
+    my ($goal, @set)=@_;
+    die "Shouldn't happen" if $goal==0;
+    while(defined (my $current=shift @set)){
+	next if $current > $goal;
+	return ($current) if $current==$goal;
+	my @answer=find($goal-$current, @set);
+	return ($current,@answer) if @answer;
     }
+    return ();
 }
