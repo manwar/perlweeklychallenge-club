@@ -72,3 +72,5 @@ Integer](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-113-1.html)
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
+[Perl Weekly Challenge 113: Recreate Binary
+Tree](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-113-2.html)
