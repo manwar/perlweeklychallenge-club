@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # Perl weekly challenge 113
-# Task 1: Represent integer.
+# Task 1: Represent integer. Slow, exhaustive
 #
 # See https://wlmb.github.io/2021/05/22/PWC113/#task-1-represent-integer
 use strict;
