@@ -2,8 +2,12 @@
    "chart" : {
       "type" : "column"
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
    "xAxis" : {
       "categories" : [
+         "Finley",
          "Flavio Poletti",
          "Francis Whittle",
          "Fred Zinn",
@@ -32,17 +36,12 @@
          "Jim Bacon",
          "Jitu Keshwani",
          "Jo Christian Oterhals",
-         "Joan Mimosinnet",
-         "Joe Tym"
+         "Joan Mimosinnet"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-05-23 21:45:52 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "yAxis" : {
       "min" : 0,
@@ -50,16 +49,14 @@
          "text" : ""
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-05-23 23:15:47 GMT"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
+            0,
             74,
             0,
             2,
@@ -88,13 +85,13 @@
             1,
             2,
             6,
-            0,
-            1
-         ],
-         "name" : "Perl"
+            0
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
+            4,
             2,
             39,
             0,
@@ -123,14 +120,12 @@
             0,
             0,
             17,
-            44,
-            0
-         ],
-         "name" : "Raku"
+            44
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
+            0,
             73,
             9,
             0,
@@ -159,9 +154,14 @@
             0,
             0,
             7,
-            2,
-            0
-         ]
+            2
+         ],
+         "name" : "Blog"
       }
-   ]
+   ],
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   }
 }
