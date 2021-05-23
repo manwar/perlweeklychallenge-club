@@ -69,16 +69,16 @@ sub print_tree {
 	preorder {print "Val: $_\n"; $_;} $node;
 }
 
-my $test = new 10;
-$test->{"left"} = new 20;
-$test->{"right"} = new 30;
+my $test = new 1, new (2, new (4, , new(7))), new (3, new (5), new (6));
+#$test->{"left"} = new 2;
+#$test->{"right"} = new 3;
 
-print "Original:\n";
+print "(Preorder) Original:\n";
 print_tree $test;
 my $sum = 0;
 preorder {$sum += $_; $_;} $test;
 preorder {$sum - $_} $test;
-print "Modified:\n";
+print "(Preorder) Modified:\n";
 print_tree $test;
 
 #preorder &print, $test;

@@ -10,26 +10,13 @@ You are given a positive integer $N and a digit $D.
 Write a script to check if $N can be represented as a sum of positive integers 
 having $D at least once. If check passes print 1 otherwise 0.
 
-=head1 Question about question
-Can the numbers repeat? E.g., if $D is 1, is 1 + 1 + ... + 1 = $N a valid answer?
-It will make the problem more difficult, but I think yes...
-
-=head1 Method
-
-1) Create a list of (positive) integers with $D digit present that are < $N
-2) Generate the power set of those digits
-3) Sum the sets
-4) Print all sets when the sum = $N
+NOTE: I am allowing a number to occur more than once in the summation
 
 =head1 Optimizations
 
 TODO
 
-=head1 links
-
-https://origin.geeksforgeeks.org/check-if-n-can-be-represented-as-sum-of-positive-integers-containing-digit-d-at-least-once/
-
-=cut
+=head1 Old Code (not used in solution)
 
 sub push2each{
 	my ($val, @arr) = @_;
@@ -62,34 +49,71 @@ sub power_set{
 #my @pa = power_set (@a);
 #print_nested @pa;
 
-=pod
+=head1 brute force
 
 brute function is ugly but effective. It generates summations using the values provided
 until $sum = $n or $sum > $n 
-
 
 =cut
 
 sub brute {
 	my ($sum, $n, @vals) = @_;
-	print "In func, sum: $sum\n";
 	# Base cases:
 	return 1 if $sum == $n;
 	return 0 if $sum > $n;
+	# Try to add a number and see what happens
 	for (@vals){
 		return 1 if brute ($sum + $_, $n, @vals);
 	}
 	return 0;
 }
 
-# Get $n and $d. TODO add param checks on ARGV
-my ($n, $d) = @ARGV;
-print "$d\n";
-# collect all numbers with $d in them
-my @nums = grep /\d*$d\d*/, 1..($n-1);
-# print "All numbers with digit $d that are < $n:\n@nums\n";
-my $repr = brute 0, $n, @nums;
-print "Output: $repr\n";
-#my @pset = power_set (@nums);
-#print_nested @pset;
+=pod
 
+=head1 Optimization attempt...
+
+doesn't work for all cases... :<
+specifically n = 28, d = 3
+
+sub check {
+	my ($n, @nums) = @_;
+	my $rem = 0;
+	for my $i (0 .. $#nums){
+		# check if $n is a multiple of $num[$i]
+		$rem = $n % $nums[$i];
+		return 1 unless $rem;
+		# check if a some multiple of other @nums could be added to make $n
+		for (reverse(0 .. $i - 1)){
+			$rem %= $nums[$_];
+			return 1 unless $rem;
+		}
+	}
+	return 0;
+}
+
+=cut
+
+# Get $n and $d. TODO add param checks on ARGV
+if (@ARGV == 2){
+	# run a specific input supplied in ARGV
+	my ($n, $d) = @ARGV;
+	# collect all numbers with $d in them
+	my @nums = grep /\d*$d\d*/, 1..($n-1);
+	print "Numbers: @nums\n";
+	# print "All numbers with digit $d that are < $n:\n@nums\n";
+	my $repr = brute 0, $n, @nums;
+	#my $repr2 = check $n, @nums;
+	print "Output: $repr\n";
+}else{
+	# not enough input args (or too many), go into test mode
+	for my $n (10 .. 25){
+		for my $d (1 .. 9){
+			my @nums = grep /\d*$d\d*/, 1..($n-1);
+			my $b = brute 0, $n, @nums;
+			print "Input: n = $n, d = $d --> Output: $b\n";
+			#my $c = check $n, @nums;
+			#print "$b ?= $c";
+			#print "($b != $c) Failed n = $n, d = $d\n" unless $b == $c;
+		}
+	}
+}
