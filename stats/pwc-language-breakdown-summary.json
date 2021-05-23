@@ -2,8 +2,8 @@
    "chart" : {
       "type" : "column"
    },
-   "legend" : {
-      "enabled" : "false"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
       "title" : {
@@ -11,20 +11,36 @@
       },
       "min" : 0
    },
+   "subtitle" : {
+      "text" : "Last updated at 2021-05-23 15:38:58 GMT"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
    "series" : [
       {
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               1575
+               1576
             ],
             [
                "Perl",
-               5336
+               5338
             ],
             [
                "Raku",
-               3386
+               3388
             ]
          ],
          "dataLabels" : {
@@ -33,31 +49,15 @@
                "fontFamily" : "Verdana, sans-serif",
                "fontSize" : "13px"
             },
+            "align" : "right",
             "y" : 10,
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
             "color" : "#FFFFFF",
-            "align" : "right"
-         },
-         "name" : "Contributions"
+            "format" : "{point.y:.0f}",
+            "rotation" : -90
+         }
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-05-23 15:30:45 GMT"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   "legend" : {
+      "enabled" : "false"
    }
 }
