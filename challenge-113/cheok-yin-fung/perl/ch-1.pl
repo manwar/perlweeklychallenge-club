@@ -34,21 +34,11 @@ sub representable {
     return 0 if $D == 2 || $D == 5;
 
     if ($D == 4 && $N > 10) {
-        if ($N % 2 == 0) {
-            return 1;
-        } 
-        else {
-            return 0;
-        }
+        return $N % 2 == 0 ? 1 : 0;
     }
 
     if ($D == 8 && $N >= 40) {
-        if ($N % 2 == 0) {
-            return 1;
-        }
-        else {
-            return 0;
-        }
+        return $N % 2 == 0 ? 1 : 0;
     }
 
     if ($D == 6) {
