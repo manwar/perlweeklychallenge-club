@@ -1,2 +1,2 @@
-113-1-represent_integer_haskell: 113-1-represent_integer_haskell.hs
-	ghc -fdiagnostics-color=always -Wall -O2 113-1-represent_integer_haskell.hs 
+ch-1: ch-1.hs
+	ghc -fdiagnostics-color=always -Wall -O2 ch-1.hs 
