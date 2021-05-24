@@ -45,5 +45,6 @@ Binary representation of `$N` is `1100`. There are two `1` bits. So the next
 higher integer is `17` having the same number of `1` bits i.e. `10001`.
 
 ### Solutions
+* [Perl](perl/ch-2.pl)
 
 ### Blog
