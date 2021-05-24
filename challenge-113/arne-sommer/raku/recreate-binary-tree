@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Str $tree = '1 | 2 3 | 4 * 5 6 | * 7', :v($verbose));
+
+my $sum = $tree.words.grep( * ~~ /\d/ ).sum;
+
+say ": Sum: $sum" if $verbose;
+
+my @elems;
+
+for $tree.words -> $elem
+{
+  $elem ~~ /\d/
+   ?? @elems.push: $sum - $elem
+   !! @elems.push: $elem;
+}
+
+say @elems.join(" ");
