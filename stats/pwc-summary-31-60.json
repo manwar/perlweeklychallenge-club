@@ -1,9 +1,23 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-05-24 13:08:13 GMT"
+      "text" : "[Champions: 30] Last updated at 2021-05-24 14:39:09 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             31,
             0,
@@ -35,10 +49,10 @@
             2,
             8,
             22
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             8,
             6,
@@ -70,8 +84,7 @@
             0,
             0,
             89
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -109,15 +122,13 @@
          "name" : "Blog"
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -152,16 +163,5 @@
          "Fabrizio Poggi",
          "Feng Chang"
       ]
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
    }
 }

@@ -1,55 +1,20 @@
 {
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 114",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
-            },
-            {
-               "name" : "Luca Ferrari",
-               "y" : 4,
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "y" : 1,
-               "name" : "Mark Anderson"
-            },
-            {
-               "y" : 3,
-               "drilldown" : "Simon Green",
-               "name" : "Simon Green"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            }
-         ]
-      }
-   ],
    "legend" : {
       "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Dave Cross",
+            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Dave Cross",
-            "id" : "Dave Cross"
+            ]
          },
          {
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -59,13 +24,15 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
          },
          {
             "data" : [
                [
                   "Raku",
-                  1
+                  2
                ]
             ],
             "id" : "Mark Anderson",
@@ -86,34 +53,64 @@
             "name" : "Simon Green"
          },
          {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            ]
          }
       ]
    },
    "chart" : {
       "type" : "column"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 114"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2021-05-24 13:08:13 GMT"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "xAxis" : {
       "type" : "category"
    },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 114"
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "Dave Cross",
+               "y" : 2,
+               "drilldown" : "Dave Cross"
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
+               "y" : 4
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Simon Green",
+               "name" : "Simon Green",
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 114",
+         "colorByPoint" : 1
+      }
+   ],
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
@@ -123,9 +120,12 @@
          }
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2021-05-24 14:39:09 GMT"
    }
 }
