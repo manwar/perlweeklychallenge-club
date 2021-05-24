@@ -1,60 +1,59 @@
 {
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "Perl Weekly Challenge - 114",
          "data" : [
             {
-               "drilldown" : "Dave Cross",
                "y" : 2,
+               "drilldown" : "Dave Cross",
                "name" : "Dave Cross"
             },
             {
+               "name" : "Luca Ferrari",
                "y" : 4,
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari"
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "name" : "Simon Green",
+               "y" : 3,
+               "drilldown" : "Simon Green"
             },
             {
                "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
                "y" : 2
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
    ],
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-05-24 09:58:22 GMT"
+   "xAxis" : {
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 114"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-05-24 10:22:07 GMT"
    },
    "drilldown" : {
       "series" : [
@@ -70,7 +69,6 @@
          },
          {
             "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -80,7 +78,22 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Luca Ferrari"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Simon Green",
+            "name" : "Simon Green"
          },
          {
             "data" : [
@@ -89,9 +102,15 @@
                   2
                ]
             ],
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          }
       ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 114"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
