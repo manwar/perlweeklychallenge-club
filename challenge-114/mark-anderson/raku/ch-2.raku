@@ -1,6 +1,6 @@
 #!/usr/bin/env raku
 
-# my translation of http://www.slideshare.net/gkumar007/bits-next-presentation
+# my translation of www.slideshare.net/gkumar007/bits-next-presentation
 # (slide 9)
 
 use Test;
