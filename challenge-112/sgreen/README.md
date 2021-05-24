@@ -1,3 +1,3 @@
-# The Weekly Challenge 111
+# The Weekly Challenge 112
 
-Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-111-291m)
+Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-112-27l0)
