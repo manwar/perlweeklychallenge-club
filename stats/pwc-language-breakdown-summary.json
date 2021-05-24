@@ -1,15 +1,6 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "legend" : {
       "enabled" : "false"
@@ -17,18 +8,6 @@
    "series" : [
       {
          "name" : "Contributions",
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "align" : "right",
-            "y" : 10,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "rotation" : -90
-         },
          "data" : [
             [
                "Blog",
@@ -36,13 +15,25 @@
             ],
             [
                "Perl",
-               5355
+               5357
             ],
             [
                "Raku",
                3396
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "enabled" : "true",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right",
+            "color" : "#FFFFFF"
+         }
       }
    ],
    "yAxis" : {
@@ -51,13 +42,22 @@
       },
       "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "subtitle" : {
-      "text" : "Last updated at 2021-05-24 05:50:05 GMT"
+      "text" : "Last updated at 2021-05-24 08:49:47 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    }
 }
