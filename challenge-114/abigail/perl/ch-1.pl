@@ -57,22 +57,9 @@ while (<>) {
     my $part2 = substr $_,    int length ($_) / 2,  length ($_) % 2;
     my $part3 = substr $_,    int length ($_) / 2 + length ($_) % 2;
 
-    if (reverse ($part1) > $part3) {
-        say $part1, $part2, scalar reverse ($part1);
+    if (reverse ($part1) <= $part3) {
+        $part1 = "$part1$part2" + 1;
+        $part2 = chop $part1 if length $part2;
     }
-    else {
-        if (length $part2) {
-            if ($part2 == 9) {
-                $part1 ++;
-                $part2 = 0;
-            }
-            else {
-                $part2 ++;
-            }
-        }
-        else {
-            $part1 ++;
-        }
-        say $part1, $part2, scalar reverse ($part1);
-    }
+    say $part1, $part2, scalar reverse ($part1);
 }
