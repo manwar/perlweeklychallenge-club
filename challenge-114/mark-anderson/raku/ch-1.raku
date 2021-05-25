@@ -31,13 +31,11 @@ multi next-palindrome-number($N)
 
 sub partition($N)
 {    
-    my @N = $N.comb;
-    my $mid = @N.elems div 2;
-    my @left = @N[^$mid];
+    my @left   = $N.comb;
     my $middle = q{};
-    my @right = @N[$mid..*];
+    my @right  = @left.splice(+@left div 2);
 
-    unless @left.end == @right.end
+    if @left < @right
     {
         $middle = @right.shift;
     }
