@@ -1,49 +1,24 @@
-# Canonical Path
+# Next Palindrome Number
 ## Java Solution
 
 To compile the code run
 ```java
-javac CanonicalPath.java
+javac NextPalindromeNumber.java
 ```
 To run
 ```java
-java CanonicalPath
+java NextPalindromeNumber
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
-Enter a string
-/a/
-/a
-/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
-Enter a string
-/a/b//c/
-/a/b/c
-/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java CanonicalPath
-Enter a string
-/a/b/c/../..
-/a
-```
-
-# Climb Stairs
-## Java Solution
-
-To compile the code run
-```java
-javac ClimbStairs.java
-```
-To run
-```java
-java ClimbStairs
-```
-### Example
-```bash
-/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java ClimbStairs
-Enter total number of stairs
-3
-3
-/perlweeklychallenge-club/challenge-112/ziameraj16/java$ java ClimbStairs
-Enter total number of stairs
-4
-5
+/perlweeklychallenge-club/challenge-114/ziameraj16/java$ javac NextPalindromeNumber.java
+/perlweeklychallenge-club/challenge-114/ziameraj16/java$ java NextPalindromeNumber
+Enter the number
+1234
+1331
+/perlweeklychallenge-club/challenge-114/ziameraj16/java$ java NextPalindromeNumber
+Enter the number
+999
+1001
+/perlweeklychallenge-club/challenge-114/ziameraj16/java$
 ```
