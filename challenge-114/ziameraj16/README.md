@@ -20,5 +20,28 @@ Enter the number
 Enter the number
 999
 1001
-/perlweeklychallenge-club/challenge-114/ziameraj16/java$
+```
+
+# Higher Integer Sets Bits
+## Java Solution
+
+To compile the code run
+```java
+javac HigherIntegerSetBits.java
+```
+To run
+```java
+java HigherIntegerSetBits
+```
+### Example
+```bash
+/perlweeklychallenge-club/challenge-114/ziameraj16/java$ javac HigherIntegerSetBits.java
+/perlweeklychallenge-club/challenge-114/ziameraj16/java$ java HigherIntegerSetBits
+Enter the number
+3
+5
+/perlweeklychallenge-club/challenge-114/ziameraj16/java$ java HigherIntegerSetBits
+Enter the number
+12
+17
 ```
