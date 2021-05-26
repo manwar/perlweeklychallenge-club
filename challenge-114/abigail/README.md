@@ -48,6 +48,7 @@ higher integer is `17` having the same number of `1` bits i.e. `10001`.
 
 ### Solutions
 * [GNU AWK](awk/ch-2.gawk)
+* [Bash](bash/ch-2.sh)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
