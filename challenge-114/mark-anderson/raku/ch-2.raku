@@ -19,12 +19,10 @@ is next-set-bits(2³²), 2³³;
 sub next-set-bits($N)
 {
     my $bits = 0 ~ $N.base(2);
-
-    my $m = $bits ~~ / $<head> = <[01]>* 0 $<ones> = 1+ $<zeros> = 0* /;
+    my $m    = $bits ~~ / $<head> = <[01]>* 01 $<ones> = 1* $<zeros> = 0* /;
    
-    my @ones  = $m<ones>.comb andthen .shift;
-    my @bits  = @ones andthen .append($m<zeros>.comb);
-       @bits .= rotate(@ones);    
+    my @ones = $m<ones>.comb;
+    my @bits = (@ones, $m<zeros>.comb).flat.Array.rotate(@ones);
 
-    $m<head> ~ 10 ~ @bits.join andthen .parse-base(2);
+    ($m<head> ~ 10 ~ @bits.join).parse-base(2);
 }
