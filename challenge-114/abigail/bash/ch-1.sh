@@ -27,6 +27,11 @@ do    if   [[ $number =~ ^9+$ ]]
            continue
       fi
 
+      if   ((${#number} == 1))
+      then echo $((number + 1))
+           continue
+      fi
+
       #
       # Split input in parts. Length of part1 and part3 are equal.
       # part2 is the middle character if the input number has odd

@@ -22,6 +22,11 @@ function reverse (word, out, i) {
     next
 }
 
+length ($1) == 1 {
+    print $1 + 1
+    next
+}
+
 {
     part1 = substr ($1, 1,  int (length ($1) / 2))
     part2 = substr ($1, 1 + int (length ($1) / 2),  length ($1) % 2)

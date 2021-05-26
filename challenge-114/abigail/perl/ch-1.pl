@@ -49,6 +49,11 @@ while (<>) {
         next;
     }
 
+    if (length ($_) == 1) {
+        say $_ + 1;
+        next;
+    }
+
     #
     # Split the number into parts 2 equal parts, with a middle part
     # of at most one digit.
