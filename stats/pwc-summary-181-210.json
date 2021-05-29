@@ -1,10 +1,8 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -43,6 +41,7 @@
          ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -74,10 +73,10 @@
             0,
             2,
             132
-         ],
-         "name" : "Raku"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             1,
             4,
@@ -109,12 +108,17 @@
             0,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-05-29 19:41:03 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "xAxis" : {
       "categories" : [
@@ -150,18 +154,14 @@
          "Ulrich Rieke"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-05-29 19:44:32 GMT"
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
