@@ -1,4 +1,4 @@
-# Perl Weekly Challenge #113
+# Perl Weekly Challenge #114
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,311 +10,177 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-113/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-114/james-smith/perl
 
-# Challenge 1 - Represent Integer
+# Challenge 1 - Next highest palindrome
 
-**You are given a positive integer `$N` and a digit `$D`. Write a script to
-check if $N can be represented as a sum of positive integers having `$D` at
-least once. If check passes print `1` otherwise `0`.**
+***You are given a positive integer `$N`. Write a script to find out
+the next Palindrome Number higher than the given integer `$N`.***
 
-**Assumption** although not clear in the question, we make the
-assumption that the numbers in the sum are all unique.
+## The solution - naive
 
-## Solution...
-
-There are two classes of solution to this problem:
-
- 1. Solutions where `$D` only appears in the right hand column.
- 1. Solutions where `$D` appears in more than one column.
-
-### Type 2 solutions...
-If `$D` is 0. Then we can find solutions for all numbers `>=100`. For
-the numbers `100` -> `109` the number itself surfices. For numbers
-`>=110` we can always find a solution of the form (or similar):
-
-```
-   x x x x 0 x
-+          x 0
-```
-
-If `$D` in not 0. Then we can find similar solutions for all numbers
-`>= 10*$D`. Again for `10*$D` -> `10*$D + 9` the number itself surfices.
-For numbers `>=11*$D` we have similar solutions to above where we can
-write the nubmer as:
-
-```
-   x x x x D x
-+          x D
-```
-
-So we check for that first, then we can look at the type (1) solutions
-
-### Type 1 solutions...
-
-We need a sequence of numbers `$D`, `10+$D`, `20+$D`, `30+$D` *etc*
-that is less than or equal to `$N` and has the same last digit as `$N`.
-Now we note `$D + 10+$D + 20+$D + 30+$D + 40+$D` is `100 + 5$D` and so
-we know this is possible to represent for all values of `$D` so we
-can ignore this case.
-
-## Perl code
-
-The first pass at this uses a for loop to generate the values of the
-numbers in the sum. After first checking the criteria for type 2
-solutions...
+We will see this again for the next challenge we just increment `$N`
+until we find another palindrome.
 
 ```perl
-sub represent {
-  my( $t, $n, $d ) = ( 0, @_ );
-  ## Type 2 solutions...
-  return 1 if $n >= 10 *A ( $d || 10 );
-  ## Type 1 solutions...
-  $n >= ( $t += $_ * 10 + $d ) &&
-    ( $n % 10 == $t % 10 ) && return 1 for 0..3;
-  0;
+sub next_palindrome_naive {
+  my ($n) = @_;
+  1 until ++$n eq reverse $n;
+  return $n
 }
 ```
 
-We can further improve performance by removing the need for the `$t`
-variable and the `for` loop by "unrolling" the loop as below...
+## The solution - optimized
+
+First we note that it is easier to compute the palindrome greater than
+equal to itself {so we just incremement the passed parameter}.
+
+We should then be able to do away with the loop entirely as the
+palindromic number will either have the same first half as itself OR
+will have this value incrememented by 1 as the first half.... No loop
+requried..
+
+### The cases..
+
+There are two cases we need to consider:
+
+ * There are an even number of digits
+ * There are an odd number of digits..
+
+The first case is slightly easiers as we just check to see if the
+palindrome created by reversing the first digits and putting them
+at the end is greater than or equal to the number, and if not
+increment and try again.
+
+The second case is slightly more interesting as we have the middle
+digit to consider. In the 2nd half above we can increment the middle
+digit if (less than 9) OR incremennt the first digits..
 
 ```perl
-sub represent_unrolled {
-  my( $n, $d ) = @_;
-  ## Type 2 solutions...
-  $n >= 10 * ( $d || 10 )            ||
-  ## Type 1 solutions...
-  $n >=   $d    && $n%10 == $d       ||
-  $n >= 2*$d+10 && !( ($n-2*$d)%10 ) ||
-  $n >= 3*$d+30 && !( ($n-3*$d)%10 ) ||
-  $n >= 4*$d+60 && !( ($n-4*$d)%10 ) ? 1 : 0;
+sub next_palindrome {
+  my $p  = 1 + shift;
+  my $x = substr $p, 0, (length $p)>>1;
+  if( 1 & length $p ) {
+    my $y = substr $p, (length$p)>>1, 1;
+    return $x.$y.reverse $x      if $p <= $x.$y.reverse $x;
+    return $x.($y+1).reverse $x  if $y<9;
+    $x++;
+    return $x.'0'.reverse $x;
+  } else {
+    $x++ if $p > $x.reverse $x;
+    return $x.reverse $x;
+  }
 }
 ```
 
-This appears to be 50% faster than the loop solution...
+## Notes and Summary
 
-# Challenge 2 - Recreate Binary Tree
+You will note I've used the "Yoda" form of some of the expressions
+inequalities. It is much easier for instance to realise that:
+`1 & length $p` is "and"ing `1` with the length of `$p` rather than
+"and"ing `1` with `$p` and then taking the length (which will be 1) if
+you were to write `length $p & 1`...
 
-**You are given a Binary Tree. Write a script to replace each
-node of the tree with the sum of all the remaining nodes.**
+There were some cases where I thought assigning the result of
+`reverse$x` and `length$p` would speed things up - but it seemed to
+slow things down by 10% or so - So I'm assuming there is some neat
+code in the interpreter/compiler does this cacheing for you.
 
-We already have an embryonic `Tree` object from the Linked list/tree
-challenge in week 94.
+For small numbers of `$N` there is little difference in the performance
+15% - but as soon as numbers are up to 3/4 digits then the optimised
+version is 6 times faster, for 5/6 digits 80 times faster, for 7/8
+approximately 1000 times faster...
 
-So we will extend this (and to write a true `BinaryTree`) representation.
+# Challenge 2 - Higher Integer Set Bits
 
-## Walk the tree
+***You are given a positive integer `$N`. Write a script to find
+the next higher integer having the same number of 1 bits in binary
+representation as `$N`.***
 
-For each of the problems cloning, summing, updating a tree we need to
-walk the tree. The solution I propose here will define a "walking"
-function on the tree, which has it's parameters:
 
-  * a function to handle each node
-  * a "global" storage object
-  * a "local" storage object
-  * whether the node is a left child / right child.
+## The solution - naive
 
-## Perl `BinaryTree` object.
-
-Our binary tree is represented by an array of length 3. The value of
-the node {which can be any object} and the left and right children.
-
-We then have two methods - `add_left_child` and `add_right_child` to
-add them to the tree.
-
-We also have accessors:
-
- * `left` - left child
- * `right` - right child
- * `value` - value of node
-
-We have to functions to check for existance of a child:
-
- * `has_left` - left child
- * `has_right` - right child
-
-and finally a method to update a node `update`
+There is a simple solution we can try - and that is to take the number,
+count the number of 1-bits, and then just increment repeatedly until we
+get a number with the same amount of 1-bits.
 
 ```perl
-package BinaryTree;
-
-sub new {
-  my $class = shift;
-  my $value = shift;
-  my $self = [ $value, undef, undef ];
-  bless $self, $class;
+sub next_bin {
+  my $n = shift;
+  my $c = (sprintf '%b', $n) =~ tr/1/1/;
+  while(++$n) {
+    return $n if $c == ( (sprintf '%b', $n) =~ tr/1/1/ );
+  }
 }
-
-sub update {
-  my( $self, $val ) = @_;
-  $self->[0] = $val;
-  return $self;
-}
-
-sub value {
-  my $self = shift;
-  return $self->[0];
-}
-
-sub add_child_left {
-  my( $self,$child ) = @_;
-  $self->[1] = $child;
-  return $self;
-}
-
-sub add_child_right {
-  my( $self,$child ) = @_;
-  $self->[2] = $child;
-  return $self;
-}
-
-sub left {
-  my $self = shift;
-  return $self->[1];
-}
-
-sub right {
-  my $self = shift;
-  return $self->[2];
-}
-
-sub has_left {
-  my $self = shift;
-  return defined $self->[1];
-}
-
-sub has_right {
-  my $self = shift;
-  return defined $self->[2];
-}
-
 ```
 
-## Walking the tree...
+ * We convert the number to binary using sprintf with the format `'%b'`;
+ * We count the number of "1"s in the string using `tr`. `tr/1/1/` leaves the string unchanged but returns the number of "1"s that were replaced.
 
-Our tree walking function takes up to 4 parameters:
+## The solution - optimized
 
- 1. `$fn` a callback function which does whatever is needed,
-    e.g. collect summary statistics, update the node etc;
- 1. `$global` a reference to a variable which is used as
-    "global" storage for the walk
- 1. `$local` a variable which is used as "local" storage for the walk,
-    it is updated as the value from `$fn` before being passed to the
-    children,
- 1. `$dir` the direction of the walk whether it be "left" or "right"
+We can easily find a solution to this problem.
 
-`$self`, `$global`, `$local` and `$dir` are all passed to the callback
-function....
+If the number contains a pair of digits "01" then we can find a number
+that is larger but has the same number of digits by swapping the "01" to "10".
+(Note we can force the binary representation to always have a "01" by prefixing
+the binary representation with "0")
 
-The code itself is quite simple to look at...
+So e.g. `174 = 1010 1110` - you can replace either of the `01`s to give either:
+
+ * `1100 1110 = 206`
+ * `1011 0110 = 182`
+
+We note that to minimize the number we start by replacing the last `01` by `10`
+
+So we have: `182 = 1011 0110 > 174 = 1010 1100`
+
+The digits after the last `01` will be of the form `1...10..0`, so we can again
+reduce the value by flipping this string around to be `0...01...1`;
+
+So now we have: `179 = 1011 0011 > 174 = 1010 110`
+
+The code then becomes either:
 
 ```perl
-sub walk {
-  my( $self, $fn, $global, $local, $dir ) = @_;
-  $local = $fn->( $self, $global, $local, $dir||'' );
-  $self->left->walk(  $fn, $global, $local, 'left'  ) if $self->has_left;
-  $self->right->walk( $fn, $global, $local, 'right' ) if $self->has_right;
-  return;
+sub next_bin_rex {
+  return oct '0b'.sprintf('0%b',shift) =~ s{01(1*)(0*)$}{10$2$1}r;
+}
+```
+or
+
+```perl
+sub next_bin_rrev {
+  my $t = rindex my $s = sprintf('0%b',shift),'01';
+  return oct '0b'.substr($s,0,$t).'10'.reverse substr $s,$t+2;
 }
 ```
 
-## Cloning - with walk 
+depending on whether or not you use a regular expression to find
+the last "`01`" in the binary representaiton.
 
-```perl
-sub clone {
-  my( $self, $clone_fn ) = @_;
-  $clone_fn ||= sub { $_[0] };
-  my $clone = {};
-  $self->walk( sub { my( $node, $global, $local, $dir ) = @_;
-    if(exists $global->{'tree'} ) {
-      my $child = BinaryTree->new( $clone_fn->( $node->value ) );
-      $dir eq 'left' ? $local->add_child_left( $child ) : $local->add_child_right( $child );
-      return $child;
-    }
-    $global->{'tree'} = BinaryTree->new( $clone_fn->( $node->value ) );
-    return $global->{'tree'};
-  }, $clone );
-  return $clone->{'tree'};
-}
-```
-We can use this `walk` method to clone our tree.
-Global is a hashref with one entry - 'tree' which will contain our
-cloned tree.
+## Summary
 
-The first time through the loop it initialises the tree and adds the
-root node to the tree and returns itself. `$local` is then this node.
+Both the performance of `next_bin_regex` and `next_bin_rrev` appear
+to slow down only slightly as `$N` increases - comparabale with 
+"linear" scans for the last "`01`". Whereas the `next_bin` naive
+method has no such property.
 
-For subsequent calls the tree exists and so a new BinaryTree objects is
-produced and attached to it's parent (which is held in `$local`) either
-as a left or right child.
+Running this a large number of times - we have the following
+approximate rates for the calculations....
 
-`clone` can take an additional `callback` which is applied to each
-node when being copied - which defaults to just a straight copy.
+| Size of number | Rate rrev  | Rate regex | Rate naive |
+| -------------- | ---------: | ---------: | ---------: |
+| 1-500          |  1,600,000 |    500,000 |    600,000 |
+| Approx 1000    |  1,550,000 |    440,000 |    400,000 |
+| Approx 1x10^6  |  1,500,000 |    390,000 |      4,000 |
+| Approx 1x10^9  |  1,450,000 |    330,000 |          1 |
 
-There are two more "walk methods" in the object, which dump the data:
-either as a single line of values (flatten) or as "ASCII-art" to show
-the nodes and their relationships.
+The calls do include the hardest example `2^n-1` for which the next
+number is `2^(n-1)` more - so much of the time in the naive loop is
+taken up by that example - in the 1x10^9 example this would require
+500_000_000 iterations of the increment/check loop.
 
-```perl
-sub flatten {
-  my( $self,$dump_fn ) = @_;
-  $dump_fn ||= sub { $_[0] };
-  my $arrayref = [];
-  $self->walk( sub {
-    my($node,$global) = @_;
-    push @{$global}, $dump_fn->( $node->value );
-  }, $arrayref );
-  return @{$arrayref};
-}
-
-sub dump {
-  my( $self, $dump_fn ) = @_;
-  $dump_fn ||= sub { $_[0] };
-  $self->walk( sub {
-    my( $node, $global, $local, $dir ) = @_;
-    say join '',
-        $local||'',
-        $dir eq 'left' ? '<' : $dir eq 'right' ? '>' : ' ',
-        ' ', $dump_fn->($node->value);
-    return $local .= '  ';
-  }, {}, '', '' );
-  return;
-}
-```
-
-Like clone they take a simple call back if you want to include a
-function of the object's values rather than the value itself....
-*a callback* within *a callback*.... You could even say its
-***Turtles all the way down***...
-
-## The solution
-
-### Walking the tree to get the sum
-
-We create a "*global*` variable which contains the total, walk through
-all nodes and add the node value to this total.... We can then
-retrieve the value by inspecting `$glob`..
-
-```perl
-my $glob = { 'total' => 0 };
-$y->walk( sub {
-  my( $node, $global ) = @_;
-  $global->{'total'} += $node->value;
-}, $glob );
-```
-
-### Walking the tree to update the nodes...
-
-We pass the variable $glob back in, and use the total there
-to update the value. For the value to be the sum of all the
-other nodes, we can get this by adding all the nodes together
-than subtracting away the node value....
-
-So the 2nd half becomes.
-```perl
-$y->walk( sub {
-  my( $node, $global ) = @_;
-  $node->update( $global->{'total'} - $node->value );
-}, $glob );
-```
+We see as we did a few weeks ago that if you don't actually need to
+use regexs then you can get an appreciable speed boost. Obviously
+remembering there is trade off between coding and running time.
