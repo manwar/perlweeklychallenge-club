@@ -1,52 +1,42 @@
-Task 1: "Represent Integer
+Task 1: "Next Palindrome Number
 
-You are given a positive integer $N and a digit $D.
+You are given a positive integer $N.
 
-Write a script to check if $N can be represented as a sum of positive
-integers having $D at least once. If check passes print 1 otherwise 0.
+Write a script to find out the next Palindrome Number higher than the given integer $N.
+
+Example
+
+  Input: $N = 1234
+  Output: 1331
+
+  Input: $N = 999
+  Output: 1001
+"
+
+My notes: sounds very simple.  Generate and test for palindromic-ness.
+
+
+Task 2: "Higher Integer Set Bits
+
+You are given a positive integer $N.
+
+Write a script to find the next higher integer having the same number
+of 1 bits in binary representation as $N.
 
 Example
 
-Input: $N = 25, $D = 7
-Output: 0 as there are 2 numbers between 1 and 25 having the digit 7
-i.e. 7 and 17. If we add up both we don't get 25.
+Input: $N = 3
+Output: 5
 
-Input: $N = 24, $D = 7
-Output: 1
+Binary representation of 3 is 011. There are two 1 bits. So the next
+higher integer is 5 having the same the number of 1 bits i.e. 101.
+
+Input: $N = 12
+Output: 17
+
+Binary representation of 12 is 1100. There are two 1 bits. So the next
+higher integer is 17 having the same number of 1 bits i.e. 10001.
 "
 
-My notes: sounds very simple.  sum ( grep contains 7 )
-
-
-Task 2: "Recreate Binary Tree
-
-You are given a Binary Tree.
-
-Write a script to replace each node of the tree with the sum of all the remaining nodes.
-
-Example
-Input Binary Tree
-
-        1
-       / \
-      2   3
-     /   / \
-    4   5   6
-     \
-      7
-
-Output Binary Tree
-
-        27
-       /  \
-      26  25
-     /   /  \
-    24  23  22
-     \
-     21
-"
-
-My notes: so each node's value becomes sum(allnodes) - that node's value
-Very tempting to view this as an ascii art -> ascii art problem, last time
-we did a similar tree question, I spent a lot of time building the tree
-structure, and getting nice layout from print_tree..
+My notes: also sounds pretty simple.  Generate and test for "having B
+bits set in the binary representation".
