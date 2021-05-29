@@ -1,5 +1,7 @@
 # Perl Weekly Challenge #114
 
+# What no regexs or loops....
+
 You can find more information about this weeks, and previous weeks challenges at:
 
   https://perlweeklychallenge.org/
