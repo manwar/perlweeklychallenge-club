@@ -37,9 +37,31 @@ sub next_bin {
   }
 }
 
+## All numbers can be written in the binary form as
+##   ^[01]*(01)1*0*$
+## This we can match with the regexp..
+##   /01(1*)(0*)$/
+## The next highest number with the same number of bits
+## flips the 01 to 10 and switches the 1s with the 0s
+## The regex replace is then:
+##   /01(1*)(0*)$/10$2$1/
+
 sub next_bin_rex {
   return oct '0b'.sprintf('0%b',shift) =~ s{01(1*)(0*)$}{10$2$1}r;
 }
+
+## We further note we can find the "01" with rindex
+## rather than having to use a regex {regex's are expensive}
+##
+## We also note that to flip 1111000 to 0001111 we don't need to
+## know how many 1s there are or 0s we just reverse the string.
+##
+## This gives us the following similar function which DOES NOT
+## use regexs
+##
+## Usually avoiding regexs leads to more performant code (unless the
+## replacement for the regex is particularly complex - which in this
+## case it isn't!)
 
 sub next_bin_rrev {
   my $t = rindex my $s = sprintf('0%b',shift),'01';
