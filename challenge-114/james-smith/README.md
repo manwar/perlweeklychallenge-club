@@ -175,19 +175,19 @@ binary string but by working out the arithmetic to make the changes.
  * To map `1 000000000 000` to `1 000000000 111` we need to add `111`
    which is 2^(#ones -1) -1
 
-Eliza's solution was to obtain counts of `0`s and `1`s using a regex
-`/(1+)(0*)$/` which works - but is still a regex... so we can replace
-this again with using `rindex`... Also rather than using `2**$n` this
-can be replaced by the much quicker `1<<$n` which does the same thing
-but is much more efficient.
+Eliza's solution was to obtain counts of `0`s and `1`s using a simple
+regex `/(1+)(0*)$/` which works - but is still a regex... so we can
+replace this again with using `rindex`... Also rather than using 
+`2**$n` this can be replaced by the much quicker `1<<$n` which does
+the same thing but is much more efficient.
 
 This gives us:
 
 ```perl
 sub next_bin_rindex2 {
-  my $t = rindex my $s = sprintf('%b',my $n = shift),'1';
-  return $n - 1 + (1<<(-1-$t+length$s))
-                + (1<<(-1+$t-rindex $s,'0',$t));
+  my $t=rindex my$s=sprintf('%b',$_[0]),'1';
+  return $_[0] + (1<<(-1-$t+length$s))
+           - 1 + (1<<(-1+$t-rindex$s,'0',$t));
 }
 ```
 
@@ -219,10 +219,10 @@ approximate rates for the calculations....
 
 | Size of number | Rate rind2 | Rate rrev  | Rate regex | Rate naive |
 | -------------- | ---------: | ---------: | ---------: | ---------: |
-| 1-500          |  1,850,000 |  1,550,000 |    500,000 |    600,000 |
-| Approx 1000    |  1,750,000 |  1,500,000 |    440,000 |    400,000 |
-| Approx 1x10^6  |  1,700,000 |  1,350,000 |    390,000 |      4,000 |
-| Approx 1x10^9  |  1,800,000 |  1,250,000 |    330,000 |          1 |
+| 1-500          |  1,900,000 |  1,550,000 |    500,000 |    600,000 |
+| Approx 1000    |  1,800,000 |  1,500,000 |    440,000 |    400,000 |
+| Approx 1x10^6  |  1,800,000 |  1,350,000 |    390,000 |      4,000 |
+| Approx 1x10^9  |  1,850,000 |  1,250,000 |    330,000 |          1 |
 
 The calls do include the hardest example `2^n-1` for which the next
 number is `2^(n-1)` more - so much of the time in the naive loop is
