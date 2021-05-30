@@ -1,22 +1,15 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-05-30 21:40:09 GMT"
+   },
    "tooltip" : {
       "shared" : 1,
       "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-05-30 20:34:52 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -52,9 +45,10 @@
          "PJ Durai"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
    },
    "series" : [
@@ -94,6 +88,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             1,
             30,
@@ -125,8 +120,7 @@
             28,
             2,
             11
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -163,5 +157,11 @@
          ],
          "name" : "Blog"
       }
-   ]
+   ],
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   }
 }
