@@ -161,22 +161,68 @@ sub next_bin_rrev {
 depending on whether or not you use a regular expression to find
 the last "`01`" in the binary representaiton.
 
+## The solution - with go faster stripes...
+
+After a discussion on facebook with Eliza Skr, about whether or not
+to use regexs rather than `rindex` she supplied a different algorithm
+for finding the next number - which didn't involve manipulating the
+binary string but by working out the arithmetic to make the changes.
+
+ * The number is of the form is `0 1111 00000000`
+ * The next hightest number is  `1 000000000 111`
+ * To map `0 1111 00000000` to `1 000000000 000` we need to add
+   `1 00000000` (which is 2^#zeros)
+ * To map `1 000000000 000` to `1 000000000 111` we need to add `111`
+   which is 2^(#ones -1) -1
+
+Eliza's solution was to obtain counts of `0`s and `1`s using a simple
+regex `/(1+)(0*)$/` which works - but is still a regex... so we can
+replace this again with using `rindex`... Also rather than using 
+`2**$n` this can be replaced by the much quicker `1<<$n` which does
+the same thing but is much more efficient.
+
+This gives us:
+
+```perl
+sub next_bin_rindex2 {
+  my $t=rindex my$s=sprintf('%b',$_[0]),'1';
+  return $_[0] + (1<<(-1-$t+length$s))
+           - 1 + (1<<(-1+$t-rindex$s,'0',$t));
+}
+```
+
+A few notes:
+
+ * here we use the three parameter version of `rindex`,
+   which allows you to specify an offset for the search to start (in this
+   case we want the last "`0`" before the last "`1`" so we use the position
+   of the "`1`" as the offset)
+ * I repeat we use the bit-shift operator `<<` to raise to the power `2`
+   rather than the power operator.... This is very much more efficient
+   - infact all the efficiency gain between the 2 `rindex` solutions is
+   due to using this over '`**`'...
+ * I looked to see if unpack was more efficient than sprintf - but found
+   that this was not the case {about 20-40% slower}.
+
 ## Summary
 
 Both the performance of `next_bin_regex` and `next_bin_rrev` appear
 to slow down only slightly as `$N` increases - comparabale with 
-"linear" scans for the last "`01`". Whereas the `next_bin` naive
-method has no such property.
+"linear" scans for the last "`01`". Interestingly the rind2 seems to
+run at similar speeds for all ranges of `$N`.
+
+The naive `next_bin` - doesn't have that property - at all and it
+rapidly tails off performance wise.
 
 Running this a large number of times - we have the following
 approximate rates for the calculations....
 
-| Size of number | Rate rrev  | Rate regex | Rate naive |
-| -------------- | ---------: | ---------: | ---------: |
-| 1-500          |  1,600,000 |    500,000 |    600,000 |
-| Approx 1000    |  1,550,000 |    440,000 |    400,000 |
-| Approx 1x10^6  |  1,500,000 |    390,000 |      4,000 |
-| Approx 1x10^9  |  1,450,000 |    330,000 |          1 |
+| Size of number | Rate rind2 | Rate rrev  | Rate regex | Rate naive |
+| -------------- | ---------: | ---------: | ---------: | ---------: |
+| 1-500          |  1,900,000 |  1,550,000 |    500,000 |    600,000 |
+| Approx 1000    |  1,800,000 |  1,500,000 |    440,000 |    400,000 |
+| Approx 1x10^6  |  1,800,000 |  1,350,000 |    390,000 |      4,000 |
+| Approx 1x10^9  |  1,850,000 |  1,250,000 |    330,000 |          1 |
 
 The calls do include the hardest example `2^n-1` for which the next
 number is `2^(n-1)` more - so much of the time in the naive loop is
