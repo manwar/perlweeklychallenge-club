@@ -17,18 +17,19 @@ my @sols = (
 #done_testing();
 
 my @ranges = (
-  [ 4000, 1,                       500 ],
-  [ 1000,  500,                    2500 ],
-  #[ 100,  1_047_576,         1_049_576 ],
-  #[ 50,   1_073_740_824, 1_073_742_824 ],
+  [ 5000, 1..500,1..500,1..500,1..500 ],
+  [ 5000,  500..2499 ],
+  [ 5000,  1_047_576..1_049_575 ],
+  [ 5000,  1_073_740_824..1_073_742_823 ],
 );
 
 foreach my $r (@ranges) {
-  cmpthese( $r->[0], {
-    'rind2' => sub { next_bin_rindex2( $_ ) foreach $r->[1] .. $r->[2] },
-    'rind'  => sub { next_bin_rrev( $_ ) foreach $r->[1] .. $r->[2] },
-    'rex'   => sub { next_bin_rex( $_ ) foreach $r->[1] .. $r->[2] },
-#    'simp' => sub { next_bin(      $_ ) foreach $r->[1] .. $r->[2] },
+  my($c,@n) = @{$r};
+  cmpthese( $c, {
+    'rind2' => sub { next_bin_rindex2( $_ ) foreach @n },
+    'rind'  => sub { next_bin_rrev( $_    ) foreach @n },
+    'rex'   => sub { next_bin_rex( $_     ) foreach @n },
+#   'simp'  => sub { next_bin($_          ) foreach @n },
   });
 }
 
