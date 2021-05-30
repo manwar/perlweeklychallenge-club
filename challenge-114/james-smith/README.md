@@ -117,7 +117,8 @@ sub next_bin {
 ```
 
  * We convert the number to binary using sprintf with the format `'%b'`;
- * We count the number of "1"s in the string using `tr`. `tr/1/1/` leaves the string unchanged but returns the number of "1"s that were replaced.
+ * We count the number of "1"s in the string using `tr`. `tr/1/1/` leaves
+   the string unchanged but returns the number of "1"s that were replaced.
 
 ## The solution - optimized
 
@@ -176,10 +177,12 @@ binary string but by working out the arithmetic to make the changes.
    which is 2^(#ones -1) -1
 
 Eliza's solution was to obtain counts of `0`s and `1`s using a simple
-regex `/(1+)(0*)$/` which works - but is still a regex... so we can
-replace this again with using `rindex`... Also rather than using 
-`2**$n` this can be replaced by the much quicker `1<<$n` which does
-the same thing but is much more efficient.
+regex `/(1+)(0*)$/` which works - but is still a regular expression,
+which as we discussed above is a slow operation.
+
+We can replace this again with using `rindex`... Also rather than
+using `2**$n` we replace it with the much quicker bit-shift operator
+`1<<$n` - which achieves the same effect.
 
 This gives us:
 
@@ -197,19 +200,21 @@ A few notes:
    which allows you to specify an offset for the search to start (in this
    case we want the last "`0`" before the last "`1`" so we use the position
    of the "`1`" as the offset)
- * I repeat we use the bit-shift operator `<<` to raise to the power `2`
-   rather than the power operator.... This is very much more efficient
-   - infact all the efficiency gain between the 2 `rindex` solutions is
-   due to using this over '`**`'...
- * I looked to see if unpack was more efficient than sprintf - but found
+ * We use the bit-shift operator `<<` to raise to the power `2`
+   rather than the power operator.... If we break down all the efficiency
+   gains between the the rrev & rind2 methods - most of the gain would
+   be lost if we reverted back to `2**$n`.
+ * We looked to see if unpack was more efficient than sprintf - but found
    that this was not the case {about 20-40% slower}.
 
 ## Summary
 
 Both the performance of `next_bin_regex` and `next_bin_rrev` appear
 to slow down only slightly as `$N` increases - comparabale with 
-"linear" scans for the last "`01`". Interestingly the rind2 seems to
-run at similar speeds for all ranges of `$N`.
+"linear" scans for the last "`01`".
+
+Interestingly the `next_bin_rind2` seems to run at similar speeds for
+all ranges of `$N`.
 
 The naive `next_bin` - doesn't have that property - at all and it
 rapidly tails off performance wise.
