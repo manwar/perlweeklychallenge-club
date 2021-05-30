@@ -59,7 +59,8 @@ sub hisb {
     }
 }
 
-sub bin2dec {            #copy from Perl Cookbook
+#copy from "Perl Cookbook", by Tom Christiansen & Nathan Torkington
+sub bin2dec {      
     return unpack("N", pack("B32", substr("0" x 32 . $_[0], -32)));
 }
 
