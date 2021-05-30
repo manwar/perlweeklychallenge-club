@@ -18,28 +18,8 @@ use experimental 'lexical_subs';
 #
 
 #
-# We are considering the following cases to determine the next
-# palindromic integer:
-#
-#  - If the number consists of just 9s, we add 2 to the number, resulting
-#    in 100001, where we have 1 less 0 than we had 9s.
-#  - Else, split the number into three parts: (NNNN)(M)(PPPP), where
-#    the first and third part are of equal lengths, and M is zero or one
-#    digit (zero digits of the input number is of even length, else the
-#    middle part is just one digit).
-#
-#    Define nnnn as the reverse of NNNN,
-#           pppp as the reverse of PPPP,
-#           QQQQ as NNNN + 1,
-#           qqqq as the reverse of QQQQ,
-#           m = M + 1 (if M is one digit long)
-#
-#    Now:
-#        - If nnnn > PPPP, then result is "NNNNMnnnn", else
-#        - If M is one digit long, then:
-#               - If M < 9,  then the result is "NNNNmnnnn", else
-#               - the result is "QQQQ0qqqq", else
-#        - The result is "QQQQqqqq".
+# See https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-114-1.html
+# for a description of the algorithm.
 #
 
 while (<>) {

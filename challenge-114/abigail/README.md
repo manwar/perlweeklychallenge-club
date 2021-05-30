@@ -22,6 +22,7 @@ Output: 1001
 * [Perl](perl/ch-1.pl)
 
 ### Blog
+[Next Palindrome Number](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-114-1.html)
 
 ## [Higher Integer Set Bits](https://perlweeklychallenge.org/blog/perl-weekly-challenge-114/#TASK2)
 
