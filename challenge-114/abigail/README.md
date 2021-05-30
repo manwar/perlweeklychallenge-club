@@ -55,3 +55,4 @@ higher integer is `17` having the same number of `1` bits i.e. `10001`.
 * [Perl](perl/ch-2.pl)
 
 ### Blog
+[Higher Integet Set Bits](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-114-2.html)
