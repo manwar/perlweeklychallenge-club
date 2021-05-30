@@ -72,9 +72,50 @@ sub next_bin_rrev {
   return oct '0b'.substr($s,0,$t).'10'.reverse substr $s,$t+2;
 }
 
+## We can get further optimization by avoiding the call to "oct" by
+## converting the above to simple arithmetic...
+## To move all the 1s to the end and flip the '01' to '10'
+## We note that if the number is of the form..
+##
+##    0 1111 00000000
+##
+## The next highest number (with the same number of bits is:
+##
+##    1 000000000 111
+##
+## To get this we first do:
+##
+##    0 1111 00000000
+##  + 0 0001 00000000
+##    ---------------
+##    1 0000 00000000
+##
+## and then:
+##
+##    1 0000 00000000
+##  + 0 0000 00000111
+##    ---------------
+##    1 0000 00000111
+##
+## which is the answer we are looking for....
+##
+## This is basically:
+##
+##    $N + 2^(#0s) +2^(#1s-1) - 1;
+##
+## We can get these with rindex
+##
+## #0s = length of the binary string - (last index of 1 + 1)
+## #1s = last index of 1 - last index of 0 (before this 1)
+##
+## This all leads into the following fn.
+##
+## Note we don't use 2**$N but 1<<$N which is much more efficient
+## Investigated unpack vs sprintf to do the dec->binary conversion
+## the latter is faster by about 20%...
+
 sub next_bin_rindex2 {
   my $t = rindex my $s = sprintf('%b',my $n = shift),'1';
   return $n - 1 + (1<<(-1-$t+length$s)) + (1<<(-1+$t-rindex $s,'0',$t));
 }
-
 
