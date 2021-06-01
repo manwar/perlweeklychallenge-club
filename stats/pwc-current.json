@@ -1,23 +1,28 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge - 115"
    },
    "xAxis" : {
       "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-06-01 09:48:10 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "drilldown" : {
       "series" : [
@@ -32,56 +37,57 @@
             "id" : "Dave Cross"
          },
          {
+            "name" : "E. Choroba",
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
-                  2
-               ]
-            ],
-            "name" : "E. Choroba",
-            "id" : "E. Choroba"
-         },
-         {
-            "id" : "Feng Chang",
-            "name" : "Feng Chang",
-            "data" : [
-               [
-                  "Raku",
                   2
                ]
             ]
          },
          {
-            "name" : "James Smith",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "id" : "James Smith"
-         },
-         {
-            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Mark Anderson"
+            "name" : "Feng Chang",
+            "id" : "Feng Chang"
          },
          {
-            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Niels van Dijke"
+            "id" : "James Smith",
+            "name" : "James Smith"
          },
          {
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
+         },
+         {
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Stuart Little",
             "name" : "Stuart Little",
             "data" : [
                [
@@ -92,10 +98,10 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Stuart Little"
+            ]
          },
          {
+            "id" : "Ulrich Rieke",
             "name" : "Ulrich Rieke",
             "data" : [
                [
@@ -106,32 +112,17 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Ulrich Rieke"
+            ]
          }
       ]
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2021-06-01 09:45:08 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
    },
    "series" : [
       {
          "data" : [
             {
-               "y" : 2,
+               "name" : "Dave Cross",
                "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
+               "y" : 2
             },
             {
                "y" : 2,
@@ -139,19 +130,19 @@
                "name" : "E. Choroba"
             },
             {
+               "drilldown" : "Feng Chang",
                "y" : 2,
-               "name" : "Feng Chang",
-               "drilldown" : "Feng Chang"
+               "name" : "Feng Chang"
             },
             {
-               "drilldown" : "James Smith",
                "name" : "James Smith",
+               "drilldown" : "James Smith",
                "y" : 2
             },
             {
                "name" : "Mark Anderson",
                "drilldown" : "Mark Anderson",
-               "y" : 2
+               "y" : 1
             },
             {
                "name" : "Niels van Dijke",
@@ -164,13 +155,22 @@
                "y" : 4
             },
             {
-               "y" : 4,
                "name" : "Ulrich Rieke",
-               "drilldown" : "Ulrich Rieke"
+               "drilldown" : "Ulrich Rieke",
+               "y" : 4
             }
          ],
          "name" : "Perl Weekly Challenge - 115",
          "colorByPoint" : 1
       }
-   ]
+   ],
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   }
 }
