@@ -2,8 +2,8 @@
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
       }
@@ -13,119 +13,76 @@
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 115",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "Dave Cross",
-               "drilldown" : "Dave Cross"
-            },
-            {
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Feng Chang",
-               "name" : "Feng Chang",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "y" : 2,
-               "name" : "Mark Anderson"
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "y" : 2,
-               "name" : "Niels van Dijke"
-            },
-            {
-               "drilldown" : "Stuart Little",
-               "name" : "Stuart Little",
-               "y" : 4
-            },
-            {
-               "name" : "Ulrich Rieke",
-               "y" : 4,
-               "drilldown" : "Ulrich Rieke"
-            }
-         ]
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-06-01 07:32:46 GMT"
+   "title" : {
+      "text" : "Perl Weekly Challenge - 115"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Dave Cross"
+            "name" : "Dave Cross",
+            "id" : "Dave Cross"
          },
          {
-            "name" : "E. Choroba",
-            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "E. Choroba",
+            "id" : "E. Choroba"
          },
          {
+            "id" : "Feng Chang",
+            "name" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Feng Chang",
-            "name" : "Feng Chang"
+            ]
          },
          {
-            "name" : "Mark Anderson",
+            "name" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "James Smith"
+         },
+         {
             "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Mark Anderson"
          },
          {
-            "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Niels van Dijke"
+            "name" : "Niels van Dijke"
          },
          {
             "name" : "Stuart Little",
-            "id" : "Stuart Little",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
             "data" : [
                [
                   "Perl",
@@ -136,26 +93,84 @@
                   2
                ]
             ],
-            "id" : "Ulrich Rieke",
-            "name" : "Ulrich Rieke"
+            "id" : "Stuart Little"
+         },
+         {
+            "name" : "Ulrich Rieke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Ulrich Rieke"
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    },
    "legend" : {
       "enabled" : 0
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 115"
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-06-01 09:45:08 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "chart" : {
-      "type" : "column"
-   }
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba"
+            },
+            {
+               "y" : 2,
+               "name" : "Feng Chang",
+               "drilldown" : "Feng Chang"
+            },
+            {
+               "drilldown" : "James Smith",
+               "name" : "James Smith",
+               "y" : 2
+            },
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke",
+               "y" : 2
+            },
+            {
+               "name" : "Stuart Little",
+               "drilldown" : "Stuart Little",
+               "y" : 4
+            },
+            {
+               "y" : 4,
+               "name" : "Ulrich Rieke",
+               "drilldown" : "Ulrich Rieke"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 115",
+         "colorByPoint" : 1
+      }
+   ]
 }
