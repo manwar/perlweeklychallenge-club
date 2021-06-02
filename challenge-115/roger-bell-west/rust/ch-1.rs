@@ -23,6 +23,11 @@ fn test_ex4() {
     assert_eq!(sc(vec!["abc","dec","cfa","cgd"]),1);
 }
 
+#[test]
+fn test_ex5() {
+    assert_eq!(sc(vec!["abc","def","cd"]),0);
+}
+
 fn sc (n: Vec<&str>) -> i8 {
     let mut m: Vec<String>=vec![];
     let mut i: HashMap<String,Vec<usize>>=HashMap::new();
@@ -57,7 +62,12 @@ fn sc (n: Vec<&str>) -> i8 {
                 }
             }
         } else {
-            return 1;
+            if i.contains_key(&m[stub[stub.len()-1]]) {
+                let xx=i.get(&m[stub[stub.len()-1]]).unwrap();
+                if xx[0]==0 {
+                    return 1;
+                }
+            }
         }
     }
     return 0;

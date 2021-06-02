@@ -2,12 +2,13 @@
 
 use Test;
 
-plan 4;
+plan 5;
 
 is(sc('abc','dea','cd'),1,'example 1');
 is(sc('ade','cbd','fgh'),0,'example 2');
 is(sc('abc','dea','fgh','hif'),0,'example 3');
 is(sc('abc','dec','cfa','cgd'),1,'example 4');
+is(sc('abc','def','cd'),0,'example 5');
 
 sub sc(**@n) {
   my @m;
@@ -37,7 +38,9 @@ sub sc(**@n) {
         }
       }
     } else {
-      return 1;
+      if (%i{@m[@stub[*-1]]}:exists && %i{@m[@stub[*-1]]}[0]==0) {
+        return 1;
+      }
     }
   }
   return 0;

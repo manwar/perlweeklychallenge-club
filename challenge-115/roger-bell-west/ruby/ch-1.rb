@@ -26,13 +26,15 @@ def sc(*n)
       if i.has_key?(m[stub[-1]]) then
         x=i[m[stub[-1]]].find_all {|x| v.include?(x)}
         x.each {|xx|
-          s=stub
+          s=stub.dup
           s.push(xx)
           chain.push(s)
         }
       end
     else
-      return 1
+      if i.has_key?(m[stub[-1]]) and i[m[stub[-1]]][0]==0 then
+        return 1
+      end
     end
   end
   return 0
@@ -51,6 +53,9 @@ class TestSc < Test::Unit::TestCase
   end
   def test_ex4
     assert_equal(1,sc('abc','dec','cfa','cgd'))
+  end
+  def test_ex5
+    assert_equal(0,sc('abc','def','cd'))
   end
   
 end
