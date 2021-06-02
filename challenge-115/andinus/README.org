@@ -1,102 +1,39 @@
-#+title: Challenge 110
-#+date: 2021-04-29
+#+title: Challenge 115
+#+date: 2021-06-02
 #+html_link_up: ../index.html
 #+export_file_name: index
 #+setupfile: ~/.emacs.d/org-templates/level-2.org
 
-* Task 1 - Valid Phone Numbers
+* Task 2 - Largest Multiple
 
-You are given a text file.
+You are given a list of positive integers (0-9), single digit.
 
-Write a script to display all valid phone numbers in the given text file.
+Write a script to find the largest multiple of 2 that can be formed from
+the list.
 
-Acceptable Phone Number Formats:
 #+begin_src
-+nn  nnnnnnnnnn
-(nn) nnnnnnnnnn
-nnnn nnnnnnnnnn
-#+end_src
+Input: @N = (1, 0, 2, 6)
+Output: 6210
 
-Input File:
-#+begin_src
-0044 1148820341
- +44 1148820341
-  44-11-4882-0341
-(44) 1148820341
-  00 1148820341
-#+end_src
+Input: @N = (1, 4, 2, 8)
+Output: 8412
 
-Output:
-#+begin_src
-0044 1148820341
- +44 1148820341
-(44) 1148820341
-#+end_src
-
-** Raku
-
-- Program: [[file:raku/ch-1.raku]]
-
-~PhoneNumber~ grammar parses each entry one by one. ~country-code~ handles
-the 3 cases for country codes & ~number~ handles the other part.
-
-We just loop over every entry & print it if it's a valid phone number.
-
-#+begin_src raku
-grammar PhoneNumber {
-    token TOP { \s* <country-code> \s+ <number> }
-    token country-code { '+' \d \d | '(' \d \d ')' | \d ** 4 }
-    token number { \d ** 10 }
-}
-
-for $file.IO.lines -> $entry {
-    say $entry if PhoneNumber.parse($entry);
-}
-#+end_src
-
-* Task 2 - Transpose File
-
-You are given a text file.
-
-Write a script to transpose the contents of the given file.
-
-Input File:
-#+begin_src
-name,age,sex
-Mohammad,45,m
-Joe,20,m
-Julie,35,f
-Cristina,10,f
-#+end_src
-
-Output:
-#+begin_src
-name,Mohammad,Joe,Julie,Cristina
-age,45,20,35,10
-sex,m,m,f,f
+Input: @N = (4, 1, 7, 6)
+Output: 7614
 #+end_src
 
 ** Raku
 
 - Program: [[file:raku/ch-2.raku]]
 
-~.IO.lines~ part creates a list of lines in the files, then we split it at
-",". ~zip~ then returns a list which is formatted the way we want it to
-be.
-
-From the documentation: https://docs.raku.org/routine/zip
-#+begin_quote
-Creates a supply that emits combined values as soon as there is a new
-value seen on all of the supplies.
-
-zip iterates through each of the input lists synchronously, 'Zipping'
-them together, so that elements are grouped according to their input
-list index, in the order that the lists are provided.
-#+end_quote
-
-We then join the entries with ",", loop over the formatted lines & print
-them.
+~@nums~ stores user entered numbers. The program terminates if there are
+no even numbers in ~@nums~. We get the least even number & then just
+reverse the rest of the sorted list & join them.
 
 #+begin_src raku
-.say for zip($file.IO.lines.map(*.split(","))).map(*.join(","));
+@nums = @nums>>.Int.sort;
+die "No even number!" unless @nums.grep(* %% 2);
+
+my Int $least-even = @nums.splice(@nums.first(* %% 2, :k), 1).first;
+say (|@nums.reverse, $least-even).join;
 #+end_src
