@@ -3,6 +3,7 @@
 import unittest
 
 from collections import defaultdict
+import copy
 
 def sc(*n):
   m=list()
@@ -19,11 +20,12 @@ def sc(*n):
     if len(v)>0:
       if m[stub[-1]] in i:
         for x in filter (lambda y: y in v, i[m[stub[-1]]]):
-          s=stub
+          s=copy.copy(stub)
           s.append(x)
           chain.append(s)
     else:
-      return 1
+      if m[stub[-1]] in i and i[m[stub[-1]]][0]==0:
+        return 1
   return 0
 
 class TestSc(unittest.TestCase):
@@ -39,5 +41,8 @@ class TestSc(unittest.TestCase):
           
         def test_ex4(self):
           self.assertEqual(sc('abc','dec','cfa','cgd'),1,'example 4')
+
+        def test_ex5(self):
+          self.assertEqual(sc('abc','def','cd'),0,'example 1')
 
 unittest.main()
