@@ -1,47 +1,27 @@
-# Next Palindrome Number
+# Largest Multiple
 ## Java Solution
 
 To compile the code run
 ```java
-javac NextPalindromeNumber.java
+javac LargestMultiple.java
 ```
 To run
 ```java
-java NextPalindromeNumber
+java LargestMultiple
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-114/ziameraj16/java$ javac NextPalindromeNumber.java
-/perlweeklychallenge-club/challenge-114/ziameraj16/java$ java NextPalindromeNumber
-Enter the number
-1234
-1331
-/perlweeklychallenge-club/challenge-114/ziameraj16/java$ java NextPalindromeNumber
-Enter the number
-999
-1001
-```
-
-# Higher Integer Sets Bits
-## Java Solution
-
-To compile the code run
-```java
-javac HigherIntegerSetBits.java
-```
-To run
-```java
-java HigherIntegerSetBits
-```
-### Example
-```bash
-/perlweeklychallenge-club/challenge-114/ziameraj16/java$ javac HigherIntegerSetBits.java
-/perlweeklychallenge-club/challenge-114/ziameraj16/java$ java HigherIntegerSetBits
-Enter the number
-3
-5
-/perlweeklychallenge-club/challenge-114/ziameraj16/java$ java HigherIntegerSetBits
-Enter the number
-12
-17
+/perlweeklychallenge-club/challenge-115/ziameraj16/java$ javac LargestMultiple.java
+/perlweeklychallenge-club/challenge-115/ziameraj16/java$ java LargestMultiple
+Enter comma separate numbers
+1,0,2,6
+Output: 6210
+/perlweeklychallenge-club/challenge-115/ziameraj16/java$ java LargestMultiple
+Enter comma separate numbers
+1,4,2,8
+Output: 8412
+/perlweeklychallenge-club/challenge-115/ziameraj16/java$ java LargestMultiple
+Enter comma separate numbers
+4,1,7,6
+Output: 7614
 ```
