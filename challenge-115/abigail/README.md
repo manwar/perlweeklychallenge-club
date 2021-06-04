@@ -1,58 +1,64 @@
 # Solutions by Abigail
-## [Next Palindrome Number](https://perlweeklychallenge.org/blog/perl-weekly-challenge-114/#TASK1)
+## [String Chain](https://perlweeklychallenge.org/blog/perl-weekly-challenge-115/#TASK1)
 
-> You are given a positive integer `$N`.
+> You are given an array of strings.
+> 
+> Write a script to find out if the given strings can be chained
+> to form a circle. Print `1` if found otherwise `0`.
 >
-> Write a script to find out the next Palindrome Number higher than
-> the given integer `$N`.
+> > A string `$S` can be put before another string `$T` in circle
+> > if the last character of `$S` is same as first character of `$T`.
 
 ### Example
 ~~~~
-Input: $N = 1234
-Output: 1331
+Input: @S = ("abc", "dea", "cd")
+Output: 1 as we can form circle e.g. "abc", "cd", "dea".
 
-Input: $N = 999
-Output: 1001
+Input: @S = ("ade", "cbd", "fgh")
+Output: 0 as we can't form circle.
 ~~~~
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
 * [C](c/ch-1.c)
+* [Lua](lua/ch-1.lua)
+* [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
+* [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[Next Palindrome Number](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-114-1.html)
+[String Chain](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-115-1.html)
 
-## [Higher Integer Set Bits](https://perlweeklychallenge.org/blog/perl-weekly-challenge-114/#TASK2)
+## [Largest Multiple](https://perlweeklychallenge.org/blog/perl-weekly-challenge-115/#TASK2)
 
-> You are given a positive integer `$N`.
-> 
-> Write a script to find the next higher integer having the same number of
-> `1` bits in binary representation as `$N`.
+> You are given a list of positive integers `(0-9)`, single digit.
+>
+> Write a script to find the largest multiple of `2` that can be
+> formed from the list.
 
 ### Examples
 ~~~~
-Input: $N = 3
-Output: 5
-~~~~
+Input: @N = (1, 0, 2, 6)
+Output: 6210
 
-Binary representation of `$N` is `011`. There are two `1` bits. So the next
-higher integer is `5` having the same the number of `1` bits i.e. `101`.
+Input: @N = (1, 4, 2, 8)
+Output: 8412
 
+Input: @N = (4, 1, 7, 6)
+Output: 7614
 ~~~~
-Input: $N = 12
-Output: 17
-~~~~
-
-Binary representation of `$N` is `1100`. There are two `1` bits. So the next
-higher integer is `17` having the same number of `1` bits i.e. `10001`.
 
 ### Solutions
-* [GNU AWK](awk/ch-2.gawk)
+* [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
 * [C](c/ch-2.c)
+* [Lua](lua/ch-2.lua)
+* [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
+* [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[Higher Integet Set Bits](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-114-2.html)
+[String Chain](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-115-2.html)
