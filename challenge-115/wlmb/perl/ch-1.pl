@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # Perl weekly challenge 115
-# Task 1: String Chain. Connectivity matrix solution.
+# Task 1: String Chain. Connectivity matrix solution. Not quite correct.
 #
 # See https://wlmb.github.io/2021/06/01/PWC115/#task-1-string-chain
 use strict;
