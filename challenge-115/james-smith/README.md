@@ -102,10 +102,10 @@ cde  ->   a-b-c    ->  a-b-c        ->  a b c
 efg       h   d        h   d            h   d
           |   |        |   |            |   |
 gha       g-f-e        g-f-e-o-p        g   e-o-p
-                           |  /          \      |
-eop       e-o-p            t q            f     q
-          |  /             |/              \    |
-pqz       t q              z                e-t-z
+                           |  /         |      /
+eop       e-o-p            t q          f     q
+          |  /             |/           |    /
+pqz       t q              z            e-t-z
           |/
 zte       z 
 ```
