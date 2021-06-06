@@ -2,12 +2,6 @@
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-06-06 22:40:18 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "categories" : [
          "Saif Ahmed",
@@ -42,24 +36,29 @@
          "Ulrich Rieke"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-06-06 22:59:06 GMT"
+   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             54,
             10,
@@ -91,9 +90,11 @@
             5,
             0,
             112
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -125,8 +126,7 @@
             0,
             2,
             134
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
