@@ -1,42 +1,49 @@
-Task 1: "Next Palindrome Number
+Task 1: "String Chain
 
-You are given a positive integer $N.
+You are given an array of strings.
 
-Write a script to find out the next Palindrome Number higher than the given integer $N.
+Write a script to find out if the given strings can be chained to form
+a circle. Print 1 if found otherwise 0.
 
-Example
+A string $S can be put before another string $T in circle if the last
+character of $S is same as first character of $T.
 
-  Input: $N = 1234
-  Output: 1331
+Examples:
 
-  Input: $N = 999
-  Output: 1001
+  Input: @S = ("abc", "dea", "cd")
+  Output: 1 as we can form circle e.g. "abc", "cd", "dea".
+
+  Input: @S = ("ade", "cbd", "fgh")
+  Output: 0 as we can't form circle.
 "
 
-My notes: sounds very simple.  Generate and test for palindromic-ness.
+My notes: word chains are often quite hard. HOWEVER, this time it's a circular word chain
+using ALL the words, so that's much easier:
+1. we don't have to try "what if we start with this word (for each word)", just pick one.
+2. we must use every word.
+
+(2) also implies an obvious shortcut to speed up failure (0) case:
+fail if numwords(starting_with_a_letter) != numwords(ending_with_that_letter).
+But I don't think I need implement that.
 
 
-Task 2: "Higher Integer Set Bits
+Task 2: "Largest Multiple (Even)
 
-You are given a positive integer $N.
+You are given a list of positive integers (0-9), single digit.
 
-Write a script to find the next higher integer having the same number
-of 1 bits in binary representation as $N.
+Write a script to find the largest multiple of 2 that can be formed from the list.
 
-Example
+Examples
 
-Input: $N = 3
-Output: 5
+  Input: @N = (1, 0, 2, 6)
+  Output: 6210
 
-Binary representation of 3 is 011. There are two 1 bits. So the next
-higher integer is 5 having the same the number of 1 bits i.e. 101.
+  Input: @N = (1, 4, 2, 8)
+  Output: 8412
 
-Input: $N = 12
-Output: 17
-
-Binary representation of 12 is 1100. There are two 1 bits. So the next
-higher integer is 17 having the same number of 1 bits i.e. 10001.
+  Input: @N = (4, 1, 7, 6)
+  Output: 7614
 "
 
-My notes: also sounds pretty simple.  Generate and test for "having B
-bits set in the binary representation".
+My notes: should be easy (multiple of 2 == even number).  Obvious heuristic is: put biggest digit
+first, but I suppose it's possible that no even numbers would result.  Hell, just try all perms..
