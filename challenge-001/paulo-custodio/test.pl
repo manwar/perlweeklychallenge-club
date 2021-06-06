@@ -1,10 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # run tests described in t/test-N.yaml
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Test::More;
 use Path::Tiny;
 use YAML::Tiny;
@@ -164,7 +162,7 @@ sub build {
             return "perl $prog";
         }
         if (/^python$/) {
-            return "python $prog";
+            return "python3 $prog";
         }
         die "unsupported language $lang";
     }

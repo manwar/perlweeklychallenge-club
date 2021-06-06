@@ -10,9 +10,7 @@
 # use all the letters.
 # (Disclaimer: The challenge was proposed by Scimon Proctor)
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 @ARGV==1 or die "Usage: ch-2.pl letters\n";
 my($letters) = @ARGV;
