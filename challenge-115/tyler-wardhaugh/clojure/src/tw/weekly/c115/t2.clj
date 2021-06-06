@@ -7,8 +7,17 @@
 (def DEFAULT-INPUT [1 0 2 6])
 
 (defn largest-multiple
-  ""
-  [coll])
+  "Determine the largest mulitple that can be formed using coll"
+  [coll]
+  (let [min-even (->> coll (filter even?) (reduce min))
+        freqs (-> coll frequencies (update min-even dec))
+        remaining (into [] (mapcat (fn [[num x]] (repeat x num))) freqs)]
+    (->> remaining
+         sort
+         (concat [min-even])
+         reverse
+         (reduce str "")
+         (Integer/parseInt))))
 
 (defn -main
   "Run Task 2 with a given input N, defaulting to the first example from the
