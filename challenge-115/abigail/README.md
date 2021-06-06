@@ -61,4 +61,4 @@ Output: 7614
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[String Chain](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-115-2.html)
+[Largest Multiple](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-115-2.html)
