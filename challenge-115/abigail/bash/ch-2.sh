@@ -8,6 +8,7 @@
 # Run as: bash ch-2.sh < input-file
 #
 
+set -f
 declare -a digits
 
 while read -a input
