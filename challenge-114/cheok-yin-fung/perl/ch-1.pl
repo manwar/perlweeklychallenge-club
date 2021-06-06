@@ -19,10 +19,10 @@ sub higher_pal {
         return (10**length $n)+1;
     }
 
-    my $suff = substr($n, 0, ((length $n) + 1)/2);
-    my $p = pal_from_half( $suff, (length $n) % 2 );
+    my $_prefix = substr($n, 0, ((length $n) + 1)/2);
+    my $p = pal_from_half( $_prefixf, (length $n) % 2 );
     if ($n >= $p) {
-        return pal_from_half( $suff+1, (length $n) % 2 );
+        return pal_from_half( $_prefixf+1, (length $n) % 2 );
     } 
     else {
         return $p;
@@ -31,9 +31,9 @@ sub higher_pal {
 
 sub pal_from_half {
     my $s = $_[0];
-    my $suf = substr( $s  , 0 , (length $s) - $_[1] );
+    my $prefix = substr( $s  , 0 , (length $s) - $_[1] );
     my $mid = $_[1] ? substr($s, -1, 1) : "";
-    my $new = join "", $suf, $mid, reverse (split //, $suf);
+    my $new = join "", $prefix, $mid, reverse (split //, $prefix);
     return $new;
 }
 
