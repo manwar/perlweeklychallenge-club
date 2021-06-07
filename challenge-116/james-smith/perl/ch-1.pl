@@ -37,8 +37,7 @@ cmpthese( 200, {
 
 sub splitnum {
   my( $in, $start ) = ( shift, '' );
-  #for( split //, substr $in, 0, (length $in) >> 1) {
-  for( split //, $in ) {
+  for( split //, substr $in, 0, (length $in) >> 1) {
     ## $start contains the first number of sequence
     ## each time through the loop we will add the
     ## next digit eg 1, 12, 123
@@ -72,10 +71,10 @@ sub splitnum {
 ## length of $n - but only really valid if you are getting very large
 ## values of $n...}
 
-## Below is the code above with the commends removed
+## Below is the code above with the comments removed
 sub splitnum_no_comments {
   my( $in, $st ) = ( shift, '' );
-  for( split //, substr $in, 0, ( length $in) >> 1) {
+  for( split //, substr $in, 0, (length $in) >> 1) {
     my @r = ( my $t = my $en = $st .= $_ );
     ($t .= ++$en) && push @r,$en while        $in gt        $t
                                     && length $in >  length $t;
