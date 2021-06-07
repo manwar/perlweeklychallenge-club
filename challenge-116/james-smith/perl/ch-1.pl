@@ -35,7 +35,7 @@ sub splitnum {
     ## We concatenate the of "end" onto $string until
     ## it is equal to or larger than the input number
 
-    $string .= (++$end) while $in gt $string && length $in > length $string;
+    $string .= ++$end while $in gt $string && length $in > length $string;
 
     ## Finally we return the list if the input and
     ## string are the same. Note we will always get
@@ -54,3 +54,13 @@ sub splitnum {
 ## There are some optimizations you could try {e.g. looping up to half the
 ## length of $n - but only really valid if you are getting very large
 ## values of $n...}
+
+sub splitnum_no_comments {
+  my($in,$st) = (shift,'');
+  foreach( split //, $in ) {
+    my $t = my $en = ($st .= $_ );
+    $t .= ++$en while $in gt $t && length $in > length $t;
+    return [$st..$en] if $t eq $in;
+  }
+}
+
