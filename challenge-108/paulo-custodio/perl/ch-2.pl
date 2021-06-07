@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 108
 #
-# TASK #2 › Bell Numbers
+# TASK #2 - Bell Numbers
 # Submitted by: Mohammad S Anwar
 #
 # Write a script to display top 10 Bell Numbers. Please refer to wikipedia page
