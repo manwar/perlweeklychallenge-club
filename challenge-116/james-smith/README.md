@@ -30,11 +30,12 @@ number each time through the loop..
 
 ```perl
 sub splitnum {
-  my($in,$start) = (shift,'');
+  my( $in, $start ) = ( shift, '' );
   foreach( split //, $in ) {
-    my $string = my $end = ($start .= $_ );
-    $string .= ++$end while $in gt $string && length $in > length $string;
-    return [$start..$end] if $string eq $in;
+    my $string = my $end = $start .= $_;
+    $string .= ++$end while        $in gt $string
+                         && length $in >  length $string;
+    return [ $start .. $end ] if $string eq $in;
   }
 }
 ```
