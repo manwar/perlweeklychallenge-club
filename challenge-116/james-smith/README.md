@@ -1,7 +1,5 @@
 # Perl Weekly Challenge #116
 
-# Cursing at recursion
-
 You can find more information about this weeks, and previous weeks challenges at:
 
   https://perlweeklychallenge.org/
