@@ -20,8 +20,7 @@ is( join(',',@{splitnum($_->[0])}),$_->[1] ) foreach @tests;
 done_testing();
 
 sub splitnum {
-  my($in,$start) = (shift,'');  ## collect param
-                                ## initialize number
+  my( $in, $start ) = ( shift, '' );
   foreach( split //, $in ) {
     ## $start contains the first number of sequence
     ## each time through the loop we will add the
@@ -30,7 +29,7 @@ sub splitnum {
     ## $end contains a copy of this, which we will
     ## then incremement as we generate the sum
 
-    my $string = my $end = ($start .= $_ );
+    my $string = my $end = $start .= $_;
 
     ## We concatenate the of "end" onto $string until
     ## it is equal to or larger than the input number
@@ -57,8 +56,8 @@ sub splitnum {
 
 sub splitnum_no_comments {
   my($in,$st) = (shift,'');
-  foreach( split //, $in ) {
-    my $t = my $en = ($st .= $_ );
+  for( split //, $in ) {
+    my $t = my $en = $st .= $_;
     $t .= ++$en while $in gt $t && length $in > length $t;
     return [$st..$en] if $t eq $in;
   }
