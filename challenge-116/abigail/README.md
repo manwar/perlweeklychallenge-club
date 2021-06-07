@@ -47,6 +47,14 @@ Output: 0 as 5^2 + 2^2 => 25 + 4 => 29
 ~~~~
 
 ### Solutions
+* [AWK](awk/ch-2.awk)
+* [Bash](bash/ch-2.sh)
+* [C](c/ch-2.c)
+* [Lua](lua/ch-2.lua)
+* [Node.js](node/ch-2.js)
+* [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
+* [Ruby](ruby/ch-2.rb)
 
 ### Blog
 [Sum of Squares](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-116-2.html)
