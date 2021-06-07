@@ -16,6 +16,7 @@ my @tests = (
 );
 
 is( join(',',@{splitnum($_->[0])}),$_->[1] ) foreach @tests;
+is( join(',',@{splitnum_no_comments($_->[0])}),$_->[1] ) foreach @tests;
 
 done_testing();
 
@@ -34,7 +35,8 @@ sub splitnum {
     ## We concatenate the of "end" onto $string until
     ## it is equal to or larger than the input number
 
-    $string .= ++$end while $in gt $string && length $in > length $string;
+    $string .= ++$end while        $in gt       $string
+                         && length $in > length $string;
 
     ## Finally we return the list if the input and
     ## string are the same. Note we will always get
@@ -54,12 +56,15 @@ sub splitnum {
 ## length of $n - but only really valid if you are getting very large
 ## values of $n...}
 
+
+## Below is the code above with the commends removed
 sub splitnum_no_comments {
-  my($in,$st) = (shift,'');
+  my( $in, $st ) = ( shift, '' );
   for( split //, $in ) {
     my $t = my $en = $st .= $_;
-    $t .= ++$en while $in gt $t && length $in > length $t;
-    return [$st..$en] if $t eq $in;
+    $t .= ++$en while        $in gt        $t
+                   && length $in >  length $t;
+    return [ $st .. $en ] if $t eq $in;
   }
 }
 
