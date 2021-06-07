@@ -5,7 +5,6 @@ use strict;
 use warnings;
 use feature qw(say);
 use Test::More;
-use Benchmark qw(cmpthese);
 
 my $nspace = join '', 1..1000;
 my $ncomma = join ',',1..1000;
@@ -25,15 +24,10 @@ my @tests = (
  [ $nspace.'99', $nspace.'99' ],                           ## 2895 digit no -> 2895 digit no
 );
 
-is( join(',',@{splitnum_no_comments($_->[0])}),$_->[1] ) foreach @tests;
 is( join(',',@{splitnum($_->[0])}),$_->[1] ) foreach @tests;
+is( join(',',@{splitnum_no_comments($_->[0])}),$_->[1] ) foreach @tests;
 
 done_testing();
-
-cmpthese( 200, {
- 'f' => sub { splitnum(            $_->[0]) foreach @tests },
- 'h' => sub { splitnum_no_comments($_->[0]) foreach @tests },
-});
 
 sub splitnum {
   my( $in, $start ) = ( shift, '' );
