@@ -25,22 +25,23 @@ of the sequence (`$start.=$_`)....
 Within each loop we just stitch together the string by incrementing the
 number each time through the loop..
 
+ * We reduce the maximum calculations by a factor of 2 by spliting just the first half of the string   
  * We use string (in)equalities so this will work with arbitrary numbers.
  * We have to check length as well as the strings in the while condition (because we are using string comparison)
 
 ```perl
 sub splitnum {
   my( $in, $start ) = ( shift, '' );
-  foreach( split //, $in ) {
-    my $string = my $end = $start .= $_;
-    $string .= ++$end while        $in gt $string
-                         && length $in >  length $string;
-    return [ $start .. $end ] if $string eq $in;
+  for( split //, substr $in, 0, (length $in) >> 1) {
+    my @range = ( my $string = my $end = $start .= $_ );
+    ($string .= ++$end) && push @range, $end
+      while $in gt $string && length $in > length $string;
+    return \@range if $string eq $in;
   }
+  return [$in];
 }
-```
 
- * We could optimize this slightly - but not sure it is worth it - by only looping through the first half of $in, and returning the number if can't find solution - but haven't put those in as the overhead is probably not worth it.
+```
 
 # Challenge 2 - Sum of Squares
 
