@@ -1,7 +1,5 @@
 #!/usr/bin/env raku
 
-
-
 #| Given a number output 1 if the sum of the squares of it's digits is a square.
 multi sub MAIN (
     UInt $N where * >= 10 #= Number to test (Greater than equal to 10)
