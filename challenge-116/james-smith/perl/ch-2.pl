@@ -13,8 +13,8 @@ is( sum_square($_->[0]), $_->[1] ) foreach @tests;
 done_testing();
 
 sub sum_square {
-  my $sum = 0;                               ## Initialize sum
-  $sum += $_*$_ foreach split //, shift;     ## Sum digits..
-  return $sum == (int sqrt $sum)**2 ? 1 : 0; ## Check is squared
+  my $sum = 0;                            ## Initialize sum
+  $sum += $_*$_ foreach split //, shift;  ## Sum digits..
+  return $sum == (int sqrt $sum)**2 || 0; ## Check is squared
 }
 
