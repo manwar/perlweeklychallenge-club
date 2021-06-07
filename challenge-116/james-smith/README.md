@@ -18,15 +18,13 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-116/ja
 
 ## The solution
 
-We first need to get the possible leading numbers.. to do this we split the
-string into individual digits. We then concatenate each digit on to the end
+We first need to get the possible leading numbers.. to do this we split the string into individual digits. We then concatenate each digit on to the end
 of the sequence (`$start.=$_`)....
 
-Within each loop we just stitch together the string by incrementing the
-number each time through the loop..
+Within each loop we just stitch together the string by incrementing the number each time through the loop..
 
+ * We use string (in)equalities/incremements so this will work with arbitrarily large numbers (see examples in script)
  * We reduce the maximum calculations by a factor of 2 by spliting just the first half of the string   
- * We use string (in)equalities so this will work with arbitrary numbers.
  * We have to check length as well as the strings in the while condition (because we are using string comparison)
 
 ```perl
@@ -40,7 +38,6 @@ sub splitnum {
   }
   return [$in];
 }
-
 ```
 
 # Challenge 2 - Sum of Squares
@@ -55,9 +52,9 @@ Just split the input number and sum the square of it's digits... Then just retur
 
 ```perl
 sub sum_square {
-  my $sum = 0;                            ## Initialize sum
-  $sum += $_*$_ foreach split //, shift;  ## Sum digits..
-  return $sum == (int sqrt $sum)**2 || 0; ## Check is squared
+  my $sum = 0;                       ## Initialize sum
+  $sum += $_*$_ for split //, shift; ## Sum digits..
+  $sum == (int sqrt $sum)**2 || 0;   ## Check is squared
 }
 ```
 
