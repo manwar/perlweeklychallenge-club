@@ -1,47 +1,54 @@
 {
    "tooltip" : {
-      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-06-08 08:44:38 GMT"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 116"
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-06-08 08:34:47 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "James Smith",
-               "y" : 3,
-               "drilldown" : "James Smith"
-            },
-            {
-               "name" : "Simon Green",
-               "drilldown" : "Simon Green",
-               "y" : 3
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 2,
-               "drilldown" : "Simon Proctor"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 116",
-         "colorByPoint" : 1
-      }
-   ],
-   "legend" : {
-      "enabled" : 0
-   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Flavio Poletti",
+            "id" : "Flavio Poletti",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -52,10 +59,10 @@
                   1
                ]
             ],
-            "name" : "James Smith",
             "id" : "James Smith"
          },
          {
+            "id" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -66,7 +73,6 @@
                   1
                ]
             ],
-            "id" : "Simon Green",
             "name" : "Simon Green"
          },
          {
@@ -81,21 +87,38 @@
          }
       ]
    },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Flavio Poletti",
+               "drilldown" : "Flavio Poletti",
+               "y" : 6
+            },
+            {
+               "y" : 3,
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
+            },
+            {
+               "name" : "Simon Green",
+               "drilldown" : "Simon Green",
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 116"
+      }
+   ],
    "chart" : {
       "type" : "column"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "xAxis" : {
+      "type" : "category"
    }
 }
