@@ -1,75 +1,20 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-06-08 09:34:40 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 116"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Aaron Smith",
-               "name" : "Aaron Smith",
-               "y" : 3
-            },
-            {
-               "y" : 6,
-               "name" : "Flavio Poletti",
-               "drilldown" : "Flavio Poletti"
-            },
-            {
-               "y" : 3,
-               "name" : "James Smith",
-               "drilldown" : "James Smith"
-            },
-            {
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari",
-               "y" : 4
-            },
-            {
-               "name" : "Paulo Custodio",
-               "drilldown" : "Paulo Custodio",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Simon Green",
-               "name" : "Simon Green",
-               "y" : 3
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 116"
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Aaron Smith",
             "data" : [
                [
                   "Raku",
@@ -80,10 +25,11 @@
                   1
                ]
             ],
-            "id" : "Aaron Smith",
             "name" : "Aaron Smith"
          },
          {
+            "name" : "Flavio Poletti",
+            "id" : "Flavio Poletti",
             "data" : [
                [
                   "Perl",
@@ -97,12 +43,9 @@
                   "Blog",
                   2
                ]
-            ],
-            "id" : "Flavio Poletti",
-            "name" : "Flavio Poletti"
+            ]
          },
          {
-            "name" : "James Smith",
             "id" : "James Smith",
             "data" : [
                [
@@ -113,9 +56,12 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "James Smith"
          },
          {
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -125,9 +71,17 @@
                   "Blog",
                   2
                ]
+            ]
+         },
+         {
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
             ],
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari"
+            "name" : "Mark Anderson"
          },
          {
             "name" : "Paulo Custodio",
@@ -140,8 +94,6 @@
             "id" : "Paulo Custodio"
          },
          {
-            "name" : "Simon Green",
-            "id" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -151,27 +103,90 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Simon Green",
+            "name" : "Simon Green"
          },
          {
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "id" : "Simon Proctor",
             "name" : "Simon Proctor"
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 116",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "Aaron Smith",
+               "y" : 3,
+               "name" : "Aaron Smith"
+            },
+            {
+               "drilldown" : "Flavio Poletti",
+               "y" : 6,
+               "name" : "Flavio Poletti"
+            },
+            {
+               "name" : "James Smith",
+               "y" : 3,
+               "drilldown" : "James Smith"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
+               "y" : 4
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Paulo Custodio",
+               "y" : 2,
+               "name" : "Paulo Custodio"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Simon Green",
+               "name" : "Simon Green"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
+            }
+         ]
+      }
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-06-08 09:47:16 GMT"
    }
 }
