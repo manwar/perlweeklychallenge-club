@@ -45,7 +45,7 @@ sub splitnum {
     ## it is equal to or larger than the input number
 
     ($string .= ++$end) && push @range, $end
-      while $in gt $string && length $in > length $string;
+      while length $in > length $string;
 
     ## Finally we return the list if the input and
     ## string are the same. Note we will always get
@@ -70,8 +70,7 @@ sub splitnum_no_comments {
   my( $in, $st ) = ( shift, '' );
   for( split //, substr $in, 0, (length $in) >> 1) {
     my @r = ( my $t = my $en = $st .= $_ );
-    ($t .= ++$en) && push @r,$en while        $in gt        $t
-                                    && length $in >  length $t;
+    ($t .= ++$en) && push @r,$en while length $in >  length $t;
     return \@r if $t eq $in;
   }
   return [$in];
