@@ -1,41 +1,47 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge - 116"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2021-06-08 08:34:47 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "series" : [
       {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 116",
          "data" : [
             {
+               "name" : "James Smith",
                "y" : 3,
-               "drilldown" : "James Smith",
-               "name" : "James Smith"
+               "drilldown" : "James Smith"
             },
             {
                "name" : "Simon Green",
                "drilldown" : "Simon Green",
                "y" : 3
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
             }
-         ]
+         ],
+         "name" : "Perl Weekly Challenge - 116",
+         "colorByPoint" : 1
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -46,7 +52,8 @@
                   1
                ]
             ],
-            "name" : "James Smith"
+            "name" : "James Smith",
+            "id" : "James Smith"
          },
          {
             "data" : [
@@ -59,28 +66,36 @@
                   1
                ]
             ],
-            "name" : "Simon Green",
-            "id" : "Simon Green"
+            "id" : "Simon Green",
+            "name" : "Simon Green"
+         },
+         {
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Simon Proctor"
          }
       ]
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 116"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-06-08 08:25:34 GMT"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
