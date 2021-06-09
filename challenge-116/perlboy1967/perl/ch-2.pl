@@ -17,6 +17,7 @@ use Test::More;
 
 # Prototype(s)
 sub isSumOfSquares($);
+sub isIntSqr($);
 
 my %tests = (
    34 => 1,
@@ -25,8 +26,6 @@ my %tests = (
    2021 => 1,
    1234563 => 1,
 );
-
-my %iSqr = (0,0);
 
 foreach my $test (sort keys %tests) {
   is(isSumOfSquares($test),$tests{$test});
@@ -42,22 +41,8 @@ sub isSumOfSquares($) {
 }
 
 
-sub isIntSqr ($) {
+sub isIntSqr($) {
   my ($i) = @_;
 
-  state $maxSqr //= $iSqr{0};
-
-  return 1 if (defined $iSqr{$i});
-  return 0 if ($maxSqr > $i);
-
-  my ($m,$sqr) = ($iSqr{$maxSqr});
-  do {
-    $sqr = ++$m**2;
-    $iSqr{$sqr} = $m;
-  } while ($iSqr{$sqr} <= $i);
-
-  $maxSqr = $sqr;
-
-  return 1 if (defined $iSqr{$i});
-  return 0;
+  return ($i == int(sqrt $i)**2 ? 1 : 0);
 }
