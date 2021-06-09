@@ -33,6 +33,9 @@ use Algorithm::Graphs::TransitiveClosure qw [floyd_warshall];
 # We will output 1 if there is *any* cycle. Including looping back to
 # itself. So, if the input contains the word "eye", we will return 1.
 #
+# See https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-115-1.html
+# for details on how the algorithm in the module works.
+#
 
 while (<>) {
     #

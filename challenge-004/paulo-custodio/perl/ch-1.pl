@@ -8,9 +8,7 @@
 #
 # we need a big-math library to compute any large number of digits
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 use Math::BigFloat;
 say Math::BigFloat->bpi(-s $0);
