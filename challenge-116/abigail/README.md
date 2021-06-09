@@ -22,6 +22,13 @@ Output: 10203 as it is impossible to split satisfying the conditions.
 ~~~~
 
 ### Solutions
+* [AWK](awk/ch-1.awk)
+* [Bash](bash/ch-1.sh)
+* [Lua](lua/ch-1.lua)
+* [Node.js](node/ch-1.js)
+* [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
+* [Ruby](ruby/ch-1.rb)
 
 ### Blog
 [Number Sequence](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-116-1.html)
