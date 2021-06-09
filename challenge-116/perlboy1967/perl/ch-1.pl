@@ -25,7 +25,8 @@ my %tests = (
 );
 
 foreach my $test (sort keys %tests) {
-  printf "$test\n" unless is(isNumberSequence($test),$tests{$test});
+  printf "Test '$test' failed\n"
+    unless is(isNumberSequence($test),$tests{$test});
 }
 
 done_testing();
