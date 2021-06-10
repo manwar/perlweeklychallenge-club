@@ -1,0 +1,7 @@
+ HigherIntegerSetBits←{
+     n←⍵+1                 ⍝ Next integer
+     (sb nb)←+⌿2⊥⍣¯1⊢⍵,n   ⍝ Set Bits, Next Bits
+     ⍺←sb                  ⍝ Fix set bits for recursion
+     ⍺=nb:n                ⍝ Found, return result
+     ⍺ ∇ n                 ⍝ Try next number
+ }

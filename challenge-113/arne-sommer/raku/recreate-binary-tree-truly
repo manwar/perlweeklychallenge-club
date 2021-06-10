@@ -1,0 +1,87 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Str $tree = '1 | 2 3 | 4 * 5 6 | * 7', :v($verbose), :g(:$graph));
+
+my $sum = $tree.words.grep( * ~~ /\d/ ).sum;
+
+say ": Sum: $sum" if $verbose;
+
+class BinaryNode
+{
+  has Numeric    $.value  is rw;
+  has BinaryNode $.left   is rw;
+  has BinaryNode $.right  is rw;
+}
+
+my @btree = $tree.split("|")>>.words;
+
+my @old-nodes;
+my @new-nodes;
+
+for @btree.reverse -> $row
+{
+  my @current = @$row;
+  @old-nodes  = @new-nodes;
+  @new-nodes  = ();
+  
+  for @current -> $value
+  {
+    if $value eq "*"
+    {
+      @new-nodes.push("*");
+      next;
+    }
+
+    my $left  = @old-nodes.shift // "*"; $left  = Nil if $left  eq "*";
+    my $right = @old-nodes.shift // "*"; $right = Nil if $right eq "*";
+
+    @new-nodes.push(BinaryNode.new(value => $value.Int,
+                                   left  => $left  // Nil,
+                                   right => $right // Nil)); 
+  }
+}
+
+my $btree = @new-nodes[0];
+
+say ": { $btree.raku }\n" if $verbose;
+
+traverse($btree);
+
+say ": { $btree.raku }\n" if $verbose;
+
+graph($btree) if $graph;
+
+sub traverse ($current)
+{
+  $current.value = $sum - $current.value;
+
+  traverse($current.left)  if $current.left.defined;
+  traverse($current.right) if $current.right.defined;
+}
+
+sub graph ($graph)
+{
+  say 'digraph foogrph {';
+  say '  node [shape = record,height=.1];';
+
+  do-it($graph);
+
+  say '}';
+
+  sub do-it ($current)
+  {
+    say "  node{ $current.value }[label = \"<left> |<center> { $current.value }|<right> \"];";
+
+    if $current.left.defined
+    {
+      say  "  \"node{ $current.value }\":left -> \"node{ $current.left.value }\":center;";  
+      do-it($current.left);
+    }
+
+    if $current.right.defined
+    {
+      say  "  \"node{ $current.value }\":right -> \"node{ $current.right.value }\":center;";  
+      do-it($current.right);
+    }
+  }
+}

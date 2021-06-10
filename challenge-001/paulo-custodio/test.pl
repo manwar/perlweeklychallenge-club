@@ -1,10 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # run tests described in t/test-N.yaml
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Test::More;
 use Path::Tiny;
 use YAML::Tiny;
@@ -18,6 +16,7 @@ our %LANG = (
     ada     => 'adb',
     awk     => 'awk',
     basic   => 'bas',
+    bc      => 'bc',
     c       => 'c',
     cpp     => 'cpp',
     d       => 'd',
@@ -36,11 +35,19 @@ else {
     $TESTS{$_}=1 for @ARGV;
 }
 
+# run independent tests
+my @indep_tests = <t/*.t>;
+if (@indep_tests) {
+    ok 0==system("perl -S prove @indep_tests"), "prove @indep_tests";
+}
+
 # to be used in eval{} in the tests
 use vars qw( $prog $exec);
 
 for my $lang (grep {-d} sort keys %LANG) {
+    next if -f "t/$lang.t";     # independent test
     next unless $TESTS{$lang};
+
     for $prog (path($lang)->children(qr/\.$LANG{$lang}$/)) {
         $prog->basename =~ /^ch[-_](.*)\.$LANG{$lang}$/ or die $prog;
         my $task = $1;
@@ -59,7 +66,13 @@ for my $lang (grep {-d} sort keys %LANG) {
                     $@ and die $@;
 
                     # build test command line
-                    my $cmd = "$exec ".value_or_eval($spec->{args});
+                    my $cmd;
+                    if ($lang eq 'bc') {        # needs args in stdin
+                        $cmd = "echo ".$spec->{args}."|$exec";
+                    }
+                    else {
+                        $cmd = "$exec ".value_or_eval($spec->{args});
+                    }
                     chomp($cmd);
 
                     # input
@@ -78,6 +91,13 @@ for my $lang (grep {-d} sort keys %LANG) {
 
                     # compare output
                     if (defined($spec->{output})) {
+                        # remove \\ \n added by bc
+                        if ($lang eq 'bc') {
+                            my $out = path("out.txt")->slurp;
+                            $out =~ s/\\\n//g;
+                            path("out.txt")->spew($out);
+                        }
+
                         run("diff -w out_exp.txt out.txt");
                     }
 
@@ -106,22 +126,25 @@ sub build {
     my $prog_wo_ext = ($prog =~ s/\.\w+//r);
     my $prog_base = path($prog)->basename;
     for ($lang) {
-        if (/ada/) {
+        if (/^ada$/) {
             run("cd ada; gnatmake $prog_base"); # gnatmake builds only if needed
             return $exe;
         }
-        if (/awk/) {
+        if (/^awk$/) {
             return "gawk -f $prog --";
         }
-        if (/basic/) {
+        if (/^basic$/) {
             run("fbc $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
+        }
+        if (/^bc$/) {
+            return "bc -lq $prog";
         }
         if (/^c$/) {
             run("gcc $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
-        if (/cpp/) {
+        if (/^cpp$/) {
             run("g++ $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
@@ -129,17 +152,17 @@ sub build {
             run("cd d; dmd $prog_base") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
-        if (/forth/) {
+        if (/^forth$/) {
             return "gforth $prog";
         }
-        if (/lua/) {
+        if (/^lua$/) {
             return "$LUA $prog";
         }
-        if (/perl/) {
+        if (/^perl$/) {
             return "perl $prog";
         }
-        if (/python/) {
-            return "python $prog";
+        if (/^python$/) {
+            return "python3 $prog";
         }
         die "unsupported language $lang";
     }

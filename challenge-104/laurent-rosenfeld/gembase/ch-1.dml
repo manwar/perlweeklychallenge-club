@@ -1,0 +1,21 @@
+PROCEDURE_FORM FUSC
+    #size = 50
+    #fusc(0) = 0
+    #fusc(1) = 1
+    #i = 2
+    while(#i < #size)
+        if (mod (#i, 2))
+            #fusc(#i) = #fusc((#i-1)/2) + #fusc((#i+1)/2)
+        else
+            #fusc(#i) = #fusc(#i/2)
+        end_if
+        #i = #i + 1
+    end_while
+    #string = ""
+    #i = 0
+    while (#i < #size)
+        #string = #string & #fusc(#i) & " "
+        #i = #i + 1
+    end_while
+    print(#string)
+END_FORM

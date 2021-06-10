@@ -1,0 +1,23 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@S where @S.elems > 0);
+
+die "Non-unique string not allowed" if @S.elems != @S.unique.elems;
+
+for @S -> $elem
+{
+  say "$elem: $elem";
+}
+
+for @S -> $first
+{
+  for @S -> $second
+  {
+    next if $second eq $first;
+
+    if $second.substr(*-1,1) eq $first.substr(0,1)
+    {
+      say "$second>$first {$first.substr(0,1)}";
+    }
+  }
+}

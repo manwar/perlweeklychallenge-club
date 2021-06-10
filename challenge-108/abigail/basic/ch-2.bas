@@ -1,0 +1,9 @@
+010 REM 
+020 REM See ../README.md
+030 REM 
+
+040 REM 
+050 REM Run as: basic ch-2.bas
+060 REM 
+
+100 PRINT "1, 1, 2, 5, 15, 52, 203, 877, 4140, 21147"

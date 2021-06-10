@@ -1,0 +1,47 @@
+#!/usr/bin/bc -lq
+
+/*
+Challenge 105
+
+TASK #1 › Nth root
+Submitted by: Mohammad S Anwar
+You are given positive numbers $N and $k.
+
+Write a script to find out the $Nth root of $k. For more information, please
+take a look at the wiki page.
+
+Example
+Input: $N = 5, $k = 248832
+Output: 12
+
+Input: $N = 5, $k = 34
+Output: 2.02
+*/
+
+scale = 4
+
+/* A function to return the integer part of x */
+define i(x) {
+    auto s
+    s = scale
+    scale = 0
+    x /= 1   /* round x down */
+    scale = s
+    return (x)
+}
+
+/* Use the fact that x^y == e^(y*log(x)) */
+define p(x,y) {
+    if (y == i(y)) {
+        return (x ^ y)
+    }
+    return ( e( y * l(x) ) )
+}
+
+define round(n) {
+    return i(n*10000+0.5)/10000
+}
+
+n = read();
+k = read();
+print round(p(k, (1/n))), "\n";
