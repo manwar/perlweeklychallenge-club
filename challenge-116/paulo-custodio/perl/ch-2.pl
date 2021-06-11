@@ -34,5 +34,3 @@ sub sum_of_squares_is_perfect_square {
     my $sqrt_int = int(sqrt($sum));
     return $sqrt_int*$sqrt_int==$sum;
 }
-
-
