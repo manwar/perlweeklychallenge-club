@@ -25,15 +25,14 @@ Within each loop we just stitch together the string by incrementing the number e
 
  * We use string (in)equalities/incremements so this will work with arbitrarily large numbers (see examples in script)
  * We reduce the maximum calculations by a factor of 2 by spliting just the first half of the string   
- * We have to check length as well as the strings in the while condition (because we are using string comparison)
+ * As we are working with strings rather than numbers we check the lengths in the while condition (because we are using string comparison)
 
 ```perl
 sub splitnum {
   my( $in, $start ) = ( shift, '' );
-  for( split //, substr $in, 0, (length $in) >> 1) {
-    my @range = ( my $string = my $end = $start .= $_ );
-    ($string .= ++$end) && push @range, $end
-      while $in gt $string && length $in > length $string;
+  for( split //, substr $in, 0, (my $len = length $in) >> 1) {
+    my @range = ( my $str = my $end = $start .= $_ );
+    ($str .= ++$end) && push @range, $end while $len > length $str;
     return \@range if $string eq $in;
   }
   return [$in];
