@@ -1,4 +1,18 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-06-12 20:52:06 GMT"
+   },
    "series" : [
       {
          "name" : "Perl",
@@ -36,7 +50,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -68,7 +81,8 @@
             166,
             113,
             53
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -106,10 +120,15 @@
          ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "xAxis" : {
       "categories" : [
@@ -144,24 +163,5 @@
          "Ruben Westerberg",
          "Ryan Thompson"
       ]
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-06-12 20:36:58 GMT"
    }
 }
