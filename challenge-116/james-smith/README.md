@@ -32,7 +32,8 @@ sub splitnum {
   my( $in, $start ) = ( shift, '' );
   for( split //, substr $in, 0, (my $len = length $in) >> 1) {
     my @range = ( my $str = my $end = $start .= $_ );
-    ($str .= ++$end) && push @range, $end while $len > length $str;
+    ($str .= ++$end) && push @range, $end while ($len > length $str) &&
+              $end eq substr $in,length($str)-length($end),length($end);
     return \@range if $string eq $in;
   }
   return [$in];

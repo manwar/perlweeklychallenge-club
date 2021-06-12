@@ -5,6 +5,7 @@ use strict;
 use warnings;
 use feature qw(say);
 use Test::More;
+use Benchmark qw(cmpthese);
 
 my $nspace = join '', 1..1000;
 my $ncomma = join ',',1..1000;
@@ -26,10 +27,12 @@ my @tests = (
 );
 
 is( join(',',@{splitnum($_->[0])}),$_->[1] ) foreach @tests;
-is( join(',',@{splitnum_no_comments($_->[0])}),$_->[1] ) foreach @tests;
-
+is( join(',',@{splitnum_optimized($_->[0])}),$_->[1] ) foreach @tests;
 done_testing();
-
+cmpthese( 120, {
+  a => sub { splitnum($_->[0]) foreach @tests; },
+  c => sub { splitnum_optimized($_->[0]) foreach @tests; },
+});
 sub splitnum {
   my( $in, $start ) = ( shift, '' );
   for( split //, substr $in, 0, (my $len = length $in) >> 1) {
@@ -65,14 +68,16 @@ sub splitnum {
 ## length of $n - but only really valid if you are getting very large
 ## values of $n...}
 
-## Below is the code above with the comments removed
-sub splitnum_no_comments {
+## We can add some optimization here... check that we match the string
+## otherwise return;
+
+sub splitnum_optimized {
   my( $in, $start ) = ( shift, '' );
   for( split //, substr $in, 0, (my $len = length $in) >> 1) {
     my @range = ( my $str = my $end = $start .= $_ );
-    ($str .= ++$end) && push @range,$end while $len > length $str;
+    ($str .= ++$end) && push @range,$end while ($len > length $str) &&
+                                               $end eq substr $in,length($str)-length($end),length($end);
     return \@range if $str eq $in;
   }
   return [$in];
 }
-
