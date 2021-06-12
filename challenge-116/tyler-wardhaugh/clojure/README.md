@@ -1,25 +1,35 @@
-# tw.weekly.c112
+# tw.weekly.c116
 
 
-The Weekly Challenge - #112 - Tyler Wardhaugh
+The Weekly Challenge - #116 - Tyler Wardhaugh
 
 ## Usage
 
+Clojure ([installation instructions](https://clojure.org/guides/getting_started#_clojure_installer_and_cli_tools)) required for `clojure` commands; Babashka ([installation instructions](https://github.com/babashka/babashka#quickstart)) required for the `bb` commands.
+
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -M -m tw.weekly.c112.core
+    $ clojure -M -m tw.weekly.c116.core
+    # ... or ...
+    $ bb run both
 
 Run the project's tests (which are samples from the task descriptions):
 
     $ clojure -M:test:runner
+    # ... or ...
+    $ bb run test
 
 Run Task #1 with input
 
-    $ clojure -M -m tw.weekly.c112.t1 PATH
+    $ clojure -M -m tw.weekly.c116.t1 N
+    # ... or ...
+    $ bb run task-1 N
 
 Run Task #2 with input:
 
-    $ clojure -M -m tw.weekly.c112.t2 N
+    $ clojure -M -m tw.weekly.c116.t2 N
+    # ... or ...
+    $ bb run task-2 N
 
 ## Project Template
 
