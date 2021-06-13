@@ -8,14 +8,14 @@
 # Run as: ruby ch-1.rb < input-file
 #
 
-def make_chain (string, start)
+def make_sequence (string, start)
     if   string == start
     then return [start]
     end
     if   0 == string . index(start)
     then tail   = string [start . length, string . length]
-         result = make_chain(tail, (start . to_i + 1) . to_s) ||
-                  make_chain(tail, (start . to_i - 1) . to_s)
+         result = make_sequence(tail, (start . to_i + 1) . to_s) ||
+                  make_sequence(tail, (start . to_i - 1) . to_s)
          if   result
          then return result . unshift (start)
          end
@@ -29,7 +29,7 @@ ARGF . each_line do
     line . strip!
     for i in 1 .. line . length do
         start  = line [0, i]
-        result = make_chain(line, start)
+        result = make_sequence(line, start)
         if   result
         then puts (result . join (","))
              break

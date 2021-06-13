@@ -12,14 +12,14 @@
 . createInterface ({input: process . stdin})   
 . on              ('line', line => main (line))
 
-function make_chain (string, start) {
+function make_sequence (string, start) {
     if (string == start) {
         return [start]
     }
     if (0 == string . indexOf (start)) {
         let tail = string . substr (start . length)
-        let result = make_chain (tail, (+ start + 1) . toString ()) ||
-                     make_chain (tail, (+ start - 1) . toString ())
+        let result = make_sequence (tail, (+ start + 1) . toString ()) ||
+                     make_sequence (tail, (+ start - 1) . toString ())
         if (result) {
             result . unshift (start)
             return result
@@ -32,7 +32,7 @@ function make_chain (string, start) {
 function main (line) {
     for (let i = 1; i <= line . length; i ++) {
         let start  = line . substr (0, i)
-        let result = make_chain (line, start)
+        let result = make_sequence (line, start)
         if (result) {
             console . log (result . join (","))
             break

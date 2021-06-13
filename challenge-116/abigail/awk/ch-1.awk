@@ -8,15 +8,15 @@
 # Run as: awk -f ch-1.awk < input-file
 #
 
-function make_chain (string, start) {
+function make_sequence (string, start) {
     if (start == string) {
         return start
     }
     if (1 == index (string, start)) {
         tail = substr (string, length (start) + 1)
-        result = make_chain(tail, start + 1)
+        result = make_sequence(tail, start + 1)
         if (result == "") {
-            result = make_chain(tail, start - 1)
+            result = make_sequence(tail, start - 1)
         }
         if (result == "") {
             return ""
@@ -28,7 +28,7 @@ function make_chain (string, start) {
 
 {
     for (i = 1; i <= length ($1); i ++) {
-        result = make_chain($1, substr ($1, 1, i))
+        result = make_sequence($1, substr ($1, 1, i))
         if (result != "") {
             print result
             next

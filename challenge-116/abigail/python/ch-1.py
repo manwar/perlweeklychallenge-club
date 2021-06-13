@@ -10,14 +10,14 @@
 
 import fileinput
 
-def make_chain (string, start):
+def make_sequence (string, start):
     if string == start:
         return [start]
 
     if 0 == string . find (start):
         tail = string [len (start) :]
-        result = make_chain (tail, str (int (start) + 1)) or \
-                 make_chain (tail, str (int (start) - 1))
+        result = make_sequence (tail, str (int (start) + 1)) or \
+                 make_sequence (tail, str (int (start) - 1))
         if result:
             return [start] + result
 
@@ -27,7 +27,7 @@ def make_chain (string, start):
 for line in fileinput . input ():
     line = line . strip ()
     for i in range (0, len (line)):
-        result = make_chain (line, line [0 : i + 1])
+        result = make_sequence (line, line [0 : i + 1])
         if result:
             print ("," . join (result))
             break

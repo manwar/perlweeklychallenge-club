@@ -12,7 +12,7 @@ set -f
 
 out=""
 
-function make_chain () {
+function make_sequence () {
     local string=$1
     local start=$2
     if   [[ "$string" = "$start" ]]
@@ -22,12 +22,12 @@ function make_chain () {
 
     if   [[ $string =~ ^$start ]]
     then local tail=${string:${#start}}
-         make_chain $tail $((start + 1))
+         make_sequence $tail $((start + 1))
          if   [[ $out =~ ^. ]]
          then out=$start,$out
               return
          fi
-         make_chain $tail $((start - 1))
+         make_sequence $tail $((start - 1))
          if   [[ $out =~ ^. ]]
          then out=$start,$out
               return
@@ -41,7 +41,7 @@ function make_chain () {
 while read string
 do    for ((i = 1; i <= ${#string}; i ++))
       do  start=${string:0:$i}
-          make_chain $string $start
+          make_sequence $string $start
           if [[ $out =~ ^. ]]
           then echo $out
                break

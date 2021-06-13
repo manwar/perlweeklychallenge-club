@@ -29,19 +29,19 @@ use experimental 'lexical_subs';
 #
 # Note the running time is O (N), despite recursing twice. This is
 # because there is no number X such that X + 1 and X - 1 are the same
-# number. Hence, in at least one of the recursive make_chain calls the
+# number. Hence, in at least one of the recursive make_sequence calls the
 # 'start' will not match the beginning of 'string'.
 #
 
-sub make_chain ($string, $start) {
+sub make_sequence ($string, $start) {
     if ($string eq $start) {
         return [$start]
     }
     if (index ($string, $start) == 0) {
         my $tail = substr $string, length $start;
         my $rest;
-        if (($rest = make_chain ($tail, $start + 1)) ||
-            ($rest = make_chain ($tail, $start - 1))) {
+        if (($rest = make_sequence ($tail, $start + 1)) ||
+            ($rest = make_sequence ($tail, $start - 1))) {
             push  @$rest => $start;
             return $rest;
         }
@@ -56,7 +56,7 @@ INPUT: while (<>) {
         #
         # Try to make a chain with each possible start.
         #
-        my  $result = make_chain $_, substr $_, 0, $i;
+        my  $result = make_sequence $_, substr $_, 0, $i;
         if ($result) {
             say join "," => reverse @$result;
             next INPUT;
