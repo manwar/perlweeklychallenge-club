@@ -1,18 +1,46 @@
 {
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : "false"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
+   "series" : [
+      {
+         "dataLabels" : {
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "align" : "right"
+         },
+         "data" : [
+            [
+               "Blog",
+               1636
+            ],
+            [
+               "Perl",
+               5487
+            ],
+            [
+               "Raku",
+               3481
+            ]
+         ],
+         "name" : "Contributions"
       }
+   ],
+   "subtitle" : {
+      "text" : "Last updated at 2021-06-13 12:15:17 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
       "title" : {
@@ -20,44 +48,16 @@
       },
       "min" : 0
    },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "align" : "right",
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "y" : 10
-         },
-         "data" : [
-            [
-               "Blog",
-               1635
-            ],
-            [
-               "Perl",
-               5485
-            ],
-            [
-               "Raku",
-               3479
-            ]
-         ]
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
       }
-   ],
-   "legend" : {
-      "enabled" : "false"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-06-13 11:22:26 GMT"
+   "chart" : {
+      "type" : "column"
    }
 }
