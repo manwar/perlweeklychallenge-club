@@ -1,49 +1,43 @@
-Task 1: "String Chain
+Task 1: "Number Sequence
 
-You are given an array of strings.
+You are given a number $N >= 10.
 
-Write a script to find out if the given strings can be chained to form
-a circle. Print 1 if found otherwise 0.
+Write a script to split the given number such that the difference between
+two consecutive numbers is always 1 and it shouldn't have leading 0.
 
-A string $S can be put before another string $T in circle if the last
-character of $S is same as first character of $T.
+Print the given number if it impossible to split the number.
 
-Examples:
+Example
 
-  Input: @S = ("abc", "dea", "cd")
-  Output: 1 as we can form circle e.g. "abc", "cd", "dea".
+  Input: $N = 1234
+  Output: 1,2,3,4
 
-  Input: @S = ("ade", "cbd", "fgh")
-  Output: 0 as we can't form circle.
+  Input: $N = 91011
+  Output: 9,10,11
+
+  Input: $N = 10203
+  Output: 10203 as it is impossible to split satisfying the conditions.
 "
 
-My notes: word chains are often quite hard. HOWEVER, this time it's a circular word chain
-using ALL the words, so that's much easier:
-1. we don't have to try "what if we start with this word (for each word)", just pick one.
-2. we must use every word.
+My notes: seems pretty easy.  Only question is the initial number's width - try all possible widths.
 
-(2) also implies an obvious shortcut to speed up failure (0) case:
-fail if numwords(starting_with_a_letter) != numwords(ending_with_that_letter).
-But I don't think I need implement that.
+Task 2: "Sum of Squares
 
+You are given a number $N >= 10.
 
-Task 2: "Largest Multiple (Even)
+Write a script to find out if the given number $N is such that sum of
+squares of all digits is a perfect square. Print 1 if it is otherwise 0.
 
-You are given a list of positive integers (0-9), single digit.
+Example
 
-Write a script to find the largest multiple of 2 that can be formed from the list.
+  Input: $N = 34
+  Ouput: 1 as 3^2 + 4^2 => 9 + 16 => 25 => 5^2
 
-Examples
-
-  Input: @N = (1, 0, 2, 6)
-  Output: 6210
-
-  Input: @N = (1, 4, 2, 8)
-  Output: 8412
-
-  Input: @N = (4, 1, 7, 6)
-  Output: 7614
+  Input: $N = 50
+  Output: 1 as 5^2 + 0^2 => 25 + 0 => 25 => 5^2
+  
+  Input: $N = 52
+  Output: 0 as 5^2 + 2^2 => 25 + 4 => 29
 "
 
-My notes: should be easy (multiple of 2 == even number).  Obvious heuristic is: put biggest digit
-first, but I suppose it's possible that no even numbers would result.  Hell, just try all perms..
+My notes: should be easy.
