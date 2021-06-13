@@ -58,7 +58,9 @@ if (@ARGV) {
 }
 
 my %squares;
-%squares = map {$_ * $_ => 1} 1 .. 9000;
+if ($type == $TYPE_PREPROCESS) {
+    %squares = map {$_ * $_ => 1} 1 .. 9000;
+}
 
 #
 # Print 1 if the squares of the digits sum to a perfect square, 0 otherwise.
