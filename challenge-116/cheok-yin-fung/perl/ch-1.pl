@@ -15,6 +15,12 @@ print "Impossible to split.\n"
     unless (determine($N));
 
 
+# I found that I had misunderstood the meaning of "consecutive"
+# after the first commit.
+# Removing some of the pound signs below, we can find 
+# numbers which can be split into "integer seq diff by 1"
+
+
 sub determine {
     my $num = $_[0];
     $num =~ s/^0+//;
@@ -24,21 +30,22 @@ sub determine {
         $yN = $num;
         my $bool_next = 1;
         my $bool_next_i = undef;
-        my $bool_next_d = undef;
+#       my $bool_next_d = undef;
         my $f = substr($yN , 0, $k);
         my $f_i;
-        my $f_d;
+#       my $f_d;
         my @arr;
         while ($bool_next && $yN ne "") {
             $yN =~ s/^$f//;
             push @arr, $f;
             $f_i = $f+1;
-            $f_d = $f-1;
+#           $f_d = $f-1;
             $bool_next_i = $yN =~ /^$f_i/;
-            $bool_next_d = $yN =~ /^$f_d/;
-            $bool_next = $bool_next_i || $bool_next_d;
+#           $bool_next_d = $yN =~ /^$f_d/;
+##          $bool_next = $bool_next_i || $bool_next_d;
+            $bool_next = $bool_next_i;
             $f = $f_i if $bool_next_i;
-            $f = $f_d if $bool_next_d;
+#           $f = $f_d if $bool_next_d;
         } 
         if ($yN eq "") {
             print join ",", @arr;
@@ -49,13 +56,12 @@ sub determine {
     return 0;
 }
 
-
 =pod
-ok determine(10) == 1, "N = 10";
+ok determine(10) == 0, "N = 10";
 ok determine(1234) == 1, "example 1";
 ok determine(91011) == 1, "example 2";
 ok determine(10203) == 0, "example 3";
-ok determine(104103) == 1, "N = 104103";
-ok determine(12123456789101110) == 1, "a large N";
+ok determine(103104) == 1, "N = 103104";
+ok determine(123456789101112) == 1, "a large N";
 ok determine(5405) == 0, "N = 5405";
 =cut
