@@ -1,25 +1,18 @@
 {
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "Last updated at 2021-06-13 22:45:19 GMT"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
    },
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "enabled" : "true",
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "format" : "{point.y:.0f}",
-            "y" : 10
-         },
          "data" : [
             [
                "Blog",
@@ -27,37 +20,44 @@
             ],
             [
                "Perl",
-               5492
+               5494
             ],
             [
                "Raku",
                3483
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "rotation" : -90,
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "enabled" : "true"
+         },
+         "name" : "Contributions"
       }
    ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
+   "chart" : {
+      "type" : "column"
    },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
+   "legend" : {
+      "enabled" : "false"
    },
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2021-06-13 22:28:25 GMT"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "legend" : {
-      "enabled" : "false"
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
    }
 }
