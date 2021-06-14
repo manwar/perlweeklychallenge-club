@@ -56,17 +56,19 @@ sub fitness{
     }
     $s = NUMBERS;
     for(my $i = 0; $i < @operands - 1; $i++){
-        if($operands[$i] == ($operands[$i + 1] - 1)){
-            $fitness++; 
-            my $chars = length($operands[$i]); 
-            $s = substr($s, $chars);    
-        }  
+        if(substr($operands[$i], 0, 1) != 0 && substr($operands[$i + 1], 0, 1) != 0){  
+            if($operands[$i] == ($operands[$i + 1] - 1)){
+                $fitness++; 
+                my $chars = length($operands[$i]); 
+                $s = substr($s, $chars);    
+            } 
+        } 
     }
     if($operands[@operands - 1] && $operands[@operands - 2]){
-    if($operands[@operands - 1] == ($operands[@operands - 2] + 1)){
-        my $chars = length($operands[@operands - 1]); 
-        $s = substr($s, $chars);    
-    }   
+        if($operands[@operands - 1] == ($operands[@operands - 2] + 1)){
+            my $chars = length($operands[@operands - 1]); 
+            $s = substr($s, $chars);    
+        }   
     }   
     $fitness *= length($s);
     return $fitness;
@@ -89,7 +91,7 @@ sub terminate{
         return true;
     }
     print NUMBERS . "\n"; 
-    return false;
+    return true;
 }
 
 MAIN:{
