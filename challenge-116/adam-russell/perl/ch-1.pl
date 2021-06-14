@@ -54,9 +54,21 @@ sub fitness{
             $s = substr($s, $i) if length($s) >= $i;
         }
     }
+    $s = NUMBERS;
     for(my $i = 0; $i < @operands - 1; $i++){
-        $fitness += 1 if $operands[$i] == ($operands[$i + 1] - 1);
+        if($operands[$i] == ($operands[$i + 1] - 1)){
+            $fitness++; 
+            my $chars = length($operands[$i]); 
+            $s = substr($s, $chars);    
+        }  
     }
+    if($operands[@operands - 1] && $operands[@operands - 2]){
+    if($operands[@operands - 1] == ($operands[@operands - 2] + 1)){
+        my $chars = length($operands[@operands - 1]); 
+        $s = substr($s, $chars);    
+    }   
+    }   
+    $fitness *= length($s);
     return $fitness;
 }
 
