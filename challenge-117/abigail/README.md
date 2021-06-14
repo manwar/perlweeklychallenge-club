@@ -1,29 +1,32 @@
 # Solutions by Abigail
-## [Number Sequence](https://perlweeklychallenge.org/blog/perl-weekly-challenge-116/#TASK1)
+## [Missing Row](https://perlweeklychallenge.org/blog/perl-weekly-challenge-117/#TASK1)
 
-> You are given a number `$N` >= `10`.
-> 
-> Write a script to split the given number such that the difference
-> between two consecutive numbers is always 1 and it shouldn't have
-> leading `0`.
-> 
-> Print the given number if it impossible to split the number.
+> You are given text file with rows numbered `1-15` in random order but
+> there is a catch one row in missing in the file.
 
-### Example
 ~~~~
-Input: $N = 1234
-Output: 1,2,3,4
-
-Input: $N = 91011
-Output: 9,10,11
-
-Input: $N = 10203
-Output: 10203 as it is impossible to split satisfying the conditions.
+11, Line Eleven
+1, Line one
+9, Line Nine
+13, Line Thirteen
+2, Line two
+6, Line Six
+8, Line Eight
+10, Line Ten
+7, Line Seven
+4, Line Four
+14, Line Fourteen
+3, Line three
+15, Line Fifteen
+5, Line Five
 ~~~~
+
+Write a script to find the missing row number.
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
@@ -31,26 +34,41 @@ Output: 10203 as it is impossible to split satisfying the conditions.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[Number Sequence](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-116-1.html)
+[Missing Row](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-117-1.html)
 
-## [Sum of Squares](https://perlweeklychallenge.org/blog/perl-weekly-challenge-115/#TASK2)
+## [Find Possible Paths](https://perlweeklychallenge.org/blog/perl-weekly-challenge-115/#TASK2)
 
-> You are given a number $N >= 10.
+> You are given size of a triangle.
+> 
+> Write a script to find all possible paths from top to the bottom
+> right corner.
+> 
+> In each step, we can either move horizontally to the right (`H`), or
+> move downwards to the left (`L`) or right (`R`).
 >
-> Write a script to find out if the given number `$N` is such that
-> sum of squares of all digits is a perfect square.
-> Print `1` if it is otherwise `0`.
+> BONUS: Try if it can handle triangle of size `10` or `20`.
 
 ### Examples
 ~~~~
-Input: $N = 34
-Ouput: 1 as 3^2 + 4^2 => 9 + 16 => 25 => 5^2
+Input: $N = 2
 
-Input: $N = 50
-Output: 1 as 5^2 + 0^2 => 25 + 0 => 25 => 5^2
+           S
+          / \
+         / _ \
+        /\   /\
+       /__\ /__\ E
 
-Input: $N = 52
-Output: 0 as 5^2 + 2^2 => 25 + 4 => 29
+Output: RR, LHR, LHLH, LLHH, RLH, LRH
+~~~~
+
+~~~~
+Input: $N = 1
+
+           S
+          / \
+         / _ \ E
+
+Output: R, LH
 ~~~~
 
 ### Solutions
@@ -64,4 +82,4 @@ Output: 0 as 5^2 + 2^2 => 25 + 4 => 29
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[Sum of Squares](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-116-2.html)
+[Find Possible Paths](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-117-2.html)
