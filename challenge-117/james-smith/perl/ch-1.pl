@@ -6,7 +6,7 @@ use warnings;
 use feature qw(say);
 use Test::More;
 
-say missing( 'test.txt');
+say missing( 'test.txt' );
 
 done_testing();
 
