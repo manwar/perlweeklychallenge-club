@@ -28,9 +28,9 @@ sub missing {
   ##
   ## $missing_line_no = $n*($n+1)/2 - $sum_lines
   ##
-  my($n,$s) = (1,0);
-  open my $fh, '<', shift;
-  ++$n && ( $s += substr $_, 0, index $_, ',' ) while <$fh>;
+  my( $n, $s ) = ( 1, 0 );
+  open my $fh, q(<), shift;
+  ++$n && ( $s += substr $_, 0, index $_, q(,) ) while <$fh>;
   close $fh;
   return ( $n + 1 ) * $n / 2 - $s;
 }
