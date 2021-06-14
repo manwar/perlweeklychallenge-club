@@ -1,27 +1,29 @@
 # Solutions by Abigail
-## [String Chain](https://perlweeklychallenge.org/blog/perl-weekly-challenge-115/#TASK1)
+## [Number Sequence](https://perlweeklychallenge.org/blog/perl-weekly-challenge-116/#TASK1)
 
-> You are given an array of strings.
+> You are given a number `$N` >= `10`.
 > 
-> Write a script to find out if the given strings can be chained
-> to form a circle. Print `1` if found otherwise `0`.
->
-> > A string `$S` can be put before another string `$T` in circle
-> > if the last character of `$S` is same as first character of `$T`.
+> Write a script to split the given number such that the difference
+> between two consecutive numbers is always 1 and it shouldn't have
+> leading `0`.
+> 
+> Print the given number if it impossible to split the number.
 
 ### Example
 ~~~~
-Input: @S = ("abc", "dea", "cd")
-Output: 1 as we can form circle e.g. "abc", "cd", "dea".
+Input: $N = 1234
+Output: 1,2,3,4
 
-Input: @S = ("ade", "cbd", "fgh")
-Output: 0 as we can't form circle.
+Input: $N = 91011
+Output: 9,10,11
+
+Input: $N = 10203
+Output: 10203 as it is impossible to split satisfying the conditions.
 ~~~~
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
-* [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
@@ -29,25 +31,26 @@ Output: 0 as we can't form circle.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[String Chain](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-115-1.html)
+[Number Sequence](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-116-1.html)
 
-## [Largest Multiple](https://perlweeklychallenge.org/blog/perl-weekly-challenge-115/#TASK2)
+## [Sum of Squares](https://perlweeklychallenge.org/blog/perl-weekly-challenge-115/#TASK2)
 
-> You are given a list of positive integers `(0-9)`, single digit.
+> You are given a number $N >= 10.
 >
-> Write a script to find the largest multiple of `2` that can be
-> formed from the list.
+> Write a script to find out if the given number `$N` is such that
+> sum of squares of all digits is a perfect square.
+> Print `1` if it is otherwise `0`.
 
 ### Examples
 ~~~~
-Input: @N = (1, 0, 2, 6)
-Output: 6210
+Input: $N = 34
+Ouput: 1 as 3^2 + 4^2 => 9 + 16 => 25 => 5^2
 
-Input: @N = (1, 4, 2, 8)
-Output: 8412
+Input: $N = 50
+Output: 1 as 5^2 + 0^2 => 25 + 0 => 25 => 5^2
 
-Input: @N = (4, 1, 7, 6)
-Output: 7614
+Input: $N = 52
+Output: 0 as 5^2 + 2^2 => 25 + 4 => 29
 ~~~~
 
 ### Solutions
@@ -61,4 +64,4 @@ Output: 7614
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[Largest Multiple](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-115-2.html)
+[Sum of Squares](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-116-2.html)
