@@ -88,7 +88,7 @@ sub schroder_non_recursive {
 }
 ```
 
-``perl
+```perl
 sub schroder_recurrence_rel {
   my( $size, @S ) = ( shift, 1, 2 );
   foreach my $n (2..$size) {
@@ -97,3 +97,4 @@ sub schroder_recurrence_rel {
   }
   return $S[ $size ];
 }
+```
