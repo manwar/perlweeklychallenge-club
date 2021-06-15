@@ -1,27 +1,44 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-06-14 10:36:52 GMT"
+   "chart" : {
+      "type" : "column"
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "drilldown" : "Feng Chang",
-               "y" : 2,
-               "name" : "Feng Chang"
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 1,
-               "drilldown" : "Mark Anderson"
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 117"
-      }
-   ],
-   "title" : {
-      "text" : "Perl Weekly Challenge - 117"
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Feng Chang",
+            "name" : "Feng Chang"
+         },
+         {
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ]
+         },
+         {
+            "name" : "Simon Green",
+            "id" : "Simon Green",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         }
+      ]
    },
    "plotOptions" : {
       "series" : {
@@ -32,47 +49,49 @@
          }
       }
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
    "xAxis" : {
       "type" : "category"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Feng Chang",
-            "name" : "Feng Chang",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
-            "data" : [
-               [
-                  "Raku",
-                  1
-               ]
-            ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
-         }
-      ]
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
    "legend" : {
       "enabled" : 0
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 117"
+   },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 117",
+         "data" : [
+            {
+               "name" : "Feng Chang",
+               "y" : 2,
+               "drilldown" : "Feng Chang"
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 1,
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Simon Green",
+               "name" : "Simon Green"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2021-06-15 12:13:07 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    }
 }
