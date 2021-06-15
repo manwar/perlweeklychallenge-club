@@ -1,45 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Feng Chang",
-            "name" : "Feng Chang"
-         },
-         {
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  1
-               ]
-            ]
-         },
-         {
-            "name" : "Simon Green",
-            "id" : "Simon Green",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ]
-         }
-      ]
-   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
@@ -49,49 +8,105 @@
          }
       }
    },
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-06-15 12:16:08 GMT"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Feng Chang",
+               "drilldown" : "Feng Chang",
+               "y" : 2
+            },
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 1
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Simon Green",
+               "name" : "Simon Green"
+            },
+            {
+               "drilldown" : "Vinod Kumar K",
+               "name" : "Vinod Kumar K",
+               "y" : 1
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 117"
+      }
+   ],
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "xAxis" : {
+      "type" : "category"
    },
    "title" : {
       "text" : "Perl Weekly Challenge - 117"
    },
-   "series" : [
-      {
-         "name" : "Perl Weekly Challenge - 117",
-         "data" : [
-            {
-               "name" : "Feng Chang",
-               "y" : 2,
-               "drilldown" : "Feng Chang"
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 1,
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "y" : 3,
-               "drilldown" : "Simon Green",
-               "name" : "Simon Green"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-06-15 12:13:07 GMT"
-   },
    "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Feng Chang",
+            "name" : "Feng Chang",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "name" : "Mark Anderson"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Simon Green",
+            "id" : "Simon Green"
+         },
+         {
+            "id" : "Vinod Kumar K",
+            "name" : "Vinod Kumar K",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ]
+         }
+      ]
    }
 }
