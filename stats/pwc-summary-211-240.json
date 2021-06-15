@@ -1,4 +1,10 @@
 {
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "xAxis" : {
       "categories" : [
          "Ulrich Rieke",
@@ -17,11 +23,22 @@
          "Yozen Hernandez"
       ]
    },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 14] Last updated at 2021-06-15 19:46:28 GMT"
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
-            114,
+            116,
             24,
             17,
             13,
@@ -35,9 +52,11 @@
             3,
             86,
             21
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             135,
             0,
@@ -53,11 +72,9 @@
             3,
             21,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -73,31 +90,14 @@
             1,
             6,
             14
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 14] Last updated at 2021-06-15 19:23:26 GMT"
-   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "chart" : {
+      "type" : "column"
    }
 }
