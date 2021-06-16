@@ -1,0 +1,54 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N >= 10, :v(:$verbose));
+
+exit if $N.starts-with('0');
+
+my $base = 1 x $N.chars -1 ;
+my $size = $base.chars;
+my $dec  = $base.parse-base(2);
+
+# say " $base - $dec";
+
+my @values = $N.comb;
+
+for 1 .. $dec -> $zip
+{
+  # say $zip.fmt('%0' ~ $size ~ "b");
+
+  my @mask = $zip.fmt('%0' ~ $size ~ "b").comb.map({ $_ == 1 ?? '|' !! ' ' });
+
+  # say ":: $zip -> @mask[]";
+
+  my $candidate = roundrobin(@values, @mask).join.trans(' ' => '');
+
+  say ": Candidate: $candidate" if $verbose;
+
+  my @c = $candidate.split('|');
+
+  if is-consecutive(@c)
+  {
+    say @c.join(',');
+    exit;
+  }
+}
+
+say $N;
+
+sub is-consecutive (*@list is copy)
+{
+  my $first = @list.shift;
+  return False if $first.starts-with('0');
+  my $second;
+
+  while (@list)
+  {
+    $second = @list.shift;
+    return False if $second.starts-with('0');
+
+    return False unless $second == $first + 1;
+    $first = $second;
+  }
+  
+  return True;
+}

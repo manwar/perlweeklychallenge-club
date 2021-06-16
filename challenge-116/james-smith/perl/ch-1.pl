@@ -5,12 +5,14 @@ use strict;
 use warnings;
 use feature qw(say);
 use Test::More;
+use Benchmark qw(cmpthese);
 
 my $nspace = join '', 1..1000;
 my $ncomma = join ',',1..1000;
 my $lint_x = my $lint   = ('9' x 999).'8';
 my $lint_y = ++$lint_x;
 $lint_y++;
+
 my @tests = (
  [ 1234,  '1,2,3,4' ],
  [ 91011, '9,10,11' ],
@@ -25,13 +27,15 @@ my @tests = (
 );
 
 is( join(',',@{splitnum($_->[0])}),$_->[1] ) foreach @tests;
-is( join(',',@{splitnum_no_comments($_->[0])}),$_->[1] ) foreach @tests;
-
+is( join(',',@{splitnum_optimized($_->[0])}),$_->[1] ) foreach @tests;
 done_testing();
-
+cmpthese( 120, {
+  a => sub { splitnum($_->[0]) foreach @tests; },
+  c => sub { splitnum_optimized($_->[0]) foreach @tests; },
+});
 sub splitnum {
   my( $in, $start ) = ( shift, '' );
-  for( split //, substr $in, 0, (length $in) >> 1) {
+  for( split //, substr $in, 0, (my $len = length $in) >> 1) {
     ## $start contains the first number of sequence
     ## each time through the loop we will add the
     ## next digit eg 1, 12, 123
@@ -39,20 +43,19 @@ sub splitnum {
     ## $end contains a copy of this, which we will
     ## then incremement as we generate the sum
 
-    my @range = ( my $string = my $end = $start .= $_ );
+    my @range = ( my $str = my $end = $start .= $_ );
 
     ## We concatenate the of "end" onto $string until
     ## it is equal to or larger than the input number
 
-    ($string .= ++$end) && push @range, $end
-      while $in gt $string && length $in > length $string;
+    ($str .= ++$end) && push @range, $end while $len > length $str;
 
     ## Finally we return the list if the input and
     ## string are the same. Note we will always get
     ## a true value as in the last loop
     ##   $in == $start == $end == $string
 
-    return \@range if $string eq $in;
+    return \@range if $str eq $in;
   }
   return [$in];
 }
@@ -65,15 +68,16 @@ sub splitnum {
 ## length of $n - but only really valid if you are getting very large
 ## values of $n...}
 
-## Below is the code above with the comments removed
-sub splitnum_no_comments {
-  my( $in, $st ) = ( shift, '' );
-  for( split //, substr $in, 0, (length $in) >> 1) {
-    my @r = ( my $t = my $en = $st .= $_ );
-    ($t .= ++$en) && push @r,$en while        $in gt        $t
-                                    && length $in >  length $t;
-    return \@r if $t eq $in;
+## We can add some optimization here... check that we match the string
+## otherwise return;
+
+sub splitnum_optimized {
+  my( $in, $start ) = ( shift, '' );
+  for( split //, substr $in, 0, (my $len = length $in) >> 1) {
+    my @range = ( my $str = my $end = $start .= $_ );
+    ($str .= ++$end) && push @range,$end while ($len > length $str) &&
+                                               $end eq substr $in,length($str)-length($end),length($end);
+    return \@range if $str eq $in;
   }
   return [$in];
 }
-
