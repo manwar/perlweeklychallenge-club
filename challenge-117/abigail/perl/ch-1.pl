@@ -27,3 +27,10 @@ use experimental 'lexical_subs';
 use List::Util qw [sum];
 
 say 120 - sum <>;
+
+#
+# An alternative one-liner, with no external modules, nor any hard
+# coded dependency of the number of lines in the file:
+#
+
+# perl -nE '$;+=$.-$_;END{say$.+1+$;}'
