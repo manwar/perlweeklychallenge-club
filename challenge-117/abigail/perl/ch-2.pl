@@ -53,4 +53,4 @@ sub steps ($x, $y, $prefix) {
     steps ($x,     $y - 1, $prefix . "H") if $y > 0;
 }
 
-steps (0 + <>, 0, "");
+steps (<>, 0, "");
