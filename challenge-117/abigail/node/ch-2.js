@@ -22,6 +22,6 @@ function steps (x, y, path) {
     }
 }
 
-  require ('readline')
+  require         ('readline')
 . createInterface ({input: process . stdin})   
 . on              ('line', number => steps (+number, 0, ""))
