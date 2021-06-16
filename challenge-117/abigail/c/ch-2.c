@@ -10,36 +10,36 @@
  * Run as: cc -o ch-2.o ch-2.c; ./ch-2.o < input-file
  */
 
-void steps (int x, int y, char * prefix, size_t l) {
+void steps (int x, int y, char * path, size_t l) {
     if (x == 0 && y == 0) {
-        printf ("%s\n", prefix);
+        printf ("%s\n", path);
         return;
     }
     if (x > 0) {
-        prefix [l]     = 'R';
-        prefix [l + 1] = '\0';
-        steps (x - 1, y,     prefix, l + 1);
-        prefix [l]     = 'L';
-        prefix [l + 1] = '\0';
-        steps (x - 1, y + 1, prefix, l + 1);
+        path [l]     = 'R';
+        path [l + 1] = '\0';
+        steps (x - 1, y,     path, l + 1);
+        path [l]     = 'L';
+        path [l + 1] = '\0';
+        steps (x - 1, y + 1, path, l + 1);
     }
     if (y > 0) {
-        prefix [l]     = 'H';
-        prefix [l + 1] = '\0';
-        steps (x,     y - 1, prefix, l + 1);
+        path [l]     = 'H';
+        path [l + 1] = '\0';
+        steps (x,     y - 1, path, l + 1);
     }
 }
 
 int main (void) {
     int size;
     if (scanf ("%d", &size) == 1) {
-        char * prefix;
-        if ((prefix = (char *) malloc ((size + 1) * sizeof (char))) == NULL) {
+        char * path;
+        if ((path = (char *) malloc ((size + 1) * sizeof (char))) == NULL) {
             perror ("Malloc failed");
             exit (1);
         }
-        prefix [0] = '\0';
-        steps (size, 0, prefix, 0);
+        path [0] = '\0';
+        steps (size, 0, path, 0);
     }
     return (0);
 }

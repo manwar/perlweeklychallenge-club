@@ -8,17 +8,17 @@
 -- Run as: lua ch-2.lua < input-file
 --
 
-function steps (x, y, prefix)
+function steps (x, y, path)
     if   x == 0 and y == 0
-    then print (prefix)
+    then print (path)
          return
     end
     if  x > 0
-    then steps (x - 1, y,     prefix .. "R")
-         steps (x - 1, y + 1, prefix .. "L")
+    then steps (x - 1, y,     path .. "R")
+         steps (x - 1, y + 1, path .. "L")
     end
     if  y > 0
-    then steps (x,     y - 1, prefix .. "H")
+    then steps (x,     y - 1, path .. "H")
     end
 end
 

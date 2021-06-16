@@ -10,15 +10,15 @@
 
 import sys
 
-def steps (x, y, prefix):
+def steps (x, y, path):
     if x == 0 and y == 0:
-        print (prefix)
+        print (path)
         return
     if x > 0:
-        steps (x - 1, y,     prefix + "R")
-        steps (x - 1, y + 1, prefix + "L")
+        steps (x - 1, y,     path + "R")
+        steps (x - 1, y + 1, path + "L")
     if y > 0:
-        steps (x,     y - 1, prefix + "H")
+        steps (x,     y - 1, path + "H")
 
 
 steps (int (sys . stdin . readline ()), 0, "")

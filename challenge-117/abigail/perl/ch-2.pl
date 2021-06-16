@@ -40,17 +40,17 @@ use experimental 'lexical_subs';
 #     a step to the right. The first coordinate stays the same,
 #     the second decreases by one.
 # In each of the calls, we add the direction we took ("R", "L", or "H"),
-# to prefix.
+# to path.
 #
 # 
 # We will be reading a single line of input ($N)
 #
 
-sub steps ($x, $y, $prefix) {
-    say    $prefix                        if $x == $y == 0;
-    steps ($x - 1, $y,     $prefix . "R") if $x > 0;
-    steps ($x - 1, $y + 1, $prefix . "L") if $x > 0;
-    steps ($x,     $y - 1, $prefix . "H") if $y > 0;
+sub steps ($x, $y, $path) {
+    say    $path                        if $x == $y == 0;
+    steps ($x - 1, $y,     $path . "R") if $x > 0;
+    steps ($x - 1, $y + 1, $path . "L") if $x > 0;
+    steps ($x,     $y - 1, $path . "H") if $y > 0;
 }
 
 steps (<>, 0, "");
