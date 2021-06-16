@@ -27,6 +27,5 @@ function steps () {
     fi
 }
 
-while read number
-do    steps $number 0 ""
-done
+read number
+steps $number 0 ""
