@@ -44,19 +44,19 @@ sub findPossiblePaths($) {
   my ($size) = @_;
 
   my ($arRes,$arPath) = ([],[]);
-  _fpp($arRes,$arPath,$size,'T',0,0);
+  _fpp($arRes,$arPath,$size,0,0);
   return $arRes;
 }
 
 sub _fpp {
-  my ($arRes,$arPath,$size,$direction,$level,$pos) = @_;
+  my ($arRes,$arPath,$size,$level,$pos) = @_;
 
   if ($level==$size and $pos==$level) {
     push(@$arRes,join('',@$arPath));
     return;
   }
 
-  _fpp($arRes,[@$arPath,'R'],$size,'R',$level+1,$pos+1) if ($level<$size); 
-  _fpp($arRes,[@$arPath,'L'],$size,'L',$level+1,$pos)   if ($level<$size);
-  _fpp($arRes,[@$arPath,'H'],$size,'H',$level,  $pos+1) if ($pos<$level); 
+  _fpp($arRes,[@$arPath,'R'],$size,$level+1,$pos+1) if ($level<$size); 
+  _fpp($arRes,[@$arPath,'L'],$size,$level+1,$pos)   if ($level<$size);
+  _fpp($arRes,[@$arPath,'H'],$size,$level,  $pos+1) if ($pos<$level); 
 }
