@@ -17,5 +17,5 @@ while(<>){
     die "Wrong number: $_" unless defined $rows{$1};
     delete $rows{$1};
 }
-die "Not 14 lines" unless $count=14;
+die "Not 14 lines" unless $count==14;
 say "Missing row: $_, $rows{$_}" for keys %rows;
