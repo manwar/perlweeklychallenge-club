@@ -4,4 +4,4 @@ use Lingua::EN::Numbers;
 
 my $n = (sum 1..15) - (sum 'file.txt'.IO.comb(/\d+/));
 
-say $n ~ ", Line " ~ cardinal($n).tc;
+say $n ~ ', Line ' ~ cardinal($n).tc;
