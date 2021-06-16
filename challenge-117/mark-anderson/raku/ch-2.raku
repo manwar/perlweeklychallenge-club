@@ -4,10 +4,10 @@
 
 sub MAIN($n) 
 {
-    travel(0, 0, 0, $n, q{});
+    traverse(0, 0, 0, $n, q{});
 }
 
-sub travel($r, $l, $h, $n, $path) 
+sub traverse($r, $l, $h, $n, $path) 
 {
     my $x = $r + $h;
     my $y = $r + $l;
@@ -19,8 +19,8 @@ sub travel($r, $l, $h, $n, $path)
 
     else
     {
-        travel($r + 1, $l,     $h,     $n, $path ~ 'R') if $y < $n; 
-        travel($r,     $l,     $h + 1, $n, $path ~ 'H') if $h < $l; 
-        travel($r,     $l + 1, $h,     $n, $path ~ 'L') if $y < $n; 
+        traverse($r + 1, $l,     $h,     $n, $path ~ 'R') if $y < $n; 
+        traverse($r,     $l,     $h + 1, $n, $path ~ 'H') if $h < $l; 
+        traverse($r,     $l + 1, $h,     $n, $path ~ 'L') if $y < $n; 
     }
 }
