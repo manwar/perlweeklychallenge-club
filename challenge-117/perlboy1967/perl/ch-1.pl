@@ -12,7 +12,6 @@ use strict;
 use warnings;
 
 use File::Basename qw(dirname);
-use File::Slurp qw(read_file);
 use List::MoreUtils qw(slide);
 
 my $input = $ARGV[0] // sprintf('%s/input.txt',dirname($0));
@@ -23,6 +22,8 @@ printf "Missing row number(s) of file '%s' is/are '%s'\n",
 
 sub missingRows {
   my ($f) = @_;
+  
+  open(my $fh,'<',$f) || die;
 
-  return grep /\d/,slide{($a+1..$b-1)if($b-$a>1)}sort{$a<=>$b}map{/^(\d+)/;$_=$1}read_file($f);
+  return grep /\d/,slide{($a+1..$b-1)if($b-$a>1)}sort{$a<=>$b}map{/^(\d+)/;$_=$1}<$fh>;
 }
