@@ -11,11 +11,8 @@ use v5.16;
 use strict;
 use warnings;
 
-use List::Util qw(sum);
-
 use Test::More;
 use Test::Deep;
-use Data::Printer;
 
 # Prototype(s)
 sub findPossiblePaths($);
@@ -29,14 +26,17 @@ my %tests = (
 );
 
 foreach my $test (sort keys %tests) {
-  cmp_deeply (findPossiblePaths($test),$tests{$test},"findPossiblePaths($test)");
+  cmp_deeply(findPossiblePaths($test),
+             $tests{$test},
+             "findPossiblePaths($test)");
 }
 
 done_testing;
 
 print "Now some bigger challenges...\n";
 for my $size (4 .. 10) {
-  printf "findPossiblePaths($size) = %d paths\n", scalar @{findPossiblePaths($size)};
+  printf "findPossiblePaths($size) = %d paths\n", 
+         scalar @{findPossiblePaths($size)};
 }
 
 
