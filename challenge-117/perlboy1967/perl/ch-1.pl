@@ -24,5 +24,5 @@ printf "Missing row number(s) of file '%s' is/are '%s'\n",
 sub missingRows {
   my ($f) = @_;
 
-  return grep /\d/,slide{($a+1..$b-1)if($b-$a>1)}sort{$a<=>$b}map{/^(\d+).*/;$_=$1}read_file($f);
+  return grep /\d/,slide{($a+1..$b-1)if($b-$a>1)}sort{$a<=>$b}map{/^(\d+)/;$_=$1}read_file($f);
 }
