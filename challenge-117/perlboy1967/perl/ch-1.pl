@@ -11,14 +11,18 @@ use v5.16;
 use strict;
 use warnings;
 
-use File::Slurp;
+use File::Basename qw(dirname);
+use File::Slurp qw(read_file);
 use List::MoreUtils qw(slide);
 
-printf "Missing row number(s) of file '%s' is/are '%s'\n", $ARGV[0], join(',',missingRows($ARGV[0]));
+my $input = $ARGV[0] // sprintf('%s/input.txt',dirname($0));
+
+printf "Missing row number(s) of file '%s' is/are '%s'\n", 
+       $input, join(',',missingRows($input));
 
 
 sub missingRows {
   my ($f) = @_;
 
-  return grep /\d/,slide{($a+1..$b-1)if($b-$a>1)}sort{$a<=>$b}map{chomp;s/^(\d+).*/$1/;$_}read_file($f);
+  return grep /\d/,slide{($a+1..$b-1)if($b-$a>1)}sort{$a<=>$b}map{/^(\d+).*/;$_=$1}read_file($f);
 }
