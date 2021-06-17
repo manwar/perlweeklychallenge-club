@@ -2,7 +2,7 @@
   (:require [clojure.test :refer [deftest is testing]]
             [clojure.java.io :as io]
             [tw.weekly.c117.t1 :as t1]
-            #_[tw.weekly.c117.t2 :refer [find-possible-paths]]))
+            [tw.weekly.c117.t2 :refer [find-possible-paths]]))
 
 (deftest task-1
   (testing "Task 1, Missing Row"
@@ -18,4 +18,10 @@
 
 (deftest task-2
   (testing "Task 2, Find Possible Paths"
-    ))
+    (is (= #{"LH" "R"} (find-possible-paths 1)))
+    (is (= #{"LHLH" "LHR" "LLHH" "LRH" "RLH" "RR"} (find-possible-paths 2)))
+    (is (=
+          #{"LHLHLH" "LHLHR" "LHLLHH" "LHLRH" "LHRLH" "LHRR" "LLHHLH" "LLHHR"
+            "LLHLHH" "LLHRH" "LLLHHH" "LLRHH" "LRHLH" "LRHR" "LRLHH" "LRRH"
+            "RLHLH" "RLHR" "RLLHH" "RLRH" "RRLH" "RRR"}
+          (find-possible-paths 3)))))
