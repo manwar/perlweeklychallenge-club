@@ -55,6 +55,8 @@ sub triangle {
 
 ### Now the counts... Schroder numbers
 
+*It's amazing what you find out about when you google the answers you get!*
+
 Due to the "memory" storage issues we can change the problem to one of counting rather than listing...
 The first approach is to just convert the `triangle` method above to count - we introduce a cache
 as well to improve performance.
