@@ -55,6 +55,8 @@ sub triangle {
 
 ### Now the counts... Schroder numbers
 
+*It's amazing what you find out about when you google the answers you get!*
+
 Due to the "memory" storage issues we can change the problem to one of counting rather than listing...
 The first approach is to just convert the `triangle` method above to count - we introduce a cache
 as well to improve performance.
@@ -72,8 +74,14 @@ sub schroder_cache_array {
 }
 ```
 
-But as we've said before recursion is a curse - so to remove the function
-overhead of recursion we can re-write this like this:
+But as we've said before recursion is a curse - but we notice that
+```
+  T0,m = 1                          
+  Tn,0 = Tn-1,0 + Tn-1,1
+  Tn,m = Tn-1,m + Tn-1,m+1 + Tn,m-1
+```
+We can use that to define each row of a triangle with `Sn` as the last
+value.
 
 ```perl
 sub schroder_non_recursive {
@@ -87,6 +95,12 @@ sub schroder_non_recursive {
   return $x[0];
 }
 ```
+
+We again use the row "flip" as we only need one row and the previous
+one to get values...
+
+There is a faster solution - in that the Scrhoder numbers can be
+written as a recurrence relation:
 
 ```perl
 sub schroder_recurrence_rel {
