@@ -53,7 +53,10 @@ sub triangle {
 }
 ```
 
-### Now the counts... Schroder numbers
+Note we don't "collect" routes in a datastructure and then print them all at the end, but instead render directly from within the
+function. For `$N` larger than `10` the memory requirements for storing this information increases significantly, so this code is limited purely by disk rather than memory.
+
+### Now the counts... Schröder numbers
 
 *It's amazing what you find out about when you google the answers you get!*
 
@@ -99,8 +102,9 @@ sub schroder_non_recursive {
 We again use the row "flip" as we only need one row and the previous
 one to get values...
 
-There is a faster solution - in that the Scrhoder numbers can be
-written as a recurrence relation:
+Googling for `2, 6, 22, 90, 394` came up with https://en.wikipedia.org/wiki/Schröder_number, a page
+about Schröder numbers - which gives up the following faster (about twice as fast as above) solution -
+as Scrhoder numbers can be written as a recurrence relation:
 
 ```perl
 sub schroder_recurrence_rel {
