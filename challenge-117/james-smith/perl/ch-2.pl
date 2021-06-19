@@ -4,6 +4,8 @@ use strict;
 
 use warnings;
 use feature qw(say);
+use utf8;
+
 use Test::More;
 use Benchmark qw(cmpthese);
 
@@ -51,9 +53,9 @@ if( $N < 0 ) { ## Run recursive dumper!
 }
 
 unless( $N ) { ## Run the test scripts
-  is( schroder_cache_array(    $_->[0] ), $_->[1] ) foreach @TESTS;
-  is( schroder_non_recursive(  $_->[0] ), $_->[1] ) foreach @TESTS;
-  is( schroder_recurrence_rel( $_->[0] ), $_->[1] ) foreach @TESTS;
+  is( schröder_cache_array(    $_->[0] ), $_->[1] ) foreach @TESTS;
+  is( schröder_non_recursive(  $_->[0] ), $_->[1] ) foreach @TESTS;
+  is( schröder_recurrence_rel( $_->[0] ), $_->[1] ) foreach @TESTS;
   done_testing();
   exit;
 }
@@ -61,9 +63,9 @@ unless( $N ) { ## Run the test scripts
 ## Run the benchmarking....
 
 cmpthese( 10000, {
-  'recursive'     => sub { @cache=(); schroder_cache_array(    $N ); },
-  'non-recursive' => sub {            schroder_non_recursive(  $N ); },
-  'recrel'        => sub {            schroder_recurrence_rel( $N ); },
+  'recursive'     => sub { @cache=(); schröder_cache_array(    $N ); },
+  'non-recursive' => sub {            schröder_non_recursive(  $N ); },
+  'recrel'        => sub {            schröder_recurrence_rel( $N ); },
 });
 
 sub triangle {
@@ -86,17 +88,14 @@ sub triangle {
 ## string AND add "H"s to move us to the right hand corner..
 
   my($size,$offset,$route) = @_;
-  unless($size) {
-    say $route.( 'H' x $offset );
-    return;
-  }
+  (say $route.( 'H' x $offset )) && return unless $size;
   triangle( $size - 1, $offset + 1, $route.'L' );
   triangle( $size - 1, $offset,     $route.'R' );
   triangle( $size,     $offset - 1, $route.'H' ) if $offset;
 }
 
-sub schroder_cache_array {
-## The count is the Schroder number
+sub schröder_cache_array {
+## The count is the Schröder number
 ## We can duplicate the "algorithm above" but counting to display
 ## the number of routes. We use a cache as we repeatedly hit the
 ## same tree [there are only $N*($N+1)/2 combinations of $size & $offset.]
@@ -107,14 +106,14 @@ sub schroder_cache_array {
   my($size,$offset) = @_; $offset ||=0;
   return $size
        ? ( $cache[$size][$offset] ||=
-             schroder_cache_array( $size - 1, $offset + 1 ) #L
-           + schroder_cache_array( $size - 1, $offset     ) #R
-           + ( $offset ? schroder_cache_array( $size, $offset - 1 ) : 0 )
+             schröder_cache_array( $size - 1, $offset + 1 ) #L
+           + schröder_cache_array( $size - 1, $offset     ) #R
+           + ( $offset ? schröder_cache_array( $size, $offset - 1 ) : 0 )
          )
        : 1;
 }
 
-sub schroder_non_recursive {
+sub schröder_non_recursive {
 ## We can rewrite this non-recursively by starting at the bottom row
 ## (all values 1) and working our way up the triangle {working right
 ## to left}
@@ -129,7 +128,7 @@ sub schroder_non_recursive {
   return $x[0];
 }
 
-sub schroder_recurrence_rel {
+sub schröder_recurrence_rel {
 ## As well as the total calculation above there is a recurrence
 ## relation which defines S_n in terms of S_1 -> S_n-1
 ## As expected slightly faster than the previous solution
