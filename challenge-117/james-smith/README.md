@@ -53,19 +53,21 @@ sub triangle {
 }
 ```
 
-Note we don't "collect" routes in a datastructure and then print them all at the end, but instead render directly from within the
-function. For `$N` larger than `10` the memory requirements for storing this information increases significantly, so this code is limited purely by disk rather than memory.
+Note we don't "collect" routes in a data structure and then print them all at the
+end, but instead render directly from within the subroutine. For `$N` larger than
+`10` the memory requirements for storing this information increases significantly,
+so this code is limited purely by disk rather than memory.
 
 ### Now the counts... Schröder numbers
 
 *It's amazing what you find out about when you google the answers you get!*
 
-Due to the "memory" storage issues we can change the problem to one of counting rather than listing...
+Due to the memory/storage issues we can change the problem to one of counting rather than listing...
 The first approach is to just convert the `triangle` method above to count - we introduce a cache
 as well to improve performance.
 
 ```perl
-sub schroder_cache_array {
+sub schröder_cache_array {
    my($size,$offset) = @_; $offset ||=0;
    return $size
         ? ( $cache[$size][$offset] ||=
@@ -79,15 +81,18 @@ sub schroder_cache_array {
 
 But as we've said before recursion is a curse - but we notice that
 ```
-  T0,m = 1                          
-  Tn,0 = Tn-1,0 + Tn-1,1
-  Tn,m = Tn-1,m + Tn-1,m+1 + Tn,m-1
+       T0,m = 1                          
+  Sn = Tn,0 = Tn-1,0 + Tn-1,1
+       Tn,m = Tn-1,m + Tn-1,m+1 + Tn,m-1
+
+
 ```
+
 We can use that to define each row of a triangle with `Sn` as the last
 value.
 
 ```perl
-sub schroder_non_recursive {
+sub schröder_non_recursive {
   my $size = shift;
   my @x = map {1} 0..$size;
   foreach my $s (1..$size) {
@@ -99,15 +104,19 @@ sub schroder_non_recursive {
 }
 ```
 
-We again use the row "flip" as we only need one row and the previous
-one to get values...
+We again use the row "flip" method as we only need one row and the previous
+one to get values... Avoids having to allocate more memory for the whole
+triangle.
 
-Googling for `2, 6, 22, 90, 394` came up with https://en.wikipedia.org/wiki/Schröder_number, a page
-about Schröder numbers - which gives up the following faster (about twice as fast as above) solution -
-as Scrhoder numbers can be written as a recurrence relation:
+### The quickest counter!
+
+Googling for `2, 6, 22, 90, 394` came up with https://en.wikipedia.org/wiki/Schröder_number, this has
+lots of information about uses of this sequence. As well as giving the non-recursive relation above it
+also gives a faster (about twice as fast as above) solution - as Scrhöder numbers can be written as a
+recurrence relation. Writing this in perl gives us, where @S = is the array of Scrhöder numbers.
 
 ```perl
-sub schroder_recurrence_rel {
+sub schröder_recurrence_rel {
   my( $size, @S ) = ( shift, 1, 2 );
   foreach my $n (2..$size) {
     $S[ $n ]  =        3 * $S[ $n - 1      ];
