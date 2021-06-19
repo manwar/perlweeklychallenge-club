@@ -1,78 +1,40 @@
-use constant TRIANGLE_TOP => q|/\\| ;
-use constant TRIANGLE_BOTTOM => q|/__\\|;
-
-sub print_triangle_3{
-    my($n) = @_;
-    print " " x 5;
-    print TRIANGLE_TOP x 1;
-    print "\n";
-    print " " x4;
-    print TRIANGLE_BOTTOM x 1;
-    print "\n";
-
-    print  " " ." " . " ".TRIANGLE_TOP .  " " . " " .TRIANGLE_TOP ;
-    print "\n";
-    print  " ". " ".TRIANGLE_BOTTOM . TRIANGLE_BOTTOM;
-    print "\n";
-
-    print  " " .TRIANGLE_TOP .  " ".  " ".TRIANGLE_TOP . " ". " ". TRIANGLE_TOP;
-    print "\n";
-    print  TRIANGLE_BOTTOM . TRIANGLE_BOTTOM .TRIANGLE_BOTTOM;
-    print "\n";
-
-}
-
-sub print_triangle_2{
-    my($n) = @_;
-    print " " x 4;
-    print TRIANGLE_TOP x 1;
-    print "\n";
-    print " " x3;
-    print TRIANGLE_BOTTOM x 1;
-    print "\n";
-
-    print " " x1;
-    print  " " .TRIANGLE_TOP .  " " . " " .TRIANGLE_TOP;
-    print "\n";
-    print  " ".TRIANGLE_BOTTOM . TRIANGLE_BOTTOM;
-    print "\n";
-
-}
-
-sub print_triangle{
-    my($n) = @_;
-    my $top = TRIANGLE_TOP . "  ";
-    for my $i (1 .. $n ){
-        print " ";
-        print "  " x ($n - $i);
-        print $top x $i  ;
-        print "\n";
-        print "  " x ($n - $i );
-        print TRIANGLE_BOTTOM x ($i );
-        print "\n";
-    }
+use strict;
+use warnings;
+##
+# You are given text file with rows numbered 1-15 in 
+# random order but there is a catch one row in missing in the file.
+# Write a script to find the missing row number.
+##   
+sub find_missing{
+    my(@numbers) = sort {$a <=> $b} @_;
+    for(my $i=0; $i< @numbers - 1; $i++){
+        return $numbers[$i] + 1 if $numbers[$i] != $numbers[$i + 1] - 1;   
+    }  
 }
 
 MAIN:{
-    print_triangle(1);
-        print "\n";
-        print "\n";
-    print_triangle(2);
-        print "\n";
-        print "\n";
-    print_triangle(3);
-        print "\n";
-        print "\n";
-    print_triangle(4);
-        print "\n";
-        print "\n";
-    print_triangle(7);
-        print "\n";
-        print "\n";
-    print_triangle(10);
-        print "\n";
-        print "\n";
-    print_triangle(20);
-        print "\n";
-        print "\n";
-} 
+    my @line_numbers; 
+    while(<DATA>){
+        chomp;
+        m/([0-9]+),.*/;
+        push @line_numbers, $1;
+    }
+    my $missing = find_missing(@line_numbers);
+    print "$missing\n"; 
+}
+
+__DATA__
+11, Line Eleven
+1, Line one
+9, Line Nine
+13, Line Thirteen
+2, Line two
+6, Line Six
+8, Line Eight
+10, Line Ten
+7, Line Seven
+4, Line Four
+14, Line Fourteen
+3, Line three
+15, Line Fifteen
+5, Line Five
