@@ -88,10 +88,7 @@ sub triangle {
 ## string AND add "H"s to move us to the right hand corner..
 
   my($size,$offset,$route) = @_;
-  unless($size) {
-    say $route.( 'H' x $offset );
-    return;
-  }
+  (say $route.( 'H' x $offset )) && return unless $size;
   triangle( $size - 1, $offset + 1, $route.'L' );
   triangle( $size - 1, $offset,     $route.'R' );
   triangle( $size,     $offset - 1, $route.'H' ) if $offset;
