@@ -18,19 +18,27 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-117/ja
 
 ## The solution
 
-It would first seem we would need to collect a complete list of line numbers - but that isn't the case. If we have a file with `N` rows, we now that the sum of the line numbers is `N*(N+1)/2`. So to find the one that is missing we just sum the line numbers and take it from `N*(N+1)/2`.
+It would first seem we would need to collect a complete list of line numbers - but that is not the case.
+
+If we have a file with `N` rows, we now that the sum of the line numbers is `N*(N+1)/2`.
+
+So to find the one that is missing we just sum the line numbers and take it from `N*(N+1)/2`.
+
+If `T` is the total of the line numbers and `n` is the number of lines read then:
+
+`N = n+1` so `T` + `missing number` = `(n+1)(n+2)2`
 
 ```perl
 sub splitnum {
-  my( $n, $s ) = ( 1, 0 );
+  my( $N, $T ) = ( 1, 0 );
   open my $fh, q(<), shift;
-  ++$n && ( $s += substr $_, 0, index $_, q(,) ) while <$fh>;
+  ++$N && ( $T += substr $_, 0, index $_, q(,) ) while <$fh>;
   close $fh;
-  return $n * ( $n + 1 ) / 2 - $s;
+  return $N * ( $N + 1 ) / 2 - $T;
 }
 ```
 
-# Challenge 2 - Find Possible Paths
+# Task 2 - Find Possible Paths
 
 ***You are given size of a triangle. Write a script to find all possible paths from top to the bottom right corner. In each step, we can either move horizontally to the right (H), or move downwards to the left (L) or right (R).***
 
@@ -42,18 +50,23 @@ For dumping the routes - this lends itself to a recursive solution:
 
 ```perl
 sub triangle {
-  my($size,$offset,$route) = @_;
-  unless($size) {
-    say $route.( 'H' x $offset );
-    return;
-  }
+  my( $size, $offset, $route ) = @_;
+  ( say $route.( 'H' x $offset ) ) && return     unless $size;
   triangle( $size - 1, $offset + 1, $route.'L' );
   triangle( $size - 1, $offset,     $route.'R' );
   triangle( $size,     $offset - 1, $route.'H' ) if $offset;
 }
 ```
 
-Note we don't "collect" routes in a data structure and then print them all at the
+**Notes:**
+
+`$offset` is the distance from the right hand side of the triangle - so moving left (`L`)
+increments `$offset` and moving horizontally (`H`) decrements `$offset`.
+
+If we get to the bottom row - we short-cut the recursion by just including an `H` for
+every point we are to the left of the corner (which just happens to be `$offset`)...
+
+We don't "collect" routes in a data structure and then print them all at the
 end, but instead render directly from within the subroutine. For `$N` larger than
 `10` the memory requirements for storing this information increases significantly,
 so this code is limited purely by disk rather than memory.
@@ -84,8 +97,6 @@ But as we've said before recursion is a curse - but we notice that
        T0,m = 1                          
   Sn = Tn,0 = Tn-1,0 + Tn-1,1
        Tn,m = Tn-1,m + Tn-1,m+1 + Tn,m-1
-
-
 ```
 
 We can use that to define each row of a triangle with `Sn` as the last
