@@ -25,6 +25,7 @@ while (scalar @newarr <= $N) {
 print "Number of Paths: ", $newarr[-1];
 print "\n";
 
+
 #   *  *  *  *  *  *  *
 sub ways {
     my $K = $_[0];
@@ -36,17 +37,17 @@ sub ways {
         $newstp = [ [ 'L' x $ord ] ];
         for my $i (1.. $ord - 1) { 
             push @{$newstp->[$i]}, $stp->[$i-1]->[$_] . 'R'
-                for (0.. scalar $stp->[$i-1]->@* - 1 );
+                for (0.. $stp->[$i-1]->$#*);
             push @{$newstp->[$i]}, $stp->[$i]->[$_] . 'L'
-                for (0.. scalar $stp->[$i]->@* - 1 );
+                for (0.. $stp->[$i]->$#*);
             push @{$newstp->[$i]}, $newstp->[$i-1]->[$_] . 'H'
-                for (0.. scalar $newstp->[$i-1]->@* - 1 );
+                for (0.. $newstp->[$i-1]->$#*);
         }
 
         push @{$newstp->[$ord]}, $stp->[$ord-1]->[$_] . 'R'
-            for (0.. scalar @{$stp->[$ord-1]} - 1 );
+            for (0.. $stp->[$ord-1]->$#*);
         push @{$newstp->[$ord]}, $newstp->[$ord-1]->[$_] . 'H'
-            for (0.. scalar @{$newstp->[$ord-1]} - 1 );
+            for (0.. $newstp->[$ord-1]->$#*);
     }
 
     return $newstp->[-1];
