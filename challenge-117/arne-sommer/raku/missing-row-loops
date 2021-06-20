@@ -1,0 +1,28 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Str $file where $file.IO.f && $file.IO.r, :v(:$verbose));
+
+my @ids;
+
+for $file.IO.lines -> $line
+{
+  my ($id, $content) = $line.split(',', 2);
+
+  say ": ID: $id" if $verbose;
+  @ids.push: $id.Int;
+}
+
+say ": IDs (sorted): { @ids.sort.join(", ") }" if $verbose;
+
+my $expected = 1;
+
+for @ids.sort -> $id
+{
+  say ": $id (expected $expected)" if $verbose;
+  unless $id == $expected
+  {
+    say $expected;
+    last;
+  }
+  $expected++;
+}
