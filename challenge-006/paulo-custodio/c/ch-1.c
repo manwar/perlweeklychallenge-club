@@ -37,8 +37,8 @@ int main(int argc, char* argv[]) {
     parse_nums(argv[1]);
     for (int i = 0; i < nr_nums; i++) {
         printf("%d", nums[i]);
-        if (i + 2 < nr_nums && 
-            nums[i + 1] == nums[i] + 1 && 
+        if (i + 2 < nr_nums &&
+            nums[i + 1] == nums[i] + 1 &&
             nums[i + 2] == nums[i] + 2) {
             int j = 0;
             while (i + j < nr_nums && nums[i + j] == nums[i] + j)
@@ -52,4 +52,3 @@ int main(int argc, char* argv[]) {
     printf("\n");
     free(nums);
 }
-
