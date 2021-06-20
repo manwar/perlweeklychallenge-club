@@ -141,11 +141,11 @@ sub build {
             return "bc -lq $prog";
         }
         if (/^c$/) {
-            run("gcc $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            run("gcc $prog -o $prog_wo_ext -lmpfr -lgmp") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
         if (/^cpp$/) {
-            run("g++ $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            run("g++ $prog -o $prog_wo_ext -lmpfr -lgmpxx -lgmp") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
         if (/^d$/) {

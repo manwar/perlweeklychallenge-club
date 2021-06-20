@@ -1,7 +1,4 @@
 #!/usr/bin/env perl
-
-use strict;
-use warnings;
-use 5.030;
-
+use Modern::Perl;
+use Test::More;
 require '../../challenge-001/paulo-custodio/test.pl';
