@@ -1,8 +1,10 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-06-20 22:31:47 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -38,9 +40,10 @@
          "Jo Christian Oterhals"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "yAxis" : {
       "min" : 0,
@@ -48,12 +51,8 @@
          "text" : ""
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             22,
             0,
@@ -85,9 +84,11 @@
             1,
             2,
             6
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             99,
             4,
@@ -119,10 +120,10 @@
             0,
             0,
             17
-         ],
-         "name" : "Raku"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -154,14 +155,13 @@
             0,
             0,
             7
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
+   "chart" : {
+      "type" : "column"
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2020]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-06-20 22:24:11 GMT"
    }
 }
