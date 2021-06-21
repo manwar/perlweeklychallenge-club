@@ -48,7 +48,8 @@ my @cache;
 ## RRR
 
 if( $N < 0 ) { ## Run recursive dumper!
-  triangle( -$N, 0, '' );
+  tr_nr( -$N, 0, '' );
+  #triangle( -$N, 0, '' );
   exit;
 }
 
@@ -68,6 +69,23 @@ cmpthese( 10000, {
   'recrel'        => sub {            schröder_recurrence_rel( $N ); },
 });
 
+sub tr_nr {
+  my $size = shift;
+  my @line = map { ['H'x$_] } reverse 0 .. $size;
+  while(@line>1) {
+    my @new = ([map( {'L'.$_ } @{$line[-2]}), map {'R'.$_ } @{$line[-1]} ]);
+    while(@line>2) {
+      pop @line;
+      push @new, [
+        map( {'H'.$_ } @{$new[ -1]}),
+        map( {'L'.$_ } @{$line[-2]}),
+        map  {'R'.$_ } @{$line[-1]}
+      ];
+    }
+    @line = @new;
+  }
+  say $_ foreach @{$line[0]};
+}
 sub triangle {
 ## As asked display results - note as $n gets large storing in an
 ## array and returning values is too memory intensive - so we will
