@@ -45,6 +45,8 @@ use experimental 'lexical_subs';
 # 
 # We will be reading a single line of input ($N)
 #
+# See also: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-117-2.html
+#
 
 sub steps ($x, $y, $path) {
     say    $path                        if $x == $y == 0;
