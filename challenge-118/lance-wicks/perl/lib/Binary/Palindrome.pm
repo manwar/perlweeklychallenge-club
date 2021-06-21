@@ -1,10 +1,9 @@
 package Binary::Palindrome;
 
+use Moo;
+
 sub is_palindrome {
     my ( $self, $n ) = @_;
-    # 1. get a binary representation of the integer
-    # 2. reverse it
-    # 3. is that the same ar step 1?
 
     my $bin = $self->represent_as_binary($n);
     my $rev = reverse $bin;
