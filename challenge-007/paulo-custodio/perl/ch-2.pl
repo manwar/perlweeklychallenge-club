@@ -8,13 +8,15 @@
 # in the sequence is obtained by changing a single character in the word wi-1.
 # All words in the ladder must be valid English words.
 #
-# Given two input words and a file that contains an ordered word list, implement
-# a routine (e.g., find_shortest_ladder(word1, word2, wordlist)) that finds the
-# shortest ladder between the two input words. For example, for the words cold
-# and warm, the routine might return:
+# Given two input words and a file that contains an ordered word list,
+# implement a routine (e.g., find_shortest_ladder(word1, word2, wordlist))
+# that finds the shortest ladder between the two input words. For example,
+# for the words cold and warm, the routine might return:
 #
 # ("cold", "cord", "core", "care", "card", "ward", "warm")
-# However, there’s a shortest ladder: (“cold”, “cord”, “card”, “ward”, “warm”).
+#
+# However, there’s a shortest ladder:
+# (“cold”, “cord”, “card”, “ward”, “warm”).
 #
 # Givens:
 # All words in the list have the same length.
@@ -31,7 +33,8 @@
 # Otherwise, it returns an empty list.
 #
 # If any of the input words is the wrong length (i.e., its length is different
-# to a random from the word list) or isn’t in the word list, return an empty list.
+# to a random from the word list) or isn’t in the word list, return an empty
+# list.
 
 use strict;
 use warnings;
