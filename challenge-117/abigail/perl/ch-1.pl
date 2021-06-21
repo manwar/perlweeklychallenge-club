@@ -23,6 +23,8 @@ use experimental 'lexical_subs';
 # beginning of the string looks like a number (and to use the value of
 # that number). Warnings need to be surpressed though.
 #
+# See also: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-117-1.html
+#
 
 use List::Util qw [sum];
 
