@@ -225,3 +225,39 @@ sub show_rt {
 }
 ```
 
+## Aside - let's eek out the speed.
+
+There is one place where the code could gain a bit of speed. The
+range checks are performed AFTER the function call not before. We
+can move them but a generic check code gets messy and isn't as
+fast. If we unravel the one loop we have left we can simplify
+things slighlty - as we can make the range checks simpler.
+
+Note we have kept the order of the offsets the same as in the `walk`
+function above - this will have an affect on the speed (the search
+is faster if you find shorter matches early on).
+
+As you can see we have avoided array look ups and extra function calls,
+so although the code is longer it is more efficient.
+
+Testing gives around a one-third speed up from around 24 seconds
+to 18 seconds per run on my usual VM.
+
+```perl
+sub walk_opt {
+  my( $x, $y, $seen, $rt ) = @_;
+  return if $seen & ( my $v = 1 << (my$t=$x+$y*8) );
+  $seen |= $v;
+  $rt   .= chr $t;
+  return ($best_rt,$best_len) = ($rt,-1+length $rt) if ($seen & $sol) == $sol;
+  return if $best_len <= length $rt;
+  walk_opt( $x-2, $y+1, $seen, $rt ) if $x>1 && $y<7;
+  walk_opt( $x+2, $y+1, $seen, $rt ) if $x<6 && $y<7;
+  walk_opt( $x-2, $y-1, $seen, $rt ) if $y   && $x>1;
+  walk_opt( $x+2, $y-1, $seen, $rt ) if $y   && $x<6;
+  walk_opt( $x-1, $y+2, $seen, $rt ) if $x   && $y<6;
+  walk_opt( $x+1, $y+2, $seen, $rt ) if $x<7 && $y<6;
+  walk_opt( $x-1, $y-2, $seen, $rt ) if $x   && $y>1;
+  walk_opt( $x+1, $y-2, $seen, $rt ) if $x<7 && $y>1;
+}
+```
