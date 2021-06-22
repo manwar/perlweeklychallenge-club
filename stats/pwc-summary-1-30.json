@@ -1,9 +1,6 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge [2019 - 2020]"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-06-22 08:40:40 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -39,15 +36,30 @@
          "Bruce Van Allen"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-06-22 08:38:06 GMT"
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge [2019 - 2020]"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -79,11 +91,9 @@
             4,
             48,
             2
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -115,9 +125,11 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -149,19 +161,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
-   ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   }
+   ]
 }
