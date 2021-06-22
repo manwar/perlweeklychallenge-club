@@ -39,6 +39,11 @@ say '#Steps:    ',-1 + length $best_rt;
 say 'Route:     ',show_rt( $best_rt ); ## Show best route
 say '';
 
+cmpthese( 20, {
+  'walk'     => sub { $best_len=65; walk(     0, 7, 0, q() ); show_rt($best_rt); },
+  'walk_opt' => sub { $best_len=65; walk_opt( 0, 7, 0, q() ); show_rt($best_rt); },
+} );
+
 sub walk {
   my( $x, $y, $seen, $rt ) = @_;
   ## Skip if the new "chain" will be bigger than the best chain so far
@@ -60,5 +65,25 @@ sub show_rt {
          map        { chr( 97 + ($_&7) ).( 1 + ($_>>3) ) }
          map        { ord $_                             }
          split m{}, shift;
+}
+
+sub walk_opt {
+  my( $x, $y, $seen, $rt ) = @_;
+  ## Skip if the new "chain" will be bigger than the best chain so far
+  ## If we have fallen off the sides of the board
+  ## Or if we have already visited the square.
+  return if $seen & ( my $v = 1 << (my$t=$x+$y*8) );
+  $seen |= $v;
+  $rt   .= chr $t;
+  return ($best_rt,$best_len) = ($rt,-1+length $rt) if ($seen & $sol) == $sol;
+  return if $best_len <= length $rt;
+  walk_opt( $x-2, $y+1, $seen, $rt ) if $x>1 && $y<7;
+  walk_opt( $x+2, $y+1, $seen, $rt ) if $x<6 && $y<7;
+  walk_opt( $x-2, $y-1, $seen, $rt ) if $x>1 && $y;
+  walk_opt( $x+2, $y-1, $seen, $rt ) if $x<6 && $y;
+  walk_opt( $x-1, $y+2, $seen, $rt ) if $x   && $y<6;
+  walk_opt( $x+1, $y+2, $seen, $rt ) if $x<7 && $y<6;
+  walk_opt( $x-1, $y-2, $seen, $rt ) if $x   && $y>1;
+  walk_opt( $x+1, $y-2, $seen, $rt ) if $x<7 && $y>1;
 }
 
