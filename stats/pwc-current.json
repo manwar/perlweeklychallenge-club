@@ -2,12 +2,16 @@
    "drilldown" : {
       "series" : [
          {
-            "name" : "James Smith",
             "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
+               ],
+               [
+                  "Blog",
+                  1
                ]
             ]
          },
@@ -22,34 +26,47 @@
             "id" : "Lucas Ransan"
          },
          {
-            "id" : "Niels van Dijke",
             "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "id" : "Niels van Dijke"
          }
       ]
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 118"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    },
    "chart" : {
       "type" : "column"
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "series" : [
       {
-         "name" : "Perl Weekly Challenge - 118",
          "colorByPoint" : 1,
+         "name" : "Perl Weekly Challenge - 118",
          "data" : [
             {
-               "y" : 2,
                "name" : "James Smith",
+               "y" : 3,
                "drilldown" : "James Smith"
             },
             {
-               "drilldown" : "Lucas Ransan",
+               "name" : "Lucas Ransan",
                "y" : 2,
-               "name" : "Lucas Ransan"
+               "drilldown" : "Lucas Ransan"
             },
             {
                "drilldown" : "Niels van Dijke",
@@ -59,35 +76,22 @@
          ]
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-06-22 10:38:02 GMT"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 118"
+      "text" : "[Champions: 3] Last updated at 2021-06-22 10:42:13 GMT"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "legend" : {
       "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    }
 }
