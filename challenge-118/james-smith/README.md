@@ -141,7 +141,11 @@ walk( 0, 7, 0, q() );
 
 Write out best solution
 ```perl
-say length $best_rt, q( - ), show_rt( $best_rt ); ## Show best route
+say '';
+say "Treasures: @treasures";
+say '#Steps:    ',-1 + length $best_rt;
+say 'Route:     ',show_rt( $best_rt );
+say '';
 ```
 
 ### The walk function
@@ -204,9 +208,9 @@ nested `map`s.
 sub show_rt {
   my %t = map { $_ => 1 } @treasures;
   return join q( ),
-         map        { ( exists $t{$_} ? q(*) : q( ) ) . $_ }
-         map        { chr( 97 + ($_&7) ).( 1 + ($_>>3) )   }
-         map        { ord $_                               }
+         map        { $_.( exists $t{$_} ? q(*) : q( ) ) }
+         map        { chr( 97 + ($_&7) ).( 1 + ($_>>3) ) }
+         map        { ord $_                             }
          split m{}, shift;
 }
 ```
