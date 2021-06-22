@@ -1,4 +1,7 @@
 {
+   "legend" : {
+      "enabled" : 0
+   },
    "drilldown" : {
       "series" : [
          {
@@ -16,82 +19,94 @@
             ]
          },
          {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Lucas Ransan",
-            "id" : "Lucas Ransan"
-         },
-         {
-            "name" : "Niels van Dijke",
+            "id" : "Lance Wicks",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "id" : "Niels van Dijke"
+            "name" : "Lance Wicks"
+         },
+         {
+            "id" : "Lucas Ransan",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Lucas Ransan"
+         },
+         {
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ]
          }
       ]
    },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 118"
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-06-22 15:00:59 GMT"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "chart" : {
       "type" : "column"
    },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 3,
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Lance Wicks",
+               "name" : "Lance Wicks"
+            },
+            {
+               "name" : "Lucas Ransan",
+               "drilldown" : "Lucas Ransan",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke",
+               "y" : 1
+            }
+         ],
+         "name" : "Perl Weekly Challenge - 118",
+         "colorByPoint" : 1
+      }
+   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "Perl Weekly Challenge - 118",
-         "data" : [
-            {
-               "name" : "James Smith",
-               "y" : 3,
-               "drilldown" : "James Smith"
-            },
-            {
-               "name" : "Lucas Ransan",
-               "y" : 2,
-               "drilldown" : "Lucas Ransan"
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "y" : 1,
-               "name" : "Niels van Dijke"
-            }
-         ]
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-06-22 10:42:13 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
+   "title" : {
+      "text" : "Perl Weekly Challenge - 118"
    }
 }
