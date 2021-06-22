@@ -16,12 +16,22 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-117/ja
 ***You are given a positive integer `$N`. Write a script to find out if the binary representation of the given integer is Palindrome. Print `1` if it is otherwise `0`.***
 ## The solution
 
+This is a simple code - we convert the number to a binary represenation
+using `sprintf` (actually faster than `unpack`), reverse and `compare`.
+
 ```perl
 sub is_binary_palindrome_string {
   my $t = sprintf '%b', shift;
   return ($t eq reverse $t) || 0;
 }
 ```
+
+I looked at alternative array based solutions - but these are all
+appreciably slower than using perl "core" string functions - which
+what you would expect. Core functionality will be written in highly
+optimzed "C" and so usually can't be beaten. We have seen this before
+when comparing the speed of `grep` to list utils `first` on small
+to medium lists when the comparison function is simple.
 
 # Task 2 - Adventure of Knight
 
