@@ -44,6 +44,6 @@ use experimental 'lexical_subs';
 # I really do hope the PWC steps away from fixed output challenges.
 #
 
-say "c7 e6 c5 b3 c1 a2 c3 b1 d2 c4 b2";
+say "a8 c7 e6 c5 b3 c1 a2 c3 b1 d2 c4 b2";
 
 __END__
