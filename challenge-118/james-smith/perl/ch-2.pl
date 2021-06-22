@@ -33,7 +33,11 @@ $sol |= 1 <<  8 * (substr $_,1) - 105 + ord $_ foreach @treasures;
 
 walk( 0, 7, 0, q() );   ## Walk the tree starting from top-left
 
-say length $best_rt, q( - ), show_rt( $best_rt ); ## Show best route
+say '';
+say "Treasures: @treasures";
+say '#Steps:    ',-1 + length $best_rt;
+say 'Route:     ',show_rt( $best_rt ); ## Show best route
+say '';
 
 sub walk {
   my( $x, $y, $seen, $rt ) = @_;
@@ -44,18 +48,17 @@ sub walk {
          || $seen & ( my $v = 1 << ( my $t = 8*$y + $x ) );
   $seen |= $v;
   $rt   .= chr $t;
-  return ($best_rt,$best_len) = ($rt,-1+length $rt)
-    if ($seen & $sol) == $sol;
+  return ($best_rt,$best_len) = ($rt,-1+length $rt) if ($seen & $sol) == $sol;
   return if $best_len <= length $rt;
   walk( $x + $_->[0], $y + $_->[1], $seen, $rt ) foreach @dir;
 }
 
 sub show_rt {
   my %t = map { $_ => 1 } @treasures;
-  return join q(),
-          map { sprintf ' %s%s', exists$t{$_}?q(*):q( ), $_ }
-          map { chr( ($_&7) + 97 ).(1 + ($_>>3)) }
-          map { ord $_ }
-        split m{}, shift;
+  return join q( ),
+         map        { $_.( exists $t{$_} ? q(*) : q( ) ) }
+         map        { chr( 97 + ($_&7) ).( 1 + ($_>>3) ) }
+         map        { ord $_                             }
+         split m{}, shift;
 }
 
