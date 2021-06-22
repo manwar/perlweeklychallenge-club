@@ -10,7 +10,7 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-117/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-118/james-smith/perl
 
 # Task 1 - Binary Palindrome
 ***You are given a positive integer `$N`. Write a script to find out if the binary representation of the given integer is Palindrome. Print `1` if it is otherwise `0`.***
