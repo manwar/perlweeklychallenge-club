@@ -1,0 +1,5 @@
+- setup:    0==system("aspell -d en dump master | aspell -l en expand > words.txt");
+  cleanup:  unlink "words.txt"
+  args:     cold warm
+  input:
+  output:   ("cold", "cord", "card", "ward", "warm")
