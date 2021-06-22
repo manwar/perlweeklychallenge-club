@@ -1,12 +1,16 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "Perl Weekly Challenge - 118"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "James Smith",
-            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -16,17 +20,19 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "James Smith",
+            "id" : "James Smith"
          },
          {
-            "id" : "Lance Wicks",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "name" : "Lance Wicks"
+            "name" : "Lance Wicks",
+            "id" : "Lance Wicks"
          },
          {
             "id" : "Lucas Ransan",
@@ -39,8 +45,18 @@
             "name" : "Lucas Ransan"
          },
          {
-            "id" : "Niels van Dijke",
             "name" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "id" : "Niels van Dijke"
+         },
+         {
+            "id" : "Steven Wilson",
+            "name" : "Steven Wilson",
             "data" : [
                [
                   "Perl",
@@ -50,11 +66,54 @@
          }
       ]
    },
+   "series" : [
+      {
+         "name" : "Perl Weekly Challenge - 118",
+         "data" : [
+            {
+               "y" : 3,
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
+            },
+            {
+               "name" : "Lance Wicks",
+               "drilldown" : "Lance Wicks",
+               "y" : 1
+            },
+            {
+               "name" : "Lucas Ransan",
+               "drilldown" : "Lucas Ransan",
+               "y" : 2
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke"
+            },
+            {
+               "y" : 1,
+               "name" : "Steven Wilson",
+               "drilldown" : "Steven Wilson"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
    "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2021-06-22 15:00:59 GMT"
+      "text" : "[Champions: 5] Last updated at 2021-06-22 15:04:04 GMT"
    },
-   "xAxis" : {
-      "type" : "category"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "plotOptions" : {
       "series" : {
@@ -64,49 +123,5 @@
          },
          "borderWidth" : 0
       }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 3,
-               "drilldown" : "James Smith",
-               "name" : "James Smith"
-            },
-            {
-               "y" : 1,
-               "drilldown" : "Lance Wicks",
-               "name" : "Lance Wicks"
-            },
-            {
-               "name" : "Lucas Ransan",
-               "drilldown" : "Lucas Ransan",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
-               "y" : 1
-            }
-         ],
-         "name" : "Perl Weekly Challenge - 118",
-         "colorByPoint" : 1
-      }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "title" : {
-      "text" : "Perl Weekly Challenge - 118"
    }
 }
