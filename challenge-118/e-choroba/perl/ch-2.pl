@@ -74,7 +74,8 @@ use constant SHOW_ANIMATION => 0;
             for my $x (0 .. 7) {
                 next if $self->board->[$x][$y] ne 'x';
 
-                $c{$x}{$y} = $i++;
+                $c{c}{$i} = [$x, $y];
+                $c{v}{$x}{$y} = $i++;
             }
         }
         return \%c
@@ -118,10 +119,13 @@ use constant SHOW_ANIMATION => 0;
     use namespace::clean;
 
     has problem => (is => 'ro', required => 1);
+    has steps => (is => 'rw', default => 0);
     has _fringe => (is => 'ro', default => sub { [] });
     has _in_fringe => (is => 'ro', default => sub { {} });
     has _score => (is => 'ro', default => sub { {} });
-    has steps => (is => 'rw', default => 0);
+    has _precomputed_distance => (is      => 'ro',
+                                  lazy    => 1,
+                                  builder => '_build_precomputed_distance');
 
 
     sub solve {
@@ -196,12 +200,32 @@ use constant SHOW_ANIMATION => 0;
     }
 
 
+    sub _distance {
+        my ($self, $x, $y, $i, $j) = @_;
+        my ($X, $Y) = map abs, $x - $i, $y - $j;
+        ($X, $Y) = ($Y, $X) if $X > $Y;
+        return $self->_precomputed_distance->{$X}{$Y};
+    }
+
+
+    sub _heuristic {
+        my ($self, $x, $y, $visited) = @_;
+        my $max_distance = 0;
+        for my $v (0 .. length($visited) - 1) {
+            next if substr $visited, $v, 1;
+
+            my ($i, $j) = @{ $self->problem->coord2v->{c}{$v} };
+            my $distance = $self->_distance($x, $y, $i, $j);
+            $max_distance = $distance if $distance > $max_distance;
+        }
+        return $max_distance
+    }
+
     sub _update_fringe {
         my ($self, $score, $new) = @_;
         my $ser = $new->serialise;
         $self->_score->{$ser} = $score;
-        my $heuristic = () = $new->visited =~ /0/g;
-        $score += $heuristic;
+        $score += $self->_heuristic($new->X, $new->Y, $new->visited);
         push @{ $self->_fringe->[$score] }, $new;
         $self->_in_fringe->{ $new->serialise } = $score;
         $self->_step;
@@ -231,7 +255,7 @@ use constant SHOW_ANIMATION => 0;
         my ($self, $x, $y, $visited) = @_;
         return $visited if $self->problem->board->[$x][$y] ne 'x';
 
-        my $v = $self->problem->coord2v->{$x}{$y};
+        my $v = $self->problem->coord2v->{v}{$x}{$y};
         substr $visited, $v, 1, '1';
         return $visited
     }
@@ -261,6 +285,41 @@ use constant SHOW_ANIMATION => 0;
         my ($self) = @_;
         $self->steps(1 + $self->steps);
     }
+
+
+    sub _build_precomputed_distance {
+        my ($self) = @_;
+        my %grid;
+        my $size = 8;
+        $grid{$size}{$size} = 0;
+        my ($xmin, $xmax, $ymin, $ymax) = ($size) x 4;
+        for my $step (0 .. 7) {
+            for my $i ($xmin .. $xmax) {
+                for my $j ($ymin .. $ymax) {
+                    next unless ($grid{$i}{$j} // 0) == $step;
+
+                    for my $m (@MOVES) {
+                        my $x = $i + $m->[0];
+                        my $y = $j + $m->[1];
+                        if ($x >= 0 && $y >= 0 && ! defined $grid{$x}{$y}) {
+                            $grid{$x}{$y} = $step + 1;
+                            $xmax = $x if $x > $xmax;
+                            $ymax = $y if $y > $ymax;
+                            $xmin = $x if $x < $xmin;
+                            $ymin = $y if $y < $ymin;
+                        }
+                    }
+                }
+            }
+        }
+        my %distances;
+        for my $j (0 .. 7) {
+            for my $i (0 .. $j) {
+                $distances{$i}{$j} = $grid{$i + $size}{$j + $size};
+            }
+        }
+        return \%distances
+    }
 }
 
 
@@ -284,5 +343,5 @@ __DATA__
 1 * x * * * * * * 1
   a b c d e f g h
 
-Steps: 1701
-11: a8, c7, e6, d4, b3, c1, a2, c3, b1, a3, c4, b2
+Steps: 1623
+11: a8, c7, e6, c5, b3, c1, a2, c3, b1, a3, c4, b2
