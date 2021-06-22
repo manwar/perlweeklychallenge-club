@@ -25,18 +25,154 @@ sub is_binary_palindrome_string {
 
 # Task 2 - Adventure of Knight
 
-***There are 6 squares with treasures. Write a script to find the path such that Knight can capture all treasures. The Knight can start from the top-left square.***
+***There are 6 squares with treasures. Write a script to find the
+path such that Knight can capture all treasures. The Knight can
+start from the top-left square.***
+
+## The technique
+
+This week unfortunately we are not going to avoid a recursive solution.
+The problem leads us in this direction, as at each step we have to test
+up to 8 "next steps" - the directions of the knight moves.
+
+BUT - to simplify our code solution - we want to avoid a solution which
+requires loops within our recursive function - other than the one which
+looks at the "next" step.
+
+We note that the chessboard has 64 squares and that Perl has 64-bit
+integers. We note therefore that we can represent the location of an
+array of items on the board as a single number.
+
+We number the squares starting bottom left with `0` & ending top right
+with `63`.
+
+```
+       a  b  c  d  e  f  g  h
+
+ 8    56 57 58 59 60 61 62 63
+ 7    48 49 50 51 52 53 54 55
+ 6    40 41 42 43 44 45 46 47
+ 5    32 33 34 35 36 37 38 39
+ 4    24 25 26 27 28 29 30 31
+ 3    16 17 18 19 20 21 22 23
+ 2     8  9 10 11 12 13 14 15
+ 1     0  1  2  3  4  5  6  7
+```
+
+Each board has a single integer representing it by adding up `2^n`
+for every square which contains an object.
+
+We can then represent the location of the "treasures" as a 64-bit
+number where we set the appropriate bit for each square a treasure
+is in. So we can represent the solution as:
+
+```
+   b1 (2^ 1)                    1
+   a2 (2^ 8)                  256
+   b2 (2^ 9)                  512
+   b3 (2^17)              131 072
+   c4 (2^26)           67 108 864
+   e6 (2^44)   17 592 186 044 416
+   ---------- -------------------
+   TOTAL       17 592 253 285 121
+   ---------- -------------------
+```
+
+We can similarly represent the squares the knight has visited as
+a single number.
+
+Two checks we need are:
+
+ * When a knight moves have they already visited the new square. If
+   they have then we do a bitwise compare (`&`) of `2^n` of the new
+   square with the representation of the squares they have visited.
+   If this is non-zero - we have already visited the square.
+
+ * To check to see if we have visited ALL the treasures we can `&`
+   the square we have visited with the location of the squares of
+   the treasure and if all the bits of the treasure squares have
+   been visited we know we have a solution. `tour & solution == solution`.
+
+**No loops required!**
+
+To find an optimal solution - we just need to find the shortest path -
+so one final check we can do is to "fail" the search if any new path is
+equal to or longer than the current shortest path.
+
+Finally this representation stores where a knight has been but NOT the
+order of the squares he has visited. We have to additionally store this
+information. At each stage we needed to compute the number of the
+square we are in (0..63). We can just store this in an array. But to
+avoid the array overhead instead we can just store it in a byte string,
+using `chr $loc`.
 
 ## The solution
 
+### The "main code"
+
+Set up list of possible knight moves.
 ```perl
 my @dir = ([-2,1],[2,1],[-2,-1],[2,-1],[-1,2],[1,2],[-1,-2],[1,-2]);
+```
+
+Get a list of treasure locations (in the form of letter.number).
+```perl
 my @treasures = qw(a2 b1 b2 b3 c4 e6);
+```
+
+Initialize variables (best route, best route length), and compute the
+numeric represenation of the solution. You see we use "`|`" rather
+than "`&`" to add up the digits.
+
+We subtract `105 = 8 + 97` - as we have to substract `ord 'a'` from the
+horizontally co-ordinate and `1 (*8)` from the vertical co-ordinate
+to map to a `0` based location number.
+
+```perl
 my( $sol, $best_len, $best_rt ) = ( 0, 65 );
 $sol |= 1 <<  8 * (substr $_,1) - 105 + ord $_ foreach @treasures;
-walk( 0, 7, 0, q() );   ## Walk the tree starting from top-left
+```
+
+Walk the grid to find the best solution. Starting in the top left
+corner which is `(0,7)`.
+```perl
+walk( 0, 7, 0, q() );
+```
+
+Write out best solution
+```perl
 say length $best_rt, q( - ), show_rt( $best_rt ); ## Show best route
 ```
+
+### The walk function
+
+This is the heart of the algorithm.
+
+To make the code shorter we don't check the square we are moving to
+before we call the function, but instead we check at the start of the
+call.
+
+We have the following variables:
+
+  * `$seen` is the binary representation of the board showing where
+    the knight has been.
+  * `$rt` the byte string of the route of of the knight.
+  * `$x`/`$y` the co-ordinates of the current square.
+  * `$t`/`$v` the location of the square as a number between `0` and `63` and
+    it's location as a bit in the 64-bit represenation. `2^$t`.
+
+We check:
+
+  * Is the new square on the board (x/y co-ordinates between 0 and 7).
+  * We check we haven't seen the square before `$seen & $v`
+
+We then update both `$seen` and `$rt`
+
+Then we check the solution - `$seen & $sol == $sol` - if it is we
+update the "best solution" and try the next path.
+
+Before the recursive step we check whether our solution will be optimal
+by comparing it's length to the best length we have already seen.
 
 ```perl
 sub walk {
@@ -52,14 +188,26 @@ sub walk {
 }
 ```
 
+### The dump function
+
+This returns the path - in the original letter.number format with
+stars to indicate when we find treasures. We do this by Using
+nested `map`s.
+
+ * We first convert the byte string representation into an array of
+   square numbers.
+ * We then convert this to a list of location strings.
+ * We finally check to see if each square is a treasure and prepend
+   with either a `*` or a space.
+
 ```perl
 sub show_rt {
   my %t = map { $_ => 1 } @treasures;
-  return join q(),
-          map { sprintf ' %s%s', exists$t{$_}?q(*):q( ), $_ }
-          map { chr( ($_&7) + 97 ).(1 + ($_>>3)) }
-          map { ord $_ }
-        split m{}, shift;
+  return join q( ),
+         map        { ( exists $t{$_} ? q(*) : q( ) ) . $_ }
+         map        { chr( 97 + ($_&7) ).( 1 + ($_>>3) )   }
+         map        { ord $_                               }
+         split m{}, shift;
 }
 ```
 
