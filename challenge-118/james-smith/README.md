@@ -273,6 +273,7 @@ Rather than checking to see if a move from one square in a given direction ("tra
 So we use the logic above to generate an array where the "key" is the square number and the "value" is an array of square numbers that you can reach.
 
 This gives us the following code:
+
 ```perl
 sub get_trans {
   my $q=[];
@@ -317,6 +318,9 @@ The array looks something like:
   [13,22]
   ....
 ]
+```
+
+The walk sub then becomes the simpler:
 
 ```perl
 sub walk_trans {
