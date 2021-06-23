@@ -293,17 +293,47 @@ sub get_trans {
 }
 ```
 
+The numbers 6, 10, 15 and 17 come from looking at the grid above....
+
+```
+  ... +15 ... +17 ...
+   +6 ... ... ... +10
+  ... ... *** ... ...
+  -10 ... ... ...  -6
+  ... -17 ... -15 ...
+```
 We then have an optimized version of the walk code:
+
+The array looks something like:
+```
+[
+  [10,17]
+  [11,16,18]
+  [8,12,17,19]
+  [9,13,18,20]
+  [10,14,19,21]
+  [11,15,20,22]
+  [12,21,23]
+  [13,22]
+  ....
+]
 
 ```perl
 sub walk_trans {
-  my( $t, $seen, $rt ) = @_;
-  return if $seen & ( my $v = 1 << $t );
-  $seen |= $v;
-  $rt   .= chr $t;
+  my( $t, $seen, $rt ) = @_;  ## Current square, visited squares, current route
+  return if $seen & 1 << $t;  ## Return if we've already been to this square.
+  $seen |= 1 << $t;           ## Mark that we have been in this square.
+  $rt   .= chr $t;            ## Add this square to our route.
   return ($best_rt,$best_len) = ($rt,-1+length $rt) if ($seen & $sol) == $sol;
+                              ## If we've found all the treasure
+                              ## Update the best route (and it's length)
+                              ## and return;
   return if $best_len <= length $rt;
+                              ## If our route is longer than the best route
+                              ## return;
   walk_trans( $_, $seen, $rt ) foreach @{$trans->[$t]};
+                              ## Try all knight move squares from the current
+                              ## square.
 }
 ```
 
