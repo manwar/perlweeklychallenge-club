@@ -68,7 +68,7 @@ for my $lang (grep {-d} sort keys %LANG) {
                     # build test command line
                     my $cmd;
                     if ($lang eq 'bc') {        # needs args in stdin
-                        $cmd = "echo ".$spec->{args}."|$exec";
+                        $cmd = "echo ".($spec->{args}//"")."|$exec";
                     }
                     else {
                         $cmd = "$exec ".value_or_eval($spec->{args});
