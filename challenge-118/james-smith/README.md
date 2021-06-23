@@ -225,7 +225,7 @@ sub show_rt {
 }
 ```
 
-## Aside - let's eek out the speed.
+## Improvement 1 - reduce function calls
 
 There is one place where the code could gain a bit of speed. The
 range checks are performed AFTER the function call not before. We
@@ -261,3 +261,54 @@ sub walk_opt {
   walk_opt( $x+1, $y-2, $seen, $rt ) if $x<7 && $y>1;
 }
 ```
+
+## Improvement 2 - remove some `if`s
+
+So we've remove unecessary loops in our first attempt, in our second we have reduced the number of function calls. So we need to see where we can gain more time...
+
+The only thing left is to reduce the `if` statements in the "heart" of the loop.
+
+Rather than checking to see if a move from one square in a given direction ("transition") is valid each time - we pre-compute the list of moves, and store it in a "transition" matrix. This reduces overall execution time.
+
+So we use the logic above to generate an array where the "key" is the square number and the "value" is an array of square numbers that you can reach.
+
+This gives us the following code:
+```perl
+sub get_trans {
+  my $q=[];
+  foreach my $y (0..7) {
+    foreach my $x (0..7) {
+      my $l = $x + $y * 8;
+      push @{ $q->[$l] }, $l + 6  if $y<7 && $x > 1;
+      push @{ $q->[$l] }, $l + 10 if $y<7 && $x < 6;
+      push @{ $q->[$l] }, $l - 6  if $y>0 && $x < 6;
+      push @{ $q->[$l] }, $l - 10 if $y>0 && $x > 1;
+      push @{ $q->[$l] }, $l + 15 if $y<6 && $x > 0;
+      push @{ $q->[$l] }, $l + 17 if $y<6 && $x < 7;
+      push @{ $q->[$l] }, $l - 15 if $y>1 && $x < 7;
+      push @{ $q->[$l] }, $l - 17 if $y>1 && $x > 0;
+    }
+  }
+  return $q;
+}
+```
+
+We then have an optimized version of the walk code:
+
+```perl
+sub walk_trans {
+  my( $t, $seen, $rt ) = @_;
+  return if $seen & ( my $v = 1 << $t );
+  $seen |= $v;
+  $rt   .= chr $t;
+  return ($best_rt,$best_len) = ($rt,-1+length $rt) if ($seen & $sol) == $sol;
+  return if $best_len <= length $rt;
+  walk_trans( $_, $seen, $rt ) foreach @{$trans->[$t]};
+}
+```
+
+The eight lines of `if`s go back to a single foreach loop.
+
+As well as removing the ifs we have a "side-effect" where we no longer need to label squares by their x&y co-ordinates but just by their index 0..63 which also gains us a little speed.
+
+The time is now down to approximately 10 seconds.
