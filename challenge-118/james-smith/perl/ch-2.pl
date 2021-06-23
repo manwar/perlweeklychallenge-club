@@ -90,18 +90,21 @@ sub show_rt {
 }
 
 sub walk_trans {
-  my( $t, $seen, $rt ) = @_;
-  ## Skip if the new "chain" will be bigger than the best chain so far
-  ## If we have fallen off the sides of the board
-  ## Or if we have already visited the square.
-  return if $seen & ( my $v = 1 << $t );
-  $seen |= $v;
-  $rt   .= chr $t;
+  my( $t, $seen, $rt ) = @_;  ## Current square, visited squares, current route
+  return if $seen & 1 << $t;  ## Return if we've already been to this square.
+  $seen |= 1 << $t;           ## Mark that we have been in this square.
+  $rt   .= chr $t;            ## Add this square to our route.
   return ($best_rt,$best_len) = ($rt,-1+length $rt) if ($seen & $sol) == $sol;
+                              ## If we've found all the treasure
+                              ## Update the best route (and it's length)
+                              ## and return;
   return if $best_len <= length $rt;
+                              ## If our route is longer than the best route
+                              ## return;
   walk_trans( $_, $seen, $rt ) foreach @{$trans->[$t]};
+                              ## Try all knight move squares from the current
+                              ## square.
 }
-
 sub get_trans {
   my $q=[];
   foreach my $y (0..7) {
