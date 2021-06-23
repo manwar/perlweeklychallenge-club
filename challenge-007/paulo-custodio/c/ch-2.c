@@ -45,10 +45,8 @@ list.
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdlib.h>
 
 #define MAXLINE         1024
-#define MAX_LADDER_SIZE 20
 
 // list of words
 typedef struct word_t {
@@ -128,10 +126,6 @@ void word_list_free(word_t** phead) {
     }
 }
 
-int word_list_size(word_t** phead) {
-    return HASH_COUNT(*phead);
-}
-
 const char* word_list_last_word(word_t** phead) {
     word_t* elem;
     word_t* tmp;
@@ -175,12 +169,6 @@ void word_list_print(word_t** phead) {
         delim = ", ";
     }
     printf(")");
-}
-
-void word_list_print_line(word_t** phead, const char* name) {
-    printf("%s : ", name);
-    word_list_print(phead);
-    printf("\n");
 }
 
 // queue of paths
@@ -231,10 +219,6 @@ word_t* find_shortest_ladder(const char* word1, const char* word2) {
     enqueue(&queue, path);
     while (queue) {
         path = dequeue(&queue);         // current path being examined
-
-#ifdef DEBUG
-        word_list_print_line(&path, "path");
-#endif
 
         // check if finished
         const char* last_word = word_list_last_word(&path);
