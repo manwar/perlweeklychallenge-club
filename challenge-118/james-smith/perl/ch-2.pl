@@ -105,6 +105,7 @@ sub walk_trans {
                               ## Try all knight move squares from the current
                               ## square.
 }
+
 sub get_trans {
   my $q=[];
   foreach my $y (0..7) {
