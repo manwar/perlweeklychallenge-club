@@ -16,38 +16,30 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-118/ja
 ***You are given a positive integer `$N`. Write a script to find out if the binary representation of the given integer is Palindrome. Print `1` if it is otherwise `0`.***
 ## The solution
 
-This is a simple code - we convert the number to a binary represenation
-using `sprintf` (actually faster than `unpack`), reverse and `compare`.
+This is a simple code - we convert the number to a binary represenation using `sprintf` (actually faster than `unpack` and doesn't need 0s trimmed), reverse and `compare`.
 
 ```perl
 sub is_binary_palindrome_string {
-  my $t = sprintf '%b', shift;
-  return ($t eq reverse $t) || 0;
+  return ( ( $a = sprintf '%b', $_[0] ) eq reverse $a ) || 0;
 }
 ```
 
-I looked at alternative array based solutions - but these are all
-appreciably slower than using perl "core" string functions - which
-what you would expect. Core functionality will be written in highly
-optimzed "C" and so usually can't be beaten. We have seen this before
-when comparing the speed of `grep` to list utils `first` on small
-to medium lists when the comparison function is simple.
+I looked at alternative array based solutions - but these are all appreciably slower than using perl "core" string functions - which
+what you would expect. Core functionality will be written in highly optimzed "C" and so usually can't be beaten. We have seen this before
+when comparing the speed of `grep` to list utils `first` on small to medium lists when the comparison function is simple.
 
 # Task 2 - Adventure of Knight
 
-***There are 6 squares with treasures. Write a script to find the
-path such that Knight can capture all treasures. The Knight can
+***There are 6 squares with treasures. Write a script to find the path such that Knight can capture all treasures. The Knight can
 start from the top-left square.***
 
 ## The technique
 
-*To start with I didn't want to look up any "ideal" solution for this
-problem - but start from first principles and see if we can get
-a "brute force" solution to come back in a reasonable time!*
+*To start with I didn't want to google an "ideal" solution for this problem - but start from first
+principles and see if we can get a "brute force" solution to come back in a reasonable time!*
 
-This week unfortunately we are not going to avoid a recursive solution.
-The problem leads us in this direction, as at each step we have to test
-up to 8 "next steps" - the directions of the knight moves.
+This week unfortunately we are not going to avoid a recursive solution. The problem leads us in this
+direction, as at each step we have to test up to 8 "next steps" - the directions of the knight moves.
 
 The brute force algorithm is:
 
@@ -56,14 +48,13 @@ The brute force algorithm is:
  * check to see if we've found the solution;
  * try all moves from the current location;
 
-If we are looking for the shortest route - we can also add a clause which
-says stop if the route we've got is equal to or longer in length than the
-current best route.
+If we are looking for the shortest route - we can also add a clause which says stop if the route we've got is
+equal to or longer in length than the current best route.
 
 ### Avoiding loops
-To simplify our code solution, and increase performance we want to
-remove the need for any extraneous loops, and also the use of arrays
-as there are many overheads to using arrays.
+
+To simplify our code solution, and increase performance we want to remove the need for any extraneous
+loops, and also the use of arrays as there are many overheads to using arrays.
 
 We want to avoid a solution which requires loops within our recursive
 function - other than the one which looks at the "next" step.
@@ -76,16 +67,18 @@ We number the squares starting bottom left with `0` & ending top right
 with `63`.
 
 ```
-       a  b  c  d  e  f  g  h
+      a  b  c  d  e  f  g  h
 
- 8    56 57 58 59 60 61 62 63
- 7    48 49 50 51 52 53 54 55
- 6    40 41 42 43 44 45 46 47
- 5    32 33 34 35 36 37 38 39
- 4    24 25 26 27 28 29 30 31
- 3    16 17 18 19 20 21 22 23
- 2     8  9 10 11 12 13 14 15
- 1     0  1  2  3  4  5  6  7
+ 8   56 57 58 59 60 61 62 63   8
+ 7   48 49 50 51 52 53 54 55   7
+ 6   40 41 42 43 44 45 46 47   6
+ 5   32 33 34 35 36 37 38 39   5
+ 4   24 25 26 27 28 29 30 31   4
+ 3   16 17 18 19 20 21 22 23   3
+ 2    8  9 10 11 12 13 14 15   2
+ 1    0  1  2  3  4  5  6  7   1
+
+      a  b  c  d  e  f  g  h
 ```
 
 Each board has a single integer representing it by adding up `2^n`
@@ -368,7 +361,7 @@ The time is now down to approximately 10 seconds.
 
 ## Notes
 
-### Transition matrix
+### The full transition matrix
 ```perl
 [
   [10, 17],
