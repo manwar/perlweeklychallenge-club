@@ -32,7 +32,7 @@ my @TESTS = (
 is( is_binary_palindrome($_->[0]), $_->[1] ) foreach @TESTS;
 is( is_binary_palindrome_string($_->[0]), $_->[1] ) foreach @TESTS;
 
-cmpthese( 250_000, {
+cmpthese( 100_000, {
   'array'  => sub { is_binary_palindrome($_->[0])        foreach @TESTS },
   'string' => sub { is_binary_palindrome_string($_->[0]) foreach @TESTS },
 } );
@@ -41,10 +41,9 @@ done_testing();
 
 sub is_binary_palindrome_string {
   ## This is the core perl solution convert to binary using sprintf
-  ## [this is faster than unpack!]
+  ## [this is faster than unpack and doesn't have issue with leading 0s!]
   ## and compare with reverse...
-  my $t = sprintf '%b', shift;
-  return ($t eq reverse $t) || 0;
+  return ( ( $a = sprintf '%b', $_[0] ) eq reverse $a ) || 0;
 }
 
 sub is_binary_palindrome {
