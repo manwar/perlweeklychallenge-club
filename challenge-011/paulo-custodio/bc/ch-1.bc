@@ -1,0 +1,39 @@
+#!/usr/bin/bc -ql
+
+/*
+Challenge 011
+
+Challenge #1
+Write a script that computes the equal point in the Fahrenheit and Celsius
+scales, knowing that the freezing point of water is 32 °F and 0 °C, and that
+the boiling point of water is 212 °F and 100 °C. This challenge was proposed
+by Laurent Rosenfeld.
+*/
+
+scale = 10
+
+/*
+F = (C * 9/5) + 32
+F = C = x
+ => f(x) = (x * 9/5) + 32 - x = 0
+<=> f(x) = (9/5 - 1) * x + 32
+    f'(x) = 9/5 - 1
+*/
+
+define f(x) {   return (9/5 - 1) * x + 32 }
+define df(x) {  return 9/5 - 1 }
+
+define newton(x0) {
+    auto x1, tmp
+    x1 = x0+1
+    while (x0 != x1) {
+        x1 = x0 - f(x0)/df(x0)
+        tmp = x1; x1 = x0; x0 = tmp
+    }
+    return x0
+}
+
+t = newton(0)
+scale = 0
+t/1
+quit
