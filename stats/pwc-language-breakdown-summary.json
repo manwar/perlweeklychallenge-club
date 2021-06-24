@@ -1,18 +1,19 @@
 {
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "enabled" : "true",
+            "rotation" : -90
+         },
          "data" : [
             [
                "Blog",
@@ -20,30 +21,35 @@
             ],
             [
                "Perl",
-               5590
+               5592
             ],
             [
                "Raku",
                3527
             ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "rotation" : -90
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
-   "legend" : {
-      "enabled" : "false"
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-06-24 05:54:51 GMT"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
    },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
@@ -51,13 +57,7 @@
    "title" : {
       "text" : "Perl Weekly Challenge Contributions [2019 - 2020]"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-06-23 17:47:02 GMT"
+   "legend" : {
+      "enabled" : "false"
    }
 }
