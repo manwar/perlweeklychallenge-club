@@ -41,13 +41,32 @@ start from the top-left square.***
 
 ## The technique
 
+*To start with I didn't want to look up any "ideal" solution for this
+problem - but start from first principles and see if we can get
+a "brute force" solution to come back in a reasonable time!*
+
 This week unfortunately we are not going to avoid a recursive solution.
 The problem leads us in this direction, as at each step we have to test
 up to 8 "next steps" - the directions of the knight moves.
 
-BUT - to simplify our code solution - we want to avoid a solution which
-requires loops within our recursive function - other than the one which
-looks at the "next" step.
+The brute force algorithm is:
+
+ * check to see if we've visited the square before; stop
+ * update route;
+ * check to see if we've found the solution;
+ * try all moves from the current location;
+
+If we are looking for the shortest route - we can also add a clause which
+says stop if the route we've got is equal to or longer in length than the
+current best route.
+
+### Avoiding loops
+To simplify our code solution, and increase performance we want to
+remove the need for any extraneous loops, and also the use of arrays
+as there are many overheads to using arrays.
+
+We want to avoid a solution which requires loops within our recursive
+function - other than the one which looks at the "next" step.
 
 We note that the chessboard has 64 squares and that Perl has 64-bit
 integers. We note therefore that we can represent the location of an
@@ -116,7 +135,7 @@ square we are in (0..63). We can just store this in an array. But to
 avoid the array overhead instead we can just store it in a byte string,
 using `chr $loc`.
 
-## The solution
+## Our first solution
 
 ### The "main code"
 
@@ -225,7 +244,7 @@ sub show_rt {
 }
 ```
 
-## Aside - let's eek out the speed.
+## Improvement 1 - reduce function calls
 
 There is one place where the code could gain a bit of speed. The
 range checks are performed AFTER the function call not before. We
@@ -260,4 +279,161 @@ sub walk_opt {
   walk_opt( $x-1, $y-2, $seen, $rt ) if $x   && $y>1;
   walk_opt( $x+1, $y-2, $seen, $rt ) if $x<7 && $y>1;
 }
+```
+
+## Improvement 2 - remove some `if`s
+
+So we've remove unecessary loops in our first attempt, in our second we have reduced the number of function calls. So we need to see where we can gain more time...
+
+The only thing left is to reduce the `if` statements in the "heart" of the loop.
+
+Rather than checking to see if a move from one square in a given direction ("transition") is valid each time - we pre-compute the list of moves, and store it in a "transition" matrix. This reduces overall execution time.
+
+So we use the logic above to generate an array where the "key" is the square number and the "value" is an array of square numbers that you can reach.
+
+This gives us the following code:
+
+```perl
+sub get_trans {
+  my $q=[];
+  foreach my $y (0..7) {
+    foreach my $x (0..7) {
+      my $l = $x + $y * 8;
+      push @{ $q->[$l] }, $l + 6  if $y<7 && $x > 1;
+      push @{ $q->[$l] }, $l + 10 if $y<7 && $x < 6;
+      push @{ $q->[$l] }, $l - 6  if $y>0 && $x < 6;
+      push @{ $q->[$l] }, $l - 10 if $y>0 && $x > 1;
+      push @{ $q->[$l] }, $l + 15 if $y<6 && $x > 0;
+      push @{ $q->[$l] }, $l + 17 if $y<6 && $x < 7;
+      push @{ $q->[$l] }, $l - 15 if $y>1 && $x < 7;
+      push @{ $q->[$l] }, $l - 17 if $y>1 && $x > 0;
+    }
+  }
+  return $q;
+}
+```
+
+The numbers 6, 10, 15 and 17 come from looking at the grid above....
+
+```
+  ... +15 ... +17 ...
+   +6 ... ... ... +10
+  ... ... *** ... ...
+  -10 ... ... ...  -6
+  ... -17 ... -15 ...
+```
+We then have an optimized version of the walk code:
+
+The array looks something like:
+```
+[
+  [10,17]
+  [11,16,18]
+  [8,12,17,19]
+  [9,13,18,20]
+  [10,14,19,21]
+  [11,15,20,22]
+  [12,21,23]
+  [13,22]
+  ....
+]
+```
+
+The walk sub then becomes the simpler:
+
+```perl
+sub walk_trans {
+  my( $t, $seen, $rt ) = @_;  ## Current square, visited squares, current route
+  return if $seen & 1 << $t;  ## Return if we've already been to this square.
+  $seen |= 1 << $t;           ## Mark that we have been in this square.
+  $rt   .= chr $t;            ## Add this square to our route.
+  return ($best_rt,$best_len) = ($rt,-1+length $rt) if ($seen & $sol) == $sol;
+                              ## If we've found all the treasure
+                              ## Update the best route (and it's length)
+                              ## and return;
+  return if $best_len <= length $rt;
+                              ## If our route is longer than the best route
+                              ## return;
+  walk_trans( $_, $seen, $rt ) foreach @{$trans->[$t]};
+                              ## Try all knight move squares from the current
+                              ## square.
+}
+```
+
+The eight lines of `if`s go back to a single foreach loop.
+
+As well as removing the ifs we have a "side-effect" where we no longer need to label squares by their x&y co-ordinates but just by their index 0..63 which also gains us a little speed.
+
+The time is now down to approximately 10 seconds.
+
+## Notes
+
+### Transition matrix
+```perl
+[
+  [10, 17],
+  [11, 16, 18],
+  [8, 12, 17, 19],
+  [9, 13, 18, 20],
+  [10, 14, 19, 21],
+  [11, 15, 20, 22],
+  [12, 21, 23],
+  [13, 22],
+  [2, 18, 25],
+  [3, 19, 24, 26],
+  [0, 4, 16, 20, 25, 27],
+  [1, 5, 17, 21, 26, 28],
+  [2, 6, 18, 22, 27, 29],
+  [3, 7, 19, 23, 28, 30],
+  [4, 20, 29, 31],
+  [5, 21, 30],
+  [1, 10, 26, 33],
+  [0, 2, 11, 27, 32, 34],
+  [1, 3, 8, 12, 24, 28, 33, 35],
+  [2, 4, 9, 13, 25, 29, 34, 36],
+  [3, 5, 10, 14, 26, 30, 35, 37],
+  [4, 6, 11, 15, 27, 31, 36, 38],
+  [5, 7, 12, 28, 37, 39],
+  [6, 13, 29, 38],
+  [9, 18, 34, 41],
+  [8, 10, 19, 35, 40, 42],
+  [9, 11, 16, 20, 32, 36, 41, 43],
+  [10, 12, 17, 21, 33, 37, 42, 44],
+  [11, 13, 18, 22, 34, 38, 43, 45],
+  [12, 14, 19, 23, 35, 39, 44, 46],
+  [13, 15, 20, 36, 45, 47],
+  [14, 21, 37, 46],
+  [17, 26, 42, 49],
+  [16, 18, 27, 43, 48, 50],
+  [17, 19, 24, 28, 40, 44, 49, 51],
+  [18, 20, 25, 29, 41, 45, 50, 52],
+  [19, 21, 26, 30, 42, 46, 51, 53],
+  [20, 22, 27, 31, 43, 47, 52, 54],
+  [21, 23, 28, 44, 53, 55],
+  [22, 29, 45, 54],
+  [25, 34, 50, 57],
+  [24, 26, 35, 51, 56, 58],
+  [25, 27, 32, 36, 48, 52, 57, 59],
+  [26, 28, 33, 37, 49, 53, 58, 60],
+  [27, 29, 34, 38, 50, 54, 59, 61],
+  [28, 30, 35, 39, 51, 55, 60, 62],
+  [29, 31, 36, 52, 61, 63],
+  [30, 37, 53, 62],
+  [33, 42, 58],
+  [32, 34, 43, 59],
+  [33, 35, 40, 44, 56, 60],
+  [34, 36, 41, 45, 57, 61],
+  [35, 37, 42, 46, 58, 62],
+  [36, 38, 43, 47, 59, 63],
+  [37, 39, 44, 60],
+  [38, 45, 61],
+  [41, 50],
+  [40, 42, 51],
+  [41, 43, 48, 52],
+  [42, 44, 49, 53],
+  [43, 45, 50, 54],
+  [44, 46, 51, 55],
+  [45, 47, 52],
+  [46, 53],
+]
 ```
