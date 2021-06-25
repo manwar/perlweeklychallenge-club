@@ -1,41 +1,16 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "subtitle" : {
-      "text" : "Last updated at 2021-06-24 10:16:56 GMT"
+      "text" : "Last updated at 2021-06-25 16:00:34 GMT"
    },
-   "series" : [
-      {
-         "data" : [
-            [
-               "Blog",
-               1669
-            ],
-            [
-               "Perl",
-               5595
-            ],
-            [
-               "Raku",
-               3530
-            ]
-         ],
-         "dataLabels" : {
-            "rotation" : -90,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "enabled" : "true",
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}"
-         },
-         "name" : "Contributions"
-      }
-   ],
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
    "chart" : {
       "type" : "column"
    },
@@ -45,19 +20,44 @@
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
       },
       "type" : "category"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
+   "series" : [
+      {
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               1669
+            ],
+            [
+               "Perl",
+               5597
+            ],
+            [
+               "Raku",
+               3530
+            ]
+         ],
+         "dataLabels" : {
+            "align" : "right",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "y" : 10
+         }
       }
-   },
-   "legend" : {
-      "enabled" : "false"
+   ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
