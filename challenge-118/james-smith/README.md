@@ -315,7 +315,6 @@ The numbers 6, 10, 15 and 17 come from looking at the grid above....
   -10 ... ... ...  -6
   ... -17 ... -15 ...
 ```
-We then have an optimized version of the walk code:
 
 The array looks something like:
 ```
@@ -332,30 +331,32 @@ The array looks something like:
 ]
 ```
 
-The walk sub then becomes the simpler:
+We then have an optimized version of the walk code, and subroutine then becomes the *simpler*:
 
 ```perl
 sub walk_trans {
-  my( $t, $seen, $rt ) = @_;  ## Current square, visited squares, current route
-  return if $seen & 1 << $t;  ## Return if we've already been to this square.
-  $seen |= 1 << $t;           ## Mark that we have been in this square.
-  $rt   .= chr $t;            ## Add this square to our route.
-  return ($best_rt,$best_len) = ($rt,-1+length $rt) if ($seen & $sol) == $sol;
-                              ## If we've found all the treasure
-                              ## Update the best route (and it's length)
-                              ## and return;
-  return if $best_len <= length $rt;
-                              ## If our route is longer than the best route
-                              ## return;
-  walk_trans( $_, $seen, $rt ) foreach @{$trans->[$t]};
-                              ## Try all knight move squares from the current
-                              ## square.
+  my( $t, $seen, $rt ) = @_;          ## Current square, visited squares, current route.
+
+  return if $seen & 1 << $t;          ## Return if we've already been to this square.
+
+  $seen |= 1 << $t;                   ## Mark that we have been in this square.
+
+  $rt   .= chr $t;                    ## Add this square to our route.
+
+  return ($best_rt,$best_len)         ## If we've found all the treasure update the best 
+       = ($rt,-1+length $rt)          ## route (and it's length) and return
+      if ($seen & $sol) == $sol;
+
+  return if $best_len <= length $rt;  ## If longer than the best route return
+
+  walk_trans( $_, $seen, $rt )        ## Try all knight move squares from the current
+      foreach @{$trans->[$t]};        ## square.
 }
 ```
 
-The eight lines of `if`s go back to a single foreach loop.
+The eight lines of `if`s go back to a single foreach loop, but this time we do not need the `if`s.
 
-As well as removing the ifs we have a "side-effect" where we no longer need to label squares by their x&y co-ordinates but just by their index 0..63 which also gains us a little speed.
+As well as removing the ifs we have a "side-effect" where we no longer need to label squares by their `x`&`y` co-ordinates but just by their index `0`..`63` which also gains us some additional speed {we no longer have to compute `$t` from `$x` & `$y`, and we need to pass one less parameter}
 
 The time is now down to approximately 10 seconds.
 
