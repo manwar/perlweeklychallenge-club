@@ -11,6 +11,11 @@ use Data::Dumper qw(Dumper);
 my @dir = ([-2,1],[2,1],[-2,-1],[2,-1],[-1,2],[1,2],[-1,-2],[1,-2]);
 my $trans = get_trans();
 
+say '';
+say '[';
+say '  [', join( q(, ), sort { $a<=>$b } @{$_}), '],' foreach @{$trans};
+say ']';
+say '';
 my @treasures = qw(a2 b1 b2 b3 c4 e6);
 my( $sol, $best_len, $best_rt ) = ( 0, 65 );
 $sol |= 1 <<  8 * (substr $_,1) - 105 + ord $_ foreach @treasures;

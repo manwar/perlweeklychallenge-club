@@ -16,38 +16,30 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-118/ja
 ***You are given a positive integer `$N`. Write a script to find out if the binary representation of the given integer is Palindrome. Print `1` if it is otherwise `0`.***
 ## The solution
 
-This is a simple code - we convert the number to a binary represenation
-using `sprintf` (actually faster than `unpack`), reverse and `compare`.
+This is a simple code - we convert the number to a binary represenation using `sprintf` (actually faster than `unpack` and doesn't need 0s trimmed), reverse and `compare`.
 
 ```perl
 sub is_binary_palindrome_string {
-  my $t = sprintf '%b', shift;
-  return ($t eq reverse $t) || 0;
+  return ( ( $a = sprintf '%b', $_[0] ) eq reverse $a ) || 0;
 }
 ```
 
-I looked at alternative array based solutions - but these are all
-appreciably slower than using perl "core" string functions - which
-what you would expect. Core functionality will be written in highly
-optimzed "C" and so usually can't be beaten. We have seen this before
-when comparing the speed of `grep` to list utils `first` on small
-to medium lists when the comparison function is simple.
+I looked at alternative array based solutions - but these are all appreciably slower than using perl "core" string functions - which
+what you would expect. Core functionality will be written in highly optimzed "C" and so usually can't be beaten. We have seen this before
+when comparing the speed of `grep` to list utils `first` on small to medium lists when the comparison function is simple.
 
 # Task 2 - Adventure of Knight
 
-***There are 6 squares with treasures. Write a script to find the
-path such that Knight can capture all treasures. The Knight can
+***There are 6 squares with treasures. Write a script to find the path such that Knight can capture all treasures. The Knight can
 start from the top-left square.***
 
 ## The technique
 
-*To start with I didn't want to look up any "ideal" solution for this
-problem - but start from first principles and see if we can get
-a "brute force" solution to come back in a reasonable time!*
+*To start with I didn't want to google an "ideal" solution for this problem - but start from first
+principles and see if we can get a "brute force" solution to come back in a reasonable time!*
 
-This week unfortunately we are not going to avoid a recursive solution.
-The problem leads us in this direction, as at each step we have to test
-up to 8 "next steps" - the directions of the knight moves.
+This week unfortunately we are not going to avoid a recursive solution. The problem leads us in this
+direction, as at each step we have to test up to 8 "next steps" - the directions of the knight moves.
 
 The brute force algorithm is:
 
@@ -56,14 +48,13 @@ The brute force algorithm is:
  * check to see if we've found the solution;
  * try all moves from the current location;
 
-If we are looking for the shortest route - we can also add a clause which
-says stop if the route we've got is equal to or longer in length than the
-current best route.
+If we are looking for the shortest route - we can also add a clause which says stop if the route we've got is
+equal to or longer in length than the current best route.
 
 ### Avoiding loops
-To simplify our code solution, and increase performance we want to
-remove the need for any extraneous loops, and also the use of arrays
-as there are many overheads to using arrays.
+
+To simplify our code solution, and increase performance we want to remove the need for any extraneous
+loops, and also the use of arrays as there are many overheads to using arrays.
 
 We want to avoid a solution which requires loops within our recursive
 function - other than the one which looks at the "next" step.
@@ -76,16 +67,18 @@ We number the squares starting bottom left with `0` & ending top right
 with `63`.
 
 ```
-       a  b  c  d  e  f  g  h
+      a  b  c  d  e  f  g  h
 
- 8    56 57 58 59 60 61 62 63
- 7    48 49 50 51 52 53 54 55
- 6    40 41 42 43 44 45 46 47
- 5    32 33 34 35 36 37 38 39
- 4    24 25 26 27 28 29 30 31
- 3    16 17 18 19 20 21 22 23
- 2     8  9 10 11 12 13 14 15
- 1     0  1  2  3  4  5  6  7
+ 8   56 57 58 59 60 61 62 63   8
+ 7   48 49 50 51 52 53 54 55   7
+ 6   40 41 42 43 44 45 46 47   6
+ 5   32 33 34 35 36 37 38 39   5
+ 4   24 25 26 27 28 29 30 31   4
+ 3   16 17 18 19 20 21 22 23   3
+ 2    8  9 10 11 12 13 14 15   2
+ 1    0  1  2  3  4  5  6  7   1
+
+      a  b  c  d  e  f  g  h
 ```
 
 Each board has a single integer representing it by adding up `2^n`
@@ -151,7 +144,7 @@ my @treasures = qw(a2 b1 b2 b3 c4 e6);
 
 Initialize variables (best route, best route length), and compute the
 numeric represenation of the solution. You see we use "`|`" rather
-than "`&`" to add up the digits.
+than "`+`" to add up the digits.
 
 We subtract `105 = 8 + 97` - as we have to substract `ord 'a'` from the
 horizontally co-ordinate and `1 (*8)` from the vertical co-ordinate
@@ -322,9 +315,8 @@ The numbers 6, 10, 15 and 17 come from looking at the grid above....
   -10 ... ... ...  -6
   ... -17 ... -15 ...
 ```
-We then have an optimized version of the walk code:
 
-The array looks something like:
+The array starts like:
 ```
 [
   [10,17]
@@ -339,36 +331,38 @@ The array looks something like:
 ]
 ```
 
-The walk sub then becomes the simpler:
+We then have an optimized version of the walk code, and subroutine then becomes the *simpler*:
 
 ```perl
 sub walk_trans {
-  my( $t, $seen, $rt ) = @_;  ## Current square, visited squares, current route
-  return if $seen & 1 << $t;  ## Return if we've already been to this square.
-  $seen |= 1 << $t;           ## Mark that we have been in this square.
-  $rt   .= chr $t;            ## Add this square to our route.
-  return ($best_rt,$best_len) = ($rt,-1+length $rt) if ($seen & $sol) == $sol;
-                              ## If we've found all the treasure
-                              ## Update the best route (and it's length)
-                              ## and return;
-  return if $best_len <= length $rt;
-                              ## If our route is longer than the best route
-                              ## return;
-  walk_trans( $_, $seen, $rt ) foreach @{$trans->[$t]};
-                              ## Try all knight move squares from the current
-                              ## square.
+  my( $t, $seen, $rt ) = @_;          ## Current square, visited squares, current route.
+
+  return if $seen & 1 << $t;          ## Return if we've already been to this square.
+
+  $seen |= 1 << $t;                   ## Mark that we have been in this square.
+
+  $rt   .= chr $t;                    ## Add this square to our route.
+
+  return ($best_rt,$best_len)         ## If we've found all the treasure update the best 
+       = ($rt,-1+length $rt)          ## route (and it's length) and return
+      if ($seen & $sol) == $sol;
+
+  return if $best_len <= length $rt;  ## If longer than the best route return
+
+  walk_trans( $_, $seen, $rt )        ## Try all knight move squares from the current
+      foreach @{$trans->[$t]};        ## square.
 }
 ```
 
-The eight lines of `if`s go back to a single foreach loop.
+The eight lines of `if`s go back to a single foreach loop, but this time we do not need the `if`s.
 
-As well as removing the ifs we have a "side-effect" where we no longer need to label squares by their x&y co-ordinates but just by their index 0..63 which also gains us a little speed.
+As well as removing the ifs we have a "side-effect" where we no longer need to label squares by their `x`&`y` co-ordinates but just by their index `0`..`63` which also gains us some additional speed {we no longer have to compute `$t` from `$x` & `$y`, and we need to pass one less parameter}
 
 The time is now down to approximately 10 seconds.
 
 ## Notes
 
-### Transition matrix
+### The full transition matrix
 ```perl
 [
   [10, 17],
@@ -379,6 +373,7 @@ The time is now down to approximately 10 seconds.
   [11, 15, 20, 22],
   [12, 21, 23],
   [13, 22],
+
   [2, 18, 25],
   [3, 19, 24, 26],
   [0, 4, 16, 20, 25, 27],
@@ -387,6 +382,7 @@ The time is now down to approximately 10 seconds.
   [3, 7, 19, 23, 28, 30],
   [4, 20, 29, 31],
   [5, 21, 30],
+  
   [1, 10, 26, 33],
   [0, 2, 11, 27, 32, 34],
   [1, 3, 8, 12, 24, 28, 33, 35],
@@ -395,6 +391,7 @@ The time is now down to approximately 10 seconds.
   [4, 6, 11, 15, 27, 31, 36, 38],
   [5, 7, 12, 28, 37, 39],
   [6, 13, 29, 38],
+  
   [9, 18, 34, 41],
   [8, 10, 19, 35, 40, 42],
   [9, 11, 16, 20, 32, 36, 41, 43],
@@ -403,6 +400,7 @@ The time is now down to approximately 10 seconds.
   [12, 14, 19, 23, 35, 39, 44, 46],
   [13, 15, 20, 36, 45, 47],
   [14, 21, 37, 46],
+  
   [17, 26, 42, 49],
   [16, 18, 27, 43, 48, 50],
   [17, 19, 24, 28, 40, 44, 49, 51],
@@ -411,6 +409,7 @@ The time is now down to approximately 10 seconds.
   [20, 22, 27, 31, 43, 47, 52, 54],
   [21, 23, 28, 44, 53, 55],
   [22, 29, 45, 54],
+  
   [25, 34, 50, 57],
   [24, 26, 35, 51, 56, 58],
   [25, 27, 32, 36, 48, 52, 57, 59],
@@ -419,6 +418,7 @@ The time is now down to approximately 10 seconds.
   [28, 30, 35, 39, 51, 55, 60, 62],
   [29, 31, 36, 52, 61, 63],
   [30, 37, 53, 62],
+  
   [33, 42, 58],
   [32, 34, 43, 59],
   [33, 35, 40, 44, 56, 60],
@@ -427,6 +427,7 @@ The time is now down to approximately 10 seconds.
   [36, 38, 43, 47, 59, 63],
   [37, 39, 44, 60],
   [38, 45, 61],
+  
   [41, 50],
   [40, 42, 51],
   [41, 43, 48, 52],
