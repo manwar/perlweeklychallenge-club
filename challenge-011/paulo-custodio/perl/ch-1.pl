@@ -21,4 +21,4 @@ $exp->addVariable('x');
 $exp->setExpression("(x * 9/5) + 32 - x");
 
 my $result = $exp->newtonRaphson('x', 0) or die $exp->getError;
-say $result;
+say sprintf("%.1f", $result);
