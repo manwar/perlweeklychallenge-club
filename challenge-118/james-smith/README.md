@@ -144,7 +144,7 @@ my @treasures = qw(a2 b1 b2 b3 c4 e6);
 
 Initialize variables (best route, best route length), and compute the
 numeric represenation of the solution. You see we use "`|`" rather
-than "`&`" to add up the digits.
+than "`+`" to add up the digits.
 
 We subtract `105 = 8 + 97` - as we have to substract `ord 'a'` from the
 horizontally co-ordinate and `1 (*8)` from the vertical co-ordinate
@@ -316,7 +316,7 @@ The numbers 6, 10, 15 and 17 come from looking at the grid above....
   ... -17 ... -15 ...
 ```
 
-The array looks something like:
+The array starts like:
 ```
 [
   [10,17]
@@ -373,6 +373,7 @@ The time is now down to approximately 10 seconds.
   [11, 15, 20, 22],
   [12, 21, 23],
   [13, 22],
+
   [2, 18, 25],
   [3, 19, 24, 26],
   [0, 4, 16, 20, 25, 27],
@@ -381,6 +382,7 @@ The time is now down to approximately 10 seconds.
   [3, 7, 19, 23, 28, 30],
   [4, 20, 29, 31],
   [5, 21, 30],
+  
   [1, 10, 26, 33],
   [0, 2, 11, 27, 32, 34],
   [1, 3, 8, 12, 24, 28, 33, 35],
@@ -389,6 +391,7 @@ The time is now down to approximately 10 seconds.
   [4, 6, 11, 15, 27, 31, 36, 38],
   [5, 7, 12, 28, 37, 39],
   [6, 13, 29, 38],
+  
   [9, 18, 34, 41],
   [8, 10, 19, 35, 40, 42],
   [9, 11, 16, 20, 32, 36, 41, 43],
@@ -397,6 +400,7 @@ The time is now down to approximately 10 seconds.
   [12, 14, 19, 23, 35, 39, 44, 46],
   [13, 15, 20, 36, 45, 47],
   [14, 21, 37, 46],
+  
   [17, 26, 42, 49],
   [16, 18, 27, 43, 48, 50],
   [17, 19, 24, 28, 40, 44, 49, 51],
@@ -405,6 +409,7 @@ The time is now down to approximately 10 seconds.
   [20, 22, 27, 31, 43, 47, 52, 54],
   [21, 23, 28, 44, 53, 55],
   [22, 29, 45, 54],
+  
   [25, 34, 50, 57],
   [24, 26, 35, 51, 56, 58],
   [25, 27, 32, 36, 48, 52, 57, 59],
@@ -413,6 +418,7 @@ The time is now down to approximately 10 seconds.
   [28, 30, 35, 39, 51, 55, 60, 62],
   [29, 31, 36, 52, 61, 63],
   [30, 37, 53, 62],
+  
   [33, 42, 58],
   [32, 34, 43, 59],
   [33, 35, 40, 44, 56, 60],
@@ -421,6 +427,7 @@ The time is now down to approximately 10 seconds.
   [36, 38, 43, 47, 59, 63],
   [37, 39, 44, 60],
   [38, 45, 61],
+  
   [41, 50],
   [40, 42, 51],
   [41, 43, 48, 52],
