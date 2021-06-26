@@ -38,6 +38,9 @@ N -> c1 -> b2 -> b1 : 3 + 2 + 3 = 8
 use strict;
 use warnings;
 use Algorithm::Combinatorics qw/permutations/;
+#use Memoize;   # faster! learn from Mr Roger Bell_West's code
+
+#memoize("expand"); # faster! learn from Mr Roger Bell_West's code
 
 die "Give me positions with treasure!\n" unless $ARGV[0];
 my @treasures = map { binumeric_position($_) } @ARGV;
