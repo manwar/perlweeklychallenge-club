@@ -17,10 +17,10 @@ use experimental 'lexical_subs';
 # Run as: perl ch-2.pl
 #
 # First thing which spring to mind is: there is a closed knight's tour
-# on a chess board. In fact, there are 19,591,828,170,979,904 of them
-# (counting rotations and reflections, but not direction). See A165134
-# in the OEIS. (And there are also billions of open tours visiting all
-# squares...)
+# on a chess board. In fact, there are 26,534,728,821,064 directed closed
+# tours (counting reflections and rotations). If we include open tours
+# (where we end not a knights move away from the start), this number 
+# rises to 19,591,828,170,979,904. See A165134 in the OEIS.
 #
 # And any knight's tour will visit all squares, including the ones with
 # treasure. So, we could just pick a tour visiting all squares and 
@@ -32,6 +32,9 @@ use experimental 'lexical_subs';
 # But wait, there's no variable input. There's just a fixed board
 # to work with. And one can quickly see there's an 11 step path
 # visiting all the treasure, and no 10 step path.
+#
+# (See https://abigail.github.io/HTML/Perl-Weekly-Challenge/week- 118-2.html
+# for details why 11 steps is the minimum).
 #
 # So, this challenge is yet another boring Hello, World! program.
 # After all, it's much easier to write down the 11 knights moves than
