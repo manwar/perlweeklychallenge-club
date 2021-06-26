@@ -237,6 +237,26 @@ sub show_rt {
 }
 ```
 
+### The output...
+
+```
+a8  c7  e6* c5  b3* c1  a2* c3  b1* d2  c4* b2*
+```
+
+```
+        a   b   c   d   e   f   g   h
+    8  0*   *   *   *   *   *   *   *  8
+    7   *   *  1*   *   *   *   *   *  7
+    6   *   *   *   *  2x   *   *   *  6
+    5   *   *  3*   *   *   *   *   *  5
+    4   *   * 10x   *   *   *   *   *  4
+    3   *  4x  7*   *   *   *   *   *  3
+    2  6x 11x   *  9*   *   *   *   *  2
+    1   *  8x  5*   *   *   *   *   *  1
+        a   b   c   d   e   f   g   h
+
+```
+
 ## Improvement 1 - reduce function calls
 
 There is one place where the code could gain a bit of speed. The
