@@ -62,14 +62,32 @@ Output: 0 as binary representation of 4 is 100 which is NOT Palindrome.
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [Basic](basic/ch-2.bas)
+* [bc](bc/ch-2.bc)
+* [Befunge-93](befunge-93/ch-2.bf93)
 * [C](c/ch-2.c)
+* [Cobol](cobol/ch-2.cb)
+* [Csh](csh/ch-2.csh)
+* [Erlang](erlang/ch-2.erl]
+* [Forth](forth/ch-2.fs]
+* [Fortran](fortran/ch-2.f90]
 * [Go](go/ch-2.go)
 * [Java](java/ch-1.java)
 * [Lua](lua/ch-2.lua)
+* [m4](m4/ch-2.m4]
 * [Node.js](node/ch-2.js)
+* [OCaml](ocaml/ch-2.ml]
+* [Pascal](pascal/ch-2.p]
 * [Perl](perl/ch-2.pl)
+* [PHP](php/ch-2.php]
+* [PostScript](postscript/ch-2.ps]
 * [Python](python/ch-2.py)
+* [R](r/ch-2.r]
+* [Rexx](rexx/ch-2.rexx]
 * [Ruby](ruby/ch-2.rb)
+* [Scheme](scheme/ch-2.scm]
+* [sed](sed/ch-2.sed]
+* [Tcl](tcl/ch-2.tcl]
 
 ### Blog
 [Adventure of Knight](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-118-2.html)
