@@ -23,4 +23,4 @@ use experimental 'lexical_subs';
 # using a pattern turns it into a one liner.
 #
 
-say sprintf ("%b" => $_) =~ /^(([01])(?1)\g{2}|[01]?)$/ || 0 while <>;
+say sprintf ("%b" => $_) =~ /^([01]?|([01])(?1)\g{2})$/ || 0 while <>;
