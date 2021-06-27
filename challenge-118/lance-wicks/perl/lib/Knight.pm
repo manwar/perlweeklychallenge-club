@@ -33,8 +33,8 @@ sub go {
 
     return {
         treasures => $self->collected_treasures,
-        path      => @path,
-        moves     => 0 + @path
+        path      => \@path,
+        moves     => @path -1, # sub 1 as path includes starting position.
     };
 }
 
@@ -55,7 +55,6 @@ sub move {
 
     while (1) {
         my $direction = int rand(8);
-        #warn "**** $row, $col -> $direction";
         $new_row = 0;
         $new_col = 0;
 

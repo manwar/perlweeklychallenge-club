@@ -1,27 +1,20 @@
 # Solutions by Abigail
-## [Missing Row](https://perlweeklychallenge.org/blog/perl-weekly-challenge-117/#TASK1)
+## [Binary Palindrome](https://perlweeklychallenge.org/blog/perl-weekly-challenge-118/#TASK1)
 
-> You are given text file with rows numbered `1-15` in random order but
-> there is a catch one row in missing in the file.
+> You are given a positive integer $N.
+> 
+> Write a script to find out if the binary representation of the given
+> integer is Palindrome. Print 1 if it is otherwise 0.
+>
 
+### Examples
 ~~~~
-11, Line Eleven
-1, Line one
-9, Line Nine
-13, Line Thirteen
-2, Line two
-6, Line Six
-8, Line Eight
-10, Line Ten
-7, Line Seven
-4, Line Four
-14, Line Fourteen
-3, Line three
-15, Line Fifteen
-5, Line Five
-~~~~
+Input: $N = 5
+Output: 1 as binary representation of 5 is 101 which is Palindrome.
 
-Write a script to find the missing row number.
+Input: $N = 4
+Output: 0 as binary representation of 4 is 100 which is NOT Palindrome.
+~~~~
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
@@ -36,54 +29,65 @@ Write a script to find the missing row number.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[Missing Row](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-117-1.html)
+[Binary Palindrome](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-118-1.html)
 
-## [Find Possible Paths](https://perlweeklychallenge.org/blog/perl-weekly-challenge-115/#TASK2)
+## [Adventure of Knight](https://perlweeklychallenge.org/blog/perl-weekly-challenge-118/#TASK2)
 
-> You are given size of a triangle.
-> 
-> Write a script to find all possible paths from top to the bottom
-> right corner.
-> 
-> In each step, we can either move horizontally to the right (`H`), or
-> move downwards to the left (`L`) or right (`R`).
+> A knight is restricted to move on an 8x8 chessboard. The knight is denoted
+> by `N` and its way of movement is the same as what it is defined in Chess.
+> `*` represents an empty square. `x` represents a square with treasure.
 >
-> BONUS: Try if it can handle triangle of size `10` or `20`.
-
-### Examples
+> > The Knight's movement is unique. It may move two squares vertically and
+> > one square horizontally, or two squares horizontally and one square
+> > vertically (with both forming the shape of an L).
+>
+> There are 6 squares with treasures.
+>
+> Write a script to find the path such that Knight can capture all
+> treasures. The Knight can start from the top-left square.
+>
 ~~~~
-Input: $N = 2
-
-           S
-          / \
-         / _ \
-        /\   /\
-       /__\ /__\ E
-
-Output: RR, LHR, LHLH, LLHH, RLH, LRH
-~~~~
-
-~~~~
-Input: $N = 1
-
-           S
-          / \
-         / _ \ E
-
-Output: R, LH
+      a b c d e f g h
+    8 N * * * * * * * 8
+    7 * * * * * * * * 7
+    6 * * * * x * * * 6
+    5 * * * * * * * * 5
+    4 * * x * * * * * 4
+    3 * x * * * * * * 3
+    2 x x * * * * * * 2
+    1 * x * * * * * * 1
+      a b c d e f g h
 ~~~~
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [Basic](basic/ch-2.bas)
+* [bc](bc/ch-2.bc)
+* [Befunge-93](befunge-93/ch-2.bf93)
 * [C](c/ch-2.c)
+* [Cobol](cobol/ch-2.cb)
+* [Csh](csh/ch-2.csh)
+* [Erlang](erlang/ch-2.erl]
+* [Forth](forth/ch-2.fs]
+* [Fortran](fortran/ch-2.f90]
 * [Go](go/ch-2.go)
 * [Java](java/ch-1.java)
 * [Lua](lua/ch-2.lua)
+* [m4](m4/ch-2.m4]
 * [Node.js](node/ch-2.js)
+* [OCaml](ocaml/ch-2.ml]
+* [Pascal](pascal/ch-2.p]
 * [Perl](perl/ch-2.pl)
+* [PHP](php/ch-2.php]
+* [PostScript](postscript/ch-2.ps]
 * [Python](python/ch-2.py)
+* [R](r/ch-2.r]
+* [Rexx](rexx/ch-2.rexx]
 * [Ruby](ruby/ch-2.rb)
+* [Scheme](scheme/ch-2.scm]
+* [sed](sed/ch-2.sed]
+* [Tcl](tcl/ch-2.tcl]
 
 ### Blog
-[Find Possible Paths](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-117-2.html)
+[Adventure of Knight](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-118-2.html)
