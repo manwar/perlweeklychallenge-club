@@ -6,23 +6,19 @@
 #  3  2^ 1  2
 #  2  1  4  3
 #  3^ 2  3  2
-
   a b c d
   --------
   N * * * |4
   * * * * |3
   * x * * |2
   * x x * |1
-
 x : b1, b2, c1
-
 b1 <-> b2 : 3
 b1 <-> c1 : 3
 b2 <-> c1 : 2
 a4(N) <-> b1 : 2
 a4 <-> b2 : 1
 a4 <-> c1 : 3
-
 N -> b1 -> b2 -> c1 : 2 + 3 + 2 = 7
 N -> b1 -> c1 -> b2 : 2 + 3 + 2 = 7
 N -> b2 -> b1 -> c1 : 1 + 3 + 3 = 7
@@ -38,6 +34,9 @@ N -> c1 -> b2 -> b1 : 3 + 2 + 3 = 8
 use strict;
 use warnings;
 use Algorithm::Combinatorics qw/permutations/;
+#use Memoize;   # faster! learn from Mr Roger Bell_West's code
+
+#memoize("expand"); # faster! learn from Mr Roger Bell_West's code
 
 die "Give me positions with treasure!\n" unless $ARGV[0];
 my @treasures = map { binumeric_position($_) } @ARGV;
@@ -62,11 +61,11 @@ my $iter = permutations( \@treasures );
 while (my $p = $iter->next) {
     my $path_length = dist_fun([0,0], $p->[0]);
     my $i = 0;
-    while ($i < $p->$#*) {
+    while ($i < $p->$#* && $path_length < $min_path_length) {
         $path_length += dist_fun($p->[$i], $p->[$i+1]);
         $i++;
     }
-    compare_mini($path_length, $p);
+    compare_mini($path_length, $p) if $i == $p->$#*;
 }
 
 
