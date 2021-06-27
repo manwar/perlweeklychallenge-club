@@ -14,7 +14,7 @@ using namespace std;
 vector<vector<int>> identity_matrix(int n) {
     vector<vector<int>> id;
     for (int row = 0; row < n; row++) {
-        id.push_back({});
+        id.emplace_back();
         for (int col = 0; col < n; col++)
             id[row].push_back(col == row ? 1 : 0);
     }
