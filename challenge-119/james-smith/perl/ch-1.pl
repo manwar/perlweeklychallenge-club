@@ -16,6 +16,6 @@ is( swap_nibble($_->[1]), $_->[0] ) foreach @TESTS;
 done_testing();
 
 sub swap_nibble {
-  return ($_[0]>>4) + (($_[0]&15)<<4);
+  return ($_[0]>>4) | (($_[0]&15)<<4);
 }
 
