@@ -23,8 +23,7 @@ cmpthese(10_000,{
 done_testing();
 
 sub no_11_array {
-  my $n = shift;
-  my @v = (0);
+  my( $n, $ptr, @v ) = ( shift, undef, 0 );
   for( my $i = 0; $i < $n; $i++ ) {
     my $ptr;
     for( $ptr = $#v; $ptr>-1 && ++$v[$ptr]>3; $ptr--) {
