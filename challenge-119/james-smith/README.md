@@ -54,18 +54,17 @@ any bits to the previous entry. Finally if we get to the start of the
 array we unshift a 1 in front of it...
 
 In the outer loop we compute the next number - but we don't increment
-the counter if the number has two adjacent 1s. [ We actually increment
-and decrement it - which has the same effect. ]
+the counter if the number has two adjacent 1s.
 
 ```perl
-sub no_11 {
+sub no_11_array {
   my( $n, $ptr, @v ) = ( shift, undef, 0 );
-  for( my $i = 0; $i < $n; $i++ ) {
+  for( my $i = 0; $i < $n; ) {
     for( $ptr = $#v; $ptr>-1 && ++$v[$ptr]>3; $ptr--) {
       $v[$ptr]=1;
     }
     unshift @v,1 if $ptr < 0;
-    $i-- if "@v"=~m{1 1};
+    $i++ unless "@v"=~m{1 1};
   }
   return join q(),@v;
 }
@@ -94,7 +93,7 @@ sub no_11_filter {
 
 ```
 
-### Making the code more readable....
+### Making the code more *readable*....
 
 This is a nice challenge to make the code more "readable", by encapsulating our new "number" string as an object.
 
