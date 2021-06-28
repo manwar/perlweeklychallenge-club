@@ -71,3 +71,7 @@ sub no_11 {
   return join q(),@v;
 }
 ```
+
+Comparing this to the pure script using numbers and filtering out those
+that contain any of the digits `0`, `4` through `9` or the string `11`
+sees an approximately 10-15x speed up.
