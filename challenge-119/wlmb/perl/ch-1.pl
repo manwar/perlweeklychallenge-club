@@ -2,7 +2,7 @@
 # Perl weekly challenge 119
 # Task 1: Swap Nibbles
 #
-# See https://wlmb.github.io/2021/06/21/PWC119/#task-1-swap-nibbles
+# See https://wlmb.github.io/2021/06/28/PWC119/#task-1-swap-nibbles
 
 
 use strict;
