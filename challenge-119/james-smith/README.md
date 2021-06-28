@@ -93,3 +93,69 @@ sub no_11_filter {
 }
 
 ```
+
+### Making the code more readable....
+
+This is a nice challenge to make the code more "readable", by encapsulating our new "number" string as an object.
+
+We will overload it's increment operator so that we can generate the sequence
+
+```
+   1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33, 111
+```
+
+The object itself is just a blessed array.
+
+We use `overload` to define both the "increment" operator `++` and the "stringfy"
+operator "".
+
+We then define a simple method to test whether or not the "string" contains a double 1.
+
+The package code is below - but first the loop in the code:
+
+```perl
+sub no_11_object {
+  my( $n, $v ) = ( shift, Three->new );
+  for( my $i = 0; $i < $n; $v++, $i++ ) {
+    $v++ while $v->has_double_one;
+  }
+  return "$v";
+}
+```
+
+```perl
+package Three;
+
+use overload '++' => 'incr';
+use overload '""' => 'str';
+
+sub new {
+  my $x = [0];
+  bless $x, 'Three';
+  return $x;
+}
+
+sub has_double_one {
+  my($f,@v) = @{$_[0]};
+  while(@v) {
+    return 1 if ($f == 1) && $v[0] == 1;
+    $f = shift @v;
+  }
+  return 0;
+}
+
+sub incr {
+  my $v = shift;
+  my $ptr;
+  for( $ptr = @{$v}-1; $ptr>-1 && ++$v->[$ptr]>3; $ptr--) {
+    $v->[$ptr] = 1;
+  }
+  unshift @{$v}, 1 if $ptr < 0;
+}
+
+sub str {
+  return join '', @{$_[0]};
+}
+
+1;
+```
