@@ -1,43 +1,54 @@
-Task 1: "Number Sequence
+Task 1: "Binary Palindrome
 
-You are given a number $N >= 10.
+You are given a positive integer $N.
 
-Write a script to split the given number such that the difference between
-two consecutive numbers is always 1 and it shouldn't have leading 0.
-
-Print the given number if it impossible to split the number.
+Write a script to find out if the binary representation of the given
+integer is Palindrome. Print 1 if it is otherwise 0.
 
 Example
 
-  Input: $N = 1234
-  Output: 1,2,3,4
+  Input: $N = 5
+  Output: 1 as binary representation of 5 is 101 which is Palindrome.
 
-  Input: $N = 91011
-  Output: 9,10,11
-
-  Input: $N = 10203
-  Output: 10203 as it is impossible to split satisfying the conditions.
+  Input: $N = 4
+  Output: 0 as binary representation of 4 is 100 which is NOT Palindrome.
 "
 
-My notes: seems pretty easy.  Only question is the initial number's width - try all possible widths.
+My notes: seems pretty easy.
 
-Task 2: "Sum of Squares
 
-You are given a number $N >= 10.
+Task 2: "Adventure of Knight
+Submitted by: Cheok-Yin Fung
 
-Write a script to find out if the given number $N is such that sum of
-squares of all digits is a perfect square. Print 1 if it is otherwise 0.
+A knight is restricted to move on an 8x8 chessboard. The knight is
+denoted by N and its way of movement is the same as what it is defined in
+Chess. * represents an empty square. x represents a square with treasure.
 
-Example
+The Knight's movement is unique. It may move two squares vertically
+and one square horizontally, or two squares horizontally and one square
+vertically (with both forming the shape of an L).
 
-  Input: $N = 34
-  Ouput: 1 as 3^2 + 4^2 => 9 + 16 => 25 => 5^2
+There are 6 squares with treasures.
 
-  Input: $N = 50
-  Output: 1 as 5^2 + 0^2 => 25 + 0 => 25 => 5^2
-  
-  Input: $N = 52
-  Output: 0 as 5^2 + 2^2 => 25 + 4 => 29
+Write a script to find the path such that Knight can capture all
+treasures. The Knight starts from the top-left square.
+
+      a b c d e f g h
+    8 N * * * * * * * 8
+    7 * * * * * * * * 7
+    6 * * * * x * * * 6
+    5 * * * * * * * * 5
+    4 * * x * * * * * 4
+    3 * x * * * * * * 3
+    2 x x * * * * * * 2
+    1 * x * * * * * * 1
+      a b c d e f g h
+
+BONUS: If you believe that your algorithm can output one of the shortest possible path.
 "
 
-My notes: should be easy.
+My notes: looks reasonably straight forward, highly recursive.  Obvious way
+to find a shortest possible path is to generate all paths of length L before
+extending each path of length L to paths of length L+1.  NB: Why not allow
+any number of treasures, not fixed at 6?  Got it working, although it takes
+forever to solve larger problems.
