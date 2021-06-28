@@ -123,6 +123,7 @@ sub no_11_object {
 }
 ```
 
+Although the code is "cleaner" performance is affected - it is about half the speed of the optimal (array) solution but still 4 times as fast as the (non-regex) filter method.
 ```perl
 package Three;
 
