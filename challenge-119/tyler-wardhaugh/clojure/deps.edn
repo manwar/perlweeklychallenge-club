@@ -1,0 +1,22 @@
+{:paths ["src" "resources"]
+ :deps {aysylu/loom {:mvn/version "1.0.2"}
+        net.mikera/core.matrix {:mvn/version "0.62.0"}
+        org.clojure/clojure {:mvn/version "1.10.3"}
+        org.clojure/math.combinatorics {:mvn/version "0.1.6"}
+        org.clojure/math.numeric-tower {:mvn/version "0.0.4"}}
+ :aliases
+ {:test
+  {:extra-paths ["test"]
+   :extra-deps {org.clojure/test.check {:mvn/version "1.0.0"}}}
+
+  :runner
+  {:extra-deps {com.cognitect/test-runner
+                {:git/url "https://github.com/cognitect-labs/test-runner"
+                 :sha "705ad25bbf0228b1c38d0244a36001c2987d7337"}}
+   :main-opts ["-m" "cognitect.test-runner"
+               "-d" "test"]}
+
+  :jar
+  {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.216"}}
+   :exec-fn hf.depstar/jar
+   :exec-args {:jar "tw-weekly.jar" :sync-pom true}}}}
