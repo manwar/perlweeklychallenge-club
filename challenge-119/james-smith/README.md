@@ -35,7 +35,10 @@ sub swap_nibble {
 
 # Task 2 - Sequence without 1-on-1
 
-*** Write a script to generate sequence starting at 1. Consider the increasing sequence of integers which contain only 1’s, 2’s and 3’s, and do not have any doublets of 1’s like below. Please accept a positive integer `$N` and print the `$N`th term in the generated sequence.
+***Write a script to generate sequence starting at 1. Consider the increasing
+sequence of integers which contain only 1’s, 2’s and 3’s, and do not have any
+doublets of 1’s like below. Please accept a positive integer `$N` and print
+the `$N`th term in the generated sequence.***
 
 ```
 1, 2, 3, 12, 13, 21, 22, 23, 31, 32, 33, 121, 122, 123, 131, ...
