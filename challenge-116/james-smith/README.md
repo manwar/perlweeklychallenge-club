@@ -23,18 +23,23 @@ of the sequence (`$start.=$_`)....
 
 Within each loop we just stitch together the string by incrementing the number each time through the loop..
 
- * We use string (in)equalities/incremements so this will work with arbitrarily large numbers (see examples in script)
- * We reduce the maximum calculations by a factor of 2 by spliting just the first half of the string   
- * As we are working with strings rather than numbers we check the lengths in the while condition (because we are using string comparison)
+ * We use string (in)equalities/incremements so this will work with arbitrarily large numbers (see examples in script) (#1)
+
+ * We reduce the maximum calculations by a factor of 2 by spliting just the first half of the string (#2)
+
+ * As we are working with strings rather than numbers we check the lengths in the while condition (because we are using string comparison) (#3)
+
+ * We also check that the number we have just added is equal to the next chunk of the string (#4)
 
 ```perl
 sub splitnum {
   my( $in, $start ) = ( shift, '' );
-  for( split //, substr $in, 0, (my $len = length $in) >> 1) {
+  for( split //, substr $in, 0, (my $len = length $in) >> 1) {              #[2]
     my @range = ( my $str = my $end = $start .= $_ );
-    ($str .= ++$end) && push @range, $end while ($len > length $str) &&
-              $end eq substr $in,length($str)-length($end),length($end);
-    return \@range if $string eq $in;
+    ( $str .= ++$end ) && push @range, $end                                 #[1]
+      while ($len > length $str) &&                                         #[3]
+            $end eq substr $in, length($str) - length($end) , length($end); #[4]
+    return \@range if $string eq $in;                                       #[1]
   }
   return [$in];
 }
