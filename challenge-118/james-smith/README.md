@@ -458,3 +458,152 @@ The time is now down to approximately 10 seconds.
   [46, 53],
 ]
 ```
+
+## Task 2 - version 2 - using pre-computed distances.
+
+Reading CY's description using pre-computed distances I wanted to
+investigate how that worked.
+
+### Technique
+
+For any 2 squares we can compute the shortest distance in "steps"
+between them.
+
+Then we try all permutations of the order of the treasures (squares)
+to compute the optimal route. In theory we can pre-cache this
+information so that we don't have to calculate it every time we
+execute the script (as we could have with the transition matrix above).
+
+So we now have the following steps:
+
+ * Compute the transition matrix
+ * Compute the distance matrix - and store an example shortest route
+   between each pair of squares.
+ * Permute the points to compute a shortest route.
+
+### Stage 1
+
+See above for computing the transition matrix
+
+### Stage 2
+
+Computing the distance matrix.
+
+For each square (using our `0`..`63` notation) we generate
+an array of distances and routes. To do this we start by
+setting `$dist[$start][$start]` to `0` and
+`$route[$start][$start]` to `''`.
+We then repeatedly scan the board looking for increasing values
+of distance `0`, `1`, `2` etc, and finding squares we could jump
+to (that we already haven't) and set distance and routes for them.
+In this case I think the code is easier to understand than the
+description.
+
+By using our pre-computed transition matrix we not only remote
+the need for two levels of nested loops BUT also the need to 
+perform the checks each time for stepping off the side of the board.
+
+```perl
+my $dist_maps  = []; ## Map of distances betw
+my $route_maps = [];
+
+foreach my $start (0..63) {
+  my @dists  = map { $_ == $start ? 0 : -1 } 0..63;
+  my @routes = map { '' } 0..63;
+  my $c = 1;
+  my $d = 0;
+  while($c<64) {
+    foreach my $x (0..63) {
+      next if $dists[$x] != $d;
+      foreach ( @{$trans->[$x]}) {
+        next if $T[$_]>=0;
+        $c++;
+        $dists[$_]  = $d+1;
+        $routes[$_] = $routes[$x].chr$_;
+      }
+    }
+    $d++;
+  }
+  push @{$dist_maps},  \@dists;
+  push @{$route_maps}, \@routes;
+}
+```
+
+### Stage 3
+
+Our optimal route routine is just a simple recursive function.
+Although here we will build in *memoisation* from the start.
+
+The key we use is a combination of the current square location
+AND the remaining treasure squares (sorted) - `"$start @{[ sort @r ]}"`.
+The function returns the two values distance and route.
+
+```perl
+sub optimal_route {
+  $calls++;
+  my($start,@r) = @_;
+  return $CACHE{$start} ||= [0,''] unless @r;
+  my $key = "$start @{[ sort @r ]}";
+  return $CACHE{$key} if exists $CACHE{$key};
+  my $len = 64;
+  my $rt  = '';
+  foreach(0..$#r) {
+    my $t = shift @r;
+    my $x = optimal_route($t,@r);
+    my $l = $dist_maps->[$start][$t] + $x->[0];
+    if( $l < $len ) {
+      $len = $l;
+      $rt  = $route_maps->[$start][$t] . $x->[1];
+    }
+    push @r,$t;
+  }
+  return $CACHE{$key} = [$len,$rt];
+}
+```
+
+### Performance
+
+Using CY's 12 treasure example:
+
+```
+h3 d7 g7 h4 b4 c2 g2 b6 d4 d1 c5 e4
+```
+
+gives the following output:
+
+```
+Minimal length: 17
+Minimal route:  a8  b6* d7* c5* e4* f2  h3* f2  d1* e3  g2* h4* f5  g7* f5  d4* c2* b4*
+
+Permutations:   479,001,600
+Function calls:     135,181
+Cache entries:       24,577
+
+Timings:
+Pre^2-compute:  0.000117
+Pre-compute:    0.005684
+Find path:      0.452598
+Overall time:   0.458399
+```
+
+Running it without the call cache gives us:
+
+```
+Minimal length: 17
+Minimal route:  a8  b6* d7* c5* e4* f2  h3* f2  d1* e3  g2* h4* f5  g7* f5  d4* c2* b4*
+
+Permutations:     479,001,600
+Function calls: 1,302,061,345
+
+Timings:
+Pre^2-compute:      0.000119
+Pre-compute:        0.005677
+Find path:      2,407.745782
+Overall time:   2,407.751578
+```
+
+This shows how efficient the caching is - reducing the function calls
+by a factor of 10,000 - and the number of times the function was
+evaluated by a factor of around 40,000.
+
+With an overall speed up of 5,000 times.
