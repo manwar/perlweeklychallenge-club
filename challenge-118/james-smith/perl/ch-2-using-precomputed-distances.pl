@@ -78,13 +78,15 @@ my $time_3 = time;
 say '';
 say 'Minimal length: ',$ln;
 say 'Minimal route:  a8  ',show_rt( $rt );
+$rt = join '', map { $route_maps->[$start][$start = ord $_] } split //,$rt;
+
+say 'Minimal route:  a8  ',show_rt( $rt );
 say '';
 my $p = 1;
 $p*=$_ foreach 1..@treasures;
 say 'Permutations:   ',$p;
 say 'Function calls: ',$calls;
 say 'Cache entries:  ',scalar keys %CACHE;
-say 'Speed up:       ',$p/scalar keys %CACHE;
 say '';
 say 'Timings:';
 say sprintf 'Pre^2-compute: %9.6f',$time_1-$time_0;
@@ -112,7 +114,7 @@ sub optimal_route {
     my $l = $dist_maps->[$start][$t] + $x->[0];
     if( $l < $len ) {
       $len = $l;
-      $rt  = $route_maps->[$start][$t] . $x->[1];
+      $rt  = (chr $t).$x->[1];
     }
     push @r,$t;
   }
