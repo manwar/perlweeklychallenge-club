@@ -1,9 +1,15 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-06-28 20:48:12 GMT"
    },
    "series" : [
       {
@@ -42,6 +48,7 @@
          ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             8,
@@ -73,8 +80,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -112,13 +118,17 @@
          ]
       }
    ],
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "title" : {
       "text" : "Perl Weekly Challenge [2019 - 2021]"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -153,15 +163,5 @@
          "Eddy HS",
          "Fabrizio Poggi"
       ]
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-06-28 20:42:50 GMT"
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
