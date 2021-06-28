@@ -59,13 +59,9 @@ and decrement it - which has the same effect. ]
 
 ```perl
 sub no_11 {
-  my $n = shift;
-  my @v = (0);
+  my( $n, $ptr, @v ) = ( shift, undef, 0 );
   for( my $i = 0; $i < $n; $i++ ) {
-    my $ptr;
-    for( $ptr =$#v; $ptr>-1; $ptr--) {
-      $v[$ptr]++;
-      last if $v[$ptr]<4;
+    for( $ptr = $#v; $ptr>-1 && ++$v[$ptr]>3; $ptr--) {
       $v[$ptr]=1;
     }
     unshift @v,1 if $ptr < 0;
@@ -77,4 +73,23 @@ sub no_11 {
 
 Comparing this to the pure script using numbers and filtering out those
 that contain any of the digits `0`, `4` through `9` or the string `11`
-sees an approximately 10-15x speed up.
+using a regexp sees an approximately `15x` speed up. If you optimize
+the filter using a series of index calls you can double the speed of the
+code at the expense of a slightly longer function BUT it is still less
+than a seventh of the performance of the array version.
+
+```perl
+sub no_11_filter {
+  my $n = shift;
+  my $v = 0;
+  while(1){
+    return $v unless $n;
+    $v++;
+    $n-- if 0 > index( $v,'4' ) && 0 > index( $v,'0'  )
+         && 0 > index( $v,'5' ) && 0 > index( $v,'6'  )
+         && 0 > index( $v,'7' ) && 0 > index( $v,'8'  )
+         && 0 > index( $v,'9' ) && 0 > index( $v,'11' );
+  }
+}
+
+```
