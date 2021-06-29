@@ -130,32 +130,27 @@ use overload '++' => 'incr';
 use overload '""' => 'str';
 
 sub new {
-  my $x = [0];
-  bless $x, 'Three';
-  return $x;
+  return bless [], 'Three';
 }
 
 sub has_double_one {
-  my($f,@v) = @{$_[0]};
-  while(@v) {
-    return 1 if ($f == 1) && $v[0] == 1;
-    $f = shift @v;
-  }
+  my( $f, @v ) = @{$_[0]};
+  ( $f == 1 && $v[0] == 1 ) ? ( return 1 ) : ( $f = shift @v ) while @v;
   return 0;
 }
 
 sub incr {
-  my $v = shift;
-  my $ptr;
-  for( $ptr = @{$v}-1; $ptr>-1 && ++$v->[$ptr]>3; $ptr--) {
-    $v->[$ptr] = 1;
+  my($v,$ptr) = (shift,-1);
+  for( $ptr = $#$v; $ptr>-1 && ++$v->[$ptr]>3; $ptr--) {
+    $v->[$ptr]=1;
   }
   unshift @{$v}, 1 if $ptr < 0;
 }
 
 sub str {
-  return join '', @{$_[0]};
+  return join '',@{$_[0]};
 }
+
 
 1;
 ```
