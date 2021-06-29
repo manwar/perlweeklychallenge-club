@@ -138,7 +138,7 @@ sub new {
 sub has_double_one {
   my($f,@v) = @{$_[0]};
   while(@v) {
-    return 1 if ($f == 1) && $v[0] == 1;
+    return 1 if $f == 1 && $v[0] == 1;
     $f = shift @v;
   }
   return 0;
