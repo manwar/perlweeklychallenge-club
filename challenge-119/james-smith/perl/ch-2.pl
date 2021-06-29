@@ -16,11 +16,10 @@ is( no_11_array(        $_->[0] ), $_->[1] ) foreach @TESTS;
 is( no_11_object(       $_->[0] ), $_->[1] ) foreach @TESTS;
 
 cmpthese(10_000,{
-  'filter' => sub { no_11_filter($_->[0]) foreach @TESTS; },
-  'filter' => sub { no_11_filter($_->[0]) foreach @TESTS; },
-  'object' => sub { no_11_object($_->[0]) foreach @TESTS; },
-  'regex' => sub { no_11_filter_regex($_->[0]) foreach @TESTS; },
-  'array'  => sub { no_11_array( $_->[0]) foreach @TESTS; },
+  'filter' => sub { no_11_filter(       $_->[0] ) foreach @TESTS; },
+  'regex'  => sub { no_11_filter_regex( $_->[0] ) foreach @TESTS; },
+  'object' => sub { no_11_object(       $_->[0] ) foreach @TESTS; },
+  'array'  => sub { no_11_array(        $_->[0] ) foreach @TESTS; },
 });
 
 done_testing();
