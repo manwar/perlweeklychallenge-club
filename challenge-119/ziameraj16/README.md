@@ -1,23 +1,23 @@
-# Binary Palindrome
+# Swap Nibbles
 ## Java Solution
 
 To compile the code run
 ```java
-javac BinaryPalindrome.java
+javac SwapNibbles.java
 ```
 To run
 ```java
-java BinaryPalindrome
+java SwapNibbles
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-118/ziameraj16/java$ javac BinaryPalindrome.java
-/perlweeklychallenge-club/challenge-118/ziameraj16/java$ java BinaryPalindrome
+/perlweeklychallenge-club/challenge-119/ziameraj16/java$ javac SwapNibbles.java
+/perlweeklychallenge-club/challenge-119/ziameraj16/java$ java SwapNibbles
 Enter the number
-5
-1
-/perlweeklychallenge-club/challenge-118/ziameraj16/java$ java BinaryPalindrome
+101
+86
+/perlweeklychallenge-club/challenge-119/ziameraj16/java$ java SwapNibbles
 Enter the number
-4
-0
+18
+33
 ```
