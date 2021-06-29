@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 
 #
-# adding base(4) after looking at other solutions.
+# added base(4) after looking at other solutions.
 #
 
 use Test;
@@ -13,5 +13,5 @@ is seq(60), 2223;
 
 sub seq($N where * > 0)
 {
-    (1..*).map(*.base(4)).grep(* !~~ /0||11/)[$N-1];
+    (1..*).map(*.base(4)).grep(* !~~ /0||11/)[$N-1]
 }
