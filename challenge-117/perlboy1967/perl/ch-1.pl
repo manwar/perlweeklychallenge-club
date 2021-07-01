@@ -25,5 +25,8 @@ sub missingRows {
   
   open(my $fh,'<',$f) || die;
 
-  return grep /\d/,slide{($a+1..$b-1)if($b-$a>1)}sort{$a<=>$b}map{/^(\d+)/;$_=$1}<$fh>;
+  return map { @$_ } slide {$b - $a > 1 ? [$a + 1 .. $b - 1] : [] }
+                     sort { $a <=> $b }
+                     map { /^(\d+)/; $_ = $1 }
+                     <$fh>;
 }

@@ -21,15 +21,13 @@ sub next_num ($prev_num) {
     #
     # First, replace any trailing 3's with 1's, incrementing the
     # digit which comes before.
-    # Then replace any trailing sequence of 1s with 12121... of the same
-    # length.
-    # Note we prepend the incoming number with "00" so we can anchor
-    # against it; we remove any leading 0s at the end.
+    # Then replace any 11 with 12 (we can only have 11s at the end)
+    # Note we prepend the incoming number with "0" so we can anchor
+    # against it; we remove any leading 0 at the end.
     #
-    "00$prev_num"                                                      =~
-       s!([012])(3*)$!($1 + 1) . (1 x length $2)!re                    =~
-       s!([023])((?:11)+)(1?)$!$1  . (12 x ((length $2) / 2)) . $3!re  =~
-       s!^0+!!r;
+    "0$prev_num" =~ s!([012])(3*)$!($1 + 1) . ($2 =~ s/3/1/rg)!re
+                 =~ s!11!12!rg
+                 =~ s!^0!!r
 }
 
 while (<>) {

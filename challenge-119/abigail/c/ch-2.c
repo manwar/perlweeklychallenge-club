@@ -35,13 +35,14 @@ int main (void) {
              * Increment the digit before the trailing 3s
              */
             number [i] ++;
+
             /*
-             * Replace every second 1 into a 2 of the trailing 1s
+             * Replace any '11' by '12'
              */
-            for (i = BUF_SIZE - 1; i > 0 && number [i] == '1'; i --);
-            i += 2;
-            for (;i < BUF_SIZE; i += 2) {
-                number [i] = '2';
+            for (i = 0; i < BUF_SIZE - 1; i ++) {
+                if (number [i] == '1' && number [i + 1] == '1') {
+                    number [i + 1] = '2';
+                }
             }
         }
         /*
