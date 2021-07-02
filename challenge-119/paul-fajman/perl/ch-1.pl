@@ -1,5 +1,23 @@
 #/usr/bin/perl
 
+# Weekly Challenge 119
+# You are given a positive integer $N.
+# Write a script to swap the two nibbles of the binary representation of the 
+# given number and print the decimal number of the new binary representation.
+#
+# Input: $N = 101
+# Output: 86
+
+# Binary representation of decimal 101 is 1100101 or as 2 nibbles (0110)(0101).
+# The swapped nibbles would be (0101)(0110) same as decimal 86.
+
+# Input: $N = 18
+# Output: 33
+
+# Binary representation of decimal 18 is 10010 or as 2 nibbles (0001)(0010).
+# The swapped nibbles would be (0010)(0001) same as decimal 33.
+##############################
+
 use strict;
 use warnings;
 
