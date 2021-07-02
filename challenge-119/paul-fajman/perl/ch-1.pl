@@ -1,6 +1,6 @@
 #/usr/bin/perl
 
-# Weekly Challenge 119
+# Weekly Challenge 119 Task #1
 # You are given a positive integer $N.
 # Write a script to swap the two nibbles of the binary representation of the 
 # given number and print the decimal number of the new binary representation.
