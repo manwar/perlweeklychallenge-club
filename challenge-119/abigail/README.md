@@ -33,6 +33,7 @@ decimal `33`.
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [bc](bc/ch-1.bc)
 * [C](c/ch-1.c)
 * [Go](go/ch-1.go)
 * [Java](java/ch-1.java)
