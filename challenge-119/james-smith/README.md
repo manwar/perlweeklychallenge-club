@@ -32,7 +32,103 @@ sub swap_nibble {
 }
 ```
 
+## Other languages
 
+I've included some other language versions of this code...
+
+The first 3 are just direct lifts as Javascript, PHP and Python all have bit shift and bitwise operators! The fourth tho' is a bit of curveball "CESIL" the first
+language I was "taught" at school - the code was run from punch cards and the printout was on green bar paper!
+
+### Javascript
+```javascript
+TESTS = [ [101,86],[18,33] ];
+
+TESTS.forEach(_ => console.log( swap_nibble( _[0] ) == _[1] ? 'OK' : '--' ) );
+TESTS.forEach(_ => console.log( swap_nibble( _[1] ) == _[0] ? 'OK' : '--' ) );
+
+function swap_nibble(_) {
+  return (_>>4) | ((_&15)<<4);
+}
+```
+
+### PHP
+```php
+<?php
+
+$TESTS = [ [101,86],[18,33] ];
+
+foreach($TESTS as $_ ) {
+  echo swap_nibble($_[0]) == $_[1] ? 'OK' : '--',"\n";
+  echo swap_nibble($_[1]) == $_[0] ? 'OK' : '--',"\n";
+}
+
+function swap_nibble($_) {
+  return ($_>>4) | (($_&15)<<4);
+}
+```
+
+### Python
+```python
+TESTS=[[15,240],[165,90]]
+
+def swap_nibbles(_):
+  return (_>>4)|((_&15)<<4)
+
+for t in TESTS:
+  print( 'OK' if swap_nibbles(t[0])==t[1] else 'Not OK' )
+  print( 'OK' if swap_nibbles(t[1])==t[0] else 'Not OK' )
+
+```
+### CESIL
+
+Thought I'd throw in a slightly curve ball - CESIL "*Computer Education in Schools Instructional Language*" written by ICL was the
+first language I was formally taught - back in the days when you had to learn how computers worked at bare bones. So it had a
+reduced instruction set with just 14 commands - ADD/SUBTRACT/MULTIPLY/DIVIDE, IN/LOAD/STORE, JUMP/JIZERO/JINEG, PRINT/OUT/LINE & HALT. The layout
+of code is "structured" with 8 character indent as it was designed to be stored/run on punch-cards... {The reason the "input" appears after a card
+with % in it}.
+
+CESIL was designed to teach "machine-code" to Computer science students - so other than the "I/O" commands everything else was at a basic operation level.
+
+```
+        LINE
+Next    IN
+        JINEG End
+        OUT
+        PRINT " => "
+        STORE a
+        IN
+        STORE c
+        LOAD a
+        DIVIDE 16
+        STORE b
+        MULTIPLY -16
+        ADD a
+        MULTIPLY 16
+        ADD b
+        OUT
+        PRINT " : "
+        SUBTRACT c
+        JIZERO Ok
+        PRINT "--"
+        JUMP Line
+Ok      PRINT "OK"
+Line    LINE
+        JUMP Next
+End     LINE
+        HALT
+        %
+        240
+        15
+        15
+        240
+        0
+        0
+        255
+        255
+        99
+        54
+        -1
+```
 # Task 2 - Sequence without 1-on-1
 
 ***Write a script to generate sequence starting at 1. Consider the increasing

@@ -5,7 +5,5 @@ def swap_nibbles(_):
 
 for t in TESTS:
   print( 'OK' if swap_nibbles(t[0])==t[1] else 'Not OK' )
-
-for t in TESTS:
   print( 'OK' if swap_nibbles(t[1])==t[0] else 'Not OK' )
 
