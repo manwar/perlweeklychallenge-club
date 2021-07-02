@@ -89,6 +89,8 @@ with % in it}.
 
 CESIL was designed to teach "machine-code" to Computer science students - so other than the "I/O" commands everything else was at a basic operation level.
 
+**Note:** Interestingly in just 26 lines of code - all 14 of the instructions are used...!
+
 ```
         LINE
 Next    IN
