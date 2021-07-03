@@ -13,9 +13,6 @@ repeat {
         break
     }
     n = as.integer (n)
-  # cat ((bitwAnd (n, bitwNot (0xFF))), "\n")
-  # cat ( bitwShiftL (bitwAnd (n, 0x0F), 4), "\n")
-  # cat ( bitwShiftR (bitwAnd (n, 0xF0), 4), "\n")
 
     cat (bitwOr (bitwOr (bitwAnd (n, bitwNot (0xFF)),
                          bitwShiftL (bitwAnd (n, 0x0F), 4)),
