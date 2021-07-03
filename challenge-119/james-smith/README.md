@@ -157,7 +157,7 @@ my %commands = (
 );
 
 while(<>) {
-  (@in = map { 0+$_ } <> ) && last if m{^ {8}%};
+  ((@in = map { 0+$_ } <> ),last) if m{^ {8}%};
   ($ptrs{$1},$_)=(scalar @code,$2) if m{^(\S{1,7})\s+(.*)};
   push @code, [ split m{\s+}, s{^\s+}{}r=~s{\s+$}{}r, 2 ];
 }

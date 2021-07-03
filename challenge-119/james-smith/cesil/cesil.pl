@@ -13,7 +13,7 @@ my %messages = (
 my %commands = (
 'LINE'    ,sub{print "\n"},
 'OUT'     ,sub{print $reg},
-'PRINT'   ,sub{print $_[0]=~s{^"}{}r=~s{"$}{}r;},
+'PRINT'   ,sub{print $_[0]=~s{^"}{}r=~s{"$}{}r},
 'IN'      ,sub{_err('i') unless @in;$reg=shift@in},
 'STORE'   ,sub{$mem{$_[0]}=$reg},
 'LOAD'    ,sub{_err('m') unless exists$mem{$_[0]};$reg=$mem{$_[0]}},
