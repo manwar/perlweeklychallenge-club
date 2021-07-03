@@ -1,20 +1,34 @@
 # Solutions by Abigail
-## [Binary Palindrome](https://perlweeklychallenge.org/blog/perl-weekly-challenge-118/#TASK1)
+## [Swap Nibbles](https://perlweeklychallenge.org/blog/perl-weekly-challenge-119/#TASK1)
 
-> You are given a positive integer $N.
-> 
-> Write a script to find out if the binary representation of the given
-> integer is Palindrome. Print 1 if it is otherwise 0.
+> You are given a positive integer `$N`.
 >
+> Write a script to swap the two nibbles of the binary representation of
+> the given number and print the decimal number of the new binary
+> representation.
+>
+> > A nibble is a four-bit aggregation, or half an octet.
+>
+> To keep the task simple, we only allow integer less than or equal to `255`.
 
 ### Examples
 ~~~~
-Input: $N = 5
-Output: 1 as binary representation of 5 is 101 which is Palindrome.
-
-Input: $N = 4
-Output: 0 as binary representation of 4 is 100 which is NOT Palindrome.
+Input: $N = 101
+Output: 86
 ~~~~
+
+Binary representation of decimal `101` is `1100101` or as 2 nibbles
+`(0110)(0101)`. The swapped nibbles would be `(0101)(0110)` same as
+decimal `86`.
+
+~~~~
+Input: $N = 18
+Output: 33
+~~~~
+
+Binary representation of decimal `18` is `10010` or as 2 nibbles
+`(0001)(0010)`. The swapped nibbles would be `(0010)(0001)` same as
+decimal `33`.
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
@@ -29,65 +43,26 @@ Output: 0 as binary representation of 4 is 100 which is NOT Palindrome.
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[Binary Palindrome](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-118-1.html)
+[Swap Nibbles](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-119-1.html)
 
-## [Adventure of Knight](https://perlweeklychallenge.org/blog/perl-weekly-challenge-118/#TASK2)
+## [Sequence without 1-on-1](https://perlweeklychallenge.org/blog/perl-weekly-challenge-119/#TASK2)
 
-> A knight is restricted to move on an 8x8 chessboard. The knight is denoted
-> by `N` and its way of movement is the same as what it is defined in Chess.
-> `*` represents an empty square. `x` represents a square with treasure.
+> Write a script to generate sequence starting at `1`. Consider the
+> increasing sequence of integers which contain only `1`s, `2`s, and
+> `3`s, and do not have any doublets of `1`s > like below. Please accept
+> a positive integer `$N` and print the `$N`th term in the generated sequence.
 >
-> > The Knight's movement is unique. It may move two squares vertically and
-> > one square horizontally, or two squares horizontally and one square
-> > vertically (with both forming the shape of an L).
->
-> There are 6 squares with treasures.
->
-> Write a script to find the path such that Knight can capture all
-> treasures. The Knight can start from the top-left square.
->
-~~~~
-      a b c d e f g h
-    8 N * * * * * * * 8
-    7 * * * * * * * * 7
-    6 * * * * x * * * 6
-    5 * * * * * * * * 5
-    4 * * x * * * * * 4
-    3 * x * * * * * * 3
-    2 x x * * * * * * 2
-    1 * x * * * * * * 1
-      a b c d e f g h
-~~~~
+> > 1, 2, 3, 12, 13, 21, 22, 23, 31, 32, 33, 121, 122, 123, 131, ...
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
-* [Basic](basic/ch-2.bas)
-* [bc](bc/ch-2.bc)
-* [Befunge-93](befunge-93/ch-2.bf93)
 * [C](c/ch-2.c)
-* [Cobol](cobol/ch-2.cb)
-* [Csh](csh/ch-2.csh)
-* [Erlang](erlang/ch-2.erl]
-* [Forth](forth/ch-2.fs]
-* [Fortran](fortran/ch-2.f90]
-* [Go](go/ch-2.go)
-* [Java](java/ch-1.java)
 * [Lua](lua/ch-2.lua)
-* [m4](m4/ch-2.m4]
 * [Node.js](node/ch-2.js)
-* [OCaml](ocaml/ch-2.ml]
-* [Pascal](pascal/ch-2.p]
 * [Perl](perl/ch-2.pl)
-* [PHP](php/ch-2.php]
-* [PostScript](postscript/ch-2.ps]
 * [Python](python/ch-2.py)
-* [R](r/ch-2.r]
-* [Rexx](rexx/ch-2.rexx]
 * [Ruby](ruby/ch-2.rb)
-* [Scheme](scheme/ch-2.scm]
-* [sed](sed/ch-2.sed]
-* [Tcl](tcl/ch-2.tcl]
 
 ### Blog
-[Adventure of Knight](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-118-2.html)
+[Sequence without 1-on-1](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-119-2.html)
