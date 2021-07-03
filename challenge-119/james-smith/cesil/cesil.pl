@@ -1,4 +1,5 @@
 use strict;
+use warnings;
 
 $| = 1;
 my( $ptr, @in, %mem, @code, %ptrs, $reg ) = 0;
@@ -21,10 +22,13 @@ my %commands = (
 );
 
 while(<>) {
-  (@in = map { 0+$_ } <> ) && last if m{^ {8}%};
+  ((@in = map { 0+$_ } <> ),last) if m{^ {8}%};
   ($ptrs{$1},$_)=(scalar @code,$2) if m{^(\S{1,7})\s+(.*)};
   push @code, [ split m{\s+}, s{^\s+}{}r=~s{\s+$}{}r, 2 ];
 }
-($commands{$code[$ptr][0]}($code[$ptr][1]),$ptr++) for 1..1e6;
+
+my $MAX_LOOPS = 1e6;
+($commands{$code[$ptr][0]}($code[$ptr][1]),$ptr++)
+  while --$MAX_LOOPS && $ptr<@code;
 
 
