@@ -6,6 +6,7 @@ my( $ptr, $reg, @in, %mem, @code, %ptrs ) = 0;
 
 my %messages = (
   'i' => 'No further input',
+  'd' => 'Division by zero ',
   'm' => 'Unitialized memory at ',
   'l' => 'Unknown pointer ',
 );
@@ -14,16 +15,16 @@ my %commands = (
 'LINE'    ,sub{print "\n"},
 'OUT'     ,sub{print $reg},
 'PRINT'   ,sub{print $_[0]=~s{^"}{}r=~s{"$}{}r},
-'IN'      ,sub{_err('i') unless @in;$reg=shift@in},
+'IN'      ,sub{@in?($reg=shift@in):_err('i')},
 'STORE'   ,sub{$mem{$_[0]}=$reg},
-'LOAD'    ,sub{_err('m') unless exists$mem{$_[0]};$reg=$mem{$_[0]}},
-'ADD'     ,sub{$reg+=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:(_err('m'))},
-'SUBTRACT',sub{$reg-=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:(_err('m'))},
-'MULTIPLY',sub{$reg*=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:(_err('m'))},
-'DIVIDE'  ,sub{$reg/=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:(_err('m'));$reg=int$reg},
-'JINEG'   ,sub{_err('l') unless exists $ptrs{$_[0]}; $ptr=$ptrs{$_[0]}-1 if $reg<0},
-'JIZERO'  ,sub{_err('l') unless exists $ptrs{$_[0]}; $ptr=$ptrs{$_[0]}-1 if $reg==0},
-'JUMP'    ,sub{_err('l') unless exists $ptrs{$_[0]}; $ptr=$ptrs{$_[0]}-1},
+'LOAD'    ,sub{exists $mem{$_[0]}?($reg=$mem{$_[0]}):_err('m')},
+'ADD'     ,sub{$reg+=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:_err('m')},
+'SUBTRACT',sub{$reg-=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:_err('m')},
+'MULTIPLY',sub{$reg*=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:_err('m')},
+'DIVIDE'  ,sub{$a=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:_err('m');$reg=$a?int($reg/$a):_err('d')},
+'JINEG'   ,sub{($reg<0)&&(exists $ptrs{$_[0]}?($ptr=$ptrs{$_[0]}-1):_err('l'))},
+'JIZERO'  ,sub{($reg==0)&&(exists $ptrs{$_[0]}?($ptr=$ptrs{$_[0]}-1):_err('l'))},
+'JUMP'    ,sub{exists $ptrs{$_[0]}?($ptr=$ptrs{$_[0]}-1):_err('l')},
 'HALT'    ,sub{exit},
 );
 
