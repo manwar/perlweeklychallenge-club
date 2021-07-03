@@ -89,6 +89,8 @@ with % in it}.
 
 CESIL was designed to teach "machine-code" to Computer science students - so other than the "I/O" commands everything else was at a basic operation level.
 
+**Note:** Interestingly in just 26 lines of code - all 14 of the instructions are used...!
+
 ```
         LINE
 Next    IN
@@ -128,6 +130,40 @@ End     LINE
         99
         54
         -1
+```
+### Side note... an intepreter for CESIL...
+
+Didn't like the idea of relying on JAVA... so here is a bare bones
+interpreter...
+```perl
+use strict;
+
+$| = 1;
+my( $ptr, @in, %mem, @code, %ptrs, $reg ) = 0;
+
+my %commands = (
+'LINE'    ,sub{print "\n"; },
+'IN'      ,sub{die 'OUT OF INPUT' unless @in;$reg=shift@in},
+'OUT'     ,sub{print $reg},
+'PRINT'   ,sub{print $_[0] =~ s{^"}{}r =~ s{"$}{}r; },
+'STORE'   ,sub{$mem{$_[0]} = $reg},
+'LOAD'    ,sub{$reg = $mem{$_[0]}},
+'HALT'    ,sub{exit},
+'JINEG'   ,sub{$ptr=$ptrs{$_[0]}-1 if $reg<0},
+'JIZERO'  ,sub{$ptr=$ptrs{$_[0]}-1 if $reg==0},
+'JUMP'    ,sub{$ptr=$ptrs{$_[0]}-1},
+'ADD'     ,sub{$reg+=$_[0]=~m{^-?\d+$}?$_[0]:$mem{$_[0]}},
+'SUBTRACT',sub{$reg-=$_[0]=~m{^-?\d+$}?$_[0]:$mem{$_[0]}},
+'MULTIPLY',sub{$reg*=$_[0]=~m{^-?\d+$}?$_[0]:$mem{$_[0]}},
+'DIVIDE'  ,sub{$reg/=$_[0]=~m{^-?\d+$}?$_[0]:$mem{$_[0]};$reg=int$reg},
+);
+
+while(<>) {
+  (@in = map { 0+$_ } <> ) && last if m{^ {8}%};
+  ($ptrs{$1},$_)=(scalar @code,$2) if m{^(\S{1,7})\s+(.*)};
+  push @code, [ split m{\s+}, s{^\s+}{}r =~ s{\s+$}{}r, 2 ];
+}
+($commands{$code[$ptr][0]}($code[$ptr][1]),$ptr++) for 1..1e6;
 ```
 # Task 2 - Sequence without 1-on-1
 
