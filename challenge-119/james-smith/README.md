@@ -161,7 +161,9 @@ while(<>) {
   ($ptrs{$1},$_)=(scalar @code,$2) if m{^(\S{1,7})\s+(.*)};
   push @code, [ split m{\s+}, s{^\s+}{}r=~s{\s+$}{}r, 2 ];
 }
-($commands{$code[$ptr][0]}($code[$ptr][1]),$ptr++) for 1..1e6;
+my $MAX_LOOPS = 1e6;
+($commands{$code[$ptr][0]}($code[$ptr][1]),$ptr++)
+  while --$MAX_LOOPS && $ptr<@code;
 ```
 # Task 2 - Sequence without 1-on-1
 
