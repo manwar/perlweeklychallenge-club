@@ -133,7 +133,7 @@ End     LINE
 ```
 ### Side note... an intepreter for CESIL...
 
-Didn't like the idea of relying on JAVASCRIPT... so here is a bare bones
+Didn't like the idea of relying on JAVA... so here is a bare bones
 interpreter...
 ```perl
 use strict;
