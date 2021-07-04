@@ -134,7 +134,7 @@ End     LINE
 ### Side note... an intepreter for CESIL...
 
 Didn't like the idea of relying on JAVA... so here is a bare bones
-interpreter... This uses a dispatcher table to execute the commands
+interpreter... This uses a dispatch table to execute the commands
 - a list of "anonymous" subroutines stored in a hash.
 
 ```perl

@@ -52,3 +52,4 @@ while(<>) {
 ($commands{$code[$ptr][0]}($_=$code[$ptr][1]),$ptr++)
   while --$MAX_LOOPS && $ptr<@code;
 die "\n** Exited without HALT\n" if $ptr >= @code;
+
