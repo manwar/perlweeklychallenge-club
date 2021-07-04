@@ -1,7 +1,7 @@
-# tw.weekly.c118
+# tw.weekly.c119
 
 
-The Weekly Challenge - #118 - Tyler Wardhaugh
+The Weekly Challenge - #119 - Tyler Wardhaugh
 
 ## Usage
 
@@ -9,7 +9,7 @@ Clojure ([installation instructions](https://clojure.org/guides/getting_started#
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -M -m tw.weekly.c118.core
+    $ clojure -M -m tw.weekly.c119.core
     # ... or ...
     $ bb run both
 
@@ -21,15 +21,15 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -M -m tw.weekly.c118.t1 N
+    $ clojure -M -m tw.weekly.c119.t1 N
     # ... or ...
     $ bb run task-1 N
 
 Run Task #2 with input:
 
-    $ clojure -M -m tw.weekly.c118.t2
+    $ clojure -M -m tw.weekly.c119.t2 N
     # ... or ...
-    $ bb run task-2
+    $ bb run task-2 N
 
 ## Project Template
 
