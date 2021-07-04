@@ -10,7 +10,7 @@ my %messages = (
 'l','Unknown pointer ','m','Unitialized memory at ');
 
 ## Support functions
-sub _e { die sprintf "\n** %s%s [cmd %s - line %d]\n",
+sub _e { die sprintf "\n** %s%s [%s @ %d]\n",
   $messages{$_[0]},@{$code[$ptr]}[1,0],1+$ptr}
 sub _j { exists$ptrs{$_}?($ptr=$ptrs{$_}-1):_e 'l'}
 sub _v { /^-?\d+$/?$_:exists$mem{$_}?$mem{$_}:_e 'm'}
@@ -35,10 +35,10 @@ my %commands = (
 
 ## Parser loop
 while(<>) {
-  ((@in=map{/^\s+-?\d+\s*$/?0+$_:()}<>),last) if m{^ {8}%};
-  ($ptrs{$1},$_)=(scalar @code,$2) if m{^(\S{1,7})\s+(.*)};
-  my($cmd,$data) = split m{\s+}, s{^\s+}{}r=~s{\s+$}{}r, 2;
-  die "\n## Unknown command [cmd $cmd - line ",1+@code,"]\n"
+  ((@in=map{/^\s+-?\d+\s*$/?0+$_:()}<>),last)if/^ {8}%/;
+  ($ptrs{$1},$_)=(0+@code,$2) if m/^(\S{1,7})\s+(.*)/;
+  my($cmd,$data) = split/\s+/,s/^\s+//r=~s/\s+$//r, 2;
+  die "\n## Unknown command [$cmd @ ",1+@code,"]\n"
     unless exists $commands{$cmd};
   push @code, [$cmd,$data//''];
 }
