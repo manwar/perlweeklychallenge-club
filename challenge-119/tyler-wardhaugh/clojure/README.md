@@ -31,6 +31,10 @@ Run Task #2 with input:
     # ... or ...
     $ bb run task-2 N
 
+View available tasks Babashka can run:
+
+    $ bb tasks
+
 ## Project Template
 
 I used Sean Corfield's clj-new to generate the project template

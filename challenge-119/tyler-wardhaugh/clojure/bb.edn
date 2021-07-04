@@ -69,9 +69,7 @@
           :task (run-task :t2 *command-line-args*)}
 
   task-2-bb {:doc "Run Task 2 (via Babashka)"
-             :task (binding [*out* *err*]
-                      (println "error: can't run Task 2 via Babashka because it depends on some incompatible libraries.")
-                      (System/exit 1))}
+             :task (run-task-bb :t2 *command-line-args*)}
 
   both {:doc "Run both tasks (via clojure)"
         :task (do
@@ -84,7 +82,8 @@
            :task (do
                    (println "Task 1:")
                    (run 'task-1-bb)
-                   (println "\n [Skipping Task 2]"))}
+                   (println "\nTask 2:")
+                   (run 'task-2-bb))}
 
   }
 }
