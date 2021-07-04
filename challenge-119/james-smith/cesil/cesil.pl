@@ -1,9 +1,12 @@
 use strict;
 use warnings;
 
+# Set auto-flush...
 $| = 1;
-my( $ptr, $reg, @in, %mem, @code, %ptrs ) = 0;
+## Initialize state
+my($MAX_LOOPS, $ptr, $reg, @in, %mem, @code, %ptrs) = (1e6,0,0);
 
+## Define error messages
 my %messages = (
   'i' => 'No further input',
   'd' => 'Division by zero ',
@@ -11,36 +14,41 @@ my %messages = (
   'l' => 'Unknown pointer ',
 );
 
+## Support functions
+sub _err { die sprintf "\n** %s%s [cmd %s - line %d]\n",
+  $messages{$_[0]}, $code[$ptr][1], $code[$ptr][0], 1+$ptr; }
+sub _j { exists$ptrs{$_}?($ptr=$ptrs{$_}-1):_err 'l'; }
+sub _v { /^-?\d+$/?$_:exists$mem{$_}?$mem{$_}:_err 'm'; }
+
+## Command dispatch table
 my %commands = (
 'LINE'    ,sub{print "\n"},
 'OUT'     ,sub{print $reg},
-'PRINT'   ,sub{print $_[0]=~s{^"}{}r=~s{"$}{}r},
-'IN'      ,sub{@in?($reg=shift@in):_err('i')},
-'STORE'   ,sub{$mem{$_[0]}=$reg},
-'LOAD'    ,sub{exists $mem{$_[0]}?($reg=$mem{$_[0]}):_err('m')},
-'ADD'     ,sub{$reg+=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:_err('m')},
-'SUBTRACT',sub{$reg-=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:_err('m')},
-'MULTIPLY',sub{$reg*=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:_err('m')},
-'DIVIDE'  ,sub{$a=$_[0]=~m{^-?\d+$}?$_[0]:exists$mem{$_[0]}?$mem{$_[0]}:_err('m');$reg=$a?int($reg/$a):_err('d')},
-'JINEG'   ,sub{($reg<0)&&(exists $ptrs{$_[0]}?($ptr=$ptrs{$_[0]}-1):_err('l'))},
-'JIZERO'  ,sub{($reg==0)&&(exists $ptrs{$_[0]}?($ptr=$ptrs{$_[0]}-1):_err('l'))},
-'JUMP'    ,sub{exists $ptrs{$_[0]}?($ptr=$ptrs{$_[0]}-1):_err('l')},
+'PRINT'   ,sub{print s/^"//r=~s/"$//r},
+'IN'      ,sub{@in?($reg=shift@in):_err 'i'},
+'STORE'   ,sub{$mem{$_}=$reg},
+'LOAD'    ,sub{$reg=_v},
+'ADD'     ,sub{$reg+=_v},
+'SUBTRACT',sub{$reg-=_v},
+'MULTIPLY',sub{$reg*=_v},
+'DIVIDE'  ,sub{$_=_v;$reg=$_?int($reg/$_):_err 'd'},
+'JINEG'   ,sub{_j if $reg<0},
+'JIZERO'  ,sub{_j if !$reg},
+'JUMP'    ,sub{_j},
 'HALT'    ,sub{exit},
 );
 
+## Parser loop
 while(<>) {
-  ((@in = map { 0+$_ } <> ),last) if m{^ {8}%};
+  ((@in = map {/^\s+-?\d+\s*$/?0+$_:()} <> ),last) if m{^ {8}%};
   ($ptrs{$1},$_)=(scalar @code,$2) if m{^(\S{1,7})\s+(.*)};
   my($cmd,$data) = split m{\s+}, s{^\s+}{}r=~s{\s+$}{}r, 2;
-  die "Unknown command [cmd $cmd - line ",1+@code,"]\n" unless exists $commands{$cmd};
+  die "\n** Unknown command [cmd $cmd - line ",1+@code,"]\n"
+    unless exists $commands{$cmd};
   push @code, [$cmd,$data||''];
 }
 
-my $MAX_LOOPS = 1e6;
-($commands{$code[$ptr][0]}($code[$ptr][1]),$ptr++)
+## Execution loop
+($commands{$code[$ptr][0]}($_=$code[$ptr][1]),$ptr++)
   while --$MAX_LOOPS && $ptr<@code;
-
-sub _err {
-  my $flag = shift;
-  die sprintf "\n%s%s [cmd %s - line %d]\n", $messages{$flag}, $code[$ptr][1], $code[$ptr][0], 1+$ptr;
-}
+die "\n** Exited without HALT\n" if $ptr >= @code;
