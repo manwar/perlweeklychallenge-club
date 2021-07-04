@@ -1,0 +1,30 @@
+use std
+
+const main = {args : byte[:][:] -> void
+    var a : uint64 = 1
+    for var n : uint64 = std.get(std.intparse(args[1])); n > 1; n--
+        a = next(a)
+    ;;
+    std.put("{}\n", a)
+}
+
+const next = {n : uint64 -> uint64
+    n++
+    for var a = 1; (n / a) % 10 == 4;
+        n -= 3 * a
+        a *= 10
+        n += a
+    ;;
+    var p = false
+    for var a = 1; n / a > 0; a *= 10
+        if (n / a) % 10 == 1
+            if p
+                -> next(n)
+            ;;
+            p = true
+        else
+            p = false
+        ;;
+    ;;
+    -> n
+}
