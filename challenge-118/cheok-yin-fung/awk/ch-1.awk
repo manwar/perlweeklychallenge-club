@@ -4,8 +4,8 @@
 # or: awk -f 'ch-1.awk' < file_contains_an_integer_on_each_line
 
 {
-    n = $0;
-    i = 0;
+    n = $0
+    i = 0
     while (n > 0) {
         arr[i] = n % 2
         n = int(n / 2)
