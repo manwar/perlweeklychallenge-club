@@ -20,4 +20,4 @@ for my $r (0..$size-1) {
 }
 
 # print matrix
-say "[", join("\n ", map {"[".join(", ", @{$i[$_]})."]"} 0..$size-1), "]";
+say "[", join(",\n ", map {"[".join(", ", @{$i[$_]})."]"} 0..$size-1), "]";

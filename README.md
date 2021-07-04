@@ -1,6 +1,6 @@
 # The Weekly Challenge Club
 
-This is the central repository for the members of [**The Weekly Challenge**](https://perlweeklychallenge.org). The members can submit the solution to the challenge each week in their favourite programming languages, although the preferred languages are **Perl** and **Raku**.
+This is the central repository for the members of [**The Weekly Challenge**](https://theweeklychallenge.org). The members can submit the solution to the challenge each week in their favourite programming languages, although the preferred languages are **Perl** and **Raku**.
 
 ## EZPWC - Easy Perl Weekly Challenges Script
 
