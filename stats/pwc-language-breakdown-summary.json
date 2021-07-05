@@ -1,10 +1,35 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
+   "series" : [
+      {
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "rotation" : -90,
+            "enabled" : "true",
+            "align" : "right"
+         },
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               1705
+            ],
+            [
+               "Perl",
+               5698
+            ],
+            [
+               "Raku",
+               3586
+            ]
+         ]
+      }
+   ],
    "xAxis" : {
       "type" : "category",
       "labels" : {
@@ -14,50 +39,25 @@
          }
       }
    },
+   "subtitle" : {
+      "text" : "Last updated at 2021-07-05 22:48:02 GMT"
+   },
    "legend" : {
       "enabled" : "false"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2021-07-05 22:23:42 GMT"
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
-   },
-   "series" : [
-      {
-         "data" : [
-            [
-               "Blog",
-               1705
-            ],
-            [
-               "Perl",
-               5697
-            ],
-            [
-               "Raku",
-               3586
-            ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "align" : "right"
-         }
-      }
-   ]
+      },
+      "min" : 0
+   }
 }
