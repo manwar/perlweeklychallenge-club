@@ -1,12 +1,13 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 120",
          "data" : [
             {
                "drilldown" : "Dave Cross",
@@ -15,8 +16,8 @@
             },
             {
                "y" : 6,
-               "drilldown" : "Flavio Poletti",
-               "name" : "Flavio Poletti"
+               "name" : "Flavio Poletti",
+               "drilldown" : "Flavio Poletti"
             },
             {
                "y" : 3,
@@ -24,52 +25,51 @@
                "name" : "James Smith"
             },
             {
-               "drilldown" : "Lucas Ransan",
-               "name" : "Lucas Ransan",
-               "y" : 2
-            },
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
-               "y" : 2
-            },
-            {
                "y" : 4,
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
+            },
+            {
+               "name" : "Lucas Ransan",
+               "drilldown" : "Lucas Ransan",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "y" : 2,
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "name" : "Roger Bell_West",
                "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West"
+               "y" : 4
             },
             {
                "drilldown" : "Simon Green",
                "name" : "Simon Green",
                "y" : 3
             }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 120"
+         ]
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge - 120"
-   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Dave Cross",
             "id" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Dave Cross"
          },
          {
-            "name" : "Flavio Poletti",
             "id" : "Flavio Poletti",
             "data" : [
                [
@@ -84,9 +84,12 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Flavio Poletti"
          },
          {
+            "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -96,23 +99,35 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "James Smith",
-            "id" : "James Smith"
+            ]
          },
          {
-            "id" : "Lucas Ransan",
+            "name" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "id" : "Luca Ferrari"
+         },
+         {
             "name" : "Lucas Ransan",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Lucas Ransan"
          },
          {
-            "name" : "Mark Anderson",
             "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
@@ -121,18 +136,16 @@
             ]
          },
          {
-            "id" : "Niels van Dijke",
-            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke"
          },
          {
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -142,10 +155,11 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Green",
             "id" : "Simon Green",
             "data" : [
                [
@@ -156,33 +170,38 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Simon Green"
          }
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2021-07-05 21:50:40 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "title" : {
+      "text" : "The Weekly Challenge - 120"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2021-07-05 21:56:22 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    }
 }
