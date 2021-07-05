@@ -36,7 +36,7 @@ my %commands = (
 ## Parser loop
 while(<>) {
   ((@in=map{/^\s+-?\d+\s*$/?0+$_:()}<>),last)if/^ {8}%/;
-  ($ptrs{$1},$_)=(0+@code,$2) if m/^(\S{1,7})\s+(.*)/;
+  ($ptrs{$1},$_)=(0+@code,$2) if /^(\S{1,7})\s+(.*)/;
   my($cmd,$data) = split/\s+/,s/^\s+//r=~s/\s+$//r, 2;
   die "\n## Unknown command [$cmd @ ",1+@code,"]\n"
     unless exists $commands{$cmd};
