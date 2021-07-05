@@ -1,34 +1,29 @@
 # Solutions by Abigail
-## [Swap Nibbles](https://perlweeklychallenge.org/blog/perl-weekly-challenge-119/#TASK1)
+## [Swap Odd/Even Bits](https://perlweeklychallenge.org/blog/perl-weekly-challenge-120/#TASK1)
 
-> You are given a positive integer `$N`.
->
-> Write a script to swap the two nibbles of the binary representation of
-> the given number and print the decimal number of the new binary
-> representation.
->
-> > A nibble is a four-bit aggregation, or half an octet.
->
-> To keep the task simple, we only allow integer less than or equal to `255`.
+> You are given a positive integer `$N` less than or equal to 255.
+> 
+> Write a script to swap the odd positioned bit with even positioned
+> bit and print the decimal equivalent of the new binary representation.
 
 ### Examples
 ~~~~
 Input: $N = 101
-Output: 86
+Output: 154
 ~~~~
 
-Binary representation of decimal `101` is `1100101` or as 2 nibbles
-`(0110)(0101)`. The swapped nibbles would be `(0101)(0110)` same as
-decimal `86`.
+Binary representation of the given number is `01 10 01 01`.
+The new binary representation after the odd/even swap is `10 01 10 10`.
+The decimal equivalent of `10011010` is `154`.
 
 ~~~~
 Input: $N = 18
 Output: 33
 ~~~~
 
-Binary representation of decimal `18` is `10010` or as 2 nibbles
-`(0001)(0010)`. The swapped nibbles would be `(0010)(0001)` same as
-decimal `33`.
+Binary representation of the given number is `00 01 00 10`.
+The new binary representation after the odd/even swap is `00 10 00 01`.
+The decimal equivalent of `100001` is `33`.
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
@@ -49,16 +44,33 @@ decimal `33`.
 * [Tcl](tcl/ch-1.tcl)
 
 ### Blog
-[Swap Nibbles](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-119-1.html)
+[Swap Odd/Even Bits](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-120-1.html)
 
-## [Sequence without 1-on-1](https://perlweeklychallenge.org/blog/perl-weekly-challenge-119/#TASK2)
+## [Clock Angle](https://perlweeklychallenge.org/blog/perl-weekly-challenge-119/#TASK2)
 
-> Write a script to generate sequence starting at `1`. Consider the
-> increasing sequence of integers which contain only `1`s, `2`s, and
-> `3`s, and do not have any doublets of `1`s > like below. Please accept
-> a positive integer `$N` and print the `$N`th term in the generated sequence.
+> You are given time `$T` in the format `hh:mm`.
 >
-> > 1, 2, 3, 12, 13, 21, 22, 23, 31, 32, 33, 121, 122, 123, 131, ...
+> Write a script to find the smaller angle formed by the hands of an
+> analog clock at a given time.<br>
+> **HINT: A analog clock is divided up into `12` sectors. One sector
+> represents `30` degree (`360/12 = 30`).**
+
+### Examples
+~~~~
+Input: $T = '03:10'
+Output: 35 degree
+~~~~
+
+The distance between the `2` and the `3` on the clock is `30` degree.
+For the `10` minutes i.e. `1/6` of an hour that have passed.  The hour
+hand has also moved `1/6` of the distance between the `3` and the `4`,
+which adds `5` degree (`1/6` of `30`).  The total measure of the angle
+is `35` degree.
+
+~~~~
+Input: $T = '04:00'
+Output: 120 degree
+~~~~
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
@@ -71,4 +83,4 @@ decimal `33`.
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[Sequence without 1-on-1](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-119-2.html)
+[Clock Angle](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-120-2.html)
