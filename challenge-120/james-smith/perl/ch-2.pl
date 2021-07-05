@@ -14,8 +14,13 @@ my @TESTS = (
 );
 
 is( clock_angle($_->[0]), $_->[1] ) foreach @TESTS;
-
+is( clock_angle_1_liner($_->[0]), $_->[1] ) foreach @TESTS;
 done_testing();
+
+cmpthese( 2_000_000, {
+  'f' => sub { clock_angle($_->[0]) foreach @TESTS },
+  '1' => sub { clock_angle_1_liner($_->[0]) foreach @TESTS },
+});
 
 sub clock_angle {
 ## The difference is: hr*30+min/2 - min*12
@@ -29,3 +34,6 @@ sub clock_angle {
   return $a > 180 ? 360-$a : $a;
 }
 
+sub clock_angle_1_liner {
+  180-abs(abs(60*(substr$_[0],0,2)-11*substr$_[0],3)%720/2-180);
+}
