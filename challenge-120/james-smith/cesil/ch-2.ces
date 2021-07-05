@@ -7,22 +7,27 @@
         STORE tests
 Next    IN
         JINEG End
+        STORE mn
+        DIVIDE 100
+        STORE hr
+        MULTIPLY -100
+        ADD mn
+        STORE mn
+        LOAD hr
         SUBTRACT +10
         JINEG bl1
         JUMP bl1e
 bl1     PRINT "0"
 bl1e    ADD +10
         OUT
-        STORE hr
         PRINT ":"
-        IN
+        LOAD mn
         SUBTRACT +10
         JINEG bl2
         JUMP bl2e
 bl2     PRINT "0"
 bl2e    ADD +10
         OUT
-        STORE mn
         IN
         STORE ans
         LOAD mn
@@ -58,7 +63,7 @@ gt100   ADD +100
         SUBTRACT ans
         JIZERO Ok
         PRINT "-- should be "
-        LOAD ans 
+        LOAD ans
         OUT
         PRINT "?"
         JUMP Line
@@ -83,31 +88,22 @@ End     LINE
         LINE
         HALT
         %
-        3  
-        18 
+        0318
         9
-        4
-        20
+        0420
         10
-        4
-        40
+        0440
         100
-        3
-        10
+        0310
         35
-        4
-        0
+        0400
         120
-        8
-        0
+        0800
         120
-        16
-        0
+        1600
         120
-        18
-        0
+        1800
         180
-        20
-        0
+        2000
         120
         -1
