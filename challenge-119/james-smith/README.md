@@ -14,7 +14,7 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-119/ja
 
 # Task 1 - Swap Nibbles
 
-***You are given a positive integer `$N`. Write a script to swap the two nibbles of the binary representation of the given number and print the decimal number of the new binary representation.(((
+***You are given a positive integer `$N`. Write a script to swap the two nibbles of the binary representation of the given number and print the decimal number of the new binary representation.***
 
 ## The solution
 
