@@ -1,0 +1,44 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-2.bc < input-file
+#
+
+diff_per_minute =  11
+min_per_hour    =  60
+full_circle     = 720
+
+while (1) {
+    hours = read ()
+    if (hours == -1) {
+        break
+    }
+    minutes = read ()
+
+    #
+    # Result scale to 0, otherwise % acts weirdly.
+    #
+    scale = 0
+    angle = (diff_per_minute * (hours * min_per_hour + minutes)) % full_circle
+    if (2 * angle >= full_circle) {
+        angle = full_circle - angle
+    }
+
+    #
+    # If the angle is an odd number of half degrees, we want 
+    # a result ending in ".5", but if it's an even number of
+    # half degrees, we don't want to end in ".0"
+    #
+    scale = angle % 2
+
+    #
+    # Little hack to print a half as "0.5"
+    #
+    if (angle == 1) {
+        "0"
+    }
+
+    angle / 2
+}

@@ -74,12 +74,18 @@ Output: 120 degree
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [bc](bc/ch-2.bc)
+* [Befunge-93](befunge-93/ch-2.bf93)
 * [C](c/ch-2.c)
+* [Go](go/ch-2.go)
+* [Java](java/ch-2.java)
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
+* [R](r/ch-2.r)
 * [Ruby](ruby/ch-2.rb)
+* [Tcl](tcl/ch-2.tcl)
 
 ### Blog
 [Clock Angle](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-120-2.html)
