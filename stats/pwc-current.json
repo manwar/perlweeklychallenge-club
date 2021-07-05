@@ -1,34 +1,15 @@
 {
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2021-07-05 21:30:52 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "drilldown" : {
       "series" : [
          {
             "id" : "Dave Cross",
+            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Dave Cross"
+            ]
          },
          {
             "data" : [
@@ -41,8 +22,8 @@
                   1
                ]
             ],
-            "id" : "James Smith",
-            "name" : "James Smith"
+            "name" : "James Smith",
+            "id" : "James Smith"
          },
          {
             "data" : [
@@ -51,11 +32,22 @@
                   2
                ]
             ],
+            "id" : "Lucas Ransan",
+            "name" : "Lucas Ransan"
+         },
+         {
             "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
          },
          {
             "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -65,35 +57,44 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Roger Bell_West"
+            ]
          }
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 120"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "legend" : {
       "enabled" : 0
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    },
    "series" : [
       {
-         "name" : "The Weekly Challenge - 120",
          "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 120",
          "data" : [
             {
                "y" : 2,
-               "name" : "Dave Cross",
-               "drilldown" : "Dave Cross"
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross"
             },
             {
                "name" : "James Smith",
@@ -101,16 +102,30 @@
                "y" : 3
             },
             {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
+               "y" : 2,
+               "name" : "Lucas Ransan",
+               "drilldown" : "Lucas Ransan"
             },
             {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "y" : 4,
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "drilldown" : "Roger Bell_West"
             }
          ]
       }
-   ]
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2021-07-05 21:36:14 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 120"
+   },
+   "chart" : {
+      "type" : "column"
+   }
 }
