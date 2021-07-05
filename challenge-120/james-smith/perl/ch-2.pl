@@ -37,14 +37,14 @@ sub clock_angle {
 ## If value is > 180 then we subtract from
 ## 360....
   my($h,$m) = split /:/,shift;
-  my $t = abs($h*60-$m*11)%720/2;
+  my $t = abs($h%12*30-$m*5.5);
   return $t > 180 ? 360-$t : $t;
 }
 
 sub clock_angle_1_liner {
-  180-abs((60*(substr$_[0],0,2)-11*substr$_[0],3)%720/2-180);
+  180-abs(abs((substr$_[0],0,2)%12*30-5.5*substr$_[0],3)-180);
 }
 
 sub clock_angle_fast {
-  180-abs((60*$_[0]-11*substr$_[0],3)%720/2-180);
+  180-abs(abs($_[0]%12*30-5.5*substr$_[0],3)-180);
 }
