@@ -1,0 +1,38 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0, :v(:$verbose));
+
+my @seq = 1;
+my $current = 1;
+
+while @seq.elems < $N
+{
+  my $new     = "";
+  my $add     = True;
+    
+  for $current.comb.reverse -> $digit is copy
+  {
+    if $add
+    {
+      if $digit <= 2
+      {
+        $digit++;
+        $add = False;
+      }
+      else
+      {
+        $digit = 1;
+      }
+    }
+      
+    $new = $digit ~ $new;
+  }
+
+  $new = "1$new" if $add; 
+  $current = $new;
+
+  @seq.push: $current unless $current.contains('11');
+}
+
+say ": Sequence: ", @seq[^$N].join(', ') if $verbose;
+say @seq[$N-1];

@@ -101,4 +101,4 @@ sub max {
 }
 
 
-say jaro_winkler_distance(@ARGV);
+say sprintf("%.2f", jaro_winkler_distance(@ARGV));

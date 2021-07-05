@@ -1,8 +1,13 @@
 find . -name "*.c" -delete
 find . -name "*.d" -delete
 find . -name "*.dart" -delete
+find . -name "*.nix" -delete
+find . -name "*.ces" -delete
+find . -name "*.myr" -delete
+find . -name "*.cr" -delete
 find . -name "*.vb" -delete
 find . -name "*.yp" -delete
+find . -name "*.zig" -delete
 find . -name "*.nim" -delete
 find . -name "*.jpg" -delete
 find . -name "*.mod" -delete
