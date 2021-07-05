@@ -7,19 +7,25 @@ use feature qw(say);
 use Test::More;
 use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
+no warnings 'numeric';
 
 my @TESTS = (
   [ '03:10', 35 ],
   [ '04:00', 120 ],
+  [ '08:00', 120 ],
+  [ '16:00', 120 ],
+  [ '18:00', 180 ],
+  [ '20:00', 120 ],
 );
 
 is( clock_angle($_->[0]), $_->[1] ) foreach @TESTS;
 is( clock_angle_1_liner($_->[0]), $_->[1] ) foreach @TESTS;
 done_testing();
 
-cmpthese( 2_000_000, {
-  'f' => sub { clock_angle($_->[0]) foreach @TESTS },
+cmpthese( 1_000_000, {
+  's' => sub { clock_angle($_->[0]) foreach @TESTS },
   '1' => sub { clock_angle_1_liner($_->[0]) foreach @TESTS },
+  'f' => sub { clock_angle_fast($_->[0]) foreach @TESTS },
 });
 
 sub clock_angle {
@@ -30,10 +36,14 @@ sub clock_angle {
 ## If value is > 180 then we subtract from
 ## 360....
   my($h,$m) = split /:/,shift;
-  my $a = abs($h*60-$m*11)%720/2;
-  return $a > 180 ? 360-$a : $a;
+  my $t = abs($h*60-$m*11)%720/2;
+  return $t > 180 ? 360-$t : $t;
 }
 
 sub clock_angle_1_liner {
-  180-abs(abs(60*(substr$_[0],0,2)-11*substr$_[0],3)%720/2-180);
+  180-abs((60*(substr$_[0],0,2)-11*substr$_[0],3)%720/2-180);
+}
+
+sub clock_angle_fast {
+  180-abs((60*$_[0]-11*substr$_[0],3)%720/2-180);
 }
