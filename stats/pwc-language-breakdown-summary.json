@@ -1,36 +1,22 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
    },
    "legend" : {
       "enabled" : "false"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2021-07-05 23:11:07 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "series" : [
       {
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -38,7 +24,7 @@
             ],
             [
                "Perl",
-               5701
+               5703
             ],
             [
                "Raku",
@@ -46,18 +32,32 @@
             ]
          ],
          "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "align" : "right",
+            "y" : 10,
+            "enabled" : "true",
             "rotation" : -90,
+            "format" : "{point.y:.0f}",
             "style" : {
                "fontFamily" : "Verdana, sans-serif",
                "fontSize" : "13px"
             },
-            "y" : 10,
-            "enabled" : "true"
-         },
-         "name" : "Contributions"
+            "align" : "right",
+            "color" : "#FFFFFF"
+         }
       }
-   ]
+   ],
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-07-05 23:35:56 GMT"
+   }
 }
