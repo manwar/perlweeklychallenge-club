@@ -77,7 +77,7 @@ OK - last weeks CESIL challenge was easier than this weeks....
  * Can't handle non-integer input - so the times have to be put in without the : so `03:30` is put in as `0330`
 ```
 ( Compute the angle between the hour and minute hand
-( Input contains of triple hour/minute & answer so
+( Input contains of pairs of hour.minute & answer so
 ( can check calculations are OK!
         LINE
         LOAD  +0
