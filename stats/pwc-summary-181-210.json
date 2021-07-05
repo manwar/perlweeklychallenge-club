@@ -1,15 +1,19 @@
 {
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-07-05 07:02:12 GMT"
+      "text" : "[Champions: 30] Last updated at 2021-07-05 07:11:10 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
    },
    "xAxis" : {
       "categories" : [
@@ -45,8 +49,17 @@
          "Tiago Stock"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             3,
@@ -78,8 +91,7 @@
             4,
             2,
             1
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -151,17 +163,5 @@
          ],
          "name" : "Blog"
       }
-   ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
-   }
+   ]
 }
