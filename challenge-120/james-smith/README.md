@@ -12,13 +12,13 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-119/james-smith/perl
 
-# Task 1 - Swap Nibbles
+# Task 1 - Swap bits
 
 ***You are given a positive integer `$N` less than or equal to `255`. Write a script to swap the odd positioned bit with even positioned bit and print the decimal equivalent of the new binary representation.***
 
 ## The solution
 
-# Task 1 - Clock Angle
+# Task 2 - Clock Angle
 
 ***You are given time `$T` in the format `hh:mm`. Write a script to find the smaller angle formed by the hands of an analog clock at a given time.***
 
