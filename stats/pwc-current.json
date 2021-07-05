@@ -1,18 +1,92 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "series" : [
+      {
+         "data" : [
+            {
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross",
+               "y" : 2
+            },
+            {
+               "y" : 6,
+               "drilldown" : "Flavio Poletti",
+               "name" : "Flavio Poletti"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
+            },
+            {
+               "drilldown" : "Lucas Ransan",
+               "name" : "Lucas Ransan",
+               "y" : 2
+            },
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke",
+               "y" : 2
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
+            },
+            {
+               "drilldown" : "Simon Green",
+               "name" : "Simon Green",
+               "y" : 3
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 120"
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 120"
+   },
    "drilldown" : {
       "series" : [
          {
             "name" : "Dave Cross",
+            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Dave Cross"
+            ]
          },
          {
-            "name" : "James Smith",
+            "name" : "Flavio Poletti",
+            "id" : "Flavio Poletti",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -23,39 +97,41 @@
                   1
                ]
             ],
+            "name" : "James Smith",
             "id" : "James Smith"
          },
          {
+            "id" : "Lucas Ransan",
+            "name" : "Lucas Ransan",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Lucas Ransan",
-            "id" : "Lucas Ransan"
+            ]
          },
          {
             "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Mark Anderson"
+            ]
          },
          {
             "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Niels van Dijke"
+            ]
          },
          {
+            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West",
             "data" : [
                [
@@ -66,11 +142,11 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Roger Bell_West"
+            ]
          },
          {
             "name" : "Simon Green",
+            "id" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -80,86 +156,33 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Simon Green"
+            ]
          }
       ]
    },
    "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-07-05 21:47:03 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+      "text" : "[Champions: 8] Last updated at 2021-07-05 21:50:40 GMT"
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    },
    "xAxis" : {
       "type" : "category"
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Dave Cross",
-               "y" : 2,
-               "name" : "Dave Cross"
-            },
-            {
-               "y" : 3,
-               "name" : "James Smith",
-               "drilldown" : "James Smith"
-            },
-            {
-               "name" : "Lucas Ransan",
-               "y" : 2,
-               "drilldown" : "Lucas Ransan"
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "y" : 2,
-               "name" : "Mark Anderson"
-            },
-            {
-               "name" : "Niels van Dijke",
-               "y" : 2,
-               "drilldown" : "Niels van Dijke"
-            },
-            {
-               "y" : 4,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
-            },
-            {
-               "drilldown" : "Simon Green",
-               "y" : 3,
-               "name" : "Simon Green"
-            }
-         ],
-         "name" : "The Weekly Challenge - 120",
-         "colorByPoint" : 1
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
-   ],
-   "title" : {
-      "text" : "The Weekly Challenge - 120"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
