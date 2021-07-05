@@ -22,6 +22,7 @@ our %LANG = (
     d       => 'd',
     forth   => 'fs',
     lua     => 'lua',
+    pascal  => 'pas',
     perl    => 'pl',
     python  => 'py',
 );
@@ -157,6 +158,10 @@ sub build {
         }
         if (/^lua$/) {
             return "$LUA $prog";
+        }
+        if (/^pascal$/) {
+            run("fpc -o$exe $prog") if (!-f $exe || -M $exe > -M $prog);
+            return $exe;
         }
         if (/^perl$/) {
             return "perl $prog";
