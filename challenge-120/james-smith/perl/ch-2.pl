@@ -20,7 +20,8 @@ my @TESTS = (
 
 is( clock_angle($_->[0]), $_->[1] ) foreach @TESTS;
 is( clock_angle_1_liner($_->[0]), $_->[1] ) foreach @TESTS;
-done_testing();
+is( clock_angle_fast($_->[0]), $_->[1] ) foreach @TESTS;
+done_testing;
 
 cmpthese( 1_000_000, {
   's' => sub { clock_angle($_->[0]) foreach @TESTS },
