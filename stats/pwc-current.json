@@ -1,14 +1,15 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-07-05 21:10:49 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "xAxis" : {
       "type" : "category"
@@ -16,9 +17,47 @@
    "title" : {
       "text" : "The Weekly Challenge - 120"
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2021-07-05 21:28:00 GMT"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 3,
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West",
+               "y" : 4
+            }
+         ],
+         "name" : "The Weekly Challenge - 120"
+      }
+   ],
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -28,13 +67,19 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "James Smith",
-            "name" : "James Smith"
+            ]
          },
          {
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West",
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -44,43 +89,13 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          }
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 120",
-         "data" : [
-            {
-               "drilldown" : "James Smith",
-               "y" : 3,
-               "name" : "James Smith"
-            },
-            {
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
-            }
-         ]
-      }
-   ],
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "chart" : {
+      "type" : "column"
    }
 }
