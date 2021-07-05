@@ -29,8 +29,8 @@ done_testing();
 
 sub swapBits($) {
 
-  $b = sprintf('%08b', $_[0]);
-  $b =~ s#(.)(.)#$2$1#g; 
+  my $bits = sprintf('%08b', $_[0]);
+  $bits =~ s#(.)(.)#$2$1#g; 
 
-  return oct('0b'.$b);
+  return oct('0b'.$bits);
 }
