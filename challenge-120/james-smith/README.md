@@ -66,4 +66,4 @@ sub clock_angle_fast {
 }
 ```
 
-(Without disabling warnings this gives `Argument "04:00" isn't numeric in multiplication (*) at ..` errors)
+(Without disabling warnings this gives `Argument "04:00" isn't numeric in modulus (%) at ..` errors)
