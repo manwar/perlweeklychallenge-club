@@ -67,3 +67,136 @@ sub clock_angle_fast {
 ```
 
 (Without disabling warnings this gives `Argument "04:00" isn't numeric in modulus (%) at ..` errors)
+
+## Solution in CESIL
+
+OK - last weeks CESIL challenge was easier than this weeks....
+
+**CAVEAT:**
+ * Can't cope with "odd minutes" as this will lead to a fractional angle {and CESIL is integer only}
+ * Can't handle non-integer input - so the times have to be put in without the : so `03:30` is put in as `0330`
+```
+( Compute the angle between the hour and minute hand
+( Input contains of triple hour/minute & answer so
+( can check calculations are OK!
+        LINE
+        LOAD  +0
+        STORE success
+        STORE tests
+Next    IN
+        JINEG End
+        STORE mn
+        DIVIDE 100
+        STORE hr
+        MULTIPLY -100
+        ADD mn
+        STORE mn
+        LOAD hr
+        SUBTRACT +10
+        JINEG bl1
+        JUMP bl1e
+bl1     PRINT "0"
+bl1e    ADD +10
+        OUT
+        PRINT ":"
+        LOAD mn
+        SUBTRACT +10
+        JINEG bl2
+        JUMP bl2e
+bl2     PRINT "0"
+bl2e    ADD +10
+        OUT
+        IN
+        STORE ans
+        LOAD mn
+        PRINT " => "
+        MULTIPLY -11
+        DIVIDE +2
+        STORE t
+        LOAD hr
+        SUBTRACT 12
+        JINEG lt12
+        JUMP gt12
+lt12    ADD +12
+gt12    MULTIPLY +30
+        ADD t
+        JINEG lt0
+        JUMP gt0
+lt0     MULTIPLY -1
+gt0     SUBTRACT +180
+        JINEG ltx0
+        MULTIPLY -1
+ltx0    ADD +80
+        JINEG lt100
+        JUMP gt100
+lt100   PRINT " "
+        ADD +90
+        JINEG lt10
+        JUMP gt10
+lt10    PRINT " "
+gt10    SUBTRACT +90
+gt100   ADD +100
+        OUT
+        PRINT " : "
+        SUBTRACT ans
+        JIZERO Ok
+        PRINT "-- should be "
+        LOAD ans
+        OUT
+        PRINT "?"
+        JUMP Line
+Ok      PRINT "OK"
+        LOAD success
+        ADD +1
+        STORE success
+Line    LINE
+        LOAD tests
+        ADD +1
+        STORE tests
+        JUMP Next
+End     LINE
+        PRINT "TESTS: "
+        LOAD success
+        OUT
+        PRINT " of "
+        LOAD tests
+        OUT
+        PRINT " passed"
+        LINE
+        LINE
+        HALT
+        %
+        0318
+        9
+        0420
+        10
+        0440
+        100
+        0310
+        35
+        0400
+        120
+        0800
+        120
+        1600
+        120
+        1800
+        180
+        2000
+        120
+        -1
+```
+Output:
+```
+03:18 =>   9 : OK
+04:20 =>  10 : OK
+04:40 => 100 : OK
+03:10 =>  35 : OK
+04:00 => 120 : OK
+08:00 => 120 : OK
+16:00 => 120 : OK
+18:00 => 180 : OK
+20:00 => 120 : OK
+
+TESTS: 9 of 9 passed
+```
