@@ -25,6 +25,7 @@ f) (2, 4)
 ~~~~
 
 ### Solutions
+* [AWK](awk/ch-1.awk)
 * [Perl](perl/ch-1.pl)
 
 
@@ -72,4 +73,5 @@ Looking at the above histogram, the largest rectangle `(3 x 5)`
 is formed by columns `(5, 7 and 5)`.
 
 ### Solutions
+* [AWK](awk/ch-2.awk)
 * [Perl](perl/ch-2.pl)
