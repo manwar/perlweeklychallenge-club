@@ -21,6 +21,7 @@ our %LANG = (
     cpp     => 'cpp',
     d       => 'd',
     forth   => 'fs',
+    fortran => 'f90',
     lua     => 'lua',
     pascal  => 'pas',
     perl    => 'pl',
@@ -155,6 +156,10 @@ sub build {
         }
         if (/^forth$/) {
             return "gforth $prog";
+        }
+        if (/^fortran$/) {
+            run("gfortran $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            return $exe;
         }
         if (/^lua$/) {
             return "$LUA $prog";
