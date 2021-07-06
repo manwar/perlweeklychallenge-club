@@ -30,4 +30,4 @@ end function
 
 dim text as string
 text = join_args()
-print trim(str(replace_e(text)));" ";text
+print replace_e(text);" ";text

@@ -14,7 +14,7 @@ sub draw_pascal(rows as integer)
     for row=1 to rows
         ' print current row
         print space(rows-row);
-        for col=0 to row-1: print trim(str(n(cur,col)));" ";: next col: print
+        for col=0 to row-1: print n(cur,col);" ";: next col: print
 
         ' compute next row
         n(1-cur, 0) = 1: n(1-cur,row) = 1
