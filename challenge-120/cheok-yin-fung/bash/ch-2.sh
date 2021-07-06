@@ -8,7 +8,7 @@
 
 hr_hand_inc_per_deg=2    #unit: minute per degree
 
-minute_hand_rate=6         #unit: degree per minute
+minute_hand_rate=6       #unit: degree per minute
 
 h=$1
 m=$2
