@@ -1,4 +1,4 @@
-Program XXX;
+Program SwapBits;
 
 (*                  *)
 (* See ../README.md *)
