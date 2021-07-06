@@ -41,4 +41,3 @@ sub swap_bits {
     }
     return $out;
 }
-
