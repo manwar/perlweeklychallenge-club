@@ -28,6 +28,6 @@ end function
 dim i as integer, n as integer
 n=val(command(1))
 for i=0 to n-1
-    print trim(str(fusc(i)));" ";
+    print fusc(i);" ";
 next
 print
