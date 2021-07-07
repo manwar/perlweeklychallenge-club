@@ -35,6 +35,9 @@ sub clock_angle {
 }
 
 
+# ref: https://www.omnicalculator.com/math/clock-angle
+#       #clock-angles-the-angle-between-clock-hands
+
 ok ( clock_angle("03:10") == 35, "Example 1");
 ok ( clock_angle("04:00") == 120 , "Example 2");
 ok ( clock_angle("12:00") == 0 , "noon");
