@@ -27,6 +27,7 @@ f) (2, 4)
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [C](c/ch-1.c)
 * [Perl](perl/ch-1.pl)
 
 
@@ -76,4 +77,5 @@ is formed by columns `(5, 7 and 5)`.
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [C](c/ch-2.c)
 * [Perl](perl/ch-2.pl)
