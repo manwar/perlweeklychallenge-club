@@ -2,7 +2,7 @@
 # Perl weekly challenge 120
 # Task 2: Clock angle
 #
-# See https://wlmb.github.io/2021/07/07/PWC220/#task-2-clock-angle
+# See https://wlmb.github.io/2021/07/07/PWC120/#task-2-clock-angle
 use strict;
 use warnings;
 use v5.12;
