@@ -2,7 +2,7 @@
 # Perl weekly challenge 120
 # Task 1: Swap odd/even bits
 #
-# See https://wlmb.github.io/2021/07/07/PWC220/#task-2-swap-oddeven-bits
+# See https://wlmb.github.io/2021/07/07/PWC220/#task-1-swap-oddeven-bits
 use strict;
 use warnings;
 use v5.12;
