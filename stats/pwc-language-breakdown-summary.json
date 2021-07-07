@@ -1,9 +1,12 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
    "chart" : {
       "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
    },
    "yAxis" : {
       "min" : 0,
@@ -11,16 +14,32 @@
          "text" : null
       }
    },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-07-07 15:17:35 GMT"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
+   },
    "series" : [
       {
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               1707
+               1708
             ],
             [
                "Perl",
-               5711
+               5713
             ],
             [
                "Raku",
@@ -28,36 +47,17 @@
             ]
          ],
          "dataLabels" : {
-            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "align" : "right",
+            "format" : "{point.y:.0f}",
             "style" : {
                "fontFamily" : "Verdana, sans-serif",
                "fontSize" : "13px"
             },
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
+            "enabled" : "true",
             "y" : 10,
-            "align" : "right",
-            "enabled" : "true"
-         },
-         "name" : "Contributions"
-      }
-   ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "color" : "#FFFFFF"
          }
       }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-07-07 14:58:46 GMT"
-   },
-   "legend" : {
-      "enabled" : "false"
-   }
+   ]
 }
