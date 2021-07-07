@@ -21,7 +21,7 @@ for line in fileinput . input ():
     if 2 * angle >= FULL_CIRCLE:
         angle = FULL_CIRCLE - angle
 
-    print ("{}" . format (int (angle / 2)), end = '')
+    print (int (angle / 2), end = '')
     if angle % 2:
         print (".5", end = '')
     print ("")
