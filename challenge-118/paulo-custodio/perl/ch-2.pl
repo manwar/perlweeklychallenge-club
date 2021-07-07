@@ -161,40 +161,30 @@ use Clone 'clone';
 }
 
 sub solve {
-    my($board) = @_;
+    my($psolution, $board) = @_;
+    my $solution = $$psolution;
 
-    my @queue = clone($board);
-    while (@queue) {
-        $board = shift @queue;
-        if (%{$board->treasures} == 0) { # all treasures found
-            return $board;
-        }
-        else {
-            my @next = $board->next_possible_moves;
-            # if any matches a treasure, move it forward
-            for (0..$#next) {
-                my($row, $col) = @{$next[$_]};
-                if (exists $board->treasures->{"$row$col"}) {
-                    @next = ($next[$_], @next[0..$_-1], @next[$_+1..$#next]);
-                    last;
-                }
-            }
-
-            for (@next) {
-                my($row, $col) = @$_;
-                my $new_board = clone($board);
-                $new_board->board->[$row][$col] = 1;
-                push @{$new_board->path}, [$row, $col];
-                delete $new_board->treasures->{"$row$col"};
-
-                push @queue, $new_board;
-            }
+    if (%{$board->treasures} == 0) { # all treasures found
+        if (@{$solution->path} == 0 ||
+            @{$solution->path} > @{$board->path}) {
+            $$psolution = clone($board);
         }
     }
-    die "no solution found\n";
+    else {
+        my @next = $board->next_possible_moves;
+        for (@next) {
+            my($row, $col) = @$_;
+            my $new_board = clone($board);
+            $new_board->board->[$row][$col] = 1;
+            push @{$new_board->path}, [$row, $col];
+            delete $new_board->treasures->{"$row$col"};
+            solve($psolution, $new_board);
+        }
+    }
 }
 
 my $board = Board->new;
+my $solution = Board->new;
 $board->parse;
-$board = solve($board);
-say $board->path_str;
+solve(\$solution, $board);
+say $solution->path_str;
