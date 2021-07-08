@@ -31,6 +31,7 @@ f) (2, 4)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
 
 
 ## [Largest Rectangle Histogram](https://theweeklychallenge.org/blog/perl-weekly-challenge-075/#task-2--largest-rectangle-histogram)
@@ -83,3 +84,4 @@ is formed by columns `(5, 7 and 5)`.
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
