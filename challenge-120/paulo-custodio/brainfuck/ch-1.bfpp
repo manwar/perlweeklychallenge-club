@@ -1,0 +1,32 @@
+>+>         ( result product )
+@INPUT          Get ASCII number convert to integer
+[           ( result product n )
+  >[-]++<       Divisor is 2
+            ( result product *n 2 )
+
+  @DIVMOD       ( result product *n/2 n%2 )
+
+  >>[-]++< @MULT    multiply remainder by 2
+  << @DUP3R >> @MULT    ( result product n/2 *(n%2)*2*product )
+  <<< @DUP4R >>>    ( result product n/2 *(n%2)*2*product result )
+  @PLUS         ( result product n/2 *(n%2)*2*product(plus)result )
+  @MOVE3L <     ( new_result product *n/2 )
+
+  >[-]++<       Divisor is 2
+            ( result product *n 2 )
+
+  @DIVMOD       ( result product *n/2 n%2 )
+
+  >         multiply remainder by 1
+  << @DUP3R >> @MULT    ( result product n/2 *(n%2)*2*product )
+  <<< @DUP4R >>>    ( result product n/2 *(n%2)*2*product result )
+  @PLUS         ( result product n/2 *(n%2)*2*product(plus)result )
+  @MOVE3L <     ( new_result product *n/2 )
+
+  < @DUP2R >>>[-]++++<  ( result product n *product 4 )
+  @MULT         ( result product n *product*4 )
+  @MOVE2L <
+
+]           ( result product *0 )
+<[-]<           ( *result )
+@OUTPUT

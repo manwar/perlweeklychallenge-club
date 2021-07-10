@@ -17,6 +17,7 @@ our %LANG = (
     awk     => 'awk',
     basic   => 'bas',
     bc      => 'bc',
+    brainfuck=>'bfpp',
     c       => 'c',
     cpp     => 'cpp',
     d       => 'd',
@@ -44,7 +45,7 @@ if (@indep_tests) {
 }
 
 # to be used in eval{} in the tests
-use vars qw( $prog $exec);
+use vars qw( $prog $exec );
 
 for my $lang (grep {-d} sort keys %LANG) {
     next if -f "t/$lang.t";     # independent test
@@ -69,7 +70,7 @@ for my $lang (grep {-d} sort keys %LANG) {
 
                     # build test command line
                     my $cmd;
-                    if ($lang eq 'bc') {        # needs args in stdin
+                    if ($lang =~ /^(bc|brainfuck)$/) {        # needs args in stdin
                         $cmd = "echo ".($spec->{args}//"")."|$exec";
                     }
                     else {
@@ -141,6 +142,10 @@ sub build {
         }
         if (/^bc$/) {
             return "bc -lq $prog";
+        }
+        if (/^brainfuck$/) {
+            run("perl -S bfpp.pl <$prog_wo_ext.bfpp >$prog_wo_ext.bf");
+            return "brainfuck $prog_wo_ext.bf";
         }
         if (/^c$/) {
             run("gcc $prog -o $prog_wo_ext -lmpfr -lgmp") if (!-f $exe || -M $exe > -M $prog);
