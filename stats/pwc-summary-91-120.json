@@ -1,11 +1,15 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-07-11 18:21:55 GMT"
+      "text" : "[Champions: 30] Last updated at 2021-07-11 21:58:39 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -41,22 +45,8 @@
          "Lucas Ransan"
       ]
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             6,
@@ -88,9 +78,11 @@
             129,
             0,
             0
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             17,
@@ -122,8 +114,7 @@
             0,
             116,
             8
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -161,7 +152,16 @@
          "name" : "Blog"
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
    }
 }
