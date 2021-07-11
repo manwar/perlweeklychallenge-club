@@ -117,7 +117,7 @@ sub test {
 
     $input = '06:01';
     is_deeply( clock_hands_angle($input),
-        174.5, "One minute after six o'clock, 179.5 degrees." );
+        174.5, "One minute after six o'clock, 174.5 degrees." );
 
     done_testing();
 }
