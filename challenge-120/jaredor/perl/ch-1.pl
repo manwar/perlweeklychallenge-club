@@ -10,8 +10,7 @@ use Pod::Usage;
 
 # For this challenge
 
-use bigint;                # To allow for arbitrarily long hexstrings
-use List::Util qw(all);    # To check all the input args
+# use Data::Dump qw(pp);
 
 # Validate Input
 
@@ -37,31 +36,47 @@ sub run {
 
     my @errors;
 
-    push @errors,
-      "This script requires at least one non-negative integer as an argument."
-      unless @_;
+    push @errors, "This script requires one positive integer as an argument."
+      unless @_ == 1;
 
-    push @errors, "Not all arguments are non-negative decimal integers."
-      unless all { /\A (?:0 | [1-9] \d*) \Z/xms } @_;
+    push @errors, "The argument is not a positive decimal integers"
+      unless $_[0] =~ /\A \d+ \Z/xms;
 
     pod2usage( join "\n", map { "ERROR: " . $_ } @errors ) if @errors;
 
     # Get the solution.
 
-    output_results( main_algo(@_) );
+    output_results( bit_swap(@_) );
 }
 
 exit;    # End of main script.
 
 # The main algorithm.
 
-sub main_algo {
+sub bit_swap {
 
+    use bigint;
+
+    # It came out in testing that the Number '2' had to be copied
+    # as a bigint object when creating $bmask. It would work the
+    # first time, but then fail the second, otherwise.
+
+    my $num = $_[0] + 0;
+    my ( $num_e, $num_o, $bmask, ) = ( $num->copy(), $num->copy(), 2->copy() );
+    $bmask->blsft(2)->bior(2) until $bmask->bge($num);
+    $num_e->band($bmask);
+    $bmask->brsft(1);
+    $num_o->band($bmask);
+    $num_e->brsft(1);
+    $num_o->blsft(1);
+    return $num_o->bior($num_e);
 }
 
 # Report to STDOUT from user command line input.
 
 sub output_results {
+
+    say @_;
 
 }
 
@@ -72,24 +87,19 @@ sub test {
     use Test::More;
     my $input;
 
-    $input = [ 101, ];
-    is_deeply( nybble_swap( @{$input} ), [ 86, ], "First example: 101 -> 86" );
+    $input = 101;
+    is_deeply( bit_swap($input), 154, "First example: 101 -> 154" );
 
-    $input = [ 18, ];
-    is_deeply( nybble_swap( @{$input} ), [ 33, ], "Second example: 18 -> 33" );
+    $input = 18;
+    is_deeply( bit_swap($input), 33, "Second example: 18 -> 33" );
 
-    $input = [ 0 .. 255 ];
-    is_deeply( nybble_swap( @{ nybble_swap( @{$input} ) } ),
-        $input, "Composition is identity." );
+    $input = 51;
+    is_deeply( bit_swap($input), 51,
+        "Identity for numbers with 'twinned bits': 51." );
 
-    $input = [ map { 16 * $_ + $_ } 0 .. 15 ];
-    is_deeply( nybble_swap( @{$input} ),
-        $input, "Bytes of twin nybbles are unchanged." );
-
-    my $p = 1279;
-    $input = [ 2**( $p - 1 ) * ( 2**$p - 1 ) ];
-    is_deeply( nybble_swap( @{ nybble_swap( @{$input} ) } ),
-        $input, "Handles a special 770 digit number." );
+    $input = 2**16 - 1;
+    is_deeply( bit_swap($input), 65535,
+        "Identity for numbers with 'twinned bits': 65535." );
 
     done_testing();
 }
@@ -98,13 +108,13 @@ __END__
 
 =head1 NAME
 
-TWC 119, TASK #1 : Swap Nibbles
+TWC 120, TASK #1 : Swap Odd/Even bits
 
 =head1 SYNOPSIS
 
-  ch-1.pl [options] nonnegint [nonnegint ...]
+  ch-1.pl [options] nonnegint
 
-  Description:    Nybble-swap the binary representation of non-negative integers.
+  Description:    bit-swap the binary representation of positive integers.
 
   Options:
     --help        Brief help
@@ -112,7 +122,7 @@ TWC 119, TASK #1 : Swap Nibbles
     --test        Run embedded test
 
   Arguments:
-    A non-empty list of non-negative integers
+    A non-empty list of positive integers
 
 =head1 OPTIONS
 
@@ -164,6 +174,6 @@ The decimal equivalent of 100001 is 33.
 
 =head1 INTERPRETATION
 
-The Resolve grey areas in problem statement.
+Used bigint to extend the range of input numbers.
 
 =cut

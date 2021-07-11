@@ -42,7 +42,7 @@ sub run {
     my $time = $_[0];
 
     if ( $time =~ /\A \d \d : \d \d \Z/xms ) {
-        my ( $h, $m ) = ($time =~ /\A ( 0? \d+ ) : ( 0? \d+ ) \Z/xms);
+        my ( $h, $m ) = ( $time =~ /\A ( 0? \d+ ) : ( 0? \d+ ) \Z/xms );
 
         push @errors, "Hours are out-of-range: 01 - 12."
           unless 1 <= $h and $h <= 12;
@@ -59,29 +59,29 @@ sub run {
 
     # Get the solution.
 
-    output_results( minute_hand_hour_hand_angle($time) );
+    output_results( clock_hands_angle($time) );
 }
 
 exit;    # End of main script.
 
 # The main algorithm.
 
-sub minute_hand_hour_hand_angle {
+sub clock_hands_angle {
 
-    my ( $hours, $minutes ) = ($_[0] =~ /\A ( 0? \d+ ) : ( 0? \d+ ) \Z/xms);
+    my ( $hours, $minutes ) = ( $_[0] =~ /\A ( 0? \d+ ) : ( 0? \d+ ) \Z/xms );
 
     # Degrees are measured from 12 o'clock position, clockwise.
 
-    $hours = 0 if $hours == 12; # Make 12 o'clock now 0 o'clock.
+    $hours = 0 if $hours == 12;    # Make 12 o'clock now 0 o'clock.
 
-    my $mdeg = 6 * $minutes; # Each minute is 6 degrees.
+    my $mdeg = 6 * $minutes;       # Each minute is 6 degrees.
 
     # Each hour is 30 degrees plus ...
     # ... 30 degrees times the ratio of current minutes to an hour of minutes.
 
-    my $hdeg = 30 * ($hours + $minutes / 60);
+    my $hdeg = 30 * ( $hours + $minutes / 60 );
 
-    my $angle = abs($hdeg - $mdeg);
+    my $angle = abs( $hdeg - $mdeg );
 
     return $angle > 180 ? 360 - $angle : $angle;
 
@@ -100,24 +100,24 @@ sub test {
     use Test::More;
     my $input;
 
-    $input = [ 101, ];
-    is_deeply( nybble_swap( @{$input} ), [ 86, ], "First example: 101 -> 86" );
+    $input = '03:10';
+    is_deeply( clock_hands_angle($input),
+        35, "First example: 03:10 is 35 degrees." );
 
-    $input = [ 18, ];
-    is_deeply( nybble_swap( @{$input} ), [ 33, ], "Second example: 18 -> 33" );
+    $input = '04:00';
+    is_deeply( clock_hands_angle($input),
+        120, "Second example: 04:10 is 120 degrees." );
 
-    $input = [ 0 .. 255 ];
-    is_deeply( nybble_swap( @{ nybble_swap( @{$input} ) } ),
-        $input, "Composition is identity." );
+    $input = '12:00';
+    is_deeply( clock_hands_angle($input),
+        0, "Twelve o'clock, the hands are coincident." );
 
-    $input = [ map { 16 * $_ + $_ } 0 .. 15 ];
-    is_deeply( nybble_swap( @{$input} ),
-        $input, "Bytes of twin nybbles are unchanged." );
+    $input = '06:00';
+    is_deeply( clock_hands_angle($input), 180, "Six o'clock, 180 degrees." );
 
-    my $p = 1279;
-    $input = [ 2**( $p - 1 ) * ( 2**$p - 1 ) ];
-    is_deeply( nybble_swap( @{ nybble_swap( @{$input} ) } ),
-        $input, "Handles a special 770 digit number." );
+    $input = '06:01';
+    is_deeply( clock_hands_angle($input),
+        174.5, "One minute after six o'clock, 179.5 degrees." );
 
     done_testing();
 }
@@ -130,7 +130,7 @@ TWC 120, TASK #2 : Clock Angle
 
 =head1 SYNOPSIS
 
-  ch-1.pl [options] <hh:mm>
+  ch-1.pl [options] "hh:mm"
 
   Description:    Return angle between two hands of an analog clock.
 
@@ -162,7 +162,7 @@ Run the embedded test suite for this script.
 
 =head1 DESCRIPTION
 
-B<L<The Weekly Challenge, TASK #2 E<gt> Clock Angle|https://theweeklychallenge.org/blog/perl-weekly-challenge-120/#TASK1>>
+B<L<The Weekly Challenge, TASK #2 E<gt> Clock Angle|https://theweeklychallenge.org/blog/perl-weekly-challenge-120/#TASK2>>
 
 I<Submitted by: Mohammad S Anwar>
 
@@ -190,6 +190,6 @@ Output: 120 degree
 
 =head1 INTERPRETATION
 
-The Resolve grey areas in problem statement.
+Problem statement and examples are straightforward.
 
 =cut
