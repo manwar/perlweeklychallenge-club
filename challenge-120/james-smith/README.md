@@ -68,9 +68,111 @@ sub clock_angle_fast {
 
 (Without disabling warnings this gives `Argument "04:00" isn't numeric in modulus (%) at ..` errors)
 
-## Solution in CESIL
+## Solutions in CESIL
 
 OK - last weeks CESIL challenge was easier than this weeks....
+
+Due to not having bit wise operations or an easy convert between hex and binary we have to find an alternative solution.
+
+## Task 1
+
+ * In this case we work through the pairs of bits flipping them round.
+ * We compute the value of the bits by dividing though by 64 (then 16, 4, (and 1)) and taking the integer value.
+ * If the value is 0 or 3 then we do nothing otherwise we map 1 to 2 and 2 to 1 respectively....
+ * we repeat 4 times for each pair and keep a running sum which gives us our answer...
+
+```
+        LINE
+        LOAD  +0
+        STORE success
+        STORE tests
+Next    IN
+        JINEG End
+        STORE a
+        OUT
+        IN
+        STORE ans
+        LOAD +0
+        STORE res
+        LOAD +64
+Loop    STORE divisor
+        LOAD a
+        DIVIDE divisor
+        SUBTRACT 1
+        JIZERO j_1
+        SUBTRACT 1
+        JIZERO j_2
+        ADD 2
+        JUMP j
+j_1     LOAD   +2
+        JUMP j
+j_2     LOAD   +1
+j       MULTIPLY divisor
+        ADD res
+        STORE res
+        LOAD a
+        DIVIDE divisor
+        MULTIPLY divisor
+        MULTIPLY -1
+        ADD a
+        STORE a
+        LOAD divisor
+        DIVIDE +4
+        JIZERO EndL
+        JUMP Loop
+EndL    LOAD res
+        PRINT " => "
+        OUT
+(Now run the test!
+        PRINT " : "
+        SUBTRACT ans
+        JIZERO Ok
+        PRINT "-- should be "
+        LOAD ans
+        OUT
+        PRINT "?"
+        JUMP Line
+Ok      PRINT "OK"
+        LOAD success
+        ADD +1
+        STORE success
+Line    LINE
+        LOAD tests
+        ADD +1
+        STORE tests
+        JUMP Next
+End     LINE
+        PRINT "TESTS: "
+        LOAD success
+        OUT
+        PRINT " of "
+        LOAD tests
+        OUT
+        PRINT " passed"
+        LINE
+        LINE
+        HALT
+        %
+        101
+        154
+        18
+        33
+        154
+        101
+        33
+        18
+        -1
+```
+Output...
+```
+101 => 154 : OK
+18 => 33 : OK
+154 => 101 : OK
+33 => 18 : OK
+
+TESTS: 4 of 4 passed
+```
+### Task 2
 
 **CAVEAT:**
  * Can't cope with "odd minutes" as this will lead to a fractional angle {and CESIL is integer only}
