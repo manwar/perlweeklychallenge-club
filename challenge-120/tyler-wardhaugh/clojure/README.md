@@ -1,7 +1,7 @@
-# tw.weekly.c119
+# tw.weekly.c120
 
 
-The Weekly Challenge - #119 - Tyler Wardhaugh
+The Weekly Challenge - #120 - Tyler Wardhaugh
 
 ## Usage
 
@@ -9,7 +9,7 @@ Clojure ([installation instructions](https://clojure.org/guides/getting_started#
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -M -m tw.weekly.c119.core
+    $ clojure -M -m tw.weekly.c120.core
     # ... or ...
     $ bb run both
 
@@ -21,15 +21,15 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -M -m tw.weekly.c119.t1 N
+    $ clojure -M -m tw.weekly.c120.t1 N
     # ... or ...
     $ bb run task-1 N
 
 Run Task #2 with input:
 
-    $ clojure -M -m tw.weekly.c119.t2 N
+    $ clojure -M -m tw.weekly.c120.t2 T
     # ... or ...
-    $ bb run task-2 N
+    $ bb run task-2 T
 
 View available tasks Babashka can run:
 

@@ -45,4 +45,4 @@ function count_subsequences(s as string, t as string) as integer
 end function
 
 ' main
-print trim(str(count_subsequences(command(1), command(2))))
+print count_subsequences(command(1), command(2))
