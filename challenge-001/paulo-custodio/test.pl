@@ -144,7 +144,7 @@ sub build {
             return "bc -lq $prog";
         }
         if (/^brainfuck$/) {
-            run("perl -S bfpp.pl <$prog_wo_ext.bfpp >$prog_wo_ext.bf");
+            run("perl bfpp.pl <$prog_wo_ext.bfpp >$prog_wo_ext.bf");
             return "brainfuck $prog_wo_ext.bf";
         }
         if (/^c$/) {
