@@ -68,7 +68,7 @@ sub clock_angle_fast {
 
 (Without disabling warnings this gives `Argument "04:00" isn't numeric in modulus (%) at ..` errors)
 
-## Solutions in CESIL
+# Solutions in CESIL
 
 OK - last weeks CESIL challenge was easier than this weeks....
 
@@ -172,7 +172,8 @@ Output...
 
 TESTS: 4 of 4 passed
 ```
-### Task 2
+
+## Task 2
 
 **CAVEAT:**
  * Can't cope with "odd minutes" as this will lead to a fractional angle {and CESIL is integer only}
