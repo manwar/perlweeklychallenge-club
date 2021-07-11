@@ -68,9 +68,112 @@ sub clock_angle_fast {
 
 (Without disabling warnings this gives `Argument "04:00" isn't numeric in modulus (%) at ..` errors)
 
-## Solution in CESIL
+# Solutions in CESIL
 
 OK - last weeks CESIL challenge was easier than this weeks....
+
+Due to not having bit wise operations or an easy convert between hex and binary we have to find an alternative solution.
+
+## Task 1
+
+ * In this case we work through the pairs of bits flipping them round.
+ * We compute the value of the bits by dividing though by 64 (then 16, 4, (and 1)) and taking the integer value.
+ * If the value is 0 or 3 then we do nothing otherwise we map 1 to 2 and 2 to 1 respectively....
+ * we repeat 4 times for each pair and keep a running sum which gives us our answer...
+
+```
+        LINE
+        LOAD  +0
+        STORE success
+        STORE tests
+Next    IN
+        JINEG End
+        STORE a
+        OUT
+        IN
+        STORE ans
+        LOAD +0
+        STORE res
+        LOAD +64
+Loop    STORE divisor
+        LOAD a
+        DIVIDE divisor
+        SUBTRACT 1
+        JIZERO j_1
+        SUBTRACT 1
+        JIZERO j_2
+        ADD 2
+        JUMP j
+j_1     LOAD   +2
+        JUMP j
+j_2     LOAD   +1
+j       MULTIPLY divisor
+        ADD res
+        STORE res
+        LOAD a
+        DIVIDE divisor
+        MULTIPLY divisor
+        MULTIPLY -1
+        ADD a
+        STORE a
+        LOAD divisor
+        DIVIDE +4
+        JIZERO EndL
+        JUMP Loop
+EndL    LOAD res
+        PRINT " => "
+        OUT
+(Now run the test!
+        PRINT " : "
+        SUBTRACT ans
+        JIZERO Ok
+        PRINT "-- should be "
+        LOAD ans
+        OUT
+        PRINT "?"
+        JUMP Line
+Ok      PRINT "OK"
+        LOAD success
+        ADD +1
+        STORE success
+Line    LINE
+        LOAD tests
+        ADD +1
+        STORE tests
+        JUMP Next
+End     LINE
+        PRINT "TESTS: "
+        LOAD success
+        OUT
+        PRINT " of "
+        LOAD tests
+        OUT
+        PRINT " passed"
+        LINE
+        LINE
+        HALT
+        %
+        101
+        154
+        18
+        33
+        154
+        101
+        33
+        18
+        -1
+```
+Output...
+```
+101 => 154 : OK
+18 => 33 : OK
+154 => 101 : OK
+33 => 18 : OK
+
+TESTS: 4 of 4 passed
+```
+
+## Task 2
 
 **CAVEAT:**
  * Can't cope with "odd minutes" as this will lead to a fractional angle {and CESIL is integer only}
@@ -199,4 +302,35 @@ Output:
 20:00 => 120 : OK
 
 TESTS: 9 of 9 passed
+```
+
+## Aside CESIL interpreter v2
+
+I do have an uncompressed version of this - but this was a challenge to get the
+CESIL interpreter into 1K of Perl - partly as we are harking back to the days of
+very small memory computers {about the time that I was programming a ZX81 with 1K
+RAM and a 4K ROM}...
+
+This fixes a few of the shortcomings in the interpreter last week {e.g. adds the
+ability to add "comments" and handles both specs of positive constants}
+
+```perl
+#!/bin/perl
+use strict;use warnings;my($M,$p,$r,@i,%m,@c,%q)=(1e6,0,0);
+my@t=('PROGRAM REQUIRES MORE DATA','UNKNOWN VARIABLE ',
+'DIVISION BY ZERO ','UNKNOWN LABEL ');
+sub _e{die sprintf "\n*** %s%s *** %s \@ %d\n",$t[$_[0]],@{$c[$p]}[1,0],1+$p}
+sub _j{exists$q{$_}?($p=$q{$_}-1):_e 3}
+sub _v{/^[-+]?\d+$/?(0+$_):exists$m{$_}?$m{$_}:_e 1}
+my%c=('LINE',sub{print"\n"},'OUT',sub{print$r},'STORE',sub{$m{$_}=$r},
+'PRINT',sub{print s/^"//r=~s/"$//r},'IN',sub{@i?($r=shift@i):_e 0},
+'JINEG',sub{_j if$r<0},'SUBTRACT',sub{$r-=_v},'MULTIPLY',sub{$r*=_v},
+'ADD',sub{$r+=_v},'DIVIDE',sub{$_=_v;$r=$_?int($r/$_):_e 2},
+'LOAD',sub{$r=_v},'JIZERO',sub{_j if!$r},'JUMP',sub{_j},'HALT',sub{exit});
+while(<>){next if/^ *\(/;((@i=map{/^\s+[-+]?\d+\s*$/?0+$_:()}<>),last)if/^ *%/;
+($q{$1},$_)=(0+@c,$2)if/^(\S{1,6})\s+(.*)/;
+my($x,$y)=split/\s+/,s/^\s+//r=~s/\s+$//r,2;next unless $x;
+die"\n# Unk cmd [$x \@ ",1+@c,"]\n"if!exists$c{$x};push@c,[$x,$y//''];}
+($c{$c[$p][0]}($_=$c[$p][1]),$p++)while--$M&&$p<@c;
+die"\n*** No HALT ***\n"
 ```
