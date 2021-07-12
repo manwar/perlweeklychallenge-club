@@ -87,24 +87,3 @@ fn tsp (d: Vec<Vec<usize>>) -> (usize, Vec<usize>) {
     path.push(0);
     return (opt,path);
 }
-
-//   my $bits=(1<<$n)-1 & ~1;
-//   my @res;
-//   foreach my $k (1..$n1) {
-//     push @res,[$c{$bits}{$k}[0]+$d->[$k][0],$k];
-//   }
-//         my @r=map {$_->[0]} @res;
-//   my %r=map {$r[$_] => $_} (0..$#r);
-//   my ($opt,$parent)=@{$res[$r{min(@r)}]};
-//   my @path;
-//   foreach my $i (0..$n1-1) {
-//     push @path,$parent;
-//     my $nb=$bits & ~(1 << $parent);
-//     $parent=$c{$bits}{$parent}[1];
-//     $bits=$nb;
-//   }
-//   push @path,0;
-//   @path=reverse @path;
-//   push @path,0;
-//   return [$opt,\@path];
-// }
