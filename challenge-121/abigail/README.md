@@ -33,6 +33,7 @@ Output: 26
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
 * [bc](bc/ch-1.bc)
+* [Befunge-93](befunge-93/ch-1.bf)
 * [C](c/ch-1.c)
 * [Go](go/ch-1.go)
 * [Java](java/ch-1.java)
@@ -71,7 +72,7 @@ Output:
 ### Solutions
 
 ### Blog
-[he Travelling Salesman][blog2]
+[The Travelling Salesman][blog2]
 
 
 
