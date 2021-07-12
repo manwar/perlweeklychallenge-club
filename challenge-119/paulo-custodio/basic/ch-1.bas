@@ -27,4 +27,4 @@
 dim n as integer
 n = val(command(1))
 n = ((int(n / 16) mod 16) + ((n mod 16) * 16))
-print trim(str(n))
+print n

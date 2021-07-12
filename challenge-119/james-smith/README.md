@@ -14,7 +14,7 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-119/ja
 
 # Task 1 - Swap Nibbles
 
-***You are given a positive integer `$N`. Write a script to swap the two nibbles of the binary representation of the given number and print the decimal number of the new binary representation.(((
+***You are given a positive integer `$N`. Write a script to swap the two nibbles of the binary representation of the given number and print the decimal number of the new binary representation.***
 
 ## The solution
 
@@ -176,7 +176,7 @@ my %commands = (
 ## Parser loop
 while(<>) {
   ((@in=map{/^\s+-?\d+\s*$/?0+$_:()}<>),last)if/^ {8}%/;
-  ($ptrs{$1},$_)=(0+@code,$2) if m/^(\S{1,7})\s+(.*)/;
+  ($ptrs{$1},$_)=(0+@code,$2) if /^(\S{1,7})\s+(.*)/;
   my($cmd,$data) = split/\s+/,s/^\s+//r=~s/\s+$//r, 2;
   die "\n## Unknown command [$cmd @ ",1+@code,"]\n"
     unless exists $commands{$cmd};

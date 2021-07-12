@@ -1,0 +1,8 @@
+ ClockAngle←{
+⍝ ⍵: Character vector or vectors
+⍝    of time in hh:mm format e.g. '23:15'
+⍝ ←: Acute angle formed by analog clock hands
+     (h m)←12 60|⍎¨':'(≠⊆⊢)⍵   ⍝ Hours and minutes
+     a←¯6 30 0.5+.×m h m       ⍝ Angle
+     a-180×a>180               ⍝ Acute angle
+ }
