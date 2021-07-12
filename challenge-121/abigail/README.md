@@ -1,35 +1,38 @@
 # Solutions by Abigail
-## [Swap Odd/Even Bits](https://perlweeklychallenge.org/blog/perl-weekly-challenge-120/#TASK1)
+## [Invert Bit][task1]
 
-> You are given a positive integer `$N` less than or equal to 255.
-> 
-> Write a script to swap the odd positioned bit with even positioned
-> bit and print the decimal equivalent of the new binary representation.
+[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-121/#TASK1
+
+> You are given integers `0 <= $m <= 255` and `1 <= $n <= 8`.
+>
+> Write a script to invert `$n` bit from the end of the binary
+> representation of `$m` and print the decimal representation of
+> the new binary number.
 
 ### Examples
 ~~~~
-Input: $N = 101
-Output: 154
+Input: $m = 12, $n = 3
+Output: 8
 ~~~~
 
-Binary representation of the given number is `01 10 01 01`.
-The new binary representation after the odd/even swap is `10 01 10 10`.
-The decimal equivalent of `10011010` is `154`.
+* Binary representation of `$m = 00001100`
+* Invert 3rd bit from the end `= 00001000`
+* Decimal equivalent of `00001000 = 8`
 
 ~~~~
-Input: $N = 18
-Output: 33
+Input: $m = 18, $n = 4
+Output: 26
 ~~~~
 
-Binary representation of the given number is `00 01 00 10`.
-The new binary representation after the odd/even swap is `00 10 00 01`.
-The decimal equivalent of `100001` is `33`.
+* Binary representation of `$m = 00010010`
+* Invert 3rd bit from the end `= 00011010`
+* Decimal equivalent of `00011010 = 26`
+
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
 * [bc](bc/ch-1.bc)
-* [Befunge-93](befunge-93/ch-1.bf93)
 * [C](c/ch-1.c)
 * [Go](go/ch-1.go)
 * [Java](java/ch-1.java)
@@ -44,50 +47,35 @@ The decimal equivalent of `100001` is `33`.
 * [Tcl](tcl/ch-1.tcl)
 
 ### Blog
-[Swap Odd/Even Bits](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-120-1.html)
+[Invert Bit][blog1]
 
-## [Clock Angle](https://perlweeklychallenge.org/blog/perl-weekly-challenge-119/#TASK2)
+## [The Travelling Salesman][task2]
 
-> You are given time `$T` in the format `hh:mm`.
+> You are given a `NxN` matrix containing the distances between `N` cities.
 >
-> Write a script to find the smaller angle formed by the hands of an
-> analog clock at a given time.<br>
-> **HINT: A analog clock is divided up into `12` sectors. One sector
-> represents `30` degree (`360/12 = 30`).**
+> Write a script to find a round trip of minimum length visiting all `N`
+> cities exactly once and returning to the start.
 
-### Examples
+### Example
 ~~~~
-Input: $T = '03:10'
-Output: 35 degree
-~~~~
+Matrix: [0, 5, 2, 7]
+        [5, 0, 5, 3]
+        [3, 1, 0, 6]
+        [4, 5, 4, 0]
 
-The distance between the `2` and the `3` on the clock is `30` degree.
-For the `10` minutes i.e. `1/6` of an hour that have passed.  The hour
-hand has also moved `1/6` of the distance between the `3` and the `4`,
-which adds `5` degree (`1/6` of `30`).  The total measure of the angle
-is `35` degree.
-
-~~~~
-Input: $T = '04:00'
-Output: 120 degree
+Output:
+        length = 10
+        tour = (0 2 1 3 0)
 ~~~~
 
 ### Solutions
-* [AWK](awk/ch-2.awk)
-* [Bash](bash/ch-2.sh)
-* [bc](bc/ch-2.bc)
-* [Befunge-93](befunge-93/ch-2.bf93)
-* [C](c/ch-2.c)
-* [Go](go/ch-2.go)
-* [Java](java/ch-2.java)
-* [Lua](lua/ch-2.lua)
-* [Node.js](node/ch-2.js)
-* [Pascal](pascal/ch-2.p)
-* [Perl](perl/ch-2.pl)
-* [Python](python/ch-2.py)
-* [R](r/ch-2.r)
-* [Ruby](ruby/ch-2.rb)
-* [Tcl](tcl/ch-2.tcl)
 
 ### Blog
-[Clock Angle](https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-120-2.html)
+[he Travelling Salesman][blog2]
+
+
+
+[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-121/#TASK1
+[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-121/#TASK2
+[blog1]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-121-1.html
+[blog2]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-121-2.html
