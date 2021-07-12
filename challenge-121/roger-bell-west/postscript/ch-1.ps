@@ -1,0 +1,37 @@
+%! Not DSC compliant
+
+/ib {
+    exch
+    1 exch 1 sub bitshift
+    xor
+} def
+
+/str 50 string def
+/fs 12 def
+/Helvetica findfont
+fs scalefont setfont
+20 750 translate
+/line 0 def
+/testnum 1 def
+
+/disptest {
+    0 line moveto testnum str cvs show (.) show
+    dup
+    50 line moveto str cvs show
+    exch
+    dup
+    100 line moveto str cvs show
+    exch
+    ib
+    dup
+    150 line moveto str cvs show
+    eq { (Pass) } { (FAIL) } ifelse
+    200 line moveto show
+    /line line fs 2 mul sub def
+    /testnum testnum 1 add def
+} def
+
+8 3 12 disptest
+26 4 18 disptest
+
+showpage
