@@ -1,13 +1,14 @@
 {
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
-   "subtitle" : {
-      "text" : "[Champions: 20] Last updated at 2021-07-12 05:07:37 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             1,
@@ -29,9 +30,11 @@
             3,
             86,
             21
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -53,11 +56,9 @@
             3,
             21,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -79,27 +80,10 @@
             1,
             6,
             14
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
    "xAxis" : {
       "categories" : [
          "Tester R59",
@@ -123,5 +107,21 @@
          "Yet Ebreo",
          "Yozen Hernandez"
       ]
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 20] Last updated at 2021-07-13 01:23:31 GMT"
    }
 }
