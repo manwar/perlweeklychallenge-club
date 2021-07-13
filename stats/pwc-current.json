@@ -1,28 +1,12 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge - 121"
-   },
    "chart" : {
       "type" : "column"
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "James Smith",
-               "y" : 3,
-               "name" : "James Smith"
-            },
-            {
-               "name" : "Luca Ferrari",
-               "y" : 4,
-               "drilldown" : "Luca Ferrari"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 121"
-      }
-   ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
@@ -32,14 +16,49 @@
          }
       }
    },
+   "legend" : {
+      "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2021-07-13 01:40:35 GMT"
+   },
    "xAxis" : {
       "type" : "category"
+   },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 121",
+         "data" : [
+            {
+               "name" : "James Smith",
+               "y" : 3,
+               "drilldown" : "James Smith"
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "y" : 4,
+               "name" : "Luca Ferrari"
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 121"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "James Smith",
-            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -49,7 +68,9 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "James Smith",
+            "name" : "James Smith"
          },
          {
             "id" : "Luca Ferrari",
@@ -64,23 +85,17 @@
                ]
             ],
             "name" : "Luca Ferrari"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
          }
       ]
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-07-13 01:36:10 GMT"
    }
 }
