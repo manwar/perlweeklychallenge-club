@@ -61,7 +61,7 @@ my $N = $ARGV[0] || scalar @{$M};
 
 # $M = $M15, $N = 11
 # length = 30
-# tour = (0 1 5 9 10 2 7 6 4 8 3)
+# tour = (0 1 5 9 10 2 7 6 4 8 3 0)
 
 # $M = $M15, $N = 12
 # length = 33
