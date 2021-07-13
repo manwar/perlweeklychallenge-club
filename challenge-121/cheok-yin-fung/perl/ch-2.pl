@@ -56,16 +56,16 @@ $M = $M09;
 my $N = $ARGV[0] || scalar @{$M};
 
 # $M = $M04, $N = 4 (Task Example)
-# (0 2 1 3 0)
-# length: 10
+# length = 10
+# tour = (0 2 1 3 0)
 
 # $M = $M15, $N = 11
-# Z A E I J B G F D H C Z
-# length: 30
+# length = 30
+# tour = (0 1 5 9 10 2 7 6 4 8 3)
 
 # $M = $M15, $N = 12
-# Z A E I J B G F D H K C Z
-# length: 33
+# length = 33
+# tour = (0 1 5 9 10 2 7 6 4 8 11 3 0)
 
 my $min = 10000;
 my @arr_min = ();
