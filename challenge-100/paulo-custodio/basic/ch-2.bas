@@ -90,4 +90,4 @@ do while command(i) <> ""
     add_row(i, command(i))
     i = i + 1
 loop
-print trim(str(min_sum()))
+print min_sum()

@@ -46,4 +46,4 @@ for i=1 to 3
 next
 P0.x = 0.0
 P0.y = 0.0
-print trim(str(point_in_triangle(P0, P(1), P(2), P(3))))
+print point_in_triangle(P0, P(1), P(2), P(3))

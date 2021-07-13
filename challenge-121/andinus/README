@@ -1,0 +1,55 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 115
+
+                                Andinus
+                            ━━━━━━━━━━━━━━━
+
+
+                               2021-06-02
+
+
+Table of Contents
+─────────────────
+
+Task 2 - Largest Multiple
+
+
+
+
+
+Task 2 - Largest Multiple
+═════════════════════════
+
+  You are given a list of positive integers (0-9), single digit.
+
+  Write a script to find the largest multiple of 2 that can be formed
+  from the list.
+
+  ┌────
+  │ Input: @N = (1, 0, 2, 6)
+  │ Output: 6210
+  │
+  │ Input: @N = (1, 4, 2, 8)
+  │ Output: 8412
+  │
+  │ Input: @N = (4, 1, 7, 6)
+  │ Output: 7614
+  └────
+
+
+Raku
+────
+
+  • Program: <file:raku/ch-2.raku>
+
+  `@nums' stores user entered numbers. The program terminates if there
+  are no even numbers in `@nums'. We get the least even number & then
+  just reverse the rest of the sorted list & join them.
+
+  ┌────
+  │ @nums = @nums>>.Int.sort;
+  │ die "No even number!" unless @nums.grep(* %% 2);
+  │
+  │ my Int $least-even = @nums.splice(@nums.first(* %% 2, :k), 1).first;
+  │ say (|@nums.reverse, $least-even).join;
+  └────

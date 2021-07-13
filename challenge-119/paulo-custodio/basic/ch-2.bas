@@ -47,4 +47,4 @@ end sub
 dim num as integer, i as integer
 num = val(command(1))
 for i=1 to num: next_seq: next i
-print trim(str(n))
+print n

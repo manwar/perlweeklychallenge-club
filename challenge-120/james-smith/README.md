@@ -1,4 +1,4 @@
-# Perl Weekly Challenge #119
+# Perl Weekly Challenge #120
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,301 +10,327 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-119/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-120/james-smith/perl
 
-# Task 1 - Swap Nibbles
+# Task 1 - Swap bits
 
-***You are given a positive integer `$N`. Write a script to swap the two nibbles of the binary representation of the given number and print the decimal number of the new binary representation.(((
+***You are given a positive integer `$N` less than or equal to `255`. Write a script to swap the odd positioned bit with even positioned bit and print the decimal equivalent of the new binary representation.***
 
 ## The solution
 
-This is a simple binary manipulation problem.
+This is very similar to last weeks challenge - but instead of swapping bits 4-7 with bits 0-3 this time we are swapping even bits with odd bits - so the solution is similar...
 
-We can isolate the lower-nibble by bit-wise `&`ing with `15` or `00001111`. We then move it to the upper-nibble by multiplying by `16` OR using the bit-shift operator `<<` to move the bits 4 spaces to the left.
-
-We can isolate the upper-nibble by bit-wise `&`ing with `240` or `11110000`, and again use the bit-shift operator `>>` to move 4 bits to the right. BUT actually we don't need to perform the bit-wise `&` IF we assume the number is in range (`0`..`255`). As the `>>` operator just drops the bits shifted off.
-
-To stitch it back together we just `|` the two numbers together.
+The even bits are found by bit-wise *and*ing the number with `0b01010101` 0r `0x55` (`85` decimal) and the odd bits are found by bit-wise anding with `0b10101010` or `0xaa` (`170` decimal). We then switch them by multiplying or dividing by 2 {which we do with the bit shift operators `<<` & `>>`}. We just have to add the two values together - as we know the bits don't overlap we can use `|` rather than `+`.
 
 ```perl
-sub swap_nibble {
-  return ($_[0]>>4) | (($_[0]&15)<<4);
+sub switch_bits {
+  ($_[0]&0xaa)>>1 | ($_[0]&0x55)<<1;
 }
 ```
 
-## Other languages
+# Task 2 - Clock Angle
 
-I've included some other language versions of this code...
+***You are given time `$T` in the format `hh:mm`. Write a script to find the smaller angle formed by the hands of an analog clock at a given time.***
 
-The first 3 are just direct lifts as Javascript, PHP and Python all have bit shift and bitwise operators! The fourth tho' is a bit of curveball "CESIL" the first
-language I was "taught" at school - the code was run from punch cards and the printout was on green bar paper!
+## The solution
 
-### Javascript
-```javascript
-TESTS = [ [101,86],[18,33] ];
+Given a time we can compute the position of the hour hand as `$hr*30+$min/2` and the minute hand as `$min*6`.
 
-TESTS.forEach(_ => console.log( swap_nibble( _[0] ) == _[1] ? 'OK' : '--' ) );
-TESTS.forEach(_ => console.log( swap_nibble( _[1] ) == _[0] ? 'OK' : '--' ) );
+We can then get the angle between the two as: `($hr*60+$min-$min*12)/2`
 
-function swap_nibble(_) {
-  return (_>>4) | ((_&15)<<4);
+To make sure the angle is between `-360` and `360` we have to ensure that the hour is between `0` and `11`, by reducing it module 12. We then get the absolute value so we have a value between `0` and `360`
+
+We need a number between `0` and `180`. To map the range `180` - `360` we can either use an IF OR we can note that if we
+do `abs(angle - 180)` we get the complementary angle. So we just subtract this from `180` giving the method below...
+
+```perl
+sub clock_angle_1_liner {
+  180-abs(abs((substr$_[0],0,2)%12*30-5.5*substr$_[0],3)-180);
 }
 ```
 
-### PHP
-```php
-<?php
-
-$TESTS = [ [101,86],[18,33] ];
-
-foreach($TESTS as $_ ) {
-  echo swap_nibble($_[0]) == $_[1] ? 'OK' : '--',"\n";
-  echo swap_nibble($_[1]) == $_[0] ? 'OK' : '--',"\n";
-}
-
-function swap_nibble($_) {
-  return ($_>>4) | (($_&15)<<4);
+Compared to this (perhaps slightly more readable) method there is about a 85% performance gain [avoiding variables!]
+```perl
+sub clock_angle {
+  my($h,$m) = split /:/,shift;
+  my $t = abs($h%12*30-$m*5.5);
+  return $t > 180 ? 360-$t : $t;
 }
 ```
 
-### Python
-```python
-TESTS=[[15,240],[165,90]]
+**Note** We can gain more speed (110% faster than "simple" method and about 15% faster than the 1-liner) by removing the first `substr` but to do so we need to disable `numeric` warnings - `no warnings qw(numeric)`.
 
-def swap_nibbles(_):
-  return (_>>4)|((_&15)<<4)
-
-for t in TESTS:
-  print( 'OK' if swap_nibbles(t[0])==t[1] else 'Not OK' )
-  print( 'OK' if swap_nibbles(t[1])==t[0] else 'Not OK' )
-
+```perl
+sub clock_angle_fast {
+  180-abs(abs($_[0]%12*30-5.5*substr$_[0],3)-180);
+}
 ```
-### CESIL
 
-Thought I'd throw in a slightly curve ball - CESIL "*Computer Education in Schools Instructional Language*" written by ICL was the
-first language I was formally taught - back in the days when you had to learn how computers worked at bare bones. So it had a
-reduced instruction set with just 14 commands - ADD/SUBTRACT/MULTIPLY/DIVIDE, IN/LOAD/STORE, JUMP/JIZERO/JINEG, PRINT/OUT/LINE & HALT. The layout
-of code is "structured" with 8 character indent as it was designed to be stored/run on punch-cards... {The reason the "input" appears after a card
-with % in it}.
+(Without disabling warnings this gives `Argument "04:00" isn't numeric in modulus (%) at ..` errors)
 
-CESIL was designed to teach "machine-code" to Computer science students - so other than the "I/O" commands everything else was at a basic operation level.
+# Solutions in CESIL
 
-**Note:** Interestingly in just 26 lines of code - all 14 of the instructions are used...!
+OK - last weeks CESIL challenge was easier than this weeks....
+
+Due to not having bit wise operations or an easy convert between hex and binary we have to find an alternative solution.
+
+## Task 1
+
+ * In this case we work through the pairs of bits flipping them round.
+ * We compute the value of the bits by dividing though by 64 (then 16, 4, (and 1)) and taking the integer value.
+ * If the value is 0 or 3 then we do nothing otherwise we map 1 to 2 and 2 to 1 respectively....
+ * we repeat 4 times for each pair and keep a running sum which gives us our answer...
 
 ```
         LINE
+        LOAD  +0
+        STORE success
+        STORE tests
 Next    IN
         JINEG End
-        OUT
-        PRINT " => "
         STORE a
-        IN
-        STORE c
-        LOAD a
-        DIVIDE 16
-        STORE b
-        MULTIPLY -16
-        ADD a
-        MULTIPLY 16
-        ADD b
         OUT
+        IN
+        STORE ans
+        LOAD +0
+        STORE res
+        LOAD +64
+Loop    STORE divisor
+        LOAD a
+        DIVIDE divisor
+        SUBTRACT 1
+        JIZERO j_1
+        SUBTRACT 1
+        JIZERO j_2
+        ADD 2
+        JUMP j
+j_1     LOAD   +2
+        JUMP j
+j_2     LOAD   +1
+j       MULTIPLY divisor
+        ADD res
+        STORE res
+        LOAD a
+        DIVIDE divisor
+        MULTIPLY divisor
+        MULTIPLY -1
+        ADD a
+        STORE a
+        LOAD divisor
+        DIVIDE +4
+        JIZERO EndL
+        JUMP Loop
+EndL    LOAD res
+        PRINT " => "
+        OUT
+(Now run the test!
         PRINT " : "
-        SUBTRACT c
+        SUBTRACT ans
         JIZERO Ok
-        PRINT "--"
+        PRINT "-- should be "
+        LOAD ans
+        OUT
+        PRINT "?"
         JUMP Line
 Ok      PRINT "OK"
+        LOAD success
+        ADD +1
+        STORE success
 Line    LINE
+        LOAD tests
+        ADD +1
+        STORE tests
         JUMP Next
 End     LINE
+        PRINT "TESTS: "
+        LOAD success
+        OUT
+        PRINT " of "
+        LOAD tests
+        OUT
+        PRINT " passed"
+        LINE
+        LINE
         HALT
         %
-        240
-        15
-        15
-        240
-        0
-        0
-        255
-        255
-        99
-        54
+        101
+        154
+        18
+        33
+        154
+        101
+        33
+        18
         -1
 ```
-### Side note... an intepreter for CESIL...
+Output...
+```
+101 => 154 : OK
+18 => 33 : OK
+154 => 101 : OK
+33 => 18 : OK
 
-Didn't like the idea of relying on JAVA... so here is a bare bones
-interpreter... This uses a dispatch table to execute the commands
-- a list of "anonymous" subroutines stored in a hash.
+TESTS: 4 of 4 passed
+```
+
+## Task 2
+
+**CAVEAT:**
+ * Can't cope with "odd minutes" as this will lead to a fractional angle {and CESIL is integer only}
+ * Can't handle non-integer input - so the times have to be put in without the : so `03:30` is put in as `0330`
+```
+( Compute the angle between the hour and minute hand
+( Input contains of pairs of hour.minute & answer so
+( can check calculations are OK!
+        LINE
+        LOAD  +0
+        STORE success
+        STORE tests
+Next    IN
+        JINEG End
+        STORE mn
+        DIVIDE 100
+        STORE hr
+        MULTIPLY -100
+        ADD mn
+        STORE mn
+        LOAD hr
+        SUBTRACT +10
+        JINEG bl1
+        JUMP bl1e
+bl1     PRINT "0"
+bl1e    ADD +10
+        OUT
+        PRINT ":"
+        LOAD mn
+        SUBTRACT +10
+        JINEG bl2
+        JUMP bl2e
+bl2     PRINT "0"
+bl2e    ADD +10
+        OUT
+        IN
+        STORE ans
+        LOAD mn
+        PRINT " => "
+        MULTIPLY -11
+        DIVIDE +2
+        STORE t
+        LOAD hr
+        SUBTRACT 12
+        JINEG lt12
+        JUMP gt12
+lt12    ADD +12
+gt12    MULTIPLY +30
+        ADD t
+        JINEG lt0
+        JUMP gt0
+lt0     MULTIPLY -1
+gt0     SUBTRACT +180
+        JINEG ltx0
+        MULTIPLY -1
+ltx0    ADD +80
+        JINEG lt100
+        JUMP gt100
+lt100   PRINT " "
+        ADD +90
+        JINEG lt10
+        JUMP gt10
+lt10    PRINT " "
+gt10    SUBTRACT +90
+gt100   ADD +100
+        OUT
+        PRINT " : "
+        SUBTRACT ans
+        JIZERO Ok
+        PRINT "-- should be "
+        LOAD ans
+        OUT
+        PRINT "?"
+        JUMP Line
+Ok      PRINT "OK"
+        LOAD success
+        ADD +1
+        STORE success
+Line    LINE
+        LOAD tests
+        ADD +1
+        STORE tests
+        JUMP Next
+End     LINE
+        PRINT "TESTS: "
+        LOAD success
+        OUT
+        PRINT " of "
+        LOAD tests
+        OUT
+        PRINT " passed"
+        LINE
+        LINE
+        HALT
+        %
+        0318
+        9
+        0420
+        10
+        0440
+        100
+        0310
+        35
+        0400
+        120
+        0800
+        120
+        1600
+        120
+        1800
+        180
+        2000
+        120
+        -1
+```
+Output:
+```
+03:18 =>   9 : OK
+04:20 =>  10 : OK
+04:40 => 100 : OK
+03:10 =>  35 : OK
+04:00 => 120 : OK
+08:00 => 120 : OK
+16:00 => 120 : OK
+18:00 => 180 : OK
+20:00 => 120 : OK
+
+TESTS: 9 of 9 passed
+```
+
+## Aside CESIL interpreter v2
+
+I do have an uncompressed version of this - but this was a challenge to get the
+CESIL interpreter into 1K of Perl - partly as we are harking back to the days of
+very small memory computers {about the time that I was programming a ZX81 with 1K
+RAM and a 4K ROM}...
+
+This fixes a few of the shortcomings in the interpreter last week {e.g. adds the
+ability to add "comments" and handles both specs of positive constants}
 
 ```perl
-use strict;
-use warnings;
-
-## Initialize state
-my($MAX,$ptr,$reg,@in,%mem,@code,%ptrs)=(1e6,0,0);
-
-## Define error messages
-my %messages = (
-'i','No further input','d','Division by zero ',
-'l','Unknown pointer ','m','Unitialized memory at ');
-
-## Support functions
-sub _e { die sprintf "\n** %s%s [%s @ %d]\n",
-  $messages{$_[0]},@{$code[$ptr]}[1,0],1+$ptr}
-sub _j { exists$ptrs{$_}?($ptr=$ptrs{$_}-1):_e 'l'}
-sub _v { /^-?\d+$/?$_:exists$mem{$_}?$mem{$_}:_e 'm'}
-
-## Command dispatch table
-my %commands = (
-'LINE'    ,sub{print "\n"},
-'OUT'     ,sub{print $reg},
-'PRINT'   ,sub{print s/^"//r=~s/"$//r},
-'IN'      ,sub{@in?($reg=shift@in):_e 'i'},
-'STORE'   ,sub{$mem{$_}=$reg},
-'LOAD'    ,sub{$reg=_v},
-'ADD'     ,sub{$reg+=_v},
-'SUBTRACT',sub{$reg-=_v},
-'MULTIPLY',sub{$reg*=_v},
-'DIVIDE'  ,sub{$_=_v;$reg=$_?int($reg/$_):_e 'd'},
-'JINEG'   ,sub{_j if $reg<0},
-'JIZERO'  ,sub{_j if !$reg},
-'JUMP'    ,sub{_j},
-'HALT'    ,sub{exit},
-);
-
-## Parser loop
-while(<>) {
-  ((@in=map{/^\s+-?\d+\s*$/?0+$_:()}<>),last)if/^ {8}%/;
-  ($ptrs{$1},$_)=(0+@code,$2) if m/^(\S{1,7})\s+(.*)/;
-  my($cmd,$data) = split/\s+/,s/^\s+//r=~s/\s+$//r, 2;
-  die "\n## Unknown command [$cmd @ ",1+@code,"]\n"
-    unless exists $commands{$cmd};
-  push @code, [$cmd,$data//''];
-}
-## Execution loop
-($commands{$code[$ptr][0]}($_=$code[$ptr][1]),$ptr++)
-  while--$MAX&& $ptr<@code;
-die "\n** Exited without HALT\n";
-```
-# Task 2 - Sequence without 1-on-1
-
-***Write a script to generate sequence starting at 1. Consider the increasing
-sequence of integers which contain only 1’s, 2’s and 3’s, and do not have any
-doublets of 1’s like below. Please accept a positive integer `$N` and print
-the `$N`th term in the generated sequence.***
-
-```
-1, 2, 3, 12, 13, 21, 22, 23, 31, 32, 33, 121, 122, 123, 131, ...
-```
-
-## The solution
-
-Note this is a first pass solution....
-
-To avoid splitting/unsplitting - we will keep the digits as an array.
-We then just increment the last entry of the array, and carry over
-any bits to the previous entry. Finally if we get to the start of the
-array we unshift a 1 in front of it...
-
-In the outer loop we compute the next number - but we don't increment
-the counter if the number has two adjacent 1s.
-
-```perl
-sub no_11_array {
-  my( $n, $ptr, @v ) = ( shift, undef, 0 );
-  for( my $i = 0; $i < $n; ) {
-    for( $ptr = $#v; $ptr>-1 && ++$v[$ptr]>3; $ptr--) {
-      $v[$ptr]=1;
-    }
-    unshift @v,1 if $ptr < 0;
-    $i++ unless "@v"=~m{1 1};
-  }
-  return join q(),@v;
-}
-```
-
-Comparing this to the pure script using numbers and filtering out those
-that contain any of the digits `0`, `4` through `9` or the string `11`
-using a regexp sees an approximately `15x` speed up. If you optimize
-the filter using a series of index calls you can double the speed of the
-code at the expense of a slightly longer function BUT it is still less
-than a seventh of the performance of the array version.
-
-```perl
-sub no_11_filter {
-  my $n = shift;
-  my $v = 0;
-  while(1){
-    return $v unless $n;
-    $v++;
-    $n-- if 0 > index( $v,'4' ) && 0 > index( $v,'0'  )
-         && 0 > index( $v,'5' ) && 0 > index( $v,'6'  )
-         && 0 > index( $v,'7' ) && 0 > index( $v,'8'  )
-         && 0 > index( $v,'9' ) && 0 > index( $v,'11' );
-  }
-}
-
-```
-
-### Making the code more *readable*....
-
-This is a nice challenge to make the code more "readable", by encapsulating our new "number" string as an object.
-
-We will overload it's increment operator so that we can generate the sequence
-
-```
-   1, 2, 3, 11, 12, 13, 21, 22, 23, 31, 32, 33, 111
-```
-
-The object itself is just a blessed array.
-
-We use `overload` to define both the "increment" operator `++` and the "stringfy"
-operator "".
-
-We then define a simple method to test whether or not the "string" contains a double 1.
-
-The package code is below - but first the loop in the code:
-
-```perl
-sub no_11_object {
-  my( $n, $v ) = ( shift, Three->new );
-  for( my $i = 0; $i < $n; $v++, $i++ ) {
-    $v++ while $v->has_double_one;
-  }
-  return "$v";
-}
-```
-
-Although the code is "cleaner" performance is affected - it is about half the speed of the optimal (array) solution but still 4 times as fast as the (non-regex) filter method.
-```perl
-package Three;
-
-use overload '++' => 'incr';
-use overload '""' => 'str';
-
-sub new {
-  return bless [], 'Three';
-}
-
-sub has_double_one {
-  my( $f, @v ) = @{$_[0]};
-  ( $f == 1 && $v[0] == 1 ) ? ( return 1 ) : ( $f = shift @v ) while @v;
-  return 0;
-}
-
-sub incr {
-  my($v,$ptr) = (shift,-1);
-  for( $ptr = $#$v; $ptr>-1 && ++$v->[$ptr]>3; $ptr--) {
-    $v->[$ptr]=1;
-  }
-  unshift @{$v}, 1 if $ptr < 0;
-}
-
-sub str {
-  return join '',@{$_[0]};
-}
-
-
-1;
+#!/bin/perl
+use strict;use warnings;my($M,$p,$r,@i,%m,@c,%q)=(1e6,0,0);
+my@t=('PROGRAM REQUIRES MORE DATA','UNKNOWN VARIABLE ',
+'DIVISION BY ZERO ','UNKNOWN LABEL ');
+sub _e{die sprintf "\n*** %s%s *** %s \@ %d\n",$t[$_[0]],@{$c[$p]}[1,0],1+$p}
+sub _j{exists$q{$_}?($p=$q{$_}-1):_e 3}
+sub _v{/^[-+]?\d+$/?(0+$_):exists$m{$_}?$m{$_}:_e 1}
+my%c=('LINE',sub{print"\n"},'OUT',sub{print$r},'STORE',sub{$m{$_}=$r},
+'PRINT',sub{print s/^"//r=~s/"$//r},'IN',sub{@i?($r=shift@i):_e 0},
+'JINEG',sub{_j if$r<0},'SUBTRACT',sub{$r-=_v},'MULTIPLY',sub{$r*=_v},
+'ADD',sub{$r+=_v},'DIVIDE',sub{$_=_v;$r=$_?int($r/$_):_e 2},
+'LOAD',sub{$r=_v},'JIZERO',sub{_j if!$r},'JUMP',sub{_j},'HALT',sub{exit});
+while(<>){next if/^ *\(/;((@i=map{/^\s+[-+]?\d+\s*$/?0+$_:()}<>),last)if/^ *%/;
+($q{$1},$_)=(0+@c,$2)if/^(\S{1,6})\s+(.*)/;
+my($x,$y)=split/\s+/,s/^\s+//r=~s/\s+$//r,2;next unless $x;
+die"\n# Unk cmd [$x \@ ",1+@c,"]\n"if!exists$c{$x};push@c,[$x,$y//''];}
+($c{$c[$p][0]}($_=$c[$p][1]),$p++)while--$M&&$p<@c;
+die"\n*** No HALT ***\n"
 ```

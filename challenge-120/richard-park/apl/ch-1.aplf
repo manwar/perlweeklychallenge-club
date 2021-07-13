@@ -1,0 +1,10 @@
+ SwapOddEvenBits←{
+     _U_←{⍵⍵⍣¯1⊢⍺⍺ ⍵⍵ ⍵}   ⍝ Under: do ⍺⍺ in domain of ⍵⍵
+     Base←⊥⍣¯1             ⍝ Convert ⍵ to base ⍺
+     Swap←{
+         b←(⊢↓⍨2|≢)0⍪⍵                        ⍝ Pad most significant bits until even length boolean
+         s←⍴b ⋄ r←¯1+≢s ⋄ rs←⌽2,(0.5,r/1)×s   ⍝ Compute shape such that odd and even bits in 2∘Base ⍵ face one another along the last axis
+         ⍉,⍤2⌽rs⍴⍉b                           ⍝ Reverse odd and even bits
+     }
+     Swap _U_(2∘Base)⍵   ⍝ Swap under base 2
+ }
