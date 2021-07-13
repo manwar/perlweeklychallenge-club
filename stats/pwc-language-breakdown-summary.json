@@ -2,15 +2,37 @@
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-07-13 02:31:27 GMT"
-   },
+   "series" : [
+      {
+         "data" : [
+            [
+               "Blog",
+               1720
+            ],
+            [
+               "Perl",
+               5756
+            ],
+            [
+               "Raku",
+               3609
+            ]
+         ],
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "align" : "right",
+            "enabled" : "true",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "color" : "#FFFFFF",
+            "y" : 10
+         },
+         "name" : "Contributions"
+      }
+   ],
    "xAxis" : {
       "type" : "category",
       "labels" : {
@@ -21,43 +43,21 @@
       }
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
-   },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "align" : "right",
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "rotation" : -90,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "color" : "#FFFFFF"
-         },
-         "data" : [
-            [
-               "Blog",
-               1720
-            ],
-            [
-               "Perl",
-               5755
-            ],
-            [
-               "Raku",
-               3609
-            ]
-         ]
       }
-   ],
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-07-13 03:00:53 GMT"
+   },
    "legend" : {
       "enabled" : "false"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
    }
 }
