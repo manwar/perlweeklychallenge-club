@@ -2,7 +2,6 @@
 use strict ;
 use warnings ;
 use feature 'say' ;
-use List::Util qw ( sum ) ;
 
 #find a number in a row
 sub findColumn {
@@ -34,21 +33,23 @@ sub findNextCity {
 }
 
 my @matrix = ( [0, 5, 2, 7] , [5, 0, 5, 3] , [3, 1, 0, 6] , [4, 5, 4, 0] ) ;
-my @tour ;
+my @tour ; #the places we touch
 my $len = scalar @matrix ;
-my %visited ;
+my %visited ; #where we have been
+my $length = 0 ; #total length covered
 my $startPlace = 0 ;
 my $currentPlace = $startPlace ;
 $visited{ $startPlace }++ ;
 push @tour , 0 ;
 while ( scalar ( keys %visited ) < $len ) {
   my $column = findNextCity( $matrix[ $currentPlace ] , \%visited ) ;
-  push @tour , $matrix[ $currentPlace ][$column] ;
+  $length += $matrix[ $currentPlace ][ $column ] ;
+  push @tour , $column ;
   $currentPlace = $column ;
   $visited{ $currentPlace }++ ;
 }
 #we must return to the start
-push @tour , $matrix[ $currentPlace ][$startPlace] ;
-my $length = sum ( @tour ) ;
+push @tour , 0 ;
+$length += $matrix[ $currentPlace ][ 0 ] ;
 say "length = $length" ;
 say "tour = (" . join( ' ' , @tour ) . ")" ;
