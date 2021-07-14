@@ -1,8 +1,8 @@
 #!/usr/bin/env perl
 # Perl weekly challenge 121
-# Task 2: The travelling salesman. Auxiliary program
+# Task 2: The traveling salesman. Auxiliary program
 #
-# See https://wlmb.github.io/2021/07/12/PWC121/#task-2-the-travelling-salesman
+# See https://wlmb.github.io/2021/07/12/PWC121/#task-2-the-traveling-salesman
 use strict;
 use warnings;
 use v5.12;
