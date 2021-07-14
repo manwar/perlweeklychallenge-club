@@ -8,9 +8,9 @@ use warnings;
 use v5.12;
 use PDL;
 
-die "Usage: ./ch-2a.pl cities steps high low data" unless @ARGV==5;
-my ($cities, $steps, $high, $low, $data)=@ARGV;
-open(my $fh, '>', $data) or die "Couldn't open $data: $!";
+die "Usage: ./ch-2a.pl cities steps high low output" unless @ARGV==5;
+my ($cities, $steps, $high, $low, $output)=@ARGV;
+open(my $fh, '>', $output) or die "Couldn't open $output: $!";
 srand(0); #seed, for tests
 my $M=random($cities, $cities); # generate distances matrix
 $M->diagonal(0,1).=0; # zero the diagonal
@@ -22,13 +22,13 @@ my $route=pdl(0..$cities-1); #initial route
 my $L=distance($route);
 while($L0>$L_stop){
     my $new_route=step($route);
-    my $new_L=distance($route);
+    my $new_L=distance($new_route);
     my $dL=$new_L-$L;
     if($dL<=0 || random(1)<exp(-$dL/$L0)){
 	$route=$new_route; # accept
 	$L=$new_L;
     }
-    say $fh $L;
+    say $fh $L; # for plotting later
     $L0*=$factor;
 }
 my $best_route=append($route, 0);
