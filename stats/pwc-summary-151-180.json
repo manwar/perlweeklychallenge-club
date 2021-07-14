@@ -1,4 +1,7 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "tooltip" : {
       "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
       "shared" : 1
@@ -8,11 +11,6 @@
          "text" : ""
       },
       "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    },
    "xAxis" : {
       "categories" : [
@@ -48,15 +46,14 @@
          "Richard Park"
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-07-14 10:35:35 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-07-14 10:32:56 GMT"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             0,
@@ -88,7 +85,8 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -126,7 +124,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -158,10 +155,13 @@
             0,
             0,
             13
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }

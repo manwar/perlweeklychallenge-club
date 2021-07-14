@@ -1,7 +1,11 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             2,
@@ -33,7 +37,8 @@
             2,
             4,
             4
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -71,12 +76,11 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
             0,
-            101,
+            102,
             0,
             33,
             1,
@@ -103,17 +107,19 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-07-14 10:32:56 GMT"
+      "text" : "[Champions: 30] Last updated at 2021-07-14 10:35:35 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "xAxis" : {
       "categories" : [
@@ -149,19 +155,13 @@
          "Tejas"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "chart" : {
+      "type" : "column"
    }
 }
