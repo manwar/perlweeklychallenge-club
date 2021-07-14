@@ -1,17 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
    "xAxis" : {
       "categories" : [
          "Bruce Gray",
@@ -47,10 +34,25 @@
       ]
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-07-14 10:35:35 GMT"
+      "text" : "[Champions: 30] Last updated at 2021-07-14 16:50:29 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -159,9 +161,7 @@
          ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    }
 }
