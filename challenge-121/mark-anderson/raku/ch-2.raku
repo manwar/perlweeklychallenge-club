@@ -40,28 +40,21 @@ class Node
 
     method Reduce
     {
-        my @cost;
-    
         for ^2
         {
             for @.matrix -> @r 
             {
                 my $min = @r.min;
-                $min = 0 if $min == ∞;
-                @cost.push($min);
 
-                for @r -> $n is rw
+                unless $min == 0|∞
                 {
-                    $n -= $min;
-                    $n = ∞ if $n ~~ NaN;
+                    $.cost += $min;
+                    @r.map(* -= $min);
                 }
             }
 
-            @.matrix  = [Z] @.matrix;
-            @.matrix .= map(*.Array);
+            @.matrix  = ([Z] @.matrix)>>.Array;
         }
-    
-        $.cost = @cost.sum;
     }
 
     method paths
@@ -86,47 +79,34 @@ class Node
 multi branch-and-bound(+@matrix)
 {
     my $node = Node.new(:path([1]), :matrix(@matrix)) andthen .Reduce;
-    branch-and-bound($node, []);
+    my Node @a = [ $node, Node.new(:cost(∞)) ];
+
+    branch-and-bound(@a);
 }
 
-multi branch-and-bound($n, @leaves)
+multi branch-and-bound(Node @nodes)
 {
-    return $n.cost if $n.path == $n.matrix; 
+    my $n = @nodes.shift;
 
-    my $node;
-    my @nodes = Empty;
+    return $n.cost if $n.path == $n.matrix; 
 
     for $n.paths -> @p
     {
-        $node = Node.new(:path(@p)); 
+        my $node = Node.new(:path(@p)); 
         $node.matrix = $n.matrix.duckmap(*.clone);
         $node.set-Infs;
         $node.Reduce;
         $node.cost += sum $n.cost, $n.matrix[@p[*-2]-1;@p[*-1]-1]; 
-        @nodes.push($node);
+        my $i = @nodes.first(*.cost >= $node.cost, :k);
+        @nodes.splice($i, 0, $node);
     }
 
-    my $min = @nodes.map(*.cost).min;
-    my $k = @leaves.first(*.cost < $min, :k); 
-
-    if $k.defined
-    {
-        $node = @leaves.splice($k, 1).head;
-    }
-
-    else
-    {
-        $k = @nodes.first(*.cost == $min, :k);
-        $node = @nodes.splice($k, 1).head;
-    }
-
-    @leaves.append(@nodes); 
-    branch-and-bound($node, @leaves);
+    branch-and-bound(@nodes);
 }
 
 sub random-matrix($n)
 {
-    my @m = ([ roll $n, (1..$n*2) ] xx $n);
+    my @m = [ roll $n, (1..$n*2) ] xx $n;
     @m.map({ .[$++] = ∞ });
     @m;
 }
