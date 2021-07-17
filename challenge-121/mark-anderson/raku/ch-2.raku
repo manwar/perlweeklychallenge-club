@@ -53,7 +53,7 @@ class Node
                 }
             }
 
-            @.matrix  = ([Z] @.matrix)>>.Array;
+            @.matrix = ([Z] @.matrix)>>.Array;
         }
     }
 
@@ -96,7 +96,7 @@ multi branch-and-bound(Node @nodes)
         $node.matrix = $n.matrix.duckmap(*.clone);
         $node.set-Infs;
         $node.Reduce;
-        $node.cost += sum $n.cost, $n.matrix[@p[*-2]-1;@p[*-1]-1]; 
+        $node.cost += $n.cost + $n.matrix[@p[*-2]-1;@p[*-1]-1]; 
         my $i = @nodes.first(*.cost >= $node.cost, :k);
         @nodes.splice($i, 0, $node);
     }
