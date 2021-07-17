@@ -11,7 +11,7 @@ is branch-and-bound([ ∞, 5, 2, 7 ],
 is branch-and-bound([ ∞,  15, 30, 4  ],
                     [ 6,  ∞,  4,  1  ],
                     [ 10, 15, ∞,  16 ],
-                    [ 7,  18, 13, ∞  ]), 36, '<a href>https://www.youtube.com/watch?v=cSY82XtVqYg&t=761s</a>';
+                    [ 7,  18, 13, ∞  ]), 36, 'https://www.youtube.com/watch?v=cSY82XtVqYg&t=761s';
 
 is branch-and-bound([ ∞,  20, 30, 10, 11 ],
                     [ 15, ∞,  16, 4,  2  ],
