@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 
-# TWC 119, TASK #1 : Swap Nibbles
+# TWC 120, TASK #2 : Clock Angle
 
 use v5.012;
 use strict;
