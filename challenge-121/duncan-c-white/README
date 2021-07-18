@@ -1,53 +1,51 @@
-Task 1: "Swap Odd/Even bits
+Task 1: "Invert Bit
 
-You are given a positive integer $N less than or equal to 255.
+You are given integers 0 <= $m <= 255 and 1 <= $n <= 8.
 
-Write a script to swap the odd positioned bit with even positioned bit
-and print the decimal equivalent of the new binary representation.
+Write a script to invert $n bit from the end of the binary representation
+of $m and print the decimal representation of the new binary number.
 
 Example
 
-  Input: $N = 101
-  Output: 154
+  Input: $m = 12, $n = 3
+  Output: 8
 
-  Binary representation of the given number is 01 10 01 01.
-  The new binary representation after the odd/even swap is 10 01 10 10.
-  The decimal equivalent of 10011010 is 154.
+Binary representation of $m = 00001100
+Invert 3rd bit from the end = 00001000
+Decimal equivalent of 00001000 = 8
 
-  Input: $N = 18
-  Output: 33
+  Input $m = 18, $n = 4
+  Output: 26
 
-  Binary representation of the given number is 00 01 00 10.
-  The new binary representation after the odd/even swap is 00 10 00 01.
-  The decimal equivalent of 100001 is 33.
+Binary representation of $m = 00010010
+Invert 4th bit from the end = 00011010
+Decimal equivalent of 00011010 = 26
 "
 
 My notes: trivial again.
 
 
-Task 2: "Clock Angle
+Task 2: "Travelling Salesman
+Submitted by: Jorg Sommrey
 
-You are given time $T in the format hh:mm.
+You are given a NxN matrix containing the distances between N cities.
 
-Write a script to find the smaller angle formed by the hands of an analog
-clock at a given time.
-
-HINT: A analog clock is divided up into 12 sectors. One sector represents
-30 degree (360/12 = 30).
+Write a script to find a round trip of minimum length visiting all N
+cities exactly once and returning to the start.
 
 Example
 
-  Input: $T = '03:10'
-  Output: 35 degree
+Matrix: [0, 5, 2, 7]
+        [5, 0, 5, 3]
+        [3, 1, 0, 6]
+        [4, 5, 4, 0]
 
-  The distance between the 2 and the 3 on the clock is 30 degree.
-  For the 10 minutes i.e. 1/6 of an hour that have passed.
-  The hour hand has also moved 1/6 of the distance between the 3 and the 4,
-  which adds 5 degree (1/6 of 30).
-  The total measure of the angle is 35 degree.
+Output:
+        length = 10
+        tour = (0 2 1 3 0)
 
-  Input: $T = '04:00'
-  Output: 120 degree
+BONUS 1: For a given number N, create a random NxN distance matrix and find a solution for this matrix.
+BONUS 2: Find a solution for a random matrix of size 15x15 or 20x20
 "
 
-My notes: sounds pretty easy.
+My notes: gurk!  TSP is hard.  I'm tired and I'm not doing that.
