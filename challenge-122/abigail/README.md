@@ -19,6 +19,7 @@ Output:      10, 15, 20, 25, 30, 35, 40, 45, 50, ...
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [Basic](basic/ch-1.bas)
 * [bc](bc/ch-1.bc)
 * [Befunge-93](befunge-93/ch-1.bf)
 * [C](c/ch-1.c)
