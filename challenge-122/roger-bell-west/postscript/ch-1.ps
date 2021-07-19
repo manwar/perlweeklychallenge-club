@@ -1,0 +1,44 @@
+%! Not DSC compliant
+
+/aos {
+    /n 0 def
+    /t 0 def
+    dup length array /o exch def
+    {
+        n add /n exch def
+        o t
+        /t t 1 add def
+        n t div cvi put
+    } forall
+    o
+} def
+
+/str 50 string def
+/fs 12 def
+/Helvetica findfont
+fs scalefont setfont
+20 750 translate
+/line 0 def
+/testnum 1 def
+
+/disptest {
+    0 line moveto testnum str cvs show (.) show
+    aos
+    /to exch def
+    /ti exch def
+    /pass true def
+    0 1 ti length 1 sub {
+        dup ti exch get exch to exch get ne
+        { /pass false def exit } if
+    } for
+    pass { (Pass) } { (FAIL) } ifelse
+    50 line moveto show
+    /line line fs 2 mul sub def
+    /testnum testnum 1 add def
+} def
+
+[ 10 15 20 25 30 35 40 45 50 ]
+[ 10 20 30 40 50 60 70 80 90 ]
+disptest
+
+showpage
