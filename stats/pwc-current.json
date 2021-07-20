@@ -1,29 +1,24 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 122"
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2021-07-20 11:56:34 GMT"
    },
    "tooltip" : {
-      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+      "followPointer" : 1
    },
    "drilldown" : {
       "series" : [
+         {
+            "id" : "Cheok-Yin Fung",
+            "name" : "Cheok-Yin Fung",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
          {
             "id" : "James Smith",
             "data" : [
@@ -53,30 +48,50 @@
    "xAxis" : {
       "type" : "category"
    },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 122",
+         "data" : [
+            {
+               "drilldown" : "Cheok-Yin Fung",
+               "name" : "Cheok-Yin Fung",
+               "y" : 2
+            },
+            {
+               "y" : 3,
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
+            },
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 2
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "James Smith",
-               "y" : 3,
-               "name" : "James Smith"
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "y" : 2,
-               "name" : "Mark Anderson"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 122"
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-07-20 11:48:20 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge - 122"
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
