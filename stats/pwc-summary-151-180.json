@@ -1,7 +1,12 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "xAxis" : {
       "categories" : [
@@ -37,26 +42,20 @@
          "Randy Lauen"
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-07-20 12:33:34 GMT"
-   },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             52,
@@ -88,7 +87,8 @@
             2,
             0,
             9
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -161,7 +161,7 @@
          ]
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-07-20 12:43:46 GMT"
    }
 }

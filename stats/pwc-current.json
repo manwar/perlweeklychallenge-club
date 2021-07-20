@@ -1,46 +1,85 @@
 {
-   "xAxis" : {
-      "type" : "category"
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 122",
+         "data" : [
+            {
+               "name" : "Cheok-Yin Fung",
+               "y" : 2,
+               "drilldown" : "Cheok-Yin Fung"
+            },
+            {
+               "name" : "Dave Jacoby",
+               "drilldown" : "Dave Jacoby",
+               "y" : 3
+            },
+            {
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 3
+            },
+            {
+               "name" : "Lucas Ransan",
+               "drilldown" : "Lucas Ransan",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "y" : 2,
+               "name" : "Mark Anderson"
+            },
+            {
+               "name" : "Niels van Dijke",
+               "y" : 2,
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Peter Scott",
+               "name" : "Peter Scott"
+            }
+         ]
+      }
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2021-07-20 12:43:46 GMT"
    },
    "tooltip" : {
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2021-07-20 12:33:35 GMT"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "title" : {
       "text" : "The Weekly Challenge - 122"
    },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Cheok-Yin Fung",
+            "name" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Cheok-Yin Fung",
-            "id" : "Cheok-Yin Fung"
+            ]
          },
          {
             "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -50,11 +89,9 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Dave Jacoby"
+            ]
          },
          {
-            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -65,17 +102,18 @@
                   1
                ]
             ],
+            "name" : "James Smith",
             "id" : "James Smith"
          },
          {
-            "id" : "Lucas Ransan",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Lucas Ransan"
+            "name" : "Lucas Ransan",
+            "id" : "Lucas Ransan"
          },
          {
             "id" : "Mark Anderson",
@@ -88,59 +126,36 @@
             "name" : "Mark Anderson"
          },
          {
+            "id" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Niels van Dijke"
+         },
+         {
             "id" : "Peter Scott",
+            "name" : "Peter Scott",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "name" : "Peter Scott"
+            ]
          }
       ]
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Cheok-Yin Fung",
-               "y" : 2,
-               "drilldown" : "Cheok-Yin Fung"
-            },
-            {
-               "name" : "Dave Jacoby",
-               "y" : 3,
-               "drilldown" : "Dave Jacoby"
-            },
-            {
-               "name" : "James Smith",
-               "y" : 3,
-               "drilldown" : "James Smith"
-            },
-            {
-               "name" : "Lucas Ransan",
-               "y" : 2,
-               "drilldown" : "Lucas Ransan"
-            },
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
-            },
-            {
-               "name" : "Peter Scott",
-               "y" : 1,
-               "drilldown" : "Peter Scott"
-            }
-         ],
-         "name" : "The Weekly Challenge - 122",
-         "colorByPoint" : 1
-      }
-   ],
    "legend" : {
       "enabled" : 0
    },
    "chart" : {
       "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
