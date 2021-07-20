@@ -1,26 +1,72 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-07-20 11:56:34 GMT"
+   "chart" : {
+      "type" : "column"
    },
+   "title" : {
+      "text" : "The Weekly Challenge - 122"
+   },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 122",
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Cheok-Yin Fung",
+               "drilldown" : "Cheok-Yin Fung"
+            },
+            {
+               "drilldown" : "James Smith",
+               "y" : 3,
+               "name" : "James Smith"
+            },
+            {
+               "name" : "Lucas Ransan",
+               "y" : 2,
+               "drilldown" : "Lucas Ransan"
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
    "tooltip" : {
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
          {
             "id" : "Cheok-Yin Fung",
-            "name" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Cheok-Yin Fung"
          },
          {
             "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -30,8 +76,17 @@
                   "Blog",
                   1
                ]
+            ]
+         },
+         {
+            "id" : "Lucas Ransan",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
             ],
-            "name" : "James Smith"
+            "name" : "Lucas Ransan"
          },
          {
             "id" : "Mark Anderson",
@@ -48,50 +103,10 @@
    "xAxis" : {
       "type" : "category"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 122",
-         "data" : [
-            {
-               "drilldown" : "Cheok-Yin Fung",
-               "name" : "Cheok-Yin Fung",
-               "y" : 2
-            },
-            {
-               "y" : 3,
-               "drilldown" : "James Smith",
-               "name" : "James Smith"
-            },
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 122"
-   },
    "legend" : {
       "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-07-20 12:07:06 GMT"
    }
 }
