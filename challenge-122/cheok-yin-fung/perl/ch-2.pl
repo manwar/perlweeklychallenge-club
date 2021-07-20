@@ -42,7 +42,6 @@ say join "\n", @ans;
 sub expand {
     my $str = $_[0];
     my @expand_arr;
-    my $next_3;
     if ($str =~ /\*/) {
         my $pos = index($str,"*");
         my $next_3 = index($str, "3", $pos+1);
