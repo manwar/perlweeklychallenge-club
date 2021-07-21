@@ -9,6 +9,7 @@ use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
 stream( map {$_*10} 1..50 );           ## Push values into stream...
+
 eval {say stream_average();} until $@; ## Use eval/$@ to repeat until stream dies.
 
 sub stream {
