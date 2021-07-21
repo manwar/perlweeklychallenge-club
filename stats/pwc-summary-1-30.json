@@ -1,10 +1,6 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -40,11 +36,30 @@
          "Bob Lied"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-07-21 14:08:05 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -76,11 +91,9 @@
             0,
             4,
             48
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -96,7 +109,7 @@
             0,
             0,
             9,
-            6,
+            8,
             51,
             0,
             0,
@@ -112,9 +125,11 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -130,7 +145,7 @@
             0,
             0,
             0,
-            19,
+            21,
             27,
             0,
             0,
@@ -146,22 +161,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
-   ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-07-21 00:57:30 GMT"
-   }
+   ]
 }
