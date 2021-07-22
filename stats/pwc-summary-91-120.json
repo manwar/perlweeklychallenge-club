@@ -1,17 +1,18 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "tooltip" : {
       "shared" : 1,
       "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-07-21 18:52:19 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             2,
@@ -43,7 +44,8 @@
             10,
             2,
             130
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -81,6 +83,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -112,10 +115,21 @@
             0,
             0,
             3
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-07-22 09:49:16 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "xAxis" : {
       "categories" : [
          "Jim Bacon",
@@ -149,19 +163,5 @@
          "Leoltron",
          "Lubos Kolouch"
       ]
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
    }
 }
