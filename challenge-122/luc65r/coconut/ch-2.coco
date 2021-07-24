@@ -1,0 +1,17 @@
+#!/usr/bin/env -S coconut-run --strict
+
+import sys
+
+flatten = reduce $ (::)
+
+def scores(0) = [[]]
+
+@addpattern(scores)
+def scores(n) =
+    range(1, 4) ↦ filter $ ((≥) $ n) ↦ map $ (
+        i → scores(n − i) ↦ map $ (→ [i] + _)
+    ) ↦ flatten
+
+sys.argv[1] ↦ int ↦ scores ↦ map $ (
+    l → ' '.join(map(str, l))
+) ↦ '\n'.join ↦ print
