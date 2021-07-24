@@ -1,0 +1,35 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (UInt $S, :v(:$verbose));
+
+recurse( (), $S);
+
+sub recurse (@points, $left)
+{
+  if $left == 0
+  {
+    say @points.join(" ");
+    return;
+  }
+
+  if $left >= 1
+  {
+    my @p = @points.clone;
+    @p.push: 1;
+    recurse(@p, $left -1);
+  }
+
+  if $left >= 2
+  {
+    my @p = @points.clone;
+    @p.push: 2;
+    recurse(@p, $left -2);
+  }
+
+  if $left >= 3
+  {
+    my @p = @points.clone;
+    @p.push: 3;
+    recurse(@p, $left -3);
+  }
+}
