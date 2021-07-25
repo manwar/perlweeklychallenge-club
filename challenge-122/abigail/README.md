@@ -1,37 +1,25 @@
 # Solutions by Abigail
-## [Invert Bit][task1]
+## [Average of Stream][task1]
 
-[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-121/#TASK1
-
-> You are given integers `0 <= $m <= 255` and `1 <= $n <= 8`.
+> You are given a stream of numbers, `@N`.
 >
-> Write a script to invert `$n` bit from the end of the binary
-> representation of `$m` and print the decimal representation of
-> the new binary number.
+> Write a script to print the average of the stream at every point.
 
-### Examples
+### Example
 ~~~~
-Input: $m = 12, $n = 3
-Output: 8
+Input: @N = (10, 20, 30, 40, 50, 60, 70, 80, 90, ...)
+Output:      10, 15, 20, 25, 30, 35, 40, 45, 50, ...
 ~~~~
 
-* Binary representation of `$m = 00001100`
-* Invert 3rd bit from the end `= 00001000`
-* Decimal equivalent of `00001000 = 8`
-
-~~~~
-Input: $m = 18, $n = 4
-Output: 26
-~~~~
-
-* Binary representation of `$m = 00010010`
-* Invert 3rd bit from the end `= 00011010`
-* Decimal equivalent of `00011010 = 26`
-
+* Average of first number is `10`.
+* Average of first 2 numbers `(10+20)/2 = 15`.
+* Average of first 3 numbers `(10+20+30)/3 = 20`.
+* Average of first 4 numbers `(10+20+30+40)/4 = 25` and so on.
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [Basic](basic/ch-1.bas)
 * [bc](bc/ch-1.bc)
 * [Befunge-93](befunge-93/ch-1.bf)
 * [C](c/ch-1.c)
@@ -48,25 +36,43 @@ Output: 26
 * [Tcl](tcl/ch-1.tcl)
 
 ### Blog
-[Invert Bit][blog1]
+[Average of Stream][blog1]
 
-## [The Travelling Salesman][task2]
+## [Basketball Points][task2]
 
-> You are given a `NxN` matrix containing the distances between `N` cities.
+> You are given a score `$S`.
+> 
+> You can win basketball points e.g. `1` point, `2` points and `3` points.
 >
-> Write a script to find a round trip of minimum length visiting all `N`
-> cities exactly once and returning to the start.
+> Write a script to find out the different ways you can score `$S`.
 
-### Example
+### Examples
 ~~~~
-Matrix: [0, 5, 2, 7]
-        [5, 0, 5, 3]
-        [3, 1, 0, 6]
-        [4, 5, 4, 0]
+Input: $S = 4
+Output: 1 1 1 1
+        1 1 2
+        1 2 1
+        1 3
+        2 1 1
+        2 2
+        3 1
+~~~~
 
-Output:
-        length = 10
-        tour = (0 2 1 3 0)
+~~~~
+Input: $S = 5
+Output: 1 1 1 1 1
+        1 1 1 2
+        1 1 2 1
+        1 1 3
+        1 2 1 1
+        1 2 2
+        1 3 1
+        2 1 1 1
+        2 1 2
+        2 2 1
+        2 3
+        3 1 1
+        3 2
 ~~~~
 
 ### Solutions
@@ -80,11 +86,11 @@ Output:
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[The Travelling Salesman][blog2]
+[Basketball Points][blog2]
 
 
 
-[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-121/#TASK1
-[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-121/#TASK2
-[blog1]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-121-1.html
-[blog2]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-121-2.html
+[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-122/#TASK1
+[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-122/#TASK2
+[blog1]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-122-1.html
+[blog2]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-122-2.html
