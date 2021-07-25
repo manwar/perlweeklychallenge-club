@@ -39,7 +39,7 @@ MAIN:{
     } 
     $S = 5;  
     print "\n\$S = $S\n"; 
-    my @point_combinations = basketball_points($S); 
+    @point_combinations = basketball_points($S); 
     for my $points (basketball_points($S)){  
         print join(" ", @{$points}) . "\n"; 
     } 
