@@ -105,23 +105,23 @@ simple tweak. This corresponds to an approximate reduction of 6.2 in function ca
 
 ## Comparing solutions
 
-By comparing timings on the 2G test machine we note that up to a score of 26 the caching solution is efficient [basically everything in memory] but
-after this streaming solution is the only real option. The difference in time up to this point though is not that great. After we get past 27 the caching algorithm non-longer executes.
+By comparing timings on the 2G test machine we note that up to a score of 26 the caching solution is efficient [basically everything in physical memory] but
+after this streaming solution is the only real option. The difference in time up to this point though is not that great. After we get past 27 the caching algorithm no longer executes - but as you can see the streaming solution continues going - just consuming more and more time (increases by a factor of 21 for every 5 extra points). The estimated size of the output file for `n=40` is around 600Gbytes, for `n=50` it would generate a 300 Terrabyte file with 10 trillion combinations in around 6 days!
 
 | n   | ways | calls cache | memory cache | time cache | calls stream | memory stream | time stream |
 | --: | --: | --: | --: | --: | --: | --: | --: |
-|  5  | 13 | 7 | 9,208 | 0.010623 | 7 | 9,196 | 0.010567 |
-| 10  | 274 | 22 | 9,204 | 0.010413 | 157 | 9,096 | 0.010751 |
-| 15  | 5,768 | 37 | 10,488 | 0.015361 | 3,313 | 9,096 | 0.016229 |
-| 20  | 121,415 | 52 | 38,916 | 0.117231 | 69,748 | 9,100 | 0.133544 |
-| 25  | 2,555,755 | 67 | 645,680 | 2.371066 | 1,468,189 | 9,096 | 2.732431 |
-| 26  | 4,700,770 | 70 | 1,183,636 | 4.619746 | 2,700,421 | 9,100 | 4.930112 |
-| 27  | 8,646,064 | 73 | 2,176,060 | 23.422928 | 4,966,849 | 9,200 | 8.957511 |
-| 28  | 15,902,591 | - | - | - | 9,135,460 | 9,096 | 16.605540 |
-| 29  | 29,459,425 | - | - | - | 16,802,731 | 9,204 | 31.175462 |
-| 30  | 53,798,080 | - | - | - | 30,905,041 | 9,200 | 61.526530 |
-| 35  | 1,132,436,852 | - | - | - | 650,543,809 | 9,200 | 1,203.608434 |
-| 40  | 23,837,527,729 | - | - | - | 13,693,793,230 | 9,196 | 24,979.923176 |
+|  5  | 13 | 7 | 9,208K | 0.011 | 7 | 9,196K | 0.011 |
+| 10  | 274 | 22 | 9,204K | 0.010 | 157 | 9,096K | 0.011 |
+| 15  | 5,768 | 37 | 10,488K | 0.015 | 3,313 | 9,096K | 0.016 |
+| 20  | 121,415 | 52 | 38,916K | 0.117 | 69,748 | 9,100K | 0.134 |
+| 25  | 2,555,755 | 67 | 631M | 2.371 | 1,468,189 | 9,096K | 2.732 |
+| 26  | 4,700,770 | 70 | 1,156M | 4.620 | 2,700,421 | 9,100K | 4.930 |
+| 27  | 8,646,064 | 73 | 2,125M | 23.423 | 4,966,849 | 9,200K | 8.958 |
+| 28  | 15,902,591 | - | - | - | 9,135,460 | 9,096K | 16.606 |
+| 29  | 29,459,425 | - | - | - | 16,802,731 | 9,204K | 31.175 |
+| 30  | 53,798,080 | - | - | - | 30,905,041 | 9,200K | 61.527 |
+| 35  | 1,132,436,852 | - | - | - | 650,543,809 | 9,200K | 0:20:04 |
+| 40  | 23,837,527,729 | - | - | - | 13,693,793,230 | 9,196K | 6:56:20  |
 
 ## Number of solutions...
 
@@ -132,7 +132,7 @@ As we have the relationship that if `T(n)` is the number of score combinations f
 ```
 
 We see that the sequence of numbers is the *Tribonacci* sequence. Listed
-below to 186 - the highest score in NBA history about ten-quindecillion (10^49) ways to get to that score.
+below to 186 - the highest score in NBA history about ten-quindecillion (10^49) ways to get to that score. For that the output file would be 10^51 bytes (names stop at yottabyte ~ 10^24) in size and take around the 35 decillion years...!
 
 ```
 1       1
