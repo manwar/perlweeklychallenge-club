@@ -51,8 +51,6 @@ int main (void) {
         perror ("Malloc failed");
         exit (1);
     }
-    scores [2] [0] [0] = '\0';
-
     if ((lengths [2] = (size_t *) malloc (sizeof (size_t))) == NULL) {
         perror ("Malloc failed");
         exit (1);
