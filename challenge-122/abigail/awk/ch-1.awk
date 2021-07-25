@@ -8,4 +8,4 @@
 # Run as: awk -f ch-1.awk < input-file
 #
 
-{print ((sum += $1) / NR)}
+{print ((s += $1) / NR)}
