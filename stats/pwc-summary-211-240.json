@@ -1,18 +1,12 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
       }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -44,7 +38,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -69,7 +62,8 @@
             3,
             21,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "data" : [
@@ -100,8 +94,9 @@
          "name" : "Blog"
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "xAxis" : {
       "categories" : [
@@ -130,10 +125,15 @@
          "Yozen Hernandez"
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
    "subtitle" : {
-      "text" : "[Champions: 23] Last updated at 2021-07-25 21:02:18 GMT"
+      "text" : "[Champions: 23] Last updated at 2021-07-25 21:10:55 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
