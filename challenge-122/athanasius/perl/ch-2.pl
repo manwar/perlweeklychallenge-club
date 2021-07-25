@@ -75,8 +75,6 @@ use warnings;
 use Const::Fast;
 use Regexp::Common qw( number );
 
-use Data::Dump qw( dd pp );
-
 const my $USAGE =>
 "Usage:
   perl $0 <S>
