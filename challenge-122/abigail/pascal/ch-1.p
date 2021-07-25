@@ -1,4 +1,4 @@
-Program XXX;
+Program Average;
 
 (*                  *)
 (* See ../README.md *)
