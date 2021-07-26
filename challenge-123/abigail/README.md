@@ -1,78 +1,58 @@
 # Solutions by Abigail
-## [Average of Stream][task1]
+## [Ugly Numbers][task1]
 
-> You are given a stream of numbers, `@N`.
->
-> Write a script to print the average of the stream at every point.
+> You are given an integer `$n >= 1`.
+> 
+> Write a script to find the $nth element of Ugly Numbers.
+> 
+> > Ugly numbers are those number whose prime factors are `2`, `3` or `5`.
+> > For example, the first 10 Ugly Numbers are `1`, `2`, `3`, `4`, `5`,
+> > `6`, `8`, `9`, `10`, `12`.
 
-### Example
+### Examples
 ~~~~
-Input: @N = (10, 20, 30, 40, 50, 60, 70, 80, 90, ...)
-Output:      10, 15, 20, 25, 30, 35, 40, 45, 50, ...
-~~~~
+Input: $n = 7
+Output: 8
 
-* Average of first number is `10`.
-* Average of first 2 numbers `(10+20)/2 = 15`.
-* Average of first 3 numbers `(10+20+30)/3 = 20`.
-* Average of first 4 numbers `(10+20+30+40)/4 = 25` and so on.
+Input: $n = 10
+Output: 12
+~~~~
 
 ### Solutions
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
-* [Basic](basic/ch-1.bas)
-* [bc](bc/ch-1.bc)
-* [Befunge-93](befunge-93/ch-1.bf)
 * [C](c/ch-1.c)
-* [Go](go/ch-1.go)
-* [Java](java/ch-1.java)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
-* [Pascal](pascal/ch-1.p)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
-* [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
-* [Scheme](scheme/ch-1.scm)
-* [Tcl](tcl/ch-1.tcl)
 
 ### Blog
-[Average of Stream][blog1]
+[Perl Weekly Challenge 123: Ugly Numbers][blog1]
 
-## [Basketball Points][task2]
+## [Square Points][task2]
 
-> You are given a score `$S`.
+> You are given coordinates of four points i.e. `(x1, y1)`, `(x2, y2)`,
+> `(x3, y3)` and `(x4, y4)`.
 > 
-> You can win basketball points e.g. `1` point, `2` points and `3` points.
->
-> Write a script to find out the different ways you can score `$S`.
+> Write a script to find out if the given four points form a square.
 
 ### Examples
 ~~~~
-Input: $S = 4
-Output: 1 1 1 1
-        1 1 2
-        1 2 1
-        1 3
-        2 1 1
-        2 2
-        3 1
+Input: x1 = 10, y1 = 20
+       x2 = 20, y2 = 20
+       x3 = 20, y3 = 10
+       x4 = 10, y4 = 10
+Output: 1 as the given coordinates form a square.
 ~~~~
 
 ~~~~
-Input: $S = 5
-Output: 1 1 1 1 1
-        1 1 1 2
-        1 1 2 1
-        1 1 3
-        1 2 1 1
-        1 2 2
-        1 3 1
-        2 1 1 1
-        2 1 2
-        2 2 1
-        2 3
-        3 1 1
-        3 2
+Input: x1 = 12, y1 = 24
+       x2 = 16, y2 = 10
+       x3 = 20, y3 = 12
+       x4 = 18, y4 = 16
+Output: 0 as the given coordinates doesn't form a square.
 ~~~~
 
 ### Solutions
@@ -86,11 +66,11 @@ Output: 1 1 1 1 1
 * [Ruby](ruby/ch-2.rb)
 
 ### Blog
-[Basketball Points][blog2]
+[Perl Weekly Challenge 123: Square Points][blog2]
 
 
 
-[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-122/#TASK1
-[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-122/#TASK2
-[blog1]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-122-1.html
-[blog2]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-122-2.html
+[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-123/#TASK1
+[task2]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-123/#TASK2
+[blog1]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-123-1.html
+[blog2]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-123-2.html
