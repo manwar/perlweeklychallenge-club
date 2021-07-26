@@ -11,7 +11,8 @@ use v5.16;
 use strict;
 use warnings;
 
-use List::MoreUtils qw(frequency);
+use List::MoreUtils qw(frequency slide);
+use Data::Printer;
 
 use Test::More;
 
@@ -40,5 +41,12 @@ sub areSquarePoints(\@) {
   my %xF = frequency map {$_->[0]} @$ar;
   my %yF = frequency map {$_->[1]} @$ar;
 
-  return (scalar(keys %xF) == 2 && scalar(keys %yF) == 2 ? 1: 0);
+  my @xV = sort { $b <=> $a } keys %xF;
+  my @yV = sort { $b <=> $a } keys %yF;
+
+  return 1 if (scalar(@xV) == 2 and
+               scalar(@yV) == 2 and
+               $xV[0]-$xV[1] == $yV[0]-$yV[1]);
+
+  return 0;
 }
