@@ -11,6 +11,8 @@ use Data::Dumper qw(Dumper);
 my @TESTS = (
   [ [ [10,20],[20,20],[20,10],[10,10] ], 1 ],
   [ [ [12,24],[16,10],[20,12],[18,16] ], 0 ],
+  [ [ [-2,5],[2,-5],[5,2],[-5,-2] ], 1 ],
+  [ [ [0,1],[1,0],[0,-1],[-1,0] ], 1 ],
 );
 
 is( is_square(@{$_->[0]}), $_->[1] ) foreach @TESTS;
@@ -33,10 +35,7 @@ sub is_square {
     my $a = shift @pts;
     $D{($a->[0]-$_->[0])**2+($a->[1]-$_->[1])**2}++ foreach @pts;
   }
-  my @K = keys %D;
-  return 0 unless @K== 2;      ## More than two distances
-  return 1 if $K[0]*2==$K[1];  ## First no is the diagonal
-  return 1 if $K[1]*2==$K[0];  ## First no is the edge..
-  return 0;                    ## Equilat triangles..
+  my %F = reverse %D;
+  return exists $F{2} && exists $F{4} && $F{2} == 2*$F{4} || 0;
 }
 
