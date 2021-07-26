@@ -2,6 +2,7 @@ find . -name "*.c" -delete
 find . -name "*.d" -delete
 find . -name "*.m" -delete
 find . -name "*.dart" -delete
+find . -name "*.coco" -delete
 find . -name "*.bfpp" -delete
 find . -name "*.odin" -delete
 find . -name "*.nix" -delete
