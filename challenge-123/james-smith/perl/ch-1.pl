@@ -18,8 +18,7 @@ done_testing();
 
 sub nth_ugly {
   my $n = shift;
-  state @uglies;
-  @uglies=(1) unless @uglies;
+  state @uglies = (1);
   while(1) {
     return $uglies[$n-1] if $n <= @uglies;
     ## Get the next ugly....
