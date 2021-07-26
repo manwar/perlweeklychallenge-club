@@ -40,7 +40,7 @@ foreach my $t (@$tests) {
 done_testing();
 
 #
-# Blatenly 'borrowed' solution using Dynamic Programming from:
+# Blatently 'borrowed' solution using Dynamic Programming from:
 # https://www.codesdope.com/blog/article/ugly-numbers/
 #
 sub uglyNumberN($) {

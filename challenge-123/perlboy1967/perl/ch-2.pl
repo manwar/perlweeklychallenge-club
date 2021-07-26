@@ -11,8 +11,7 @@ use v5.16;
 use strict;
 use warnings;
 
-use List::MoreUtils qw(frequency slide);
-use Data::Printer;
+use List::MoreUtils qw(frequency);
 
 use Test::More;
 
