@@ -10,7 +10,7 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-122/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-123/james-smith/perl
 
 # Task 1 - Ugly Numbers
 
