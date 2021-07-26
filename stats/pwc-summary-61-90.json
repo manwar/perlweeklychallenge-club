@@ -1,12 +1,17 @@
 {
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -42,16 +47,11 @@
          "Jeremy Carman"
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-07-25 21:10:55 GMT"
+      "text" : "[Champions: 30] Last updated at 2021-07-25 22:39:15 GMT"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             8,
@@ -83,9 +83,11 @@
             2,
             7,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -117,8 +119,7 @@
             0,
             0,
             1
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -156,12 +157,11 @@
          ]
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
+   "chart" : {
+      "type" : "column"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
