@@ -67,6 +67,8 @@ sub main_algo {
             } elsif ($bb_pnt == $target) {
                 push @scores, [ $bb_pnt, ];
             }
+            # Could use an "else last" here if @bb_points is assumed to
+            # always be ascending sort and you want to save a cycle or two.
         }
     }
     return \@scores;
@@ -89,13 +91,34 @@ sub output_results {
 sub test {
 
     use Test::More;
-    my $input;
+    my ($input, $output);
 
-    # Ran out of time, no built-in testing. You'll have to try it and see :-)
-    #$input = [ 4, ];
-    #pp main_algo($input);
-    #is_deeply( main_algo( $input ), [ ], "Test description" );
+    $input = 4;
+    $output = [ [1, 1, 1, 1],
+                [1, 1, 2],
+                [1, 2, 1],
+                [1, 3],
+                [2, 1, 1],
+                [2, 2],
+                [3, 1], ];
+    is_deeply( main_algo( $input ), $output, "Ways to score 4 in basketball." );
 
+    $input = 5;
+    $output = [ [1, 1, 1, 1, 1],
+                [1, 1, 1, 2],
+                [1, 1, 2, 1],
+                [1, 1, 3],
+                [1, 2, 1, 1],
+                [1, 2, 2],
+                [1, 3, 1],
+                [2, 1, 1, 1],
+                [2, 1, 2],
+                [2, 2, 1],
+                [2, 3],
+                [3, 1, 1],
+                [3, 2],
+            ];
+    is_deeply( main_algo( $input ), $output, "Ways to score 5 in basketball." );
 
     done_testing();
 }
