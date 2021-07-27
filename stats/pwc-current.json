@@ -1,8 +1,17 @@
 {
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
    "drilldown" : {
       "series" : [
          {
             "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -12,54 +21,82 @@
                   "Blog",
                   1
                ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
             ],
-            "id" : "James Smith"
-         },
-         {
-            "id" : "Lucas Ransan",
             "name" : "Lucas Ransan",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
+            "id" : "Lucas Ransan"
          },
          {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Markus Holzer",
+            "id" : "Markus Holzer"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          }
       ]
    },
    "series" : [
       {
+         "name" : "The Weekly Challenge - 123",
          "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "James Smith",
                "name" : "James Smith",
+               "drilldown" : "James Smith",
                "y" : 3
             },
             {
-               "name" : "Lucas Ransan",
+               "drilldown" : "Lucas Ransan",
                "y" : 2,
-               "drilldown" : "Lucas Ransan"
+               "name" : "Lucas Ransan"
             },
             {
-               "drilldown" : "Simon Proctor",
+               "drilldown" : "Markus Holzer",
                "y" : 2,
-               "name" : "Simon Proctor"
+               "name" : "Markus Holzer"
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 2
             }
-         ],
-         "name" : "The Weekly Challenge - 123"
+         ]
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-07-27 21:23:24 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 123"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
@@ -69,29 +106,7 @@
          "borderWidth" : 0
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "xAxis" : {
       "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-07-27 21:16:53 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 123"
    }
 }
