@@ -12,11 +12,13 @@ use strict;
 use warnings;
 
 use List::MoreUtils qw(frequency arrayify);
+use Data::Printer;
 
 use Test::More;
 
 # Prototype(s)
 sub areSquarePoints(\@);
+sub dist(\@\@);
 
 
 my $tests = [ 
@@ -25,6 +27,7 @@ my $tests = [
    [ [10,24],[12,24],[10,12],[18,16], 0 ],
    [ [20,20],[20,10],[10,10],[10,20], 1 ],
    [ [ 0, 1],[ 1, 2],[ 2, 1],[ 1, 0], 1 ],
+   [ [-5, 0],[ 5, 0],[ 0, 1],[ 0,-1], 0 ],
 ];
 
 foreach my $t (@$tests) {
