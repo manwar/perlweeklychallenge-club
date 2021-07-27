@@ -84,9 +84,10 @@ sub nth_ugly_opt {
 
 Below is the performance of the methods. Note these were tested without using `state` variables, as the caching nature of
 state variables prevents benchmarking (values are obtained directly from the cache) - although if you were using this in a
-real world situation that would be an advantage!
+real world situation that would be an advantage! Scanning where `n` is greater than 500 takes too long to get accurate
+benchmarks.
 
-|      n |                    Ugly(n) | scan /s   | simple /s     | opt /s        | opt vs sim % | sim vs scn % | opt vs scn % |
+|      n |                     Ugly_n | scan /s   | simple /s     | opt /s        | opt vs sim % | sim vs scn % | opt vs scn % |
 | -----: | -------------------------: | --------: | ------------: | ------------: | -----------: | -----------: | -----------: |
 |      1 |                          1 | *938,492* | **3,005,191** |   1,799,451   |          -40 |          220 |           92 |
 |      2 |                          2 | *536,552* |     816,345   | **1,089,848** |           34 |           52 |          103 |
