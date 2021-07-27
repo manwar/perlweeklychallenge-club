@@ -1,0 +1,25 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+use feature 'say';
+use feature 'signatures';
+
+no warnings qw(experimental::signatures);
+
+my $S = $ARGV[0] // die "Please specify a positive integer";
+
+recurse($S);
+
+sub recurse ($left, @points)
+{
+  if ($left == 0)
+  {
+    say join(" ", @points);
+    return;
+  }
+
+  recurse($left - 1, @points, 1) if $left >= 1;
+  recurse($left - 2, @points, 2) if $left >= 2;
+  recurse($left - 3, @points, 3) if $left >= 3;
+}
