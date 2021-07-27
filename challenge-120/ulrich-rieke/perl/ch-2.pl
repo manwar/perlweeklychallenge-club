@@ -1,9 +1,14 @@
-use v6 ;
+#!/usr/bin/perl ;
+use strict ;
+use warnings ;
+use feature 'say' ;
 
-sub MAIN( Str $T is copy ) {
-  my ( $hours, $minutes ) = $T.split( /':'/ ) ;
-  my $hourposition = 360 / 12 * (+$hours % 12 ) + 30 / 60 * $minutes ;
-  my $minutesposition =  360 / 60 * $minutes ;
-  say ( max( $hourposition, $minutesposition ) - min( $hourposition ,
-        $minutesposition ) ) ~ " degrees" ;
-}
+my $T = $ARGV[0] ;
+my ( $hours , $minutes ) = split( /:/ , $T ) ;
+my $hourPosition = 360 / 12 * ($hours % 12 ) + 30 / 60 * $minutes ;
+my $minutesPosition = 360 / 60 * $minutes ;
+my $max = $hourPosition > $minutesPosition ? $hourPosition :
+$minutesPosition ;
+my $min = $hourPosition > $minutesPosition ? $minutesPosition :
+$hourPosition ;
+say $max - $min . " degrees" ;

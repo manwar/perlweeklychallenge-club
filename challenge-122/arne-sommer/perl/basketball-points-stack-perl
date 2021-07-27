@@ -1,0 +1,41 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+use feature 'say';
+use feature 'signatures';
+use Getopt::Long;
+
+no warnings qw(experimental::signatures);
+
+my $upper = 3;
+
+GetOptions("upper=i" => \$upper);
+
+die "--upper must be > 0" if $upper < 1;
+
+my $S = $ARGV[0] // die "Please specify a positive integer";
+
+my @queue;
+
+my @first = ($S);
+
+push(@queue, \@first);
+
+while (@queue)
+{
+  my $curr = shift(@queue);
+
+  my ($left, @points) = @$curr;
+
+  $left == 0 && ( say join(" ", @points) ) && next;
+ 
+  for my $step (reverse (1 .. $upper))
+  {
+    if ($left >= $step)
+    {
+      my @p = ($left - $step, @points, $step);
+      unshift(@queue, \@p);
+    }
+  }
+}

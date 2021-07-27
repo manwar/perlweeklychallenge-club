@@ -22,7 +22,7 @@ is_deeply(tsp([
 use YAML::XS;
 print Dump(tsp(mkmatrix(10)));
 
-use Algorithm::Permute;
+use Algorithm::Combinatorics qw(combinations);
 use List::Util qw(min);
 
 sub tsp {
@@ -34,8 +34,9 @@ sub tsp {
     $c{1<<$k}{$k}=[$d->[0][$k],0];
   }
   foreach my $ss (2..$n1) {
-    my $p=Algorithm::Permute->new([1..$n1],$ss);
-    while (my @s = $p->next) {
+    my $p=combinations([1..$n1],$ss);
+    while (my $ss = $p->next) {
+      my @s=@{$ss};
       my $bits=0;
       foreach my $bit (@s) {
         $bits |= 1 << $bit;
