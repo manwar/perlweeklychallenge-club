@@ -9,7 +9,6 @@ use strict;
 use warnings;
 use v5.10.0;
 use Test::More tests => 5; 
-#extend to 7 test cases after writing cases for rotation or 3D
 
 my $D = $ARGV[0] || 2;
 
