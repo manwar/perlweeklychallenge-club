@@ -29,12 +29,12 @@ sub is_square {
     return 0 unless (vec_prod($v1, $v2) == 0) xor
                     (vec_prod($v0, $v2) == 0) xor
                     (vec_prod($v0, $v1) == 0);
-    return 0 unless vec_same($v0, vec_sum($v1, $v2) ) xor
-                    vec_same($v1, vec_sum($v2, $v0) ) xor
-                    vec_same($v2, vec_sum($v0, $v1) );
+#    return 0 unless vec_same($v0, vec_sum($v1, $v2) ) xor
+#                    vec_same($v1, vec_sum($v2, $v0) ) xor
+#                    vec_same($v2, vec_sum($v0, $v1) );
     my @n_vector = map { norm_f($_) } ($v0, $v1, $v2);
     @n_vector = sort {$a<=>$b} @n_vector;
-    if ( $n_vector[0] == $n_vector[1] ) { 
+    if ( $n_vector[0] == $n_vector[1] && 2*$n_vector[0] == $n_vector[2] ) { 
         return 1;
     } 
     else {

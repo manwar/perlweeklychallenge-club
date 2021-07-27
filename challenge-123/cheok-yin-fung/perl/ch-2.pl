@@ -8,7 +8,7 @@
 use strict;
 use warnings;
 use v5.10.0;
-use Test::More tests => 5; 
+use Test::More tests => 11; 
 
 my $D = $ARGV[0] || 2;
 
@@ -29,18 +29,16 @@ sub is_square {
     return 0 unless (vec_prod($v1, $v2) == 0) xor
                     (vec_prod($v0, $v2) == 0) xor
                     (vec_prod($v0, $v1) == 0);
-    # "vector sum test";
-    return 0 unless vec_same($v0, vec_sum($v1, $v2) ) xor
-                    vec_same($v1, vec_sum($v2, $v0) ) xor
-                    vec_same($v2, vec_sum($v0, $v1) );
     my @n_vector = map { norm($_) } ($v0, $v1, $v2);
     @n_vector = sort {$a<=>$b} @n_vector;
     # "norm test"
     #if ( $n_vector[0] == $n_vector[1] ) {
 #   the above conditional is fit for integter coordinates
-#   the  below is special arrangement for the 5th test case 
+#   the below is special arrangement satarting from the 7th test case 
 #   or floating point number in general
-    if ( sprintf("%f",$n_vector[0]) eq sprintf("%f", $n_vector[1]) ) { 
+    if ( sprintf("%f",$n_vector[0]) == sprintf("%f", $n_vector[1]) 
+        && 2*sprintf("%f", $n_vector[0]) == sprintf("%f", $n_vector[2])
+         ) { 
         return 1;
     } 
     return 0;
@@ -102,4 +100,41 @@ ok is_square( [1, 1] , [-1, 1], [ 1,-1], [-1,-1] ) == 1, "centre at origin";
 ok is_square( [1, sqrt(3)/2, -1/2], [1, -sqrt(3)/2, 1/2], 
               [-1, sqrt(3)/2, -1/2], [-1, -sqrt(3)/2, 1/2] ) == 1, 
              "centre at origin, inclined";
+
+ok is_square( [5/sqrt(26), 1/sqrt(26)], 
+              [-1/sqrt(26), 5/sqrt(26)],
+              [-5/sqrt(26), -1/sqrt(26)], 
+              [1/sqrt(26), -5/sqrt(26)]) == 1,
+             "inclined by arctan(1/5), centre at origin"; 
+
+ok is_square( 
+              [cos(atan2(1,5)), sin(atan2(1,5))], [-sin(atan2(1,5)), cos(atan2(1,5))],
+              [-cos(atan2(1,5)), -sin(atan2(1,5))],[sin(atan2(1,5)), -cos(atan2(1,5))]
+            )  
+              == 1, "arctan(1/5) by atan2(), caught by the equalities";  
+
+ok is_square( 
+              [2.7*cos(atan2(1,5)), 2.7*sin(atan2(1,5))], [-2.7*sin(atan2(1,5)), 2.7*cos(atan2(1,5))],
+              [-2.7*cos(atan2(1,5)), -2.7*sin(atan2(1,5))],[2.7*sin(atan2(1,5)), -2.7*cos(atan2(1,5))]
+            )  
+              == 1, "arctan(1/5) by atan2() of larger size (multipled by 2.7), caught by the equalities";  
+
+ok is_square( 
+              [2.8*cos(atan2(1,5)), 2.8*sin(atan2(1,5))], [-2.8*sin(atan2(1,5)), 2.8*cos(atan2(1,5))],
+              [-2.8*cos(atan2(1,5)), -2.8*sin(atan2(1,5))],[2.8*sin(atan2(1,5)), -2.8*cos(atan2(1,5))]
+            )  
+              == 1, "arctan(1/5) by atan2() of larger size (multipled by 2.8), caught by the equalities";  
+
+ok is_square( 
+              [4.0*cos(atan2(1,5)), 4.0*sin(atan2(1,5))], [-4.0*sin(atan2(1,5)), 4.0*cos(atan2(1,5))],
+              [-4.0*cos(atan2(1,5)), -4.0*sin(atan2(1,5))],[4.0*sin(atan2(1,5)), -4.0*cos(atan2(1,5))]
+            )  
+              == 1, "arctan(1/5) by atan2() of larger size (multipled by 4.0), caught by the equalities";  
+
+ok is_square( 
+              [0.0009*cos(atan2(1,5)), 0.0009*sin(atan2(1,5))], [-0.0009*sin(atan2(1,5)), 0.0009*cos(atan2(1,5))],
+              [-0.0009*cos(atan2(1,5)), -0.0009*sin(atan2(1,5))],[0.0009*sin(atan2(1,5)), -0.0009*cos(atan2(1,5))]
+            )  
+              == 1, "arctan(1/5) by atan2() of a much smaller size (multiple by 0.0009), caught by the equalities";
+
 done_testing();
