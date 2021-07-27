@@ -12,13 +12,11 @@ use strict;
 use warnings;
 
 use List::MoreUtils qw(frequency arrayify);
-use Data::Printer;
 
 use Test::More;
 
 # Prototype(s)
 sub areSquarePoints(\@);
-sub dist(\@\@);
 
 
 my $tests = [ 
