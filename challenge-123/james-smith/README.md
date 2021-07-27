@@ -111,12 +111,12 @@ benchmarks.
 
 ## Solution.
 
-First we need to think how we define a square - it has 4 sides of equal length and sides at right angles. If we want to define it terms of distances between points we have 4 pairs of points that are the same distance apart and two pairs of points which are at `sqrt(2)` times this distance.
+First we need to think how we define a square - it has 4 sides of equal length and sides at right angles. If we want to define it terms of distances between points we have 4 pairs of points that are the same distance apart and two pairs of points which are at `sqrt(2)` times this distance. (There is another combination of points for which 4 have one distance and 2 another. This is an isosceles triangle with an inscribed equilateral triangle - the ratio of the two squares is `2+sqrt(3)`
 
 We therefore measure the squares of the distances between the points, and collect them together. If the list of distances is 2, and the ratio of the squares of the distance is 2 then we have a square.
 
  * The `while/foreach` loops calculate the square of the distances between points, and stores these in the hash `%dist` where the distance is the key.
- * We flip the hash so that the keys become values and values become keys. This allows us to check to see if we have one length 4 times and one length 2 times, for belt and braces we check the ratio of the length of the diagonal vs the length of the edges of the sides to see that it is 2.
+ * We flip the hash so that the keys become values and values become keys. This allows us to check to see if we have one length 4 times and one length 2 times, and check the ratio of the length of the diagonal vs the length of the edges of the sides to see that it is 2.
 
 ```perl
 sub is_square {
