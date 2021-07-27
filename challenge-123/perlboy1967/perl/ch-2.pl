@@ -11,8 +11,6 @@ use v5.16;
 use strict;
 use warnings;
 
-use List::MoreUtils qw(frequency);
-
 use Test::More;
 
 # Prototype(s)
@@ -27,6 +25,7 @@ my $tests = [
    [ [ 0, 1],[ 1, 2],[ 2, 1],[ 1, 0], 1 ],
    [ [-5, 0],[ 5, 0],[ 0, 1],[ 0,-1], 0 ],
    [ [-1, 0],[ 5, 0],[ 0, 1],[ 0,-1], 0 ],
+   [ [-1, 0],[ 1, 0],[ 0, sqrt(3)],[ 0, sqrt(3)/3], 0 ], # equilateral triangle
 ];
 
 foreach my $t (@$tests) {
@@ -40,28 +39,21 @@ done_testing();
 sub areSquarePoints(\@) {
   my ($ar) = @_;
 
-  my @dP;
+  my %dP;
 
   # If all points given are coordinates of a square
   # then the distance between one point and the other three
   # will give 2 identical and on other
   foreach my $i (0 .. 3) {
-    my @d;
     foreach my $j (0 .. 3) {
       next if ($i == $j);
-      push(@d,sqrt(($ar->[$i][0]-$ar->[$j][0])**2 +
-                   ($ar->[$i][1]-$ar->[$j][1])**2));
+      $dP{sqrt(($ar->[$i][0]-$ar->[$j][0])**2 +
+               ($ar->[$i][1]-$ar->[$j][1])**2)}++;
     }
-    my %f = frequency @d;
-    push(@dP,keys %f);
   }
 
-  # If all four points give same distance 'frequencies'
-  # then we have a square
-  my %f = frequency @dP;
+  my @v = sort { $b <=> $a } values %dP;
 
-  return 1 if (scalar keys %f == 2);
-
-  return 0;
+  return ($v[0] == 8 && $v[1] == 4 ? 1 : 0);
 }
 
