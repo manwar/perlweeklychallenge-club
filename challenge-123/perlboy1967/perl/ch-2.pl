@@ -45,7 +45,6 @@ sub areSquarePoints(\@) {
   # then the distance between one point and the other three
   # will give 2 identical and on other
   foreach my $i (0 .. 3) {
-    my @d;
     foreach my $j (0 .. 3) {
       next if ($i == $j);
       $dP{sqrt(($ar->[$i][0]-$ar->[$j][0])**2 +
@@ -55,8 +54,6 @@ sub areSquarePoints(\@) {
 
   my @v = sort { $b <=> $a } values %dP;
 
-  return 1 if ($v[0] == 8 && $v[1] == 4);
-
-  return 0;
+  return ($v[0] == 8 && $v[1] == 4 ? 1 : 0);
 }
 
