@@ -1,42 +1,25 @@
 {
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : null
       }
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
    "series" : [
       {
-         "dataLabels" : {
-            "y" : 10,
-            "align" : "right",
-            "rotation" : -90,
-            "enabled" : "true",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF"
-         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -48,16 +31,33 @@
             ],
             [
                "Raku",
-               3656
+               3658
             ]
          ],
-         "name" : "Contributions"
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "align" : "right",
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "color" : "#FFFFFF",
+            "enabled" : "true"
+         }
       }
    ],
+   "legend" : {
+      "enabled" : "false"
+   },
    "subtitle" : {
-      "text" : "Last updated at 2021-07-27 21:07:07 GMT"
+      "text" : "Last updated at 2021-07-27 21:12:08 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
