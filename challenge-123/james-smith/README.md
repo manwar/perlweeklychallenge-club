@@ -111,7 +111,11 @@ benchmarks.
 
 ## Solution.
 
-First we need to think how we define a square - it has 4 sides of equal length and sides at right angles. If we want to define it terms of distances between points we have 4 pairs of points that are the same distance apart and two pairs of points which are at `sqrt(2)` times this distance. (There is another combination of points for which 4 have one distance and 2 another. This is an isosceles triangle with an inscribed equilateral triangle - the ratio of the two squares is `2+sqrt(3)`
+First we need to think how we define a square - it has 4 sides of equal length and sides at right angles. If we want to define it terms of distances between points we have 4 pairs of points that are the same distance apart and two pairs of points which are at `sqrt(2)` times this distance.
+
+**Note:** There are two other combinations of points for which 4 of the distances are the same and 2 of the distances and the same. These are:
+  * an isosceles triangle with an inscribed equilateral triangle - the ratio of the two squares is `2+sqrt(3)`
+  * a kite - for which one half is an equilateral triangle and the other has height `1-sqrt(3)/2` - the ratio of the two squares is `2-sqrt(3)`.
 
 We therefore measure the squares of the distances between the points, and collect them together. If the list of distances is 2, and the ratio of the squares of the distance is 2 then we have a square.
 
