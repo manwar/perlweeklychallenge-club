@@ -117,6 +117,8 @@ First we need to think how we define a square - it has 4 sides of equal length a
   * an isosceles triangle with an inscribed equilateral triangle - the ratio of the two squares is `2+sqrt(3)`
   * a kite - for which one half is an equilateral triangle and the other has height `1-sqrt(3)/2` - the ratio of the two squares is `2-sqrt(3)`.
 
+![Layout of points](https://github.com/drbaggy/perlweeklychallenge-club/blob/master/challenge-123/james-smith/sets-of-points.png?raw=true)
+
 We therefore measure the squares of the distances between the points, and collect them together. If the list of distances is 2, and the ratio of the squares of the distance is 2 then we have a square.
 
  * The `while/foreach` loops calculate the square of the distances between points, and stores these in the hash `%dist` where the distance is the key.
