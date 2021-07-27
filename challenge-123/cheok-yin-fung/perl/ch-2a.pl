@@ -1,22 +1,22 @@
 #!/usr/bin/perl
 # The Weekly Challenge 123
 # Task 2 extension: Square/Cube/Hypercube Points
-# Usage: ch-2a.pl (optional $k)  (optional)$D 
+# Usage: ch-2a.pl (optional $k) (optional)$D 
 # $k: 2 or 3 or 4, stands for square or cube or hypercube, default is 3
-# $D: 2 or above, cannot be smaller than $k, default is 3
+# $D: 2 or above, cannot be smaller than $k, default is same as $k
 
 use strict;
 use warnings;
 use v5.10.0;
-use Test::More tests => 5; #7  #extend to 10 after writing cases for rotation
-# extends after writing cases for 3D or above
+use Test::More tests => 9; 
+
 use Algorithm::Combinatorics qw(permutations);  #use for hypercube
 
 
 my $k = $ARGV[0] || 3;
-my $D = $ARGV[1] || 3;
+my $D = $ARGV[1] || $k;
 
-die "Usage: ch-2a.pl [2, 3 or 4] [(optional)dimension of space] " 
+die "Usage: ch-2a.pl [2, 3 or 4] (optional)[dimension of space] " 
     if $k > 4 or $k <= 1;
 die "How can I put a $k-polytope into $D-dim space? \n" if $k > $D;
 
@@ -32,7 +32,7 @@ sub is_square {
     return 0 unless vec_same($v0, vec_sum($v1, $v2) ) xor
                     vec_same($v1, vec_sum($v2, $v0) ) xor
                     vec_same($v2, vec_sum($v0, $v1) );
-    my @n_vector = map { norm($_) } ($v0, $v1, $v2);
+    my @n_vector = map { norm_f($_) } ($v0, $v1, $v2);
     @n_vector = sort {$a<=>$b} @n_vector;
     if ( $n_vector[0] == $n_vector[1] ) { 
         return 1;
@@ -48,7 +48,7 @@ sub is_cube {
     $v{$_} = vec_subtract($p[0], $p[$_]) for (1..7);
     my @ind = sort { norm($v{$a}) <=> norm($v{$b}) } keys %v;
     my ($N, $W, $U) = ($v{$ind[0]} , $v{$ind[1]} , $v{$ind[2]}) ;
-    return 0 unless norm($N) == norm($W) && norm($N) == norm($U);
+    return 0 unless norm_f($N) == norm_f($W) && norm_f($N) == norm_f($U);
     return 0 unless vec_prod($N,$W) == 0 && vec_prod($W,$U) == 0 
                         && vec_prod($U,$N) == 0;
     my $NW = vec_sum($N, $W);
@@ -84,25 +84,20 @@ sub is_cube {
     }
     return 0 if !$bool;
 
-    my $NWU = vec_sum( $N, vec_sum($W, $U) );
+    my $NWU = vec_sum( $N, $WU);
     if ( vec_same( $v{$ind[6]} , $NWU ) ) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
-=pod 
-   if ( vec_same( $v{$ind[6]} , $NWU ) ) {
+=pod
         return 0 unless
             2*norm($N) == norm($NW) &&
             norm($NW) == norm($WU) &&
             norm($WU) == norm($UN) &&
             3*norm($N) == norm($NWU);
+=cut
         return 1;
-    } else {
+    }
+    else {
         return 0;
     }
-=cut
 }
 
 sub is_hypercube {
@@ -113,15 +108,16 @@ sub is_hypercube {
     my ($N, $W, $U, $A) = ( $v{$ind[0]}, $v{$ind[1]} , 
                             $v{$ind[2]}, $v{$ind[3]} );
     return 0 unless 
-        norm($N) == norm($W) && norm($W) == norm($U)
-                             && norm($U) == norm($A);
+        norm_f($N) == norm_f($W) && norm_f($W) == norm_f($U)
+                             && norm_f($U) == norm_f($A);
     return 0 unless 
         vec_prod($N, $W) == 0 &&
         vec_prod($N, $U) == 0 &&
         vec_prod($N, $A) == 0 &&
-        vec_prod($A, $W ) == 0 &&
-        vec_prod($A, $U ) == 0 &&
-        vec_prod($W, $U ) == 0 ;
+        vec_prod($A, $W) == 0 &&
+        vec_prod($A, $U) == 0 &&
+        vec_prod($W, $U) == 0 ;
+
     my $AU = vec_sum($A, $U);
     my $AW = vec_sum($A, $W);
     my $AN = vec_sum($A, $N);
@@ -132,12 +128,12 @@ sub is_hypercube {
     my $iter_face = permutations([$AU, $UN, $NW, $WU, $AW, $AN]);
     while (!$bool_face && (my $p = $iter_face->next)) {
         $bool_face = 
-            vec_same($v{$ind[4]}, $AU) &&
-            vec_same($v{$ind[5]}, $UN) &&
-            vec_same($v{$ind[6]}, $NW) &&
-            vec_same($v{$ind[7]}, $WU) &&
-            vec_same($v{$ind[8]}, $AW) &&
-            vec_same($v{$ind[9]}, $AN) ;
+            vec_same($v{$ind[4]}, $p->[0]) &&
+            vec_same($v{$ind[5]}, $p->[1]) &&
+            vec_same($v{$ind[6]}, $p->[2]) &&
+            vec_same($v{$ind[7]}, $p->[3]) &&
+            vec_same($v{$ind[8]}, $p->[4]) &&
+            vec_same($v{$ind[9]}, $p->[5]) ;
     }
     return 0 if !$bool_face;
 
@@ -149,21 +145,16 @@ sub is_hypercube {
     my $iter_cube = permutations([$UNW, $ANW, $AWU, $AUN]);
     while (!$bool_cube && (my $p = $iter_cube->next)) {
         $bool_cube = 
-            vec_same($v{$ind[10]}, $UNW) &&
-            vec_same($v{$ind[11]}, $ANW) &&
-            vec_same($v{$ind[12]}, $AWU) &&
-            vec_same($v{$ind[13]}, $AUN);
+            vec_same($v{$ind[10]}, $p->[0]) &&
+            vec_same($v{$ind[11]}, $p->[1]) &&
+            vec_same($v{$ind[12]}, $p->[2]) &&
+            vec_same($v{$ind[13]}, $p->[3]);
     }
     return 0 if !$bool_cube;
+
     my $AUNW = vec_sum($AU,$NW);
     if ( vec_same($v{$ind[14]}, $AUNW) ) {
-        return 1;
-    }
-    else {
-        return 0;
-    }
 =pod
-    if ( vec_same($v{$ind[14]}, $AUNW) ) {
         return 0 unless 
             2*norm($N) == norm($NW) &&
             norm($NW) == norm($AU) &&
@@ -176,11 +167,12 @@ sub is_hypercube {
             3*norm($N) == norm($AWU) &&
             3*norm($N) == norm($AUN) &&
             4*norm($N) == norm($AUNW);
+=cut
         return 1;
-    } else {
+    }
+    else {
         return 0;
     }
-=cut
 }
 
 sub vec_prod {
@@ -197,6 +189,10 @@ sub norm {
     my $sum = 0;
     $sum+= ($p->[$_])**2 for (0..$p->$#*);
     return $sum;
+}
+
+sub norm_f {
+    return sprintf("%f", norm($_[0]));
 }
 
 sub vec_sum {
@@ -231,22 +227,55 @@ sub vec_subtract {
     return $ans;
 }
 
-# 2 tests
-ok is_square( [1, 2] , [4,3], [3,1], [2,4] ) == 1, "Knight's square";
-ok is_square( [1, 1] , [-1, 1], [ 1,-1], [-1,-1] ) == 1, "centre at origin";
 
-# 3 tests
+
+# 4 tests
+ok is_square( [1,0], [0,1], [-1,0],[0,-1]) == 1, "on x-axis and y-axis";
+
+ok is_square( [5/sqrt(26), 1/sqrt(26)], 
+              [-1/sqrt(26), 5/sqrt(26)],
+              [-5/sqrt(26), -1/sqrt(26)], 
+              [1/sqrt(26), -5/sqrt(26)]) == 1,
+             "inclined by arctan(1/5), centre at origin"; 
+
+#ok is_square( 
+#              [cos(atan2(1,5)), sin(atan2(1,5))], [-sin(atan2(1,5)), cos(atan2(1,5))],
+#              [-cos(atan2(1,5)), -sin(atan2(1,5))],[sin(atan2(1,5)), -cos(atan2(1,5))]
+#            )  
+#              == 0, "arctan(1/5) by atan2(), fail to catch the equalities due to floating-point";  
+
+ok is_square( [1, 2] , [4,3], [3,1], [2,4] ) == 1, "Knight's square";
+ok is_square( [1, 1] , [-1, 1], [1,-1], [-1,-1] ) == 1, "centre at origin";
+
+# 4 tests
 ok is_cube( [1, 1, 1], [1, 1, 0], [1, 0, 1], [1, 0, 0], 
             [0, 1, 1], [0, 1, 0], [0, 0, 1], [0, 0, 0] ) == 1, 
             "standard 2**3";
 ok is_cube([ -2, -2, -2], [ -2, -2,  2], [ -2,  2, -2], [ -2,  2,  2], 
            [  2, -2, -2], [  2, -2,  2], [  2,  2, -2], [  2,  2,  2]) == 1, 
-            "center at origin";
-# ok is_cube( [1, 1, 1] , [-1,1], [1,-1], [-1,-1] ) == 1, 
-#           "a rotated cube centred at somewhere";
+            "centre at origin";
+ok is_cube( 
+            [-2, -2*sqrt(3), 3-2*sqrt(3)]   ,  
+            [-2, 4-2*sqrt(3), 3+2*sqrt(3)],    
+            [-2, 2*sqrt(3), -2*sqrt(3)-1 ],  
+            [-2, 4+2*sqrt(3), -1+2*sqrt(3) ], 
+            [ 6, -2*sqrt(3), 3-2*sqrt(3)],
+            [ 6, 4-2*sqrt(3), 3+2*sqrt(3)],
+            [ 6, 2*sqrt(3), -2*sqrt(3)-1],
+            [ 6, 4+2*sqrt(3), -1+2*sqrt(3)]
+           ) 
+              == 1, "a rotated cube centred at (2,2,1)";
 ok is_cube([  2,  2,  2], [  2,  3,  2], [  2,  2,  3], [  2,  4,  2], 
            [  3,  3,  2], [  2,  2,  1], [  2,  3,  2], [  2,  7,  3]) == 0, 
-            "not a cube";
+            "this is not a cube";
 
-
-# test for hypercube is needed
+# 1 test
+ok is_hypercube(
+                [0,0,0,0],[0,0,0,1],[0,0,1,0],
+                [0,0,1,1],[0,1,0,0],[0,1,0,1],
+                [0,1,1,0],[0,1,1,1],[1,0,0,0],
+                [1,0,0,1],[1,0,1,0],[1,0,1,1],
+                [1,1,0,0],[1,1,0,1],[1,1,1,0],
+                [1,1,1,1]
+               ) == 1, "hypercube";
+done_testing();

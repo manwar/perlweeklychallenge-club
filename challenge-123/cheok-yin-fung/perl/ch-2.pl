@@ -8,7 +8,7 @@
 use strict;
 use warnings;
 use v5.10.0;
-use Test::More tests => 4; 
+use Test::More tests => 5; 
 #extend to 7 test cases after writing cases for rotation or 3D
 
 my $D = $ARGV[0] || 2;
@@ -19,24 +19,31 @@ my $pt2 = [split " ", <STDIN>];
 my $pt3 = [split " ", <STDIN>];
 
 say is_square($pt0, $pt1, $pt2, $pt3);
-say "";
+
 
 sub is_square {
     my ($p0,$p1,$p2,$p3) = ($_[0], $_[1], $_[2], $_[3]);
     my $v0 = vec_subtract($p0, $p1);
     my $v1 = vec_subtract($p0, $p2);
     my $v2 = vec_subtract($p0, $p3);
+    # "cross product test";
     return 0 unless (vec_prod($v1, $v2) == 0) xor
                     (vec_prod($v0, $v2) == 0) xor
                     (vec_prod($v0, $v1) == 0);
+    # "vector sum test";
     return 0 unless vec_same($v0, vec_sum($v1, $v2) ) xor
                     vec_same($v1, vec_sum($v2, $v0) ) xor
                     vec_same($v2, vec_sum($v0, $v1) );
     my @n_vector = map { norm($_) } ($v0, $v1, $v2);
     @n_vector = sort {$a<=>$b} @n_vector;
-    if ( $n_vector[0] == $n_vector[1] ) { 
+    # "norm test"
+    #if ( $n_vector[0] == $n_vector[1] ) {
+#   the above conditional is fit for integter coordinates
+#   the  below is special arrangement for the 5th test case 
+#   or floating point number in general
+    if ( sprintf("%f",$n_vector[0]) eq sprintf("%f", $n_vector[1]) ) { 
         return 1;
-    }
+    } 
     return 0;
 }
 
@@ -93,5 +100,7 @@ ok is_square( [10,20], [20,20], [20, 10], [10, 10] ) == 1, "Example 1";
 ok is_square( [12,24], [16,10], [20, 12], [18, 16] ) == 0, "Example 2";
 ok is_square( [1, 2] , [4,3], [3,1], [2,4] ) == 1, "Knight's square";
 ok is_square( [1, 1] , [-1, 1], [ 1,-1], [-1,-1] ) == 1, "centre at origin";
-
+ok is_square( [1, sqrt(3)/2, -1/2], [1, -sqrt(3)/2, 1/2], 
+              [-1, sqrt(3)/2, -1/2], [-1, -sqrt(3)/2, 1/2] ) == 1, 
+             "centre at origin, inclined";
 done_testing();
