@@ -109,7 +109,10 @@ benchmarks.
 
 ***You are given coordinates of four points i.e. (x1, y1), (x2, y2), (x3, y3) and (x4, y4). Write a script to find out if the given four points form a square.***
 
-## Solution.
+## Assumption
+
+We will assume that the points are not in any particular order (The sequare may be p1->p2->p3->p4 OR p1->p3->p2->p4)
+## Solution
 
 First we need to think how we define a square - it has 4 sides of equal length and sides at right angles. If we want to define it terms of distances between points we have 4 pairs of points that are the same distance apart and two pairs of points which are at `sqrt(2)` times this distance.
 
@@ -117,9 +120,13 @@ First we need to think how we define a square - it has 4 sides of equal length a
   * an isosceles triangle with an inscribed equilateral triangle - the ratio of the two squares is `2+sqrt(3)`
   * a kite - for which one half is an equilateral triangle and the other has height `1-sqrt(3)/2` - the ratio of the two squares is `2-sqrt(3)`.
 
-![Layout of points](https://github.com/drbaggy/perlweeklychallenge-club/blob/master/challenge-123/james-smith/sets-of-points.png?raw=true)
+There are three other combinations of points for which there are only two distances.
+  * With 5 of one length and 1 of another - we have an rhomobus consisting of two equilateral triangles (ratio of squares is 3)
+  * With 3 of one length and 3 of another - we have a equilateral triangle with the fourth point at it's centre (ratio of squares is also 3) and trapezium which is a regular pentagon with one point knocked off (with ratio of squares `2:3+sqrt(5)`
+`
+![Layout of points](sets-of-points.png?raw=true)
 
-We therefore measure the squares of the distances between the points, and collect them together. If the list of distances is 2, and the ratio of the squares of the distance is 2 then we have a square.
+We therefore measure the squares of the distances between the points, and collect them together. If the list of distances is 2, and the ratio of the squares of the distances is 2 then we have a square.
 
  * The `while/foreach` loops calculate the square of the distances between points, and stores these in the hash `%dist` where the distance is the key.
  * We flip the hash so that the keys become values and values become keys. This allows us to check to see if we have one length 4 times and one length 2 times, and check the ratio of the length of the diagonal vs the length of the edges of the sides to see that it is 2.
