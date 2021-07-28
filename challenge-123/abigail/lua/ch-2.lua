@@ -13,16 +13,16 @@ for _ = 2, 8 do
     pat = pat .. "%s+(-?%d+)";
 end
 
+function dist (x1, y1, x2, y2)
+    return (x1 - x2) ^ 2 + (y1 - y2) ^ 2
+end
 
 for line in io . lines () do
     _, _, x1, y1, x2, y2, x3, y3, x4, y4 = line : find (pat)
-    local e1 = (x1 - x2) ^ 2 + (y1 - y2) ^ 2
-    local e2 = (x2 - x3) ^ 2 + (y2 - y3) ^ 2
-    local e3 = (x3 - x4) ^ 2 + (y3 - y4) ^ 2
-    local e4 = (x4 - x1) ^ 2 + (y4 - y1) ^ 2
-    local d1 = (x1 - x3) ^ 2 + (y1 - y3) ^ 2
-    local d2 = (x2 - x4) ^ 2 + (y2 - y4) ^ 2
-    if  e1 == e2 and e2 == e3 and e3 == e4 and d1 == d2 then
+    if  dist (x1, y1, x2, y2) == dist (x2, y2, x3, y3) and
+        dist (x2, y2, x3, y3) == dist (x3, y3, x4, y4) and
+        dist (x3, y3, x4, y4) == dist (x4, y4, x1, y1) and
+        dist (x1, y1, x3, y3) == dist (x2, y2, x4, y4) then
         print (1)
     else
         print (0)
