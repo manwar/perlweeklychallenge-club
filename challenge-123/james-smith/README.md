@@ -109,7 +109,10 @@ benchmarks.
 
 ***You are given coordinates of four points i.e. (x1, y1), (x2, y2), (x3, y3) and (x4, y4). Write a script to find out if the given four points form a square.***
 
-## Solution.
+## Assumption
+
+We will assume that the points are not in any particular order (The sequare may be p1->p2->p3->p4 OR p1->p3->p2->p4)
+## Solution
 
 First we need to think how we define a square - it has 4 sides of equal length and sides at right angles. If we want to define it terms of distances between points we have 4 pairs of points that are the same distance apart and two pairs of points which are at `sqrt(2)` times this distance.
 
@@ -117,7 +120,7 @@ First we need to think how we define a square - it has 4 sides of equal length a
   * an isosceles triangle with an inscribed equilateral triangle - the ratio of the two squares is `2+sqrt(3)`
   * a kite - for which one half is an equilateral triangle and the other has height `1-sqrt(3)/2` - the ratio of the two squares is `2-sqrt(3)`.
 
-![Layout of points](https://github.com/drbaggy/perlweeklychallenge-club/blob/master/challenge-123/james-smith/sets-of-points.png?raw=true)
+![Layout of points](sets-of-points.png?raw=true)
 
 We therefore measure the squares of the distances between the points, and collect them together. If the list of distances is 2, and the ratio of the squares of the distance is 2 then we have a square.
 
