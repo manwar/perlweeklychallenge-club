@@ -1,0 +1,32 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-2.bc < input-file
+#
+# Input should be terminated with a line starting with a 0
+#
+
+while (1) {
+    a = read ()
+    if (a == 0) {break}
+    b = read ()
+    c = read ()
+    d = read ()
+    e = read ()
+    f = read ()
+    g = read ()
+    h = read ()
+    i = (a - c) ^ 2 + (b - d) ^ 2
+    j = (c - e) ^ 2 + (d - f) ^ 2
+    k = (e - g) ^ 2 + (f - h) ^ 2
+    l = (g - a) ^ 2 + (h - b) ^ 2
+    m = (a - e) ^ 2 + (b - f) ^ 2
+    n = (c - g) ^ 2 + (d - h) ^ 2
+    o = 0
+    if (i == j && j == k && k == l && m == n) {
+        o = 1
+    }
+    o
+}
