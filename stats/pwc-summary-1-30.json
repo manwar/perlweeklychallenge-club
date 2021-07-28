@@ -1,16 +1,20 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-07-28 09:35:13 GMT"
    },
    "series" : [
       {
@@ -49,7 +53,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -81,7 +84,8 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -119,10 +123,8 @@
          ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -158,10 +160,8 @@
          "Bob Lied"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-07-28 08:17:25 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
