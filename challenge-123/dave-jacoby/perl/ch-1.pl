@@ -15,20 +15,24 @@ GetOptions( 'n=i' => \$n, );
 carp 'Bad Input' unless $n > 0;
 
 my $u = get_ugly($n);
-say "Input:  \$n = $n";
-say "Output: $u";
+say "Input:  \$n = $n  Output: $u";
 
 sub get_ugly ( $n ) {
-    return 1 if $n == 1;
-    my $c = 1;
+    my $c = 0;
     my $u = 0;
     while (1) {
         $u++;
-        my $f = 0;
-        $f = 1 if $u % 2 == 0;
-        $f = 1 if $u % 3 == 0;
-        $f = 1 if $u % 5 == 0;
-        $c++      if $f;
+        my $f = is_ugly($u) ? 1 : 0;
+        $c++ if $f;
         return $u if $n == $c;
     }
+}
+
+sub is_ugly( $n ) {
+    for my $i ( 2, 3, 5 ) {
+        while ( $n % $i == 0 ) {
+            $n /= $i;
+        }
+    }
+    return $n == 1 ? 1 : 0;
 }
