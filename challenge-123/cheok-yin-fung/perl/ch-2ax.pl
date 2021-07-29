@@ -10,13 +10,13 @@ use warnings;
 use v5.10.0;
 use Test::More tests => 14; 
 
-use Algorithm::Combinatorics qw(permutations);  #use for hypercube
+use Algorithm::Combinatorics qw(permutations);  #use for cube and hypercube
 
 
 my $k = $ARGV[0] || 3;
 my $D = $ARGV[1] || $k;
 
-die "Usage: ch-2a.pl [2, 3 or 4] (optional)[dimension of space] " 
+die "Usage: ch-2ax.pl [2, 3 or 4] (optional)[dimension of space] " 
     if $k > 4 or $k <= 1;
 die "How can I put a $k-polytope into $D-dim space? \n" if $k > $D;
 
@@ -29,9 +29,6 @@ sub is_square {
     return 0 unless (vec_prod($v1, $v2) == 0) xor
                     (vec_prod($v0, $v2) == 0) xor
                     (vec_prod($v0, $v1) == 0);
-#    return 0 unless vec_same($v0, vec_sum($v1, $v2) ) xor
-#                    vec_same($v1, vec_sum($v2, $v0) ) xor
-#                    vec_same($v2, vec_sum($v0, $v1) );
     my @n_vector = map { norm_f($_) } ($v0, $v1, $v2);
     @n_vector = sort {$a<=>$b} @n_vector;
     if ( $n_vector[0] == $n_vector[1] && 2*$n_vector[0] == $n_vector[2] ) { 
@@ -60,8 +57,6 @@ sub is_cube {
           &&  vec_same($UN, $v{$ind[5]}) ) { $bool = 1;
       } elsif ( vec_same($WU, $v{$ind[5]}) 
            &&   vec_same($UN, $v{$ind[4]}) ) { $bool = 1;
-      } else {
-        $bool = undef;
       }
     } 
     if (!$bool && vec_same($NW, $v{$ind[4]})) {
@@ -69,8 +64,6 @@ sub is_cube {
           &&  vec_same($UN, $v{$ind[5]}) ) { $bool = 1;
       } elsif ( vec_same($WU, $v{$ind[5]}) 
            &&   vec_same($UN, $v{$ind[3]}) ) { $bool = 1;
-      } else {
-        $bool = undef;
       }
     }
     if (!$bool && vec_same($NW, $v{$ind[5]})) {
@@ -178,7 +171,7 @@ sub is_hypercube {
 sub vec_prod {
     my $first = $_[0];
     my $second = $_[1];
-    die "Not the same dimension in vec_prod \n" if $first->$#* != $second->$#*;
+    warn "Not the same dimension in vec_prod \n" if $first->$#* != $second->$#*;
     my $sum = 0;
     $sum+= ($first->[$_]*$second->[$_]) for (0..$first->$#*);
     return $sum;
@@ -199,7 +192,7 @@ sub vec_sum {
     my $first = $_[0];
     my $second = $_[1];
     my $ans = [];
-    die "Not the same dimension in vec_sum \n" if $first->$#* != $second->$#*;
+    warn "Not the same dimension in vec_sum \n" if $first->$#* != $second->$#*;
     for my $s (0..$first->$#*) {
         push $ans->@*, $first->[$s] + $second->[$s];
     }
@@ -209,7 +202,7 @@ sub vec_sum {
 sub vec_same {
     my $first = $_[0];
     my $second = $_[1];
-    die "Not the same dimension in vec_same \n" if $first->$#* != $second->$#*;
+    warn "Not the same dimension in vec_same \n" if $first->$#* != $second->$#*;
     for my $s (0..$first->$#*) {
         return undef if $first->[$s] != $second->[$s];
     }
@@ -220,7 +213,7 @@ sub vec_subtract {
     my $first = $_[0];
     my $second = $_[1];
     my $ans = [];
-    die "Not the same dimension in vec_subtract\n" if $first->$#* != $second->$#*;
+    warn "Not the same dimension in vec_subtract\n" if $first->$#* != $second->$#*;
     for my $s (0..$first->$#*) {
         push $ans->@*, $second->[$s] - $first->[$s];
     }
@@ -239,34 +232,44 @@ ok is_square( [5/sqrt(26), 1/sqrt(26)],
              "inclined by arctan(1/5), centre at origin"; 
 
 ok is_square( 
-              [cos(atan2(1,5)), sin(atan2(1,5))], [-sin(atan2(1,5)), cos(atan2(1,5))],
-              [-cos(atan2(1,5)), -sin(atan2(1,5))],[sin(atan2(1,5)), -cos(atan2(1,5))]
+              [cos(atan2(1,5)), sin(atan2(1,5))], 
+              [-sin(atan2(1,5)), cos(atan2(1,5))],
+              [-cos(atan2(1,5)), -sin(atan2(1,5))],
+              [sin(atan2(1,5)), -cos(atan2(1,5))]
             )  
               == 1, "arctan(1/5) by atan2(), caught by the equalities";  
 
 ok is_square( 
-              [2.7*cos(atan2(1,5)), 2.7*sin(atan2(1,5))], [-2.7*sin(atan2(1,5)), 2.7*cos(atan2(1,5))],
-              [-2.7*cos(atan2(1,5)), -2.7*sin(atan2(1,5))],[2.7*sin(atan2(1,5)), -2.7*cos(atan2(1,5))]
+              [2.7*cos(atan2(1,5)), 2.7*sin(atan2(1,5))], 
+              [-2.7*sin(atan2(1,5)), 2.7*cos(atan2(1,5))],
+              [-2.7*cos(atan2(1,5)), -2.7*sin(atan2(1,5))],
+              [2.7*sin(atan2(1,5)), -2.7*cos(atan2(1,5))]
             )  
               == 1, "arctan(1/5) by atan2() of larger size (multipled by 2.7), caught by the equalities";  
 
 ok is_square( 
-              [2.8*cos(atan2(1,5)), 2.8*sin(atan2(1,5))], [-2.8*sin(atan2(1,5)), 2.8*cos(atan2(1,5))],
-              [-2.8*cos(atan2(1,5)), -2.8*sin(atan2(1,5))],[2.8*sin(atan2(1,5)), -2.8*cos(atan2(1,5))]
+              [2.8*cos(atan2(1,5)), 2.8*sin(atan2(1,5))], 
+              [-2.8*sin(atan2(1,5)), 2.8*cos(atan2(1,5))],
+              [-2.8*cos(atan2(1,5)), -2.8*sin(atan2(1,5))],
+              [2.8*sin(atan2(1,5)), -2.8*cos(atan2(1,5))]
             )  
               == 1, "arctan(1/5) by atan2() of larger size (multipled by 2.8), caught by the equalities";  
 
 ok is_square( 
-              [4.0*cos(atan2(1,5)), 4.0*sin(atan2(1,5))], [-4.0*sin(atan2(1,5)), 4.0*cos(atan2(1,5))],
-              [-4.0*cos(atan2(1,5)), -4.0*sin(atan2(1,5))],[4.0*sin(atan2(1,5)), -4.0*cos(atan2(1,5))]
+              [4.0*cos(atan2(1,5)), 4.0*sin(atan2(1,5))], 
+              [-4.0*sin(atan2(1,5)), 4.0*cos(atan2(1,5))],
+              [-4.0*cos(atan2(1,5)), -4.0*sin(atan2(1,5))],
+              [4.0*sin(atan2(1,5)), -4.0*cos(atan2(1,5))]
             )  
               == 1, "arctan(1/5) by atan2() of larger size (multipled by 4.0), caught by the equalities";  
 
 ok is_square( 
-              [0.0009*cos(atan2(1,5)), 0.0009*sin(atan2(1,5))], [-0.0009*sin(atan2(1,5)), 0.0009*cos(atan2(1,5))],
-              [-0.0009*cos(atan2(1,5)), -0.0009*sin(atan2(1,5))],[0.0009*sin(atan2(1,5)), -0.0009*cos(atan2(1,5))]
+              [0.0009*cos(atan2(1,5)), 0.0009*sin(atan2(1,5))], 
+              [-0.0009*sin(atan2(1,5)), 0.0009*cos(atan2(1,5))],
+              [-0.0009*cos(atan2(1,5)), -0.0009*sin(atan2(1,5))],
+              [0.0009*sin(atan2(1,5)), -0.0009*cos(atan2(1,5))]
             )  
-              == 1, "arctan(1/5) by atan2() of a much smaller size (multiple by 0.0009), caught by the equalities";  
+              == 1, "arctan(1/5) by atan2() of a much smaller size (multiple by 0.0009), caught by the equalities (_\"not ok\" is normal_)";  
 
 ok is_square( [1, 2] , [4,3], [3,1], [2,4] ) == 1, "Knight's square";
 ok is_square( [1, 1] , [-1, 1], [1,-1], [-1,-1] ) == 1, "centre at origin";

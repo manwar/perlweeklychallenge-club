@@ -34,7 +34,7 @@ sub is_square {
     # "norm test"
     #if ( $n_vector[0] == $n_vector[1] ) {
 #   the above conditional is fit for integter coordinates
-#   the below is special arrangement satarting from the 7th test case 
+#   the below is special arrangement starting from the 7th test case 
 #   or floating point number in general
     if ( sprintf("%f",$n_vector[0]) == sprintf("%f", $n_vector[1]) 
         && 2*sprintf("%f", $n_vector[0]) == sprintf("%f", $n_vector[2])
@@ -47,7 +47,7 @@ sub is_square {
 sub vec_prod {
     my $first = $_[0];
     my $second = $_[1];
-    die "Not the same dimension in vec_prod \n" if $first->$#* != $second->$#*;
+    warn "Not the same dimension in vec_prod \n" if $first->$#* != $second->$#*;
     my $sum = 0;
     $sum+= ($first->[$_]*$second->[$_]) for (0..$first->$#*);
     return $sum;
@@ -64,7 +64,7 @@ sub vec_sum {
     my $first = $_[0];
     my $second = $_[1];
     my $ans = [];
-    die "Not the same dimension in vec_sum \n" if $first->$#* != $second->$#*;
+    warn "Not the same dimension in vec_sum \n" if $first->$#* != $second->$#*;
     for my $s (0..$first->$#*) {
         push $ans->@*, $first->[$s] + $second->[$s];
     }
@@ -74,7 +74,7 @@ sub vec_sum {
 sub vec_same {
     my $first = $_[0];
     my $second = $_[1];
-    die "Not the same dimension in vec_same \n" if $first->$#* != $second->$#*;
+    warn "Not the same dimension in vec_same \n" if $first->$#* != $second->$#*;
     for my $s (0..$first->$#*) {
         return 0 if $first->[$s] != $second->[$s];
     }
@@ -85,7 +85,7 @@ sub vec_subtract {
     my $first = $_[0];
     my $second = $_[1];
     my $ans = [];
-    die "Not the same dimension in vec_subtract\n" if $first->$#* != $second->$#*;
+    warn "Not the same dimension in vec_subtract\n" if $first->$#* != $second->$#*;
     for my $s (0..$first->$#*) {
         push $ans->@*, $second->[$s] - $first->[$s];
     }
