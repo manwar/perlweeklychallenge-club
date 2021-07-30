@@ -6,6 +6,7 @@
 # $D: 2 or above, cannot be smaller than $k, default is same as $k
 
 # Note: check out $ diff ch-2a.pl ch-2ax.pl
+# ALSO: ch-2x.pl is the best implementation.
 
 use strict;
 use warnings;

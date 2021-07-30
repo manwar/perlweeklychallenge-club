@@ -1,12 +1,10 @@
 #!/usr/bin/perl
 # The Weekly Challenge 123
 # Task 2 extension: Square/Cube/Hypercube Points
-# Usage: ch-2ax.pl (optional) $k (optional)$D 
+# Usage: $ ch-2x.pl (optional) $k (optional)$D 
 # $k: 2 or 3 or 4, stands for square or cube or hypercube, default is 3
 # $D: 2 or above, cannot be smaller than $k, default is same as $k
 
-# Note: check out $ diff ch-2a.pl ch-2ax.pl
-# ALSO: ch-2x.pl is the best implementation.
 use strict;
 use warnings;
 use v5.10.0;
@@ -18,7 +16,7 @@ use Algorithm::Combinatorics qw(permutations);  #use for hypercube
 my $k = $ARGV[0] || 3;
 my $D = $ARGV[1] || $k;
 
-die "Usage: ch-2ax.pl [2, 3 or 4] (optional)[dimension of space] " 
+die "Usage: ch-2x.pl [2, 3 or 4] (optional)[dimension of space] " 
     if $k > 4 or $k <= 1;
 die "How can I put a $k-polytope into $D-dim space? \n" if $k > $D;
 
@@ -54,25 +52,25 @@ sub is_cube {
     my $WU = vec_sum($W, $U);
     my $UN = vec_sum($U, $N);
     my $bool = undef;
-    if (vec_same($NW, $v{$ind[3]})) {
-      if   (  vec_same($WU, $v{$ind[4]}) 
-          &&  vec_same($UN, $v{$ind[5]}) ) { $bool = 1;
-      } elsif ( vec_same($WU, $v{$ind[5]}) 
-           &&   vec_same($UN, $v{$ind[4]}) ) { $bool = 1;
+    if (vec_same_f($NW, $v{$ind[3]})) {
+      if   (  vec_same_f($WU, $v{$ind[4]}) 
+          &&  vec_same_f($UN, $v{$ind[5]}) ) { $bool = 1;
+      } elsif ( vec_same_f($WU, $v{$ind[5]}) 
+           &&   vec_same_f($UN, $v{$ind[4]}) ) { $bool = 1;
       }
     } 
-    if (!$bool && vec_same($NW, $v{$ind[4]})) {
-      if   (  vec_same($WU, $v{$ind[3]}) 
-          &&  vec_same($UN, $v{$ind[5]}) ) { $bool = 1;
-      } elsif ( vec_same($WU, $v{$ind[5]}) 
-           &&   vec_same($UN, $v{$ind[3]}) ) { $bool = 1;
-      }
+    if (!$bool && vec_same_f($NW, $v{$ind[4]})) {
+      if   (  vec_same_f($WU, $v{$ind[3]}) 
+          &&  vec_same_f($UN, $v{$ind[5]}) ) { $bool = 1;
+      } elsif ( vec_same_f($WU, $v{$ind[5]}) 
+           &&   vec_same_f($UN, $v{$ind[3]}) ) { $bool = 1;
+      } 
     }
-    if (!$bool && vec_same($NW, $v{$ind[5]})) {
-      if   (  vec_same($WU, $v{$ind[4]}) 
-          &&  vec_same($UN, $v{$ind[3]}) ) { $bool = 1;
-      } elsif ( vec_same($WU, $v{$ind[3]}) 
-           &&   vec_same($UN, $v{$ind[4]}) ) { $bool = 1;
+    if (!$bool && vec_same_f($NW, $v{$ind[5]})) {
+      if   (  vec_same_f($WU, $v{$ind[4]}) 
+          &&  vec_same_f($UN, $v{$ind[3]}) ) { $bool = 1;
+      } elsif ( vec_same_f($WU, $v{$ind[3]}) 
+           &&   vec_same_f($UN, $v{$ind[4]}) ) { $bool = 1;
       } else {
         return 0;
       }
@@ -80,14 +78,7 @@ sub is_cube {
     return 0 if !$bool;
 
     my $NWU = vec_sum( $N, $WU);
-    if ( vec_same( $v{$ind[6]} , $NWU ) ) {
-=pod
-        return 0 unless
-            2*norm_f($N) == norm_f($NW) &&
-            norm_f($NW) == norm_f($WU) &&
-            norm_f($WU) == norm_f($UN) &&
-            3*norm_f($N) == norm_f($NWU);
-=cut
+    if ( vec_same_f( $v{$ind[6]} , $NWU ) ) {
         return 1;
     }
     else {
@@ -123,12 +114,12 @@ sub is_hypercube {
     my $iter_face = permutations([$AU, $UN, $NW, $WU, $AW, $AN]);
     while (!$bool_face && (my $p = $iter_face->next)) {
         $bool_face = 
-            vec_same($v{$ind[4]}, $p->[0]) &&
-            vec_same($v{$ind[5]}, $p->[1]) &&
-            vec_same($v{$ind[6]}, $p->[2]) &&
-            vec_same($v{$ind[7]}, $p->[3]) &&
-            vec_same($v{$ind[8]}, $p->[4]) &&
-            vec_same($v{$ind[9]}, $p->[5]) ;
+            vec_same_f($v{$ind[4]}, $p->[0]) &&
+            vec_same_f($v{$ind[5]}, $p->[1]) &&
+            vec_same_f($v{$ind[6]}, $p->[2]) &&
+            vec_same_f($v{$ind[7]}, $p->[3]) &&
+            vec_same_f($v{$ind[8]}, $p->[4]) &&
+            vec_same_f($v{$ind[9]}, $p->[5]) ;
     }
     return 0 if !$bool_face;
 
@@ -140,29 +131,15 @@ sub is_hypercube {
     my $iter_cube = permutations([$UNW, $ANW, $AWU, $AUN]);
     while (!$bool_cube && (my $p = $iter_cube->next)) {
         $bool_cube = 
-            vec_same($v{$ind[10]}, $p->[0]) &&
-            vec_same($v{$ind[11]}, $p->[1]) &&
-            vec_same($v{$ind[12]}, $p->[2]) &&
-            vec_same($v{$ind[13]}, $p->[3]);
+            vec_same_f($v{$ind[10]}, $p->[0]) &&
+            vec_same_f($v{$ind[11]}, $p->[1]) &&
+            vec_same_f($v{$ind[12]}, $p->[2]) &&
+            vec_same_f($v{$ind[13]}, $p->[3]);
     }
     return 0 if !$bool_cube;
 
     my $AUNW = vec_sum($AU,$NW);
-    if ( vec_same($v{$ind[14]}, $AUNW) ) {
-=pod
-        return 0 unless 
-            2*norm_f($N) == norm_f($NW) &&
-            norm_f($NW) == norm_f($AU) &&
-            norm_f($NW) == norm_f($UN) &&
-            norm_f($NW) == norm_f($WU) &&
-            norm_f($NW) == norm_f($AW) &&
-            norm_f($NW) == norm_f($AN) &&
-            3*norm_f($N) == norm_f($UNW) &&
-            3*norm_f($N) == norm_f($ANW) &&
-            3*norm_f($N) == norm_f($AWU) &&
-            3*norm_f($N) == norm_f($AUN) &&
-            4*norm_f($N) == norm_f($AUNW);
-=cut
+    if ( vec_same_f($v{$ind[14]}, $AUNW) ) {
         return 1;
     }
     else {
@@ -208,11 +185,21 @@ sub vec_sum {
 sub vec_same {
     my $first = $_[0];
     my $second = $_[1];
-    warn "Not the same dimension in vec_same \n" if $first->$#* != $second->$#*;
+    warn "Not the same dimension in vec_same_f \n" if $first->$#* != $second->$#*;
     for my $s (0..$first->$#*) {
         return undef if $first->[$s] != $second->[$s];
     }
     return 1;
+}
+
+sub vec_same_f {
+    my $first = $_[0];
+    my $second = $_[1];
+    warn "Not the same dimension in vec_same_f \n" if $first->$#* != $second->$#*;
+    for my $s (0..$first->$#*) {
+        return undef if sprintf("%f",$first->[$s]) != sprintf("%f",$second->[$s]);
+    }
+    return 1;    
 }
 
 sub vec_subtract {
