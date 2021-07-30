@@ -1,9 +1,11 @@
 #!/usr/bin/perl
 # The Weekly Challenge 123
 # Task 2 extension: Square/Cube/Hypercube Points
-# Usage: ch-2a.pl (optional $k) (optional)$D 
+# Usage: $ ch-2a.pl (optional) $k (optional)$D 
 # $k: 2 or 3 or 4, stands for square or cube or hypercube, default is 3
 # $D: 2 or above, cannot be smaller than $k, default is same as $k
+
+# Note: check out $ diff ch-2a.pl ch-2ax.pl
 
 use strict;
 use warnings;
@@ -26,12 +28,18 @@ sub is_square {
     my $v0 = vec_subtract($p0, $p1);
     my $v1 = vec_subtract($p0, $p2);
     my $v2 = vec_subtract($p0, $p3);
-    return 0 unless (vec_prod($v1, $v2) == 0) xor
-                    (vec_prod($v0, $v2) == 0) xor
-                    (vec_prod($v0, $v1) == 0);
+    return 0 unless (vec_prod_f($v1, $v2) == 0) xor
+                    (vec_prod_f($v0, $v2) == 0) xor
+                    (vec_prod_f($v0, $v1) == 0);
+#========== BEGIN: diff of ch-2a.pl and ch-2ax.pl =========
     return 0 unless vec_same($v0, vec_sum($v1, $v2) ) xor
                     vec_same($v1, vec_sum($v2, $v0) ) xor
                     vec_same($v2, vec_sum($v0, $v1) );
+#=========== END: diff of ch-2a.pl and ch-2ax.pl ==========
+# COMMENT:
+#  this test is mathematically NOT necessary, 
+#  and if you check it against ch-2ax.pl,
+#  you will find this section is the source of failed tests!
     my @n_vector = map { norm_f($_) } ($v0, $v1, $v2);
     @n_vector = sort {$a<=>$b} @n_vector;
     if ( $n_vector[0] == $n_vector[1] ) { 
@@ -46,11 +54,11 @@ sub is_cube {
     my @p = @_;
     my %v;
     $v{$_} = vec_subtract($p[0], $p[$_]) for (1..7);
-    my @ind = sort { norm($v{$a}) <=> norm($v{$b}) } keys %v;
+    my @ind = sort { norm_f($v{$a}) <=> norm_f($v{$b}) } keys %v;
     my ($N, $W, $U) = ($v{$ind[0]} , $v{$ind[1]} , $v{$ind[2]}) ;
     return 0 unless norm_f($N) == norm_f($W) && norm_f($N) == norm_f($U);
-    return 0 unless vec_prod($N,$W) == 0 && vec_prod($W,$U) == 0 
-                        && vec_prod($U,$N) == 0;
+    return 0 unless vec_prod_f($N,$W) == 0 && vec_prod_f($W,$U) == 0 
+                        && vec_prod_f($U,$N) == 0;
     my $NW = vec_sum($N, $W);
     my $WU = vec_sum($W, $U);
     my $UN = vec_sum($U, $N);
@@ -93,19 +101,19 @@ sub is_hypercube {
     my @p = @_;
     my %v;
     $v{$_} = vec_subtract($p[0], $p[$_]) for (1..15);
-    my @ind = sort { norm($v{$a}) <=> norm($v{$b}) } keys %v;
+    my @ind = sort { norm_f($v{$a}) <=> norm_f($v{$b}) } keys %v;
     my ($N, $W, $U, $A) = ( $v{$ind[0]}, $v{$ind[1]} , 
                             $v{$ind[2]}, $v{$ind[3]} );
     return 0 unless 
         norm_f($N) == norm_f($W) && norm_f($W) == norm_f($U)
                              && norm_f($U) == norm_f($A);
     return 0 unless 
-        vec_prod($N, $W) == 0 &&
-        vec_prod($N, $U) == 0 &&
-        vec_prod($N, $A) == 0 &&
-        vec_prod($A, $W) == 0 &&
-        vec_prod($A, $U) == 0 &&
-        vec_prod($W, $U) == 0 ;
+        vec_prod_f($N, $W) == 0 &&
+        vec_prod_f($N, $U) == 0 &&
+        vec_prod_f($N, $A) == 0 &&
+        vec_prod_f($A, $W) == 0 &&
+        vec_prod_f($A, $U) == 0 &&
+        vec_prod_f($W, $U) == 0 ;
 
     my $AU = vec_sum($A, $U);
     my $AW = vec_sum($A, $W);
@@ -159,6 +167,10 @@ sub vec_prod {
     return $sum;
 }
 
+sub vec_prod_f {
+    return sprintf("%f", vec_prod($_[0], $_[1]));
+}
+
 sub norm {
     my $p = $_[0];
     my $sum = 0;
@@ -204,7 +216,7 @@ sub vec_subtract {
 
 
 
-# 4 tests
+# 9 tests
 ok is_square( [1,0], [0,1], [-1,0],[0,-1]) == 1, "on x-axis and y-axis";
 
 ok is_square( [5/sqrt(26), 1/sqrt(26)], 
@@ -227,7 +239,9 @@ ok is_square(
               [-2.7*cos(atan2(1,5)), -2.7*sin(atan2(1,5))],
               [2.7*sin(atan2(1,5)), -2.7*cos(atan2(1,5))]
             )  
-              == 1, "arctan(1/5) by atan2() of larger size (multipled by 2.7), caught by the equalities";  
+              == 1, 
+             "arctan(1/5) by atan2() of larger size (multipled by 2.7)," 
+            ."caught by the equalities";  
 
 ok is_square( 
               [2.8*cos(atan2(1,5)), 2.8*sin(atan2(1,5))], 
@@ -235,7 +249,9 @@ ok is_square(
               [-2.8*cos(atan2(1,5)), -2.8*sin(atan2(1,5))],
               [2.8*sin(atan2(1,5)), -2.8*cos(atan2(1,5))]
             )  
-              == 1, "arctan(1/5) by atan2() of larger size (multipled by 2.8), caught by the equalities";  
+              == 1, 
+             "arctan(1/5) by atan2() of larger size (multipled by 2.8),"
+            ."caught by the equalities";  
 
 ok is_square( 
               [4.0*cos(atan2(1,5)), 4.0*sin(atan2(1,5))], 
@@ -243,7 +259,9 @@ ok is_square(
               [-4.0*cos(atan2(1,5)), -4.0*sin(atan2(1,5))],
               [4.0*sin(atan2(1,5)), -4.0*cos(atan2(1,5))]
             )  
-              == 1, "arctan(1/5) by atan2() of larger size (multipled by 4.0), caught by the equalities";  
+              == 1, 
+             "arctan(1/5) by atan2() of larger size (multipled by 4.0),"
+            ." caught by the equalities";  
 
 ok is_square( 
               [0.0009*cos(atan2(1,5)), 0.0009*sin(atan2(1,5))], 
@@ -251,7 +269,10 @@ ok is_square(
               [-0.0009*cos(atan2(1,5)), -0.0009*sin(atan2(1,5))],
               [0.0009*sin(atan2(1,5)), -0.0009*cos(atan2(1,5))]
             )  
-              == 1, "arctan(1/5) by atan2() of a much smaller size (multiple by 0.0009), caught by the equalities (_\"not ok\" is normal_)";  
+              == 1, 
+             "arctan(1/5) by atan2() of a much smaller size"
+            ."(multiple by 0.0009), caught by the equalities"
+            ."(_\"not ok\" is normal_)";  
 
 ok is_square( [1, 2] , [4,3], [3,1], [2,4] ) == 1, "Knight's square";
 ok is_square( [1, 1] , [-1, 1], [1,-1], [-1,-1] ) == 1, "centre at origin";
