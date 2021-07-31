@@ -12,6 +12,9 @@ use Test::More tests => 13;
 
 my $D = $ARGV[0] || 2;
 
+say "Input coordinates of 4 points in $D dimensional space:";
+say "a point per line.";
+
 my $pt0 = [split " ", <STDIN>];
 my $pt1 = [split " ", <STDIN>];
 my $pt2 = [split " ", <STDIN>];
@@ -42,7 +45,10 @@ sub is_square {
 #       times the edge length would not be a necessary check 
 #       if we preserve the dot product test, because in
 #       Euclidean space, if two vectors are orthogonal and in equal length,
-#       we can apply the Pythagorean theorem.
+#       we can apply the Pythagorean theorem for the norm of the vector sum.
+#       For DEMOSTRATION PURPOSE, 
+#       the test of orthogonality (the dot product test) is commented out by brace,
+#       but the dot product test will be used both for cube and hypercube.
          ) { 
         return 1;
     } 
@@ -69,27 +75,6 @@ sub norm {
     return $sum;
 }
 
-sub vec_sum {
-    my $first = $_[0];
-    my $second = $_[1];
-    my $ans = [];
-    warn "Not the same dimension in vec_sum \n" if $first->$#* != $second->$#*;
-    for my $s (0..$first->$#*) {
-        push $ans->@*, $first->[$s] + $second->[$s];
-    }
-    return $ans;
-}
-
-sub vec_same {
-    my $first = $_[0];
-    my $second = $_[1];
-    warn "Not the same dimension in vec_same \n" if $first->$#* != $second->$#*;
-    for my $s (0..$first->$#*) {
-        return 0 if $first->[$s] != $second->[$s];
-    }
-    return 1;
-}
-
 sub vec_subtract {
     my $first = $_[0];
     my $second = $_[1];
@@ -106,6 +91,8 @@ ok is_square( [10,20], [20,20], [20, 10], [10, 10] ) == 1, "Example 1";
 ok is_square( [12,24], [16,10], [20, 12], [18, 16] ) == 0, "Example 2";
 ok is_square( [1, 2] , [4,3], [3,1], [2,4] ) == 1, "Knight's square";
 ok is_square( [1, 1] , [-1, 1], [ 1,-1], [-1,-1] ) == 1, "centre at origin";
+
+# =========== test cases with irrational numbers ==============
 ok is_square( [1, sqrt(3)/2, -1/2], [1, -sqrt(3)/2, 1/2], 
               [-1, sqrt(3)/2, -1/2], [-1, -sqrt(3)/2, 1/2] ) == 1, 
              "centre at origin, inclined";
