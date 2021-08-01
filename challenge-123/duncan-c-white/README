@@ -1,57 +1,47 @@
-Task 1: "Average of Stream
+Task 1: "Ugly Numbers
 
-You are given a stream of numbers, @N.
+You are given an integer $n >= 1.
 
-Write a script to print the average of the stream at every point.
+Write a script to find the $nth element of Ugly Numbers.
 
-Example
-
-Input: @N = (10, 20, 30, 40, 50, 60, 70, 80, 90, ...)
-Output:      10, 15, 20, 25, 30, 35, 40, 45, 50, ...
-
-Average of first number is 10.
-Average of first 2 numbers (10+20)/2 = 15
-Average of first 3 numbers (10+20+30)/3 = 20
-Average of first 4 numbers (10+20+30+40)/4 = 25 and so on.
-"
-
-My notes: sounds quite simple, just requires a running total.
-
-
-Task 2: "Basketball Points
-
-You are given a score $S.
-
-You can win basketball points e.g. 1 point, 2 points and 3 points.
-
-Write a script to find out the different ways you can score $S.
+Ugly numbers are those number whose prime factors are 2, 3 or 5.
+For example, the first 10 Ugly Numbers are 1, 2, 3, 4, 5, 6, 8, 9, 10, 12.
 
 Example
 
-Input: $S = 4
-Output: 1 1 1 1
-        1 1 2
-        1 2 1
-        1 3
-        2 1 1
-        2 2
-        3 1
+	Input: $n = 7
+	Output: 8
 
-Input: $S = 5
-Output: 1 1 1 1 1
-        1 1 1 2
-        1 1 2 1
-        1 1 3
-        1 2 1 1
-        1 2 2
-        1 3 1
-        2 1 1 1
-        2 1 2
-        2 2 1
-        2 3
-        3 1 1
+	Input: $n = 10
+	Output: 12
 "
 
-My notes: Assuming I'm understanding it right, all combinations of
-removing 1, 2 or 3 from N repeatedly.  Easyish (recursive).
-NOTE: surely the $S = 5 example omits one last solution "3 2"?
+My notes: sounds quite simple.  I thought of digging out primes and
+factors code from previous PWCs, but the only primes we care about are
+2, 3 and 5.
+
+
+Task 2: "Square Points
+
+You are given coordinates of four points
+i.e. (x1, y1), (x2, y2), (x3, y3) and (x4, y4).
+
+Write a script to find out if the given four points form a square.
+
+Example
+
+	Input: x1 = 10, y1 = 20
+	       x2 = 20, y2 = 20
+	       x3 = 20, y3 = 10
+	       x4 = 10, y4 = 10
+	Output: 1 as the given coordinates form a square.
+
+	Input: x1 = 12, y1 = 24
+	       x2 = 16, y2 = 10
+	       x3 = 20, y3 = 12
+	       x4 = 18, y4 = 16
+	Output: 0 as the given coordinates doesn't form a square.
+"
+
+My notes: sounds surprisingly easy for a task 2.  I guess the points
+can be in any order.
