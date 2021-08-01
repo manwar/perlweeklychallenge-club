@@ -1,9 +1,19 @@
 {
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-08-01 18:33:37 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -39,9 +49,13 @@
          "E. Choroba"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
    },
    "series" : [
       {
@@ -80,7 +94,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             8,
             0,
@@ -112,9 +125,11 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             1,
             0,
@@ -146,22 +161,7 @@
             0,
             1,
             52
-         ],
-         "name" : "Blog"
+         ]
       }
-   ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-08-01 18:00:18 GMT"
-   }
+   ]
 }
