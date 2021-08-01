@@ -1,7 +1,8 @@
 use strict;
 use warnings;
 ##
-#   
+# You are given an integer $n >= 1.
+# Write a script to find the $nth Ugly Number.   
 ##
 use boolean;
 

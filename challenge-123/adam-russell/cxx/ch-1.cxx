@@ -1,6 +1,11 @@
 #include <vector>
 #include <iostream>
 
+/* 
+ * You are given an integer n >= 1.
+ * Write a script to find the nth Ugly Number.
+*/
+
 class Ugly{
     private:
         std::vector<int> factor(int);   
@@ -11,7 +16,7 @@ class Ugly{
 
 std::vector<int> Ugly::factor(int n){
     std::vector<int> factors;  
-    for (long int i=2; i*i<=n; i++){
+    for (int i=2; i*i<=n; i++){
         if (n%i==0){
             if(i*i!=n){  
                 factors.push_back(i);

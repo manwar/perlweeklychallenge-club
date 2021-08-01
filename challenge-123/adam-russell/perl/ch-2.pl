@@ -1,12 +1,12 @@
 use strict;
 use warnings;
 ##
-#    
+# You are given co-ordinates for four points.
+# Write a script to find out if the given 
+# four points form a square.    
 ##
 use boolean;  
 use Math::GSL::Vector;
-
-use Data::Dump q/pp/; 
 
 sub unique{
     my %seen;
