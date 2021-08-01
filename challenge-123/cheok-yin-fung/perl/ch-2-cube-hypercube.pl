@@ -39,6 +39,8 @@ sub is_square {
     }
 }
 
+
+
 sub is_cube {
     my @p = @_;
     my %v;
@@ -52,7 +54,7 @@ sub is_cube {
     my $WU = vec_sum($W, $U);
     my $UN = vec_sum($U, $N);
     my $iter_face = permutations([$NW, $WU, $UN]);
-    my $bool = undef;
+    my $bool_face = undef;
     while (!$bool && (my $p = $iter_face->next)) {
         $bool = 
             vec_same_f($v{$ind[3]}, $p->[0]) &&
@@ -60,7 +62,7 @@ sub is_cube {
             vec_same_f($v{$ind[5]}, $p->[2]) ; 
     }
 
-    return 0 if !$bool;
+    return 0 if !$bool_face;
 
     my $NWU = vec_sum( $N, $WU);
     if ( vec_same_f( $v{$ind[6]} , $NWU ) ) {
@@ -70,6 +72,7 @@ sub is_cube {
         return 0;
     }
 }
+
 
 sub is_hypercube {
     my @p = @_;
@@ -132,6 +135,7 @@ sub is_hypercube {
     }
 }
 
+
 sub vec_prod {
     my $first = $_[0];
     my $second = $_[1];
@@ -145,6 +149,7 @@ sub vec_prod_f {
     return sprintf("%f", vec_prod($_[0], $_[1]));
 }
 
+
 sub norm {
     my $p = $_[0];
     my $sum = 0;
@@ -156,6 +161,7 @@ sub norm_f {
     return sprintf("%f", norm($_[0]));
 }
 
+
 sub vec_sum {
     my $first = $_[0];
     my $second = $_[1];
@@ -166,6 +172,7 @@ sub vec_sum {
     }
     return $ans;
 }
+
 
 sub vec_same {
     my $first = $_[0];
@@ -186,6 +193,7 @@ sub vec_same_f {
     }
     return 1;    
 }
+
 
 sub vec_subtract {
     my $first = $_[0];
