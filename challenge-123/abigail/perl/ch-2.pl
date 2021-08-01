@@ -22,12 +22,15 @@ use experimental 'lexical_subs';
 # So we check whether all edges are equal, and whether both diagonals are equal.
 #
 
+#
+# Given the coordinates of two points, return the square of
+# the distance between them.
+#
+sub dist ($x1, $y1, $x2, $y2) {($x1 - $x2) ** 2 + ($y1 - $y2) ** 2}
+
 while (<>) {
-    my ($x1, $y1, $x2, $y2, $x3, $y3, $x4, $y4) = split;
-    say + ($x1 - $x2) ** 2 + ($y1 - $y2) ** 2 ==
-          ($x2 - $x3) ** 2 + ($y2 - $y3) ** 2 ==
-          ($x3 - $x4) ** 2 + ($y3 - $y4) ** 2 ==
-          ($x4 - $x1) ** 2 + ($y4 - $y1) ** 2 &&
-          ($x1 - $x3) ** 2 + ($y1 - $y3) ** 2 ==
-          ($x2 - $x4) ** 2 + ($y2 - $y4) ** 2 ? 1 : 0
+    my  ($x1, $y1, $x2, $y2, $x3, $y3, $x4, $y4) = split;
+    say dist ($x1, $y1, $x2, $y2) == dist ($x2, $y2, $x3, $y3) ==
+        dist ($x3, $y3, $x4, $y4) == dist ($x4, $y4, $x1, $x2) &&
+        dist ($x1, $y1, $x3, $y3) == dist ($x2, $y2, $x4, $y4) ? 1 : 0
 }
