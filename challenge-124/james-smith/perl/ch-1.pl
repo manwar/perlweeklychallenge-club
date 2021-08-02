@@ -7,6 +7,7 @@ use feature qw(say);
 use Test::More;
 use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
+use POSIX qw(ceil);
 my $tau = 6.283185307179586476925286766559;
 
 
@@ -31,8 +32,8 @@ unless($radius) {
 my @a = map { ' ' x ($radius*2+1) } 0..$radius*2+$cross;
 
 ## Now we draw the circle...
-foreach my $x (0..$radius) {
-  my $y = int sqrt( $radius**2 - $x**2 );
+foreach my $x (0 .. ceil($radius*0.71)) {
+  my $y = int sqrt( ($radius-.5)**2 - $x**2 );
   substr $a[ $radius - $x ],$radius-$y,1,'^';
   substr $a[ $radius + $x ],$radius-$y,1,'^';
   substr $a[ $radius - $x ],$radius+$y,1,'^';
