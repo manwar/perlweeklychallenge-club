@@ -17,9 +17,9 @@ sub nth_seq_num {
     my $parameter = $_[1];
     my $k;
     my $i = 0;
-    while (scalar @seq < $parameter) {
+    while (scalar $_[0]->@* < $parameter) {
         $i++;
-        $k = $seq[-1] + $i;
+        $k = $_[0]->[-1] + $i;
         my $j = $k;
         my $tmp_j = 0;
         while ( $j != 1 && $tmp_j != $j) {
@@ -29,11 +29,11 @@ sub nth_seq_num {
             $j /= 5 if $j % 5 == 0;
         }
         if ($j == 1) {
-            push @seq, $k;
+            push $_[0]->@*, $k;
             $i = 0;
         } 
     }
-    return $seq[$parameter-1];
+    return $_[0]->[$parameter-1];
 }
 
 
