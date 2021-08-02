@@ -10,8 +10,8 @@
 sub is_square {
     die if @_ != 4 or grep@$_!=2,@_;
     my %dsf;   #dsf=distance squared found
-    for my $p1 (0..2){         # for the three first points
-    for my $p2 ($p1..3){       # loop through the rest of the points
+    for my $p1 ( 0     .. 2 ){       # for the three first points
+    for my $p2 ( $p1+1 .. 3 ){       # loop through the rest of the points
 	my($p1x,$p1y,$p2x,$p2y)=(@{$_[$p1]},@{$_[$p2]});
 	$dsf{ ($p1x-$p2x)**2 + ($p1y-$p2y)**2 }++; #register distance squared
     }}
