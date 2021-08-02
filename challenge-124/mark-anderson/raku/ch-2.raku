@@ -5,9 +5,7 @@ say tug-of-war(10, -15, 20, 30, -25, 0, 5, 40, -5);
 
 sub tug-of-war(+$list)
 {
-    my $n = $list.elems div 2;
-
-    my %h = $list.combinations($n).map(-> $a
+    my %h = $list.combinations(+$list div 2).map(-> $a
     {
         my $b = ($list (-) $a).keys.List;
         abs($b.sum - $a.sum) => ($a, $b);
