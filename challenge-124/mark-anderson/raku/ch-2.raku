@@ -7,12 +7,11 @@ sub tug-of-war(+$list)
 {
     my $n = $list.elems div 2;
 
-    my %h = $list.combinations($n).map(-> @a
+    my %h = $list.combinations($n).map(-> $a
     {
-        my @b = ($list (-) @a).keys;
-
-        abs(@b.sum - @a.sum) => @a ~ ' ' ~ @b;
+        my $b = ($list (-) $a).keys.List;
+        abs($b.sum - $a.sum) => ($a, $b);
     });
 
-    .head($n), .tail(* - $n) with %h.min.value.split(/\s/).cache;
+    %h.min.value;
 }
