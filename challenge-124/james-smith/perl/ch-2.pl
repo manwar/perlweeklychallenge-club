@@ -13,10 +13,10 @@ say match_teams( map { $_*10 } 1..15 );
 say match_teams( map { $_*10 } 1..10 );
 say match_teams( qw(10 -15 20 30 -25 0 5 40 -5) );
 say match_teams( qw(2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 79 83 89 97) );
-
-timethis(1_000, sub { match_teams( map { $_*10 } 1..10 ); } );
-timethis(1_000, sub { match_teams( map { $_*10 } 1..12 ); } );
-timethis(1_000, sub { match_teams( map { $_*10 } 1..14 ); } );
+timethis(1000, sub { match_teams( map { $_*10 } 1..10 ); } );
+timethis(1000, sub { match_teams( map { $_*10 } 1..12 ); } );
+timethis(1000, sub { match_teams( map { $_*10 } 1..14 ); } );
+exit;
 timethis(100, sub { match_teams( map { $_*10 } 1..16 ); } );
 timethis(100, sub { match_teams( map { $_*10 } 1..18 ); } );
 timethis(100, sub { match_teams( map { $_*10 } 1..20 ); } );
@@ -25,26 +25,26 @@ timethis(10, sub { match_teams( map { $_*10 } 1..24 ); } );
 timethis(5, sub { match_teams( map { $_*10 } 1..26 ); } );
 timethis(5, sub { match_teams( map { $_*10 } 1..28 ); } );
 timethis(5, sub { match_teams( map { $_*10 } 1..30 ); } );
+
 sub match_teams {
-  my @n = @_;
-  my $diff = shift @n;
-  my $best = [];
-  separate( \@n, 1 + int(@n/2), [$diff], [], $diff, $best );
-  return "Team 1: [@{$best->[0]}]; Team 2[@{$best->[1]}]; difference $best->[2]";
-  sub separate {
-    my($nums,$maxsize,$team1,$team2,$diff,$be) = @_;
-    if(@{$nums}==0) {
-      unless( defined $be->[0] && abs $diff>=$be->[2] ) {
-        $be->[0] = $team1;
-        $be->[1] = $team2;
-        $be->[2] = abs $diff;
-      }
-      return;
+  my( $diff, @n ) = @_;
+  separate( 1 + int(@n/2), [$diff], [], $diff, my $best = [], @n );
+  return "Team 1: [@{$best->[0]}]; Team 2: [@{$best->[1]}]; difference $best->[2]";
+}
+
+sub separate {
+  my($maxsize,$team1,$team2,$diff,$be,@nums) = @_;
+  unless(@nums) {
+    if( !defined $be->[0] || $be->[2]>abs $diff ) {
+      $be->[0] = $team1;
+      $be->[1] = $team2;
+      $be->[2] = abs $diff;
     }
-    my $next = shift @{$nums};
-    separate( [@{$nums}], $maxsize, [@{$team1},$next], $team2, $diff+$next, $be ) if @{$team1} < $maxsize;
-    separate( [@{$nums}], $maxsize, $team1, [@{$team2},$next], $diff-$next, $be ) if @{$team2} < $maxsize;
+    return;
   }
+  my $next = shift @nums;
+  separate( $maxsize, [@{$team1},$next], $team2, $diff+$next, $be, @nums ) if @{$team1} < $maxsize;
+  separate( $maxsize, $team1, [@{$team2},$next], $diff-$next, $be, @nums ) if @{$team2} < $maxsize;
 }
 
 ##
