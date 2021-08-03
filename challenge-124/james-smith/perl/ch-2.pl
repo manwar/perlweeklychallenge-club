@@ -27,24 +27,41 @@ timethis(5, sub { match_teams( map { $_*10 } 1..28 ); } );
 timethis(5, sub { match_teams( map { $_*10 } 1..30 ); } );
 
 sub match_teams {
-  my( $diff, @n ) = @_;
-  separate( 1 + int(@n/2), [$diff], [], $diff, my $best = [], @n );
+  ## Pre-process input
+  ##   * Remove first person from list - he will always go in team 1
+  ##   * The rest are to be allocated.
+  ##   * Pre-compute the maximum size team!
+  ##
+  ## $best - stores the result!!
+  ##
+  ## $best->[0] = array of team 1 members
+  ## $best->[1] = array of team 2 members 
+  ## $best->[2] = difference between scores
+
+  my( $diff, @names ) = @_;
+  separate( 1 + int( @names/2 ), [$diff], [], $diff, my $best = [], @names );
   return "Team 1: [@{$best->[0]}]; Team 2: [@{$best->[1]}]; difference $best->[2]";
 }
 
 sub separate {
-  my($maxsize,$team1,$team2,$diff,$be,@nums) = @_;
+  my( $maxsize, $team1, $team2, $diff, $be, @nums ) = @_;
   unless(@nums) {
-    if( !defined $be->[0] || $be->[2]>abs $diff ) {
-      $be->[0] = $team1;
-      $be->[1] = $team2;
-      $be->[2] = abs $diff;
-    }
+    if( !defined $be->[0] || $be->[2]>abs $diff ) {                                        
+      $be->[0] = $team1;       ## If this is the first time we have got to the end of the list
+      $be->[1] = $team2;       ## OR we have got to the end of the list and have a better solution
+      $be->[2] = abs $diff;    ## store this in $be - can't just do $be = [ , , ] as this would                             
+    }                          ## change the pointer and wouldn't be preserved....
     return;
   }
-  my $next = shift @nums;
+  my $next = shift @nums;      ## Get the next person and allocate to team 1 and/or team 2 depending
+                               ## on whether the teams have space...
   separate( $maxsize, [@{$team1},$next], $team2, $diff+$next, $be, @nums ) if @{$team1} < $maxsize;
   separate( $maxsize, $team1, [@{$team2},$next], $diff-$next, $be, @nums ) if @{$team2} < $maxsize;
+
+  ## We update the difference as we go along to avoid the need to sum the two teams and compute
+  ## differences at the end! When we add a member to a team we don't just push but create a new arrayref
+  ## by adding the new member to the team array. If we pushed the reference would be the same and
+  ## the recursion code would fall over!
 }
 
 ##
