@@ -1,0 +1,53 @@
+%! Not DSC compliant
+
+/un {
+    /c exch def
+    0
+    {
+        1 add
+        dup
+        [ 2 3 5 ] {
+            /k exch def
+            {
+                dup k mod 0 eq {
+                    k div cvi
+                } {
+                    exit
+                } ifelse
+            } loop
+        } forall
+        1 eq {
+            /c c 1 sub def
+        } if
+        c 0 le {
+            exit
+        } if
+    } loop
+} def
+
+/str 50 string def
+/fs 12 def
+/Helvetica findfont
+fs scalefont setfont
+20 750 translate
+/line 0 def
+/testnum 1 def
+
+/disptest {
+    0 line moveto testnum str cvs show (.) show
+    dup
+    50 line moveto str cvs show
+    un
+    dup
+    100 line moveto str cvs show
+    eq { (Pass) } { (FAIL) } ifelse
+    150 line moveto show
+    /line line fs 2 mul sub def
+    /testnum testnum 1 add def
+} def
+
+8 7 disptest
+12 10 disptest
+16200 200 disptest
+
+showpage
