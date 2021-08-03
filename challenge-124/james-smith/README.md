@@ -150,6 +150,33 @@ Example output...
                     ^
 ```
 
+## Alternative languages
+
+As this was a script to generate an image - why not go back to learning languages after we had looked at CESIL, and visit the learning language of the 70s & 80s - LOGO. A graphic language where you drive a "turtle" around the screen.
+
+```logo
+setpensize 4
+pendown
+
+;cross
+back 300
+forward 150
+left 90
+forward 150
+back 300
+forward 150
+right 90
+forward 150
+
+;circle
+right 89
+repeat 180 [
+  forward 10
+  left 2
+]
+
+penup
+```
 # Task 2 - Tug of War
 
 ***You are given a set of `$n` integers `(n1, n2, n3, ...)`. Write a script to divide the set in two subsets of `n/2` sizes each so that the difference of the sum of two subsets is the least. If `$n` is even then each subset must be of size `$n/2` each. In case `$n` is odd then one subset must be `($n-1)/2` and other must be `($n+1)/2`.***
