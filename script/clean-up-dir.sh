@@ -1,4 +1,6 @@
 find . -name "*.c" -delete
+find . -name "*.cxx" -delete
+find . -name "*.c3" -delete
 find . -name "*.d" -delete
 find . -name "*.m" -delete
 find . -name "*.dart" -delete

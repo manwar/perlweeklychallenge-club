@@ -1,0 +1,26 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $number where $number > 0, :u(:$upto));
+
+$upto
+  ?? ( say "$_: " ~ factors($_) for 1..$number )
+  !! say factors($number);
+
+sub factors ($number is copy)
+{
+  return (1)       if $number == 1;
+  return ($number) if $number.is-prime;
+
+  my @factors;
+
+  for (2 .. $number div 2).grep( *.is-prime) -> $candidate
+  {
+    while $number %% $candidate
+    {
+      @factors.push: $candidate;
+      $number /= $candidate;
+    }
+  }
+    
+  return @factors;
+}
