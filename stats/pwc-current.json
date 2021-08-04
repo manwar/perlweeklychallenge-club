@@ -1,9 +1,9 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
    "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2021-08-04 04:37:40 GMT"
+      "text" : "[Champions: 10] Last updated at 2021-08-04 04:42:02 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
@@ -18,24 +18,35 @@
                   2
                ]
             ],
-            "name" : "Bruce Gray",
-            "id" : "Bruce Gray"
+            "id" : "Bruce Gray",
+            "name" : "Bruce Gray"
          },
          {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
             "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby"
+            "id" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
          },
          {
+            "name" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "E. Choroba"
+         },
+         {
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -46,18 +57,17 @@
                   1
                ]
             ],
-            "name" : "James Smith",
-            "id" : "James Smith"
+            "name" : "James Smith"
          },
          {
             "id" : "kjetillll",
-            "name" : "kjetillll",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "kjetillll"
          },
          {
             "id" : "Mark Anderson",
@@ -80,14 +90,14 @@
             "id" : "Niels van Dijke"
          },
          {
+            "name" : "Peter Campbell Smith",
+            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "name" : "Peter Campbell Smith",
-            "id" : "Peter Campbell Smith"
+            ]
          },
          {
             "name" : "Simon Green",
@@ -104,47 +114,45 @@
             "id" : "Simon Green"
          },
          {
-            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "id" : "Simon Proctor"
+            "name" : "Simon Proctor"
          }
       ]
    },
    "title" : {
       "text" : "The Weekly Challenge - 124"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "legend" : {
+      "enabled" : 0
    },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Bruce Gray",
+               "name" : "Bruce Gray",
                "y" : 4,
-               "name" : "Bruce Gray"
+               "drilldown" : "Bruce Gray"
             },
             {
+               "drilldown" : "Dave Jacoby",
                "y" : 3,
-               "name" : "Dave Jacoby",
-               "drilldown" : "Dave Jacoby"
+               "name" : "Dave Jacoby"
+            },
+            {
+               "drilldown" : "E. Choroba",
+               "y" : 2,
+               "name" : "E. Choroba"
             },
             {
                "drilldown" : "James Smith",
@@ -152,24 +160,24 @@
                "name" : "James Smith"
             },
             {
-               "name" : "kjetillll",
                "y" : 2,
-               "drilldown" : "kjetillll"
+               "drilldown" : "kjetillll",
+               "name" : "kjetillll"
             },
             {
                "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson",
-               "y" : 1
+               "y" : 1,
+               "name" : "Mark Anderson"
             },
             {
-               "name" : "Niels van Dijke",
                "y" : 2,
-               "drilldown" : "Niels van Dijke"
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke"
             },
             {
                "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith",
-               "y" : 1
+               "y" : 1,
+               "name" : "Peter Campbell Smith"
             },
             {
                "drilldown" : "Simon Green",
@@ -177,23 +185,30 @@
                "name" : "Simon Green"
             },
             {
-               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
                "y" : 1,
-               "drilldown" : "Simon Proctor"
+               "name" : "Simon Proctor"
             }
          ],
-         "name" : "The Weekly Challenge - 124"
+         "name" : "The Weekly Challenge - 124",
+         "colorByPoint" : 1
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "type" : "category"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
