@@ -1,20 +1,12 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "subtitle" : {
+      "text" : "[Champions: 12] Last updated at 2021-08-04 09:53:59 GMT"
    },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
@@ -33,7 +25,6 @@
             "id" : "Bruce Gray"
          },
          {
-            "name" : "Dave Jacoby",
             "id" : "Dave Jacoby",
             "data" : [
                [
@@ -44,19 +35,21 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Dave Jacoby"
          },
          {
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "E. Choroba",
-            "id" : "E. Choroba"
+            "name" : "E. Choroba"
          },
          {
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -67,50 +60,50 @@
                   1
                ]
             ],
-            "id" : "James Smith",
             "name" : "James Smith"
          },
          {
+            "id" : "kjetillll",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "kjetillll",
             "name" : "kjetillll"
          },
          {
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson"
          },
          {
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Niels van Dijke",
-            "name" : "Niels van Dijke"
+            ]
          },
          {
-            "name" : "Peter Campbell Smith",
-            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "name" : "Peter Campbell Smith",
+            "id" : "Peter Campbell Smith"
          },
          {
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -119,14 +112,17 @@
                [
                   "Raku",
                   2
+               ],
+               [
+                  "Blog",
+                  1
                ]
             ],
-            "name" : "Roger Bell_West",
             "id" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Green",
             "id" : "Simon Green",
+            "name" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -145,11 +141,10 @@
                   1
                ]
             ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          },
          {
-            "id" : "Stuart Little",
             "name" : "Stuart Little",
             "data" : [
                [
@@ -160,12 +155,18 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Stuart Little"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "title" : {
@@ -175,28 +176,34 @@
    "title" : {
       "text" : "The Weekly Challenge - 124"
    },
-   "subtitle" : {
-      "text" : "[Champions: 12] Last updated at 2021-08-04 09:50:27 GMT"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    },
    "series" : [
       {
-         "name" : "The Weekly Challenge - 124",
          "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 124",
          "data" : [
             {
-               "y" : 4,
+               "drilldown" : "Bruce Gray",
                "name" : "Bruce Gray",
-               "drilldown" : "Bruce Gray"
+               "y" : 4
             },
             {
-               "y" : 3,
                "drilldown" : "Dave Jacoby",
-               "name" : "Dave Jacoby"
+               "name" : "Dave Jacoby",
+               "y" : 3
             },
             {
                "y" : 2,
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba"
             },
             {
                "y" : 3,
@@ -205,38 +212,38 @@
             },
             {
                "y" : 2,
-               "name" : "kjetillll",
-               "drilldown" : "kjetillll"
+               "drilldown" : "kjetillll",
+               "name" : "kjetillll"
             },
             {
-               "y" : 1,
+               "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
+               "y" : 1
             },
             {
+               "y" : 2,
                "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke",
-               "y" : 2
+               "drilldown" : "Niels van Dijke"
             },
             {
-               "y" : 1,
                "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith"
+               "name" : "Peter Campbell Smith",
+               "y" : 1
             },
             {
-               "y" : 4,
+               "y" : 5,
                "name" : "Roger Bell_West",
                "drilldown" : "Roger Bell_West"
             },
             {
-               "y" : 2,
                "name" : "Simon Green",
-               "drilldown" : "Simon Green"
+               "drilldown" : "Simon Green",
+               "y" : 2
             },
             {
+               "y" : 1,
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 1
+               "name" : "Simon Proctor"
             },
             {
                "drilldown" : "Stuart Little",
@@ -245,8 +252,5 @@
             }
          ]
       }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   }
+   ]
 }
