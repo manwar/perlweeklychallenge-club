@@ -177,6 +177,9 @@ repeat 180 [
 
 penup
 ```
+
+You may ask why we only rotate right 89 to start the circle. If we start by rotating right then the circle will be off-set by "5" units to the right - we either have to do `right 90` `forward 5` `left 2` then `repeat` for `179`. And finish with another `right 5`. (This means the centre of one of the sides is at the top of the cross - or we can rotate the shape by 1 degree and have it stand on one of it's points)
+
 # Task 2 - Tug of War
 
 ***You are given a set of `$n` integers `(n1, n2, n3, ...)`. Write a script to divide the set in two subsets of `n/2` sizes each so that the difference of the sum of two subsets is the least. If `$n` is even then each subset must be of size `$n/2` each. In case `$n` is odd then one subset must be `($n-1)/2` and other must be `($n+1)/2`.***
@@ -200,18 +203,14 @@ So to start - we allocate person 1 to group 1, and set the difference to his wei
 ```perl
 sub match_teams {
   my( $diff, @n ) = @_;
-  separate( 1 + int(@n/2), [$diff], [], $diff, my $best = [], @n );
-  return "Team 1: [@{$best->[0]}]; Team 2: [@{$best->[1]}]; difference $best->[2]";
+  separate( 1 + int(@n/2), [$diff], [], $diff, my $best = [1e300], @n );
+  return "Team 1: [@{$best->[1]}]; Team 2: [@{$best->[2]}]; difference $best->[0]";
 }
 
 sub separate {
   my($maxsize,$team1,$team2,$diff,$be,@nums) = @_;
   unless(@nums) {
-    if( !defined $be->[0] || $be->[2]>abs $diff ) {
-      $be->[0] = $team1;
-      $be->[1] = $team2;
-      $be->[2] = abs $diff;
-    }
+    @{$be} = ($team1, $team2, abs $diff)  if $be->[0]>abs $diff;
     return;
   }
   my $next = shift @nums;
@@ -220,7 +219,7 @@ sub separate {
 }
 ```
 ### Notes:
- * Notice the yoda inequality `$be->[2]>abs $diff` - it makes it clearer that you are only computing the absolute value of `$diff` not that of `$diff < $be->[2]`.
+ * Notice the yoda inequality `$be->[0]>abs $diff` - it makes it clearer that you are only computing the absolute value of `$diff` not that of `$diff < $be->[0]`.
  * `$team1` / `$team2` are refs - so when we update them we make copies `[@{$team2},$next]` rather than pushing to them.
  * We keep the running total as it avoids the need to do the sum each time.
 
