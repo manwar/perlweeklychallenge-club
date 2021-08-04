@@ -1,58 +1,59 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2021-08-04 03:48:51 GMT"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "James Smith",
-               "y" : 3,
-               "drilldown" : "James Smith"
-            },
-            {
-               "name" : "kjetillll",
-               "y" : 2,
-               "drilldown" : "kjetillll"
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 1,
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 1,
-               "drilldown" : "Simon Proctor"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 124"
-      }
-   ],
-   "title" : {
-      "text" : "The Weekly Challenge - 124"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 124",
+         "data" : [
+            {
+               "drilldown" : "James Smith",
+               "name" : "James Smith",
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "drilldown" : "kjetillll",
+               "name" : "kjetillll"
+            },
+            {
+               "y" : 1,
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Simon Green",
+               "name" : "Simon Green"
+            },
+            {
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
+               "y" : 1
+            }
+         ]
       }
+   ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2021-08-04 03:52:27 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 124"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "drilldown" : {
       "series" : [
          {
             "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -62,37 +63,50 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "James Smith"
+            ]
          },
          {
+            "id" : "kjetillll",
             "name" : "kjetillll",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "kjetillll"
+            ]
          },
          {
-            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "name" : "Mark Anderson"
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
          },
          {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Simon Green",
+            "name" : "Simon Green"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
             "name" : "Simon Proctor",
-            "data" : [
-               [
-                  "Raku",
-                  1
-               ]
-            ],
             "id" : "Simon Proctor"
          }
       ]
@@ -101,12 +115,17 @@
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    },
    "legend" : {
       "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
