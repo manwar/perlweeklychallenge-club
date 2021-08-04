@@ -18,26 +18,34 @@ die "At least 2 terms.\n" unless scalar @in > 1;
 if (scalar @in >= 5 ) {
     say_ans_for_tug_of_war( tug_of_war([@in])->@* );
 }
- 
 else { 
-    @in = sort {$a<=>$b} @in;
-    say "TOTAL: ", sum(@in), "\n";
-    given(scalar @in) {
-        when (4) { say 
-                    $in[0], " ", $in[3], " ==> ", $in[0]+$in[3],
-                    "\n", 
-                    $in[1], " ", $in[2], " ==> ", $in[1]+$in[2];  
+    say_ans_for_tug_of_war( tug_of_small_war([@in])->@* );
+}
+
+
+
+sub tug_of_small_war {
+    my @inp = $_[0]->@*;
+    @inp = sort {$a<=>$b} @inp;
+    given(scalar @inp) {
+        when (4) { return [ [$inp[0], $inp[3]] , [ $inp[1], $inp[2] ] ];  
                  }
-        when (2) { say $in[0], "\n", $in[1]; 
+        when (2) { return [ [$inp[0]] , [$inp[1]] ]; 
                  }
-        when (3) { 
-            if (abs($in[0]+$in[1]-$in[2])<=abs($in[0]+$in[2]-$in[1])) {
-                say $in[0]," ",$in[1], " ==> ", $in[0]+$in[1];
-                say $in[2]; }
-            else { 
-                say $in[0]," ",$in[2], " ==> ", $in[0]+$in[2];
-                say $in[1]; }
-                }
+        when (3) {
+                  my $sum01 = $inp[0]+$inp[1];
+                  my $sum02 = $inp[0]+$inp[2];
+                  my $sum12 = $inp[1]+$inp[2];
+                  if (abs($sum01-$inp[2])<=abs($sum02-$inp[1])) {
+                      return [ [$inp[0], $inp[1] ] , [ $inp[2] ] ] 
+                          if abs($sum12-$inp[0]) >= abs($sum01-$inp[2]);  
+                  }
+                  else { 
+                      return [ [$inp[0], $inp[2] ] , [ $inp[1] ] ]  
+                          if abs($sum12-$inp[0]) >= abs($sum02-$inp[1]);  
+                  }
+                  return [ [$inp[1], $inp[2] ] , [ $inp[0] ] ];  
+                 }
     } 
 }
 
@@ -45,8 +53,8 @@ else {
 
 sub tug_of_war { 
     my @S = $_[0]->@*;
-    die "At least 5 terms for this subroutine.\n" unless scalar @S >= 5;
-    my ($target1, $target2);
+    warn "At least 5 terms for this subroutine.\n" unless scalar @S >= 5;
+    my ($mark1, $mark2);
 
     my $s = sum @S;
 
@@ -54,12 +62,12 @@ sub tug_of_war {
     my $odd_sum  = $s % 2 == 1;
 
     if ($odd_sum) {
-        $target1 = $s >= 0 ? int ($s / 2) : ($s-1)/2;
-        $target2 = 1 + $target1;
+        $mark1 = $s >= 0 ? int ($s / 2) : ($s-1)/2;
+        $mark2 = 1 + $mark1;
     } 
     else {
-        $target1 = $s / 2;
-        $target2 = $target1;
+        $mark1 = $s / 2;
+        $mark2 = $mark1;
     }
 
     @S = sort {$a<=>$b} @S;
@@ -90,7 +98,7 @@ sub tug_of_war {
     print "sum of \@S: ", $s, "\n";
     say "sum of \@arr0: ", $sum_initial;
     print "sum of \@arr1: ", (sum @arr1), "\n"; 
-    say "target(s): ", $target1, " ", $target2;
+    say "mark(s): ", $mark1, " ", $mark2;
     say "arr0: ", "@arr0";
     say "arr1: ", "@arr1";
     say " h  :   @{$diff_arr_h}";
@@ -102,7 +110,7 @@ sub tug_of_war {
             #  then use the map {-$_} and call tug_of_war again
             my ( $na0, $na1 ) = tug_of_war([map { -$_ } @S])->@*;
             # "used odd term and large last term method";
-            return [ [ map {-$_} $na0->@*  ] , [map {-$_} $na1->@* ]  ];
+            return [ [ reverse map {-$_} $na0->@*  ] , [ reverse map {-$_} $na1->@* ]  ];
         }
         elsif (2*$sum_initial == $s) {
             return [ [@arr0], [@arr1] ]; 
@@ -111,13 +119,13 @@ sub tug_of_war {
 
     my $soln_h = closest_sum_to_target( 
                     $diff_arr_h, 
-                    $target1 - $sum_initial, 
-                    $target2 - $sum_initial, 
+                    $mark1 - $sum_initial, 
+                    $mark2 - $sum_initial, 
                  ); 
     my $soln_m = closest_sum_to_target( 
                     $diff_arr_m, 
-                    $target1 - $sum_initial, 
-                    $target2 - $sum_initial, 
+                    $mark1 - $sum_initial, 
+                    $mark2 - $sum_initial, 
                  ); 
     if ($soln_m->[1] <= $soln_h->[1]) {
         foreach (@{$soln_m->[0]}) {
@@ -138,6 +146,8 @@ sub tug_of_war {
     return [ [@arr0], [@arr1] ];
 }
 
+
+
 sub say_ans_for_tug_of_war {
     my @a0 = $_[0]->@*;
     my @a1 = $_[1]->@*;
@@ -147,10 +157,13 @@ sub say_ans_for_tug_of_war {
     say "(", "@a1", ") ==> ", sum @a1;
 }
 
+
+
 sub closest_sum_to_target {
     my @array = $_[0]->@*;
     my $target1 = $_[1];
     my $target2 = $_[2];
+    warn "\$target1 should be smaller or equal to \$target2" if $target1 > $target2;
     my $exact = undef;
     my %indices_to_values = ( [] => 0 );
     my $generation_aged = [ [] ];
@@ -163,7 +176,7 @@ sub closest_sum_to_target {
     while ( !$exact && $n < scalar @array ) {
         foreach my $arr ($generation_aged->@*) {
             foreach my $i (0..$#array) {
-               # check_if_arr_contain_i, _if_yes_then_next__
+               # check_if_@array_contain_i, _if_yes_then_next__
                 next if any { $_ == $i } $arr->@*;
                 my $arr_cp = $n>0 ? [$arr->@*] : [] ;
                 push $arr_cp->@*, $i;
@@ -172,7 +185,7 @@ sub closest_sum_to_target {
                     $my_sum += $indices_to_values{$arr};
                 }
                # check_if_values_of_hash_indices_to_values_contain_i, _if_yes_then_next__
-                next if any { $_ == $my_sum && $_ != 0 } values %indices_to_values;
+                next if any { $_ == $my_sum && $_ != 0 } values %indices_to_values;    #[*]
                 push $generation_new->@*, $arr_cp;
                 $indices_to_values{$arr_cp} = $my_sum;
                 if ($my_sum == $target1 || $my_sum == $target2) {
@@ -199,32 +212,33 @@ sub closest_sum_to_target {
         $n++;
     }
 
-
+    # return [ [@arr of inpd] => sum of values , diff to the target ]
     if (defined($exact)) {
-        return [ $exact, 0 ]; # return [  [@arr of ind] => sum of values , diff to the target    ]
+        return [ $exact, 0 ]; 
     } 
     else {
-       # say "No exact solutions.";
+       # "No exact solutions."
         my $temp_smaller = $current_sum_smaller;
         my $temp_larger = $current_sum_larger;
-        # say $temp_smaller;
-        # say $temp_larger;
         if ( defined($temp_smaller) && 
-                (   !defined($temp_larger)
+                (    !defined($temp_larger)
                   || (($target1 - $temp_smaller) <= ($temp_larger - $target2)) 
                 )
            ) {
             return [ 
-                $current_ind_smaller, $target1 - $temp_smaller
+                $current_ind_smaller, 
+                $target1 - $temp_smaller
             ];
         }
         else {
             return [ 
-                $current_ind_larger, $temp_larger - $target2
+                $current_ind_larger, 
+                $temp_larger - $target2
             ];
         }
     }
 }
+
 
 
 say "";
@@ -234,7 +248,7 @@ ok (manual_test([10, -15, 20, 30, -25, 0, 5, 40, -5], 0), "Example Set 2");
 ok (manual_test([1..100], 0), "natural numbers");
 ok (manual_test([-26, -2, 3, 4, 5], 18), "a big negative");
 ok (manual_test([-1, -2, 3, 4, 11], 1), "a big positive");
-ok (manual_test([-1, 0, 0, 1, 5], 3), "-1 and 0015");
+ok (manual_test([-1, 0, 0, 1, 5], 3), "-1 and 0,0,1,5");
 
 sub manual_test {
     my @set = $_[0]->@*;
@@ -254,47 +268,4 @@ sub manual_test {
 
 
 done_testing();
-
-#==================
-
-
-
-=pod 
-BEGIN: unorganized notes
-case: -4 1 2 5 6
-target: 5
--4  2  6 -> sum == 4
-1  5    -> sum == 6
-
-TARGET MINUS SUM_OF_ARR0: 1 
-diff_arr_h: 9
-diff_arr_m: 5 3
-
-
-case: -23 -6 -1  8 12 19
-targets: 4 5
-TARGET MINUS SUM OF ARR0 : -16, -17
-diff_arr_h: 31 20
-diff_arr_m: 17 9 7
-
-
-case -21 -10 -9 -8 -6 11 15 21
-sum of @arr0: -21
-target(s): -4 -3
-TARGET MINUS SUM OF ARR0: 17 
-13 20 27
-11 1 17 6
-
-case  -25 -18 -17 -10 -9 -6 21 22 24 25
-sum of @arr0: -6
-target(s): 3 4
-TARGET MINUS SUM OF ARR0: 9, 10
-15 11 31 4
-7 7 3 1 1
-END: unorganized notes
-
-Then apply:
-https://stackoverflow.com/questions/19572043/given-a-target-sum-and-a-set-of-integers-find-the-closest-subset-of-numbers-tha
-
-
 
