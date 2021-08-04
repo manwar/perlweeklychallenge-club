@@ -34,23 +34,23 @@ sub match_teams {
   ##
   ## $best - stores the result!!
   ##
-  ## $best->[0] = array of team 1 members
-  ## $best->[1] = array of team 2 members 
-  ## $best->[2] = difference between scores
+  ## $best->[0] = difference between scores
+  ## $best->[1] = array of team 1 members
+  ## $best->[2] = array of team 2 members
 
   my( $diff, @names ) = @_;
-  separate( 1 + int( @names/2 ), [$diff], [], $diff, my $best = [], @names );
-  return "Team 1: [@{$best->[0]}]; Team 2: [@{$best->[1]}]; difference $best->[2]";
+  separate( 1 + int( @names/2 ), [$diff], [], $diff, my $best = [1<<63], @names );
+  return "Team 1: [@{$best->[1]}]; Team 2: [@{$best->[2]}]; difference $best->[0]";
 }
 
 sub separate {
   my( $maxsize, $team1, $team2, $diff, $be, @nums ) = @_;
   unless(@nums) {
-    if( !defined $be->[0] || $be->[2]>abs $diff ) {                                        
-      $be->[0] = $team1;       ## If this is the first time we have got to the end of the list
-      $be->[1] = $team2;       ## OR we have got to the end of the list and have a better solution
-      $be->[2] = abs $diff;    ## store this in $be - can't just do $be = [ , , ] as this would                             
-    }                          ## change the pointer and wouldn't be preserved....
+    ## If this is the first time we have got to the end of the list
+    ## OR we have got to the end of the list and have a better solution
+    ## store this in $be - can't just do $be = [ , , ] as this would
+    ## change the pointer and wouldn't be preserved....
+    @{$be}=(abs $diff, $team1,$team2) if $be->[0]>abs $diff;
     return;
   }
   my $next = shift @nums;      ## Get the next person and allocate to team 1 and/or team 2 depending
