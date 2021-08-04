@@ -2,84 +2,16 @@
    "chart" : {
       "type" : "column"
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Bruce Gray",
-            "id" : "Bruce Gray"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "name" : "James Smith",
-            "id" : "James Smith"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "name" : "kjetillll",
-            "id" : "kjetillll"
-         },
-         {
-            "id" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  1
-               ]
-            ],
-            "name" : "Mark Anderson"
-         },
-         {
-            "id" : "Simon Green",
-            "name" : "Simon Green",
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ]
-         },
-         {
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor",
-            "data" : [
-               [
-                  "Raku",
-                  1
-               ]
-            ]
-         }
-      ]
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 124"
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
@@ -90,27 +22,121 @@
          "borderWidth" : 0
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 124"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2021-08-04 04:22:48 GMT"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Bruce Gray",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Bruce Gray"
+         },
+         {
+            "id" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "James Smith"
+         },
+         {
+            "name" : "kjetillll",
+            "id" : "kjetillll",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "id" : "Mark Anderson"
+         },
+         {
+            "id" : "Peter Campbell Smith",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "name" : "Peter Campbell Smith"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Simon Green",
+            "name" : "Simon Green"
+         },
+         {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ]
+         }
+      ]
    },
    "series" : [
       {
-         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 124",
          "data" : [
             {
-               "y" : 4,
                "drilldown" : "Bruce Gray",
+               "y" : 4,
                "name" : "Bruce Gray"
             },
             {
                "drilldown" : "James Smith",
-               "y" : 3,
-               "name" : "James Smith"
+               "name" : "James Smith",
+               "y" : 3
             },
             {
                "drilldown" : "kjetillll",
-               "y" : 2,
-               "name" : "kjetillll"
+               "name" : "kjetillll",
+               "y" : 2
             },
             {
                "name" : "Mark Anderson",
@@ -118,33 +144,22 @@
                "drilldown" : "Mark Anderson"
             },
             {
-               "name" : "Simon Green",
+               "y" : 1,
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith"
+            },
+            {
                "y" : 2,
+               "name" : "Simon Green",
                "drilldown" : "Simon Green"
             },
             {
-               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
                "y" : 1,
-               "drilldown" : "Simon Proctor"
+               "name" : "Simon Proctor"
             }
          ],
-         "name" : "The Weekly Challenge - 124"
+         "colorByPoint" : 1
       }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2021-08-04 03:57:28 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   }
+   ]
 }
