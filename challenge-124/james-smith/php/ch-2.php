@@ -12,11 +12,8 @@ function match_teams( $teams ) {
     implode( ' ', $bt[1] ), implode( ' ', $bt[2] ), $bt[0] );
 }
 
-function separate( $m, $t1, $t2, $d, &$b, $w ) {
-  if(!sizeof($w)) {
-    if( $b[0]>abs($d) ) list($b[0],$b[1],$b[2]) = [abs($d),$t1,$t2];
-    return;
-  }
+function separate( $m, $t1, $t2, $d, &$b, $w ) { // & in front of $b as pass by reference!
+  if(!sizeof($w)) return ( $b[0]>abs($d) ) && ( $b = [abs($d),$t1,$t2] );
   $n = array_shift( $w );
   if( sizeof($t1)<$m ) separate( $m, array_merge($t1,[$n]), $t2, $d+$n, $b, $w );
   if( sizeof($t2)<$m ) separate( $m, $t1, array_merge($t2,[$n]), $d-$n, $b, $w );
