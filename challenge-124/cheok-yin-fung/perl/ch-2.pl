@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use List::Util qw/sum any max min first/;
 use v5.10.0;
-use Test::More tests => 7;
+use Test::More tests => 8;
 use Data::Dumper;
 use experimental 'switch';
 
@@ -268,13 +268,15 @@ ok (manual_test([1..9], 1), "natural numbers");
 ok (manual_test([-26, -2, 3, 4, 5], 18), "a big negative");
 ok (manual_test([-1, -2, 3, 4, 11], 1), "a big positive");
 ok (manual_test([-1, 0, 0, 1, 5], 3), "-1 and 0,0,1,5");
+
+
 say "This test case might run more than 2 minutes.";
 ok (manual_test([ qw/ -31894 -26276 -25733 -25733 -21928 -19631 -17247 -17096 -16729 -16441
                       -15402 -14397 -12187 -8096 -7280 -5968 2333 2770 5883 7909
                        9871 14560 14894 15638 16087 16362 16541 22712 26241 29094 /], 1), 
-                "a case expected unsuccessful");
+                "a size-30 case (expected NOT succeed)");
 
-# FOR THE LAST CASE
+# FOR THE 7th CASE
 
 # My Output:
 # (-31894 -25733 -21928 -17247 -16729 -14397 -8096 -5968 2333 7909 14560 14894 16087 16541 29094) ==> -40574
@@ -284,11 +286,15 @@ ok (manual_test([ qw/ -31894 -26276 -25733 -25733 -21928 -19631 -17247 -17096 -1
 # user	1m28.916s
 # sys	0m0.024s
 
-# a solution of the last case 
-# [-31894 -26276 -25733 -17247 -17096 -15402 -8096 -5968 2770 7909 9871 14894 16362 26241 29094] => -40571
-# [-25733 -21928 -19631 -16729 -16441 -14397 -12187 -7280 2333 5883 14560 15638 16087 16541 22712] => -40572
+# a solution of the 7th case 
+# [-31894 -26276 -25733 -17247 -17096 -15402 -8096 -5968 2770 7909 9871 14894 16362 26241 29094] ==> -40571
+# [-25733 -21928 -19631 -16729 -16441 -14397 -12187 -7280 2333 5883 14560 15638 16087 16541 22712] ==> -40572
 
 
+ok (manual_test([-31,-26,-17,-17,14,15,16,16,22], 0), "a small but powerful buggy test case (expected NOT succeed)");
+# a solution of the 8th case
+# [-31 -26 15 16 22] ==> -4
+# [-17 -17 14 16] ==> -4
 
 
 
