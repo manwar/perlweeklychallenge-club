@@ -6,7 +6,7 @@ use strict;
 use warnings;
 use List::Util qw/sum any max min first/;
 use v5.10.0;
-use Test::More tests => 6;
+use Test::More tests => 7;
 use Data::Dumper;
 use experimental 'switch';
 
@@ -84,13 +84,11 @@ sub tug_of_war {
 
     my $sum_initial = sum @arr0;
 
-    my ($diff_arr_h, $diff_arr_m);
 
 
 
     my $temp_m = min ($#arr1, int $#S/2);
-    $diff_arr_h = [map { $arr1[$_] - $arr0[$_-1] } (1..$#arr1)];
-    $diff_arr_m = [map { $arr1[$_] - $arr0[$_] } (0..$temp_m)];
+    my $diff_arr_m = [map { $arr1[$_] - $arr0[$_] } (0..$temp_m)];
 
 =pod
   #  TESTING INFO
@@ -103,7 +101,8 @@ sub tug_of_war {
     say "arr1: ", "@arr1";
     say " h  :   @{$diff_arr_h}";
     say " m  : @{$diff_arr_m}";
-=cut 
+=cut
+ 
     if ($odd_term) {
         if (2*$sum_initial > $s) {
             # if $S[-1] is relatively large # example: -1 -2 3 4 5
@@ -117,30 +116,50 @@ sub tug_of_war {
         }
     }
 
-    my $soln_h = closest_sum_to_target( 
-                    $diff_arr_h, 
-                    $mark1 - $sum_initial, 
-                    $mark2 - $sum_initial, 
-                 ); 
+
     my $soln_m = closest_sum_to_target( 
                     $diff_arr_m, 
                     $mark1 - $sum_initial, 
                     $mark2 - $sum_initial, 
                  ); 
-    if ($soln_m->[1] <= $soln_h->[1]) {
+
+    if ($soln_m->[1] == 0) {
+        # "use m"
         foreach (@{$soln_m->[0]}) {
-            # "use m"
             my $temp_c = $arr0[$_];
             $arr0[$_] = $arr1[$_];
             $arr1[$_] = $temp_c;
         }
     }
     else {
-        foreach (@{$soln_h->[0]}) {
-            # "use h";
+        my $diff_arr;
+        my $soln_h;
+        my $soln_h_best = [ [$soln_m->[0]->@*] , $soln_m->[1] ];
+        my $diff_arr_best = [$diff_arr_m->@*];
+        my $shft = 0;
+        my $shft_best = 0;
+        do {
+            $shft++;
+            $diff_arr = 
+                [ map { $arr1[$_] - $arr0[$_-$shft] } 
+                      ($shft..$#arr1)
+                ];
+
+            $soln_h = closest_sum_to_target( 
+                        $diff_arr, 
+                        $mark1 - $sum_initial, 
+                        $mark2 - $sum_initial, 
+                     ); 
+            if ( $soln_h->[1] < $soln_h_best->[1] ) {
+                $soln_h_best = [ [$soln_h->[0]->@*], $soln_h->[1] ] ;
+                $shft_best = $shft;
+            }
+        } while ( $soln_h_best->[1] != 0  &&  $shft < $#arr1 );
+
+        foreach (@{$soln_h_best->[0]}) {
             my $temp_c = $arr0[$_];
-            $arr0[$_] = $arr1[1+$_];
-            $arr1[$_+1] = $temp_c;
+            $arr0[$_] = $arr1[$shft_best+$_];
+            $arr1[$_+$shft_best] = $temp_c;
         }
     }
     return [ [@arr0], [@arr1] ];
@@ -245,10 +264,33 @@ say "";
 say "TEST";
 ok (manual_test([10, 20, 30, 40, 50, 60, 70, 80, 90, 100], 10), "Example Set 1");
 ok (manual_test([10, -15, 20, 30, -25, 0, 5, 40, -5], 0), "Example Set 2");
-ok (manual_test([1..100], 0), "natural numbers");
+ok (manual_test([1..9], 1), "natural numbers");
 ok (manual_test([-26, -2, 3, 4, 5], 18), "a big negative");
 ok (manual_test([-1, -2, 3, 4, 11], 1), "a big positive");
 ok (manual_test([-1, 0, 0, 1, 5], 3), "-1 and 0,0,1,5");
+say "This test case might run more than 2 minutes.";
+ok (manual_test([ qw/ -31894 -26276 -25733 -25733 -21928 -19631 -17247 -17096 -16729 -16441
+                      -15402 -14397 -12187 -8096 -7280 -5968 2333 2770 5883 7909
+                       9871 14560 14894 15638 16087 16362 16541 22712 26241 29094 /], 1), 
+                "a case expected unsuccessful");
+
+# FOR THE LAST CASE
+
+# My Output:
+# (-31894 -25733 -21928 -17247 -16729 -14397 -8096 -5968 2333 7909 14560 14894 16087 16541 29094) ==> -40574
+# (-26276 -25733 -19631 -17096 -16441 -15402 -12187 -7280 2770 5883 9871 15638 16362 22712 26241) ==> -40569
+#
+# real	1m29.205s
+# user	1m28.916s
+# sys	0m0.024s
+
+# a solution of the last case 
+# [-31894 -26276 -25733 -17247 -17096 -15402 -8096 -5968 2770 7909 9871 14894 16362 26241 29094] => -40571
+# [-25733 -21928 -19631 -16729 -16441 -14397 -12187 -7280 2333 5883 14560 15638 16087 16541 22712] => -40572
+
+
+
+
 
 sub manual_test {
     my @set = $_[0]->@*;
