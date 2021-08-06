@@ -4,11 +4,8 @@ use strict;
 
 use warnings;
 use feature qw(say);
-use Test::More;
 use Benchmark qw(cmpthese timethis);
-use Data::Dumper qw(Dumper);
 
-done_testing();
 say match_teams( map { $_*10 } 1..15 );
 say match_teams( map { $_*10 } 1..10 );
 say match_teams( qw(10 -15 20 30 -25 0 5 40 -5) );
@@ -16,7 +13,6 @@ say match_teams( qw(2 3 5 7 11 13 17 19 23 29 31 37 41 43 47 53 59 61 67 71 73 7
 timethis(1000, sub { match_teams( map { $_*10 } 1..10 ); } );
 timethis(1000, sub { match_teams( map { $_*10 } 1..12 ); } );
 timethis(1000, sub { match_teams( map { $_*10 } 1..14 ); } );
-exit;
 timethis(100, sub { match_teams( map { $_*10 } 1..16 ); } );
 timethis(100, sub { match_teams( map { $_*10 } 1..18 ); } );
 timethis(100, sub { match_teams( map { $_*10 } 1..20 ); } );
@@ -34,25 +30,21 @@ sub match_teams {
   ##
   ## $best - stores the result!!
   ##
-  ## $best->[0] = array of team 1 members
-  ## $best->[1] = array of team 2 members 
-  ## $best->[2] = difference between scores
+  ## $best->[0] = difference between scores
+  ## $best->[1] = array of team 1 members
+  ## $best->[2] = array of team 2 members
 
   my( $diff, @names ) = @_;
-  separate( 1 + int( @names/2 ), [$diff], [], $diff, my $best = [], @names );
-  return "Team 1: [@{$best->[0]}]; Team 2: [@{$best->[1]}]; difference $best->[2]";
+  separate( 1 + int( @names/2 ), [$diff], [], $diff, my $best = [1<<63], @names );
+  return "Team 1: [@{$best->[1]}]; Team 2: [@{$best->[2]}]; difference $best->[0]";
 }
 
 sub separate {
   my( $maxsize, $team1, $team2, $diff, $be, @nums ) = @_;
-  unless(@nums) {
-    if( !defined $be->[0] || $be->[2]>abs $diff ) {                                        
-      $be->[0] = $team1;       ## If this is the first time we have got to the end of the list
-      $be->[1] = $team2;       ## OR we have got to the end of the list and have a better solution
-      $be->[2] = abs $diff;    ## store this in $be - can't just do $be = [ , , ] as this would                             
-    }                          ## change the pointer and wouldn't be preserved....
-    return;
-  }
+  return ( $be->[0] > abs $diff ) && ( @{$be} = ( abs $diff, $team1, $team2 ) ) unless @nums;
+  ## If we get to the end of the list and have a better solution (smaller diff)
+  ## store info in $be - can't just do $be = [ , , ] as this would
+  ## change the pointer and wouldn't be preserved....
   my $next = shift @nums;      ## Get the next person and allocate to team 1 and/or team 2 depending
                                ## on whether the teams have space...
   separate( $maxsize, [@{$team1},$next], $team2, $diff+$next, $be, @nums ) if @{$team1} < $maxsize;
