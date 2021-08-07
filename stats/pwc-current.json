@@ -1,25 +1,15 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 19] Last updated at 2021-08-07 00:17:15 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 124"
    },
    "drilldown" : {
       "series" : [
@@ -38,18 +28,26 @@
             ]
          },
          {
-            "name" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "id" : "Cheok-Yin Fung"
+            "id" : "Cheok-Yin Fung",
+            "name" : "Cheok-Yin Fung"
          },
          {
-            "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby",
+            "id" : "Colin Crain",
+            "data" : [
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Colin Crain"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -59,7 +57,9 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby"
          },
          {
             "data" : [
@@ -73,6 +73,7 @@
          },
          {
             "name" : "Flavio Poletti",
+            "id" : "Flavio Poletti",
             "data" : [
                [
                   "Perl",
@@ -86,8 +87,7 @@
                   "Blog",
                   2
                ]
-            ],
-            "id" : "Flavio Poletti"
+            ]
          },
          {
             "data" : [
@@ -142,6 +142,7 @@
             "name" : "Laurent Rosenfeld"
          },
          {
+            "name" : "Luca Ferrari",
             "id" : "Luca Ferrari",
             "data" : [
                [
@@ -152,8 +153,7 @@
                   "Blog",
                   2
                ]
-            ],
-            "name" : "Luca Ferrari"
+            ]
          },
          {
             "name" : "Mark Anderson",
@@ -166,14 +166,14 @@
             ]
          },
          {
+            "name" : "Niels van Dijke",
             "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Niels van Dijke"
+            ]
          },
          {
             "data" : [
@@ -186,7 +186,6 @@
             "name" : "Peter Campbell Smith"
          },
          {
-            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -201,11 +200,11 @@
                   1
                ]
             ],
+            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West"
          },
          {
             "name" : "Simon Green",
-            "id" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -215,17 +214,18 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Simon Green"
          },
          {
             "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor"
+            ]
          },
          {
             "name" : "Stuart Little",
@@ -242,7 +242,6 @@
             ]
          },
          {
-            "name" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -253,9 +252,11 @@
                   1
                ]
             ],
-            "id" : "Ulrich Rieke"
+            "id" : "Ulrich Rieke",
+            "name" : "Ulrich Rieke"
          },
          {
+            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -266,35 +267,43 @@
                   1
                ]
             ],
-            "id" : "W. Luis Mochan",
             "name" : "W. Luis Mochan"
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "xAxis" : {
+      "type" : "category"
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 124"
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "series" : [
       {
+         "name" : "The Weekly Challenge - 124",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Bruce Gray",
                "y" : 4,
+               "drilldown" : "Bruce Gray",
                "name" : "Bruce Gray"
             },
             {
-               "name" : "Cheok-Yin Fung",
                "y" : 1,
-               "drilldown" : "Cheok-Yin Fung"
+               "drilldown" : "Cheok-Yin Fung",
+               "name" : "Cheok-Yin Fung"
+            },
+            {
+               "name" : "Colin Crain",
+               "drilldown" : "Colin Crain",
+               "y" : 1
             },
             {
                "y" : 3,
@@ -303,13 +312,13 @@
             },
             {
                "name" : "E. Choroba",
-               "y" : 2,
-               "drilldown" : "E. Choroba"
+               "drilldown" : "E. Choroba",
+               "y" : 2
             },
             {
-               "y" : 6,
+               "name" : "Flavio Poletti",
                "drilldown" : "Flavio Poletti",
-               "name" : "Flavio Poletti"
+               "y" : 6
             },
             {
                "name" : "James Smith",
@@ -317,13 +326,13 @@
                "y" : 3
             },
             {
-               "drilldown" : "Jorg Sommrey",
                "y" : 2,
+               "drilldown" : "Jorg Sommrey",
                "name" : "Jorg Sommrey"
             },
             {
-               "y" : 2,
                "drilldown" : "kjetillll",
+               "y" : 2,
                "name" : "kjetillll"
             },
             {
@@ -332,34 +341,34 @@
                "name" : "Laurent Rosenfeld"
             },
             {
-               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
                "y" : 4,
-               "name" : "Luca Ferrari"
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "name" : "Mark Anderson",
                "drilldown" : "Mark Anderson",
-               "y" : 1
-            },
-            {
-               "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke",
-               "y" : 2
-            },
-            {
                "y" : 1,
-               "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith"
+               "name" : "Mark Anderson"
             },
             {
-               "name" : "Roger Bell_West",
-               "y" : 5,
-               "drilldown" : "Roger Bell_West"
-            },
-            {
-               "drilldown" : "Simon Green",
+               "drilldown" : "Niels van Dijke",
                "y" : 2,
-               "name" : "Simon Green"
+               "name" : "Niels van Dijke"
+            },
+            {
+               "name" : "Peter Campbell Smith",
+               "y" : 1,
+               "drilldown" : "Peter Campbell Smith"
+            },
+            {
+               "y" : 5,
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
+            },
+            {
+               "name" : "Simon Green",
+               "drilldown" : "Simon Green",
+               "y" : 2
             },
             {
                "y" : 2,
@@ -372,18 +381,24 @@
                "drilldown" : "Stuart Little"
             },
             {
-               "name" : "Ulrich Rieke",
                "y" : 3,
-               "drilldown" : "Ulrich Rieke"
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke"
             },
             {
                "name" : "W. Luis Mochan",
                "y" : 3,
                "drilldown" : "W. Luis Mochan"
             }
-         ],
-         "name" : "The Weekly Challenge - 124",
-         "colorByPoint" : 1
+         ]
       }
-   ]
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 20] Last updated at 2021-08-07 00:59:00 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   }
 }
