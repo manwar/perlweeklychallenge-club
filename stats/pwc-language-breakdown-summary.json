@@ -1,44 +1,13 @@
 {
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "series" : [
-      {
-         "data" : [
-            [
-               "Blog",
-               1784
-            ],
-            [
-               "Perl",
-               5937
-            ],
-            [
-               "Raku",
-               3698
-            ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true",
-            "align" : "right",
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "y" : 10
-         }
-      }
-   ],
+   "subtitle" : {
+      "text" : "Last updated at 2021-08-07 00:05:31 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
       "min" : 0,
       "title" : {
@@ -48,16 +17,47 @@
    "legend" : {
       "enabled" : "false"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2021-08-06 23:44:09 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
+   "series" : [
+      {
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               1784
+            ],
+            [
+               "Perl",
+               5939
+            ],
+            [
+               "Raku",
+               3699
+            ]
+         ],
+         "dataLabels" : {
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "align" : "right"
+         }
+      }
+   ],
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
    }
 }
