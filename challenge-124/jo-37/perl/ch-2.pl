@@ -7,15 +7,14 @@ use List::Util qw(sum0 sum max reduce shuffle);
 use List::MoreUtils qw(binsert firstidx bsearchidx);
 use Math::Prime::Util qw(forcomb lastfor);
 use Time::HiRes qw(gettimeofday tv_interval);
-use Benchmark 'cmpthese';
 use experimental qw(signatures postderef);
 
-our ($tests, $examples, $benchmark, $scan, $approx);
+our ($tests, $examples, $scan, $approx);
 
 run_tests() if $tests || $examples;	# does not return
 
 die <<EOS unless @ARGV;
-usage: $0 [-examples] [-tests] [-approx] [-scan] [-benchmark] [--] [N...]
+usage: $0 [-examples] [-tests] [-approx=sec] [-scan] [--] [N...]
 
 -examples
     run the examples from the challenge
@@ -25,15 +24,10 @@ usage: $0 [-examples] [-tests] [-approx] [-scan] [-benchmark] [--] [N...]
 
 -approx=sec
     stop processing after sec seconds and return the best known
-    approximation so far.  The actual processing time may be longer than
-    specified because a node with a known minimal path has to be reached
-    first.
+    approximation so far.  Use -approx=0 to show the very first result.
 
 -scan
     use the brute-force scan implementation
-
--benchmark
-    benchmark the cbldm and the scan implementations
 
 N...
     numbers to partition
@@ -45,10 +39,11 @@ EOS
 
 my ($diff, @p);
 if ($scan) {
-    # The scan approach is very inefficient for exact partitionings when
-    # applied to sorted lists.  A large number of iterations is needed
-    # until the two parts reach sums around halve the total sum.
-    # Therefore shuffling the data.
+    # The scan approach is very inefficient for an exact partitioning or
+    # approximations when applied to sorted lists.  A large number of
+    # iterations is needed until the two parts reach sums around halve
+    # the total sum.  Therefore shuffling the list. (Test2::V0 seeds the
+    # current date, so results are consistent within the same day.)
     ($diff, @p) = tug_of_war(shuffle @ARGV);
     say "delta: $diff";
     say "Subset $_: ($p[$_]->@*)" for 0, 1;
@@ -58,18 +53,12 @@ if ($scan) {
     say "Subset $_: ($p[$_]->@*)" for 0, 1;
 }
 
-exit unless $benchmark;
-cmpthese(0, {
-        tow => sub {tug_of_war(@ARGV)},
-        cbldm => sub {run_cbldm(@ARGV)}
-    });
-
 
 ### Implementation
 
 # This is known as the "balanced partition problem", a variant of the
 # partition problem.  Both belong to the class of NP-hard problems.
-# Finding exact solutions is therefore expensive in the general case.
+# Finding proper solutions is therefore expensive in the general case.
 # There are several algorithms for the partition problem, particularly:
 # - The "largest differencing method" (a.k.a. Karmarkar-Karp algorithm).
 #   This algorithm is capable of finding a very good approximation in a
@@ -77,93 +66,99 @@ cmpthese(0, {
 # - The "complete largest differencing method" (a.k.a. Complete
 #   Karmarkar-Karp algorithm).  This is an extension to LDM that
 #   improves the (initial) approximation until the minimum is found.  This
-#   can be extremely fast if there exists an exact partitioning.  See
+#   can be extremely fast if there exists an exact partitioning and it
+#   provides very good estimates when used as an "anytime algorithm".  See
 #   results below.
 # Both algorithms can be extended to approximate or solve the balanced
 # partition problem, culminating in Stephan Mertens' "complete balanced
 # largest differencing method", which is implemented here.  See the
 # arXiv paper for details.
 #
-# Some results for N successive cubic numbers starting with 1000000.
-# Approximation done within 10 seconds, i.e.  -approx=10. A time below
-# 10 s signifies a true solution.  N=23 is the largest size where a
-# non-exact partitioning was found with certainty.
+# Distinguishing between a "proper solution" that represents a global
+# minimum and an "exact partitioning" where both subsets have equal
+# sums.  Every exact partitioning is a proper solution.
 #
-# N     mode            delta   time
-# =     ====            =====   ====
-# 22    approx          7       1.5s (true)
-# 22    scan            7       3.7s
+# Here are some approximation results for N successive cubic numbers
+# starting with 1000000 and limited to a maximum run time of 20 s.  If
+# an approximation can be identified as a global minimum, it is marked
+# as "proper".  Delta is the difference between the partitions' sums.
 #
-# 23    approx          7       2.5s (true)
-# 23    scan            7       7.4s
+# N     mode        delta   time
+# =     ====        =====   ====
+# 20    cbldm       6       0.6s (proper)
+# 20    scan        6       1.3s (proper)
 #
-# 24    approx          0       0.1s (true)
-# 24    scan            0       1.8s
+# 21    cbldm       4       0.9s (proper)
+# 21    scan        4       2.6s (proper)
 #
-# 25    approx          0       0.2s (true)
-# 25    scan            0       4.4s
+# 22    cbldm       7       1.8s (proper)
+# 22    scan        7       5.1s (proper)
 #
-# 26    approx          1       15.4s
-# 26    scan            1       63.4s
+# 23    cbldm       7       3.2s (proper)
+# 23    scan        7       10.1s (proper)
 #
-# 27    approx          1       10.8s
-# 27    scan            1       123.3s
+# 24    cbldm       0       0.1s (proper)
+# 24    scan        0       2.5s (proper)
 #
-# 28    approx          2       18.2s
-# 28    scan            -       -
+# 25    cbldm       0       0.2s (proper)
+# 25    scan        0       6.0s (proper)
 #
-# 29    approx          0       8.4s (true)
-# 29    scan            0       0.1s
+# 26    cbldm       1       19.7s (proper)
+# 26    scan        1       20.1s
 #
-# 30    approx          1       11.5s
-# 30    scan            -       -
+# 27    cbldm       1       20.1s
+# 27    scan        5       20.1s
 #
-# 31    approx          1       17.ss
-# 31    scan            -       -
+# 28    cbldm       2       20.1s
+# 28    scan        2       20.1s
 #
-# 32    approx          0       0.1s (true)
-# 32    scan            0       35.6s
+# 29    cbldm       0       10.5s (proper)
+# 29    scan        0       0.8s (proper)
 #
-# 33    approx          0       0.1s (true)
-# 33    scan            0       1.6s
+# 30    cbldm       1       20.1s
+# 30    scan        3       20.1s
 #
-# 34    approx          1       17.9s
-# 34    scan            -       -
+# 31    cbldm       1       20.1s
+# 31    scan        1       20.1s
 #
-# 35    approx          1       17.8s
-# 35    scan            -       -
+# 32    cbldm       0       0.1s (proper)
+# 32    scan        2       20.1s
 #
-# 36    approx          2       14.6s
-# 36    scan            -       -
+# 33    cbldm       0       0.2s (proper)
+# 33    scan        0       1.9s (proper)
 #
-# 37    approx          0       14.5s (true)
-# 37    scan            0       25.9s
 #
-# 38    approx          1       10.3s
-# 38    scan            -       -
+# 100   cbldm       6       20.1s
+# 100   scan        6       20.1s
 #
-# 39    approx          1       13.6s
-# 39    scan            -       -
+# 200   cbldm       48      20.1s
+# 200   scan        6985248 20.1s
 #
-# 40    approx          0       0.1s (true)
-# 40    scan            0       24.1s
+# 400   cbldm       0       0.1s (proper)
+# 400   scan        1093681818  20.1s
 #
-# 100   approx          6       14.8s
-# 200   approx          48      10.3s
-# 400   approx          0       0.1s (true)
-# 800   approx          0       0.3s (true)
-# 1600  approx          0       0.9s (true)
+# 800   cbldm       0       0.3s (proper)
+# 800   scan        13038516378 20.1s
+#
+# 1600  cbldm       0       0.9s (proper)
+# 1600  scan        7565594650  20.1s
 #
 # In summary:
-# - An exact partitioning may be found in a short time.
-# - Approximated solutions are very good according to their absolute
-#   delta which does not leave much room for improvements
-# - The times to find exact partinionings using scan are pure chance due
-#   to the shuffled data.
-# - Not trying to find non-exact scan solutions for N > 33 due to the
-#   expected running times.
+# - In many cases CBLDM is capable of finding an exact partitioning in a
+#   short time.
+# - Many approximated solutions are very good according to their
+#   absolute delta, which does not leave much room for improvements.
+#   (Actually, all shown CBLDM approximations for N <= 33 are proper.)
+# - With the scan implementation, time-limited results and the time
+#   needed to find an exact partitioning are pure chance due to the
+#   shuffled list.
+# - In general, trying to find proper solutions for larger lists doesn't
+#   seem reasonable.
 # - For longer lists the probability for an exact partitioning grows and
-#   these are found very quickly using CBLDM.
+#   these may be found very quickly using CBLDM.
+# - For longer lists a scan approximation becomes useless and the
+#   strength of CBLDM emerges. For N=200,400,800,1600 the very first
+#   result is already final. (Use -approx=0)
 # 
 # References:
 # https://en.wikipedia.org/wiki/Partition_problem
@@ -173,7 +168,7 @@ cmpthese(0, {
 our ($delta, $xmax, $mmax, $xsum, $msum, $n, $m, $start);
 
 # Wrapper for the worker sub. Set up global variables, prepare input
-# data and postprocess the result.  Returns the delta and both
+# data and post-process the result.  Returns the delta and both
 # partitions.
 sub run_cbldm (@n) {
     local $n = @n;
@@ -192,7 +187,9 @@ sub run_cbldm (@n) {
 
 # Worker sub implementing Stephan Mertens' CBLDM.  This is not an
 # "anytime algorithm" as proposed, as such algorithm would report all
-# improved local solutions while running.
+# improved local solutions while running.  For the sake of simplicity,
+# here the processing will be aborted after a given running time
+# instead.
 no warnings 'recursion';
 sub cbldm ($x) {
     my @p;
@@ -233,7 +230,7 @@ sub cbldm ($x) {
 
             # Adjust the global variables.  As I didn't find a way to
             # calculate the new value for $mmax without iterating the
-            # whole list, the other values may be recalculated as well.
+            # whole list, the other values are recalculated as well.
             local ($xsum, $xmax, $msum, $mmax) = (reduce {
                     $a->[0] += $b->[0];
                     $a->[1] = max $a->[1], $b->[0];
@@ -247,7 +244,7 @@ sub cbldm ($x) {
             my @pn = __SUB__->(\@x);
 
 
-            # The sub returns improved solutions only.
+            # The sub returns improved solutions only. Backtrack.
             if (@pn) {
                 my ($idx, $p);
                 # Locate the composite element in one of the partitions.
@@ -275,21 +272,23 @@ sub cbldm ($x) {
                 @p = @pn;
             }
 
-            # Stop if an exact solution has been detected or at the
-            # current local minimum in approximation mode.
-            return @p if $delta == 0 ||
-                @p && defined $approx && tv_interval($start) > $approx;
+            # Stop if an exact partitioning has been detected or there
+            # exists a local minimum and the running time is exhausted.
+            return @p if $delta == 0 || defined $approx &&
+                ($delta < 'inf') && tv_interval($start) > $approx;
         }
     }
 
     @p;
 }
 
-# For comparison I kept my first solution attempt: a brute force scan of
-# all subsets having almost halve the cardinality.
+# My first solution attempt: a brute force scan of all subsets having
+# (almost) halve the cardinality.  For a better comparison to CBLDM a
+# time limit was added.
 sub tug_of_war (@a) {
     my $diff = 'inf';
     my @p;
+    my $start = [gettimeofday];
 
     # Loop over all "halve subsets" of the given set of numbers.
     forcomb {
@@ -310,6 +309,8 @@ sub tug_of_war (@a) {
             # Stop on an exact partitioning.
             lastfor if $diff == 0;
         }
+        # Time exhausted.
+        lastfor if defined $approx && tv_interval($start) > $approx;
     } @a, int +(@a + 1) / 2;
 
     ($diff, @p);
