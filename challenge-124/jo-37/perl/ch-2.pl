@@ -45,10 +45,10 @@ EOS
 
 my ($diff, @p);
 if ($scan) {
-    # The scan approach is very inefficient when applied to sorted
-    # lists.  A large number of iterations is needed until the two parts
-    # reach sums around halve the total sum.  Therefore shuffling the
-    # data.
+    # The scan approach is very inefficient for exact partitionings when
+    # applied to sorted lists.  A large number of iterations is needed
+    # until the two parts reach sums around halve the total sum.
+    # Therefore shuffling the data.
     ($diff, @p) = tug_of_war(shuffle @ARGV);
     say "delta: $diff";
     say "Subset $_: ($p[$_]->@*)" for 0, 1;
@@ -84,62 +84,86 @@ cmpthese(0, {
 # largest differencing method", which is implemented here.  See the
 # arXiv paper for details.
 #
-# Some results for N successive square numbers starting with 1000000.
-# Approximation done within 60 and 5 wall clock seconds or "first
-# found", i.e.  -approx=0. A time below 60 s signifies a true solution.
-# N=29 is the largest size where a non-exact partitioning could be found
-# with certainty.  The exact partitioning result for N=28 using "scan"
-# requires shuffled input data.
+# Some results for N successive cubic numbers starting with 1000000.
+# Approximation done within 10 seconds, i.e.  -approx=10. A time below
+# 10 s signifies a true solution.  N=23 is the largest size where a
+# non-exact partitioning was found with certainty.
 #
 # N     mode            delta   time
 # =     ====            =====   ====
-# 26    approx=60       1017    19.3s (proven)
-# 26    approx=5        1261    5.1s
-# 26    approx=0        1977    0.1s
-# 26    scan            1017    61.3s
+# 22    approx          7       1.5s (true)
+# 22    scan            7       3.7s
 #
-# 28    approx=60       0       0.1s
-# 28    approx=0        4       0.1s
-# 28    scan            0       0.1s
+# 23    approx          7       2.5s (true)
+# 23    scan            7       7.4s
 #
-# 29    proven          602316  134.2s
-# 29    approx=60       655330  76.8s
-# 29    approx=5        749020  7.1s
-# 29    approx=0        971594  0.1s
+# 24    approx          0       0.1s (true)
+# 24    scan            0       1.8s
 #
-# 36    approx=60       0       0.2s
-# 36    approx=0        4       0.1s
+# 25    approx          0       0.2s (true)
+# 25    scan            0       4.4s
 #
-# 38    approx=60       957     71.4s
-# 38    approx=5        1377    5.1s
-# 38    approx=0        1965    0.1s
+# 26    approx          1       15.4s
+# 26    scan            1       63.4s
 #
-# 64    approx=60       0       0.1s
-# 64    approx=0        0       0.1s
+# 27    approx          1       10.8s
+# 27    scan            1       123.3s
 #
-# 128   approx=60       0       0.1s
-# 128   approx=0        0       0.1s
+# 28    approx          2       18.2s
+# 28    scan            -       -
 #
-# 256   approx=60       0       0.1s
-# 256   approx=0        0       0.1s
+# 29    approx          0       8.4s (true)
+# 29    scan            0       0.1s
 #
-# 512   approx=60       0       0.2s
-# 512   approx=0        0       0.2s
+# 30    approx          1       11.5s
+# 30    scan            -       -
 #
-# 1024  approx=60       0       0.4s
-# 1024  approx=0        0       0.4s
+# 31    approx          1       17.ss
+# 31    scan            -       -
 #
-# 2048  approx=60       0       1.3s
-# 2048  approx=0        0       1.3s
+# 32    approx          0       0.1s (true)
+# 32    scan            0       35.6s
+#
+# 33    approx          0       0.1s (true)
+# 33    scan            0       1.6s
+#
+# 34    approx          1       17.9s
+# 34    scan            -       -
+#
+# 35    approx          1       17.8s
+# 35    scan            -       -
+#
+# 36    approx          2       14.6s
+# 36    scan            -       -
+#
+# 37    approx          0       14.5s (true)
+# 37    scan            0       25.9s
+#
+# 38    approx          1       10.3s
+# 38    scan            -       -
+#
+# 39    approx          1       13.6s
+# 39    scan            -       -
+#
+# 40    approx          0       0.1s (true)
+# 40    scan            0       24.1s
+#
+# 100   approx          6       14.8s
+# 200   approx          48      10.3s
+# 400   approx          0       0.1s (true)
+# 800   approx          0       0.3s (true)
+# 1600  approx          0       0.9s (true)
 #
 # In summary:
-# - An exact partitioning may be proven in a short time.
-# - Approximated solutions are not far from optimum even for short
-#   running times. (As far as the optimum is known.)
-# - The first found local minimum is already a good approximation and an
-#   exact partitioning might be detected with it.
-# - A practical usage is an approximation with some reasonable running
-#   time limit.
+# - An exact partitioning may be found in a short time.
+# - Approximated solutions are very good according to their absolute
+#   delta which does not leave much room for improvements
+# - The times to find exact partinionings using scan are pure chance due
+#   to the shuffled data.
+# - Not trying to find non-exact scan solutions for N > 33 due to the
+#   expected running times.
+# - For longer lists the probability for an exact partitioning grows and
+#   these are found very quickly using CBLDM.
 # 
 # References:
 # https://en.wikipedia.org/wiki/Partition_problem
@@ -316,11 +340,11 @@ sub run_tests {
 
         is [run_cbldm(1)], [1, [1], []], 'single element';
 
-        # 256 successive square numbers.
-        my ($delta, $p1, $p2) = run_cbldm(map $_**2, 1000 .. 1255);
-        is $delta, 0, 'squares: delta';
-        is abs(sum(@$p1) - sum(@$p2)), $delta, 'squares: sums';
-        ok +(abs(@$p1 - @$p2) <= 1), 'squares: cardinality';
+        # 400 successive cubic numbers.
+        my ($delta, $p1, $p2) = run_cbldm(map $_**3, 100 .. 499);
+        is $delta, 0, 'cubes: delta';
+        is abs(sum(@$p1) - sum(@$p2)), $delta, 'cubes: sums';
+        ok +(abs(@$p1 - @$p2) <= 1), 'cubes: cardinality';
 
 	}
 
