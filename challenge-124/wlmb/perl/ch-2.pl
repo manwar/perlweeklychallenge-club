@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # Perl weekly challenge 124
-# Task 2: Tug of war
+# Task 2: Tug of war. Exhaustive search.
 #
 # See https://wlmb.github.io/2021/08/02/PWC124/#task-2-tug-of-war
 use strict;
