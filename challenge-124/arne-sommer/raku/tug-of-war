@@ -1,0 +1,38 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@n where @n.elems > 0   &&
+                         all(@n) ~~ Int &&
+                         @n.elems == @n.unique.elems,
+               :v(:$verbose),
+	       :a(:$all));
+
+my $best = Inf;
+my @subset1;
+my @subset2;
+
+for @n.combinations(@n.elems / 2) -> @first
+{
+  my @second = (@n (-) @first).keys.sort;
+   
+  my $difference = (@first.sum - @second.sum).abs;
+
+  if $difference < $best
+  {
+    say ": { @first.join(", ") } - { @second.join(", ") } = $difference [BEST]" if $verbose;
+
+    $best = $difference;
+    @subset1 = @first;
+    @subset2 = @second;
+
+    last if $best == 0 && !$all;
+  }
+  else
+  {
+    say ": { @first.join(", ") } - { @second.join(", ") } = $difference" if $verbose;
+  }
+}
+
+say "Subset 1 = ({ @subset1.join(", ") })";
+say "Subset 2 = ({ @subset2.join(", ") })";
+
+say ": Difference: $best" if $verbose;

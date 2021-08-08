@@ -1,0 +1,20 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@n where @n.elems > 0   &&
+                         all(@n) ~~ Int, # &&
+                         # @n.elems == @n.unique.elems,
+               :v(:$verbose));
+
+my $half-sum = @n.sum / 2;
+
+if $verbose
+{
+  say ": Half sum: $half-sum";
+  say ": Combinations: ", @n.combinations(@n.elems / 2);
+  say ": Sums: ", @n.combinations(@n.elems / 2).map({ @$_.sum});
+}
+
+# (say "0"; exit ) unless $half-sum == $half-sum.Int;
+
+say + so @n.combinations(@n.elems / 2).map({ @$_.sum}).any == $half-sum;
+
