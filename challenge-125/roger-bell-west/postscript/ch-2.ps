@@ -1,0 +1,73 @@
+%! no DSC
+
+% def btd(tree)
+%   st=tree.length
+%   depth=Array.new(st,0)
+%   diameter=Array.new(st,0)
+%   (st-1).downto(0) do |i|
+%     if tree[i] != 0 then
+%       a=i*2+1
+%       b=a+1
+%       if b < st then
+%         depth[i]=1+[depth[a],depth[b]].max
+%         diameter[i]=[
+%           1+depth[a]+depth[b],
+%           diameter[a],
+%           diameter[b],
+%         ].max
+%       else
+%         depth[i]=1
+%         diameter[i]=1
+%       end
+%     end
+%   end
+%   return diameter[0]
+% end
+
+/max2 {
+    dup % a b b
+    3 2 roll % b b a
+    dup % b b a a
+    3 1 roll % b a b a
+    lt { exch} if
+    pop
+} def
+
+/btd {
+    /tree exch def
+    /st tree length def
+    /depth st array def
+    /diameter st array def
+    0 1 st 1 sub {
+        dup
+        depth exch 0 put
+        diameter exch 0 put
+    } for
+    st 1 sub 1 neg 0 {
+        /i exch def
+        tree i get 0 ne {
+            /a i 2 mul 1 add def
+            /b a 1 add def
+            b st lt {
+                depth i depth a get depth b get max2 1 add put
+                diameter i
+                depth a get depth b get 1 add add
+                diameter a get
+                diameter b get
+                max2 max2 put
+            } {
+                depth i 1 put
+                diameter i 1 put
+            } ifelse
+        } if
+    } for
+    diameter 0 get
+} def
+
+[ 1
+  2 5
+  3 4 6 7
+  0 0 0 0 0 0 8 10
+  0 0 0 0 0 0 0  0 0 0 0 0 9 0 0 0 ]
+btd
+=
