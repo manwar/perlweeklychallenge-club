@@ -8,7 +8,7 @@ grammar BTreeGrammar {
 
 class BTreeRep {...}
 
-role BTree[::T] {
+role BTree[::T,::R=BTreeRep] {
     has T $.value is required;
     has BTree @!nodes[2];
 
@@ -34,7 +34,7 @@ role BTree[::T] {
     }
 
     method gist() {
-        BTreeRep.new( tree=>self ).gist();
+        R.new( tree=>self ).gist();
     }
 
     method raku() {
@@ -143,6 +143,8 @@ multi sub MAIN( *@data ) {
     my BTree[Any](Str) $tree = @data.join("");
     my @routes = $tree.traverse.sort( -*.elems );
 
+    say $tree;
+    
     my $long = shift @routes;
     my $result = $long.elems;
     for @routes -> $pos {
