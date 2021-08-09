@@ -1,14 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
-   },
    "xAxis" : {
       "categories" : [
          "Steven Wilson",
@@ -37,6 +27,27 @@
          "Yet Ebreo",
          "Yozen Hernandez"
       ]
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 25] Last updated at 2021-08-09 06:29:26 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "series" : [
       {
@@ -70,7 +81,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             1,
             248,
@@ -97,10 +107,10 @@
             3,
             21,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             4,
             0,
@@ -127,21 +137,11 @@
             1,
             6,
             14
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 25] Last updated at 2021-08-08 23:01:22 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "chart" : {
+      "type" : "column"
    }
 }
