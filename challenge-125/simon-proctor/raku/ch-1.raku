@@ -26,15 +26,6 @@ sub py-triples(UInt $N) {
     
     my @odds = (1,*+2...* >= $N).cache;
 
-    my @pairs = (@odds X, @odds).grep( -> ($m, $n) { $m > $n } );
-    
-    for @pairs -> ( $m, $n ) {
-        my $pos = (  ($m * $n), ( ($m²-$n²)/2), ( ($m² + $n²)/2 ) );
-        if ( $N ~~ $pos.any ) {
-            push @out, $pos;
-        }
-    }
-    
-    return @out;
+    return (@odds X, @odds).hyper.grep( -> ($m, $n) { $m > $n } ).map( -> ( $m, $n ) { (  ($m * $n), ( ($m²-$n²)/2), ( ($m² + $n²)/2 ) ) } ).grep( -> $pos { $N ~~ $pos.any; } );
 }
   
