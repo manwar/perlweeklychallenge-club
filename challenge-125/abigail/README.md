@@ -1,27 +1,31 @@
 # Solutions by Abigail
-## [Happy Women Day][task1]
+## [Pythagorean Triples][task1]
 
-> Write a script to print the Venus Symbol, international gender symbol
-> for women. Please feel free to use any character.
+> You are given a positive integer `$N`.
+>
+> Write a script to print all Pythagorean Triples containing $N as
+> a member. Print `-1` if it can't be a member of any.
+>
+> Triples with the same set of elements are considered the same,
+> i.e. if your script has already printed `(3, 4, 5)`, `(4, 3, 5)` should
+> not be printed.
+>
+> > The famous Pythagorean theorem states that in a right angle
+> > triangle, the length of the two shorter sides and the length of the
+> > longest side are related by `a^2+b^2 = c^2`.
 
+### Example
 ~~~~
-    ^^^^^
-   ^     ^
-  ^       ^
- ^         ^
- ^         ^
- ^         ^
- ^         ^
- ^         ^
-  ^       ^
-   ^     ^
-    ^^^^^
-      ^
-      ^
-      ^
-    ^^^^^
-      ^
-      ^
+Input: $N = 5
+Output: (3, 4, 5)
+        (5, 12, 13)
+
+Input: $N = 13
+Output: (5, 12, 13)
+        (13, 84, 85)
+
+Input: $N = 1
+Output: -1
 ~~~~
 
 ### Solutions
@@ -56,40 +60,51 @@
 * [Tcl](tcl/ch-1.tcl)
 
 ### Blog
-[Perl Weekly Challenge 124: Happy Women Day][blog1]
+[Perl Weekly Challenge 125: Pythagorean Triples][blog1]
 
-## [Tug of War][task2]
+## [Binary Tree Diameter][task2]
 
-> You are given a set of $n integers `(n1, n2, n3, ...)`.
+> You are given binary tree as below:
+
+~~~~
+    1
+   / \
+  2   5
+ / \ / \
+3  4 6  7
+       / \
+      8  10
+     /
+    9
+~~~~
+
+> Write a script to find the diameter of the given binary tree.
 >
-> Write a script to divide the set in two subsets of `n/2` sizes each
-> so that the difference of the sum of two subsets is the least. If
-> `$n` is even then each subset must be of size `$n/2` each. In case $n
-> is odd then one subset must be `($n-1)/2` and other must be `($n+1)/2`.
+> > The diameter of a binary tree is the length of the longest path
+> > between any two nodes in a tree. It doesn't have to pass
+> > through the root.
 
-### Examples
-~~~~
-Input:        Set = (10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
-Output:  Subset 1 = (30, 40, 60, 70, 80)
-         Subset 2 = (10, 20, 50, 90, 100)
-~~~~
+For the above given binary tree, possible diameters (7) are:
 
 ~~~~
-Input:        Set = (10, -15, 20, 30, -25, 0, 5, 40, -5)
-         Subset 1 = (30, 0, 5, -5)
-         Subset 2 = (10, -15, 20, -25, 40)
+3, 2, 1, 5, 7, 8, 9
+~~~~
+
+or
+
+~~~~
+4, 2, 1, 5, 7, 8, 9
 ~~~~
 
 ### Solutions
 * [Perl](perl/ch-2.pl)
-* [Python](python/ch-2.py)
 
 ### Blog
-[Perl Weekly Challenge 124: Tug of War][blog2]
+[Perl Weekly Challenge 125: Binary Tree Diameter][blog2]
 
 
 
-[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-124/#TASK1
-[task2]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-124/#TASK2
-[blog1]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-124-1.html
-[blog2]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-124-2.html
+[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-125/#TASK1
+[task2]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-125/#TASK2
+[blog1]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-125-1.html
+[blog2]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-125-2.html
