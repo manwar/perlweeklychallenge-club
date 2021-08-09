@@ -1,6 +1,11 @@
 find . -name "*.c" -delete
+find . -name "*.logo" -delete
+find . -name "*.amx" -delete
+find . -name "*.svg" -delete
+find . -name "*.mms" -delete
 find . -name "*.cxx" -delete
 find . -name "*.c3" -delete
+find . -name "*.io" -delete
 find . -name "*.d" -delete
 find . -name "*.m" -delete
 find . -name "*.dart" -delete
