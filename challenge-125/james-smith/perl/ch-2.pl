@@ -26,6 +26,7 @@ my $x = BinaryTree->new(1)->add_child_left(
           BinaryTree->new(5)->add_child_left( BinaryTree->new(6))->add_child_right(
             BinaryTree->new(7)->add_child_left( BinaryTree->new(8)->add_child_left(BinaryTree->new(9)) )->add_child_right(BinaryTree->new(10))
         ));
+say '1) Tree with root node having both left and right children!';
 $x->dump;
 say sprintf 'Max depth: %d, diameter %d', $x->depth, $x->diameter;
 say '';
@@ -43,6 +44,7 @@ $x = BinaryTree->new(1)->add_child_left(
                  BinaryTree->new(7)
      ))))));
 
+say '2) Tree with no node having two children';
 $x->dump;
 say sprintf 'Max depth: %d, diameter %d', $x->depth, $x->diameter;
 say '';
@@ -64,6 +66,8 @@ $x = BinaryTree->new(1)->add_child_left(
               )
      )));
 
+say '3) Tree with node further down having two children - but distance from';
+say '   root to node is greater than the depth of either child';
 $x->dump;
 say sprintf 'Max depth: %d, diameter %d', $x->depth, $x->diameter;
 say '';
@@ -76,6 +80,8 @@ say '';
 ## ---------------------
 ## 6 -> 5 -> 2 -> 3 -> 4 [ diameter 5 ]
 
+say '4) Tree with node further down having two children - but distance from';
+say '   root to node is less than the depth of both children';
 $x = BinaryTree->new(1)->add_child_left(
        BinaryTree->new(2)->add_child_left(
          BinaryTree->new(3)->add_child_left( BinaryTree->new(4) )
