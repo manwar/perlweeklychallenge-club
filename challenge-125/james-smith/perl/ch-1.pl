@@ -12,7 +12,7 @@ my @TESTS = (
   [ 0, 1 ],
 );
 
-say $_,' > ', get_triples($_) foreach 1..100;
+say $_,' > ', get_triples($_) foreach 1..500;
 
 sub get_triples {
   my $n = shift;
