@@ -29,8 +29,9 @@ sub py-triples(UInt $N) {
     my @pairs = (@odds X, @odds).grep( -> ($m, $n) { $m > $n } );
     
     for @pairs -> ( $m, $n ) {
-        if ( $N ~~ $m * $n || $N ~~ ($m²-$n²)/2 || $N ~~ ($m² + $n²)/2 ) {
-            push @out, $ = ( ($m * $n), ( ($m²-$n²)/2), ( ($m² + $n²)/2 ) );
+        my $pos = (  ($m * $n), ( ($m²-$n²)/2), ( ($m² + $n²)/2 ) );
+        if ( $N ~~ $pos.any ) {
+            push @out, $pos;
         }
     }
     
