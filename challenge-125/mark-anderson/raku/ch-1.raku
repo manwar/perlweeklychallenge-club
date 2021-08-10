@@ -8,12 +8,12 @@
 # factor-pairs uses the Rainbow method
 # https://www.chilimath.com/lessons/introductory-algebra/finding-all-the-factors-of-a-whole-number-using-the-rainbow-method
 
-multi sub MAIN($N)
+multi MAIN($N)
 {
     .say for py-tris($N);
 }
 
-multi sub MAIN
+multi MAIN
 {
     use Test;
     plan 9;
@@ -46,7 +46,6 @@ multi py-tris($N where * > 0)
                 my $z = $r + $p[0] + $p[1];
         
                 take ($x, $y, $z) if any($x, $y, $z) == $N;
-
                 last SEQ if $x == $N and $z - $y == 1|2;
             }
         }
