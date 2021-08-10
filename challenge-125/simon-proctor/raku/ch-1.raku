@@ -8,7 +8,7 @@ multi sub MAIN('test') is hidden-from-USAGE {
     is py-triples(3), ( (3,4,5) );
     is py-triples(4), ( (3,4,5) );
     is py-triples(5), ( (3,4,5), (5,12,13) );
-    is py-triples(6), ();
+    is py-triples(6), ( (6,8,10) );
     is py-triples(13), ( (5,12,13), (13, 84, 85) );
 
     done-testing;
