@@ -33,7 +33,7 @@ sub py-triples(UInt $N) {
                                   .grep( -> ($a,$b) { $N² == $a² + $b² } )
                                   .map( -> ($a, $b) { ( $a, $b, $N ).sort } );
 
-    my $cs = start (($N^..($N² div 2)) X, ($N^..($N² div 2)+1)).hyper
+    my $cs = start ((1..($N² div 2)) X, (1..($N² div 2)+1)).hyper
                                      .grep( -> ($a,$c) { $c >= $a } )
                                      .grep( -> ($a,$c) { $N² + $a² == $c² } )
                                      .map( -> ($a, $c) { ( $a, $N, $c ).sort } );
