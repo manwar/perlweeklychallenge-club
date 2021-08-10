@@ -19,7 +19,7 @@ multi sub MAIN
     is py-tris(1), -1;
     is py-tris(2), -1;
     is-deeply py-tris(3),  ((3, 4, 5),);
-    is-deeply py-tris(5),  ((3, 4,  5), (5, 12, 13));
+    is-deeply py-tris(5),  ((3, 4, 5), (5, 12, 13));
     is-deeply py-tris(6),  ((6, 8, 10),);
     is-deeply py-tris(13), ((5, 12, 13), (13, 84, 85));
     is-deeply py-tris(15), ((8, 15, 17), (9, 12, 15), (15, 20, 25), (15, 36, 39), (15, 112, 113));
@@ -29,7 +29,7 @@ multi sub MAIN
 
 multi py-tris($N where * == 1|2) { -1 }
 
-multi py-tris($N where * == 3|4) { (3,4,5), }
+multi py-tris($N where * == 3|4) { (3, 4, 5), }
 
 multi py-tris($N where * > 0)
 {
