@@ -24,8 +24,24 @@ multi sub MAIN(UInt $N where * > 0) {
 sub py-triples(UInt $N) {
     my @out;
     
-    my @odds = (1,*+2...* >= $N).cache;
+    #my @odds = (1,*+2...* >= $N).cache;
+    
+    #return (@odds X, @odds).hyper.grep( -> ($m, $n) { $m > $n } ).map( -> ( $m, $n ) { note ($m,$n); (  ($m * $n), ( ($m²-$n²)/2), ( ($m² + $n²)/2 ) ) } ).grep( -> $pos { note $pos; $N ~~ $pos.any; } );
 
-    return (@odds X, @odds).hyper.grep( -> ($m, $n) { $m > $n } ).map( -> ( $m, $n ) { (  ($m * $n), ( ($m²-$n²)/2), ( ($m² + $n²)/2 ) ) } ).grep( -> $pos { $N ~~ $pos.any; } );
+    my $as = start ((1..^$N) X, (1..^$N²)).hyper
+                                  .grep( -> ($a,$b) { $b >= $a } )
+                                  .grep( -> ($a,$b) { $N² == $a² + $b² } )
+                                  .map( -> ($a, $b) { ( $a, $b, $N ).sort } );
+
+    my $cs = start (($N^..($N² div 2)) X, ($N^..($N² div 2)+1)).hyper
+                                     .grep( -> ($a,$c) { $c >= $a } )
+                                     .grep( -> ($a,$c) { $N² + $a² == $c² } )
+                                     .map( -> ($a, $c) { ( $a, $N, $c ).sort } );
+                                     
+    await $as, $cs;
+    
+    return |$as.result , |$cs.result;
+
+                                                                                                                       
 }
   
