@@ -1,7 +1,5 @@
 #!/usr/bin/env raku
 
-my @odds = (1,*+2...*).cache;
-
 multi sub MAIN('test') is hidden-from-USAGE {
     use Test;
 
