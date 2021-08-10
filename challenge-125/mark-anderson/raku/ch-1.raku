@@ -37,11 +37,11 @@ multi py-tris($N where * > 0)
     {
         SEQ: for 2, 4 ... * -> $r
         {
-            for factor-pairs(($r**2/2).Int) -> $p
+            for factor-pairs(($r**2 / 2).Int) -> ($s, $t)
             {
-                my $x = $r + $p[0];
-                my $y = $r + $p[1];
-                my $z = $r + $p[0] + $p[1];
+                my $x = $r + $s;
+                my $y = $r + $t;
+                my $z = $r + $s + $t;
 
                 take ($x, $y, $z) if any($x, $y, $z) == $N;
                 last SEQ if $x == $N and $z - $y == 1|2;
