@@ -72,6 +72,31 @@ $x->dump;
 say sprintf 'Max depth: %d, diameter %d', $x->depth, $x->diameter;
 say '';
 
+## 1 -> 2 -> 3 -> 4 -> 5 -> 6
+##        `>10 `> 7 -> 8 -> 9
+## --------------------------
+## 9 -> 8 -> 7 -> 3 -> 4 -> 5 -> 6
+
+$x = BinaryTree->new(1)->add_child_left(
+          BinaryTree->new(2)->add_child_left(
+            BinaryTree->new(3)->add_child_left(
+              BinaryTree->new(4)->add_child_left(
+                BinaryTree->new(5)->add_child_left( BinaryTree->new(6) )
+              )
+            )->add_child_right(
+              BinaryTree->new(7)->add_child_left(
+                BinaryTree->new(8)->add_child_left( BinaryTree->new(9) )
+              )
+            )
+          )->add_child_right( BinaryTree->new(10))
+       );
+
+say '4) Tree with node further down having two children - but distance from';
+say '   root to node is greater than the depth of either child';
+$x->dump;
+say sprintf 'Max depth: %d, diameter %d', $x->depth, $x->diameter;
+say '';
+
 ## This time both child trees have depths longer than the number of
 ## ancestor nodes - so that is used to get the length...
 
@@ -80,7 +105,7 @@ say '';
 ## ---------------------
 ## 6 -> 5 -> 2 -> 3 -> 4 [ diameter 5 ]
 
-say '4) Tree with node further down having two children - but distance from';
+say '5) Tree with node further down having two children - but distance from';
 say '   root to node is less than the depth of both children';
 $x = BinaryTree->new(1)->add_child_left(
        BinaryTree->new(2)->add_child_left(

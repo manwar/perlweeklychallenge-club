@@ -32,18 +32,13 @@ sub depth {
 
 sub diameter {
   my $self = shift;
-  return 1 + $self->left->depth + $self->right->depth if $self->has_left && $self->has_right;
-
-  my $diameter = $self->depth; ## Case 1 has a single depth....
-  my $t = $self->has_left ? $self->left : $self->right;
-  while( $t->has_left || $t->has_right ) {
-    if( $t->has_left && $t->has_right ) {
-      my $d = 1 + $t->left->depth + $t->right->depth;
-      return $d > $diameter ? $d : $diameter;
-    }
-    $t = $t->has_left ? $t->left : $t->right;
-  }
-  return $diameter;
+  my $global = { 'diameter' => 0 };
+  $self->walk( sub {
+    my $d = ($_[0]->has_left  ? $_[0]->left->depth  : 0 ) +
+            ($_[0]->has_right ? $_[0]->right->depth : 0 );
+    $_[1]{'diameter'} = $d if $d > $_[1]->{'diameter'};
+  }, $global );
+  return $global->{'diameter'};
 }
 
 sub value {
