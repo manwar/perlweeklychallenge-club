@@ -53,6 +53,6 @@ multi py-tris($N where * > 0)
 sub factor-pairs($n)
 {
     my @divs = proper-divisors($n);
-    @divs = @divs.grep(* < sqrt($n));
+    @divs .= grep(* < sqrt($n));
     @divs.map({ $_, $n div $_ });
 }
