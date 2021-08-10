@@ -6,12 +6,12 @@
 
 use Prime::Factor;
 
-multi sub MAIN($N)
+multi MAIN($N)
 {
     .say for py-tris($N);
 }
 
-multi sub MAIN
+multi MAIN
 {
     use Test;
     plan 9;
