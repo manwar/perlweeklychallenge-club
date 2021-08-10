@@ -28,7 +28,7 @@ sub py-triples(UInt $N) {
     
     #return (@odds X, @odds).hyper.grep( -> ($m, $n) { $m > $n } ).map( -> ( $m, $n ) { note ($m,$n); (  ($m * $n), ( ($m²-$n²)/2), ( ($m² + $n²)/2 ) ) } ).grep( -> $pos { note $pos; $N ~~ $pos.any; } );
 
-    my $as = start ((1..^$N) X, (1..^$N²)).hyper
+    my $as = start ((1..^$N) X, (1..^$N)).hyper
                                   .grep( -> ($a,$b) { $b >= $a } )
                                   .grep( -> ($a,$b) { $N² == $a² + $b² } )
                                   .map( -> ($a, $b) { ( $a, $b, $N ).sort } );
