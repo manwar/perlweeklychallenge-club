@@ -47,7 +47,9 @@ my $done;
     grep { scalar $_->@* == $max }
     sort { scalar $b->@* <=> scalar $a->@* } @diameters;
 
-say join "\n", map { join " ", ( scalar $_->@* ), ':', $_->@* }
+# DIAMETER refers to the edge count, not the node count, 
+# so the it's the node count minus one
+say join "\n", map { join " ", ( -1 + scalar $_->@* ), ':', $_->@* }
 
     @diameters;
 

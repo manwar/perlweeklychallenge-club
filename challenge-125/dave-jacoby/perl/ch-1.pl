@@ -65,22 +65,4 @@ sub pt_c ($n ) {
     }
     return uniq @output if @output;
     return undef;
-
-    # my @output;
-    # my $n2 = $n**2;
-
-    # for my $a1 ( 1 .. $n2 ) {
-    #     my $a2 = $a1**2;
-    #     for my $b1 ( 1 .. $n2 ) {
-    #         my $b2 = $b1**2;
-    #         my $c2 = $a2 + $b2;
-    #         next if $c2 > $n2;
-    #         if ( $n2 == $c2 ) {
-    #             my @x = sort { $a <=> $b } map { int $_ } $a1, $b1, $n;
-    #             push @output, $json->encode( \@x );
-    #         }
-    #     }
-    # }
-    # return uniq @output if @output;
-    # return undef;
 }
