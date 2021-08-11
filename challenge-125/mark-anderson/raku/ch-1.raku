@@ -50,7 +50,7 @@ multi py-tris($N where * > 0)
 
 sub factor-pairs($n)
 {
-    grep ({ $n %% $_ }), 1..^sqrt($n)
+    grep { $n %% $_ }, 1..^sqrt($n)
 
     andthen .map({ $_, $n div $_ });
 }
