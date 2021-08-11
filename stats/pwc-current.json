@@ -2,37 +2,13 @@
    "xAxis" : {
       "type" : "category"
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 125",
-         "data" : [
-            {
-               "name" : "James Smith",
-               "drilldown" : "James Smith",
-               "y" : 2
-            },
-            {
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
-            }
-         ]
-      }
-   ],
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 125"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
@@ -47,7 +23,16 @@
             "name" : "James Smith"
          },
          {
-            "id" : "Roger Bell_West",
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "id" : "Mark Anderson"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -62,25 +47,55 @@
                   1
                ]
             ],
+            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-08-11 20:01:30 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 125",
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "y" : 1,
+               "name" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "y" : 4,
+               "name" : "Roger Bell_West"
+            }
+         ],
+         "colorByPoint" : 1
       }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 125"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2021-08-11 20:13:13 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
