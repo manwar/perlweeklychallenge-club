@@ -4,8 +4,6 @@
 # https://en.wikipedia.org/wiki/Formulas_for_generating_Pythagorean_triples#Dickson's_method
 #
 
-use Prime::Factor;
-
 multi MAIN($N)
 {
     .say for py-tris($N);
@@ -52,7 +50,7 @@ multi py-tris($N where * > 0)
 
 sub factor-pairs($n)
 {
-    my @divs = proper-divisors($n);
-    @divs .= grep(* < sqrt($n));
-    @divs.map({ $_, $n div $_ });
+    grep ({ $n %% $_ }), 1..^sqrt($n)
+
+    andthen .map({ $_, $n div $_ });
 }
