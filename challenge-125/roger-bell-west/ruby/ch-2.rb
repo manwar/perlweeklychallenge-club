@@ -11,13 +11,12 @@ def btd(tree)
       if b < st then
         depth[i]=1+[depth[a],depth[b]].max
         diameter[i]=[
-          1+depth[a]+depth[b],
+          depth[a]+depth[b],
           diameter[a],
           diameter[b],
         ].max
       else
         depth[i]=1
-        diameter[i]=1
       end
     end
   end
@@ -29,12 +28,12 @@ require 'test/unit'
 class TestBtd < Test::Unit::TestCase
 
   def test_ex1
-    assert_equal(7,btd([1,
+    assert_equal(6,btd([1,
                         2,5,
                         3,4,6,7,
                         0,0,0,0,0,0,8,10,
                         0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0
                        ]))
   end
-  
+
 end
