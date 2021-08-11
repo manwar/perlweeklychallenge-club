@@ -17,44 +17,62 @@ use experimental 'lexical_subs';
 # Run as: perl ch-2.pl < input-file
 #
 
-#
-# Once again, the weekly challenge cannot be bothered to specify how
-# the input looks like when the exercises is about binary trees;
-# there's only a single example tree, of which it's clear it will not
-# scale beyond anything trivial.
-#
-# As such, the best we can do is recognize the one example, while being
-# lenient if there is surplus white space. We'll print the answer if
-# the example tree is given as input, and die on anything else, as nothing
-# else is specified.
-#
+package Tree {
+    use Hash::Util::FieldHash qw [fieldhash];
+    use List::Util            qw [max];
 
-undef $/;
-my $input = <>;
+    fieldhash my %left;
+    fieldhash my %right;
+    
+    sub new ($class) {bless do {\my $var} => $class}
 
-#
-# Remove blank lines
-#
-$input =~ s/^\s+$//gm;
+    sub init ($self, $input) {
+        #
+        # Initialize a tree given the input following the
+        # specification of how we're given a tree.
+        #
 
-#
-# Remove trailing whitespace from each line.
-#
-$input =~ s/\h+$//mg;
+        ...;   # <-- This is the yada, yada, yada operator, typically
+               #     a placeholder for code which still needs to be written.
+               #     Perfect! Once we have a specification of how the
+               #     the input is structured (other than a single example
+               #     of which anyone can instantly see it doesn't scale
+               #     beyond trivial sizes), we can replace this piece of code.
+               #
+               # This does mean though, that rest of the code is largely
+               # untested. "It compiles" is the best we can do.
+               #
 
-#
-# Remove leading whitespace
-#
-$input =~ s/^ //gm while $input !~ /^\S/m;
+        $self;
+    }
 
-if ($input eq << '--') {say 7} else {die "Unrecognized input"}
-    1
-   / \
-  2   5
- / \ / \
-3  4 6  7
-       / \
-      8  10
-     /
-    9
---
+    #
+    # Get the left and right child of a tree. Leaves obviously
+    # don't have children.
+    #
+    sub left  ($self) {$self && $left  {$self}}
+    sub right ($self) {$self && $right {$self}}
+
+    sub diameter ($self) {
+        ($self -> _diameter ($self)) [1]
+    }
+
+    sub _diameter ($self) {
+        #
+        # Given a tree, return a tuple ($depth, $diameter), where
+        # first element is the depth of a tree (longest path to a leaf),
+        # and second the diameter (longest path in the tree).
+        #
+        # Depth of a tree is 1 + max (depth left child, depth right child)
+        # Diameter of a tree is max (diameter left child,
+        # diameter right child, 1 + depth left child + depth right child).
+        #
+        return (0, 0) unless $self;  # Leaves have no depth nor diameter.
+        my ($ldp, $ldm) = $self -> left  -> _diameter;
+        my ($rdp, $rdm) = $self -> right -> _diameter;
+        (max ($ldp, $rdp), max ($ldm, $rdm, 1 + $ldp + $rdp))
+    }
+}
+
+
+say Tree:: -> new -> init (do {local $/; <>}) -> diameter;
