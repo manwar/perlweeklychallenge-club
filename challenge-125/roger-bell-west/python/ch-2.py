@@ -15,13 +15,12 @@ def btd(tree):
       if b < st:
         depth[i]=1+max(depth[a],depth[b])
         diameter[i]=max(
-          1+depth[a]+depth[b],
+          depth[a]+depth[b],
           diameter[a],
           diameter[b]
           )
       else:
         depth[i]=1
-        diameter[i]=1
   return diameter[0]
 
 class TestBtd(unittest.TestCase):
@@ -31,6 +30,6 @@ class TestBtd(unittest.TestCase):
                                 2,5,
                                 3,4,6,7,
                                 0,0,0,0,0,0,8,10,
-                                0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0]),7,'example 1')
-          
+                                0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0]),6,'example 1')
+
 unittest.main()

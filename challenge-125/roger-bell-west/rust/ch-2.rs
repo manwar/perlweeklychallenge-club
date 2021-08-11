@@ -8,7 +8,7 @@ fn test_ex1() {
                         3,4,6,7,
                         0,0,0,0,0,0,8,10,
                         0,0,0,0,0,0,0,0,0,0,0,0,9,0,0,0
-    ]),7);
+    ]),6);
 }
 
 fn btd(tree: Vec<u64>) -> u64 {
@@ -22,13 +22,12 @@ fn btd(tree: Vec<u64>) -> u64 {
             if b < st {
                 depth[i]=1+[depth[a],depth[b]].iter().max().unwrap();
                 diameter[i]=*[
-                    1+depth[a]+depth[b],
+                    depth[a]+depth[b],
                     diameter[a],
                     diameter[b]
                     ].iter().max().unwrap();
             } else {
                 depth[i]=1;
-                diameter[i]=1;
             }
         }
     }
