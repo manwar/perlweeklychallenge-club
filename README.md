@@ -31,7 +31,7 @@ Let us assume you want to submit solutions for **Challenge 002** and your Github
 
 3. Go to the **Challenge 002** folder.
    ```
-   $ cd perlweeklychallenge-club/challenge-002
+   $ cd challenge-002
    ```
 
 4. If you find a folder with your name in the current folder then skip to next step otherwise create a new folder. 
