@@ -25,6 +25,7 @@ Let us assume you want to submit solutions for **Challenge 002** and your Github
 
 3. Create a new branch for the solution 
    ```
+   $ cd perlweeklychallenge-club
    $ git checkout -b new-branch
    ```
 
