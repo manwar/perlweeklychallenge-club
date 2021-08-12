@@ -18,6 +18,29 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-125/ja
 
 ## The solution
 
+There are two cases to consider - whether `$N` is the hypotenuse or one of the shorter sides.
+
+ * `$N` is the hypotenuse - we just need to work out whether `$N**2 - $a**2` is a square for `$a` between `3` and `$N/sqrt 2`
+
+ * `$N` is not the hypotenuse - we need to loop through `$a` from `$N+1` such that `$a**2-$N**2` is a square.
+
+This gives:
+```perl
+sub get_triples {
+  my $n = shift;
+  return $n < 3 ? -1 : join '; ', map { sprintf '(%s)', join ', ', @{$_} }
+  (
+    grep { $_->[1] == int $_->[1] }                ## Check if all int
+    map  { [ $_, sqrt($n**2-$_**2), $n ] }         ## Generate triple
+    3 .. sqrt($n**2/2)                   ## Shortest side ($n is hypotenuse)
+  ),(
+    map  { $_->[0]>$_->[1] ? [@{$_}[1,0,2]] : $_ } ## put in numerical order
+    grep { $_->[1] == int $_->[1] }                ## Check all int
+    map  { [ $n, sqrt($_**2-$n**2), $_ ] }         ## Generate triple
+    ($n+1) .. ($n**2/2+1)       ## Hypotenuse ($n is one of other two sides)
+  );
+}
+```
 # Task 2 - Binary Tree Diameter
 
 *** Write a script to find the diameter of the given binary tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. It doesn’t have to pass through the root.***
