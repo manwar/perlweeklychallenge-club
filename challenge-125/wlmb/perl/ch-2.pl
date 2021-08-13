@@ -11,7 +11,7 @@ use List::Util qw(max);
 foreach(@ARGV){
     die("Only []0-9, and spaces allowed") unless m/^([][0-9,\s])*$/;
     my $tree_as_array=eval $_;
-    warn("eval failed @!"), next if @!;
+    warn("eval failed $@"), next if $@;
     my $tree_as_hash=make_tree($tree_as_array);
     my @path=(reverse(path($tree_as_hash->{head}{left})), $tree_as_hash->{head}{value},
 	      path($tree_as_hash->{head}{right}));

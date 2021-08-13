@@ -23,8 +23,8 @@ foreach(@ARGV){
 	}
     }
     say "Input; $_\nOutput:";
-    say "\t$_" foreach uniq map {
-	my($A,$B,$K)=@$_;
+    say "\t$_" foreach uniq map { #remove duplicates
+	my($A,$B,$K)=@$_; # careful not to confuse with $a and $b from sort
 	my ($x, $y, $z)=sort {$a <=> $b} map {$K*$_} ($A**2-$B**2, 2*$A*$B, $A**2+$B**2);
 	"\t($x, $y, $z)";
     } @found;
