@@ -1,6 +1,7 @@
 #!/usr/bin/perl
-# The Weekly Challenge 094
+# The Weekly Challenge 125
 # Task 2: Binary Tree Diameter
+# Usage: ch-2.pl [binary tree in array format, 'x' for null nodes]
 use strict;
 use warnings;
 use v5.10.0;
@@ -41,6 +42,8 @@ sub diameter {
     }
     return $max_dist;
 }
+
+# above: I am tired this week therefore I don't optimize. -- CY
 
 sub collect_leaves_by_id {
     my @tree = $_[0]->@*;
