@@ -119,6 +119,9 @@ sub run_tests {
             bag {item [224, 30, 226]; item [16, 30, 34]; etc}, 'as y';
         like [find_pythagorean_triples(13)],
             bag {item [5, 12, 13]; etc}, 'as z'; 
+        like [find_pythagorean_triples(15485863)],
+            bag {item [15485863, 119905976427384, 119905976427385]; end},
+            '1000000-th prime';
 	}
 
     done_testing;
