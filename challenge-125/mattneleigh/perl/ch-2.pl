@@ -70,7 +70,7 @@ my @node_IDs;
 foreach $tree (@trees){
     @node_IDs = ();
     ($diameter, $path) = calculate_tree_diameter_path($tree);
-    printf("Diameter: $diameter\n");
+    print("Diameter: $diameter\n");
     foreach(@{$path}){
         push(@node_IDs, $_->{d});
     }
