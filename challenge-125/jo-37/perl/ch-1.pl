@@ -5,6 +5,11 @@ use Test2::V0;
 use Math::Prime::Util qw(fordivisors sqrtint lastfor is_power);
 use experimental 'signatures';
 
+###
+### I really should have been more careful.  This does not work.
+### Please ignore.
+###
+
 our ($tests, $examples);
 
 run_tests() if $tests || $examples;	# does not return
