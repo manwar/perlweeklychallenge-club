@@ -37,6 +37,11 @@ sub pyth ($n) {
         }
     }
 
+
+    # (C+1)^2 - C^2 = 2C + 1
+    # 2C + 1 <= n^2
+    # C <= (n^2-1)/2
+
     for my $b0 ($n+1..int ($n*$n-1)/2) {
         my $is_sq = $b0*$b0 + $n*$n;
         if (sqrt($is_sq) == int sqrt($is_sq)) {
