@@ -50,8 +50,9 @@ package Tree {
     # Get the left and right child of a tree. Leaves obviously
     # don't have children.
     #
-    sub left  ($self) {$self && $left  {$self}}
-    sub right ($self) {$self && $right {$self}}
+    sub left   ($self) {!$self -> isleaf && $left  {$self}}
+    sub right  ($self) {!$self -> isleaf && $right {$self}}
+    sub isleaf ($self) {!$left {$self} || !$right {$self}}
 
     sub diameter ($self) {
         ($self -> _diameter ($self)) [1]
@@ -67,7 +68,7 @@ package Tree {
         # Diameter of a tree is max (diameter left child,
         # diameter right child, depth left child + depth right child).
         #
-        return (0, 0) unless $self;  # Leaves have no depth nor diameter.
+        return (0, 0) if  $self -> isleaf;  # Leaves have no depth nor diameter.
         my ($ldp, $ldm) = $self -> left  -> _diameter;
         my ($rdp, $rdm) = $self -> right -> _diameter;
         (max ($ldp, $rdp), max ($ldm, $rdm, $ldp + $rdp))
