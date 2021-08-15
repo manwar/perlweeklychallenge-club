@@ -65,12 +65,12 @@ package Tree {
         #
         # Depth of a tree is 1 + max (depth left child, depth right child)
         # Diameter of a tree is max (diameter left child,
-        # diameter right child, 1 + depth left child + depth right child).
+        # diameter right child, depth left child + depth right child).
         #
         return (0, 0) unless $self;  # Leaves have no depth nor diameter.
         my ($ldp, $ldm) = $self -> left  -> _diameter;
         my ($rdp, $rdm) = $self -> right -> _diameter;
-        (max ($ldp, $rdp), max ($ldm, $rdm, 1 + $ldp + $rdp))
+        (max ($ldp, $rdp), max ($ldm, $rdm, $ldp + $rdp))
     }
 }
 
