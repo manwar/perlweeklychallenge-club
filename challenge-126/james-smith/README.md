@@ -1,4 +1,4 @@
-# Perl Weekly Challenge #125
+# Perl Weekly Challenge #126
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,67 +10,86 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-125/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-126/james-smith/perl
 
-# Task 1 - Pythagorean Triples
+# Task 1 - Count Numbers
 
-***You are given a positive integer `$N`. Write a script to print all Pythagorean Triples containing `$N` as a member. Print `-1` if it can’t be a member of any. Triples with the same set of elements are considered the same, i.e. if your script has already printed (3, 4, 5), (4, 3, 5) should not be printed.***
+***You are given a positive integer `$N` - Write a script to print count of numbers from `1` to `$N` that don’t contain digit `1`.***
 
 ## The solution
 
-There are two cases to consider - whether `$N` is the hypotenuse or one of the shorter sides.
+First pass - just do the simple `O(n)` thing which is to loop through all `$N` numbers and count those without `1`s.
 
- * `$N` is the hypotenuse - we just need to work out whether `$N**2 - $a**2` is a square for `$a` between `3` and `$N/sqrt 2`
-
- * `$N` is not the hypotenuse - we need to loop through `$a` from `$N+1` such that `$a**2-$N**2` is a square.
-
-This gives:
 ```perl
-sub get_triples {
+sub get_no_one_count {
   my $n = shift;
-  return $n < 3 ? -1 : join '; ', map { sprintf '(%s)', join ', ', @{$_} }
-  (
-    grep { $_->[1] == int $_->[1] }                ## Check if all int
-    map  { [ $_, sqrt($n**2-$_**2), $n ] }         ## Generate triple
-    3 .. sqrt($n**2/2)                   ## Shortest side ($n is hypotenuse)
-  ),(
-    map  { $_->[0]>$_->[1] ? [@{$_}[1,0,2]] : $_ } ## put in numerical order
-    grep { $_->[1] == int $_->[1] }                ## Check all int
-    map  { [ $n, sqrt($_**2-$n**2), $_ ] }         ## Generate triple
-    ($n+1) .. ($n**2/2+1)       ## Hypotenuse ($n is one of other two sides)
-  );
+  return scalar grep { ! m{1} } 2..$n;
 }
 ```
-# Task 2 - Binary Tree Diameter
 
-*** Write a script to find the diameter of the given binary tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. It doesn’t have to pass through the root.***
+If we look at a few numbers we see that for powers of 10 we see we have values 8, 80, 728, 6560, 59048, ... what we notices these are all of the form `9^$N-1`.... For multiples of these we see that for the total is `(n-1)*9^N`.
+
+We see we can then add these up - with one exception if we find a 1 we stop the loop (or if working backwards) throw any calculations away - giving us the order `O(ln n)` solution:
+
+```perl
+sub get_no_one_count_9 {
+  my ( $n, $count, $pow_9 ) = ( shift, 0, 1 );
+  while($n) {
+    my $t   = $n % 10; ## get last digit
+    $count  = 0 if $t==1; ## Throw everything away we've found a 1
+    $count += $t ? ( $t == 1 ? ($pow_9-1) : ($t-1)*$pow_9 ) : 0;
+                          ## 0 it contributes nothing
+                          ## 1 contributes 9^X-1
+                          ## 2-9 contributes (n-1)9^X
+    $pow_9 *= 9;  ## update power of nine
+    $n      = ( $n - $t )/10; ## drop last digit
+  }
+  return $count;
+}
+```
+
+## Comparison
+Even for 2 digit numbers this speed up is good (72x), but as N increases
+we see that gain gets higher and higher.. for 7 digit numbers the speed
+up is 6 orders of magnitude.
+
+| N         | scan      | opt       | Speed-up   |
+| --------: | --------: | --------: | ---------: |
+|        98 | 16,027    | 1,173,850 |        72  |
+|       987 |  2,623    |   867,796 |       330  |
+|     9,876 |    253    |   685,956 |     2,715  |
+|    98,765 |     24.4  |   565,427 |    23,155  |
+|   987,654 |      1.23 |   482,800 |   392,998  |
+| 9,876,543 |      0.23 |   418,410 | 1,853,771  |
+
+# Task 2 - Minesweeper Game
+
+***You are given a rectangle with points marked with either `x` or `*`. Please consider the `x` as a land mine. Write a script to print a rectangle with numbers and `x` as in the Minesweeper game.***
 
 ## Solution
 
-For any node - we can compute the longest tree which goes through the node itself - this is the sum of the maximum lengths of the left tree and the depth of the right. We do know that there will be trees for which this is not the diameter - there could be another node for which the left and right depths sum to a larger value...
-
-So to compute the diameter of the tree we just choose the maximum value of the maximum lengths of the left/right sub tree.
-
-We will re-use the BinaryTree module from a previous challenge and so need to define walk functions to work out the maximum length of a subtree and consequently diameter...
-
 ```perl
-sub max_length {
-  my $self = shift;
-  my $d = 0;
-     $d = $self->left->max_length if $self->has_left;
-  return 1+$d unless $self->has_right;
-  my $t = $self->right->max_length;
-  return $t > $d ? 1+$t : 1+$d;
-}
+sub solve {
+  my @res = ('');
+  ## Map input of strings into an array of 1s (bombs) + 0s (spaces)
+  my @in = map { [ map { $_ eq 'x' ? 1:0 } split //, $_ ] } @_;
 
-sub diameter {
-  my $self = shift;
-  my $global = { 'diameter' => 0 };
-  $self->walk( sub {
-    my $d = ($_[0]->has_left  ? $_[0]->left->max_length  : 0 ) +
-            ($_[0]->has_right ? $_[0]->right->max_length : 0 );
-    $_[1]{'diameter'} = $d if $d > $_[1]->{'diameter'};
-  }, $global );
-  return $global->{'diameter'};
+  ## Get index of last row or column...
+  my( $h, $w ) = ( $#_, -1 + length $_[0] );
+
+  foreach my $y ( 0 .. $h ) {
+    $res[-1] .= $in[$y][$_] ? 'x' :
+     ( $y      ? ( $_ ? $in[$y-1][$_-1] : 0 ) + $in[$y-1][$_] + ( $_ < $w ? $in[$y-1][$_+1] : 0 ) : 0 ) +
+                 ( $_ ? $in[$y  ][$_-1] : 0 ) + $in[$y  ][$_] + ( $_ < $w ? $in[$y  ][$_+1] : 0 )       +
+     ( $y < $h ? ( $_ ? $in[$y+1][$_-1] : 0 ) + $in[$y+1][$_] + ( $_ < $w ? $in[$y+1][$_+1] : 0 ) : 0 ) foreach 0 .. $w;
+    push @res, '';
+  }
+  return join "\n", @res;
 }
 ```
+
+There are two stages to this:
+
+ 1. convert the strings into an array of `1`s and `0`s representing mines and spaces.
+ 2. we compute the convulation - counting the number of mines in adjacent squares (or tagging with a "x" if the square is bomb)
+
