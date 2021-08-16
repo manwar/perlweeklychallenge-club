@@ -64,25 +64,23 @@ up is 6 orders of magnitude.
 
 # Task 2 - Minesweeper Game
 
-***You are given a rectangle with points marked with either `x` or `*`. Please consider the `x` as a land mine. Write a script to print a rectangle with numbers and `x` as in the Minesweeper game.***
+***You are given a rectangle with points marked with either `x` or `*`. Consider the `x` as a land mine. Write a script to print a rectangle with numbers and `x` as in the Minesweeper game.***
 
 ## Solution
 
 ```perl
 sub solve {
-  my @res = ('');
-  ## Map input of strings into an array of 1s (bombs) + 0s (spaces)
-  my @in = map { [ map { $_ eq 'x' ? 1:0 } split //, $_ ] } @_;
+  my @res = ();
+  my @g = map { [ map { $_ eq 'x' ? 1 : 0 } split //, $_ ] } @_;
 
-  ## Get index of last row or column...
   my( $h, $w ) = ( $#_, -1 + length $_[0] );
-
   foreach my $y ( 0 .. $h ) {
-    $res[-1] .= $in[$y][$_] ? 'x' :
-     ( $y      ? ( $_ ? $in[$y-1][$_-1] : 0 ) + $in[$y-1][$_] + ( $_ < $w ? $in[$y-1][$_+1] : 0 ) : 0 ) +
-                 ( $_ ? $in[$y  ][$_-1] : 0 ) + $in[$y  ][$_] + ( $_ < $w ? $in[$y  ][$_+1] : 0 )       +
-     ( $y < $h ? ( $_ ? $in[$y+1][$_-1] : 0 ) + $in[$y+1][$_] + ( $_ < $w ? $in[$y+1][$_+1] : 0 ) : 0 ) foreach 0 .. $w;
-    push @res, '';
+    push @res, join '', map {
+      $g[$y][$_] ? 'x' :
+        ( $y    ? ( $_ ? $g[$y-1][$_-1] : 0 ) + $g[$y-1][$_] + ( $_<$w ? $g[$y-1][$_+1] : 0 ) : 0 ) +
+                  ( $_ ? $g[$y  ][$_-1] : 0 ) + $g[$y  ][$_] + ( $_<$w ? $g[$y  ][$_+1] : 0 )       +
+        ( $y<$h ? ( $_ ? $g[$y+1][$_-1] : 0 ) + $g[$y+1][$_] + ( $_<$w ? $g[$y+1][$_+1] : 0 ) : 0 )
+     } 0 .. $w;
   }
   return join "\n", @res;
 }
@@ -91,5 +89,6 @@ sub solve {
 There are two stages to this:
 
  1. convert the strings into an array of `1`s and `0`s representing mines and spaces.
- 2. we compute the convulation - counting the number of mines in adjacent squares (or tagging with a "x" if the square is bomb)
+ 2. we compute the convulation - counting the number of mines in adjacent squares (or tagging with a "x" if the square is bomb).
+   Rather than using loops and if statements we use nested ternary operators in a single line
 
