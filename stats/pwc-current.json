@@ -1,48 +1,34 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Andrew Shitov",
+            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ],
-            "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov"
+            ]
          },
          {
-            "name" : "Cristina Heredia",
-            "id" : "Cristina Heredia",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "name" : "Cristina Heredia",
+            "id" : "Cristina Heredia"
          },
          {
             "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -52,8 +38,7 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "James Smith"
+            ]
          },
          {
             "name" : "Luca Ferrari",
@@ -70,13 +55,13 @@
             ]
          },
          {
-            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "name" : "Mark Anderson",
             "id" : "Mark Anderson"
          },
          {
@@ -90,50 +75,71 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Simon Green",
+            "id" : "Simon Green"
+         },
+         {
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
             "name" : "Steven Wilson",
+            "id" : "Steven Wilson",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "id" : "Steven Wilson"
+            ]
          }
       ]
    },
+   "title" : {
+      "text" : "The Weekly Challenge - 126"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2021-08-16 21:40:25 GMT"
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 126",
          "data" : [
             {
-               "name" : "Andrew Shitov",
                "y" : 1,
+               "name" : "Andrew Shitov",
                "drilldown" : "Andrew Shitov"
             },
             {
-               "name" : "Cristina Heredia",
                "y" : 1,
-               "drilldown" : "Cristina Heredia"
+               "drilldown" : "Cristina Heredia",
+               "name" : "Cristina Heredia"
             },
             {
                "name" : "James Smith",
-               "y" : 3,
-               "drilldown" : "James Smith"
+               "drilldown" : "James Smith",
+               "y" : 3
             },
             {
                "name" : "Luca Ferrari",
@@ -142,13 +148,18 @@
             },
             {
                "drilldown" : "Mark Anderson",
-               "y" : 2,
-               "name" : "Mark Anderson"
+               "name" : "Mark Anderson",
+               "y" : 2
             },
             {
+               "y" : 4,
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Simon Green",
+               "name" : "Simon Green"
             },
             {
                "name" : "Simon Proctor",
@@ -156,25 +167,33 @@
                "y" : 1
             },
             {
-               "y" : 1,
                "drilldown" : "Steven Wilson",
-               "name" : "Steven Wilson"
+               "name" : "Steven Wilson",
+               "y" : 1
             }
-         ]
+         ],
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 126"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2021-08-16 21:19:48 GMT"
+   "legend" : {
+      "enabled" : 0
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 126"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    },
    "chart" : {
       "type" : "column"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
    }
 }
