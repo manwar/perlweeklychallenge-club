@@ -8,5 +8,5 @@ is count-numbers(25), 13;
 
 sub count-numbers($N)
 {
-    + grep { not .contains: 1 }, 1..$N;
+    + grep { not .contains: 1 }, 2..$N;
 }
