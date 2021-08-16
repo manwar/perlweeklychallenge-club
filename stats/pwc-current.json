@@ -1,9 +1,101 @@
 {
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
    "drilldown" : {
       "series" : [
          {
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
             "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov",
+            "name" : "Andrew Shitov"
+         },
+         {
+            "name" : "Cristina Heredia",
+            "id" : "Cristina Heredia",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ]
+         },
+         {
+            "id" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "James Smith"
+         },
+         {
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Mark Anderson"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
+         },
+         {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
@@ -12,102 +104,16 @@
             ]
          },
          {
-            "name" : "Cristina Heredia",
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ]
-            ],
-            "id" : "Cristina Heredia"
-         },
-         {
-            "name" : "James Smith",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "id" : "James Smith"
-         },
-         {
-            "name" : "Luca Ferrari",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ],
-               [
-                  "Blog",
-                  2
-               ]
-            ],
-            "id" : "Luca Ferrari"
-         },
-         {
-            "id" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Mark Anderson"
-         },
-         {
-            "id" : "Simon Proctor",
-            "data" : [
-               [
-                  "Raku",
-                  1
-               ]
-            ],
-            "name" : "Simon Proctor"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ]
-            ],
             "name" : "Steven Wilson",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
             "id" : "Steven Wilson"
          }
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-08-16 21:17:32 GMT"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 126"
    },
    "series" : [
       {
@@ -116,18 +122,18 @@
          "data" : [
             {
                "name" : "Andrew Shitov",
-               "drilldown" : "Andrew Shitov",
-               "y" : 1
+               "y" : 1,
+               "drilldown" : "Andrew Shitov"
             },
             {
-               "drilldown" : "Cristina Heredia",
                "name" : "Cristina Heredia",
-               "y" : 1
+               "y" : 1,
+               "drilldown" : "Cristina Heredia"
             },
             {
+               "name" : "James Smith",
                "y" : 3,
-               "drilldown" : "James Smith",
-               "name" : "James Smith"
+               "drilldown" : "James Smith"
             },
             {
                "name" : "Luca Ferrari",
@@ -136,26 +142,39 @@
             },
             {
                "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson",
-               "y" : 2
+               "y" : 2,
+               "name" : "Mark Anderson"
             },
             {
-               "drilldown" : "Simon Proctor",
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
                "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
                "y" : 1
             },
             {
-               "drilldown" : "Steven Wilson",
                "y" : 1,
+               "drilldown" : "Steven Wilson",
                "name" : "Steven Wilson"
             }
          ]
       }
    ],
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-08-16 21:19:48 GMT"
    },
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "The Weekly Challenge - 126"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
