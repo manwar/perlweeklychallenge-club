@@ -23,15 +23,38 @@ my @TESTS = (
   [ 4000, 2187 ],
   [ 5000, 2916 ],
   [ 10000, 6560 ],
+  [ 20000, 6561 ],
+  [ 25000, 6561+2916 ],
+  [ 25500, 6561+2916+324 ],
+  [ 25540, 6561+2916+324+27 ],
+  [ 25543, 6561+2916+324+27+2 ],
   [ 100000, 59048 ],
   [ 1000000, 531440  ],
 );
 
+# warn "@{$_} -> ", get_no_one_count_x($_->[0]), "\n" foreach @TESTS;
+
+is( get_no_one_count_x($_->[0]), $_->[1] ) foreach @TESTS;
 is( get_no_one_count($_->[0]), $_->[1] ) foreach @TESTS;
 done_testing();
 
 sub get_no_one_count {
   my $n = shift;
   return scalar grep { ! m{1} } 2..$n;
+}
+
+## Optimized version.... seems to work ... and far better than scan...
+sub get_no_one_count_x {
+  my $n = shift;
+  my $c = 0;
+  my $m = 1;
+  while($n) {
+    my $t=$n%10;
+    $c = 0 if $t==1;
+    $c += $t ? ( $t < 2 ? ($m-1) : ($t-1)*$m ) : 0;
+    $m *= 9;
+    $n= int($n/10);
+  }
+  return $c;
 }
 
