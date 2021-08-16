@@ -25,12 +25,13 @@ Let us assume you want to submit solutions for **Challenge 002** and your Github
 
 3. Create a new branch for the solution 
    ```
+   $ cd perlweeklychallenge-club
    $ git checkout -b new-branch
    ```
 
 3. Go to the **Challenge 002** folder.
    ```
-   $ cd perlweeklychallenge-club/challenge-002
+   $ cd challenge-002
    ```
 
 4. If you find a folder with your name in the current folder then skip to next step otherwise create a new folder. 
@@ -175,6 +176,6 @@ Let us assume you already have the repository forked. If this is the first time 
 
     You should see button to create **Pull Request**.
 
-`Dave Cross` wrote a very detailed [**blog**](https://dev.to/davorg/learn-enough-git-and-github-to-take-part-in-the-perl-weekly-challenge-gpm) with regard to the exposure of `git` and `GitHub` needed to start contributing. Highly Recommended.
+`Dave Cross` wrote a very detailed [**blog post**](https://dev.to/davorg/learn-enough-git-and-github-to-take-part-in-the-perl-weekly-challenge-gpm) covering the minimum knowledge of `git` and `GitHub` needed to start contributing. Highly Recommended.
 
 If you have any trouble with the above instructions then please get in touch with me anytime <mohammad.anwar@yahoo.com>.
