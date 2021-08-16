@@ -32,24 +32,24 @@ my @TESTS = (
   [ 1000000, 531440  ],
 );
 
-# warn "@{$_} -> ", get_no_one_count_x($_->[0]), "\n" foreach @TESTS;
+# warn "@{$_} -> ", get_no_one_count_9($_->[0]), "\n" foreach @TESTS;
 
-is( get_no_one_count_x($_->[0]), $_->[1] ) foreach @TESTS;
+is( get_no_one_count_9($_->[0]), $_->[1] ) foreach @TESTS;
 is( get_no_one_count($_->[0]), $_->[1] ) foreach @TESTS;
 done_testing();
 
 cmpthese(-5,{ 'scan 98' => sub { get_no_one_count(   98 ) },
-              'opt  98' => sub { get_no_one_count_x( 98 ) }, });
+              'opt  98' => sub { get_no_one_count_9( 98 ) }, });
 cmpthese(-5,{ 'scan 987' => sub { get_no_one_count(   987 ) },
-              'opt  987' => sub { get_no_one_count_x( 987 ) }, });
+              'opt  987' => sub { get_no_one_count_9( 987 ) }, });
 cmpthese(-5,{ 'scan 9876' => sub { get_no_one_count(   9876 ) },
-              'opt  9876' => sub { get_no_one_count_x( 9876 ) }, });
+              'opt  9876' => sub { get_no_one_count_9( 9876 ) }, });
 cmpthese(-5,{ 'scan 98765' => sub { get_no_one_count(   98765 ) },
-              'opt  98765' => sub { get_no_one_count_x( 98765 ) }, });
+              'opt  98765' => sub { get_no_one_count_9( 98765 ) }, });
 cmpthese(-5,{ 'scan 987654' => sub { get_no_one_count(   987654 ) },
-              'opt  987654' => sub { get_no_one_count_x( 987654 ) }, });
+              'opt  987654' => sub { get_no_one_count_9( 987654 ) }, });
 cmpthese(-5,{ 'scan 9876543' => sub { get_no_one_count(   9876543 ) },
-              'opt  9876543' => sub { get_no_one_count_x( 9876543 ) }, });
+              'opt  9876543' => sub { get_no_one_count_9( 9876543 ) }, });
 
 sub get_no_one_count {
   my $n = shift;
@@ -57,7 +57,7 @@ sub get_no_one_count {
 }
 
 ## Optimized version.... seems to work ... and far better than scan...
-sub get_no_one_count_x {
+sub get_no_one_count_9 {
   my ( $n, $count, $pow_9 ) = ( shift, 0, 1 );
   while($n) {
     my $t   = $n % 10; ## get last digit
