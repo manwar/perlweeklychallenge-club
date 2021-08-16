@@ -62,7 +62,7 @@ sub get_no_one_count_9 {
   while($n) {
     my $t   = $n % 10; ## get last digit
     $count  = 0 if $t==1; ## Throw everything away we've found a 1
-    $count += $t ? ( $t == 1 ? ($pow_9-1) : ($t-1)*$pow_9 ) : 0;
+    $count += !$t ? 0 : $t == 1 ? ($pow_9-1) : ($t-1)*$pow_9;
                           ## 0 it contributes nothing
                           ## 1 contributes 9^X-1
                           ## 2-9 contributes (n-1)9^X
