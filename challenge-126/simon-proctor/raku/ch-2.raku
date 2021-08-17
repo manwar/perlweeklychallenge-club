@@ -35,6 +35,18 @@ multi sub MAIN("example") {
     find-numbers( $example ).say;
 }
 
+subset PInt of Int where * > 0;
+subset Density of Int where 1 <= * <= 50;
+
+#| Given a width, height and mine density (1-50%) makes a map then prints the numbers
+multi sub MAIN( PInt $width, PInt $height, Density $density ) {
+    my @opts = ( |("x" xx $density), |("*" xx (100-$density)) );
+    my $grid = (^$height).map( { @opts.roll($width).join( " " ) } ).join("\n");
+    $grid.say;
+    ("-" xx $width).join("-").say;
+    find-numbers( $grid ).say;
+}
+
 sub parse-mines( Str $input ) {
     return $input.lines.map( { $_.comb(/\S/).Array } ).Array;
 }
