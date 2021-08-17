@@ -18,7 +18,7 @@ open FILE, $filename or die "Usage: \$ ch-2.pl --file filename_of_the_map\n";
 
 while ($_ = <FILE>) {
     chomp($_);
-    $map .= ($_."\n");
+    $map .= ($_."\n") if $_;
 }
 close FILE;
 
