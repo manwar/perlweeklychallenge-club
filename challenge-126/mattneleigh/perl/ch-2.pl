@@ -63,13 +63,13 @@ sub mark_minefield_counts{
 
     $h = scalar(@grid);
 
-    # Change un-mined cells to zeros, eliminate
-    # spaces, and break each line into its
-    # component characters
+    # Eliminate spaces, change un-mined
+    # cells to zeros, and break each line
+    # into its component characters
     $j = $h;
     while($j--){
-        $grid[$j] =~ s/\*/0/g;
         $grid[$j] =~ s/ //g;
+        $grid[$j] =~ s/\*/0/g;
         $grid[$j] = [split('', $grid[$j])];
     }
 
