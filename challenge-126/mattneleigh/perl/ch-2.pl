@@ -85,11 +85,18 @@ sub mark_minefield_counts{
             if($grid[$j][$i] eq 'x'){
                 # This cell is a mine- examine adjacent
                 # cells that are on the grid
-                for my $y ($j - ($j?1:0) .. $j + ($h-($j+1)?1:0)){
-                    for my $x ($i - ($i?1:0) .. $i + ($w-($i+1)?1:0)){
-                        if(($grid[$y][$x] ne 'x')){
+                for my $y ($j - 1 .. $j + 1){
+                    for my $x ($i - 1 .. $i + 1){
+                        if(
+                            ($x > -1) && ($x < $w)
+                            &&
+                            ($y > -1) && ($y < $h)
+                            &&
+                            ($grid[$y][$x] ne 'x')
+                        ){
                             # The adjacent cell at $x, $y is
-                            # not a mine- increment it
+                            # on the grid and not a mine-
+                            # increment it
                             $grid[$y][$x]++;
                         }
                     }
