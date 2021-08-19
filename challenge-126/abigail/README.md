@@ -29,7 +29,10 @@ There are 13 numbers between `1` and `25` that don't contain digit `1`:
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
 * [C](c/ch-1.c)
+* [Lua](lua/ch-1.lua)
+* [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
+* [Python](python/ch-1.py)
 
 ### Blog
 [Perl Weekly Challenge 126: Count Numbers][blog1]
