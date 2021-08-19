@@ -26,6 +26,7 @@ There are 13 numbers between `1` and `25` that don't contain digit `1`:
 
 
 ### Solutions
+* [C](c/ch-1.c)
 * [Perl](perl/ch-1.pl)
 
 ### Blog
