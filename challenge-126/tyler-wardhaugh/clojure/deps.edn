@@ -1,19 +1,14 @@
 {:paths ["src" "resources"]
- :deps {org.clojure/clojure {:mvn/version "1.10.3"}
-        org.clojure/math.numeric-tower {:mvn/version "0.0.4"}}
+ :deps {org.clojure/clojure {:mvn/version "1.10.3"}}
  :aliases
- {:test
-  {:extra-paths ["test"]
-   :extra-deps {org.clojure/test.check {:mvn/version "1.0.0"}}}
-
-  :runner
-  {:extra-deps {com.cognitect/test-runner
-                {:git/url "https://github.com/cognitect-labs/test-runner"
-                 :sha "705ad25bbf0228b1c38d0244a36001c2987d7337"}}
-   :main-opts ["-m" "cognitect.test-runner"
-               "-d" "test"]}
-
-  :jar
-  {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.0.216"}}
-   :exec-fn hf.depstar/jar
-   :exec-args {:jar "tw-weekly.jar" :sync-pom true}}}}
+ {:test {:extra-paths ["test"]
+         :extra-deps {org.clojure/test.check {:mvn/version "1.1.0"}
+                      io.github.cognitect-labs/test-runner
+                      {:git/url "https://github.com/cognitect-labs/test-runner"
+                       :sha "62ef1de18e076903374306060ac0e8a752e57c86"}}
+         :exec-fn cognitect.test-runner.api/test}
+  :jar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.278"}}
+        :exec-fn hf.depstar/uberjar
+        :exec-args {:aot true
+                    :jar "tw-weekly.jar"
+                    :sync-pom true}}}}
