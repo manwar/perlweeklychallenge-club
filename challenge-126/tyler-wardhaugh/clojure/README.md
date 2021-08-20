@@ -15,7 +15,7 @@ Run the project directly (shows default output from both tasks):
 
 Run the project's tests (which are samples from the task descriptions):
 
-    $ clojure -M:test:runner
+    $ clojure -X:test
     # ... or ...
     $ bb run test
 
@@ -27,9 +27,9 @@ Run Task #1 with input
 
 Run Task #2 with input:
 
-    $ clojure -M -m tw.weekly.c126.t2
+    $ clojure -M -m tw.weekly.c126.t2 F
     # ... or ...
-    $ bb run task-2
+    $ bb run task-2 F
 
 View available tasks Babashka can run:
 
