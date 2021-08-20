@@ -1,9 +1,4 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "xAxis" : {
       "categories" : [
          "Jim Bacon",
@@ -38,21 +33,24 @@
          "Leoltron"
       ]
    },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "chart" : {
       "type" : "column"
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-08-20 03:15:13 GMT"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             2,
@@ -81,12 +79,14 @@
             20,
             15,
             22,
-            227,
+            229,
             10,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -115,11 +115,10 @@
             0,
             4,
             0,
-            233,
+            235,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -150,18 +149,19 @@
             16,
             0,
             0,
-            184,
+            185,
             0,
             0
          ],
          "name" : "Blog"
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-08-20 02:44:52 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
    }
 }
