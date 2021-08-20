@@ -1,31 +1,19 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
+         "name" : "Contributions",
          "dataLabels" : {
-            "format" : "{point.y:.0f}",
             "enabled" : "true",
+            "align" : "right",
+            "rotation" : -90,
+            "color" : "#FFFFFF",
             "style" : {
                "fontSize" : "13px",
                "fontFamily" : "Verdana, sans-serif"
             },
-            "rotation" : -90,
-            "y" : 10,
-            "align" : "right",
-            "color" : "#FFFFFF"
+            "format" : "{point.y:.0f}",
+            "y" : 10
          },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -33,31 +21,43 @@
             ],
             [
                "Perl",
-               6006
+               6008
             ],
             [
                "Raku",
-               3740
+               3742
             ]
          ]
       }
    ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-08-20 02:44:53 GMT"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "legend" : {
       "enabled" : "false"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-08-19 17:15:24 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
    }
 }
