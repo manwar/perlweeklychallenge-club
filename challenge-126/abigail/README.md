@@ -69,6 +69,7 @@ Output:
 ~~~
 
 ### Solutions
+* [AWK](awk/ch-2.awk)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
