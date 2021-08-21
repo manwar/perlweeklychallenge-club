@@ -1,4 +1,6 @@
 #!/usr/bin/perl
+# The Weekly Challenge 126 Task 2 Minesweeper Game
+# Usage: $ ch-2.pl --file filename_of_the_map
 use List::Util qw/sum/;
 use Getopt::Long;
 use Data::Dumper;
@@ -6,7 +8,6 @@ use IO::Prompter;    # for the game part
 use v5.12.0;
 use experimental;
 no warnings;
-# Usage: $ ch-2.pl --file filename_of_the_map
 
 my $num_of_mines = 0;
 my $map;
@@ -14,59 +15,65 @@ my $filename;
 
 GetOptions('file=s' => \$filename,);
 
-open FILE, $filename or die "Usage: \$ ch-2.pl --file filename_of_the_map\n";
+(open(FILE, $filename)) || ($map = <<MAP);
+    x * * * x * x x x x
+    * * * * * * * * * x
+    * * * * x * x * x *
+    * * * x x * * * * *
+    x * * * x * * * * x
+MAP
 
-while ($_ = <FILE>) {
-    chomp($_);
-    $map .= ($_."\n") if $_;
+if (!defined($map)) {
+    while ( defined($filename) && ($_ = <FILE>) ) {
+        chomp($_);
+        $map .= ($_."\n") if $_;
+    }
+    close FILE;
 }
-close FILE;
 
 $map =~ s/[ \t]//g;
 
-my @temp = split "\n", $map;
-my $width = length $temp[0];
-my $height = scalar @temp;
+my @rows = split "\n", $map;
+my $width = length $rows[0];
+my $height = scalar @rows;
 
-push @temp, '*' x $width;
-unshift @temp, '*' x $width;
+push @rows, '*' x $width;
+unshift @rows, '*' x $width;
 
-$_ = '*'. $_ . '*' foreach @temp;
+$_ = '*'. $_ . '*' foreach @rows;
 
-my $m = \@temp;
-
-for my $row (1..$height) {
+for my $r (1..$height) {
     for my $col (1..$width) {
-        substr($m->[$row], $col, 1) = countx($row, $col);
+        substr($rows[$r], $col, 1) = countx($r, $col);
     }
 }
 
 sub countx {
-    my $row = $_[0];
-    my $col = $_[1];
+    my $r_i = $_[0];
+    my $c_i = $_[1];
 
-    if (substr($m->[$row], $col, 1 ) eq 'x') {
+    if (substr($rows[$r_i], $c_i, 1 ) eq 'x') {
         $num_of_mines++;
         return 'x';
     }
     my $ans = 0;
     for my $r (-1, 0, +1) {
         for my $c (-1, 0, +1) {
-            $ans += int( substr($m->[$row+$r], $col+$c,1 ) eq 'x')
-               unless ($r == $c && $c == 0)
+            $ans += int( substr($rows[$r_i+$r], $c_i+$c,1 ) eq 'x')
+               unless ($r == 0 && $c == 0)
         }
     }
     return $ans;
 }
 
-for my $row (1..$height) {
-    substr($m->[$row], 0, 1) = "";
-    substr($m->[$row], -1, 1) = "";
+for my $r (1..$height) {
+    substr($rows[$r], 0, 1) = "";
+    substr($rows[$r], -1, 1) = "";
 }
 
 my $master_board;
 for my $i (0..$height-1) {
-    $master_board->[$i] = [split //, $m->[$i+1]];
+    $master_board->[$i] = [split //, $rows[$i+1]];
 }
 
 # =============== BEGIN: game (can be removed) ============
@@ -113,8 +120,9 @@ while (   !$explosion
         prompt('action:'),
     );
 
+    last if $data[2] eq "q";
     if ( $data[0] !~ /^[1-9A-Z]$/ || $data[1] !~ /^[1-9A-Z]$/ )  {
-         say "Cannot identify your input of row/col.";
+         say "Cannot identify your input of row/col.\n";
          next; 
     }
     else
@@ -122,16 +130,16 @@ while (   !$explosion
         $i = $rb35{$data[0]} - 1;  
         $j = $rb35{$data[1]} - 1;  
     }
-
     if ( 
         ($i > $height-1 || $i < 0)    
            ||
         ($j > $width-1 || $j < 0)  
        )
     {
-         say "Cannot identify your input.";
-         next; 
+        say "Cannot identify your input.\n";
+        next; 
     }
+    
 
     my $act = $data[2];
     if ($act eq "o" && $master_board->[$i][$j] eq "x") {
@@ -149,11 +157,11 @@ while (   !$explosion
                 $table->[$i][$j] = $table->[$i][$j] eq "f" ? "." : "f";
             }
             else {
-                say "Grid already identified.";
+                say "Grid already identified.\n";
             }
         }
-        when ("c") {say "Action cancelled.";}
-        default {say "Cannot identify your action.";}
+        when ("c") {say "Action cancelled.\n";}
+        default {say "Cannot identify your action.\n";}
     }
 }
 print "\n" x 3;
