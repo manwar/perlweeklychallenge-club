@@ -1,21 +1,9 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-08-21 16:57:15 GMT"
-   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
+   "chart" : {
+      "type" : "column"
    },
    "legend" : {
       "enabled" : "false"
@@ -23,6 +11,18 @@
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "rotation" : -90,
+            "enabled" : "true",
+            "y" : 10
+         },
          "data" : [
             [
                "Blog",
@@ -30,34 +30,34 @@
             ],
             [
                "Perl",
-               6026
+               6028
             ],
             [
                "Raku",
                3744
             ]
-         ],
-         "dataLabels" : {
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "align" : "right"
-         }
+         ]
       }
    ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
+      },
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-08-21 17:10:58 GMT"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
       }
    }
 }
