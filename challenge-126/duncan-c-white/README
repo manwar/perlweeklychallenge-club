@@ -1,74 +1,57 @@
-Task 1: "Pythagorean Triples
+Task 1: "Count Numbers
 
 You are given a positive integer $N.
 
-Write a script to print all Pythagorean Triples containing $N as a
-member. Print -1 if it can't be a member of any. i
-
-Triples with the same set of elements are considered the same, i.e. if
-your script has already printed (3, 4, 5), (4, 3, 5) should not be
-printed.
-
-The famous Pythagorean theorem states that in a right angle triangle,
-the length of the two shorter sides and the length of the longest
-side are related by a2+b2 = c2.
-
-A Pythagorean triple refers to the triple of three integers whose lengths
-can compose a right-angled triangle.
+Write a script to print count of numbers from 1 to $N that don't
+contain digit 1.
 
 Example
 
-    Input: $N = 5
-    Output:
-        (3, 4, 5)
-        (5, 12, 13)
+Input: $N = 15
+Output: 8
 
-    Input: $N = 13
-    Output:
-        (5, 12, 13)
-        (13, 84, 85)
+    There are 8 numbers between 1 and 15 that don't contain digit 1.
+    2, 3, 4, 5, 6, 7, 8, 9.
 
-    Input: $N = 1
-    Output:
-        -1
+Input: $N = 25
+Output: 13
+
+    There are 13 numbers between 1 and 25 that don't contain digit 1.
+    2, 3, 4, 5, 6, 7, 8, 9, 20, 22, 23, 24, 25.
 "
 
-My notes: the tricky part here is knowing how to generate all Pythagorean
-triples that MIGHT contain $N, i.e. when to stop generating triples..
+My notes: very easy.  Let's produce the "There are ..." output if --debug
+is given, the terse output otherwise.
 
 
-Task 2: "Binary Tree Diameter
+Task 2: "Minesweeper Game
 
-You are given binary tree as below:
+You are given a rectangle with points marked with either x or *.
+Please consider the x as a land mine (DCW adds: and a * as a non-landmine).
 
-    1
-   / \
-  2   5
- / \ / \
-3  4 6  7
-       / \
-      8  10
-     /
-    9
+Write a script to print a rectangle with numbers and x as in the
+Minesweeper game.
 
-Write a script to find the diameter of the given binary tree.
+A number in a square of the minesweeper game indicates the number
+of mines within the neighbouring squares (usually 8), also implies
+that there are no bombs on that square.
 
-    The diameter of a binary tree is the length of the longest path between any two nodes in a tree. It doesn't have to pass through the root.
+Example
 
-For the above given binary tree, possible diameters (6) are:
+Input:
+    x * * * x * x x x x
+    * * * * * * * * * x
+    * * * * x * x * x *
+    * * * x x * * * * *
+    x * * * x * * * * x
 
-3, 2, 1, 5, 7, 8, 9
-
-or
-
-4, 2, 1, 5, 7, 8, 9
-
-
-UPDATE (2021-08-10 17:00:00 BST): Jorg Sommrey corrected the example.
-
-The length of a path is the number of its edges, not the number of the vertices it connects. So the diameter should be 6, not 7.
+Output:
+    x 1 0 1 x 2 x x x x
+    1 1 0 2 2 4 3 5 5 x
+    0 0 1 3 x 3 x 2 x 2
+    1 1 1 x x 4 1 2 2 2
+    x 1 1 3 x 2 0 0 1 x
 "
 
-My notes: Looks quite tricky.  We can use generate and test - if we can
-generate all paths, then we could do a "max" test.  Also, how to represent
-the binary tree?  let's hard-code it for now.
+My notes: also looks pretty easy.  It's not the WHOLE minesweeper game,
+just the "work out what the finished puzzle looks like"
