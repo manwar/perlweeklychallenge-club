@@ -62,7 +62,7 @@ sub read_pdl ($fh) {
 
 # Print a 2-d piddle containing ascii character codes.
 sub print_pdl ($p) {
-    say "@{[map chr, @$_]}" for @{$p->unpdl};
+    say "@{[map chr($_->sclr), $_->dog]}" for $p->dog;
 }
 
 
