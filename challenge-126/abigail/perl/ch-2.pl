@@ -22,20 +22,19 @@ use experimental 'lexical_subs';
 #
 my @input = map {[/\S/g]} <>;
 
-my @output;
 my $X =   @input;
 my $Y = @{$input [0]};
 
 #
 # Loop over each cell of the board. If the cell contains a mine,
-# copy the mine. Else, iterate over the 8 neighbours, skipping 
-# neighbours outside of the board, and count the mines. Put the
-# count in the output structure.
+# print the mine. Else, iterate over the 8 neighbours, skipping 
+# neighbours outside of the board, and count the mines. Print the count.
 #
 for my $x (0 .. ($X - 1)) {
     foreach my $y (0 .. ($Y - 1)) {
+        print ' ' if $y > 0;
         if ($input  [$x] [$y] eq 'x') { # Mine
-            $output [$x] [$y] =  'x';
+            print 'x';
             next;
         }
         my $mines = 0;
@@ -47,14 +46,10 @@ for my $x (0 .. ($X - 1)) {
                 $mines ++ if $input [$x + $dx] [$y + $dy] eq 'x';
             }
         }
-        $output [$x] [$y] = $mines;
+        print $mines;
     }
+    print "\n";
 }
-
-#
-# Print it
-#
-say "@$_" for @output;
 
 
 __END__
