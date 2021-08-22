@@ -21,27 +21,8 @@ use experimental 'lexical_subs';
 #
 
 #
-# To get the nth number which doesn't contain a 1, you would
-# convert n to base 9, then replace each non-zero digit d, with d + 1.
-#
-# This process is reversable, assuming a number doesn't contain a 1:
-# Replace each non-zero digit d with d + 1, then convert the resulting
-# base-9 number back to base 10.
-#
-# The result will give the number of numbers up to the input number 
-# which do not contain a 1.
-#
-# For input numbers n containing a 1, consider the number p, such that
-# p is the largest integer smaller than n, which doesn't contain a 1.
-# Since all numbers between p and n contain a 1, there are as many numbers
-# up to p not containing a 1, as there are up to n.
-#
-# To get p, find the first 1 in n, replace this 1 by a 0, and replace each
-# subsequent digit by a 9. If n doesn't contain a 1, p == n.
-#
-# We can collapse all three processes (finding p, subtracting 1 from
-# non-zero digits, and converting from base-9 to base-10) into a single
-# pass over the digits of $n:
+# For a description of the algorithm see:
+# https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-126-1.html 
 #
 
 while (my $n = <>) {
