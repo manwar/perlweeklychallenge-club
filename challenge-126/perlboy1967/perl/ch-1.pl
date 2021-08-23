@@ -9,4 +9,4 @@
 
 use 5.16.0;
 
-say scalar grep !/1/,1..shift;
+say scalar grep !/1/,2..shift;
