@@ -8,7 +8,11 @@ use Test::More;
 use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
-my @grid = qw(x***x*xxxx *********x ****x*x*x* ***xx***** x***x****x);
+my @grid = qw(x***x*xxxx 
+              *********x 
+              ****x*x*x* 
+              ***xx***** 
+              x***x****x);
 
 say join "\n",'',@grid,'';
 say solve(@grid);
@@ -22,9 +26,19 @@ sub solve {
   foreach my $y ( 0 .. $h ) {
     push @res, join '', map {
       $g[$y][$_] ? 'x' :
-        ( $y    ? ( $_ ? $g[$y-1][$_-1] : 0 ) + $g[$y-1][$_] + ( $_<$w ? $g[$y-1][$_+1] : 0 ) : 0 ) +
-                  ( $_ ? $g[$y  ][$_-1] : 0 ) + $g[$y  ][$_] + ( $_<$w ? $g[$y  ][$_+1] : 0 )       +
-        ( $y<$h ? ( $_ ? $g[$y+1][$_-1] : 0 ) + $g[$y+1][$_] + ( $_<$w ? $g[$y+1][$_+1] : 0 ) : 0 )
+        ( $y    ? ( $_    ? $g[$y-1][$_-1] : 0 ) +
+                            $g[$y-1][$_  ]       +
+                  ( $_<$w ? $g[$y-1][$_+1] : 0 )
+                : 0 ) +
+                
+                  ( $_    ? $g[$y  ][$_-1] : 0 ) +
+                            $g[$y  ][$_  ]       +
+                  ( $_<$w ? $g[$y  ][$_+1] : 0 ) +
+
+        ( $y<$h ? ( $_    ? $g[$y+1][$_-1] : 0 ) +
+                            $g[$y+1][$_  ]       +
+                  ( $_<$w ? $g[$y+1][$_+1] : 0 )
+                : 0 )
      } 0 .. $w;
   }
   return join "\n", @res;
