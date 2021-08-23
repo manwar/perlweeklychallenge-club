@@ -1,9 +1,9 @@
 #!/usr/bin/env raku
 
 # The adjust function adjusts the number if it contains a 1 
-# Examples: 111     is converted to 99
-#           901     is converted to 900
-#           2731515 is converted to 2730999
+# Examples: adjust(111)     = 99
+#           adjust(901)     = 900
+#           adjust(2731515) = 2730999
 
 # The count-numbers function performs this equivalent algorithm:
 # For all digits, subtract 1 and multiply that by 9 raised to the
@@ -49,7 +49,5 @@ sub adjust($N is copy)
     return $N if @a.elems == 1; # $N has no 1s
 
     @a.tail = 0 ~ 9 x @a.tail.chars;
-
-    return +@a.tail unless @a.head; # first digit of $N is 1
     return @a.join;
 }
