@@ -1,23 +1,8 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge - 127"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2021-08-23 22:33:42 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "plotOptions" : {
       "series" : {
@@ -28,36 +13,70 @@
          "borderWidth" : 0
       }
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Niels van Dijke",
-            "name" : "Niels van Dijke",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         }
-      ]
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2021-08-23 23:10:20 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 127"
    },
    "series" : [
       {
          "name" : "The Weekly Challenge - 127",
          "data" : [
             {
-               "y" : 2,
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 3
+            },
+            {
                "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke"
+               "name" : "Niels van Dijke",
+               "y" : 2
             }
          ],
          "colorByPoint" : 1
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "James Smith"
+         },
+         {
+            "id" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Niels van Dijke"
+         }
+      ]
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
