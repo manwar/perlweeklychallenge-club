@@ -9,14 +9,30 @@ use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
 my @TESTS = (
-  [ 0, 1 ],
+  [ [1,4], [3,5], [6,8], [12, 13], [3,20] ],
+  [ [3,4], [5,7], [6,9], [10, 12], [13,15] ],
 );
 
-is( my_function($_->[0]), $_->[1] ) foreach @TESTS;
+#is( my_function($_->[0]), $_->[1] ) foreach @TESTS;
+#done_testing();
 
-done_testing();
+print_res( conflict_intervals( $_ ) ) foreach @TESTS;
 
-sub my_function {
-  return 1;
+sub print_res {
+  printf "[ %s ]\n", join ', ', map { "($_->[0],$_->[1])" } @{$_[0]};
+}
+
+sub conflict_intervals {
+  my @in = @{ $_[0] };
+  my @conf;
+  while(@in) {
+    my $int = pop @in;
+    foreach(@in) {
+      next unless $int->[1] < $_->[0] || $int->[0] < $_->[1];
+      unshift @conf, $int;
+      last;
+    }
+  }
+  return \@conf;
 }
 
