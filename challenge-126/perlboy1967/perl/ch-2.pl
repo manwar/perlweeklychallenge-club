@@ -29,8 +29,9 @@ printBoard(@B);
 sub generateBoard($$\@) {
   my ($w,$h,$arB) = @_;
 
-  my @c = qw(X . . . .); # 1 in 5 chance of placing a bomb
-
+  my $bRatio = 5; # 1 in 5 chance of placing a bomb
+  my @c = ('X', map '.', 1..$bRatio-1);
+  
   foreach my $y (1 .. $h) {
     foreach my $x (1 .. $w) {
       $arB->[$y][$x] = $c[int rand(scalar @c)];
