@@ -17,6 +17,7 @@ my @TESTS = (
 #done_testing();
 
 print_res( conflict_intervals( $_ ) ) foreach @TESTS;
+print_res( conflict_intervals_compact( $_ ) ) foreach @TESTS;
 
 sub print_res {
   printf "[ %s ]\n", join ', ', map { "($_->[0],$_->[1])" } @{$_[0]};
@@ -25,13 +26,20 @@ sub print_res {
 sub conflict_intervals {
   my @in = @{ $_[0] };
   my @conf;
-  while(@in) {
-    my $int = pop @in;
+  while( my $int = pop @in ) {
     foreach(@in) {
       next unless $int->[1] < $_->[0] || $int->[0] < $_->[1];
       unshift @conf, $int;
       last;
     }
+  }
+  return \@conf;
+}
+
+sub conflict_intervals_compact {
+  my(@in,@conf) = @{$_[0]};
+  while(my $int = pop @in) {
+    ($int->[1] < $_->[0] || $int->[0] < $_->[1]) && (unshift @conf, $int) && last foreach @in;
   }
   return \@conf;
 }
