@@ -1,13 +1,17 @@
 #!/usr/bin/env raku
 
-# count-numbers uses the following algorithm.
-# Example: The result of 9324 = 8*9^3 + 2*9^2 + 1*9^1 + 3*9^0 = 6006
-
-# But first, adjust is called.
+# The adjust function adjusts the number if it contains a 1 
 # Examples: 111     is converted to 99
 #           901     is converted to 900
 #           2731515 is converted to 2730999
-#           A number with no 1s is unchanged
+
+# The count-numbers function performs this equivalent algorithm:
+# For all digits, subtract 1 and multiply that by 9 raised to the
+# power of the log of that digit's place value. Then sum those 
+# results. 
+# Examples: count-numbers(25)   = 1*9^1 + 4*9^0 = 13
+#           count-numbers(7777) = 6*9^3 + 6*9^2 + 6*9^1 + 6*9^0 = 4920  
+#           count-numbers(9324) = 8*9^3 + 2*9^2 + 1*9^1 + 3*9^0 = 6006
 
 use Test;
 plan 9;
@@ -30,25 +34,22 @@ multi count-numbers($N is copy)
     my @digits = $N.comb;
     my $count;
 
-    while @digits
+    loop 
     {
+        return $count unless @digits;
         my $d = @digits.shift;
         next if $d == 0;
         $count += ($d-1) * 9 ** @digits.elems;
     }
-
-    $count;
 }         
 
 sub adjust($N is copy)
 {
     my @a = $N.split('1', 2);
-
-    return $N if @a.elems == 1; # no 1s
+    return $N if @a.elems == 1; # $N has no 1s
 
     @a.tail = 0 ~ 9 x @a.tail.chars;
 
-    return @a.tail.substr(1) unless @a.head; # first digit is 1
-
+    return +@a.tail unless @a.head; # first digit of $N is 1
     return @a.join;
 }
