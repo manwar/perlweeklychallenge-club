@@ -10,6 +10,12 @@ my @b = 4, 6, 7, 8, 9;
 # my @a = 1, 2, 5, 3, 4, 6;
 # my @b = 4, 6, 7, 8, 9;
 
+# Short output
+
+say +!(@a ∩ @b);
+
+# Long output
+
 given @a ∩ @b {
     when .elems == 1 {
         say "0 as the given two sets have common member $_.";
