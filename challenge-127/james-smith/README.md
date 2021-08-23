@@ -1,4 +1,4 @@
-# Perl Weekly Challenge #126
+# Perl Weekly Challenge #127
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,85 +10,74 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-126/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-127/james-smith/perl
 
-# Task 1 - Count Numbers
+# Task 1 -  Disjoint Sets
 
-***You are given a positive integer `$N` - Write a script to print count of numbers from `1` to `$N` that don’t contain digit `1`.***
+***You are given two sets with unique integers. Write a script to figure out if they are disjoint.***
 
 ## The solution
 
-First pass - just do the simple `O(n)` thing which is to loop through all `$N` numbers and count those without `1`s.
+This is a rewording of simple perl, which is to see if there any elements of set 1 in set 2. To avoid nested loops, we use the efficiency of perl's hash key search to search for members. So for set 1 we create a hash who's keys are the members of set 1. We then search through set 2 to see which members are keys in this hash (and so in both sets). If there are any we return 0 o/w return 1.
 
 ```perl
-sub get_no_one_count {
-  my $n = shift;
-  return scalar grep { ! m{1} } 2..$n;
+sub disjoint_sets {
+  my %m = map { $_=>1 } @{$_[0]};
+  return grep( { $m{$_} } @{$_[1]}) ? 0 : 1;
 }
 ```
 
-If we look at a few numbers we see that for powers of 10 we see we have values 8, 80, 728, 6560, 59048, ... what we notices these are all of the form `9^$N-1`.... For multiples of these we see that for the total is `(n-1)*9^N`.
+# Task 2 - Conflict Intervals
 
-We see we can then add these up - with one exception if we find a 1 we stop the loop (or if working backwards) throw any calculations away - giving us the order `O(ln n)` solution:
+***You are given a list of intervals. Write a script to find out if the current interval conflicts with any of the previous intervals.***
 
-```perl
-sub get_no_one_count_9 {
-  my ( $n, $count, $pow_9 ) = ( shift, 0, 1 );
-  while($n) {
-    my $t   = $n % 10; ## get last digit
-    $count  = 0 if $t==1; ## Throw everything away we've found a 1
-    $count += $t ? ( $t == 1 ? ($pow_9-1) : ($t-1)*$pow_9 ) : 0;
-                          ## 0 it contributes nothing
-                          ## 1 contributes 9^X-1
-                          ## 2-9 contributes (n-1)9^X
-    $pow_9 *= 9;  ## update power of nine
-    $n      = ( $n - $t )/10; ## drop last digit
-  }
-  return $count;
-}
-```
+## Background
 
-## Comparison
-Even for 2 digit numbers this speed up is good (72x), but as N increases
-we see that gain gets higher and higher.. for 7 digit numbers the speed
-up is 6 orders of magnitude.
-
-| N         | scan      | opt       | Speed-up   |
-| --------: | --------: | --------: | ---------: |
-|        98 | 16,027    | 1,173,850 |        72  |
-|       987 |  2,623    |   867,796 |       330  |
-|     9,876 |    253    |   685,956 |     2,715  |
-|    98,765 |     24.4  |   565,427 |    23,155  |
-|   987,654 |      1.23 |   482,800 |   392,998  |
-| 9,876,543 |      0.23 |   418,410 | 1,853,771  |
-
-# Task 2 - Minesweeper Game
-
-***You are given a rectangle with points marked with either `x` or `*`. Consider the `x` as a land mine. Write a script to print a rectangle with numbers and `x` as in the Minesweeper game.***
+This is going back to my day job again - but I thought I would add a bit of background this time. I'm not a geneticist, but a web developer working at an institution that uses DNA sequencing to use genomics to investigate genetics. My first project was to develop/lead the developers for a genome browser. Often we had to display information about genomic features and whether or not they overlapped a particular region (to know whether to display them or not) or to bump them for display (to make sure features didn't merge/overlap)...
 
 ## Solution
 
-```perl
-sub solve {
-  my @res = ();
-  my @g = map { [ map { $_ eq 'x' ? 1 : 0 } split //, $_ ] } @_;
 
-  my( $h, $w ) = ( $#_, -1 + length $_[0] );
-  foreach my $y ( 0 .. $h ) {
-    push @res, join '', map {
-      $g[$y][$_] ? 'x' :
-        ( $y    ? ( $_ ? $g[$y-1][$_-1] : 0 ) + $g[$y-1][$_] + ( $_<$w ? $g[$y-1][$_+1] : 0 ) : 0 ) +
-                  ( $_ ? $g[$y  ][$_-1] : 0 ) + $g[$y  ][$_] + ( $_<$w ? $g[$y  ][$_+1] : 0 )       +
-        ( $y<$h ? ( $_ ? $g[$y+1][$_-1] : 0 ) + $g[$y+1][$_] + ( $_<$w ? $g[$y+1][$_+1] : 0 ) : 0 )
-     } 0 .. $w;
+There are six arrangements more any two regions..... See picture below...
+
+```
+         [============]
+[------]    [++++++]    [------]
+     [++++++++++++++++++++]
+     [++++++]      [++++++]
+```
+
+Over the 6 we have two of regions which are disjoint from the top region: Where `region_2_start > region_1_end` or `region_1_start > region_2_end`...
+
+Our loop finally becomes....
+
+```perl
+sub conflict_intervals {
+  my @in = @{ $_[0] };
+  my @conf;
+  while( my $int = pop @in ) {
+    foreach(@in) {
+      next unless $int->[1] < $_->[0] || $int->[0] < $_->[1];
+      unshift @conf, $int;
+      last;
+    }
   }
-  return join "\n", @res;
+  return \@conf;
 }
 ```
 
-There are two stages to this:
+**Notes:**
+ # Note we work from the end backwards - this is easier as we just pop the last interval off the loop each time and compare it with previous ones.
+ # We then use unshift to add it to the start of what we return.
 
- 1. convert the strings into an array of `1`s and `0`s representing mines and spaces.
- 2. we compute the convulation - counting the number of mines in adjacent squares (or tagging with a "x" if the square is bomb).
-   Rather than using loops and if statements we use nested ternary operators in a single line
+We can compact this slightly using the `&&` trick in the foor loop to do away with the `next`/`last` combination:
 
+```perl
+sub conflict_intervals_compact {
+  my(@i,@o) = @{$_[0]};
+  while(my $r = pop @i) {
+    ($r->[1]<$_->[0] || $r->[0]<$_->[1]) && (unshift @o, $r) && last foreach @i;
+  }
+  return \@o;
+}
+```
