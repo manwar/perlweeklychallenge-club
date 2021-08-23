@@ -15,12 +15,8 @@ sub conflict-intervals(**@i)
     {
         while @i > 1
         {
-            if @i[1].head < @i[0].tail
-            {
-                take @i[1];
-            }
-
-            @i.shift;
+            take @i[1] if @i[1].head < @i[0].tail;
+            shift @i;
         }
     }
 }
