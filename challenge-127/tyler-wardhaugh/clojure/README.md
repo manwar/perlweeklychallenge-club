@@ -1,7 +1,7 @@
-# tw.weekly.c126
+# tw.weekly.c127
 
 
-The Weekly Challenge - #126 - Tyler Wardhaugh
+The Weekly Challenge - #127 - Tyler Wardhaugh
 
 ## Usage
 
@@ -9,7 +9,7 @@ Clojure ([installation instructions](https://clojure.org/guides/getting_started#
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -M -m tw.weekly.c126.core
+    $ clojure -M -m tw.weekly.c127.core
     # ... or ...
     $ bb run both
 
@@ -21,15 +21,15 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -M -m tw.weekly.c126.t1 N
+    $ clojure -M -m tw.weekly.c127.t1 S1 S2
     # ... or ...
-    $ bb run task-1 N
+    $ bb run task-1 S1 S2
 
 Run Task #2 with input:
 
-    $ clojure -M -m tw.weekly.c126.t2 F
+    $ clojure -M -m tw.weekly.c127.t2 I
     # ... or ...
-    $ bb run task-2 F
+    $ bb run task-2 I
 
 View available tasks Babashka can run:
 
@@ -45,5 +45,4 @@ See [seancorfield/clj-new: Generate new projects based on clj, Boot, or Leininge
 
 Copyright © 2021 Tyler Wardhaugh
 
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
+Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.

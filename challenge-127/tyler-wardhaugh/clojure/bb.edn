@@ -23,12 +23,12 @@
           (defn run-task
             [task args]
             (let [clj-options (format "-M -m %s " (get-task-ns task))]
-              (clojure (apply str clj-options args))))
+              (apply clojure clj-options args)))
 
           (defn run-task-bb
             [task args]
             (let [bb-cmd (format "bb -m %s " (get-task-ns task))]
-              (shell (apply str bb-cmd args)))))
+              (apply shell bb-cmd args))))
 
   clean {:doc "Clean out temporary files"
          :task (run! fs/delete-tree [".nrepl-port" ".cpcache" ".lsp"])}
