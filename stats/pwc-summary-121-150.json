@@ -1,10 +1,15 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-08-24 20:29:45 GMT"
    },
    "series" : [
       {
@@ -43,6 +48,7 @@
          ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -74,10 +80,10 @@
             0,
             0,
             8
-         ],
-         "name" : "Raku"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             3,
@@ -109,18 +115,9 @@
             0,
             4,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-08-24 20:23:04 GMT"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "yAxis" : {
       "min" : 0,
       "title" : {
@@ -160,6 +157,9 @@
          "Neil Bowers",
          "Nick Logan"
       ]
+   },
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
