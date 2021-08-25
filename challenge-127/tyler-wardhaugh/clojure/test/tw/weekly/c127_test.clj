@@ -1,7 +1,7 @@
 (ns tw.weekly.c127-test
   (:require [clojure.test :refer [deftest is testing]]
             [tw.weekly.c127.t1 :refer [disjoint?]]
-            #_[tw.weekly.c127.t2 :refer []]))
+            [tw.weekly.c127.t2 :refer [conflict-intervals]]))
 
 (deftest task-1
   (testing "Disjoint Sets"
@@ -10,4 +10,7 @@
 
 (deftest task-2
   (testing "Task 2, Conflict Intervals"
-    ))
+    (is (= (conflict-intervals '[ (1,4), (3,5), (6,8), (12, 13), (3,20) ])
+           '[ (3,5), (3,20) ]))
+    (is (= (conflict-intervals '[ (3,4), (5,7), (6,9), (10, 12), (13,15) ])
+           '[ (6,9) ]))))
