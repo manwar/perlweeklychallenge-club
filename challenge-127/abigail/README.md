@@ -1,28 +1,28 @@
 # Solutions by Abigail
-## [Count Numbers][task1]
+## [Disjoint Sets][task1]
 
-> You are given a positive integer `$N`.
+> You are given two sets with unique integers.
 > 
-> Write a script to print count of numbers from `1` to `$N` that don't
-> contain digit `1`.
+> Write a script to figure out if they are disjoint.
+> 
+> > The two sets are disjoint if they don't have any common members.
 
-### Example
 
-~~~~
-Input: $N = 15
-Output: 8
-~~~~
-
-There are 8 numbers between `1` and `15` that don't contain digit `1`:
-`2, 3, 4, 5, 6, 7, 8, 9`.
+### Examples
 
 ~~~~
-Input: $N = 25
-Output: 13
+Input: @S1 = (1, 2, 5, 3, 4)
+       @S2 = (4, 6, 7, 8, 9)
 ~~~~
 
-There are 13 numbers between `1` and `25` that don't contain digit `1`:
-`2, 3, 4, 5, 6, 7, 8, 9, 20, 22, 23, 24, 25`.
+Output: `0` as the given two sets have common member `4`.
+
+~~~~
+Input: @S1 = (1, 3, 5, 7, 9)
+       @S2 = (0, 2, 4, 6, 8)
+~~~~
+
+Output: `1` as the given two sets do not have common member.
 
 
 ### Solutions
@@ -36,51 +36,56 @@ There are 13 numbers between `1` and `25` that don't contain digit `1`:
 * [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[Perl Weekly Challenge 126: Count Numbers][blog1]
+[Perl Weekly Challenge 127: Disjoint Sets][blog1]
 
-## [Minesweeper Game][task2]
+## [Conflict Intervals][task2]
 
-> You are given a rectangle with points marked with either `x` or `*`.
-> Please consider the `x` as a land mine.
+> You are given a list of intervals.
 > 
-> Write a script to print a rectangle with numbers and `x` as in the
-> Minesweeper game.
-> 
-> > A number in a square of the minesweeper game indicates the
-> > number of mines within the neighbouring squares (usually `8`),
-> > also implies that there are no bombs on that square.
+> Write a script to find out if the current interval conflicts with
+> any of the previous intervals.
 
-### Example
+### Examples
 
 ~~~~
-Input:
-    x * * * x * x x x x
-    * * * * * * * * * x
-    * * * * x * x * x *
-    * * * x x * * * * *
-    x * * * x * * * * x
+Input: @Intervals = [(1,4), (3,5), (6,8), (12, 13), (3,20)]
+Output: [(3,5), (3,20)]
+~~~~
 
-Output:
-    x 1 0 1 x 2 x x x x
-    1 1 0 2 2 4 3 5 5 x
-    0 0 1 3 x 3 x 2 x 2
-    1 1 1 x x 4 1 2 2 2
-    x 1 1 3 x 2 0 0 1 x
-~~~
+* The 1st interval `(1,4)` do not have any previous intervals to compare with,
+  so skip it.
+* The 2nd interval `(3,5)` does conflict with previous interval (1,4).
+* The 3rd interval `(6,8)` do not conflicts with any of the previous intervals
+  `(1,4)` and `(3,5)`, so skip it.
+* The 4th interval `(12,13)` again do not conflicts with any of the previous
+  intervals `(1,4)`, `(3,5)` and `(6,8)`, so skip it.
+* The 5th interval `(3,20)` conflicts with the first interval `(1,4)`.
+
+~~~~
+Input: @Intervals = [(3,4), (5,7), (6,9), (10, 12), (13,15)]
+Output: [(6,9)]
+~~~~
+
+* The 1st interval `(3,4)` do not have any previous intervals to compare with,
+  so skip it.
+* The 2nd interval `(5,7)` do not conflicts with the previous interval `(3,4)`,
+  so skip it.
+* The 3rd interval `(6,9)` does conflict with one of the previous
+  intervals `(5,7)`.
+* The 4th interval `(10,12)` do not conflicts with any of the previous
+  intervals `(3,4)`, `(5,7)` and `(6,9)`, so skip it.
+* The 5th interval `(13,15)` do not conflicts with any of the previous
+  intervals `(3,4)`, `(5,7)`, `(6,9)` and `(10,12)`, so skip it.
 
 ### Solutions
-* [AWK](awk/ch-2.awk)
-* [C](c/ch-2.c)
-* [Lua](lua/ch-2.lua)
-* [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
-[Perl Weekly Challenge 126: Minesweeper Game][blog2]
+[Perl Weekly Challenge 127: Conflict Intervals][blog2]
 
 
 
-[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-126/#TASK1
-[task2]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-126/#TASK2
-[blog1]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-126-1.html
-[blog2]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-126-2.html
+[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-127/#TASK1
+[task2]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-127/#TASK2
+[blog1]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-127-1.html
+[blog2]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-127-2.html
