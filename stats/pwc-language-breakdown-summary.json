@@ -1,13 +1,53 @@
 {
+   "legend" : {
+      "enabled" : "false"
+   },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
-      },
-      "type" : "category"
+      }
    },
+   "subtitle" : {
+      "text" : "Last updated at 2021-08-26 20:00:38 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "series" : [
+      {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "enabled" : "true",
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "y" : 10
+         },
+         "data" : [
+            [
+               "Blog",
+               1828
+            ],
+            [
+               "Perl",
+               6066
+            ],
+            [
+               "Raku",
+               3763
+            ]
+         ]
+      }
+   ],
    "chart" : {
       "type" : "column"
    },
@@ -17,47 +57,7 @@
          "text" : null
       }
    },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-08-26 19:30:40 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
-   },
-   "series" : [
-      {
-         "data" : [
-            [
-               "Blog",
-               1828
-            ],
-            [
-               "Perl",
-               6064
-            ],
-            [
-               "Raku",
-               3763
-            ]
-         ],
-         "dataLabels" : {
-            "rotation" : -90,
-            "y" : 10,
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "enabled" : "true"
-         },
-         "name" : "Contributions"
-      }
-   ]
+   }
 }
