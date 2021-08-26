@@ -23,12 +23,12 @@
           (defn run-task
             [task args]
             (let [clj-options (format "-M -m %s " (get-task-ns task))]
-              (clojure (apply str clj-options args))))
+              (apply clojure clj-options args)))
 
           (defn run-task-bb
             [task args]
             (let [bb-cmd (format "bb -m %s " (get-task-ns task))]
-              (shell (apply str bb-cmd args)))))
+              (apply shell bb-cmd args))))
 
   clean {:doc "Clean out temporary files"
          :task (run! fs/delete-tree [".nrepl-port" ".cpcache" ".lsp"])}
@@ -69,9 +69,7 @@
           :task (run-task :t2 *command-line-args*)}
 
   task-2-bb {:doc "Run Task 2 (via Babashka)"
-             :task (binding [*out* *err*]
-                      (println "error: can't run Task 2 via Babashka because it depends on some incompatible libraries.")
-                      (System/exit 1))}
+             :task (run-task-bb :t2 *command-line-args*)}
 
   both {:doc "Run both tasks (via clojure)"
         :task (do
