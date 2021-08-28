@@ -6,7 +6,7 @@
 use warnings;
 use v5.12.0;
 use List::Util qw/max min/; 
-use Test::More tests => 2;
+use Test::More tests => 4;
 use Test::Deep;
 
 my @inp;
@@ -90,4 +90,20 @@ cmp_deeply(
     conflict_intervals([3,4], [5,7], [6,9], [10,12], [13, 15]),
     [[6,9]],
     "Example 2"
+);
+cmp_deeply(
+    conflict_intervals(
+        [0, 2], [11, 15], [12, 19], [16, 23], [17, 18], 
+        [15, 17], [19, 25], [7, 9], [1, 3], [3, 8]
+    ),
+    [ [12,19], [16,23], [17,18], [15,17], [19, 25], [1, 3], [3, 8]],
+    "Test 1"
+);
+cmp_deeply(
+    conflict_intervals(
+        [14, 28], [9, 13], [6, 16], [12, 15], [28, 36],
+        [6, 24], [15, 22], [13, 16], [1, 16], [8, 27]
+    ),
+    [[6,16], [12, 15], [6, 24], [15, 22], [13, 16], [1, 16], [8, 27]],
+    "Test 2"
 );
