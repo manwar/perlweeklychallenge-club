@@ -18,11 +18,15 @@ while ($a[$i] ne 'x' && $i < scalar @a) {
     $i++;
 }
 
+$i++;
+
 while ($i < scalar @a) {
     push @a2, $a[$i];
     $i++;
 }
 
+say " first array: ", "@a1";
+say "second array: ", "@a2";
 say disjoint( [@a1], [@a2]);
 
 sub disjoint ($s1 , $s2) {
