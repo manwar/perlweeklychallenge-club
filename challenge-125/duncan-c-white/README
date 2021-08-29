@@ -1,49 +1,74 @@
-Task 1: "Write a script to print the Venus Symbol, international gender
-symbol for women. Please feel free to use any character.
+Task 1: "Pythagorean Triples
 
-    ^^^^^
-   ^     ^
-  ^       ^
- ^         ^
- ^         ^
- ^         ^
- ^         ^
- ^         ^
-  ^       ^
-   ^     ^
-    ^^^^^
-      ^
-      ^
-      ^
-    ^^^^^
-      ^
-      ^
-"
+You are given a positive integer $N.
 
-My notes: sounds like a print statement to reproduce the given input.
+Write a script to print all Pythagorean Triples containing $N as a
+member. Print -1 if it can't be a member of any. i
 
+Triples with the same set of elements are considered the same, i.e. if
+your script has already printed (3, 4, 5), (4, 3, 5) should not be
+printed.
 
-Task 2: "Tug of War
+The famous Pythagorean theorem states that in a right angle triangle,
+the length of the two shorter sides and the length of the longest
+side are related by a2+b2 = c2.
 
-You are given a set of $n integers (n1, n2, n3, ...).
-
-Write a script to divide the set in two subsets of n/2 sizes each so
-that the difference of the sum of two subsets is the least. If $n is
-even then each subset must be of size $n/2 each. In case $n is odd then
-one subset must be ($n-1)/2 and other must be ($n+1)/2.
+A Pythagorean triple refers to the triple of three integers whose lengths
+can compose a right-angled triangle.
 
 Example
 
-  Input:        Set = (10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
-  Output:  Subset 1 = (30, 40, 60, 70, 80)
-           Subset 2 = (10, 20, 50, 90, 100)
+    Input: $N = 5
+    Output:
+        (3, 4, 5)
+        (5, 12, 13)
 
-  Input:        Set = (10, -15, 20, 30, -25, 0, 5, 40, -5)
-           Subset 1 = (30, 0, 5, -5)
-           Subset 2 = (10, -15, 20, -25, 40)
+    Input: $N = 13
+    Output:
+        (5, 12, 13)
+        (13, 84, 85)
+
+    Input: $N = 1
+    Output:
+        -1
 "
 
-My notes: sounds like a "generate and test" problem.  Easy to do inefficiently,
-	  challenging to try to make efficient.
-	  Let's start by counting from 0 to 2^n-1 and using the bits
-	  to select which subset to put each value into.
+My notes: the tricky part here is knowing how to generate all Pythagorean
+triples that MIGHT contain $N, i.e. when to stop generating triples..
+
+
+Task 2: "Binary Tree Diameter
+
+You are given binary tree as below:
+
+    1
+   / \
+  2   5
+ / \ / \
+3  4 6  7
+       / \
+      8  10
+     /
+    9
+
+Write a script to find the diameter of the given binary tree.
+
+    The diameter of a binary tree is the length of the longest path between any two nodes in a tree. It doesn't have to pass through the root.
+
+For the above given binary tree, possible diameters (6) are:
+
+3, 2, 1, 5, 7, 8, 9
+
+or
+
+4, 2, 1, 5, 7, 8, 9
+
+
+UPDATE (2021-08-10 17:00:00 BST): Jorg Sommrey corrected the example.
+
+The length of a path is the number of its edges, not the number of the vertices it connects. So the diameter should be 6, not 7.
+"
+
+My notes: Looks quite tricky.  We can use generate and test - if we can
+generate all paths, then we could do a "max" test.  Also, how to represent
+the binary tree?  let's hard-code it for now.

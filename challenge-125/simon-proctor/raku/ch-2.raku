@@ -146,10 +146,10 @@ multi sub MAIN( *@data ) {
     say $tree;
     
     my $long = shift @routes;
-    my $result = $long.elems;
+    my $result = $long.elems - 1;
     for @routes -> $pos {
         if ($long (&) $pos).elems == 1 {
-            $result = $long.elems + $pos.elems - 1;
+            $result = $long.elems + $pos.elems - 2;
             last;
         }
     }

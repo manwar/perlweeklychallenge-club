@@ -1,0 +1,17 @@
+/ds {
+    dup length dict /dd exch def
+    {
+       dd exch 1 put
+    } forall
+    /dj 1 def
+    {
+        dd exch known {
+            /dj 0 def
+            exit
+        } if
+    } forall
+    dj
+} def
+
+[ 1 2 5 3 4 ] [ 4 6 7 8 9 ] ds 0 eq { (Pass) } { (Fail) } ifelse =
+[ 1 3 5 7 9 ] [ 0 2 4 6 8 ] ds 1 eq { (Pass) } { (Fail) } ifelse =
