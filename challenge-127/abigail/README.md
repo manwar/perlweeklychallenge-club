@@ -78,6 +78,7 @@ Output: [(6,9)]
   intervals `(3,4)`, `(5,7)`, `(6,9)` and `(10,12)`, so skip it.
 
 ### Solutions
+* [AWK](awk/ch-2.awk)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
