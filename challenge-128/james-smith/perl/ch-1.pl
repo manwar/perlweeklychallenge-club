@@ -47,10 +47,10 @@ sub find_empty {
   my $max_area = [0,0,0];
   foreach my $x ( 0..$w ) {
     foreach my $y ( 0..$h ) {
-      next unless $runs[$y][$x];  ## Short cut answer will be 0
+      next unless $runs[$y][$x];   ## Short cut answer will be 0
       my $max_w = 1e9;
       foreach my $j ( $y..$h ) {
-        last unless $runs[$j][$x];   ## Short cut all subsequent answers will zero
+        last unless $runs[$j][$x]; ## Short cut all subsequent answers are 0
         $max_w    = $runs[$j][$x]          if $runs[$j][$x] < $max_w;
         my $area  = $max_w * ($j-$y+1);
         $max_area = [$area,$max_w,$j-$y+1] if $area>$max_area->[0];
