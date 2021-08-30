@@ -26,32 +26,42 @@ sub bump_platform {
   my @arr = @{shift @_};
   my @dep = @{shift @_};
   #shift @{$arr};
-  my @plat = ();#(shift @{$dep});
+  my @platforms = ();#(shift @{$dep});
   OUTER: foreach my $st (@arr) {
-    foreach(0..$#plat) {
-      next unless $st gt $plat[$_];
-      $plat[$_] = shift @dep;
-      next OUTER;
+    foreach(0..$#platforms) {
+      ## If train fits on platform - we extend the last departure time
+      ## and start working with new train
+      ($platforms[$_] = shift @dep) && (next OUTER) if $st gt $platforms[$_];
     }
-    push @plat,shift @dep;
+    ## Otherwise we start a new platform...
+    push @platforms,shift @dep;
   }
-  return scalar @plat;
+  return scalar @platforms;
 }
 
 sub bump_platform_keep_trains {
   my @arr = @{shift @_};
   my @dep = @{shift @_};
-  my $t = 0;
-  my @plat;
+  my($train_no, @platforms) = (0);
+
   OUTER: foreach my $st (@arr) {
-    foreach(@plat) {
-      next unless $st gt $_->[-1][1];
-      push @{$_}, [ $st, (shift @dep), ++$t ];
-      next OUTER;
+    foreach(@platforms) {
+      ## If we can fit on this platform - add train details
+      ## and go to the next train
+      (push @{$_}, [ $st, (shift @dep), ++$train_no ]) &&
+        (next OUTER) if $st gt $_->[-1][1];
     }
-    push @plat, [ [ $st, (shift @dep), ++$t ] ];
+    ## No room on any of the existing platforms - so we create
+    ## a new one and push the train
+    push @platforms, [ [ $st, (shift @dep), ++$train_no ] ];
   }
-  say '  ',join '  ', map { "Train $_->[2]: $_->[0]-$_->[1]" } @{$_} foreach @plat;
-  return scalar @plat;
+  ## Display details about trains on platform.
+  say '  ',
+    join '  ',
+    map { "Train $_->[2]: $_->[0]-$_->[1]" }
+    @{$_} foreach @platforms;
+  ## Return the number of platforms
+  return scalar @platforms;
 }
+
 
