@@ -1,3 +1,3 @@
-# The Weekly Challenge 127
+# The Weekly Challenge 128
 
-Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-127-4k6j)
+Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-128-1ng1)
