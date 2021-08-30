@@ -12,6 +12,22 @@ say "Example 2";
                         <0 0 0 1>,
                         <0 0 1 0>);
 
+say " ";
+
+say "Example 3";
+.say for max-sub-matrix(<1 0 1 0 1 0 1 0 1 0 0 1>,
+                        <1 0 1 0 1 0 1 0 1 0 0 1>,
+                        <1 0 0 0 1 0 0 0 1 1 0 0>,
+                        <1 0 0 0 1 0 0 0 1 1 0 0>,
+                        <1 0 0 0 1 0 1 0 1 0 1 1>,
+                        <1 0 0 0 1 0 0 0 1 0 0 1>,
+                        <1 0 1 0 1 0 1 0 1 0 0 1>,
+                        <1 0 1 0 1 0 1 0 1 0 0 0>,
+                        <1 0 1 0 1 0 1 0 1 0 0 1>,
+                        <1 0 1 0 1 0 1 0 1 0 0 1>,
+                        <1 0 1 0 1 0 1 0 1 0 0 0>,
+                        <1 0 0 0 0 0 0 0 1 0 1 0>);
+
 sub max-sub-matrix(+$matrix)
 {
     my %h;
@@ -19,18 +35,18 @@ sub max-sub-matrix(+$matrix)
 
     for ^$matrix -> $i
     {
-        for $matrix[$i].join ~~ m:g/00+/ -> $m
+        for $matrix[$i].join ~~ m:g/00+/
         {
-            %h{$i}.push: $m.from..$m.pos-1;
+            %h{$i}.push: .from .. .pos-1;
         }
     }
 
-    for (^$matrix).combinations(2) -> $range 
+    for (^$matrix).combinations: 2 -> ($head, $tail) 
     {
-        for [X] %h{$range.head..$range.tail} -> @rows
+        for [X] %h{$head .. $tail} -> @rows
         {
             my $cols = +([(&)] @rows);
-            my $rows = $range.tail - $range.head + 1;
+            my $rows = $tail - $head + 1;
             my $area = $rows * $cols;
             %results{"$rows x $cols"} = $area;
         }
