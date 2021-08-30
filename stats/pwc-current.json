@@ -1,44 +1,52 @@
 {
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "James Smith",
+               "y" : 3,
+               "name" : "James Smith"
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
+               "y" : 4
+            },
+            {
+               "y" : 1,
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Simon Green",
+               "name" : "Simon Green",
+               "y" : 3
+            }
+         ],
+         "name" : "The Weekly Challenge - 128"
+      }
+   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 128",
-         "data" : [
-            {
-               "drilldown" : "James Smith",
-               "name" : "James Smith",
-               "y" : 3
-            },
-            {
-               "name" : "Luca Ferrari",
-               "y" : 4,
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "y" : 3,
-               "name" : "Simon Green",
-               "drilldown" : "Simon Green"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "legend" : {
-      "enabled" : 0
+   "xAxis" : {
+      "type" : "category"
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 128"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "James Smith",
             "name" : "James Smith",
             "data" : [
                [
@@ -49,8 +57,7 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "James Smith"
+            ]
          },
          {
             "name" : "Luca Ferrari",
@@ -67,8 +74,17 @@
             "id" : "Luca Ferrari"
          },
          {
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "id" : "Mark Anderson"
+         },
+         {
             "id" : "Simon Green",
-            "name" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -78,9 +94,13 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Simon Green"
          }
       ]
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 128"
    },
    "plotOptions" : {
       "series" : {
@@ -92,14 +112,9 @@
       }
    },
    "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-08-30 22:46:55 GMT"
+      "text" : "[Champions: 4] Last updated at 2021-08-30 22:53:17 GMT"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    }
 }
