@@ -1,92 +1,79 @@
 # Solutions by Abigail
-## [Disjoint Sets][task1]
+## [Maximum Sub-Matrix][task1]
 
-> You are given two sets with unique integers.
+> You are given m x n binary matrix having 0 or 1.
 > 
-> Write a script to figure out if they are disjoint.
-> 
-> > The two sets are disjoint if they don't have any common members.
+> Write a script to find out maximum sub-matrix having only 0
 
 
 ### Examples
 
 ~~~~
-Input: @S1 = (1, 2, 5, 3, 4)
-       @S2 = (4, 6, 7, 8, 9)
+Input : [ 1 0 0 0 1 0 ]
+        [ 1 1 0 0 0 1 ]
+        [ 1 0 0 0 0 0 ]
+
+Output: [ 0 0 0 ]
+        [ 0 0 0 ]
 ~~~~
 
-Output: `0` as the given two sets have common member `4`.
-
 ~~~~
-Input: @S1 = (1, 3, 5, 7, 9)
-       @S2 = (0, 2, 4, 6, 8)
-~~~~
+Input : [ 0 0 1 1 ]
+        [ 0 0 0 1 ]
+        [ 0 0 1 0 ]
 
-Output: `1` as the given two sets do not have common member.
+Output: [ 0 0 ]
+        [ 0 0 ]
+        [ 0 0 ]
+~~~~
 
 
 ### Solutions
-* [AWK](awk/ch-1.awk)
-* [Bash](bash/ch-1.sh)
-* [C](c/ch-1.c)
-* [Lua](lua/ch-1.lua)
-* [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
-* [Python](python/ch-1.py)
-* [Ruby](ruby/ch-1.rb)
 
 ### Blog
-[Perl Weekly Challenge 127: Disjoint Sets][blog1]
+[Perl Weekly Challenge 128: Maximum Sub-Matrix][blog1]
 
-## [Conflict Intervals][task2]
+## [Minimum Platforms][task2]
 
-> You are given a list of intervals.
+> You are given two arrays of arrival and departure times of trains
+> at a railway station.
 > 
-> Write a script to find out if the current interval conflicts with
-> any of the previous intervals.
+> Write a script to find out the minimum number of platforms needed
+> so that no train needs to wait.
 
 ### Examples
 
 ~~~~
-Input: @Intervals = [(1,4), (3,5), (6,8), (12, 13), (3,20)]
-Output: [(3,5), (3,20)]
+Input: @arrivals   = (11:20, 14:30)
+       @departutes = (11:50, 15:00)
+Output: 1
 ~~~~
 
-* The 1st interval `(1,4)` do not have any previous intervals to compare with,
-  so skip it.
-* The 2nd interval `(3,5)` does conflict with previous interval (1,4).
-* The 3rd interval `(6,8)` do not conflicts with any of the previous intervals
-  `(1,4)` and `(3,5)`, so skip it.
-* The 4th interval `(12,13)` again do not conflicts with any of the previous
-  intervals `(1,4)`, `(3,5)` and `(6,8)`, so skip it.
-* The 5th interval `(3,20)` conflicts with the first interval `(1,4)`.
+The 1st arrival of train is at 11:20 and this is the only train at
+the station, so you need 1 platform.  Before the second arrival at
+14:30, the first train left the station at 11:50, so you still need
+only 1 platform.
 
 ~~~~
-Input: @Intervals = [(3,4), (5,7), (6,9), (10, 12), (13,15)]
-Output: [(6,9)]
+Input: @arrivals   = (10:20, 11:00, 11:10, 12:20, 16:20, 19:00)
+       @departutes = (10:30, 13:20, 12:40, 12:50, 20:20, 21:20)
+Output: 3
 ~~~~
 
-* The 1st interval `(3,4)` do not have any previous intervals to compare with,
-  so skip it.
-* The 2nd interval `(5,7)` do not conflicts with the previous interval `(3,4)`,
-  so skip it.
-* The 3rd interval `(6,9)` does conflict with one of the previous
-  intervals `(5,7)`.
-* The 4th interval `(10,12)` do not conflicts with any of the previous
-  intervals `(3,4)`, `(5,7)` and `(6,9)`, so skip it.
-* The 5th interval `(13,15)` do not conflicts with any of the previous
-  intervals `(3,4)`, `(5,7)`, `(6,9)` and `(10,12)`, so skip it.
+Between 11:00 and 12:20, there would be at least 3 trains at the
+station, so we need minimum 3 platforms.
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
-[Perl Weekly Challenge 127: Conflict Intervals][blog2]
+[Perl Weekly Challenge 128: Minimum Platforms][blog2]
 
 
 
-[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-127/#TASK1
-[task2]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-127/#TASK2
-[blog1]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-127-1.html
-[blog2]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-127-2.html
+[task1]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-128/#TASK1
+[task2]: https://perlweeklychallenge.org/blog/perl-weekly-challenge-128/#TASK2
+[blog1]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-128-1.html
+[blog2]: https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-128-2.html
