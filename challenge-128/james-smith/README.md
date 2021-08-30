@@ -118,18 +118,16 @@ Here we use a little used concept in perl the label "`OUTER`" - this allows our 
 sub bump_platform {
   my @arr = @{shift @_};
   my @dep = @{shift @_};
-  my @plat = ();
+  my @platforms = ();
   OUTER: foreach my $st (@arr) {
-    foreach(0..$#plat) {
-      next unless $st gt $plat[$_];
-      $plat[$_] = shift @dep;
-      next OUTER;
+    foreach(0..$#platforms) {
+      ($platforms[$_] = shift @dep) && (next OUTER)
+        if $st gt $platforms[$_];
     }
-    push @plat, shift @dep;
+    push @platforms,shift @dep;
   }
-  return scalar @plat;
+  return scalar @platforms;
 }
-
 ```
 
 **Notes:
@@ -140,17 +138,17 @@ We can also keep information about which trains are on by re-writing what is sto
 sub bump_platform_keep_trains {
   my @arr = @{shift @_};
   my @dep = @{shift @_};
-  my $t = 0;
-  my @plat; # = ( [ [shift @{$arr}, shift @{$dep}, my $t=1] ] );
+  my($train_no, @platforms) = (0);
+
   OUTER: foreach my $st (@arr) {
-    foreach(@plat) {
-      next unless $st gt $_->[-1][1];
-      push @{$_}, [ $st, (shift @dep), ++$t ];
-      next OUTER;
+    foreach(@platforms) {
+      (push @{$_}, [ $st, (shift @dep), ++$train_no ]) &&
+        (next OUTER) if $st gt $_->[-1][1];
     }
-    push @plat, [ [ $st, (shift @dep), ++$t ] ];
+    push @platforms, [ [ $st, (shift @dep), ++$train_no ] ];
   }
-  say '  ', join '  ', map { "Train $_->[2]: $_->[0]-$_->[1]" } @{$_} foreach @plat;
-  return scalar @plat;
+  say '  ', join '  ', map { "Train $_->[2]: $_->[0]-$_->[1]" } @{$_}
+    foreach @platforms;
+  return scalar @platforms;
 }
 ```

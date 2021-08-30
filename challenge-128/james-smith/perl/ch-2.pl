@@ -25,8 +25,7 @@ done_testing();
 sub bump_platform {
   my @arr = @{shift @_};
   my @dep = @{shift @_};
-  #shift @{$arr};
-  my @platforms = ();#(shift @{$dep});
+  my @platforms = ();
   OUTER: foreach my $st (@arr) {
     foreach(0..$#platforms) {
       ## If train fits on platform - we extend the last departure time
