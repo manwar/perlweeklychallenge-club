@@ -2,8 +2,6 @@
 
 require 'test/unit'
 
-require 'set'
-
 def msm(m)
   y=m.length()
   x=m[0].length()
