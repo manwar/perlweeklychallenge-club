@@ -17,7 +17,7 @@ my @TESTS = (
     3 ]
 );
 
-is( bump_platform( $_->[0], $_->[1] ), $_->[2] ) foreach @TESTS;
+is( bump_platform(             $_->[0], $_->[1] ), $_->[2] ) foreach @TESTS;
 is( bump_platform_keep_trains( $_->[0], $_->[1] ), $_->[2] ) foreach @TESTS;
 
 done_testing();
@@ -42,7 +42,7 @@ sub bump_platform_keep_trains {
   my @arr = @{shift @_};
   my @dep = @{shift @_};
   my $t = 0;
-  my @plat; # = ( [ [shift @{$arr}, shift @{$dep}, my $t=1] ] );
+  my @plat;
   OUTER: foreach my $st (@arr) {
     foreach(@plat) {
       next unless $st gt $_->[-1][1];
@@ -51,7 +51,7 @@ sub bump_platform_keep_trains {
     }
     push @plat, [ [ $st, (shift @dep), ++$t ] ];
   }
-  print Dumper( \@plat );
+  say '  ',join '  ', map { "Train $_->[2]: $_->[0]-$_->[1]" } @{$_} foreach @plat;
   return scalar @plat;
 }
 
