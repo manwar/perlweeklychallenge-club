@@ -67,6 +67,7 @@ station, so we need minimum 3 platforms.
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [C](awk/ch-2.c)
+* [Lua](lua/ch-2.lua)
 * [Perl](perl/ch-2.pl)
 
 ### Blog
