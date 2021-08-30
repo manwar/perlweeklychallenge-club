@@ -2,9 +2,10 @@
    "chart" : {
       "type" : "column"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
    },
    "series" : [
@@ -42,6 +43,7 @@
          ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             2,
@@ -71,10 +73,10 @@
             3,
             21,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -104,10 +106,24 @@
             1,
             6,
             14
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 28] Last updated at 2021-08-30 12:00:38 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Steve Bresson",
@@ -139,21 +155,5 @@
          "Yet Ebreo",
          "Yozen Hernandez"
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 28] Last updated at 2021-08-30 01:54:19 GMT"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
    }
 }
