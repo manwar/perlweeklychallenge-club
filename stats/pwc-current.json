@@ -1,4 +1,9 @@
 {
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "series" : [
       {
          "data" : [
@@ -6,27 +11,41 @@
                "drilldown" : "James Smith",
                "name" : "James Smith",
                "y" : 3
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
             }
          ],
          "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 128"
       }
    ],
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 128"
+   },
    "legend" : {
       "enabled" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "chart" : {
+      "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2021-08-30 22:38:21 GMT"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -37,27 +56,27 @@
                   1
                ]
             ],
-            "id" : "James Smith"
+            "id" : "James Smith",
+            "name" : "James Smith"
+         },
+         {
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ]
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 128"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2021-08-30 22:23:28 GMT"
+   "xAxis" : {
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
