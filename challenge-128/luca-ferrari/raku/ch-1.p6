@@ -22,8 +22,7 @@ sub MAIN() {
         }
     }
 
-    say @zeroes;
-
+    
     my $rows = 0;
     my $cols = 0;
     my @sub-matrix;
@@ -42,7 +41,7 @@ sub MAIN() {
             }
 
             
-            $max = $rows * $cols if $rows * $cols > $max;
+            $max = $rows * $cols and @sub-matrix = () if $rows * $cols > $max;
             @sub-matrix.push: [ $rows * $cols, $current-row, $current-column, $current-row + $rows - 1, $current-column + $cols - 1 ] if $rows * $cols > 0 && $rows * $cols >= $max;
 
             
