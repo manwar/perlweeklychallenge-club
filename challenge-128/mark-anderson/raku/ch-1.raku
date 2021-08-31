@@ -9,7 +9,7 @@ is-deeply max-sub-matrix(<1 0 0 0 1 0>,
 
 is-deeply max-sub-matrix(<0 0 1 1>,
                          <0 0 0 1>,
-                         <0 0 1 0>), ['3 x 2',];
+                         <0 0 1 0>), ['3 x 2'];
 
 is-deeply max-sub-matrix(<1 0 1 0 1 0 1 0 1 0 0 1>,
                          <1 0 1 0 1 0 1 0 1 0 0 1>,
