@@ -5,7 +5,7 @@
 //
 
 //
-// Run as: node ch-1.js < input-file
+// Run as: node ch-2.js < input-file
 //
 
 let first_line = 1
