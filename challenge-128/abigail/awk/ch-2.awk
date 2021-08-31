@@ -37,10 +37,10 @@ END {
             }
         }
         else {
-            for (minute = 0; minute <= arrivals [i]; minute ++) {
+            for (minute = 0; minute <= departures [i]; minute ++) {
                 trains [minute] ++
             }
-            for (minute = departures [i]; minute < 24 * 60; minute ++) {
+            for (minute = arrivals [i]; minute < 24 * 60; minute ++) {
                 trains [minute] ++
             }
         }

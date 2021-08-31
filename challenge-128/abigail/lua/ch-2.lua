@@ -42,10 +42,10 @@ for i, arrival in ipairs (arrivals) do
             trains [i] = trains [i] + 1
         end
     else
-        for i = 0, arrival do
+        for i = 0, departure do
             trains [i] = trains [i] + 1
         end
-        for i = departures, 24 * 60 - 1 do
+        for i = arrival, 24 * 60 - 1 do
             trains [i] = trains [i] + 1
         end
     end
