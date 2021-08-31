@@ -10,8 +10,8 @@ is minimum-platforms(<10:20 11:00 11:10 12:20 16:20 19:00>,
 
 sub minimum-platforms($arrivals, $departures)
 {
-    my @queue;
     my $result;
+    my $platforms;
     my @arrivals   = $arrivals.sort;
     my @departures = $departures.sort;
 
@@ -19,14 +19,14 @@ sub minimum-platforms($arrivals, $departures)
     {
         if @arrivals.head lt @departures.head
         {
-            @queue.push: @arrivals.shift;
-            $result = max($result, +@queue);
+            @arrivals.shift;
+            $result = max $result, ++$platforms;
         }
 
         else 
         {
             @departures.shift;
-            @queue.shift;
+            $platforms--;
         }
     }
 
