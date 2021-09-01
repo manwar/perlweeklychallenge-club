@@ -1,74 +1,54 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 128",
          "data" : [
             {
-               "drilldown" : "James Smith",
-               "y" : 3,
-               "name" : "James Smith"
-            },
-            {
-               "drilldown" : "Luca Ferrari",
-               "y" : 4,
-               "name" : "Luca Ferrari"
-            },
-            {
-               "name" : "Mark Anderson",
                "y" : 2,
-               "drilldown" : "Mark Anderson"
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba"
             },
             {
-               "drilldown" : "Peter Campbell Smith",
+               "drilldown" : "James Smith",
+               "name" : "James Smith",
+               "y" : 3
+            },
+            {
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
+               "y" : 4
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
+               "y" : 2
+            },
+            {
                "y" : 1,
-               "name" : "Peter Campbell Smith"
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith"
             },
             {
+               "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
+               "y" : 4
             },
             {
-               "drilldown" : "Simon Green",
                "name" : "Simon Green",
+               "drilldown" : "Simon Green",
                "y" : 3
             },
             {
                "name" : "Stuart Little",
-               "y" : 4,
-               "drilldown" : "Stuart Little"
+               "drilldown" : "Stuart Little",
+               "y" : 4
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 128"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-08-31 15:51:33 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "type" : "category"
@@ -76,6 +56,17 @@
    "drilldown" : {
       "series" : [
          {
+            "name" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "E. Choroba"
+         },
+         {
+            "name" : "James Smith",
             "id" : "James Smith",
             "data" : [
                [
@@ -86,8 +77,7 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "James Smith"
+            ]
          },
          {
             "name" : "Luca Ferrari",
@@ -104,27 +94,26 @@
             "id" : "Luca Ferrari"
          },
          {
-            "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Mark Anderson"
+            "id" : "Mark Anderson"
          },
          {
+            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "name" : "Peter Campbell Smith",
             "id" : "Peter Campbell Smith"
          },
          {
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -135,11 +124,11 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West"
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          },
          {
             "id" : "Simon Green",
-            "name" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -149,10 +138,10 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Simon Green"
          },
          {
-            "id" : "Stuart Little",
             "data" : [
                [
                   "Perl",
@@ -163,11 +152,37 @@
                   2
                ]
             ],
+            "id" : "Stuart Little",
             "name" : "Stuart Little"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-09-01 09:00:49 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 128"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
