@@ -1,73 +1,98 @@
 {
    "series" : [
       {
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 128",
          "data" : [
             {
+               "name" : "E. Choroba",
                "y" : 2,
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
+               "drilldown" : "E. Choroba"
             },
             {
+               "name" : "Flavio Poletti",
+               "drilldown" : "Flavio Poletti",
+               "y" : 6
+            },
+            {
+               "y" : 3,
                "drilldown" : "James Smith",
-               "name" : "James Smith",
-               "y" : 3
+               "name" : "James Smith"
             },
             {
                "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 4
+               "y" : 4,
+               "drilldown" : "Luca Ferrari"
             },
             {
                "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson",
-               "y" : 2
+               "y" : 2,
+               "name" : "Mark Anderson"
             },
             {
-               "y" : 1,
                "name" : "Peter Campbell Smith",
+               "y" : 1,
                "drilldown" : "Peter Campbell Smith"
             },
             {
-               "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West",
-               "y" : 4
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
             },
             {
-               "name" : "Simon Green",
                "drilldown" : "Simon Green",
-               "y" : 3
+               "y" : 3,
+               "name" : "Simon Green"
             },
             {
-               "name" : "Stuart Little",
                "drilldown" : "Stuart Little",
-               "y" : 4
+               "y" : 4,
+               "name" : "Stuart Little"
             }
-         ]
+         ],
+         "name" : "The Weekly Challenge - 128",
+         "colorByPoint" : 1
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "name" : "E. Choroba",
             "id" : "E. Choroba"
          },
          {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "name" : "Flavio Poletti",
+            "id" : "Flavio Poletti"
+         },
+         {
             "name" : "James Smith",
-            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -77,9 +102,11 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "James Smith"
          },
          {
+            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari",
             "data" : [
                [
@@ -90,30 +117,30 @@
                   "Blog",
                   2
                ]
-            ],
-            "id" : "Luca Ferrari"
+            ]
          },
          {
-            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson"
+            "name" : "Mark Anderson"
          },
          {
+            "id" : "Peter Campbell Smith",
             "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "id" : "Peter Campbell Smith"
+            ]
          },
          {
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -124,7 +151,6 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West"
          },
          {
@@ -142,6 +168,7 @@
             "name" : "Simon Green"
          },
          {
+            "id" : "Stuart Little",
             "data" : [
                [
                   "Perl",
@@ -152,33 +179,29 @@
                   2
                ]
             ],
-            "id" : "Stuart Little",
             "name" : "Stuart Little"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2021-09-01 09:00:49 GMT"
-   },
    "title" : {
       "text" : "The Weekly Challenge - 128"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2021-09-01 09:05:23 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "yAxis" : {
       "title" : {
