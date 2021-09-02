@@ -68,7 +68,7 @@ sub max-sub-matrix(+@matrix)
         my @cols = ([(&)] @zero-indices[$first-row .. $last-row]).keys
                                                                  .sort
                                                                  .Array;
-        next unless @cols;
+        next unless @cols > 1;
         my $rows = $last-row - $first-row + 1;
 
         for consecutives(@cols) -> $cols
