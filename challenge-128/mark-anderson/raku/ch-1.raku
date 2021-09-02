@@ -1,15 +1,20 @@
 #!/usr/bin/env raku
 
 use Test;
-plan 3;
+plan 4;
 
 is-deeply max-sub-matrix(<1 0 0 0 1 0>,
                          <1 1 0 0 0 1>,
-                         <1 0 0 0 0 0>), ['2 x 3', '3 x 2'];
+                         <1 0 0 0 0 0>), 
+                         ['2 x 3 at rows 1..2 and cols 2..4', 
+                          '3 x 2 at rows 0..2 and cols 2..3'], 
+                         'Example 1';
 
 is-deeply max-sub-matrix(<0 0 1 1>,
                          <0 0 0 1>,
-                         <0 0 1 0>), ['3 x 2'];
+                         <0 0 1 0>), 
+                         ['3 x 2 at rows 0..2 and cols 0..1'], 
+                         'Example 2';
 
 is-deeply max-sub-matrix(<1 0 1 0 1 0 1 0 1 0 0 1>,
                          <1 0 1 0 1 0 1 0 1 0 0 1>,
@@ -22,31 +27,76 @@ is-deeply max-sub-matrix(<1 0 1 0 1 0 1 0 1 0 0 1>,
                          <1 0 1 0 1 0 1 0 1 0 0 1>,
                          <1 0 1 0 1 0 1 0 1 0 0 1>,
                          <1 0 1 0 1 0 1 0 1 0 0 0>,
-                         <1 0 0 0 0 0 0 0 1 0 1 0>), ['4 x 3', '6 x 2'];
+                         <1 0 0 0 0 0 0 0 1 0 1 0>), 
+                         ['4 x 3 at rows 2..5 and cols 1..3', 
+                          '6 x 2 at rows 5..10 and cols 9..10'],
+                          'Example 3';
 
-sub max-sub-matrix(+$matrix)
+is-deeply max-sub-matrix(
+    [0, 0, 0, 1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1],
+    [0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 1, 1, 1, 1, 0, 1, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 0, 1],
+    [1, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+    [0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 1],
+    [0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0],
+    [1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0],
+    [1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0],
+    [1, 0, 0, 1, 1, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+    [1, 1, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0],
+    [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
+    [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0],
+    [0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]), 
+                          ['2 x 9 at rows 13..14 and cols 0..8',
+                           '2 x 9 at rows 16..17 and cols 4..12'],
+                           'E Choroba\'s Matrix';
+
+sub max-sub-matrix(+@matrix)
 {
-    my %h;
     my %results;
 
-    for ^$matrix -> $i
-    {
-        for $matrix[$i].join ~~ m:g/00+/
-        {
-            %h{$i}.push: .from .. .pos-1;
-        }
-    }
+    my @zero-indices = @matrix.map({ .grep(0, :k) })>>.Array;
 
-    for (^$matrix).combinations: 2 -> ($head, $tail) 
+    for (^@matrix).combinations: 2 -> ($first-row, $last-row) 
     {
-        for [X] %h{$head .. $tail} -> @rows
+        my @cols = ([(&)] @zero-indices[$first-row .. $last-row]).keys.sort;
+        next unless @cols > 1;
+        my $rows = $last-row - $first-row + 1;
+
+        for consecutives(@cols) -> $cols
         {
-            my $cols = +([(&)] @rows);
-            my $rows = $tail - $head + 1;
-            my $area = $rows * $cols;
-            %results{"$rows x $cols"} = $area;
+            next unless $cols > 1;
+            my $k = "$rows x {+$cols} at rows "  ~
+                    "$first-row..$last-row and " ~
+                    "cols {$cols.head}..{$cols.tail}"; 
+
+            %results{$k} = $rows * $cols;
         }
     }
 
     %results.maxpairs>>.key.sort.Array;
+}
+
+sub consecutives(@cols)
+{
+    my $i;
+
+    my @consecutives = gather for (|@cols, Inf).rotor(2 => -1)
+    {
+        $i++;
+
+        if .head !== .tail - 1
+        {
+            take $i;
+            $i = 0;
+        }
+    }
+
+    @cols.rotor(@consecutives);
 }
