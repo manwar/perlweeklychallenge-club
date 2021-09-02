@@ -66,8 +66,8 @@ sub max-sub-matrix(+@matrix)
     for (^@matrix).combinations: 2 -> ($first-row, $last-row) 
     {
         my @cols = ([(&)] @zero-indices[$first-row .. $last-row]).keys
-                                                                 .sort
-                                                                 .Array;
+                                                                 .sort;
+
         next unless @cols > 1;
         my $rows = $last-row - $first-row + 1;
 
