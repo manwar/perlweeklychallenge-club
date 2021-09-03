@@ -2,14 +2,48 @@
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
+   "series" : [
+      {
+         "data" : [
+            [
+               "Blog",
+               1845
+            ],
+            [
+               "Perl",
+               6129
+            ],
+            [
+               "Raku",
+               3788
+            ]
+         ],
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "rotation" : -90,
+            "enabled" : "true",
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "y" : 10
+         },
+         "name" : "Contributions"
+      }
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : null
       },
-      "type" : "category"
+      "min" : 0
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-09-02 15:46:00 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
@@ -17,47 +51,13 @@
    "chart" : {
       "type" : "column"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               1805
-            ],
-            [
-               "Perl",
-               5996
-            ],
-            [
-               "Raku",
-               3735
-            ]
-         ],
-         "dataLabels" : {
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "enabled" : "true"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
-      }
-   ],
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-08-16 23:25:19 GMT"
+      },
+      "type" : "category"
    }
 }

@@ -43,7 +43,7 @@ sub get_triples {
 ```
 # Task 2 - Binary Tree Diameter
 
-*** Write a script to find the diameter of the given binary tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. It doesn’t have to pass through the root.***
+***Write a script to find the diameter of the given binary tree. The diameter of a binary tree is the length of the longest path between any two nodes in a tree. It doesn’t have to pass through the root.***
 
 ## Solution
 

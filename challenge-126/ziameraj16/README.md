@@ -1,34 +1,19 @@
-# Happy Women Day
+# Count Numbers
 ## Java Solution
-This solution requires Java 15 or above version.
 
 To compile the code run
 ```java
-javac HappyWomenDay.java
+javac CountNumbers.java
 ```
 To run
 ```java
-java HappyWomenDay
+java CountNumbers
 ```
 ### Example
 ```bash
-/perlweeklychallenge-club/challenge-124/ziameraj16/java$ javac HappyWomenDay.java
-/perlweeklychallenge-club/challenge-124/ziameraj16/java$ java HappyWomenDay
-    ^^^^^
-   ^     ^
-  ^       ^
- ^         ^
- ^         ^
- ^         ^
- ^         ^
- ^         ^
-  ^       ^
-   ^     ^
-    ^^^^^
-      ^
-      ^
-      ^
-    ^^^^^
-      ^
-      ^
+/perlweeklychallenge-club/challenge-126/ziameraj16/java$ javac CountNumbers.java
+/perlweeklychallenge-club/challenge-126/ziameraj16/java$ java CountNumbers
+Enter the number
+15
+8
 ```
