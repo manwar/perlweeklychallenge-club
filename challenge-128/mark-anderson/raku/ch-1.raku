@@ -8,13 +8,13 @@ is-deeply max-sub-matrix(<1 0 0 0 1 0>,
                          <1 0 0 0 0 0>), 
                          ['2 x 3 at rows 1..2 and cols 2..4', 
                           '3 x 2 at rows 0..2 and cols 2..3'], 
-                         'Example 1';
+                          'Example 1';
 
 is-deeply max-sub-matrix(<0 0 1 1>,
                          <0 0 0 1>,
                          <0 0 1 0>), 
                          ['3 x 2 at rows 0..2 and cols 0..1'], 
-                         'Example 2';
+                          'Example 2';
 
 is-deeply max-sub-matrix(<1 0 1 0 1 0 1 0 1 0 0 1>,
                          <1 0 1 0 1 0 1 0 1 0 0 1>,
@@ -52,7 +52,7 @@ is-deeply max-sub-matrix(
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0],
     [1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 0, 0],
     [0, 0, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]), 
+    [1, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0]),
                           ['2 x 9 at rows 13..14 and cols 0..8',
                            '2 x 9 at rows 16..17 and cols 4..12'],
                            'E Choroba\'s Matrix';
