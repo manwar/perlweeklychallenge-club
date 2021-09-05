@@ -34,7 +34,7 @@ sub minimum-platforms($arrivals, $departures)
 
     while @arrivals
     {
-        if @arrivals.head < @departures.head
+        if @arrivals.head <= @departures.head
         {
             @arrivals.shift;
             $result = max $result, ++$platforms;
@@ -55,7 +55,7 @@ sub minimum-platforms($arrivals, $departures)
         has Str $.time;
     }
 
-    multi infix:« < »(dt $a, dt $b) 
+    multi infix:<< <= >>(dt $a, dt $b) 
     {
         my $r = $a.day <=> $b.day;
 
