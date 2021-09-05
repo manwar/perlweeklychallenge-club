@@ -47,7 +47,7 @@ use List::Util qw [max];
 # Assumptions:
 #   - If train A departures at time X, while train B arrives at time X,
 #     the cannot share the same platform.
-#   - There is minimum distance between trains; that is, if train A
+#   - There is no minimum distance between trains; that is, if train A
 #     leaves a platform at time X, train B can arrive at the platform
 #     at time X + 1.
 #   - No two trains can share a platform. Either the platforms are 
