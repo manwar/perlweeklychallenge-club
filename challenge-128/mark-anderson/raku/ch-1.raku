@@ -63,7 +63,7 @@ sub max-sub-matrix(+@matrix)
 
     my @zero-indices = @matrix.map({ .grep(0, :k) })>>.Array;
 
-    for (^@matrix).combinations: 2 -> ($first-row, $last-row) 
+    for (^@zero-indices).combinations: 2 -> ($first-row, $last-row) 
     {
         my @cols = ([(&)] @zero-indices[$first-row .. $last-row]).keys.sort;
         next unless @cols > 1;
