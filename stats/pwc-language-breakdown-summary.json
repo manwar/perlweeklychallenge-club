@@ -1,15 +1,46 @@
 {
-   "subtitle" : {
-      "text" : "Last updated at 2021-09-05 22:37:04 GMT"
-   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
    },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "series" : [
+      {
+         "data" : [
+            [
+               "Blog",
+               1851
+            ],
+            [
+               "Perl",
+               6144
+            ],
+            [
+               "Raku",
+               3793
+            ]
+         ],
+         "dataLabels" : {
+            "enabled" : "true",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "rotation" : -90,
+            "format" : "{point.y:.0f}"
+         },
+         "name" : "Contributions"
+      }
+   ],
+   "subtitle" : {
+      "text" : "Last updated at 2021-09-05 23:00:51 GMT"
+   },
    "legend" : {
       "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
    },
    "yAxis" : {
       "min" : 0,
@@ -18,46 +49,15 @@
       }
    },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontSize" : "13px",
             "fontFamily" : "Verdana, sans-serif"
          }
-      },
-      "type" : "category"
-   },
-   "series" : [
-      {
-         "dataLabels" : {
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "rotation" : -90,
-            "align" : "right",
-            "color" : "#FFFFFF"
-         },
-         "data" : [
-            [
-               "Blog",
-               1851
-            ],
-            [
-               "Perl",
-               6142
-            ],
-            [
-               "Raku",
-               3793
-            ]
-         ],
-         "name" : "Contributions"
       }
-   ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
