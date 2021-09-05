@@ -70,6 +70,7 @@ station, so we need minimum 3 platforms.
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
 
 ### Blog
 [Perl Weekly Challenge 128: Minimum Platforms][blog2]
