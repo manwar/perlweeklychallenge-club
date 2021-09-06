@@ -1,0 +1,60 @@
+Task 1: "Maximum Sub-Matrix
+
+You are given m x n binary matrix having 0 or 1 elements.
+
+Write a script to find out maximum sub-matrix having only 0.
+
+Example 1:
+
+Input : [ 1 0 0 0 1 0 ]
+        [ 1 1 0 0 0 1 ]
+        [ 1 0 0 0 0 0 ]
+
+Output: [ 0 0 0 ]
+        [ 0 0 0 ]
+
+Example 2:
+
+Input : [ 0 0 1 1 ]
+        [ 0 0 0 1 ]
+        [ 0 0 1 0 ]
+
+Output: [ 0 0 ]
+        [ 0 0 ]
+        [ 0 0 ]
+"
+
+My notes: dull but easy.  No opportunity for cleverness.
+
+
+Task 2: "Minimum Platforms
+
+You are given two arrays of arrival and departure times of trains at a
+railway station.
+
+Write a script to find out the minimum number of platforms needed so
+that no train needs to wait.
+
+Example 1:
+
+Input: @arrivals   = (11:20, 14:30)
+       @departures = (11:50, 15:00)
+Output: 1
+
+The 1st arrival of train is at 11:20 and this is the only train at the station,
+so you need 1 platform.  Before the second arrival at 14:30, the first train
+left the station at 11:50, so you still need only 1 platform.
+
+Example 2:
+
+Input: @arrivals   = (10:20, 11:00, 11:10, 12:20, 16:20, 19:00)
+       @departures = (10:30, 13:20, 12:40, 12:50, 20:20, 21:20)
+Output: 3
+
+Between 12:20 and 12:40, there would be at least 3 trains at the station,
+so we need minimum 3 platforms."
+
+My notes: nice problem - looks like a tiny discrete event simulation.
+Build a DIARY: an array of (time, type) pairs - where type == 'A' for
+an arrival, or type == 'D' for a departure.  Then walk the diary,
+simulating "train arrival" and "train departure" events.
