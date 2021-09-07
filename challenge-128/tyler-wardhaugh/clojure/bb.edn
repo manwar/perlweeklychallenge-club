@@ -71,7 +71,9 @@
           :task (run-task :t2 *command-line-args*)}
 
   task-2-bb {:doc "Run Task 2 (via Babashka)"
-             :task (run-task-bb :t2 *command-line-args*)}
+             :task (binding [*out* *err*]
+                      (println "error: can't run Task 2 via Babashka because it depends on some unsupported functions.")
+                      (System/exit 1))}
 
   both {:doc "Run both tasks (via clojure)"
         :task (do
