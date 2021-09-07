@@ -1,36 +1,38 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "title" : {
       "text" : "The Weekly Challenge - 129"
    },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "series" : [
       {
+         "name" : "The Weekly Challenge - 129",
          "data" : [
             {
-               "y" : 2,
                "drilldown" : "Abigail",
+               "y" : 2,
                "name" : "Abigail"
             },
             {
-               "y" : 4,
                "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari"
+               "name" : "Luca Ferrari",
+               "y" : 4
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "y" : 3,
+               "name" : "Roger Bell_West"
             }
          ],
-         "name" : "The Weekly Challenge - 129",
          "colorByPoint" : 1
       }
    ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-09-07 01:47:44 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
@@ -40,28 +42,26 @@
          }
       }
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2021-09-07 01:52:51 GMT"
    },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Abigail",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Abigail",
             "name" : "Abigail"
          },
          {
-            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -72,11 +72,30 @@
                   2
                ]
             ],
-            "name" : "Luca Ferrari"
+            "id" : "Luca Ferrari"
+         },
+         {
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "id" : "Roger Bell_West"
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
