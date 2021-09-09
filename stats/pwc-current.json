@@ -1,11 +1,57 @@
 {
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-09-09 06:48:35 GMT"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 129",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Abigail",
+               "drilldown" : "Abigail"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
+            {
+               "y" : 2,
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "y" : 6,
+               "drilldown" : "Flavio Poletti",
+               "name" : "Flavio Poletti"
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
+            },
+            {
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
+               "y" : 3
+            },
+            {
+               "y" : 3,
+               "name" : "W. Luis Mochan",
+               "drilldown" : "W. Luis Mochan"
+            }
+         ]
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 129"
    },
    "chart" : {
       "type" : "column"
@@ -15,11 +61,31 @@
          "text" : "Total Solutions"
       }
    },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Abigail",
             "name" : "Abigail",
+            "id" : "Abigail",
             "data" : [
                [
                   "Perl",
@@ -28,7 +94,6 @@
             ]
          },
          {
-            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -39,14 +104,33 @@
                   1
                ]
             ],
+            "id" : "Dave Jacoby",
             "name" : "Dave Jacoby"
          },
          {
-            "id" : "E. Choroba",
             "name" : "E. Choroba",
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Flavio Poletti",
+            "id" : "Flavio Poletti",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
                   2
                ]
             ]
@@ -62,18 +146,18 @@
                   2
                ]
             ],
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari"
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
          },
          {
-            "id" : "Peter Campbell Smith",
+            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "name" : "Peter Campbell Smith"
+            "id" : "Peter Campbell Smith"
          },
          {
             "name" : "Roger Bell_West",
@@ -90,7 +174,7 @@
             "id" : "Roger Bell_West"
          },
          {
-            "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -101,69 +185,8 @@
                   1
                ]
             ],
-            "id" : "W. Luis Mochan"
+            "name" : "W. Luis Mochan"
          }
       ]
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "drilldown" : "Abigail",
-               "name" : "Abigail",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Dave Jacoby",
-               "y" : 3,
-               "name" : "Dave Jacoby"
-            },
-            {
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba",
-               "y" : 2
-            },
-            {
-               "name" : "Luca Ferrari",
-               "y" : 4,
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "y" : 3,
-               "name" : "Roger Bell_West"
-            },
-            {
-               "drilldown" : "W. Luis Mochan",
-               "name" : "W. Luis Mochan",
-               "y" : 3
-            }
-         ],
-         "name" : "The Weekly Challenge - 129"
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-09-08 19:13:49 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 129"
-   },
-   "xAxis" : {
-      "type" : "category"
    }
 }
