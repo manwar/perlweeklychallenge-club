@@ -130,7 +130,7 @@ sub bump_platform {
 }
 ```
 
-**Notes:
+**Notes:**
 
 We can also keep information about which trains are on by re-writing what is stored in `@plat` rather than storing the last departure time - we can store the arrival/departure time of trains on each platform...
  
