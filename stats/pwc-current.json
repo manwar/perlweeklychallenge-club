@@ -1,19 +1,86 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
       }
    },
-   "chart" : {
-      "type" : "column"
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 129",
+         "data" : [
+            {
+               "y" : 4,
+               "drilldown" : "Abigail",
+               "name" : "Abigail"
+            },
+            {
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
+               "y" : 3
+            },
+            {
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Flavio Poletti",
+               "name" : "Flavio Poletti",
+               "y" : 6
+            },
+            {
+               "drilldown" : "James Smith",
+               "name" : "James Smith",
+               "y" : 2
+            },
+            {
+               "name" : "Jorg Sommrey",
+               "drilldown" : "Jorg Sommrey",
+               "y" : 2
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
+            },
+            {
+               "drilldown" : "Peter Campbell Smith",
+               "name" : "Peter Campbell Smith",
+               "y" : 1
+            },
+            {
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
+               "name" : "W. Luis Mochan",
+               "drilldown" : "W. Luis Mochan",
+               "y" : 3
+            }
+         ]
+      }
+   ],
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Abigail",
             "data" : [
                [
                   "Perl",
@@ -24,10 +91,10 @@
                   2
                ]
             ],
-            "name" : "Abigail",
             "id" : "Abigail"
          },
          {
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -38,21 +105,19 @@
                   1
                ]
             ],
-            "id" : "Dave Jacoby",
-            "name" : "Dave Jacoby"
+            "id" : "Dave Jacoby"
          },
          {
-            "name" : "E. Choroba",
             "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "E. Choroba"
          },
          {
-            "id" : "Flavio Poletti",
             "name" : "Flavio Poletti",
             "data" : [
                [
@@ -67,7 +132,18 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "id" : "Flavio Poletti"
+         },
+         {
+            "name" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "James Smith"
          },
          {
             "data" : [
@@ -80,8 +156,6 @@
             "id" : "Jorg Sommrey"
          },
          {
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -91,7 +165,9 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
          },
          {
             "data" : [
@@ -118,8 +194,8 @@
                   1
                ]
             ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          },
          {
             "data" : [
@@ -137,79 +213,18 @@
          }
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 129"
+   "chart" : {
+      "type" : "column"
    },
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2021-09-10 22:17:59 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 129",
-         "data" : [
-            {
-               "drilldown" : "Abigail",
-               "name" : "Abigail",
-               "y" : 4
-            },
-            {
-               "name" : "Dave Jacoby",
-               "drilldown" : "Dave Jacoby",
-               "y" : 3
-            },
-            {
-               "y" : 2,
-               "name" : "E. Choroba",
-               "drilldown" : "E. Choroba"
-            },
-            {
-               "y" : 6,
-               "name" : "Flavio Poletti",
-               "drilldown" : "Flavio Poletti"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Jorg Sommrey",
-               "name" : "Jorg Sommrey"
-            },
-            {
-               "y" : 4,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith",
-               "y" : 1
-            },
-            {
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
-            },
-            {
-               "drilldown" : "W. Luis Mochan",
-               "name" : "W. Luis Mochan",
-               "y" : 3
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2021-09-10 15:50:40 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge - 129"
    }
 }
