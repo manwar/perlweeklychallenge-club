@@ -54,7 +54,7 @@ class LinkedList {
 
 
     method append_element { 
-        # an O(N) operation, seldem used
+        # an O(N) operation, seldom used
         my $dgt = $_[0];
         my $p = $head_node;
         while (defined($p->next)) {
