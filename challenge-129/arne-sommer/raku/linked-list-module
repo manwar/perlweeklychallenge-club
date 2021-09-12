@@ -1,0 +1,16 @@
+#! /usr/bin/env raku
+
+use lib "lib";
+use LinkedList;
+
+unit sub MAIN ($values = "1 2 3 4", :z(:$zero));
+
+my @values = $values.words;
+
+$zero
+  ?? ( die "Must be 0..9 only" unless all(@values) ~~ /^<[0..9]>$/ )
+  !! ( die "Must be 1..9 only" unless all(@values) ~~ /^<[1..9]>$/ );
+
+my $ll = LinkedList.add-elems(@values>>.Int);
+
+say $ll.nice;
