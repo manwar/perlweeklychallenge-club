@@ -38,48 +38,16 @@ sub find_odd {
 
 ## Solution
 
-For a given tree to be a Binary Search Tree:
+If we flatten the tree in the order - left-subtree - value - right-subtree. We just need to check the
+values are in ascending order... If any isn't larger than it's previous value we know it isn't a BST.
 
-* Any sub-tree is also a Binary Search Tree;
-* The maximum value of any left child is less than the value of the node;
-* The minimum value of any right child is greater than the value of the node;
-
-So we have a tree is not a BST IF
-
-* It has a left child   && left sub tree is not a BST
-* It has a left child   && max( left  sub tree ) > node value
-
-* It has a right child  && right sub tree is not a BST
-* It has a right child  && min( right sub tree ) < node value
-
-We combine that into the is_bst function below:
+From the BinaryTree class we use "in-order" ordering to flatten the tree... Then we loop through the
+values, checking the value against the previous value.
 
 ```perl
 sub is_bst {
-  my $tr = shift;
-  return ( $tr->has_left  && ( max($tr->left)  > $tr->value || ! is_bst( $tr->left ) ) )
-      || ( $tr->has_right && ( min($tr->right) < $tr->value || ! is_bst( $tr->right) ) )
-       ? 0 : 1;
-}
-```
-
-The two supporting functions `max` & `min` are supplied below. Note they are
-very similar just switching the nested call and the inequalities.
-
-```perl
-sub max {
-  my $tr = shift;
-  my $m = $tr->value;
-  if( $tr->has_left  ) { my $t = max( $tr->left );  $m = $t if $t > $m; }
-  if( $tr->has_right ) { my $t = max( $tr->right ); $m = $t if $t > $m; }
-  return $m;
-}
-
-sub min {
-  my $tr = shift;
-  my $m = $tr->value;
-  if( $tr->has_left  ) { my $t = min( $tr->left  ); $m = $t if $t < $m; }
-  if( $tr->has_right ) { my $t = min( $tr->right ); $m = $t if $t < $m; }
-  return $m;
+  my( $p, @values ) = shift->flatten( sub { return $_[0]; }, 'in' );
+  ( $values[0] < $p ) ? ( return 0 ) : ( $p = shift @values ) while @values;
+  return 1;
 }
 ```
