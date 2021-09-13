@@ -1,19 +1,19 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "enabled" : "true",
+            "rotation" : -90
+         },
          "data" : [
             [
                "Blog",
@@ -21,41 +21,41 @@
             ],
             [
                "Perl",
-               6174
+               6176
             ],
             [
                "Raku",
                3806
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "y" : 10,
-            "enabled" : "true"
-         }
+         ]
       }
    ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
    "subtitle" : {
-      "text" : "Last updated at 2021-09-13 22:55:41 GMT"
+      "text" : "Last updated at 2021-09-13 22:59:54 GMT"
    },
-   "legend" : {
-      "enabled" : "false"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "chart" : {
       "type" : "column"
