@@ -28,40 +28,26 @@ is( is_bst($_->[0]), $_->[1] ) foreach @TESTS;
 done_testing();
 
 sub is_bst {
-  my $tree = shift;
-  return 1 unless $tree->has_left || $tree->has_right; ## Trivial solution no children...
-  return 0 if $tree->has_left && ( max_value($tree->left)> $tree->value ||
-                                         ! is_bst( $tree->left) );
-  return 0 if $tree->has_right && ( min_value($tree->right)<$tree->value ||
-                                         ! is_bst( $tree->right) );
-  return 1;
+  my $tr = shift;
+  return ( $tr->has_left  && ( max($tr->left)  > $tr->value || ! is_bst( $tr->left ) ) )
+      || ( $tr->has_right && ( min($tr->right) < $tr->value || ! is_bst( $tr->right) ) )
+       ? 0 : 1;
 }
 
-sub max_value {
-  my $tree = shift;
-  my $max = $tree->value;
-  if( $tree->has_left ) {
-    my $t = max_value( $tree->left );
-    $max = $t if $t > $max;
-  }
-  if( $tree->has_right ) {
-    my $t = max_value( $tree->right );
-    $max = $t if $t > $max;
-  }
-  return $max;
+sub max {
+  my $tr = shift;
+  my $m = $tr->value;
+  if( $tr->has_left  ) { my $t = max( $tr->left );  $m = $t if $t > $m; }
+  if( $tr->has_right ) { my $t = max( $tr->right ); $m = $t if $t > $m; }
+  return $m;
 }
 
-sub min_value {
-  my $tree = shift;
-  my $min = $tree->value;
-  if( $tree->has_left ) {
-    my $t = min_value( $tree->left );
-    $min = $t if $t < $min;
-  }
-  if( $tree->has_right ) {
-    my $t = min_value( $tree->right );
-    $min = $t if $t < $min;
-  }
-  return $min;
+sub min {
+  my $tr = shift;
+  my $m = $tr->value;
+  if( $tr->has_left  ) { my $t = min( $tr->left  ); $m = $t if $t < $m; }
+  if( $tr->has_right ) { my $t = min( $tr->right ); $m = $t if $t < $m; }
+  return $m;
 }
+
 
