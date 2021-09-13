@@ -19,7 +19,7 @@ done_testing();
 
 sub find_odd {
   my %x;
-  $x{$_}++ foreach @{$_[0]};
-  return ( grep { $x{$_}&1 } keys %x )[0];
+  $x{$_}^=1 foreach @{$_[0]};
+  return ( grep { $x{$_} } keys %x )[0];
 }
 
