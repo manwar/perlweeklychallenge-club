@@ -1,4 +1,7 @@
 {
+   "legend" : {
+      "enabled" : 0
+   },
    "chart" : {
       "type" : "column"
    },
@@ -7,14 +10,9 @@
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1
    },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2021-09-13 22:42:32 GMT"
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "James Smith",
-            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -24,18 +22,57 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "James Smith",
+            "name" : "James Smith"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 130",
+         "data" : [
+            {
+               "drilldown" : "James Smith",
+               "name" : "James Smith",
+               "y" : 3
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
+               "y" : 4
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
    "xAxis" : {
       "type" : "category"
    },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2021-09-13 22:50:10 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge - 130"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "plotOptions" : {
       "series" : {
@@ -44,24 +81,6 @@
             "format" : "{point.y}",
             "enabled" : 1
          }
-      }
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "James Smith",
-               "y" : 3,
-               "drilldown" : "James Smith"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 130"
-      }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
       }
    }
 }
