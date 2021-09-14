@@ -1,26 +1,42 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 130",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Dave Jacoby",
+               "drilldown" : "Dave Jacoby",
+               "y" : 2
+            },
+            {
+               "name" : "James Smith",
+               "y" : 3,
+               "drilldown" : "James Smith"
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "y" : 4,
+               "name" : "Luca Ferrari"
+            },
+            {
+               "name" : "Olivier Delouya",
+               "y" : 1,
+               "drilldown" : "Olivier Delouya"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
+            }
+         ]
       }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
+   ],
    "drilldown" : {
       "series" : [
          {
@@ -34,7 +50,6 @@
             "id" : "Dave Jacoby"
          },
          {
-            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -45,6 +60,7 @@
                   1
                ]
             ],
+            "id" : "James Smith",
             "name" : "James Smith"
          },
          {
@@ -62,7 +78,16 @@
             "name" : "Luca Ferrari"
          },
          {
-            "id" : "Roger Bell_West",
+            "name" : "Olivier Delouya",
+            "id" : "Olivier Delouya",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -73,63 +98,53 @@
                   2
                ]
             ],
+            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West"
          },
          {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            ]
          }
       ]
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "xAxis" : {
       "type" : "category"
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2021-09-13 23:04:54 GMT"
+      "text" : "[Champions: 6] Last updated at 2021-09-14 11:27:26 GMT"
    },
    "chart" : {
       "type" : "column"
    },
+   "legend" : {
+      "enabled" : 0
+   },
    "title" : {
       "text" : "The Weekly Challenge - 130"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Dave Jacoby",
-               "y" : 2,
-               "name" : "Dave Jacoby"
-            },
-            {
-               "name" : "James Smith",
-               "y" : 3,
-               "drilldown" : "James Smith"
-            },
-            {
-               "name" : "Luca Ferrari",
-               "y" : 4,
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 4
-            },
-            {
-               "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
-            }
-         ],
-         "name" : "The Weekly Challenge - 130",
-         "colorByPoint" : 1
-      }
-   ]
+   }
 }
