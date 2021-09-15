@@ -1,18 +1,18 @@
 {
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 130",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
                "y" : 3,
-               "name" : "Dave Jacoby"
+               "drilldown" : "Dave Jacoby"
             },
             {
+               "drilldown" : "Flavio Poletti",
                "y" : 6,
-               "name" : "Flavio Poletti",
-               "drilldown" : "Flavio Poletti"
+               "name" : "Flavio Poletti"
             },
             {
                "drilldown" : "James Smith",
@@ -20,53 +20,38 @@
                "name" : "James Smith"
             },
             {
-               "drilldown" : "Luca Ferrari",
                "name" : "Luca Ferrari",
-               "y" : 4
+               "y" : 4,
+               "drilldown" : "Luca Ferrari"
             },
             {
                "y" : 1,
-               "name" : "Olivier Delouya",
-               "drilldown" : "Olivier Delouya"
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
             },
             {
-               "name" : "Roger Bell_West",
+               "name" : "Olivier Delouya",
+               "drilldown" : "Olivier Delouya",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Roger Bell_West",
                "y" : 4,
-               "drilldown" : "Roger Bell_West"
+               "name" : "Roger Bell_West"
             },
             {
                "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
             }
          ]
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 130"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-09-15 08:52:45 GMT"
-   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -76,9 +61,7 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby"
+            ]
          },
          {
             "data" : [
@@ -95,8 +78,8 @@
                   2
                ]
             ],
-            "id" : "Flavio Poletti",
-            "name" : "Flavio Poletti"
+            "name" : "Flavio Poletti",
+            "id" : "Flavio Poletti"
          },
          {
             "data" : [
@@ -113,8 +96,8 @@
             "id" : "James Smith"
          },
          {
-            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -127,16 +110,28 @@
             ]
          },
          {
-            "name" : "Olivier Delouya",
-            "id" : "Olivier Delouya",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
+         },
+         {
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "name" : "Olivier Delouya",
+            "id" : "Olivier Delouya"
          },
          {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -146,9 +141,7 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            ]
          },
          {
             "name" : "Simon Proctor",
@@ -162,16 +155,38 @@
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "The Weekly Challenge - 130"
    },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         },
-         "borderWidth" : 0
+         }
       }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-09-15 09:12:14 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
