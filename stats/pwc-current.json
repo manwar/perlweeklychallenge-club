@@ -6,69 +6,97 @@
          "data" : [
             {
                "drilldown" : "Dave Jacoby",
-               "name" : "Dave Jacoby",
-               "y" : 3
+               "y" : 3,
+               "name" : "Dave Jacoby"
             },
             {
-               "y" : 3,
+               "y" : 6,
+               "name" : "Flavio Poletti",
+               "drilldown" : "Flavio Poletti"
+            },
+            {
                "drilldown" : "James Smith",
+               "y" : 3,
                "name" : "James Smith"
             },
             {
-               "name" : "Luca Ferrari",
                "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
                "y" : 4
             },
             {
-               "drilldown" : "Olivier Delouya",
+               "y" : 1,
                "name" : "Olivier Delouya",
-               "y" : 1
+               "drilldown" : "Olivier Delouya"
             },
             {
-               "y" : 4,
                "name" : "Roger Bell_West",
+               "y" : 4,
                "drilldown" : "Roger Bell_West"
             },
             {
+               "y" : 2,
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 2
+               "drilldown" : "Simon Proctor"
             }
          ]
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge - 130"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "The Weekly Challenge - 130"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "legend" : {
       "enabled" : 0
    },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
    "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2021-09-14 20:37:56 GMT"
+      "text" : "[Champions: 7] Last updated at 2021-09-15 08:52:45 GMT"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
             "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby"
+         },
+         {
             "data" : [
                [
                   "Perl",
                   2
                ],
                [
+                  "Raku",
+                  2
+               ],
+               [
                   "Blog",
-                  1
+                  2
                ]
-            ]
+            ],
+            "id" : "Flavio Poletti",
+            "name" : "Flavio Poletti"
          },
          {
             "data" : [
@@ -81,12 +109,12 @@
                   1
                ]
             ],
-            "id" : "James Smith",
-            "name" : "James Smith"
+            "name" : "James Smith",
+            "id" : "James Smith"
          },
          {
-            "name" : "Luca Ferrari",
             "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -99,14 +127,14 @@
             ]
          },
          {
+            "name" : "Olivier Delouya",
+            "id" : "Olivier Delouya",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "id" : "Olivier Delouya",
-            "name" : "Olivier Delouya"
+            ]
          },
          {
             "data" : [
@@ -119,12 +147,12 @@
                   2
                ]
             ],
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West"
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Proctor",
             "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
@@ -134,21 +162,16 @@
          }
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         }
+         },
+         "borderWidth" : 0
       }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "xAxis" : {
-      "type" : "category"
    }
 }
