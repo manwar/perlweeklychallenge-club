@@ -1,24 +1,49 @@
 {
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2021-09-15 17:05:24 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge - 130"
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "series" : [
       {
-         "name" : "The Weekly Challenge - 130",
-         "colorByPoint" : 1,
          "data" : [
             {
                "drilldown" : "Dave Jacoby",
-               "y" : 3,
-               "name" : "Dave Jacoby"
+               "name" : "Dave Jacoby",
+               "y" : 3
             },
             {
-               "drilldown" : "Flavio Poletti",
+               "drilldown" : "E. Choroba",
+               "y" : 2,
+               "name" : "E. Choroba"
+            },
+            {
+               "y" : 6,
                "name" : "Flavio Poletti",
-               "y" : 6
+               "drilldown" : "Flavio Poletti"
             },
             {
                "drilldown" : "James Smith",
@@ -36,39 +61,35 @@
                "y" : 1
             },
             {
-               "drilldown" : "Olivier Delouya",
+               "name" : "Olivier Delouya",
                "y" : 1,
-               "name" : "Olivier Delouya"
+               "drilldown" : "Olivier Delouya"
             },
             {
-               "y" : 1,
+               "drilldown" : "Rich Snyder",
                "name" : "Rich Snyder",
-               "drilldown" : "Rich Snyder"
+               "y" : 1
             },
             {
-               "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West",
-               "y" : 4
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
             },
             {
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor",
-               "y" : 2
+               "y" : 2,
+               "name" : "Simon Proctor"
             },
             {
-               "name" : "Ulrich Rieke",
+               "drilldown" : "Ulrich Rieke",
                "y" : 2,
-               "drilldown" : "Ulrich Rieke"
+               "name" : "Ulrich Rieke"
             }
-         ]
+         ],
+         "name" : "The Weekly Challenge - 130",
+         "colorByPoint" : 1
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2021-09-15 14:48:53 GMT"
-   },
    "drilldown" : {
       "series" : [
          {
@@ -82,12 +103,20 @@
                   1
                ]
             ],
-            "id" : "Dave Jacoby",
-            "name" : "Dave Jacoby"
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby"
          },
          {
-            "id" : "Flavio Poletti",
-            "name" : "Flavio Poletti",
+            "id" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "E. Choroba"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -101,11 +130,13 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Flavio Poletti",
+            "id" : "Flavio Poletti"
          },
          {
-            "name" : "James Smith",
             "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -119,7 +150,6 @@
          },
          {
             "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -129,27 +159,28 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Luca Ferrari"
          },
          {
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "id" : "Mark Anderson"
          },
          {
+            "id" : "Olivier Delouya",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "name" : "Olivier Delouya",
-            "id" : "Olivier Delouya"
+            "name" : "Olivier Delouya"
          },
          {
             "id" : "Rich Snyder",
@@ -162,6 +193,7 @@
             ]
          },
          {
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -172,22 +204,19 @@
                   2
                ]
             ],
-            "name" : "Roger Bell_West",
             "id" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Proctor",
             "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
          },
          {
-            "name" : "Ulrich Rieke",
-            "id" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -197,30 +226,16 @@
                   "Raku",
                   1
                ]
-            ]
+            ],
+            "name" : "Ulrich Rieke",
+            "id" : "Ulrich Rieke"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
+   "chart" : {
+      "type" : "column"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "xAxis" : {
+      "type" : "category"
    }
 }
