@@ -7,7 +7,11 @@
 (def DEFAULT-INPUT [[2 5 4 4 5 5 2]])
 
 (defn odd-one-out
-  [coll])
+  [coll]
+  (-> (fn [acc v]
+        (if (acc v) (disj acc v) (conj acc v)))
+      (reduce #{} coll)
+      first))
 
 (defn -main
   "Run Task 1 with a given input N, defaulting to the first example from the
