@@ -2,18 +2,8 @@
    "chart" : {
       "type" : "column"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-09-19 16:13:52 GMT"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -45,9 +35,11 @@
             0,
             4,
             48
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -79,8 +71,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -118,13 +109,26 @@
          "name" : "Blog"
       }
    ],
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-09-19 16:19:32 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "xAxis" : {
       "categories" : [
@@ -159,9 +163,5 @@
          "Bob Kleemann",
          "Bob Lied"
       ]
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
