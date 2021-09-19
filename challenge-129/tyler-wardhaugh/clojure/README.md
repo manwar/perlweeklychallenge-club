@@ -27,9 +27,9 @@ Run Task #1 with input
 
 Run Task #2 with input:
 
-    $ clojure -M -m tw.weekly.c128.t2 A D 
+    $ clojure -M -m tw.weekly.c128.t2 L1 L2
     # ... or ...
-    $ bb run task-2 A D
+    $ bb run task-2 L1 L2
 
 View available tasks Babashka can run:
 
