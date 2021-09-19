@@ -1,3 +1,3 @@
-# The Weekly Challenge 129
+# The Weekly Challenge 130
 
-Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-129-33kn)
+Solution by Simon Green.
