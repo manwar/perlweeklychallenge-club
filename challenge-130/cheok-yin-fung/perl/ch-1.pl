@@ -13,9 +13,30 @@ my @N = @ARGV;
 
 
 say "@{oddities(@N)}";
-say the_only_odd(@N);
+say eccentric_odd(@N);
 
-sub the_only_odd {
+
+
+sub oddities {
+    # return all the numbers appear odd number of times
+    # inspired by Week 046 solutions
+    # https://theweeklychallenge.org/blog/review-challenge-046/
+    my @ans;
+    my %ap;
+    for (@_) {
+        $ap{$_}++;
+        $ap{$_} %= 2;
+    }
+    @ans = grep {$ap{$_} > 0} keys %ap;
+    return [@ans];
+}
+
+
+
+sub eccentric_odd {
+    # inspired by the "the DIFFERENCE from PERFECTION" in Task 1 of Week 117
+    # https://theweeklychallenge.org/blog/review-challenge-117/
+    # look like not very successful... Oooops.
     my $s = "";
     for my $d (@_) {
         my $md = index((scalar reverse $s), (scalar reverse "- $d "));
@@ -28,21 +49,8 @@ sub the_only_odd {
 }
 
 
-sub oddities {
-    # return all the numbers appear odd number of times
-    # inspired by Andrezgz's Week 127 solution after reading 
-    # https://theweeklychallenge.org/blog/review-challenge-127/#PWC127TASK1
-    my @ans;
-    my %ap;
-    for (@_) {
-        $ap{$_}++ && ($ap{$_} *= -1);
-    }
-    @ans = grep {$ap{$_} > 0} keys %ap;
-    return [@ans];
-}
-
 
 ok ${oddities(1, 2, 3, 4, 3, 2, 1, 4, 4)}[0] == 4, 
    "Example 2 using subroutine oddities";
-ok the_only_odd(1, 2, 3, 4, 3, 2, 1, 4, 4) == 4, 
-   "Example 2 using subroutine the_only_odd";
+ok eccentric_odd(1, 2, 3, 4, 3, 2, 1, 4, 4) == 4, 
+   "Example 2 using subroutine eccentric_odd";
