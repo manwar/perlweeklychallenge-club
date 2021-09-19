@@ -1,60 +1,74 @@
-Task 1: "Maximum Sub-Matrix
+Task 1: "Odd Number
 
-You are given m x n binary matrix having 0 or 1 elements.
+You are given an array of positive integers, such that all the numbers
+appear even number of times except one number.
 
-Write a script to find out maximum sub-matrix having only 0.
+Write a script to find that integer.
 
-Example 1:
+Example 1
 
-Input : [ 1 0 0 0 1 0 ]
-        [ 1 1 0 0 0 1 ]
-        [ 1 0 0 0 0 0 ]
+  Input: @N = (2, 5, 4, 4, 5, 5, 2)
+  Output: 5
+   as it appears 3 times in the array where as all other numbers 2 and
+   4 appears exactly twice.
 
-Output: [ 0 0 0 ]
-        [ 0 0 0 ]
+Example 2
 
-Example 2:
-
-Input : [ 0 0 1 1 ]
-        [ 0 0 0 1 ]
-        [ 0 0 1 0 ]
-
-Output: [ 0 0 ]
-        [ 0 0 ]
-        [ 0 0 ]
+  Input: @N = (1, 2, 3, 4, 3, 2, 1, 4, 4)
+  Output: 4
 "
 
-My notes: dull but easy.  No opportunity for cleverness.
+My notes: easy, let's use a frequency hash.
 
 
-Task 2: "Minimum Platforms
+Task 2: "Binary Search Tree
 
-You are given two arrays of arrival and departure times of trains at a
-railway station.
+You are given a tree.
 
-Write a script to find out the minimum number of platforms needed so
-that no train needs to wait.
+Write a script to find out if the given tree is Binary Search Tree (BST).
 
-Example 1:
+According to wikipedia, the definition of BST:
 
-Input: @arrivals   = (11:20, 14:30)
-       @departures = (11:50, 15:00)
-Output: 1
+A binary search tree is a rooted binary tree, whose internal nodes
+each store a key (and optionally, an associated value), and each has
+two distinguished sub-trees, commonly denoted left and right. The tree
+additionally satisfies the binary search property: the key in each node
+is greater than or equal to any key stored in the left sub-tree, and less
+than or equal to any key stored in the right sub-tree. The leaves (final
+nodes) of the tree contain no key and have no structure to distinguish
+them from one another.
 
-The 1st arrival of train is at 11:20 and this is the only train at the station,
-so you need 1 platform.  Before the second arrival at 14:30, the first train
-left the station at 11:50, so you still need only 1 platform.
+Example 1
 
-Example 2:
+Input:
+        8
+       / \
+      5   9
+     / \
+    4   6
 
-Input: @arrivals   = (10:20, 11:00, 11:10, 12:20, 16:20, 19:00)
-       @departures = (10:30, 13:20, 12:40, 12:50, 20:20, 21:20)
-Output: 3
+Output: 1 as the given tree is a BST.
 
-Between 12:20 and 12:40, there would be at least 3 trains at the station,
-so we need minimum 3 platforms."
+Example 2
 
-My notes: nice problem - looks like a tiny discrete event simulation.
-Build a DIARY: an array of (time, type) pairs - where type == 'A' for
-an arrival, or type == 'D' for a departure.  Then walk the diary,
-simulating "train arrival" and "train departure" events.
+Input:
+        5
+       / \
+      4   7
+     / \
+    3   6
+
+Output: 0 as the given tree is a not BST.
+"
+
+My notes: yet another tree question, the hardest part is to read the tree
+from input, so let's reuse some tree reading logic from an earlier challenge..
+
+To determine whether a given tree is a BST, we need to pass around a list of
+constraints, where each constraint is either of the form "<=N" or ">=N", and
+apply those constraints to each value we find in the tree.
+
+I also tried a second variation (ch-2-with-constraintfunctions.pl) where the
+list of textual constraints was replaced by an on-the-fly constructed constraint
+function.  But that wasn't as clear, even though it was a few lines shorter,
+and doesn't offer as good debugging support.
