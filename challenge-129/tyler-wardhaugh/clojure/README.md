@@ -21,9 +21,9 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -M -m tw.weekly.c128.t1 M
+    $ clojure -M -m tw.weekly.c128.t1 T N
     # ... or ...
-    $ bb run task-1 M
+    $ bb run task-1 T N
 
 Run Task #2 with input:
 
