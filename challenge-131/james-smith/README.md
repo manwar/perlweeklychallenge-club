@@ -12,42 +12,43 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-130/james-smith/perl
 
-# Task 1 -  Odd Number
+# Task 1 - Consecutive Arrays
 
-***You are given an array of positive integers, such that all the numbers appear even number of times except one number.***
+***You are given a sorted list of unique positive integers. Write a script to return list of arrays where the arrays are consecutive integers.***
 
 ## The solution
 
-For each of the inputs we need to keep a tally of how many times we've seen them (or more simply if we have seen them an odd or even number of times). To achieve the latter we use the **xor** operator or `^` in perl.
-
-For each number we update the "count" to be 0 if 1 and 1 if 0, using `$x{$_}^=1`.
-
-Only entries for which `$x{$_}` is "true" have odd counts. So we get the (only one) odd count by `grep`ing the list and returning the (1) key.
-
 ```perl
-sub find_odd {
-  my %x;
-  $x{$_}^=1 foreach @{$_[0]};
-  return ( grep { $x{$_} } keys %x )[0];
+sub conseq {
+  my @val = @{$_[0]};
+  my @res = ( [shift @val] );
+  ( $_ == 1 + $res[-1][-1] ) ? (push @{$res[-1]},$_) : (push @res,[$_]) foreach @val;
+  return \@res;
 }
 ```
 
-# Task 2 - Binary Search Tree
+# Task 2 - Find Pairs
 
-***You are given a tree.  Write a script to find out if the given tree is Binary Search Tree (BST).***
+***You are given a string of delimiter pairs and a string to search. Write a script to return two strings, the first with any characters matching the 'opening character' set, the second with any matching the 'closing character' set.***
+
 
 ## Solution
 
-If we flatten the tree in the order - left-subtree - value - right-subtree. We just need to check the
-values are in ascending order... If any isn't larger than it's previous value we know it isn't a BST.
-
-From the BinaryTree class we use "in-order" ordering to flatten the tree... Then we loop through the
-values, checking the value against the previous value.
+We solve this with a one liner.... which is below:
 
 ```perl
-sub is_bst {
-  my( $p, @values ) = shift->flatten( sub { return $_[0]; }, 'in' );
-  ( $values[0] < $p ) ? ( return 0 ) : ( $p = shift @values ) while @values;
-  return 1;
+sub find_pairs {
+  return map { join '', $_[1] =~ /$_/g }
+         map { '(['.quotemeta($_).'])' }
+         map { join '', $_[0] =~ /$_/g }
+         '(.).?', '.(.?)';
 }
 ```
+
+A bit of an explanation on this one....
+
+ * Working backwards we define two regex `(.).` & `.(.)` these when combined with `/g` return alternate characters in the string
+   either starting from the first char or the 2nd.
+ * We then join these together to get two lists of characters.
+ * We convert them into a regex by using quotemeta to remove the "specialness" and then wrapping them in "([ ])" to capture them
+ * We just run this regex against our original string (with `/g` again) to get results.

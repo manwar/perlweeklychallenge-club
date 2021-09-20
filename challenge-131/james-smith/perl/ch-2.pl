@@ -19,17 +19,9 @@ is( join( ' - ', find_pairs( @{$_->[0]})), join( ' - ', @{$_->[1]} ) ) foreach @
 done_testing();
 
 sub find_pairs {
-  ## Initilize variables
-  ## && Split delimeters on ""...
-  my( $r1, $r2, $str, @parts ) = ( '', '', $_[1], split //, $_[0] );
-
-  ## Merge 1st, 3rd, ... character into r1 & 2nd, 4th ... into r2
-  ( $r1 .= shift @parts, $r2 .= shift @parts ) while @parts;
-
-  ## Convert to regex - making sure we escape special chars
-  ## Return result of regex matches...
-  return map { join '', $str =~m{$_}g    }
+  return map { join '', $_[1] =~m{$_}g   }
          map { '(['.quotemeta( $_ ).'])' }
-         $r1, $r2;
+         map { join '', $_[0] =~ /$_/g   }
+         qr((.).), qr(.(.));
 }
 
