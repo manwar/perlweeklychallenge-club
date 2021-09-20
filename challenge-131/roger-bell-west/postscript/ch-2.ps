@@ -1,0 +1,50 @@
+%!PS
+
+/fp {
+    exch
+    dup length
+    dup dict /sopen exch def
+    dict /sclose exch def
+    /i 0 def
+    {
+        i 0 eq {
+            sopen exch 1 put
+        } {
+            sclose exch 1 put
+        } ifelse
+        /i 1 i sub def
+    } forall
+    dup length
+    dup string /copen exch def
+    string /cclose exch def
+    /iopen 0 def
+    /iclose 0 def
+    {
+        dup
+        dup sopen exch known {
+            copen exch iopen exch put
+            /iopen iopen 1 add def
+        } {
+            pop
+        } ifelse
+        dup sclose exch known {
+            cclose exch iclose exch put
+            /iclose iclose 1 add def
+        } {
+            pop
+        } ifelse
+    } forall
+    cclose copen
+} def
+
+(""[]())
+("I like (parens) and the Apple ][+" they said.)
+fp
+=
+=
+
+(**//<>)
+(/* This is a comment (in some languages) */ <could be a tag>)
+fp
+=
+=
