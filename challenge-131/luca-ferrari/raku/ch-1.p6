@@ -2,8 +2,6 @@
 
 sub MAIN( *@values where { @values.elems > 1 && @values.grep( * ~~ Int ).elems == @values.elems } ) {
     my @results;
-    my $current-result = 0;
-
     @results.push: [ @values[ 0 ] ];
     for 1 ..^ @values.elems {
         if @results[ * - 1 ][ * - 1 ] - @values[ $_ ] == -1 {
@@ -12,7 +10,6 @@ sub MAIN( *@values where { @values.elems > 1 && @values.grep( * ~~ Int ).elems =
         else {
             @results.push: [ @values[ $_ ] ];
         }
-               
     }
 
     @results.say;
