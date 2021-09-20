@@ -21,12 +21,16 @@ my @TESTS = (
 say con_dump( conseq( $_->[0] ) ) foreach @TESTS;
 
 sub con_dump {
+  ## Join each sublist with ', ' & wrap in []
+  ## join each of these results together with ', ' & wrap in ()
   return sprintf '(%s)', join ', ',map { sprintf '[%s]', join ', ', @{$_} } @{$_[0]};
 }
 
 sub conseq {
-  my @val = @{$_[0]};
-  my @res = ( [shift @val] );
+  my @val = @{$_[0]};            ## Store parameters in array val...
+  my @res = ( [shift @val] );    ## Initiliase the results array by placing the
+                                 ## first number into first list of response
+  ## If consecutive            ## Add to last list     ## Create new list
   ( $_ == 1 + $res[-1][-1] ) ? (push @{$res[-1]},$_) : (push @res,[$_]) foreach @val;
   return \@res;
 }
