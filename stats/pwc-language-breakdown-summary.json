@@ -1,21 +1,15 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
    },
    "series" : [
       {
-         "dataLabels" : {
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true",
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "y" : 10
-         },
          "name" : "Contributions",
          "data" : [
             [
@@ -24,40 +18,46 @@
             ],
             [
                "Perl",
-               6214
+               6216
             ],
             [
                "Raku",
                3823
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "align" : "right",
+            "enabled" : "true",
+            "y" : 10,
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         }
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "chart" : {
       "type" : "column"
    },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   },
    "legend" : {
       "enabled" : "false"
    },
+   "subtitle" : {
+      "text" : "Last updated at 2021-09-20 19:00:46 GMT"
+   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-09-20 18:55:39 GMT"
+      }
    }
 }

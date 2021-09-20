@@ -1,4 +1,9 @@
 {
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
@@ -8,40 +13,52 @@
          "borderWidth" : 0
       }
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 131"
-   },
    "series" : [
       {
+         "name" : "The Weekly Challenge - 131",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "James Smith",
+               "name" : "Ivan Dimitrov",
+               "drilldown" : "Ivan Dimitrov",
+               "y" : 2
+            },
+            {
                "drilldown" : "James Smith",
-               "y" : 3
+               "y" : 3,
+               "name" : "James Smith"
             },
             {
-               "name" : "Luca Ferrari",
                "y" : 4,
-               "drilldown" : "Luca Ferrari"
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
             },
             {
-               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith",
                "y" : 2,
-               "drilldown" : "Peter Campbell Smith"
+               "name" : "Peter Campbell Smith"
             }
-         ],
-         "name" : "The Weekly Challenge - 131",
-         "colorByPoint" : 1
+         ]
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
    "drilldown" : {
       "series" : [
          {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Ivan Dimitrov",
+            "name" : "Ivan Dimitrov"
+         },
+         {
+            "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -51,11 +68,10 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "James Smith",
-            "name" : "James Smith"
+            ]
          },
          {
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -66,36 +82,35 @@
                   2
                ]
             ],
-            "name" : "Luca Ferrari",
             "id" : "Luca Ferrari"
          },
          {
-            "id" : "Peter Campbell Smith",
             "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Peter Campbell Smith"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2021-09-20 19:00:46 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2021-09-20 18:55:39 GMT"
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 131"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
