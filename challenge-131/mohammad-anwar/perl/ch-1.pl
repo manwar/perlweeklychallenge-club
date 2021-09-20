@@ -1,5 +1,20 @@
 #!/usr/bin/perl
 
+=head1
+
+Week 131:
+
+    https://theweeklychallenge.org/blog/perl-weekly-challenge-131
+
+Task #1: Consecutive Arrays
+
+    You are given a sorted list of unique positive integers.
+
+    Write a script to return list of arrays where the arrays are
+    consecutive integers.
+
+=cut
+
 use strict;
 use warnings;
 
