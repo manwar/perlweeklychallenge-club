@@ -2,7 +2,7 @@
 
 You can find more information about this weeks, and previous weeks challenges at:
 
-  https://perlweeklychallenge.org/
+  https://theweeklychallenge.org/
 
 If you are not already doing the challenge - it is a good place to practise your
 **perl** or **raku**. If it is not **perl** or **raku** you develop in - you can
