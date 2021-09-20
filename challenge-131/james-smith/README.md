@@ -23,7 +23,7 @@ sub conseq {
   my @val = @{$_[0]};
   my @res = ( [shift @val] );
   ( $_ == 1 + $res[-1][-1] ) ? (push @{$res[-1]},$_) : (push @res,[$_]) foreach @val;
-  return \@res;
+  \@res;
 }
 ```
 
@@ -38,10 +38,10 @@ We solve this with a one liner.... which is below:
 
 ```perl
 sub find_pairs {
-  return map { join '', $_[1] =~ /$_/g }
-         map { '(['.quotemeta($_).'])' }
-         map { join '', $_[0] =~ /$_/g }
-         '(.).?', '.(.?)';
+  map { join '', $_[1] =~ /$_/g }
+  map { '(['.quotemeta($_).'])' }
+  map { join '', $_[0] =~ /$_/g }
+  '(.).?', '.(.?)';
 }
 ```
 

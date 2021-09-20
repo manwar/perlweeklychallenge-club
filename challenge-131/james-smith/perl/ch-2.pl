@@ -19,9 +19,9 @@ is( join( ' - ', find_pairs( @{$_->[0]})), join( ' - ', @{$_->[1]} ) ) foreach @
 done_testing();
 
 sub find_pairs {
-  return map { join '', $_[1] =~m{$_}g   }
-         map { '(['.quotemeta( $_ ).'])' }
-         map { join '', $_[0] =~ /$_/g   }
-         qr((.).), qr(.(.));
+  map { join '', $_[1] =~m{$_}g }
+  map { '['.quotemeta( $_ ).']' }
+  map { join '', $_[0] =~ /$_/g }
+      qr((.).?), qr(.(.?));
 }
 
