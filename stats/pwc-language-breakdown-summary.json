@@ -1,12 +1,6 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "legend" : {
       "enabled" : "false"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
    },
    "yAxis" : {
       "min" : 0,
@@ -14,24 +8,26 @@
          "text" : null
       }
    },
-   "subtitle" : {
-      "text" : "Last updated at 2021-09-20 19:16:49 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
    },
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "align" : "right",
-            "y" : 10,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "color" : "#FFFFFF"
-         },
          "data" : [
             [
                "Blog",
@@ -39,25 +35,29 @@
             ],
             [
                "Perl",
-               6218
+               6220
             ],
             [
                "Raku",
                3824
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "align" : "right",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "y" : 10
+         },
+         "name" : "Contributions"
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
+   "subtitle" : {
+      "text" : "Last updated at 2021-09-20 19:22:06 GMT"
    }
 }
