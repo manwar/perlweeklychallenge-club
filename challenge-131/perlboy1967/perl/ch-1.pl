@@ -26,18 +26,16 @@ done_testing;
 
 
 sub consecutiveArrays {
-
   my @r = ([]);
 
+  no warnings 'once';
   slide { 
     push(@{$r[-1]}, $a);
-    if ($a != $b - 1) { 
-      push(@r, []);
-    } 
+    push(@r, []) if ($a != $b - 1);
   } @_;
 
   push(@{$r[-1]}, $_[-1]);
 
-  return [@r];
+  return \@r;
 }
 
