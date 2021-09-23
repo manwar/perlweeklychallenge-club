@@ -3,31 +3,13 @@
       "enabled" : "false"
    },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      },
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-09-22 23:44:00 GMT"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
       }
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "series" : [
       {
@@ -38,26 +20,44 @@
             ],
             [
                "Perl",
-               6232
+               6234
             ],
             [
                "Raku",
                3830
             ]
          ],
+         "name" : "Contributions",
          "dataLabels" : {
-            "align" : "right",
-            "rotation" : -90,
+            "enabled" : "true",
             "y" : 10,
+            "rotation" : -90,
+            "align" : "right",
+            "format" : "{point.y:.0f}",
             "style" : {
                "fontSize" : "13px",
                "fontFamily" : "Verdana, sans-serif"
             },
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "enabled" : "true"
-         },
-         "name" : "Contributions"
+            "color" : "#FFFFFF"
+         }
       }
-   ]
+   ],
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-09-22 23:59:29 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   },
+   "chart" : {
+      "type" : "column"
+   }
 }
