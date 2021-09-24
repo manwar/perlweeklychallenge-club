@@ -5,11 +5,11 @@ use strict;
 sub consecutive_arrays {
     my @input = @_;
     my @results = ([]);
-    for my $i (0 .. $#input) {
-        if ( ! @{ $results[-1] } || $results[-1][-1] + 1 == $input[$i] ) {
-            push @{ $results[-1] }, $input[$i];
+    for my $i (@input) {
+        if (! @{ $results[-1] } || $results[-1][-1] + 1 == $i) {
+            push @{ $results[-1] }, $i;
         } else {
-            push @results, [$input[$i]];
+            push @results, [$i];
         }
     }
     return \@results
