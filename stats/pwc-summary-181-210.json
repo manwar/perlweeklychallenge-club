@@ -1,7 +1,8 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -37,12 +38,8 @@
          "Sitaram Chamarty"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-09-24 19:48:14 GMT"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             11,
@@ -74,7 +71,8 @@
             5,
             4,
             1
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -147,19 +145,21 @@
          ]
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-09-24 19:56:02 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
    },
    "chart" : {
       "type" : "column"
