@@ -10,11 +10,9 @@ is-deeply consecutive-arrays(1, 2, 3, 4, 5), ([1, 2, 3, 4, 5],);
 
 sub consecutive-arrays(**@N)
 {
-    my $i;
-
     my @consecutives = gather for @N.rotor(2 => -1, :partial)
     {
-        $i++;
+        state $i++;
 
         if .head !== .tail - 1
         {
