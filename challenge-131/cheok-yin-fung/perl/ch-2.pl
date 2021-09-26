@@ -147,16 +147,18 @@ sub find_pair {
                 pop @waiting_to_be_closed;
             }
             elsif (!defined($neutral_found{$c})) {
-                say("Warning: $stack[-1] at position ", $waiting_to_be_closed[-1],
-                    " does not close appropriately."); 
+                say("Warning: $stack[-1] at position ", 
+                    $waiting_to_be_closed[-1],
+                    " may not close appropriately."); 
                 say("Warning: $c at position ", $p,
-                    " may not be correspond to an opening delimiter.");
+                    " may not be corresponding to an opening delimiter.");
                 $early_warn = 1;
                 last;
             }
             else {
-                say("Warning: $stack[-1] at position ", $waiting_to_be_closed[-1],
-                    " does not open or close appropriately." );
+                say("Warning: $stack[-1] at position ", 
+                    $waiting_to_be_closed[-1],
+                    " does not open or close appropriately.");
                 $early_warn = 1;
                 last;
             }
@@ -177,20 +179,18 @@ sub find_pair {
                 last;
             }
         }
-       # say "Pos: ", $p;
-       # say "STACK: ", @stack;
-       # say "WAITING TO BE CLOSED: ", "@waiting_to_be_closed";
     }
-    if (!$early_warn && scalar @stack != 0 && !defined($close_found{$stack[-1]}) ) {
+    if (!$early_warn && scalar @stack != 0 
+        && !defined($close_found{$stack[-1]}) 
+       ) {
         say "Warning: delimiter(s) do not open or close appropriately:";
         say "Delimiters: @stack";
         say "Positions: ", "@waiting_to_be_closed";
     }
     if ($early_warn) {
-        say "Feedback: It is recommended that you check other delimiters as well.";
+        say "Feedback: It is recommended that you check other ",
+            "delimiters as well.";
     }
     
-    
     say "";
-    return;
 }
