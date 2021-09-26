@@ -35,10 +35,10 @@ $_ = <>; # String to search
 
 #
 # Extract the characters on the odd and even positions;
-# replace / with \/.
+# replace / with \/, and \ with \\.
 #
-my $odds = $chars =~ s/(.)./$1/gr =~ s!/!\\/!r;
-my $even = $chars =~ s/.(.)/$1/gr =~ s!/!\\/!r;
+my $odds = $chars =~ s/(.)./$1/gr =~ s!([/\\])!\\$1!r;
+my $even = $chars =~ s/.(.)/$1/gr =~ s!([/\\])!\\$1!r;
 
 #
 # Use y///dc to get rid of the characters which don't match, and
