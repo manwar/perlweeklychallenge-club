@@ -18,11 +18,19 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-131/ja
 
 ## The solution
 
+There isn't much to the solution, we are going to return the data as an array of arrayrefs each containing consecutive numbers.
+
+ * We start by creating our first arrayref containing the first value. {for the `if` code to work without an edge case we need in element in our first arrayref to compare against)
+ * We then loop through the values:
+   * if the next number is 1 greater than the last value in the last arrayref. We push it there,
+   * otherwise we create a new arrayref and push it on the end of our array.
+ * We "cheat" a bit with the `if` statement - by replace `if( $a ) { $b } else { $c }` with `($a) ? ($b) : ($c)` this means we can use it inline within a `foreach` loop.
+ 
 ```perl
 sub conseq {
   my @val = @{$_[0]};
   my @res = ( [shift @val] );
-  ( $_ == 1 + $res[-1][-1] ) ? (push @{$res[-1]},$_) : (push @res,[$_]) foreach @val;
+  ( $_ == 1 + $res[-1][-1] ) ? (push @{$res[-1]},$_) : (push @res,[$_]) for @val;
   \@res;
 }
 ```
