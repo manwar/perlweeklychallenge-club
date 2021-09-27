@@ -1,74 +1,61 @@
-Task 1: "Odd Number
+Task 1: "Consecutive Arrays
 
-You are given an array of positive integers, such that all the numbers
-appear even number of times except one number.
+You are given a sorted list of unique positive integers.
 
-Write a script to find that integer.
+Write a script to return list of arrays where the arrays are consecutive
+integers.
 
-Example 1
+Example 1:
 
-  Input: @N = (2, 5, 4, 4, 5, 5, 2)
-  Output: 5
-   as it appears 3 times in the array where as all other numbers 2 and
-   4 appears exactly twice.
+   Input:  (1, 2, 3, 6, 7, 8, 9)
+   Output: ([1, 2, 3], [6, 7, 8, 9])
 
-Example 2
+Example 2:
 
-  Input: @N = (1, 2, 3, 4, 3, 2, 1, 4, 4)
-  Output: 4
+   Input:  (11, 12, 14, 17, 18, 19)
+   Output: ([11, 12], [14], [17, 18, 19])
+
+Example 3:
+
+   Input:  (2, 4, 6, 8)
+   Output: ([2], [4], [6], [8])
+
+Example 4:
+
+   Input:  (1, 2, 3, 4, 5)
+   Output: ([1, 2, 3, 4, 5])
 "
 
-My notes: easy, let's use a frequency hash.
+My notes: easy, should be able to do this in 1-pass.
 
 
-Task 2: "Binary Search Tree
+Task 2: "Find Pairs
 
-You are given a tree.
+You are given a string of delimiter pairs and a string to search.
 
-Write a script to find out if the given tree is Binary Search Tree (BST).
+Write a script to return two strings, the first with any characters
+matching the 'opening character' set, the second with any matching
+the 'closing character' set.
 
-According to wikipedia, the definition of BST:
-
-A binary search tree is a rooted binary tree, whose internal nodes
-each store a key (and optionally, an associated value), and each has
-two distinguished sub-trees, commonly denoted left and right. The tree
-additionally satisfies the binary search property: the key in each node
-is greater than or equal to any key stored in the left sub-tree, and less
-than or equal to any key stored in the right sub-tree. The leaves (final
-nodes) of the tree contain no key and have no structure to distinguish
-them from one another.
-
-Example 1
+Example 1:
 
 Input:
-        8
-       / \
-      5   9
-     / \
-    4   6
+    Delimiter pairs: ""[]()
+    Search String: "I like (parens) and the Apple ][+" they said.
 
-Output: 1 as the given tree is a BST.
+Output:
+    "(["
+    ")]"
 
-Example 2
+Example 2:
 
 Input:
-        5
-       / \
-      4   7
-     / \
-    3   6
+    Delimiter pairs: **//<>
+    Search String: /* This is a comment (in some languages) */ <could be a tag>
 
-Output: 0 as the given tree is a not BST.
+Output:
+    /**/<
+    /**/>
 "
 
-My notes: yet another tree question, the hardest part is to read the tree
-from input, so let's reuse some tree reading logic from an earlier challenge..
-
-To determine whether a given tree is a BST, we need to pass around a list of
-constraints, where each constraint is either of the form "<=N" or ">=N", and
-apply those constraints to each value we find in the tree.
-
-I also tried a second variation (ch-2-with-constraintfunctions.pl) where the
-list of textual constraints was replaced by an on-the-fly constructed constraint
-function.  But that wasn't as clear, even though it was a few lines shorter,
-and doesn't offer as good debugging support.
+My notes: also pretty easy, if I've understood it right.  Also doable in 1-pass.
