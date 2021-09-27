@@ -1,20 +1,20 @@
 {
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "legend" : {
       "enabled" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "xAxis" : {
+      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
       }
@@ -22,16 +22,17 @@
    "drilldown" : {
       "series" : [
          {
+            "name" : "Cheok-Yin Fung",
             "id" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "name" : "Cheok-Yin Fung"
+            ]
          },
          {
+            "name" : "James Smith",
             "id" : "James Smith",
             "data" : [
                [
@@ -42,10 +43,10 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "James Smith"
+            ]
          },
          {
+            "name" : "Luca Ferrari",
             "id" : "Luca Ferrari",
             "data" : [
                [
@@ -56,47 +57,46 @@
                   "Blog",
                   2
                ]
-            ],
-            "name" : "Luca Ferrari"
+            ]
          },
          {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
+                  2
+               ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
+         },
+         {
+            "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
                   2
                ]
             ]
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2021-09-27 15:15:39 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "title" : {
       "text" : "The Weekly Challenge - 132"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 132",
          "data" : [
             {
-               "drilldown" : "Cheok-Yin Fung",
                "y" : 1,
+               "drilldown" : "Cheok-Yin Fung",
                "name" : "Cheok-Yin Fung"
             },
             {
-               "y" : 3,
                "drilldown" : "James Smith",
+               "y" : 3,
                "name" : "James Smith"
             },
             {
@@ -105,12 +105,27 @@
                "y" : 4
             },
             {
-               "y" : 2,
                "drilldown" : "Mark Anderson",
+               "y" : 2,
                "name" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Niels van Dijke",
+               "y" : 2,
+               "name" : "Niels van Dijke"
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
-   ]
+   ],
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2021-09-27 15:42:08 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   }
 }
