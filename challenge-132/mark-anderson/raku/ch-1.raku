@@ -5,7 +5,7 @@ say mirror-dates('1967/02/14');
 sub mirror-dates($date)
 {
     my $t = Date.today;
-    my $d = Date.new(|$date.split("/"));
+    my $d = Date.new($date.trans('/' => '-'));
 
     my $days = $t - $d;
 
