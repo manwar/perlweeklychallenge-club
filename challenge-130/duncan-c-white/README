@@ -1,0 +1,74 @@
+Task 1: "Odd Number
+
+You are given an array of positive integers, such that all the numbers
+appear even number of times except one number.
+
+Write a script to find that integer.
+
+Example 1
+
+  Input: @N = (2, 5, 4, 4, 5, 5, 2)
+  Output: 5
+   as it appears 3 times in the array where as all other numbers 2 and
+   4 appears exactly twice.
+
+Example 2
+
+  Input: @N = (1, 2, 3, 4, 3, 2, 1, 4, 4)
+  Output: 4
+"
+
+My notes: easy, let's use a frequency hash.
+
+
+Task 2: "Binary Search Tree
+
+You are given a tree.
+
+Write a script to find out if the given tree is Binary Search Tree (BST).
+
+According to wikipedia, the definition of BST:
+
+A binary search tree is a rooted binary tree, whose internal nodes
+each store a key (and optionally, an associated value), and each has
+two distinguished sub-trees, commonly denoted left and right. The tree
+additionally satisfies the binary search property: the key in each node
+is greater than or equal to any key stored in the left sub-tree, and less
+than or equal to any key stored in the right sub-tree. The leaves (final
+nodes) of the tree contain no key and have no structure to distinguish
+them from one another.
+
+Example 1
+
+Input:
+        8
+       / \
+      5   9
+     / \
+    4   6
+
+Output: 1 as the given tree is a BST.
+
+Example 2
+
+Input:
+        5
+       / \
+      4   7
+     / \
+    3   6
+
+Output: 0 as the given tree is a not BST.
+"
+
+My notes: yet another tree question, the hardest part is to read the tree
+from input, so let's reuse some tree reading logic from an earlier challenge..
+
+To determine whether a given tree is a BST, we need to pass around a list of
+constraints, where each constraint is either of the form "<=N" or ">=N", and
+apply those constraints to each value we find in the tree.
+
+I also tried a second variation (ch-2-with-constraintfunctions.pl) where the
+list of textual constraints was replaced by an on-the-fly constructed constraint
+function.  But that wasn't as clear, even though it was a few lines shorter,
+and doesn't offer as good debugging support.

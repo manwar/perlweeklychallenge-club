@@ -1,0 +1,40 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($values = "1 2 3 4", :z($zero));
+
+my @values = $values.words;
+
+$zero
+  ?? ( die "Must be 0..9 only" unless all(@values) ~~ /^<[0..9]>$/ )
+  !! ( die "Must be 1..9 only" unless all(@values) ~~ /^<[1..9]>$/ );
+
+class LinkedList
+{
+  has Int        $.value;
+  has LinkedList $.next is rw;
+  
+  method add-elems (@values is copy)
+  {
+    my $list  = self;
+    my $first = @values.shift;
+    my $obj   = LinkedList.new(value => $first);
+
+    ($list ~~ LinkedList:D)
+      ?? ( $list.next = $obj )
+      !! ( $list      = $obj );
+
+    $obj.add-elems(@values) if @values.elems;
+
+    return $obj;
+  }
+
+  method recursive-value
+  {
+    return flat(self.value, self.next.recursive-value) if self.next;
+    return self.value;
+  }
+}
+
+my $ll = LinkedList.add-elems(@values>>.Int);
+
+say $ll.recursive-value.join(" -> ");
