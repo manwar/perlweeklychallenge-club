@@ -1,7 +1,7 @@
 (ns tw.weekly.c132-test
   (:require [clojure.test :refer [deftest is testing]]
             [tw.weekly.c132.t1 :as t1]
-            #_[tw.weekly.c132.t2 :refer []]))
+            [tw.weekly.c132.t2 :as t2]))
 
 (def today (t1/parse-date t1/DEFAULT-TODAY))
 
@@ -17,4 +17,12 @@
 
 (deftest task-2
   (testing "Task 2, Hash Join"
-    ))
+    (is  (= (set '((20 "Alex" "Stewart")
+                   (18 "Alex" "Stewart")
+                   (28 "Joe" "Root")
+                   (38 "Mike" "Gatting")
+                   (28 "Joe" "Blog")
+                   (20 "Alex" "Jones")
+                   (18 "Alex" "Jones")
+                   (18 "Simon" "Duane")))
+            (set (apply t2/hash-join t2/DEFAULT-INPUT))))))
