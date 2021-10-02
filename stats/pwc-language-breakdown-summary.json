@@ -1,19 +1,9 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "rotation" : -90,
-            "align" : "right",
-            "y" : 10
-         },
          "data" : [
             [
                "Blog",
@@ -21,20 +11,45 @@
             ],
             [
                "Perl",
-               6284
+               6285
             ],
             [
                "Raku",
                3858
             ]
-         ]
+         ],
+         "name" : "Contributions",
+         "dataLabels" : {
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "align" : "right"
+         }
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "chart" : {
+      "type" : "column"
    },
    "legend" : {
       "enabled" : "false"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-10-02 15:02:09 GMT"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
    "xAxis" : {
       "type" : "category",
@@ -44,20 +59,5 @@
             "fontSize" : "13px"
          }
       }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-10-02 08:33:36 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
