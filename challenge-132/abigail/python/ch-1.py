@@ -8,15 +8,7 @@
 # Run as: python ch-1.py < input-file
 #
 
-import math
 import fileinput
-
-def _int (x):
-    if x < 0:
-        return math . ceil  (x)
-    else:
-        return math . floor (x)
-        
 
 def g2j (Y, M, D):
     return (int ((1461 * (Y +    4800 + int ((M - 14) / 12))) /   4) +
