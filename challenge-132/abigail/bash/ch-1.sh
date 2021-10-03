@@ -33,7 +33,7 @@ function j2g () {
 g2j 2021 9 22; julian_today=$J
 
 while read y m d
-do   g2j $y ${m/#0/} ${d/#0/}; julian_then=$J
+do   g2j ${y/#0/} ${m/#0/} ${d/#0/}; julian_then=$J
      j2g $(( 2 * julian_then - julian_today ))
      printf "%04d/%02d/%02d, " $Y $M $D
      j2g $(( 2 * julian_today - julian_then ))
