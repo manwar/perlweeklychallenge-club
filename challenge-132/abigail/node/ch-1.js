@@ -8,8 +8,6 @@
 // Run as: node ch-1.js < input-file
 //
 
-const util = require ('util')
-
 function int (x) {
     if (x < 0) {
         return Math . ceil  (x)
