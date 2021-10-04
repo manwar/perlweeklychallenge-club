@@ -52,6 +52,14 @@ sub smith_numbers {
 }
 ```
 
+And the support functions:
+ * `sum` - Just sum an array;
+ * `sum_digits` - Sum digits of number,
+   We cache the digit sum for each number in `%ds`;
+ * `prime_factors` - for a prime returns nothing, for a composite returns the factors,
+   We keep a list of primes `@primes`, and also the prime factors for each composite `%comp`.
+   
+```perl
 sub sum        { my $t = 0; $t+=$_ foreach @_; $t;          }
 sub sum_digits { return $ds{$_[0]} ||= sum split //, $_[0]; }
 
