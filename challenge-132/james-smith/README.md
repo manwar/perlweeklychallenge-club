@@ -44,6 +44,19 @@ sub mirror_days {
      * Reset the hash table, and continue scanning the build input R
  * Do a final scan of the probe input S and add the resulting join tuples to the output relation
 
+## Aside
+
+You may think that this looks an overly convoluted way to join two data-structures together. But there are times when this method is the
+best possible one - from an efficiency point of view.
+
+If the two tables to be joined are not simple perl data structures but files with hundreds of millions of lines. Then this method makes a lot
+more sense. You open the first file, and pull out a number of rows and store them in a keyed hash. You then loop through the other file
+when you find a match (the key exists in the hash) you output the resultant rows.... You can continue taking chunks from the first file, and looping through the second.
+
+This method uses least memory - and is therefore much more efficient than trying to do everything in memory.
+
+*Not this algorithm - but joining two tables genetic variation, alternate names for the variations. We needed to join them together - the MySQL join just wasn't coming back at all (blowing up memory), instead
+we dumped out the contens of each table - fortunately ordered by the same key, and walked down the two files joining the rows together, only ever 1 line of each file in memory at once!.*
 
 ## Solution
 
