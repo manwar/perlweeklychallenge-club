@@ -1,48 +1,24 @@
 {
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "title" : {
       "text" : "The Weekly Challenge - 133"
    },
    "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2021-10-04 22:21:22 GMT"
+      "text" : "[Champions: 7] Last updated at 2021-10-04 22:26:19 GMT"
    },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 133",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "drilldown" : "Abigail",
-               "name" : "Abigail",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Andinus",
-               "name" : "Andinus",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Ben Davies",
-               "name" : "Ben Davies"
-            },
-            {
-               "name" : "Cheok-Yin Fung",
-               "drilldown" : "Cheok-Yin Fung",
-               "y" : 1
-            },
-            {
-               "y" : 2,
-               "name" : "James Smith",
-               "drilldown" : "James Smith"
-            },
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
-            }
-         ]
-      }
-   ],
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
@@ -55,17 +31,16 @@
    "drilldown" : {
       "series" : [
          {
-            "name" : "Abigail",
-            "id" : "Abigail",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Abigail",
+            "name" : "Abigail"
          },
          {
-            "id" : "Andinus",
             "name" : "Andinus",
             "data" : [
                [
@@ -76,7 +51,8 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Andinus"
          },
          {
             "data" : [
@@ -85,27 +61,27 @@
                   2
                ]
             ],
-            "id" : "Ben Davies",
-            "name" : "Ben Davies"
+            "name" : "Ben Davies",
+            "id" : "Ben Davies"
          },
          {
-            "name" : "Cheok-Yin Fung",
             "id" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "name" : "Cheok-Yin Fung"
          },
          {
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "James Smith",
             "name" : "James Smith"
          },
          {
@@ -117,26 +93,69 @@
             ],
             "name" : "Mark Anderson",
             "id" : "Mark Anderson"
+         },
+         {
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Roger Bell_West"
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 133",
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Abigail",
+               "drilldown" : "Abigail"
+            },
+            {
+               "y" : 2,
+               "name" : "Andinus",
+               "drilldown" : "Andinus"
+            },
+            {
+               "y" : 2,
+               "name" : "Ben Davies",
+               "drilldown" : "Ben Davies"
+            },
+            {
+               "drilldown" : "Cheok-Yin Fung",
+               "y" : 1,
+               "name" : "Cheok-Yin Fung"
+            },
+            {
+               "name" : "James Smith",
+               "y" : 2,
+               "drilldown" : "James Smith"
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            }
+         ],
+         "colorByPoint" : 1
       }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
+   ],
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
