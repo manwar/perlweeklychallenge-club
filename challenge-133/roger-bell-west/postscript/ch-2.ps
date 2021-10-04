@@ -1,0 +1,82 @@
+%!PS
+
+/sumofdigits {
+    /sum 0 def
+    {
+        {
+            dup 0 eq { pop exit } if
+            dup 10 mod sum add /sum exch def
+            10 idiv
+        } loop
+    } forall
+    sum
+} def
+
+(test sod) =
+[ 2 ] sumofdigits
+2 eq { (Pass) } { (Fail) } ifelse print ( ) print
+[ 11 ] sumofdigits
+2 eq { (Pass) } { (Fail) } ifelse print ( ) print
+[ 66 ] sumofdigits
+12 eq { (Pass) } { (Fail) } ifelse =
+
+/factor {
+    /ft 2 def
+    dup array /f exch def
+    /fi 0 def
+    {
+        dup ft mod 0 eq {
+            f fi ft put
+            /fi fi 1 add def
+            ft idiv
+        } {
+            /ft ft 1 add def
+            ft 2 mod 0 eq {
+                /ft ft 1 add def
+            } if
+        } ifelse
+        dup 1 le { pop exit } if
+    } loop
+    fi array /out exch def
+    0 1 fi 1 sub {
+        /i exch def
+        out i f i get put
+    } for
+    out
+} def
+
+(test factor) =
+2 factor ==
+10 factor ==
+666 factor ==
+
+/smith {
+    /count exch def
+    /c 1 def
+    {
+        /c c 1 add def
+        /ff c factor def
+        ff length 1 ne {
+            ff sumofdigits [ c ] sumofdigits eq {
+                c
+                /count count 1 sub def
+                count 0 le {
+                    exit
+                } if
+            } if
+        } if
+    } loop
+} def
+
+(test 1) =
+10 smith
+265 eq { (Pass) } { (Fail) } ifelse print ( ) print
+202 eq { (Pass) } { (Fail) } ifelse print ( ) print
+166 eq { (Pass) } { (Fail) } ifelse print ( ) print
+121 eq { (Pass) } { (Fail) } ifelse print ( ) print
+94  eq { (Pass) } { (Fail) } ifelse print ( ) print
+85  eq { (Pass) } { (Fail) } ifelse print ( ) print
+58  eq { (Pass) } { (Fail) } ifelse print ( ) print
+27  eq { (Pass) } { (Fail) } ifelse print ( ) print
+22  eq { (Pass) } { (Fail) } ifelse print ( ) print
+4   eq { (Pass) } { (Fail) } ifelse =
