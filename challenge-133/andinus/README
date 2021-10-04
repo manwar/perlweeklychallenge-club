@@ -1,0 +1,51 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 130
+
+                                Andinus
+                            ━━━━━━━━━━━━━━━
+
+
+                               2021-09-14
+
+
+Table of Contents
+─────────────────
+
+Task 1 - Odd Number
+
+
+
+
+
+Task 1 - Odd Number
+═══════════════════
+
+  You are given an array of positive integers, such that all the numbers
+  appear even number of times except one number.
+
+  Write a script to find that integer.
+
+  Examples:
+  ┌────
+  │ Input: @N = (2, 5, 4, 4, 5, 5, 2)
+  │ Output: 5 as it appears 3 times in the array where as all other numbers 2 and 4 appears exactly twice.
+  │
+  │ Input: @N = (1, 2, 3, 4, 3, 2, 1, 4, 4)
+  │ Output: 4
+  └────
+
+
+Raku
+────
+
+  • Program: <file:raku/ch-1.raku>
+
+  `@nums' holds the input and `%seen' is True if it's seen odd number of
+  times. We loop over `@nums' and invert the value of that number in
+  `%seen'.
+
+  ┌────
+  │ my Bool %seen;
+  │ %seen{$_} = !%seen{$_} for @nums;
+  │ put %seen.grep(*.value).map(*.key);
+  └────
