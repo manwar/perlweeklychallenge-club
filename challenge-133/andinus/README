@@ -1,51 +1,81 @@
                             ━━━━━━━━━━━━━━━
-                             CHALLENGE 130
+                             CHALLENGE 133
 
                                 Andinus
                             ━━━━━━━━━━━━━━━
 
 
-                               2021-09-14
-
-
-Table of Contents
-─────────────────
-
-Task 1 - Odd Number
+                               2021-10-04
 
 
 
 
 
-Task 1 - Odd Number
-═══════════════════
+Task 1 - Integer Square Root
+════════════════════════════
 
-  You are given an array of positive integers, such that all the numbers
-  appear even number of times except one number.
+  You are given a positive integer `$N'.
 
-  Write a script to find that integer.
+  Write a script to calculate the integer square root of the given
+  number.
 
-  Examples:
+  Please avoid using built-in function. Find out more about it [here].
+
   ┌────
-  │ Input: @N = (2, 5, 4, 4, 5, 5, 2)
-  │ Output: 5 as it appears 3 times in the array where as all other numbers 2 and 4 appears exactly twice.
+  │ Input: $N = 10
+  │ Output: 3
   │
-  │ Input: @N = (1, 2, 3, 4, 3, 2, 1, 4, 4)
-  │ Output: 4
+  │ Input: $N = 27
+  │ Output: 5
+  │
+  │ Input: $N = 85
+  │ Output: 9
+  │
+  │ Input: $N = 101
+  │ Output: 10
   └────
 
+
+[here] <https://en.wikipedia.org/wiki/Integer_square_root>
 
 Raku
 ────
 
   • Program: <file:raku/ch-1.raku>
 
-  `@nums' holds the input and `%seen' is True if it's seen odd number of
-  times. We loop over `@nums' and invert the value of that number in
-  `%seen'.
+  Initial estimate is set to `$n +> 1', then we loop infinitely until
+  previous 2 estimates are equal.
 
   ┌────
-  │ my Bool %seen;
-  │ %seen{$_} = !%seen{$_} for @nums;
-  │ put %seen.grep(*.value).map(*.key);
+  │ my $x = $n +> 1;
+  │ loop {
+  │     given ($x + ($n / $x)) / 2 {
+  │         last if $x == $_;
+  │         $x = $_;
+  │     }
+  │ }
+  │ put $x;
+  └────
+
+
+C
+─
+
+  • Program: <file:c/ch-1.c>
+
+  `argv' holds the input & `argc' holds the number of inputs. The input
+  should be a single integer so `argc' should be equal to 2. After
+  checking for that, we check if valid value was passed.
+
+  Loop until previous 2 estimates are equal.
+
+  ┌────
+  │ double x = num >> 1;
+  │ for (;;) {
+  │     double x_next = (x + (num / x)) / 2;
+  │     if (x == x_next)
+  │         break;
+  │     x = x_next;
+  │  }
+  │ printf("%f\n", x);
   └────
