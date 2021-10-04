@@ -9,5 +9,6 @@ sub digits(Int:D $x, Int:D $base) {
     $x.polymod($base xx $x.log: $base).reverse
 }
 sub prime-factors(Int:D $x is copy) {
-    gather $x div= take (2..$x).grep(*.is-prime).first($x %% *) while $x > 1
+    state Int:D @primes = (2..*).grep(*.is-prime);
+    gather $x div= take @primes.first($x %% *) while $x > 1
 }
