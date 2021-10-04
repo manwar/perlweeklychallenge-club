@@ -1,15 +1,50 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2021-10-04 22:17:16 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         },
-         "borderWidth" : 0
+         }
       }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 133"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Abigail",
+            "name" : "Abigail"
+         },
          {
             "data" : [
                [
@@ -21,18 +56,18 @@
                   1
                ]
             ],
-            "id" : "Andinus",
-            "name" : "Andinus"
+            "name" : "Andinus",
+            "id" : "Andinus"
          },
          {
+            "id" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "name" : "Cheok-Yin Fung",
-            "id" : "Cheok-Yin Fung"
+            "name" : "Cheok-Yin Fung"
          },
          {
             "data" : [
@@ -41,63 +76,44 @@
                   2
                ]
             ],
-            "id" : "James Smith",
-            "name" : "James Smith"
+            "name" : "James Smith",
+            "id" : "James Smith"
          },
          {
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2021-10-04 21:48:19 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 133"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 2,
-               "name" : "Andinus",
-               "drilldown" : "Andinus"
+               "name" : "Abigail",
+               "drilldown" : "Abigail",
+               "y" : 2
             },
             {
-               "name" : "Cheok-Yin Fung",
+               "y" : 2,
+               "drilldown" : "Andinus",
+               "name" : "Andinus"
+            },
+            {
+               "y" : 1,
                "drilldown" : "Cheok-Yin Fung",
-               "y" : 1
+               "name" : "Cheok-Yin Fung"
             },
             {
+               "drilldown" : "James Smith",
                "y" : 2,
-               "name" : "James Smith",
-               "drilldown" : "James Smith"
+               "name" : "James Smith"
             },
             {
                "y" : 2,
@@ -105,7 +121,6 @@
                "name" : "Mark Anderson"
             }
          ],
-         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 133"
       }
    ]
