@@ -1,4 +1,4 @@
-# Perl Weekly Challenge #132
+# Perl Weekly Challenge #133
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,85 +10,58 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-132/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-133/james-smith/perl
 
-# Task 1 - Mirror dates
+# Task 1 - Integer Square Root
 
-***You are given a date (yyyy/mm/dd). Assuming, the given date is your date of birth. Write a script to find the mirror dates of the given date.***
+***You are given a positive integer `$N`. Write a script to calculate the integer square root of the given number.***
 
 ## The solution
 
-Here we use Date::Calc module to handle the date time manipulations.
+We implement Newton's formulae to compute the integer square root.. This is the compact version.
 
-We compute the number of days between dob & today. We then work out which day is this distance before the dob & after today to give the two values.
 ```perl
-my @TODAY = @ARGV ? split m{/}, $ARGV[0]: Today;
-
-sub mirror_days {
-  my $d = Delta_Days( @TODAY, split m{/}, $_->[0] );
-  return  [
-    sprintf( '%04d/%02d/%02d', Add_Delta_Days( @bd,     $d )),
-    sprintf( '%04d/%02d/%02d', Add_Delta_Days( @TODAY, -$d )),
-  ];
+sub find_root {
+  my( $x, $y ) = ( my $n = shift ) >> 1;             ## $x is half $n rounded down...
+  return $n unless $x;                               ## Return $n if it is <2 (i.e. 0 or 1)
+  $x = $y while ( $y = ( $x + $n / $x ) >> 1 ) < $x; ## The crux - the next no is 1/2 of $x & $n/$x
+  return $x;                                         ## Return value
 }
 ```
 
-# Task 2 - Hash join
+# Task 2 - Smith Numbers
 
-***Write a script to implement Hash Join algorithm as suggested by wikipedia.***
-
- * For each tuple r in the build input R
-   * Add r to the in-memory hash table
-   * If the size of the hash table equals the maximum in-memory size:
-     * Scan the probe input S, and add matching join tuples to the output relation
-     * Reset the hash table, and continue scanning the build input R
- * Do a final scan of the probe input S and add the resulting join tuples to the output relation
-
+***Write a script to generate first 10 Smith Numbers in base 10.***
 
 ## Solution
 
-The problem is "simple" seems simple to begin with - but there are two "gotchas"..
+We break the logic up into chunks and implement those in separate function. As we look at each
+prime in turn we can effectively create a sieve to get the prime factors.
 
- * We have to chunk the first array up into chunks of no more than `$N`.
- * The keys in the two tables are NOT unique, so we need to store multiple values based on a key;
- 
-To solve the first problem we break the input array up into to chunks of size `$MAX`, and repeat foreach one.
-
-To resolve the issue of the multiple keys, instead of the value of the cache being the value itself, it is the key to an array of values.
-
-Although not needed - the code is written to match the description above - so works with multiple non key columns in both tables.
-
+Here is the main code.
+ * We check to see if the sum of digits is the same as the sum of primefactor digits {and that it is not prime}
+ * We add this to the list if it is the case
+ * Return when we have `$C` (`10`) in this case...
 ```perl
+sub smith_numbers {
+  my ( $C, $n, @sn ) = (shift,3);
+  ( sum_digits( $n ) - sum map { sum_digits $_ } prime_factors( $n ) ) ||
+  ( push @sn, $n                                                     ) &&
+  ( @sn == $C                                                        ) &&
+  ( return @sn                                                       ) while $n++;
+}
+```
 
-## index of key columns...
-my $ages_key      = 1;
-my $names_key     = 0;
+sub sum        { my $t = 0; $t+=$_ foreach @_; $t;          }
+sub sum_digits { return $ds{$_[0]} ||= sum split //, $_[0]; }
 
-## Get non-key columns in the names table... 
-##   { get all column ids and splice out the key column}
-my @names_columns = 0..(@{$player_names[0]}-1); 
-splice @names_columns, $names_key,1; ## Remove key....
-
-## Get chunk size (default to 4)
-my $MAX = @ARGV ? $ARGV[0] : 4;
-
-my @res;
-
-while( my @pns = splice @player_names, 0, $MAX ) {
-  my %cache = ();
-  ## Foreach we key on the key column, and store the non-key columns
-  ##   Because key columns not unique we have array of arrays for
-  ##   the hash values
-  push @{$cache{$_->[$names_key]}},[ @{$_}[@names_columns] ] foreach @pns;
-
-  ## Now loop through the array of ages.
-  ## When we find a key we dump all values.
-  ## We push all values in the ages table - and all values (except the key) of the names table
-  foreach my $p (@player_ages) {
-    push @res, [@{$p}, @{$_}] foreach @{$cache{$p->[$ages_key]}};
-  }
+sub prime_factors {
+  my $N = shift;
+  ( $N % $_) or ( return @{ $comp{$N} = [ $_, @{$comp{ $N / $_ }||[$N/$_]}] } ) foreach @primes;
+  push @primes, $N;
+  return;
 }
 
-## Just print values
-say join "\t", map { sprintf '%-15s', $_ } @{$_} foreach @res;
+
+
 ```
