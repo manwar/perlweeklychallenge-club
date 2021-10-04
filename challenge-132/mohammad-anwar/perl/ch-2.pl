@@ -33,18 +33,24 @@ my @player_names = (
     ["Simon","Duane"  ],
 );
 
-my $names = {
-    map {
-        join(" ", @$_) => { f => $_->[0], l => $_->[1] }
-    } @player_names
-};
+hash_join(\@player_ages, 1, \@player_names, 0);
 
-foreach my $player (@player_ages) {
-    my $first_name = $player->[1];
-    my $age        = $player->[0];
-    foreach my $n (keys %$names) {
-        if ($names->{$n}->{f} eq $first_name) {
-            print "$age, $first_name, $names->{$n}->{l}\n";
+sub hash_join {
+    my ($table_1, $key_1, $table_2, $key_2) = @_;
+
+    my $names = {
+        map {
+            join(", ", @$_) => $_->[$key_2]
+        } @$table_2
+    };
+
+    foreach my $player (@$table_1) {
+        my $key = $player->[$key_1];
+        my $age = $player->[0];
+        foreach my $n (keys %$names) {
+            if ($names->{$n} eq $key) {
+                print "$age, $n\n";
+            }
         }
     }
 }
