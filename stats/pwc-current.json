@@ -1,47 +1,100 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "legend" : {
+      "enabled" : 0
+   },
    "title" : {
       "text" : "The Weekly Challenge - 133"
    },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-10-04 22:26:19 GMT"
+   "xAxis" : {
+      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Abigail",
+               "y" : 2,
+               "drilldown" : "Abigail"
+            },
+            {
+               "name" : "Andinus",
+               "y" : 2,
+               "drilldown" : "Andinus"
+            },
+            {
+               "name" : "Ben Davies",
+               "drilldown" : "Ben Davies",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Cheok-Yin Fung",
+               "y" : 1,
+               "name" : "Cheok-Yin Fung"
+            },
+            {
+               "name" : "James Raspass",
+               "y" : 2,
+               "drilldown" : "James Raspass"
+            },
+            {
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "y" : 2,
+               "name" : "Mark Anderson"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            }
+         ],
+         "name" : "The Weekly Challenge - 133"
+      }
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-10-05 07:53:19 GMT"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Abigail",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Abigail",
-            "name" : "Abigail"
+            "id" : "Abigail"
          },
          {
-            "name" : "Andinus",
+            "id" : "Andinus",
             "data" : [
                [
                   "Raku",
@@ -52,7 +105,7 @@
                   1
                ]
             ],
-            "id" : "Andinus"
+            "name" : "Andinus"
          },
          {
             "data" : [
@@ -61,38 +114,48 @@
                   2
                ]
             ],
-            "name" : "Ben Davies",
-            "id" : "Ben Davies"
+            "id" : "Ben Davies",
+            "name" : "Ben Davies"
          },
          {
-            "id" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
+            "id" : "Cheok-Yin Fung",
             "name" : "Cheok-Yin Fung"
          },
          {
-            "id" : "James Smith",
+            "name" : "James Raspass",
+            "id" : "James Raspass",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "James Smith"
+            "id" : "James Smith"
          },
          {
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
+            "name" : "Mark Anderson"
          },
          {
             "name" : "Roger Bell_West",
@@ -109,53 +172,5 @@
             "id" : "Roger Bell_West"
          }
       ]
-   },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 133",
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "Abigail",
-               "drilldown" : "Abigail"
-            },
-            {
-               "y" : 2,
-               "name" : "Andinus",
-               "drilldown" : "Andinus"
-            },
-            {
-               "y" : 2,
-               "name" : "Ben Davies",
-               "drilldown" : "Ben Davies"
-            },
-            {
-               "drilldown" : "Cheok-Yin Fung",
-               "y" : 1,
-               "name" : "Cheok-Yin Fung"
-            },
-            {
-               "name" : "James Smith",
-               "y" : 2,
-               "drilldown" : "James Smith"
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson",
-               "y" : 2
-            },
-            {
-               "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
