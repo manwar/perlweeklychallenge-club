@@ -16,7 +16,7 @@ sub sum_prime_factors {
   my $N = shift;
 
   ## If we are composite then store the sum of the digit factors for the composite and return...
-  ( $N % $_) or ( return $comp{$N} = $comp{$N/$_} + $comp{$_} ) foreach @primes;
+  ( $N % $_) || ( return $comp{$N} = $comp{$N/$_} + $comp{$_} ) foreach @primes;
 
   ## Otherwise we are prime so add to primes and return nothing....
   $comp{$N} = sum_digits $N;
@@ -32,10 +32,13 @@ sub smith_numbers { ## This is the short form! using &&
   ( return @sn                               ) while $n++;
 }
 
+## Same functions without comments....
+
 sub cl_sum_digits { my $t = 0; $t+=$_ foreach split //, $_[0]; $t }
+
 sub cl_sum_prime_factors {
   my $N = shift;
-  ( $N % $_) or ( return $comp{$N} = $comp{$N/$_} + $comp{$_} ) foreach @primes;
+  ( $N % $_) || ( return $comp{$N} = $comp{$N/$_} + $comp{$_} ) foreach @primes;
   $comp{$N} = cl_sum_digits $N;
   push @primes, $N;
   return 0;
