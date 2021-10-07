@@ -16,7 +16,7 @@ sub sum_prime_factors {
   my $N = shift;
 
   ## If we are composite then store the sum of the digit factors for the composite and return...
-  ( $N % $_) || ( return $sum_pf[$N] = $sum_pf[$N/$_] + $sum_pf[$_] )
+  ( $N % $_) ? (( $N<$_*$_) && last ) : ( return $sum_pf[$N] = $sum_pf[$N/$_] + $sum_pf[$_] )
     foreach @primes;
 
   ## Otherwise we are prime so add to primes and return nothing....
