@@ -1,9 +1,20 @@
 #include <stdio.h>
 
 // Compute all Smith Numbers below MAX_N
-#define MAX_N 1000000
+
+// Use guess that PSIZE should approximately 1.1 * PFSIZE / ln(PFSIZE)
+
+// 10^6
+// #define MAX_N   1000000
+// #define PSIZE   42000          // Have to guess this!
+// 10^8
+  #define MAX_N   100000000
+  #define PSIZE   3200000      // Have to guess this!
+// 10^9
+//#define MAX_N   1000000000
+//#define PSIZE   28000000     // Have to guess this!
+
 #define PFSIZE (MAX_N/2)
-#define PSIZE  100000     // Have to guess this!
 
 // Set up arrays 
 int sum_pf[ PFSIZE+1 ], primes[ PSIZE ], prime_index = 0;
@@ -47,8 +58,8 @@ int sum_prime_factors( int n ) {
   }
   if( n <= PFSIZE ) {
     sum_pf[ n             ] = sum_digits(n);
+    primes[ prime_index++ ] = n;
   }
-  primes[ prime_index++ ] = n;
   return 0;
 }
 
