@@ -27,12 +27,11 @@ my $COUNT = 10;
 #
 # Return the sum of the digits of the set of given numbers.
 #
-sub digitsum (@n) {sum map {split //} @n}
+sub digitsum (@n) {sum "@n" =~ /\d/ag}
 
 my $c = 0;
-my $n = 1;
+my $n = 0;
 do {
-    my @factors = factor $n;
+    my @factors = factor ++ $n;
     $c ++, say $n if @factors > 1 && digitsum ($n) == digitsum @factors;
-    $n ++;
 } until $c == $COUNT;
