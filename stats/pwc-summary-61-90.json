@@ -1,4 +1,7 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-10-08 18:58:33 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
    },
@@ -6,11 +9,14 @@
       "type" : "column"
    },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-10-08 18:48:47 GMT"
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "series" : [
       {
@@ -49,6 +55,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -80,8 +87,7 @@
             0,
             14,
             92
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -119,11 +125,10 @@
          "name" : "Blog"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -158,10 +163,5 @@
          "Jason Messer",
          "Javier Luque"
       ]
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
