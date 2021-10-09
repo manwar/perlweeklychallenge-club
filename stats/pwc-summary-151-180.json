@@ -2,6 +2,9 @@
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
    },
+   "chart" : {
+      "type" : "column"
+   },
    "xAxis" : {
       "categories" : [
          "Myoungjin Jeon",
@@ -36,18 +39,16 @@
          "Phillip Hartfield Sr"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-10-09 15:00:09 GMT"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "series" : [
       {
@@ -121,7 +122,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             16,
             0,
@@ -153,15 +153,15 @@
             2,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-10-09 15:05:18 GMT"
    }
 }
