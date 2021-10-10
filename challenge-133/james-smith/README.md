@@ -100,6 +100,8 @@ So here is my first C programme for probably 30 years!
 
 This is the limit for the algorithm (would need 20+ Gbytes for the 10 billion case)
 
+Note there is an additional about 0.08 second penalty for compiling the C code - so infact for less than 100,000 the perl code is faster in total...
+
 ### The C code
 
 ```c
