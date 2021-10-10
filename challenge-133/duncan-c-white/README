@@ -1,106 +1,44 @@
-TASK #1 - Mirror Dates
+TASK #1 - Integer Square Root
 
-You are given a date (yyyy/mm/dd).
+You are given a positive integer $N.
 
-Assuming, the given date is your date of birth. Write a script to find
-the mirror dates of the given date.
+Write a script to calculate the integer square root of the given number.
 
-Assuming today is 2021/09/22.
+Please avoid using a built-in function. Find out more about it:
 
-Example 1:
+https://en.wikipedia.org/wiki/Integer_square_root
 
-Input: 2021/09/18
-Output: 2021/09/14, 2021/09/26
+Examples
 
-On the date you were born, someone who was your current age, would have
-been born on 2021/09/14.  Someone born today will be your current age
-on 2021/09/26.
+  Input: $N = 10
+  Output: 3
 
-Example 2:
+  Input: $N = 27
+  Output: 5
 
-Input: 1975/10/10
-Output: 1929/10/27, 2067/09/05
+  Input: $N = 85
+  Output: 9
 
-On the date you were born, someone who was your current age, would have
-been born on 1929/10/27.  Someone born today will be your current age
-on 2067/09/05.
+  Input: $N = 101
+  Output: 10
 
-Example 3:
-
-Input: 1967/02/14
-Output: 1912/07/08, 2076/04/30
-
-On the date you were born, someone who was your current age, would have
-been born on 1912/07/08.  Someone born today will be your current age
-on 2076/04/30.
-
-MY NOTES: Sounds like a pretty easy date manipulation exercise:  dob - delta,
-today + delta where delta = today - date.  The hardest part is working out
-which Date manipulation module to use, as Perl has so many.
+MY NOTES: Pretty easy as the Wikipedia page shows a C implementation
 
 
-TASK #2 - Hash Join
+TASK #2 - Smith Numbers
 
-Write a script to implement Hash Join algorithm as suggested by wikipedia.
+Write a script to generate first 10 Smith Numbers in base 10.
 
-1. For each tuple r in the build input R
-    1.1 Add r to the in-memory hash table
-    1.2 If the size of the hash table equals the maximum in-memory size:
-        1.2.1 Scan the probe input S, and add matching join tuples to the output relation
-        1.2.2 Reset the hash table, and continue scanning the build input R
-2. Do a final scan of the probe input S and add the resulting join tuples to the output relation
+According to Wikipedia:
 
-Example
+"In number theory, a Smith number is a composite number for which, in
+a given number base, the sum of its digits is equal to the sum of the
+digits in its prime factorization in the given number base."
 
-Input:
+MY NOTES: Ok, an example in the Wikipedia clarifies this:
 
-    @player_ages = (
-        [20, "Alex"  ],
-        [28, "Joe"   ],
-        [38, "Mike"  ],
-        [18, "Alex"  ],
-        [25, "David" ],
-        [18, "Simon" ],
-    );
+    4937775 = 3**1 5**2 658371 (prime factors)
+    4 + 9 + 3 + 7 + 7 + 7 + 5 = 42
+    3 x· 1 + 5x 2 + (6 + 5 + 8 + 3 + 7) x 1 = 42 too
 
-    @player_names = (
-        ["Alex", "Stewart"],
-        ["Joe",  "Root"   ],
-        ["Mike", "Gatting"],
-        ["Joe",  "Blog"   ],
-        ["Alex", "Jones"  ],
-        ["Simon","Duane"  ],
-    );
-
-Output:
-
-    Based on index = 1 of @players_age and index = 0 of @players_name.
-
-    20, "Alex",  "Stewart"
-    20, "Alex",  "Jones"
-    18, "Alex",  "Stewart"
-    18, "Alex",  "Jones"
-    28, "Joe",   "Root"
-    28, "Joe",   "Blog"
-    38, "Mike",  "Gatting"
-    18, "Simon", "Duane"
-
-MY NOTES: Ok, I think I understand, but I'm going to ignore the
-whole "out of memory" part as that's too complicated.
-Also, I can't see what logical order the example output is ordered by,
-as far as I can see, the described algorithm leads to the order that I
-produce - not the order the above example output shows; so I'm going to
-ignore that too.  After all, in a relation, order doesn't matter, right?
-
-So for the example I build %name2ages containing:
-"Alex" => [20, 18],
-"Joe" => [28],
-"Mike" => [38],
-"David" => [25],
-"Simon" => [18].
-Then use %name2ages while iterating over @player_names.
-
-There's also the question of how to provide the relations,
-in ch-2.pl I hard-coding them as arrays of pairs as shown above,
-but see also ch-2a.pl which generalises them as files, read by Text::CSV
-and containing fieldnames in row 1.
+Should be quite straightforward.
