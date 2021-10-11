@@ -1,20 +1,18 @@
 #!raku
 
 
-sub MAIN( Int $limit where { $limit > 0 } = 5 ) {
-    my @digits = 1 .. 9;
-    @digits.push: 0;
-    my $start =  @digits.join;
-    
-    my @pandigital = lazy gather {
-        for $start ..^ Inf -> $current {
-            next if $start ~~ / ^0+ /;
-            my $found = 0;
-            $found += $current.comb.grep( $_ ).so ?? 1 !! 0 for @digits;
-            take $current if $found >= @digits.elems;
-        }
+sub MAIN( Int $n where { $n > 0 } ) {
+    $n.say and exit if $n == 1;
+
+    my Int $current-solution = $n +> 1;  # divide by two
+    my Int $next-solution    = 0;
+    while ( $next-solution < $current-solution ) {
+        $next-solution    = ( $current-solution + $n / $current-solution ) +> 1 if ! $next-solution;
+        ( $current-solution, $next-solution ) = $next-solution,
+                                                ( $next-solution + $n / $next-solution ) +> 1;
+        
     }
 
-    @pandigital[ $_ ].say for 0 ..^ $limit;
+    $current-solution.say;
 
 }
