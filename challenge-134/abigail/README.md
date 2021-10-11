@@ -6,5 +6,4 @@
 
 ## Part 2
 
-* [C](c/ch-2.c)
 * [Perl](perl/ch-2.pl)
