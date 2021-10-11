@@ -8,6 +8,8 @@ is isqrt(27),   5;
 is isqrt(85),   9;
 is isqrt(101), 10;
 
+# from https://stackoverflow.com/a/15391420
+
 sub isqrt($n)
 {
     my $x = $n;

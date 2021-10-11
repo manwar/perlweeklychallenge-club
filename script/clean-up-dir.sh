@@ -1,3 +1,4 @@
+find . -name "*.w" -delete
 find . -name "*.c" -delete
 find . -name "*.logo" -delete
 find . -name "*.amx" -delete
