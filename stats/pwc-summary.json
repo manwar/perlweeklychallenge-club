@@ -1,13 +1,21 @@
 {
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 241] Last updated at 2021-10-11 21:44:06 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
    },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -254,17 +262,9 @@
          "Yozen Hernandez"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 241] Last updated at 2021-10-11 14:37:25 GMT"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             1,
             0,
@@ -460,7 +460,7 @@
             1,
             1,
             1,
-            118,
+            119,
             57,
             30,
             27,
@@ -493,7 +493,7 @@
             1,
             3,
             0,
-            85,
+            86,
             12,
             9,
             12,
@@ -507,8 +507,7 @@
             3,
             44,
             11
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -527,7 +526,7 @@
             0,
             0,
             7,
-            9,
+            10,
             31,
             0,
             0,
@@ -707,7 +706,7 @@
             0,
             3,
             0,
-            106,
+            107,
             57,
             28,
             0,
@@ -740,7 +739,7 @@
             0,
             0,
             1,
-            87,
+            88,
             0,
             2,
             0,
@@ -757,7 +756,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -773,7 +771,7 @@
             0,
             0,
             0,
-            17,
+            18,
             17,
             0,
             0,
@@ -1000,12 +998,14 @@
             1,
             5,
             10
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    }
 }
