@@ -11,7 +11,7 @@ sub MAIN( Int $limit where { $limit > 0 } = 5 ) {
             next if $start ~~ / ^0+ /;
             my $found = 0;
             $found += $current.comb.grep( $_ ).so ?? 1 !! 0 for @digits;
-            take $current if $found == @digits.elems;
+            take $current if $found >= @digits.elems;
         }
     }
 
