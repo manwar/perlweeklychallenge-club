@@ -7,8 +7,8 @@ sub MAIN(UInt:D \m, UInt:D \n) {
         ' |',
         (1..n)».&{ $_.fmt(" %{ @widths[$_-1] }d") }.join;
     put '-' x m.chars,
-        '-+', 
-        (1..n)».&{ '-' x (@widths[$_-1] + 1) }.join;
+        '-+',
+        '-' x (@widths.sum + n);
 
     for 1..m -> $row {
         put $row.fmt("%{ m.chars }d"),
