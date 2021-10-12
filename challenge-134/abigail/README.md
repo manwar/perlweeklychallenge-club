@@ -7,6 +7,7 @@
 * [Befunge-93](befunge-93/ch-1.bf93)
 * [C](c/ch-1.c)
 * [Lua](lua/ch-1.lua)
+* [m4](m4/ch-1.m4)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
