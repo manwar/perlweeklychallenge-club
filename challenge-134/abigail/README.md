@@ -4,6 +4,7 @@
 
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [bc](bc/ch-1.bc)
 * [Befunge-93](befunge-93/ch-1.bf93)
 * [C](c/ch-1.c)
 * [Go](go/ch-1.go)
@@ -19,6 +20,7 @@
 
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [bc](bc/ch-2.bc)
 * [C](c/ch-2.c)
 * [Go](go/ch-2.go)
 * [Java](java/ch-2.java)
