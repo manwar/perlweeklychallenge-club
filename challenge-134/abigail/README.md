@@ -4,6 +4,7 @@
 
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
+* [Basic](basic/ch-1.bas)
 * [bc](bc/ch-1.bc)
 * [Befunge-93](befunge-93/ch-1.bf93)
 * [C](c/ch-1.c)
