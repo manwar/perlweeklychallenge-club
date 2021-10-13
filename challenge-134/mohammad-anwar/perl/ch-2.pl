@@ -30,8 +30,8 @@ sub create_table {
     die "ERROR: Missing 'm'\n." unless defined $m;
     die "ERROR: Missing 'n'\n." unless defined $n;
 
-    die "ERROR: Invalid $m\n."  if ($m < 0);
-    die "ERROR: Invalid $n\n."  if ($n < 0);
+    die "ERROR: Invalid $m\n."  if ($m <= 0);
+    die "ERROR: Invalid $n\n."  if ($n <= 0);
 
     my $table  = [];
     my $length = length($m * $n) + 1;
