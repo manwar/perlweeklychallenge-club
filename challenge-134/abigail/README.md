@@ -8,6 +8,7 @@
 * [bc](bc/ch-1.bc)
 * [Befunge-93](befunge-93/ch-1.bf93)
 * [C](c/ch-1.c)
+* [csh](csh/ch-1.csh)
 * [Erlang](erlang/ch-1.erl)
 * [Go](go/ch-1.go)
 * [Java](java/ch-1.java)
