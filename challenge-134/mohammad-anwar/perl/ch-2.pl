@@ -44,9 +44,10 @@ sub create_table {
     $line .= '-' for (4 .. length($col));
     push @$table, $line;
 
-    my %terms;
+    my %terms = ();
+    $terms{$_} = 1 for (1 .. $m);
+
     foreach my $i (1 .. $m) {
-        $terms{$i} = 1;
         my $row = "$i | $i";
         foreach my $j (2 .. $n) {
             my $k = $i * $j;
