@@ -14,6 +14,7 @@
 * [m4](m4/ch-1.m4)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
+* [PHP](php/ch-1.php)
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
