@@ -33,8 +33,5 @@ sub next_perm {
   return 1; ## Return true to say can continue...
 }
 
-
 say @s while next_perm && $count--;
-
-
 
