@@ -31,7 +31,8 @@
               (apply shell bb-cmd args))))
 
   clean {:doc "Clean out temporary files"
-         :task (run! fs/delete-tree [".nrepl-port" ".cpcache" ".lsp"])}
+         :task (run! fs/delete-tree
+                     [".nrepl-port" ".cpcache" ".lsp" ".clj-kondo"])}
 
   generate-pom {:doc "Generate POM file"
                 :task (clojure "-X:deps mvn-pom")}
