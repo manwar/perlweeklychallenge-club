@@ -12,10 +12,10 @@ for line in io . lines () do
     local _, _, m, n = line : find ("([0-9]+)%s+([0-9]+)")
     local seen = {}
     local count = 0
-    for x = 1, m do
-        for y = 1, n do
-            if seen [x * y] == nil then
-                seen [x * y] = 1
+    for i = 1, m do
+        for j = 1, n do
+            if seen [i * j] == nil then
+                seen [i * j] = 1
                 count = count + 1
             end
         end
