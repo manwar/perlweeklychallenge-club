@@ -31,7 +31,7 @@ To walk the pandigital numbers we can write a script which generates the next pe
 We note though that we don't have to start at 0123456789 (the lowest permutation) as all numbers starting with 0 are skipped. We can then pre-empty this loop by noting the largest permutation 0987654321 which isn't a pan-digital number, so when we find the next iteration we have our first pandigital number....
 
 ```perl
-my @s = (0,reverse 1..9);
+my @s = reverse 1..9, 0;
 
 sub next_perm {
   my( $i, $j );

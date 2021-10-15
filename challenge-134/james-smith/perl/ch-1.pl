@@ -8,11 +8,11 @@ use Test::More;
 use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
-my @s = (0,reverse 1..9); ## Cheat we start with the last perumation
-                          ## starting with 0 - 0987654321
-                          ## Saves us looping through the first
-                          ## combinations checking for number starting
-                          ## with non-zero (362880 combinations)
+my @s = reverse 1..9,0; ## Cheat we start with the last perumation
+                        ## starting with 0 - 0987654321
+                        ## Saves us looping through the first
+                        ## combinations checking for number starting
+                        ## with non-zero (362880 combinations)
 my $count = @ARGV ? $ARGV[0] : 5;
 
 sub next_perm {
