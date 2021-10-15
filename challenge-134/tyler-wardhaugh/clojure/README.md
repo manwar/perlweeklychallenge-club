@@ -22,8 +22,6 @@ Run the project's tests (which are samples from the task descriptions):
 Run Task #1 with input
 
     $ clojure -M -m tw.weekly.c134.t1 N
-    # ... or ...
-    $ bb run task-1 N
 
 Run Task #2 with input:
 
