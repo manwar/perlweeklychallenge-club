@@ -1,40 +1,30 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontSize" : "13px",
             "fontFamily" : "Verdana, sans-serif"
          }
-      },
-      "type" : "category"
+      }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-10-16 21:55:17 GMT"
    },
    "legend" : {
       "enabled" : "false"
    },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
+      },
+      "min" : 0
    },
    "series" : [
       {
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "enabled" : "true",
-            "rotation" : -90
-         },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -42,22 +32,32 @@
             ],
             [
                "Perl",
-               6383
+               6385
             ],
             [
                "Raku",
                3909
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "y" : 10,
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF"
+         },
+         "name" : "Contributions"
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2021-10-16 13:46:17 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
