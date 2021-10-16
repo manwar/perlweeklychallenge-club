@@ -1,46 +1,18 @@
 {
-   "series" : [
-      {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "align" : "right",
-            "rotation" : -90,
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "color" : "#FFFFFF"
-         },
-         "data" : [
-            [
-               "Blog",
-               1935
-            ],
-            [
-               "Perl",
-               6381
-            ],
-            [
-               "Raku",
-               3907
-            ]
-         ]
-      }
-   ],
+   "chart" : {
+      "type" : "column"
+   },
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       },
       "type" : "category"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
       "min" : 0,
@@ -48,16 +20,44 @@
          "text" : null
       }
    },
-   "legend" : {
-      "enabled" : "false"
+   "series" : [
+      {
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10,
+            "enabled" : "true",
+            "rotation" : -90
+         },
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               1935
+            ],
+            [
+               "Perl",
+               6383
+            ],
+            [
+               "Raku",
+               3909
+            ]
+         ]
+      }
+   ],
+   "subtitle" : {
+      "text" : "Last updated at 2021-10-16 13:46:17 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-10-16 12:25:43 GMT"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
