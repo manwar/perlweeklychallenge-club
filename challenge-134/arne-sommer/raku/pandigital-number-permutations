@@ -1,0 +1,16 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $n where $n > 0 = 5, :v($verbose));
+
+my $pandigital-seq := gather
+{
+  my @base  = 0 .. 9;
+
+  for @base.permutations -> @permutation
+  {
+    say ":Candidate ", @permutation.join("") if $verbose;
+    take @permutation.join unless @permutation[0] == 0;
+  }
+}
+
+say $pandigital-seq[^$n].join(", ");
