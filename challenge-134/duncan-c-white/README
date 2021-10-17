@@ -1,44 +1,52 @@
-TASK #1 - Integer Square Root
+TASK #1 - Pandigital Numbers
 
-You are given a positive integer $N.
+Write a script to generate first 5 Pandigital Numbers in base 10.
 
-Write a script to calculate the integer square root of the given number.
+As per the wikipedia, it says:
 
-Please avoid using a built-in function. Find out more about it:
+A pandigital number is an integer that in a given base has among its
+significant digits each digit used in the base at least once.
+The smallest base 10 pandigital number is 1023456789, and subsequent
+ones are lexicographic permutations, ie. 1023456798, 1023456879...
 
-https://en.wikipedia.org/wiki/Integer_square_root
+MY NOTES: Basically just needs a standard lexicographic permutation algorithm,
+with the initial value to permute being 1023456789.
 
-Examples
+TASK #2 - Distinct Terms Count
 
-  Input: $N = 10
-  Output: 3
+You are given 2 positive numbers, $m and $n.
 
-  Input: $N = 27
-  Output: 5
+Write a script to generate multiplication table and display count of distinct terms.
 
-  Input: $N = 85
-  Output: 9
+Example 1
 
-  Input: $N = 101
-  Output: 10
+Input: $m = 3, $n = 3
+Output:
 
-MY NOTES: Pretty easy as the Wikipedia page shows a C implementation
+      x | 1 2 3
+      --+------
+      1 | 1 2 3
+      2 | 2 4 6
+      3 | 3 6 9
+
+Distinct Terms: 1, 2, 3, 4, 6, 9
+Count: 6
+
+Example 2
+
+Input: $m = 3, $n = 5
+Output:
+
+      x | 1  2  3  4  5
+      --+--------------
+      1 | 1  2  3  4  5
+      2 | 2  4  6  8 10
+      3 | 3  6  9 12 15
+
+Distinct Terms: 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15
+Count: 11
 
 
-TASK #2 - Smith Numbers
-
-Write a script to generate first 10 Smith Numbers in base 10.
-
-According to Wikipedia:
-
-"In number theory, a Smith number is a composite number for which, in
-a given number base, the sum of its digits is equal to the sum of the
-digits in its prime factorization in the given number base."
-
-MY NOTES: Ok, an example in the Wikipedia clarifies this:
-
-    4937775 = 3**1 5**2 658371 (prime factors)
-    4 + 9 + 3 + 7 + 7 + 7 + 5 = 42
-    3 x· 1 + 5x 2 + (6 + 5 + 8 + 3 + 7) x 1 = 42 too
-
-Should be quite straightforward.
+MY NOTES: Pretty easy, the distinct terms just need a set (hash) as usual.
+The tricky bit is the pretty layout of the multiplication table, especially
+getting the correct column widths..
