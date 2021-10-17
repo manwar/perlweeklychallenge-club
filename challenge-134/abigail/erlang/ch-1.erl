@@ -11,12 +11,12 @@
 -module (ch1).
 -export ([main/0]).
 
-func ([])    -> ok;
-func ([H|T]) ->
-    io:fwrite ("1023456~w~n", [H]),
-    func (T).
+pandigital ([])            -> ok;
+pandigital ([Head | List]) ->
+    io:fwrite ("1023456~w~n", [Head]),
+    pandigital (List).
     
 
 main () ->
-    func ([789, 798, 879, 897, 978]).
+    pandigital ([789, 798, 879, 897, 978]).
 

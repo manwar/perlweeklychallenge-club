@@ -11,8 +11,7 @@ while {[gets stdin line] >= 0} {
     array set seen { }
     for {set i 1} {$i <= $n} {incr i} {
         for {set j 1} {$j <= $m} {incr j} {
-            set p [expr $i * $j]
-            set seen($p) 1
+            set seen([expr $i * $j]) 1
         }
     }
     puts [array size seen]
