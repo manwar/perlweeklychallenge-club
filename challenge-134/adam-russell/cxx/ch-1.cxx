@@ -20,21 +20,12 @@ std::vector<int> Pandigital::first_n_pandigitals(int n) {
     int x = 1000000000;
     do {
         int test = x;
-        std::vector<int> test_vector;
+        std::vector<int> test_vector = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9};
         do {
-            test_vector.push_back(test % 10);
+            test_vector.erase(std::remove(test_vector.begin(), test_vector.end(), test % 10), test_vector.end());
             test = test / 10;
         } while(test > 0);
-        if(std::count(test_vector.begin(), test_vector.end(), 0) &&
-                std::count(test_vector.begin(), test_vector.end(), 1) &&
-                std::count(test_vector.begin(), test_vector.end(), 2) &&
-                std::count(test_vector.begin(), test_vector.end(), 3) &&
-                std::count(test_vector.begin(), test_vector.end(), 4) &&
-                std::count(test_vector.begin(), test_vector.end(), 5) &&
-                std::count(test_vector.begin(), test_vector.end(), 6) &&
-                std::count(test_vector.begin(), test_vector.end(), 7) &&
-                std::count(test_vector.begin(), test_vector.end(), 8) &&
-                std::count(test_vector.begin(), test_vector.end(), 9))
+        if(test_vector.size() == 0)
             pandigitals.push_back(x);
         x++;
     } while(pandigitals.size() < n);
