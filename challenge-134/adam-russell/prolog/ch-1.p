@@ -10,6 +10,7 @@ pandigital(Pandigitals):-
     Pandigitals = [A, B, C, D, E, F, G, H, I, J],
     fd_domain([A, B, C, D, E, F, G, H, I, J], Digits),
     A #= 1,
+    B #= 0,
     all_unique([A, B, C, D, E, F, G, H, I, J], Digits),
     fd_labeling(Pandigitals).
 
@@ -24,4 +25,4 @@ print_pandigitals([H|T]):-
     flatten(Codes, DigitCodes), 
     number_codes(Number, DigitCodes),
     write(Number), nl,
-    print_pandigitals(T). 
+    print_pandigitals(T).
