@@ -1,6 +1,6 @@
 # The Weekly Challenge 134
 # Task 2 Distinct Terms Count
-# Usage: ch-2.pl $m $n (optional linewidth, default:256)
+# Usage: $ ch-2.pl m n [optional linewidth, default:256]
 use v5.12.0;
 use warnings;
 
