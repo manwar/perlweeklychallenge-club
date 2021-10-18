@@ -16,7 +16,8 @@ my @TESTS = (
   [ 1000,    'Even digits'  ],
 );
 
-is( middle3($_->[0]), $_->[1] ) foreach @TESTS;
+is( middle3(  $_->[0]), $_->[1] ) foreach @TESTS;
+is( middle3no($_->[0]), $_->[1] ) foreach @TESTS[0..2,4];
 
 done_testing();
 
@@ -26,6 +27,15 @@ sub middle3 {
   $n = abs $n;
   return length $n < 3 ? 'Too short'
        : (length $n)%2 ? substr $n, (-3 + length $n ) / 2, 3
-       :                 'Even digits';
+       :                 'Even digits'
+       ;
+}
+
+sub middle3no {
+  my $n = abs shift;
+  return length $n < 3 ? 'Too short'
+       : (length $n)%2 ? substr $n, (-3 + length $n ) / 2, 3
+       :                 'Even digits'
+       ;
 }
 
