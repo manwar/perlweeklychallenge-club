@@ -11,7 +11,7 @@
 ## Part 2
 
 * [AWK](awk/ch-2.awk)
-* [Bash](bash/ch-1.sh)
+* [Bash](bash/ch-2.sh)
 * [C](c/ch-2.c)
-* [Node.js](node/ch-1.js)
+* [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
