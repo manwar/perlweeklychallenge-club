@@ -23,9 +23,9 @@ done_testing();
 sub middle3 {
   my $n = shift;
   return 'Not a number' unless $n =~ m{^-?\d+$};
-  return 'Too short'    unless $n =~ m{\d{3}};
-  return 'Even digits'  if $n =~ m{^-?(?:\d\d)+$};
-  $n =~ s{^-}{};
-  return substr $n, (-3 + length $n ) / 2, 3;
+  $n = abs $n;
+  return length $n < 3 ? 'Too short'
+       : (length $n)%2 ? substr $n, (-3 + length $n ) / 2, 3
+       :                 'Even digits';
 }
 
