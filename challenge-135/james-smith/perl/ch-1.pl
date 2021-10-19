@@ -18,23 +18,23 @@ my @TESTS = (
   [ 1000,    'Even digits'  ],
 );
 
-is( middle3(  $_->[0]), $_->[1] ) foreach @TESTS;
-is( middle3no($_->[0]), $_->[1] ) foreach @TESTS[0..2,4];
+is( middle3(        $_->[0]), $_->[1] ) foreach @TESTS;
+is( middle3compact( $_->[0]), $_->[1] ) foreach @TESTS[0..4,6];
 
 done_testing();
 
 sub middle3 {
   my $n = shift;
   return 'Not a number' unless $n =~ m{^-?\d+$};
-  $n = abs $n;
-  return length $n < 3 ? 'Too short'
-       : (length $n)%2 ? substr $n, (-3 + length $n ) / 2, 3
-       :                 'Even digits'
+  my $l = length( $n = abs $n );
+  return $l < 3 ? 'Too short'
+       : $l % 2 ? substr $n, ( $l - 3 ) / 2, 3
+       :          'Even digits'
        ;
 }
 
-sub middle3no {
-  my$l=length(my$n=abs shift);
+sub middle3compact {
+  my$l=length(my$n=abs$_[0]);
   return$l<3?'Too short':$l%2?substr$n,$l/2-1,3:'Even digits';
 }
 
