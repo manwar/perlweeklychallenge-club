@@ -45,7 +45,7 @@ It is possible to compact this slightly - buy 1 - assuming `$n` is an integer, a
 ```perl
 sub middle3compact {
   my$l=length(my$n=abs$_[0]);
-  return$l<3?'Too short':$l%2?substr$n,$l/2-1,3:'Even digits';
+  $l<3?'Too short':$l%2?substr$n,$l/2-1,3:'Even digits';
 }
 ```
 
