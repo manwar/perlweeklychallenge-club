@@ -10,6 +10,7 @@
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 * [Ruby](ruby/ch-1.rb)
+* [Tcl](tcl/ch-1.tcl)
 
 ## Part 2
 
@@ -21,3 +22,4 @@
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
 * [Ruby](ruby/ch-2.rb)
+* [Tcl](tcl/ch-2.tcl)
