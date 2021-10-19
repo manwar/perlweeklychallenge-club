@@ -23,7 +23,7 @@ let w = [1, 3, 1, 7, 3, 9, 1]
         let check = 0
         for (let i = 0; i < 7; i ++) {
             let value = line . charCodeAt (i)
-            value -= value <= 57 ? 48 : 55
+            value -= value <= 57 ? 48 : 65
             check += w [i] * value
         }
         console . log (check % 10 == 0 ? 1 : 0)

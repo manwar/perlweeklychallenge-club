@@ -22,7 +22,7 @@ for line in fileinput . input ():
             if val <= ord ("9"):
                 val = val - ord ("0")
             else:
-                val = val - ord ("A") + 10
+                val = val - ord ("A")
             check = check + w [i] * val
         if check % 10 == 0:
             print (1)

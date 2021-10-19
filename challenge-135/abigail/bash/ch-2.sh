@@ -26,7 +26,7 @@ do    if ((${#line} != 7))
               printf -v ord %d "'$char"
               if [[ $char =~ [0-9] ]]
               then ((value = ord - 48))
-              else ((value = ord - 65 + 10))
+              else ((value = ord - 65))
               fi
               ((check += ${w[i]} * value))
           done

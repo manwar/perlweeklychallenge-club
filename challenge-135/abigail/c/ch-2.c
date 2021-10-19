@@ -24,10 +24,8 @@ int main (void) {
             int check = 0;
             for (size_t i = 0; i < 7 && valid; i ++) {
                 char first;
-                int  base;
                 if ('0' <= line_ptr [i] && line_ptr [i] <= '9') {
                     first = '0';
-                    base  =  0;
                 }
                 else {
                     if ('B' <= line_ptr [i] && line_ptr [i] <= 'Z' &&
@@ -37,13 +35,12 @@ int main (void) {
                                line_ptr [i] != 'U'                 &&
                                i < 6) {
                         first = 'A';
-                        base  = 10;
                     }
                     else {
                         valid = 0;
                     }
                 }
-                check += (line_ptr [i] - first + base) * w [i];
+                check += (line_ptr [i] - first) * w [i];
             }
             if (check % 10 != 0) {
                 valid = 0;

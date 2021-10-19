@@ -21,7 +21,7 @@ for line in io . lines () do
             local byte = string . byte (line : sub (i, i))
             if   byte <= string . byte ("9")
             then byte  = byte - string . byte ("0")
-            else byte  = byte - string . byte ("A") + 10
+            else byte  = byte - string . byte ("A")
             end
             check = check + w [i] * byte
          end

@@ -22,7 +22,6 @@ ARGF . each_line do
                 val -= "0" . ord
             else
                 val -= "A" . ord
-                val += 10
             end
             check += w [i] * val
         end

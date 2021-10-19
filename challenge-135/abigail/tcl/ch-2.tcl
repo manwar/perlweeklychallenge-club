@@ -16,7 +16,7 @@ while {[gets stdin line] >= 0} {
             if {[expr $val <= [scan "9" %c]]} {
                 set val [expr $val - [scan "0" %c]]
             } else {
-                set val [expr $val - [scan "A" %c] + 10]
+                set val [expr $val - [scan "A" %c]]
             }
             set check [expr $check + [lindex $w $i] * $val]
         }
