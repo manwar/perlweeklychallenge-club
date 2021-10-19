@@ -87,7 +87,7 @@ Again we can compact the code - by removing spaces and a couple of rewrites:
  
 ```perl
 sub is_sedol_compact {
-  return 0 if$_[0]!~/^[0-9B-HJ-NP-TW-Z]{6}\d$/;
+  return 0if$_[0]!~/^[0-9B-HJ-NP-TW-Z]{6}\d$/;
   my($t,@w)=qw(0 1 9 3 7 1 3 1);
   $t+=(/\d/?$_:-55+ord$_)*pop@w for split//,$_[0];
   $t%10?0:1;
