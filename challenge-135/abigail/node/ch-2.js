@@ -22,9 +22,9 @@ let w = [1, 3, 1, 7, 3, 9, 1]
     else {
         let check = 0
         for (let i = 0; i < 7; i ++) {
-            let value = line . charCodeAt (i)
-            value -= value <= 57 ? 48 : 65
-            check += w [i] * value
+            let val = line . charCodeAt (i)
+            val   -= (val <= "9" . charCodeAt (0) ? "0" : "A") . charCodeAt (0)
+            check += w [i] * val
         }
         console . log (check % 10 == 0 ? 1 : 0)
     }

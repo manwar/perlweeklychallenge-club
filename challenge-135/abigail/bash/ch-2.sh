@@ -12,6 +12,9 @@ set -f
 
 w=(1 3 1 7 3 9 1)
 
+printf -v ord_0 %d "'0"
+printf -v ord_A %d "'A"
+
 while read line
 do    if ((${#line} != 7))
       then echo 0
@@ -25,8 +28,8 @@ do    if ((${#line} != 7))
           do  char=${line:$i:1}
               printf -v ord %d "'$char"
               if [[ $char =~ [0-9] ]]
-              then ((value = ord - 48))
-              else ((value = ord - 65))
+              then ((value = ord - ord_0))
+              else ((value = ord - ord_A))
               fi
               ((check += ${w[i]} * value))
           done

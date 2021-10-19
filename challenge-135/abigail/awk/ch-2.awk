@@ -9,12 +9,16 @@
 #
 
 BEGIN {
+    ord_0 = 48
+    ord_9 = 57
+    ord_A = 65
+    ord_Z = 90
     split ("1 3 1 7 3 9 1", w, " ")
-    for (i = 48; i <= 57; i ++) {
-        c [sprintf ("%c", i)] = i - 48
+    for (i = ord_0; i <= ord_9; i ++) {
+        c [sprintf ("%c", i)] = i - ord_0
     }
-    for (i = 65; i <= 90; i ++) {
-        c [sprintf ("%c", i)] = i - 65
+    for (i = ord_A; i <= ord_Z; i ++) {
+        c [sprintf ("%c", i)] = i - ord_A
     }
 }
 
