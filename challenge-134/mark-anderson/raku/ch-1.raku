@@ -1,25 +1,36 @@
 #!/usr/bin/env raku
 
-say pandigital(1..5);
-say pandigital(1, 1000000, 2000000, 3000000, 3265920);
+# a translation of http://perplexus.info/show.php?pid=6448&cid=42810
 
-sub pandigital(+$arr where 3265920 >= .all)
+for (1, 1e6, 2e6, 3e6, 3265920)
 {
-    my @polys = |$arr.map(*.pred.polymod(362880));
+    say pandigital($_);
+}
 
-    my $starts := < 1023456789 2013456789 3012456789 
-                    4012356789 5012346789 6012345789 
-                    7012345689 8012345679 9012345678 >;
+multi pandigital($n where * == 3265920) { 9876543210 }
 
-    my @pans = gather for $starts.head.comb.permutations
+multi pandigital($n is copy where * < 3265920)
+{
+    my $m;
+    my $t;
+    my $a = '';
+    my @a = 1..9;
+    my $s = set 0..9;
+
+    loop
     {
-        .take
-    }[@polys>>[0]]>>.join;  
-
-    gather for @pans Z @polys  
-    {
-        my $div = .tail.tail;
-        .head .= trans($starts[0] => $starts[$div]) if $div; 
-        take .head;
+        my $f = [*] @a;
+        $m = ($n / $f).floor;
+        last if $m * $f == $n;
+        $t = $++ ?? $s.sort.[$m].key !! $s.sort.[$m+1].key;
+        $a ~= $t;
+        $s (-)= $t;
+        $n -= $f * $m;
+        @a.pop;
     }
+
+    $t = $s.sort.[$m-1].key;
+    $a ~= $t;
+    $s (-)= $t;
+    $a ~ $s.keys.sort(-*).join;
 }
