@@ -14,7 +14,6 @@ sub mirror {
     my $_today = timelocal(0, 0, 0, @arr_today);
     my @arr_birth = ($_[2], $_[1]-1, $_[0]);
     my $_birth = timelocal(0, 0, 0, @arr_birth);
-    my $sec_diff = $_today - $_birth;
     my $y1 = int (($_today - $_birth)/86400);
     my @d_senior = localtime timegm_nocheck 0, 0, 0, $arr_birth[0]-$y1, $arr_birth[1], $arr_birth[2]; 
     my @d_junior = localtime timegm_nocheck 0, 0, 0, $arr_today[0]+$y1, $arr_today[1], $arr_today[2]; 
