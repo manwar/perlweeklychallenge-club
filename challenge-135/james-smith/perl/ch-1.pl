@@ -35,6 +35,6 @@ sub middle3 {
 
 sub middle3compact {
   my$l=length(my$n=abs$_[0]);
-  return$l<3?'Too short':$l%2?substr$n,$l/2-1,3:'Even digits';
+  return$l<3?'Too short':$l%2?substr$n,$l/2-1,3:'Even digits'
 }
 

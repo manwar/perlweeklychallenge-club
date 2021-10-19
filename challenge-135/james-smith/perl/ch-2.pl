@@ -18,7 +18,7 @@ my @TESTS = (
   [ 'BG03Y86', 1 ],
 );
 
-is( is_sedol($_->[0]), $_->[1] ) for @TESTS;
+is( is_sedol(        $_->[0]), $_->[1] ) for @TESTS;
 is( is_sedol_compact($_->[0]), $_->[1] ) for @TESTS;
 
 done_testing();
@@ -38,9 +38,9 @@ sub is_sedol {
 }
 
 sub is_sedol_compact {
-  return 0 unless$_[0]=~/^[0-9B-HJ-NP-TW-Z]{6}\d$/;
-  my($t,@w)=qw(0 1 3 1 7 3 9 1);
-  $t+=(/\d/?$_:-55+ord$_)*shift@w for split//,$_[0];
-  $t%10?0:1;
+  return 0if$_[0]!~/^[0-9B-HJ-NP-TW-Z]{6}\d$/;
+  my($t,@w)=qw(0 1 9 3 7 1 3 1);
+  $t+=(/\d/?$_:-55+ord$_)*pop@w for split//,$_[0];
+  $t%10?0:1
 }
 
