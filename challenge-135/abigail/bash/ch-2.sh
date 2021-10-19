@@ -17,6 +17,8 @@ do    if ((${#line} != 7))
       then echo 0
       elif [[ $line =~ [^0-9BCDFGHJKLMNPQRSTVWXYZ] ]]
       then echo 0
+      elif [[ $line =~ [^0-9]$ ]]
+      then echo 0
       else
           ((check = 0))
           for ((i = 0; i < 7; i ++))

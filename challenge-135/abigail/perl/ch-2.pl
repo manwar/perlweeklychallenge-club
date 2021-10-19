@@ -35,8 +35,9 @@ my %c = do {my $c = 0; map {$_ => $c ++} 0 .. 9, 'A' .. 'Z'};
 #                         except vowels; this is capture group 1.
 #     ((?1)):             use the same subpattern as capture group 1,
 #                         and capture it.
-# @{["((?1))" x 6]}:      repeat the above 6 times.
+# @{["((?1))" x 5]}:      repeat the above 5 times.
+# [0-9]:                  last character must be digit
 #
-say /^((?[[0-9A-Z]-[AEIOU]]))@{["((?1))" x 6]}/x &&
+say /^((?[[0-9A-Z]-[AEIOU]]))@{["((?1))" x 5]}([0-9])$/x &&
 ($c {$1} + 3 * $c {$2} + $c {$3} + 7 * $c {$4} + 3 * $c {$5} + 9 * $c {$6} +
  $c {$7}) % 10 == 0 || 0 while <>;

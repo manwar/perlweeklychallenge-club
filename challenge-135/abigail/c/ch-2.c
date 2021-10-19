@@ -34,7 +34,8 @@ int main (void) {
                                line_ptr [i] != 'E'                 &&
                                line_ptr [i] != 'I'                 &&
                                line_ptr [i] != 'O'                 &&
-                               line_ptr [i] != 'U') {
+                               line_ptr [i] != 'U'                 &&
+                               i < 6) {
                         first = 'A';
                         base  = 10;
                     }

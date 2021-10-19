@@ -15,7 +15,7 @@ w = [1, 3, 1, 7, 3, 9, 1]
 
 for line in fileinput . input ():
     line = line . strip ()
-    if re . search (r'^[0-9BCDFGHJKLMNPQRSTVWXYZ]{7}$', line):
+    if re . search (r'^[0-9BCDFGHJKLMNPQRSTVWXYZ]{6}[0-9]$', line):
         check = 0
         for i in range (len (line)):
             val = ord (line [i : i + 1])

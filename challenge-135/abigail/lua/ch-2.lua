@@ -10,8 +10,12 @@
 
 local w = {1, 3, 1, 7, 3, 9, 1}
 
+local valid = "[0-9BCDFGHJKLMNPQRSTVWXYZ]"
+local pat   = "^" .. valid .. valid .. valid ..
+                     valid .. valid .. valid .. "[0-9]$"
+
 for line in io . lines () do
-    if line : find ("^[0-9BCDFGHJKLMNPQRSTVWXYZ]*$") then
+    if line : find (pat) then
         local check = 0
         for i = 1, 7 do
             local byte = string . byte (line : sub (i, i))

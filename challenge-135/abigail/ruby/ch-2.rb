@@ -13,7 +13,7 @@ w = [1, 3, 1, 7, 3, 9, 1]
 ARGF . each_line do
     | line |
     line . strip!
-    if line . match (/^[0-9BCDFGHJKLMNPQRSTVWXYZ]/) then
+    if line . match (/^[0-9BCDFGHJKLMNPQRSTVWXYZ]{6}[0-9]$/) then
         check = 0
         line . split('') . each_with_index do
             | char, i |

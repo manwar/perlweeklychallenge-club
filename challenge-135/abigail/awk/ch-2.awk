@@ -24,6 +24,7 @@ BEGIN {
 #
 /[^0-9BCDFGHJKLMNPQRSTVWXYZ]/ {print 0; next}
 length ($0) != 7              {print 0; next}
+/[^0-9]$/                     {print 0; next}
 
 #
 # Do the check sum

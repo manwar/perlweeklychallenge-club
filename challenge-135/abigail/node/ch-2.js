@@ -14,7 +14,9 @@ let w = [1, 3, 1, 7, 3, 9, 1]
 . createInterface ({input: process . stdin})   
 . on              ('line', line => {
     line = line . trim ()
-    if (line . length != 7 || line . match (/[^0-9BCDFGHJKLMNPQRSTVWXYZ]/)) {
+    if (line . length != 7 ||
+        line . match (/[^0-9BCDFGHJKLMNPQRSTVWXYZ]/) ||
+        line . match (/[^0-9]$/)) {
         console . log (0)
     }
     else {
