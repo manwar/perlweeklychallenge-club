@@ -83,13 +83,13 @@ sub is_sedol {
 Again we can compact the code - by removing spaces and a couple of rewrites:
 
  * replace `unless $x=~//` with `if $x!~//`;
- * replace `$x?0:1` with `1^!$x`.
+ * flip `@w` and use `pop`.
  
 ```perl
 sub is_sedol_compact {
   return 0 if$_[0]!~/^[0-9B-HJ-NP-TW-Z]{6}\d$/;
-  my($t,@w)=qw(0 1 3 1 7 3 9 1);
-  $t+=(/\d/?$_:-55+ord$_)*shift@w for split//,$_[0];
-  1^!$t%10;
+  my($t,@w)=qw(0 1 9 3 7 1 3 1);
+  $t+=(/\d/?$_:-55+ord$_)*pop@w for split//,$_[0];
+  $t%10?0:1;
 }
 ```
