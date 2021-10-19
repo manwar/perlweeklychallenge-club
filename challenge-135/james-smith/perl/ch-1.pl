@@ -9,6 +9,8 @@ use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
 my @TESTS = (
+  [ 123456789, 456 ],
+  [ -1234567, 345 ],
   [ 1234567, 345 ],
   [ -123,    123 ],
   [ 1,       'Too short'    ],
@@ -32,10 +34,7 @@ sub middle3 {
 }
 
 sub middle3no {
-  my $n = abs shift;
-  return length $n < 3 ? 'Too short'
-       : (length $n)%2 ? substr $n, (-3 + length $n ) / 2, 3
-       :                 'Even digits'
-       ;
+  my$l=length(my$n=abs shift);
+  return$l<3?'Too short':$l%2?substr$n,$l/2-1,3:'Even digits';
 }
 
