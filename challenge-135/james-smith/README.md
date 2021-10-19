@@ -45,7 +45,7 @@ It is possible to compact this slightly - buy 1 - assuming `$n` is an integer, a
 ```perl
 sub middle3compact {
   my$l=length(my$n=abs$_[0]);
-  $l<3?'Too short':$l%2?substr$n,$l/2-1,3:'Even digits';
+  $l<3?'Too short':$l%2?substr$n,$l/2-1,3:'Even digits'
 }
 ```
 
@@ -55,14 +55,14 @@ sub middle3compact {
 
 ## Solution
 
-You find about SEDOL numbers on Wikipedia at https://en.wikipedia.org/wiki/SEDOL.
+You find about SEDOL (Stock Exchange Daily Official List) numbers on Wikipedia at https://en.wikipedia.org/wiki/SEDOL.
 
 The consist of 6 digits/consonants + a checksum digit. The weighted sum of the 6 digits + the checksum is a multiple of 10.
-The weights are 1, 3, 1, 7, 3 and 9 for the six digits and the checksum.
+The weights are 1, 3, 1, 7, 3 and 9 for the six digits and 1 for the checksum.
 
 We have to:
- * validate the number is a SEDOL number
- * compute the weighted sum
+ * validate the number is of valid format for a SEDOL number - 6 numbers or consonants & a single number.
+ * compute the weighted sum (using ord to convert the B-Z characters to their numeric equivalends)
  * check to see if it is a multiple of 10
 
 ```perl
@@ -70,7 +70,7 @@ sub is_sedol {
 ## Check correct format... numbers and consonants only
   return 0 unless $_[0] =~ m{^[0-9B-HJ-NP-TW-Z]{6}\d$};
 
-## Accumulator and weights for each charachter
+## Accumulator and weights for each character
   my( $t, @w ) = qw(0 1 3 1 7 3 9 1);
 
 ## Calculate SEDOL sum... note YODA sum -55 + ord $_ to avoid precedence issue
@@ -80,16 +80,18 @@ sub is_sedol {
   return $t % 10 ? 0 : 1;
 }
 ```
+
 Again we can compact the code - by removing spaces and a couple of rewrites:
 
  * replace `unless $x=~//` with `if $x!~//`;
  * flip `@w` and use `pop`.
+ * Note `0if` expands as `0 if`.
  
 ```perl
 sub is_sedol_compact {
-  return 0if$_[0]!~/^[0-9B-HJ-NP-TW-Z]{6}\d$/;
+  return 0if$_[0]!~/^[\dB-HJ-NP-TW-Z]{6}\d$/;
   my($t,@w)=qw(0 1 9 3 7 1 3 1);
   $t+=(/\d/?$_:-55+ord$_)*pop@w for split//,$_[0];
-  $t%10?0:1;
+  $t%10?0:1
 }
 ```
