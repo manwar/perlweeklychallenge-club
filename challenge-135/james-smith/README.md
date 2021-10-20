@@ -1,4 +1,4 @@
-# Perl Weekly Challenge #134
+# Perl Weekly Challenge #135
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,57 +10,88 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-134/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-135/james-smith/perl
 
-# Task 1 -  Pandigital Numbers
+# Task 1 -  Middle three digits
 
-***Write a script to generate first 5 Pandigital Numbers in base 10.***
+***You are given an integer. Write a script find out the middle 3-digits of the given integer, if possible otherwise throw sensible error.***
 
 ## The solution
 
-Pandigital numbers (base 10) are numbers who contain all the digits between 0-9 (but don't start with 0)
-The lowest pandigital numbers all are permutations of the digits 0..9 with 0 not being the first digit.
+Obviously using `substr $n, ??, 3` will give a 3-digit chunk of a number - so what are the errors...
 
-To walk the pandigital numbers we can write a script which generates the next perumtation in "lexical" order. You don't need to do this recursively or with tightly nested loops a simple algorithm finds them...
+ * Not an integer - doesn't match `/^-?\d+$/`
+ * Less than 3 digits - length less than 3
+ * Does not have a unique "central 3-digits" *i.e.* has even length
 
- * Find the largest value of `$i` such that `$s[$i]` `<` `$s[$i+1]`
- * Find the largest value of `$j` such that `$s[$i]` `<` `$s[$j]`
- * Flip these to entries
- * Flip all entries from $i+1 to end of the list...
+The value of the `??` is the expression above - `( length number - 3 ) / 2`
 
-We note though that we don't have to start at 0123456789 (the lowest permutation) as all numbers starting with 0 are skipped. We can then pre-empty this loop by noting the largest permutation 0987654321 which isn't a pan-digital number, so when we find the next iteration we have our first pandigital number....
+All that gives us the simple function....
 
 ```perl
-my @s = reverse 1..9, 0;
-
-sub next_perm {
-  my( $i, $j );
-  ( $s[$_] < $s[$_+1] ) && ( $i = $_ ) foreach 0 .. @s-2;
-  return unless defined $i;
-  ( $s[$i] < $s[$_]   ) && ( $j = $_ ) foreach $i+1 .. @s-1;
-  @s[ $i, $j       ] = @s[ $j, $i               ];
-  @s[ $i+1 .. @s-1 ] = @s[ reverse $i+1 .. @s-1 ];
-  return 1;
+sub middle3 {
+  my $n = shift;
+  return 'Not a number' unless $n =~ m{^-?\d+$};
+  my $l = length( $n = abs $n );
+  return $l < 3 ? 'Too short'
+       : $l % 2 ? substr $n, ( $l - 3 ) / 2, 3
+       :          'Even digits'
+       ;
 }
-
-say @s while next_perm && $count--;
 ```
 
-# Task 2 - Distinct Terms Count
+It is possible to compact this slightly - buy 1 - assuming `$n` is an integer, and then rewriting `($l-3)/2` as `$l/2-1` - which is good enough for the `substr` to work.
 
-***You are given 2 positive numbers, `$m` and `$n`. Write a script to generate multiplcation table and display count of distinct terms.***
+```perl
+sub middle3compact {
+  my$l=length(my$n=abs$_[0]);
+  $l<3?'Too short':$l%2?substr$n,$l/2-1,3:'Even digits'
+}
+```
+
+# Task 2 - Validate SEDOL
+
+***You are given 7-characters alphanumeric SEDOL. Write a script to validate the given SEDOL. Print 1 if it is a valid SEDOL otherwise 0.***
 
 ## Solution
 
-Number 2 again is the easier code this week...
-We just loop through the two indicies and make a note of each product as a keys of a hash. And return scalar
+You find about SEDOL (Stock Exchange Daily Official List) numbers on Wikipedia at https://en.wikipedia.org/wiki/SEDOL.
+
+The consist of 6 digits/consonants + a checksum digit. The weighted sum of the 6 digits + the checksum is a multiple of 10.
+The weights are 1, 3, 1, 7, 3 and 9 for the six digits and 1 for the checksum.
+
+We have to:
+ * validate the number is of valid format for a SEDOL number - 6 numbers or consonants & a single number.
+ * compute the weighted sum (using ord to convert the B-Z characters to their numeric equivalends)
+ * check to see if it is a multiple of 10
 
 ```perl
-  my($m,$n,%x) = @_;
-  for my $i (1..$m) {
-    $x{$i*$_}++ for 1..$n;
-  }
-  return scalar keys %x;
+sub is_sedol {
+## Check correct format... numbers and consonants only
+  return 0 unless $_[0] =~ m{^[0-9B-HJ-NP-TW-Z]{6}\d$};
+
+## Accumulator and weights for each character
+  my( $t, @w ) = qw(0 1 3 1 7 3 9 1);
+
+## Calculate SEDOL sum... note YODA sum -55 + ord $_ to avoid precedence issue
+  $t += ( /\d/ ? $_ : -55 + ord $_ ) * shift @w for split //, $_[0];
+
+## Return true (1) if total modulo 10 is 0, and false (0) otherwise
+  return $t % 10 ? 0 : 1;
+}
 ```
 
-If `$m` & `$n` are large (and similar) there may be gain in separating the rectangle into a square and a rectangle - and only compute products for one half of the triangle...
+Again we can compact the code - by removing spaces and a couple of rewrites:
+
+ * replace `unless $x=~//` with `if $x!~//`;
+ * flip `@w` and use `pop`.
+ * Note `0if` expands as `0 if`.
+ 
+```perl
+sub is_sedol_compact {
+  return 0if$_[0]!~/^[\dB-HJ-NP-TW-Z]{6}\d$/;
+  my($t,@w)=qw(0 1 9 3 7 1 3 1);
+  $t+=(/\d/?$_:-55+ord$_)*pop@w for split//,$_[0];
+  $t%10?0:1
+}
+```
