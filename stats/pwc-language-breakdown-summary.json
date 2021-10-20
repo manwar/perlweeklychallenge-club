@@ -1,15 +1,9 @@
 {
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
+   "subtitle" : {
+      "text" : "Last updated at 2021-10-20 07:21:23 GMT"
    },
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
    },
    "yAxis" : {
       "min" : 0,
@@ -17,20 +11,21 @@
          "text" : null
       }
    },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-10-20 07:05:46 GMT"
-   },
    "series" : [
       {
+         "dataLabels" : {
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "y" : 10
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -38,26 +33,31 @@
             ],
             [
                "Perl",
-               6416
+               6418
             ],
             [
                "Raku",
-               3919
+               3921
             ]
-         ],
-         "dataLabels" : {
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "enabled" : "true",
-            "color" : "#FFFFFF"
-         },
-         "name" : "Contributions"
+         ]
       }
-   ]
+   ],
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "legend" : {
+      "enabled" : "false"
+   }
 }
