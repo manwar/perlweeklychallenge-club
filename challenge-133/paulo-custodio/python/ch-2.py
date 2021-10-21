@@ -11,7 +11,20 @@
 # prime factorization in the given number base.
 # 
 
-from sympy import isprime
+def is_prime(n):
+    if n <= 1:
+        return 0
+    elif n <= 3:
+        return 1
+    elif n % 2 == 0 or n % 3 == 0:
+        return 0
+    else:
+        for i in range(5, n+1, 6):
+            if i*i>n:
+                break
+            if n % i == 0 or n % (i+2) == 0:
+                return 0
+        return 1
 
 def get_prime_factors(n):
     i = 2
@@ -29,7 +42,7 @@ def get_prime_factors(n):
     return prime_factors
 
 def is_smith(n):
-    if isprime(n):
+    if is_prime(n):
         return False
     digits = [int(x) for x in str(n)]
     sum1 = sum(digits)
@@ -45,5 +58,3 @@ while count<10:
     if is_smith(n):
         print(n)
         count+=1
-
-    
