@@ -1,9 +1,18 @@
 {
-   "subtitle" : {
-      "text" : "Last updated at 2021-10-21 17:13:08 GMT"
-   },
    "series" : [
       {
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10,
+            "align" : "right",
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "rotation" : -90
+         },
          "name" : "Contributions",
          "data" : [
             [
@@ -12,29 +21,20 @@
             ],
             [
                "Perl",
-               6425
+               6427
             ],
             [
                "Raku",
                3923
             ]
-         ],
-         "dataLabels" : {
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "rotation" : -90,
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            }
-         }
+         ]
       }
    ],
-   "legend" : {
-      "enabled" : "false"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "title" : {
@@ -42,22 +42,22 @@
       },
       "min" : 0
    },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
             "fontSize" : "13px",
             "fontFamily" : "Verdana, sans-serif"
          }
-      }
+      },
+      "type" : "category"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   "subtitle" : {
+      "text" : "Last updated at 2021-10-21 17:18:30 GMT"
    }
 }
