@@ -49,7 +49,7 @@ sub middle_three_digits{
     my $length;
 
     # Get rid of any leading negative sign
-    # or dicemal point, and find the length
+    # or decimal point, and find the length
     # of the number
     $number =~ s/^-//;
     $number =~ s/\.//;
