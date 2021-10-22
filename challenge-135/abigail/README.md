@@ -12,6 +12,7 @@
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 * [Ruby](ruby/ch-1.rb)
+* [Scheme](scheme/ch-1.scm)
 * [Tcl](tcl/ch-1.tcl)
 
 ## Part 2
@@ -26,4 +27,5 @@
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
 * [Ruby](ruby/ch-2.rb)
+* [Scheme](scheme/ch-2.scm)
 * [Tcl](tcl/ch-2.tcl)
