@@ -25,4 +25,4 @@ length ($0) < 3 {print "too short";             next}
 # Print the middle three digits
 #
 
-                {print substr ($0, 1 + int ((length ($0) - 3) / 2), 3)}
+                {print substr ($0, 1 + (length ($0) - 3) / 2, 3)}
