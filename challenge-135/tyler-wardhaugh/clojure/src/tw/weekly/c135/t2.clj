@@ -5,13 +5,11 @@
 ;;;
 (def DEFAULT-INPUT ["2936921"])
 
-(let [weights [1 3 1 7 3 9]
-      c->n (->> "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                (into {} (map-indexed #(vector %2 %1))))]
+(let [weights [1 3 1 7 3 9]]
   (defn check-digit
     [coll]
     (let [source (map vector coll weights)
-          xf (map (fn [[c w]] (* (c->n c) w)))
+          xf (map (fn [[c w]] (* (Character/digit c 36) w)))
           sum (transduce xf + source)]
       (mod (- 10 (mod sum 10)) 10))))
 
