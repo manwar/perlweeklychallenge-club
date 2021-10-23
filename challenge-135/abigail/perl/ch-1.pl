@@ -18,11 +18,12 @@ use experimental 'lexical_subs';
 #
 
 while (<>) {
-    s/^[-+]\s*//g;  # We don't care about signs.
-    say /^([0-9]*)([0-9]{3})([0-9]*)$
+    say /^[-+]?([0-9]*)([0-9]{3})([0-9]*)$
         (??{length ($1) == length ($3) ? "" : "(*FAIL)"})/x
-                      ? $2
-      : length () % 2 ? "even number of digits"
-      : length () < 4 ? "too short"
-      :                 "not an integer";
+                                  ? $2
+      : /^[-+]?[0-9]*[^0-9].*\n/  ? "not an integer"
+      : /^[-+]?(?:[0-9][0-9])*\n/ ? "even number of digits"
+      :                             "too short"
 }
+
+__END__
