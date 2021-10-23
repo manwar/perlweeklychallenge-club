@@ -1,0 +1,12 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $n);
+
+$n = $n.abs if $n < 0;
+
+given $n
+{
+  when .chars %% 2 { say "even number of digits"; }
+  when .chars < 3  { say "too short"; }
+  default          { say .substr((.chars - 3) /2, 3); }
+}
