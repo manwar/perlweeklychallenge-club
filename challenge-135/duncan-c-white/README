@@ -1,52 +1,56 @@
-TASK #1 - Pandigital Numbers
+TASK #1 - Middle 3-digits
 
-Write a script to generate first 5 Pandigital Numbers in base 10.
+You are given an integer.
 
-As per the wikipedia, it says:
-
-A pandigital number is an integer that in a given base has among its
-significant digits each digit used in the base at least once.
-The smallest base 10 pandigital number is 1023456789, and subsequent
-ones are lexicographic permutations, ie. 1023456798, 1023456879...
-
-MY NOTES: Basically just needs a standard lexicographic permutation algorithm,
-with the initial value to permute being 1023456789.
-
-TASK #2 - Distinct Terms Count
-
-You are given 2 positive numbers, $m and $n.
-
-Write a script to generate multiplication table and display count of distinct terms.
+Write a script find out the middle 3-digits of the given integer, if
+possible otherwise throw sensible error.
 
 Example 1
 
-Input: $m = 3, $n = 3
-Output:
-
-      x | 1 2 3
-      --+------
-      1 | 1 2 3
-      2 | 2 4 6
-      3 | 3 6 9
-
-Distinct Terms: 1, 2, 3, 4, 6, 9
-Count: 6
+  Input: $n = 1234567
+  Output: 345
 
 Example 2
 
-Input: $m = 3, $n = 5
-Output:
+  Input: $n = -123
+  Output: 123
 
-      x | 1  2  3  4  5
-      --+--------------
-      1 | 1  2  3  4  5
-      2 | 2  4  6  8 10
-      3 | 3  6  9 12 15
+Example 3
 
-Distinct Terms: 1, 2, 3, 4, 5, 6, 8, 9, 10, 12, 15
-Count: 11
+  Input: $n = 1
+  Output: too short
+
+Example 4
+
+  Input: $n = 10
+  Output: even number of digits
+
+MY NOTES: Pretty easy, although it's not clear how to always treat negative numbers.
+Assume abs() them.
 
 
-MY NOTES: Pretty easy, the distinct terms just need a set (hash) as usual.
-The tricky bit is the pretty layout of the multiplication table, especially
-getting the correct column widths..
+TASK #2 - Validate SEDOL
+
+You are given 7-characters alphanumeric SEDOL.
+
+Write a script to validate the given SEDOL. Print 1 if it is a valid SEDOL otherwise 0.
+
+For more information about SEDOL, please checkout https://en.wikipedia.org/wiki/SEDOL
+
+Example 1
+
+  Input: $SEDOL = '2936921'
+  Output: 1
+
+Example 2
+
+  Input: $SEDOL = '1234567'
+  Output: 0
+
+Example 3
+
+  Input: $SEDOL = 'B0YBKL9'
+  Output: 1
+
+MY NOTES: Pretty easy
+
