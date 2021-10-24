@@ -9,6 +9,8 @@ say sedol($ARGV[0]) ? 1 : 0;
 
 sub sedol {
     return 0 if !defined($_[0]);
+    return 0 if $_[0] =~ m/[AEIOU]/;
+    return 0 if $_[0] !~ m/^[0-9B-Z]{7}$/;
     my %val;
     $val{$_} = $_ for (0..9);
     $val{$_} = ord($_)-ord("A")+10 for ("A".."Z");
