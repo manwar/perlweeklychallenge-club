@@ -20,7 +20,7 @@ for line in io . lines () do
                 print ("too short")
             else
                 local start = 1 + (line : len () - 3) / 2
-                print (line : sub (start , start + 2))
+                print (line : sub (start, start + 2))
             end
         end
     end

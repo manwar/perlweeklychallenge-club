@@ -23,7 +23,7 @@ int main (void) {
         if (str_len == 8) {
             int check = 0;
             for (size_t i = 0; i < 7 && valid; i ++) {
-                char first;
+                char first = 0;
                 if ('0' <= line_ptr [i] && line_ptr [i] <= '9') {
                     first = '0';
                 }
