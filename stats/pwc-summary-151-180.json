@@ -1,4 +1,10 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
+   },
    "series" : [
       {
          "data" : [
@@ -36,6 +42,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             40,
             0,
@@ -67,10 +74,10 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             16,
             0,
@@ -102,28 +109,26 @@
             2,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-10-24 21:42:10 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-10-24 21:52:46 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -158,10 +163,5 @@
          "Phillip Harris",
          "Phillip Hartfield Sr"
       ]
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
