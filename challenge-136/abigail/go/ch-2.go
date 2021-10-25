@@ -12,11 +12,15 @@ import (
     "fmt"
 )
 
-func count (target int, this_fib int, prev_fib int) int {
+func _count (target int, this_fib int, prev_fib int) int {
     if target <  this_fib {return 0}
     if target == this_fib {return 1}
-    return count (target - this_fib, this_fib + prev_fib, this_fib) +
-           count (target,            this_fib + prev_fib, this_fib)
+    return _count (target - this_fib, this_fib + prev_fib, this_fib) +
+           _count (target,            this_fib + prev_fib, this_fib)
+}
+
+func count (target int) int {
+    return _count (target, 1, 1)
 }
 
 func main () {
@@ -27,6 +31,6 @@ func main () {
             break;
         }
 
-        fmt . Printf ("%d\n", count (n, 1, 1))
+        fmt . Printf ("%d\n", count (n))
     }
 }
