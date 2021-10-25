@@ -3,6 +3,7 @@
 ## Part 1
 
 * [GNU AWK](awk/ch-1.gawk)
+* [Bash](bash/ch-1.sh)
 * [Perl](perl/ch-1.pl)
 
 ## Part 2
