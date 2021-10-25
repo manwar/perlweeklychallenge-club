@@ -12,6 +12,7 @@
 * [Python](python/ch-1.py)
 * [Ruby](ruby/ch-1.rb)
 * [Tcl](tcl/ch-1.tcl)
+* [Scheme](scheme/ch-1.scm)
 
 ## Part 2
 
@@ -24,3 +25,4 @@
 * [Python](python/ch-2.py)
 * [Ruby](ruby/ch-2.rb)
 * [Tcl](tcl/ch-2.tcl)
+* [Scheme](scheme/ch-2.scm)
