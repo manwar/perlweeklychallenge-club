@@ -1,23 +1,6 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2021-10-26 22:18:35 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "title" : {
@@ -27,16 +10,17 @@
    "drilldown" : {
       "series" : [
          {
-            "id" : "Abigail",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Abigail"
+            "name" : "Abigail",
+            "id" : "Abigail"
          },
          {
+            "id" : "Flavio Poletti",
             "data" : [
                [
                   "Perl",
@@ -51,10 +35,10 @@
                   2
                ]
             ],
-            "id" : "Flavio Poletti",
             "name" : "Flavio Poletti"
          },
          {
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -65,8 +49,7 @@
                   2
                ]
             ],
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari"
+            "id" : "Luca Ferrari"
          },
          {
             "id" : "Mark Anderson",
@@ -79,17 +62,31 @@
             "name" : "Mark Anderson"
          },
          {
-            "name" : "Paulo Custodio",
+            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Raku",
+                  1
+               ]
+            ]
+         },
+         {
             "id" : "Paulo Custodio",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Paulo Custodio"
          },
          {
-            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -100,20 +97,20 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West"
+            "name" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Simon Proctor"
+            "name" : "Simon Proctor"
          },
          {
-            "id" : "Ulrich Rieke",
+            "name" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -124,10 +121,10 @@
                   2
                ]
             ],
-            "name" : "Ulrich Rieke"
+            "id" : "Ulrich Rieke"
          },
          {
-            "id" : "W. Luis Mochan",
+            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -138,21 +135,39 @@
                   1
                ]
             ],
-            "name" : "W. Luis Mochan"
+            "id" : "W. Luis Mochan"
          }
       ]
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "title" : {
       "text" : "The Weekly Challenge - 136"
    },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2021-10-26 23:15:11 GMT"
    },
    "legend" : {
       "enabled" : 0
    },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
    "series" : [
       {
+         "name" : "The Weekly Challenge - 136",
          "data" : [
             {
                "name" : "Abigail",
@@ -160,19 +175,24 @@
                "drilldown" : "Abigail"
             },
             {
-               "name" : "Flavio Poletti",
                "drilldown" : "Flavio Poletti",
-               "y" : 6
+               "y" : 6,
+               "name" : "Flavio Poletti"
             },
             {
+               "y" : 4,
                "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 4
+               "drilldown" : "Luca Ferrari"
             },
             {
                "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "name" : "Mohammad S Anwar",
                "y" : 2,
-               "name" : "Mark Anderson"
+               "drilldown" : "Mohammad S Anwar"
             },
             {
                "drilldown" : "Paulo Custodio",
@@ -181,8 +201,8 @@
             },
             {
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
             },
             {
                "name" : "Simon Proctor",
@@ -190,17 +210,16 @@
                "drilldown" : "Simon Proctor"
             },
             {
-               "y" : 4,
                "drilldown" : "Ulrich Rieke",
-               "name" : "Ulrich Rieke"
+               "name" : "Ulrich Rieke",
+               "y" : 4
             },
             {
-               "y" : 3,
                "drilldown" : "W. Luis Mochan",
+               "y" : 3,
                "name" : "W. Luis Mochan"
             }
          ],
-         "name" : "The Weekly Challenge - 136",
          "colorByPoint" : 1
       }
    ]
