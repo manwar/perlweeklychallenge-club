@@ -47,7 +47,7 @@ sub parse_tree {
     chomp(my @lines = <>);
     @lines or die "malformed tree\n";
     $lines[0] =~ /^( +)\d/ or die "malformed tree\n";
-    $tree = parse_subtree(\@lines, 0, length($1));
+    my $tree = parse_subtree(\@lines, 0, length($1));
     return $tree;
 }
 
@@ -62,12 +62,15 @@ sub parse_subtree {
     # parse children
     if ($row+2 <= $#{$lines}) {
         # parse left subtree
-        if ($col-2 >= 0 && $col-2 < length($lines->[$row+1]) && substr($lines->[$row+1], $col-1, 1) eq '/') {
+        if ($col-2 >= 0 &&
+            $col-2 < length($lines->[$row+1]) &&
+            substr($lines->[$row+1], $col-1, 1) eq '/') {
             my $child = parse_subtree($lines, $row+2, $col-2);
             $node->left($child);
         }
         # parse right subtree
-        if ($col+2 < length($lines->[$row+2]) && substr($lines->[$row+1], $col+1, 1) eq '\\') {
+        if ($col+2 < length($lines->[$row+2]) &&
+            substr($lines->[$row+1], $col+1, 1) eq '\\') {
             my $child = parse_subtree($lines, $row+2, $col+2);
             $node->right($child);
         }
