@@ -42,7 +42,7 @@ def parse_arrivals_departures():
 
 def allocate_platforms(stops):
     platforms = []
-    
+
     def platform_free(platform, s, e):
         for stop in platform:
             if (s >= stop[0] and s <  stop[1]) or \
@@ -57,7 +57,7 @@ def allocate_platforms(stops):
                 platform.append([s, e])
                 return
         platforms.append([[s, e]])
-    
+
     for stop in stops:
         allocate_stop(stop[0], stop[1])
     return platforms

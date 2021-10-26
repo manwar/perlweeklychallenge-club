@@ -33,50 +33,50 @@ my @platforms = allocate_platforms(@stops);
 say scalar(@platforms);
 
 sub parse_arrivals_departures {
-	my @arrivals = parse_times();
-	my @departures = parse_times();
-	
-	my @stops;
-	while (@arrivals && @departures) {
-		push @stops, [shift @arrivals, shift @departures];
-	}
-	return @stops;
+    my @arrivals = parse_times();
+    my @departures = parse_times();
+
+    my @stops;
+    while (@arrivals && @departures) {
+        push @stops, [shift @arrivals, shift @departures];
+    }
+    return @stops;
 }
 
 sub parse_times {
-	my @times = map {Time::Piece->strptime($_, "%H:%M")->epoch} 
-				split(' ', scalar(<>));
+    my @times = map {Time::Piece->strptime($_, "%H:%M")->epoch}
+                split(' ', scalar(<>));
 }
 
 sub allocate_platforms {
-	my(@stops) = @_;
-	my @platforms;
-	
-	for my $stop (@stops) {
-		allocate_stop(\@platforms, @$stop);
-	}
-	return @platforms;
+    my(@stops) = @_;
+    my @platforms;
+
+    for my $stop (@stops) {
+        allocate_stop(\@platforms, @$stop);
+    }
+    return @platforms;
 }
 
 sub allocate_stop {
-	my($platforms, $s, $e) = @_;
-	for my $p (0 .. $#$platforms) {
-		if (platform_free($platforms->[$p], $s, $e)) {
-			push @{$platforms->[$p]}, [$s, $e];
-			return;
-		}
-	}
-	push @$platforms, [[$s, $e]];
+    my($platforms, $s, $e) = @_;
+    for my $p (0 .. $#$platforms) {
+        if (platform_free($platforms->[$p], $s, $e)) {
+            push @{$platforms->[$p]}, [$s, $e];
+            return;
+        }
+    }
+    push @$platforms, [[$s, $e]];
 }
 
 sub platform_free {
-	my($platform, $s, $e) = @_;
-	for my $stop (@$platform) {
-		if (($s >= $stop->[0] && $s <  $stop->[1]) ||
-		    ($e >= $stop->[0] && $e <  $stop->[1]) ||
-			($s <  $stop->[0] && $e >= $stop->[1])) {
-			return 0;
-		}
-	}
-	return 1;
+    my($platform, $s, $e) = @_;
+    for my $stop (@$platform) {
+        if (($s >= $stop->[0] && $s <  $stop->[1]) ||
+            ($e >= $stop->[0] && $e <  $stop->[1]) ||
+            ($s <  $stop->[0] && $e >= $stop->[1])) {
+            return 0;
+        }
+    }
+    return 1;
 }
