@@ -19,6 +19,7 @@
 ## Part 2
 
 * [AWK](awk/ch-2.awk)
+* [Bash](bash/ch-1.sh)
 * [Bc](bc/ch-2.bc)
 * [C](c/ch-2.c)
 * [Go](go/ch-2.go)
