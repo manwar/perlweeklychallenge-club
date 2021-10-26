@@ -3,9 +3,9 @@
 # TASK #1 > Root Distance
 # Submitted by: Mohammad S Anwar
 # You are given a tree and a node of the given tree.
-# 
+#
 # Write a script to find out the distance of the given node from the root.
-# 
+#
 # Example 1:
 # Tree:
 #         1
@@ -15,16 +15,16 @@
 #             4
 #            / \
 #           5   6
-# 
+#
 # Node: 6
 # Output: 3 as the distance of given node 6 from the root (1).
-# 
+#
 # Node: 5
 # Output: 3
-# 
+#
 # Node: 2
 # Output: 1
-# 
+#
 # Node: 4
 # Output: 2
 # Example 2:
@@ -38,13 +38,13 @@
 #       6   7
 #      / \
 #     8   9
-# 
+#
 # Node: 7
 # Output: 3 as the distance of given node 6 from the root (1).
-# 
+#
 # Node: 8
 # Output: 4
-# 
+#
 # Node: 6
 # Output: 3
 
@@ -102,7 +102,7 @@ def root_dist(tree, value):
             if found > 0:
                 return found
         return -1
-    
+
     return subtree_dist(tree, value, 0)
 
 value = int(sys.argv.pop())

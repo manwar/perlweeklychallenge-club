@@ -3,10 +3,10 @@
 # TASK #1 > Pandigital Numbers
 # Submitted by: Mohammad S Anwar
 # Write a script to generate first 5 Pandigital Numbers in base 10.
-# 
+#
 # As per the wikipedia, it says:
-# 
-# A pandigital number is an integer that in a given base has among its 
+#
+# A pandigital number is an integer that in a given base has among its
 # significant digits each digit used in the base at least once.
 
 # solution from https://oeis.org/A050278

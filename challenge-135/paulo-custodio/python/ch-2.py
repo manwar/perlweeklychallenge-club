@@ -3,12 +3,12 @@
 # TASK #2 > Validate SEDOL
 # Submitted by: Mohammad S Anwar
 # You are given 7-characters alphanumeric SEDOL.
-# 
-# Write a script to validate the given SEDOL. Print 1 if it is a valid SEDOL 
+#
+# Write a script to validate the given SEDOL. Print 1 if it is a valid SEDOL
 # otherwise 0.
-# 
+#
 # For more information about SEDOL, please checkout the wikipedia page.
-# 
+#
 # Example 1
 # Input: $SEDOL = '2936921'
 # Output: 1
