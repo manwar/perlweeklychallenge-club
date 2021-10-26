@@ -13,10 +13,9 @@
 //    (https://en.wikipedia.org/wiki/Euclidean_algorithm#Implementations)
 //
 function gcd (a, b) {
-    while (b > 0) {
-        [a, b] = [b, a % b]
-    }
-    return (a)
+    if (b >  a) {return gcd (b, a)}
+    if (b == 0) {return a}
+                 return gcd (b, a % b)
 }
 
 //

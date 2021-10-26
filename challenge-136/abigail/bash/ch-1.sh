@@ -15,13 +15,12 @@
 function gcd () {
     local a=$1
     local b=$2
-    local t=0
-    while ((b != 0))
-    do    ((t = b))
-          ((b = a % b))
-          ((a = t))
-    done
-    ((gcd = a))
+    if   ((b > a))
+    then gcd $b $a
+    elif ((b == 0))
+    then gcd=$a
+    else gcd $b $((a % b))
+    fi
 }
 
 set -f
