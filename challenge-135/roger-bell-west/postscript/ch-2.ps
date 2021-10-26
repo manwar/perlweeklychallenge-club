@@ -1,0 +1,38 @@
+%!PS
+
+/sedolv {
+    /sedol exch def
+    /weight [ 1 3 1 7 3 9 1 ] def
+    /valid 1 def
+    /sum 0 def
+    sedol length 7 ne { 0 exit } if
+    0 1 6 {
+        dup
+        sedol exch get
+        valid 0 eq { exit } if
+        dup 48 ge exch dup 57 le 3 -1 roll and {
+            48 sub
+        } {
+            dup 66 ge exch dup 90 le 3 -1 roll and {
+                dup 69 eq { /valid 0 def } if
+                dup 73 eq { /valid 0 def } if
+                dup 79 eq { /valid 0 def } if
+                dup 85 eq { /valid 0 def } if
+                55 sub
+            } {
+                /valid 0 def
+            } ifelse
+        } ifelse
+        exch weight exch get mul sum add /sum exch def
+    } for
+    sum 10 mod 0 ne {
+        /valid 0 def
+    } if
+    valid
+} def
+
+(2936921) sedolv 1 eq { (Pass) } { (Fail) } ifelse print ( ) print
+(1234567) sedolv 0 eq { (Pass) } { (Fail) } ifelse print ( ) print
+(B0YBKL9) sedolv 1 eq { (Pass) } { (Fail) } ifelse print ( ) print
+(A0ZBKL9) sedolv 0 eq { (Pass) } { (Fail) } ifelse print ( ) print
+(B2YBIL9) sedolv 0 eq { (Pass) } { (Fail) } ifelse =
