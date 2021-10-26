@@ -3,10 +3,10 @@
 # TASK #1 > Consecutive Arrays
 # Submitted by: Mark Anderson
 # You are given a sorted list of unique positive integers.
-# 
+#
 # Write a script to return list of arrays where the arrays are consecutive
 # integers.
-# 
+#
 # Example 1:
 # Input:  (1, 2, 3, 6, 7, 8, 9)
 # Output: ([1, 2, 3], [6, 7, 8, 9])

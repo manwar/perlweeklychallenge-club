@@ -3,8 +3,8 @@
 # TASK #2 > Distinct Terms Count
 # Submitted by: Mohammad S Anwar
 # You are given 2 positive numbers, $m and $n.
-# 
-# Write a script to generate multiplication table and display count of distinct 
+#
+# Write a script to generate multiplication table and display count of distinct
 # terms.
 
 import sys

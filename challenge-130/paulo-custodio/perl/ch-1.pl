@@ -4,9 +4,9 @@
 # Submitted by: Mohammad S Anwar
 # You are given an array of positive integers, such that all the
 # numbers appear even number of times except one number.
-# 
+#
 # Write a script to find that integer.
-# 
+#
 # Example 1
 # Input: @N = (2, 5, 4, 4, 5, 5, 2)
 # Output: 5 as it appears 3 times in the array where as all other
@@ -18,6 +18,6 @@
 use Modern::Perl;
 
 my @N = @ARGV;
-my %count; 
+my %count;
 $count{$_}++ for @N;
 say $_ for (grep {$count{$_}%2==1} keys %count);

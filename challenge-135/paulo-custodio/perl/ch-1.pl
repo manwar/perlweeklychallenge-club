@@ -3,9 +3,9 @@
 # TASK #1 > Middle 3-digits
 # Submitted by: Mohammad S Anwar
 # You are given an integer.
-# 
+#
 # Write a script find out the middle 3-digits of the given integer, if possible otherwise throw sensible error.
-# 
+#
 # Example 1
 # Input: $n = 1234567
 # Output: 345
@@ -24,11 +24,11 @@ use Modern::Perl;
 my $n = abs(shift||0);
 my $len = length($n);
 if ($len%2==0) {
-	say "even number of digits";
+    say "even number of digits";
 }
 elsif ($len<3) {
-	say "too short";
+    say "too short";
 }
 else {
-	say substr($n, ($len-3)/2, 3);
+    say substr($n, ($len-3)/2, 3);
 }

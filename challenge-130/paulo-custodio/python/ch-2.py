@@ -3,12 +3,12 @@
 # TASK #2 > Binary Search Tree
 # Submitted by: Mohammad S Anwar
 # You are given a tree.
-# 
+#
 # Write a script to find out if the given tree is Binary Search Tree
 # (BST).
-# 
+#
 # According to wikipedia, the definition of BST:
-# 
+#
 # A binary search tree is a rooted binary tree, whose internal nodes
 # each store a key (and optionally, an associated value), and each has
 # two distinguished sub-trees, commonly denoted left and right. The
@@ -17,7 +17,7 @@
 # sub-tree, and less than or equal to any key stored in the right
 # sub-tree. The leaves (final nodes) of the tree contain no key and
 # have no structure to distinguish them from one another.
-# 
+#
 # Example 1
 # Input:
 #         8
@@ -25,7 +25,7 @@
 #       5   9
 #      / \
 #     4   6
-# 
+#
 # Output: 1 as the given tree is a BST.
 # Example 2
 # Input:
@@ -34,7 +34,7 @@
 #       4   7
 #      / \
 #     3   6
-# 
+#
 # Output: 0 as the given tree is a not BST.
 
 import fileinput

@@ -4,7 +4,7 @@
 # Submitted by: Mohammad S Anwar
 # Write a script to implement Hash Join algorithm as suggested
 # by wikipedia.
-# 
+#
 # 1. For each tuple r in the build input R
 #     1.1 Add r to the in-memory hash table
 #     1.2 If the size of the hash table equals the maximum
@@ -17,7 +17,7 @@
 #    join tuples to the output relation
 # Example
 # Input:
-# 
+#
 #     @player_ages = (
 #         [20, "Alex"  ],
 #         [28, "Joe"   ],
@@ -26,7 +26,7 @@
 #         [25, "David" ],
 #         [18, "Simon" ],
 #     );
-# 
+#
 #     @player_names = (
 #         ["Alex", "Stewart"],
 #         ["Joe",  "Root"   ],
@@ -35,12 +35,12 @@
 #         ["Alex", "Jones"  ],
 #         ["Simon","Duane"  ],
 #     );
-# 
+#
 # Output:
-# 
-#     Based on index = 1 of @players_age and 
+#
+#     Based on index = 1 of @players_age and
 #     index = 0 of @players_name.
-# 
+#
 #     20, "Alex",  "Stewart"
 #     20, "Alex",  "Jones"
 #     18, "Alex",  "Stewart"
@@ -95,6 +95,6 @@ def hash_join(table1, key1, table2, key2):
     return result
 
 result = hash_join(player_ages, player_ages_key,
-				   player_names, player_names_key)
+                   player_names, player_names_key)
 for row in result:
     print(', '.join(row))
