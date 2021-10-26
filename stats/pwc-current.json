@@ -2,36 +2,22 @@
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2021-10-26 03:44:27 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge - 136"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Abigail",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Abigail",
             "name" : "Abigail"
          },
          {
@@ -49,14 +35,14 @@
             "id" : "Luca Ferrari"
          },
          {
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
          },
          {
             "id" : "Paulo Custodio",
@@ -69,6 +55,31 @@
             "name" : "Paulo Custodio"
          },
          {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
+         },
+         {
+            "id" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -79,18 +90,7 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
-         },
-         {
-            "name" : "Simon Proctor",
-            "id" : "Simon Proctor",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
+            "name" : "Ulrich Rieke"
          },
          {
             "data" : [
@@ -103,30 +103,37 @@
                   1
                ]
             ],
-            "id" : "W. Luis Mochan",
-            "name" : "W. Luis Mochan"
+            "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan"
          }
       ]
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 136",
          "data" : [
             {
+               "y" : 2,
                "drilldown" : "Abigail",
-               "name" : "Abigail",
-               "y" : 2
+               "name" : "Abigail"
             },
             {
-               "drilldown" : "Luca Ferrari",
                "y" : 4,
-               "name" : "Luca Ferrari"
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "drilldown" : "Mark Anderson",
+               "y" : 2,
                "name" : "Mark Anderson",
-               "y" : 2
+               "drilldown" : "Mark Anderson"
             },
             {
                "drilldown" : "Paulo Custodio",
@@ -134,8 +141,8 @@
                "y" : 2
             },
             {
-               "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West",
                "y" : 4
             },
             {
@@ -144,22 +151,34 @@
                "y" : 2
             },
             {
-               "y" : 3,
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke",
+               "y" : 4
+            },
+            {
+               "drilldown" : "W. Luis Mochan",
                "name" : "W. Luis Mochan",
-               "drilldown" : "W. Luis Mochan"
+               "y" : 3
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2021-10-26 04:04:58 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
    "tooltip" : {
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 136"
    }
 }
