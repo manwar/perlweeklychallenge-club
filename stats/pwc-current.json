@@ -1,79 +1,12 @@
 {
-   "drilldown" : {
-      "series" : [
-         {
-            "id" : "Luca Ferrari",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ],
-               [
-                  "Blog",
-                  2
-               ]
-            ],
-            "name" : "Luca Ferrari"
-         },
-         {
-            "id" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Mark Anderson"
-         },
-         {
-            "name" : "Paulo Custodio",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "id" : "Paulo Custodio"
-         },
-         {
-            "id" : "Roger Bell_West",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Roger Bell_West"
-         },
-         {
-            "id" : "Simon Proctor",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Simon Proctor"
-         },
-         {
-            "name" : "W. Luis Mochan",
-            "id" : "W. Luis Mochan",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ]
-         }
-      ]
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2021-10-26 03:44:27 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
@@ -84,17 +17,111 @@
          "borderWidth" : 0
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Abigail",
+            "name" : "Abigail"
+         },
+         {
+            "name" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "id" : "Luca Ferrari"
+         },
+         {
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Paulo Custodio",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Paulo Custodio"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
+         },
+         {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "W. Luis Mochan",
+            "name" : "W. Luis Mochan"
+         }
+      ]
    },
    "series" : [
       {
          "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 136",
          "data" : [
             {
+               "drilldown" : "Abigail",
+               "name" : "Abigail",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Luca Ferrari",
                "y" : 4,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
+               "name" : "Luca Ferrari"
             },
             {
                "drilldown" : "Mark Anderson",
@@ -112,39 +139,27 @@
                "y" : 4
             },
             {
-               "y" : 2,
                "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
+               "name" : "Simon Proctor",
+               "y" : 2
             },
             {
+               "y" : 3,
                "name" : "W. Luis Mochan",
-               "drilldown" : "W. Luis Mochan",
-               "y" : 3
+               "drilldown" : "W. Luis Mochan"
             }
-         ],
-         "name" : "The Weekly Challenge - 136"
+         ]
       }
    ],
-   "xAxis" : {
-      "type" : "category"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "title" : {
       "text" : "The Weekly Challenge - 136"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2021-10-26 03:33:37 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
