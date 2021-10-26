@@ -1,0 +1,41 @@
+%!PS
+
+/gcd {
+    {
+        dup
+        3 1 roll
+        mod
+        dup 0 eq {
+            pop exit
+        } if
+    } loop
+} bind def
+
+48 18 gcd 6 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+18 48 gcd 6 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+24 54 gcd 6 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+54 24 gcd 6 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+12 8 gcd 4 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+8 12 gcd 4 eq { (Pass) } { (FAIL) } ifelse =
+
+/ispower2 {
+    dup 2 lt {
+        pop false
+    } {
+        dup 1 sub and 0 eq
+    } ifelse
+} bind def
+
+1 ispower2 false eq { (Pass) } { (FAIL) } ifelse print ( ) print
+2 ispower2 true eq { (Pass) } { (FAIL) } ifelse print ( ) print
+17 ispower2 false eq { (Pass) } { (FAIL) } ifelse print ( ) print
+16 ispower2 true eq { (Pass) } { (FAIL) } ifelse =
+
+/twofriendly {
+    gcd ispower2
+} bind def
+
+8 24 twofriendly true eq { (Pass) } { (FAIL) } ifelse print ( ) print
+26 39 twofriendly false eq { (Pass) } { (FAIL) } ifelse print ( ) print
+4 10 twofriendly true eq { (Pass) } { (FAIL) } ifelse print ( ) print
+1 2 twofriendly false eq { (Pass) } { (FAIL) } ifelse =
