@@ -4,6 +4,7 @@
 
 * [GNU AWK](awk/ch-1.gawk)
 * [Bash](bash/ch-1.sh)
+* [Bc](bc/ch-1.bc)
 * [C](c/ch-1.c)
 * [Go](go/ch-1.go)
 * [Lua](lua/ch-1.lua)
@@ -17,6 +18,7 @@
 ## Part 2
 
 * [AWK](awk/ch-2.awk)
+* [Bc](bc/ch-2.bc)
 * [C](c/ch-2.c)
 * [Go](go/ch-2.go)
 * [Lua](lua/ch-2.lua)
