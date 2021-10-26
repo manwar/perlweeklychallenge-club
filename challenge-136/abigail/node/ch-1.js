@@ -18,19 +18,26 @@ function gcd (a, b) {
                  return gcd (b, a % b)
 }
 
-//
-// Precalculate the powers of 2. We're losing precision around 2^53
-//
-let power_of_2 = {};
-let power = 1;
-for (let i = 1; i < 53; i ++) {
-    power *= 2;
-    power_of_2 [power] = 1;
+function is_power_of_n (number, n) {
+    if (number <  1) {return false}
+    if (number == 1) {return true}
+    if (number %  n) {return false}
+                      return is_power_of_n (number / n, n)
+}
+
+function is_power_of_2 (number) {
+    return is_power_of_n (number, 2)
 }
 
   require ('readline')
 . createInterface ({input: process . stdin})   
 . on              ('line', line => {
     let [m, n] = line . trim () . split (' ') . map (x => +x)
-    console . log (power_of_2 [gcd (m, n)] || 0)
+    let  r     = gcd (m, n)
+    if (r > 1 && is_power_of_2 (r)) {
+        console . log (1)
+    }
+    else {
+        console . log (0)
+    }
 })

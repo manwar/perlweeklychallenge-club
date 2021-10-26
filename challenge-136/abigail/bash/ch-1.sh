@@ -23,18 +23,32 @@ function gcd () {
     fi
 }
 
+function is_power_of_n () {
+    local number=$1
+    local n=$2
+    if   ((number < 1))
+    then is_power_of_n=0
+    elif ((number == 1))
+    then is_power_of_n=1
+    elif ((number % n > 0))
+    then is_power_of_n=0
+    else is_power_of_n $((number / 2)) $n
+    fi
+}
+
+function is_power_of_2 () {
+    is_power_of_n $1 2
+    is_power_of_2=$is_power_of_n
+}
+
 set -f
 
-#
-# Calculate the powers of 2 (greater than 1). 2^62 is the max a bash
-# integer holds
-#
-declare -a power_of_2
-for ((i = 1; i <= 62; i ++))
-do  power_of_2[$((1 << i))]=1
-done
 
 while read n m
 do   gcd $n $m
-     echo ${power_of_2[$gcd]:-0}
+     is_power_of_2 $gcd
+     if ((gcd > 1 && is_power_of_2 == 1))
+     then echo 1
+     else echo 0
+     fi
 done

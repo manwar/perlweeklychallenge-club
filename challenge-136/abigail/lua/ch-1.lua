@@ -18,22 +18,21 @@ function gcd (a, b)
                    return gcd (b, a % b)
 end
 
---
--- Precalculate all the relevant powers of 2. Note that in pre 5-3 lua
--- integers are doubles, and start losing precision at 2^53, so we go
--- up to 2^52.
---
-local power_of_2 = {}
-local power      = 1
-for i = 1, 52 do
-    power = power * 2
-    power_of_2 [power] = 1
+function is_power_of_n (number, n)
+    if number <  1    then return false end
+    if number == 1    then return true  end
+    if number % n > 1 then return false end
+                      return (is_power_of_n (number / n, n))
 end
 
+function is_power_of_2 (number)
+    return is_power_of_n (number, 2)
+end
 
 for line in io . lines () do
     local _, _, n, m = line : find ("([0-9]+)%s+([0-9]+)")
-    if power_of_2 [gcd (tonumber (n), tonumber (m))] then
+    local r = gcd (tonumber (n), tonumber (m))
+    if r > 1 and is_power_of_2 (r) then
         print (1)
     else
         print (0)

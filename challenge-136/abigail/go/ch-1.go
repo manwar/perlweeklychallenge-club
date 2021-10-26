@@ -29,19 +29,24 @@ func gcd (u int, v int) int {
                            return gcd (v - u,  u)
 }
 
-func main () {
-    var power_of_2 map [int] int = make (map [int] int)
-    for i := 1; i < 62; i ++ {
-        power_of_2 [i << 1] = 1
-    }
+func is_power_of_n (number int, n int) bool {
+    if (number <  1)     {return false}
+    if (number == 1)     {return true}
+    if (number % n != 0) {return false}
+                          return is_power_of_n (number / n, n)
+}
+func is_power_of_2 (number int) bool {
+    return is_power_of_n (number, 2)
+}
 
+func main () {
     for {
         var n, m int
         c, err := fmt . Scanf ("%d %d", &n, &m);
         if c != 2 || err != nil {
             break;
         }
-        if _, ok := power_of_2 [gcd (m, n)]; ok {
+        if r := gcd (m, n); r > 1 && is_power_of_2 (r) {
             fmt . Print ("1\n")
         } else {
             fmt . Print ("0\n")

@@ -26,16 +26,19 @@ function gcd (u, v, u_odd, v_odd) {
          :                            gcd(v - u,         u)
 }
 
-#
-# Pre calculate powers of 2. We can do powers up to and including 2^52
-#
-BEGIN {
-    for (i = 1; i <= 52; i ++) {
-        power_of_2 [lshift (1, i)] = 1
-    }
+function is_power_of_n (number, n) {
+    return number <  1 ? 0  \
+         : number == 1 ? 1  \
+         : number %  n ? 0  \
+         : is_power_of_n(number / n, n)
 }
 
+function is_power_of_2 (number) {
+    return is_power_of_n(number, 2)
+}
+                 
 
 {
-    print power_of_2 [gcd($1, $2)] || 0
+    r = gcd($1, $2)
+    print (r > 1 && is_power_of_2(r) ? 1 : 0)
 }
