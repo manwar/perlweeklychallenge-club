@@ -1,0 +1,21 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-2.bc < input-file
+#
+
+define d (t, f, p) {
+    if (t <  f) {return 0}
+    if (t == f) {return 1}
+    return d (t - f, f + p, f) + d (t, f + p, f)
+}
+define c (t) {
+    return d (t, 1, 1)
+}
+
+while (1) {
+    n = read (); if (n == 0) {break}
+    c (n)
+}

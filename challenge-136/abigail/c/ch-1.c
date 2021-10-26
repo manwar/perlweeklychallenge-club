@@ -1,6 +1,7 @@
 # include <stdlib.h>
 # include <stdio.h>
 # include <string.h>
+# include <stdbool.h>
 
 /*
  * See ../README.md
@@ -28,25 +29,24 @@ long long gcd (long long u, long long v) {
          :                    gcd (v - u,  u);
 }
 
+bool is_power_of_n (long long number, long long n) {
+    return number <  1 ? false
+         : number == 1 ? true
+         : number %  n ? false
+         : is_power_of_n (number / n, n);
+}
+bool is_power_of_2 (long long number) {
+    return is_power_of_n (number, 2);
+}
+     
+
 
 int main (void) {
     long long n, m;
 
     while (scanf ("%lld %lld", &n, &m) == 2) {
-        long long ggcd = gcd (n, m);
-        short valid = 0;
-        /*
-         * Check whether ggcd is a power of 2
-         */
-        if (ggcd > 1) {
-            while (ggcd % 2 == 0) {
-                ggcd /= 2;
-            }
-            if (ggcd == 1) {
-                valid = 1;
-            }
-        }
-        printf ("%d\n", valid);
+        long long r = gcd (n, m);
+        printf ("%d\n", r > 1 && is_power_of_2 (r) ? 1 : 0);
     }
 
     return (0);
