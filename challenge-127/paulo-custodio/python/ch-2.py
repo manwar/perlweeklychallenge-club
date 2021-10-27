@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # TASK #2 > Conflict Intervals
 # Submitted by: Mohammad S Anwar
@@ -33,52 +33,39 @@
 #     - The 5th interval (13,15) do not conflicts with any of the previous
 #       intervals (3,4), (5,7), (6,9) and (10,12), so skip it.
 
-use Modern::Perl;
+import sys
 
-my @intervals = parse_intervals(@ARGV);
-my @conflicts = find_conflicts(@intervals);
-print_intervals(@conflicts);
+def parse_intervals(args):
+    args = [int(x) for x in args]
+    out = []
+    while args:
+        out.append([args.pop(0), args.pop(0)])
+    return out
 
+def find_conflicts(intervals):
+    conflicts = []
+    for i in range(1, len(intervals)):
+        for j in range(0, i):
+            i1s = intervals[i][0]
+            i1e = intervals[i][1]
+            i2s = intervals[j][0]
+            i2e = intervals[j][1]
+            if (i1s >= i2s and i1s <  i2e) or \
+               (i1e >= i2s and i1e <  i2e) or \
+               (i1s <  i2s and i1e >= i2e):
+                conflicts.append(intervals[i])
+                break;
+    return conflicts
 
-sub parse_intervals {
-    my(@in) = @_;
-    my @out;
-    while (@in) {
-        my($s, $e) = splice(@in, 0, 2);
-        push @out, [$s, $e];
-    }
-    return @out;
-}
+def intervals_as_string(intervals):
+    out = "[ "
+    sep = ""
+    for interval in intervals:
+        out += f"{sep}({interval[0]},{interval[1]})"
+        sep = ", "
+    out += " ]"
+    return out
 
-sub find_conflicts {
-    my(@intervals) = @_;
-    my @conflicts;
-    for my $i (1 .. $#intervals) {
-        for my $j (0 .. $i-1) {
-            my $i1s = $intervals[$i][0];
-            my $i1e = $intervals[$i][1];
-            my $i2s = $intervals[$j][0];
-            my $i2e = $intervals[$j][1];
-            if (($i1s >= $i2s && $i1s <  $i2e) ||
-                ($i1e >= $i2s && $i1e <  $i2e) ||
-                ($i1s <  $i2s && $i1e >= $i2e)) {
-                push @conflicts, $intervals[$i];
-                last;
-            }
-        }
-    }
-
-    return @conflicts;
-}
-
-sub print_intervals {
-    my(@intervals) = @_;
-    print "[ ";
-    my $sep = "";
-    for (@intervals) {
-        my($s, $e) = @$_;
-        print $sep,"($s,$e)";
-        $sep = ", ";
-    }
-    print " ]\n";
-}
+intervals = parse_intervals(sys.argv[1:])
+conflicts = find_conflicts(intervals)
+print(intervals_as_string(conflicts))

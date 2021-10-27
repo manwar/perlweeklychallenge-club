@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 127
 #
@@ -19,10 +19,10 @@
 #        @S2 = (0, 2, 4, 6, 8)
 # Output: 1 as the given two sets do not have common member.
 
-use Modern::Perl;
-use Set::Intersection;
-
-my @s1 = split(' ', scalar(<>));
-my @s2 = split(' ', scalar(<>));
-my @intersection = get_intersection(\@s1, \@s2);
-say @intersection ? 0 : 1;
+s1 = set([int(x) for x in input().split()])
+s2 = set([int(x) for x in input().split()])
+z = s1.intersection(s2)
+if len(z)==0:
+    print(1)
+else:
+    print(0)
