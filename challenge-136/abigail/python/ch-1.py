@@ -11,13 +11,22 @@
 import fileinput
 import math
 
+def is_power_of_n (number, n):
+    if number < 1:
+        return False
+    if number == 1:
+        return True
+    if number % n:
+        return False
+    return is_power_of_n (number / n, n)
+
+def is_power_of_2 (number):
+    return is_power_of_n (number, 2)
+
 for line in fileinput . input ():
     m, n = line . strip () . split (' ')
-    gcd = math . gcd (int (m), int (n))
-    valid = 0
-    if gcd > 1:
-        while gcd % 2 == 0:
-            gcd = gcd / 2
-        if gcd == 1:
-            valid = 1
-    print (valid)
+    r = math . gcd (int (m), int (n))
+    if r > 1 and is_power_of_2 (r):
+        print (1)
+    else:
+        print (0)
