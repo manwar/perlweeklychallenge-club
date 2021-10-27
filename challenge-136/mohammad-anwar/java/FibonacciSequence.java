@@ -12,7 +12,6 @@ Task #2: Fibonacci Sequence
 
 */
 
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
 
