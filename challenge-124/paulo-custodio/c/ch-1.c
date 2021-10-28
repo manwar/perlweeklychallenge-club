@@ -8,21 +8,21 @@ women. Please feel free to use any character.
 #include "stdio.h"
 
 int main() {
-	puts("    ^^^^^");
-	puts("   ^     ^");
-	puts("  ^       ^");
-	puts(" ^         ^");
-	puts(" ^         ^");
-	puts(" ^         ^");
-	puts(" ^         ^");
-	puts(" ^         ^");
-	puts("  ^       ^");
-	puts("   ^     ^");
-	puts("    ^^^^^");
-	puts("      ^");
-	puts("      ^");
-	puts("      ^");
-	puts("    ^^^^^");
-	puts("      ^");
-	puts("      ^");
+    puts("    ^^^^^");
+    puts("   ^     ^");
+    puts("  ^       ^");
+    puts(" ^         ^");
+    puts(" ^         ^");
+    puts(" ^         ^");
+    puts(" ^         ^");
+    puts(" ^         ^");
+    puts("  ^       ^");
+    puts("   ^     ^");
+    puts("    ^^^^^");
+    puts("      ^");
+    puts("      ^");
+    puts("      ^");
+    puts("    ^^^^^");
+    puts("      ^");
+    puts("      ^");
 }

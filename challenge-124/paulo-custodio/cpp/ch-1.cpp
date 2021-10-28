@@ -9,21 +9,21 @@ women. Please feel free to use any character.
 using namespace std;
 
 int main() {
-	cout << "    ^^^^^" << endl;
-	cout << "   ^     ^" << endl;
-	cout << "  ^       ^" << endl;
-	cout << " ^         ^" << endl;
-	cout << " ^         ^" << endl;
-	cout << " ^         ^" << endl;
-	cout << " ^         ^" << endl;
-	cout << " ^         ^" << endl;
-	cout << "  ^       ^" << endl;
-	cout << "   ^     ^" << endl;
-	cout << "    ^^^^^" << endl;
-	cout << "      ^" << endl;
-	cout << "      ^" << endl;
-	cout << "      ^" << endl;
-	cout << "    ^^^^^" << endl;
-	cout << "      ^" << endl;
-	cout << "      ^" << endl;
+    cout << "    ^^^^^" << endl;
+    cout << "   ^     ^" << endl;
+    cout << "  ^       ^" << endl;
+    cout << " ^         ^" << endl;
+    cout << " ^         ^" << endl;
+    cout << " ^         ^" << endl;
+    cout << " ^         ^" << endl;
+    cout << " ^         ^" << endl;
+    cout << "  ^       ^" << endl;
+    cout << "   ^     ^" << endl;
+    cout << "    ^^^^^" << endl;
+    cout << "      ^" << endl;
+    cout << "      ^" << endl;
+    cout << "      ^" << endl;
+    cout << "    ^^^^^" << endl;
+    cout << "      ^" << endl;
+    cout << "      ^" << endl;
 }

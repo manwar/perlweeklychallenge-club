@@ -6,23 +6,23 @@
 \ women. Please feel free to use any character.
 
 : VENUS
-	."    ^^^^^"	CR
-	."   ^     ^"	CR
-	."  ^       ^"	CR
-	." ^         ^"	CR
-	." ^         ^"	CR
-	." ^         ^"	CR
-	." ^         ^"	CR
-	." ^         ^"	CR
-	."  ^       ^"	CR
-	."   ^     ^"	CR
-	."    ^^^^^"	CR
-	."      ^"		CR
-	."      ^"		CR
-	."      ^"		CR
-	."    ^^^^^"	CR
-	."      ^"		CR
-	."      ^"		CR
+    ."    ^^^^^"    CR
+    ."   ^     ^"   CR
+    ."  ^       ^"  CR
+    ." ^         ^" CR
+    ." ^         ^" CR
+    ." ^         ^" CR
+    ." ^         ^" CR
+    ." ^         ^" CR
+    ."  ^       ^"  CR
+    ."   ^     ^"   CR
+    ."    ^^^^^"    CR
+    ."      ^"      CR
+    ."      ^"      CR
+    ."      ^"      CR
+    ."    ^^^^^"    CR
+    ."      ^"      CR
+    ."      ^"      CR
 ;
 
 VENUS BYE

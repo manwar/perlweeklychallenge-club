@@ -8,21 +8,21 @@ with Ada.Text_IO; use Ada.Text_IO;
 
 procedure ch_1 is
 begin
-	Put_Line("    ^^^^^");
-	Put_Line("   ^     ^");
-	Put_Line("  ^       ^");
-	Put_Line(" ^         ^");
-	Put_Line(" ^         ^");
-	Put_Line(" ^         ^");
-	Put_Line(" ^         ^");
-	Put_Line(" ^         ^");
-	Put_Line("  ^       ^");
-	Put_Line("   ^     ^");
-	Put_Line("    ^^^^^");
-	Put_Line("      ^");
-	Put_Line("      ^");
-	Put_Line("      ^");
-	Put_Line("    ^^^^^");
-	Put_Line("      ^");
-	Put_Line("      ^");
+    Put_Line("    ^^^^^");
+    Put_Line("   ^     ^");
+    Put_Line("  ^       ^");
+    Put_Line(" ^         ^");
+    Put_Line(" ^         ^");
+    Put_Line(" ^         ^");
+    Put_Line(" ^         ^");
+    Put_Line(" ^         ^");
+    Put_Line("  ^       ^");
+    Put_Line("   ^     ^");
+    Put_Line("    ^^^^^");
+    Put_Line("      ^");
+    Put_Line("      ^");
+    Put_Line("      ^");
+    Put_Line("    ^^^^^");
+    Put_Line("      ^");
+    Put_Line("      ^");
 end ch_1;

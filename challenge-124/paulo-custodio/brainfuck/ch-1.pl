@@ -30,7 +30,7 @@ my $text = <<'END';
 END
 
 for (split //, $text) {
-	print "[-]";			# zero cell
-	print "+" x ord($_);	# set cell to ASCII value of character
-	print ".";				# output character
+    print "[-]";            # zero cell
+    print "+" x ord($_);    # set cell to ASCII value of character
+    print ".";              # output character
 }

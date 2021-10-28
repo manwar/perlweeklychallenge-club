@@ -8,21 +8,21 @@ women. Please feel free to use any character.
 import std.stdio;
 
 void main() {
-	writeln("    ^^^^^");
-	writeln("   ^     ^");
-	writeln("  ^       ^");
-	writeln(" ^         ^");
-	writeln(" ^         ^");
-	writeln(" ^         ^");
-	writeln(" ^         ^");
-	writeln(" ^         ^");
-	writeln("  ^       ^");
-	writeln("   ^     ^");
-	writeln("    ^^^^^");
-	writeln("      ^");
-	writeln("      ^");
-	writeln("      ^");
-	writeln("    ^^^^^");
-	writeln("      ^");
-	writeln("      ^");
+    writeln("    ^^^^^");
+    writeln("   ^     ^");
+    writeln("  ^       ^");
+    writeln(" ^         ^");
+    writeln(" ^         ^");
+    writeln(" ^         ^");
+    writeln(" ^         ^");
+    writeln(" ^         ^");
+    writeln("  ^       ^");
+    writeln("   ^     ^");
+    writeln("    ^^^^^");
+    writeln("      ^");
+    writeln("      ^");
+    writeln("      ^");
+    writeln("    ^^^^^");
+    writeln("      ^");
+    writeln("      ^");
 }

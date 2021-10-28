@@ -4,8 +4,8 @@
 ! women. Please feel free to use any character.
 
 program ch1
-	implicit none
-	
+    implicit none
+
     print *, '    ^^^^^'
     print *, '   ^     ^'
     print *, '  ^       ^'
