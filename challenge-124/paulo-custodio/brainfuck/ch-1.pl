@@ -34,3 +34,4 @@ for (split //, $text) {
     print "+" x ord($_);    # set cell to ASCII value of character
     print ".";              # output character
 }
+print "\n";
