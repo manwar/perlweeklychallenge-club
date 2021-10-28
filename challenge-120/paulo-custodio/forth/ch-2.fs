@@ -40,25 +40,3 @@
     DUP 180 > IF 360 SWAP - THEN ;
 
 NEXT-ARG parse_time clock_angle . CR BYE
-
-\ #include <stdio.h>
-\ #include <stdlib.h>
-\ #include <stdbool.h>
-\
-\
-\ int clock_angle(int hh, int mm) {
-\   int mm_angle = mm*360/60;
-\   int hh_angle = (hh % 12)*360/12 + mm_angle/12;
-\     int angle = abs(hh_angle - mm_angle);
-\     if (angle > 180) { angle = 360 - angle; }
-\     return angle;
-\ }
-\
-\ int main(int argc, char* argv[]) {
-\     if (argc != 2) return EXIT_FAILURE;
-\     int hh, mm;
-\     if (!parse_time(argv[1], &hh, &mm)) return EXIT_FAILURE;
-\     int angle = clock_angle(hh, mm);
-\     printf("%d\n", angle);
-\ }
-\
