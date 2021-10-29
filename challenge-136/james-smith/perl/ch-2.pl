@@ -10,9 +10,10 @@ use Data::Dumper qw(Dumper);
 
 my @TESTS = (
   [ 16, 4 ],
+  [ 99_999, 192 ],
   [ 9,  2 ],
   [ 15, 2 ],
-  [ 99_999, 192 ],
+  [ 8, 3 ],
 );
 my @fib = (1,2);
 
@@ -24,7 +25,7 @@ done_testing();
 sub fib_sum {
   my $n = shift;
   push @fib, $fib[-1]+$fib[-2] while $n > $fib[-1];
-  return sum( $n, @fib[0..@fib-2] );
+  return sum( $n, grep { $_ <= $n }  @fib );
 }
 
 sub sum {
