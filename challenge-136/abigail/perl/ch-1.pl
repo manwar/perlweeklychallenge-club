@@ -59,6 +59,8 @@ sub is_power_of_2 ($number) {
 # Main program
 #
 while (<>) {
-    my  $r = gcd split;
+    my ($n, $m) = split;
+    say (0), next if ($n % 2) || ($m % 2);
+    my  $r = gcd $n, $m;
     say $r > 1 && is_power_of_2 ($r) ? 1 : 0
 }

@@ -55,10 +55,14 @@ var
 begin
     while (not eof) do begin
         readln (m, n);
-        r := gcd (m, n);
-        if (r > 1) and is_power_of_2 (r) then
-            writeln (1)
-        else
+        if (n mod 2 = 1) or (m mod 2 = 1) then
             writeln (0)
+        else begin
+            r := gcd (m, n);
+            if (r > 1) and is_power_of_2 (r) then
+                writeln (1)
+            else
+                writeln (0)
+        end
     end
 end.
