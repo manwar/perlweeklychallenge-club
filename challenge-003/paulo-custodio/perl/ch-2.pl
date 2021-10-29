@@ -7,9 +7,7 @@
 # the command line. The Pascal Triangle should have at least 3 rows. For more
 # information about Pascal Triangle, check this wikipedia page.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($rows) = @ARGV;
 

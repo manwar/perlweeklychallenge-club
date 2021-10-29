@@ -1,0 +1,64 @@
+#!/usr/bin/bc -ql
+
+/*
+TASK #1 > Ugly Numbers
+Submitted by: Mohammad S Anwar
+You are given an integer $n >= 1.
+
+Write a script to find the $nth element of Ugly Numbers.
+
+Ugly numbers are those number whose prime factors are 2, 3 or 5. For example,
+the first 10 Ugly Numbers are 1, 2, 3, 4, 5, 6, 8, 9, 10, 12.
+
+Example
+Input: $n = 7
+Output: 8
+
+Input: $n = 10
+Output: 12
+*/
+
+scale = 0
+
+num = read()
+
+define min(a,b) {
+    if (a < b) { return a; } else { return b; }
+}
+
+define min3(a,b,c) {
+    return min(a,min(b,c));
+}
+
+q2[0] = 1; q2size = 1
+q3[0] = 1; q3size = 1
+q5[0] = 1; q5size = 1
+
+for (i = 0; i < num; i++) {
+    /* next hamming: get smallest of the queue heads */
+    h = min3(q2[0], q3[0], q5[0])
+    h
+
+    /* shift used multiples */
+    if (h == q2[0]) {
+        for (j = 1; j < q2size; j++)
+            q2[j-1] = q2[j]
+        q2size = q2size-1
+    }
+    if (h == q3[0]) {
+        for (j = 1; j < q3size; j++)
+            q3[j-1] = q3[j]
+        q3size = q3size-1
+    }
+    if (h == q5[0]) {
+        for (j = 1; j < q5size; j++)
+            q5[j-1] = q5[j]
+        q5size = q5size-1
+    }
+
+    /* push next multiples */
+    q2[q2size] = 2*h; q2size = q2size+1
+    q3[q3size] = 3*h; q3size = q3size+1
+    q5[q5size] = 5*h; q5size = q5size+1
+}
+quit
