@@ -1,16 +1,11 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-10-29 05:39:37 GMT"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
-   },
    "chart" : {
       "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -46,16 +41,15 @@
          "Simon Reinhardt"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
    "series" : [
       {
@@ -129,6 +123,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -160,8 +155,13 @@
             0,
             12,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
-   ]
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-10-29 05:53:57 GMT"
+   }
 }

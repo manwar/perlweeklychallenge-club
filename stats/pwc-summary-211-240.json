@@ -1,13 +1,6 @@
 {
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-10-29 05:39:37 GMT"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
+      "text" : "[Champions: 30] Last updated at 2021-10-29 05:53:57 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -43,8 +36,10 @@
          "Yet Ebreo"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -83,7 +78,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -115,7 +109,8 @@
             0,
             3,
             21
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "data" : [
@@ -153,15 +148,20 @@
          "name" : "Blog"
       }
    ],
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
+   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
