@@ -12,7 +12,7 @@ Program XXX;
 (* Find the GCD, using Stein's algorithm                   *)   
 (*    (https://en.wikipedia.org/wiki/Binary_GCD_algorithm) *)
 (*                                                         *)
-function gcd (u, v: integer): integer;
+function gcd (u, v: longint): longint;
     var
         u_odd, v_odd: boolean;
 
@@ -34,7 +34,7 @@ function gcd (u, v: integer): integer;
 (* Return true if number is a power of n, that is, number == n ^ p *)
 (* for some non-negative integer p. Return false otherwise.        *)
 (*                                                                 *)
-function is_power_of_n (number, n: integer): boolean;
+function is_power_of_n (number, n: longint): boolean;
     begin
              if number < 1        then is_power_of_n := false
         else if number = 1        then is_power_of_n := true
@@ -42,7 +42,7 @@ function is_power_of_n (number, n: integer): boolean;
         else is_power_of_n := is_power_of_n (number div n, n);
     end;
 
-function is_power_of_2 (number: integer): boolean;
+function is_power_of_2 (number: longint): boolean;
     begin
         is_power_of_2 := is_power_of_n (number, 2);
     end;
@@ -50,7 +50,7 @@ function is_power_of_2 (number: integer): boolean;
 
 
 var
-    m, n, r: integer;
+    m, n, r: longint;
 
 begin
     while (not eof) do begin
