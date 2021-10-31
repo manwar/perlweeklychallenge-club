@@ -46,6 +46,10 @@ func main () {
         if c != 2 || err != nil {
             break;
         }
+        if n % 2 == 1 || m % 2 == 1 {
+            fmt . Print ("0\n")
+            continue
+        }
         if r := gcd (m, n); r > 1 && is_power_of_2 (r) {
             fmt . Print ("1\n")
         } else {

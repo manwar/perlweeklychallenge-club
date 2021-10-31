@@ -22,6 +22,10 @@ end
 ARGF . each_line do
     | line |
     m, n = line . split . map {|x| x . to_i}
-    r = m . gcd (n)
-    puts (r > 1 && is_power_of_2(r) ? 1 : 0)
+    if n % 2 == 1 || m % 2 == 1 then
+        puts (0)
+    else
+        r = m . gcd (n)
+        puts (r > 1 && is_power_of_2(r) ? 1 : 0)
+    end
 end

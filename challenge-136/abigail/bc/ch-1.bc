@@ -28,8 +28,12 @@ define q (n) {
 while (1) {
     n = read (); if (n == 0) {break}
     m = read (); if (m == 0) {break}
-    r = g (n, m)
-    r > 1 && q (r)
+    if (n % 2 == 1 || m % 2 == 1) {
+        0
+    } else {
+        r = g (n, m)
+        r > 1 && q (r)
+    }
 }
 
 quit

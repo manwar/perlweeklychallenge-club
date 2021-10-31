@@ -45,6 +45,10 @@ int main (void) {
     long long n, m;
 
     while (scanf ("%lld %lld", &n, &m) == 2) {
+        if (n % 2 || m % 2) {
+            printf ("0\n");
+            continue;
+        }
         long long r = gcd (n, m);
         printf ("%d\n", r > 1 && is_power_of_2 (r) ? 1 : 0);
     }
