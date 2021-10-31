@@ -1,0 +1,29 @@
+%!PS
+
+/fibseq {
+    1 1 f
+} bind def
+
+/f {
+    3 dict begin
+    /z exch def
+    /y exch def
+    /x exch def
+    x y lt {
+        x 0 eq {
+            1
+        } {
+            0
+        } ifelse
+    } {
+        x y sub y z add y f
+        x y z add y f
+        add
+    } ifelse
+    end
+} bind def
+
+16 fibseq 4 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+9 fibseq 2 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+15 fibseq 2 eq { (Pass) } { (FAIL) } ifelse =
+

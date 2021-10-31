@@ -8,5 +8,5 @@ git push -u origin master
 
 git checkout devel
 git pull
-git rebase master
-git push --force -u origin devel
+git merge master
+git push -u origin devel

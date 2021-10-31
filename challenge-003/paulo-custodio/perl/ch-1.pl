@@ -7,17 +7,8 @@
 # or equal to 5. They are also called Hamming/Regular/Ugly numbers. For more
 # information, please check this wikipedia.
 
-use strict;
-use warnings;
-use 5.030;
-
-sub min {
-    my($min, @a) = @_;
-    for (@a) {
-        $min = $_ if $min > $_;
-    }
-    return $min;
-}
+use Modern::Perl;
+use List::Util 'min';
 
 # return an iterator to generate the sequence
 # the sequence is a merge of all multiples of 2, 3 and 5

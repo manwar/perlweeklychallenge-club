@@ -3,13 +3,13 @@
 # TASK #2 > Smith Numbers
 # Submitted by: Mohammad S Anwar
 # Write a script to generate first 10 Smith Numbers in base 10.
-# 
+#
 # According to Wikipedia:
-# 
+#
 # In number theory, a Smith number is a composite number for which, in a given
-# number base, the sum of its digits is equal to the sum of the digits in its 
+# number base, the sum of its digits is equal to the sum of the digits in its
 # prime factorization in the given number base.
-# 
+#
 
 def is_prime(n):
     if n <= 1:
@@ -35,10 +35,10 @@ def get_prime_factors(n):
             n //= i
         else:
             i += 1
-    
+
     if n>1:
         prime_factors.append(n)
-    
+
     return prime_factors
 
 def is_smith(n):
@@ -50,7 +50,7 @@ def is_smith(n):
     fact_digits = [int(x) for x in factors]
     sum2 = sum(fact_digits)
     return sum1==sum2
-    
+
 n=1
 count=0
 while count<10:
