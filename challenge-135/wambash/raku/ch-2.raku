@@ -24,7 +24,7 @@ class Validate-SEDOL {
     }
 
     method char ($/) {
-        make $/.Str.parse-base(35)
+        make $/.Str.parse-base(36)
     }
 }
 
