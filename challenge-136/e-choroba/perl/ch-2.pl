@@ -5,7 +5,7 @@ use strict;
 use List::Util qw{ sum };
 
 my @F = (1, 2);
-sub fibonacci_sequence {
+sub fibonacci_sequence_indicator {
     my ($n) = @_;
     my $count = 0;
     my $indicator = 1;
@@ -21,8 +21,30 @@ sub fibonacci_sequence {
     return $count
 }
 
+my %fs = (1 => [[1]], 2 => [[2]]);
+sub fs_dynamic {
+    my ($n) = @_;
+    return @{ $fs{$n} } if exists $fs{$n};
+
+    push @F, $F[-2] + $F[-1] while $F[-1] < $n;
+    my @result;
+    for my $f (grep $_ <= $n, @F) {
+        no warnings 'recursion';
+        my @without = grep { ! grep $_ == $f, @$_ } fs_dynamic($n - $f);
+        next if @without && $f < $without[0][0];
+
+        push @result, map [$f, @$_], @without;
+        push @result, [$f] if $n == $f;
+    }
+    return @{ $fs{$n} = \@result }
+}
+
+sub fibonacci_sequence {
+    scalar fs_dynamic(@_)
+}
+
 use Test2::V0;
-plan 52;
+plan 118;
 
 is fibonacci_sequence(16), 4, 'Example 1';
 is fibonacci_sequence(9), 2, 'Example 2';
@@ -47,6 +69,7 @@ is fibonacci_sequence(29), 5, 'Check 29';
 is fibonacci_sequence(30), 3, 'Check 30';
 is fibonacci_sequence(31), 3, 'Check 31';
 is fibonacci_sequence(32), 4, 'Check 32';
+
 is fibonacci_sequence(33), 1, 'Check 33';
 is fibonacci_sequence(34), 4, 'Check 34';
 is fibonacci_sequence(35), 4, 'Check 35';
@@ -80,3 +103,6 @@ is fibonacci_sequence(62), 3, 'Check 62';
 is fibonacci_sequence(63), 8, 'Check 63';
 is fibonacci_sequence(64), 5, 'Check 64';
 is fibonacci_sequence(65), 5, 'Check 65';
+
+is fibonacci_sequence($_), fibonacci_sequence_indicator($_), "same $_"
+    for 1 .. 65, 1234;
