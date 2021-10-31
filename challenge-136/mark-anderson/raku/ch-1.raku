@@ -9,5 +9,5 @@ is two-friendly(4,  10), 1, 'Example 3';
 
 sub two-friendly($m, $n)
 {
-    +(log2($m gcd $n).narrow ~~ UInt);
+    +(log2($m gcd $n).narrow ~~ Int);
 }
