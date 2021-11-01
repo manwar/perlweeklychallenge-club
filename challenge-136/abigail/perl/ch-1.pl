@@ -22,11 +22,6 @@ use experimental 'lexical_subs';
 # for instance in weeks 82, 89 and 93.
 # So, we copy-and-pasted some code.
 #
-# We could write some code to check whether a number is a power of 2.
-# But there are only 63 powers of 2 which fit in a 64 bit integer, one
-# of them being 1. So, we can just precalculate the ones we're interested in.
-#
-my %power_of_2 = map {1 << $_ => 1} 1 .. 62;
 
 #
 # Find the GCD, using Stein's algorithm
@@ -45,6 +40,27 @@ sub gcd ($u, $v) {
 }
 
 #
+# Return true of $number is a power of $n, that is
+# $number == $n ^ $p for some non-negative integer $p
+#
+sub is_power_of_n ($number, $n) {
+    use integer;
+    $number <  1 ? 0
+  : $number == 1 ? 1
+  : $number % $n ? 0
+  : is_power_of_n ($number / $n, $n)
+}
+
+sub is_power_of_2 ($number) {
+    is_power_of_n ($number, 2)
+}
+
+#
 # Main program
 #
-say $power_of_2 {gcd split} || 0 while <>;
+while (<>) {
+    my ($n, $m) = split;
+    say (0), next if ($n % 2) || ($m % 2);
+    my  $r = gcd $n, $m;
+    say $r > 1 && is_power_of_2 ($r) ? 1 : 0
+}

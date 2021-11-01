@@ -13,30 +13,35 @@
 --    (https://en.wikipedia.org/wiki/Euclidean_algorithm#Implementations)
 --
 function gcd (a, b)
-    while b > 0 do
-        a, b = b, a % b
-    end
-    return a
+    if b >  a then return gcd (b, a) end
+    if b == 0 then return a          end
+                   return gcd (b, a % b)
 end
 
---
--- Precalculate all the relevant powers of 2. Note that in pre 5-3 lua
--- integers are doubles, and start losing precision at 2^53, so we go
--- up to 2^52.
---
-local power_of_2 = {}
-local power      = 1
-for i = 1, 52 do
-    power = power * 2
-    power_of_2 [power] = 1
+function is_power_of_n (number, n)
+    if number <  1    then return false end
+    if number == 1    then return true  end
+    if number % n > 1 then return false end
+                      return (is_power_of_n (number / n, n))
 end
 
+function is_power_of_2 (number)
+    return is_power_of_n (number, 2)
+end
 
 for line in io . lines () do
     local _, _, n, m = line : find ("([0-9]+)%s+([0-9]+)")
-    if power_of_2 [gcd (tonumber (n), tonumber (m))] then
+    n = tonumber (n)
+    m = tonumber (m)
+    if n % 2 == 1 or m % 2 == 1 then
+        print (0)
+        goto continue
+    end
+    local r = gcd (n, m)
+    if r > 1 and is_power_of_2 (r) then
         print (1)
     else
         print (0)
     end
+    ::continue::
 end

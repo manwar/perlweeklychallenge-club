@@ -33,13 +33,17 @@ use experimental 'lexical_subs';
 # we count the number of ways making $target with Fibonnaci numbers larger
 # than $this_fib. We return the sum of these counts.
 #
+# We also cache the results, to reduce the number of recursive calls.
+#
 
 sub count;
 sub count ($target, $this_fib = 1, $prev_fib = 1) {
-      $this_fib >  $target ? 0
-    : $this_fib == $target ? 1
-    : count ($target - $this_fib, $this_fib + $prev_fib, $this_fib) +
-      count ($target,             $this_fib + $prev_fib, $this_fib)
+      state $cache = {};
+      $$cache {$target, $this_fib} //=
+          $this_fib >  $target ? 0
+        : $this_fib == $target ? 1
+        : count ($target - $this_fib, $this_fib + $prev_fib, $this_fib) +
+          count ($target,             $this_fib + $prev_fib, $this_fib)
 }
 
 
