@@ -7,7 +7,7 @@
  */
 
 /*
- * Run as: cc -o ch-1.o ch-1.c; ./ch-1.o < input-file
+ * Run as: cc -o ch-1.o ch-1.c; ./ch-1.o
  */
 
 short start_years       [] = {1600, 2000};

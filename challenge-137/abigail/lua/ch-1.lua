@@ -5,7 +5,7 @@
 --
 
 --
--- Run as: lua ch-1.lua < input-file
+-- Run as: lua ch-1.lua
 --
 
 local start_years       = {1600, 2000}

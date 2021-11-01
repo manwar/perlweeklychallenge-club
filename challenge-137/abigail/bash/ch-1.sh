@@ -5,7 +5,7 @@
 #
 
 #
-# Run as: bash ch-1.sh < input-file
+# Run as: bash ch-1.sh
 #
 
 set -f
