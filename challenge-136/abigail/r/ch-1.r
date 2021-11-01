@@ -42,12 +42,17 @@ repeat {
     m <- as.numeric (parts [[1]] [[1]])
     n <- as.numeric (parts [[1]] [[2]])
 
-    r <- gcd (n, m)
-
-    if (r > 1 & is_power_of_2 (r)) {
-        cat ("1\n")
+    if (n %% 2 == 1 | m %% 2 == 1) {
+        cat ("0\n")
     }
     else {
-        cat ("0\n")
+        r <- gcd (n, m)
+
+        if (r > 1 & is_power_of_2 (r)) {
+            cat ("1\n")
+        }
+        else {
+            cat ("0\n")
+        }
     }
 }

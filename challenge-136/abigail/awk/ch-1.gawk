@@ -37,6 +37,10 @@ function is_power_of_2 (number) {
     return is_power_of_n(number, 2)
 }
                  
+$1 % 2 || $2 % 2 {
+    print 0
+    next
+}
 
 {
     r = gcd($1, $2)

@@ -14,18 +14,18 @@ use Modern::Perl;
 
 my $text = "";
 for my $n (1..20) {
-	if ($n%15==0) {
-		$text .= "fizzbuzz\n";
-	}
-	elsif ($n%3==0) {
-		$text .= "fizz\n";
-	}
-	elsif ($n%5==0) {
-		$text .= "buzz\n";
-	}
-	else {
-		$text .= "$n\n";
-	}
+    if ($n%15==0) {
+        $text .= "fizzbuzz\n";
+    }
+    elsif ($n%3==0) {
+        $text .= "fizz\n";
+    }
+    elsif ($n%5==0) {
+        $text .= "buzz\n";
+    }
+    else {
+        $text .= "$n\n";
+    }
 }
 
 for (split //, $text) {

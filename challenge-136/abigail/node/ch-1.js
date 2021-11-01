@@ -33,6 +33,10 @@ function is_power_of_2 (number) {
 . createInterface ({input: process . stdin})   
 . on              ('line', line => {
     let [m, n] = line . trim () . split (' ') . map (x => +x)
+    if (n % 2 == 1 || m % 2 == 1) {
+        console . log (0)
+        return
+    }
     let  r     = gcd (m, n)
     if (r > 1 && is_power_of_2 (r)) {
         console . log (1)

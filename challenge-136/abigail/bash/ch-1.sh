@@ -45,7 +45,11 @@ set -f
 
 
 while read n m
-do   gcd $n $m
+do   if ((n % 2 == 1 || m % 2 == 1))
+     then echo 0
+          continue
+     fi
+     gcd $n $m
      is_power_of_2 $gcd
      if ((gcd > 1 && is_power_of_2 == 1))
      then echo 1

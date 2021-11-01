@@ -25,8 +25,13 @@ def is_power_of_2 (number):
 
 for line in fileinput . input ():
     m, n = line . strip () . split (' ')
-    r = math . gcd (int (m), int (n))
-    if r > 1 and is_power_of_2 (r):
-        print (1)
-    else:
+    m = int (m)
+    n = int (n)
+    if m % 2 or n % 2:
         print (0)
+    else:
+        r = math . gcd (m, n)
+        if r > 1 and is_power_of_2 (r):
+            print (1)
+        else:
+            print (0)

@@ -227,7 +227,7 @@ Move[] next_moves(Game* game) {
     for (int i = 0; i < moves.length; i++) {
         Move[] temp_moves;
         try_num_moves(&temp_moves, game, moves[i].row, moves[i].col);
-        moves[i].num_moves = temp_moves.length;
+        moves[i].num_moves = cast(int)temp_moves.length;
         if (min_moves > moves[i].num_moves) min_moves = moves[i].num_moves;
     }
 

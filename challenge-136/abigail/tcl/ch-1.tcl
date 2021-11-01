@@ -47,10 +47,14 @@ proc is_power_of_2 {number} {
 
 while {[gets stdin line] >= 0} {
     lassign [split $line " "] m n
-    set r [gcd $m $n]
-    if {$r > 1 && [is_power_of_2 $r]} {
-        puts 1
-    } else {
+    if {[expr $m % 2] == 1 || [expr $n % 2] == 1} {
         puts 0
+    } else {
+        set r [gcd $m $n]
+        if {$r > 1 && [is_power_of_2 $r]} {
+            puts 1
+        } else {
+            puts 0
+        }
     }
 }

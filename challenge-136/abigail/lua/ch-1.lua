@@ -31,10 +31,17 @@ end
 
 for line in io . lines () do
     local _, _, n, m = line : find ("([0-9]+)%s+([0-9]+)")
-    local r = gcd (tonumber (n), tonumber (m))
+    n = tonumber (n)
+    m = tonumber (m)
+    if n % 2 == 1 or m % 2 == 1 then
+        print (0)
+        goto continue
+    end
+    local r = gcd (n, m)
     if r > 1 and is_power_of_2 (r) then
         print (1)
     else
         print (0)
     end
+    ::continue::
 end

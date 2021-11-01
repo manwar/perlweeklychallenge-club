@@ -46,6 +46,11 @@ public class ch1 {
         while (scanner . hasNextInt ()) {
             int n = scanner . nextInt ();
             int m = scanner . nextInt ();
+            
+            if (n % 2 == 1 || m % 2 == 1) {
+                System . out . println ("0");
+                continue;
+            }
 
             int r = gcd (n, m);
 

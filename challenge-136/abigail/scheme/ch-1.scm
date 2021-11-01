@@ -44,8 +44,16 @@
     (define r)
     (if (not (eof-object? m))
         (begin
-            (set! r (gcd m n))
-            (display (if (and (> r 1) (is-power-of-2 r)) 1 0))
+            (display (cond ((= (modulo n 2) 1) 0)
+                           ((= (modulo m 2) 1) 0)
+                           (else
+                               (begin
+                                   (set! r (gcd m n))
+                                   (if (and (> r 1) (is-power-of-2 r)) 1 0)
+                               )
+                           )
+                      )
+            )
             (newline)
             (main)
         )
