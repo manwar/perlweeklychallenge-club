@@ -44,6 +44,7 @@ use experimental 'lexical_subs';
 # Guess which method we're using.
 #
 
+my @start_years       = qw [1600 2000]
 my @long_year_offsets = qw [
     004     009     015     020     026
     032     037     043     048     054
@@ -64,4 +65,4 @@ my @long_year_offsets = qw [
 ];
 
 say for grep {1900  <= $_ <= 2100}
-         map {my $fy = $_; map {$_ + $fy} @long_year_offsets} 1600, 2000;
+         map {my $fy = $_; map {$_ + $fy} @long_year_offsets} @start_years
