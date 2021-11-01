@@ -1,3 +1,3 @@
-# The Weekly Challenge 136
+# The Weekly Challenge 137
 
-Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-136-12m7)
+Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-137-3jon)
