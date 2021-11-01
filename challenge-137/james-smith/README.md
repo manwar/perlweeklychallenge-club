@@ -1,4 +1,4 @@
-# Perl Weekly Challenge #136
+# Perl Weekly Challenge #137
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,64 +10,50 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-136/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-137/james-smith/perl
 
-# Task 1 -  Two friendly
+# Task 1 -  Long year
 
-***You are given 2 positive numbers, `$m` and `$n`. Write a script to find out if the given two numbers are "Two friendly".***
+***Write a script to find all the years between 1900 and 2100 which is a Long Year.***
 
-*Two positive numbers, `m` and `n` are two friendly when `gcd(m, n) = 2 ^ p` where `p > 0`. The greatest common divisor (gcd) of a set of numbers is the largest positive number that divides all the numbers in the set without remainder.*
+*Long years are those years with 53 weeks, they either start on a Thursday OR on a Wednesday in a Leap Year*
 
 ## The solution
 
-The logic of our solution is (1) find the GCD; (2) check they are not co-prime (GCD = 1); (3) The GCD is a power of 2
-
-We can test the last case by converting the GCD into binary - and checking to see if it has the form `10+`. Alternatively we can use `&` and `>>=` to remove trailing zeros.
-
-All that gives us the simple function....
-
 ```perl
-sub friendly {
-  my($a,$b) = @_;
-  ($a,$b) = ($b,$a%$b) while $b; ## Compute GCD
-  return 0 if $a == 1;           ## Co-prime not friendly
-  $a>>=1 until $a&1;             ## Remove trailing 0s
-  return $a == 1 ? 1 : 0;        ## Friendly iff
-}
+my $start_day = 1;
 
+foreach my $year ( 1900 .. 2100 ) {
+  my $is_leap_year = ! $year % 4 && ( $year % 100 || ! $year % 400 );
+  say $year if $start_day == 4 || $start_day == 3 && $is_leap_year;
+  $start_day = ( $start_day + 1 + $is_leap_year ) % 7;
+}
 ```
 
-# Task 2 - Fibonacci Sequence
+# Task 2 - Lychrel Number
 
-***You are given a positive number `$n`. Write a script to find how many different sequences you can create using Fibonacci numbers where the sum of unique numbers in each sequence are the same as the given number. ***
+***You are given a number, `10 <= $n <= 1000`. Write a script to find out if the given number is Lychrel number.***
+ 
+*To keep the task simple, we impose the following rules: a. Stop if the number of iterations reached 500; b. Stop if you end up with number >= 10_000_000.*
 
 ## Solution
 
-There are two bits to this:
- * get a list of fibonacci numbers `<= $n`. Easier to find list up to the first fibonnaci number `> $n`.
-   * We have a cache of the fibonnaci numbers - we just need to extend it to include all those fibonnaci numbers below `$n` (if required).
- * get a list of sums of these numbers which equal `$n`
-   * We call a generic "get-sum" method where we pass in our target number and array of fibonacci numbers
-   * this get-sum method is then call recursively to count the number of totals
- 
 ```perl
-
-my @fib;
-
-sub fib_sum {
-  my $n = shift;
-  push @fib, $fib[-1] + $fib[-2] while $n > $fib[-1];
-  return sum( $n, grep { $_ <= $n }  @fib );
+sub lychrel {
+  my($n,$c) = (shift,$COUNT);
+  ($n eq reverse $n) ? (return 0) : ($n+= reverse $n) while $c-- && $n <= $MAX;
+  1;
 }
+```
 
-sub sum {
-  local $_;
-  my ( $t, @n ) = @_;
-  return 1 unless $t;
-  return 0 if $t < 0;
-  my $c = 0;
-  $c += sum( $t - $_, @n ) while $_ = shift @n;
-  return $c;
+```perl
+sub lychrel_large {
+  my ( $c, @n ) = ( $COUNT, split //, $_[0] );
+  while( $c-- && @n <= $MAX_LARGE ) {
+    return 0 if (join '', my @r = reverse @n ) eq (join '', @n); ## Check if palindromic
+    ## Add the arrays as if numbers - note this is compact - but does the job!
+    ( $n[$_] += $r[$_] ) > 9  && ($n[$_] -= 10, $_ ? ($n[$_-1]++) : (unshift @n, 1) ) foreach reverse 0 .. @n-1;
+  }
+  1;
 }
-
 ```
