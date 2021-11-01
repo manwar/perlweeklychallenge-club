@@ -1,10 +1,4 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
    "xAxis" : {
       "categories" : [
          "Bruce Gray",
@@ -39,11 +33,23 @@
          "E. Choroba"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-10-31 23:58:52 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
    "chart" : {
       "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -117,6 +123,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             1,
             0,
@@ -148,20 +155,13 @@
             0,
             1,
             52
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-11-01 00:11:30 GMT"
    }
 }
