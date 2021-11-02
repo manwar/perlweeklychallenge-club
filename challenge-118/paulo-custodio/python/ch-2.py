@@ -136,4 +136,3 @@ board = Board()
 board.parse()
 board.solve()
 print(solution.path_str())
-
