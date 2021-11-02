@@ -94,7 +94,7 @@ If this is not the first digit on `@n` we just carry to the next column `$n[$_-1
 
 Doing this removes a number of "non Lychrel" numbers that are calculated by the previous function.
 
-###Lychrel numbers computed
+### Lychrel numbers computed
 
 The first method found the following candidate Lychrel numbers between 1 and 1000:
 
