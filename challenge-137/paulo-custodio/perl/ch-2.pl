@@ -60,5 +60,3 @@ sub is_lychrel {
 }
 
 say is_lychrel(shift||0);
-
-
