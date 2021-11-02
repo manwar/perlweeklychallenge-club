@@ -2,153 +2,168 @@
    "title" : {
       "text" : "The Weekly Challenge - 137"
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "id" : "Bob Lied",
-            "name" : "Bob Lied"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ],
-               [
-                  "Blog",
-                  2
-               ]
-            ],
-            "id" : "Flavio Poletti",
-            "name" : "Flavio Poletti"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "name" : "James Smith",
-            "id" : "James Smith"
-         },
-         {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "id" : "Simon Green",
-            "name" : "Simon Green"
-         }
-      ]
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "xAxis" : {
+      "type" : "category"
    },
    "legend" : {
       "enabled" : 0
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2021-11-02 08:45:32 GMT"
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "chart" : {
       "type" : "column"
    },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2021-11-02 09:32:00 GMT"
+   },
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Bob Lied",
+            "name" : "Bob Lied",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "name" : "Flavio Poletti",
+            "id" : "Flavio Poletti"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "James Smith",
+            "name" : "James Smith"
+         },
+         {
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Simon Green",
+            "id" : "Simon Green",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "id" : "Steven Wilson",
+            "name" : "Steven Wilson"
+         }
+      ]
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Bob Lied",
                "drilldown" : "Bob Lied",
-               "y" : 2
+               "y" : 2,
+               "name" : "Bob Lied"
             },
             {
-               "y" : 6,
+               "drilldown" : "Flavio Poletti",
                "name" : "Flavio Poletti",
-               "drilldown" : "Flavio Poletti"
+               "y" : 6
             },
             {
-               "name" : "James Smith",
                "drilldown" : "James Smith",
+               "name" : "James Smith",
                "y" : 3
             },
             {
-               "y" : 2,
                "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
+               "name" : "Mark Anderson",
                "y" : 2
             },
             {
-               "y" : 3,
+               "y" : 2,
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "drilldown" : "Simon Green",
                "name" : "Simon Green",
-               "drilldown" : "Simon Green"
+               "y" : 3
+            },
+            {
+               "drilldown" : "Steven Wilson",
+               "y" : 1,
+               "name" : "Steven Wilson"
             }
          ],
+         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 137"
       }
-   ]
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   }
 }
