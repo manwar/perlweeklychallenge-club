@@ -20,6 +20,28 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-137/ja
 
 ## The solution
 
+We will do this without using Perl modules or date functions, the only "input" we need is that January 1st 1900 was in fact a Monday.
+We encode days of the week with Sunday = 0, Monday = 1, *etc*.
+
+For each year the first thing we have to find out if the year is infact a leap year. That is achieved with the formulae
+
+```perl
+! $year % 4 && ( $year % 100 || ! $year % 400 );
+```
+
+We then check to see if the year is a long year, *i.e.* if starts on a Thursday (day 4) or Wednesday (day 3) in a leap year
+
+```perl
+$start_day == 4 || $start_day == 3 && $is_leap_year;
+```
+
+Finally we increment the start day - by two days in a leap year or one in a non-leap year.
+```perl
+$start_day = ( $start_day + 1 + $is_leap_year ) % 7;
+```
+
+Bringing this altogether gives us the following code:
+
 ```perl
 my $start_day = 1;
 
@@ -36,7 +58,11 @@ foreach my $year ( 1900 .. 2100 ) {
  
 *To keep the task simple, we impose the following rules: a. Stop if the number of iterations reached 500; b. Stop if you end up with number >= 10_000_000.*
 
+*Note we don't know which numbers are Lychrel numbers, but we do know which aren't! Brute force will only get us so far - but leaves open the question of a palindrome further down the line than we stop computing and reversing sums.*
+
 ## Solution
+
+The solution is suprisingly simple. Check to see if the number is a palindrome - if so return 0. If not add the reverse of the number to itself and repeat until the count or size limits in the question apply.
 
 ```perl
 sub lychrel {
@@ -46,14 +72,32 @@ sub lychrel {
 }
 ```
 
+You will note there is a limit on the size of `$n` in the question, and one of the reasons for this is that when `$n` gets large Perl reverts to floating point representation and the code here fails. Instead we can replace our representation of `$n` as a digit array, we can do the same calculations and checks on the elements of the array, but this allows us to deal with arbitrary sized values.
+ 
 ```perl
 sub lychrel_large {
   my ( $c, @n ) = ( $COUNT, split //, $_[0] );
-  while( $c-- && @n <= $MAX_LARGE ) {
-    return 0 if (join '', my @r = reverse @n ) eq (join '', @n); ## Check if palindromic
-    ## Add the arrays as if numbers - note this is compact - but does the job!
-    ( $n[$_] += $r[$_] ) > 9  && ($n[$_] -= 10, $_ ? ($n[$_-1]++) : (unshift @n, 1) ) foreach reverse 0 .. @n-1;
+  while( $c-- ) {
+    return 0 if (join '', my @r = reverse @n ) eq (join '', @n);
+    ( $n[$_] += $r[$_] ) > 9  && ($n[$_] -= 10, $_ ? ($n[$_-1]++) : (unshift @n, 1) ) for reverse 0 .. @n-1;
   }
   1;
 }
 ```
+The interesting line I suppose is:
+```
+( $n[$_] += $r[$_] ) > 9  && ($n[$_] -= 10, $_ ? ($n[$_-1]++) : (unshift @n, 1) ) for reverse 0 .. @n-1;
+```
+This adds the reverse of the number represented in `@n` to itself, ready for the next iteration. If `$n[] = $r[]` is greater than 9 we have to carry one to the left.
+
+If this is not the first digit on `@n` we just carry to the next column `$n[$_-1]`, but if it is the first digit we can't do this so need to add an additional element (containing 1) as the new first digit....
+
+Doing this removes a number of "non Lychrel" numbers that are calculated by the previous function.
+
+###Lychrel numbers computed
+
+The first method found the following candidate Lychrel numbers between 1 and 1000:
+
+89 98 177 187 **196** 276 286 **295** 375 385 **394** **493** 573 583 **592** 672 682 **689** **691** 739 771 781 **788** **790** 849 869 870 **879** 880 **887** 899 937 948 968 **978** **986** 998
+
+The ones highlighted in bold are the candidate Lychrel numbers which are not ruled out by the second function.
