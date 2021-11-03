@@ -83,30 +83,3 @@ def count_combin_sum(n, terms):
 n = int(sys.argv[1])
 fibs = fibonacci_upto(n)
 print(count_combin_sum(n, fibs))
-
-# use Modern::Perl;
-# use Math::Fibonacci 'term';
-# use Math::Combinatorics;
-# use List::Util 'sum';
-#
-# @ARGV or die "Usage: ch-2.pl n\n";
-# my $n = shift;
-# my @fibs = fibs_upto($n);
-# say count_combin_sum($n, @fibs);
-#
-#
-# sub count_combin_sum {
-#   my($n, @fibs) = @_;
-#   my $count = 0;
-#   for my $k (1..@fibs) {
-#       my @combin = combine($k, @fibs);
-#       for (@combin) {
-#           my @combo = @$_;
-#           if (sum(@combo) == $n) {
-#               $count++;
-#           }
-#       }
-#   }
-#   return $count;
-# }
-#
