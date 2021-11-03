@@ -36,15 +36,16 @@ use experimental 'lexical_subs';
 # 
 # Now, we could calculate the day of the week of Jan 1 and Dec 31,
 # either using a module or some handrolled calculations, checking
-# whether at least of those days is a Thursday.
+# whether at least of those days is a Thursday. 
 #
 # Or we could just list the 71 years in a 400 year period, and so
 # some trivial arithmetic.
 #
-# Guess which method we're using.
+# We opt to use the latter method in this solution.
+# For the former method, see ch-1a.pl.
 #
 
-my @start_years       = qw [1600 2000]
+my @start_years       = qw [1600 2000];
 my @long_year_offsets = qw [
     004     009     015     020     026
     032     037     043     048     054
