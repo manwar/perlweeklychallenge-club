@@ -130,7 +130,7 @@ This lead me to seeing if I could a longer list of compute Lychrel numbers, this
 
 Here is the perl - I will try and explain how it works afterwards.
 ```perl
-my( @sieve, @seeds, %lychrel );
+my( %seeds, %lychrel );
 
 sub lychrel_large_seed {
   my ( $c, $n, @n ) = ( $COUNT, $_[0], split //, $_[0] );
@@ -138,10 +138,10 @@ sub lychrel_large_seed {
     my @r = reverse @n;
     my $rn = join '', @r;
     my $nn = join '', @n;
-    return exists $lychrel{$seeds[$rn]} if $rn < $S_MAX*$MULT && $r[0] && defined $seeds[$rn] ;
-    return exists $lychrel{$seeds[$nn]} if $nn < $S_MAX*$MULT && defined $seeds[$nn];
-    $seeds[ $rn ] = $n if $rn < $S_MAX*$MULT && $r[0];
-    $seeds[ $nn ] = $n if $nn < $S_MAX*$MULT;
+    return exists $lychrel{$seeds{$rn}} if $r[0] && defined $seeds{$rn};
+    return exists $lychrel{$seeds{$nn}} if          defined $seeds{$nn};
+    $seeds{ $rn } = $n if $rn < $S_MAX*$MULT && $r[0];
+    $seeds{ $nn } = $n if $nn < $S_MAX*$MULT;
     return 0 if $rn eq $nn; ## Check if palindromic
     ## Add the arrays as if numbers - note this is compact - but does the job!
     ( $n[$_] += $r[$_] ) > 9  && ($n[$_] -= 10, $_ ? ($n[$_-1]++) : (unshift @n, 1) ) for reverse 0 .. @n-1;
@@ -150,8 +150,8 @@ sub lychrel_large_seed {
 }
 
 foreach my $n (10..$S_MAX) {
-  if( defined $seeds[$n] ) {
-    $lychrel{$n}++ if exists $lychrel{$seeds[$n]};
+  if( defined $seeds{$n} ) {
+    $lychrel{$n}++ if exists $lychrel{$seeds{$n}};
     next;
   }
   $lychrel{$n}=1 if lychrel_large_seed($n);
