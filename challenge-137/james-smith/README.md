@@ -16,7 +16,21 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-137/ja
 
 ***Write a script to find all the years between 1900 and 2100 which is a Long Year.***
 
-*Long years are those years with 53 weeks, they either start on a Thursday OR on a Wednesday in a Leap Year*
+## What is a "long year"?
+
+All years are the same length (except for leap years) so what is a long year.
+
+Every week (starting on a Monday) is allocated a number of the form year-week. Now for 51 (or 52) weeks
+of the year that week fall entirely in one year. The first and last week can span two years.
+
+To avoid ambiguity those weeks are allocated to one or other of the years, and so it is allocated to
+the year that has the most of its days in, i.e. 4, 5, 6 or 7.
+
+In a normal year there are 8 days in these two weeks (and a leap year 9). So for both the first and last week
+to be allocated to the same year they they must have 4 days each in the same year (and 4 & 5 in a leap year).
+
+So long years either start on a Thursday (Thurs -> Sun = 4 days) OR on a Wednesday (Weds -> Sun = 4 days)
+in a Leap Year.
 
 ## The solution
 
@@ -55,14 +69,20 @@ foreach my $year ( 1900 .. 2100 ) {
 # Task 2 - Lychrel Number
 
 ***You are given a number, `10 <= $n <= 1000`. Write a script to find out if the given number is Lychrel number.***
- 
-*To keep the task simple, we impose the following rules: a. Stop if the number of iterations reached 500; b. Stop if you end up with number >= 10_000_000.*
 
-*Note we don't know which numbers are Lychrel numbers, but we do know which aren't! Brute force will only get us so far - but leaves open the question of a palindrome further down the line than we stop computing and reversing sums.*
+## What is a Lychrel Number?
+
+To find out if a number is a Lychrel number, we generate a sequence by adding each number to reverse of itself, repeatedly, terminating when the value is a palindrome.
+
+A Lychrel Number is one such that sequence the sequence is infinite. These leads to the fact that we don't know if a number is a Lychrel Number - just that we know it doesn't {in some bases there are numbers for which the sequence forms a pattern and so are known to be Lychrel numbers). Therefore all Lycrhel Numbers are known as candidate Lychrel numbers.
+
+Now we can't go on for an infinite amount of time - so the challenge says *To keep the task simple, we impose the following rules: a. Stop if the number of iterations reached 500; b. Stop if you end up with number >= 10_000_000.* Note you will never reach 500 iterations with the limit of `1e7`. Brute force will only get us so far - but leaves open the question of a palindrome further down the line than we stop computing and reversing sums.
+
+We will later develop a second solution which can rule out more numbers buy removing the restriction on the size of number, and increasing the number of iterations.
 
 ## Solution
 
-The solution is suprisingly simple. Check to see if the number is a palindrome - if so return 0. If not add the reverse of the number to itself and repeat until the count or size limits in the question apply.
+The solution is suprisingly simple. Check to see if the number is a palindrome - if so return 0. If not add the reverse of the number to itself and repeat until the count or size limits in the question apply. `$COUNT` and `$MAX` are the constants defined above {you can easily experiment by changing the values to see how more/less candidates we find)
 
 ```perl
 sub lychrel {
@@ -71,6 +91,8 @@ sub lychrel {
   1;
 }
 ```
+
+## A larger solution
 
 You will note there is a limit on the size of `$n` in the question, and one of the reasons for this is that when `$n` gets large Perl reverts to floating point representation and the code here fails. Instead we can replace our representation of `$n` as a digit array, we can do the same calculations and checks on the elements of the array, but this allows us to deal with arbitrary sized values.
  
@@ -101,3 +123,52 @@ The first method found the following candidate Lychrel numbers between 1 and 100
 89 98 177 187 **196** 276 286 **295** 375 385 **394** **493** 573 583 **592** 672 682 **689** **691** 739 771 781 **788** **790** 849 869 870 **879** 880 **887** 899 937 948 968 **978** **986** 998
 
 The ones highlighted in bold are the candidate Lychrel numbers which are not ruled out by the second function.
+
+## Finding more Lychrel nubmers
+
+This lead me to seeing if I could a longer list of compute Lychrel numbers, this gets slower as the range of numbers being tested gets longer (especially as any candidate Lychrel number takes as many iterations as you allow). But there is a way you can improve performance. It works similar to the sieve of Eratosthenes for prime numbers.
+
+Here is the perl - I will try and explain how it works afterwards.
+```perl
+my( %seeds, %lychrel );
+
+sub lychrel_large_seed {
+  my ( $c, $n, @n ) = ( $COUNT, $_[0], split //, $_[0] );
+  while( $c-- ) {
+    my @r = reverse @n;
+    my $rn = join '', @r;
+    my $nn = join '', @n;
+    return exists $lychrel{$seeds{$rn}} if $r[0] && defined $seeds{$rn};
+    return exists $lychrel{$seeds{$nn}} if          defined $seeds{$nn};
+    $seeds{ $rn } = $n if $rn < $S_MAX*$MULT && $r[0];
+    $seeds{ $nn } = $n if $nn < $S_MAX*$MULT;
+    return 0 if $rn eq $nn; ## Check if palindromic
+    ## Add the arrays as if numbers - note this is compact - but does the job!
+    ( $n[$_] += $r[$_] ) > 9  && ($n[$_] -= 10, $_ ? ($n[$_-1]++) : (unshift @n, 1) ) for reverse 0 .. @n-1;
+  }
+  1;
+}
+
+foreach my $n (10..$S_MAX) {
+  if( defined $seeds{$n} ) {
+    $lychrel{$n}++ if exists $lychrel{$seeds{$n}};
+    next;
+  }
+  $lychrel{$n}=1 if lychrel_large_seed($n);
+}
+
+say $_ foreach sort { $a <=> $b } keys %lychrel;
+```
+
+### Performance
+
+Using this script to generate all candidate Lychrel numbers up to 1 million took approximately `12` seconds. To use the `lychrel_large` routine took approximately 2180 seconds (36 minutes 20 seconds), a speed gain of approximately `180x`.
+
+To 10 million the time taken was approximately 6 minutes.
+
+### Explanation
+
+For every sequence generated above - all the numbers are either not Lychral numbers or candidate Lychral numbers. Once we either get to a palindrome OR reach the "end of the sequence" we can tag every number as either a candidate Lychral number or not. This reduces the number of calculations.
+
+But even more two sequences can converge so that if we find a number we have seen in another sequence we know that all the numbers we have seen are Lychral or not without finding the palindrome / hitting the end of the sequence... Which speeds it up further.
+
