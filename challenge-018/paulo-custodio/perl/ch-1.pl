@@ -9,9 +9,7 @@
 # Other common substrings are “A”, “AB”, “B”, “BA”, “BC” and “C”. Please check
 # this wiki page for details.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 say "(", join(", ", map {$_=qq("$_")} longest_substr(@ARGV)), ")";
 

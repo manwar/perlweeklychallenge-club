@@ -15,8 +15,6 @@
 # Input: $S = "The Weekly Challenge"
 # Output: "Challenge Weekly The"
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 say join ' ', reverse split ' ', "@ARGV";

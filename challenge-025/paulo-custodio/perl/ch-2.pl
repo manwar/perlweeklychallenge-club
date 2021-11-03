@@ -6,9 +6,7 @@
 # Create script to implement Chaocipher. Please checkout wiki page for more
 # information.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my $left  = "HXUCZVAMDSLKPEFJRIGTWOBNYQ";
 my $right = "PTLNBQDEOYSFAVZKGJRIHWXUMC";

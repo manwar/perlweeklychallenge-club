@@ -19,9 +19,7 @@
 #          = A(0, 3)
 #          = 4
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 use Memoize;
 memoize 'A';

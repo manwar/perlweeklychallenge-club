@@ -6,9 +6,7 @@
 # Write a script to find Jaro-Winkler distance between two strings. For more
 # information check wikipedia page.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 sub jaro_similarity {
     my($s1, $s2) = @_;

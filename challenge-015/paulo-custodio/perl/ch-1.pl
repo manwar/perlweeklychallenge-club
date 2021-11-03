@@ -16,9 +16,7 @@
 #   Strong Prime number p(n) when p(n) > [ p(n-1) + p(n+1) ] / 2
 #   Weak   Prime number p(n) when p(n) < [ p(n-1) + p(n+1) ] / 2
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # check if number is prime
 sub is_prime {

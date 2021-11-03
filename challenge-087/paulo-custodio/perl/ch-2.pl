@@ -39,9 +39,7 @@
 #     [ 1 1 1 1 ]
 #     [ 1 1 1 1 ]
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # read matrix from input
 my @m;

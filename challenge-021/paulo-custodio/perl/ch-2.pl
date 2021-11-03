@@ -11,9 +11,7 @@
 # normalization process is to transform a URL into a normalized URL so it is
 # possible to determine if two syntactically different URLs may be equivalent.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 sub decode_triplets {
     my($hex) = @_;

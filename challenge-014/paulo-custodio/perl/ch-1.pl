@@ -7,9 +7,7 @@
 # information, please check out wikipedia page. This challenge was proposed by
 # team member Andrezgz.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 sub van_eck_iter {
     my @hist;

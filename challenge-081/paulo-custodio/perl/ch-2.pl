@@ -29,9 +29,7 @@
 #
 # 9 and the
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # compute word frequency
 my %words;

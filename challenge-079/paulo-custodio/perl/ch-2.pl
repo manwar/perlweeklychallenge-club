@@ -36,9 +36,7 @@
 #
 # Therefore your script should print 6.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 @ARGV or die "Usage: ch-2.pl list\n";
 my @N = @ARGV;

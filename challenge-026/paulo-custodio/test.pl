@@ -1,9 +1,7 @@
 #!/usr/bin/perl
 
 use strict;
-use warnings;
-use Test::More;
-use 5.030;
+use Modern::Perl;
 
 is capture("perl perl/ch-1.pl chancellor chocolate"), "8\n";
 

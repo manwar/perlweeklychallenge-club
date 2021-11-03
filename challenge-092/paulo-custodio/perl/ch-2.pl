@@ -18,9 +18,7 @@
 # Input $S = (1,5), (7,9); $N = (10,11)
 # Output: (1,5), (7,9), (10,11)
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @intervals;          # set of all intervals
 add_interval(parse($_)) for @ARGV;
