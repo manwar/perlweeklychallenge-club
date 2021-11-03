@@ -9,10 +9,12 @@
 * [Go](go/ch-1.go)
 * [Java](java/ch-1.java)
 * [Lua](lua/ch-1.lua)
-* [Node.js](node/ch-1.js)
+* Node.js
+    * [Using look-up](node/ch-1.js)
+    * [Using Doomsday values](node/ch-1a.js)
 * [Pascal](pascal/ch-1.p)
 * Perl
-    * [Using loop-up](perl/ch-1.pl)
+    * [Using look-up](perl/ch-1.pl)
     * [Using Doomsday values](perl/ch-1a.pl)
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
