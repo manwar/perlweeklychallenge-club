@@ -1,8 +1,6 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Test::More;
 
 is capture("echo 5 248832 | bc -lq ./bc/ch-1.bc"), "11.9999\n";

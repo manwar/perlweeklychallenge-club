@@ -31,9 +31,7 @@
 #     Factors of 18: 1, 2, 3, 6, 9
 #     Factors of 23: 1
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($M, $N) = @ARGV;
 my @common = common_factors($M, $N);

@@ -15,9 +15,7 @@
 #     1BvBMSEYstWetqTFn5Au4m4GFg7xJaNVN2
 #     3J98t1WpEZ73CNmQviecrnyiWrnqRhWNLy
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Crypt::Digest::SHA256 'sha256';
 
 use constant BASE58 => 58;

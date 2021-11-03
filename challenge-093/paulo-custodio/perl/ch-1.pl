@@ -28,9 +28,7 @@
 # Input: (1,1), (2,2), (3,1), (1,3), (5,3)
 # Output: 3
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # get points
 (@ARGV<4 || @ARGV&1==1) and die "Usage: ch-1.pl x y x y x y ...\n";

@@ -6,9 +6,7 @@
 # Write a script that finds the first square number that has at least 5 distinct
 # digits. This was proposed by Laurent Rosenfeld.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 sub num_diff_digits {
     my($n) = @_;

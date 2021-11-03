@@ -5,9 +5,7 @@
 # Task #2
 # Write a script that can wrap the given paragraph at a specified column using the greedy algorithm.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my $text = "";
 while (<>) {

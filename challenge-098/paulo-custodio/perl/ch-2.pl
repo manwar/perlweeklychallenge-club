@@ -25,9 +25,7 @@
 # Output: 4 since the target 19 is missing and should be placed at
 # the index 4.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # use bisect method to search for position
 sub search_insert {

@@ -1,9 +1,7 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
+use Modern::Perl;
 use Test::More;
-use 5.030;
 
 is capture("perl/ch-1.pl 12 18"), "(1, 2, 3, 6)\n";
 is capture("perl/ch-1.pl 18 23"), "(1)\n";

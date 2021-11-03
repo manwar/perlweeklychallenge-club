@@ -22,9 +22,7 @@
 # Input: 1231230512
 # Output: 0
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($n) = @ARGV;
 say reverse_int($n);

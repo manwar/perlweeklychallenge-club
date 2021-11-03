@@ -7,9 +7,7 @@
 # numeral CCXLVI, it should return 246. Similarly, for decimal number 39, it
 # should return XXXIX. Checkout wikipedia page for more information.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my %ROMAN = ( M => 1000, D => 500, C => 100, L => 50, X => 10, V => 5, I => 1 );
 my $RE = qr/[MDCLXVI]/i;

@@ -18,9 +18,7 @@
 # Input: 19:15
 # Output: 07:15 pm or 07:15pm
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Time::Piece;
 
 @ARGV==1 or die "Usage: ch-1.pl time\n";

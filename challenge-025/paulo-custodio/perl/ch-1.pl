@@ -5,9 +5,7 @@
 # Generate a longest sequence of the following “English Pokemon” names where
 # each name starts with the last letter of previous name.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @names = qw( audino bagon baltoy banette bidoof braviary bronzor carracosta
                 charmeleon cresselia croagunk darmanitan deino emboar emolga

@@ -42,9 +42,7 @@
 #     [6 3 7 4 2]
 #     [3 7 4 2 6]
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($A, $B) = @ARGV;
 my @A = split ' ', $A;

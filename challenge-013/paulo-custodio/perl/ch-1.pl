@@ -19,9 +19,7 @@
 # 2019/11/29
 # 2019/12/27
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use constant Friday => 5;
 
 sub is_leap {

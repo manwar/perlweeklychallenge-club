@@ -26,9 +26,7 @@
 # Output:
 #     ("a")
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Array::Utils 'intersect';
 
 @ARGV==2 or die "Usage: ch-1.pl A B\n";

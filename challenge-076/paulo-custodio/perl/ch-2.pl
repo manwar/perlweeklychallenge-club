@@ -34,9 +34,7 @@
 #
 # aimed, align, antes, argos, arose, ashed, blunt, blunts, broad, buries, clove, cloven, constitution, constitutions, croon, depart, departed, enter, filch, garlic, goats, grieve, grieves, hazard, liens, malign, malignant, malls, margo, midst, ought, ovary, parted, patna, pudgiest, quash, quashed, raped, ruses, shrine, shrines, social, socializing, spasm, spasmodic, succor, succors, theorem, theorems, traci, tracie, virus, viruses, wigged
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Path::Tiny;
 
 @ARGV==2 or die "Usage: ch-2.pl grid words\n";
