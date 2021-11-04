@@ -6,12 +6,17 @@
 * [Bash](bash/ch-1.sh)
 * [Bc](bc/ch-1.bc)
 * [C](c/ch-1.c)
+* [Erlang](c/ch-1.erl)
 * [Go](go/ch-1.go)
 * [Java](java/ch-1.java)
 * [Lua](lua/ch-1.lua)
-* [Node.js](node/ch-1.js)
+* Node.js
+    * [Using look-up](node/ch-1.js)
+    * [Using Doomsday values](node/ch-1a.js)
 * [Pascal](pascal/ch-1.p)
-* [Perl](perl/ch-1.pl)
+* Perl
+    * [Using look-up](perl/ch-1.pl)
+    * [Using Doomsday values](perl/ch-1a.pl)
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
@@ -21,7 +26,7 @@
 ## Part 2
 
 * [AWK](awk/ch-2.awk)
-* [Bash](bash/ch-1.sh)
+* [Bash](bash/ch-2.sh)
 * [Bc](bc/ch-2.bc)
 * [C](c/ch-2.c)
 * [Go](go/ch-2.go)
