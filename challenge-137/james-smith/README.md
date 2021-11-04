@@ -172,6 +172,7 @@ To 10 million the time taken was approximately 1 min 40s; 20 million ~ 3 min 50s
 | 20,000,000 |   4,521,930 |  3 min 50s |
 | 30,000,000 |   7,177,742 | 31 min 40s |
 
+The last of these is still quicker than getting Lychrel numbers up to 1,000,000 using the "large" method.
 ### Explanation
 
 For every sequence generated above - all the numbers are either not Lychral numbers or candidate Lychral numbers. Once we either get to a palindrome OR reach the "end of the sequence" we can tag every number as either a candidate Lychral number or not. This reduces the number of calculations.
