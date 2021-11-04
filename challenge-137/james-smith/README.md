@@ -164,7 +164,13 @@ say $_ foreach sort { $a <=> $b } keys %lychrel;
 
 Using this script to generate all candidate Lychrel numbers up to 1 million took approximately `12` seconds. To use the `lychrel_large` routine took approximately 2180 seconds (36 minutes 20 seconds), a speed gain of approximately `180x`.
 
-To 10 million the time taken was approximately 6 minutes.
+To 10 million the time taken was approximately 1 min 40s; 20 million ~ 3 min 50s; 30 million ~ 31 min 40s {I think the time for this got large as the machine was starting to hit SWAP storage}. The code fails shortly after this as memory and swap was exhausted ~ 12GB.
+
+| N          | Lycrhel < N | Time taken |
+| ---------: | ----------: | ---------: |
+| 10,000,000 |   2,010,871 |  1 min 40s |
+| 20,000,000 |   4,521,930 |  3 min 50s |
+| 30,000,000 |   7,177,742 | 31 min 40s |
 
 ### Explanation
 
