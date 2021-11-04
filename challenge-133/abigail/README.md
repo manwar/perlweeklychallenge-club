@@ -8,6 +8,8 @@
 
 ### "No buildin sqrt function"
 
+* [AWK][awk/ch-1.awk)
+* [C][c/ch-1.c)
 * [Perl][perl/ch-1a.pl)
 
 ## Part 2
