@@ -19,13 +19,19 @@
 
 import sys
 import re
+from itertools import combinations
+
+def nums_containing(n, d):
+    nums = list(filter(lambda x: re.search(str(d), str(x)), range(n+1)))
+    return nums
 
 def represent(n, d):
-    sum = 0
-    for i in range(n+1):
-        if re.search(str(d), str(i)):
-            sum += i
-    return sum==n
+    nums = nums_containing(n, d)
+    for k in range(1, len(nums)+1):
+        for combin in combinations(nums, k):
+            if sum(combin) == n:
+                return True
+    return False
 
 if represent(int(sys.argv[1]), int(sys.argv[2])):
     print(1)
