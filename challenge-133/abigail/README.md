@@ -24,5 +24,11 @@
 
 ## Part 2
 
+* [AWK](awk/ch-2.awk)
+* [Bash](awk/ch-2.awk)
 * [C](c/ch-2.c)
+* [Lua](lua/ch-2.lua)
+* [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Python](python/ch-2.py)
+* [Ruby](ruby/ch-2.rb)
