@@ -1,8 +1,8 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 106
 #
-# TASK #1 › Maximum Gap
+# TASK #1 > Maximum Gap
 # Submitted by: Mohammad S Anwar
 # You are given an array of integers @N.
 #
@@ -21,20 +21,18 @@
 # Input: @N = (5)
 # Output: 0
 
-use Modern::Perl;
+import sys
 
-my @N = @ARGV;
-say max_gap(@N);
+def max_gap(n):
+    if len(n)<2:
+        return 0
+    n.sort()
 
-sub max_gap {
-    my(@n) = @_;
-    return 0 if @n < 2;
-    @n = sort @n;
+    max_gap = 0
+    for i in range(0, len(n)-1):
+        gap = n[i+1]-n[i]
+        max_gap = max(max_gap, gap)
 
-    my $max_gap = 0;
-    for my $i (0..$#n-1) {
-        my $gap = $n[$i+1] - $n[$i];
-        $max_gap = $gap if $gap > $max_gap;
-    }
-    return $max_gap;
-}
+    return max_gap
+
+print(max_gap([int(x) for x in sys.argv[1:]]))
