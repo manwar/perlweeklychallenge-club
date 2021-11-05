@@ -21,14 +21,16 @@
               (-> file get-first-form second str)))
 
           (defn run-task
-            [task args]
-            (let [clj-options (format "-M -m %s " (get-task-ns task))]
-              (apply clojure clj-options args)))
+            ([task args] (run-task task args (get-task-ns task)))
+            ([task args task-ns]
+             (let [clj-options (format "-M -m %s " task-ns)]
+               (apply clojure clj-options args))))
 
           (defn run-task-bb
-            [task args]
-            (let [bb-cmd (format "bb -m %s " (get-task-ns task))]
-              (apply shell bb-cmd args))))
+            ([task args] (run-task-bb task args (get-task-ns task)))
+            ([task args task-ns]
+             (let [bb-cmd (format "bb -m %s " task-ns)]
+               (apply shell bb-cmd args)))))
 
   clean {:doc "Clean out temporary files"
          :task (run! fs/delete-tree
@@ -61,10 +63,10 @@
   c**** {:doc "CHALLENGE TASKS"}
 
   task-1 {:doc "Run Task 1 (via clojure)"
-          :task (run-task :t1 *command-line-args*)}
+          :task (run-task :t1 *command-line-args* "tw.weekly.c137.t1")}
 
   task-1-bb {:doc "Run Task 1 (via Babashka)"
-             :task (run-task-bb :t1 *command-line-args*)}
+             :task (run-task-bb :t1 *command-line-args* "tw.weekly.c137.t1")}
 
   task-2 {:doc "Run Task 2 (via clojure)"
           :task (run-task :t2 *command-line-args*)}
