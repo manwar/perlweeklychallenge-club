@@ -1,0 +1,3 @@
+#! /usr/bin/env raku
+
+say (1900 .. 2100).grep({ Date.new("$_-12-31").week-number == 53 }).join(", ");
