@@ -1,0 +1,80 @@
+        LINE
+        LOAD  +0
+        STORE success
+        STORE tests
+Next    IN
+        JINEG End
+        STORE a
+        OUT
+        IN
+        STORE ans
+        LOAD +0
+        STORE res
+        LOAD +64
+Loop    STORE divisor
+        LOAD a
+        DIVIDE divisor
+        SUBTRACT 1
+        JIZERO j_1
+        SUBTRACT 1
+        JIZERO j_2
+        ADD 2
+        JUMP j
+j_1     LOAD   +2
+        JUMP j
+j_2     LOAD   +1
+j       MULTIPLY divisor
+        ADD res
+        STORE res
+        LOAD a
+        DIVIDE divisor
+        MULTIPLY divisor
+        MULTIPLY -1
+        ADD a
+        STORE a
+        LOAD divisor
+        DIVIDE +4
+        JIZERO EndL
+        JUMP Loop
+EndL    LOAD res
+        PRINT " => "
+        OUT
+(Now run the test!
+        PRINT " : "
+        SUBTRACT ans
+        JIZERO Ok
+        PRINT "-- should be "
+        LOAD ans
+        OUT
+        PRINT "?"
+        JUMP Line
+Ok      PRINT "OK"
+        LOAD success
+        ADD +1
+        STORE success
+Line    LINE
+        LOAD tests
+        ADD +1
+        STORE tests
+        JUMP Next
+End     LINE
+        PRINT "TESTS: "
+        LOAD success
+        OUT
+        PRINT " of "
+        LOAD tests
+        OUT
+        PRINT " passed"
+        LINE
+        LINE
+        HALT
+        %
+        101
+        154
+        18
+        33
+        154
+        101
+        33
+        18
+        -1

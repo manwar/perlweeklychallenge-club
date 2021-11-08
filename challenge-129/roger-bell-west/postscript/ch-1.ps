@@ -1,0 +1,72 @@
+%! no DSC
+
+/rd {
+    /content exch def
+    /tree exch def
+    /ret -1 def
+    /depth 0 def
+    /dl 1 def
+    /db 1 def
+    tree {
+        content eq { /ret depth def exit } if
+        /dl dl 1 sub def
+        dl 0 eq {
+            /db db 2 mul def
+            /dl db def
+            /depth depth 1 add def
+        } if
+    } forall
+    ret
+} def
+
+[
+               1 
+           2       3 
+         0   0   0   4 
+        0 0 0 0 0 0 5 6
+] 6 rd 3 eq { (Pass) } { (Fail) } ifelse =
+
+[
+               1 
+           2       3 
+         0   0   0   4 
+        0 0 0 0 0 0 5 6
+] 5 rd 3 eq { (Pass) } { (Fail) } ifelse =
+
+[
+               1 
+           2       3 
+         0   0   0   4 
+        0 0 0 0 0 0 5 6
+] 2 rd 1 eq { (Pass) } { (Fail) } ifelse =
+
+[
+               1 
+           2       3 
+         0   0   0   4 
+        0 0 0 0 0 0 5 6
+] 4 rd 2 eq { (Pass) } { (Fail) } ifelse =
+
+[
+                       1
+               2               3 
+           4       0       0       5 
+         0   6   0   0   0   0   7   0 
+        0 0 8 9 0 0 0 0 0 0 0 0 0 0 0 0
+] 7 rd 3 eq { (Pass) } { (Fail) } ifelse =
+
+[
+                       1
+               2               3 
+           4       0       0       5 
+         0   6   0   0   0   0   7   0 
+        0 0 8 9 0 0 0 0 0 0 0 0 0 0 0 0
+] 8 rd 4 eq { (Pass) } { (Fail) } ifelse =
+
+[
+                       1
+               2               3 
+           4       0       0       5 
+         0   6   0   0   0   0   7   0 
+        0 0 8 9 0 0 0 0 0 0 0 0 0 0 0 0
+] 6 rd 3 eq { (Pass) } { (Fail) } ifelse =

@@ -1,0 +1,11 @@
+ Minesweeper←{
+     (⎕IO ⎕ML)←1
+⍝ Example input: 5 10⍴'×   × ××××         ×    × × ×    ××     ×   ×    ×'
+     CellCount←{
+    ⍝ A cell is a 3 by 3 area
+         c←'×'=,⍵   ⍝ 1 is a mine, 0 is not
+         5⊃c:'×'    ⍝ Middle is a mine?
+         +/c        ⍝ Else count mines in cell
+     }
+     CellCount⌺3 3⊢⍵
+ }

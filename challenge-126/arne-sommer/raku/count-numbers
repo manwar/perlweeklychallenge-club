@@ -1,0 +1,11 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0, :v(:$verbose));
+
+my $non-one := gather take $_ unless /1/ for 2 .. Inf;
+
+my @numbers = $non-one.map({ $_ <= $N ?? $_ !! last });
+
+say ": Numbers: { @numbers.join(", ") }" if $verbose;
+
+say @numbers.elems;

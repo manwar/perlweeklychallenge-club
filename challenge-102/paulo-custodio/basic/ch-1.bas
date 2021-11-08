@@ -42,7 +42,7 @@ sub print_rare_numbers(n as Integer)
         if is_perfect_square(r+r1) then
             if r>=r1 then
                 if is_perfect_square(r-r1) then
-                    print trim(str(r))
+                    print r
                 end if
             end if
         end if

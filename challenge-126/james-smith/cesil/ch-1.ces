@@ -1,0 +1,42 @@
+        LINE
+Next    LOAD 0
+        STORE count
+        LOAD 1
+        STORE mult9
+        IN
+        JINEG End
+        OUT
+        PRINT " - "
+Loop    STORE n
+        DIVIDE 10
+        STORE new_n
+        MULTIPLY -10
+        ADD n
+        JIZERO Skip
+        ADD -1
+        JIZERO is_one
+        JUMP not_1
+is_one  LOAD -1
+        ADD   mult9
+        STORE count
+        JUMP Skip
+not_1   MULTIPLY mult9
+        ADD count
+        STORE count
+Skip    LOAD mult9
+        MULTIPLY 9
+        STORE mult9
+        LOAD new_n
+        JIZERO Disp
+        JUMP Loop
+Disp    LOAD count
+        OUT
+        LINE
+        JUMP Next
+End     HALT
+        %
+        15
+        25
+        18446744073709551615
+        -1
+

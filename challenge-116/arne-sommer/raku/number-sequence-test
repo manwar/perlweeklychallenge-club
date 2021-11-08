@@ -1,0 +1,28 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N >= 10, :v(:$verbose));
+
+my $seq := gather
+{
+  get-val( (), $N);
+
+  sub get-val (@done is copy, $todo is copy)
+  {
+    for 1 .. $todo.chars -> $size
+    {
+      my @done2 = @done.clone;
+      my $val   = $todo.substr(0, $size);
+      my $todo2 = $todo.substr($size);
+      
+      @done2.push($val);
+
+      say ": Done: @done2[] { $todo2 ?? "Todo: $todo2" !! ""}" if $verbose;
+
+      $todo2.chars
+       ?? get-val(@done2, $todo2)
+       !! take @done2;
+    }
+  }
+}
+
+say $seq;

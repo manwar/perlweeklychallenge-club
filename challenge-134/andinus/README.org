@@ -1,0 +1,28 @@
+#+title: Challenge 134
+#+date: 2021-10-11
+#+html_link_up: ../
+#+export_file_name: index
+#+options: toc:nil
+#+setupfile: ~/.emacs.d/org-templates/level-2.org
+
+* Task 1 - Pandigital Numbers
+
+Write a script to generate first 5 Pandigital Numbers in base 10.
+
+As per the [[https://en.wikipedia.org/wiki/Pandigital_number][wikipedia]], it says:
+
+#+begin_quote
+A pandigital number is an integer that in a given base has among its
+significant digits each digit used in the base at least once.
+#+end_quote
+
+** Raku
+
+Loop from 1023456789 (first Pandigital Number) and take if it contains
+every digit in base 10.
+
+#+begin_src raku
+put gather for 1023456789 .. ∞ {
+    .take if .comb>>.Int.Set ≡ (0 .. 9).Set;
+}[^5]
+#+end_src

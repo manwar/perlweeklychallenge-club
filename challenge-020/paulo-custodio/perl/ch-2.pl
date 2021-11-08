@@ -6,9 +6,7 @@
 # Write a script to print the smallest pair of Amicable Numbers. For more
 # information, please checkout wikipedia page.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 sub divisors {
     my($n) = @_;

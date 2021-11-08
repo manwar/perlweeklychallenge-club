@@ -1,0 +1,15 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (UInt $S, :v(:$verbose), UInt :u(:$upper) where $upper > 1 = 3);
+
+recurse( (), $S);
+
+sub recurse (@points, $left)
+{
+  $left == 0 && @points.join(" ").say && return;
+
+  for 1 .. $upper -> $step
+  {
+    recurse((@points, $step).flat, $left - $step) if $left >= $step;
+  }
+}

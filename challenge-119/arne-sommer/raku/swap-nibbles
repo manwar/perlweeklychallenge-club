@@ -1,0 +1,14 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0 && $N <= 255, :v(:$verbose));
+
+my $binary  = $N.fmt('%08b');
+my $swapped = $binary.substr(4) ~ $binary.substr(0,4);
+
+if $verbose
+{
+  say ": Binary:  $binary";
+  say ": Swapped: $swapped (binary)";
+}
+
+say $swapped.parse-base(2);

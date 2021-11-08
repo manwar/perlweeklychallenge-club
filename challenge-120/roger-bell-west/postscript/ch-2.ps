@@ -1,0 +1,47 @@
+%! Not DSC compliant
+
+/ca {
+    (:) search
+    pop
+    cvi 30 mul
+    3 1 roll pop
+    cvi dup
+    6 mul
+    3 1 roll
+    2 div add
+    sub
+    abs
+    {
+        dup 180 gt
+        { 360 sub }
+        { exit }
+        ifelse
+    } loop
+    abs
+} def
+
+/str 50 string def
+/fs 12 def
+/Helvetica findfont
+fs scalefont setfont
+20 750 translate
+/line 0 def
+/testnum 1 def
+
+/disptest {
+    0 line moveto testnum str cvs show (.) show
+    dup
+    50 line moveto str cvs show
+    ca
+    dup
+    100 line moveto str cvs show
+    eq { (Pass) } { (FAIL) } ifelse
+    150 line moveto show
+    /line line fs 2 mul sub def
+    /testnum testnum 1 add def
+} def
+
+35 (03:10) disptest
+120 (04:00) disptest
+
+showpage

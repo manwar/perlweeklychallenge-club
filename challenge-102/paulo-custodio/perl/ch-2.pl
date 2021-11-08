@@ -26,9 +26,7 @@
 # (d) "#3#5#7#10#" is the string of length 10
 # (e) "2#4#6#8#11#14#" is the string of length 14
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($N) = @ARGV or die "Usage: ch-1.pl N\n";
 say hash_counting($N);

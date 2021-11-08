@@ -53,9 +53,7 @@
 #
 # Output: Your script should print `4` as `4 % 1000000007 = 4`.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 @ARGV==1 or die "Usage: ch-1.pl N\n";
 say(sum(map {bit_count($_)} 1..$ARGV[0])  % 1000000007);

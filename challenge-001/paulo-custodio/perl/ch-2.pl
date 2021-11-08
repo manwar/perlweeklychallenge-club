@@ -8,9 +8,7 @@
 # ‘fizz’ and any divisible by 5 by the word ‘buzz’. Those numbers that are both
 # divisible by 3 and 5 become ‘fizzbuzz’.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my $n = shift || 20;
 for (1 .. $n) {

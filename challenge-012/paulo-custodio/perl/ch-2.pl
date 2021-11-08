@@ -13,9 +13,7 @@
 # and the path separator is /. Your script should return /a/b as common
 # directory path.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # extract a common prefix, if one exists
 sub extract_common_prefix {

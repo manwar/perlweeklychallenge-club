@@ -1,0 +1,21 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@n where @n.elems > 0 && all(@n) ~~ Int, :v(:$verbose));
+
+my @subset1;
+my @subset2;
+
+for @n.sort -> $current
+{
+  @subset1.sum <= @subset2.sum
+    ?? @subset1.push: $current
+    !! @subset2.push: $current;
+}
+
+my $sum1 = @subset1.sum;
+my $sum2 = @subset2.sum;
+
+say "Subset 1 = ({ @subset1.join(", ") }){ $verbose ?? " (sum: $sum1)" !! "" }";
+say "Subset 2 = ({ @subset2.join(", ") }){ $verbose ?? " (sum: $sum2)" !! "" }";
+
+say ": Difference: { ($sum1 - $sum2).abs }" if $verbose;

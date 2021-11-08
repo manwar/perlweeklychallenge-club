@@ -1,0 +1,16 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0, :v(:$verbose));
+
+my $non-one := gather
+{
+  for 2 .. Inf -> $candidate
+  {
+    last if $candidate > $N;
+    take $candidate unless $candidate ~~ /1/;
+  }
+}
+
+say ": Numbers: { @$non-one.join(', ') }." if $verbose;
+
+say @$non-one.elems;

@@ -1,0 +1,35 @@
+#!/usr/bin/bc -ql
+
+/*
+Challenge 007
+
+Challenge #1
+Print all the niven numbers from 0 to 50 inclusive, each on their own line.
+A niven number is a non-negative number that is divisible by the sum of its
+digits.
+*/
+
+scale = 0
+
+num = read()
+
+define niven(n) {
+    auto rem, sum
+    sum = 0
+    rem = n
+    while (rem > 0) {
+        sum += rem % 10
+        rem /= 10
+    }
+    if ((n % sum) == 0) {
+        return 1
+    } else {
+        return 0
+    }
+}
+
+for (i = 1; i <= num; i++)
+    if (niven(i))
+        print i, "\n"
+
+quit

@@ -69,4 +69,4 @@ function wag_fish_dist(a as string, b as string) as integer
     wag_fish_dist = d(len(a), len(b))
 end function
 
-print trim(str(wag_fish_dist(command(1), command(2))))
+print wag_fish_dist(command(1), command(2))

@@ -9,9 +9,7 @@
 # Solution: 4 weeks are 28 days, to have 5 week-ends we need additional 3 days (29,30,31),
 # therefore 31st must be a Sunday
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use constant Sunday => 7;
 
 sub is_leap {

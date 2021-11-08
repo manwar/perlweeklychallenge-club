@@ -7,9 +7,7 @@
 # if the size is 4, then create Identity Matrix 4x4. For more information about
 # Indentity Matrix, please read the wiki page.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my $size = shift || 4;
 my @i;
@@ -20,4 +18,4 @@ for my $r (0..$size-1) {
 }
 
 # print matrix
-say "[", join("\n ", map {"[".join(", ", @{$i[$_]})."]"} 0..$size-1), "]";
+say "[", join(",\n ", map {"[".join(", ", @{$i[$_]})."]"} 0..$size-1), "]";

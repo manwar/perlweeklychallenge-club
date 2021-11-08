@@ -1,0 +1,39 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-1.bc < input-file
+#
+# Terminate input with a 0
+#
+
+define g (a, b) {
+    if (b > a) {return g (b, a)} 
+    if (b > 0) {return g (b, a % b)} 
+                return a 
+}
+
+define p (n, m) {
+    if (n <  1)    {return 0}
+    if (n == 1)    {return 1}
+    if (n % m > 0) {return 0}
+                    return p (n / m, m)
+}
+
+define q (n) {
+    return p (n, 2)
+}
+
+while (1) {
+    n = read (); if (n == 0) {break}
+    m = read (); if (m == 0) {break}
+    if (n % 2 == 1 || m % 2 == 1) {
+        0
+    } else {
+        r = g (n, m)
+        r > 1 && q (r)
+    }
+}
+
+quit

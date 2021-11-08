@@ -1,0 +1,22 @@
+%
+
+/isqrt {
+    /n exch def
+    /k n -1 bitshift def
+    /x false def
+    {
+        /k1 k n k idiv add -1 bitshift def
+        k1 k ge {
+            /x true def
+        } if
+        /k k1 def
+        x { exit } if
+    } loop
+    k
+} def
+
+(test isqrt) =
+10 isqrt 3 eq { (Pass) } { (Fail) } ifelse print ( ) print
+27 isqrt 5 eq { (Pass) } { (Fail) } ifelse print ( ) print
+85 isqrt 9 eq { (Pass) } { (Fail) } ifelse print ( ) print
+101 isqrt 10 eq { (Pass) } { (Fail) } ifelse =

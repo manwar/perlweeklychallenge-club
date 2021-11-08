@@ -1,0 +1,37 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+use feature 'say';
+use File::Slurp;
+use Getopt::Long;
+
+my $verbose = 0;
+
+GetOptions("verbose" => \$verbose);
+
+my $file = $ARGV[0] // die "Please specify a file";
+
+my @ids;
+
+for my $line (read_file($file, chomp => 1))
+{
+  my ($id, $content) = split(',', $line, 2);
+
+  say ": ID: $id" if $verbose;
+  push(@ids, $id);
+}
+say ": IDs (sorted): " . join(", ", sort { $a <=> $b } @ids) if $verbose;
+
+my $expected = 1;
+
+for my $id (sort { $a <=> $b } @ids)
+{
+  say ": $id (expected $expected)" if $verbose;
+  unless ($id == $expected)
+  {
+    say $expected;
+    last;
+  }
+  $expected++;
+}

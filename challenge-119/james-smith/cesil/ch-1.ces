@@ -1,0 +1,38 @@
+        LINE
+Next    IN
+        JINEG End
+        OUT
+        PRINT " => "
+        STORE a
+        IN
+        STORE c
+        LOAD a
+        DIVIDE 16
+        STORE b
+        MULTIPLY -16
+        ADD a
+        MULTIPLY 16
+        ADD b
+        OUT
+        PRINT " : "
+        SUBTRACT c
+        JIZERO Ok
+        PRINT "--"
+        JUMP Line
+Ok      PRINT "OK"
+Line    LINE
+        JUMP Next
+End     LINE
+        HALT
+        %
+        240
+        15
+        15
+        240
+        0
+        0
+        255
+        255
+        99
+        54
+        -1

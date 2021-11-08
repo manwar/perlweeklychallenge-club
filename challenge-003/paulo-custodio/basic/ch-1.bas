@@ -144,5 +144,5 @@ end function
 ' main
 dim i as integer
 for i=1 to val(command(1))
-    print trim(str(next_hamming()))
+    print next_hamming()
 next i

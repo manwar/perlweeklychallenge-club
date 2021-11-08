@@ -1,0 +1,52 @@
+#!/usr/bin/bc -ql
+
+/*
+Challenge 116
+
+TASK #2 - Sum of Squares
+Submitted by: Mohammad Meraj Zia
+You are given a number $N >= 10.
+
+Write a script to find out if the given number $N is such that sum of squares
+of all digits is a perfect square. Print 1 if it is otherwise 0.
+
+Example
+Input: $N = 34
+Ouput: 1 as 3^2 + 4^2 => 9 + 16 => 25 => 5^2
+
+Input: $N = 50
+Output: 1 as 5^2 + 0^2 => 25 + 0 => 25 => 5^2
+
+Input: $N = 52
+Output: 0 as 5^2 + 2^2 => 25 + 4 => 29
+*/
+
+scale = 10
+num = read()
+
+define sum_of_squares_is_perfect_square(num) {
+    if (num < 10) return 0;
+
+    sum = 0;
+    while (num > 0) {
+    scale = 0
+        digit = num % 10;
+        num = num / 10;
+    scale = 10
+        sum += digit*digit;
+/*print "num ",num," digit ",digit," sum ",sum,"\n"*/
+    }
+
+    sqrt_int = sqrt(sum);
+    scale = 0
+    sqrt_int = sqrt_int / 1;
+    scale = 10
+    if (sqrt_int*sqrt_int == sum) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+sum_of_squares_is_perfect_square(num)
+quit

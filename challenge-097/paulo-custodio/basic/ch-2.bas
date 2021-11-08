@@ -43,4 +43,4 @@ function bit_flips(bits as string, n as integer) as integer
     bit_flips=flips
 end function
 
-print trim(str(bit_flips(command(1), val(command(2)))))
+print bit_flips(command(1), val(command(2)))

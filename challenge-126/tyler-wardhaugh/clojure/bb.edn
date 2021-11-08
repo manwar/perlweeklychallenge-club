@@ -1,0 +1,91 @@
+{
+ :paths ["src"]
+ :deps {}
+ 
+ :tasks
+ {
+  :requires ([clojure.java.io :as io]
+             [clojure.edn :as edn]
+             [babashka.fs :as fs])
+  :init (do
+          (defn get-first-form
+            [file]
+            (with-open [r (-> file fs/file io/reader)
+                        pr (java.io.PushbackReader. r)]
+              (edn/read pr)))
+
+          (defn get-task-ns
+            [task]
+            (let [glob-target (format "src/tw/weekly/*/%s.clj" (name task))
+                  file (->> glob-target (fs/glob ".") first)]
+              (-> file get-first-form second str)))
+
+          (defn run-task
+            [task args]
+            (let [clj-options (format "-M -m %s " (get-task-ns task))]
+              (clojure (apply str clj-options args))))
+
+          (defn run-task-bb
+            [task args]
+            (let [bb-cmd (format "bb -m %s " (get-task-ns task))]
+              (shell (apply str bb-cmd args)))))
+
+  clean {:doc "Clean out temporary files"
+         :task (run! fs/delete-tree [".nrepl-port" ".cpcache" ".lsp"])}
+
+  generate-pom {:doc "Generate POM file"
+                :task (clojure "-X:deps mvn-pom")}
+
+  generate-jar {:doc "Generate JAR file"
+                :depends [generate-pom]
+                :task (clojure "-X:jar")}
+
+  publish {:doc "Publish branch via git-push to REPO (default: origin)"
+           :requires ([clojure.string :as str]
+                      [babashka.process :as p :refer [process]])
+           :task (let [repo (or (first *command-line-args*) "origin")
+                       current-branch (-> (p/$ git branch --show-current)
+                                          p/check
+                                          :out
+                                          slurp
+                                          str/trim-newline)
+                       cmd '[git push --force-with-lease --set-upstream]
+                       args [repo current-branch]]
+                   (-> (process (concat cmd args) {:inherit true})
+                       p/check))}
+
+  test {:doc "Run tests"
+        :task (clojure "-X:test")}
+
+  c**** {:doc "CHALLENGE TASKS"}
+
+  task-1 {:doc "Run Task 1 (via clojure)"
+          :task (run-task :t1 *command-line-args*)}
+
+  task-1-bb {:doc "Run Task 1 (via Babashka)"
+             :task (run-task-bb :t1 *command-line-args*)}
+
+  task-2 {:doc "Run Task 2 (via clojure)"
+          :task (run-task :t2 *command-line-args*)}
+
+  task-2-bb {:doc "Run Task 2 (via Babashka)"
+             :task (binding [*out* *err*]
+                      (println "error: can't run Task 2 via Babashka because it depends on some incompatible libraries.")
+                      (System/exit 1))}
+
+  both {:doc "Run both tasks (via clojure)"
+        :task (do
+                (println "Task 1:")
+                (run 'task-1)
+                (println "\nTask 2:")
+                (run 'task-2))}
+
+  both-bb {:doc "Run both tasks (via Babashka)"
+           :task (do
+                   (println "Task 1:")
+                   (run 'task-1-bb)
+                   (println "\nTask 2:")
+                   (run 'task-2-bb))}
+
+  }
+}

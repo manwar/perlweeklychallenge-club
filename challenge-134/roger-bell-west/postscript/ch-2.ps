@@ -1,0 +1,96 @@
+%!PS
+
+/bubblesort {
+    mark exch aload pop counttomark /idx
+    exch store
+    {
+        0 1 idx 1 sub {
+            pop 2 copy gt {
+                exch
+            } if idx 1 roll
+        } for
+        idx 1 roll /idx idx 1 sub store
+        idx 0 eq {
+            exit
+        } if
+    } loop
+]
+} store
+
+/strconcat % (a) (b) -> (ab)  
+{ exch dup length    
+  2 index length add string    
+  dup dup 4 2 roll copy length
+  4 -1 roll putinterval
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> ajbjc
+{
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+} def
+
+  /apush { % [a b] c -> [a b c]
+      /t exch def
+      [ exch aload pop t ]
+  } def
+  
+  /multable {
+      /x exch def
+      /y exch def
+      /dscale 25 def
+      gsave 20 800 translate
+      /Times-Roman findfont 12 scalefont setfont
+      x y mul dict /results exch def
+      0 0 6 sub moveto (x) show
+      0 
+      1 1 y {
+          /yy exch def
+          0 yy dscale neg mul 6 sub moveto yy (...) cvs show
+      } for
+      1 1 x {
+          /xx exch def
+          xx dscale mul 0 6 sub moveto xx (...) cvs show
+          1 1 y {
+              /yy exch def
+              /res xx yy mul def
+              results res 1 put
+              xx dscale mul yy dscale neg mul 6 sub moveto res (...) cvs show
+          } for
+      } for
+      0                    0.5 dscale mul neg        moveto
+      x 0.5 add dscale mul  0.5 dscale mul neg        lineto
+      0.5 dscale mul        0                        moveto
+      0.5 dscale mul        y 0.5 add dscale mul neg  lineto
+      stroke
+      /ra 0 array def
+      results {
+          pop
+          ra exch apush /ra exch def
+      } forall
+      ra bubblesort
+      /rb 0 array def
+      {
+          (..) cvs rb exch dup length string cvs apush /rb exch store
+      } forall
+      rb (, ) strjoin
+      0 y 2 add dscale mul neg moveto
+      show
+      0 y 3 add dscale mul neg moveto
+      ra length (..) cvs show
+      grestore
+      showpage
+  } def
+  3 3 multable
+  3 5 multable

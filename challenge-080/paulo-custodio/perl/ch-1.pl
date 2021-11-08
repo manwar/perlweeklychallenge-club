@@ -18,9 +18,7 @@
 # Input: @N = (2, 0, -1)
 # Output: 1
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 say missing(@ARGV);
 

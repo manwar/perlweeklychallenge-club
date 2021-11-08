@@ -44,4 +44,4 @@ function isomorphic(a as string, b as string) as integer
     isomorphic = 1
 end function
 
-print trim(str(isomorphic(command(1), command(2))))
+print isomorphic(command(1), command(2))

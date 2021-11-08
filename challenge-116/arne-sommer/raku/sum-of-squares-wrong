@@ -1,0 +1,13 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N >= 10, :v(:$verbose));
+
+if $verbose
+{
+  say ": Digits: {  $N.comb }";
+  say ": Squares: { $N.comb.map( * ** 2) }";
+  say ": Sum: {     $N.comb.map( * ** 2).sum }";
+  say ": Root: {    $N.comb.map( * ** 2).sum.sqrt }";
+}
+
+say + ($N.comb.map( * ** 2).sum.sqrt ~~ Int);

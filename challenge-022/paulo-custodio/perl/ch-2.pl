@@ -7,9 +7,7 @@
 # The script should have method to encode/decode algorithm. The wiki page
 # explains the compression algorithm very nicely.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 {
     package Dict;

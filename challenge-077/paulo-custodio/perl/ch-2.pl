@@ -26,9 +26,7 @@
 #
 #     b) Second X found at Row 3 Col 4.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @m = @ARGV;
 for (@m) { $_ = [split //, $_]; }

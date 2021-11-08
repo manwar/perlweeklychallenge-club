@@ -18,9 +18,7 @@
 #
 # Output: 23
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 @ARGV >= 3 or die "need at least 3 words\n";
 say length(join('', @ARGV[1 .. $#ARGV-1]));

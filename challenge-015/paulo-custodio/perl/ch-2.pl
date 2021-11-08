@@ -6,9 +6,7 @@
 # Write a script to implement Vigenère cipher. The script should be able encode
 # and decode. Checkout wiki page for more information.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($op, $key, @text) = @ARGV;
 if ($op && $op =~ /^enc/i) {

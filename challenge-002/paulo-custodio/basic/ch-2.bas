@@ -63,7 +63,7 @@ end function
 
 ' main
 if command(1) = "-r" then
-    print trim(str(scan_number(command(2), 35)))
+    print scan_number(command(2), 35)
 else
     print format_number(val(command(1)), 35)
 end if

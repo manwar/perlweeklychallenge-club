@@ -16,6 +16,6 @@ for i=1 to val(command(1))
     elseif i mod  5=0 then
         print "buzz"
     else
-        print trim(str(i))
+        print i
     end if
 next i

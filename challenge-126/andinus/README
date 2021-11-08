@@ -1,0 +1,166 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 126
+
+                                Andinus
+                            ━━━━━━━━━━━━━━━
+
+
+                               2021-08-19
+
+
+Table of Contents
+─────────────────
+
+Task 1 - Count Numbers
+Task 2 - Minesweeper Game
+
+
+
+
+
+Task 1 - Count Numbers
+══════════════════════
+
+  You are given a positive integer `$N'.
+
+  Write a script to print count of numbers from 1 to `$N' that don’t
+  contain digit 1.
+
+  Example:
+  ┌────
+  │ Input: $N = 15
+  │ Output: 8
+  │
+  │     There are 8 numbers between 1 and 15 that don't contain digit 1.
+  │     2, 3, 4, 5, 6, 7, 8, 9.
+  │
+  │ Input: $N = 25
+  │ Output: 13
+  │
+  │     There are 13 numbers between 1 and 25 that don't contain digit 1.
+  │     2, 3, 4, 5, 6, 7, 8, 9, 20, 22, 23, 24, 25.
+  └────
+
+
+Raku
+────
+
+  • Program: <file:raku/ch-1.raku>
+
+  Loop over `1..$N' and grep for numbers that don't have `1'. `hyper'
+  hints the compiler that this can be run in parallel.
+
+  ┌────
+  │ print .join: ', ' with (1..$N).hyper.grep(*.comb.grep(1).elems == 0);
+  │ put '.';
+  └────
+
+
+C
+─
+
+  • Program: <file:c/ch-1.c>
+
+  `argv' holds the input & `argc' holds the number of inputs. The input
+  should be a single integer so `argc' should be equal to 2. After
+  checking for that, we check if valid integer was passed.
+
+  After checks, we loop over all numbers from 1 to `num' (passed value)
+  and check if they contain digit `1'. The check is performed by
+  converting `num' to a string and matching for '1' in the string. If we
+  find it then we set the flag to false and don't print the number,
+  otherwise we print it.
+
+  ┌────
+  │ if (argc != 2) {
+  │     puts("Usage: ./ch-1 <number>");
+  │     exit(0);
+  │  }
+  │
+  │ const char *errstr;
+  │ int num = strtonum(argv[1], 1, INT_MAX, &errstr);
+  │ if (errstr != NULL)
+  │     errx(1, "number is %s: %s", errstr, argv[1]);
+  │
+  │ for (int idx = 1; idx <= num; idx++) {
+  │     bool take = true;
+  │
+  │     int str_size = 1 + snprintf(NULL, 0, "%d", idx);
+  │     char *num_str = calloc(str_size, sizeof(char));
+  │     snprintf(num_str, str_size, "%d", idx);
+  │
+  │     for (int x = 0; num_str[x] != '\0'; x++)
+  │         if (num_str[x] == '1') take = false;
+  │     free(num_str);
+  │
+  │     if (take == true) printf("%d ", idx);
+  │  }
+  │ printf("\n");
+  └────
+
+
+Task 2 - Minesweeper Game
+═════════════════════════
+
+  You are given a rectangle with points marked with either x or *.
+  Please consider the x as a land mine.
+
+  Write a script to print a rectangle with numbers and x as in the
+  Minesweeper game.
+
+        A number in a square of the minesweeper game indicates the
+        number of mines within the neighbouring squares (usually
+        8), also implies that there are no bombs on that square.
+
+  Example:
+  ┌────
+  │ Input:
+  │     x * * * x * x x x x
+  │     * * * * * * * * * x
+  │     * * * * x * x * x *
+  │     * * * x x * * * * *
+  │     x * * * x * * * * x
+  │
+  │ Output:
+  │     x 1 0 1 x 2 x x x x
+  │     1 1 0 2 2 4 3 5 5 x
+  │     0 0 1 3 x 3 x 2 x 2
+  │     1 1 1 x x 4 1 2 2 2
+  │     x 1 1 3 x 2 0 0 1 x
+  └────
+
+
+Raku
+────
+
+  • Program: <file:raku/ch-2.raku>
+
+  `@rect' holds the challenge grids and `@grids' holds the solution. We
+  loop over every cell and if it's not a land mine then we loop over
+  it's neighbors and find the number of neighboring land mines and set
+  it's value.
+
+  The neighbors is returned by `neighbors' subroutine which is adapted
+  from `Octans::Neighbors' (projects/octans) which was adapted from my
+  2020 AoC day 11's solution.
+
+  ┌────
+  │ my @rect = $input.IO.lines.map(*.words.cache);
+  │ die "Not rectangle" unless [==] @rect.map(*.elems);
+  │
+  │ my @grid;
+  │ for 0 .. @rect.end -> $r {
+  │     for 0 .. @rect[$r].end -> $c {
+  │         given @rect[$r][$c] {
+  │             when "x" { @grid[$r][$c] = @rect[$r][$c] }
+  │             when "*" {
+  │                 @grid[$r][$c] = 0;
+  │                 for neighbors(@rect, $r, $c).List -> $pos {
+  │                     @grid[$r][$c]++ if @rect[$pos[0]][$pos[1]] eq "x";
+  │                 }
+  │             }
+  │         }
+  │     }
+  │ }
+  │ .put for @grid;
+  └────

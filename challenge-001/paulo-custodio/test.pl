@@ -1,10 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # run tests described in t/test-N.yaml
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Test::More;
 use Path::Tiny;
 use YAML::Tiny;
@@ -19,11 +17,14 @@ our %LANG = (
     awk     => 'awk',
     basic   => 'bas',
     bc      => 'bc',
+    brainfuck=>'bf',
     c       => 'c',
     cpp     => 'cpp',
     d       => 'd',
     forth   => 'fs',
+    fortran => 'f90',
     lua     => 'lua',
+    pascal  => 'pas',
     perl    => 'pl',
     python  => 'py',
 );
@@ -44,7 +45,7 @@ if (@indep_tests) {
 }
 
 # to be used in eval{} in the tests
-use vars qw( $prog $exec);
+use vars qw( $prog $exec );
 
 for my $lang (grep {-d} sort keys %LANG) {
     next if -f "t/$lang.t";     # independent test
@@ -69,8 +70,8 @@ for my $lang (grep {-d} sort keys %LANG) {
 
                     # build test command line
                     my $cmd;
-                    if ($lang eq 'bc') {        # needs args in stdin
-                        $cmd = "echo ".$spec->{args}."|$exec";
+                    if ($lang =~ /^(bc|brainfuck)$/) {        # needs args in stdin
+                        $cmd = "echo ".($spec->{args}//"")."|$exec";
                     }
                     else {
                         $cmd = "$exec ".value_or_eval($spec->{args});
@@ -136,18 +137,22 @@ sub build {
             return "gawk -f $prog --";
         }
         if (/^basic$/) {
-            run("fbc $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            run("fbc $prog") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
         if (/^bc$/) {
             return "bc -lq $prog";
         }
+        if (/^brainfuck$/) {
+            #run("perl bfpp.pl <$prog_wo_ext.bfpp >$prog_wo_ext.bf");
+            return "bf $prog_wo_ext.bf";
+        }
         if (/^c$/) {
-            run("gcc $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            run("gcc $prog -o $prog_wo_ext -lm -lmpfr -lgmp") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
         if (/^cpp$/) {
-            run("g++ $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            run("g++ $prog -o $prog_wo_ext -lmpfr -lgmpxx -lgmp") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
         if (/^d$/) {
@@ -157,14 +162,22 @@ sub build {
         if (/^forth$/) {
             return "gforth $prog";
         }
+        if (/^fortran$/) {
+            run("gfortran $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            return $exe;
+        }
         if (/^lua$/) {
             return "$LUA $prog";
+        }
+        if (/^pascal$/) {
+            run("fpc -o$exe $prog") if (!-f $exe || -M $exe > -M $prog);
+            return $exe;
         }
         if (/^perl$/) {
             return "perl $prog";
         }
         if (/^python$/) {
-            return "python $prog";
+            return "python3 $prog";
         }
         die "unsupported language $lang";
     }

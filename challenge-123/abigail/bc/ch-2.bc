@@ -1,0 +1,32 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-2.bc < input-file
+#
+# Input should be terminated with a line starting with a 0
+#
+
+define dist (a, b, c, d) {return ((a - c) ^ 2 + (b - d) ^ 2)}
+
+while (1) {
+    a = read ()
+    if (a == 0) {break}
+    b = read ()
+    c = read ()
+    d = read ()
+    e = read ()
+    f = read ()
+    g = read ()
+    h = read ()
+
+    if (dist (a, b, c, d) == dist (c, d, e, f) && \
+        dist (c, d, e, f) == dist (e, f, g, h) && \
+        dist (e, f, g, h) == dist (g, h, a, b) && \
+        dist (a, b, e, f) == dist (c, d, g, h)) {
+        1
+    } else {
+        0
+    }
+}

@@ -24,4 +24,4 @@ dim n as integer, k as integer
 
 n=val(command(1))
 k=val(command(2))
-print trim(str(round(k^(1/n))))
+print round(k^(1/n))

@@ -1,0 +1,62 @@
+        LINE
+        IN
+        STORE success
+        STORE tests
+Next    IN
+        JINEG End
+        OUT
+        PRINT " => "
+        STORE a
+        IN
+        STORE c
+        LOAD a
+        DIVIDE 16
+        STORE b
+        MULTIPLY -16
+        ADD a
+        MULTIPLY 16
+        ADD b
+        OUT
+        PRINT " : "
+        SUBTRACT c
+        JIZERO Ok
+        PRINT "-- should be "
+        LOAD c
+        OUT
+        PRINT "?"
+        JUMP Line
+Ok      PRINT "OK"
+        LOAD success
+        ADD 1
+        STORE success
+Line    LINE
+        LOAD tests
+        ADD 1
+        STORE tests
+        JUMP Next
+End     LINE
+        PRINT "TESTS: "
+        LOAD success
+        OUT
+        PRINT " of "
+        LOAD tests
+        OUT
+        PRINT " passed"
+        LINE
+        LINE
+        HALT
+        %
+        0
+        240
+        15
+        15
+        240
+        0
+        0
+        255
+        255
+        99
+        54
+        99
+        2
+        -1

@@ -1,0 +1,40 @@
+%!PS
+
+/i2s {
+    dup log cvi 1 add string cvs
+} bind def
+
+/reverse {
+    2 dict begin
+    dup length dup /l exch def string /out exch def
+    {
+        /l l 1 sub def
+        out exch l exch put
+    } forall
+    out
+    end
+} bind def
+
+/lychrel {
+    /ret -1 def
+    500 {
+        dup i2s reverse cvi
+        dup 2 index eq {
+            /ret 0 def
+            pop
+            exit
+        } if
+        add
+        dup 1e7 ge {
+            exit
+        } if
+    } repeat
+    pop
+    ret
+} bind def
+
+56 lychrel 0 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+57 lychrel 0 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+59 lychrel 0 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+196 lychrel -1 eq { (Pass) } { (FAIL) } ifelse =
+

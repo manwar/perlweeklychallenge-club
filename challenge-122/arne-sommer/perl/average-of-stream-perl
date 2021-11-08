@@ -1,0 +1,31 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+use feature 'say';
+use Getopt::Long;
+
+my $verbose = 0;
+
+GetOptions("verbose" => \$verbose);
+
+die "Please specify a list of numbers" unless @ARGV;
+
+my $sum   = 0;
+my $count = 0;
+
+my @result;
+
+for my $current (@ARGV)
+{
+  $sum += $current;
+
+  my $avg = $sum / ++$count;
+  push(@result, $avg);
+
+  say "Average of first " .
+      ( $count == 1 ? "number" : "$count numbers" ) .
+      " (" . join("+", @ARGV[0 .. $count -1]) . ")/$count = $avg" if $verbose;
+}
+
+say join(", ", @result);

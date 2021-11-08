@@ -1,0 +1,26 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-1.bc < input-file
+#
+# The input-file should end with -1
+#
+
+while (1) {
+    m = read ()
+    if (m == -1) {
+        break
+    }
+    n = read ()
+    p = 2 ^ (n - 1)
+    b = (m / p) % 2
+    if (b == 1) {
+        m = m - p
+    }
+    if (b == 0) {
+        m = m + p
+    }
+    m
+}

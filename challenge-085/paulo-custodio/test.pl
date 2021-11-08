@@ -1,9 +1,7 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
+use Modern::Perl;
 use Test::More;
-use 5.030;
 
 is capture("perl/ch-1.pl 1.2 0.4 0.1 2.5"), "1\n";
 is capture("perl/ch-1.pl 0.2 1.5 0.9 1.1"), "0\n";

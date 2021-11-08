@@ -1,0 +1,11 @@
+#!/usr/bin/env -S coconut-run --strict
+
+import sys
+
+(sys.argv
+    ↦ .[1:]
+    ↦ map $ int
+    ↦ scan $ (+)
+    ↦ map $ ((÷), ?, count 1)
+    ↦ list
+    ↦ print)

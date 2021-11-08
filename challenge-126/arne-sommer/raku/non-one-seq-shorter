@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0);
+
+my $non-one := gather take $_ unless /1/ for 2 .. Inf;
+
+say "First $N non-one numbers: { $non-one[^$N].join(', ') }.";

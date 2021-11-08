@@ -1,0 +1,27 @@
+#! /usr/bin/env raku
+
+use lib "lib";
+use LinkedList1;
+
+unit sub MAIN (Str $string1 = '1 2 3', Str $string2 = '3 2 1', :z(:$zero), :v(:$verbose));
+
+my @values1 = $string1.words;
+my @values2 = $string2.words;
+
+$zero
+  ?? ( die "Must be 0..9 only" unless all((@values1, @values2).flat) ~~ /^<[0..9]>$/ )
+  !! ( die "Must be 1..9 only" unless all((@values1, @values2).flat) ~~ /^<[1..9]>$/ );
+
+my $l1 = LinkedList1.add-elems(@values1>>.Int);
+my $l2 = LinkedList1.add-elems(@values2>>.Int);
+
+say "L1:    ", $l1.nice if $verbose;
+say "L2:    ", $l2.nice if $verbose;
+
+my @values3 = ( $l1.nice("") + $l2.nice("") ).comb>>.Int;
+
+my $l3 = LinkedList1.add-elems(@values3);
+
+say "L1+L2: ", $l3.nice if $verbose;
+
+say $l3.nice;

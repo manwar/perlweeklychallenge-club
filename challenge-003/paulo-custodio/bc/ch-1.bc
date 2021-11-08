@@ -1,0 +1,55 @@
+#!/usr/bin/bc -ql
+
+/*
+Challenge 003
+
+Challenge #1
+Create a script to generate 5-smooth numbers, whose prime divisors are less or
+equal to 5. They are also called Hamming/Regular/Ugly numbers. For more
+information, please check this wikipedia.
+*/
+
+scale = 0
+
+num = read()
+
+define min(a,b) {
+    if (a < b) { return a; } else { return b; }
+}
+
+define min3(a,b,c) {
+    return min(a,min(b,c));
+}
+
+q2[0] = 1; q2size = 1
+q3[0] = 1; q3size = 1
+q5[0] = 1; q5size = 1
+
+for (i = 0; i < num; i++) {
+    /* next hamming: get smallest of the queue heads */
+    h = min3(q2[0], q3[0], q5[0])
+    h
+
+    /* shift used multiples */
+    if (h == q2[0]) {
+        for (j = 1; j < q2size; j++)
+            q2[j-1] = q2[j]
+        q2size = q2size-1
+    }
+    if (h == q3[0]) {
+        for (j = 1; j < q3size; j++)
+            q3[j-1] = q3[j]
+        q3size = q3size-1
+    }
+    if (h == q5[0]) {
+        for (j = 1; j < q5size; j++)
+            q5[j-1] = q5[j]
+        q5size = q5size-1
+    }
+
+    /* push next multiples */
+    q2[q2size] = 2*h; q2size = q2size+1
+    q3[q3size] = 3*h; q3size = q3size+1
+    q5[q5size] = 5*h; q5size = q5size+1
+}
+quit

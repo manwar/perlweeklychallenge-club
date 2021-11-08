@@ -1,0 +1,15 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-1.bc < input-file
+#
+
+while (1) {
+    num = read ()
+    if (num == 0) {
+        break
+    }
+    num - (num % 256) + (num % 16) * 16 + (num % 256) / 16
+}

@@ -1,0 +1,27 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-1.bc < input-file
+#
+
+while (1) {
+    num = read ()
+    if (num == 0) {
+        break
+    }
+    out = 0
+    for (i = 0; i < 8; i ++) {
+        bit = ((num - (num % 2 ^ i)) / 2 ^ i) % 2
+        if (bit == 1) {
+            if (i % 2 == 1) {
+                out += 2 ^ (i - 1)
+            }
+            if (i % 2 == 0) {
+                out += 2 ^ (i + 1)
+            }
+        }
+    }
+    out
+}

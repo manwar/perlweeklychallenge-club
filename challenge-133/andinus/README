@@ -1,0 +1,81 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 133
+
+                                Andinus
+                            ━━━━━━━━━━━━━━━
+
+
+                               2021-10-04
+
+
+
+
+
+Task 1 - Integer Square Root
+════════════════════════════
+
+  You are given a positive integer `$N'.
+
+  Write a script to calculate the integer square root of the given
+  number.
+
+  Please avoid using built-in function. Find out more about it [here].
+
+  ┌────
+  │ Input: $N = 10
+  │ Output: 3
+  │
+  │ Input: $N = 27
+  │ Output: 5
+  │
+  │ Input: $N = 85
+  │ Output: 9
+  │
+  │ Input: $N = 101
+  │ Output: 10
+  └────
+
+
+[here] <https://en.wikipedia.org/wiki/Integer_square_root>
+
+Raku
+────
+
+  • Program: <file:raku/ch-1.raku>
+
+  Initial estimate is set to `$n +> 1', then we loop infinitely until
+  previous 2 estimates are equal.
+
+  ┌────
+  │ my $x = $n +> 1;
+  │ loop {
+  │     given ($x + ($n / $x)) / 2 {
+  │         last if $x == $_;
+  │         $x = $_;
+  │     }
+  │ }
+  │ put $x;
+  └────
+
+
+C
+─
+
+  • Program: <file:c/ch-1.c>
+
+  `argv' holds the input & `argc' holds the number of inputs. The input
+  should be a single integer so `argc' should be equal to 2. After
+  checking for that, we check if valid value was passed.
+
+  Loop until previous 2 estimates are equal.
+
+  ┌────
+  │ double x = num >> 1;
+  │ for (;;) {
+  │     double x_next = (x + (num / x)) / 2;
+  │     if (x == x_next)
+  │         break;
+  │     x = x_next;
+  │  }
+  │ printf("%f\n", x);
+  └────

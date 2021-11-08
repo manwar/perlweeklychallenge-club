@@ -7,9 +7,7 @@
 # decomposition of a number is defined as a list of prime numbers which when
 # all multiplied together, are equal to that number. For example, the Prime decomposition of 228 is 2,2,3,19 as 228 = 2 * 2 * 3 * 19.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($n) = @ARGV;
 say join(", ", prime_decomposition($n)), ".";

@@ -1,0 +1,73 @@
+TASK #1 - Long Year
+
+Write a script to find all the years between 1900 and 2100 which is a Long Year.
+
+    A year is Long if it has 53 weeks.
+
+For more information about Long Year, please refer to
+
+https://en.wikipedia.org/wiki/ISO_week_date#Weeks_per_year
+
+Expected Output
+
+1903, 1908, 1914, 1920, 1925,
+1931, 1936, 1942, 1948, 1953,
+1959, 1964, 1970, 1976, 1981,
+1987, 1992, 1998, 2004, 2009,
+2015, 2020, 2026, 2032, 2037,
+2043, 2048, 2054, 2060, 2065,
+2071, 2076, 2082, 2088, 2093,
+2099
+
+MY NOTES: Pretty easy.  Especially using the p(year) and weeks(year) functions given,
+won't even need a date manipulation module..
+
+
+TASK #2 - Lychrel Number
+
+You are given a number, 10 <= $n <= 1000.
+
+Write a script to find out if the given number is Lychrel number;
+output 1 if it is, and zero if it is not.  To keep the task simple, we impose the following rules:
+
+a. Stop and return 1 if the number of iterations reached 500.
+b. Stop and return 1 if you end up with number >= 10_000_000.
+
+According to wikipedia:
+
+    A Lychrel number is a natural number that cannot form a palindrome
+    through the iterative process of repeatedly reversing its digits
+    and adding the resulting numbers.
+
+Example 1
+
+	Input: $n = 56
+	Output: 0
+
+	After 1 iteration, we found palindrome number.
+	56 + 65 = 121
+
+Example 2
+
+	Input: $n = 57
+	Output: 0
+
+	After 2 iterations, we found palindrome number.
+	 57 +  75 = 132
+	132 + 231 = 363
+
+Example 3
+
+	Input: $n = 59
+	Output: 0
+
+	After 3 iterations, we found palindrome number.
+	 59 +  95 =  154
+	154 + 451 =  605
+	605 + 506 = 1111
+
+MY NOTES: Sounds pretty easy.  The strangest thing about this question
+is that the Wikipedia page has that (without the artificial constraints)
+noone found a definite Lychrel base 10 number.  So any "Output: 1" entries
+we can find (such as 89) are caused by sequences violating one or other
+of the constraints.

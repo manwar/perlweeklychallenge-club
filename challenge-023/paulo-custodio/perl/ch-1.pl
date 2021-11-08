@@ -16,9 +16,7 @@
 # Similarly you can carry on 2nd order forward difference series like:
 # (-7-4), (6+7), (-7-6), (5+7) => -11, 13, -13, 12.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($n, @seq) = @ARGV;
 say join(", ", nth_forward_diff($n, @seq)), ".";

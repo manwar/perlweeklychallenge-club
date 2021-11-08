@@ -1,0 +1,19 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (UInt $S, :v(:$verbose), UInt :u(:$upper) where $upper > 1 = 3);
+
+my @stack = ( ( (), $S), );
+
+while @stack
+{
+  my $curr   = @stack.shift;
+  my @points = $curr[0];
+  my $left   = $curr[1];
+
+  $left == 0 && @points.join(" ").say && next;
+ 
+  for $upper ... 1 -> $step
+  {
+    @stack.unshift:  ((@points, $step).flat, $left - $step) if $left >= $step;
+  }
+}

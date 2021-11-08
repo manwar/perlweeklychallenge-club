@@ -1,0 +1,19 @@
+ CountNumbers←{
+     (⎕IO ⎕ML)←1
+     10>⍵:⍵-1               ⍝ Less than 10, n-1
+     m←10*⌊10⍟⍵             ⍝ Magnitude (m)
+     k←⌊⍵÷m ⋄ r←¯1+k        ⍝ Most significant digit (k) // Recursion factor (r)
+     2>k:∇ ¯1+m             ⍝ No new numbers start with 1, e.g. (1000 to 1999)
+     (∇ 1⌈m|⍵)+r+r×∇ ¯1+m   ⍝ Recurse (∇) lesser significant digits and lower magnitudes
+
+⍝ A brute force version:
+⍝ Converts integers up to ⍵ into character vectors and removes those that contain '1'
+⍝ CountNumbersBrute ← {+/~'1'∘∊¨⍕¨⍳⍵}
+
+⍝ Memoisation:
+⍝ Performance can be significantly improved with dfns.memo
+⍝ 'memo'⎕CY'dfns'
+⍝ 'cache'⎕NS⍬
+⍝ cache.(keys vals)←⍬⍬
+⍝ CountNumbersMemo ← CountNumbers memo cache
+ }

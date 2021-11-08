@@ -1,0 +1,12 @@
+ TravellingSalesman←{
+     ⎕IO←0
+⍝ Brute force travelling salesman
+⍝ For a better treatment of this problem in APL, see https://dl.acm.org/doi/10.1145/97811.97850
+⍝ ⍵: Matrix of path costs. ⍵[i;j] is cost from node i to j
+⍝ indices number costs
+⍝ permutations totals bitmask
+     'dfns'⎕CY'pmat'   ⍝ Permutation matrix
+     i←⍳n←≢c←⍵
+     b←(⊢∊⌊/)t←+/c[(¯1∘⌽,¨⊢)p←pmat n]
+     b∘⌿¨t,⍥⊂⍥⍪p
+ }

@@ -1,0 +1,54 @@
+Task 1: "Binary Palindrome
+
+You are given a positive integer $N.
+
+Write a script to find out if the binary representation of the given
+integer is Palindrome. Print 1 if it is otherwise 0.
+
+Example
+
+  Input: $N = 5
+  Output: 1 as binary representation of 5 is 101 which is Palindrome.
+
+  Input: $N = 4
+  Output: 0 as binary representation of 4 is 100 which is NOT Palindrome.
+"
+
+My notes: seems pretty easy.
+
+
+Task 2: "Adventure of Knight
+Submitted by: Cheok-Yin Fung
+
+A knight is restricted to move on an 8x8 chessboard. The knight is
+denoted by N and its way of movement is the same as what it is defined in
+Chess. * represents an empty square. x represents a square with treasure.
+
+The Knight's movement is unique. It may move two squares vertically
+and one square horizontally, or two squares horizontally and one square
+vertically (with both forming the shape of an L).
+
+There are 6 squares with treasures.
+
+Write a script to find the path such that Knight can capture all
+treasures. The Knight starts from the top-left square.
+
+      a b c d e f g h
+    8 N * * * * * * * 8
+    7 * * * * * * * * 7
+    6 * * * * x * * * 6
+    5 * * * * * * * * 5
+    4 * * x * * * * * 4
+    3 * x * * * * * * 3
+    2 x x * * * * * * 2
+    1 * x * * * * * * 1
+      a b c d e f g h
+
+BONUS: If you believe that your algorithm can output one of the shortest possible path.
+"
+
+My notes: looks reasonably straight forward, highly recursive.  Obvious way
+to find a shortest possible path is to generate all paths of length L before
+extending each path of length L to paths of length L+1.  NB: Why not allow
+any number of treasures, not fixed at 6?  Got it working, although it takes
+forever to solve larger problems.

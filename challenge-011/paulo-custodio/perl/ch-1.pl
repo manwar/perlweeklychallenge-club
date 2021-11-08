@@ -8,9 +8,7 @@
 # the boiling point of water is 212 °F and 100 °C. This challenge was proposed
 # by Laurent Rosenfeld.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 use Math::Calculus::NewtonRaphson;
 
@@ -21,4 +19,4 @@ $exp->addVariable('x');
 $exp->setExpression("(x * 9/5) + 32 - x");
 
 my $result = $exp->newtonRaphson('x', 0) or die $exp->getError;
-say $result;
+say sprintf("%.1f", $result);

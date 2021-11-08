@@ -1,0 +1,109 @@
+( Compute the angle between the hour and minute hand
+( Input contains of pair of hour.minute & answer so
+( can check calculations are OK!
+        LINE
+        LOAD  +0
+        STORE success
+        STORE tests
+Next    IN
+        JINEG End
+        STORE mn
+        DIVIDE 100
+        STORE hr
+        MULTIPLY -100
+        ADD mn
+        STORE mn
+        LOAD hr
+        SUBTRACT +10
+        JINEG bl1
+        JUMP bl1e
+bl1     PRINT "0"
+bl1e    ADD +10
+        OUT
+        PRINT ":"
+        LOAD mn
+        SUBTRACT +10
+        JINEG bl2
+        JUMP bl2e
+bl2     PRINT "0"
+bl2e    ADD +10
+        OUT
+        IN
+        STORE ans
+        LOAD mn
+        PRINT " => "
+        MULTIPLY -11
+        DIVIDE +2
+        STORE t
+        LOAD hr
+        SUBTRACT 12
+        JINEG lt12
+        JUMP gt12
+lt12    ADD +12
+gt12    MULTIPLY +30
+        ADD t
+        JINEG lt0
+        JUMP gt0
+lt0     MULTIPLY -1
+gt0     SUBTRACT +180
+        JINEG ltx0
+        MULTIPLY -1
+ltx0    ADD +80
+        JINEG lt100
+        JUMP gt100
+lt100   PRINT " "
+        ADD +90
+        JINEG lt10
+        JUMP gt10
+lt10    PRINT " "
+gt10    SUBTRACT +90
+gt100   ADD +100
+        OUT
+        PRINT " : "
+        SUBTRACT ans
+        JIZERO Ok
+        PRINT "-- should be "
+        LOAD ans
+        OUT
+        PRINT "?"
+        JUMP Line
+Ok      PRINT "OK"
+        LOAD success
+        ADD +1
+        STORE success
+Line    LINE
+        LOAD tests
+        ADD +1
+        STORE tests
+        JUMP Next
+End     LINE
+        PRINT "TESTS: "
+        LOAD success
+        OUT
+        PRINT " of "
+        LOAD tests
+        OUT
+        PRINT " passed"
+        LINE
+        LINE
+        HALT
+        %
+        0318
+        9
+        0420
+        10
+        0440
+        100
+        0310
+        35
+        0400
+        120
+        0800
+        120
+        1600
+        120
+        1800
+        180
+        2000
+        120
+        -1

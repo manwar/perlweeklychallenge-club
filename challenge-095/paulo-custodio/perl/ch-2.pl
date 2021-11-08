@@ -21,9 +21,7 @@
 # $stack->push(0);
 # print $stack->min; # prints -1
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 {
     package Stack;

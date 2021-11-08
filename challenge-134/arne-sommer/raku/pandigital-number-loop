@@ -1,0 +1,20 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $n where $n > 0 = 5, :v($verbose));
+
+my $pandigital-seq := gather
+{
+  my $base  = 10;
+  my @base  = 0 .. 9;
+  my $start = (1 ~ '0' x $base -1).Int;
+
+  say ":Start: $start" if $verbose;
+
+  for $start .. Inf -> $candidate
+  {
+    say ":Checking $candidate" if $verbose;
+    take $candidate if $candidate.comb.unique.elems == $base;
+  }
+}
+
+say $pandigital-seq[^$n].join(", ");

@@ -85,5 +85,5 @@ do while command(i)<>""
     i=i+1
 loop
 
-print trim(str(search_insert(aN(), n)))
+print search_insert(aN(), n)
 print_numbers aN()

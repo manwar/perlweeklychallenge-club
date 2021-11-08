@@ -14,9 +14,7 @@
 # Maine + Alabama = MEAL
 # California + Louisiana + Massachusetts + Rhode Island = Calamari
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Locale::US;
 
 my $u = Locale::US->new;
