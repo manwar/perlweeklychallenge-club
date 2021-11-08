@@ -10,8 +10,8 @@ sub workdays($year)
 
     for 1..$days
     {
-        state $bd++ if $dt.day-of-week ~~ 1..5;
+        state $wd++ if $dt.day-of-week ~~ 1..5;
         $dt .= later(:1days);
-        LAST { return $bd }
+        LAST { return $wd }
     }
 }
