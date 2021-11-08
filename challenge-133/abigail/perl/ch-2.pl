@@ -10,6 +10,10 @@ use experimental 'signatures';
 use experimental 'lexical_subs';
 
 #
+# Run as: perl ch-2.pl < input-file
+#
+
+#
 # We've done factorization in previous challenges, so now I'll just
 # use a module to give me the prime factors of a number.
 #

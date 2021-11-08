@@ -16,9 +16,7 @@
 
 # Solution: store the inverted index in a SQLite database, use DBI to access it
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Path::Tiny;
 use DBI;
 use DBD::SQLite;

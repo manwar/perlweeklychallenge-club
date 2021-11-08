@@ -1,8 +1,6 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Test::More;
 
 is capture("perl perl/ch-1.pl"), "2.71828182845905\n";

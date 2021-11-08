@@ -17,9 +17,7 @@
 #     2 as sum of 2 prime numbers i.e. 2 and 7 is same as the input number.
 #     2 + 7 = 9.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Math::Combinatorics;
 
 my($N) = shift;

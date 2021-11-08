@@ -17,9 +17,7 @@
 # Input: @A = (3, 4, 5)
 # Output: (5)
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @A = @ARGV;
 my $max = 0;

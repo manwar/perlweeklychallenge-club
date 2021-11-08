@@ -25,9 +25,7 @@
 #     "1011": 0 flip
 #     "0111": 2 flips to make it "1011"
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 @ARGV==2 && $ARGV[0]=~/^[01]+$/ && $ARGV[1]=~/^\d+$/
 && length($ARGV[0])%$ARGV[1]==0

@@ -29,9 +29,7 @@
 # Output: 26
 # as sum three paths (1->2->4), (1->3->5) and (1->3->6)
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # tree object
 {

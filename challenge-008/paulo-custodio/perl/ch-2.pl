@@ -8,9 +8,7 @@
 # lines of text so that if they were printed, the text would be centered, and
 # return the modified lines.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 sub center {
     my(@lines) = @_;

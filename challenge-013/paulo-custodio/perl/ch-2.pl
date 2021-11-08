@@ -12,9 +12,7 @@
 #  F ( n ) = n − M ( F ( n − 1 ) ) , n > 0
 #  M ( n ) = n − F ( M ( n − 1 ) ) , n > 0.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 sub F {
     my($n) = @_;

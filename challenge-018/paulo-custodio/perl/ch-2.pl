@@ -15,9 +15,7 @@
 # highest priority, and return it. If two elements have the same priority,
 # then return element added first.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # implement a Priority-queue as an ordered list of [priority, list of elements]
 {

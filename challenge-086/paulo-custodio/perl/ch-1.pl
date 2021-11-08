@@ -20,9 +20,7 @@
 # Input: @N = (10, 30, 20, 50, 40) and $A = 15
 # Output: 0
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # input: list of numbers, last is the difference
 my @N = @ARGV;

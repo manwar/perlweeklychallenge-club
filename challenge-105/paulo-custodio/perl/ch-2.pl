@@ -18,9 +18,7 @@
 #     Fee fi mo-matie
 #     Katie!
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my $name = shift;
 my $end = $name =~ s/^[bcdfghjklmnpqrstvwxyz]//ir;

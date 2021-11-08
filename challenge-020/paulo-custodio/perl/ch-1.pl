@@ -7,9 +7,7 @@
 # of character. For example, if the string is “ABBCDEEF”, then it should split
 # like “A”, “BB”, “C”, “D”, “EE”, “F”.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my $str = shift;
 

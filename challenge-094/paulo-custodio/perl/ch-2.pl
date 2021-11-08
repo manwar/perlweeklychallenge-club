@@ -24,9 +24,7 @@
 #
 #         1 -> 2 -> 4 -> 5 -> 6 -> 7 -> 3
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # tree object
 {

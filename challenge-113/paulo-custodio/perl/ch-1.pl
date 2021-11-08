@@ -18,14 +18,29 @@
 # Output: 1
 
 use Modern::Perl;
-my($N, $D) = @ARGV;
-say represent($N||0, $D||0) ? 1 : 0;
+use Math::Combinatorics;
+use List::Util 'sum';
+
+sub nums_containing {
+    my($n, $d) = @_;
+    my @nums;
+    for (1..$n) {
+        push @nums, $_ if /$d/;
+    }
+    return @nums;
+}
 
 sub represent {
     my($n, $d) = @_;
-    my $sum = 0;
-    for (1..$n) {
-        $sum += $_ if /$d/;
+    my @nums = nums_containing($n, $d);
+    for my $k (1 .. @nums) {
+        for my $combin (combine($k, @nums)) {
+            return 1 if sum(@$combin) == $n;
+        }
     }
-    return $sum==$n;
+    return 0;
 }
+
+
+my($N, $D) = @ARGV or die "Usage: ch-1.pl N D\n";
+say represent($N, $D) ? 1 : 0;

@@ -12,9 +12,7 @@
 #
 # Print 1 if found otherwise 0.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($x1,$y1,$x2,$y2,$x3,$y3) = @ARGV;
 say point_in_triangle(0,0, $x1,$y1,$x2,$y2,$x3,$y3) ? 1 : 0;

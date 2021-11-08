@@ -16,9 +16,7 @@
 #     print readN("input.txt", 4); # returns "5678"
 #     print readN("input.txt", 4); # returns "90"
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 sub readN {
     my($file, $length) = @_;

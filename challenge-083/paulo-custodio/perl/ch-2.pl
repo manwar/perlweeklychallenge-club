@@ -26,9 +26,7 @@
 # Explanation:
 # Flipping the sign of just one element 12 gives the result 0 i.e. (-12) + (2) + (10) = 0
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @A = @ARGV;
 say count_flips(@A);

@@ -16,9 +16,7 @@
 # Input: $N = 5, $k = 34
 # Output: 2.02
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 use constant ROUND_FACTOR => 10000;
 

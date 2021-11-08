@@ -18,9 +18,7 @@
 # Input: @R = (0.5, 1.1, 0.3, 0.7)
 # Output: 1 as 1 < 0.5 + 1.1 + 0.3 < 2
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @R = @ARGV;
 @R >= 3 or die "Need at least 3 values\n";

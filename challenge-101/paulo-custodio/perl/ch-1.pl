@@ -13,9 +13,7 @@
 # ‘Tightly’ means the absolute value |M-N| of the difference has to be as small
 # as possible.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @list = @ARGV;
 

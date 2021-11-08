@@ -18,9 +18,7 @@
 #   query:    profile=true
 #   fragment: h1
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my $url = shift;
 my $word = qr{ [a-z_] [a-z_0-9+.-]* }ix;

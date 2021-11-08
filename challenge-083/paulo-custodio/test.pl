@@ -1,9 +1,7 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
+use Modern::Perl;
 use Test::More;
-use 5.030;
 
 is capture("perl/ch-1.pl The Weekly Challenge"),                    "6\n";
 is capture("perl/ch-1.pl The purpose of our lives is to be happy"), "23\n";

@@ -18,9 +18,7 @@
 # Input: 125
 # Output: 1 as 125 = 5 ** 3
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # Sieve of Eratosthenes
 my @sieve;
