@@ -1,0 +1,51 @@
+%!PS
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/i2s {
+    dup log cvi 1 add string cvs
+} bind def
+
+/splnum {
+    /n exch def
+    /ret 0 def
+    n sqrt cvi /k exch def
+    k k mul n ne {
+        0 exit
+    } if
+    /d n i2s def
+    /dl d length 1 sub def
+    1 1 1 dl bitshift 1 sub {
+        /sa [ 0 ] def
+        /s exch def
+        0 1 dl 1 sub {
+            /i exch def
+            s 1 i bitshift and 0 gt {
+                /sa sa i 1 add apush def
+            } if
+        } for
+        /sa sa dl 1 add apush def
+        /c 0 def
+        0 1 sa length 2 sub {
+            /j exch def
+            d
+            sa j get
+            sa j 1 add get sa j get sub
+            getinterval cvi
+            c add /c exch def
+        } for
+        c k eq {
+            /ret 1 def
+            exit
+        } if
+    } for
+    ret
+} bind def
+
+81 splnum 1 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+9801 splnum 1 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+36 splnum 0 eq { (Pass) } { (FAIL) }
+ifelse =

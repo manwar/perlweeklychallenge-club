@@ -1,0 +1,37 @@
+%!PS
+
+/p {
+    dup dup dup
+    4 idiv 4 1 roll
+    100 idiv neg 4 1 roll
+    400 idiv
+    add add add
+    7 mod
+} bind def
+
+/leapyear {
+    dup dup
+    4 mod 0 eq {
+        100 mod 0 ne exch
+        400 mod 0 eq or
+        {
+            true
+        } {
+            false
+        } ifelse
+    } {
+        pop pop false
+    } ifelse
+} bind def
+
+/workdays {
+    dup
+    p exch
+    leapyear {
+        7 add
+    } if
+    [ 0 1 1 1 1 0 0 1 2 2 2 2 1 ] exch get 260 add
+} bind def
+
+2021 workdays 260 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+2020 workdays 262 eq { (Pass) } { (FAIL) } ifelse =
