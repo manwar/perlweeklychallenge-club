@@ -1,8 +1,8 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 105
 #
-# TASK #1 › Nth root
+# TASK #1 > Nth root
 # Submitted by: Mohammad S Anwar
 # You are given positive numbers $N and $k.
 #
@@ -16,14 +16,14 @@
 # Input: $N = 5, $k = 34
 # Output: 2.02
 
-use Modern::Perl;
+import sys
 
-use constant ROUND_FACTOR => 10000;
+def round(n):
+    ROUND_FACTOR = 10000
+    result = int(n*ROUND_FACTOR+0.5)/ROUND_FACTOR
+    if int(result)==result:
+        result = int(result)
+    return result
 
-my($n, $k) = @ARGV;
-say round($k ** (1/$n));
-
-sub round {
-    my($n) = @_;
-    return int($n*ROUND_FACTOR+0.5)/ROUND_FACTOR;
-}
+n, k = int(sys.argv[1]), int(sys.argv[2])
+print(round(k ** (1/n)))
