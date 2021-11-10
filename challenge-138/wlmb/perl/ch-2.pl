@@ -22,7 +22,7 @@ sub splits { # array of all possible ways to split a string
     my $counter=0;
     my @splits=();
     while(defined (my $split=one_split($string, $counter++))){
-	push @splits, $split;
+        push @splits, $split;
     }
     return @splits;
 }
@@ -35,11 +35,11 @@ sub one_split { # produce the n-th way to split a string
     my @chars=split "", $string;
     my @current=();
     for(0..$#chars){
-	unshift @current, pop @chars;
-	if(pop @binary_counter){
-	    unshift @split, join '', @current;
-	    @current=();
-	}
+        unshift @current, pop @chars;
+        if(pop @binary_counter){
+            unshift @split, join '', @current;
+            @current=();
+        }
     }
     unshift @split, join '', @current if @current;
     return [@split];
