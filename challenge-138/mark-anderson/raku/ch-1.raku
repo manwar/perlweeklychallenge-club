@@ -15,9 +15,9 @@ is workdays(2076), 262;
 
 sub workdays($year)
 {
-    my @a = [ Nil, 261, 261, 261, 261, 261, 260, 260 ],
-            [ Nil, 262, 262, 262, 262, 261, 260, 261 ];
+    my $a := [ Nil, 261, 261, 261, 261, 261, 260, 260 ],
+             [ Nil, 262, 262, 262, 262, 261, 260, 261 ];
 
     my $dt = Date.new($year, 1, 1);
-    @a[ +$dt.is-leap-year ][ $dt.day-of-week ];
+    $a[ +$dt.is-leap-year ][ $dt.day-of-week ];
 }
