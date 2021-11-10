@@ -40,26 +40,25 @@ We can then use a look up table which stores the number of working days (over 26
 
 We break this calculation into 3 functions:
 
- * `workdays` - this does the look up
- * `ly`       - tests for leap year
- * `zf`       - uses Zeller's formulae to work out first day of the year {works for the Gregorian calendar}
+ * `work_days` - this does the look up
+ * `leap_year` - tests for leap year
+ * `zellers_congruence_jan_1` - uses Zeller's congruence to work out first day of the year {works for the Gregorian calendar}
 
 All of which 
 ```perl
-my @EXTRA = ( [0,1,1,1,1,1,0], [1,2,2,2,2,1,0] );
+my @EXTRA_WORKDAYS = ( [0,1,1,1,1,1,0], [1,2,2,2,2,1,0] );
 
-sub workdays {
-  260 + $EXTRA[ ly($_[0]) ][ zf($_[0]) ];
+sub leap_year {
+  $_[0]&3 || (!($_[0]%100) && $_[0]%400) ? 0 : 1;
+}
+sub zellers_congruence_jan_1 {
+  ( 1 + $_[0]%100 + ($_[0]%100>>2) - ($_[0]/100<<1) + ($_[0]/400>>0) ) % 7;
 }
 
-sub ly {
-  $_[0]%4 || (!($_[0]%100) && $_[0]%400) ? 0 : 1;
+sub work_days {
+  260 + $EXTRA_WORKDAYS[ leap_year $_[0] ][ zellers_congruence_jan_1 $_[0] - 1 ];
 }
 
-sub zf {
-  my $y = $_[0]-1;
-  ( 1 + $y%100 + ($y%100>>2) + ($y/400<<0) - ($y/100<<1) )%7;
-}
 ```
 
 # Task 2 - Split Number
@@ -87,15 +86,17 @@ It takes 2 parameters - the sum required add a string of digits. We call the fun
 
 ```perl
 sub check_square {
-  return 0 if $_[0]<=1;
-  return split_no( sqrt($_[0]), $_[0] );
+  return $_[0] <= 1 ? 0 : split_no( sqrt($_[0]), $_[0] );
 }
 
 sub split_no {
   my( $sum, $str ) = @_;
-  return $sum ? 0 : 1 if $str eq '';
-  return 0            if $sum < 0;
-  return 1            if grep { split_no( ($sum - substr $str,$_) , substr $str, 0, $_ ) } 0 .. -1 + length $str;
+  return 0 if $sum < 0;
+  return 0 if $str eq '' && $sum;
+  return 1 if $str eq '';
+  return 1 if grep { split_no( ($sum - substr $str,$_) , substr $str, 0, $_ ) }
+              0 .. -1 + length $str;
   return 0;
 }
+
 ```
