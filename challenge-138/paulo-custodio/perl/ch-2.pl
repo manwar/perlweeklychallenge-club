@@ -29,7 +29,7 @@ use List::Util 'sum';
 my $n = shift||1;
 say sqroot_is_sum_splits($n);
 
-sub num_splits {
+sub get_splits {
     my($n) = @_;
     my @splits;
     add_splits(\@splits, [], $n);
@@ -54,7 +54,7 @@ sub sqroot_is_sum_splits {
     my($n) = @_;
     my $sq = sqrt($n);
     return 0 if int($sq) != $sq;        # not pefect square
-    for (num_splits($n)) {
+    for (get_splits($n)) {
         my @split = @$_;
         return 1 if sum(@split) == $sq;
     }

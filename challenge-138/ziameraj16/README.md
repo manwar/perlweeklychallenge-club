@@ -1,31 +1,23 @@
-# Middle 3 digits
+# Workdays
 ## Java Solution
 
 To compile the code run
 ```java
-javac MiddleThreeDigits.java
+javac Workdays.java
 ```
 To run
 ```java
-java MiddleThreeDigits
+java Workdays
 ```
 ### Example
 ```bash
-~/study/github/perlweeklychallenge-club/challenge-135/ziameraj16/java$ javac MiddleThreeDigits.java
-~/study/github/perlweeklychallenge-club/challenge-135/ziameraj16/java$ java MiddleThreeDigits
-Enter the Number
-1234567
-345
-~/study/github/perlweeklychallenge-club/challenge-135/ziameraj16/java$ java MiddleThreeDigits
-Enter the Number
--123
-123
-~/study/github/perlweeklychallenge-club/challenge-135/ziameraj16/java$ java MiddleThreeDigits
-Enter the Number
-1
-too short
-~/study/github/perlweeklychallenge-club/challenge-135/ziameraj16/java$ java MiddleThreeDigits
-Enter the Number
-1234
-even number of digits
+~/study/github/perlweeklychallenge-club/challenge-138/ziameraj16/java$ javac Workdays.java
+~/study/github/perlweeklychallenge-club/challenge-138/ziameraj16/java$ java Workdays
+Enter the year
+2021
+Number of workdays: 261
+~/study/github/perlweeklychallenge-club/challenge-138/ziameraj16/java$ java Workdays
+Enter the year
+2020
+Number of workdays: 262
 ```
