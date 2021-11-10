@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 089
 
@@ -46,9 +46,9 @@ use warnings;
 sub square {
     my($a, $b, $c) = @_;
     my @sq;
-    push @sq, [ $c - $b,            $c + ($a + $b), $c - $a         ];
-    push @sq, [ $c - ($a - $b),     $c,             $c + ($a - $b)  ];
-    push @sq, [ $c + $a,            $c - ($a + $b), $c + $b         ];
+    push @sq, [ $c - $b,        $c - ($a - $b), $c + $a        ];
+    push @sq, [ $c + ($a + $b), $c,             $c - ($a + $b) ];
+    push @sq, [ $c - $a,        $c + ($a - $b), $c + $b        ];
     return @sq;
 }
 
