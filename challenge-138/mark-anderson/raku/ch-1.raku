@@ -15,26 +15,9 @@ is workdays(2076), 262;
 
 sub workdays($year)
 {
-    my %h is Map = False => { 
-                                6 => 260, 
-                                7 => 260,
-                                1 => 261,
-                                2 => 261,
-                                3 => 261,
-                                4 => 261,
-                                5 => 261 
-                            },
-                   True  => {
-                                6 => 260,
-                                5 => 261,
-                                7 => 261,
-                                1 => 262,
-                                2 => 262,      
-                                3 => 262,      
-                                4 => 262      
-                            }
+    my @a = [ Nil, 261, 261, 261, 261, 261, 260, 260 ],
+            [ Nil, 262, 262, 262, 262, 261, 260, 261 ];
 
     my $dt = Date.new($year, 1, 1);
-
-    %h{ $dt.is-leap-year }{ $dt.day-of-week }
+    @a[ +$dt.is-leap-year ][ $dt.day-of-week ];
 }
