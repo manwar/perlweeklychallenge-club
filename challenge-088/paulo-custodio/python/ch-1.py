@@ -1,8 +1,8 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 088
 #
-# TASK #1 › Array of Product
+# TASK #1 > Array of Product
 # Submitted by: Mohammad S Anwar
 # You are given an array of positive integers @N.
 #
@@ -31,19 +31,15 @@
 #     $M[2] = 2 x 1 x 3 = 6
 #     $M[3] = 2 x 1 x 4 = 8
 
-use Modern::Perl;
+import sys
 
-my @N = @ARGV;
-my @M = array_product(@N);
-say "(", join(", ", @M), ")";
+def array_product(n):
+    m = [1 for x in n]          # initialize the products to 1
+    for i in range(len(n)):
+        for j in range(len(m)):
+            if i!=j:
+                m[j] *= n[i]
+    return m
 
-sub array_product {
-    my(@n) = @_;
-    my @m = (1) x scalar(@n);               # initialize the products to 1
-    for my $i (0 .. $#n) {
-        for my $j (0 .. $#m) {
-            $m[$j] *= $n[$i] if $i != $j;   # multiply if not the same index
-        }
-    }
-    return @m;
-}
+m = array_product([int(x) for x in sys.argv[1:]])
+print("("+ ", ".join([str(x) for x in m]) +")")
