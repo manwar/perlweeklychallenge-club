@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 086
 
@@ -20,22 +20,18 @@
 # Input: @N = (10, 30, 20, 50, 40) and $A = 15
 # Output: 0
 
-use Modern::Perl;
+import sys
 
-# input: list of numbers, last is the difference
-my @N = @ARGV;
-my $A = pop @N;
+def found(dif, nums):
+    for i in range(len(nums)-1):
+        for j in range(i+1, len(nums)):
+            if abs(nums[i]-nums[j])==dif:
+                return True
+    return False
 
-say found($A, @N);
-
-sub found {
-    my($a, @n) = @_;
-    for my $i (0 .. $#n-1) {
-        for my $j ($i+1 .. $#n) {
-            if (abs($n[$i]-$n[$j]) == $a) {
-                return 1;
-            }
-        }
-    }
-    return 0;
-}
+nums = [int(x) for x in sys.argv[1:]]
+dif = nums.pop(-1)
+if found(dif, nums):
+    print(1)
+else:
+    print(0)

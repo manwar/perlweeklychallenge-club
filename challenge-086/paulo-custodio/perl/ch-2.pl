@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 086
 
-# TASK #2 › Sudoku Puzzle
+# TASK #2 > Sudoku Puzzle
 # Submitted by: Mohammad S Anwar
 # You are given Sudoku puzzle (9x9).
 #
