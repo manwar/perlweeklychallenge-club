@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env python3
 
 # Challenge 084
 #
@@ -43,40 +43,39 @@
 #
 # Output: 0
 
-use Modern::Perl;
+import fileinput
+import re
 
-# read matrix from input
-my @m;
-my $ncols;
-while (<>) {
-    my @cols = split(' ', s/\D/ /gr);       # ignore all but numbers
-    die "invalid matrix\n" if defined($ncols) && $ncols != scalar(@cols);
-    $ncols = scalar(@cols);
-    push @m, \@cols;
-}
+def read_input():
+    lines = []
+    for line in fileinput.input():
+        lines.append(line)
+    return lines
 
-say count_squares(@m);
+def read_matrix(lines):
+    m = []
+    for line in lines:
+        line = re.sub(r"\D+", " ", line)
+        cols = [int(x) for x in line.split()]
+        m.append(cols)
+    return m
 
+def count_squares(m):
+    nrows = len(m)
+    ncols = len(m[0])
+    if nrows < 2 or ncols < 2:
+        return 0
 
-# count squares larger than 1
-sub count_squares {
-    my(@m) = @_;
-    my $nrows = scalar(@m);
-    return 0 if $nrows < 2;
-    my $ncols = scalar(@{$m[0]});
-    return 0 if $ncols < 2;
+    count = 0
+    for r in range(nrows):
+        for c in range(ncols):
+            if m[r][c]:
+                d = 1
+                while r+d < nrows and c+d < ncols:
+                    if m[r+d][c] and m[r][c+d] and m[r+d][c+d]:
+                        count += 1
+                    d += 1
 
-    my $count = 0;
-    for my $row (0 .. $nrows-1) {
-        for my $col (0 .. $ncols-1) {
-            if ($m[$row][$col]) {
-                for (my $d = 1; $row+$d < $nrows && $col+$d < $ncols; $d++) {
-                    if ($m[$row+$d][$col] && $m[$row][$col+$d] && $m[$row+$d][$col+$d]) {
-                        $count++;
-                    }
-                }
-            }
-        }
-    }
-    return $count;
-}
+    return count
+
+print(count_squares(read_matrix(read_input())))

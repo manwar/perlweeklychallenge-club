@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 084
 #
@@ -22,21 +22,21 @@
 # Input: 1231230512
 # Output: 0
 
-use Modern::Perl;
+import sys
 
-my($n) = @ARGV;
-say reverse_int($n);
+def reverse_int(n):
+    if n < -0x80000000 or n > 0x7fffffff:
+        return 0
+    rev = 0
+    if n < 0:
+        sign = -1
+        n = -n
+    else:
+        sign = 1
+    while n > 0:
+        rev = 10 * rev + n%10
+        n //= 10
+    rev *= sign
+    return rev
 
-sub reverse_int {
-    my($n) = @_;
-    return 0 if ($n < -0x80000000 || $n > 0x7fffffff);
-    my $rev = 0;
-    my $sign = ($n < 0) ? -1 : 1;
-    $n = abs($n);
-    while ($n > 0) {
-        $rev = 10 * $rev + ($n % 10);
-        $n = int($n / 10);
-    }
-    $rev *= $sign;
-    return $rev;
-}
+print(reverse_int(int(sys.argv[1])))
