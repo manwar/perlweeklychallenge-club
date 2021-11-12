@@ -30,7 +30,7 @@ my $N = shift;
 
 sub _splitN($prefix, $rest, $sqrtN, $depth, $splits)
 {
-    my $tab = " " x ($depth*4);
+    my $tab = " " x ($depth*4); # Debugging aid
     my $len = length $rest;
     for my $p ( 1 .. ($len-1) )
     {
