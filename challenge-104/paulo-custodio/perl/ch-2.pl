@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 104
 #
@@ -18,9 +18,7 @@
 # A plays to win, B plays randomly, A wins 91% of the time
 # If both play to win, the second player to play always wins
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 sub play_to_win {
     my($T) = @_;

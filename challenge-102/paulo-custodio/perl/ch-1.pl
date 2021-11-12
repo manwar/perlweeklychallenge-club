@@ -15,9 +15,7 @@
 # (b) 6 digits: 621770
 # (c) 9 digits: 281089082
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($N) = @ARGV or die "Usage: ch-1.pl N\n";
 print_rare($N);

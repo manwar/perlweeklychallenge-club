@@ -13,9 +13,7 @@
 #    ranking number, and the next item(s) receive the immediately following
 #    ranking number.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # in:  list of numbers
 # out: list of items with the same value reverse-ordered by value

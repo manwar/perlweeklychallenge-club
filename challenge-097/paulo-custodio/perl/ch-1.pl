@@ -19,9 +19,7 @@
 # Plaintext:  THE QUICK BROWN FOX JUMPS OVER THE LAZY DOG
 # Ciphertext: QEB NRFZH YOLTK CLU GRJMP LSBO QEB IXWV ALD
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 @ARGV>=2 or die "Usage: ch-1.pl N WORDS...\n";
 my($n, @words) = @ARGV;

@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 086
 
-# TASK #1 › Pair Difference
+# TASK #1 > Pair Difference
 # Submitted by: Mohammad S Anwar
 # You are given an array of integers @N and an integer $A.
 #
@@ -20,9 +20,7 @@
 # Input: @N = (10, 30, 20, 50, 40) and $A = 15
 # Output: 0
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # input: list of numbers, last is the difference
 my @N = @ARGV;

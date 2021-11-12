@@ -6,9 +6,7 @@
 # Write a script to calculate the value of e, also known as Euler’s number and
 # Napier’s constant. Please checkout wiki page for more information.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 sub calc_e {
     my $e = 1;

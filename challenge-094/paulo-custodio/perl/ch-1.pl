@@ -21,9 +21,7 @@
 #     Input: ("x")
 #     Output: [ ("x") ]
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # get list of words
 my @words = @ARGV;

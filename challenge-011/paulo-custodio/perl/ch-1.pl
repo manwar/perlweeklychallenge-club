@@ -8,9 +8,7 @@
 # the boiling point of water is 212 °F and 100 °C. This challenge was proposed
 # by Laurent Rosenfeld.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 use Math::Calculus::NewtonRaphson;
 

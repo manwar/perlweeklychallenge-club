@@ -20,9 +20,7 @@
 #     Input: 1938
 #     Output: Earth Tiger
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @animals  = qw(Rat Ox Tiger Rabbit Dragon Snake Horse Goat Monkey Rooster Dog Pig);
 my @elements = qw(Wood Wood Fire Fire Earth Earth Metal Metal Water Water);

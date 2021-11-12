@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # TASK #2 › Decimal String
 # Submitted by: Mohammad S Anwar

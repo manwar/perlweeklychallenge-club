@@ -1,0 +1,30 @@
+%!PS
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/p {
+    dup dup dup
+    4 idiv 4 1 roll
+    100 idiv neg 4 1 roll
+    400 idiv
+    add add add
+    7 mod
+} bind def
+
+/out 0 array def
+1900 1 2100 {
+    dup
+    dup p 4 eq
+    exch
+    1 sub p 3 eq
+    or
+    {
+        out exch apush /out exch def
+    } {
+        pop
+    } ifelse
+} for
+out ==

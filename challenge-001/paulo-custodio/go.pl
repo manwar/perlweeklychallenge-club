@@ -27,5 +27,10 @@ for my $dir (qw(
     path("challenge-$nr/paulo-custodio/$dir")->mkpath;
 }
 path("challenge-$nr/paulo-custodio/README")->spew("Solution by Paulo Custodio\n");
+if (! -f "challenge-$nr/paulo-custodio/Makefile") {
+    path("challenge-$nr/paulo-custodio/Makefile")->spew(
+         "all:\n\tperl ../../challenge-001/paulo-custodio/test.pl\n");
+}
+
 chdir("challenge-$nr/paulo-custodio");
 system("bash");

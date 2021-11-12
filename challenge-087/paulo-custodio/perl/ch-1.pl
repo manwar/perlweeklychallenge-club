@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 087
 #
@@ -18,9 +18,7 @@
 # Input: @N = (20, 19, 9, 11, 10)
 # Output: (9, 10, 11)
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @seq = longest_seq(@ARGV);
 if (@seq) {

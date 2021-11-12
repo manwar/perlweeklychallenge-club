@@ -57,9 +57,7 @@
 #     "Les Miserables Episode 1: The Bishop (broadcast date: 1937-07-23)"
 #     00:17:33
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 @ARGV==3 or die "Usage: ch-2.pl start_secs current_secs playlist.csv\n";
 my($start_secs, $current_secs, $playlist) = @ARGV;

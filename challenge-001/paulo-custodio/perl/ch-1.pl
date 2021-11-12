@@ -7,9 +7,7 @@
 # ‘Perl Weekly Challenge’. Also print the number of times the character ‘e’
 # is found in the string.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my $s = @ARGV ? "@ARGV" : "Perl Weekly Challenge";
 say(($s =~ tr/e/E/), " ", $s);

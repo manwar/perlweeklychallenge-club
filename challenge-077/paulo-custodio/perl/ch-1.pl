@@ -24,9 +24,7 @@
 #     1 + 8 = 9
 #     1 + 3 + 5 = 9
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Math::Combinatorics;
 
 my($N) = shift;

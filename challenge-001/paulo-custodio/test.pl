@@ -148,7 +148,7 @@ sub build {
             return "bf $prog_wo_ext.bf";
         }
         if (/^c$/) {
-            run("gcc $prog -o $prog_wo_ext -lmpfr -lgmp") if (!-f $exe || -M $exe > -M $prog);
+            run("gcc $prog -o $prog_wo_ext -lm -lmpfr -lgmp") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
         if (/^cpp$/) {

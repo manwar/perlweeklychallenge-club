@@ -6,9 +6,7 @@
 # Create a script that prints mean angles of the given list of angles in degrees.
 # Please read wiki page that explains the formula in details with an example.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Math::Trig;
 
 say mean(@ARGV);

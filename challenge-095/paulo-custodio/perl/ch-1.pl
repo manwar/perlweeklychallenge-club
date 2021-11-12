@@ -18,9 +18,7 @@
 # Input: 90
 # Output: 0
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my $N = shift;
 say join('', reverse split(//, $N)) eq $N ? 1 : 0;

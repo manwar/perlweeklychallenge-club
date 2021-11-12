@@ -8,9 +8,7 @@
 # except itself). Please check Wiki for more information. This challenge was
 # proposed by Laurent Rosenfeld.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # check if number is prime
 sub is_prime {

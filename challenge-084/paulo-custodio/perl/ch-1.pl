@@ -1,13 +1,13 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 084
 #
-# TASK #1 › Reverse Integer
+# TASK #1 > Reverse Integer
 # Submitted by: Mohammad S Anwar
 # You are given an integer $N.
 #
 # Write a script to reverse the given integer and print the result. Print 0 if
-# the result doesn’t fit in 32-bit signed integer.
+# the result doesn't fit in 32-bit signed integer.
 #
 # The number 2,147,483,647 is the maximum positive value for a 32-bit signed binary
 # integer in computing.
@@ -22,9 +22,7 @@
 # Input: 1231230512
 # Output: 0
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($n) = @ARGV;
 say reverse_int($n);

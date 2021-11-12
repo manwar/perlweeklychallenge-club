@@ -31,3 +31,4 @@ WHERE total_sum = l
 
 $CODE$
 LANGUAGE SQL;
+

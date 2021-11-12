@@ -36,9 +36,7 @@
 # to a random from the word list) or isn’t in the word list, return an empty
 # list.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # get arguments
 sub get_args {
