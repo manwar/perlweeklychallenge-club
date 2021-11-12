@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 083
 #
@@ -18,7 +18,6 @@
 #
 # Output: 29
 
-use Modern::Perl;
+import sys
 
-@ARGV >= 3 or die "need at least 3 words\n";
-say length(join(' ', @ARGV[1 .. $#ARGV-1]));
+print(len(" ".join(sys.argv[2:-1])))
