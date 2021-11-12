@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 082
 #
@@ -31,19 +31,16 @@
 #     Factors of 18: 1, 2, 3, 6, 9
 #     Factors of 23: 1
 
-use Modern::Perl;
+import sys
 
-my($M, $N) = @ARGV;
-my @common = common_factors($M, $N);
-say "(", join(", ", @common), ")";
+def get_common_factors(a, b):
+    factors = []
+    i = 1
+    while i <= a or i <= b:
+        if a%i==0 and b%i==0:
+            factors.append(i)
+        i += 1
+    return factors
 
-sub common_factors {
-    my($a, $b) = @_;
-    my @common;
-    for (my $i = 1; $i <= $a || $i <= $b; $i++) {
-        if (($a % $i)==0 && ($b % $i)==0) {
-            push @common, $i;
-        }
-    }
-    return @common;
-}
+factors = get_common_factors(int(sys.argv[1]), int(sys.argv[2]))
+print("("+ ", ".join([str(x) for x in factors]) +" )")
