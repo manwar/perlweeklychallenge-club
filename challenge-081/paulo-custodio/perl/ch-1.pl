@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 081
 #
-# TASK #1 › Common Base String
+# TASK #1 > Common Base String
 # Submitted by: Mohammad S Anwar
 # You are given 2 strings, $A and $B.
 #

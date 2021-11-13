@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 081
 #
@@ -29,25 +29,39 @@
 #
 # 9 and the
 
-use Modern::Perl;
+import fileinput
+import re
 
-# compute word frequency
-my %words;
-while (<>) {
-    s/[."(),]/ /g; s/--/ /g; s/'s/ /g;
-    $words{$_}++ for split ' ', $_;
-}
+def read_input():
+    lines = []
+    for line in fileinput.input():
+        lines.append(line)
+    return lines
 
-# order by frequency
-my @freq;
-while (my($word, $n) = each %words) {
-    $freq[$n] ||= [];
-    push @{$freq[$n]}, $word;
-}
+def get_word_freq(lines):
+    words = {}
+    for line in lines:
+        line = re.sub(r"""[."(),]|--|'s""", " ", line)
+        for word in line.split():
+            if word in words:
+                words[word] += 1
+            else:
+                words[word] = 1
+    return words
 
-# output
-for (1 .. $#freq) {
-    if ($freq[$_]) {
-        say join(" ", $_, sort(@{$freq[$_]})),"\n";
-    }
-}
+def order_by_freq(words):
+    freqs = []
+    for word, freq in words.items():
+        while len(freqs) <= freq:
+            freqs.append([])
+        freqs[freq].append(word)
+        freqs[freq].sort()
+    return freqs
+
+def print_freqs(freqs):
+    for freq in range(1, len(freqs)):
+        if freqs[freq]:
+            print(freq, " ".join([x for x in freqs[freq]]))
+            print()
+
+print_freqs(order_by_freq(get_word_freq(read_input())))

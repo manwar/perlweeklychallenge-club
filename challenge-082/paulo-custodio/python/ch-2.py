@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 082
 #
@@ -36,17 +36,12 @@
 #
 # Output: 0
 
-use Modern::Perl;
+import sys
 
-say interleaved(@ARGV);
+def interleaved(a, b, c):
+    for i in range(len(a)+1):
+        if a[:i]+b+a[i:] == c:
+            return True
+    return False
 
-
-sub interleaved {
-    my($a, $b, $c) = @_;
-    for my $i (0 .. length($a)) {
-        if (substr($a,0,$i).$b.substr($a,$i) eq $c) {
-            return 1;
-        }
-    }
-    return 0;
-}
+print(1 if interleaved(sys.argv[1], sys.argv[2], sys.argv[3]) else 0)
