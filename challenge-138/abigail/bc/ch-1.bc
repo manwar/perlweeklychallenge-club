@@ -1,0 +1,55 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-1.bc < input-file
+#
+
+sunday      =   0
+monday      =   1
+tuesday     =   2
+wednesday   =   3
+thursday    =   4
+friday      =   5
+saturday    =   6
+
+lookup [ 0] = 261
+lookup [ 1] = 261
+lookup [ 2] = 260
+lookup [ 3] = 260
+lookup [ 4] = 261
+lookup [ 5] = 261
+lookup [ 6] = 261
+lookup [ 7] = 262
+lookup [ 8] = 262
+lookup [ 9] = 261
+lookup [10] = 260
+lookup [11] = 261
+lookup [12] = 262
+lookup [13] = 262
+
+anchor [ 0] = tuesday
+anchor [ 1] = sunday
+anchor [ 2] = friday
+anchor [ 3] = wednesday
+
+define doomsday (year) {
+    a = anchor [(year / 100) % 4]
+    y = year % 100
+    return (((y / 12) + (y % 12) + ((y % 12) / 4)) + a) % 7
+}
+
+define is_leap (year) {
+    if ((year % 400 == 0) || (year % 4 == 0) && (year % 100 != 0)) {
+        return 1
+    } else {
+        return 0
+    }
+}
+
+
+while (1) {
+    year = read (); if (year == 0) {break}
+    lookup [7 * is_leap (year) + doomsday (year)]
+}
