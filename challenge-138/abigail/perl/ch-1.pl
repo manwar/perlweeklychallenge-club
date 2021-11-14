@@ -71,7 +71,7 @@ my $SATURDAY  = 6;
 # Given a year, return its "Doomsday" value. 
 # 0 -> Sunday, 6 -> Saturday
 #
-sub doomsday ($year) {
+sub doomsday ($year = $_) {
     use integer;
     my $anchor   = ($TUESDAY, $SUNDAY, $FRIDAY, $WEDNESDAY) [($year / 100) % 4];
     my $y        = $year % 100;
@@ -79,11 +79,11 @@ sub doomsday ($year) {
     $doomsday;
 }
 
-sub is_leap ($year) {
+sub is_leap ($year = $_) {
     ($year % 400 == 0) || ($year % 4 == 0) && ($year % 100 != 0) ? 1 : 0
 }
 
 
 while (<>) {
-    say $lookup [is_leap $_] [doomsday $_]
+    say $lookup [is_leap] [doomsday]
 }
