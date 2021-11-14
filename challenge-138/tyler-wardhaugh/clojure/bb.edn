@@ -30,7 +30,17 @@
             ([task args] (run-task-bb task args (get-task-ns task)))
             ([task args task-ns]
              (let [bb-cmd (format "bb -m %s " task-ns)]
-               (apply shell bb-cmd args)))))
+               (apply shell bb-cmd args))))
+
+          (defn bb-no-go
+            [task & _]
+            (binding [*out* *err*]
+              (let [task-num (-> task name last (Character/digit 10))]
+                (println
+                  (str "error: can't run Task " task-num
+                       " via Babashka because it depends"
+                       " on some incompatible libraries."))))
+            (System/exit 1)))
 
   clean {:doc "Clean out temporary files"
          :task (run! fs/delete-tree
@@ -63,16 +73,16 @@
   c**** {:doc "CHALLENGE TASKS"}
 
   task-1 {:doc "Run Task 1 (via clojure)"
-          :task (run-task :t1 *command-line-args* "tw.weekly.c137.t1")}
+          :task (run-task :t1 *command-line-args*)}
 
   task-1-bb {:doc "Run Task 1 (via Babashka)"
-             :task (run-task-bb :t1 *command-line-args* "tw.weekly.c137.t1")}
+             :task (bb-no-go :t1 *command-line-args*)}
 
   task-2 {:doc "Run Task 2 (via clojure)"
           :task (run-task :t2 *command-line-args*)}
 
   task-2-bb {:doc "Run Task 2 (via Babashka)"
-             :task (run-task-bb :t2 *command-line-args*)}
+             :task (bb-no-go :t2 *command-line-args*)}
 
   both {:doc "Run both tasks (via clojure)"
         :task (do
