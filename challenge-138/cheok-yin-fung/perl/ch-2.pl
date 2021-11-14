@@ -22,12 +22,17 @@ sub split_number {
     my $len = length $N;
     my $upper = length $rt;
 
-    my %wlen;
-
+    my %wlen;       # hash to record each unordered partition
 
     my $i = Integer::Partition->new($len);
     while (my $a = $i->next) {
-        next if any { $_ > $upper } @$a;
+        next if any { $_ > $upper } @$a; 
+        # Explanation for above line:
+        # It is an optimization.
+        # For example, sqrt(9663676416) = 98304
+        # so we can expect partitions with number > 99999,
+        # i.e. length number > 5, 
+        # cannot fulfill the requirement.
         my $j = permutations($a);
         while (my $b = $j->next) {
             if (!defined($wlen{join ",", @$b})) {
@@ -41,7 +46,7 @@ sub split_number {
                     push @config, $temp;
                 }
                 if ( (sum @config) == $rt) {
-                    say "sqrt($N) = " , 
+                    say "sqrt($N) = " ,     #print the formula
                         "$rt = ", 
                         join " + ", map { $_ == 0 ? "(0)" : $_ } @config;
                     return 1;
