@@ -32,8 +32,7 @@ function num_of_work_days(year)
 
     LastMondayDec = SundayDec + Dates.Day(1);
     
-    ans += 5*(dayofyear(LastMondayDec) - dayofyear(FirstMondayJan))/7
-    # early version of CY's code: ans += 5*51
+    ans += 5*(Dates.dayofyear(LastMondayDec) - Dates.dayofyear(FirstMondayJan))/7
     ans = convert(Int64, ans)
 
     my_day = LastMondayDec
@@ -45,7 +44,6 @@ function num_of_work_days(year)
     end
 
     return ans
-
 end
 
 
