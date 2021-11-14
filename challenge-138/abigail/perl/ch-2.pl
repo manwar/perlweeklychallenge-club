@@ -47,7 +47,7 @@ sub can_split ($target, $number) {
     # and division we can trivially port to other language solutions,
     # while taking substrings requires more work.
     #
-    while ($pow_10 < $number) {
+    while ($pow_10 <= $number) {
         use integer;
         return 1 if can_split ($target - ($number % $pow_10), 
                                           $number / $pow_10);
