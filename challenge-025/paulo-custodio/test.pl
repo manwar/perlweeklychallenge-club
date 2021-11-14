@@ -1,9 +1,7 @@
 #!/usr/bin/perl
 
 use strict;
-use warnings;
-use Test::More;
-use 5.030;
+use Modern::Perl;
 
 is capture("perl perl/ch-1.pl"), <<END;
 machamp petilil landorus scrafty yamask kricketune emboar registeel loudred darmanitan nosepass simisear relicanth heatmor rufflet trapinch haxorus seaking girafarig gabite exeggcute emolga audino

@@ -24,9 +24,7 @@
 # Operation 1: replace 's' with 'm'
 # Operation 2: replace 'u' with 'o'
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 say wag_fis_dist(@ARGV);
 

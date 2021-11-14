@@ -1,0 +1,23 @@
+%! no DSC
+
+/on {
+    dup length dict /k exch def
+    {
+        dup
+        k exch known {
+            k exch undef
+        } {
+            k exch 1 put
+        } ifelse
+    } forall
+    k {
+        pop
+        /out exch def
+        exit
+    } forall
+    out
+} def
+
+[ 2 5 4 4 5 5 2 ] on 5 eq { (Pass) } { (Fail) } ifelse =
+
+[ 1 2 3 4 3 2 1 4 4 ] on 4 eq { (Pass) } { (Fail) } ifelse =

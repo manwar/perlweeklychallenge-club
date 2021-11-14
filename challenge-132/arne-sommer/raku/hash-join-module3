@@ -1,0 +1,39 @@
+#! /usr/bin/env raku
+
+use lib "lib";
+use HashJoin;
+
+unit sub MAIN (:v(:$verbose));
+
+my @player_ages = (
+  [20, "Alex", "May",     29 ],
+  [28, "Joe",  "August",   2 ],
+  [38, "Mike", "June",    12 ],
+  [18, "Alex", "January", 29 ],
+  [25, "David", "March",  14 ],
+  [18, "Simon", "June",   10 ],
+);
+
+my @player_names = (
+  ["Alex", "Stewart", "Oslo"   ],
+  ["Joe",  "Root",    "Berlin" ],
+  ["Mike", "Gatting", "London" ],
+  ["Joe",  "Blog",    "Bern"   ],
+  ["Alex", "Jones",   "Zürich" ],
+  ["Simon","Duane",   "Oxford" ],
+);
+
+my @countries = (
+  ["Norway",      "Oslo"   ],
+  ["Germany",     "Berlin" ],
+  ["England",     "London" ],
+  ["Switzerland", "Bern"   ],
+  ["Switzerland", "Zürich" ],
+  ["England",     "Oxford" ],
+);
+
+my @joined = HashJoin::merge(@player_ages, 1, @player_names, 0, :$verbose);
+
+my @joined2 = HashJoin::merge(@joined, 5, @countries, 1);
+
+HashJoin::print-it(@joined2);

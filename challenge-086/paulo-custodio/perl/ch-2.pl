@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 086
 
-# TASK #2 › Sudoku Puzzle
+# TASK #2 > Sudoku Puzzle
 # Submitted by: Mohammad S Anwar
 # You are given Sudoku puzzle (9x9).
 #
@@ -45,9 +45,7 @@
 # [ 2 4 8 ] [ 9 5 7 ] [ 1 3 6 ]
 # [ 7 6 3 ] [ 4 1 8 ] [ 2 5 9 ]
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Clone 'clone';
 
 # read input, replace blanks by zero

@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 082
 #
-# TASK #2 › Interleave String
+# TASK #2 > Interleave String
 # Submitted by: Mohammad S Anwar
 # You are given 3 strings; $A, $B and $C.
 #
@@ -36,9 +36,7 @@
 #
 # Output: 0
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 say interleaved(@ARGV);
 

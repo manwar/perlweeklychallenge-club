@@ -46,9 +46,7 @@
 #            5 [2] 3
 #           4 3 [1] 3
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 @ARGV or die "Usage: ch-2.pl row1 row2 ...\n";
 my @triangle = parse(@ARGV);

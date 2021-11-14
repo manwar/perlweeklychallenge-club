@@ -1,0 +1,11 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $N where $N > 0);
+
+for 2 .. Inf -> $guess
+{
+  my $squared = $guess * $guess;
+
+  (say $guess;    last) if $squared == $N;
+  (say $guess -1; last) if $squared > $N;
+}

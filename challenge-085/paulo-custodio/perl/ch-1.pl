@@ -1,12 +1,13 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 085
 #
-# TASK #1 › Triplet Sum
+# TASK #1 > Triplet Sum
 # Submitted by: Mohammad S Anwar
 # You are given an array of real numbers greater than zero.
 #
-# Write a script to find if there exists a triplet (a,b,c) such that 1 < a+b+c < 2. Print 1 if you succeed otherwise 0.
+# Write a script to find if there exists a triplet (a,b,c) such that
+# 1 < a+b+c < 2. Print 1 if you succeed otherwise 0.
 #
 # Example 1:
 # Input: @R = (1.2, 0.4, 0.1, 2.5)
@@ -18,9 +19,7 @@
 # Input: @R = (0.5, 1.1, 0.3, 0.7)
 # Output: 1 as 1 < 0.5 + 1.1 + 0.3 < 2
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @R = @ARGV;
 @R >= 3 or die "Need at least 3 values\n";

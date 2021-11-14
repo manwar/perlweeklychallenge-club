@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 104
 #
@@ -15,9 +15,7 @@
 # when n is even: fusc(n) = fusc(n / 2),
 # when n is odd: fusc(n) = fusc((n-1)/2) + fusc((n+1)/2)
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my $N = shift // 50;
 for my $i (0 .. $N-1) {

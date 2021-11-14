@@ -1,0 +1,58 @@
+TASK #1 - Workdays
+
+You are given a year, $year in 4-digits form.
+
+Write a script to calculate the total number of workdays in the given year.
+For the task, we consider, Monday - Friday as workdays.
+
+Example 1
+
+	Input: $year = 2021
+	Output: 261
+
+Example 2
+
+	Input: $year = 2020
+	Output: 262
+
+MY NOTES: Pretty easy.  Essentially: iterate over all days in $year, inc
+count if day_of_week(that day) is a week day (Mon..Fri).  Date::Simple
+looks like it can do everything we need.
+
+
+TASK #2 - Split Number
+
+You are given a perfect square.
+
+Write a script to figure out if the square root the given number is same
+as sum of 2 or more splits of the given number.
+
+Example 1
+
+	Input: $n = 81
+	Output: 1
+
+	Since, sqrt(81) = 8 + 1
+
+Example 2
+
+	Input: $n = 9801
+	Output: 1
+
+	Since, sqrt(9801) = 98 + 0 + 1
+
+Example 3
+
+	Input: $n = 36
+	Output: 0
+
+	Since, sqrt(36) != 3 + 6
+
+MY NOTES: Sounds pretty easy.  The only tricky part is identifying all
+distinct "splits" of the number.  Is there a "binary counting" method,
+where bit i being true means: split the number between digit i and i+1?
+
+BONUS: I was interested in how many perfect squares do have this "split
+summing to the sqrt" property, so I added tabulate-split-sums which
+tries the first N perfect squares, and prints out those that do have
+this property. 81 is the first, 100 the second, 1296 the third etc..

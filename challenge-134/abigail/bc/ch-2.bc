@@ -1,0 +1,25 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-2.bc < input-file
+#
+
+while (1) {
+    m = read(); if (m == 0) break
+    n = read(); if (n == 0) break
+    for (i = 1; i <= m * n; i ++) {
+        s[i] = 0
+    }
+    count = 0
+    for (i = 1; i <= n; i ++) {
+        for (j = 1; j <= m; j ++) {
+            if (s[i * j] == 0) {
+                count = count + 1
+                s[i * j] = 1
+            }
+        }
+    }
+    count
+}

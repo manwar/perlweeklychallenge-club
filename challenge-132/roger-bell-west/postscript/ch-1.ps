@@ -1,0 +1,89 @@
+%!PS
+
+/dmy2jd {
+    /d exch def
+    /m exch def
+    /y exch def
+    /mn m 14 sub 12 idiv def
+    y 4800 add mn add 1461 mul 4 idiv
+    mn 12 mul neg 2 sub m add 367 mul 12 idiv add
+    y 4900 add mn add 100 idiv 3 mul 4 idiv sub
+    d add
+    32075 sub
+} def
+
+(test dmy2jd) =
+2013 1 1 dmy2jd 2456294 eq { (Pass) } { (Fail) } ifelse =
+
+/jd2dmy {
+    /y 4716 def
+    /v 3 def
+    /j 1401 def
+    /u 5 def
+    /m 2 def
+    /s 153 def
+    /n 12 def
+    /w 2 def
+    /r 4 def
+    /B 274277 def
+    /p 1461 def
+    /C -38 def
+    dup
+    4 mul B add 146097 idiv 3 mul 4 idiv C add j add add /f exch def
+    r f mul v add /e exch def
+    e p mod r idiv u mul w add /h exch def
+    /day h s mod u idiv 1 add def
+    /month h s idiv m add n mod 1 add def
+    /year e p idiv y sub n m add month sub n idiv add def
+    year month day
+} def
+
+(test jd2dmy) =
+2456294 jd2dmy
+1    eq { (Pass) } { (Fail) } ifelse print ( ) print
+1    eq { (Pass) } { (Fail) } ifelse print ( ) print
+2013 eq { (Pass) } { (Fail) } ifelse =
+
+/mirdat {
+    /dn exch def
+    /mn exch def
+    /yn exch def
+    yn 0 eq {
+        (%Calendar%) currentdevparams dup dup
+        /Year get /yn exch def
+        /Month get /mn exch def
+        /Day get /dn exch def
+    } if
+    yn mn dn dmy2jd /tn exch def
+    dmy2jd /tt exch def
+    /delta tn tt sub def
+    tt delta sub jd2dmy
+    tn delta add jd2dmy
+} def
+
+(test 1) =
+2021 9 18 2021 9 22 mirdat
+26   eq { (Pass) } { (Fail) } ifelse print ( ) print
+9    eq { (Pass) } { (Fail) } ifelse print ( ) print
+2021 eq { (Pass) } { (Fail) } ifelse print ( ) print
+14   eq { (Pass) } { (Fail) } ifelse print ( ) print
+9    eq { (Pass) } { (Fail) } ifelse print ( ) print
+2021 eq { (Pass) } { (Fail) } ifelse =
+
+(test 2) =
+1975 10 10 2021 9 22 mirdat
+5    eq { (Pass) } { (Fail) } ifelse print ( ) print
+9    eq { (Pass) } { (Fail) } ifelse print ( ) print
+2067 eq { (Pass) } { (Fail) } ifelse print ( ) print
+27   eq { (Pass) } { (Fail) } ifelse print ( ) print
+10   eq { (Pass) } { (Fail) } ifelse print ( ) print
+1929 eq { (Pass) } { (Fail) } ifelse =
+
+(test 3) =
+1967 2 14 2021 9 22 mirdat
+30   eq { (Pass) } { (Fail) } ifelse print ( ) print
+4    eq { (Pass) } { (Fail) } ifelse print ( ) print
+2076 eq { (Pass) } { (Fail) } ifelse print ( ) print
+8    eq { (Pass) } { (Fail) } ifelse print ( ) print
+7    eq { (Pass) } { (Fail) } ifelse print ( ) print
+1912 eq { (Pass) } { (Fail) } ifelse =

@@ -10,9 +10,7 @@
 # only A-Z,a-z characters are acceptable. Also make the comparison case
 # sensitive.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 say count(@ARGV);
 

@@ -11,9 +11,7 @@
 #
 # Write a script that figures out which guest gets the largest piece of pie.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my $pie = 1;
 my @guest_slice;

@@ -1,0 +1,45 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $n where $n > 0 = 10, Int :$base where 2 <= $base <= 10 = 10);
+
+my $smith-seq := gather
+{
+  for 4 .. Inf -> $candidate
+  {
+    next if $candidate.is-prime;
+    my @prime-factors = factors($candidate);
+
+    if $base == 10
+    {
+      take $candidate
+        if $candidate.comb.sum == @prime-factors>>.comb>>.sum.sum;
+    }
+    else
+    {
+      take $candidate
+        if $candidate.base($base).comb.sum == @prime-factors>>.base($base)>>.comb>>.sum.sum;
+    }
+  }
+}
+
+say $smith-seq[^$n].join(", ");
+
+sub factors ($number is copy)
+{
+  return (1)       if $number == 1;
+  return ($number) if $number.is-prime;
+
+  my @factors;
+
+  for (2 .. $number div 2).grep( *.is-prime) -> $candidate
+  {
+    while $number %% $candidate
+    {
+      @factors.push: $candidate;
+      $number /= $candidate;
+    }
+  }
+    
+  return @factors;
+}
+

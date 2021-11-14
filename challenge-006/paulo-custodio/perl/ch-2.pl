@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 006
 #
@@ -10,9 +10,7 @@
 # gives only 15 to 17 significant decimal digits
 # Therefore must use the bignum library
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Math::BigFloat;
 
 my $accuracy = 128;

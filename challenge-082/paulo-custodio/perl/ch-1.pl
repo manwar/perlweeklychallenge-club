@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 082
 #
-# TASK #1 › Common Factors
+# TASK #1 > Common Factors
 # Submitted by: Niels van Dijke
 # You are given 2 positive numbers $M and $N.
 #
@@ -31,9 +31,7 @@
 #     Factors of 18: 1, 2, 3, 6, 9
 #     Factors of 23: 1
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my($M, $N) = @ARGV;
 my @common = common_factors($M, $N);
@@ -42,7 +40,7 @@ say "(", join(", ", @common), ")";
 sub common_factors {
     my($a, $b) = @_;
     my @common;
-    for (my $i = 1; 2*$i <= $a || 2*$i <= $b; $i++) {
+    for (my $i = 1; $i <= $a || $i <= $b; $i++) {
         if (($a % $i)==0 && ($b % $i)==0) {
             push @common, $i;
         }

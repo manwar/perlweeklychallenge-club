@@ -9,9 +9,7 @@
 # stemming from the Latin word for six: sex. For more information, please
 # checkout wiki page.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # check if number is prime
 sub is_prime {

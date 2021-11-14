@@ -19,9 +19,7 @@
 # Input: $A = "sum"; $B = "add"
 # Output: 0
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 say isomorphic(@ARGV);
 

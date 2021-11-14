@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 005
 #
@@ -8,9 +8,7 @@
 # create a hash of all words in dictionary where key is sorted list of letters
 # therefore two anagrams have the same key
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 # get input
 my($word) = @ARGV;

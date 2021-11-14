@@ -1,9 +1,7 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
+use Modern::Perl;
 use Test::More;
-use 5.030;
 use Path::Tiny;
 
 is capture("perl perl/ch-1.pl 1  5 9 2 8 1 6"), "4, -7, 6, -7, 5.\n";

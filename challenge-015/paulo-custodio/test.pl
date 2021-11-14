@@ -1,9 +1,7 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
+use Modern::Perl;
 use Test::More;
-use 5.030;
 
 is capture("perl perl/ch-1.pl"), <<END;
 Strong Prime: 11, 17, 29, 37, 41, 59, 67, 71, 79, 97

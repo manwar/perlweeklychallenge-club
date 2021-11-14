@@ -1,0 +1,13 @@
+#! /usr/bin/env raku
+
+subset SEDOL where * ~~ /<[0..9 BCDFGHJKLMNPQRSTVWXZ]>**6<[0..9]>/;
+
+unit sub MAIN (SEDOL $SEDOL);
+
+my @weight = (1, 3, 1, 7, 3, 9, 1);
+
+my $sum = (^6).map({ $SEDOL.substr($_, 1).parse-base(35) * @weight[$_] }).sum;
+
+my $check = (10 - ($sum % 10)) % 10;
+
+say + ($SEDOL.substr(6) eq $check);

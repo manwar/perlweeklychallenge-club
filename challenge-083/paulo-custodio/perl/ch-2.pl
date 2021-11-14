@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 083
 #
-# TASK #2 › Flip Array
+# TASK #2 > Flip Array
 # Submitted by: Mohammad S Anwar
 # You are given an array @A of positive numbers.
 #
@@ -19,16 +19,16 @@
 # Input: @A = (3, 10, 8)
 # Output: 1
 # Explanation:
-# Flipping the sign of just one element 10 gives the result 1 i.e. (3) + (-10) + (8) = 1
+# Flipping the sign of just one element 10 gives the result 1 i.e.
+# (3) + (-10) + (8) = 1
 # Example 2:
 # Input: @A = (12, 2, 10)
 # Output: 1
 # Explanation:
-# Flipping the sign of just one element 12 gives the result 0 i.e. (-12) + (2) + (10) = 0
+# Flipping the sign of just one element 12 gives the result 0 i.e.
+# (-12) + (2) + (10) = 0
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @A = @ARGV;
 say count_flips(@A);

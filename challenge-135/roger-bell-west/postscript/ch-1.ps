@@ -1,0 +1,25 @@
+%!PS
+
+/m3d {
+    abs
+    dup log cvi 1 add string /sform exch def
+    sform cvs pop
+    sform length
+    dup 3 lt {
+        pop
+        (too short)
+    } {
+        dup 2 mod 0 eq {
+            pop
+            (even number of digits)
+        } {
+            2 idiv 1 sub
+            sform exch 3 getinterval
+        } ifelse
+    } ifelse
+} def
+
+1234567 m3d (345) eq { (Pass) } { (Fail) } ifelse print ( ) print
+-123 m3d (123) eq { (Pass) } { (Fail) } ifelse print ( ) print
+1 m3d (too short) eq { (Pass) } { (Fail) } ifelse print ( ) print
+1010 m3d (even number of digits) eq { (Pass) } { (Fail) } ifelse =

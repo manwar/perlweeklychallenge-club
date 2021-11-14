@@ -17,7 +17,7 @@ our %LANG = (
     awk     => 'awk',
     basic   => 'bas',
     bc      => 'bc',
-    brainfuck=>'bfpp',
+    brainfuck=>'bf',
     c       => 'c',
     cpp     => 'cpp',
     d       => 'd',
@@ -137,18 +137,18 @@ sub build {
             return "gawk -f $prog --";
         }
         if (/^basic$/) {
-            run("fbc $prog -o $prog_wo_ext") if (!-f $exe || -M $exe > -M $prog);
+            run("fbc $prog") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
         if (/^bc$/) {
             return "bc -lq $prog";
         }
         if (/^brainfuck$/) {
-            run("perl bfpp.pl <$prog_wo_ext.bfpp >$prog_wo_ext.bf");
-            return "brainfuck $prog_wo_ext.bf";
+            #run("perl bfpp.pl <$prog_wo_ext.bfpp >$prog_wo_ext.bf");
+            return "bf $prog_wo_ext.bf";
         }
         if (/^c$/) {
-            run("gcc $prog -o $prog_wo_ext -lmpfr -lgmp") if (!-f $exe || -M $exe > -M $prog);
+            run("gcc $prog -o $prog_wo_ext -lm -lmpfr -lgmp") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
         if (/^cpp$/) {

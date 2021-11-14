@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 088
 #
@@ -31,9 +31,7 @@
 #     $M[2] = 2 x 1 x 3 = 6
 #     $M[3] = 2 x 1 x 4 = 8
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 my @N = @ARGV;
 my @M = array_product(@N);

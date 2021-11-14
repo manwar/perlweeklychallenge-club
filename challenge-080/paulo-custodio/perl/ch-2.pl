@@ -23,9 +23,7 @@
 #
 # Output: 7
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 say candies(@ARGV);
 

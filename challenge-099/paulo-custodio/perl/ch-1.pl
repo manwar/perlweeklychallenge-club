@@ -26,9 +26,7 @@
 # Input: $S = "abcde" $P = "a*c?e"
 # Output: 1
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 @ARGV==2 or die "Usage: ch-1.pl STRING PATTERN\n";
 my($S, $P) = @ARGV;

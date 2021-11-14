@@ -1,8 +1,6 @@
 #!/usr/bin/perl
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 use Test::More;
 use Path::Tiny;
 

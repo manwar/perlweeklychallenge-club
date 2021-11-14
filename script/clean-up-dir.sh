@@ -1,3 +1,4 @@
+find . -name "*.w" -delete
 find . -name "*.c" -delete
 find . -name "*.logo" -delete
 find . -name "*.amx" -delete
@@ -91,6 +92,8 @@ find . -name "*.fish" -delete
 find . -name "*.swift" -delete
 find . -name "*.janet" -delete
 find . -name "*.aplf" -delete
+find . -name "*.apl" -delete
+find . -name "*.ijs" -delete
 find . -name "*.lock" -delete
 find . -name "*.toml" -delete
 find . -name "*.json" -delete

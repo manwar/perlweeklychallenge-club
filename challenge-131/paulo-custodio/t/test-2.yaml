@@ -1,0 +1,18 @@
+- setup:
+  cleanup:
+  args:
+  input:    |
+            ""[]()
+            "I like (parens) and the Apple ][+" they said.
+  output:   |
+            "(["
+            ")]"
+- setup:
+  cleanup:
+  args:
+  input:    |
+            **//<>
+            /* This is a comment (in some languages) */ <could be a tag>
+  output:   |
+            /**/<
+            /**/>

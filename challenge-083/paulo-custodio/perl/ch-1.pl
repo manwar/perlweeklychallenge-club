@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 083
 #
-# TASK #1 › Words Length
+# TASK #1 > Words Length
 # Submitted by: Mohammad S Anwar
 # You are given a string $S with 3 or more words.
 #
@@ -16,11 +16,9 @@
 # Example 2:
 # Input: $S = "The purpose of our lives is to be happy"
 #
-# Output: 23
+# Output: 29
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 @ARGV >= 3 or die "need at least 3 words\n";
-say length(join('', @ARGV[1 .. $#ARGV-1]));
+say length(join(' ', @ARGV[1 .. $#ARGV-1]));

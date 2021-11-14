@@ -7,9 +7,7 @@
 # representation, using the characters 0-9 and A-Y. Dave Jacoby came up
 # with nice description about base35, in case you needed some background.
 
-use strict;
-use warnings;
-use 5.030;
+use Modern::Perl;
 
 use constant { BASE => 35 };
 my @digits = ('0'..'9','A'..'Z');
