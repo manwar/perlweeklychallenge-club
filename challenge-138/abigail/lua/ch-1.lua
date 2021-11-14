@@ -17,8 +17,8 @@ local FRIDAY    = 5
 local SATURDAY  = 6
 
 local lookup    = {
-    {261, 261, 260, 260, 261, 261, 261},
-    {262, 262, 261, 260, 261, 262, 262},
+    {261, 260, 260, 261, 261, 261, 261},
+    {262, 261, 260, 261, 262, 262, 262},
 }
 
 local anchors   = {TUESDAY, SUNDAY, FRIDAY, WEDNESDAY}

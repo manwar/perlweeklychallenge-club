@@ -6,8 +6,8 @@
 ;;; Run as: guile --no-auto-compile ch-1.scm
 ;;;
 
-(define lookup (list (list 261 261 260 260 261 261 261) 
-                     (list 262 262 261 260 261 262 262)))
+(define lookup (list (list 261 260 260 261 261 261 261) 
+                     (list 262 261 260 261 262 262 262)))
 
 (define SUNDAY    0)
 (define MONDAY    1)
