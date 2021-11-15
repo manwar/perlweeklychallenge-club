@@ -4,7 +4,7 @@
 # Usage: ch-2.pl $N
 use v5.12.0;
 use warnings;
-use List::Util qw/ any sum all /;
+use List::Util qw/ any all sum notall/;
 use Integer::Partition;
 use Algorithm::Combinatorics qw / permutations /;
 use Test::More tests => 6;
@@ -27,13 +27,15 @@ sub split_number {
     my $i = Integer::Partition->new($len);
     while (my $len_a = $i->next) {
         next unless all { $_ <= $upper } @$len_a; 
+       # say "ooops" if all { $_ <= $upper } @$len_a; 
+        say "@$len_a";
         # Explanation for above line:
         # It is an optimization.
         # For example, sqrt(9663676416) = 98304
         # so we can expect partitions with $number > 99999,
         # i.e. length $number > 5, 
         # cannot fulfill the requirement.
-        # (4th public version, 2021-11-15 05:09 GMT)
+        # (3rd public version, 2021-11-15 04:51 GMT)
 
         # NOT:::::: next if any { length $_ > $upper } @$len_a; 
         #     (2nd public version, 2021-11-15 04:35 GMT) 
