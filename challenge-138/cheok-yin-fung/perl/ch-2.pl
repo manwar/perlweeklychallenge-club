@@ -23,15 +23,15 @@ sub split_number {
     my $upper = length $rt;
 
     my %wlen;       # hash to record each unordered partition
-
+    return 0 if $N == 1;  #after reading Abigail's code
     my $i = Integer::Partition->new($len);
     while (my $a = $i->next) {
-        next if any { $_ > $upper } @$a; 
+        next if any { (length $_) > $upper } @$a; 
         # Explanation for above line:
         # It is an optimization.
         # For example, sqrt(9663676416) = 98304
-        # so we can expect partitions with number > 99999,
-        # i.e. length number > 5, 
+        # so we can expect partitions with $number > 99999,
+        # i.e. length $number > 5, 
         # cannot fulfill the requirement.
         my $j = permutations($a);
         while (my $b = $j->next) {
@@ -64,13 +64,11 @@ ok split_number(9801) == 1, "Example 2";
 ok split_number(36) == 0, "Example 3";
 
 
-=pod for fun
-for my $num (1..100) {
-    split_number($num*$num);
-}
+#for fun
+# grep { 1 == split_number($_*$_)} 1..100;
 
+=pod 
 Output:
-sqrt(1) = 1 = 1
 sqrt(81) = 9 = 8 + 1
 sqrt(100) = 10 = 10 + 0
 sqrt(1296) = 36 = 1 + 29 + 6
