@@ -45,18 +45,18 @@ use experimental 'lexical_subs';
 #  +----------------+-------+----------+-------+----------+
 #  | Doomsday value | Jan 1 | Workdays | Jan 1 | Workdays |
 #  +----------------+-------+----------+-------+----------+
-#  |              0 |  Thu  |      261 |   Wed |      262 |
-#  |              1 |  Fri  |      261 |   Thu |      262 |
-#  |              2 |  Sat  |      260 |   Fri |      261 |
-#  |              3 |  Sun  |      260 |   Sat |      260 |
-#  |              4 |  Mon  |      261 |   Sun |      261 |
-#  |              5 |  Tue  |      261 |   Mon |      262 |
-#  |              6 |  Wed  |      261 |   Tue |      262 |
+#  |              0 |  Fri  |      261 |   Thu |      262 |
+#  |              1 |  Sat  |      260 |   Fri |      261 |
+#  |              2 |  Sun  |      260 |   Sat |      260 |
+#  |              3 |  Mon  |      261 |   Sun |      261 |
+#  |              4 |  Tue  |      261 |   Mon |      262 |
+#  |              5 |  Wed  |      261 |   Tue |      262 |
+#  |              6 |  Thu  |      261 |   Wed |      262 |
 #  +----------------+-------+----------+-------+----------+
 
 my @lookup = (
-    [261, 261, 260, 260, 261, 261, 261],   # Regular years
-    [262, 262, 261, 260, 261, 262, 262],   # Leap years
+    [261, 260, 260, 261, 261, 261, 261],   # Regular years
+    [262, 261, 260, 261, 262, 262, 262],   # Leap years
 );
 
 my $SUNDAY    = 0;
@@ -71,7 +71,7 @@ my $SATURDAY  = 6;
 # Given a year, return its "Doomsday" value. 
 # 0 -> Sunday, 6 -> Saturday
 #
-sub doomsday ($year) {
+sub doomsday ($year = $_) {
     use integer;
     my $anchor   = ($TUESDAY, $SUNDAY, $FRIDAY, $WEDNESDAY) [($year / 100) % 4];
     my $y        = $year % 100;
@@ -79,11 +79,11 @@ sub doomsday ($year) {
     $doomsday;
 }
 
-sub is_leap ($year) {
+sub is_leap ($year = $_) {
     ($year % 400 == 0) || ($year % 4 == 0) && ($year % 100 != 0) ? 1 : 0
 }
 
 
 while (<>) {
-    say $lookup [is_leap $_] [doomsday $_]
+    say $lookup [is_leap] [doomsday]
 }

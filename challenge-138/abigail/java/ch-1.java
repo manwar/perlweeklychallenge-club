@@ -10,8 +10,8 @@ import java.util.*;
 
 public class ch1 {
     static int [] [] lookup = {
-        {261, 261, 260, 260, 261, 261, 261},
-        {262, 262, 261, 260, 261, 262, 262},
+        {261, 260, 260, 261, 261, 261, 261},
+        {262, 261, 260, 261, 262, 262, 262},
     };
 
     public static final int SUNDAY    = 0;

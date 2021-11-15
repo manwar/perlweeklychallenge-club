@@ -6,8 +6,8 @@
 # Run as: tclsh ch-1.tcl < input-file
 #
 
-set lookup [list [list 261 261 260 260 261 261 261]   \
-                 [list 262 262 261 260 261 262 262]]
+set lookup [list [list 261 260 260 261 261 261 261]   \
+                 [list 262 261 260 261 262 262 262]]
 
 set SUNDAY    0
 set MONDAY    1

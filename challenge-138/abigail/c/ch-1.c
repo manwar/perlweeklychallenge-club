@@ -18,8 +18,8 @@
 # define FRIDAY    5
 # define SATURDAY  6
 
-int lookup  [] = {261, 261, 260, 260, 261, 261, 261,
-                  262, 262, 261, 260, 261, 262, 262};
+int lookup  [] = {261, 260, 260, 261, 261, 261, 261,
+                  262, 261, 260, 261, 262, 262, 262};
 int anchors [] = {TUESDAY, SUNDAY, FRIDAY, WEDNESDAY};
 
 int doomsday (int year) {
