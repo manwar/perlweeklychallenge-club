@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 081
 #
-# TASK #2 › Frequency Sort
+# TASK #2 > Frequency Sort
 # Submitted by: Mohammad S Anwar
 # You are given file named input.
 #

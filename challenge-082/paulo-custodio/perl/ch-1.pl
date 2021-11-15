@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 082
 #
-# TASK #1 › Common Factors
+# TASK #1 > Common Factors
 # Submitted by: Niels van Dijke
 # You are given 2 positive numbers $M and $N.
 #
@@ -40,7 +40,7 @@ say "(", join(", ", @common), ")";
 sub common_factors {
     my($a, $b) = @_;
     my @common;
-    for (my $i = 1; 2*$i <= $a || 2*$i <= $b; $i++) {
+    for (my $i = 1; $i <= $a || $i <= $b; $i++) {
         if (($a % $i)==0 && ($b % $i)==0) {
             push @common, $i;
         }
