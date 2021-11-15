@@ -25,26 +25,27 @@ sub split_number {
     my %wlen;       # hash to record each unordered partition
     return 0 if $N == 1;  #after reading Abigail's code
     my $i = Integer::Partition->new($len);
-    while (my $a = $i->next) {
-        next if any { $_ > $upper } @$a; 
+    while (my $len_a = $i->next) {
+        next if any { $_ > $upper } @$len_a; 
         # Explanation for above line:
         # It is an optimization.
         # For example, sqrt(9663676416) = 98304
         # so we can expect partitions with $number > 99999,
         # i.e. length $number > 5, 
         # cannot fulfill the requirement.
+        # (3rd public version, 2021-11-15 04:51 GMT)
 
-        # NOT:::::: next if any { length $_ > $upper } @$a; 
-        #     (2nd public version) 
+        # NOT:::::: next if any { length $_ > $upper } @$len_a; 
+        #     (2nd public version, 2021-11-15 04:35 GMT) 
 
-        my $j = permutations($a);
+        my $j = permutations($len_a);
         while (my $b = $j->next) {
             if (!defined($wlen{join ",", @$b})) {
                 my @config = ( substr($N ,0, $b->[0]) );
-                my $acc = 0;
+                my $len_acc = 0;
                 for my $k (0..scalar @$b - 2) {
-                    $acc += $b->[$k];
-                    my $temp = substr($N, $acc, $b->[$k+1]);
+                    $len_acc += $b->[$k];
+                    my $temp = substr($N, $len_acc, $b->[$k+1]);
                     $temp =~ s/^[0]*//g;
                     $temp = 0 if $temp eq "";
                     push @config, $temp;
@@ -68,7 +69,7 @@ ok split_number(9801) == 1, "Example 2";
 ok split_number(36) == 0, "Example 3";
 ok split_number(999*999) == 1, "test case 1 with 10^n-1";
 ok split_number(9999*9999) == 1, "test case 2 with 10^n-1";
-ok split_number(17073424) == 1, "final test"
+ok split_number(17073424) == 1, "final test";
 
 
 
