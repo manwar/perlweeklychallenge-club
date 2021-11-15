@@ -35,6 +35,8 @@ sub split_number {
         # cannot fulfill the requirement.
         # (4th public version, 2021-11-15 05:09 GMT)
 
+        # OKAY WITH:::::: next if any { $_ > $upper } @$len_a; 
+        #     (1st public version, 2021-11-14 GMT)
         # NOT:::::: next if any { length $_ > $upper } @$len_a; 
         #     (2nd public version, 2021-11-15 04:35 GMT) 
 
