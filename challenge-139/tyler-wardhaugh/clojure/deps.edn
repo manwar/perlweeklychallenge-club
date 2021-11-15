@@ -1,0 +1,17 @@
+{:paths ["src" "resources"]
+ :deps {org.clojure/clojure {:mvn/version "1.10.3"}
+        clojure.java-time/clojure.java-time {:mvn/version "0.3.3"}
+        org.threeten/threeten-extra {:mvn/version "1.7.0"}
+        org.clojure/math.numeric-tower {:mvn/version "0.0.4"}}
+ :aliases
+ {:test {:extra-paths ["test"]
+         :extra-deps {org.clojure/test.check {:mvn/version "1.1.0"}
+                      io.github.cognitect-labs/test-runner
+                      {:git/url "https://github.com/cognitect-labs/test-runner"
+                       :sha "62ef1de18e076903374306060ac0e8a752e57c86"}}
+         :exec-fn cognitect.test-runner.api/test}
+  :jar {:replace-deps {com.github.seancorfield/depstar {:mvn/version "2.1.278"}}
+        :exec-fn hf.depstar/uberjar
+        :exec-args {:aot true
+                    :jar "tw-weekly.jar"
+                    :sync-pom true}}}}
