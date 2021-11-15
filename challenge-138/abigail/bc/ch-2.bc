@@ -1,0 +1,30 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-2.bc < input-file
+#
+
+define can_split (target, number) {
+    if (target >  number || target < 0) {return 0}
+    if (target == number)               {return 1}
+    pow_10 = 10
+    while (pow_10 <= number) {
+        if (can_split (target - (number % pow_10), number / pow_10)) {
+            return 1
+        }
+        pow_10 *= 10
+    }
+    return 0
+}
+
+
+while (1) {
+    number = read (); if (number == 0) {break}
+    if (can_split (sqrt (number), number)) {
+        1
+    } else {
+        0
+    }
+}
