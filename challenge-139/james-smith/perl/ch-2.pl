@@ -4,7 +4,7 @@ use strict;
 use warnings;
 use feature qw(say);
 
-my( $N, @primes, @long_primes ) = ( $ARGV[0]||5, 2 );
+my( $N, @primes, @long_primes ) = ( $ARGV[0]||5 );
 
 O: for( my $p=3; @long_primes<$N; $p+=2 ) {
   ($p % $_) || (next O) for @primes;
