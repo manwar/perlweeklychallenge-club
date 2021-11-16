@@ -1,0 +1,73 @@
+%!PS
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/is_prime {
+    currentdict /ret undef
+    /n exch def
+    n 2 gt n 2 mod 0 eq and {
+        /ret false def
+    } if
+    n 3 gt n 3 mod 0 eq and {
+        /ret false def
+    } if
+    currentdict /ret known not {
+        /lim n sqrt cvi def
+        /k6 0 def
+        {
+            /k6 k6 6 add def
+            [ k6 1 sub k6 1 add ] {
+                /t exch def
+                t lim le {
+                    n t mod 0 eq {
+                        /ret false def
+                        exit
+                    } if
+                } {
+                    /ret true def
+                    exit
+                } ifelse
+            } forall
+            currentdict /ret known {
+                exit
+            } if
+        } loop
+    } if
+    ret
+} bind def
+
+/longprime {
+    /nn exch def
+    /o 0 array def
+    /b 5 def
+    {
+        /b b 2 add def
+        b is_prime {
+            /k 1 def
+            /l 0 def
+            {
+                /k k 10 mul def
+                /l l 1 add def
+                /k k b mod def
+                k 1 eq {
+                    exit
+                } if
+            } loop
+            l b 1 sub eq {
+                /o o b apush def
+                /nn nn 1 sub def
+            } if
+        } if
+        nn 0 le {
+            exit
+        } if
+    } loop
+    o
+} bind def
+
+5 longprime ==
+
+60 longprime ==
