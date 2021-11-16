@@ -1,4 +1,4 @@
-# Perl Weekly Challenge #139
+# Perl Weekly Challenge #139 - "Whats recurring"
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -20,7 +20,7 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-139/ja
 
 This challenge is relatively easy - to see if the list of numbers if monotonically increasing we just have to check that each entry is bigger than the one before.
 
-* We start by shifting the first number of the list passeda (this is the *previous number*);
+* We start by shifting the first number of the list passed (this is the *previous number*);
 * The loop through the rest comparing the current number against the previous number.
   * If the number is less than the previous number we return `0`;
   * Otherwise we set previous number `$p` to the current number and continue
@@ -62,7 +62,7 @@ that has only 4-lines.
 
 ***Write a script to generate first 5 Long Primes. A prime number `p` is called Long Prime if `1/p` has an infinite decimal expansion repeating every `p-1` digits.***
 
-## Solution
+## The solution
 
 Now this challenge is not so easy - but those of us who have been working on the challenges for more than 6 months would have already worked out parts of fractions which are recursive. There were many solutions for this - if you didn't do the challenge.
 
@@ -85,8 +85,7 @@ sub rec_len {
 ```
 
 * We compute twice the number of digits than the denominator, we generate this as a string but using long-division to compute each digit.
-
-* We then see if there is any repeating sequence (tied to the end of the sting we generate). We then get the length of this recurrent string.
+* We then see if there is any repeating sequence (tied to the end of the sting we generate). We then get the length of this recurrent string. (If you don't include the `\1+` you could end up with a shorter match as "3333" would be picked up as "33" recurring rather than "3" recurring.
 
 So now we have this function we can look at computing the long primes. We know that `1/2` doesn't recur so we can rule this out - that means we are only considering odd primes.
 
