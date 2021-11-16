@@ -1,73 +1,56 @@
 {
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "xAxis" : {
+      "type" : "category"
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Andrew Shitov",
-               "drilldown" : "Andrew Shitov",
-               "y" : 1
-            },
-            {
-               "y" : 2,
-               "name" : "Cheok-Yin Fung",
-               "drilldown" : "Cheok-Yin Fung"
-            },
-            {
-               "drilldown" : "Olivier Delouya",
-               "name" : "Olivier Delouya",
-               "y" : 1
-            },
-            {
-               "y" : 2,
-               "name" : "Peter Campbell Smith",
-               "drilldown" : "Peter Campbell Smith"
-            },
-            {
-               "drilldown" : "Ulrich Rieke",
-               "name" : "Ulrich Rieke",
-               "y" : 4
-            }
-         ],
-         "name" : "The Weekly Challenge - 139",
-         "colorByPoint" : 1
-      }
-   ],
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 139"
+   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Andrew Shitov",
+            "name" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ],
-            "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov"
+            ]
          },
          {
-            "id" : "Cheok-Yin Fung",
-            "name" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Cheok-Yin Fung",
+            "id" : "Cheok-Yin Fung"
          },
          {
-            "name" : "Olivier Delouya",
-            "id" : "Olivier Delouya",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
+         },
+         {
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "name" : "Olivier Delouya",
+            "id" : "Olivier Delouya"
          },
          {
             "data" : [
@@ -80,7 +63,6 @@
             "id" : "Peter Campbell Smith"
          },
          {
-            "name" : "Ulrich Rieke",
             "id" : "Ulrich Rieke",
             "data" : [
                [
@@ -91,37 +73,70 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Ulrich Rieke"
          }
       ]
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 139"
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 139",
+         "data" : [
+            {
+               "y" : 1,
+               "name" : "Andrew Shitov",
+               "drilldown" : "Andrew Shitov"
+            },
+            {
+               "drilldown" : "Cheok-Yin Fung",
+               "y" : 2,
+               "name" : "Cheok-Yin Fung"
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Olivier Delouya",
+               "name" : "Olivier Delouya",
+               "y" : 1
+            },
+            {
+               "drilldown" : "Peter Campbell Smith",
+               "y" : 2,
+               "name" : "Peter Campbell Smith"
+            },
+            {
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke",
+               "y" : 4
+            }
+         ]
       }
+   ],
+   "legend" : {
+      "enabled" : 0
    },
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
    },
    "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2021-11-16 19:13:37 GMT"
+      "text" : "[Champions: 6] Last updated at 2021-11-16 19:31:17 GMT"
    }
 }
