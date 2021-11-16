@@ -90,6 +90,8 @@ So now we have this function we can look at computing the long primes. We know t
 Therefore we loop through all the odd numbers checking to see if the number is a prime, if it is we then check for the property that the recurring sequence has `$p-1` digits.
 
 ```
+my( $N, @primes, @long_primes ) = ( $ARGV[0]||5 );
+
 O: for( my $p=3; @long_primes<$N; $p+=2 ) {
   ($p % $_) || (next O) for @primes;
   push @primes,      $p;
