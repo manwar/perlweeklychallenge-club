@@ -5,11 +5,10 @@ use strict;
 use warnings;
 use feature qw(say);
 
-my( $N,                   $p, @primes, @long_primes ) =
-  ( @ARGV ? $ARGV[0] : 5, 1,  2 );
+my( $N, @primes, @long_primes ) = ( $ARGV[0]||5, 2 );
 
 O: for( my $p=3; @long_primes<$N; $p+=2 ) {
-  ($p % $_) || (next O) for @primes; ## next if not prime...
+  ($p % $_) || (next O) for @primes; ## next if !prime
   push @long_primes, $p if $p - rec_len($p) == 1;
   push @primes,      $p;
 }
