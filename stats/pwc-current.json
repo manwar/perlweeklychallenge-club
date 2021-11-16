@@ -1,18 +1,30 @@
 {
+   "title" : {
+      "text" : "The Weekly Challenge - 139"
+   },
    "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2021-11-16 19:46:19 GMT"
+      "text" : "[Champions: 9] Last updated at 2021-11-16 19:54:26 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Andrew Shitov",
+            "name" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ],
-            "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov"
+            ]
          },
          {
             "id" : "Cheok-Yin Fung",
@@ -25,8 +37,8 @@
             ]
          },
          {
-            "name" : "Dave Jacoby",
             "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -41,6 +53,16 @@
          {
             "data" : [
                [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "E. Choroba",
+            "name" : "E. Choroba"
+         },
+         {
+            "data" : [
+               [
                   "Raku",
                   2
                ]
@@ -49,34 +71,34 @@
             "id" : "Mark Anderson"
          },
          {
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ]
-            ],
             "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke"
-         },
-         {
+            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "id" : "Olivier Delouya",
-            "name" : "Olivier Delouya"
+            ]
          },
          {
-            "id" : "Peter Campbell Smith",
-            "name" : "Peter Campbell Smith",
+            "id" : "Olivier Delouya",
+            "name" : "Olivier Delouya",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Peter Campbell Smith",
+            "id" : "Peter Campbell Smith"
          },
          {
             "data" : [
@@ -94,8 +116,16 @@
          }
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 139"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "xAxis" : {
       "type" : "category"
@@ -105,13 +135,13 @@
          "data" : [
             {
                "y" : 1,
-               "drilldown" : "Andrew Shitov",
-               "name" : "Andrew Shitov"
+               "name" : "Andrew Shitov",
+               "drilldown" : "Andrew Shitov"
             },
             {
+               "y" : 2,
                "name" : "Cheok-Yin Fung",
-               "drilldown" : "Cheok-Yin Fung",
-               "y" : 2
+               "drilldown" : "Cheok-Yin Fung"
             },
             {
                "y" : 3,
@@ -120,27 +150,32 @@
             },
             {
                "y" : 2,
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "y" : 2,
                "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson"
             },
             {
                "name" : "Niels van Dijke",
-               "y" : 1,
-               "drilldown" : "Niels van Dijke"
+               "drilldown" : "Niels van Dijke",
+               "y" : 1
             },
             {
                "name" : "Olivier Delouya",
-               "y" : 1,
-               "drilldown" : "Olivier Delouya"
+               "drilldown" : "Olivier Delouya",
+               "y" : 1
             },
             {
                "y" : 2,
-               "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith"
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith"
             },
             {
-               "drilldown" : "Ulrich Rieke",
                "y" : 4,
+               "drilldown" : "Ulrich Rieke",
                "name" : "Ulrich Rieke"
             }
          ],
@@ -149,28 +184,8 @@
       }
    ],
    "tooltip" : {
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
