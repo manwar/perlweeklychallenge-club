@@ -78,8 +78,7 @@ This gives us the function below to get the length of the recurring sequence.
 sub rec_len {
   my( $D, $N, $s ) = ( shift, 1, '' );
   ( $s, $N ) = ( $s.int($N/$D), ($N%$D).0 ) for 0 .. 2*$D;
-  $s =~ m{(\d+?)\1+$};
-  length $1;
+  $s =~ /(\d+?)\1+$/ ? length $1 : 0;
 }
 ```
 
