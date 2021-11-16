@@ -17,8 +17,10 @@ sub mirror {
     my @arr_birth = ($_[2], $_[1]-1, $_[0]);
     my $_birth = timegm_nocheck(0, 0, 0, @arr_birth);
     my $y1 = int (($_today - $_birth)/86400);
-    my $d_senior = gmtime timegm_nocheck 0, 0, 0, $arr_birth[0]-$y1, $arr_birth[1], $arr_birth[2]; 
-    my $d_junior = gmtime timegm_nocheck 0, 0, 0, $arr_today[0]+$y1, $arr_today[1], $arr_today[2]; 
+    my $d_senior = gmtime timegm_nocheck 0, 0, 0, 
+                        $arr_birth[0]-$y1, $arr_birth[1], $arr_birth[2]; 
+    my $d_junior = gmtime timegm_nocheck 0, 0, 0, 
+                        $arr_today[0]+$y1, $arr_today[1], $arr_today[2]; 
     return [ $d_senior, $d_junior ];
 }
 
