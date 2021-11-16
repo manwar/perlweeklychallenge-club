@@ -8,7 +8,7 @@ use feature qw(say);
 my( $N,                   $p, @primes, @long_primes ) =
   ( @ARGV ? $ARGV[0] : 5, 1,  2 );
 
-O: while( (@long_primes < $N) && ($p += 2) ) {
+O: for( my $p=3; @long_primes<$N; $p+=2 ) {
   ($p % $_) || (next O) for @primes; ## next if not prime...
   push @long_primes, $p if $p - rec_len($p) == 1;
   push @primes,      $p;
