@@ -1,4 +1,4 @@
-# Perl Weekly Challenge #138
+# Perl Weekly Challenge #139 - "Whats recurring"
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,93 +10,102 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-138/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-139/james-smith/perl
 
-# Task 1 - Workdays
+# Task 1 - JortSort
 
-***Write a script to calculate the total number of workdays in the given year. (Monday to Friday)
-
-## Notes
-
-There are either 260, 261, 262 workdays in a calendar year.
-
-* In a normal year there is 261 workdays unless the year both starts and finishes on a weekend (i.e. there are 260 workdays if the year starts on a Saturday or Sunday);
-* In a leap year there is only 260 working days if Jan 1st is a Saturday & Dec 31st is a Sunday; 261 if Jan 1st is a Sunday or Dec 31st is a Saturday, 262 otherwise.
+***You are given a list of numbers. Write a script to implement JortSort. It should return true/false depending if the given list of numbers are already sorted.***
 
 ## The solution
 
-So we basically need 2 pieces of information given a year?
+This challenge is relatively easy - to see if the list of numbers if monotonically increasing we just have to check that each entry is bigger than the one before.
 
- * Is it a leap year
- * What is the first day of the year.
-
-We can then use a look up table which stores the number of working days (over 260) for non leap years and for leap years:
-
-|                         | Sun | Mon | Tue | Wed | Thu | Fri | Sat |
-| ----------------------- | --: | --: | --: | --: | --: | --: | --: |
-| **day no**              |   0 |   1 |   2 |   3 |   4 |   5 |   6 |
-| **#days non-leap year** |   0 |   1 |   1 |   1 |   1 |   1 |   0 |
-| **#days leap year**     |   1 |   2 |   2 |   2 |   2 |   1 |   0 |
-
-We break this calculation into 3 functions:
-
- * `work_days` - this does the look up
- * `leap_year` - tests for leap year
- * `zellers_congruence_jan_1` - uses Zeller's congruence to work out first day of the year {works for the Gregorian calendar}
-
-All of which 
-```perl
-my @EXTRA_WORKDAYS = ( [0,1,1,1,1,1,0], [1,2,2,2,2,1,0] );
-
-sub leap_year {
-  $_[0]&3 || (!($_[0]%100) && $_[0]%400) ? 0 : 1;
-}
-sub zellers_congruence_jan_1 {
-  ( 1 + $_[0]%100 + ($_[0]%100>>2) - ($_[0]/100<<1) + ($_[0]/400>>0) ) % 7;
-}
-
-sub work_days {
-  260 + $EXTRA_WORKDAYS[ leap_year $_[0] ][ zellers_congruence_jan_1 $_[0] - 1 ];
-}
+* We start by shifting the first number of the list passed (this is the *previous number*);
+* The loop through the rest comparing the current number against the previous number.
+  * If the number is less than the previous number we return `0`;
+  * Otherwise we set previous number `$p` to the current number and continue
+* If we get to the end of the list then the list is sorted and we return `1`.
 
 ```
-
-# Task 2 - Split Number
-
-***You are given a perfect square, Write a script to figure out if the square root the given number is same as sum of 2 or more splits of the given number.***
-
-## Solution
-
-We use recursion to simplify the problem - first we note that for the sqrt to be the sum of splits of the number then there are always 2 sums except in two trivial cases 0 & 1 (`n^2 = n`) so we can check this in the first wrapper function.
-
-As the first stage in the loop requires some "setup" - we write a wrapper function that:
-
- * Checks for the edge case of 0/1;
- * Passes in the square root of `$n` as the total we need to compare against in the more generic `split_no` function which works out if there is a way of summing groups of digits.
-
-`split_no` does all the hard work.
-
-It takes 2 parameters - the sum required add a string of digits. We call the function recursively
-
- * If the the string of digits is empty we have reached the end - and check to see if the remaining sum is zero.
- * If sum is less than 0 then we return 0 - no match.
- * If not we split the string into 2 pieces in all ways possible and call the function.
-   * We reduce the sum required by the first part of the string;
-   * And pass the second part of the string as the string of digits.
-
-```perl
-sub check_square {
-  return $_[0] <= 1 ? 0 : split_no( sqrt($_[0]), $_[0] );
+sub in_order {
+  my $p = shift;
+  ($p>$_) ? (return 0) : ($p=$_) for @_;
+  return 1;
 }
+```
 
-sub split_no {
-  my( $sum, $str ) = @_;
-  return 0 if $sum < 0;
-  return 0 if $str eq '' && $sum;
-  return 1 if $str eq '';
-  return 1 if grep { split_no( ($sum - substr $str,$_) , substr $str, 0, $_ ) }
-              0 .. -1 + length $str;
-  return 0;
-}
+**Notes:**
+
+* We can rewrite the `if( $x ) { y } else { z }` and `($x) ? (y) : (z)`. Why is this useful - well we can then use the brace less postfix `for` for the loop rather than having to use braces. This means the loop becomes 1 line, rather than the longer 7 line version using K&R braces. If you don't cuddle your braces it is even longer!
 
 ```
+  for (@_) {
+    if( $p>$_ ) {
+      return 0;
+    } else {
+      $p = $_;  
+    }
+  }
+```
+
+Admittedly there is an intermediate version... That uses the exit early approach..
+
+```
+  for (@_) {
+    return 0 if $p>$_;
+    $p = $_;  
+  }
+```
+that has only 4-lines.
+
+# Task 2 - Long Primes
+
+***Write a script to generate first 5 Long Primes. A prime number `p` is called Long Prime if `1/p` has an infinite decimal expansion repeating every `p-1` digits.***
+
+## The solution
+
+Now this challenge is not so easy - but those of us who have been working on the challenges for more than 6 months would have already worked out parts of fractions which are recursive. There were many solutions for this - if you didn't do the challenge.
+
+You can see mine at: 
+
+https://github.com/drbaggy/perlweeklychallenge-club/blob/master/challenge-106/james-smith/perl/ch-2.pl
+
+Now we don't require the actual part of the number repeats which makes the function simpler, and we know explicitly that the numerator is going to be 1.
+
+This gives us the function below to get the length of the recurring sequence.
+
+```
+sub rec_len {
+  my( $D, $N, $s ) = ( shift, 1, '' );
+  ( $s, $N ) = ( $s.int($N/$D), ($N%$D).0 ) for 0 .. 2*$D;
+  $s =~ /(\d+?)\1+$/ ? length $1 : 0;
+}
+```
+
+* We compute twice the number of digits than the denominator, we generate this as a string but using long-division to compute each digit.
+* We then see if there is any repeating sequence (tied to the end of the sting we generate). We then get the length of this recurrent string. (If you don't include the `\1+` you could end up with a shorter match as "3333" would be picked up as "33" recurring rather than "3" recurring.
+
+So now we have this function we can look at computing the long primes. We know that `1/2` doesn't recur so we can rule this out - that means we are only considering odd primes.
+
+Therefore we loop through all the odd numbers checking to see if the number is a prime, if it is we then check for the property that the recurring sequence has `$p-1` digits.
+
+```
+my( $N, @primes, @long_primes ) = ( $ARGV[0]||5 );
+
+O: for( my $p=3; @long_primes<$N; $p+=2 ) {
+  ($p % $_) || (next O) for @primes;
+  push @primes,      $p;
+  push @long_primes, $p if $p - rec_len($p) == 1;
+}
+```
+We will now break this down.
+* The `for` line is obvious - repeat increasing `$p` by two until we have sufficient long primes.
+* The next line loops through all current known primes to see if they are factor of `$p` - if yes skips to the next outer loop.
+  * We use `next O` to jump out of the inner `for` loop, and to the start of the next outer `for` loop - labelled `O`.
+  * We again use a trick to flatten the loop with a conditional: `($p % $_) || (next O)` if the first part is true the "or" `||` is true, so we don't evaluate the second part. But it `$_` is a factor of `$p` the left hand side is `0` (false) and so we need to evaluate it to see if the right hand side is true - and in the evaluation - skips to the start of the loop by executing `next O`.
+* We know it has no known prime factors in line 3 so we add it to the list of primes.
+* Then we use our `rec_len` function to see if the number is in fact a long prime.
+
+
+
+
