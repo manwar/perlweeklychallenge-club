@@ -22,7 +22,7 @@ while($count<$max_count){
     my @groups= grep {$_} split /(\d{$length})/, 1./$prime; # groups of digits
     pop @groups; # throw away last (guard) repetition (posibly inexact)
      ++$count, push @lines,
-                    "$count-th long prime is $prime",
+                    "long_prime[$count] is $prime",
 		    "       as 1/$prime = " . shift(@groups) . join "_", @groups,"..."
         if (first # if cycle doesn't stop early
            {my $x=10**$_%$prime; $x==1||$x==0}
