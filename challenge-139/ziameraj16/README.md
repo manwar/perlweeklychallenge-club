@@ -1,23 +1,22 @@
-# Workdays
+# Jort Sort
 ## Java Solution
 
 To compile the code run
 ```java
-javac Workdays.java
+javac JortSort.java
 ```
 To run
 ```java
-java Workdays
+java JortSort
 ```
 ### Example
 ```bash
-~/study/github/perlweeklychallenge-club/challenge-138/ziameraj16/java$ javac Workdays.java
-~/study/github/perlweeklychallenge-club/challenge-138/ziameraj16/java$ java Workdays
-Enter the year
-2021
-Number of workdays: 261
-~/study/github/perlweeklychallenge-club/challenge-138/ziameraj16/java$ java Workdays
-Enter the year
-2020
-Number of workdays: 262
+~/study/github/perlweeklychallenge-club/challenge-139/ziameraj16$ java JortSort
+Enter comma separated list
+1,2,3,4,5,6
+1
+~/study/github/perlweeklychallenge-club/challenge-139/ziameraj16$ java JortSort
+Enter comma separated list
+1,2,3,4,5,7,6
+0
 ```
