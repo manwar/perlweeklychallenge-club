@@ -1,0 +1,19 @@
+%!PS
+
+/jortsort {
+    /a exch def
+    /ret true def
+    1 1 a length 1 sub {
+        dup
+        1 sub a exch get exch
+        a exch get
+        gt {
+            /ret false def
+            exit
+        } if
+    } for
+    ret
+} bind def
+
+[ 1 2 3 4 5] jortsort true eq { (Pass) } { (FAIL) } ifelse print ( ) print
+[ 1 3 2 4 5] jortsort false eq { (Pass) } { (FAIL) } ifelse =

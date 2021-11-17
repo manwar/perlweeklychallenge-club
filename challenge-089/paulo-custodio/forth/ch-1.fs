@@ -7,9 +7,6 @@
 \ Write a script to sum GCD of all possible unique pairs between 1 and $N.
 \
 \ This solution uses a recursive algorithm to compute the GCD.
-\
-\ Start the script with N in the stack, i.e.
-\   gforth -e 12345 ch-1.pl
 
 : gcd       { a b -- gcd }
     a 0= IF
@@ -28,4 +25,5 @@
     LOOP
 ;
 
+NEXT-ARG S>NUMBER? 0= THROW DROP
 sum_gcd . CR BYE

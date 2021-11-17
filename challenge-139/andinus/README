@@ -1,0 +1,51 @@
+                            ━━━━━━━━━━━━━━━
+                             CHALLENGE 135
+
+                                Andinus
+                            ━━━━━━━━━━━━━━━
+
+
+                               2021-10-22
+
+
+
+
+
+Task 1 - Middle 3-digits
+════════════════════════
+
+  You are given an integer.
+
+  Write a script find out the middle 3-digits of the given integer, if
+  possible otherwise throw sensible error.
+
+  ┌────
+  │ Input: $n = 1234567
+  │ Output: 345
+  │
+  │ Input: $n = -123
+  │ Output: 123
+  │
+  │ Input: $n = 1
+  │ Output: too short
+  │
+  │ Input: $n = 10
+  │ Output: even number of digits
+  └────
+
+
+Raku
+────
+
+  Input's absolute value is taken because the sign is meaningless here.
+  To get middle 3-digits we take 3 digits from `$n.chars div 2 - 1'
+  position, `-1' because Arrays are 0-indexed. It's guaranteed that we
+  have odd number of digits so `div 2' will land us on left of middle
+  digit, we just take 3 digits from there.
+
+  ┌────
+  │ $n = abs $n;
+  │ die "too short" if $n.chars < 3;
+  │ die "even number of digits" if $n.chars %% 2;
+  │ put $n.substr($n.chars div 2 - 1, 3);
+  └────

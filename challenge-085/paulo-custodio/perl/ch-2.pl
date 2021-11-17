@@ -1,12 +1,13 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 085
 #
-# TASK #2 › Power of Two Integers
+# TASK #2 > Power of Two Integers
 # Submitted by: Mohammad S Anwar
 # You are given a positive integer $N.
 #
-# Write a script to find if it can be expressed as a ** b where a > 0 and b > 1. Print 1 if you succeed otherwise 0.
+# Write a script to find if it can be expressed as a ** b where
+# a > 0 and b > 1. Print 1 if you succeed otherwise 0.
 #
 # Example 1:
 # Input: 8

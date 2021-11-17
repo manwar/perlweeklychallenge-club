@@ -1,8 +1,8 @@
-#!/usr/bin/perl
+#!/usr/bin/env perl
 
 # Challenge 086
 
-# TASK #1 › Pair Difference
+# TASK #1 > Pair Difference
 # Submitted by: Mohammad S Anwar
 # You are given an array of integers @N and an integer $A.
 #

@@ -17,9 +17,7 @@ sub split-number($n)
 {
     for terms($n.chars)
     {
-        my @a = $n.comb.rotor($_);
-        next if first { .elems > 1 and .head == 0 }, @a;
-        return 1 if @a.map(*.join).sum == $n.sqrt;
+        return 1 if $n.comb.rotor($_).map(*.join).sum == $n.sqrt;
     }
 
     return 0;
