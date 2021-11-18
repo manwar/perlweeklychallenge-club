@@ -16,6 +16,6 @@ say $_ for @long_primes;
 
 sub rec_len {
   my( $D, $N, $s ) = ( shift, 1, '' );
-  ($s,$N) = ( $s.int($N/$D), ($N%$D).0 ) for 0 .. 2*$D;
-  $s =~ /(\d+?)\1+$/ ? length $1 : 0;
+  $s.=int($N/$D),$N%=$D,$N.=0 for 0..2*$D;
+  $s =~ /(.+?)\1+$/ ? length $1 : 0;
 }
