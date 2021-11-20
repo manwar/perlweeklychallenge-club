@@ -1,7 +1,7 @@
-# tw.weekly.c138
+# tw.weekly.c139
 
 
-The Weekly Challenge - #138 - Tyler Wardhaugh
+The Weekly Challenge - #139 - Tyler Wardhaugh
 
 ## Usage
 
@@ -9,7 +9,7 @@ Clojure ([installation instructions](https://clojure.org/guides/getting_started#
 
 Run the project directly (shows default output from both tasks):
 
-    $ clojure -M -m tw.weekly.c138.core
+    $ clojure -M -m tw.weekly.c139.core
     # ... or ...
     $ bb run both
 
@@ -21,15 +21,15 @@ Run the project's tests (which are samples from the task descriptions):
 
 Run Task #1 with input
 
-    $ clojure -M -m tw.weekly.c138.t1 N
+    $ clojure -M -m tw.weekly.c139.t1 COLL
     # ... or ...
-    $ bb run task-1 N
+    $ bb run task-1 COLL
 
 Run Task #2 with input:
 
-    $ clojure -M -m tw.weekly.c138.t2 N
+    $ clojure -M -m tw.weekly.c139.t2
     # ... or ...
-    $ bb run task-2 N
+    $ bb run task-2
 
 View available tasks Babashka can run:
 
