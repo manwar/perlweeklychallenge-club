@@ -25,7 +25,7 @@ done-testing;
 #
 # METHODS
 
-sub jortsort(@n where @n.elems ~~ Int --> Bool) {
+sub jortsort(@n where @n.all ~~ Int --> Bool) {
 
     my @s = @n.sort;
     for 0 .. @n-1 -> $i {
