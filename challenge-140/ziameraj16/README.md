@@ -1,22 +1,34 @@
-# Jort Sort
+# AddBinary
 ## Java Solution
 
 To compile the code run
 ```java
-javac JortSort.java
+javac AddBinary.java
 ```
 To run
 ```java
-java JortSort
+java AddBinary
 ```
 ### Example
 ```bash
-~/study/github/perlweeklychallenge-club/challenge-139/ziameraj16$ java JortSort
-Enter comma separated list
-1,2,3,4,5,6
+~/study/github/perlweeklychallenge-club/challenge-140/ziameraj16/java$ javac AddBinary.java
+~/study/github/perlweeklychallenge-club/challenge-140/ziameraj16/java$ java AddBinary
+Enter first number in Binary format
+11
+Enter second number in Binary format
 1
-~/study/github/perlweeklychallenge-club/challenge-139/ziameraj16$ java JortSort
-Enter comma separated list
-1,2,3,4,5,7,6
-0
+100
+~/study/github/perlweeklychallenge-club/challenge-140/ziameraj16/java$ java AddBinary
+Enter first number in Binary format
+101
+Enter second number in Binary format
+1
+110
+~/study/github/perlweeklychallenge-club/challenge-140/ziameraj16/java$ java AddBinary
+Enter first number in Binary format
+100
+Enter second number in Binary format
+11
+111
+~/study/github/perlweeklychallenge-club/challenge-140/ziameraj16/java$ 
 ```
