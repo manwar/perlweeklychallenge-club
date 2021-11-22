@@ -1,0 +1,27 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-1.bc < input-file
+#
+# End each line with a 0.
+# End the input with a 0 as the first number on a line
+#
+
+
+while (1) {
+    prev = read(); if (prev == 0) break;   # End of input
+    sorted = 1;
+    while (1) {
+        next = read()
+        if (next == 0) { # End of line
+            sorted
+            break
+        }
+        if (prev > next) {
+            sorted = 0
+        }
+        prev = next
+    }
+}
