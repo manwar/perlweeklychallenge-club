@@ -18,8 +18,8 @@ my @TESTS = (
   [ [3,3,6], 4 ],
 );
 
-is( get_num(@{$_->[0]}), $_->[1] ) foreach @TESTS;
-is( get_num_exp(@{$_->[0]}), $_->[1] ) foreach @TESTS;
+is( get_num(@{$_->[0]}), $_->[1] ) for @TESTS;
+is( get_num_exp(@{$_->[0]}), $_->[1] ) for @TESTS;
 
 done_testing();
 
@@ -31,8 +31,8 @@ sub get_num {
 
 sub get_num_exp {
   my($i,$j,$k,$t,%h) = @_;
-  foreach $t (1..$i) {
-    $h{$t*$_}++ foreach 1..$j;
+  for $t (1..$i) {
+    $h{$t*$_}++ for 1..$j;
   }
   for (sort {$a<=>$b} keys %h) {
     $k -= $h{$_};

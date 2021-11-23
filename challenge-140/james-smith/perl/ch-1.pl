@@ -14,17 +14,27 @@ my @TESTS = (
   [ [ 100, 11 ] , 111 ],
 );
 
-say DecBin->new($_->[0][0]) + DecBin->new($_->[0][1]) == DecBin->new($_->[1]) ? 'OK' : 'FAIL' foreach @TESTS;
+foreach(@TESTS) {
+  my $x = DecBin->new($_->[0][0]);
+  my $y = DecBin->new($_->[0][1]);
+  my $z = DecBin->new($_->[1]);
+  say join "\t", $x, $y, $x+$y, $z, $x+$y==$z ? 'OK' : 'FAIL';
+}
 
-say DecBinExp->new($_->[0][0]) + DecBinExp->new($_->[0][1]) == DecBinExp->new($_->[1]) ? 'OK' : 'FAIL' foreach @TESTS;
+foreach(@TESTS) {
+  my $x = DecBinExp->new($_->[0][0]);
+  my $y = DecBinExp->new($_->[0][1]);
+  my $z = DecBinExp->new($_->[1]);
+  say join "\t", $x, $y, $x+$y, $z, $x+$y==$z ? 'OK' : 'FAIL';
+}
 
 package DecBin;
 
-use overload ('+','bin_add','==','comp');
+use overload ('+'=>'bin_add','=='=>'comp','""'=>'show');
 
-sub new  { return bless \$_[1], $_[0]; }
-
-sub comp { ${$_[0]} == ${$_[1]}; }
+sub new  { bless \$_[1], $_[0] }
+sub show { ${$_[0]} }
+sub comp { ${$_[0]} == ${$_[1]} }
 
 sub bin_add {
   my($t,$c,$m,$a,$b) = (0,0,1,${$_[0]},${$_[1]});
@@ -34,11 +44,11 @@ sub bin_add {
 
 package DecBinExp;
 
-use overload ('+','bin_add','==','comp');
+use overload ('+'=>'bin_add','=='=>'comp','""'=>'show');
 
-sub new  { return bless \$_[1], $_[0]; }
-
-sub comp { ${$_[0]} == ${$_[1]}; }
+sub new  { bless \$_[1], $_[0] }
+sub show { ${$_[0]} }
+sub comp { ${$_[0]} == ${$_[1]} }
 
 sub bin_add {
   my($t,$c,$m,$a,$b) = (0,0,1,${$_[0]},${$_[1]});
