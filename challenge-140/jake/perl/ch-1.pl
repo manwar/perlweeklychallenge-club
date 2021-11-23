@@ -15,26 +15,24 @@ printf ( "binary number a: %i\n", $a_binary );
 
 # convert dec to bin
 sub decimal_to_binary {
-    my ( $power, $decimal_number ) = @_;
+    my ( $power, $decimal_number, $binary_quantum ) = @_;
+
     if ( $decimal_number == 0 ) {
         return 0;
-        #exit;
     }
-    elsif ( $decimal_number == 2**$power ) {
-        print "if\n$decimal_number\n$power\n\n";
-        return 10**$power;
-        #exit;
+
+    if ( $decimal_number == 2**$power ) {
+        $binary_quantum += 10**$power;
+        return $binary_quantum; 
     }
-    elsif ( $decimal_number <= 2**($power+1) ) {
-        $power++;
-        decimal_to_binary ( $power, $decimal_number );
-        print "elsif\n$decimal_number\n$power\n\n";
-    }
-    else {
-        return 10**($power+1);
-        $decimal_number -= 2**($power+1);
+
+    if ( $decimal_number > 2**$power && $decimal_number < 2**( $power +1 ) ) {
+        $binary_quantum += 10**$power;
+        $decimal_number -= 2**$power;
         $power = 0;
-        print "else\n$decimal_number\n$power\n\n";
-        decimal_to_binary ( $power, $decimal_number );
+        return decimal_to_binary ( $power, $decimal_number, $binary_quantum );
     }
+
+    $power++;
+    return decimal_to_binary ( $power, $decimal_number, $binary_quantum );
 }
