@@ -19,12 +19,23 @@ my @TESTS = (
 );
 
 is( get_num(@{$_->[0]}), $_->[1] ) foreach @TESTS;
+is( get_num_exp(@{$_->[0]}), $_->[1] ) foreach @TESTS;
 
 done_testing();
 
 sub get_num {
-  my($i,$j,$k,%h) = @_;
-  $a=$_, map { $h{$a*$_}++ } 1..$j for 1..$i;
+  my($i,$j,$k,$t,%h) = @_;
+  $t=$_, map { $h{$t*$_}++ } 1..$j for 1..$i;
   $k-=$h{$_}, ($k<1) && (return $_) for sort { $a<=>$b } keys %h;
 }
 
+sub get_num_exp {
+  my($i,$j,$k,$t,%h) = @_;
+  foreach $t (1..$i) {
+    $h{$t*$_}++ foreach 1..$j;
+  }
+  for (sort {$a<=>$b} keys %h) {
+    $k -= $h{$_};
+    return $_ if $k<1;
+  }
+}
