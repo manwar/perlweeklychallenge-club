@@ -6,11 +6,11 @@ use warnings;
 # https://theweeklychallenge.org/blog/perl-weekly-challenge-140/#TASK1
 
 # get input
-print "decimal number a: ";
-my $a = <STDIN>;
-chomp $a;
-my $a_binary = decimal_to_binary ( $a );
-printf ( "binary number a: %i\n", $a_binary );
+print "decimal number: ";
+my $decimal_input = <STDIN>;
+chomp $decimal_input;
+my $a_binary = decimal_to_binary ( $decimal_input );
+printf ( "binary number: %i\n", $a_binary );
 
 # convert dec to bin
 sub decimal_to_binary {
