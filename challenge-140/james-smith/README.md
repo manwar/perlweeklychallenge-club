@@ -1,4 +1,4 @@
-# Perl Weekly Challenge #139 - "Whats recurring"
+# Perl Weekly Challenge #140
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,102 +10,129 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-139/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-140/james-smith/perl
 
-# Task 1 - JortSort
+# Challenge 1 - Add binary
 
-***You are given a list of numbers. Write a script to implement JortSort. It should return true/false depending if the given list of numbers are already sorted.***
-
-## The solution
-
-This challenge is relatively easy - to see if the list of numbers if monotonically increasing we just have to check that each entry is bigger than the one before.
-
-* We start by shifting the first number of the list passed (this is the *previous number*);
-* The loop through the rest comparing the current number against the previous number.
-  * If the number is less than the previous number we return `0`;
-  * Otherwise we set previous number `$p` to the current number and continue
-* If we get to the end of the list then the list is sorted and we return `1`.
-
-```perl
-sub in_order {
-  my $p = shift;
-  ($p>$_) ? (return 0) : ($p=$_) for @_;
-  return 1;
-}
-```
-
-**Notes:**
-
-* We can rewrite the `if( $x ) { y } else { z }` and `($x) ? (y) : (z)`. Why is this useful - well we can then use the brace less postfix `for` for the loop rather than having to use braces. This means the loop becomes 1 line, rather than the longer 7 line version using K&R braces. If you don't cuddle your braces it is even longer!
-
-```perl
-  for (@_) {
-    if( $p>$_ ) {
-      return 0;
-    } else {
-      $p = $_;  
-    }
-  }
-```
-
-Admittedly there is an intermediate version... That uses the exit early approach..
-
-```perl
-  for (@_) {
-    return 0 if $p>$_;
-    $p = $_;  
-  }
-```
-that has only 4-lines.
-
-# Task 2 - Long Primes
-
-***Write a script to generate first 5 Long Primes. A prime number `p` is called Long Prime if `1/p` has an infinite decimal expansion repeating every `p-1` digits.***
+***Write a script to simulate the addition of the given binary numbers. The script should simulate something like `$a + $b`. (operator overloading)***
 
 ## The solution
 
-Now this challenge is not so easy - but those of us who have been working on the challenges for more than 6 months would have already worked out parts of fractions which are recursive. There were many solutions for this - if you didn't do the challenge.
+To allow for operator overloading we need to create a class. `DecBin` will be that class. We have to override to functions:
 
-You can see mine at: 
+* `+` - addition
+* `==` - comparison
 
-https://github.com/drbaggy/perlweeklychallenge-club/blob/master/challenge-106/james-smith/perl/ch-2.pl
+We also override `""` - stringify so we can print the numbers if we want.
 
-Now we don't require the actual part of the number repeats which makes the function simpler, and we know explicitly that the numerator is going to be 1.
+Our object is simple a scalar reference. So in `new` we just bless the reference to the number than is passed, and show and comparison just return the scalar pointed to by the reference or compares two of these.
 
-This gives us the function below to get the length of the recurring sequence.
+The add function is the more complex function. Working backwards digit by digit
+
+* we add the *carry bit* and the last digit of the remaining string;
+* we then use the last digit of this to update the total, but multiplying this by the position multiplier;
+* we then move the multiplier one digit to the left by multiplying by 10;
+* we then divide the *carry bit* by 2, to see if we need to carry to the next number;
+* remove the last digit of the two numbers
+
+We repeat this until we no longer have a carry AND we have processed all digits of the two numbers.
+
+* Note - the *carry bit* will always be 0,1,2,3 after the first addition, as the digits of the two numbers can only be 1 or 0 and the *carry bit* will only ever be 0 and 1 as well.
 
 ```perl
-sub rec_len {
-  my( $D, $N, $s ) = ( shift, 1, '' );
-  ( $s, $N ) = ( $s.int($N/$D), ($N%$D).0 ) for 0 .. 2*$D;
-  $s =~ /(\d+?)\1+$/ ? length $1 : 0;
+package DecBin;
+
+use overload ('+'=>bin_add','=='=>'comp','""'=>'show');
+
+sub new  { bless \$_[1], $_[0] }
+sub show { ${$_[0]} }
+sub comp { ${$_[0]} == ${$_[1]} }
+
+sub bin_add {
+  my($t,$c,$m,$a,$b) = (0,0,1,${$_[0]},${$_[1]});
+  $c+=$a%10+$b%10,$t+=$m*($c&1),$m*=10,$c>>=1,$a=int$a/10,$b=int$b/10 while $a||$b||$c;
+  DecBin->new($t);
+}
+```
+The long line may be unreadable - so I also include a multi-line version
+
+```perl
+sub bin_add {
+  my($t,$c,$m,$a,$b) = (0,0,1,${$_[0]},${$_[1]});
+  while ($a||$b||$c) {
+    $c +=  $a%10 + $b%10;
+    $t +=  $m * ($c&1);
+    $m *=  10;
+    $c >>= 1;
+    $a =   int $a/10;
+    $b =   int $b/10;
+  }
+  DecBin->new($t);
 }
 ```
 
-* We compute twice the number of digits than the denominator, we generate this as a string but using long-division to compute each digit.
-* We then see if there is any repeating sequence (tied to the end of the sting we generate). We then get the length of this recurrent string. (If you don't include the `\1+` you could end up with a shorter match as "3333" would be picked up as "33" recurring rather than "3" recurring.
-
-So now we have this function we can look at computing the long primes. We know that `1/2` doesn't recur so we can rule this out - that means we are only considering odd primes.
-
-Therefore we loop through all the odd numbers checking to see if the number is a prime, if it is we then check for the property that the recurring sequence has `$p-1` digits.
+To show that the overloading works - we use the following test script:
 
 ```perl
-my( $N, @primes, @long_primes ) = ( $ARGV[0]||5 );
-
-O: for( my $p=3; @long_primes<$N; $p+=2 ) {
-  ($p % $_) || (next O) for @primes;
-  push @primes,      $p;
-  push @long_primes, $p if $p - rec_len($p) == 1;
+my @TESTS = (
+  [ [  11,  1 ] , 100 ],
+  [ [ 101,  1 ] , 110 ],
+  [ [ 100, 11 ] , 111 ],
+);
+foreach(@TESTS) {
+  my $x = DecBin->new($_->[0][0]);
+  my $y = DecBin->new($_->[0][1]);
+  my $z = DecBin->new($_->[1]);
+  say join "\t", $x, $y, $x+$y, $z, $x+$y==$z ? 'OK' : 'FAIL';
 }
 ```
-We will now break this down.
-* The `for` line is obvious - repeat increasing `$p` by two until we have sufficient long primes.
-* The next line loops through all current known primes to see if they are factor of `$p` - if yes skips to the next outer loop.
-  * We use `next O` to jump out of the inner `for` loop, and to the start of the next outer `for` loop - labelled `O`.
-  * We again use a trick to flatten the loop with a conditional: `($p % $_) || (next O)` if the first part is true the "or" `||` is true, so we don't evaluate the second part. But it `$_` is a factor of `$p` the left hand side is `0` (false) and so we need to evaluate it to see if the right hand side is true - and in the evaluation - skips to the start of the loop by executing `next O`.
-* We know it has no known prime factors in line 3 so we add it to the list of primes.
-* Then we use our `rec_len` function to see if the number is in fact a long prime.
 
+with output:
 
+```
+11      1       100     100     OK
+101     1       110     110     OK
+100     11      111     111     OK
+```
 
+# Challenge 2 - Multiplication Table
+
+***You are given 3 positive integers, `$i`, `$j` and `$k`. Write a script to print the `$k`th element in the sorted multiplication table of `$i` and `$j`.***
+
+## The solution
+
+Obviously there are two parts to this - a first pass which finds all the numbers and a second pass which counts to find the `$k`th element.
+
+```perl
+sub get_num {
+  my($i,$j,$k,$t,%h) = @_;
+  $t=$_, map { $h{$t*$_}++ } 1..$j for 1..$i;
+  $k-=$h{$_}, ($k<1) && (return $_) for sort { $a<=>$b } keys %h;
+}
+```
+
+Here we do some *naughty* code, using `,` to perform multiple commands in one line; using `map` to perform a for loop (altering values & ignoring the result) and using `&&` to simulate an `if` statement.
+
+In this function each of these is written as a single line. We can expand each of these functions out to see how the algorithm works:
+
+```perl
+sub get_num {
+  my($i,$j,$k,$t,%h) = @_;
+  for $t (1..$i) {
+    $h{$t*$_}++ for 1..$j;
+  }
+  for (sort {$a<=>$b} keys %h) {
+    $k -= $h{$_};
+    return $_ if $k<1;
+  }
+}
+```
+
+The first `for loop` simply stores the numbers as keys to a hash, whose values are the "frequency" of the number occuring.
+
+The second one finds the answer. We first thing we do is sort the numbers into order as the keys of the hash are un-ordered.
+
+Rather than working up to `$k` we can work down from it to 0. So we subtract the frequency of the current number and if the value is less than `1` then we know this is the number we are looking for and return it's value.
+
+Note we always return in the `for` loop - so don't need a return at the end.
 
