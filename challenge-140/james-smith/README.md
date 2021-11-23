@@ -42,7 +42,7 @@ We repeat this until we no longer have a carry AND we have processed all digits 
 ```perl
 package DecBin;
 
-use overload ('+'=>bin_add','=='=>'comp','""'=>'show');
+use overload ('+'=>'bin_add','=='=>'comp','""'=>'show');
 
 sub new  { bless \$_[1], $_[0] }
 sub show { ${$_[0]} }
