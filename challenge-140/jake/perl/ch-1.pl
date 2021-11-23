@@ -9,12 +9,17 @@ use warnings;
 print "decimal number a: ";
 my $a = <STDIN>;
 chomp $a;
-my $power_n = 0;
-my $a_binary += decimal_to_binary ( $power_n, $a );
+my $a_binary = decimal_to_binary ( $a );
 printf ( "binary number a: %i\n", $a_binary );
 
 # convert dec to bin
 sub decimal_to_binary {
+    my ( $decimal ) = @_;
+
+    return _decimal_to_binary ( 0, $decimal );
+}
+
+sub _decimal_to_binary {
     my ( $power, $decimal_number, $binary_quantum ) = @_;
 
     if ( $decimal_number == 0 ) {
@@ -30,9 +35,9 @@ sub decimal_to_binary {
         $binary_quantum += 10**$power;
         $decimal_number -= 2**$power;
         $power = 0;
-        return decimal_to_binary ( $power, $decimal_number, $binary_quantum );
+        return _decimal_to_binary ( $power, $decimal_number, $binary_quantum );
     }
 
     $power++;
-    return decimal_to_binary ( $power, $decimal_number, $binary_quantum );
+    return _decimal_to_binary ( $power, $decimal_number, $binary_quantum );
 }
