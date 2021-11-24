@@ -1,0 +1,40 @@
+%!PS
+
+/cvradix {
+    /tf exch def
+    /r exch def
+    /n exch def
+    /o 0 def
+    /m 1 def
+    tf 0 eq {
+        /ra r def
+        /rb 10 def
+    } {
+        /ra 10 def
+        /rb r def
+    } ifelse
+    {
+        /o o n ra mod m mul add def
+        /n n ra div cvi def
+        /m m rb mul def
+        n 0 le {
+            exit
+        } if
+    } loop
+    o
+} bind def
+
+11 2 1 cvradix 3 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+3 2 0 cvradix 11 eq { (Pass) } { (FAIL) } ifelse =
+
+/dcbadd {
+    2 1 cvradix
+    exch
+    2 1 cvradix
+    add
+    2 0 cvradix
+} bind def
+
+11 1 dcbadd 100 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+101 1 dcbadd 110 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+100 11 dcbadd 111 eq { (Pass) } { (FAIL) } ifelse =

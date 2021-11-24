@@ -1,0 +1,38 @@
+%!PS
+
+/bubblesort {
+    mark exch aload pop counttomark /idx
+    exch store
+    {
+        0 1 idx 1 sub {
+            pop 2 copy gt {
+                exch
+            } if idx 1 roll
+        } for
+        idx 1 roll /idx idx 1 sub store
+        idx 0 eq {
+            exit
+        } if
+    } loop
+]
+} store
+
+/mtable {
+    /k exch def
+    /j exch def
+    /i exch def
+    /l i j mul array def
+    /li 0 def
+    1 1 i {
+        /ix exch def
+        1 1 j {
+            ix mul l exch li exch put
+            /li li 1 add def
+        } for
+    } for
+    /l l bubblesort def
+    l k 1 sub get
+} bind def
+
+2 3 4 mtable 3 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+3 3 6 mtable 4 eq { (Pass) } { (FAIL) } ifelse =
