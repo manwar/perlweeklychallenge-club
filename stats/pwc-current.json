@@ -1,12 +1,55 @@
 {
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Andrew Shitov",
+               "y" : 2,
+               "drilldown" : "Andrew Shitov"
+            },
+            {
+               "drilldown" : "Feng Chang",
+               "y" : 2,
+               "name" : "Feng Chang"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Peter Campbell Smith",
+               "name" : "Peter Campbell Smith"
+            }
+         ],
+         "name" : "The Weekly Challenge - 140"
+      }
+   ],
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
          {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
             "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov",
+            "name" : "Andrew Shitov"
+         },
+         {
+            "name" : "Feng Chang",
+            "id" : "Feng Chang",
             "data" : [
                [
                   "Raku",
@@ -16,63 +59,35 @@
          },
          {
             "id" : "Peter Campbell Smith",
-            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Peter Campbell Smith"
          }
       ]
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "legend" : {
       "enabled" : 0
    },
+   "title" : {
+      "text" : "The Weekly Challenge - 140"
+   },
    "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2021-11-24 01:00:45 GMT"
+      "text" : "[Champions: 3] Last updated at 2021-11-24 01:16:58 GMT"
    },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
       }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 140"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 140",
-         "data" : [
-            {
-               "drilldown" : "Andrew Shitov",
-               "y" : 2,
-               "name" : "Andrew Shitov"
-            },
-            {
-               "y" : 2,
-               "name" : "Peter Campbell Smith",
-               "drilldown" : "Peter Campbell Smith"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
    }
 }
