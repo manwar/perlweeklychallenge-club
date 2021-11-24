@@ -1,52 +1,38 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2021-11-24 01:43:01 GMT"
+   },
    "xAxis" : {
       "type" : "category"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2021-11-24 01:29:01 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
+            "name" : "Andrew Shitov",
             "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov"
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
          },
          {
-            "name" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Feng Chang"
+            "id" : "Feng Chang",
+            "name" : "Feng Chang"
          },
          {
-            "name" : "James Smith",
             "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -59,14 +45,28 @@
             ]
          },
          {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  4
+               ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
+         },
+         {
             "id" : "Peter Campbell Smith",
+            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Peter Campbell Smith"
+            ]
          },
          {
             "data" : [
@@ -79,53 +79,72 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          }
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 140"
-   },
    "tooltip" : {
-      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 140",
          "data" : [
             {
                "name" : "Andrew Shitov",
-               "drilldown" : "Andrew Shitov",
+               "y" : 2,
+               "drilldown" : "Andrew Shitov"
+            },
+            {
+               "drilldown" : "Feng Chang",
+               "name" : "Feng Chang",
                "y" : 2
             },
             {
-               "y" : 2,
-               "drilldown" : "Feng Chang",
-               "name" : "Feng Chang"
+               "name" : "James Smith",
+               "y" : 3,
+               "drilldown" : "James Smith"
             },
             {
-               "drilldown" : "James Smith",
-               "y" : 3,
-               "name" : "James Smith"
+               "name" : "Luca Ferrari",
+               "y" : 6,
+               "drilldown" : "Luca Ferrari"
             },
             {
                "drilldown" : "Peter Campbell Smith",
-               "y" : 2,
-               "name" : "Peter Campbell Smith"
+               "name" : "Peter Campbell Smith",
+               "y" : 2
             },
             {
+               "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
+               "y" : 4
             }
-         ],
-         "name" : "The Weekly Challenge - 140",
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "legend" : {
-      "enabled" : 0
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 140"
    }
 }
