@@ -1,0 +1,35 @@
+- setup:
+  cleanup:
+  args:     http://example.com/foo%2a
+  input:
+  output:   http://example.com/foo%2A
+- setup:
+  cleanup:
+  args:     HTTP://User@Example.COM/Foo
+  input:
+  output:   http://User@example.com/Foo
+- setup:
+  cleanup:
+  args:     HTTP://Example.COM/Foo
+  input:
+  output:   http://example.com/Foo
+- setup:
+  cleanup:
+  args:     http://example.com/%7Efoo%2ebar
+  input:
+  output:   http://example.com/~foo.bar
+- setup:
+  cleanup:
+  args:     http://example.com/foo/./bar/baz/../qux
+  input:
+  output:   http://example.com/foo/bar/qux
+- setup:
+  cleanup:
+  args:     http://example.com
+  input:
+  output:   http://example.com/
+- setup:
+  cleanup:
+  args:     http://example.com:80/
+  input:
+  output:   http://example.com/
