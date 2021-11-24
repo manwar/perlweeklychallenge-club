@@ -111,7 +111,8 @@ sub get_num {
 }
 ```
 
-Here we do some *naughty* code, using `,` to perform multiple commands in one line; using `map` to perform a for loop (altering values & ignoring the result) and using `&&` to simulate an `if` statement.
+Here we do some *naughty* code (as in challenge 1), using `,` to perform multiple commands in one line; using `map` to perform a `for`
+loop (altering values & ignoring the result) and using `&&` to simulate an `if` statement.
 
 In this function each of these is written as a single line. We can expand each of these functions out to see how the algorithm works:
 
@@ -127,12 +128,11 @@ sub get_num {
   }
 }
 ```
-
-The first `for loop` simply stores the numbers as keys to a hash, whose values are the "frequency" of the number occuring.
-
-The second one finds the answer. We first thing we do is sort the numbers into order as the keys of the hash are un-ordered.
-
-Rather than working up to `$k` we can work down from it to 0. So we subtract the frequency of the current number and if the value is less than `1` then we know this is the number we are looking for and return it's value.
-
-Note we always return in the `for` loop - so don't need a return at the end.
+## Notes
+  * In the `my` statement we initalise the first 3 parameters with the values passed in, the remaining 2 values `$t` and `%h` are not assigned a value.
+  * The first `for` loop (`for` can be used in place of `foreach` in perl, simply stores the numbers as keys to a hash, whose values are the "frequency" of the number occuring.
+  * The second one finds the answer. We first thing we do is sort the numbers into order as the keys of the hash are un-ordered.
+  * Rather than working up to `$k` we can work down from it to `0`. So we subtract the frequency of the current number and if the
+    value is less than `1` then we know this is the number we are looking for and return it's value.
+  * Note we always return in the `for` loop unless there is no answer - so don't need a return at the end.
 
