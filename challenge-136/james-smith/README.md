@@ -39,7 +39,7 @@ sub friendly {
 
 # Task 2 - Fibonacci Sequence
 
-***You are given a positive number `$n`. Write a script to find how many different sequences you can create using Fibonacci numbers where the sum of unique numbers in each sequence are the same as the given number. ***
+***You are given a positive number `$n`. Write a script to find how many different sequences you can create using Fibonacci numbers where the sum of unique numbers in each sequence are the same as the given number.***
 
 ## Solution
 
