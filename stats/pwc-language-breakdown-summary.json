@@ -1,18 +1,40 @@
 {
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
-      },
-      "type" : "category"
+      }
    },
    "subtitle" : {
-      "text" : "Last updated at 2021-11-25 13:30:08 GMT"
+      "text" : "Last updated at 2021-11-25 16:13:10 GMT"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "series" : [
       {
+         "dataLabels" : {
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "enabled" : "true"
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -20,44 +42,22 @@
             ],
             [
                "Perl",
-               6717
+               6719
             ],
             [
                "Raku",
                4087
             ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "align" : "right",
-            "rotation" : -90,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "color" : "#FFFFFF"
-         }
+         ]
       }
    ],
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
