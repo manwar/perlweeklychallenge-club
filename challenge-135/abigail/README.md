@@ -28,6 +28,7 @@
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
+* [Pascal](pascal/ch-2.p)
 * [Python](python/ch-2.py)
 * [R](r/ch-2.r)
 * [Ruby](ruby/ch-2.rb)
