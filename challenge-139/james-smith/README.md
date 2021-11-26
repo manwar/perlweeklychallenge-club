@@ -1,3 +1,6 @@
+[< Previous 138](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-138/james-smith) |
+[Next 140 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-140/james-smith)
+
 # Perl Weekly Challenge #139 - "Whats recurring"
 
 You can find more information about this weeks, and previous weeks challenges at:

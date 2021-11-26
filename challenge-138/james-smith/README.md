@@ -1,3 +1,6 @@
+[< Previous 137](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-137/james-smith) |
+[Next 139 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-139/james-smith)
+
 # Perl Weekly Challenge #138
 
 You can find more information about this weeks, and previous weeks challenges at:
@@ -14,7 +17,7 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-138/ja
 
 # Task 1 - Workdays
 
-***Write a script to calculate the total number of workdays in the given year. (Monday to Friday)
+***Write a script to calculate the total number of workdays in the given year. (Monday to Friday)***
 
 ## Notes
 
