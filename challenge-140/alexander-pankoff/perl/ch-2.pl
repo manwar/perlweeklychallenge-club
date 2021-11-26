@@ -12,6 +12,12 @@ sub run() {
     my $j = prompt_for_integer('j');
     my $k = prompt_for_integer('k');
 
+    my $max = $i * $j;
+
+    if ( $k > $max ) {
+        die "Index 'k' ($k) is larger than the table. Max: $max\n";
+    }
+
     my $matrix        = multiplication_matrix( $i, $j );
     my @sorted_matrix = sort_multiplication_matrix($matrix);
     my $res           = $sorted_matrix[ $k - 1 ];
