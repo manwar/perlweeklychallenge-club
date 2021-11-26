@@ -17,7 +17,7 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-138/ja
 
 # Task 1 - Workdays
 
-***Write a script to calculate the total number of workdays in the given year. (Monday to Friday)
+***Write a script to calculate the total number of workdays in the given year. (Monday to Friday)***
 
 ## Notes
 
