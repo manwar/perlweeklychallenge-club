@@ -6,7 +6,6 @@
 * [Bash](bash/ch-1.sh)
 * [Bc](bc/ch-1.bc)
 * [C](c/ch-1.c)
-* [Erlang](c/ch-1.erl)
 * [Go](go/ch-1.go)
 * [Java](java/ch-1.java)
 * [Lua](lua/ch-1.lua)
