@@ -36,22 +36,19 @@ sub aggregate_multiplication_table {
 sub _aggregate_multiplication_table {
     my ( $vertical_range, $horizontal_range, $height_increment, $horizontal_values, $all_values ) = @_;
 
-    # access lists from references
-    my @horizontal_values = @{$horizontal_values // []};
-    my @all_values = @{$all_values // []};
-
     # once all lines of the table have been written we can return @all_values
-    return \@all_values if $height_increment > $vertical_range;
+    #push @$all_values,;
+    return \@$all_values if $height_increment > $vertical_range;
 
     # we 'write' the first line of the multiplication table.
     # after that we run over each value in this first adding each new value to the accumulator @all_values.
     # we will repeat this for every line that needs to be added to the table.
-    @horizontal_values = 1 ... $horizontal_range;
-    foreach ( @horizontal_values ) {
-        push @all_values, $_ * $height_increment;
+    @$horizontal_values = 1 ... $horizontal_range;
+    foreach ( @$horizontal_values ) {
+        push @$all_values, $_ * $height_increment;
     }
 
     # we need to increase our line counter upon iteration.
     # this is necessary for our foreach loop to add the next line in the following iteration.
-    return _aggregate_multiplication_table ( $vertical_range, $horizontal_range, $height_increment + 1, \@horizontal_values, \@all_values );
+    return _aggregate_multiplication_table ( $vertical_range, $horizontal_range, $height_increment + 1, \@$horizontal_values, \@$all_values );
 }
