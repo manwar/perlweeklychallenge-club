@@ -1,22 +1,18 @@
 {
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
    },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-11-27 18:11:38 GMT"
    },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-11-27 17:47:11 GMT"
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "xAxis" : {
       "categories" : [
@@ -52,13 +48,15 @@
          "Jason Messer"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             8,
@@ -90,10 +88,10 @@
             0,
             26,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -125,11 +123,9 @@
             4,
             0,
             14
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -161,7 +157,11 @@
             0,
             12,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
-   ]
+   ],
+   "chart" : {
+      "type" : "column"
+   }
 }
