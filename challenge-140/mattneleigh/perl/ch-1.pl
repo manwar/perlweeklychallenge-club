@@ -71,8 +71,8 @@ use overload (
 ################################################################################
 # Create a new binaryNumber object
 # Takes one argument:
-# * The decimal-coded binary number to store, which must consist solely of 1's
-#   and 0's- this is best thought of as a string rather than a numerical
+# * The decimal-coded binary number to store, which must consist solely of ones
+#   and zeros- this is best thought of as a string rather than a numerical
 #   argument
 # Returns on success:
 # * A ref to a binaryNumber object
@@ -133,7 +133,8 @@ sub getValue{
 # * undef if its argument is not a ref to a binaryNumber object
 # Example:
 # $c = $a->add($b);  # Where $a and $b are refs to binaryNumber objects and $c
-#                    # will be populated with one that contains the sum
+#                    # will be populated with one that contains the sum of the
+#                    # original two
 ################################################################################
 sub add{
     use Scalar::Util qw(blessed);
