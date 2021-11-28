@@ -149,7 +149,7 @@ sub add{
     # Extract the individual digits and store
     # them in reverse order (least
     # significant bit first)
-    my @self_digits = reverse(split("", $self->{value}));
+    my @self_digits = reverse(split("", $self->getValue()));
     my @addend_digits = reverse(split("", $addend->getValue()));
     my $max;
     my $i;
