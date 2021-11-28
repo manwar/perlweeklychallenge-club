@@ -146,8 +146,9 @@ sub add{
     return(undef)
         unless(blessed($addend) && $addend->isa('binaryNumber'));
 
-    # Store the digits individually- but
-    # reversed (least-significant bit first)
+    # Extract the individual digits and store
+    # them in reverse order (least
+    # significant bit first)
     my @self_digits = reverse(split("", $self->{value}));
     my @addend_digits = reverse(split("", $addend->getValue()));
     my $max;
@@ -164,8 +165,7 @@ sub add{
         :
         scalar(@addend_digits);
 
-    # Loop over the longest list, adding
-    # as we go
+    # Loop over the longest list
     for($i = 0; $i < $max; $i++){
         my $self_digit = $self_digits[$i];
         my $addend_digit = $addend_digits[$i];
