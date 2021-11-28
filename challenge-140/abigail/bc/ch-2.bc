@@ -1,0 +1,29 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-2.bc < input-file
+#
+
+while (1) {
+    i = read (); if (i == 0) {break}
+    j = read (); if (j == 0) {break}
+    k = read (); if (k == 0) {break}
+
+    n = 0
+    while (k > 0) {
+        n = n + 1
+        for (d = 1; d * d <= n && k > 0; d ++) {
+            if (n % d == 0) {
+                if (d <= i && n / d <= j) {k = k - 1}
+                if (d <= j && n / d <= i) {k = k - 1}
+                if (n == d * d)           {k = k + 1}
+            }
+        }
+    }
+
+    n
+}
+
+quit

@@ -1,0 +1,35 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-1.bc < input-file
+#
+
+while (1) {
+    n = read (); if (n == 0) {break;}
+    if (n < 0) {n = -n}
+    #
+    # Find the number of digits
+    #
+    d = 1
+    f = 10
+    while (f <= n) {
+        d = d + 1
+        f = f * 10
+    }
+    if (d % 2 == 0) {
+        "even number of digits"
+    } else {
+        if (d < 3) {
+            "too short"
+        } else {
+            for (q = (d + 3) / 2 - 1; q >= (d - 3) / 2; q --) {
+                r = (n / (10 ^ q)) % 10
+                print (r)
+            }
+        }
+    }
+    "
+"
+}

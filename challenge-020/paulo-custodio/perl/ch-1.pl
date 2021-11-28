@@ -4,8 +4,8 @@
 #
 # Task #1
 # Write a script to accept a string from command line and split it on change
-# of character. For example, if the string is “ABBCDEEF”, then it should split
-# like “A”, “BB”, “C”, “D”, “EE”, “F”.
+# of character. For example, if the string is "ABBCDEEF", then it should split
+# like "A", "BB", "C", "D", "EE", "F".
 
 use Modern::Perl;
 
@@ -17,4 +17,4 @@ while ($str ne '') {
     push @segs, $1;
 }
 
-say join(", ", map {'"'.$_.'"'} @segs), ".";
+say join(", ", map {'"'.$_.'"'} @segs);

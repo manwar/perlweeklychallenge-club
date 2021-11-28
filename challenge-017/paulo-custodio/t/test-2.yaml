@@ -1,0 +1,72 @@
+- setup:
+  cleanup:
+  args:     jdbc://user:password@localhost:3306/pwc?profile=true#h1
+  input:
+  output:   |
+            scheme:   jdbc
+            userinfo: user:password
+            host:     localhost
+            port:     3306
+            path:     /pwc
+            query:    profile=true
+            fragment: h1
+- setup:
+  cleanup:
+  args:     jdbc://localhost:3306/pwc?profile=true#h1
+  input:
+  output:   |
+            scheme:   jdbc
+            userinfo:
+            host:     localhost
+            port:     3306
+            path:     /pwc
+            query:    profile=true
+            fragment: h1
+- setup:
+  cleanup:
+  args:     jdbc://localhost/pwc?profile=true#h1
+  input:
+  output:   |
+            scheme:   jdbc
+            userinfo:
+            host:     localhost
+            port:
+            path:     /pwc
+            query:    profile=true
+            fragment: h1
+- setup:
+  cleanup:
+  args:     jdbc:/pwc?profile=true#h1
+  input:
+  output:   |
+            scheme:   jdbc
+            userinfo:
+            host:
+            port:
+            path:     /pwc
+            query:    profile=true
+            fragment: h1
+- setup:
+  cleanup:
+  args:     jdbc:/pwc?profile=true
+  input:
+  output:   |
+            scheme:   jdbc
+            userinfo:
+            host:
+            port:
+            path:     /pwc
+            query:    profile=true
+            fragment:
+- setup:
+  cleanup:
+  args:     jdbc:/pwc
+  input:
+  output:   |
+            scheme:   jdbc
+            userinfo:
+            host:
+            port:
+            path:     /pwc
+            query:
+            fragment:

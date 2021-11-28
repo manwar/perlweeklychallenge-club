@@ -3,8 +3,8 @@
 # Challenge 021
 #
 # Task #1
-# Write a script to calculate the value of e, also known as Euler’s number and
-# Napier’s constant. Please checkout wiki page for more information.
+# Write a script to calculate the value of e, also known as Euler's number and
+# Napier's constant. Please checkout wiki page for more information.
 
 use Modern::Perl;
 
@@ -18,4 +18,4 @@ sub calc_e {
     return $e;
 }
 
-say calc_e();
+say sprintf("%.14f", calc_e());

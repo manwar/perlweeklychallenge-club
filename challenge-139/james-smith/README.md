@@ -26,7 +26,7 @@ This challenge is relatively easy - to see if the list of numbers if monotonical
   * Otherwise we set previous number `$p` to the current number and continue
 * If we get to the end of the list then the list is sorted and we return `1`.
 
-```
+```perl
 sub in_order {
   my $p = shift;
   ($p>$_) ? (return 0) : ($p=$_) for @_;
@@ -38,7 +38,7 @@ sub in_order {
 
 * We can rewrite the `if( $x ) { y } else { z }` and `($x) ? (y) : (z)`. Why is this useful - well we can then use the brace less postfix `for` for the loop rather than having to use braces. This means the loop becomes 1 line, rather than the longer 7 line version using K&R braces. If you don't cuddle your braces it is even longer!
 
-```
+```perl
   for (@_) {
     if( $p>$_ ) {
       return 0;
@@ -50,7 +50,7 @@ sub in_order {
 
 Admittedly there is an intermediate version... That uses the exit early approach..
 
-```
+```perl
   for (@_) {
     return 0 if $p>$_;
     $p = $_;  
@@ -74,7 +74,7 @@ Now we don't require the actual part of the number repeats which makes the funct
 
 This gives us the function below to get the length of the recurring sequence.
 
-```
+```perl
 sub rec_len {
   my( $D, $N, $s ) = ( shift, 1, '' );
   ( $s, $N ) = ( $s.int($N/$D), ($N%$D).0 ) for 0 .. 2*$D;
@@ -89,7 +89,7 @@ So now we have this function we can look at computing the long primes. We know t
 
 Therefore we loop through all the odd numbers checking to see if the number is a prime, if it is we then check for the property that the recurring sequence has `$p-1` digits.
 
-```
+```perl
 my( $N, @primes, @long_primes ) = ( $ARGV[0]||5 );
 
 O: for( my $p=3; @long_primes<$N; $p+=2 ) {

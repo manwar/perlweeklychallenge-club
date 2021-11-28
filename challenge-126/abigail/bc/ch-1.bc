@@ -1,0 +1,51 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-1.bc < input-file
+#
+
+#
+# Kind of reverses a number. Trailing zero's will be dropped though
+#
+define reverse (n) {
+    result = 0
+    while (n > 0) {
+        result = 10 * result + (n % 10)
+        n      = n / 10
+    }
+    return result
+}
+
+
+while (1) {
+    n = read (); if (n == 0) {break}
+    #
+    # Reverse the number -- after adding a 1
+    #
+    n = reverse (10 * n + 1)
+
+    result   = 0
+    seen_one = 0
+    while (n > 9) {
+        digit = n % 10
+        n = n / 10
+        result = result * 9
+        if (seen_one == 1) {
+            result = result + 8
+        } else {
+            if (digit == 1) {
+                seen_one = 1
+            } else {
+                if (digit > 0) {
+                    result = result + digit - 1
+                }
+            }
+        }
+    }
+    result
+}
+
+
+halt
