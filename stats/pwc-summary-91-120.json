@@ -1,13 +1,21 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-11-28 21:49:09 GMT"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             92,
             1,
@@ -39,7 +47,8 @@
             16,
             4,
             4
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -77,6 +86,7 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             46,
             0,
@@ -108,16 +118,9 @@
             0,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-11-28 21:21:39 GMT"
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
    },
@@ -155,13 +158,10 @@
          "Konstantinos Giannakakis"
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
    }
 }
