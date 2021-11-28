@@ -36,6 +36,7 @@ There are 13 numbers between `1` and `25` that don't contain digit `1`:
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
 * [Ruby](ruby/ch-1.rb)
+* [Scheme](scheme/ch-1.scm)
 * [Tcl](tcl/ch-1.tcl)
 
 ### Blog
