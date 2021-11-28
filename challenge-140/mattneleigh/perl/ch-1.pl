@@ -34,7 +34,7 @@ my $pair;
 foreach $pair (@pairs){
     my ($a, $b) = map(binaryNumber->new($_), @{$pair});
 
-    # This formatting will accomodate numbers
+    # This formatting will accommodate numbers
     # up to 16 bits
     printf(
         "   %+16s\n + %+16s\n ------------------\n   %+16s\n\n",
