@@ -58,7 +58,7 @@ sub repeatedDivDigits {
     $rSeen{$n}[1] -= length($1);
   }
 
-  return substr($result, 
+  return substr($result,
                 $rSeen{$n}[0],
                 $rSeen{$n}[1] - $rSeen{$n}[0]);
 }
@@ -67,10 +67,9 @@ my @primes;
 
 my $i = 1;
 while (scalar(@primes) < 5) {
-  push(@primes,$i) 
+  push(@primes,$i)
     if (is_prime($i) and length(repeatedDivDigits($i)) == $i-1);
   $i++
 }
 
 printf "%s\n",join("\n",@primes);
-
