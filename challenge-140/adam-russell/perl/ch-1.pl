@@ -18,7 +18,7 @@ sub add_binary{
     my $carry = 0; 
     for(my $d = 0; $d <= @a - 1; $d++){ 
         my $d0 = $a[$d]; 
-        my $d1 = $b[$d];# || 0; 
+        my $d1 = $b[$d];
         if($d1){
             $sum = "0$sum", $carry = 0 if $d0 == 1 && $d1 == 1 && $carry == 1;  
             $sum = "1$sum", $carry = 0 if $d0 == 1 && $d1 == 0 && $carry == 0; 
