@@ -141,6 +141,8 @@ sub add{
     my $self = shift();
     my $addend = shift();
 
+    # Make sure we're actually adding a
+    # binaryNumber object
     return(undef)
         unless(blessed($addend) && $addend->isa('binaryNumber'));
 
