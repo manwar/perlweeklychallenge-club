@@ -8,6 +8,7 @@ use Test::More;
 use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
+timethis( 2_000_000, sub { get_no_one_count_9( 0xFFFFFFFFFFFFFFFF ); } );exit;
 my @TESTS = (
   [ 15, 8 ],
   [ 25, 13 ],

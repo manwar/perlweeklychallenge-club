@@ -24,18 +24,15 @@ is( get_num_exp(@{$_->[0]}), $_->[1] ) for @TESTS;
 done_testing();
 
 sub get_num {
-  my($i,$j,$k,$t,%h) = @_;
-  $t=$_, map { $h{$t*$_}++ } 1..$j for 1..$i;
-  $k-=$h{$_}, ($k<1) && (return $_) for sort { $a<=>$b } keys %h;
+  my($i,$j,$k,$t) = @_;
+  (sort{$a<=>$b}map{++$t;map{$t*$_}1..$i}1..$j)[$k-1];
 }
 
 sub get_num_exp {
-  my($i,$j,$k,$t,%h) = @_;
-  for $t (1..$i) {
-    $h{$t*$_}++ for 1..$j;
+  my($i,$j,$k,@A) = @_;
+  foreach my $t (1..$j) {
+    push @A,map{$t*$_} 1..$i;
   }
-  for (sort {$a<=>$b} keys %h) {
-    $k -= $h{$_};
-    return $_ if $k<1;
-  }
+  @A = sort @A;
+  return $A[ $k-1 ];
 }

@@ -4,6 +4,7 @@ use strict;
 
 use warnings;
 use feature qw(say);
+use Benchmark qw(timethese cmpthese);
 
 ## Ubuntu supplies a number of different dictionaries
 ## I have installed all four of the english (UK)
@@ -20,15 +21,58 @@ use feature qw(say);
 ##   insane:  654,299   427,891
 ##
 
+#foreach (1..10) {
+#say longest_u( '/usr/share/dict/british-english-small'  );
+#say longest_u( '/usr/share/dict/british-english-large'  );
+#say longest_u( '/usr/share/dict/british-english-huge'   );
+#say longest_u( '/usr/share/dict/british-english-insane' );
+#}
+#
+cmpthese( 10,{
+  's' => sub {
 say longest( '/usr/share/dict/british-english-small'  );
 say longest( '/usr/share/dict/british-english-large'  );
 say longest( '/usr/share/dict/british-english-huge'   );
 say longest( '/usr/share/dict/british-english-insane' );
-
+},
+  'u' => sub {
+say longest_u( '/usr/share/dict/british-english-small'  );
+say longest_u( '/usr/share/dict/british-english-large'  );
+say longest_u( '/usr/share/dict/british-english-huge'   );
+say longest_u( '/usr/share/dict/british-english-insane' );
+},
+});
 #say longest_no_comments( '/usr/share/dict/british-english-small'  );
 #say longest_no_comments( '/usr/share/dict/british-english-large'  );
 #say longest_no_comments( '/usr/share/dict/british-english-huge'   );
 #say longest_no_comments( '/usr/share/dict/british-english-insane' );
+
+sub longest_u {
+  open my $fh, q(<), $_[0];
+  my @max = (0);
+     (chomp)         ## Remove newline character
+  #&& !/\W/           ## Remove words with non-alpha chars
+  && !/[^a-z]/       ## Remove words starting with a capital
+  && ( $max[0] <= length $_ )
+                     ## Remove words that are too short
+  && ( $_ eq join q(), sort unpack '(A)*' )
+                     ## Check the word is unchanged when the
+                     ## letters are sorted
+  && ( $max[0] == length $_
+       ? ( push @max, $_ )
+       : ( @max = (length $_, $_) )
+     )
+    ## If the word is the same length as the maximal word
+    ## push it onto @max - so we store all the longest words
+    ## with maximum length.
+    ## If the word is longer than the max length (1st entry
+    ## in @max - reset max to include the new max length and
+    ## the word.
+    while <$fh>;
+  return "$_[0] > @max";
+  ## Return the name of the file used, the size of the words
+  ## and a complete list of the words of that length.
+}
 
 sub longest {
   open my $fh, q(<), $_[0];
