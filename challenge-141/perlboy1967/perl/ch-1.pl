@@ -2,8 +2,8 @@
 
 =pod
 
-The Weekly Challenge - 140
- - https://perlweeklychallenge.org/blog/perl-weekly-challenge-140/#TASK1
+The Weekly Challenge - 141
+ - https://perlweeklychallenge.org/blog/perl-weekly-challenge-141/#TASK1
 
 Author: Niels 'PerlBoy' van Dijke
 
