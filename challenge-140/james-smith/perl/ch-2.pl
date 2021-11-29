@@ -24,8 +24,8 @@ is( get_num_exp(@{$_->[0]}), $_->[1] ) for @TESTS;
 done_testing();
 
 sub get_num {
-  my($i,$j,$k,$t) = @_;
-  (sort{$a<=>$b}map{++$t;map{$t*$_}1..$i}1..$j)[$k-1];
+  my$t;
+  (sort{$a<=>$b}map{++$t;map{$t*$_}1..$_[0]}1..$_[1])[$_[2]-1];
 }
 
 sub get_num_exp {
