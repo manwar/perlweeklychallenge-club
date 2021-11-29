@@ -38,7 +38,7 @@ use experimental 'lexical_subs';
 
 use Math::Prime::Util qw [fordivisors];
 
-MAIN: while (<>) {
+while (<>) {
     my ($n, $i, $j, $k) = (0, split);
     fordivisors {$_ <= $i && $n / $_ <= $j && !-- $k && say $n} ++ $n
            while $k >= 1;
