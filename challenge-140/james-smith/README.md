@@ -108,8 +108,8 @@ This is written as a 1-liner as so:
 
 ```perl
 sub get_num {
-  my($i,$j,$k,$t) = @_;
-  (sort{$a<=>$b}map{++$t;map{$t*$_}1..$i}1..$j)[$k-1];
+   my$t;
+  (sort{$a<=>$b}map{++$t;map{$t*$_}1..$_[0]}1..$_[1])[$_[2]-1];
 }
 ```
 
