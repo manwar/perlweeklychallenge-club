@@ -107,4 +107,5 @@ rm -rf abigail/t/input-*
 rm -rf arne-sommer/perl/*
 rm -rf arne-sommer/raku/*
 rm -rf tyler-wardhaugh/clojure/src/tw/weekly/*
+rm -rf tyler-wardhaugh/clojure/test/tw/weekly/*
 rm -rf tyler-wardhaugh/clojure/resources/*
