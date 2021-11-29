@@ -57,6 +57,5 @@
     )
 )
 
-;; (display (divisors 12 10 10))(newline)
 
 (main)
