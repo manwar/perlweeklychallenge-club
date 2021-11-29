@@ -104,38 +104,39 @@ with output:
 
 ## The solution
 
-Obviously there are two parts to this - a first pass which finds all the numbers and a second pass which counts to find the `$k`th element.
+This is written as a 1-liner as so:
 
 ```perl
 sub get_num {
-  my($i,$j,$k,$t,%h) = @_;
-  $t=$_, map { $h{$t*$_}++ } 1..$j for 1..$i;
-  $k-=$h{$_}, ($k<1) && (return $_) for sort { $a<=>$b } keys %h;
+   my$t;
+  (sort{$a<=>$b}map{++$t;map{$t*$_}1..$_[0]}1..$_[1])[$_[2]-1];
 }
 ```
 
-Here we do some *naughty* code (as in challenge 1), using `,` to perform multiple commands in one line; using `map` to perform a `for`
-loop (altering values & ignoring the result) and using `&&` to simulate an `if` statement.
+We loop through the each row for each column and create an array of the results
 
-In this function each of these is written as a single line. We can expand each of these functions out to see how the algorithm works:
+```perl
+map{++$t;map{$t*$_}1..$i}1..$j
+```
+
+We sort the resultant array which gives a list. We wrap this in `()` to convert it into an array.
+
+We then and take the `$k-1` element of the array (the array is `0` based, where the question is `1` based)
+
+There is one bit of *naughty* where we have two statements in the outer `map` because we can't refer to both the value of the inner and outer loop as they would both be `$_`.
+
+We can expand the procedure out to a more readable form:
 
 ```perl
 sub get_num {
-  my($i,$j,$k,$t,%h) = @_;
-  for $t (1..$i) {
-    $h{$t*$_}++ for 1..$j;
+  my($i,$j,$k,@A) = @_;
+  foreach my $t (1..$j) {
+    push @A,map{$t*$_} 1..$i;
   }
-  for (sort {$a<=>$b} keys %h) {
-    $k -= $h{$_};
-    return $_ if $k<1;
-  }
+  @A = sort @A;
+  return $A[ $k-1 ];
 }
 ```
-## Notes
-  * In the `my` statement we initalise the first 3 parameters with the values passed in, the remaining 2 values `$t` and `%h` are not assigned a value.
-  * The first `for` loop (`for` can be used in place of `foreach` in perl, simply stores the numbers as keys to a hash, whose values are the "frequency" of the number occuring.
-  * The second one finds the answer. We first thing we do is sort the numbers into order as the keys of the hash are un-ordered.
-  * Rather than working up to `$k` we can work down from it to `0`. So we subtract the frequency of the current number and if the
-    value is less than `1` then we know this is the number we are looking for and return it's value.
-  * Note we always return in the `for` loop unless there is no answer - so don't need a return at the end.
+
+where we do each of the code blocks above as separate statements, and avoid the double `map` by using `for`/`push` to create the array.
 
