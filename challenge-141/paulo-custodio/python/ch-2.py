@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/python3
 
 # Challenge 141
 #
@@ -33,36 +33,32 @@
 # There are 3 integers divisible by 4 such as:
 # 8, 76 and 68.
 
-use Modern::Perl;
+import sys
 
-sub numbers {
-    my($num) = @_;
-    my @ret;
+def numbers(num):
+    ret = []
+    mask_n = 0
+    while True:
+        mask = ("{:0"+str(len(str(num)))+"b}").format(mask_n)
+        if len(mask) > len(str(num)):
+            break
 
-    my $mask_n = 0;
-    for (;; $mask_n++) {
-        my $mask = sprintf("%0".length($num)."b", $mask_n);
-        last if length($mask) > length($num);
+        # combine num with mask
+        res = 0
+        for i in range(len(str(num))):
+            if mask[i] == "1":
+                res = 10*res + int(str(num)[i])
 
-        # combine $num with $mask
-        my $res = 0;
-        for my $i (0 .. length($num)-1) {
-            if (substr($mask, $i, 1) eq "1") {
-                $res = 10*$res + substr($num, $i, 1);
-            }
-        }
-        push @ret, $res;
-    }
-    return @ret;
-}
+        ret.append(res)
+        mask_n += 1
 
-my($m, $n) = @ARGV;
-my $count = 0;
-for my $num (numbers($m)) {
-    if ($num != 0 && $num != $m) {
-        if ($num % $n == 0) {
-            $count++;
-        }
-    }
-}
-say $count;
+    return ret
+
+m = int(sys.argv[1])
+n = int(sys.argv[2])
+count = 0
+for num in numbers(m):
+    if num != 0 and num != m:
+        if num % n == 0:
+            count += 1
+print(count)
