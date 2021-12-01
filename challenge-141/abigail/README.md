@@ -2,7 +2,7 @@
 
 ## Part 1
 
-* [GNU AWK](awk/ch-1.gawk)
+* [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
 * [Bc](bc/ch-1.bc)
 * [C](c/ch-1.c)
@@ -22,7 +22,6 @@
 
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
-* [Bc](bc/ch-2.bc)
 * [C](c/ch-2.c)
 * [Go](go/ch-2.go)
 * [Java](java/ch-2.java)
