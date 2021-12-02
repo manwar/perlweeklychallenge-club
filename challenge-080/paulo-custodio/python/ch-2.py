@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/python3
 
 # Challenge 080
 #
@@ -36,23 +36,17 @@
 #
 # Output: 7
 
-use Modern::Perl;
+import sys
 
-say candies(@ARGV);
+def candies(n):
+    candy = [1 for x in n]
+    for i in range(len(n)):
+        if i>0:
+            if n[i]>n[i-1]:
+                candy[i] += 1
+        if i<len(n)-1:
+            if n[i]>n[i+1]:
+                candy[i] += 1
+    return candy
 
-sub candies {
-    my(@N) = @_;
-    my @candy;
-    for my $i (0 .. $#N) {
-        $candy[$i]++;
-        $candy[$i]++ if $N[$i] > ($i>0   ? $N[$i-1] : $N[$i]);
-        $candy[$i]++ if $N[$i] > ($i<$#N ? $N[$i+1] : $N[$i]);
-    }
-    return sum(@candy);
-}
-
-sub sum {
-    my($sum, @a) = @_;
-    $sum += $_ for @a;
-    return $sum;
-}
+print(sum(candies([int(x) for x in sys.argv[1:]])))

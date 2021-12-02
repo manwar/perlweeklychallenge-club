@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/python3
 
 # Challenge 080
 #
@@ -18,15 +18,13 @@
 # Input: @N = (2, 0, -1)
 # Output: 1
 
-use Modern::Perl;
+import sys
 
-say missing(@ARGV);
+def missing(nums):
+    nums = sorted(filter(lambda x:x>0, nums))
+    for a,b in zip(nums, range(1, len(nums)+1)):
+        if a!=b:
+            return b
+    return len(nums)+1
 
-
-sub missing {
-    my @N = sort grep {$_ > 0} @_;  # filter only positive numbers and sort
-    for (0 .. $#N) {                # find missing sequence
-        return $_+1 if $N[$_] != $_+1;
-    }
-    return scalar(@N)+1;
-}
+print(missing([int(x) for x in sys.argv[1:]]))
