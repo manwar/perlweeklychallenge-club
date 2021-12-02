@@ -1,18 +1,28 @@
 {
-   "legend" : {
-      "enabled" : "false"
-   },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
-      }
+      },
+      "type" : "category"
    },
    "series" : [
       {
+         "dataLabels" : {
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "rotation" : -90,
+            "y" : 10
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -20,44 +30,34 @@
             ],
             [
                "Perl",
-               6781
+               6780
             ],
             [
                "Raku",
                4113
             ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "rotation" : -90,
-            "align" : "right"
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
+      }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-12-02 18:28:21 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2021]"
    },
    "chart" : {
       "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2021-12-02 16:56:33 GMT"
    }
 }
