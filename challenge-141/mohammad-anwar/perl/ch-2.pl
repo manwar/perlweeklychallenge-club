@@ -28,7 +28,7 @@ is_deeply(
 
 is_deeply(
     like_numbers(768, 4),
-    [8, 76, 68.],
+    [8, 76, 68],
     'Example 2'
 );
 
