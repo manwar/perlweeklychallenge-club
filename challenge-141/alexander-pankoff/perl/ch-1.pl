@@ -25,12 +25,16 @@ sub find_k_lowest_integers_with_exactly_n_divisors ( $k, $n ) {
 }
 
 sub find_divisors($x) {
+    return 1 if $x == 1;
     my @out;
-    for ( my $i = 1 ; $i <= int( $x / 2 ) ; $i++ ) {
-        push @out, $i if $x % $i == 0;
+    my $max = $x;
+    for ( my $i = 1 ; $i < $max ; $i++ ) {
+        if ( $x % $i == 0 ) {
+            $max = $x / $i;
+            push @out, $i;
+            push @out, $max if $i != $max;
+        }
     }
-
-    push @out, $x;
 
     return @out;
 }
@@ -41,7 +45,7 @@ sub explain ( $x, $count, @divisors ) {
       . " such number having exactly "
       . scalar @divisors
       . " divisors.";
-    say join( ", ", @divisors );
+    say join( ", ", sort { $a <=> $b } @divisors );
 
 }
 
