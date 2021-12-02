@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
-# THE WEEKLY CHALLENGE - 091
+# Challenge 091
+#
 # TASK #2: Jump Game
 #
 # You are given an array of positive numbers @N, where value at each index

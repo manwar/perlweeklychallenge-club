@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# Challenge 019
+# Challenge 024
 #
 # Task #2
 # Create a script to implement full text search functionality using Inverted

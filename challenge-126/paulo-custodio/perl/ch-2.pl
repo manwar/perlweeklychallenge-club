@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
 
+# Challenge 126
+#
 # TASK #2 > Minesweeper Game
 # Submitted by: Cheok-Yin Fung
 # You are given a rectangle with points marked with either x or *. Please
