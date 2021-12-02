@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/python3
 
 # Challenge 079
 #
@@ -41,49 +41,42 @@
 #
 # Therefore your script should print 6.
 
-use Modern::Perl;
-
-@ARGV or die "Usage: ch-2.pl list\n";
-my @N = @ARGV;
+import sys
+import re
 
 # draw histogram
-my @hist = draw_hist(@N);
+def draw_hist(n):
+    max_height = max(n)
+    hist = []
+    for row in range(max_height):
+        height = max_height-row
+        line = ""
+        for col in range(len(n)):
+            if n[col]>=height:
+                line += "#"
+            else:
+                line += " "
+        hist.append(line)
+    return hist
 
-# count spaces between walls, replace them by 'x'
-for (@hist) {
-    1 while s/#( +)#/'#'.('x' x length($1)).'#'/e;
-}
+# fill buckets with water
+def fill_watter(hist):
+    for i in range(len(hist)):
+        while True:
+            matches = re.search(r"#( +)#", hist[i])
+            if not matches:
+                break
+            hist[i] = hist[i][:matches.start(1)] + \
+                      "w"*(matches.end(1)-matches.start(1)) + \
+                      hist[i][matches.end(1):]
+    return hist
 
-# count x
-my $count = sum(map {tr/x/x/} @hist);
+# count water buckets
+def count_watter(hist):
+    count = 0
+    for row in hist:
+        row, watter = re.subn(r"w", r"w", row)
+        count += watter
+    return count
 
-say $count;
-
-sub draw_hist {
-    my(@n) = @_;
-    my $max = max(@n);
-    my @hist;
-    for my $row (0..$max-1) {
-        my $n = $max-$row;
-        my $line = '';
-        for my $col (0..$#n) {
-            $line .= $n[$col] >= $n ? '#' : ' ';
-        }
-        push @hist, $line;
-    }
-    return @hist;
-}
-
-sub max {
-    my($max, @a) = @_;
-    for (@a) {
-        $max = $_ if $max < $_;
-    }
-    return $max;
-}
-
-sub sum {
-    my($sum, @a) = @_;
-    $sum += $_ for @a;
-    return $sum;
-}
+print(count_watter(fill_watter(draw_hist([int(x) for x in sys.argv[1:]]))))

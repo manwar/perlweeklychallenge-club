@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/python3
 
 # Challenge 079
 #
@@ -56,23 +56,10 @@
 #
 # Output: Your script should print `4` as `4 % 1000000007 = 4`.
 
-use Modern::Perl;
+import sys
 
-@ARGV==1 or die "Usage: ch-1.pl N\n";
-say(sum(map {bit_count($_)} 1..$ARGV[0])  % 1000000007);
+def bit_count(n):
+    bits = "{:b}".format(n)
+    return sum([int(x) for x in bits])
 
-sub bit_count {
-    my($n) = @_;
-    my $count = 0;
-    while ($n > 0) {
-        $count++ if $n & 1;
-        $n >>= 1;
-    }
-    return $count;
-}
-
-sub sum {
-    my($sum, @a) = @_;
-    $sum += $_ for @a;
-    return $sum;
-}
+print(sum([bit_count(x) for x in range(1, int(sys.argv[1])+1)]) % 1000000007)
