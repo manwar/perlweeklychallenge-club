@@ -18,11 +18,9 @@ is( like_numbers(@{$_->[0]}), $_->[1] ) foreach @TESTS;
 done_testing();
 
 sub like_numbers {
-  scalar grep { !($_%$_[1]) } get_nums( $_[0] );
-}
-
-sub get_nums {
-  my @nums = split //, my $m = shift;
-  return map { my $n=$_<<1; join '',grep{($n>>=1)&1} @nums } 1..(1<<@nums)-2;
+  my @digits = split//,$_[0];
+  0 + grep { !($_%$_[1]) }
+       map { my $n=$_<<1; join '',grep{($n>>=1)&1} @digits }
+           1 .. (1<<@digits) - 2;
 }
 

@@ -13,20 +13,20 @@ my @vals;
 
 ##
 ## We know that all such numbers must have the form:
-##   p^3.q, p.q.r
+##   p^8, p^3.q, p.q.r
 ## where p, q, r are all primes...
 ##
 ## We therefore constuct all such combinations of the primes <= 13
 ## this should include the 10 numbers we are looking for!
 
 while(@primes) {
-  my $p1 = shift @primes;
+  push @vals,(my $p1 = shift @primes)**8;
   my @t  = @primes;
   while( @t ) {
     my $p2 = shift @t;
-    push @vals, $p1*$p2*$p2*$p2, $p2*$p1*$p1*$p1, map {$p1*$p2*$_} @t;
+    push @vals, $p1*$p2**3, $p2*$p1**3, map {$p1*$p2*$_} @t;
   }
 }
 
-say join "\n",(sort{$a<=>$b}@vals)[0..9];
+say for (sort{$a<=>$b}@vals)[0..9];
 
