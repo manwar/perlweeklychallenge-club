@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/python3
 
 # Challenge 023
 #
@@ -16,19 +16,17 @@
 # Similarly you can carry on 2nd order forward difference series like:
 # (-7-4), (6+7), (-7-6), (5+7) => -11, 13, -13, 12.
 
-use Modern::Perl;
+import sys
 
-my($n, @seq) = @ARGV;
-say join(", ", nth_forward_diff($n, @seq));
+def forward_diff(seq):
+    return [seq[i+1]-seq[i] for i in range(len(seq)-1)]
 
+def nth_forward_diff(n ,seq):
+    for i in range(n):
+        seq = forward_diff(seq)
+    return seq
 
-sub forward_diff {
-    my(@in) = @_;
-    return map {$in[$_+1] - $in[$_]} 0..$#in-1;
-}
-
-sub nth_forward_diff {
-    my($n, @seq) = @_;
-    @seq = forward_diff(@seq) for 1 .. $n;
-    return @seq;
-}
+n = int(sys.argv[1])
+seq = [int(x) for x in sys.argv[2:]]
+seq = nth_forward_diff(n ,seq)
+print(", ".join([str(x) for x in seq]))
