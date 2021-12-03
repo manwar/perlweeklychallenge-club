@@ -61,7 +61,7 @@ sub like_numbers {
   my @digits = split//,$_[0];
   0 + grep { !($_%$_[1]) }
        map { my $n=$_<<1; join '',grep{($n>>=1)&1} @digits }
-           1 .. (1<<@digits) - 2;
+           1 .. (1<<@digits) - 2
 }
 ```
 
