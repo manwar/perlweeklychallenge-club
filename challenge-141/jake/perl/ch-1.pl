@@ -40,20 +40,24 @@ sub collect_numbers {
 
 # starting at 1 we aggregate all divisors in an array
 # we also aggregate all corresponding reciprocal values in another array
+# these 2 lists contain all divisors: once ascending, once descending
+# there's no need to check each number for modulo 0, we just need the first half of divisors
+# we only need to find the middle of the lists before we have the entire list
+# to do this we find the list element where both lists overlap, i.e. their symmetry axis
 # if these arrays are symmetric to each other at the position of half our's div_required, we know they have the required amount of divisors
 # example for even div_required = 8; num = 24; the divisor arrays are cross-symmetric at div_required / 2
 # the axis is between $divisors[3] and $reciprocal[4]
-#         <==\\==>
-# 24 12  8  6\\4  3  2  1
-#  1  2  3  4\\6  8 12 24
-#         <==\\==>
+#         <==||==>
+# 24 12  8  6||4  3  2  1
+#  1  2  3  4||6  8 12 24
+#         <==||==>
 #
 # example for odd div_required = 9; num = 36; the divisor arrays are cross-symmetric at div_required / 2
 # the axis is on $divisors[4] and $reciprocal[4]
-#          <==\  \==>
-# 36 18 12 09 \06\ 04 03 02 01
-# 01 02 03 04 \06\ 09 12 18 36 
-#          <==\  \==>
+#          <==|  |==>
+# 36 18 12 09 |06| 04 03 02 01
+# 01 02 03 04 |06| 09 12 18 36
+#          <==|  |==>
 
 sub count_divisors {
     my ( $spec_num, $divisor) = @_;
@@ -72,12 +76,14 @@ sub count_divisors {
             push @reciprocal, ( $num_atr->{num} / $divisor );
         }
 
-        # if div_required is even we look for the axis between array elements
+        # if div_required is even we look for the axis BETWEEN array elements; see example above sub
+        # also we fist check if the values to be examined are actually defined to avoid unnecessary error messages
         if ( $num_atr->{div_required} % 2 == 0 ) {
             return $num_atr->{num} if $divisors[$num_atr->{div_required} / 2] && $divisors[$num_atr->{div_required} / 2] == $reciprocal[$num_atr->{div_required} / 2 - 1];
         }
 
-        # if div_required is odd we look for the axis on an array element
+        # if div_required is odd we look for the axis ON an array element; see example above sub
+        # also we fist check if the values to be examined are actually defined to avoid unnecessary error messages
         if ( $num_atr->{div_required} % 2 == 1 ) {
             return $num_atr->{num} if $divisors[int($num_atr->{div_required} / 2)]
                                     && $divisors[int($num_atr->{div_required} / 2)] == $reciprocal[int($num_atr->{div_required} / 2)];
