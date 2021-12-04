@@ -32,7 +32,7 @@ else {
 
 my @number = split(//,$m);
 my (@final, @all_nums, @dfinal);
-my (@arr, @sarr, my @uarr);
+my (@arr, @sarr, @uarr);
 
 my $i=1;
 my $j=length($m);
