@@ -65,10 +65,10 @@ sub substrings ($n, $m, $prefix = -1, $max = $n) {
     # Recurse, once by picking up the first character of $n, and
     # once by skipping the first character.
     #
-    my $fc   = substr ($n, 0, 1);
-    my $next = 10 * ($prefix == -1 ? 0 : $prefix) + $fc;
-    substrings (substr ($n, 1), $m, $next,   $max) +
-    substrings (substr ($n, 1), $m, $prefix, $max);
+    my $fc       = substr ($n, 0, 1);
+    my $n_prefix = 10 * ($prefix == -1 ? 0 : $prefix) + $fc;
+    substrings (substr ($n, 1), $m, $n_prefix, $max) +
+    substrings (substr ($n, 1), $m, $prefix,   $max);
 }
 
 
