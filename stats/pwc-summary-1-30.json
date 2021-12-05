@@ -1,14 +1,4 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "xAxis" : {
       "categories" : [
          "3ter",
@@ -43,11 +33,26 @@
          "Bob Lied"
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-12-05 20:42:48 GMT"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-12-05 20:34:57 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
    "series" : [
       {
@@ -86,6 +91,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -117,11 +123,9 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -153,15 +157,11 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
    "chart" : {
       "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
