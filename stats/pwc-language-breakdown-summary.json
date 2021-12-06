@@ -1,13 +1,44 @@
 {
+   "legend" : {
+      "enabled" : "false"
+   },
    "chart" : {
       "type" : "column"
    },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2021-12-06 18:52:46 GMT"
-   },
+   "series" : [
+      {
+         "data" : [
+            [
+               "Blog",
+               2070
+            ],
+            [
+               "Perl",
+               6808
+            ],
+            [
+               "Raku",
+               4130
+            ]
+         ],
+         "dataLabels" : {
+            "align" : "right",
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "enabled" : "true",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}"
+         },
+         "name" : "Contributions"
+      }
+   ],
    "xAxis" : {
       "labels" : {
          "style" : {
@@ -18,46 +49,15 @@
       "type" : "category"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "y" : 10,
-            "rotation" : -90
-         },
-         "data" : [
-            [
-               "Blog",
-               2070
-            ],
-            [
-               "Perl",
-               6806
-            ],
-            [
-               "Raku",
-               4130
-            ]
-         ]
       }
-   ]
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2021-12-06 19:23:50 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2021]"
+   }
 }
