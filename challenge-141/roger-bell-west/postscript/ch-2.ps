@@ -1,0 +1,35 @@
+%!PS
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/i2s {
+    dup log cvi 1 add string cvs
+} bind def
+
+/likenumber {
+    /factor exch def
+    /source exch def
+    /s source i2s def
+    /m s length def
+    /n 0 def
+    1 1 1 m bitshift 2 sub {
+        /mask exch def
+        /c 0 def
+        0 1 m 1 sub {
+            /di exch def
+            mask 1 di bitshift and 0 gt {
+                /c c 10 mul s di get cvi add def
+            } if
+        } for
+        c factor mod 0 eq {
+            /n n 1 add def
+        } if
+    } for
+    n
+} bind def
+
+1234 2 likenumber 9 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+768 4 likenumber 3 eq { (Pass) } { (FAIL) } ifelse =
