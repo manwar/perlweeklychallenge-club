@@ -11,6 +11,7 @@ use Data::Dumper qw(Dumper);
 my @TESTS = (
   [ 24, 2, 2 ],
   [ 30, 5, 2 ],
+  [ 121, 1, 2 ],
   [ 231, 1, 3 ],
   [ 242, 1 , 3 ],
 );
@@ -22,6 +23,6 @@ done_testing();
 sub divisor_last_digit {
   my($m,$n)=@_;
   ($n==1?1:0)+grep{$_%10==$n}
-              map{$m%$_?():($_,$m/$_)}
+              map{$m%$_?():$m==$_*$_?($_):($_,$m/$_)}
               2..sqrt$m;
 }
