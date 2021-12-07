@@ -9,6 +9,8 @@ use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
 my @TESTS = (
+  [ [1000001,9991],  0 ],
+  [ [1000000,9991],  0 ],
   [ [31,96],  0 ],
   [ [8,24],   1 ],
   [ [26,39],  0 ],
@@ -21,6 +23,7 @@ done_testing();
 
 sub friendly {
   my($a,$b) = @_;
+  return 0 if 1 & ($a | $b);
   ($a,$b) = ($b,$a%$b) while $b; ## Get GCD
   return 0 if $a == 1;           ## Numbers are co-prime so not friendly
   $a>>=1 until $a&1;             ## Remove trailing binary 0 digits

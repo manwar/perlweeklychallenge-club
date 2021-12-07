@@ -23,12 +23,13 @@ my @examples = (
 #); @examples = (
   [ [qw(pk fz iy oz cf xm gm uy ur te ct zz rw jm aq oq xy mi me rv jc iv sx pq lz nd cm vj uf rq ij zk ef wm bb cj vv oo og ft fq mj os uh gn ml mz fm az yr zh wa bm gj xn df yf er xc xb bl uw ri nq nn oi pc ym jr da rz bq vm sr ni jz po oj wf iu ja tu lk yt nc sl wi zb hm uv th kn hk pv yq ez we im gt za sj nh qr bt rr ok ai xx qs lg ue fc ws vc vy ki xi wy fv lt rl xw nj gu dz ip zl je pf hn uk di mv ug vf uz wt yn qx rh sz fh pm sa qz gp gw jp ve le fe ia nw pu km uo gy li pe hj mn ew hg qg se mq by vh ca hd bn nl xu dd ji bd ol vp wp yo st ac bh bx fa md zx mm ox qi mc lc jx wz jd xt vr yj pn uj zy ih ul pb id xh wb qq xg ou sp bo yz bu ec vz fy io hl jo cl zs ge tz qp mf zf kq sk qw as vs rm jw yk tr cw tk xz kt ra qo tj fu dy hx ic ej nt jt gf ko rd od ep qn sg ek ui bg iw zm at dv fx kb xr nu xl xs lr xk na ne xe rt jf ga hv kf xq sq pt cp rj fr fp qf gg ii ey tn ce ya kl wc ks qh em gc ts dn wk is fo pa sd ly uc zn dk wq bw tq kg xf vn ea hh ik lm nr wd kc mu ru co kx nb gl fs bi hu fk ld qa qy qm wl cn cr zd ke jl gz wr xp tm tl kj no ex wj su dc sh ee hf dw ax ms hq jj sb ed qj vw ha ju wx yi sf ln jy rx ei sy ar dm hr al ah mb on ob uq ps lv ad jk rb fb gk cc rp jq ka my ix nv re vk tp zw rg tb up pp uu ds ho zv nf ty cu kp eg in lu hy mk um zt hc qt yp tv rk hb pj ph bk af to lq qe ib gi bz jh iz lo yv ci jg gh yx bj il cz gx ro ff kk vd ub et bs tw si qd ql au ti xj yh yl kr om nx lw wo gs gq ku mw py tx ll fl xd ch rc go dt lx zu ry hz bc lj la lh ux sc fn it ir tt mo pr gd sm mx jn cd vl vb mt pz vt he eh ss dh dj yw xv be ov wh ww pg ao es ye xa vq hs yc yd vu ns zr lf rs pl cs eo zi qb qk so oc wn el zc yb de mg fw cx cv wv ot cb qu wu nm ow zp rn hw lp ma en vg cy rf tc am ut cq sv kv oh jb np us ck mh ny gr gb op an kw aa vo zq iq ba px dr un or ze bp zg eb ud if dl dq zj ky bf vi cg ua br yu mp bv sn pi db ae of kh pd hp qc jv xo du fg ta do kd dx av ys tg ls fi kz tf eu aj sw vx oa pw fd ab hi va lb dg ig dp nz js qv ag aw eq mr zo yy ie nk yg ap oe gv oy ht ev ak td ay fj ng wg)], 1 ],
 );
+pop @examples;
 
 is(circ_single_connected(@{$_->[0]}),$_->[1]) foreach @examples;
 is(circ_single(@{$_->[0]}),$_->[1])   foreach @examples;
 
 done_testing();
-cmpthese( 400, {
+cmpthese( 10000, {
   nr => sub { circ_single_connected(@{$_->[0]}) foreach @examples; },
   r  => sub { circ_single(@{$_->[0]}) foreach @examples; },
 } );

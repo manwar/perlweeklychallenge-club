@@ -5,6 +5,8 @@ use strict;
 use warnings;
 use feature qw(say);
 use Test::More;
+use Data::Dumper qw(Dumper);
+use Benchmark qw(cmpthese);
 
 my @TESTS = (
   [[qw(4 1 7 6)], 7614],
@@ -16,7 +18,16 @@ my @TESTS = (
   [[qw(2 4 6 8)], 8642],
 );
 
-is( biggest_even(    $_->[0] ), $_->[1] ) foreach @TESTS;
+is( biggest_even(       $_->[0] ), $_->[1] ) foreach @TESTS;
+is( biggest_even_short( $_->[0] ), $_->[1] ) foreach @TESTS;
+is( biggest_even_local( $_->[0] ), $_->[1] ) foreach @TESTS;
+done_testing();
+
+cmpthese(100_000,{
+  's' => sub { biggest_even_short( $_->[0] ) foreach @TESTS; },
+  'n' => sub { biggest_even( $_->[0] ) foreach @TESTS; },
+  'l' => sub { biggest_even_local( $_->[0] ) foreach @TESTS; },
+});
 
 sub biggest_even {
   my $ptr = my @digits = reverse sort @{$_[0]};
@@ -33,6 +44,20 @@ sub biggest_even {
   }
 
   ## If we get to the start return 0 as there are no even digits!
+  return '';
+}
+
+
+sub biggest_even_short {
+  my $T = my @T = reverse sort @{$_[0]};
+  $T[$T]&1 || return join '',@T[0..$T-1,$T+1..$#T,$T] while $T--;
+  return '';
+}
+
+
+sub biggest_even_local {
+  local $_ =  @_ = reverse sort @{$_[0]};
+  $_[$_]&1 || return join '',@_[0..$_-1,$_+1..$#_,$_] while $_--;
   return '';
 }
 

@@ -8,8 +8,8 @@
 // #define MAX_N   1000000
 // #define PSIZE   42000          // Have to guess this!
 // 10^8
-  #define MAX_N   100000000
-  #define PSIZE   3200000      // Have to guess this!
+  #define MAX_N   10000
+  #define PSIZE   5000      // Have to guess this!
 // 10^9
 //#define MAX_N   1000000000
 //#define PSIZE   28000000     // Have to guess this!
@@ -29,19 +29,20 @@ int sum_digits(int n) {
 }
 
 // Get the sum of prime factors - 
-// as we build this in order we only need to find a 
-// factorisation then we just add together the
-// digit sum of the two factors (Here for speed we
-// know one will be prime.
-// We go through all primes we have until prime^2
-// is greater than the number itself.
 //
-// To make the last bit easier IF we have a prime
-// we return 0 as not composite...
+// as we build this in order we only need to find a factorisation then
+// we just add together the digit sum of the two factors (Here for
+// speed we know one will be prime.
 //
-// Note to save memory we only store the sum if 
-// n < MAX_N/2 as we won't need it again (can't
-// be a factor of a larger number less than MAX_N
+// We go through all primes we have until prime^2 is greater than the
+// number itself.
+//
+// To make the last bit easier IF we have a prime we return 0 as not
+// composite...
+//
+// Note to save memory we only store the sum if // n < MAX_N/2 as we
+// won't need it again (can't be a factor of a larger number less than
+// MAX_N )
 
 int sum_prime_factors( int n ) {
   int p;
@@ -63,8 +64,7 @@ int sum_prime_factors( int n ) {
   return 0;
 }
 
-// Main is simple just loop and search, printing out
-// Smith numbers
+// Main is simple just loop and search, printing out Smith numbers
 int main() {
   int count = 0, n = 1;
   while( n++ <= MAX_N ) {
