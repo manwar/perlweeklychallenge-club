@@ -14,13 +14,17 @@ my @TESTS = (
   [ [ 100, 11 ] , 111 ],
 );
 
+my Tie $x, 'DecBin';
+my Tie $y, 'DecBin';
+my Tie $z, 'DecBin';
+
 foreach(@TESTS) {
-  my $x = DecBin->new($_->[0][0]);
-  my $y = DecBin->new($_->[0][1]);
-  my $z = DecBin->new($_->[1]);
+  $x = $_->[0][0];
+  $y = $_->[0][1];
+  $z = $_->[1];
   say join "\t", $x, $y, $x+$y, $z, $x+$y==$z ? 'OK' : 'FAIL';
 }
-
+exit;
 foreach(@TESTS) {
   my $x = DecBinExp->new($_->[0][0]);
   my $y = DecBinExp->new($_->[0][1]);

@@ -89,31 +89,51 @@ $x = BinaryTree->new(1)
 $y;
 
 say '
+========================================================================
+
+BinaryTree.pm
+=============
+
 Now using the binary specific code - with clone/dump/flatten methods
 added into the class implemented by walk
-
 ';
 
 say 'Dump $x';
 $x->dump;
 say '';
-say 'Clone $x as $y';
-$y = $x->clone;
-say 'Dump $y (clone of $x)';
-$y->dump;
-say '';
-say 'Now get total value and adjust each node... for $y';
+say 'Now get total value';
 my $glob = { 'total' => 0 };
-$y->walk( sub { my( $node, $global ) = @_; $global->{'total'} += $node->value;                 }, $glob );
-$y->walk( sub { my( $node, $global ) = @_; $node->update( $global->{'total'} - $node->value ); }, $glob );
+$x->walk( sub { my( $node, $global ) = @_; $global->{'total'} += $node->value;                 }, $glob );
+say '  TOTAL is ',$glob->{'total'};
+say '';
+## Clone x into y -> but with the value as total - value'
+say 'Clone $x as $y - and set value as "total" - value';
+$y = $x->clone( sub { $glob->{'total'} - $_[0]; } );
 say '';
 say 'Dump $y (clone of $x)';
 $y->dump;
-say '';
+say '
+------------------------------------------------------------------------
+';
 
+say "@{[ $x->flatten ]}";
+say "@{[ $y->flatten ]}";
+say '
+Dump in different orders:
+';
+say "Pre-order     @{[ $x->flatten( undef, 'pre'     ) ]}";
+say "In order      @{[ $x->flatten( undef, 'in'      ) ]}";
+say "Reverse order @{[ $x->flatten( undef, 'reverse' ) ]}";
+say "Post order    @{[ $x->flatten( undef, 'post'    ) ]}";
+say '
+------------------------------------------------------------------------
+';
 say 'Running tests';
 is( "@{[ $x->flatten ]}", '1 2 4 7 3 5 6' );
 is( "@{[ $y->flatten ]}", '27 26 24 21 25 23 22' );
 done_testing();
-say '';
+say '
+========================================================================
+
+';
 

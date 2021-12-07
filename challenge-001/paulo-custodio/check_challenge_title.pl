@@ -33,10 +33,10 @@ for my $chall_dir (path(".")->children(qr/challenge-\d+/)) {
         next unless $dir->is_dir;
 
         for my $sol ($dir->children(qr/^ch[-_]\d\.$LANG{$lang}$/)) {
-			my $text = $sol->slurp;
-			if ($text !~ /Challenge 0*$chall\b/) {
-				say $sol;
-			}
-		}
+            my $text = $sol->slurp;
+            if ($text !~ /Challenge 0*$chall\b/) {
+                say $sol;
+            }
+        }
     }
 }

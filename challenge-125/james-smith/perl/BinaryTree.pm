@@ -21,12 +21,12 @@ sub new {
   bless $self, $class;
 }
 
-sub depth {
+sub max_length {
   my $self = shift;
   my $d = 0;
-     $d = $self->left->depth if $self->has_left;
+     $d = $self->left->max_length if $self->has_left;
   return 1+$d unless $self->has_right;
-  my $t = $self->right->depth;
+  my $t = $self->right->max_length;
   return $t > $d ? 1+$t : 1+$d;
 }
 
@@ -34,8 +34,8 @@ sub diameter {
   my $self = shift;
   my $global = { 'diameter' => 0 };
   $self->walk( sub {
-    my $d = ($_[0]->has_left  ? $_[0]->left->depth  : 0 ) +
-            ($_[0]->has_right ? $_[0]->right->depth : 0 );
+    my $d = ($_[0]->has_left  ? $_[0]->left->max_length  : 0 ) +
+            ($_[0]->has_right ? $_[0]->right->max_length : 0 );
     $_[1]{'diameter'} = $d if $d > $_[1]->{'diameter'};
   }, $global );
   return $global->{'diameter'};

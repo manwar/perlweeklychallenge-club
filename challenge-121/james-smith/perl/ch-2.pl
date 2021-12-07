@@ -23,7 +23,7 @@ if(@ARGV) {
   $N = shift @ARGV;
   $dist_maps = [];
   foreach my $r (0..$N-1) {
-    $dist_maps->[$r][$_] = $r == $_ ? 0 : int rand(20) foreach 0..$N-1;
+    $dist_maps->[$r][$_] = $r == $_ ? 0 : 1+int rand(20) foreach 0..$N-1;
   }
 }
 $comb*=$_ foreach 2..($N-1);

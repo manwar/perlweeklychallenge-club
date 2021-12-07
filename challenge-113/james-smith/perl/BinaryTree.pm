@@ -64,19 +64,67 @@ sub add_child_right {
   return $self;
 }
 
+## Define walk method....
 sub walk {
+  my $self = shift;
+  $self->walk_pre( @_ );
+  return;
+}
+
+##
+## Pre-order walk process node then the left and right sub-trees
+##
+
+sub walk_pre {
   my( $self, $fn, $global, $local, $dir ) = @_;
   $local = $fn->( $self, $global, $local, $dir||'' );
-  $self->left->walk(  $fn, $global, $local, 'left'  ) if $self->has_left;
-  $self->right->walk( $fn, $global, $local, 'right' ) if $self->has_right;
+  $self->left->walk_pre(  $fn, $global, $local, 'left'  ) if $self->has_left;
+  $self->right->walk_pre( $fn, $global, $local, 'right' ) if $self->has_right;
+  return;
+}
+
+##
+## In-order walk process left sub-tree, then the node and finally the right sub-tree
+##
+
+sub walk_in {
+  my( $self, $fn, $global, $local, $dir ) = @_;
+  $self->left->walk_in(  $fn, $global, $local, 'left'  ) if $self->has_left;
+  $local = $fn->( $self, $global, $local, $dir||'' );
+  $self->right->walk_in( $fn, $global, $local, 'right' ) if $self->has_right;
+  return;
+}
+
+##
+## Reverse-order walk process right sub-tree, then the node and finally the left sub-tree
+##
+
+sub walk_reverse {
+  my( $self, $fn, $global, $local, $dir ) = @_;
+  $self->right->walk_reverse( $fn, $global, $local, 'right' ) if $self->has_right;
+  $local = $fn->( $self, $global, $local, $dir||'' );
+  $self->left->walk_reverse(  $fn, $global, $local, 'left'  ) if $self->has_left;
+  return;
+}
+
+##
+## Post-order walk the left and right subtrees before processing the node...
+##
+
+sub walk_post {
+  my( $self, $fn, $global, $local, $dir ) = @_;
+  $self->left->walk_post(  $fn, $global, $local, 'left'  ) if $self->has_left;
+  $self->right->walk_post( $fn, $global, $local, 'right' ) if $self->has_right;
+  $local = $fn->( $self, $global, $local, $dir||'' );
   return;
 }
 
 sub flatten {
-  my( $self,$dump_fn ) = @_;
+  my( $self,$dump_fn, $method ) = @_;
   $dump_fn ||= sub { $_[0] };
+  $method  = $self->can( 'walk_'.($method||'pre') ) || 'walk';
   my $arrayref = [];
-  $self->walk( sub {
+  $self->$method( sub {
     my($node,$global) = @_;
     push @{$global}, $dump_fn->( $node->value );
   }, $arrayref );
@@ -95,6 +143,16 @@ sub dump {
 }
 
 sub clone {
+  my( $self, $clone_fn ) = @_;
+  $self->walk_post( sub { my ($node, $global, $local, $dir ) = @_
+    my $new_node = BinaryTree->new( $clone_fn( $node->value ) );
+    $new_node->add_child_left(  $self->left->walk_post(  $node, $global ) ) if $self->has_left;
+    $new_node->add_child_right( $self->right->walk_post( $node, $global ) ) if $self->has_right;
+    return $new_node;
+  });
+  return
+}
+sub clonez {
   my( $self, $clone_fn ) = @_;
   $clone_fn ||= sub { $_[0] };
   my $clone = {};

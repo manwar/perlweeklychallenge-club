@@ -9,7 +9,7 @@ use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
 my $MAX         = 1e9;
-my $S_MAX       = 1e6;
+my $S_MAX       = 1e7;
 my $MULT        = 100;
 my $COUNT = 500;
 my @TESTS = (
@@ -63,9 +63,9 @@ sub lychrel_large_seed {
 
 use Time::HiRes qw(time);
 my $time = time;
-print "Simple:";
+print "\n\nSimple:";
 print " $_" for grep { lychrel $_ } 10..1000;
-print "** time ", time - $time;
+print "\n\n** time ", time - $time;
 
 foreach my $n (10..$S_MAX) {
   if( defined $seeds{$n} ) {
@@ -74,15 +74,15 @@ foreach my $n (10..$S_MAX) {
   }
   $lychrel{$n}=1 if lychrel_large_seed($n);
 }
-print "\nSieve: ";
+print "\n\nSieve: ";
 print join " ", sort { $a <=> $b } keys %lychrel;
-print "** time ", time - $time;
+print "\n\n** time ", time - $time;
 print "\n\n";
-
+exit;
 $time = time;
-print "\nLarge: ";
+print "\n\nLarge: ";
 print " $_" for grep { lychrel_large $_ } 10..$S_MAX;
-print "** time ", time - $time;
+print "\n\n** time ", time - $time;
 print "\n\n";
 
 $time = time;

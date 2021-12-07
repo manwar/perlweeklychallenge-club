@@ -1,16 +1,17 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 # Challenge 023
 #
 # Task #2
 # Create a script that prints Prime Decomposition of a given number. The prime
 # decomposition of a number is defined as a list of prime numbers which when
-# all multiplied together, are equal to that number. For example, the Prime decomposition of 228 is 2,2,3,19 as 228 = 2 * 2 * 3 * 19.
+# all multiplied together, are equal to that number. For example, the Prime
+# decomposition of 228 is 2,2,3,19 as 228 = 2 * 2 * 3 * 19.
 
 use Modern::Perl;
 
 my($n) = @ARGV;
-say join(", ", prime_decomposition($n)), ".";
+say join(", ", prime_decomposition($n));
 
 
 # check if number is prime
