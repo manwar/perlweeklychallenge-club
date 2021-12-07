@@ -31,7 +31,8 @@ sub run() {
     # week, where we found numbers with exactly 8 divisors including the number
     # itself
     my @divisors = grep { $_ != $m } Challenge141Task01::find_divisors($m);
-    say join( ", ", sort { $a <=> $b } @divisors );
+    say join( ", ", sort { $a <=> $b } @divisors ) if DEBUG;
     my @result = grep { substr( $_, -1 ) == $n } @divisors;
-    say join( ", ", sort { $a <=> $b } @result );
+    say join( ", ", sort { $a <=> $b } @result ) if DEBUG;
+    say scalar @result;
 }
