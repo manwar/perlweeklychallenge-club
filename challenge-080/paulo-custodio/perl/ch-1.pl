@@ -1,8 +1,8 @@
 #!/usr/bin/perl
 
-# Challenge 081
+# Challenge 080
 #
-# TASK #1 › Smallest Positive Number
+# TASK #1 > Smallest Positive Number
 # Submitted by: Mohammad S Anwar
 # You are given unsorted list of integers @N.
 #

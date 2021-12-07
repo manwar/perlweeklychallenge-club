@@ -1,7 +1,7 @@
 #!/usr/bin/env lua
 
 --[[
-THE WEEKLY CHALLENGE - 091
+Challenge 091
 
 TASK #2: Jump Game
 

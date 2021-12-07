@@ -1,0 +1,28 @@
+#
+# See ../README.md
+#
+
+#
+# Run as: bc ch-1.bc
+#
+
+count          = 10
+nr_of_divisors =  8
+
+for (n = 1; count > 0; n ++) {
+    c = 0
+    for (m = 1; m * m <= n && c <= nr_of_divisors; m ++) {
+        if (n % m == 0) {
+            c = c + 2
+            if (n == m * m) {
+                c = c - 1
+            }
+        }
+    }
+    if (c == nr_of_divisors) {
+        n
+        count = count - 1
+    }
+}
+
+halt
