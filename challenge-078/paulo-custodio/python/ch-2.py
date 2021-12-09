@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/python3
 
 # Challenge 078
 #
@@ -50,13 +50,11 @@
 #     [6 3 7 4 2]
 #     [3 7 4 2 6]
 
-use Modern::Perl;
+import sys
 
-my($A, $B) = @ARGV;
-my @A = split ' ', $A;
-my @B = split ' ', $B;
+A = [int(x) for x in sys.argv[1].split()]
+B = [int(x) for x in sys.argv[2].split()]
 
-for my $i (@B) {
-    my @a = (@A[$i .. $#A], @A[0 .. $i-1]);
-    say "[@a]";
-}
+for i in B:
+    a = [*A[i:], *A[:i]]
+    print("["+" ".join([str(x) for x in a])+"]")
