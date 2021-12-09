@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/python3
 
 # Challenge 078
 #
@@ -19,16 +19,18 @@
 # Input: @A = (3, 4, 5)
 # Output: (5)
 
-use Modern::Perl;
+import sys
 
-my @A = @ARGV;
-my $max = 0;
-my @leaders;
-for my $i (reverse 0..$#A) {
-    if ($A[$i] > $max) {
-        unshift @leaders, $A[$i];
-        $max = $A[$i];
-    }
-}
-@leaders = (0) unless @leaders;
-say "(", join(", ", @leaders), ")";
+def find_leaders(a):
+    leaders = []
+    cur_max = 0
+    for i in range(len(a))[::-1]:
+        if a[i] > cur_max:
+            leaders.insert(0, a[i])
+            cur_max = a[i]
+    if len(leaders)==0:
+        leaders = [0]
+    return leaders
+
+leaders = find_leaders([int(x) for x in sys.argv[1:]])
+print("("+", ".join([str(x) for x in leaders])+")")
