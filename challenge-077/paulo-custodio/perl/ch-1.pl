@@ -2,12 +2,13 @@
 
 # Challenge 077
 #
-# TASK #1 › Fibonacci Sum
+# TASK #1 > Fibonacci Sum
 # Submitted by: Mohammad S Anwar
 # You are given a positive integer $N.
 #
 # UPDATE: 2020-09-07 09:00:00
-# Write a script to find out all possible combination of Fibonacci Numbers required to get $N on addition.
+# Write a script to find out all possible combination of Fibonacci Numbers
+# required to get $N on addition.
 #
 # You are NOT allowed to repeat a number. Print 0 if none found.
 #
@@ -41,7 +42,8 @@ for my $k (1 .. scalar(@terms)) {
     my $combinat = Math::Combinatorics->new(count => $k, data => \@terms);
     while(my @set = $combinat->next_combination) {
         if (sum(@set) == $N) {
-            push @out, join(" + ", sort @set)." = $N\n";
+            @set = sort {$a<=>$b} @set;
+            push @out, join(" + ", @set)." = $N\n";
         }
     }
 }

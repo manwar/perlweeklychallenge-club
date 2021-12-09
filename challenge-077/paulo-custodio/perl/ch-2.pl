@@ -2,18 +2,20 @@
 
 # Challenge 077
 #
-# TASK #2 › Lonely X
+# TASK #2 > Lonely X
 # Submitted by: Mohammad S Anwar
 # You are given m x n character matrix consists of O and X only.
 #
-# Write a script to count the total number of X surrounded by O only. Print 0 if none found.
+# Write a script to count the total number of X surrounded by O only.
+# Print 0 if none found.
 #
 # Example 1:
 # Input: [ O O X ]
 #        [ X O O ]
 #        [ X O O ]
 #
-# Output: 1 as there is only one X at the first row last column surrounded by only O.
+# Output: 1 as there is only one X at the first row last column surrounded by
+# only O.
 # Example 2:
 # Input: [ O O X O ]
 #        [ X O O O ]
@@ -28,7 +30,7 @@
 
 use Modern::Perl;
 
-my @m = @ARGV;
+my @m = <>;
 for (@m) { $_ = [split //, $_]; }
 
 my $lonely = 0;
