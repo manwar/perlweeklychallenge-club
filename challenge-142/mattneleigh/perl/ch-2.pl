@@ -94,7 +94,9 @@ sub _sleep_sort_thread_core{
     # that's iffy if the CPU is busy
     select(undef, undef, undef, 0.1 * $value);
 
-    # Store the value in the shared list
+    # Lock the shared list, and store the
+    # value therein
+    lock($sorted);
     push(@{$sorted}, $value);
 
     return(undef);
