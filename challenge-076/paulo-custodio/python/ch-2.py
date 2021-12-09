@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/python3
 
 # Challenge 076
 #
@@ -43,65 +43,51 @@
 # raped, ruses, shrine, shrines, social, socializing, spasm, spasmodic, succor,
 # succors, theorem, theorems, traci, tracie, virus, viruses, wigged
 
-use Modern::Perl;
-use Path::Tiny;
-
-@ARGV==2 or die "Usage: ch-2.pl grid words\n";
-my($grid_file, $words_file) = @ARGV;
-
-my @grid = parse_grid($grid_file);
-my %words = grid_words(5, \@grid);
-my @found = find_dict($words_file, \%words);
-
-say join(", ", sort @found);
-
+import sys
+import re
 
 # parse grid file, return matrix m x n or letters
-sub parse_grid {
-    my($file) = @_;
-    my @grid = path($file)->lines;
-    for (@grid) {
-        s/\s+//g;
-        $_ = [split //, $_];
-    }
-    return @grid;
-}
+def parse_grid(file):
+    with open(file) as f:
+        grid = []
+        for line in f.readlines():
+            line = re.sub(r"\s+", "", line)
+            grid.append([x for x in line])
+    return grid
 
 # extract all possible words with the given minimum length
 # from the grid in all 8 directions
-sub grid_words {
-    my($min_len, $grid) = @_;
-    my %words;
-    for my $r0 (0 .. $#{$grid}) {
-        for my $c0 (0 .. $#{$grid->[0]}) {
-            for my $dr (-1 .. 1) {
-                for my $dc (-1 .. 1) {
-                    if (!($dr==0 && $dc==0)) {
-                        my $word = "";
-                        for (my $len = 0; 1; $len++) {
-                            my($r, $c) = ($r0+$len*$dr, $c0+$len*$dc);
-                            last if $r < 0 || $r > $#{$grid} || $c < 0 || $c > $#{$grid->[0]};
-                            $word .= $grid->[$r][$c];
-                            if (length($word) >= $min_len) {
-                                $words{lc($word)} = 1;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    return %words;
-}
+def grid_words(min_len, grid):
+    words = set()
+    for r0 in range(0, len(grid)):
+        for c0 in range(0, len(grid[0])):
+            for dr in range(-1, 2):
+                for dc in range(-1, 2):
+                    if dr!=0 or dc!=0:
+                        word = ""
+                        l = 0
+                        while True:
+                            r, c = r0+l*dr, c0+l*dc
+                            if r<0 or r>=len(grid) or \
+                               c<0 or c>=len(grid[0]):
+                                break
+                            word += grid[r][c]
+                            if len(word)>=min_len:
+                                words.add(word.lower())
+                            l += 1
+    return words
 
-# return all wards from dictionary that exist in the given hash
-sub find_dict {
-    my($dict, $words) = @_;
-    my @found;
-    open(my $fh, "<", $dict) or die "$dict: $!\n";
-    while (<$fh>) {
-        chomp;
-        push @found, $_ if exists $words->{$_};
-    }
-    return @found;
-}
+# return all wards from dictionary that exist in the given set
+def find_dict(file, words):
+    found = []
+    with open(file) as f:
+        for word in f.readlines():
+            word = word.strip()
+            if word in words:
+                found.append(word)
+    return sorted(found)
+
+grid = parse_grid(sys.argv[1])
+words = grid_words(5, grid)
+found = find_dict(sys.argv[2], words)
+print(*found,sep=", ")
