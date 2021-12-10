@@ -39,7 +39,7 @@ def read_input():
 
 m = read_input()
 for i in range(len(m)):
-    m[i] = [x for x in m[i].rstrip("\n")]
+    m[i] = [x for x in m[i].strip()]
 
 lonely = 0
 for row in range(len(m)):
