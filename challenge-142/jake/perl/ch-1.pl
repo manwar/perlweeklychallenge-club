@@ -18,15 +18,16 @@ my $last_dig = <STDIN>;
 chomp $last_dig;
 
 # output
-my @res = count_divisors( 1, $num );
-my @rres = filter_last_digit ( $last_dig, \@res );
-say scalar ( @rres );
+my @divisors = count_divisors( 1, $num );
+my @res = filter_last_digit ( $last_dig, \@divisors );
+say scalar ( @res );
 
 # collect numbers with specific last digit
 sub filter_last_digit {
-    my ( $last_dig, $res ) = @_;
+    my ( $last_dig, $divisors ) = @_;
 
-    my @result = grep { substr( $_, -1 ) == $last_dig } @$res ;
+    # courtesy ccntrq
+    my @result = grep { substr( $_, -1 ) == $last_dig } @$divisors ;
     return @result;
 }
 
@@ -43,6 +44,6 @@ sub count_divisors {
     }
 
     #according to the task the number itself is not considered a divisor, so we cut it off of the result
-    splice( @divisors, $#divisors, 1 );
+    splice( @divisors, -1 );
     return @divisors;
 }
