@@ -83,7 +83,7 @@ sub add_doc {
         $word_count++;
     }
 
-    say "Indexed $title: found $word_count words";
+    say "Indexed $title";
 
     # disconnect from database
     $dbh->disconnect();
