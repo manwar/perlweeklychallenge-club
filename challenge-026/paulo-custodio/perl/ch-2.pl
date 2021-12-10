@@ -9,7 +9,7 @@
 use Modern::Perl;
 use Math::Trig;
 
-say mean(@ARGV);
+say sprintf("%.1f", mean(@ARGV));
 
 sub mean {
     my(@a) = @_;

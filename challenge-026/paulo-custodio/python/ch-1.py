@@ -1,4 +1,4 @@
-#!/usr/bin/perl
+#!/usr/bin/python3
 
 # Challenge 026
 #
@@ -10,12 +10,10 @@
 # only A-Z,a-z characters are acceptable. Also make the comparison case
 # sensitive.
 
-use Modern::Perl;
+import sys
 
-say count(@ARGV);
+def count(letters, word):
+    letters = set([x for x in letters])
+    return len(list(filter(lambda x: x in letters, [x for x in word])))
 
-sub count {
-    my($letters, $word) = @_;
-    my %letters; $letters{$_}=1 for grep {/\w/} split //, $letters;
-    return scalar grep {$letters{$_}} split //, $word;
-}
+print(count(sys.argv[1], sys.argv[2]))
