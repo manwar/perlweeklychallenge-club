@@ -33,7 +33,7 @@ sub coins_sum {
     my $matrix;
 
     # Sum of 0 can be achieved in one possible way.
-    $matrix->[$_][0] = 1 for (0 .. $size+1);
+    $matrix->[$_][0] = 1 for (0 .. $size);
 
     foreach my $i (0 .. $size) {
 
