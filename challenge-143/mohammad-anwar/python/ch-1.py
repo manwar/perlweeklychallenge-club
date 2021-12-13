@@ -8,7 +8,9 @@ Week 143:
 
 Task #1: Calculator
 
-    Write a script to find lowest 10 positive integers having exactly 8 divisors.
+    You are given a string, `$s`, containing mathematical expression.
+
+    Write a script to print the result of the mathematical expression. To keep it simple, please only accept `+ - * ()`.
 
 '''
 
