@@ -1,4 +1,4 @@
-# Perl Weekly Challenge #142
+# Perl Weekly Challenge #143
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,32 +10,27 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-142/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-143/james-smith/perl
 
-# Challenge 1 - Divisor Last Digit
+# Challenge 1 - Calculator
 
-***You are given positive integers, `$m` and `$n`.  Write a script to find total count of divisors of `$m` having last digit `$n`.***
+***You are given a string, `$s`, containing mathematical expression. Write a script to print the result of the mathematical expression. To keep it simple, please only accept `+ - * ()`.***`
 
 ## The solution
 
 ```perl
-sub divisor_last_digit {
-  my($m,$n)=@_;
-  ($n==1?1:0)+grep{$_%10==$n}
-              map{$m%$_?():$m==$_*$_?($_):($_,$m/$_)}
-              2..sqrt$m;
+sub evaluate  {
+  my $str = shift;
+  1 while $str =~ s/\(\s*([^()]*?)\s*\)/       evaluate($1)             /e;
+  1 while $str =~ s/(-?\d+)\s*\*\s*(-?\d+)/    $1 * $2                  /e;
+  1 while $str =~ s/(-?\d+)\s*([-+])\s*(-?\d+)/$2 eq '+' ? $1+$3 : $1-$3/e;
+  return $str;
 }
 ```
 
- * First we find all the factors - by looping over all values between `2` and the square root of `$m`. If the value is a factor, so is `$m/$_`.
- * We have a special case when `$m` is a square to avoid including the square root twice.
- * We then `grep` to obtain those which have the correct last digit.
- * There is one extra special case if `$n` is `1` we have to add `1` as `1` is a factor which we miss out in our calculations (so we don't
-   equally get `$m` as a factor).
+# Challenge 2 - Stealthy Number
 
-# Challenge 2 - Sleep sort
-
-***Another joke sort similar to JortSort suggested by champion Adam Russell. You are given a list of numbers. Write a script to implement Sleep Sort.***
+***You are given a positive number, `$n`.  Write a script to find out if the given number is Stealthy Number. A positive integer `N` is stealthy, if there exist positive integers `a`, `b`, `c`, `d` such that `a * b = c * d = N` and `a + b = c + d + 1`.***
 
 To perform a sleep sort - we loop through the list of numbers, sleeping for `$value` seconds and updating the list of results with `$value`
 
