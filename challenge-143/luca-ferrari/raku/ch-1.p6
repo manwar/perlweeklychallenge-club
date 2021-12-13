@@ -55,6 +55,8 @@ class CalculatorActions {
     }
 
 
+    # Computes a single operation in the form
+    # a + b
     method do-compute( $left-operand, $operator, $right-operand ) {
         given $operator {
             when $OPERATOR_ADD      { $left-operand + $right-operand }
@@ -65,6 +67,12 @@ class CalculatorActions {
     }
 
 
+    # Computes all the operation given the first operand, the set of operators
+    # and the other operands.
+    # For example:
+    # 1 + 2 * 3
+    # becomes
+    # do-compute-all( 1, [+,*], [2,3])
     method do-compute-all( $left-operand is rw, @operators, @operands ) {
         while ( @operators.elems > 0 ) {
             $left-operand = self.do-compute( $left-operand,
