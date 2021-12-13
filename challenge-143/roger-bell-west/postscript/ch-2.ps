@@ -1,0 +1,55 @@
+%!PS
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/factorpairs {
+    /nn exch def
+    nn 1 eq {
+        [ 2 ]
+    } {
+        /ff 0 array def
+        /s nn sqrt cvi def
+        s s mul nn eq {
+            /ff ff s 2 mul apush def
+            /s s 1 sub def
+        } if
+        2 1 s {
+            /pf exch def
+            nn pf mod 0 eq {
+                /ff ff pf nn pf idiv add apush def
+            } if
+        } for
+        /ff ff 1 nn add apush def
+        ff
+    } ifelse
+} bind def
+
+/is_stealthy {
+    /n exch def
+    /p n factorpairs def
+    /stl false def
+    p length 1 ne {
+        0 1 p length 2 sub {
+            /ix exch def
+            ix 1 add 1 p length 1 sub {
+                /iy exch def
+                p ix get p iy get sub abs
+                1 eq {
+                    /stl true def
+                    exit
+                } if
+            } for
+            stl {
+                exit
+            } if
+        } for
+    } if
+    stl
+} bind def
+
+36 is_stealthy true eq { (Pass) } { (FAIL) } ifelse print ( ) print
+12 is_stealthy true eq { (Pass) } { (FAIL) } ifelse print ( ) print
+6 is_stealthy false eq { (Pass) } { (FAIL) } ifelse =
