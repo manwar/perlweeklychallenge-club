@@ -36,7 +36,7 @@ sub explain($stealthy) {
 "Since $a (a) * $b (b) = $c (c) * $d (d) and $a (a) + $b (b) = $c (c) + $d (d) + 1";
 }
 
-sub pairs(@xs ) {
+sub pairs(@xs) {
     my @out;
     for my $i ( 0 .. $#xs - 1 ) {
         push @out, map { [ $xs[$i], $xs[$_] ] } ( $i + 1 .. $#xs );
