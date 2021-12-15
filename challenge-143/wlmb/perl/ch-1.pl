@@ -60,12 +60,13 @@ sub term {
 sub simple {
     my $op=$token->[0];
     my $val=$token->[1];
-    die "Unrecognized expression: $previous\n" unless defined $op && $op=~/[-(N]/;
+    die "Unrecognized expression: $previous\n" unless defined $op && $op=~/[-+(N]/;
     token();
-    return -simple() if $op eq '-';
-    return $val if $op eq 'N';
-    my $result=expression();
-    $op=$token->[0];
+    return -simple() if $op eq '-'; # unary -
+    return simple() if $op eq '+';  # unary +
+    return $val if $op eq 'N';      # number
+    my $result=expression();        # parenthesized expression
+    $op=$token->[0];                # closing parenthesis should follow
     die "Unbalanced parenthesis: $previous\n" unless defined $op and $op eq ')';
     token();
     return $result;
