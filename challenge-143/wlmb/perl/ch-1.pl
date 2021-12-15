@@ -13,14 +13,14 @@ my $current;
 my $token;
 foreach (@ARGV){
     try {
-	$original_string=$previous=$current=$_;
-	token();
-	my $result=expression();
-	die "Extra characters: $previous\n" if defined $token->[0];
-	say "$original_string=$result";
+        $original_string=$previous=$current=$_;
+        token();
+        my $result=expression();
+        die "Extra characters: $previous\n" if defined $token->[0];
+        say "$original_string=$result";
     }
     catch {
-	warn $_;
+        warn $_;
     };
 }
 
