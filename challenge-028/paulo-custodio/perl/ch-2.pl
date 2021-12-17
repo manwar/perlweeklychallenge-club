@@ -88,19 +88,19 @@ my $CLEAR = "\e[H\e[2J";
 my $HOME  = "\e[H";
 
 sub banner {
-	my($text) = @_;
-	for my $row (0 .. $#{$chars{' '}}) {
-		for my $c (split(//, $text)) {
-			print $chars{$c}[$row];
-		}
-		print "\n";
-	}
+    my($text) = @_;
+    for my $row (0 .. $#{$chars{' '}}) {
+        for my $c (split(//, $text)) {
+            print $chars{$c}[$row];
+        }
+        print "\n";
+    }
 }
 
 print $CLEAR;
 while (1) {
-	my $time = strftime("%H:%M:%S", localtime(time));
-	print $HOME;
-	banner($time);
-	usleep(500*1000);
+    my $time = strftime("%H:%M:%S", localtime(time));
+    print $HOME;
+    banner($time);
+    usleep(500*1000);
 }

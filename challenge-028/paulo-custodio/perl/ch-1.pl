@@ -12,8 +12,8 @@ use Modern::Perl;
 
 my $file = shift or die "Usage: $0 file\n";
 if (-T $file) {
-	say "The file content is ascii.";
+    say "The file content is ascii.";
 }
 else {
-	say "The file content is binary.";
+    say "The file content is binary.";
 }

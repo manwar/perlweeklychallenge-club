@@ -9,7 +9,7 @@
 from datetime import datetime
 import time
 
-chars = { 
+chars = {
     ' ': ["      ",
           "      ",
           "      ",
