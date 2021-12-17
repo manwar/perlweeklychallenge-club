@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 
+# Challenge 143
+#
 # TASK #2 > Stealthy Number
 # Submitted by: Mohammad S Anwar
 # You are given a positive number, $n.
