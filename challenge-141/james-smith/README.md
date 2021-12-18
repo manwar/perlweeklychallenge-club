@@ -1,3 +1,5 @@
+[< Previous 140](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-140/james-smith) |
+[Next 142 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-142/james-smith)
 # Perl Weekly Challenge #141
 
 You can find more information about this weeks, and previous weeks challenges at:
