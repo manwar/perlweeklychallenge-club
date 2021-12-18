@@ -46,6 +46,49 @@ sub evaluate  {
 
 For small strings - this is about the same speed as `eval`, for larger strings not so, but in both cases it is "safer" as string `eval` of "tainted" input is a real security risk.
 
+## As a challenge infix->RPN converter than evaluate
+
+On the Perl Programming Facebook Group - the use or RPN was mentioned - and so the challenge lead to reimplementing this by converting the infix notation to Reverse Polish and then evaluating the RPN stack.
+
+Infix `(a+b)*c+d` would become `a b + c * d +` in Reverse Polish Notation. 
+
+To achieve this we set up a dispatch table - which stores methods for every operator we see in the string...
+And then when we see an operator in the stream (either infix or rpn) we use the appropriate function. This simplifies the code considerably...
+
+```perl
+my(@s,@o,%f);
+
+## THe 3 values are:
+##  precedence
+##  fn to apply when finding operator in infix stream
+##  fn to apply when finding operator in RPN stream
+ 
+%f = (
+  '('=>[0,sub{push@s,'(' },                                                       ],
+  ')'=>[0,sub{push@o,$_ while($_=pop@s)ne'('},                                    ],
+  '*'=>[2,sub{push@o,pop@s while@s&&$f{$s[-1]}[0]>1;push@s,'*'},sub{$s[-2]*=pop@s}],
+  '+'=>[1,sub{push@o,pop@s while@s&&$f{$s[-1]}[0];  push@s,'+'},sub{$s[-2]+=pop@s}],
+  '-'=>[1,sub{push@o,pop@s while@s&&$f{$s[-1]}[0];  push@s,'-'},sub{$s[-2]-=pop@s}],
+);
+
+## @o is output, @s is a stack..
+## Two loops - first line converts infix to rpn
+##             second evaluates the rpn string.
+sub evaluate_rpn  {
+  @o=(); @s=(); ## Clear output and stack.
+  ## If operator use function in f hash to update output/stack
+  ##    othewise it is a number and we push to output.
+  ($f{$_}) ? (&{$f{$_}[1]}) : (push@o,$_) for $_[0] =~ m{(-?\d+|[-+*()])}g;
+  ## If operator use function in f to update stack
+  ##    otherwise we push the value onto the stack
+  ## ** we use reverse splice to reverse the string AND clear the stack at the
+  ##    same time for the loop to work.
+  ($f{$_}) ? (&{$f{$_}[2]}) : (push@s,$_) for @o, reverse splice @s,0;
+  ## The result is the remaining value in the stack.
+  $s[0];
+}
+```
+
 # Challenge 2 - Stealthy Number
 
 ***You are given a positive number, `$n`.  Write a script to find out if the given number is Stealthy Number. A positive integer `N` is stealthy, if there exist positive integers `a`, `b`, `c`, `d` such that `a * b = c * d = N` and `a + b = c + d + 1`.***
