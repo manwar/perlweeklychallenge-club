@@ -1,4 +1,6 @@
-# Perl Weekly Challenge #142
+[< Previous 142](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-142/james-smith) |
+[Next 144 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-144/james-smith)
+# Perl Weekly Challenge #143
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,71 +12,102 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-142/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-143/james-smith
 
-# Challenge 1 - Divisor Last Digit
+# Challenge 1 - Calculator
 
-***You are given positive integers, `$m` and `$n`.  Write a script to find total count of divisors of `$m` having last digit `$n`.***
+***You are given a string, `$s`, containing mathematical expression. Write a script to print the result of the mathematical expression. To keep it simple, please only accept `+ - * ()`.***`
 
 ## The solution
 
+The simple solution is just to "`eval`" the string, but where is the fun in that... We can either go for a tokenizing parser - where we create an array of elements brackets, symbols, numbers, or we can use regular expressions to reduce the equation.
+
+All students will remember BODMAS - Brackets, order, Division/Multiplication, Addition/Division. (or BIDMAS, PIDMAS, PEMDAS or whatever you used to remember it). So we have to break our prasing down into:
+
+ * Brackets
+ * Order    - we don't have this in our equations
+ * Division/Multiplication - we only have the latter
+ * Addition/Subtraction.
+
+So our logic becomes:
+
+ * Find brackets without brackets within - for these we evaluate the contents using the same algorithm;
+ * If there are no brackets left - we then looking for multiplications from left to right and evaluate these.
+ * If there are no brackets or multiplications we look at the addition/subtraction again left to right.
+ * This gives the following perl function:
+
 ```perl
-sub divisor_last_digit {
-  my($m,$n)=@_;
-  ($n==1?1:0)+grep{$_%10==$n}
-              map{$m%$_?():$m==$_*$_?($_):($_,$m/$_)}
-              2..sqrt$m;
+sub evaluate  {
+  my $str = shift;
+  1 while $str =~ s/\(\s*([^()]*?)\s*\)/       evaluate($1)             /e;
+  1 while $str =~ s/(-?\d+)\s*\*\s*(-?\d+)/    $1 * $2                  /e;
+  1 while $str =~ s/(-?\d+)\s*([-+])\s*(-?\d+)/$2 eq '+' ? $1+$3 : $1-$3/e;
+  return $str;
 }
 ```
 
- * First we find all the factors - by looping over all values between `2` and the square root of `$m`. If the value is a factor, so is `$m/$_`.
- * We have a special case when `$m` is a square to avoid including the square root twice.
- * We then `grep` to obtain those which have the correct last digit.
- * There is one extra special case if `$n` is `1` we have to add `1` as `1` is a factor which we miss out in our calculations (so we don't
-   equally get `$m` as a factor).
+For small strings - this is about the same speed as `eval`, for larger strings not so, but in both cases it is "safer" as string `eval` of "tainted" input is a real security risk.
 
-# Challenge 2 - Sleep sort
+## As a challenge infix->RPN converter than evaluate
 
-***Another joke sort similar to JortSort suggested by champion Adam Russell. You are given a list of numbers. Write a script to implement Sleep Sort.***
+On the Perl Programming Facebook Group - the use or RPN was mentioned - and so the challenge lead to reimplementing this by converting the infix notation to Reverse Polish and then evaluating the RPN stack.
 
-To perform a sleep sort - we loop through the list of numbers, sleeping for `$value` seconds and updating the list of results with `$value`
+Infix `(a+b)*c+d` would become `a b + c * d +` in Reverse Polish Notation. 
+
+To achieve this we set up a dispatch table - which stores methods for every operator we see in the string...
+And then when we see an operator in the stream (either infix or rpn) we use the appropriate function. This simplifies the code considerably...
+
+```perl
+my(@s,@o,%f);
+
+## THe 3 values are:
+##  precedence
+##  fn to apply when finding operator in infix stream
+##  fn to apply when finding operator in RPN stream
+ 
+%f = (
+  '('=>[0,sub{push@s,'(' },                                                       ],
+  ')'=>[0,sub{push@o,$_ while($_=pop@s)ne'('},                                    ],
+  '*'=>[2,sub{push@o,pop@s while@s&&$f{$s[-1]}[0]>1;push@s,'*'},sub{$s[-2]*=pop@s}],
+  '+'=>[1,sub{push@o,pop@s while@s&&$f{$s[-1]}[0];  push@s,'+'},sub{$s[-2]+=pop@s}],
+  '-'=>[1,sub{push@o,pop@s while@s&&$f{$s[-1]}[0];  push@s,'-'},sub{$s[-2]-=pop@s}],
+);
+
+## @o is output, @s is a stack..
+## Two loops - first line converts infix to rpn
+##             second evaluates the rpn string.
+sub evaluate_rpn  {
+  @o=(); @s=(); ## Clear output and stack.
+  ## If operator use function in f hash to update output/stack
+  ##    othewise it is a number and we push to output.
+  ($f{$_}) ? (&{$f{$_}[1]}) : (push@o,$_) for $_[0] =~ m{(-?\d+|[-+*()])}g;
+  ## If operator use function in f to update stack
+  ##    otherwise we push the value onto the stack
+  ## ** we use reverse splice to reverse the string AND clear the stack at the
+  ##    same time for the loop to work.
+  ($f{$_}) ? (&{$f{$_}[2]}) : (push@s,$_) for @o, reverse splice @s,0;
+  ## The result is the remaining value in the stack.
+  $s[0];
+}
+```
+
+# Challenge 2 - Stealthy Number
+
+***You are given a positive number, `$n`.  Write a script to find out if the given number is Stealthy Number. A positive integer `N` is stealthy, if there exist positive integers `a`, `b`, `c`, `d` such that `a * b = c * d = N` and `a + b = c + d + 1`.***
 
 ## The solution
 
-We need to parallelise this process
+First we find all the factors of `N` (well the ones for where `N=a*b` and `a<b`)
 
-There are different ways of doing this `fork`, `threads`, `Promises`.
+We then store the sum of the factors in a hash (as the keys), we also store the sum of the factors + 1 in the hash {using `++` so what is stored is the count of these numbers}.
 
-We will go for the `threads` approach as it easier to implement that `Promises` but doesn't eat at memory by forking lots of times.
+So if we have the condition `a+b == c+d+1` is equivalent to seeing which keys in the hash have a value greater than 1. In which case we have our value. For the problem we don't need this value - just whether there is a value. So our function comes down to this.
 
 ```perl
-use threads;
-use threads::shared;
-use Time::HiRes qw(sleep);
-
-my @res :shared;
-my @list=map{0.001*int rand 3000}1..20;
-
-say "@list";
-
-sub sleeper {sleep$_[0];push@res,$_[0]}
-
-threads->new( \&sleeper, $_ ) for @list;
-
-$_->join for threads->list;
-
-say for @res;
+sub stealthy_number {
+  my($n,%c) = shift;
+  $n%$_||($c{$n/$_+$_ }++,$c{$n/$_+$_+1}++) for 1..sqrt$n;
+  (grep { $_ > 1 } values %c) ? 1 : 0;
+}
 ```
-
-## Notes
-
- * We create a test set of 20 values between `0` and `3`.
- * We fire off all the threads (`threads->new`)
- * Wait for them to finish `$_->join for threads->list`
- * Return the results.
- * As well as `use threads`, we also `use threads::shared`. This lets us declare the results array `@res` shareable across all processes, which we need to collect the values.
-
-## Caveat
-
-Not all threads start at the same time so sometimes results don't quite come back in the same order - especially if values are close together.
 
