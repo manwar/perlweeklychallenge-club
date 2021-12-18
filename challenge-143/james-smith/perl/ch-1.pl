@@ -31,6 +31,7 @@ my @TESTS = (
   [ '10 * 10 - 6 * 6 - 8 * 8', 0 ],
   [ '4 + 4 - 6 - 2', 0 ],
   [ '(10 + 10) * (10 - 10) * (10 + 10) * (20 - (((20))))', 0 ],
+  [ '(((((10+10)*10+10)*10+10)*10+10)*10+10)*10+10', 2111110 ],
 );
 
 is( evaluate(        $_->[0]), $_->[1] ) foreach @TESTS;
@@ -42,9 +43,13 @@ cmpthese( 20000, {
   'eval_rpn' => sub { evaluate_via_rpn($_->[0]) for @TESTS },
   'eval_hsh' => sub { evaluate_rpn_hsh($_->[0]) for @TESTS },
   'eval'     => sub { eval(    $_->[0]) for @TESTS },
+  'eval_x'   => sub { eval_x(  $_->[0]) for @TESTS },
 });
 done_testing();
 
+sub eval_x {
+  return eval( shift );
+}
 sub evaluate  {
   my $str = shift;
   1 while $str =~ s/\(\s*([^()]*?)\s*\)/       evaluate($1)             /e;
@@ -54,18 +59,17 @@ sub evaluate  {
 }
 
 sub evaluate_via_rpn  {
-  @s=();@o=();
-
+  @s=();@o=(); ## Stack/output
   for ( $_[0] =~ m{(-?\d+|[-+*()])}g ) {
-    if( m{\d} ) {
+    if( m{\d} ) { ## Number push to output
       push @o, $_;
-    } elsif( $_ eq '(' ) {
+    } elsif( $_ eq '(' ) { # open bracket add to stack
       push @s, $_;
-    } elsif( $_ eq ')' ) {
-      push @o, $_ while ($_ = pop @s) ne '(';
-    } else {
-      push @o, pop @s while @s && $f{$s[-1]}[0] && $f{$_}[0]<=$f{$s[-1]}[0];
-      push @s, $_;
+    } elsif( $_ eq ')' ) { # close bracket
+      push @o, $_ while ($_ = pop @s) ne '('; # push everything to output (in reverse order)
+    } else {                                  # until we reach the open bracket
+      push @o, pop @s while @s && $f{$s[-1]}[0] && $f{$_}[0]<=$f{$s[-1]}[0]; # pop off
+      push @s, $_;           # and push to stack if higher precidence and push value to stack
     }
   }
   push @o, reverse @s;
