@@ -110,3 +110,31 @@ sub stealthy_number {
 }
 ```
 
+## An alternative solution
+
+Having played with the solution above - I realised (it should have been obvious) that the pairs of factors will be consecutive, e.g. 12 has 3 pairs 1,12 2,6, 3,4, and the pair that makes this a stealthy number is going to be `2+6 = 3+4+1`.
+
+We can therefore we don't need to keep an array of valid factors - only the previous factor. The code thus becomes:
+
+```perl
+sub stealthy_number_1pass {
+  my($p,$n) = (1,@_);
+  $n%$_?1:$n/$p+$p-$n/$_-$_-1?($p=$_):(return 1)for 2..sqrt$n;
+  0;
+}
+```
+
+OK - that's a bit golfed. So lets unravel the ternaries in the middle to make the code more readable.
+
+```perl
+sub stealthy_number_1pass {
+  my $n = shift;
+  my $p = 1;
+  foreach ( 2 .. sqrt $n ) {
+    next     if $n % $_;
+    return 1 if $n/$p + $p == $n/$_ + $_ + 1;
+    $p = $_;
+  }
+  return 0;
+}
+```
