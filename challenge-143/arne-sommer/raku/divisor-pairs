@@ -1,0 +1,31 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * > 0;
+
+unit sub MAIN (PosInt $n);
+
+say "Divisor pairs: { divisor-pairs($n).raku }";
+
+sub divisor-pairs ($number)
+{
+  my @divisors;
+  my %seen;
+
+  return ((1,1),) if $number == 1;
+
+  for (1 .. $number/2) -> $candidate
+  {
+    if $number %% $candidate
+    {
+      my $b = $number div $candidate;
+
+      next if %seen{$candidate};
+
+      %seen{$b} = True;
+      
+      @divisors.push: ($candidate, $b);
+    }
+  }
+
+  return @divisors;
+}
