@@ -1,41 +1,63 @@
-TASK #1 - Divisor Last Digit
+TASK #1 - Calculator
 
-You are given positive integers, $m and $n.
+You are given a string, $s, containing mathematical expression.
 
-Write a script to find total count of divisors of $m having last digit $n.
+Write a script to print the result of the mathematical expression. To
+keep it simple, please only accept + - * ().
 
 Example 1:
 
-	Input: $m = 24, $n = 2
-	Output: 2
-
-	The divisors of 24 are 1, 2, 3, 4, 6, 8 and 12.
-	There are only 2 divisors having last digit 2 are 2 and 12.
-
+    Input: $s = "10 + 20 - 5"
+    Output: 25
 
 Example 2:
 
-	Input: $m = 30, $n = 5
-	Output: 2
+    Input: $s = "(10 + 20 - 5) * 2"
+    Output: 50
 
-	The divisors of 30 are 1, 2, 3, 5, 6, 10 and 15.
-	There are only 2 divisors having last digit 5 are 5 and 15.
+MY NOTES: Ok, so a mini parser of a string in one or more command
+   line arguments.   What's the easiest way?
+   - use Parse::RecDescent?
+   - hand write a recursive descent parser?
+   - convert to RPN and evaluate RPN?
 
-MY NOTES: Very easy.
+
+TASK #2 - Stealthy Number
+
+You are given a positive number, $n.
+
+Write a script to find out if the given number is Stealthy Number.
+
+A positive integer N is stealthy, if there exist positive integers
+a, b, c, d such that a * b = c * d = N and a + b = c + d + 1.
+
+Example 1
+
+	Input: $n = 36
+	Output: 1
+
+	Since 36 = 4 (a) * 9 (b) = 6 (c) * 6 (d) and
+	4 (a) + 9 (b) = 6 (c) + 6 (d) + 1.
+
+Example 2
+
+	Input: $n = 12
+	Output: 1
+
+	Since 2 * 6 = 3 * 4 and 2 + 6 = 3 + 4 + 1
+
+Example 3
+
+	Input: $n = 6
+	Output: 0
+
+	Since 2 * 3 = 1 * 6 but 2 + 3 != 1 + 6 + 1
 
 
-TASK #2 - Sleep Sort
+MY NOTES: hmm..  need some kind of brute force search, presumably.
+what are the limits of a..d?  first thought: each <= $n,
+hang on, (a,b) must be a factor pair of n (where a is a factor of n
+<= sqrt(n) and b is n/a), and (c,d) must also be a factor pair of n.
 
-Another joke sort similar to JortSort suggested by champion Adam Russell.
-
-You are given a list of numbers.
-
-Write a script to implement Sleep Sort. For more information:
-
-for n in array
-	create a new thread and make it sleep for array[n] milliseconds
-	print array[n]
-end
-wait for all processes to finish
-
-MY NOTES: threaded sorting? weird.  not sure I can be bothered..
+As a bonus, I've also implemented the --firstn flag which makes it
+find and display the first $n stealthy numbers.
