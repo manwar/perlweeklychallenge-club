@@ -5,7 +5,6 @@ stealthy(N):-
     fd_domain(T, 2, N),
     fd_domain(U, 2, N),
     fd_domain(V, 2, N),
-    S * T #= U * V,
     S * T #= N,
     U * V #= N,
     S + T #= U + V + 1,
