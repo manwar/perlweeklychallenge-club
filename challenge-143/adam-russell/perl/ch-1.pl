@@ -1,7 +1,7 @@
 use strict;
 use warnings;
 ##
-# Write a script to demonstrate Reverse Polish notation(RPN).     
+# Write a script to implement a four function infix calculator.     
 ##
 use TWCCalculator;
 use constant ADD => "10 + 8";
