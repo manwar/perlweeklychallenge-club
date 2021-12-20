@@ -1,6 +1,6 @@
 [< Previous 143](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-143/james-smith) |
 [Next 145 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-145/james-smith)
-# Perl Weekly Challenge #143
+# Perl Weekly Challenge #144
 
 You can find more information about this weeks, and previous weeks challenges at:
 
