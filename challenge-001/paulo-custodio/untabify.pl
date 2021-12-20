@@ -10,7 +10,7 @@ for my $dir (<challenge-*/paulo-custodio>) {
     my $iter = path($dir)->iterator({recurse=>1});
     while (defined(my $path = $iter->())) {
         next unless $path->is_file;
-		next unless -T $path;
+        next unless -T $path;
         next if $path =~ /~$/;                      # temp files
         my $ext = ""; $path->basename =~ /(\.\w+)$/ and $ext = $1;
         next if $ext eq "" || $ext =~ /\.(exe|o|obj|ali|ads)$/; # binaries
