@@ -31,9 +31,9 @@ All students will remember BODMAS - Brackets, order, Division/Multiplication, Ad
 
 So our logic becomes:
 
- * Find brackets without brackets within - for these we evaluate the contents using the same algorithm;
- * If there are no brackets left - we then looking for multiplications from left to right and evaluate these.
- * If there are no brackets or multiplications we look at the addition/subtraction again left to right.
+ * **B** - Find brackets without brackets within - for these we evaluate the contents using the same algorithm;
+ * **M** - If there are no brackets left - we then looking for multiplications from left to right and evaluate these.
+ * **AS** - If there are no brackets or multiplications we look at the addition/subtraction again left to right.
  * This gives the following perl function:
 
 ```perl
@@ -58,36 +58,35 @@ To achieve this we set up a dispatch table - which stores methods for every oper
 And then when we see an operator in the stream (either infix or rpn) we use the appropriate function. This simplifies the code considerably...
 
 ```perl
-my(@s,@o,%f);
+my( @s, @o, %f ); ## @s <- stack, @o <- output, %f <- method "dispatch" table
 
 ## THe 3 values are:
 ##  precedence
 ##  fn to apply when finding operator in infix stream
 ##  fn to apply when finding operator in RPN stream
  
-%f = (
-  '('=>[0,sub{push@s,'(' },                                                       ],
-  ')'=>[0,sub{push@o,$_ while($_=pop@s)ne'('},                                    ],
-  '*'=>[2,sub{push@o,pop@s while@s&&$f{$s[-1]}[0]>1;push@s,'*'},sub{$s[-2]*=pop@s}],
-  '+'=>[1,sub{push@o,pop@s while@s&&$f{$s[-1]}[0];  push@s,'+'},sub{$s[-2]+=pop@s}],
-  '-'=>[1,sub{push@o,pop@s while@s&&$f{$s[-1]}[0];  push@s,'-'},sub{$s[-2]-=pop@s}],
+       ##  Precedence
+%f = ( ##     Convertion function Infix -> RPN                                 RPN processing function
+  '(' => [ 0, sub{ push @s, '('                                             },                        ],
+  ')' => [ 0, sub{ push @o, $_     while ($_=pop@s) ne '('                  },                        ],
+  '*' => [ 2, sub{ push @o, pop @s while @s && $f{$s[-1]}[0]>1; push@s, '*' }, sub{ $s[-2] *= pop @s }],
+  '+' => [ 1, sub{ push @o, pop @s while @s && $f{$s[-1]}[0];   push@s, '+' }, sub{ $s[-2] += pop @s }],
+  '-' => [ 1, sub{ push @o, pop @s while @s && $f{$s[-1]}[0];   push@s, '-' }, sub{ $s[-2] -= pop @s }],
 );
 
-## @o is output, @s is a stack..
 ## Two loops - first line converts infix to rpn
 ##             second evaluates the rpn string.
 sub evaluate_rpn  {
-  @o=(); @s=(); ## Clear output and stack.
-  ## If operator use function in f hash to update output/stack
-  ##    othewise it is a number and we push to output.
+  @o= @s= (); ## Clear output and stack.
+              ## If operator use function in f hash to update output/stack
+              ##    othewise it is a number and we push to output.
   ($f{$_}) ? (&{$f{$_}[1]}) : (push@o,$_) for $_[0] =~ m{(-?\d+|[-+*()])}g;
-  ## If operator use function in f to update stack
-  ##    otherwise we push the value onto the stack
-  ## ** we use reverse splice to reverse the string AND clear the stack at the
-  ##    same time for the loop to work.
+              ## If operator use function in f to update stack
+              ##    otherwise we push the value onto the stack
+              ## ** we use reverse splice to reverse the string AND clear the stack at the
+              ##    same time for the loop to work.
   ($f{$_}) ? (&{$f{$_}[2]}) : (push@s,$_) for @o, reverse splice @s,0;
-  ## The result is the remaining value in the stack.
-  $s[0];
+  $s[0];      ## The result is the remaining value in the stack.
 }
 ```
 
@@ -111,3 +110,31 @@ sub stealthy_number {
 }
 ```
 
+## An alternative solution
+
+Having played with the solution above - I realised (it should have been obvious) that the pairs of factors will be consecutive, e.g. 12 has 3 pairs 1,12 2,6, 3,4, and the pair that makes this a stealthy number is going to be `2+6 = 3+4+1`.
+
+We can therefore we don't need to keep an array of valid factors - only the previous factor. The code thus becomes:
+
+```perl
+sub stealthy_number_1pass {
+  my($p,$n) = (1,@_);
+  $n%$_?1:$n/$p+$p-$n/$_-$_-1?($p=$_):(return 1)for 2..sqrt$n;
+  0;
+}
+```
+
+OK - that's a bit golfed. So lets unravel the ternaries in the middle to make the code more readable.
+
+```perl
+sub stealthy_number_1pass {
+  my $n = shift;
+  my $p = 1;
+  foreach ( 2 .. sqrt $n ) {
+    next     if $n % $_;
+    return 1 if $n/$p + $p == $n/$_ + $_ + 1;
+    $p = $_;
+  }
+  return 0;
+}
+```
