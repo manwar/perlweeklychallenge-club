@@ -1,6 +1,25 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
    "drilldown" : {
       "series" : [
+         {
+            "name" : "Paulo Custodio",
+            "id" : "Paulo Custodio",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
          {
             "data" : [
                [
@@ -12,56 +31,52 @@
                   2
                ]
             ],
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West"
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          }
       ]
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 144"
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "legend" : {
+      "enabled" : 0
    },
    "xAxis" : {
       "type" : "category"
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Paulo Custodio",
+               "y" : 2,
+               "drilldown" : "Paulo Custodio"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            }
+         ],
+         "name" : "The Weekly Challenge - 144"
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 144"
    },
    "chart" : {
       "type" : "column"
    },
    "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2021-12-21 15:06:31 GMT"
+      "text" : "[Champions: 2] Last updated at 2021-12-21 15:38:35 GMT"
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
-            }
-         ],
-         "name" : "The Weekly Challenge - 144",
-         "colorByPoint" : 1
-      }
-   ],
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    }
 }
