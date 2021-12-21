@@ -7,10 +7,8 @@
 # defined or standard C function.
 
 use Modern::Perl;
-use Inline C => <<'END';
-    int sum(int a, int b) {
-        return a+b;
-    }
-END
+use Path::Tiny;
 
-say sum(@ARGV);
+use Inline C => path("cmult.c")->slurp();
+
+say sprintf("%.2f", cmult(@ARGV));
