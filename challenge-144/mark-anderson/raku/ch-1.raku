@@ -13,11 +13,7 @@ is-deeply (^Inf).hyper.grep(&semi-prime)[1000, 2000, 5000, 9999],
 
 sub semi-prime($n)
 {
-    return True if sqrt($n).is-prime;
-
-    given proper-divisors($n).grep(*.is-prime)
-    {
-        return False if .elems !== 2;
-        return .[0] * .[1] == $n;
-    }
+    my @div = proper-divisors($n).skip;
+    return False if @div ~~ Empty;
+    return @div.grep(*.is-prime) == @div;
 }
