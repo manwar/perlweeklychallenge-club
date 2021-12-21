@@ -18,19 +18,16 @@ use experimental 'lexical_subs';
 #
 
 #
-# And the upteenth time in succession, we'll use the divisors method.
+# And the upteenth time in succession, we'll use Math::Prime::Util
 #
-# BBOOOOOOOOOOOOORRRRRRRRRRRRRRRIIIIIIIIIIIIIIINNNNNNNNNNNNGGGGGGGGGG
+# BBBBBBBBBBOOOOOOOOOOORRRRRRRRRRRIIIIIIIIIIINNNNNNNNNNNGGGGGGGGGG
 #
 # Besides, ANY challenge of the form "print the first N terms of an
 # OEIS sequence" is a trivial glorified hello world program.
 #
-# Semiprimes have either 3 (squares of primes) or 4 divisors (product
-# of two primes), but should not be cubes of primes. They only cubes
-# of primes < 100 are 8 and 27.
+# Semiprimes have exactly 2 factors.
 #
 
-use Math::Prime::Util qw [divisors];
-my %cubes = map {$_ => 1} 8, 27;
+use Math::Prime::Util qw [factor];
 
-say join ", " => grep {!$cubes {$_} && 3 <= divisors ($_) <= 4} 1 .. 100;
+say join ", " => grep {2 == factor $_} 1 .. 100;
