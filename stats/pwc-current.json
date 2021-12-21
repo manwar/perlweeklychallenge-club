@@ -1,15 +1,34 @@
 {
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2021-12-21 16:16:32 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "E. Choroba",
-            "id" : "E. Choroba"
+            "name" : "E. Choroba"
          },
          {
             "name" : "Luca Ferrari",
@@ -26,17 +45,31 @@
             "id" : "Luca Ferrari"
          },
          {
-            "name" : "Paulo Custodio",
+            "id" : "Paulo Custodio",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Paulo Custodio"
+            "name" : "Paulo Custodio"
          },
          {
-            "name" : "Roger Bell_West",
+            "id" : "Peter Campbell Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Peter Campbell Smith"
+         },
+         {
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -47,70 +80,56 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West"
+            "name" : "Roger Bell_West"
          }
       ]
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 144"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 144",
-         "data" : [
-            {
-               "drilldown" : "E. Choroba",
-               "y" : 2,
-               "name" : "E. Choroba"
-            },
-            {
-               "drilldown" : "Luca Ferrari",
-               "y" : 6,
-               "name" : "Luca Ferrari"
-            },
-            {
-               "y" : 2,
-               "name" : "Paulo Custodio",
-               "drilldown" : "Paulo Custodio"
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 4
-            }
-         ]
-      }
-   ],
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
    },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2021-12-21 16:01:22 GMT"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
-   "xAxis" : {
-      "type" : "category"
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 144",
+         "data" : [
+            {
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
+               "y" : 6
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Paulo Custodio",
+               "name" : "Paulo Custodio"
+            },
+            {
+               "y" : 3,
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith"
+            },
+            {
+               "y" : 4,
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 144"
    }
 }
