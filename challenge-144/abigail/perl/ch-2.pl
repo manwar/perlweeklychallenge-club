@@ -20,30 +20,23 @@ use List::Util qw [min];
 #
 
 sub ulam ($u1, $u2) {
-    die unless $u1 > 0 && $u2 > 0 && $u1 != $u2
-            && $u1 == int $u1 && $u2 == int $u2;
-    ($u1, $u2) = ($u2, $u1) if $u1 > $u2;
+    my @seen = ($u1,  $u2);
+    my %sums = ($u1 + $u2, 1);
 
-    my @seen = ($u1, $u2);
-    my %sums;
-       $sums   {$u1 + $u2} = 1;
-    my %todo = ($u1 + $u2, 1);
-
-    while (%todo) {
-        my $next = min keys %todo;
-        delete $todo {$next};
-        next if $sums {$next} > 1;
+    my $next;
+    while (%sums) {
+        $next = min keys %sums;  # A heap saves a factor N/log N, but
+                                 # who cares about performance when we
+                                 # just want to do the first 10 numbers?
+        next if delete $sums {$next} > 1;
         push   @seen => $next;
         return @seen if @seen >= 10;
 
-        foreach my $seen (@seen) {
-            next if $seen == $next;
-            my $sum = $seen + $next;
-            $sums {$sum} ++;
-            $todo {$sum} = 1;
-        }
+        $_ == $next || $sums {$_ + $next} ++ foreach @seen;
     }
 }
+
+
 
 $, = ", ";
 say ulam /[0-9]+/g while <>;
