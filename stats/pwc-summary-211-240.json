@@ -1,4 +1,7 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2021-12-22 03:02:50 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Simon Green",
@@ -33,14 +36,17 @@
          "Wanderdoc"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             134,
             7,
@@ -72,9 +78,11 @@
             106,
             65,
             177
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -106,8 +114,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -145,23 +152,16 @@
          ]
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2021-12-22 02:20:21 GMT"
-   },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    }
 }
