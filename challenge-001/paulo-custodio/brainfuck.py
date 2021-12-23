@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 
 # Run brainfuck from input
-# Addition to the language:     # - comment, ignore rest of the line
 # Option:                       -t - trace execution
 
 import sys
 import getopt
 import re
 
-TAPE_SIZE = 3000
+TAPE_SIZE = 30000
 do_trace = False
 
 class TuringMachine:
@@ -19,8 +18,7 @@ class TuringMachine:
         self.ip = 0
 
     def parse(self, prog):
-        prog = re.sub(r"#[^\n]*", "", prog)   # remove comments
-        prog = re.sub(r"\s*", "", prog)       # remove blanks
+        prog = re.sub(r"[^-+<>,.\[\]]+", "", prog)  # remove non-brainfuck operations
         return prog
 
     def done(self):
@@ -61,8 +59,7 @@ class TuringMachine:
             if self.tape[self.ptr]!=0:
                 self.find_open()
         else:
-            print("operation not supported:", op)
-            sys.exit(1)
+            pass                        # ignore other characters
 
         if do_trace:
             print(op, end=" ")
