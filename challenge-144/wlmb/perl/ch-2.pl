@@ -10,18 +10,17 @@ use PDL::NiceSlice;
 say("Usage: ./ch-2.pl u v [N]\nto find the first N (default 10) terms".
     " of the Ulam sequence u,v..."),exit unless @ARGV==2 || @ARGV==3;
 say("The given numbers should not be equal"), exit unless $ARGV[0]!=$ARGV[1];
-my $ulam=pdl(@ARGV[(0,1)]); # initialize sequence
+my $ulam=pdl[$ARGV[0]]; # initialize sequence
+my $candidates=pdl[$ARGV[1]]; # candidate list
 my $N=$ARGV[2]//10;
-foreach(3..$N){
-    my $sums=$ulam+$ulam->slice("*"); # addition table for Ulam sequence
-    my $ordered=$sums->where(
-	($sums->xvals>$sums->yvals)  # upper triangle in addition table
-	&($sums>$ulam((-1)) # remove previous terms
-	))->qsort; # order
-    $ordered=$ordered->where( # eliminate duplicates with right or left
-        ($ordered!=$ordered->rotate(-1))
-        &($ordered!=$ordered->rotate(1))) if $ordered->nelem>1;
-    $ulam=$ulam->append($ordered((0)));
+foreach(2..$N){
+    my $sl=$candidates->qsort; # short list
+    # remove duplicates
+    $sl=$sl->where(($sl!=$sl->rotate(1))&($sl!=$sl->rotate(-1))) if $sl->nelem>1;
+    my $next=$sl->((0)); # Next Ulam number
+    $candidates=$candidates->append($ulam+$next); # Update candidate list
+    $candidates=$candidates->where($candidates>$next); # remove those too small
+    $ulam=$ulam->append([$next]); # update list of ulam numbers
 }
 say "Input: u=$ARGV[0], v=$ARGV[1]", defined $ARGV[2]?", N=$N":"";
 say "Output: $ulam";
