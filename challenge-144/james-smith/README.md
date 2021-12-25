@@ -20,6 +20,11 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-144/ja
 
 ## The solution
 
+Rather than looping through each number to find if it is a semiprime - instead we find all the primes and multiply these together.
+We realise we need the primes up to $N/2, and so compute them. Then for each prime we push all multiples of the prime with all
+the previous primes (filtering for values less than or equal to $N)
+
+This method is faster than the loop method about 9x faster than the loop method for `$N = 10,000`.
 ```perl
 my $N = 1000;
 my @primes      = (2);
@@ -40,6 +45,8 @@ say for sort {$a<=>$b} @semi_primes;
 The standard Ulam sequence (the (1, 2)-Ulam sequence) starts with U1 = 1 and U2 = 2. Then for n > 2, Un is defined to be the smallest integer that is the sum of two distinct earlier terms in exactly one way and larger than all earlier terms.***
 
 ## The solution
+
+For ulam numbers - we use an array and a hash to store previous ulam numbers. That allows us to quickly find those which have 1 unique partition. We do this with the grep in the 3rd line of the function. We then continue until the the array has the appropriate size. (We know there will be at least one solution the sum of the last two ulam numbers)
 
 ```perl
 sub ulam {
