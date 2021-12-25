@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 
+# Challenge 143
+#
 # TASK #1 > Calculator
 # Submitted by: Mohammad S Anwar
 # You are given a string, $s, containing mathematical expression.
-# 
+#
 # Write a script to print the result of the mathematical expression. To keep
 # it simple, please only accept + - * ().
-# 
+#
 # Example 1:
 #     Input: $s = "10 + 20 - 5"
 #     Output: 25
@@ -46,7 +48,7 @@ def factor(input):
             value -= b
         else:
             return input, value
-    
+
 def term(input):
     input = input.strip()+" "
     match = re.match(r"[-+]?\d+", input)
