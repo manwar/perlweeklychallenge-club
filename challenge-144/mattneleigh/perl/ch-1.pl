@@ -92,7 +92,8 @@ sub find_semiprimes{
         } # End for $j
     } # End for $i
 
-    # Sort the primes in ascending order
+    # Sort the semiprimes in ascending
+    # order
     @semiprimes = sort({ $a->{product} <=> $b->{product} } @semiprimes);
 
     return(@semiprimes);
