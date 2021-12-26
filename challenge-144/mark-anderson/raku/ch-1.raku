@@ -14,5 +14,5 @@ is-deeply (^Inf).hyper.grep(&semi-prime)[1000, 2000, 5000, 9999],
 sub semi-prime($n)
 {
     my @div = proper-divisors($n, :s).skip;
-    @div.elems and @div.all.is-prime.Bool; 
+    @div.elems and @div.all.is-prime; 
 }
