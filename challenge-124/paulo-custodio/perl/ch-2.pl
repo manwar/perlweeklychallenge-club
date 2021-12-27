@@ -1,5 +1,7 @@
 #!/usr/bin/env perl
 
+# Challenge 124
+#
 # TASK #2 > Tug of War
 # Submitted by: Mohammad S Anwar
 # You are given a set of $n integers (n1, n2, n3, ….).

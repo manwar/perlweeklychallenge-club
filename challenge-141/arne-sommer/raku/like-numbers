@@ -1,0 +1,31 @@
+#! /usr/bin/env raku
+
+subset PosInt of Int where * >= 1;
+
+unit sub MAIN (PosInt $m, PosInt $n, :v(:$verbose));
+
+my $seq := gather { recurse("", $m.comb); }
+
+my %seen;
+
+sub recurse($done, @todo is copy)
+{
+  unless %seen{$done}
+  {
+    take $done if 1 <= $done.chars < $m.chars;
+    %seen{$done} = True;
+  }
+  
+  return unless @todo;
+  my $next = @todo.shift;
+  recurse($done ~ $next, @todo);
+  recurse($done, @todo);
+}
+
+my @candidates = $seq;
+my @divisible  = @candidates.grep( * %% $n );
+
+say ": Candidates: { @candidates.join(", ") }" if $verbose;
+say ": Divisibles: { @divisible.join(", ") }"  if $verbose;
+
+say @divisible.elems;

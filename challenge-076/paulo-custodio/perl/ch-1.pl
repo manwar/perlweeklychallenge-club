@@ -2,10 +2,11 @@
 
 # Challenge 076
 #
-# TASK #1 › Prime Sum
+# TASK #1 > Prime Sum
 # Submitted by: Mohammad S Anwar
 # Reviewed by: Ryan Thompson
-# You are given a number $N. Write a script to find the minimum number of prime numbers required, whose summation gives you $N.
+# You are given a number $N. Write a script to find the minimum number of
+# prime numbers required, whose summation gives you $N.
 #
 # For the sake of this task, please assume 1 is not a prime number.
 #

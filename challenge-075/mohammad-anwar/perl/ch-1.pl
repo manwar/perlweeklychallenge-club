@@ -11,6 +11,7 @@
 use strict;
 use warnings;
 
+my $DEBUG = 0;
 my $COINS = $ARGV[0] || "1, 2, 4";
 my $SUM   = $ARGV[1] || 6;
 
@@ -30,7 +31,7 @@ sub coins_sum {
     my $matrix;
 
     # Sum of 0 can be achieved in one possible way.
-    $matrix->[$_][0] = 1 for (0 .. $size+1);
+    $matrix->[$_][0] = 1 for (0 .. $size);
 
     foreach my $i (0 .. $size) {
 
@@ -51,7 +52,22 @@ sub coins_sum {
         }
     }
 
+    show_matrix($matrix) if $DEBUG;
     return $matrix->[$size][$sum];
+}
+
+sub show_matrix {
+    my ($matrix) = @_;
+
+    my $rows = @$matrix;
+    my $cols = @{$matrix->[0]};
+
+    foreach my $r (0 .. $rows-1) {
+        foreach my $c (0 .. $cols-1) {
+            print sprintf("%s ", $matrix->[$r][$c]);
+        }
+        print "\n";
+    }
 }
 
 sub prepare {

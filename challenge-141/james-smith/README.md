@@ -1,4 +1,6 @@
-# Perl Weekly Challenge #140
+[< Previous 140](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-140/james-smith) |
+[Next 142 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-142/james-smith)
+# Perl Weekly Challenge #141
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -10,129 +12,65 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-140/james-smith/perl
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-141/james-smith/perl
 
-# Challenge 1 - Add binary
+# Challenge 1 - Number Divisors
 
-***Write a script to simulate the addition of the given binary numbers. The script should simulate something like `$a + $b`. (operator overloading)***
-
-## The solution
-
-To allow for operator overloading we need to create a class. `DecBin` will be that class. We have to override to functions:
-
-* `+` - addition
-* `==` - comparison
-
-We also override `""` - stringify so we can print the numbers if we want.
-
-Our object is simple a scalar reference. So in `new` we just bless the reference to the number than is passed, and show and comparison just return the scalar pointed to by the reference or compares two of these.
-
-The add function is the more complex function. Working backwards digit by digit
-
-* we add the *carry bit* and the last digit of the remaining string;
-* we then use the last digit of this to update the total, but multiplying this by the position multiplier;
-* we then move the multiplier one digit to the left by multiplying by 10;
-* we then divide the *carry bit* by 2, to see if we need to carry to the next number;
-* remove the last digit of the two numbers
-
-We repeat this until we no longer have a carry AND we have processed all digits of the two numbers.
-
-* Note - the *carry bit* will always be 0,1,2,3 after the first addition, as the digits of the two numbers can only be 1 or 0 and the *carry bit* will only ever be 0 and 1 as well.
-
-```perl
-package DecBin;
-
-use overload ('+'=>'bin_add','=='=>'comp','""'=>'show');
-
-sub new  { bless \$_[1], $_[0] }
-sub show { ${$_[0]} }
-sub comp { ${$_[0]} == ${$_[1]} }
-
-sub bin_add {
-  my($t,$c,$m,$a,$b) = (0,0,1,${$_[0]},${$_[1]});
-  $c+=$a%10+$b%10,$t+=$m*($c&1),$m*=10,$c>>=1,$a=int$a/10,$b=int$b/10 while $a||$b||$c;
-  DecBin->new($t);
-}
-```
-The long line may be unreadable - so I also include a multi-line version
-
-```perl
-sub bin_add {
-  my($t,$c,$m,$a,$b) = (0,0,1,${$_[0]},${$_[1]});
-  while ($a||$b||$c) {
-    $c +=  $a%10 + $b%10;
-    $t +=  $m * ($c&1);
-    $m *=  10;
-    $c >>= 1;
-    $a =   int $a/10;
-    $b =   int $b/10;
-  }
-  DecBin->new($t);
-}
-```
-
-To show that the overloading works - we use the following test script:
-
-```perl
-my @TESTS = (
-  [ [  11,  1 ] , 100 ],
-  [ [ 101,  1 ] , 110 ],
-  [ [ 100, 11 ] , 111 ],
-);
-foreach(@TESTS) {
-  my $x = DecBin->new($_->[0][0]);
-  my $y = DecBin->new($_->[0][1]);
-  my $z = DecBin->new($_->[1]);
-  say join "\t", $x, $y, $x+$y, $z, $x+$y==$z ? 'OK' : 'FAIL';
-}
-```
-
-with output:
-
-```
-11      1       100     100     OK
-101     1       110     110     OK
-100     11      111     111     OK
-```
-
-# Challenge 2 - Multiplication Table
-
-***You are given 3 positive integers, `$i`, `$j` and `$k`. Write a script to print the `$k`th element in the sorted multiplication table of `$i` and `$j`.***
+***Write a script to find lowest 10 positive integers having exactly 8 divisors.***
 
 ## The solution
 
-Obviously there are two parts to this - a first pass which finds all the numbers and a second pass which counts to find the `$k`th element.
+For a number 2 have exactly 8 divisors it must be of the form:
+
+ * `p1 * p2 * p3`
+ * `p1 * p2^3`
+ * `p1^8`
+
+So to find the list of integers with 8 divisors we can generate a list of such numbers (for a set of small primes) and take the lowest 10...
+
+So the code is written as 
 
 ```perl
-sub get_num {
-  my($i,$j,$k,$t,%h) = @_;
-  $t=$_, map { $h{$t*$_}++ } 1..$j for 1..$i;
-  $k-=$h{$_}, ($k<1) && (return $_) for sort { $a<=>$b } keys %h;
+my @primes = (2,3,5,7,11,13);
+my @vals;
+
+while(@primes) {
+  push @vals, (my $p1 = shift @primes) ** 8;
+  my @t  = @primes;
+  while( @t ) {
+    my $p2 = shift @t;
+    push @vals, $p1*$p2**3, $p2*$p1**3, map {$p1*$p2*$_} @t;
+  }
+}
+
+say for (sort{$a<=>$b}@vals)[0..9];
+```
+
+The `shift` operator on both `@primes` and `@t` means we don't get duplicate values (`$p1`<`$p2`<`$_`), but does mean that we have to find `p1 * p2^3` and `p1^3 * p2`.
+
+As someone pointed out last week on Perl Programmers Facebook group `say` without any parameters operates on `$_` so the printing for loop simplifies to `say for ...`;
+
+
+# Challenge 2 - Like Numbers
+
+***You are given positive integers, `$m` and `$n`. Write a script to find total count of integers created using the digits of `$m` which is also divisible by `$n`. Repeating of digits are not allowed. Order/Sequence of digits can’t be altered. You are only allowed to use (n-1) digits at the most. For example, 432 is not acceptable integer created using the digits of 1234. Also for 1234, you can only have integers having no more than three digits.***
+
+## The solution
+
+The solution is here... but as it's so compact let us expand out the stages. Note as these are nested functions we will need to work backwards through the statement.
+```perl
+sub like_numbers {
+  my @digits = split//,$_[0];
+  0 + grep { !($_%$_[1]) }
+       map { my $n=$_<<1; join '',grep{($n>>=1)&1} @digits }
+           1 .. (1<<@digits) - 2
 }
 ```
 
-Here we do some *naughty* code (as in challenge 1), using `,` to perform multiple commands in one line; using `map` to perform a `for`
-loop (altering values & ignoring the result) and using `&&` to simulate an `if` statement.
+(line 1) The first thing we do is convert the number into an array of digits.
 
-In this function each of these is written as a single line. We can expand each of these functions out to see how the algorithm works:
+(line 4) We can enumarate the numbers made of the digits (in order) from `1` to `2^n-1` - the last though is the full number to so we reduce the loop to `1` to `2^n-2`.
 
-```perl
-sub get_num {
-  my($i,$j,$k,$t,%h) = @_;
-  for $t (1..$i) {
-    $h{$t*$_}++ for 1..$j;
-  }
-  for (sort {$a<=>$b} keys %h) {
-    $k -= $h{$_};
-    return $_ if $k<1;
-  }
-}
-```
-## Notes
-  * In the `my` statement we initalise the first 3 parameters with the values passed in, the remaining 2 values `$t` and `%h` are not assigned a value.
-  * The first `for` loop (`for` can be used in place of `foreach` in perl, simply stores the numbers as keys to a hash, whose values are the "frequency" of the number occuring.
-  * The second one finds the answer. We first thing we do is sort the numbers into order as the keys of the hash are un-ordered.
-  * Rather than working up to `$k` we can work down from it to `0`. So we subtract the frequency of the current number and if the
-    value is less than `1` then we know this is the number we are looking for and return it's value.
-  * Note we always return in the `for` loop unless there is no answer - so don't need a return at the end.
+(line 3) We use the binary representation of this number to work out which digits to use. Here we use the right shift operator (with `&1` to check to see if the digit is to be included. We have to do `$n=$_<<1;` in the map as the first thing we do is `$n>>=1`.
 
+(line 2) We filter out numbers not divisible by `$n` using `grep`. We could use the `scalar` to explicitly cast the list to it's length or we can use the shorter 0+ which does it implicitly.

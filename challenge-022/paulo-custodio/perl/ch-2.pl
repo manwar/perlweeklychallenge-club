@@ -3,7 +3,7 @@
 # Challenge 022
 #
 # Task #2
-# Write a script to implement Lempel–Ziv–Welch (LZW) compression algorithm.
+# Write a script to implement Lempel-Ziv-Welch (LZW) compression algorithm.
 # The script should have method to encode/decode algorithm. The wiki page
 # explains the compression algorithm very nicely.
 

@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 
-# Challenge 019
+# Challenge 024
 #
 # Task #2
 # Create a script to implement full text search functionality using Inverted
@@ -83,7 +83,7 @@ sub add_doc {
         $word_count++;
     }
 
-    say "Indexed $title: found $word_count words";
+    say "Indexed $title";
 
     # disconnect from database
     $dbh->disconnect();

@@ -1,0 +1,66 @@
+%!PS
+
+/aeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/factorctr {
+    /n exch def
+    n 1 eq {
+        1
+    } {
+        /f 2 def
+        /s n sqrt cvi def
+        s s mul n eq {
+            /s s 1 sub def
+            /f f 1 add def
+        } if
+        2 1 s {
+            n exch mod 0 eq {
+                /f f 2 add def
+            } if
+        } for
+        f
+    } ifelse
+} bind def
+
+/divisors {
+    /nn exch def
+    /ctr exch def
+    /a 0 array def
+    /t 0 def
+    {
+        nn 0 le {
+            exit
+        } if
+        /t t 1 add def
+        t factorctr ctr eq {
+            /a a t apush def
+            /nn nn 1 sub def
+        } if
+    } loop
+    a
+} bind def
+
+8 10 divisors [ 24 30 40 42 54 56 66 70 78 88 ] aeq { (Pass) } { (FAIL) } ifelse =
