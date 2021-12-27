@@ -39,7 +39,7 @@ while (scalar @ulams < 10) {
     for my $candidate (@candidates) {
         $freq{$candidate}++;
     }
-    @candidates = grep { %freq{$_} < 2 } keys %freq;
+    @candidates = grep { $freq{$_} < 2 } keys %freq;
 
     @candidates = grep { $a = $_; !grep { $_ == $a } @ulams; } @candidates;
 
