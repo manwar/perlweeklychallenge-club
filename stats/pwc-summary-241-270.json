@@ -1,10 +1,11 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2021-12-27 07:56:39 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
    },
    "xAxis" : {
       "categories" : [
@@ -15,43 +16,26 @@
          "Yozen Hernandez"
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             3,
             3,
             86,
             21
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
             3,
             21,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -63,5 +47,21 @@
          ],
          "name" : "Blog"
       }
-   ]
+   ],
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2021-12-27 10:37:44 GMT"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   }
 }
