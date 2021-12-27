@@ -43,16 +43,19 @@ sub isPrime {
     return 1;
 }
 
-my $n = shift // die "Need an integer.\n";
+my @semiprimes;
 
-my @factors = grep { $n % $_ == 0 && isPrime($_) } (2 .. $n / 2);
-if (scalar @factors == 1) {
-    say $factors[0] * $factors[0] == $n ? 1 : 0;
-} else {
-    say
+for my $n (2 .. 100) {
+    my @factors = grep { $n % $_ == 0 && isPrime($_) } (2 .. $n / 2);
+    if (scalar @factors == 1 && $factors[0] * $factors[0] == $n) {
+        push @semiprimes, $n;
+    } elsif(
         scalar
         (grep { $_ == $n }
         (map { $_->[0] * $_->[1] }
-        combinations (\@factors, 2)))
-        ? 1 : 0;
+        combinations (\@factors, 2)))) {
+            push @semiprimes, $n;
+    }
 }
+
+say join q{, }, @semiprimes;
