@@ -16,4 +16,4 @@ my @ulam = lazy gather {
     }
 };
 
-put @ulam[^10];
+put @ulam[^20];
