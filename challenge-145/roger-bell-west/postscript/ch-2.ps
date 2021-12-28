@@ -1,0 +1,124 @@
+%!PS
+
+/aeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/spush { % (ab) c -> (abc)
+    3 dict begin
+    /t exch 0 get def
+    /a exch def
+    a length 1 add string /b exch def
+    a b copy pop
+    b b length 1 sub t put
+    b
+    end
+} bind def
+
+/sreverse { % (abc) -> (cba)
+    3 dict begin
+    /a exch def
+    /l a length 1 sub def
+    /b l 1 add string def
+    l -1 0 {
+        dup
+        l exch sub
+        a exch get
+        b 3 1 roll put
+    } for
+    b
+    end
+} bind def
+
+/eertree {
+    8 dict begin
+    /str exch def
+    /pal 0 array def
+    /l str length def
+    0 1 l 1 sub {
+        /i exch def
+        1 1 l i sub {
+            /j exch def
+            /strpal str i j getinterval def
+            strpal strpal sreverse eq {
+                /pal pal strpal apush def
+            } if
+        } for
+    } for
+    /res 0 array def
+    /rd pal length dict def
+    pal {
+        dup
+        rd exch known not {
+            dup rd exch 1 put
+            res exch apush /res exch def
+        } if
+    } forall
+    res
+    end
+} bind def
+
+(redivider) eertree
+[ (r) (redivider) (e) (edivide) (d) (divid) (i) (ivi) (v) ] aeq {
+    (Pass)
+} {
+    (FAIL)
+} ifelse print ( ) print
+
+(deific) eertree
+[ (d) (e) (i) (ifi) (f) (c) ] aeq {
+    (Pass)
+} {
+    (FAIL)
+} ifelse print ( ) print
+
+(rotors) eertree
+[ (r) (rotor) (o) (oto) (t) (s) ] aeq {
+    (Pass)
+} {
+    (FAIL)
+} ifelse print ( ) print
+
+(challenge) eertree
+[ (c) (h) (a) (l) (ll) (e) (n) (g) ] aeq {
+    (Pass)
+} {
+    (FAIL)
+} ifelse print ( ) print
+
+(champion) eertree
+[ (c) (h) (a) (m) (p) (i) (o) (n) ] aeq {
+    (Pass)
+} {
+    (FAIL)
+} ifelse print ( ) print
+
+(christmas) eertree
+[ (c) (h) (r) (i) (s) (t) (m) (a) ] aeq {
+    (Pass)
+} {
+    (FAIL)
+} ifelse =
+
+
