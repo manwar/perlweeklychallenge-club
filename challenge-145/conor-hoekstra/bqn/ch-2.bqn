@@ -1,4 +1,4 @@
-PalindromicTree ← {1↓(⌽≡⊢)¨⊸/˜⍷∾´↑¨↓𝕩}
+PalindromicTree ← {1↓⌽⊸≡˜¨⊸/˜⍷∾´↑¨↓𝕩}
 
 # Tests
 PalindromicTree "redivider" # ⟨ "r" "redivider" "e" "edivide" "d" "divid" "i" "ivi" "v" ⟩
