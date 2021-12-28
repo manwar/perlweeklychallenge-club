@@ -51,7 +51,7 @@ class TuringMachine:
             if do_trace:
                 print("")
         elif op==",":
-            self.tape[self.ptr] = chr(sys.stdin.read(1))
+            self.tape[self.ptr] = ord(sys.stdin.read(1))
         elif op=="[":
             if self.tape[self.ptr]==0:
                 self.find_close()
