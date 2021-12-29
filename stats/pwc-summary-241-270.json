@@ -1,8 +1,6 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2021]"
    },
    "series" : [
       {
@@ -26,16 +24,20 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
             1,
             6,
             14
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "xAxis" : {
       "categories" : [
          "William Gilmore",
@@ -45,23 +47,21 @@
          "Yozen Hernandez"
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2021-12-29 18:30:19 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2021]"
-   },
    "chart" : {
       "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2021-12-29 19:13:14 GMT"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
