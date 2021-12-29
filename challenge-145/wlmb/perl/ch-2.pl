@@ -18,7 +18,7 @@ foreach(@ARGV){
     $root={size=>0, edges=>{}};
     $current=$root;
     $_->{suffix}=$imaginary_root foreach($root, $imaginary_root);
-    @letters=grep {!/[[:punct]|\s/} split '', lc $_; #ignore spaces and case
+    @letters=grep {!/\s/} split '', lc $_; #ignore spaces and case
     foreach(0..@letters-1){
 	add_letter($_);
     }
@@ -26,7 +26,8 @@ foreach(@ARGV){
     palindromes($imaginary_root->{edges}->{$_}, $_, $output)
 	foreach keys $imaginary_root->{edges}->%*;
     palindromes($root, "", $output);
-    say "Input: $_\nOutput: ", wrap("", "        ", join ", ", sort {$a cmp $b} $output->@*);
+    say "Input: $_\nOutput: ", wrap("", "        ",
+        join ", ", sort {length $a <=> length $b or $a cmp $b} $output->@*);
 }
 sub add_letter {
     my $index=shift;
@@ -34,13 +35,15 @@ sub add_letter {
     $current=$current->{suffix}
         while $index-$current->{size}-1<0
             || $letters[$index-$current->{size}-1] ne $letter;
-    $current=$current->{edges}{$letter}, return if defined $current->{edges}{letter};
-    my $suffix=$current;
-    $current=$current->{edges}->{$letter}={size=>$current->{size}+2, edges=>{}};
+    $current=$current->{edges}{$letter}, return
+        if defined $current->{edges}{$letter};
+    my $suffix=$current->{suffix};
+    $current=$current->{edges}->{$letter}
+        ={size=>$current->{size}+2, edges=>{}};
     $current->{suffix}=$root, return if $current->{size}==1;
-    $suffix=$suffix->{suffix} while $letters[$index-$suffix->{size}-1] ne $letter;
-    $suffix=$suffix->{edges}->{$letter} if $suffix->{size}==-1;
-    $current->{suffix}=$suffix;
+    $suffix=$suffix->{suffix}
+        while $letters[$index-$suffix->{size}-1] ne $letter;
+    $current->{suffix}=$suffix->{edges}->{$letter};
     return;
 }
 
