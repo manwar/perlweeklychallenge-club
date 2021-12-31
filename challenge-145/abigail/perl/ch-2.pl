@@ -48,6 +48,12 @@ use experimental 'lexical_subs';
 # We'll be doing the "do as I do" option.
 #
 
+#
+# Please see the section "Unicode and Combining Characters" at
+# https://abigail.github.io/HTML/Perl-Weekly-Challenge/week-145-2.html
+# to see how we interpret a palindrome.
+#
+
 local $, = $";
 while (<>) {
     my %seen;
@@ -64,4 +70,3 @@ while (<>) {
     #
     say keys %seen;
 }
-
