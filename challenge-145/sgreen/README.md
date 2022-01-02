@@ -1,4 +1,3 @@
-# The Weekly Challenge 144
+# The Weekly Challenge 145
 
-Solution by Simon Green. Sorry, no blog this week. Hopefully the code
-is easy enough to understand.
+Solution by Simon Green. [Blog](https://dev.to/simongreennet/weekly-challenge-145-4kho)
