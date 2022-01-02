@@ -1,57 +1,71 @@
-TASK #1 - Semiprime
+TASK #1 - Dot Product
 
-Write a script to generate all Semiprime number <= 100.
+You are given 2 arrays of same size, @a and @b.
 
-For more information about Semiprime, please checkout the wikipedia page
-https://en.wikipedia.org/wiki/Semiprime
+Write a script to implement Dot Product.
 
-In mathematics, a semiprime is a natural number that is the product of
-exactly two prime numbers. The two primes in the product may equal each
-other, so the semiprimes include the squares of prime numbers.
+Example:
 
-Example
+	@a = (1, 2, 3);
+	@b = (4, 5, 6);
 
-	10 is Semiprime as 10 = 2 x 5
-	15 is Semiprime as 15 = 3 x 5
+	$dot_product = (1 * 4) + (2 * 5) + (3 * 6) => 4 + 10 + 18 => 32
 
-MY NOTES: Sounds easy, using my existing factors function, and
-my existing prime generation code.
+MY NOTES: Very easy.
 
 
-TASK #2 - Ulam Sequence
+TASK #2 - Palindromic Tree
 
-You are given two positive numbers, $u and $v.
+You are given a string $s.
 
-Write a script to generate Ulam Sequence having at least 10 Ulam numbers
-where $u and $v are the first 2 Ulam numbers.
+Write a script to create a Palindromic Tree for the given string.
 
-For more information about Ulam Sequence, please checkout the website
-https://en.wikipedia.org/wiki/Ulam_number
+I found this blog exaplaining Palindromic Tree in detail:
 
-The standard Ulam sequence (the (1, 2)-Ulam sequence) starts with U1 =
-1 and U2 = 2. Then for n > 2, Un is defined to be the smallest integer
-that is the sum of two distinct earlier terms in exactly one way and
-larger than all earlier terms.
+https://medium.com/@alessiopiergiacomi/eertree-or-palindromic-tree-82453e75025b
 
-Example 1
+Example 1:
 
-	Input: $u = 1, $v = 2
-	Output: 1, 2, 3, 4, 6, 8, 11, 13, 16, 18
+	Input: $s = 'redivider'
+	Output: r redivider e edivide d divid i ivi v
 
-Example 2
+Example 2:
 
-	Input: $u = 2, $v = 3
-	Output: 2, 3, 5, 7, 8, 9, 13, 14, 18, 19
+	Input: $s = 'deific'
+	Output: d e i ifi f c
 
-Example 3
+Example 3:
 
-	Input: $u = 2, $v = 5
-	Output: 2, 5, 7, 9, 11, 12, 13, 15, 19, 23
+	Input: $s = 'rotors'
+	Output: r rotor o oto t s
 
+Example 4:
 
-MY NOTES: hmm..  sounds relatively straightforward.  I'm slightly puzzled
-by "in exactly one way", but the wikipedia gives an example that clarifies it.
-So presumably we're going to check each distinct pair of earlier terms,
-checking whether the sum of that pair is an Ulam number at all, whether it's
-greater than the last term we've found, and then pick the smallest of all
-such numbers found.  Obviously O(N**2) or worse.
+	Input: $s = 'challenge'
+	Output: c h a l ll e n g
+
+Example 5:
+
+	Input: $s = 'champion'
+	Output: c h a m p i o n
+
+Example 6:
+
+	Input: $s = 'christmas'
+	Output: c h r i s t m a
+
+MY NOTES: hmm..  I read the blog, but what on earth is it
+talking about, it's not very clear?  the underlying paper
+https://arxiv.org/pdf/1506.04862.pdf is a lot clearer, but
+still way too detailed for 10pm on a Sunday.
+
+Looking at the examples given above, the output seems to be
+a list of palindromic substrings not previously encountered,
+in the natural order found by sequencing through every starting
+position in the word and trying increasingly long substrings
+for "Palindromic"-ness.
+
+So, could we solve the "generate the output from the input"
+problem, entirely ignoring the whole "build a weird tree"
+part of it?  Presumably a lot less efficient than their
+clever eertree/Palindrome tree thingy, but who cares.
