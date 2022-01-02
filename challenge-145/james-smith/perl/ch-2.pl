@@ -21,7 +21,7 @@ my @TESTS = (
   [ 'llanfairpwllgwyngyllgogerychwyrndrobwllllantysiliogogogoch', 'l ll a n f i r p w g y gog o e c h d b lll llll t s ili ogo ogogo ogogogo gogog' ],
 );
 
-is( eertree($_->[0]), $_->[1] ) for @TESTS;
+is( stringify( eertree($_->[0]) ), $_->[1] ) for @TESTS;
 done_testing();
 
 sub eertree {
@@ -37,13 +37,7 @@ sub eertree {
   add_str( $tree, $str, -1, $_, $_   ),
   add_str( $tree, $str, q(), $_, $_+1 ) for 0.. @{$str}-1;
 
-  ## grab nodes and sort into start/length order and join....
-  return join q( ),
-         sort { $tree->{$a}{'start'} <=> $tree->{$b}{'start'} ||
-                length $a <=> length $b
-              }
-         grep { defined $tree->{$_}{'start'} }
-         keys %{$tree};
+  $tree;
 }
 
 sub add_str {
@@ -69,3 +63,12 @@ sub add_str {
   }
 }
 
+sub stringify {
+  my $tr = shift;
+  join q( ),
+  sort { $tr->{$a}{'start'} <=> $tr->{$b}{'start'} ||
+         length $a <=> length $b
+       }
+  grep { defined $tr->{$_}{'start'} }
+  keys %{$tr};
+}
