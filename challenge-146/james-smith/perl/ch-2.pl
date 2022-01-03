@@ -5,8 +5,6 @@ use strict;
 use warnings;
 use feature qw(say);
 use Test::More;
-use Benchmark qw(cmpthese timethis);
-use Data::Dumper qw(Dumper);
 
 my @TESTS = (
   [ 3,5, '3/5 3/2 1/2 1/1' ],
@@ -25,6 +23,6 @@ sub tree {
 }
 
 sub stringify {
-  join ' ', map { "$_->[0]/$_->[1]" } @{$_[0]};
+  join q( ), map { "$_->[0]/$_->[1]" } @{$_[0]};
 }
 
