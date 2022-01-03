@@ -20,7 +20,7 @@ use experimental 'lexical_subs';
 #     * The root is 1/1
 #     * Each node a/b has children a/(a + b) and (a + b)/b
 #
-# without having to rely on an image which needs to be interpolated.
+# without having to rely on an image which needs to be extrapolated.
 # Of course, we also have to utterly ignore the existance of
 # "the tree created similar to the above sample", as similar implies
 # it being different.
