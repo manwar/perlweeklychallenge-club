@@ -15,20 +15,14 @@ foreach(@ARGV){
 	my $gcd=gcd($n, $d);
 	say "Warning: $_ not reduced" unless $gcd==1;
 	($n, $d)=map {$_/$gcd} ($n, $d);
+	my @parent=parent($n, $d);
 	try {
-	    my @parent=parent($n, $d);
-	    try {
-		my @grand_parent=parent(@parent);
-		say "Input: $n/$d\nParent:$parent[0]/$parent[1]\n",
-		    "Grand parent: $grand_parent[0]/$grand_parent[1]\n";
-	    }
-	    catch {
-		die "No grandparent of $n/$d\n";
-	    }
-
+	    my @grand_parent=parent(@parent);
+	    say "Input: $n/$d\nParent:$parent[0]/$parent[1]\n",
+		"Grand parent: $grand_parent[0]/$grand_parent[1]\n";
 	}
 	catch {
-	    die $_;
+	    die "No grandparent of $n/$d\n";
 	}
     }
     catch {
