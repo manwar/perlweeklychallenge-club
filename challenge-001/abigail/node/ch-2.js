@@ -1,9 +1,11 @@
+#!/usr/local/bin/node
+
 //
-// See ../README.md
+// See https://theweeklychallenge.org/blog/perl-weekly-challenge-001
 //
 
 //
-// Run as: node ch-1.js < input-file
+// Run as: node ch-2.js < input-file
 //
 
   require      ("fs")
