@@ -49,8 +49,6 @@ class Node {
 }
 
 sub MAIN( Rat $member ) {
-    say $member;
-
     my $level = 1;
     my $root = Node.new: member => 1.Rat;
     $root.adjust;
