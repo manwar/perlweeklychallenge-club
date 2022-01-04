@@ -10,7 +10,7 @@ use PDL::NiceSlice;
 use Try::Tiny;
 for my $N(@ARGV?@ARGV:10001){
     try{
-	die "Argument should be positive: $N" unless $N>=1;
+	die "Argument $N is not positive\n" unless $N>=1;
 	# Estimate size $M of required sieve by solving $M/log($M) approx $N
 	# unless $N is too small
 	my $M=$N<4?6:find_zero(sub {my $x=shift; $N-$x/log($x)},
@@ -20,7 +20,8 @@ for my $N(@ARGV?@ARGV:10001){
 	$sieve($_*$_:-1:$_).=0 foreach(2..sqrt($M-1)); # multiples of 'it' are not prime
 	my $primes=$sieve->xvals->where($sieve); # first primes
 	die "Short sieve" unless $N<=$primes->nelem; # shouldn't happen
-	say "$N-th prime is ", $primes(($N-1));
+	my $Nth=$N>1?"$N-th":"$N-st";
+	say "The $Nth prime is ", $primes(($N-1));
     }
     catch { say $_;}
 }
@@ -31,5 +32,6 @@ sub find_zero { # Find zero of function using Newton's iteration
     my $y;
     my $max=10; # guard against non-convergence
     do{($y, $x)= ($x, $x-$f->($x)/$d->($x))} until approx($y,$x) or --$max<=0;
+    die "find_zero didn't converge" unless $max>0;
     return $x;
 }
