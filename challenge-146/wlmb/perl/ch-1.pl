@@ -28,10 +28,11 @@ for my $N(@ARGV?@ARGV:10001){
 
 no PDL::NiceSlice; # NiceSlice destroys indirect function calls!
 sub find_zero { # Find zero of function using Newton's iteration
-    my ($f, $d, $x)=@_; # function, derivative, initial guess
+    my ($f, $d, $x0)=@_; # function, derivative, initial guess
+    my $x=$x0;
     my $y;
     my $max=10; # guard against non-convergence
     do{($y, $x)= ($x, $x-$f->($x)/$d->($x))} until approx($y,$x) or --$max<=0;
-    die "find_zero didn't converge" unless $max>0;
+    die "find_zero didn't converge starting from $x0\n" unless $max>0;
     return $x;
 }
