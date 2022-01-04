@@ -5,10 +5,8 @@ use strict;
 use warnings;
 use feature qw(say);
 
-my @primes = (3);
-
-for( my $c=5; @primes<10000; $c+=2 ) {
-  ($_*$_>$c)?((push@primes,$c),last):$c%$_||last for @primes;
+my($c,@p)=(5,3);
+for(;@p<10000;$c+=2){
+  ($_*$_>$c)?((push@p,$c),last):$c%$_||last for@p;
 }
-
-say $primes[-1];
+say$p[-1];

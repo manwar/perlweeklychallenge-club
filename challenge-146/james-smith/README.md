@@ -23,16 +23,14 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-146/ja
 We could use a Prime module, but finding primes is not that difficult so we will roll our own generator:
 
 ```perl
-my @primes = (3);
-
-for( my $c=5; @primes<10000; $c+=2 ) {
-  ($_*$_>$c)?((push@primes,$c),last):$c%$_||last for @primes;
+my($c,@p)=(5,3);
+for(;@p<10000;$c+=2){
+  ($_*$_>$c)?((push@p,$c),last):$c%$_||last for@p;
 }
-
-say $primes[-1];
+say$p[-1];
 ```
 
-The crux of the code is in the `for @primes` line. This sees if a given odd number is prime.
+The crux of the code is in the `for @` line. This sees if a given odd number is prime.
 
 We loop through all the primes up to and including the square root of the value we are checking.
 If we don't find a prime factor by then we push the new value to the primes list, and go on to
@@ -51,18 +49,19 @@ so the last element is the 10,001st prime.
 We notice that:
   * if you have a top-heavy fraction then the parent has the same denominator, and the new demoninator is the difference between the numerator and denominator.
   * otherwise the numerator stays the same and the denominator becomes the difference between the numerator and denominator.
-We repeat this until we get to the top of the tree where both the denominator and numerator are 1.
+We repeat this until we get to the top of the tree where both the denominator and numerator are less than 2. (In the tree is always 1/1) as all tree members have co-prime numerators and denominators. Other values end when the numerator is 0.
 
-The stringify function just converts the tree into a single string (list of fractions) so we can test the tree code.
+The `stringify` function just converts the tree into a single string (list of fractions) so we can test the tree code.
+
 ```perl
 sub tree {
-  my $tree = [[ my($n,$d)=@_ ]];
-  push @{$tree}, [($n,$d)=$d>$n?($n,$d-$n):($n-$d,$d)] while $n>1||$d>1;
-  $tree;
+  my@tr=[my($n,$d)=@_];
+  push@tr,$d>$n?[$n,$d-=$n]:[$n-=$d,$d]while$n*$d>1;
+  \@tr;
 }
 
 sub stringify {
-  join q( ), map { "$_->[0]/$_->[1]" } @{$_[0]};
+  "@{[map{join'/',@{$_}}@{$_[0]}]}";
 }
 ```
 
