@@ -26,6 +26,7 @@ count the number of time we encountered an 'e'.
 * [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
 * [Tcl](tcl/ch-1.tcl)
+* [Scheme](scheme/ch-1.scm)
 
 
 ## [Challenge #2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-001/#challenge-2)
@@ -56,3 +57,4 @@ upper bound from STDIN.
 * [R](r/ch-2.r)
 * [Ruby](ruby/ch-2.rb)
 * [Tcl](tcl/ch-2.tcl)
+* [Scheme](scheme/ch-2.scm)
