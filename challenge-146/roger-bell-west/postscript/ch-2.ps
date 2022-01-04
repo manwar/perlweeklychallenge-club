@@ -1,0 +1,74 @@
+%!PS
+
+/aeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/spush { % (ab) c -> (abc)
+    3 dict begin
+    /t exch 0 get def
+    /a exch def
+    a length 1 add string /b exch def
+    a b copy pop
+    b b length 1 sub t put
+    b
+    end
+} bind def
+
+/i2s {
+    dup log cvi 1 add string cvs
+} bind def
+
+/stringify {
+    exch i2s 0 string exch spush
+    (/) spush
+    exch i2s spush
+} bind def
+
+/get_parent {
+    2 copy
+    gt {
+        exch 1 index sub exch
+    } {
+        1 index sub
+    } ifelse
+} bind def
+
+/p_gp {
+    /out 0 array def
+    (/) search {
+        cvi
+        exch pop
+        exch cvi
+        1 1 2 {
+            pop get_parent 2 copy stringify out exch apush /out exch def
+        } for
+        out
+    } {
+        pop out
+    } ifelse
+} bind def
+
+(3/5) p_gp [ (3/2) (1/2) ] aeq { (Pass) } { (FAIL) } ifelse print ( ) print
+(4/3) p_gp [ (1/3) (1/2) ] aeq { (Pass) } { (FAIL) } ifelse =
