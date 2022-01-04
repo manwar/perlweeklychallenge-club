@@ -1,7 +1,7 @@
 #!/opt/local/bin/python
 
 #
-# See https://theweeklychallenge.org/blog/perl-weekly-challenge-000
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-001
 #
 
 #
