@@ -23,6 +23,7 @@ count the number of time we encountered an 'e'.
 * [Pascal](pascal/ch-1.p)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
+* [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
 
 
@@ -50,4 +51,5 @@ upper bound from STDIN.
 * [Pascal](pascal/ch-2.p)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
+* [R](r/ch-2.r)
 * [Ruby](ruby/ch-2.rb)
