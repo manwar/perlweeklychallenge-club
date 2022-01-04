@@ -25,6 +25,7 @@ count the number of time we encountered an 'e'.
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
+* [Tcl](tcl/ch-1.tcl)
 
 
 ## [Challenge #2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-001/#challenge-2)
@@ -54,3 +55,4 @@ upper bound from STDIN.
 * [Python](python/ch-2.py)
 * [R](r/ch-2.r)
 * [Ruby](ruby/ch-2.rb)
+* [Tcl](tcl/ch-2.tcl)
