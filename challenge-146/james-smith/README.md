@@ -42,7 +42,7 @@ so the last element is the 10,001st prime.
 
 # Challenge 2 - Curious Fraction Tree
 
-*** Can't really describe this - best to look at the image on the website at https://theweeklychallenge.org/blog/perl-weekly-challenge-146/.***
+***Can't really describe this - best to look at the image on the website at https://theweeklychallenge.org/blog/perl-weekly-challenge-146/.***
 
 ## The solution
 
