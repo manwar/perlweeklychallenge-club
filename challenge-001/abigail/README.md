@@ -36,7 +36,7 @@ be replaced by the word `fizz` and any divisible by `5` by the word
 
 ### Note
 We will not be assuming a fixed upper bound. Instead, we read the
-upper boad from STDIN.
+upper bound from STDIN.
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
