@@ -3,11 +3,11 @@
 # include <string.h>
 
 /*
- * See ../README.md
+ * See https://theweeklychallenge.org/blog/perl-weekly-challenge-001
  */
 
 /*
- * Run as: cc -o ch-2.o cc-2.c; ./ch-2.o < input-file
+ * Run as: cc -o ch-2.o ch-2.c; ./ch-2.o < input-file
  */
 
 int main (void) {

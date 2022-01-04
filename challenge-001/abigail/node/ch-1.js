@@ -1,3 +1,13 @@
+#!/usr/local/bin/node
+
+//
+// See https://theweeklychallenge.org/blog/perl-weekly-challenge-001
+//
+
+//
+// Run as: node ch-1.js < input-file
+//
+
 //
 // Read STDIN. Split on newlines, filter out empty lines, then call "main".
 //
