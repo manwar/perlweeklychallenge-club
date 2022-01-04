@@ -1,6 +1,6 @@
-[< Previous 144](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-144/james-smith) |
-[Next 146 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-146/james-smith)
-# Perl Weekly Challenge #145
+[< Previous 145](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-145/james-smith) |
+[Next 147 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-147/james-smith)
+# Perl Weekly Challenge #146
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,79 +12,56 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-145/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-146/james-smith
 
-# Challenge 1 - Dot product
+# Challenge 1 - 10001st Prime Number
 
-***You are given 2 arrays of same size, `@a` and `@b`. Write a script to implement Dot Product.***
-
-## The solution
-
-This challenge is simple - Relatively simple one to start with this week. We keep a running total of the product of corresponding entries in each of the arrays.
-
-In this case we use one array as the basis of the loop, and shift off elements of the other array.
-
-```perl
-sub dot_product {
-  my ($t,@y) = (0,@{$_[1]});
-  $t += $_ * shift @y foreach @{$_[0]};
-  $t;
-}
-```
-
-# Challenge 2 - Palindromic Tree
-
-***You are given a string `$s`. Write a script to create a Palindromic Tree for the given string.***
+***Write a script to generate the 10001st prime number.***
 
 ## The solution
 
-This was one of the hardest challenges over recent weeks - not the implementation but understanding how/what this does.
-
-Creating the tree is relatively straight forward. We start with the two "empty" nodes, and for each letter or pair of
-adjacent letters which are the same we add the node as children (connected by edges), and also a back link to the
-first/last letter.
+We could use a Prime module, but finding primes is not that difficult so we will roll our own generator:
 
 ```perl
-sub eertree {
-  my $str = [ split //, $_[0] ];
-  my $tree = {
-    -1  => { 'start' => undef, 'edges' => {}, 'suff' => -1 },
-    q() => { 'start' => undef, 'edges' => {}, 'suff' => -1 },
-  };
-  add_str( $tree, $str, -1, $_, $_   ),
-  add_str( $tree, $str, q(), $_, $_+1 ) for 0.. @{$str}-1;
-  $tree;
+my($c,@p)=(5,3);
+for(;@p<10000;$c+=2){
+  ($_*$_>$c)?((push@p,$c),last):$c%$_||last for@p;
 }
+say$p[-1];
 ```
 
-In `add_str` we:
+The crux of the code is in the `for @` line. This sees if a given odd number is prime.
 
- * check that we are still in bounds and that the first and last letters are the same;
- * we create a link from the current node to the new node;
- * we create the new node if it didn't already exist;
- * we then expand the palindrome by a character at the front/end and repeat until we
-   are out of bounds or we don't have a palindrome.
+We loop through all the primes up to and including the square root of the value we are checking.
+If we don't find a prime factor by then we push the new value to the primes list, and go on to
+try the next number. If we find a
+factor we skip the rest of the loop and go on to try the next number.
+
+We stop when we have 10,000 records in the array (as we don't include the prime number 2 in the list),
+so the last element is the 10,001st prime.
+
+# Challenge 2 - Curious Fraction Tree
+
+*** Can't really describe this - best to look at the image on the website at https://theweeklychallenge.org/blog/perl-weekly-challenge-146/.***
+
+## The solution
+
+We notice that:
+  * if you have a top-heavy fraction then the parent has the same denominator, and the new demoninator is the difference between the numerator and denominator.
+  * otherwise the numerator stays the same and the denominator becomes the difference between the numerator and denominator.
+We repeat this until we get to the top of the tree where both the denominator and numerator are less than 2. (In the tree is always 1/1) as all tree members have co-prime numerators and denominators. Other values end when the numerator is 0.
+
+The `stringify` function just converts the tree into a single string (list of fractions) so we can test the tree code.
 
 ```perl
-sub add_str {
-  my( $tr, $c, $node, $st, $en ) = @_;
-  while( $st >=0 && $en < @{$c} && $c->[$st] eq $c->[$en] ) {
-    $tr->{$node}{'edges'}{my $s = join q(), @{$c}[$st..$en] } ||= keys %{$tr->{$node}{'edges'}};
-    $tr->{$node=$s} ||= { 'start' => $st, 'edges' => {}, 'suff' => $st==$en ? -1 : $en==$st+1 ? q() : $c->[$st] };
-    $st--;
-    $en++;
-  }
+sub tree {
+  my@tr=[my($n,$d)=@_];
+  push@tr,$d>$n?[$n,$d-=$n]:[$n-=$d,$d]while$n*$d>1;
+  \@tr;
 }
-```
 
-To generate the output required in the tests we flatten the string by sorting the nodes into the order of their first appearance (and length)
-```perl
 sub stringify {
-  my $tree = shift;
-  return join q( ),
-         sort { $tree->{$a}{'start'} <=> $tree->{$b}{'start'} ||
-                length $a <=> length $b }
-         grep { defined $tree->{$_}{'start'} }
-         keys %{$tree};
+  "@{[map{join'/',@{$_}}@{$_[0]}]}";
 }
 ```
+
