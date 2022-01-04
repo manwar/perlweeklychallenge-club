@@ -14,16 +14,16 @@ sub ancestors($rat is copy)
 {
     gather until $rat == 1
     {
-        $rat = ancestor($rat) andthen .take
+        $rat = parent($rat) andthen .take
     }
 }
 
-multi ancestor(\rat where * < 1)
+multi parent(\rat where * < 1)
 {
     .numerator / (.denominator - .numerator) with rat
 }
 
-multi ancestor(\rat)
+multi parent(\rat)
 {
     (.numerator - .denominator) / .denominator with rat
 }
