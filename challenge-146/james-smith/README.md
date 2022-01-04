@@ -62,11 +62,18 @@ so the last element is the 10,001st prime.
  |   |     |   |     |   |     |   |     |   |     |   |     |   |     |   |
 1/5 5/4   4/7 7/3   3/8 8/5   5/7 7/2   2/7 7/5   5/8 8/3   3/7 7/4   4/5 5/1
 ```
+
+For a given node `n/d` the children are `n/(n+d)` and `(n+d)/d`.
+
 ## The solution
 
-We notice that:
-  * if you have a top-heavy fraction then the parent has the same denominator, and the new demoninator is the difference between the numerator and denominator.
-  * otherwise the numerator stays the same and the denominator becomes the difference between the numerator and denominator.
+We note that the left-child is always less than one, the right child is always greater than 1.
+
+* To get the parent of the left child we note that `n+d = D` and `n = N`, so the parent denominator is `N-D` and numerator doesn't change
+* To get the parent of a right child we note that `n = N+D` and `d = D`, so the parent numerator is `N-D` and denominator doesn't change.
+* For all nodes the numerator/denominator are co-prime.
+
+If it is a member of the tree we repeat until both `n` & `d` are 1. If the node is such that the numbers aren't coprime we eventually stop when 
 We repeat this until we get to the top of the tree where both the denominator and numerator are less than 2. (In the tree is always 1/1) as all tree members have co-prime numerators and denominators. Other values end when the numerator is 0.
 
 The `stringify` function just converts the tree into a single string (list of fractions) so we can test the tree code.
