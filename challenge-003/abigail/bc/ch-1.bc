@@ -1,8 +1,35 @@
-max = read ()
-for (base2 = 1; base2 <= max; base2 *= 2) {
-    for (base3 = base2; base3 <= max; base3 *= 3) {
-        for (base5 = base3; base5 <= max; base5 *= 5) {
-            base5
-        }
+#!/usr/bin/bc
+
+#
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-003
+#
+
+#
+# Run as: bc ch-1.bc < input-file
+#
+
+while (1) {
+    n = read ()
+    if (n == 0) {
+        break
     }
+    ugly [0] = 1
+    next_2   = 0
+    next_3   = 0
+    next_5   = 0
+    index    = 1
+    while (index < n) {
+        u2 = 2 * ugly [next_2]
+        u3 = 3 * ugly [next_3]
+        u5 = 5 * ugly [next_5]
+        if ((u2 <= u3) && (u2 <= u5)) {min = u2}
+        if ((u3 <= u2) && (u3 <= u5)) {min = u3}
+        if ((u5 <= u2) && (u5 <= u3)) {min = u5}
+        ugly [index] = min
+        if (2 * ugly [next_2] <= ugly [index]) {next_2 = next_2 + 1}
+        if (3 * ugly [next_3] <= ugly [index]) {next_3 = next_3 + 1}
+        if (5 * ugly [next_5] <= ugly [index]) {next_5 = next_5 + 1}
+        index = index + 1
+    }
+    ugly [index - 1]
 }
