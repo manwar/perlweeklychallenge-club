@@ -39,6 +39,29 @@ try the next number. If we find a factor we skip the rest of the loop and go on 
 We stop when we have 10,000 records in the array (as we don't include the prime number 2 in the list - we
 explicitly exclude even numbers in the list we search over), so the last element is the 10,001st prime.
 
+For those of you that can't follow/don't like using `?:`, `&&` and `||` instead of `if/else`, `if` and
+`unless`. This is that block of code mapped out in full. The slight difference is that in the example
+above `$c+=2` is done after the main block is executed, and in this case before {so in this case we
+start with `$c=3` which increments to `$c=5` at the start of the loop.
+
+```perl
+my @primes = (3);
+my $c = 3;
+while( @primes < 10000 ) {
+  $c += 2;
+  foreach ( @primes ) {
+    if( $_*$_ > $c ) {
+      push @primes, $c;
+      last;
+    }
+    unless( $c % $_ ) {
+      last;
+    }
+  }
+}
+say $primes[-1];
+```
+
 # Challenge 2 - Curious Fraction Tree
 
 ***The tree below is defined by the following rules. For a fraction `a/b` the children are `a/(b+a)` & `(a+b)/b`. Given a node in the tree `n/m` we need to find the pate back up to the root node.***
