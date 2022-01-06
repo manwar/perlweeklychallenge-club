@@ -1,11 +1,11 @@
 #!/opt/local/bin/python
 
 #
-# See ../READ.md
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-002
 #
 
 #
-# Run as python ch-2.py {-f | -t} < input-file
+# Run as: python ch-2.py {-f | -t} < input-file
 #
 
 import fileinput
@@ -28,7 +28,7 @@ for opt, val in opts:
         do_to_base = 1
 
 if do_to_base + do_from_base != 1:
-    print "Need exactly one of -f or -t"
+    print ("Need exactly one of -f or -t")
     sys . exit (1)
 
 
@@ -52,7 +52,7 @@ def to_base (number):
 # Translate a number from base BASE to base 10
 #
 def from_base (number):
-    return int (number, BASE)
+    return int (number . strip (), BASE)
     
 #
 # Need to clean argv, else fileinput will try to open a file
@@ -60,4 +60,4 @@ def from_base (number):
 sys . argv [1:] = []
 
 for line in fileinput . input ():
-    print from_base (line) if do_from_base else to_base (int (line))
+    print (from_base (line) if do_from_base else to_base (int (line)))
