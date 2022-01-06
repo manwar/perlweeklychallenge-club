@@ -24,6 +24,7 @@ Output: 12
 * [bc](bc/ch-1.bc)
 * [C](c/ch-1.c)
 * [Go](go/ch-1.go)
+* [Java](java/ch-1.java)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
