@@ -10,7 +10,7 @@ use experimental 'signatures';
 use experimental 'lexical_subs';
 
 #
-# See ../README.md
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-004
 #
 
 #
@@ -54,8 +54,7 @@ while (<DATA>) {
 print "\n";
 
 #
-# FODDER FODDER FODDER FODDER FODDER FODDER FODDER
-# FODDER FODDER FODDER FODDER FODDER FODDER FODDER
+# FODDER FODDER FODDER FODDER FODDER FODDER FODDER!!
 #
 
 __DATA__
