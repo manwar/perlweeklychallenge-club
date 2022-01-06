@@ -32,4 +32,5 @@
 * [Python](python/ch-2.py)
 * [R](r/ch-2.r)
 * [Ruby](ruby/ch-2.rb)
+* [Scheme](scheme/ch-2.scm)
 * [Tcl](tcl/ch-2.tcl)
