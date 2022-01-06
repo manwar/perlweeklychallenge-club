@@ -20,6 +20,8 @@
 * [Bash](bash/ch-2.sh)
 * [bc](bc/ch-2.bc)
 * [C](c/ch-2.c)
+* [Go](go/ch-2.go)
+* [Java](java/ch-2.java)
 * [Lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
 * [Perl](perl/ch-2.pl)
