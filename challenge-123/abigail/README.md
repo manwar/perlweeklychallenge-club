@@ -32,6 +32,7 @@ Output: 12
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
+* [Tcl](tcl/ch-1.tcl)
 
 ### Blog
 [Perl Weekly Challenge 123: Ugly Numbers][blog1]
