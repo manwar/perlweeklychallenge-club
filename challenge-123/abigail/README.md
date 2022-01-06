@@ -23,6 +23,7 @@ Output: 12
 * [Bash](bash/ch-1.sh)
 * [bc](bc/ch-1.bc)
 * [C](c/ch-1.c)
+* [Go](go/ch-1.go)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
 * [Perl](perl/ch-1.pl)
