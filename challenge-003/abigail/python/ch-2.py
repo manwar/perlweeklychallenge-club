@@ -5,7 +5,7 @@
 #
 
 #
-# Run as python ch-2.py < input-file
+# Run as: python ch-2.py < input-file
 #
 
 import fileinput
