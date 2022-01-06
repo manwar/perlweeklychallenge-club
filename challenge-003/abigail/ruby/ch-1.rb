@@ -1,26 +1,29 @@
 #!/usr/bin/ruby
 
 #
-# See ../README.md
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-003
 #
  
 #
 # Run as: ruby ch-1.rb < input-file
 #
 
-ARGF . each_line do |_|
-     max = _ . to_i
-     base2 = 1
-     while base2 <= max
-         base3 = base2
-         while base3 <= max
-             base5 = base3
-             while base5 <= max
-                 puts base5
-                 base5 *= 5
-             end
-             base3 *= 3
-         end
-         base2 *= 2
-     end
+ugly   = [1]
+next_2 =  0
+next_3 =  0
+next_5 =  0
+
+ARGF . each_line do
+    |n|
+    n = n . to_i
+    while ugly . length < n do
+        ugly . push ([2 * ugly [next_2],
+                      3 * ugly [next_3],
+                      5 * ugly [next_5]] . min)
+
+        next_2 += 1 if 2 * ugly [next_2] <= ugly [-1]
+        next_3 += 1 if 3 * ugly [next_3] <= ugly [-1]
+        next_5 += 1 if 5 * ugly [next_5] <= ugly [-1]
+    end
+    puts (ugly [n - 1])
 end

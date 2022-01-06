@@ -1,29 +1,39 @@
 #!/usr/bin/awk
 
 #
-# See ../README.md
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-003
 #
 
 #
 # Run as: awk -f ch-1.awk < input-file
 #
 
-#
-# Generate the 5-smooth numbers up to $0.
-# This does *NOT* generate the numbers is order. It does, however,
-# generate all of them, and no other numbers.
-#
-#
-# base2 is of the form 2^i;              i       >= 0
-# base3 if of the form 2^i * 3^j;        i, j    >= 0
-# base5 is of the form 2^i * 3^j * 5^k;  i, j, k >= 0
-#
-{
-    for (base2 = 1; base2 <= $0; base2 *= 2) {
-        for (base3 = base2; base3 <= $0; base3 *= 3) {
-            for (base5 = base3; base5 <= $0; base5 *= 5) {
-                print base5
-            }
-        }
-    }
+BEGIN {
+    ugly [0] = 1
+    next_2   = 0
+    next_3   = 0
+    next_5   = 0
+    count    = 1
 }
+
+{
+    while (count < $1) {
+        c2 = 2 * ugly [next_2]
+        c3 = 3 * ugly [next_3]
+        c5 = 5 * ugly [next_5]
+
+        ugly [count] = c2 < c3 ? c2 < c5 ? c2 : c5 \
+                               : c3 < c5 ? c3 : c5
+
+        if (2 * ugly [next_2] <= ugly [count]) {next_2 ++}
+        if (3 * ugly [next_3] <= ugly [count]) {next_3 ++}
+        if (5 * ugly [next_5] <= ugly [count]) {next_5 ++}
+                                         
+        count ++
+    }
+    print ugly [$1 - 1]
+}
+
+
+
+
