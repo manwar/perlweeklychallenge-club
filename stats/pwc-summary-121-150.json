@@ -1,8 +1,4 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "yAxis" : {
       "title" : {
          "text" : ""
@@ -11,6 +7,14 @@
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2021]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -46,13 +50,12 @@
          "Miguel Prz"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-01-07 18:54:04 GMT"
    },
    "series" : [
       {
@@ -91,7 +94,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -123,10 +125,10 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -158,10 +160,8 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-01-07 09:51:12 GMT"
-   }
+   ]
 }
