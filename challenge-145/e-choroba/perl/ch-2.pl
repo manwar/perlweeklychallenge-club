@@ -6,10 +6,10 @@ use feature qw{ say };
 {   package Eertree::Node;
     use Moo;
 
-    has length     => (is => 'ro', required => 1);
-    has pos        => (is => 'rwp', required => 1);
-    has link       => (is => 'rw');
-    has edge       => (is => 'lazy', builder => sub { {} }, predicate => 1);
+    has length => (is => 'ro',  required => 1);
+    has pos    => (is => 'rwp', required => 1);
+    has link   => (is => 'rw');
+    has edge   => (is => 'lazy', builder => sub { {} }, predicate => 1);
 
     sub string {
         my ($self, $eertree) = @_;
@@ -21,11 +21,11 @@ use feature qw{ say };
     use Moo;
 
     has nodes => (is => 'ro', default => sub { [
-        'Eertree::Node'->new(link   => 0, length => -1, pos => -1),
-        'Eertree::Node'->new(link   => 0, length =>  0, pos => 0)
+        'Eertree::Node'->new(link => 0, length => -1, pos => -1),
+        'Eertree::Node'->new(link => 0, length =>  0, pos =>  0)
     ]});
     has string => (is => 'ro');
-    has max => (is => 'rw', default => 0);
+    has max    => (is => 'rw', default => 0);
 
     sub node {
         my ($self, $index) = @_;
