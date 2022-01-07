@@ -3,7 +3,7 @@
 //
 
 //
-// Run as: ln ch-1.java ch1.java; javac ch1.java; java ch1 < input-file
+// Run as: ln ch-1.java ch1.java; javac ch1.java; java ch1
 //
 
 import java.util.*;
@@ -63,4 +63,4 @@ public class ch1 {
     }
 }
 
-//  FODDER  FODDER!
+// FODDER FODDER  FODDER FODDER!
