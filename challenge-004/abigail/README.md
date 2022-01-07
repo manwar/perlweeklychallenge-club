@@ -24,6 +24,7 @@ and printing. We may even need to filler comments to make it all work out.
 * [AWK](awk/ch-1.awk)
 * [Bash](bash/ch-1.sh)
 * [C](c/ch-1.c)
+* [Go](go/ch-1.go)
 * [Lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.node)
 * [Perl](perl/ch-1.pl)
