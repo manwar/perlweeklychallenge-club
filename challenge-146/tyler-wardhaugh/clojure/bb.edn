@@ -16,15 +16,13 @@
 
           (defn get-task-ns
             [task]
-            (let [glob-target (format "src/tw/weekly/*/%s.clj" (name task))
+            (let [glob-target (format "src/*/%s.clj" (name task))
                   file (->> glob-target (fs/glob ".") first)]
               (-> file get-first-form second str)))
 
-          (defn run-task
-            ([task args] (run-task task args (get-task-ns task)))
-            ([task args task-ns]
-             (let [clj-options (format "-M -m %s " task-ns)]
-               (apply clojure clj-options args))))
+          (defn run-task-clj
+            [task args]
+            (apply clojure (str "-M:" task) args))
 
           (defn run-task-bb
             ([task args] (run-task-bb task args (get-task-ns task)))
@@ -43,11 +41,9 @@
             (System/exit 1)))
 
   clean {:doc "Clean out temporary files"
-         :task (run! fs/delete-tree
-                     [".nrepl-port" ".cpcache" ".lsp" ".clj-kondo"])}
-
-  generate-pom {:doc "Generate POM file"
-                :task (clojure "-X:deps mvn-pom")}
+         :task (do (clojure "-T:build" "clean")
+                   (run! fs/delete-tree
+                         [".nrepl-port" ".cpcache" ".lsp" ".clj-kondo"]))}
 
   generate-jar {:doc "Generate JAR file"
                 :depends [generate-pom]
@@ -68,35 +64,20 @@
                        p/check))}
 
   test {:doc "Run tests"
-        :task (clojure "-X:test")}
+        :task (clojure "-T:build test")}
 
   c**** {:doc "CHALLENGE TASKS"}
 
   task-1 {:doc "Run Task 1 (via clojure)"
-          :task (run-task :t1 *command-line-args*)}
+          :task (run-task-clj :t1 *command-line-args*)}
 
   task-1-bb {:doc "Run Task 1 (via Babashka)"
              :task (run-task-bb :t1 *command-line-args*)}
 
   task-2 {:doc "Run Task 2 (via clojure)"
-          :task (run-task :t2 *command-line-args*)}
+          :task (run-task-clj :t2 *command-line-args*)}
 
   task-2-bb {:doc "Run Task 2 (via Babashka)"
              :task (run-task-bb :t2 *command-line-args*)}
-
-  both {:doc "Run both tasks (via clojure)"
-        :task (do
-                (println "Task 1:")
-                (run 'task-1)
-                (println "\nTask 2:")
-                (run 'task-2))}
-
-  both-bb {:doc "Run both tasks (via Babashka)"
-           :task (do
-                   (println "Task 1:")
-                   (run 'task-1-bb)
-                   (println "\nTask 2:")
-                   (run 'task-2-bb))}
-
   }
 }
