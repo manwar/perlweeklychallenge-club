@@ -1,11 +1,11 @@
 #!/opt/local/bin/python
 
 #
-# See ../READ.md
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-003
 #
 
 #
-# Run as python ch-2.py < input-file
+# Run as: python ch-2.py < input-file
 #
 
 import fileinput

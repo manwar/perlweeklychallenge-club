@@ -1,0 +1,40 @@
+#! /usr/bin/env raku
+
+subset NuDe of Str where * ~~ /^\d+\/\d+$/;
+
+unit sub MAIN (Int $levels where $levels > 0 = 3);
+
+say 'digraph foogrph {';
+
+recurse('1/1');
+
+say '}';
+
+sub recurse (NuDe $current, $level = 1)
+{
+  my $left  = left-child($current);
+  my $right = right-child($current);
+    
+  say "    \"{ $current }\" -> \"{ left-child($current) }\"";
+  say "    \"{ $current }\" -> \"{ right-child($current) }\"";
+
+  return if $level == $levels;
+
+  recurse($left,  $level +1);
+  recurse($right, $level +1);
+}
+
+
+sub left-child (NuDe $fraction)
+{
+  my (Int $numerator, Int $denominator) = $fraction.split("/")>>.Int;
+
+  return "$numerator/{ $numerator + $denominator }";
+}
+
+sub right-child (NuDe $fraction)
+{
+  my (Int $numerator, Int $denominator) = $fraction.split("/")>>.Int;
+
+  return "{ $numerator + $denominator }/$denominator";
+}
