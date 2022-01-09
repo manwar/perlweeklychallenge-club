@@ -34,6 +34,7 @@ and printing. We may even need to filler comments to make it all work out.
 * [Python](python/ch-1.py)
 * [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
+* [Scheme](scheme/ch-1.scm)
 * [Tcl](tcl/ch-1.tcl)
 
 
