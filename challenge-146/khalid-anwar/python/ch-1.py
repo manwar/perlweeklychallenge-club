@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" Returns the n-th prime number By Khalid Anwar
+""" Returns the nth prime number By Khalid Anwar
 """
 def get_nth_prime_number(nth):
   total_number_of_primes = 0
