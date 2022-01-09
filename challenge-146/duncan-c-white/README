@@ -1,71 +1,39 @@
-TASK #1 - Dot Product
+TASK #1 - 10001st Prime Number
 
-You are given 2 arrays of same size, @a and @b.
+Write a script to generate the 10001st prime number.
 
-Write a script to implement Dot Product.
-
-Example:
-
-	@a = (1, 2, 3);
-	@b = (4, 5, 6);
-
-	$dot_product = (1 * 4) + (2 * 5) + (3 * 6) => 4 + 10 + 18 => 32
-
-MY NOTES: Very easy.
+(Remember that 2 is the 1st prime number).
 
 
-TASK #2 - Palindromic Tree
+MY NOTES: Very easy, especially (tada) if you happen to have a prime
+generating module that you've already used several times in these
+challenges..
 
-You are given a string $s.
 
-Write a script to create a Palindromic Tree for the given string.
+TASK #2 - Curious Fraction Tree
 
-I found this blog exaplaining Palindromic Tree in detail:
+Consider the following Curious Fraction Tree:
 
-https://medium.com/@alessiopiergiacomi/eertree-or-palindromic-tree-82453e75025b
+[diagram in which the root is 1/1, and for each element N/D
+it's right child is N+D/D, and it's left child is N/N+D]
+
+You are given a N/D member of the tree created similar to the above sample.
+
+Write a script to find out the parent and grandparent of the given member.
 
 Example 1:
 
-	Input: $s = 'redivider'
-	Output: r redivider e edivide d divid i ivi v
+    Input: $member = '3/5';
+    Output: parent = '3/2' and grandparent = '1/2'
 
 Example 2:
 
-	Input: $s = 'deific'
-	Output: d e i ifi f c
+    Input: $member = '4/3';
+    Output: parent = '1/3' and grandparent = '1/2'
 
-Example 3:
+MY NOTES: hmm..  having determined the left and right child rules
+above, I worked out that given a child N/D the parent rule is
+"if D>N then (N, D-N) else (N-D, D)"
 
-	Input: $s = 'rotors'
-	Output: r rotor o oto t s
-
-Example 4:
-
-	Input: $s = 'challenge'
-	Output: c h a l ll e n g
-
-Example 5:
-
-	Input: $s = 'champion'
-	Output: c h a m p i o n
-
-Example 6:
-
-	Input: $s = 'christmas'
-	Output: c h r i s t m a
-
-MY NOTES: hmm..  I read the blog, but what on earth is it
-talking about, it's not very clear?  the underlying paper
-https://arxiv.org/pdf/1506.04862.pdf is a lot clearer, but
-still way too detailed for 10pm on a Sunday.
-
-Looking at the examples given above, the output seems to be
-a list of palindromic substrings not previously encountered,
-in the natural order found by sequencing through every starting
-position in the word and trying increasingly long substrings
-for "Palindromic"-ness.
-
-So, could we solve the "generate the output from the input"
-problem, entirely ignoring the whole "build a weird tree"
-part of it?  Presumably a lot less efficient than their
-clever eertree/Palindrome tree thingy, but who cares.
+So very easy using that rule twice (and why not go all the way up to
+the root while we're doing it).
