@@ -1,0 +1,247 @@
+# Test data for Perl and Raku, "Curious Fraction Tree", https://theweeklychallenge.org/blog/perl-weekly-challenge-146/#TASK2
+# Format: \d+/\d+  \s+  \d+/\d+  \s+  \d+/\d+
+#   where the first rational number is the input, and 2nd and 3rd are expected result of parent and grandparent
+#   (Comments allowed)
+# Many lines also have an end-of-line comment describing the LR navigation and/or position within the row.
+
+# From task examples:
+3/5 3/2 1/2
+4/3 1/3 1/2
+
+# From task diagram, 3rd level:
+1/3 1/2 1/1
+3/2 1/2 1/1
+2/3 2/1 1/1
+3/1 2/1 1/1
+
+# From task diagram, 4th level:
+1/4 1/3 1/2
+4/3 1/3 1/2
+3/5 3/2 1/2
+5/2 3/2 1/2
+2/5 2/3 2/1
+5/3 2/3 2/1
+3/4 3/1 2/1
+4/1 3/1 2/1
+
+# From https://www.jasondavies.com/calkin-wilf-tree/ , left side:
+ 7/1   6/1  5/1
+ 6/7   6/1  5/1
+11/6   5/6  5/1
+ 5/11  5/6  5/1
+14/5   9/5  4/5
+ 9/14  9/5  4/5
+13/9   4/9  4/5
+ 4/13  4/9  4/5
+15/4  11/4  7/4
+11/15 11/4  7/4
+18/11  7/11 7/4
+ 7/18  7/11 7/4
+17/7  10/7  3/7
+10/17 10/7  3/7
+13/10  3/10 3/7
+ 3/13  3/10 3/7
+14/3  11/3  8/3
+11/14 11/3  8/3
+19/11  8/11 8/3
+ 8/19  8/11 8/3
+21/8  13/8  5/8
+13/21 13/8  5/8
+18/13  5/13 5/8
+ 5/18  5/13 5/8
+17/5  12/5  7/5
+12/17 12/5  7/5
+19/12  7/12 7/5
+ 7/19  7/12 7/5
+16/7   9/7  2/7
+ 9/16  9/7  2/7
+11/9   2/9  2/7
+ 2/11  2/9  2/7
+
+# From https://www.jasondavies.com/calkin-wilf-tree/ , right side:
+11/2   9/2  7/2
+ 9/11  9/2  7/2
+16/9   7/9  7/2
+ 7/16  7/9  7/2
+19/7  12/7  5/7
+12/19 12/7  5/7
+17/12  5/12 5/7
+ 5/17  5/12 5/7
+18/5  13/5  8/5
+13/18 13/5  8/5
+21/13  8/13 8/5
+ 8/21  8/13 8/5
+19/8  11/8  3/8
+11/19 11/8  3/8
+14/11  3/11 3/8
+ 3/14  3/11 3/8
+13/3  10/3  7/3
+10/13 10/3  7/3
+17/10  7/10 7/3
+ 7/17  7/10 7/3
+18/7  11/7  4/7
+11/18 11/7  4/7
+15/11  4/11 4/7
+ 4/15  4/11 4/7
+13/4   9/4  5/4
+ 9/13  9/4  5/4
+14/9   5/9  5/4
+ 5/14  5/9  5/4
+11/5   6/5  1/5
+ 6/11  6/5  1/5
+ 7/6   1/6  1/5
+ 1/7   1/6  1/5
+
+#
+# Below here is all my own test data, generated via LR in Test_data/ch-2_test_generator.raku
+#
+
+# Alternating long groups of L|R, with the length of the group shortening until group-size is 1.
+      1/34             1/33             1/32        # LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL
+     34/33             1/33             1/32        # LLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLR
+     33/34            33/1             32/1         # RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRL
+     34/1             33/1             32/1         # RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR
+
+    273/290          273/17           256/17        # LLLLLLLLLLLLLLLLRRRRRRRRRRRRRRRRL
+    290/17           273/17           256/17        # LLLLLLLLLLLLLLLLRRRRRRRRRRRRRRRRR
+     17/290           17/273           17/256       # RRRRRRRRRRRRRRRRLLLLLLLLLLLLLLLLL
+    290/273           17/273           17/256       # RRRRRRRRRRRRRRRRLLLLLLLLLLLLLLLLR
+
+   4817/5410        4817/593         4224/593       # LLLLLLLLRRRRRRRRLLLLLLLLRRRRRRRRL
+   5410/593         4817/593         4224/593       # LLLLLLLLRRRRRRRRLLLLLLLLRRRRRRRRR
+    593/5410         593/4817         593/4224      # RRRRRRRRLLLLLLLLRRRRRRRRLLLLLLLLL
+   5410/4817         593/4817         593/4224      # RRRRRRRRLLLLLLLLRRRRRRRRLLLLLLLLR
+
+ 121393/150050    121393/28657      92736/28657     # LLLLRRRRLLLLRRRRLLLLRRRRLLLLRRRRL
+ 150050/28657     121393/28657      92736/28657     # LLLLRRRRLLLLRRRRLLLLRRRRLLLLRRRRR
+  28657/150050     28657/121393     28657/92736     # RRRRLLLLRRRRLLLLRRRRLLLLRRRRLLLLL
+ 150050/121393     28657/121393     28657/92736     # RRRRLLLLRRRRLLLLRRRRLLLLRRRRLLLLR
+
+1607521/2273378  1607521/665857    941664/665857    # LLRRLLRRLLRRLLRRLLRRLLRRLLRRLLRRL
+2273378/665857   1607521/665857    941664/665857    # LLRRLLRRLLRRLLRRLLRRLLRRLLRRLLRRR
+ 665857/2273378   665857/1607521   665857/941664    # RRLLRRLLRRLLRRLLRRLLRRLLRRLLRRLLL
+2273378/1607521   665857/1607521   665857/941664    # RRLLRRLLRRLLRRLLRRLLRRLLRRLLRRLLR
+
+5702887/9227465  5702887/3524578  2178309/3524578   # LRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRL
+9227465/3524578  5702887/3524578  2178309/3524578   # LRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRR
+3524578/9227465  3524578/5702887  3524578/2178309   # RLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLL
+9227465/5702887  3524578/5702887  3524578/2178309   # RLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLR
+
+
+# Left and Right edges of the tree, focused around the 64th level.
+# This is the point that `ch-2_via_module.pl` (based on Math::PlanePath::RationalsTree) fails.
+# Math::PlanePath::RationalsTree fails 18 of these 24 tests.
+# My own CW algorithms in my Perl and Raku code pass all of these tests.
+ 1/65   1/64   1/63     # 'L' x 63, then L
+65/64   1/64   1/63     # 'L' x 63, then R
+64/65  64/1   63/1      # 'R' x 63, then L
+65/1   64/1   63/1      # 'R' x 63, then R
+ 1/66   1/65   1/64     # 'L' x 64, then L
+66/65   1/65   1/64     # 'L' x 64, then R
+65/66  65/1   64/1      # 'R' x 64, then L
+66/1   65/1   64/1      # 'R' x 64, then R
+ 1/67   1/66   1/65     # 'L' x 65, then L
+67/66   1/66   1/65     # 'L' x 65, then R
+66/67  66/1   65/1      # 'R' x 65, then L
+67/1   66/1   65/1      # 'R' x 65, then R
+ 1/68   1/67   1/66     # 'L' x 66, then L
+68/67   1/67   1/66     # 'L' x 66, then R
+67/68  67/1   66/1      # 'R' x 66, then L
+68/1   67/1   66/1      # 'R' x 66, then R
+ 1/69   1/68   1/67     # 'L' x 67, then L
+69/68   1/68   1/67     # 'L' x 67, then R
+68/69  68/1   67/1      # 'R' x 67, then L
+69/1   68/1   67/1      # 'R' x 67, then R
+ 1/70   1/69   1/68     # 'L' x 68, then L
+70/69   1/69   1/68     # 'L' x 68, then R
+69/70  69/1   68/1      # 'R' x 68, then L
+70/1   69/1   68/1      # 'R' x 68, then R
+
+# Left and Right edges of the tree, at exponential depths.
+    1/3          1/2          1/1                   # 'L' x     1, then L
+    3/2          1/2          1/1                   # 'L' x     1, then R
+    2/3          2/1          1/1                   # 'R' x     1, then L
+    3/1          2/1          1/1                   # 'R' x     1, then R
+    1/12         1/11         1/10                  # 'L' x    10, then L
+   12/11         1/11         1/10                  # 'L' x    10, then R
+   11/12        11/1         10/1                   # 'R' x    10, then L
+   12/1         11/1         10/1                   # 'R' x    10, then R
+    1/102        1/101        1/100                 # 'L' x   100, then L
+  102/101        1/101        1/100                 # 'L' x   100, then R
+  101/102      101/1        100/1                   # 'R' x   100, then L
+  102/1        101/1        100/1                   # 'R' x   100, then R
+    1/1002       1/1001       1/1000                # 'L' x  1000, then L
+ 1002/1001       1/1001       1/1000                # 'L' x  1000, then R
+ 1001/1002    1001/1       1000/1                   # 'R' x  1000, then L
+ 1002/1       1001/1       1000/1                   # 'R' x  1000, then R
+    1/10002      1/10001      1/10000               # 'L' x 10000, then L
+10002/10001      1/10001      1/10000               # 'L' x 10000, then R
+10001/10002  10001/1      10000/1                   # 'R' x 10000, then L
+10002/1      10001/1      10000/1                   # 'R' x 10000, then R
+
+
+# Alternating L and R produces approximations of the Golden Ratio φ (1.618033988749...), and its inverse|conjugate.
+# https://en.wikipedia.org/wiki/Golden_ratio
+# 90 levels is the deepest we can go, without Rat collapsing into Num (or needing FatRat).
+# Of interest: these numbers are all ratios of successive Fibonacci numbers.
+#   e.g.  F(92)/F(93) == 7540113804746346429/12200160415121876738 ~~ 1.618033988749...
+                   3/5                                       3/2                                       1/2                    # LRL
+                   5/3                                       2/3                                       2/1                    # RLR
+                 144/233                                   144/89                                     55/89                   # LRLRLRLRLRL
+                 233/144                                    89/144                                    89/55                   # RLRLRLRLRLR
+                6765/10946                                6765/4181                                 2584/4181                 # LRLRLRLRLRLRLRLRLRL
+               10946/6765                                 4181/6765                                 4181/2584                 # RLRLRLRLRLRLRLRLRLR
+              317811/514229                             317811/196418                             121393/196418               # LRLRLRLRLRLRLRLRLRLRLRLRLRL
+              514229/317811                             196418/317811                             196418/121393               # RLRLRLRLRLRLRLRLRLRLRLRLRLR
+            14930352/24157817                         14930352/9227465                           5702887/9227465              # LRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRL
+            24157817/14930352                          9227465/14930352                          9227465/5702887              # RLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLR
+           701408733/1134903170                      701408733/433494437                       267914296/433494437            # LRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRL
+          1134903170/701408733                       433494437/701408733                       433494437/267914296            # RLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLR
+         32951280099/53316291173                   32951280099/20365011074                   12586269025/20365011074          # LRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRL
+         53316291173/32951280099                   20365011074/32951280099                   20365011074/12586269025          # RLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLR
+       1548008755920/2504730781961               1548008755920/956722026041                 591286729879/956722026041         # LRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRL
+       2504730781961/1548008755920                956722026041/1548008755920                956722026041/591286729879         # RLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLR
+      72723460248141/117669030460994            72723460248141/44945570212853             27777890035288/44945570212853       # LRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRL
+     117669030460994/72723460248141             44945570212853/72723460248141             44945570212853/27777890035288       # RLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLR
+    3416454622906707/5527939700884757         3416454622906707/2111485077978050         1304969544928657/2111485077978050     # LRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRL
+    5527939700884757/3416454622906707         2111485077978050/3416454622906707         2111485077978050/1304969544928657     # RLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLR
+  160500643816367088/259695496911122585     160500643816367088/99194853094755497       61305790721611591/99194853094755497    # LRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRL
+  259695496911122585/160500643816367088      99194853094755497/160500643816367088      99194853094755497/61305790721611591    # RLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLR
+ 7540113804746346429/12200160415121876738  7540113804746346429/4660046610375530309   2880067194370816120/4660046610375530309  # LRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRL
+12200160415121876738/7540113804746346429   4660046610375530309/7540113804746346429   4660046610375530309/2880067194370816120  # RLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLRLR
+
+
+# Single-bit set (or unset) produce the sequence 2,3,4...(size+1) as we slide the position of the bit:
+ 2/31   2/29   2/27     # RLLLLLLLLLLLLLLL      position = 32768
+ 3/44   3/41   3/38     # LRLLLLLLLLLLLLLL      position = 16384
+ 4/55   4/51   4/47     # LLRLLLLLLLLLLLLL      position =  8192
+ 5/64   5/59   5/54     # LLLRLLLLLLLLLLLL      position =  4096
+ 6/71   6/65   6/59     # LLLLRLLLLLLLLLLL      position =  2048
+ 7/76   7/69   7/62     # LLLLLRLLLLLLLLLL      position =  1024
+ 8/79   8/71   8/63     # LLLLLLRLLLLLLLLL      position =   512
+ 9/80   9/71   9/62     # LLLLLLLRLLLLLLLL      position =   256
+10/79  10/69  10/59     # LLLLLLLLRLLLLLLL      position =   128
+11/76  11/65  11/54     # LLLLLLLLLRLLLLLL      position =    64
+12/71  12/59  12/47     # LLLLLLLLLLRLLLLL      position =    32
+13/64  13/51  13/38     # LLLLLLLLLLLRLLLL      position =    16
+14/55  14/41  14/27     # LLLLLLLLLLLLRLLL      position =     8
+15/44  15/29  15/14     # LLLLLLLLLLLLLRLL      position =     4
+16/31  16/15   1/15     # LLLLLLLLLLLLLLRL      position =     2
+17/16   1/16   1/15     # LLLLLLLLLLLLLLLR      position =     1
+
+31/2   29/2   27/2      # LRRRRRRRRRRRRRRR      position = 65535 - 32768
+44/3   41/3   38/3      # RLRRRRRRRRRRRRRR      position = 65535 - 16384
+55/4   51/4   47/4      # RRLRRRRRRRRRRRRR      position = 65535 -  8192
+64/5   59/5   54/5      # RRRLRRRRRRRRRRRR      position = 65535 -  4096
+71/6   65/6   59/6      # RRRRLRRRRRRRRRRR      position = 65535 -  2048
+76/7   69/7   62/7      # RRRRRLRRRRRRRRRR      position = 65535 -  1024
+79/8   71/8   63/8      # RRRRRRLRRRRRRRRR      position = 65535 -   512
+80/9   71/9   62/9      # RRRRRRRLRRRRRRRR      position = 65535 -   256
+79/10  69/10  59/10     # RRRRRRRRLRRRRRRR      position = 65535 -   128
+76/11  65/11  54/11     # RRRRRRRRRLRRRRRR      position = 65535 -    64
+71/12  59/12  47/12     # RRRRRRRRRRLRRRRR      position = 65535 -    32
+64/13  51/13  38/13     # RRRRRRRRRRRLRRRR      position = 65535 -    16
+55/14  41/14  27/14     # RRRRRRRRRRRRLRRR      position = 65535 -     8
+44/15  29/15  14/15     # RRRRRRRRRRRRRLRR      position = 65535 -     4
+31/16  15/16  15/1      # RRRRRRRRRRRRRRLR      position = 65535 -     2
+16/17  16/1   15/1      # RRRRRRRRRRRRRRRL      position = 65535 -     1
