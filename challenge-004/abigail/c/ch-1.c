@@ -3,7 +3,7 @@
 # include <string.h>
 
 /*
- * See ../README.md
+ * See https://theweeklychallenge.org/blog/perl-weekly-challenge-004
  */
 
 /*
@@ -48,7 +48,7 @@ int main (void) {
           "'S/z}#vS|i)S9[=*/nCG)PMaY-{pML);vN?%kRcr#*.Tg,x;42'(1w.0dA)S" \
           ")-us%.#1$R-rkwf%m%B-(ctK8+4Sn^%*C1Y-wqsr%eNg11%$De&&07q+%1>-" \
           "+mCl2%)V#w%#y:[,?t*D$64`9.U+{`-SBX-+gi/o)0B$q#V$tW+#lmM)';EH" \
-          "%yFPZ/Gy(~,dl@h)A&ju-Co2,-du++)[Awk&wE}p*H;._.[]4W+Eb7K#iiKB";
+          "%yFPZ/Gy(~,dl@h)A&ju-Co2,-du++)[Awk&wE}p*H;._.[]4W+Eb7K#iiK?";
     printf ("3.");
     size_t l = strlen (pi);
     for (size_t i = 0; i < l; i += in_size) {
@@ -67,8 +67,7 @@ int main (void) {
 }
 
 /*
- * FODDER  FODDER  FODDER  FODDER  FODDER  FODDER FODDER
+ * FODDER  FODDER  FODDER  FODDER  FODDER  FODDER FODDER FODDER:
  * FODDER  FODDER  FODDER  FODDER  FODDER  FODDER FODDER.
- * FODDER  FODDER  FODDER  FODDER  FODDER  FODDER FODDER.
- * FODDER  FODDER  FODDER  FODDER  FODDER  FODDER FODDER.
+ * FODDER  FODDER  FODDER  FODDER  FODDER  FODDER FODDER!!
  */
