@@ -17,9 +17,6 @@ function pentpair()
       end
       for b = 1,a do
          d=fpent[a]-fpent[b]
-         if d < fpent[b] then
-            break
-         end
          if rpent[d] ~= nil then
             s=fpent[a]+fpent[b]
             while s > fpent[mx] do

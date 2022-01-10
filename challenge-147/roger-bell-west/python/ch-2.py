@@ -15,8 +15,6 @@ def pentpair():
       rpent[fpent[mx]]=mx
     for b in range(1,a):
       d=fpent[a]-fpent[b]
-      if d < fpent[b]:
-        break
       if d in rpent:
         s=fpent[a]+fpent[b]
         while s > fpent[mx]:

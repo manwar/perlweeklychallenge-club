@@ -18,9 +18,6 @@ sub pentpair {
     }
     foreach my $b (1..$a-1) {
       my $d=$fpent[$a]-$fpent[$b];
-      if ($d < $fpent[$b]) {
-        last;
-      }
       if (exists $rpent{$d}) {
         my $s=$fpent[$a]+$fpent[$b];
         while ($s > $fpent[$mx]) {

@@ -20,9 +20,6 @@ fn pentpair() {
         }
         for b in 1..=a - 1 {
             let d = fpent[a] - fpent[b];
-            if d < fpent[b] {
-                break;
-            }
             if rpent.contains_key(&d) {
                 let s = fpent[a] + fpent[b];
                 while s > fpent[mx] {

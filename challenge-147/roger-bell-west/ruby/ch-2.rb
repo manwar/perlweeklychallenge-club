@@ -17,9 +17,6 @@ def pentpair()
     end
     1.upto(a-1) do |b|
       d=fpent[a]-fpent[b]
-      if d < fpent[b] then
-        break
-      end
       if rpent.has_key?(d) then
         s=fpent[a]+fpent[b]
         while s > fpent[mx] do

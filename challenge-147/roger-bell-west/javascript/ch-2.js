@@ -17,9 +17,6 @@ function pentpair() {
         }
         for (b = 1; b < a; b++) {
             let d=fpent[a]-fpent[b];
-            if (d < fpent[b]) {
-                break;
-            }
             if (rpent.has(d)) {
                 let s=fpent[a]+fpent[b];
                 while (s > fpent[mx]) {

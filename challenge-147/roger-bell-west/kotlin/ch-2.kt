@@ -18,9 +18,6 @@ fun pentpair() {
         }
         for (b in 1..a-1) {
             val d=fpent[a]-fpent[b]
-            if (d < fpent[b]) {
-                break
-            }
             if (rpent.contains(d)) {
                 val s=fpent[a]+fpent[b]
                 while (s > fpent[mx]) {
