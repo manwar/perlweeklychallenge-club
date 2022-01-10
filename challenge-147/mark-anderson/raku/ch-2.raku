@@ -20,5 +20,5 @@ sub pentagonal(\n)
 
 sub is-pentagonal(\n)
 {
-    return (((sqrt(24 * n + 1)) + 1) / 6).narrow ~~ UInt;
+    (((sqrt(24 * n + 1)) + 1) / 6).narrow ~~ UInt;
 }
