@@ -1,9 +1,4 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "legend" : {
       "enabled" : 0
    },
@@ -16,20 +11,18 @@
          }
       }
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2022-01-10 19:15:24 GMT"
+      "text" : "[Champions: 5] Last updated at 2022-01-10 21:08:26 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -40,20 +33,35 @@
                   4
                ]
             ],
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari"
+            "id" : "Luca Ferrari"
          },
          {
-            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "id" : "Mark Anderson",
             "name" : "Mark Anderson"
          },
          {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar"
+         },
+         {
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -63,29 +71,31 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            ]
          },
          {
-            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Simon Proctor"
+            "name" : "Simon Proctor"
          }
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
+               "name" : "Luca Ferrari",
                "y" : 6,
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari"
+               "drilldown" : "Luca Ferrari"
             },
             {
                "y" : 2,
@@ -93,17 +103,21 @@
                "drilldown" : "Mark Anderson"
             },
             {
+               "drilldown" : "Mohammad S Anwar",
+               "y" : 2,
+               "name" : "Mohammad S Anwar"
+            },
+            {
                "y" : 4,
                "name" : "Roger Bell_West",
                "drilldown" : "Roger Bell_West"
             },
             {
-               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
                "y" : 2
             }
          ],
-         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 147"
       }
    ],
@@ -112,5 +126,10 @@
    },
    "title" : {
       "text" : "The Weekly Challenge - 147"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    }
 }
