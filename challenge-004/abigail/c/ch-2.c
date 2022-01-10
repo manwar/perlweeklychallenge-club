@@ -9,7 +9,7 @@
 # define NR_OF_LETTERS 26
 
 /*
- * See ../README.md
+ * See https://theweeklychallenge.org/blog/perl-weekly-challenge-004
  */
 
 /*
