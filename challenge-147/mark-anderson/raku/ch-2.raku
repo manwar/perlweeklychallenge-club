@@ -4,7 +4,7 @@
 
 my @p = (2200...1).map(&pentagonal);
 
-for @p X @p
+for @p.combinations: 2
 {
     if is-pentagonal(.head + .tail) and is-pentagonal(abs(.head - .tail))
     {
