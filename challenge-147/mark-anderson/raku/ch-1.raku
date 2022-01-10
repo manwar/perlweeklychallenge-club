@@ -1,15 +1,15 @@
 #!/usr/bin/env raku
 
-say (1, 2, 3, { $_ + 2 } ... *).grep(&tp).head(20);
+say (2, 3, { $_ + 2 } ... *).grep(&tp).head(20);
 
 multi tp(\n where *.index: 0)
 {
-    return False;
+    False;
 }
 
 multi tp(\n where * < 10)
 {
-    return n.is-prime
+    n.is-prime
 }
 
 multi tp(\n)
