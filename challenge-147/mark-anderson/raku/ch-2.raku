@@ -2,7 +2,7 @@
 
 # Through trial and error I came up with the ~2200 figure.
 
-my @p = reverse (1..2200).map(&pentagonal);
+my @p = (2200...1).map(&pentagonal);
 
 for @p X @p
 {
