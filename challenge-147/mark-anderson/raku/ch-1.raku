@@ -4,7 +4,7 @@ say (2, 3, { $_ + 2 } ... *).grep(&tp).head(20);
 
 multi tp(\n where *.index: 0)
 {
-    False;
+    False
 }
 
 multi tp(\n where * < 10)
