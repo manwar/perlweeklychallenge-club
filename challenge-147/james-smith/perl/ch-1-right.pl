@@ -6,10 +6,10 @@ use warnings;
 use feature qw(say);
 use Time::HiRes qw(time);
 
-my ($t0,$c,@primes) = ( time, 5, 3 );
+my ( $TEMPLATE, $idx, $t0, $c, @primes) =
+   ( "%6d\t%28d\t%15.6f\n", 0, time, 5, 3 );
 my @tprimes_current = (2,3,5,7);
-my $idx = 0;
-printf "%6d\t%28d\t%15.6f\n", ++$idx, $_, time - $t0 foreach @tprimes_current;
+printf $TEMPLATE, ++$idx, $_, time - $t0 foreach @tprimes_current;
 
 for my $p ( 1 .. 100 ) {
   last unless @tprimes_current;
@@ -23,7 +23,7 @@ for my $p ( 1 .. 100 ) {
       ## check if $n is composite;
       $n%$_||next B foreach @primes;
       push @tprimes_new, $n;
-      printf "%6d\t%28d\t%15.6f\n", ++$idx, $n, time - $t0;
+      printf $TEMPLATE, ++$idx, $n, time - $t0;
     }
   }
   @tprimes_current = @tprimes_new;
