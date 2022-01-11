@@ -11,7 +11,7 @@ my $c = 1;
 my $n = 2;
 
 while (1) {
-    if ( is_prime($n) ) {
+    if ( $n !~ /0/mx && is_prime($n) ) {
         $primes{$n}++;
         my $copy = $n;
         while ( length $copy > 0 ) {
@@ -22,7 +22,7 @@ while (1) {
                 last;
             }
         }
-        last if scalar keys %trunc > 20;
+        last if scalar keys %trunc > 30;
     }
     $n++;
 }
