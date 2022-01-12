@@ -13,13 +13,13 @@ my $N=shift;
 my $start=time();
 J:
     foreach my $j(2..$N){
-	my $p=$j*(3*$j-1)/2;
-	foreach my $k(1..$j-1){
-	    my $q=$k*(3*$k-1)/2;
-	    say("p$j=$p, p$k=$q, p$j+p$k=", $p+$q, "=p", index_of($p+$q),
-                  " p$j-p$k=", $p-$q, "=p", index_of($p-$q)),
+        my $p=$j*(3*$j-1)/2;
+        foreach my $k(1..$j-1){
+            my $q=$k*(3*$k-1)/2;
+            say("p$j=$p\np$k=$q\np$j-p$k=", $p-$q, "=p", index_of($p-$q),
+                  "\np$j+p$k=", $p+$q, "=p", index_of($p+$q)),
                 last J if pentagonal($q+$p) && pentagonal($p-$q);
-	}
+        }
 }
 say "Time: ", time()-$start;
 sub pentagonal {
