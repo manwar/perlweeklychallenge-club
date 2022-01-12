@@ -66,8 +66,6 @@ BEGIN
            IF FOUND THEN
               SELECT current_tuple.n
                      , other_tuple.n
-                     , current_tuple.p
-                     , other_tuple.p
                      , current_tuple.p + other_tuple.p
                      , abs( current_tuple.p - other_tuple.p )
                      , p1.n
