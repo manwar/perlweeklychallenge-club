@@ -5,12 +5,13 @@
 # See https://wlmb.github.io/2022/01/10/PWC147/#task-2-pentagon-numbers
 use v5.12;
 use warnings;
-use bigint;
+use POSIX qw(floor);
 use Time::HiRes qw(time);
 
 die "Usage: ./ch-2.pl largest_index\n" unless @ARGV==1;
 my $N=shift;
 my $start=time();
+use integer;
 J:
     foreach my $j(2..$N){
         my $p=$j*(3*$j-1)/2;
@@ -21,10 +22,12 @@ J:
                 last J if pentagonal($q+$p) && pentagonal($p-$q);
         }
 }
+no integer; # don't truncate time
 say "Time: ", time()-$start;
+use integer;
 sub pentagonal {
     my $p=24*shift()+1;
-    my $s=sqrt($p);
+    my $s=floor(sqrt($p));
     return $s**2==$p && $s%6==5;
 }
 sub index_of {
