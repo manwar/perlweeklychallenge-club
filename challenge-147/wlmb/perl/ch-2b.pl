@@ -16,7 +16,7 @@ my $n=zeroes(long, $N)->xvals+1;
 my $p=$n*(3*$n-1)/2;
 my $check=pentagonal($p);
 my $pass=whichND(pentagonal($p+$p(*1)) & pentagonal($p-$p(*1)));
-die "Bad luck" unless $pass->dim(1)>0;
+die "No solution found. Try to increase the largest_index" unless $pass->dim(1)>0;
 my $ij=$pass(:,(0))+1;
 my ($pi, $pj)=map {$p(($_-1))} (my ($i, $j)=map {$ij(($_))} (0,1));
 my ($s, $d)=($pi+$pj, $pi-$pj);
