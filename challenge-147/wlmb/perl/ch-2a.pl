@@ -14,8 +14,7 @@ my $N=shift;
 my $start=time();
 my $n=zeroes(long, $N)->xvals+1;
 my $p=$n*(3*$n-1)/2;
-my $check=pentagonal($p);
-for my $i (2..$p->nelem){
+for my $i (1..$p->nelem){
     my $pi=$p(($i-1));
     my $pass=which(pentagonal($pi+$p) & pentagonal($pi-$p));
     next unless $pass->nelem;
