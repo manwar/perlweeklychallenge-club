@@ -1,18 +1,91 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2022-01-12 14:07:33 GMT"
+   },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 147",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "Alexander Karelas",
+               "drilldown" : "Alexander Karelas",
+               "y" : 1
+            },
+            {
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 3
+            },
+            {
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
+               "y" : 7
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "Mohammad S Anwar",
+               "drilldown" : "Mohammad S Anwar"
+            },
+            {
+               "y" : 2,
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Peter Campbell Smith",
+               "name" : "Peter Campbell Smith"
+            },
+            {
+               "y" : 5,
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan"
+            }
+         ]
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 147"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Alexander Karelas",
             "name" : "Alexander Karelas",
+            "id" : "Alexander Karelas",
             "data" : [
                [
                   "Perl",
@@ -31,10 +104,12 @@
                   1
                ]
             ],
-            "name" : "James Smith",
-            "id" : "James Smith"
+            "id" : "James Smith",
+            "name" : "James Smith"
          },
          {
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -44,9 +119,7 @@
                   "Blog",
                   5
                ]
-            ],
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari"
+            ]
          },
          {
             "data" : [
@@ -55,11 +128,10 @@
                   2
                ]
             ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
          },
          {
-            "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -70,11 +142,22 @@
                   1
                ]
             ],
-            "id" : "Mohammad S Anwar"
+            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar"
          },
          {
-            "id" : "Peter Campbell Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
+         },
+         {
             "name" : "Peter Campbell Smith",
+            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -87,7 +170,6 @@
             ]
          },
          {
-            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -102,31 +184,32 @@
                   1
                ]
             ],
-            "name" : "Roger Bell_West"
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Simon Proctor"
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          },
          {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Raku",
+                  1
+               ]
+            ],
             "id" : "Ulrich Rieke",
-            "name" : "Ulrich Rieke",
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ],
-               [
-                  "Raku",
-                  1
-               ]
-            ]
+            "name" : "Ulrich Rieke"
          },
          {
             "id" : "W. Luis Mochan",
@@ -144,87 +227,19 @@
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 147"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Alexander Karelas",
-               "name" : "Alexander Karelas",
-               "y" : 1
-            },
-            {
-               "y" : 3,
-               "drilldown" : "James Smith",
-               "name" : "James Smith"
-            },
-            {
-               "y" : 7,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "drilldown" : "Mohammad S Anwar",
-               "name" : "Mohammad S Anwar",
-               "y" : 2
-            },
-            {
-               "y" : 3,
-               "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith"
-            },
-            {
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 5
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Simon Proctor",
-               "name" : "Simon Proctor"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Ulrich Rieke",
-               "name" : "Ulrich Rieke"
-            },
-            {
-               "y" : 3,
-               "name" : "W. Luis Mochan",
-               "drilldown" : "W. Luis Mochan"
-            }
-         ],
-         "name" : "The Weekly Challenge - 147",
-         "colorByPoint" : 1
-      }
-   ],
    "legend" : {
       "enabled" : 0
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2022-01-12 11:54:51 GMT"
+   "xAxis" : {
+      "type" : "category"
    }
 }
