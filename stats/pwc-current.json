@@ -2,23 +2,8 @@
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2022-01-12 14:07:33 GMT"
-   },
    "series" : [
       {
-         "name" : "The Weekly Challenge - 147",
-         "colorByPoint" : 1,
          "data" : [
             {
                "name" : "Alexander Karelas",
@@ -26,8 +11,13 @@
                "y" : 1
             },
             {
-               "name" : "James Smith",
+               "y" : 3,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
+            {
                "drilldown" : "James Smith",
+               "name" : "James Smith",
                "y" : 3
             },
             {
@@ -36,14 +26,14 @@
                "y" : 7
             },
             {
-               "drilldown" : "Mark Anderson",
+               "y" : 2,
                "name" : "Mark Anderson",
-               "y" : 2
+               "drilldown" : "Mark Anderson"
             },
             {
                "y" : 2,
-               "name" : "Mohammad S Anwar",
-               "drilldown" : "Mohammad S Anwar"
+               "drilldown" : "Mohammad S Anwar",
+               "name" : "Mohammad S Anwar"
             },
             {
                "y" : 2,
@@ -52,8 +42,8 @@
             },
             {
                "y" : 3,
-               "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith"
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith"
             },
             {
                "y" : 5,
@@ -61,9 +51,9 @@
                "drilldown" : "Roger Bell_West"
             },
             {
+               "y" : 2,
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 2
+               "drilldown" : "Simon Proctor"
             },
             {
                "y" : 2,
@@ -71,24 +61,48 @@
                "name" : "Ulrich Rieke"
             },
             {
-               "y" : 3,
+               "name" : "W. Luis Mochan",
                "drilldown" : "W. Luis Mochan",
-               "name" : "W. Luis Mochan"
+               "y" : 3
             }
-         ]
+         ],
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 147"
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge - 147"
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 12] Last updated at 2022-01-12 14:16:56 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Alexander Karelas",
             "id" : "Alexander Karelas",
+            "name" : "Alexander Karelas",
             "data" : [
                [
                   "Perl",
+                  1
+               ]
+            ]
+         },
+         {
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
                   1
                ]
             ]
@@ -104,8 +118,8 @@
                   1
                ]
             ],
-            "id" : "James Smith",
-            "name" : "James Smith"
+            "name" : "James Smith",
+            "id" : "James Smith"
          },
          {
             "id" : "Luca Ferrari",
@@ -122,16 +136,18 @@
             ]
          },
          {
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            ]
          },
          {
+            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -141,19 +157,17 @@
                   "Raku",
                   1
                ]
-            ],
-            "id" : "Mohammad S Anwar",
-            "name" : "Mohammad S Anwar"
+            ]
          },
          {
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Niels van Dijke",
-            "name" : "Niels van Dijke"
+            ]
          },
          {
             "name" : "Peter Campbell Smith",
@@ -184,8 +198,8 @@
                   1
                ]
             ],
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West"
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          },
          {
             "data" : [
@@ -212,8 +226,6 @@
             "name" : "Ulrich Rieke"
          },
          {
-            "id" : "W. Luis Mochan",
-            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -223,23 +235,30 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "W. Luis Mochan",
+            "name" : "W. Luis Mochan"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         },
-         "borderWidth" : 0
+         }
       }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 147"
    },
    "xAxis" : {
       "type" : "category"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    }
 }
