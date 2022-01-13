@@ -60,7 +60,7 @@ for($i=1; $i<$n; $i++){
 }
 
 # Uh oh...
-if(!$done){
+unless($done){
     warn("Qualifying Pentagonal Numbers not found with \$n = $n\n");
     exit(1);
 }
