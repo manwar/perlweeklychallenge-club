@@ -1,0 +1,44 @@
+%!PS
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/factor {
+    /nn exch def
+    nn 1 eq {
+        [ 1 ]
+    } {
+        /ff 0 array def
+        /s nn sqrt cvi def
+        s s mul nn eq {
+            /ff ff s apush def
+            /s s 1 sub def
+        } if
+        2 1 s {
+            /pf exch def
+            nn pf mod 0 eq {
+                /ff ff pf apush def
+                /ff ff nn pf idiv apush def
+            } if
+        } for
+        /ff ff 1 apush nn apush def
+        ff
+    } ifelse
+} bind def
+
+/dld {
+    /n exch def
+    /m exch def
+    /tx 0 def
+    m factor {
+        10 mod n eq {
+            /tx tx 1 add def
+        } if
+    } forall
+    tx
+} bind def
+
+24 2 dld 2 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+30 5 dld 2 eq { (Pass) } { (FAIL) } ifelse =

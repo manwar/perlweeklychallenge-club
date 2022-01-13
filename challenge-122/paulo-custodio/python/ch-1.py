@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+# Challenge 122
+#
 # TASK #1 > Average of Stream
 # Submitted by: Mohammad S Anwar
 # You are given a stream of numbers, @N.

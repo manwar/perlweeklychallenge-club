@@ -21,8 +21,8 @@ const FRIDAY    = 5
 const SATURDAY  = 6
 
 var lookup = [2] [7] int {
-    {261, 261, 260, 260, 261, 261, 261},
-    {262, 262, 261, 260, 261, 262, 262},
+    {261, 260, 260, 261, 261, 261, 261},
+    {262, 261, 260, 261, 262, 262, 262},
 }
 
 var anchors = [4] int {TUESDAY, SUNDAY, FRIDAY, WEDNESDAY}

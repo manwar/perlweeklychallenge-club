@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 
-# THE WEEKLY CHALLENGE - 091
+# Challenge 091
+#
 # TASK #1: Count Number
 #
 # You are given a positive number $N. Write a script to count number and

@@ -1,6 +1,8 @@
 find . -name "*.w" -delete
+find . -name "*.wl" -delete
 find . -name "*.c" -delete
 find . -name "*.logo" -delete
+find . -name "*.ring" -delete
 find . -name "*.amx" -delete
 find . -name "*.svg" -delete
 find . -name "*.mms" -delete
@@ -107,4 +109,5 @@ rm -rf abigail/t/input-*
 rm -rf arne-sommer/perl/*
 rm -rf arne-sommer/raku/*
 rm -rf tyler-wardhaugh/clojure/src/tw/weekly/*
+rm -rf tyler-wardhaugh/clojure/test/tw/weekly/*
 rm -rf tyler-wardhaugh/clojure/resources/*

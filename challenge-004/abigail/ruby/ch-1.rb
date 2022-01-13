@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
 #
-# See ../README.md
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-004
 #
 
 #
@@ -37,7 +37,7 @@ pi = "%(uP7+Y`ME)gy(7')v?;%s^qc(Mj1}16idp'ONGs'2m.o,1HLY'}~P61@@Y-" +
      "'S/z}#vS|i)S9[=*/nCG)PMaY-{pML);vN?%kRcr#*.Tg,x;42'(1w.0dA)S" +
      ")-us%.#1$R-rkwf%m%B-(ctK8+4Sn^%*C1Y-wqsr%eNg11%$De&&07q+%1>-" +
      "+mCl2%)V#w%#y:[,?t*D$64`9.U+{`-SBX-+gi/o)0B$q#V$tW+#lmM)';EH" +
-     "%yFPZ/Gy(~,dl@h)A&ju-Co2,-du++)[Awk&wE}p*H;._.[]4W+Eb7K#iiKB"
+     "%yFPZ/Gy(~,dl@h)A&ju-Co2,-du++)[Awk&wE}p*H;._.[]4W+Eb7K#iiK?"
 
 in_size   = 5
 out_size  = 9
@@ -70,5 +70,5 @@ printf "\n"
 # FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER
 # FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER
 # FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER
-# FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER FODDER
+# FODDER FODDER FODDER
 #

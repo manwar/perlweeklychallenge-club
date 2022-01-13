@@ -30,11 +30,11 @@ sub fib_sum {
 
 sub sum {
   local $_;
-  my ( $t, @n) = @_;
-  return 1 unless $t;
-  return 0 if $t < 0;
-  my $c = 0;
+  my( $t, @n ) = @_;
+  return 1 unless $t; ## Return 1 - as we have a combination which totals to $n;
+  return 0 if $t < 0; ## Return 0 - we've gone past $n - so no combinations
+  my $c = 0;          ## We now have to sum up all combinations
   $c += sum( $t-$_, @n ) while $_ = shift @n;
-  return $c;
+  return $c;          ## And return the sum;
 }
 

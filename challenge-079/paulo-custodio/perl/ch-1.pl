@@ -2,16 +2,19 @@
 
 # Challenge 079
 #
-# TASK #1 › Count Set Bits
+# TASK #1 > Count Set Bits
 # Submitted by: Mohammad S Anwar
 # You are given a positive number $N.
 #
-# Write a script to count the total numbrer of set bits of the binary representations of all numbers from 1 to $N and return $total_count_set_bit % 1000000007.
+# Write a script to count the total numbrer of set bits of the binary
+# representations of all numbers from 1 to $N and return
+# $total_count_set_bit % 1000000007.
 #
 # Example 1:
 # Input: $N = 4
 #
-# Explanation: First find out the set bit counts of all numbers i.e. 1, 2, 3 and 4.
+# Explanation: First find out the set bit counts of all numbers i.e. 1, 2, 3
+# and 4.
 #
 #     Decimal: 1
 #     Binary: 001

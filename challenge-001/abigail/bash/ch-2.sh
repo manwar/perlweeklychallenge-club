@@ -1,9 +1,11 @@
+#!/bin/sh
+
 #
-# See ../README.md
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-001
 #
 
 #
-# Run as: bash ch-1.sh < input-file
+# Run as: bash ch-2.sh < input-file
 #
 
 while read max

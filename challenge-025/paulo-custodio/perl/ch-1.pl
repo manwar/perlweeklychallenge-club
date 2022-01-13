@@ -1,8 +1,8 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 # Challenge 025
 #
-# Generate a longest sequence of the following “English Pokemon” names where
+# Generate a longest sequence of the following "English Pokemon" names where
 # each name starts with the last letter of previous name.
 
 use Modern::Perl;

@@ -1,0 +1,77 @@
+%!PS
+
+% Warning, this is untested - it runs off the end of Ghostscript's ability
+% to handle memory allocation happily.
+
+/bubblesort {
+    mark exch aload pop counttomark /idx
+    exch store
+    {
+        0 1 idx 1 sub {
+            pop 2 copy gt {
+                exch
+            } if idx 1 roll
+        } for
+        idx 1 roll /idx idx 1 sub store
+        idx 0 eq {
+            exit
+        } if
+    } loop
+]
+} store
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/genprimes {
+    /mx exch def
+    /primesh mx dict def
+    2 1 3 {
+        primesh exch 1 put
+    } for
+    6 6 mx {
+        dup 1 sub exch 1 add 2 exch {
+            primesh exch 1 put
+        } for
+    } for
+    /q [ 3 5 7 ] def
+    /qi 0 def
+    /p 2 def
+    /mr mx sqrt cvi def
+    {
+        p mr le not {
+            exit
+        } if
+        primesh p known {
+            p dup mul p mx {
+                primesh exch undef
+            } for
+        } if
+        q length qi sub 2 le {
+            /q q q q length 1 sub get 4 add apush def
+            /q q q q length 1 sub get 2 add apush def
+        } if
+        /p q qi get def
+        /qi qi 1 add def
+    } loop
+    /primes 0 array def
+    primesh {
+        pop
+        /primes exch primes exch apush def
+    } forall
+    primes bubblesort
+} bind def
+
+/nthprime {
+    /n exch def
+    /m 15 def
+    n 6 ge {
+        /m n ln n mul ln n mul 1 add cvi def
+    } if
+    /pr m genprimes def
+    pr n 1 sub get
+} bind def
+
+10001 nthprime 104743 eq { (Pass) } { (FAIL) } ifelse =

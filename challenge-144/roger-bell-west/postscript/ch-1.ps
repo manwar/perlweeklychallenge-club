@@ -1,0 +1,95 @@
+%!PS
+
+/bubblesort {
+    mark exch aload pop counttomark /idx
+    exch store
+    {
+        0 1 idx 1 sub {
+            pop 2 copy gt {
+                exch
+            } if idx 1 roll
+        } for
+        idx 1 roll /idx idx 1 sub store
+        idx 0 eq {
+            exit
+        } if
+    } loop
+]
+} store
+
+/aeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/semiprime {
+    /mx exch def
+    /mxx mx 2 idiv def
+    /primesh mxx dict def
+    2 1 mxx {
+        primesh exch 1 put
+    } for
+    /p 2 def
+    {
+        p dup mul mxx le not {
+            exit
+        } if
+        primesh p known {
+            p dup mul p mxx {
+              primesh exch undef
+            } for
+        } if
+        p 2 eq {
+            /p p 1 sub def
+        } if
+        /p p 2 add def
+    } loop
+    /primes 0 array def
+    primesh {
+        pop
+        /primes exch primes exch apush def
+    } forall
+    /primes primes bubblesort def
+    /semiprimesh mx dict def
+    0 1 primes length 1 sub {
+        /i exch def
+        i 1 primes length 1 sub {
+            primes exch get primes i get mul /t exch def
+            t mx le {
+                semiprimesh t 1 put
+            } {
+                exit
+            } ifelse 
+        } for
+    } for
+    /semiprimes 0 array def
+    semiprimesh {
+        pop
+        /semiprimes exch semiprimes exch apush def
+    } forall
+    /semiprimes semiprimes bubblesort def
+    semiprimes
+} bind def
+
+100 semiprime [ 4 6 9 10 14 15 21 22 25 26 33 34 35 38 39 46 49 51 55 57 58 62 65 69 74 77 82 85 86 87 91 93 94 95 ]
+aeq { (Pass) } { (FAIL) } ifelse =

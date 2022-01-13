@@ -2,13 +2,15 @@
 
 # Challenge 078
 #
-# TASK #1 › Leader Element
+# TASK #1 > Leader Element
 # Submitted by: Mohammad S Anwar
 # You are given an array @A containing distinct integers.
 #
-# Write a script to find all leader elements in the array @A. Print (0) if none found.
+# Write a script to find all leader elements in the array @A. Print (0) if
+# none found.
 #
-# An element is leader if it is greater than all the elements to its right side.
+# An element is leader if it is greater than all the elements to its right
+# side.
 #
 # Example 1:
 # Input: @A = (9, 10, 7, 5, 6, 1)

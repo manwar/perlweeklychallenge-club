@@ -14,8 +14,13 @@ THURSDAY  <- 4
 FRIDAY    <- 5
 SATURDAY  <- 6
 
-lookup  <- array (c (261, 261, 260, 260, 261, 261, 261,
-                     262, 262, 261, 260, 261, 262, 262), dim = c (2, 7))
+lookup <- array (c (261, 262,
+                    260, 261,
+                    260, 260,
+                    261, 261,
+                    261, 262,
+                    261, 262,
+                    261, 262), dim = c (2, 7))
 
 anchors <- c (TUESDAY, SUNDAY, FRIDAY, WEDNESDAY)
 

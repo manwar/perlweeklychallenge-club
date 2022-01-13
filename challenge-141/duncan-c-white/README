@@ -1,0 +1,70 @@
+TASK #1 - Number Divisors
+
+Write a script to find lowest 10 positive integers having exactly 8 divisors.
+
+Example
+
+	24 is the first such number having exactly 8 divisors.
+	1, 2, 3, 4, 6, 8, 12 and 24.
+
+MY NOTES: Very easy.
+
+
+TASK #2 - Like Numbers
+
+You are given positive integers, $m and $n.  Write a script to find
+total count of integers created using the digits of $m which is also
+divisible by $n.
+
+Repeating of digits are not allowed. Order/Sequence of digits can't
+be altered. You are only allowed to use (n-1) digits at the most. For
+example, 432 is not acceptable integer created using the digits of
+1234 (because the digits are in the wrong order). Also for 1234, you can
+only have integers having no more than three digits.
+
+Example 1:
+
+	Input: $m = 1234, $n = 2
+	Output: 9
+
+	Possible integers created using the digits of 1234 are:
+	1, 2, 3, 4, 12, 13, 14, 23, 24, 34, 123, 124, 134 and 234.
+
+	There are 9 integers divisible by 2 such as:
+	2, 4, 12, 14, 24, 34, 124, 134 and 234.
+
+Example 2:
+
+	Input: $m = 768, $n = 4
+	Output: 3
+
+	Possible integers created using the digits of 768 are:
+	7, 6, 8, 76, 78 and 68.
+
+	There are 3 integers divisible by 4 such as:
+	8, 76 and 68.
+
+
+MY NOTES: Sounds pretty easy.  However, there's one mistake:
+"You are only allowed to use (n-1) digits at the most"
+is flatly contradicted by the examples.  I assume it meant
+"length(m)-1" which is what the examples show.
+
+So each digit can either be present or absent - it's another "subsets"
+task.  One wrinkle: the length(m)-1 rule means that (all-present) is
+not a valid combination. Plus of course (all-absent) isn't either.
+
+Last time we did a "subsets" task was in Challenge 136 Task 2,
+Fibonacci Seqence.  In that, I wrote:
+
+"How do we sum subsets of values?  Two obvious ways:
+
+1. recursive function, iterating over the values: each value is either in the
+   subset or not, try both possibilities.
+2. binary-counting method, iterate over every combination C from 1 ..
+   2**(number values)-1, then sum up only the elements where the corresponding
+   bit in C is on.
+"
+
+That time, I wrote a (2) binary-counting method.  So this time round, let's
+try a recursive function instead, just for variety.

@@ -16,11 +16,17 @@ count the number of time we encountered an 'e'.
 * [Bash](bash/ch-1.sh)
 * [Befunge-93](befunge/ch-1.bf93)
 * [C](c/ch-1.c)
+* [Go](go/ch-1.go)
+* [Java](java/ch-1.java)
 * [lua](lua/ch-1.lua)
 * [Node.js](node/ch-1.js)
+* [Pascal](pascal/ch-1.p)
 * [Perl](perl/ch-1.pl)
 * [Python](python/ch-1.py)
+* [R](r/ch-1.r)
 * [Ruby](ruby/ch-1.rb)
+* [Tcl](tcl/ch-1.tcl)
+* [Scheme](scheme/ch-1.scm)
 
 
 ## [Challenge #2](https://perlweeklychallenge.org/blog/perl-weekly-challenge-001/#challenge-2)
@@ -33,15 +39,22 @@ be replaced by the word `fizz` and any divisible by `5` by the word
 
 ### Note
 We will not be assuming a fixed upper bound. Instead, we read the
-upper boad from STDIN.
+upper bound from STDIN.
 
 ### Solutions
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
 * [Befunge-93](befunge-93/ch-2.bf93)
+* [bc](bc/ch-2.bc)
 * [C](c/ch-2.c)
+* [Go](go/ch-2.go)
+* [Java](java/ch-2.java)
 * [lua](lua/ch-2.lua)
 * [Node.js](node/ch-2.js)
+* [Pascal](pascal/ch-2.p)
 * [Perl](perl/ch-2.pl)
 * [Python](python/ch-2.py)
+* [R](r/ch-2.r)
 * [Ruby](ruby/ch-2.rb)
+* [Tcl](tcl/ch-2.tcl)
+* [Scheme](scheme/ch-2.scm)

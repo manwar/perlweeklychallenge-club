@@ -1,0 +1,48 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($s is copy = 'redivider', :v(:$verbose));
+
+my @result;
+
+while ($s.chars)
+{
+  my $letter = $s.substr(0,1);
+  @result.push: $letter;
+  
+  last if $s.chars == 1;
+
+  my $is-palindromic = is-palindromic($s);
+  
+  if ($is-palindromic)
+  {
+    my $new = $s.substr(0, $is-palindromic);
+    @result.push: $new;
+ 
+    if ($is-palindromic == $s.chars)
+    {
+      $s = $s.substr(1, $is-palindromic -2);
+    }
+    else
+    {
+       $s = $s.substr(1, $is-palindromic -1) ~ $s.substr($is-palindromic);
+    }
+  }
+  else
+  {
+    $s = $s.substr(1);
+  }
+
+  say "Result: @result[] | Todo: $s" if $verbose;
+}
+
+say @result.unique.join(" ");
+
+sub is-palindromic($string)
+{
+  for $string.chars ... 2 -> $end
+  {
+    my $partial = $string.substr(0, $end);
+    return $end if $partial eq $partial.flip;
+  }
+  return 0;
+}
