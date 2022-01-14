@@ -3,11 +3,12 @@
 # Pentagon Numbers
 # Write a sript to find the first pair of Pentagon Numbers
 # whose sum and difference are also a Pentagon Number.
-# Answer: First pair is 210 and 330
+# Answer: First pair is 1560090 and 7042750
 
 use strict;
 use warnings;
 use feature qw/ say /;
+use POSIX qw/ fmod /;
 
 my @pentagonal_numbers = qw/ 1 /;
 my $first_pair_found   = 0;
@@ -35,6 +36,6 @@ sub pentagonal_number {
 
 sub is_pentagonal_number {
     my $x         = shift;
-    my $remainder = ( sqrt( 24 * $x + 1 ) + 1 ) % 6;
+    my $remainder = fmod( sqrt( 24 * $x + 1 ) + 1, 6 );
     $remainder > 0 ? return 0 : return 1;
 }
