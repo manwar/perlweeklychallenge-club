@@ -37,7 +37,7 @@ def left_truncatable_numbers(n):
         numbers.append(int(s[i:]))
         i += 1
 
-    return numbers;
+    return numbers
 
 def left_truncatable_primes(count):
     ltp = []
