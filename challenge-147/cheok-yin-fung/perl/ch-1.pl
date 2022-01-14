@@ -1,9 +1,12 @@
 # The Weekly Challenge 147
 # Task 1 Truncatable Prime
-# Thursday, January 13, 2022 PM04:18:51 HKT
+# version 0: Thursday, January 13, 2022 PM04:18:51 HKT
+# version 1: Friday, January 14, 2022 AM01:20:32 
 
 use v5.12.0;
 use warnings;
+
+
 
 my @ltp = ();
 my @recent_ltp = (2,3,5,7);
@@ -11,9 +14,11 @@ my @new_ltp = ();
 
 my @prime = (2,3,5,7);
 
+
+
 sub is_prime {
     my $t = $_[0];
-    for (my $k = 0; defined($prime[$k]) && $prime[$k] <= sqrt($t) ;$k++) {
+    for (my $k = 0; $prime[$k] <= sqrt($t) ;$k++) {
         return 0 if $t % $prime[$k] == 0;
     } 
     return 1;
@@ -23,7 +28,8 @@ sub is_prime {
 
 sub append_arr_of_primes {
     my $max = $_[0];
-    my @relatively_small_primes = grep { $_ <= sqrt($max) } @prime;
+    my $sqrtmax = sqrt($max);
+    my @relatively_small_primes = grep { $_ <= $sqrtmax } @prime;
     HERE: for my $can ($relatively_small_primes[-1]+1..$max) {
         for my $p (@relatively_small_primes) {
             next HERE if $can % $p == 0
