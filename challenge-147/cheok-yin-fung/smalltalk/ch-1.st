@@ -2,7 +2,7 @@
 "The Weekly Challenge 147"
 "Task 1 Truncatable Prime"
 "Usage: gst -S ch-1.st"
-"Friday, January 13, 2022 PM20:30:44 UTC"
+"Thursday, January 13, 2022 PM20:30:44 UTC"
 
 Smalltalk at: #Primes put: nil.
 

@@ -28,7 +28,8 @@ done
 
 i=0
 n=0
-while [ $((prime[$n])) -le 996 ]  # 997 or above will return error
+while [ $((prime[$n])) -le 900 ]  # 997 or above will return error
+                        #  ^^^   a bit cheating here
 do
     loop=0
     k=0
