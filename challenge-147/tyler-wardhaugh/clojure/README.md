@@ -1,34 +1,22 @@
-# c146
+# c147
 
-The Weekly Challenge — #146 — Tyler Wardhaugh
+The Weekly Challenge — #147 — Tyler Wardhaugh
 
 ## Usage
 
 Clojure ([installation instructions](https://clojure.org/guides/getting_started#_clojure_installer_and_cli_tools)) required for `clojure` commands; Babashka ([installation instructions](https://github.com/babashka/babashka#quickstart)) required for the `bb` commands.
 
-Run Task #1 (implemented with a sieve):
+Run Task #1:
 
     $ clojure -M:t1
     # ... or ...
     $ bb run task-1
 
-    # Alternatively, to run it via Babashka:
-    $ bb run task-1-bb
+Run Task #2:
 
-Run Task #1b (implemented using JVM's BigInteger library):
-
-    $ clojure -M:t1b
+    $ clojure -M:t2
     # ... or ...
-    $ bb run task-1b
-
-    # Alternatively, to run it via Babashka:
-    $ bb run task-1b-bb
-
-Run Task #2 with input:
-
-    $ clojure -M:t2 M
-    # ... or ...
-    $ bb run task-2 M
+    $ bb run task-2
 
     # Alternatively, to run it via Babashka:
     $ bb run task-2-bb
