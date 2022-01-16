@@ -1,0 +1,13 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($limit = 10);
+
+my $penta-seq = (1..Inf).grep(*.&is-pentagonial);
+
+say $penta-seq[^$limit].join(", ");
+
+sub is-pentagonial ($candidate)
+{
+  my $is = (1 + (1 + 24 * $candidate).sqrt) / 6;
+  return $is.Int == $is;
+}
