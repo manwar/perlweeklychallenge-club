@@ -12,9 +12,6 @@ set -f
 
 declare -A pentagon
 
-# ((n = 0))
-# ((p = 0))
-
 while true
 do    ((p = p + n + n + n + 1))
       ((n ++))
