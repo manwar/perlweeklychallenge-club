@@ -18,9 +18,6 @@ Run Task #2:
     # ... or ...
     $ bb run task-2
 
-    # Alternatively, to run it via Babashka:
-    $ bb run task-2-bb
-
 Run the project's tests (which are samples from the task descriptions):
 
     $ clojure -T:build test
