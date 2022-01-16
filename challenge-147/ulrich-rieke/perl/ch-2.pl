@@ -7,7 +7,7 @@ use feature 'say' ;
 
 sub isPentagonNumber {
   my $num = shift ;
-  my $root = ( sqrt( 24 * $num + 1 ) + 1 ) / 2 ;
+  my $root = ( sqrt( 24 * $num + 1 ) + 1 ) / 6 ;
   return floor( $root ) == $root ;
 }
 
@@ -27,16 +27,17 @@ while ( my $c = $iter->next ) {
   }
 }
 my $combiFound = 0 ;
+my @pair ;
 do {
   $current++ ;
   push @pentagons , toPentagon( $current ) ;
-  $iter = combinations( \@pentagons , 2 ) ;
-  while ( my $c = $iter->next ) {
-      if ( isPentagonNumber( $c->[ 0 ] + $c->[1] ) &&
-        isPentagonNumber( abs( $c->[0] - $c->[1] ) ) ) {
-    say "$c->[0] , $c->[1]" ;
+  for my $i (@pentagons[0 .. $current - 2]) {
+      if ( isPentagonNumber( $i + $pentagons[ -1 ] ) &&
+          isPentagonNumber( abs( $i - $pentagons[ -1 ] ) ) ) {
+    push @pair , $i , $pentagons[ -1 ] ;
     $combiFound = 1 ;
     last ;
-      }
+    }
   }
 } while ( $combiFound == 0 ) ;
+say join( ", " , @pair ) ;
