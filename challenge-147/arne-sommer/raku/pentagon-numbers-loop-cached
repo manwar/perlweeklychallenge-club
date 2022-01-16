@@ -1,0 +1,40 @@
+#! /usr/bin/env raku
+
+unit sub MAIN;
+
+for 2 .. Inf -> $a
+{
+  for $a -1 ... 1 -> $b
+  {
+    my $penta-a = pentagonial($a);
+    my $penta-b = pentagonial($b);
+
+    if is-pentagonial($penta-a + $penta-b) && is-pentagonial($penta-a - $penta-b)
+    {
+      say "$penta-b $penta-a";
+      exit;
+    }
+  }
+}
+
+sub is-pentagonial ($candidate)
+{
+  state @cache;
+  return @cache[$candidate] if @cache[$candidate];
+
+  my $value = (1 + (1 + 24 * $candidate).sqrt) / 6;
+
+  @cache[$candidate] = ( $value.Int == $value );
+
+  return @cache[$candidate];
+}
+
+sub pentagonial ($number)
+{
+  state @cache;
+  return @cache[$number] if @cache[$number];
+
+  return @cache[$number] = $number * ( 3 * $number -1) / 2;
+}
+
+say "(no match)";
