@@ -1,33 +1,25 @@
-Solutions by Bruce Gray.
+Solutions by Bruce Gray for https://theweeklychallenge.org/blog/perl-weekly-challenge-147/
 
-For ch-2, the Perl and Raku programs can take rationals on the command-line for experimentation,
-or will run their test suites if invoked without arguments.
+NOTE: Both Task#2 solutions deliberately avoid the need for is_pentagon_number(),
+[as per quadratic transformation of `n(3n-1)/2 = P`
+to `sqrt(24P + 1) must be 5(mod 6)` and `24P + 1 must be a perfect square`]
+, just for fun.
 
 Sample runs:
-$ perl perl/ch-1.pl 
-    104743
+$ perl perl/ch-1.pl
+    2 3 5 7 13 17 23 37 43 47 53 67 73 83 97 103 107 113 137 167
+    2 3 5 7 13 17 23 37 43 47 53 67 73 83 97 113 137 167 173 197
 
 $ raku raku/ch-1.raku
-    104743
+    2 3 5 7 13 17 23 37 43 47 53 67 73 83 97 103 107 113 137 167
+    2 3 5 7 13 17 23 37 43 47 53 67 73 83 97 113 137 167 173 197
 
-$ perl perl/ch-2.pl 4817/5410
-    4817/5410 has CW parent,grandparent of: 4817/593,4224/593
+$ perl perl/ch-2.pl 
+    7042750 5482660
 
-$ raku raku/ch-2.raku 4817/5410
-    (4817/593 4224/593)
+$ time raku raku/ch-2.raku
+    7042750 5482660
 
-$ prove perl/ch-2.pl
-    perl/ch-2.pl .. ok       
-    All tests successful.
-    Files=1, Tests=202,  0 wallclock secs ( 0.04 usr  0.01 sys +  0.09 cusr  0.01 csys =  0.15 CPU)
-    Result: PASS
-
-$ prove -e raku raku/ch-2.raku
-    raku/ch-2.raku .. ok       
-    All tests successful.
-    Files=1, Tests=202,  3 wallclock secs ( 0.05 usr  0.00 sys +  2.72 cusr  0.13 csys =  2.90 CPU)
-    Result: PASS
-
-$ perl -MMath::PlanePath::RationalsTree -wE 'my $CW = Math::PlanePath::RationalsTree->new( tree_type => "CW" ); say join "/", $CW->n_to_xy( $CW->tree_n_parent( $CW->xy_to_n(@ARGV) ) );' 4817 5410
-    4817/593
-    (Fleshed out in ch-2_via_module.pl)
+    real	0m2.432s
+    user	0m2.534s
+    sys 	0m0.067s
