@@ -2,4 +2,4 @@
 
 use Lingua::EN::Numbers;
 
-.say for (^101).map(&cardinal).grep({.index('e') ~~ Nil});
+.say for (^101).grep({ cardinal($_).index('e') ~~ Nil });
