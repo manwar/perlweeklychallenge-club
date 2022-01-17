@@ -35,8 +35,7 @@ my @e = (0,2,4,6,30,32,34,36,40,42,44,46,50,52,54,56,60,62,64,66);
 
 my %en = map { (substr('00'.$e[$_],-3,3), $_) } (0 .. scalar(@e)-1);
  
-my @eban = map{ 0+$_ } @e[1..scalar(@e)-1];
-push(@eban);
+my @eban = @e[1..scalar(@e)-1];
 
 my $len = shift // 100;
 
