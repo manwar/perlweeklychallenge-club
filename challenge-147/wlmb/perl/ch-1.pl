@@ -7,7 +7,7 @@ use v5.12;
 use warnings;
 use PDL;
 use PDL::NiceSlice;
-use POSIX qw(); # don't import to avoid name collisions with PDL
+use POSIX (); # don't import to avoid name collisions with PDL
 use Text::Wrap qw(wrap $columns $break);
 
 die "Usage: ./ch-1.pl size_of_sieve number_of_truncatable_primes [base]\n"

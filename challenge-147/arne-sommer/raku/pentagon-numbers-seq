@@ -1,0 +1,16 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($limit = 10);
+
+my $penta-seq = gather
+{
+  state $index = 0;
+
+  loop
+  {
+    $index++;
+    take $index * ( 3 * $index -1) / 2;
+  }
+}
+
+say $penta-seq[^$limit].join(", ");

@@ -1,0 +1,35 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($limit = 10, :v(:$verbose));
+
+my $penta-seq = gather
+{
+  state $index = 0;
+
+  loop
+  {
+    $index++;
+    take $index * ( 3 * $index -1) / 2;
+  }
+}
+
+my @a = $penta-seq[^$limit];
+
+my %is-penta = @a.Set;
+
+for @a -> $a
+{
+  for @a -> $b
+  {
+    next if $b <= $a;
+    say ": Considering $a, $b" if $verbose;
+
+    if %is-penta{$a + $b} && %is-penta{$b - $a}
+    {
+      say "$a, $b";
+      exit;
+    }
+  }
+}
+
+say "(no match)";
