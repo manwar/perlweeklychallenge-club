@@ -1,0 +1,47 @@
+TASK #1 - Truncatable Prime
+
+Write a script to generate first 20 left-truncatable prime numbers in base 10.
+
+In number theory, a left-truncatable prime is a prime number which, in a
+given base, contains no 0, and if the leading left digit is successively
+removed, then all resulting numbers are primes.
+
+Example
+
+9137 is one such left-truncatable prime since 9137, 137, 37 and 7 are
+all prime numbers.
+
+MY NOTES: Very easy, especially (tada) if you happen to have a prime
+generating module that you've already used several times in these
+challenges..
+
+
+TASK #2 - Pentagon Numbers
+
+Write a script to find the first pair of Pentagon Numbers whose sum and difference are also a Pentagon Number.
+
+    Pentagon numbers can be defined as P(n) = n(3n - 1)/2.
+
+Example
+
+	The first 10 Pentagon Numbers are:
+	1, 5, 12, 22, 35, 51, 70, 92, 117 and 145.
+
+	P(4) + P(7) = 22 + 70 = 92 = P(8)
+	but
+	P(4) - P(7) = |22 - 70| = 48 is not a Pentagon Number.
+
+MY NOTES: Ok, reasonably straight forward, calc first N Pentagon numbers,
+form a sethash of them to allow lookups, then iterate over all pairs of
+Pentagon numbers rejecting all pairs where the diff or sum isn't a Pentagon
+number. The diff of any two of the first N Pentagon numbers is obviously
+smaller, so may be looked up directly in the sethash.  The only tricky bit
+concerns the SUM of any two of them, because that sum may be greater than
+the biggest Pentagon number we know as yet, hence not in the sethash because
+we haven't calculated such Pentagon numbers yet - not because it's not a
+Pentagon number.  I can nearly see the structure of an adaptive solution,
+that generates Pentagon numbers incrementally, but it's a bit tricky.
+So instead let's Keep It Simple - just generate the first N Pentagon numbers
+and see if we can find any matching pair of those (where the sum is in the
+first N Pentagon numbers).  If not, run the program again with a bigger value
+of N.  Experimentation reveals that N=2400 finds the solution..
