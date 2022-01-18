@@ -12,6 +12,9 @@ Run Task #1:
     # ... or ...
     $ bb run task-1
 
+    # Alternatively, to run it via Babashka:
+    $ bb run task-1-bb
+
 Run Task #2:
 
     $ clojure -M:t2
