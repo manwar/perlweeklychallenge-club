@@ -2,4 +2,4 @@
 
 use Lingua::EN::Numbers;
 
-.say for (^101).grep({ cardinal($_).contains('e').not });
+.say for (^101).grep({ not cardinal($_).contains('e') });
