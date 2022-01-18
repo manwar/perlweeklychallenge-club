@@ -1,53 +1,46 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2022-01-18 10:08:54 GMT"
-   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
       }
    },
    "series" : [
       {
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 148",
          "data" : [
             {
-               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith",
                "y" : 3,
-               "drilldown" : "Peter Campbell Smith"
+               "name" : "Peter Campbell Smith"
+            },
+            {
+               "name" : "W. Luis Mochan",
+               "y" : 3,
+               "drilldown" : "W. Luis Mochan"
             }
-         ]
+         ],
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 148"
       }
    ],
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 148"
-   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Peter Campbell Smith",
             "id" : "Peter Campbell Smith",
+            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -58,10 +51,36 @@
                   1
                ]
             ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "W. Luis Mochan",
+            "name" : "W. Luis Mochan"
          }
       ]
    },
+   "legend" : {
+      "enabled" : 0
+   },
    "chart" : {
       "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 148"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2022-01-18 17:54:01 GMT"
    }
 }
