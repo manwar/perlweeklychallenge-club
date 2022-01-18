@@ -1,0 +1,45 @@
+%!PS
+
+/aeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/eban {
+    /units [ true false true false true false true false false false ] def
+    /tens [ true false false true true true true false false false false ] def
+    /out 0 array def
+    0 exch 1 exch {
+        dup dup dup
+        10 idiv tens exch get 3 1 roll
+        10 mod units exch get 3 1 roll
+        0 ne and and {
+            /out exch out exch apush def
+        } {
+            pop
+        } ifelse
+    } for
+    out
+} bind def
+
+100 eban [ 2 4 6 30 32 34 36 40 42 44 46 50 52 54 56 60 62 64 66 ] aeq { (Pass) } { (FAIL) } ifelse =
