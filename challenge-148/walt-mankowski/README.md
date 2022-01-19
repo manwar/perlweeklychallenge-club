@@ -16,7 +16,7 @@ my @eban = grep { num2en($_) !~ tr/e// } 1..100;
 
 For this task we need to generate the first 5 **Cardano Triplets**. The formula for Cardano Triplets involves square and cube roots. Github's Markdown engine doesn't support inline math, so I'll refer the reader to a [Project Euler](https://projecteuler.net/problem=251) problem involving them.
 
-There's no obvious method to sort Cardano Triplets, so instead of generating the first 5, I decided to generate all the solutions where a, b, and c are all less than or equal to 100.
+There's no obvious method to sort Cardano Triplets, so instead of generating the first 5, I decided to generate all the solutions where a, b, and c are all less than or equal to 100. I didn't use anything fancy to generate them, just 3 nested `for` loops.
 
 The only real difficulty here is that the second cube root term is often negative. This is the case for the example of (2,1,5) given in the problem description. Like all nonzero real numbers, 2 - sqrt(5) has exactly one real cube root, but since it's negative Perl's `**` operator returns `NaN`. To get around this I take the cube root of the absolute value, then make it negative:
 
