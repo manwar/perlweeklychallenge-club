@@ -14,5 +14,5 @@ my $max = 100;
 
 say "Eban Numbers <= $max:";
 for ( 1 .. $max ) {
-    ( num2en($_) =~ /e/ ) ? next : say $_;
+    ( num2en($_) =~ /e/i ) ? next : say $_;
 }
