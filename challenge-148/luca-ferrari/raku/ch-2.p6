@@ -24,5 +24,5 @@ sub MAIN( Int $limit = 5 ) {
         }
     };
 
-    @triplets[ 0 .. 5 ].join( "\n" ).say;
+    @triplets[ 0 .. $limit ].join( "\n" ).say;
 }
