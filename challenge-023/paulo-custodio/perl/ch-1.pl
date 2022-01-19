@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 # Challenge 023
 #
@@ -19,7 +19,7 @@
 use Modern::Perl;
 
 my($n, @seq) = @ARGV;
-say join(", ", nth_forward_diff($n, @seq)), ".";
+say join(", ", nth_forward_diff($n, @seq));
 
 
 sub forward_diff {

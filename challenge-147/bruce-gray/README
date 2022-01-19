@@ -1,0 +1,25 @@
+Solutions by Bruce Gray for https://theweeklychallenge.org/blog/perl-weekly-challenge-147/
+
+NOTE: Both Task#2 solutions deliberately avoid the need for is_pentagon_number(),
+[as per quadratic transformation of `n(3n-1)/2 = P`
+to `sqrt(24P + 1) must be 5(mod 6)` and `24P + 1 must be a perfect square`]
+, just for fun.
+
+Sample runs:
+$ perl perl/ch-1.pl
+    2 3 5 7 13 17 23 37 43 47 53 67 73 83 97 103 107 113 137 167
+    2 3 5 7 13 17 23 37 43 47 53 67 73 83 97 113 137 167 173 197
+
+$ raku raku/ch-1.raku
+    2 3 5 7 13 17 23 37 43 47 53 67 73 83 97 103 107 113 137 167
+    2 3 5 7 13 17 23 37 43 47 53 67 73 83 97 113 137 167 173 197
+
+$ perl perl/ch-2.pl 
+    7042750 5482660
+
+$ time raku raku/ch-2.raku
+    7042750 5482660
+
+    real	0m2.432s
+    user	0m2.534s
+    sys 	0m0.067s

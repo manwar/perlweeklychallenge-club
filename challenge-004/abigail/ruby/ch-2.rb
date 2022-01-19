@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 
 #
-# See ../README.md
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-004
 #
  
 #

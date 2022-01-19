@@ -2,12 +2,15 @@
 
 # Challenge 076
 #
-# TASK #2 › Word Search
+# TASK #2 > Word Search
 # Submitted by: Neil Bowers
 # Reviewed by: Ryan Thompson
-# Write a script that takes two file names. The first file would contain word search grid as shown below. The second file contains list of words, one word per line. You could even use local dictionary file.
+# Write a script that takes two file names. The first file would contain word
+# search grid as shown below. The second file contains list of words, one word
+# per line. You could even use local dictionary file.
 #
-# Print out a list of all words seen on the grid, looking both orthogonally and diagonally, backwards as well as forwards.
+# Print out a list of all words seen on the grid, looking both orthogonally
+# and diagonally, backwards as well as forwards.
 #
 # Search Grid
 # B I D E M I A T S U C C O R S T
@@ -30,9 +33,15 @@
 # R S E C I S N A B O S C N E R A
 # D R S M P C U U N E L T E S I L
 # Output
-# Found 54 words of length 5 or more when checked against the local dictionary. You may or may not get the same result but that is fine.
+# Found 54 words of length 5 or more when checked against the local dictionary.
+# You may or may not get the same result but that is fine.
 #
-# aimed, align, antes, argos, arose, ashed, blunt, blunts, broad, buries, clove, cloven, constitution, constitutions, croon, depart, departed, enter, filch, garlic, goats, grieve, grieves, hazard, liens, malign, malignant, malls, margo, midst, ought, ovary, parted, patna, pudgiest, quash, quashed, raped, ruses, shrine, shrines, social, socializing, spasm, spasmodic, succor, succors, theorem, theorems, traci, tracie, virus, viruses, wigged
+# aimed, align, antes, argos, arose, ashed, blunt, blunts, broad, buries,
+# clove, cloven, constitution, constitutions, croon, depart, departed, enter,
+# filch, garlic, goats, grieve, grieves, hazard, liens, malign, malignant,
+# malls, margo, midst, ought, ovary, parted, patna, pudgiest, quash, quashed,
+# raped, ruses, shrine, shrines, social, socializing, spasm, spasmodic, succor,
+# succors, theorem, theorems, traci, tracie, virus, viruses, wigged
 
 use Modern::Perl;
 use Path::Tiny;

@@ -1,0 +1,25 @@
+- setup:
+  cleanup:
+  args:     "'10 20 30 40 50' '3 4'"
+  input:
+  output:   |
+            [40 50 10 20 30]
+            [50 10 20 30 40]
+- setup:
+  cleanup:
+  args:     "'7 4 2 6 3' '1 3 4'"
+  input:
+  output:   |
+            [4 2 6 3 7]
+            [6 3 7 4 2]
+            [3 7 4 2 6]
+- setup:
+  cleanup:
+  args:     "'7 4 2 6 3' '0 1 2 3 4'"
+  input:
+  output:   |
+            [7 4 2 6 3]
+            [4 2 6 3 7]
+            [2 6 3 7 4]
+            [6 3 7 4 2]
+            [3 7 4 2 6]

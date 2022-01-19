@@ -4,7 +4,7 @@
 "Usage: gst -S ch-2.st"
 "written on 30th Jan 2021"
 "Smalltalk has built-in Linked List, 
-here is reventing the wheel."
+here is reinventing the wheel."
 
 
 Object subclass: Node [

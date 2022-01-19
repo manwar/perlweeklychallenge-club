@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($s is copy = 'redivider', :v(:$verbose));
+
+my @result = $s.comb;
+my $length = $s.chars;
+
+for 0 .. $length -2 -> $start
+{
+  for $start +1 .. $length -1 -> $stop
+  {
+    my $candidate = $s.substr($start, $stop - $start +1);
+    say ": [$start,$stop] $candidate" if $verbose;
+    @result.push: $candidate if $candidate.flip eq $candidate;
+  }
+}
+
+say @result.unique.join(" ");

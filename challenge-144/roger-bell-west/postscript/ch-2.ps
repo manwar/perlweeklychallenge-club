@@ -1,0 +1,63 @@
+%!PS
+
+/aeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/ulam {
+    /ccount exch def
+    /v exch def
+    /u exch def
+    /ulams [ u v ] def
+    /sieve 0 array def
+    /uc v def
+    {
+        ulams length ccount ge {
+            exit
+        } if
+        uc ulams ulams length 2 sub get add sieve length sub {
+            /sieve sieve 0 apush def
+        } repeat
+        0 1 ulams length 2 sub {
+            ulams exch get uc add 1 sub /t exch def
+            sieve t sieve t get 1 add put
+        } for
+        uc 1 sieve length 1 sub {
+            /i exch def
+            sieve i get 1 eq {
+                /uc i 1 add def
+                /ulams ulams uc apush def
+                exit
+            } if
+        } for
+    } loop
+    ulams
+} bind def
+
+1 2 10 ulam [ 1 2 3 4  6  8 11 13 16 18 ]
+aeq { (Pass) } { (FAIL) } ifelse print ( ) print
+2 3 10 ulam [ 2 3 5 7  8  9 13 14 18 19 ]
+aeq { (Pass) } { (FAIL) } ifelse print ( ) print
+2 5 10 ulam [ 2 5 7 9 11 12 13 15 19 23 ]
+aeq { (Pass) } { (FAIL) } ifelse =

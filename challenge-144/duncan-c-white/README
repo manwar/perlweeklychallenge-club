@@ -1,0 +1,57 @@
+TASK #1 - Semiprime
+
+Write a script to generate all Semiprime number <= 100.
+
+For more information about Semiprime, please checkout the wikipedia page
+https://en.wikipedia.org/wiki/Semiprime
+
+In mathematics, a semiprime is a natural number that is the product of
+exactly two prime numbers. The two primes in the product may equal each
+other, so the semiprimes include the squares of prime numbers.
+
+Example
+
+	10 is Semiprime as 10 = 2 x 5
+	15 is Semiprime as 15 = 3 x 5
+
+MY NOTES: Sounds easy, using my existing factors function, and
+my existing prime generation code.
+
+
+TASK #2 - Ulam Sequence
+
+You are given two positive numbers, $u and $v.
+
+Write a script to generate Ulam Sequence having at least 10 Ulam numbers
+where $u and $v are the first 2 Ulam numbers.
+
+For more information about Ulam Sequence, please checkout the website
+https://en.wikipedia.org/wiki/Ulam_number
+
+The standard Ulam sequence (the (1, 2)-Ulam sequence) starts with U1 =
+1 and U2 = 2. Then for n > 2, Un is defined to be the smallest integer
+that is the sum of two distinct earlier terms in exactly one way and
+larger than all earlier terms.
+
+Example 1
+
+	Input: $u = 1, $v = 2
+	Output: 1, 2, 3, 4, 6, 8, 11, 13, 16, 18
+
+Example 2
+
+	Input: $u = 2, $v = 3
+	Output: 2, 3, 5, 7, 8, 9, 13, 14, 18, 19
+
+Example 3
+
+	Input: $u = 2, $v = 5
+	Output: 2, 5, 7, 9, 11, 12, 13, 15, 19, 23
+
+
+MY NOTES: hmm..  sounds relatively straightforward.  I'm slightly puzzled
+by "in exactly one way", but the wikipedia gives an example that clarifies it.
+So presumably we're going to check each distinct pair of earlier terms,
+checking whether the sum of that pair is an Ulam number at all, whether it's
+greater than the last term we've found, and then pick the smallest of all
+such numbers found.  Obviously O(N**2) or worse.

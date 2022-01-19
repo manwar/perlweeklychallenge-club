@@ -6,14 +6,20 @@ use strict;
     use Tie::Scalar;
     use parent -norequire => 'Tie::StdScalar';
 
+    sub validate {
+        die 'Invalid format' if $_[0] =~ /[^01]/;
+    }
+
     sub TIESCALAR {
         my ($class, $value) = @_;
         die 'Too many arguments' if @_ > 2;
-        die 'Invalid format' if $value =~ /[^01]/;
+        validate($value);
         bless \$value, $class
     }
 
     sub FETCH { $_[0] }
+
+    sub STORE { validate($_[1]); $_[0]->SUPER::STORE($_[1]) }
 
     use overload
         '+' => sub {
@@ -41,7 +47,9 @@ use Test::Exception;
     is $A + $B, 110, "Example 2 ($A + $B)";
 }
 
-{   tie my $A, 'Binary', 100;
-    tie my $B, 'Binary', 11;
+{   tie my $A, 'Binary', 0;
+    tie my $B, 'Binary', 0;
+    $A = 100;
+    $B = 11;
     is $A + $B, 111, "Example 3 ($A + $B)";
 }

@@ -1,0 +1,35 @@
+#!/usr/bin/bc
+
+#
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-003
+#
+
+#
+# Run as: bc ch-2.bc < input-file
+#
+
+while (1) {
+    n = read ()
+    if (n == 0) {
+        break
+    }
+
+    p [0] = 1
+    p [0]
+    for (i = 1; i <= n; i ++) {
+        for (j = 0; j < i; j ++) {
+            n [j] = p [j]
+            if (j - 1 >= 0) {
+                n [j] = n [j] + p [j - 1]
+            }
+            print n [j], " "
+        }
+        n [i] = 1
+        print "1
+"
+        for (j = 0; j <= i; j ++) {
+            p [j] = n [j]
+        }
+    }
+    break
+}
