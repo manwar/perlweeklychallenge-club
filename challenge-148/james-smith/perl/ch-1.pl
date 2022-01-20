@@ -26,7 +26,7 @@ my @tens   = (0,30,40,50,60);
 
 ## We need to dump our first eban numbers!
 
-dump_list(my@eb=grep{$_}my@nx=map{my$a=$_;map{$a+$_}@digits}@tens);
+say join "\n",(my@e=grep{$_}my@n=map{my$a=$_;map{$a+$_}@digits}@tens);
 
 ########################################################################
 ## Now we extend these by adding more digits at the end so we get those
@@ -34,7 +34,7 @@ dump_list(my@eb=grep{$_}my@nx=map{my$a=$_;map{$a+$_}@digits}@tens);
 ## Note there would need to be a slight tweak when we get to sextillion,
 ## septillion to skip those numbers
 
-dump_list(@eb=map{my$a=$_;map{sprintf'%s,%03d',$a,$_}@nx}@eb)for 2..$N;
+say join"\n",(@e=map{my$a=$_;map{sprintf'%s,%03d',$a,$_}@n}@e)for 2..$N;
 
 ########################################################################
 ## Just as an aside the number of eban numbers for $N is precisely
@@ -45,12 +45,3 @@ dump_list(@eb=map{my$a=$_;map{sprintf'%s,%03d',$a,$_}@nx}@eb)for 2..$N;
 ## specify where eban numbers can be negative - if this is the case any
 ## +ve eban number has an associated -ve eban number - and visa-versa.
 
-## In dump_list below we remove leading zeros and blank entries
-## To avoid grep - we check to see if $_ is "non-zero"
-## and if it is we add an empty array element rather
-## than blank. This avoids the additional map, and potential double
-## array calculation
-
-sub dump_list {
-  say for map { $_ ? s{^0+}{}r : () }  @_;
-}
