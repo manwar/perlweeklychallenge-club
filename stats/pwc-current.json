@@ -1,107 +1,34 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 148"
+   "xAxis" : {
+      "type" : "category"
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Dave Jacoby",
-               "y" : 3,
-               "drilldown" : "Dave Jacoby"
-            },
-            {
-               "name" : "E. Choroba",
-               "drilldown" : "E. Choroba",
-               "y" : 2
-            },
-            {
-               "y" : 6,
-               "drilldown" : "Flavio Poletti",
-               "name" : "Flavio Poletti"
-            },
-            {
-               "drilldown" : "Luca Ferrari",
-               "y" : 6,
-               "name" : "Luca Ferrari"
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "y" : 1,
-               "name" : "Mark Anderson"
-            },
-            {
-               "name" : "Marton Polgar",
-               "y" : 2,
-               "drilldown" : "Marton Polgar"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Matthew Neleigh",
-               "name" : "Matthew Neleigh"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke"
-            },
-            {
-               "drilldown" : "Peter Campbell Smith",
-               "y" : 3,
-               "name" : "Peter Campbell Smith"
-            },
-            {
-               "name" : "Robert DiCicco",
-               "drilldown" : "Robert DiCicco",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "y" : 5,
-               "name" : "Roger Bell_West"
-            },
-            {
-               "name" : "Steven Wilson",
-               "y" : 1,
-               "drilldown" : "Steven Wilson"
-            },
-            {
-               "name" : "Ulrich Rieke",
-               "drilldown" : "Ulrich Rieke",
-               "y" : 3
-            },
-            {
-               "y" : 3,
-               "drilldown" : "W. Luis Mochan",
-               "name" : "W. Luis Mochan"
-            },
-            {
-               "name" : "Walt Mankowski",
-               "drilldown" : "Walt Mankowski",
-               "y" : 3
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 148"
-      }
-   ],
    "drilldown" : {
       "series" : [
          {
+            "data" : [
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Colin Crain",
+            "name" : "Colin Crain"
+         },
+         {
+            "name" : "Dave Jacoby",
             "id" : "Dave Jacoby",
             "data" : [
                [
@@ -112,22 +39,21 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Dave Jacoby"
+            ]
          },
          {
-            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "E. Choroba",
             "name" : "E. Choroba"
          },
          {
-            "name" : "Flavio Poletti",
             "id" : "Flavio Poletti",
+            "name" : "Flavio Poletti",
             "data" : [
                [
                   "Perl",
@@ -144,7 +70,6 @@
             ]
          },
          {
-            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -155,7 +80,8 @@
                   4
                ]
             ],
-            "id" : "Luca Ferrari"
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
          },
          {
             "data" : [
@@ -164,40 +90,42 @@
                   1
                ]
             ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
          },
          {
-            "name" : "Marton Polgar",
-            "id" : "Marton Polgar",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Marton Polgar",
+            "name" : "Marton Polgar"
          },
          {
-            "id" : "Matthew Neleigh",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Matthew Neleigh",
             "name" : "Matthew Neleigh"
          },
          {
-            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Niels van Dijke",
             "name" : "Niels van Dijke"
          },
          {
+            "id" : "Peter Campbell Smith",
+            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -207,23 +135,21 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Peter Campbell Smith",
-            "name" : "Peter Campbell Smith"
+            ]
          },
          {
+            "name" : "Robert DiCicco",
+            "id" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Robert DiCicco",
-            "name" : "Robert DiCicco"
+            ]
          },
          {
-            "name" : "Roger Bell_West",
             "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -241,13 +167,13 @@
          },
          {
             "name" : "Steven Wilson",
+            "id" : "Steven Wilson",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "id" : "Steven Wilson"
+            ]
          },
          {
             "data" : [
@@ -260,11 +186,12 @@
                   2
                ]
             ],
-            "id" : "Ulrich Rieke",
-            "name" : "Ulrich Rieke"
+            "name" : "Ulrich Rieke",
+            "id" : "Ulrich Rieke"
          },
          {
             "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -274,11 +201,11 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "W. Luis Mochan"
+            ]
          },
          {
             "id" : "Walt Mankowski",
+            "name" : "Walt Mankowski",
             "data" : [
                [
                   "Perl",
@@ -288,26 +215,114 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Walt Mankowski"
+            ]
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 15] Last updated at 2022-01-20 14:11:29 GMT"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
    "legend" : {
       "enabled" : 0
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "subtitle" : {
+      "text" : "[Champions: 16] Last updated at 2022-01-20 14:16:29 GMT"
    },
-   "xAxis" : {
-      "type" : "category"
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "Colin Crain",
+               "y" : 1,
+               "drilldown" : "Colin Crain"
+            },
+            {
+               "y" : 3,
+               "name" : "Dave Jacoby",
+               "drilldown" : "Dave Jacoby"
+            },
+            {
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba",
+               "y" : 2
+            },
+            {
+               "name" : "Flavio Poletti",
+               "y" : 6,
+               "drilldown" : "Flavio Poletti"
+            },
+            {
+               "y" : 6,
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "y" : 1,
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Marton Polgar",
+               "y" : 2,
+               "name" : "Marton Polgar"
+            },
+            {
+               "drilldown" : "Matthew Neleigh",
+               "name" : "Matthew Neleigh",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Peter Campbell Smith",
+               "name" : "Peter Campbell Smith",
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "name" : "Robert DiCicco",
+               "drilldown" : "Robert DiCicco"
+            },
+            {
+               "y" : 5,
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "y" : 1,
+               "name" : "Steven Wilson",
+               "drilldown" : "Steven Wilson"
+            },
+            {
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke",
+               "y" : 3
+            },
+            {
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan",
+               "y" : 3
+            },
+            {
+               "drilldown" : "Walt Mankowski",
+               "name" : "Walt Mankowski",
+               "y" : 3
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 148"
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 148"
    }
 }
