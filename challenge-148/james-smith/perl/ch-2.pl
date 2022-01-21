@@ -34,7 +34,7 @@ use Data::Dumper qw(Dumper);
 ## It is an integer if $n%$d is zero. Again saves rounding error issues
 
 
-for my $k (1..3333) {
+for my $k (1..333) {
   for( my ($b, $n) = (1, $k*$k*(8*$k-3) ); $n > $b*$b; $b++ ) {
     say join "\t", 3*$k-1,$b,$n/$b/$b unless $n%($b*$b);
   }
@@ -45,7 +45,7 @@ for my $k (1..3333) {
 
 sub is_card {
   my($a,$b,$c) = @_;
-  return abs( cr($a+$b*sqrt$c) + cr($a-$b*sqrt$) - 1 ) < 0.000001;
+  return abs( cr($a+$b*sqrt$c) + cr($a-$b*sqrt$c) - 1 ) < 0.000001;
 }
 
 ## To get the cube route - the code would fail if the value
