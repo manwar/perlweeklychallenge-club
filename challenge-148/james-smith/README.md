@@ -45,5 +45,23 @@ Which can be further parametrized as:
 Where *a=3.k-1* *k* starts at 1.
 
 So the first entry *k=1*, *b^2.c=5* - so is solved by *a=2*, *b=1*, *c=5*.
+
+So the code to find all cardano triplets with *a<10,000* is:
+
+```perl
+for my $k (1..3333) {
+  for( my ($b, $n) = (1, $k*$k*(8*$k-3) ); $n > $b*$b; $b++ ) {
+    say join "\t", 3*$k-1, $b, $n/$b/$b unless $n%($b*$b);
+  }
+}
+
+We loop through each value of `$k` up to 3,333, this gives the maximum value of `$a` 9,998. Largest less than or equal to 10,000.
+We then loop `$b` from 1 up to the value where `$c < 1`. Rather than computing `$c` at this stage (there could be rounding errors).
+We just compare the numerator (*k^2 . (8.k-3)*) with the denominator (*b^2*). We then check to see `$c` is an integer - we again
+do this without computing `$c` to avoid rounding errors - to compute the results and display them.
+
+Time taken to caluclate these **32,235** cardano triplets is **78.5sec**.
+
+```
 ### The result
 
