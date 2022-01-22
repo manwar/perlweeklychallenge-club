@@ -28,12 +28,10 @@ I will present two different solutions for the more general problem of large Eba
 So to compute the eban numbers less than 100 (and consequently all eban numbers less than one thousand) we can use:
 
 ```perl
-my @e = map { my $a=$_; map {$a+$_}(0,2,4,6) }(0,30,40,50,60);
-shift @e;
-say "@e";
+say for map{my$a=$_;map{10*$a+2*$_||()}(0..3)}(0,3..6);
 ```
 
-The `shift` removes the zero value which is not an eban number.
+The `||()` removes the zero value which is not an eban number.
 
 This gives us the following numbers less than 1,000:
 
@@ -44,22 +42,9 @@ Now we can use this sequence to generate all eban numbers.
 For eban numbers of order *1000^n* we just need to multiply all the eban numbers of order "*1000^(n-1)*" these by 1000 and add each one add each of the eban numbers less than 100 (this time including 0). This assumes that for values of 1000, 1000000 etc we say *one thousand*, *one million*, ...
 
 ```perl
-sub method_one {
-  say for my@e=grep{$_}my@n=map{my$a=$_;map{$a+$_}(0,2,4,6)}(0,30,40,50,60);
-  for(2..$_[0]) {
-    say for @e=map{my$a=$_;map{sprintf'%s,%03d',$a,$_}@n}@e;
-  }
-}
-```
-
-We modify the creation of `@n` by padding with *0*s, and convert them back to numbers when creating `@e` by converting the strings back to numbers and remove the `0`.
-
-```perl
-sub method_two {
-  say for my@e=grep{$_}map{0+$_}(my@n=map{my$a=$_;map{'0'.$a.$_}(0,2,4,6)}(0,3..6));
-  for(2..$_[0]) {
-    say for @e=map{my$a=$_;map{$a.','.$_}@n}@e;
-  }
+say for my@e=grep{$_}my@n=map{my$a=$_;map{10*$a+2*$_}(0..3)}(0,3..6);
+for(2..$N){
+  say for@e=map{my$a=$_;map{$a*1e3+$_}@n}@e;
 }
 ```
 
@@ -67,14 +52,14 @@ The second removes the need to use `sprintf` everytime in the subsequent loops, 
 
 ### Notes: Timings
 
-| Max   | (in words)  | Rate method_one | Rate method_two | %diff (2v1) |
-| ----: | :---------: | --------------: | --------------: | ----------: |
-|  10^3 | Thousand    |   200,481.00 /s |   104,559.00 /s |        -48% |
-|  10^6 | Million     |     6,996.00 /s |    10,311.00 /s |         47% |
-|  10^9 | Billion     |       343.00 /s |       500.00 /s |         46% |
-| 10^12 | Trillion    |        15.40 /s |        26.20 /s |         70% |
-| 10^15 | Quadrillion |         0.63 /s |         1.23 /s |         94% |
-| 10^18 | Quintillion |         0.03 /s |         0.06 /s |         77% |
+| Max   | (in words)  | Rate            | Count      |
+| ----: | :---------: | --------------: | ---------: |
+|  10^3 | Thousand    |   200,481.00 /s |         19 |
+|  10^6 | Million     |    18,214.94 /s |        399 |
+|  10^9 | Billion     |       971.82 /s |      7,999 |
+| 10^12 | Trillion    |        49.41 /s |    159,999 |
+| 10^15 | Quadrillion |         2.27 /s |  3,199,999 |
+| 10^18 | Quintillion |         0.10 /s | 63,999,999 |
 
 Larger values of *n* would require too much memory to compute and alternative solution would be required {using seek etc to rewind the file}
 
