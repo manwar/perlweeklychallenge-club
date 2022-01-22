@@ -88,6 +88,11 @@ use experimental 'lexical_subs';
 # we cannot find better.
 #
 
+#
+# Note that while we generate and print the first 5 triplets, we 
+# will NOT print them in order. This is not a requirement.
+#
+
 use Math::Prime::Util qw [divisors];
 use List::Util        qw [sum max];
 
