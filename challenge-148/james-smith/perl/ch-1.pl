@@ -8,13 +8,17 @@ use Test::More;
 use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
-my $N = @ARGV ? $ARGV[0] : 1;
-$N<0?(method_one(-$N)):(method_two($N));
+unless(@ARGV) {
+  say for map{my$a=$_;map{10*$a+2*$_||()}(0..3)}(0,3..6);
+  exit;
+}
 
-sub method_zero {
-  my @e = map { my $a=$_; map {$a+$_}(0,2,4,6) }(0,30,40,50,60);
-  shift @e;
-  say join "\n",@e;
+## All eban numbers less than 1000
+
+
+say for my@e=grep{$_}my@n=map{my$a=$_;map{10*$a+2*$_}(0..3)}(0,3..6);
+for(2..$ARGV[0]){
+  say for@e=map{my$a=$_;map{$a*1e3+$_}@n}@e;
 }
 
 ## works for $N up to 7 (numbers up to but not including 1 sextillion)
@@ -39,23 +43,6 @@ sub method_zero {
 ## We only need to find 2 digit eban numbers here as there are no 3
 ## digit eban numbers - hundred contains an "e"...
 
-
-sub method_one {
-  say for my@e=grep{$_}my@n=map{my$a=$_;map{$a+$_}(0,2,4,6)}(0,30,40,50,60);
-  for(2..$_[0]) {
-    say for @e=map{my$a=$_;map{sprintf'%s,%03d',$a,$_}@n}@e;
-  }
-}
-
-## Slight optimization - we avoid sprintf which is sub-optimal
-sub method_two {
-  say for my@e=grep{$_}map{0+$_}(my@n=map{my$a=$_;map{'0'.$a.$_}(0,2,4,6)}(0,3..6));
-  #say for my@e=map{0+$_}@n[1..@n-1];
-  for(2..$_[0]) {
-    say for @e=map{my$a=$_;map{$a.','.$_}@n}@e;
-  }
-}
-
 ########################################################################
 ## Now we extend these by adding more digits at the end so we get those
 ## less than 1 million, 1 billion etc.
@@ -70,14 +57,4 @@ sub method_two {
 ## There is an imprecise nature to this list as the definition does not
 ## specify where eban numbers can be negative - if this is the case any
 ## +ve eban number has an associated -ve eban number - and visa-versa.
-
-# | Max   | (in words)  | Rate method 1 | Rate method 2 | %diff (2v1) |
-# | ----: | :---------: | ------------: : ------------: : ----------: |
-# |  10^3 | Thousand    |  200,481   /s |  104,559   /s |        -48% |
-# |  10^6 | Million     |    6,996   /s |   10,311   /s |         47% |
-# |  10^9 | Billion     |      343   /s |      500a  /s |         46% |
-# | 10^12 | Trillion    |       15.4 /s |       26.2 /s |         70% |
-# | ----: | :---------: | ------------: : ------------: : ----------: |
-# | 10^15 | Quadrillion |        1.57 s |      0.811  s |         94% |
-# | 10^18 | Quintillion |       29.5  s |     16.7    s |         77% |
 
