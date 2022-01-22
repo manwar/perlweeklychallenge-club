@@ -25,8 +25,7 @@ BEGIN {
 
     max_index = 1  # Index of largest sum
 
-    k = 0
-    while (3 * k + 2 <= out [max_index, 4]) {
+    for (k = 0; 3 * k + 2 <= out [max_index, 4]; k ++) {
         a  = 3 * k + 2
         f1 =     k + 1
         f2 = 8 * k + 5
@@ -66,19 +65,29 @@ BEGIN {
             }
         }
 
-        delete seen
-
         for (i = 1; i <= d1c; i ++) {
             for (j = 1; j <= d2c; j ++) {
                 b = d1 [i] * d2 [j]
-                if (!(b in seen)) {
-                    c = f1 * f1 * f2 / (b * b)
-                    if (a + b + c < out [max_index, 4]) {
-                        out [max_index, 1] = a
-                        out [max_index, 2] = b
-                        out [max_index, 3] = c
-                        out [max_index, 4] = a + b + c
+                c = f1 * f1 * f2 / (b * b)
+                if (a + b + c < out [max_index, 4]) {
+                    #
+                    # Skip duplicates
+                    #
+                    seen = 0
+                    for (m = 1; m <= COUNT; m ++) {
+                        if (out [m, 1] == a && out [m, 2] == b) {
+                            seen = 1
+                        }
                     }
+                    if (seen) {
+                        break
+                    }
+
+                    out [max_index, 1] = a
+                    out [max_index, 2] = b
+                    out [max_index, 3] = c
+                    out [max_index, 4] = a + b + c
+                
                     #
                     # Find the new max_index
                     #
@@ -90,11 +99,9 @@ BEGIN {
                             max_index = l
                         }
                     }
-                    seen [b] = 1
                 }
             }
         }
-        k ++
     }
 
     #
@@ -104,5 +111,3 @@ BEGIN {
         printf ("%d %d %d\n", out [i, 1], out [i, 2], out [i, 3])
     }
 }
-
-

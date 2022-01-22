@@ -29,7 +29,8 @@ use experimental 'lexical_subs';
 # Order them on (a1 + b1 + c1) <=> (a2 + b2 + c2)?
 # Order them on  a1 <=> a2 || b1 <=> b2?
 # Order them on  min (a1, b1, c1) <=> min (a2, b2, c2) (with ties
-#     broken on the second smallest number)?
+#     broken on the second smallest number)? (Since for each possible
+#     a, there is a solution with b = 1, this may be boring).
 # Some other order?
 #
 # We will pick the first one.
@@ -81,26 +82,33 @@ use experimental 'lexical_subs';
 #
 
 #
-# So, how many k do we have to try? We start generating triples.
-# As soon as we have 5 of them, we find the sum of the 5th triple.
-# We then continue until 3 * k + 2 exceeds this sum.
+# To know when we can stop generating triples, we keep the 5 best
+# triples so far, updating them each time we find a better triple.
+# Once 3 * k + 2 (= a) exceeds the sum of the fifth triple, we know
+# we cannot find better.
 #
 
 use Math::Prime::Util qw [divisors];
 use List::Util        qw [sum max];
 
-my @out;
-
 my $COUNT = 5;
+my $A     = 0;
+my $B     = 1;
+my $C     = 2;
+my $SUM   = 3;
+my @out;
+foreach my $i (0 .. $COUNT - 1) {
+    $out [$i]        = [(999999) x 3];
+    $out [$i] [$SUM] = sum @{$out [$i]};
+}
 
-my $max;
+my $max_index = 0;
 
-for (my $k = 0; !$max || 3 * $k + 2 <= $max; $k ++) {
-    my $A  = 3 * $k + 2;
+for (my $k = 0; 3 * $k + 2 <= $out [$max_index] [$SUM]; $k ++) {
+    my $a  = 3 * $k + 2;
     my $f1 =     $k + 1;
     my $f2 = 8 * $k + 5; 
 
-    my %seen;
     #
     # Divisors of (k + 1)
     #
@@ -115,28 +123,40 @@ for (my $k = 0; !$max || 3 * $k + 2 <= $max; $k ++) {
     # Calculate all the solutions for b and c (for this k)
     #
     foreach my $d1 (@d1) {
+      D2:
         foreach my $d2 (@d2) {
-            $seen {$d1 * $d2} = ($f1) ** 2 * $f2 / ($d1 * $d1 * $d2 * $d2);
+            my $b = $d1 * $d2;
+            my $c = $f1 * $f1 * $f2 / ($b * $b);
+            if ($a + $b + $c < $out [$max_index] [$SUM]) {
+                #
+                # Avoid duplicate entries
+                #
+                foreach my $info (@out) {
+                    next D2 if $$info [$A] == $a && $$info [$B] == $b;
+                }
+
+                #
+                # Put triple in the output structure
+                #
+                $out [$max_index] = [$a, $b, $c, $a + $b + $c];
+
+                #
+                # Find the index of the new highest value
+                #
+                $max_index = 0;
+                my $max_sum = $out [$max_index] [$SUM];
+                for (my $i = 1; $i < $COUNT; $i ++) {
+                    if ($out [$i] [$SUM] > $max_sum) {
+                        $max_index = $i;
+                        $max_sum   = $out [$i] [$SUM];
+                    }
+                }
+            }
         }
-    }
-
-    #
-    # Add solutions to @out
-    #
-    push @out => map {[$A, $_, $seen {$_}]} keys %seen;
-
-    #
-    # Find the stopping requirement.
-    #
-    if (!$max && @out >= $COUNT) {
-        @out = sort {sum (@$a) <=> sum (@$b)} @out;
-        $max = sum @{$out [$COUNT - 1]};
     }
 }
 
 
-@out = sort {sum (@$a) <=> sum (@$b)} @out;
-
-say "@$_" for @out [0 .. $COUNT - 1];
+say "@$_[$A, $B, $C]" for @out;
 
 __END__
