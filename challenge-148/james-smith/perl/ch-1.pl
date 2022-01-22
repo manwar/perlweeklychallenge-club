@@ -8,13 +8,12 @@ use Test::More;
 use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
+
 unless(@ARGV) {
+  ## All eban numbers less than 1000
   say for map{my$a=$_;map{10*$a+2*$_||()}(0..3)}(0,3..6);
   exit;
 }
-
-## All eban numbers less than 1000
-
 
 say for my@e=grep{$_}my@n=map{my$a=$_;map{10*$a+2*$_}(0..3)}(0,3..6);
 for(2..$ARGV[0]){
