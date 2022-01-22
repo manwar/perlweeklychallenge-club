@@ -1,6 +1,6 @@
 [< Previous 147](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-145/james-smith) |
 [Next 149 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-149/james-smith)
-# Perl Weekly Challenge #147
+# Perl Weekly Challenge #148
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -61,7 +61,9 @@ The second removes the need to use `sprintf` everytime in the subsequent loops, 
 | 10^15 | Quadrillion |         2.27 /s |  3,199,999 |
 | 10^18 | Quintillion |         0.10 /s | 63,999,999 |
 
-Larger values of *n* would require too much memory to compute and alternative solution would be required {using seek etc to rewind the file}
+Unable to proceed with values of n greater than 6, as we are hitting memory limits, and the size of integer perl can store by default (64-bit).
+
+ * Would need to look at using `bigint` for working with arbitrary sized integers or reverting to a string based solution (although this uses a even more memory)
 
 # Challenge 2 - Cardano Triplets
 ***Write a script to generate first 5 Cardano Triplets. A triplet of positive integers (a,b,c) is called a Cardano Triplet if it satisfies the below condition.***
@@ -80,7 +82,7 @@ Which can be further parametrized as:
 
 *b^2.c = k^2 . (8.k-3)*
 
-Where *a=3.k-1*. *k* starts at 1.
+Where *a=3.k-1*. and *k* starts at 1.
 
 So the first entry *k=1*, *b^2.c=5* - so is solved by *a=2*, *b=1*, *c=5*.
 
