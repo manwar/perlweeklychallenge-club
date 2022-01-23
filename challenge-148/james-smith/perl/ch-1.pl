@@ -8,12 +8,27 @@ use Test::More;
 use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
+## Units for which there are no "e" are used:
+##   0 [ not-spelled at all except for Zero ]
+##   2 two
+##   4 four
+##   6 six
+## Tens for which there a no "e":
+##   0 [ not-spelled at all except for Zero ]
+##  30 thirty
+##  40 forty
+##  50 fifty
+##  60 sixty
+## We only need to find 2 digit eban numbers here as there are no 3
+## digit eban numbers - hundred contains an "e"...
 
 unless(@ARGV) {
   ## All eban numbers less than 1000
   say for map{my$a=$_;map{10*$a+2*$_||()}(0..3)}(0,3..6);
   exit;
 }
+
+## This is the code which generates eban numbers {up to 10^18}
 
 say for my@e=grep{$_}my@n=map{my$a=$_;map{10*$a+2*$_}(0..3)}(0,3..6);
 for(2..$ARGV[0]){
@@ -28,19 +43,6 @@ for(2..$ARGV[0]){
 ## as we have no solutions for numbers containing sextillion, septillion
 ## decillion to novemdecillion ..
 
-## Units for which there are no "e" are used:
-##   0 not-spelled at all except for Zero
-##   2
-##   4
-##   6
-## Tens for which there a no "e":
-##   0 not-spelled at all (except when 0)
-##  30
-##  40
-##  50
-##  60
-## We only need to find 2 digit eban numbers here as there are no 3
-## digit eban numbers - hundred contains an "e"...
 
 ########################################################################
 ## Now we extend these by adding more digits at the end so we get those
