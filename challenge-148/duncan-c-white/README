@@ -1,47 +1,58 @@
-TASK #1 - Truncatable Prime
+TASK #1 - Eban Numbers
 
-Write a script to generate first 20 left-truncatable prime numbers in base 10.
+Write a script to generate all Eban Numbers <= 100.
 
-In number theory, a left-truncatable prime is a prime number which, in a
-given base, contains no 0, and if the leading left digit is successively
-removed, then all resulting numbers are primes.
-
-Example
-
-9137 is one such left-truncatable prime since 9137, 137, 37 and 7 are
-all prime numbers.
-
-MY NOTES: Very easy, especially (tada) if you happen to have a prime
-generating module that you've already used several times in these
-challenges..
-
-
-TASK #2 - Pentagon Numbers
-
-Write a script to find the first pair of Pentagon Numbers whose sum and difference are also a Pentagon Number.
-
-    Pentagon numbers can be defined as P(n) = n(3n - 1)/2.
+An Eban number is a number that has no letter 'e' in it when the
+number is spelled in English (American or British).
 
 Example
 
-	The first 10 Pentagon Numbers are:
-	1, 5, 12, 22, 35, 51, 70, 92, 117 and 145.
+2, 4, 6, 30, 32 are the first 5 Eban numbers.
 
-	P(4) + P(7) = 22 + 70 = 92 = P(8)
-	but
-	P(4) - P(7) = |22 - 70| = 48 is not a Pentagon Number.
+MY NOTES: Very easy, no doubt there are CPAN modules to "speak" numbers
+in English, but let's do it from first principles..
 
-MY NOTES: Ok, reasonably straight forward, calc first N Pentagon numbers,
-form a sethash of them to allow lookups, then iterate over all pairs of
-Pentagon numbers rejecting all pairs where the diff or sum isn't a Pentagon
-number. The diff of any two of the first N Pentagon numbers is obviously
-smaller, so may be looked up directly in the sethash.  The only tricky bit
-concerns the SUM of any two of them, because that sum may be greater than
-the biggest Pentagon number we know as yet, hence not in the sethash because
-we haven't calculated such Pentagon numbers yet - not because it's not a
-Pentagon number.  I can nearly see the structure of an adaptive solution,
-that generates Pentagon numbers incrementally, but it's a bit tricky.
-So instead let's Keep It Simple - just generate the first N Pentagon numbers
-and see if we can find any matching pair of those (where the sum is in the
-first N Pentagon numbers).  If not, run the program again with a bigger value
-of N.  Experimentation reveals that N=2400 finds the solution..
+
+TASK #2 - Cardano Triplets
+
+Write a script to generate first 5 Cardano Triplets.
+
+A triplet of positive integers (a,b,c) is called a Cardano Triplet if
+it satisfies the below condition.
+
+  cuberoot(a+b.sqrt(c)) + cuberoot(a-b.sqrt(c)) = 1
+
+Example
+
+(2,1,5) is the first Cardano Triplet.
+
+MY NOTES: Ok, two mildly tricky things:
+1. real arithmetic means "=" is imprecise, we can't even use rationals as
+   sqrt() and cuberoot() are involved, so we'll need our old abs(diff)<epsilon
+   trick..   and
+2. the question says (2,1,5) is the "first" Cardano triplet - in what order?
+
+The answer to the latter question sets the basic structure of the program.
+Perhaps we should "order by minimum sum of triplet numbers"?  ch-2.pl does
+that, effectively generating all (a,b,c) where a+b+c=SUM for gradually
+increasing values of SUM, testing whether each (a,b,c) triple is a Cardano
+triple.  It works perfectly well - but quite slowly.
+
+I then built a SECOND VERSION (ch-2FAST.pl) which uses a much more efficient
+parameterised version of Cardano Triplets that I found on the Internet.
+See the top comments in that for a longer explanation, but it turns out
+that we can (nearly) directly pick out Cardano triples by calculating:
+
+a=3k+2 and x=(k+1)**2(8k+5) for each k
+
+(where x represents bsquared*c)
+
+then we need to break x down into b and c - noting that several (b,c) pairs
+may result from a single value of x.
+
+How much faster is this than ch-2.pl?  For n=40, ch-2 takes 30 seconds where
+ch-2FAST takes just under 2 seconds!  And this gets better as n increases,
+ch-2FAST takes 6.9s for n=100, but I gave up on running ch-2 40 after a couple
+of minutes when it had only found about 60 triples.
+
+Can anyone find a faster version?
