@@ -1,0 +1,105 @@
+#!/usr/bin/bc
+
+#
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-148
+#
+
+#
+# Run as: bc ch-2.bc
+#
+
+count = 5
+for (i = 1; i <= count; i ++) {
+    out_a   [i] = 999999
+    out_b   [i] = 999999
+    out_c   [i] = 999999
+    out_sum [i] = out_a [i] + out_b [i] + out_c [i]
+}
+
+max_index = 1
+
+for (k = 0; 3 * k + 2 <= out_sum [max_index]; k ++) {
+    a  = 3 * k + 2
+    f1 =     k + 1
+    f2 = 8 * k + 5
+
+    d1c = 0
+    d2c = 0
+
+    #
+    # Find divisors of f1
+    #
+    for (i = 1; i * i <= f1; i ++) {
+        if (f1 % i == 0) {
+            d1c = d1c + 1
+            d1 [d1c] = i
+            if (i != f1 / i) {
+                d1c = d1c + 1
+                d1 [d1c] = f1 / i
+            }
+        }
+    }
+
+    #
+    # Find divisors of f2 which are squares
+    #
+    for (i = 1; i * i <= f2; i ++) {
+        if (f2 % i == 0) {
+            s1 = sqrt (i)
+            s2 = sqrt (f2 / i)
+            if (s1 * s1 == i) {
+                d2c = d2c + 1
+                d2 [d2c] = s1
+            }
+            if (s2 * s2 == f2 / i && s1 != s2) {
+                d2c = d2c + 1
+                d2 [d2c] = s2
+            }
+        }
+    }
+
+    for (i = 1; i <= d1c; i ++) {
+        for (j = 1; j <= d2c; j ++) {
+            b = d1 [i] * d2 [j]
+            c = f1 * f1 * f2 / (b * b)
+            if (a + b + c < out_sum [max_index]) {
+                seen = 0
+                for (m = 1; m <= count; m ++) {
+                    if (out_a [m] == a && out_b [m] == b) {
+                        seen = 1
+                    }
+                }
+                if (seen == 1) {
+                    break
+                }
+
+                out_a   [max_index] = a
+                out_b   [max_index] = b
+                out_c   [max_index] = c
+                out_sum [max_index] = a + b + c
+                #
+                # Find the new max_index
+                #
+                max_index = 1
+                max_sum   = out_sum [max_index]
+                for (l = 2; l <= count; l ++) {
+                    if (out_sum [l] > max_sum) {
+                        max_sum   = out_sum [l]
+                        max_index = l
+                    }
+                }
+            }
+        }
+    }
+}
+
+#
+# Print the array
+#
+for (i = 1; i <= count; i ++) {
+    print out_a [i], " ", out_b [i], " ", out_c [i], "
+"
+}
+
+
+halt
