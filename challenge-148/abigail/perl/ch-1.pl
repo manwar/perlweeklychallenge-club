@@ -24,15 +24,15 @@ use experimental 'lexical_subs';
 #
 #   Number       English       Contains e
 #     0             ZERO            Y
-#    ?1              ONE            Y
-#    ?2              TWO            N
-#    ?3            THREE            Y
-#    ?4             FOUR            N
-#    ?5             FIVE            Y
-#    ?6              SIX            N
-#    ?7            SEVEN            Y
-#    ?8            EIGHT            Y
-#    ?9             NINE            Y
+#     1              ONE            Y
+#     2              TWO            N
+#     3            THREE            Y
+#     4             FOUR            N
+#     5             FIVE            Y
+#     6              SIX            N
+#     7            SEVEN            Y
+#     8            EIGHT            Y
+#     9             NINE            Y
 #    10              TEN            Y
 #    11           ELEVEN            Y
 #    12           TWELVE            Y
@@ -45,11 +45,11 @@ use experimental 'lexical_subs';
 #    7?         SEVENTY*            Y
 #    8?          EIGHTY*            Y
 #    9?          NINETY*            Y
-#    1?          HUNDRED            Y
+#   100          HUNDRED            Y
 #
 
 #
-# So, in short, numbers containing an E when written in English
+# So, in short, numbers <= 100 containing an E when written in English
 # are:  - 0
 #       - contains a 1, 7, 8 or 9
 #       - ends with a 3, or 5
