@@ -19,6 +19,6 @@ for( my($n,$ds,$i,$fa,$fb,%fib)=(@ARGV?$ARGV[0]:20,0,0,1,1,0,1,1,1);
       ## Digit sum can only be 1 larger than current maximum
       ## fibonacci.
   ($fib{$fa+$fb},$fa,$fb)=(1,$fb,$fa+$fb) if $ds > $fb;
-  (say $i)**$n-- if exists $fib{$ds};
+  $n--,say $i if exists $fib{$ds};
 }
 
