@@ -8,23 +8,17 @@ use Test::More;
 use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 
-my $n = @ARGV ? $ARGV[0] : 20;
-
-my @fib = (0,1,1);
-my %fib = (0,1,1,1);
-
-for(my $i=0; $n; $i++ ) {
-  my $ds = 0;
+# As an array we don't need to keep the fibonacci numbers
+# We need them as the keys to the hash %fib which we use
+# to check that a digit sum is a fibonacci number. Instead
+# We only keep the last two values $fa & $fb
+for( my($n,$ds,$i,$fa,$fb,%fib)=(@ARGV?$ARGV[0]:20,0,0,1,1,0,1,1,1);
+     $n; $i++,$ds=0 ) {
   $ds+=$_ foreach split //,$i;
-  if($ds>$fib[-1]) {
-    ## If we dont have a large enough fib add the next one...
-    ## Digit sum can only be 1 larger than current maximum
-    ## fibonacci.
-    push @fib, $fib[-2]+$fib[-1];
-    $fib{$fib[-1]}=1;
-  }
-  next unless exists $fib{$ds};
-  say $i;
-  $n--;
+      ## If we dont have a large enough fib add the next one...
+      ## Digit sum can only be 1 larger than current maximum
+      ## fibonacci.
+  ($fib{$fa+$fb},$fa,$fb)=(1,$fb,$fa+$fb) if $ds > $fb;
+  (say $i)**$n-- if exists $fib{$ds};
 }
 
