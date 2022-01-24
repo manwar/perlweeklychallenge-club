@@ -49,7 +49,7 @@ my @tprimes_current = (3,7);
 printf $TEMPLATE, ++$index, $_, time-$t0 for 2,3,5,7;
 while(1) {
   # ** Stop if there are no primes of length `n`.
-  last unless @tprimes_current;
+  @tprimes_current||last;
   my @tprimes_new = ();
   # ** Loop through each of possible left-truncatable primes...
   for my $first ( 1..9 ) {
@@ -109,7 +109,7 @@ my @tprimes_current = (2,3,5,7);
 printf $TEMPLATE, ++$idx, $_, time - $t0 foreach @tprimes_current;
 
 for my $p ( 1 .. 100 ) {
-  last unless @tprimes_current;
+  @tprimes_current||last;
   my @tprimes_new = ();
   foreach my $base ( @tprimes_current ) {
     B: foreach my $last ( 1,3,7,9 ) {

@@ -1,0 +1,34 @@
+%!PS
+
+/cardano {
+    /cn exch def
+    /k 0 def
+    {
+        /a k 3 mul 2 add def
+        /b2c k 1 add dup mul k 8 mul 5 add mul def
+        /b 0 def
+        /b2 0 def
+        /inc 1 def
+        {
+            /b b 1 add def
+            /b2 b2 inc add def
+            /inc inc 2 add def
+            b2 b2c gt {
+                exit
+            } if
+            b2c b2 mod 0 eq {
+                [ a b b2c b2 idiv ] ==
+                /cn cn 1 sub def
+                cn 0 le {
+                    exit
+                } if
+            } if
+        } loop
+        cn 0 le {
+            exit
+        } if
+        /k k 1 add def
+    } loop
+} bind def
+
+5 cardano

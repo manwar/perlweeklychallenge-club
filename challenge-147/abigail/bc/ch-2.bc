@@ -1,0 +1,41 @@
+#!/usr/bin/bc
+
+#
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-147
+#
+
+#
+# Run as: bc ch-2.bc
+#
+
+define is_pentagonal (p) {
+    auto l, h, m
+    l = l
+    h = high
+    while (l <= h) {
+        m = (l + h) / 2
+        if (pentagon [m] == p) {return 1}
+        if (pentagon [m] <  p) {l = m + 1} else {h = m - 1}
+    }
+    return 0
+}
+
+while (!done) {
+    p = p + n + n + n + 1
+    n = n + 1
+    high = high + 1
+
+    pentagon [high] = p
+
+    for (i = 1; i <= high && pentagon [i] + pentagon [i] < p && !done; i ++) {
+        seen = pentagon [i]
+        
+        if (is_pentagonal (p - seen) && is_pentagonal (p - seen - seen)) {
+            print seen, " "
+            p - seen
+            done = 1
+        }
+    }
+}
+
+halt

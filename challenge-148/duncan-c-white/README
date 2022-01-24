@@ -1,0 +1,58 @@
+TASK #1 - Eban Numbers
+
+Write a script to generate all Eban Numbers <= 100.
+
+An Eban number is a number that has no letter 'e' in it when the
+number is spelled in English (American or British).
+
+Example
+
+2, 4, 6, 30, 32 are the first 5 Eban numbers.
+
+MY NOTES: Very easy, no doubt there are CPAN modules to "speak" numbers
+in English, but let's do it from first principles..
+
+
+TASK #2 - Cardano Triplets
+
+Write a script to generate first 5 Cardano Triplets.
+
+A triplet of positive integers (a,b,c) is called a Cardano Triplet if
+it satisfies the below condition.
+
+  cuberoot(a+b.sqrt(c)) + cuberoot(a-b.sqrt(c)) = 1
+
+Example
+
+(2,1,5) is the first Cardano Triplet.
+
+MY NOTES: Ok, two mildly tricky things:
+1. real arithmetic means "=" is imprecise, we can't even use rationals as
+   sqrt() and cuberoot() are involved, so we'll need our old abs(diff)<epsilon
+   trick..   and
+2. the question says (2,1,5) is the "first" Cardano triplet - in what order?
+
+The answer to the latter question sets the basic structure of the program.
+Perhaps we should "order by minimum sum of triplet numbers"?  ch-2.pl does
+that, effectively generating all (a,b,c) where a+b+c=SUM for gradually
+increasing values of SUM, testing whether each (a,b,c) triple is a Cardano
+triple.  It works perfectly well - but quite slowly.
+
+I then built a SECOND VERSION (ch-2FAST.pl) which uses a much more efficient
+parameterised version of Cardano Triplets that I found on the Internet.
+See the top comments in that for a longer explanation, but it turns out
+that we can (nearly) directly pick out Cardano triples by calculating:
+
+a=3k+2 and x=(k+1)**2(8k+5) for each k
+
+(where x represents bsquared*c)
+
+then we need to break x down into b and c - noting that several (b,c) pairs
+may result from a single value of x.
+
+How much faster is this than ch-2.pl?  For n=40, ch-2 takes 30 seconds where
+ch-2FAST takes just under 2 seconds!  And this gets better as n increases,
+ch-2FAST takes 6.9s for n=100, but I gave up on running ch-2 40 after a couple
+of minutes when it had only found about 60 triples.
+
+Can anyone find a faster version?
