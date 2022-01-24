@@ -71,21 +71,23 @@ sub biggest_perfect_square {
 
 The values for each value of $N are given below up to (base 15) - the largest value for which we can compute in perl's 64-bit architecture.
 
-|  N | v         | v^2                | v^2 (base N)    | Time      |
-| -: | --------: | -----------------: | --------------: | --------: |
-|  2 |         1 |                  1 |               1 |  0.000028 |
-|  3 |         1 |                  1 |               1 |  0.000024 |
-|  4 |        15 |                225 |            3201 |  0.000022 |
-|  5 |        24 |                576 |            4301 |  0.000053 |
-|  6 |       195 |              38025 |          452013 |  0.000030 |
-|  7 |       867 |             751689 |         6250341 |  0.000043 |
-|  8 |      3213 |           10323369 |        47302651 |  0.001041 |
-|  9 |     18858 |          355624164 |       823146570 |  0.000961 |
-| 10 |     99066 |         9814072356 |      9814072356 |  0.000468 |
-| 11 |    528905 |       279740499025 |     A8701245369 |  0.003916 |
-| 12 |   2950717 |      8706730814089 |    B8750A649321 |  0.035817 |
-| 13 |   4809627 |     23132511879129 |    CBA504216873 | 18.810472 |
-| 14 | 105011842 |  11027486960232964 |  DC71B30685A924 |  0.140345 |
-| 15 | 659854601 | 435408094460869201 | EDAC93B24658701 |  0.310490 |
+|  N | v         | v^2                | v^2 (base N)    | Time      | Evals    |
+| -: | --------: | -----------------: | --------------: | --------: | -------: |
+|  2 |         1 |                  1 |               1 |  0.000020 |        1 |
+|  3 |         1 |                  1 |               1 |  0.000022 |        4 |
+|  4 |        15 |                225 |            3201 |  0.000014 |        1 |
+|  5 |        24 |                576 |            4301 |  0.000043 |       31 |
+|  6 |       195 |              38025 |          452013 |  0.000029 |       17 |
+|  7 |       867 |             751689 |         6250341 |  0.000045 |       28 |
+|  8 |      3213 |           10323369 |        47302651 |  0.001050 |      841 |
+|  9 |     18858 |          355624164 |       823146570 |  0.000947 |      671 |
+| 10 |     99066 |         9814072356 |      9814072356 |  0.000476 |      315 |
+| 11 |    528905 |       279740499025 |     A8701245369 |  0.004091 |     2564 |
+| 12 |   2950717 |      8706730814089 |    B8750A649321 |  0.035980 |    22903 |
+| 13 |   4809627 |     23132511879129 |    CBA504216873 | 18.936489 | 12533147 |
+| 14 | 105011842 |  11027486960232964 |  DC71B30685A924 |  0.143197 |    89326 |
+| 15 | 659854601 | 435408094460869201 | EDAC93B24658701 |  0.315265 |   190654 |
 
-You will note that most time is taken where `$n` is 13. You will note that for `$n` in `3`, `5`, `13` there are no pan-digital solutions so we have to loop through all the 13 digit numbers and reach the 12 digit numbers before we find a solution.
+
+You will note that most time is taken where `$n` is 13. You will note that for `$n` in `3`, `5`, `13` there are no pan-digital solutions so we have to loop through all the 13 digit numbers and reach the 12 digit numbers before we find a solution. *97.6%* of the checks for matching digits are in the case where `$n` is 13 (approximately 97% of the time in the code).
+
