@@ -25,7 +25,7 @@ for( my($n,$ds,$i,$fa,$fb,%fib)=(@ARGV?$ARGV[0]:20,0,0,1,1,0,1,1,1);
      $n; $i++,$ds=0 ) {                                 ## 1
   $ds+=$_ foreach split //,$i;                          ## 2
   ($fib{$fa+$fb},$fa,$fb)=(1,$fb,$fa+$fb) if $ds > $fb; ## 3
-  (say $i)**$n-- if exists $fib{$ds};                   ## 4
+  $n--,say $i if exists $fib{$ds};                      ## 4
 }
 ```
 
