@@ -9,11 +9,15 @@ use Time::HiRes qw(time);
 
 my @MAP = ( 0..9,'A'..'Z' );
 
+## Format output so I can paste it straight into github markup...
+say '|  N | v         | v^2                | v^2 (base N)    | Time      | Evals    |';
+say '| -: | --------: | -----------------: | --------------: | --------: | -------: |';
+
 for my $N (2..15) {
   my $time = time;
-  my $v = biggest_perfect_square($N);
-  say sprintf '%2d v = %10d v^2 = %20d = %16s; TIME = %10.6f',
-         $N, $v, $v*$v, baseN($v*$v,$N), time-$time;
+  my ($v,$c) = biggest_perfect_square($N);
+  say sprintf '| %2d | %9d | %18d | %15s | %9.6f | %8d |',
+         $N, $v, $v*$v, baseN($v*$v,$N), time-$time, $c;
 }
 
 ## We brute force this - we start at the largest possible square.
@@ -27,11 +31,12 @@ for my $N (2..15) {
 ## out of both the while and the for loop
 
 sub biggest_perfect_square {
-  my $n = shift;
-  O: for( my $t = int($n**($n/2)); $t; $t -- ) {
+  my $nt = my $m = (my $n = shift) -1;
+  $m=$m*$n+$nt while $nt--;
+  O: for( my $tn = my $t = int sqrt $m; $t; $t -- ) {
     my ($q,%seen) = $t**2;
     $seen{$q%$n}++?(next O):($q=int($q/$n)) while $q;
-    return $t;
+    return($t,$tn-$t+1);
   }
 }
 
