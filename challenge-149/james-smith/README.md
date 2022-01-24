@@ -47,4 +47,45 @@ for( my($n,$ds,$i,$fa,$fb,%fib)=(@ARGV?$ARGV[0]:20,0,0,1,1,0,1,1,1);
 
 ## The solution
 
+```perl
+sub biggest_perfect_square {
+  my $nt = my $m = (my $n = shift) -1;                       ## 1
+  $m=$m*$n+$nt while $nt--;                                  ## 2
+  O: for( my $t = int sqrt $m; ; $t -- ) {                   ## 3
+    my ($q,%seen) = $t**2;                                   ## 4
+    $seen{$q%$n}++?(next O):($q=int($q/$n)) while $q;        ## 5
+    return $t;                                               ## 6
+  }
+}
+```
 
+**Notes:**
+
+ * Line 1 - initialise `$n` the base we are looking at, and variables to compute the maximum possible square
+ * Line 2 - Compute the maximum possible pandigital value for the given base - it is the digits in descending order *e.g.* `BA9876543210` for `$n=12`
+ * Line 3 - Here we just loop from the maximum possible square (sqrt of max pandigital number rounded down). Loop will finish for all +be bases as `1` is a solution in all cases.
+ * Line 4/5 - We loop through all digits to see if we have already seen the digit if so we skip to the next value of `$t` by using `next` with a label to not just out of this loop but to go to the next element of the outer loop.
+ * If we get through the while loop we have a value - and it must be the highest.
+
+## Results
+
+The values for each value of $N are given below up to (base 15) - the largest value for which we can compute in perl's 64-bit architecture.
+
+|  N | v         | v^2                | v^2 (base N)    | Time      |
+| -: | --------: | -----------------: | --------------: | --------: |
+|  2 |         1 |                  1 |               1 |  0.000028 |
+|  3 |         1 |                  1 |               1 |  0.000024 |
+|  4 |        15 |                225 |            3201 |  0.000022 |
+|  5 |        24 |                576 |            4301 |  0.000053 |
+|  6 |       195 |              38025 |          452013 |  0.000030 |
+|  7 |       867 |             751689 |         6250341 |  0.000043 |
+|  8 |      3213 |           10323369 |        47302651 |  0.001041 |
+|  9 |     18858 |          355624164 |       823146570 |  0.000961 |
+| 10 |     99066 |         9814072356 |      9814072356 |  0.000468 |
+| 11 |    528905 |       279740499025 |     A8701245369 |  0.003916 |
+| 12 |   2950717 |      8706730814089 |    B8750A649321 |  0.035817 |
+| 13 |   4809627 |     23132511879129 |    CBA504216873 | 18.810472 |
+| 14 | 105011842 |  11027486960232964 |  DC71B30685A924 |  0.140345 |
+| 15 | 659854601 | 435408094460869201 | EDAC93B24658701 |  0.310490 |
+
+You will note that most time is taken where `$n` is 13. You will note that for `$n` in `3`, `5`, `13` there are no pan-digital solutions so we have to loop through all the 13 digit numbers and reach the 12 digit numbers before we find a solution.
