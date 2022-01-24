@@ -1,0 +1,43 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+use feature 'say';
+use feature 'signatures';
+
+use Getopt::Long;
+
+no warnings qw(experimental::signatures);
+
+my $verbose =  0;
+my $limit   = 21;
+my $count   =  5;
+
+GetOptions("limit" => \$limit, "count" => \$count, "verbose" => \$verbose);
+
+for my $a (1 .. $limit)
+{
+  for my $b (1 .. $limit)
+  {
+    for my $c (1 .. $limit)
+    {
+      my $left  = $a + $b * sqrt($c);
+      my $right = $a - $b * sqrt($c);
+
+      say ": Considering $a, $b, $c" if $verbose;
+
+      if (cube_root($left) + cube_root($right) == 1)
+      {
+        say "($a, $b, $c)";
+	$count--;
+	last if $count == 0; 
+      }
+    }
+  }
+}
+
+sub cube_root ($number)
+{
+  return $number ** (1/3) if $number >= 0;
+  return - ( (-$number) ** (1/3) );
+}

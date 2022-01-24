@@ -1,0 +1,22 @@
+#! /usr/bin/env raku
+
+use Math::Root;
+
+unit sub MAIN (Int $limit = 5, :v(:$verbose));
+
+my $ct := gather
+{
+  for 1 .. Inf -> $a
+  {
+    for 1 .. Inf -> $b
+    {
+      for 1 .. Inf -> $c
+      {
+        say ": Considering $a, $b, $c" if $verbose;
+        take ($a, $b, $c) if root($a + $b * root($c), 3) + root($a - $b * root($c), 3) == 1;
+      }
+    }
+  }
+}
+
+$ct[^$limit].map({ say "(" ~ @$_.join(", ") ~ ")" if $_ });
