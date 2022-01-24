@@ -17,23 +17,29 @@ function digit_sum (number, sum) {
     return sum
 }
 
-{
-    max_fib = 9 * (1 + length ($1))
-    f = 0
-    g = 1
+function is_fib (n, t) {
+    while (g < n) {
+        t = g
+        g = f + g
+        f = t
+        fib [g] = 1
+    }
+    return n in fib
+}
+
+BEGIN {
+    f       = 0
+    g       = 1
     fib [f] = 1
     fib [g] = 1
-    while (g < max_fib) {
-        t = f + g
-        fib [t] = 1
-        f = g
-        g = t
-    }
+}
 
-    for (c = k = 0; c < $1; k ++) {
-        if (digit_sum(k) in fib) {
+{
+    N = $1
+    for (k = 0; N > 0; k ++) {
+        if (is_fib(digit_sum(k))) {
             printf ("%d ", k)
-            c ++
+            N --
         }
     }
 
