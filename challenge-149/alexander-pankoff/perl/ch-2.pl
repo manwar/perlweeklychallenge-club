@@ -16,7 +16,7 @@ no warnings qw'experimental::signatures';
 #     f(10)="9814072356"
 #     f(12)="B8750A649321"
 
-use List::Util qw(sum0 first uniq);
+use List::Util qw(uniq);
 
 run() unless caller();
 
@@ -41,16 +41,22 @@ EOF
 }
 
 sub largest_perfet_square_without_repeated_digits_in_base($base) {
-    my $x = first {
-        my $perfect_square = dec_to_base( $base, $_**2 );
+    my @digits = ( 0 .. 9, 'A' .. 'Z' )[ 0 .. $base - 1 ];
+
+    for (
+        my $i =
+        int( sqrt( base_to_dec( $base, join( '', reverse @digits ) ) ) ) ;
+        $i > 0 ;
+        $i--
+      )
+    {
+        my $perfect_square = dec_to_base( $base, $i**2 );
 
         my @digits = split( '', $perfect_square );
 
-        scalar uniq(@digits) == scalar @digits;
-    }
-    reverse( 0 .. int( sqrt( $base**$base - 1 ) ) );
+        return $perfect_square if scalar uniq(@digits) == scalar @digits;
 
-    return dec_to_base( $base, $x**2 );
+    }
 }
 
 sub dec_to_base ( $base, $n ) {
@@ -62,4 +68,31 @@ sub dec_to_base ( $base, $n ) {
     my $next = int( $n / $base );
 
     dec_to_base( $base, $next ) . $digits[$rem];
+}
+
+sub base_to_dec ( $base, $n ) {
+    my $power = 1;
+    my $num   = 0;
+
+    my @digits = split( '', $n );
+
+    for my $i ( reverse( 0 .. $#digits ) ) {
+
+        $num += value( $digits[$i] ) * $power;
+        $power = $power * $base;
+
+    }
+
+    return $num;
+
+}
+
+sub value($c) {
+
+    if ( $c ge '0' && $c le '9' ) {
+        return ord($c) - ord('0');
+
+    }
+
+    return ord($c) - ord('A') + 10;
 }
