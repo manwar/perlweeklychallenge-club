@@ -89,5 +89,5 @@ The values for each value of $N are given below up to (base 15) - the largest va
 | 15 | 659854601 | 435408094460869201 | EDAC93B24658701 |  0.315265 |   190654 |
 
 
-You will note that most time is taken where `$n` is 13. You will note that for `$n` in `3`, `5`, `13` there are no pan-digital solutions so we have to loop through all the 13 digit numbers and reach the 12 digit numbers before we find a solution. **97.6%** of the checks for matching digits are in the case where `$n` is 13 (approximately **97%** of the time in the code).
+You will note that most time is taken where `$n` is 13. You will note that for `$n` in `2`, `3`, `5`, `13` there are no pan-digital solutions so we have to loop through all the 13 digit numbers and reach the 12 digit numbers before we find a solution. **97.6%** of the checks for matching digits are in the case where `$n` is 13 (approximately **97%** of the time in the code).
 
