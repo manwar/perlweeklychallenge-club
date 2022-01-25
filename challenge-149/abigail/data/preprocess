@@ -1,0 +1,190 @@
+#!/opt/perl/bin/perl
+
+use 5.032;
+
+use strict;
+use warnings;
+no  warnings 'syntax';
+
+use experimental 'signatures';
+use experimental 'lexical_subs';
+
+use LWP::Simple;
+
+my $lang = lc (shift // "Perl");
+
+my $URL = "https://oeis.org/A287298/b287298.txt";
+
+my @chars = (0 .. 9, 'A' .. 'Z');
+my @A287298;
+
+foreach my $line (split (/\n/ => get $URL),
+                 "22 340653564758245010607213613056") {
+    next unless $line =~ /^([0-9]+)\s+([0-9]+)/;
+    my ($base, $value) = ($1, $2);
+    my $value_in_base = `echo "obase=$base; $value" | bc`
+                      =~ s/ ([0-9]{2})/$chars [0 + $1]/egr
+                      =~ s/\n//r;
+    $A287298 [$base] = [$value_in_base, $value];
+} 
+
+open my $awk_h,    ">", "a287298.awk"   or die "open a287298.awk: $!";
+open my $bash_h,   ">", "a287298.sh"    or die "open a287298.sh: $!";
+open my $basic_h,  ">", "a287298.bas"   or die "open a287298.bas: $!";
+open my $bc_h,     ">", "a287298.bc"    or die "open a287298.bc: $!";
+open my $c_h,      ">", "a287298.c"     or die "open a287298.c: $!";
+open my $go_h,     ">", "a287298.go"    or die "open a287298.go: $!";
+open my $java_h,   ">", "a287298.java"  or die "open a287298.java: $!";
+open my $lua_h,    ">", "a287298.lua"   or die "open a287298.lua: $!";
+open my $node_h,   ">", "a287298.js"    or die "open a287298.js: $!";
+open my $pascal_h, ">", "a287298.p"     or die "open a287298.p: $!";
+open my $perl_h,   ">", "a287298.pl"    or die "open a287298.pl: $!";
+open my $python_h, ">", "a287298.py"    or die "open a287298.py: $!";
+open my $r_h,      ">", "a287298.r"     or die "open a287298.r: $!";
+open my $ruby_h,   ">", "a287298.rb"    or die "open a287298.rb: $!";
+open my $scheme_h, ">", "a287298.scm"   or die "open a287298.scm: $!";
+open my $tcl_h,    ">", "a287298.tcl"   or die "open a287298.tcl: $!";
+
+my  $basic_ln = 1000;
+
+say $awk_h      "BEGIN {";
+say $bash_h     "declare -a A287298\n";
+say $basic_h    "$basic_ln INPUT N\n\n";
+say $c_h        "int main (void) {";
+say $c_h        "    char * A287298 [23];\n";
+say $go_h       "func main () {";
+say $go_h       "    var A287298 [23] string\n";
+say $java_h     "    public static void main (String [] args) {";
+say $java_h     "        String [] A287298 = new String [23];";
+say $lua_h      "A287298 = {}\n";
+say $node_h     "let A287298 = []\n";
+say $pascal_h   "var";
+say $pascal_h   "    A287298: array [0 .. 22] of string;\n";
+say $pascal_h   "begin";
+say $perl_h     "my \@A287298;\n";
+say $python_h   "A287298 = {}\n";
+say $r_h        "A287298 <- c ()\n";
+say $ruby_h     "A287298 = []\n";
+say $scheme_h   "(define A287298 '())\n";
+say $tcl_h      "set A287298 list\n";
+
+while (my ($i, $info) = each @A287298) {
+    if (!defined $info) {
+        printf $c_h      "    A287298 [%2d] = %24s;\n",     $i, "NULL";
+        printf $go_h     "    A287298 [%2d] = %24s\n",      $i,   '""';
+        printf $java_h   "        A287298 [%2d] = %24s;\n", $i,   '""';
+        printf $pascal_h "    A287298 [%2d] = %24s;\n",     $i,   "''";
+        printf $scheme_h "(set! A287298 (append A287298 (list %24s)))\n", '""';
+        printf $tcl_h    "lset A287298 %2d %24s\n",         $i,   '""';
+        next;
+    }
+    my ($value, $decimal_value) = @$info;
+    my $dqvalue = qq ["$value"];
+    my $sqvalue = qq ['$value'];
+        
+    #
+    # AWK
+    #
+    printf $awk_h    "    A287298 [%2d] = %24s\n", $i, $dqvalue;
+
+    #
+    # Bash
+    #
+    printf $bash_h   "A287298[%d]=%s\n", $i, $value;
+
+    #
+    # BASIC
+    #
+    printf $basic_h  "%04d IF N = %2d THEN PRINT %24s\n",
+                     ($basic_ln += 10), $i, $dqvalue;
+
+    #
+    # bc
+    #
+    if ($i <= 16) {
+        printf $bc_h     "a287298 [%2d] = %30s\n", $i, $decimal_value;
+    }
+
+    #
+    # C
+    #
+    printf $c_h      "    A287298 [%2d] = %24s;\n", $i, $dqvalue;
+
+    #
+    # Go
+    #
+    printf $go_h     "    A287298 [%2d] = %24s\n", $i, $dqvalue;
+
+    #
+    # Java
+    #
+    printf $java_h   "        A287298 [%2d] = %24s;\n", $i, $dqvalue;
+
+    #
+    # Lua
+    #
+    printf $lua_h    "A287298 [%2d] = %24s\n", $i, $dqvalue;
+
+    #
+    # Node.js
+    #
+    printf $node_h   "A287298 [%2d] = %24s\n", $i, $dqvalue;
+
+    #
+    # Pascal
+    #
+    printf $pascal_h "    A287298 [%2d] = %24s;\n", $i, $sqvalue;
+
+    #
+    # Perl
+    #
+    printf $perl_h   "\$A287298 [%2d] = %24s;\n", $i, $dqvalue;
+
+    #
+    # Python
+    #
+    printf $python_h "A287298 [%2d] = %24s\n", $i, $dqvalue;
+
+    #
+    # R
+    #
+    printf $r_h      "A287298 [[%2d]] <- %24s\n", $i, $dqvalue;
+
+    #
+    # Ruby
+    #
+    printf $ruby_h   "A287298[%2d] = %24s\n", $i, $dqvalue;
+
+    #
+    # Scheme
+    #
+    printf $scheme_h "(set! A287298 (append A287298 (list %24s)))\n", $dqvalue;
+
+    #
+    # Tcl
+    #
+    printf $tcl_h    "lset A287298 %2d %24s\n", $i, $dqvalue;
+}
+say $awk_h    "}";
+say $c_h      "}";
+say $go_h     "}";
+say $java_h   "    }";
+say $pascal_h "end.";
+
+
+close $awk_h     or die "close a287298.awk: $!";
+close $bash_h    or die "close a287298.sh: $!";
+close $basic_h   or die "close a287298.bas: $!";
+close $bc_h      or die "close a287298.bc: $!";
+close $c_h       or die "close a287298.c: $!";
+close $go_h      or die "close a287298.go: $!";
+close $java_h    or die "close a287298.java: $!";
+close $lua_h     or die "close a287298.lua: $!";
+close $node_h    or die "close a287298.js: $!";
+close $pascal_h  or die "close a287298.p: $!";
+close $perl_h    or die "close a287298.pl: $!";
+close $python_h  or die "close a287298.py: $!";
+close $r_h       or die "close a287298.r: $!";
+close $ruby_h    or die "close a287298.rb: $!";
+close $scheme_h  or die "close a287298.scm: $!";
+close $tcl_h     or die "close a287298.tcl: $!";
