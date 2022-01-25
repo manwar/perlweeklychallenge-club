@@ -1,63 +1,82 @@
 {
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 149",
-         "data" : [
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
-            }
-         ],
-         "colorByPoint" : 1
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2022-01-25 18:31:09 GMT"
    },
    "legend" : {
       "enabled" : 0
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 149"
+   "xAxis" : {
+      "type" : "category"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            }
+         ],
+         "name" : "The Weekly Challenge - 149"
       }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2022-01-25 18:24:20 GMT"
-   },
+   ],
    "drilldown" : {
       "series" : [
          {
+            "name" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "James Smith"
+         },
+         {
             "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Mark Anderson"
+            ]
          }
       ]
    },
    "tooltip" : {
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 149"
    },
    "chart" : {
       "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
    }
 }
