@@ -29,7 +29,17 @@ use List::Util qw [sum];
 #
 # Return the sum of the digits of its argument
 #
-sub digitsum ($n) {sum $n =~ /\d/ag}
+sub digitsum ($number) {
+    my $sum  =  0;
+    my $base = 10;
+    while ($number > 0) {
+        use integer;
+        $sum    += $number % $base;
+        $number /= $base;
+    }
+    return $sum;
+}
+
 
 #
 # Return whether the argument is a Fibonacci number. We do this by
