@@ -1,0 +1,80 @@
+%!PS
+
+/aeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/i2s {
+    dup 0 le {
+        (0)
+    } {
+        dup log cvi 1 add string cvs
+    } ifelse
+} bind def
+
+/fds {
+    /n exch def
+    /ft n 4 mul dict def
+    /out 0 array def
+    /f [ 0 1 ] def
+    f {
+        ft exch true put
+    } forall
+    /k 0 def
+    {
+        /ds 0 def
+        /j k def
+        {
+            j 0 gt {
+                /ds ds j 10 mod add def
+                /j j 10 idiv def
+            } {
+                exit
+            } ifelse
+        } loop
+        {
+            f 0 get ds gt {
+                exit
+            } if
+            f 0 get f 1 get add
+            f 1 get f exch 0 exch put
+            f exch 1 exch put
+            ft f 0 get true put
+        } loop
+        ft ds known {
+            /out out k apush def
+            out length n ge {
+                exit
+            } if
+        } if
+        /k k 1 add def
+    } loop
+    out
+} bind def
+
+8 fds [0 1 2 3 5 8 10 11 ] aeq { (Pass) } { (FAIL) } ifelse print ( ) print
+
+20 fds [ 0 1 2 3 5 8 10 11 12 14 17 20 21 23 26 30 32 35 41 44] aeq { (Pass) } { (FAIL) } ifelse print ( ) print
+
+61 fds [0 1 2 3 5 8 10 11 12 14 17 20 21 23 26 30 32 35 41 44 49 50 53 58 62 67 71 76 80 85 94 100 101 102 104 107 110 111 113 116 120 122 125 131 134 139 140 143 148 152 157 161 166 170 175 184 193 200 201 203 206 ] aeq { (Pass) } { (FAIL) } ifelse =
