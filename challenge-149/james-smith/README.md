@@ -1,6 +1,6 @@
-[< Previous 147](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-145/james-smith) |
-[Next 149 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-149/james-smith)
-# Perl Weekly Challenge #148
+[< Previous 148](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-148/james-smith) |
+[Next 150 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-150/james-smith)
+# Perl Weekly Challenge #149
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,103 +12,82 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-148/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-149/james-smith
 
-# Challenge 1 - Eban Numbers
+# Challenge 1 - Fibonacci Digit Sum
 
-***Write a script to generate all Eban Numbers <= 100. An Eban number is a number that has no letter ‘e’ in it when the number is spelled in English (American or British).***
+***Given an input $N, generate the first $N numbers for which the sum of their digits is a Fibonacci number.***
 
 ## The solution
 
-I will present two different solutions for the more general problem of large Eban numbers, but for numbers less than 1,000 we have:
-
-* The units must be 0, 2, 4, 6
-* The tens must be 0, 30, 40,50, 60, 
-
-So to compute the eban numbers less than 100 (and consequently all eban numbers less than one thousand) we can use:
-
 ```perl
-say for map{my$a=$_;map{10*$a+2*$_||()}(0..3)}(0,3..6);
-```
-
-The `||()` removes the zero value which is not an eban number.
-
-This gives us the following numbers less than 1,000:
-
-`2 4 6 30 32 34 36 40 42 44 46 50 52 54 56 60 62 64 66`
-
-Now we can use this sequence to generate all eban numbers.
-
-For eban numbers of order *1000^n* we just need to multiply all the eban numbers of order "*1000^(n-1)*" these by 1000 and add each one add each of the eban numbers less than 100 (this time including 0). This assumes that for values of 1000, 1000000 etc we say *one thousand*, *one million*, ...
-
-```perl
-say for my@e=grep{$_}my@n=map{my$a=$_;map{10*$a+2*$_}(0..3)}(0,3..6);
-for(2..$N){
-  say for@e=map{my$a=$_;map{$a*1e3+$_}@n}@e;
+for( my($n,$ds,$i,$fa,$fb,%fib)=(@ARGV?$ARGV[0]:20,0,0,1,1,0,1,1,1);
+     $n; $i++,$ds=0 ) {                                 ## 1
+  $ds+=$_ foreach split //,$i;                          ## 2
+  ($fib{$fa+$fb},$fa,$fb)=(1,$fb,$fa+$fb) if $ds > $fb; ## 3
+  $n--,say $i if exists $fib{$ds};                      ## 4
 }
 ```
 
-The second removes the need to use `sprintf` everytime in the subsequent loops, by generating the list of numbers padded with 0s - we can see this with the performance gain in all but the first case (the first loop is made slightly more complex).
+**Notes:**
 
-### Notes: Timings
+ * Line 1 - We initialise everything inside the for loop
+   * `$n` is the number to print (and is based on what is passed at the command line)
+   * `$ds` is the digit sum (Note we reset it everytime through the loop in the incremement part of the loop
+   * `$i`  current value being considered
+   * `$fa` & `$fb` - the highest two fibonacci numbers 
+   * `%fib` hash whose keys are fibonacci numbers
+ * Line 2 - Computes the digit sum by splitting number on `//` I split into 1 character blocks
+ * Line 3 - Expand the fibonacci hash by 1 if the digit sum is greater than the highest fibonnaci number {we don't need to loop this as the digit sum of `$n+1` can only be at most 1 higher than that for `$n`. Note we just update $fb and $fa in this line
+ * Line 4 - Check to see if the digit sum exists, print and decrement counter - and return to the start of the loop.
 
-| Max   | (in words)  | Rate            | Count      |
-| ----: | :---------: | --------------: | ---------: |
-|  10^3 | Thousand    |   200,481.00 /s |         19 |
-|  10^6 | Million     |    18,214.94 /s |        399 |
-|  10^9 | Billion     |       971.82 /s |      7,999 |
-| 10^12 | Trillion    |        49.41 /s |    159,999 |
-| 10^15 | Quadrillion |         2.27 /s |  3,199,999 |
-| 10^18 | Quintillion |         0.10 /s | 63,999,999 |
+# Challenge 2 - Largest Square
 
-Unable to proceed with values of n greater than 6, as we are hitting memory limits, and the size of integer perl can store by default (64-bit).
-
- * Would need to look at using `bigint` for working with arbitrary sized integers or reverting to a string based solution (although this uses a even more memory)
-
-# Challenge 2 - Cardano Triplets
-***Write a script to generate first 5 Cardano Triplets. A triplet of positive integers (a,b,c) is called a Cardano Triplet if it satisfies the below condition.***
-
-*(a+b.sqrt(c))^(1/3) + (a-b.sqrt(c))^(1/3) = 1*
+***Given a number base, derive the largest perfect square with no repeated digits and return it as a string. (For base>10, use ‘A’..‘Z’.)***
 
 ## The solution
 
-There is a very naive solution which tries all combinations of *a*,*b*,*c*. But there is a more performant solution.
-
-You can rewrite the equation in the form:
-
-*8.a^3 + 15.a^2 + 6.a - 27.b^2.c = 1*
-
-Which can be further parametrized as:
-
-*b^2.c = k^2 . (8.k-3)*
-
-Where *a=3.k-1*. and *k* starts at 1.
-
-So the first entry *k=1*, *b^2.c=5* - so is solved by *a=2*, *b=1*, *c=5*.
-
-So the code to find all cardano triplets with *a<10,000* is:
-
 ```perl
-for my $k (1..3333) {
-  for( my ($b, $n) = (1, $k*$k*(8*$k-3) ); $n > $b*$b; $b++ ) {
-    say join "\t", 3*$k-1, $b, $n/$b/$b unless $n%($b*$b);
+sub biggest_perfect_square {
+  my $nt = my $m = (my $n = shift) -1;                       ## 1
+  $m=$m*$n+$nt while $nt--;                                  ## 2
+  O: for( my $t = int sqrt $m; ; $t -- ) {                   ## 3
+    my ($q,%seen) = $t**2;                                   ## 4
+    $seen{$q%$n}++?(next O):($q=int($q/$n)) while $q;        ## 5
+    return $t;                                               ## 6
   }
 }
 ```
 
-We loop through each value of `$k` up to 3,333, this gives the maximum value of `$a` 9,998. Largest less than or equal to 10,000.
-We then loop `$b` from 1 up to the value where `$c < 1`. Rather than computing `$c` at this stage (there could be rounding errors).
-We just compare the numerator (*k^2 . (8.k-3)*) with the denominator (*b^2*). We then check to see `$c` is an integer - we again
-do this without computing `$c` to avoid rounding errors - to compute the results and display them.
+**Notes:**
 
-Time taken to calculate these **32,235** cardano triplets is **78.5sec**.
+ * Line 1 - initialise `$n` the base we are looking at, and variables to compute the maximum possible square
+ * Line 2 - Compute the maximum possible pandigital value for the given base - it is the digits in descending order *e.g.* `BA9876543210` for `$n=12`
+ * Line 3 - Here we just loop from the maximum possible square (sqrt of max pandigital number rounded down). Loop will finish for all +be bases as `1` is a solution in all cases.
+ * Line 4/5 - We loop through all digits to see if we have already seen the digit if so we skip to the next value of `$t` by using `next` with a label to not just out of this loop but to go to the next element of the outer loop.
+ * If we get through the while loop we have a value - and it must be the highest.
 
-If we go back to the original problem and look at the first 5 cardano triplets we have either:
+## Results
 
-The first 5 (if you sort by *a* and *b*) are:
+The values for each value of $N are given below up to (base 15) - the largest value for which we can compute in perl's 64-bit architecture.
 
-    (2,1,5), (5,1,52), (5,2,13), (8,1,189), (8,3,21).
+|  N | v         | v^2                | v^2 (base N)    | Time      | Evals    |
+| -: | --------: | -----------------: | --------------: | --------: | -------: |
+|  2 |         1 |                  1 |               1 |  0.000020 |        1 |
+|  3 |         1 |                  1 |               1 |  0.000022 |        4 |
+|  4 |        15 |                225 |            3201 |  0.000014 |        1 |
+|  5 |        24 |                576 |            4301 |  0.000043 |       31 |
+|  6 |       195 |              38025 |          452013 |  0.000029 |       17 |
+|  7 |       867 |             751689 |         6250341 |  0.000045 |       28 |
+|  8 |      3213 |           10323369 |        47302651 |  0.001050 |      841 |
+|  9 |     18858 |          355624164 |       823146570 |  0.000947 |      671 |
+| 10 |     99066 |         9814072356 |      9814072356 |  0.000476 |      315 |
+| 11 |    528905 |       279740499025 |     A8701245369 |  0.004091 |     2564 |
+| 12 |   2950717 |      8706730814089 |    B8750A649321 |  0.035980 |    22903 |
+| 13 |   4809627 |     23132511879129 |    CBA504216873 | 18.936489 | 12533147 |
+| 14 | 105011842 |  11027486960232964 |  DC71B30685A924 |  0.143197 |    89326 |
+| 15 | 659854601 | 435408094460869201 | EDAC93B24658701 |  0.315265 |   190654 |
 
-The first 5 (if you sort by total *a+b+c*) are:
 
-    (2,1,5), (5,2,13), (8,3,21), (17,18,5), (11,4,29).
+You will note that most time is taken where `$n` is 13. You will note that for `$n` in `2`, `3`, `5`, `13` there are no pan-digital solutions so we have to loop through all the 13 digit numbers and reach the 12 digit numbers before we find a solution. **97.6%** of the checks for matching digits are in the case where `$n` is 13 (approximately **97%** of the time in the code).
+
