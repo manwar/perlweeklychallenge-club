@@ -18,19 +18,19 @@ define digit_sum (n) {
     return (sum)
 }
 
-f         = 1
-g         = 1
+fib_prev  = 1
+fib_last  = 1
 fib [0]   = 0
 fib [1]   = 1
 fib_count = 2
 
 define is_fib (n) {
     auto t, min, max
-    while (g < n) {
-        t = g
-        g = f + g
-        f = t
-        fib [fib_count] = g
+    while (fib_last < n) {
+        t        = fib_last
+        fib_last = fib_prev + fib_last
+        fib_prev = t
+        fib [fib_count] = fib_last
         fib_count = fib_count + 1
     }
     min = 0

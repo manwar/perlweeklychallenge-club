@@ -51,22 +51,19 @@ sub digitsum ($number) {
 # Then it's a simple lookup.
 #
 sub is_fib ($n) {
-    state $fib = {0 => 1, 1 => 1};
-    state $f   = 0;
-    state $g   = 1;
-    while ($g < $n) {
-        ($f, $g)   = ($g, $f + $g);
-        $$fib {$g} = 1;
+    state  $fib = {0 => 1, 1 => 1};
+    state  $fib_prev = 0;
+    state  $fib_last = 1;
+    while ($fib_last < $n) {
+        ($fib_prev, $fib_last) = ($fib_last, $fib_prev + $fib_last);
+        $$fib {$fib_last}      = 1;
     }
     $$fib {$n}
 }
 
 while (<>) {
     for (my ($k, $N) = (0, 0 + $_); $N > 0; $k ++) {
-        if (is_fib (digitsum $k)) {
-            print "$k ";
-            $N --;
-        }
+        $N --, print "$k " if is_fib digitsum $k
     }
     print "\n";
 }
