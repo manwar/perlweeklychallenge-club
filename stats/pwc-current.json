@@ -2,28 +2,10 @@
    "title" : {
       "text" : "The Weekly Challenge - 149"
    },
-   "subtitle" : {
-      "text" : "[Champions: 13] Last updated at 2022-01-27 17:51:53 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "series" : [
       {
          "name" : "The Weekly Challenge - 149",
+         "colorByPoint" : 1,
          "data" : [
             {
                "name" : "Abigail",
@@ -32,48 +14,53 @@
             },
             {
                "name" : "Cheok-Yin Fung",
-               "drilldown" : "Cheok-Yin Fung",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Cheok-Yin Fung"
             },
             {
-               "y" : 6,
+               "y" : 4,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
+            {
                "drilldown" : "Flavio Poletti",
+               "y" : 6,
                "name" : "Flavio Poletti"
             },
             {
+               "name" : "James Smith",
                "drilldown" : "James Smith",
-               "y" : 3,
-               "name" : "James Smith"
+               "y" : 3
             },
             {
+               "name" : "Lubos Kolouch",
                "drilldown" : "Lubos Kolouch",
-               "y" : 1,
-               "name" : "Lubos Kolouch"
-            },
-            {
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 4
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 2,
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "name" : "Matthew Neleigh",
-               "y" : 2,
-               "drilldown" : "Matthew Neleigh"
-            },
-            {
-               "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke",
                "y" : 1
             },
             {
-               "y" : 3,
+               "name" : "Luca Ferrari",
+               "y" : 4,
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "name" : "Matthew Neleigh",
+               "drilldown" : "Matthew Neleigh",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Niels van Dijke",
+               "y" : 1,
+               "name" : "Niels van Dijke"
+            },
+            {
+               "name" : "Peter Campbell Smith",
                "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith"
+               "y" : 3
             },
             {
                "y" : 1,
@@ -81,30 +68,28 @@
                "name" : "Robert DiCicco"
             },
             {
+               "name" : "Roger Bell_West",
                "y" : 4,
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West"
             },
             {
-               "y" : 3,
                "drilldown" : "W. Luis Mochan",
+               "y" : 3,
                "name" : "W. Luis Mochan"
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
    "xAxis" : {
       "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
@@ -119,6 +104,8 @@
             "id" : "Abigail"
          },
          {
+            "id" : "Cheok-Yin Fung",
+            "name" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
@@ -128,13 +115,23 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Cheok-Yin Fung",
-            "name" : "Cheok-Yin Fung"
+            ]
          },
          {
-            "id" : "Flavio Poletti",
-            "name" : "Flavio Poletti",
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -148,7 +145,9 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "id" : "Flavio Poletti",
+            "name" : "Flavio Poletti"
          },
          {
             "name" : "James Smith",
@@ -165,14 +164,14 @@
             ]
          },
          {
+            "id" : "Lubos Kolouch",
+            "name" : "Lubos Kolouch",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "id" : "Lubos Kolouch",
-            "name" : "Lubos Kolouch"
+            ]
          },
          {
             "data" : [
@@ -189,11 +188,21 @@
             "name" : "Luca Ferrari"
          },
          {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
+                  2
+               ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
+         },
+         {
+            "name" : "Matthew Neleigh",
+            "id" : "Matthew Neleigh",
+            "data" : [
+               [
+                  "Perl",
                   2
                ]
             ]
@@ -202,21 +211,11 @@
             "data" : [
                [
                   "Perl",
-                  2
-               ]
-            ],
-            "name" : "Matthew Neleigh",
-            "id" : "Matthew Neleigh"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
                   1
                ]
             ],
-            "id" : "Niels van Dijke",
-            "name" : "Niels van Dijke"
+            "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke"
          },
          {
             "data" : [
@@ -233,8 +232,8 @@
             "name" : "Peter Campbell Smith"
          },
          {
-            "id" : "Robert DiCicco",
             "name" : "Robert DiCicco",
+            "id" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
@@ -243,8 +242,6 @@
             ]
          },
          {
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -254,11 +251,13 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          },
          {
-            "id" : "W. Luis Mochan",
             "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -271,5 +270,25 @@
             ]
          }
       ]
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 14] Last updated at 2022-01-27 18:43:20 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
