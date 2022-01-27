@@ -74,7 +74,8 @@ sub calculate_largest_non_repeating_square_in_base{
         (
             # Assignment to capture digit string is deliberate
             ($digit_string = number_to_digit_string($root ** 2, $base))
-            =~ m/(.).{0,}\1/
+            =~
+            m/(.).{0,}\1/
         )
     ){
         # Decrement the root
@@ -181,9 +182,6 @@ sub number_to_digit_string{
         U V W X Y Z
     );
     my $string = "";
-
-    return(undef)
-        if($base > scalar(@digit_list));
 
     # Special case of the number being zero
     if($number == 0){
