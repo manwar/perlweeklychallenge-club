@@ -17,9 +17,16 @@ my $URL = "https://oeis.org/A287298/b287298.txt";
 
 my @chars = (0 .. 9, 'A' .. 'Z');
 my @A287298;
+my $ARRAY = 'A287298';
+my $file  = lc $ARRAY;
+
+$ENV {BC_LINE_LENGTH} = 1000;
 
 foreach my $line (split (/\n/ => get $URL),
-                 "22 340653564758245010607213613056") {
+                 "22 340653564758245010607213613056",
+                 "23 20837313275713865979999662611449",
+                 "24 1331214423741263089885099589776609",
+                 "25 88663641996555130440258540215016516") {
     next unless $line =~ /^([0-9]+)\s+([0-9]+)/;
     my ($base, $value) = ($1, $2);
     my $value_in_base = `echo "obase=$base; $value" | bc`
@@ -28,54 +35,100 @@ foreach my $line (split (/\n/ => get $URL),
     $A287298 [$base] = [$value_in_base, $value];
 } 
 
-open my $awk_h,    ">", "a287298.awk"   or die "open a287298.awk: $!";
-open my $bash_h,   ">", "a287298.sh"    or die "open a287298.sh: $!";
-open my $basic_h,  ">", "a287298.bas"   or die "open a287298.bas: $!";
-open my $bc_h,     ">", "a287298.bc"    or die "open a287298.bc: $!";
-open my $c_h,      ">", "a287298.c"     or die "open a287298.c: $!";
-open my $go_h,     ">", "a287298.go"    or die "open a287298.go: $!";
-open my $java_h,   ">", "a287298.java"  or die "open a287298.java: $!";
-open my $lua_h,    ">", "a287298.lua"   or die "open a287298.lua: $!";
-open my $node_h,   ">", "a287298.js"    or die "open a287298.js: $!";
-open my $pascal_h, ">", "a287298.p"     or die "open a287298.p: $!";
-open my $perl_h,   ">", "a287298.pl"    or die "open a287298.pl: $!";
-open my $python_h, ">", "a287298.py"    or die "open a287298.py: $!";
-open my $r_h,      ">", "a287298.r"     or die "open a287298.r: $!";
-open my $ruby_h,   ">", "a287298.rb"    or die "open a287298.rb: $!";
-open my $scheme_h, ">", "a287298.scm"   or die "open a287298.scm: $!";
-open my $tcl_h,    ">", "a287298.tcl"   or die "open a287298.tcl: $!";
+my $size     = @A287298;
+my $max_base = $size - 1;
+my $width    = 2 + length $A287298 [$max_base] [0];
 
-my  $basic_ln = 1000;
+
+open my $awk_h,    ">", "$file.awk"   or die "open $file.awk: $!";
+open my $bash_h,   ">", "$file.sh"    or die "open $file.sh: $!";
+open my $basic_h,  ">", "$file.bas"   or die "open $file.bas: $!";
+open my $bc_h,     ">", "$file.bc"    or die "open $file.bc: $!";
+open my $c_h,      ">", "$file.c"     or die "open $file.c: $!";
+open my $go_h,     ">", "$file.go"    or die "open $file.go: $!";
+open my $java_h,   ">", "$file.java"  or die "open $file.java: $!";
+open my $lua_h,    ">", "$file.lua"   or die "open $file.lua: $!";
+open my $node_h,   ">", "$file.js"    or die "open $file.js: $!";
+open my $pascal_h, ">", "$file.p"     or die "open $file.p: $!";
+open my $perl_h,   ">", "$file.pl"    or die "open $file.pl: $!";
+open my $python_h, ">", "$file.py"    or die "open $file.py: $!";
+open my $r_h,      ">", "$file.r"     or die "open $file.r: $!";
+open my $ruby_h,   ">", "$file.rb"    or die "open $file.rb: $!";
+open my $scheme_h, ">", "$file.scm"   or die "open $file.scm: $!";
+open my $tcl_h,    ">", "$file.tcl"   or die "open $file.tcl: $!";
+
+my  $basic_ln = 990;
 
 say $awk_h      "BEGIN {";
-say $bash_h     "declare -a A287298\n";
-say $basic_h    "$basic_ln INPUT N\n\n";
-say $c_h        "int main (void) {";
-say $c_h        "    char * A287298 [23];\n";
-say $go_h       "func main () {";
-say $go_h       "    var A287298 [23] string\n";
-say $java_h     "    public static void main (String [] args) {";
-say $java_h     "        String [] A287298 = new String [23];";
-say $lua_h      "A287298 = {}\n";
-say $node_h     "let A287298 = []\n";
-say $pascal_h   "var";
-say $pascal_h   "    A287298: array [0 .. 22] of string;\n";
-say $pascal_h   "begin";
-say $perl_h     "my \@A287298;\n";
-say $python_h   "A287298 = {}\n";
-say $r_h        "A287298 <- c ()\n";
-say $ruby_h     "A287298 = []\n";
-say $scheme_h   "(define A287298 '())\n";
-say $tcl_h      "set A287298 list\n";
+
+say $bash_h     "declare -a $ARRAY\n";
+
+say $basic_h    ($basic_ln += 10), " maxbase = $max_base\n";
+say $basic_h    ($basic_ln += 10), " INPUT N\n\n";
+
+say $bc_h       "max_base = $max_base\n";
+
+print $c_h <<~ "--";
+   int main (void) {
+       char * $ARRAY [$size];
+       size_t max_base = $max_base;
+
+   --
+
+print $go_h <<~ "--";
+    func main () {
+        max_base := $max_base
+        var $ARRAY [$size] string
+
+    --
+
+print $java_h <<~ "--";
+        public static void main (String [] args) {
+            int max_base = $max_base;
+            String [] $ARRAY = new String [$size];
+    --
+
+say $lua_h      "$ARRAY = {}\n";
+
+say $node_h     "let $ARRAY = []\n";
+
+print $pascal_h <<~ "--";
+    var
+        $ARRAY: array [0 .. $max_base] of string;
+        max_base: integer = $max_base;
+
+    begin
+    --
+
+say $perl_h     "my \@$ARRAY;\n";
+
+say $python_h   "$ARRAY = {}\n";
+
+print $r_h <<~ "--";
+    $ARRAY <- c ()
+    max_base <- $max_base
+
+    --
+
+say $ruby_h     "$ARRAY = []\n";
+
+print $scheme_h <<~ "--";
+    (define $ARRAY '())
+    (define max_base $max_base)
+
+    --
+
+say $tcl_h      "set $ARRAY list\n";
 
 while (my ($i, $info) = each @A287298) {
     if (!defined $info) {
-        printf $c_h      "    A287298 [%2d] = %24s;\n",     $i, "NULL";
-        printf $go_h     "    A287298 [%2d] = %24s\n",      $i,   '""';
-        printf $java_h   "        A287298 [%2d] = %24s;\n", $i,   '""';
-        printf $pascal_h "    A287298 [%2d] = %24s;\n",     $i,   "''";
-        printf $scheme_h "(set! A287298 (append A287298 (list %24s)))\n", '""';
-        printf $tcl_h    "lset A287298 %2d %24s\n",         $i,   '""';
+        printf $c_h      "    $ARRAY [%2d] = %${width}s;\n",     $i, "NULL";
+        printf $go_h     "    $ARRAY [%2d] = %${width}s\n",      $i,   '""';
+        printf $java_h   "        $ARRAY [%2d] = %${width}s;\n", $i,   '""';
+        printf $pascal_h "    $ARRAY [%2d] = %${width}s;\n",     $i,   "''";
+        printf $scheme_h "(set! $ARRAY (append $ARRAY (list %${width}s)))\n",
+                                '""';
+        printf $tcl_h    "lset $ARRAY %2d %${width}s\n",         $i,   '""';
         next;
     }
     my ($value, $decimal_value) = @$info;
@@ -85,85 +138,86 @@ while (my ($i, $info) = each @A287298) {
     #
     # AWK
     #
-    printf $awk_h    "    A287298 [%2d] = %24s\n", $i, $dqvalue;
+    printf $awk_h    "    $ARRAY [%2d] = %${width}s\n", $i, $dqvalue;
 
     #
     # Bash
     #
-    printf $bash_h   "A287298[%d]=%s\n", $i, $value;
+    printf $bash_h   "${ARRAY}[%d]=%s\n", $i, $value;
 
     #
     # BASIC
     #
-    printf $basic_h  "%04d IF N = %2d THEN PRINT %24s\n",
+    printf $basic_h  "%04d IF N = %2d THEN PRINT %${width}s\n",
                      ($basic_ln += 10), $i, $dqvalue;
 
     #
     # bc
     #
     if ($i <= 16) {
-        printf $bc_h     "a287298 [%2d] = %30s\n", $i, $decimal_value;
+        printf $bc_h     "\l$ARRAY [%2d] = %30s\n", $i, $decimal_value;
     }
 
     #
     # C
     #
-    printf $c_h      "    A287298 [%2d] = %24s;\n", $i, $dqvalue;
+    printf $c_h      "    $ARRAY [%2d] = %${width}s;\n", $i, $dqvalue;
 
     #
     # Go
     #
-    printf $go_h     "    A287298 [%2d] = %24s\n", $i, $dqvalue;
+    printf $go_h     "    $ARRAY [%2d] = %${width}s\n", $i, $dqvalue;
 
     #
     # Java
     #
-    printf $java_h   "        A287298 [%2d] = %24s;\n", $i, $dqvalue;
+    printf $java_h   "        $ARRAY [%2d] = %${width}s;\n", $i, $dqvalue;
 
     #
     # Lua
     #
-    printf $lua_h    "A287298 [%2d] = %24s\n", $i, $dqvalue;
+    printf $lua_h    "$ARRAY [%2d] = %${width}s\n", $i, $dqvalue;
 
     #
     # Node.js
     #
-    printf $node_h   "A287298 [%2d] = %24s\n", $i, $dqvalue;
+    printf $node_h   "$ARRAY [%2d] = %${width}s\n", $i, $dqvalue;
 
     #
     # Pascal
     #
-    printf $pascal_h "    A287298 [%2d] = %24s;\n", $i, $sqvalue;
+    printf $pascal_h "    $ARRAY [%2d] := %${width}s;\n", $i, $sqvalue;
 
     #
     # Perl
     #
-    printf $perl_h   "\$A287298 [%2d] = %24s;\n", $i, $dqvalue;
+    printf $perl_h   "\$$ARRAY [%2d] = %${width}s;\n", $i, $dqvalue;
 
     #
     # Python
     #
-    printf $python_h "A287298 [%2d] = %24s\n", $i, $dqvalue;
+    printf $python_h "$ARRAY [%2d] = %${width}s\n", $i, $dqvalue;
 
     #
     # R
     #
-    printf $r_h      "A287298 [[%2d]] <- %24s\n", $i, $dqvalue;
+    printf $r_h      "$ARRAY [[%2d]] <- %${width}s\n", $i, $dqvalue;
 
     #
     # Ruby
     #
-    printf $ruby_h   "A287298[%2d] = %24s\n", $i, $dqvalue;
+    printf $ruby_h   "${ARRAY}[%2d] = %${width}s\n", $i, $dqvalue;
 
     #
     # Scheme
     #
-    printf $scheme_h "(set! A287298 (append A287298 (list %24s)))\n", $dqvalue;
+    printf $scheme_h "(set! $ARRAY (append $ARRAY (list %${width}s)))\n",
+                            $dqvalue;
 
     #
     # Tcl
     #
-    printf $tcl_h    "lset A287298 %2d %24s\n", $i, $dqvalue;
+    printf $tcl_h    "lset $ARRAY %2d %${width}s\n", $i, $dqvalue;
 }
 say $awk_h    "}";
 say $c_h      "}";
@@ -172,19 +226,19 @@ say $java_h   "    }";
 say $pascal_h "end.";
 
 
-close $awk_h     or die "close a287298.awk: $!";
-close $bash_h    or die "close a287298.sh: $!";
-close $basic_h   or die "close a287298.bas: $!";
-close $bc_h      or die "close a287298.bc: $!";
-close $c_h       or die "close a287298.c: $!";
-close $go_h      or die "close a287298.go: $!";
-close $java_h    or die "close a287298.java: $!";
-close $lua_h     or die "close a287298.lua: $!";
-close $node_h    or die "close a287298.js: $!";
-close $pascal_h  or die "close a287298.p: $!";
-close $perl_h    or die "close a287298.pl: $!";
-close $python_h  or die "close a287298.py: $!";
-close $r_h       or die "close a287298.r: $!";
-close $ruby_h    or die "close a287298.rb: $!";
-close $scheme_h  or die "close a287298.scm: $!";
-close $tcl_h     or die "close a287298.tcl: $!";
+close $awk_h     or die "close $file.awk: $!";
+close $bash_h    or die "close $file.sh: $!";
+close $basic_h   or die "close $file.bas: $!";
+close $bc_h      or die "close $file.bc: $!";
+close $c_h       or die "close $file.c: $!";
+close $go_h      or die "close $file.go: $!";
+close $java_h    or die "close $file.java: $!";
+close $lua_h     or die "close $file.lua: $!";
+close $node_h    or die "close $file.js: $!";
+close $pascal_h  or die "close $file.p: $!";
+close $perl_h    or die "close $file.pl: $!";
+close $python_h  or die "close $file.py: $!";
+close $r_h       or die "close $file.r: $!";
+close $ruby_h    or die "close $file.rb: $!";
+close $scheme_h  or die "close $file.scm: $!";
+close $tcl_h     or die "close $file.tcl: $!";
