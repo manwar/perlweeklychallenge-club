@@ -183,9 +183,6 @@ sub number_to_digit_string{
     );
     my $string = "";
 
-    return(undef)
-        if($base > scalar(@digit_list));
-
     # Special case of the number being zero
     if($number == 0){
         return("0");
