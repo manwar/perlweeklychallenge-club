@@ -74,7 +74,8 @@ sub calculate_largest_non_repeating_square_in_base{
         (
             # Assignment to capture digit string is deliberate
             ($digit_string = number_to_digit_string($root ** 2, $base))
-            =~ m/(.).{0,}\1/
+            =~
+            m/(.).{0,}\1/
         )
     ){
         # Decrement the root
