@@ -40,6 +40,8 @@ use experimental 'lexical_subs';
 # This lookup table was created by ../data/preprocess:
 #   - We fetch the values from https://oeis.org/A287298/b287298.txt,
 #     and inject the value for base = 22
+#   - We add values for bases 23, 24, and 25, derived from running the
+#     OEIS supplied Python program for quite some time.
 #   - We then use bc to translate the decimal numbers to the
 #     appropriate base.
 #   - For bases exceeding 16, bc doesn't use letters, but numbers;
