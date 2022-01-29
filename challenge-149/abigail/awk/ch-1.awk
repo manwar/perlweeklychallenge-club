@@ -18,20 +18,20 @@ function digit_sum (number, sum) {
 }
 
 function is_fib (n, t) {
-    while (g < n) {
-        t = g
-        g = f + g
-        f = t
-        fib [g] = 1
+    while (fib_last < n) {
+        t        = fib_last
+        fib_last = fib_prev + fib_last
+        fib_prev = t
+        fib [fib_last] = 1
     }
     return n in fib
 }
 
 BEGIN {
-    f       = 0
-    g       = 1
-    fib [f] = 1
-    fib [g] = 1
+    fib_prev       = 0
+    fib_last       = 1
+    fib [fib_prev] = 1
+    fib [fib_last] = 1
 }
 
 {

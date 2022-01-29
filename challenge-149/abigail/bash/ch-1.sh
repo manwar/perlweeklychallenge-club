@@ -17,19 +17,19 @@ function digit_sum () {
     done
 }
 
-f=0
-g=1
+fib_prev=0
+fib_last=1
 declare -A fib
-fib[$f]=1
-fib[$g]=1
+fib[$fib_prev]=1
+fib[$fib_last]=1
 
 function is_fib () {
     local n=$1
-    while (($g < $n))
-    do   ((t = g))
-         ((g = f + g))
-         ((f = t))
-         fib[$g]=1
+    while (($fib_last < $n))
+    do   ((t        = fib_last))
+         ((fib_last = fib_prev + fib_last))
+         ((fib_prev = t))
+         fib[$fib_last]=1
     done
     is_fib=${fib[$n]:-0}
 }
