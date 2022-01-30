@@ -2,21 +2,19 @@
 use warnings;
 use strict;
 
-use Math::Int2Base qw{ int2base base2int };
+use Math::Base::Convert qw{ cnv };
 
+my @digits36 = (0 .. 9, 'A' .. 'Z');
 sub largest_square {
     my ($base) = @_;
     die "Base can't be more than 36.\n" if $base > 36;
 
-    my $start = join "", map int2base($_, 36), reverse 0 .. $base - 1;
-    my $n = int sqrt base2int($start, $base);
-    if ($n =~ /E/) {
-        use bigint;
-        $n = int sqrt base2int($start, $base);
-    }
+    my $chars = [@digits36[0 .. $base - 1]];
+    my $start = join "", reverse @$chars;
+    my $n = int sqrt cnv($start, $chars, 10);
 
     while ($n) {
-        my $square = int2base($n * $n, $base);
+        my $square = cnv($n * $n, 10, $chars);
 
         --$n, next if $square =~ /(.).*\1/;
 
@@ -30,4 +28,4 @@ is largest_square(2), '1';
 is largest_square(4), '3201';
 is largest_square(10), '9814072356';
 is largest_square(12), 'B8750A649321';
-is largest_square(16), 'FEB6795D4C32A801';
+is largest_square(16), 'FED5B39A42706C81';
