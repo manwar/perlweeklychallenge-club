@@ -1,58 +1,31 @@
-TASK #1 - Eban Numbers
+TASK #1 - Fibonacci Digit Sum
 
-Write a script to generate all Eban Numbers <= 100.
-
-An Eban number is a number that has no letter 'e' in it when the
-number is spelled in English (American or British).
+Given an input $N, generate the first $N numbers for which the sum of
+their digits is a Fibonacci number.
 
 Example
 
-2, 4, 6, 30, 32 are the first 5 Eban numbers.
+f(20)=[0, 1, 2, 3, 5, 8, 10, 11, 12, 14, 17, 20, 21, 23, 26, 30, 32, 35, 41, 44]
 
-MY NOTES: Very easy, no doubt there are CPAN modules to "speak" numbers
-in English, but let's do it from first principles..
+MY NOTES: Pretty easy.  Only question: how many Fibonacci numbers do we
+need to compute?  Let's extend the sequence whenever we need..
 
 
-TASK #2 - Cardano Triplets
+TASK #2 - Largest Square
 
-Write a script to generate first 5 Cardano Triplets.
+Given a number base, derive the largest perfect square with no repeated
+digits and return it as a string. (For base>10, use 'A'..'Z'.)
 
-A triplet of positive integers (a,b,c) is called a Cardano Triplet if
-it satisfies the below condition.
+Example:
 
-  cuberoot(a+b.sqrt(c)) + cuberoot(a-b.sqrt(c)) = 1
+    f(2)="1"
+    f(4)="3201"
+    f(10)="9814072356"
+    f(12)="B8750A649321"
 
-Example
 
-(2,1,5) is the first Cardano Triplet.
-
-MY NOTES: Ok, two mildly tricky things:
-1. real arithmetic means "=" is imprecise, we can't even use rationals as
-   sqrt() and cuberoot() are involved, so we'll need our old abs(diff)<epsilon
-   trick..   and
-2. the question says (2,1,5) is the "first" Cardano triplet - in what order?
-
-The answer to the latter question sets the basic structure of the program.
-Perhaps we should "order by minimum sum of triplet numbers"?  ch-2.pl does
-that, effectively generating all (a,b,c) where a+b+c=SUM for gradually
-increasing values of SUM, testing whether each (a,b,c) triple is a Cardano
-triple.  It works perfectly well - but quite slowly.
-
-I then built a SECOND VERSION (ch-2FAST.pl) which uses a much more efficient
-parameterised version of Cardano Triplets that I found on the Internet.
-See the top comments in that for a longer explanation, but it turns out
-that we can (nearly) directly pick out Cardano triples by calculating:
-
-a=3k+2 and x=(k+1)**2(8k+5) for each k
-
-(where x represents bsquared*c)
-
-then we need to break x down into b and c - noting that several (b,c) pairs
-may result from a single value of x.
-
-How much faster is this than ch-2.pl?  For n=40, ch-2 takes 30 seconds where
-ch-2FAST takes just under 2 seconds!  And this gets better as n increases,
-ch-2FAST takes 6.9s for n=100, but I gave up on running ch-2 40 after a couple
-of minutes when it had only found about 60 triples.
-
-Can anyone find a faster version?
+MY NOTES: Obvious technique is to compute all permutations of 0..B-1 (B the
+base), and check whether each is a perfect square, and track the largest
+perfect square we find.  I hate permutations, but I'm sure I have written
+a permutation generator in previous Perl Challenges...  Oh yes, I've stolen
+code from Challenge 134 (task 1) and made it into a simple Perms module here.
