@@ -39,19 +39,18 @@ sub fibonacci_digit_sum {
             push @fibonacci, $fibonacci[-1] + $fibonacci[-2];
         }
 
+        my $sum = 0;
         if ($index < 10) {
-            if (grep /$index/, @fibonacci) {
-                push @digit_sum, $index;
-            }
+            $sum = $index;
         }
         else {
-            my $sum = 0;
             $sum += $_ for (split //,$index);
-
-            if (grep /\b$sum\b/, @fibonacci) {
-                push @digit_sum, $index;
-            }
         }
+
+        if (grep /\b$sum\b/, @fibonacci) {
+            push @digit_sum, $index;
+        }
+
         $index++;
     }
 
