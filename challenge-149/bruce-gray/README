@@ -1,79 +1,72 @@
-Solutions by Bruce Gray for https://theweeklychallenge.org/blog/perl-weekly-challenge-148/
+Solutions by Bruce Gray for https://theweeklychallenge.org/blog/perl-weekly-challenge-149/
+Languages: Raku, Perl, C
 
-The Raku solution to Task#2 shows four different results for "first 5",
-to show the different orderings produced by different algorithms.
+Task 1: Generate https://oeis.org/A028840
+Task 2: Generate https://oeis.org/A287298
 
-Output:
-$ perl perl/ch-1.pl
-    2 4 6 30 32 34 36 40 42 44 46 50 52 54 56 60 62 64 66
-$ raku raku/ch-1.raku
-    2 4 6 30 32 34 36 40 42 44 46 50 52 54 56 60 62 64 66
-
-$ perl perl/ch-2.pl 
-     2   1   5
-     5   1  52
-     8   1 189
-    11   1 464
-    14   1 925
-$ raku raku/ch-2.raku
-    ((  2   1   5) (  5   2  13) ( 17  18   5) ( 17   9  20) (  8   3  21))
-    ((  2   1   5) (  5   2  13) (  8   3  21) ( 17   9  20) ( 17  18   5))
-    ((  2   1   5) (  5   1  52) (  5   2  13) (  8   1 189) (  8   3  21))
-    ((  2   1   5) (  5   1  52) (  8   1 189) ( 11   1 464) ( 14   1 925))
+Sample runs:
+$ perl perl/ch-1.pl 30
+$ raku raku/ch-1.raku 30
+$ gcc -Wall c/ch-1.c && ./a.out 30
+    All have the output:
+    0, 1, 2, 3, 5, 8, 10, 11, 12, 14, 17, 20, 21, 23, 26, 30, 32, 35, 41, 44, 49, 50, 53, 58, 62, 67, 71, 76, 80, 85
     
-
-Analysis of Task#2:
-
-If I get a blogpost written, I plan to delve into how `=~=` is insufficient for this task, as the default $*TOLERANCE misses some cases.
-
-Original equation: (a + b√c)^⅓ + (a - b√c)^⅓ = 1
-When solved for `c` via https://www.wolframalpha.com/ :
-  Solve[ Cbrt[a + bSqrt[c]] + Cbrt[a - bSqrt[c]] = 1, c ]
-      c = (a + 1)² * (8a - 1) / 27b²
-  Useful!
-  Also means that:
-      (a + 1)² * (8a - 1) / 27b²c = 1
-
-# Full derivation:
-# https://math.stackexchange.com/questions/2160805/cardano-triplet-transformation
-Original equation:
-    (a + b√c)^⅓ + (a - b√c)^⅓ = 1
-Move 2nd term across:
-    (a + b√c)^⅓  = 1 - (a - b√c)^⅓
-Cubing just removes the cube-root on the left, and expands on the right to:
-    Expand[ (1 - Cbrt[a - bSqrt[c]])³ ]
-                    3 ((a - b√c)^⅓)² - 3 (a - b√c)^⅓ - a + b√c + 1
-     a + b√c == 1 + 3 ((a - b√c)^⅓)² - 3 (a - b√c)^⅓ - a + b√c
-     a       == 1 + 3 ((a - b√c)^⅓)² - 3 (a - b√c)^⅓ - a      
-    2a       == 1 + 3 ((a - b√c)^⅓)² - 3 (a - b√c)^⅓          
-    2a - 1   ==     3 ((a - b√c)^⅓)² - 3 (a - b√c)^⅓
-    2a - 1   ==    -3 ((a - b√c)^⅓) (1 - (a - b√c)^⅓)
-Use original equality to substitute the last part from (a-...) to (a+...) :
-    2a - 1   ==    -3 ((a - b√c)^⅓) ((a + b√c)^⅓)
-Cube both sides again:
-    Expand[ (2a - 1)³ ]
-        8a³ - 12a² + 6a - 1
-    Expand[ (-3 ((a - b√c)^⅓) ((a + b√c)^⅓))³ ]
-        27b²c - 27a²
-    8a³ - 12a² + 6a - 1 == 27b²c - 27a²
-    8a³ + 15a² + 6a - 1 == 27b²c
-Factor[8a³ + 15a² + 6a - 1]
-    (a + 1)² (8a - 1) == 27b²c
-Now solving for `c` is easy:
-    (a + 1)² (8a - 1) / 27b² == c
-`c` can only be a whole number if (a + 1)² (8a - 1) can be evenly divided by 27b².
-
-
-Jean Marie goes further, in https://math.stackexchange.com/questions/1885095/parametrization-of-cardano-triplet ,
-showing (halfway through) that 𝑎 ≡ 2 𝑚𝑜𝑑 3. 
-
-Humor:
-Easy to prove that, if we lock `b` to always be 1, and `𝑎 ≡ 2 𝑚𝑜𝑑 3` , then `c` will be integer for all `a` generated from 3k+2.
-    (a + 1)² (8a - 1) / 27 == c
-    Expand[((3k + 2) + 1)² * (8(3k + 2) - 1)]
-        216k² + 567k² + 486k + 135
-    Factor[Expand[((3k + 2) + 1)² * (8(3k + 2) - 1)]]
-        27 (k + 1)² (8k + 5)
-    Aha! Always divisible by 27!
-So, a cheap way to generate Cardano triplets is (3k+2, 1, (k + 1)² (8k + 5)) for k=0..Inf.
-Since 1 in the lowest possible `b`, using k=0..4 would give a reasonable (although unexpected) answer for the task.
+$ perl perl/ch-2.pl 2-12 14-16 18-19
+     2           1                     1         1                 1
+     3           1                     1         1                 1
+     4          15                   225        33              3201
+     5          24                   576        44              4301
+     6         195                 38025       523            452013
+     7         867                751689      2346           6250341
+     8        3213              10323369      6215          47302651
+     9       18858             355624164     27773         823146570
+    10       99066            9814072356     99066        9814072356
+    11      528905          279740499025    331413       A8701245369
+    12     2950717         8706730814089    BA3711      B8750A649321
+    14   105011842     11027486960232964   DD3789C    DC71B30685A924
+    15   659854601    435408094460869201  3CDE271B   EDAC93B24658701
+    16  4285181505  18362780530794065025  FF6AAE41  FED5B39A42706C81
+    18  198009443151  3.92077395769691e+22  HH7CF68B9  HGF80ADC537126GBH2
+    19  1404390324525  1.97231218361943e+24  46D29B1F53  IHGFD3408C68ID1IBG7
+(21m38s runtime)
+$ raku raku/ch-2.raku 2-12 14-16 18-19
+     2           1                     1         1                 1
+     3           1                     1         1                 1
+     4          15                   225        33              3201
+     5          24                   576        44              4301
+     6         195                 38025       523            452013
+     7         867                751689      2346           6250341
+     8        3213              10323369      6215          47302651
+     9       18858             355624164     27773         823146570
+    10       99066            9814072356     99066        9814072356
+    11      528905          279740499025    331413       A8701245369
+    12     2950717         8706730814089    BA3711      B8750A649321
+    14   105011842     11027486960232964   DD3789C    DC71B30685A924
+    15   659854601    435408094460869201  3CDE271B   EDAC93B24658701
+    16  4285181505  18362780530794065025  FF6AAE41  FED5B39A42706C81
+    18  198009443151  39207739576969100808801  HH7CF68B9  HGF80ADC53712EB649
+    19  1404390324525  1972312183619434816475625  46D29B1F53  IHGFD3408C6E715A2B9
+(4m51s runtime)
+$ gcc -Wall -lgmp c/ch-2.c && ./a.out 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16    18 19 20   22 23 24 
+f(2)='1'
+f(3)='1'
+f(4)='3201'
+f(5)='4301'
+f(6)='452013'
+f(7)='6250341'
+f(8)='47302651'
+f(9)='823146570'
+f(10)='9814072356'
+f(11)='a8701245369'
+f(12)='b8750a649321'
+f(13)='cba504216873'
+f(14)='dc71b30685a924'
+f(15)='edac93b24658701'
+f(16)='fed5b39a42706c81'
+f(18)='hgf80adc53712eb649'
+f(19)='ihgfd3408c6e715a2b9'
+f(20)='jihg03dac457bfe96281'
+f(22)='lkjig5d14b9032fhac867e'
+f(23)='mlkjefg5ic1d9h8042ab376'
+f(24)='nmlkjbgc6a0d579482i3efh1'
+(13m20s runtime)
