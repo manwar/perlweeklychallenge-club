@@ -1,0 +1,68 @@
+#!/usr/bin/bc
+
+#
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-149
+#
+
+#
+# Run as: bc ch-1.bc < input-file
+#
+
+define digit_sum (n) {
+    auto sum
+    sum = 0
+    while (n > 0) {
+        sum = sum + n % 10
+        n   = n / 10
+    }
+    return (sum)
+}
+
+fib_prev  = 1
+fib_last  = 1
+fib [0]   = 0
+fib [1]   = 1
+fib_count = 2
+
+define is_fib (n) {
+    auto t, min, max
+    while (fib_last < n) {
+        t        = fib_last
+        fib_last = fib_prev + fib_last
+        fib_prev = t
+        fib [fib_count] = fib_last
+        fib_count = fib_count + 1
+    }
+    min = 0
+    max = fib_count
+    while (min < max) {
+        mid = (min + max) / 2
+        if (fib [mid] == n) {
+            return (1)
+        }
+        if (fib [mid] < n) {
+            min = mid + 1
+        } else {
+            max = mid
+        }
+    }
+    return (0)
+}
+
+
+while (1) {
+    n = read ()
+    if (n == 0) {
+        break
+    }
+    for (k = 0; n > 0; k ++) {
+        if (is_fib (digit_sum (k)) == 1) {
+            print k, " "
+            n = n - 1
+        }
+    }
+    print "
+"
+}
+
+halt

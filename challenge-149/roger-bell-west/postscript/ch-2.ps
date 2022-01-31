@@ -1,0 +1,63 @@
+%!PS
+
+/ls {
+    /base exch def
+    /max 0 def
+    base 1 sub -1 0 {
+        /max max base mul def
+        max add /max exch def
+    } for
+    /t max sqrt cvi def
+    /digits (0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ) def
+    {
+        /s t t mul def
+        /v true def
+        /c base array def
+        0 1 base 1 sub {
+            c exch 0 put
+        } for
+        /dg base string def
+        /i base def
+        {
+            s 0 le {
+                exit
+            } if
+            /d s base mod def
+            c d get 1 add c exch d exch put
+            c d get 1 gt {
+                /v false def
+                exit
+            } if
+            /s s base idiv def
+            /i i 1 sub def
+            dg i digits d get put
+        } loop
+        v {
+            exit
+        } if
+        /t t 1 sub def
+    } loop
+    /st 0 def
+    /i 1 def
+    dg {
+        0 eq {
+            /st i def
+        } if
+        /i i 1 add def
+    } forall
+    st 0 gt {
+        dg st base st sub getinterval
+    } {
+      dg
+    } ifelse
+} bind def
+
+2 ls (1) eq { (Pass) } { (FAIL) } ifelse
+print ( ) print
+4 ls (3201) eq { (Pass) } { (FAIL) } ifelse
+print ( ) print
+10 ls (9814072356) eq { (Pass) } { (FAIL) } ifelse
+print ( ) print
+12 ls (B8750A649321) eq { (Pass) } { (FAIL) } ifelse
+=
+
