@@ -15,6 +15,6 @@ sub largest-square(\base)
     loop
     {
         my \b = ($d-- ** 2).base(base);
-        return \b unless b.comb.repeated;
+        return b unless b.comb.repeated;
     }
 }
