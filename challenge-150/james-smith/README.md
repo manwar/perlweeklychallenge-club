@@ -20,6 +20,12 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-150/ja
 
 ## The solution
 
+As we are not interested in the full 'fibonnaci' sequence - we just need to keep the last two entries.
+
+We use Perl's ability to update two variables at once with the line `( $r, $s ) = ( $s, $r.$s )` which means that the original `$r` is used in the evaluation of `$s` which is often very useful. We repeat this until the last string is long enough to find the 51st element.
+
+We then just use `substr` to extract it (remembering `substr` is `0`-based so we only need character `50`.)
+
 ```perl
 sub fibnum {
   my ( $r, $s ) = @_;
@@ -29,13 +35,13 @@ sub fibnum {
 ```
 
 A slightly more compact version is achieved by:
-
- * Using `$a`, `$b` instead of `$r`, `$s`. The former are special variables (for sort) and therefore they don't have to be `my`ed even when strict is enabled.
- * By rewriting `( $r, $s ) = ( $s, $r.$s )` as the slightly less readable `$s = $r.( $r=$s )` here you have to realise that `$r` has the old value outside the brackets, and the new value (or `$s`) inside the brackets. So even though it looks like `$r.$r` it is infact `$r.$s`.
+ * By rewriting `( $r, $s ) = ( $s, $r.$s )` as the slightly less readable `$s = $r.( $r=$s )` here you have to realise that `$r` has the old value outside the brackets, and the new value (or `$s`) inside the brackets. So even though it looks like `$r.$r` it is infact `$r.$s`. Yargh!!
+ * Using `$a`, `$b` instead of `$r`, `$s`. The former are *special* variables (for the comparision function in `sort`) and therefore they don't have to be `my`ed even when strict mode is enabled.
 
 ```perl
 sub fibnum_messy {
-  ($a,$b)=@_;$b=$a.($a=$b)while 51>length$b;substr$b,50,1;
+  ($a,$b)=@_;$b=$a.($a=$b)while 51>length$b;
+  substr$b,50,1;
 }
 ```
 
@@ -44,6 +50,14 @@ sub fibnum_messy {
 ***Write a script to generate all square-free integers <= 500. In mathematics, a square-free integer (or squarefree integer) is an integer which is divisible by no perfect square other than 1. That is, its prime factorization has exactly one factor for each prime that appears in it. For example, 10 = 2 x 5 is square-free, but 18 = 2 x 3 x 3 is not, because 18 is divisible by 9 = 3**2
 
 ## The solution
+
+Rather than searching for all square factors, we realise that we only need to search for the squares of primes {e.g. a number which is a multiple of `36=6*6` is also a multiple of both `4=2*2` and `9=3*3`.
+
+So we do passes first we create a list of prime squares. Again we use our *nasty* 2 line "prime" generator. Except this time we store and check against `prime^2` rather than just prime.
+
+**Note** we do the extra work of getting the square of the primes, rather than just the primes themselves, here. We do the "squaring operation" once only - and not every time through the second loop from `1..$N`.
+
+The second pass (OK in compact form - may not be the most efficient as `$N` gets large) is a set of nested greps. The inner one returns an empty list if there are is a prime squared factor - and so negating it returns true.
 
 ```perl
 my($N,@p2) = (@ARGV?$ARGV[0]:500,4);
@@ -54,3 +68,5 @@ for(my$c=3;$c*$c<$N;$c+=2){
 
 say for grep{my$t=$_;!grep{!($t%$_)}@p2}1..$N;
 ```
+
+**Note** `say` without any parameters - outputs the contents of `$_` and then sends a carriage return. so `say for @A;` outputs all elements of the array `@A` on separate lines.
