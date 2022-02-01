@@ -35,7 +35,8 @@ A slightly more compact version is achieved by:
 
 ```perl
 sub fibnum_messy {
-  ($a,$b)=@_;$b=$a.($a=$b)while 51>length$b;substr$b,50,1;
+  ($a,$b)=@_;$b=$a.($a=$b)while 51>length$b;
+  substr$b,50,1;
 }
 ```
 
