@@ -4,19 +4,11 @@ use strict;
 
 use warnings;
 use feature qw(say);
-use Test::More;
-use Benchmark qw(cmpthese timethis);
-use Data::Dumper qw(Dumper);
 
-my @TESTS = (
-  [ 0, 1 ],
-);
+my($N,@p2) = (@ARGV?$ARGV[0]:500,4);
 
-is( my_function($_->[0]), $_->[1] ) foreach @TESTS;
-
-done_testing();
-
-sub my_function {
-  return 1;
+for(my$c=3;$c*$c<$N;$c+=2){
+  ($_>$c)?((push@p2,$c*$c),last):$c*$c%$_||last for@p2;
 }
 
+say for grep{my$t=$_;!grep{!($t%$_)}@p2}1..$N;
