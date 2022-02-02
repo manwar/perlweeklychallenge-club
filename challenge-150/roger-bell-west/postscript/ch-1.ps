@@ -1,0 +1,21 @@
+/fibstr {
+    4 dict begin
+    /limit exch def
+    /b exch def
+    /a exch def
+    {
+        /c a length b length add string def
+        a c copy
+        c a length b putinterval
+        c =
+        c length limit ge {
+            exit
+        } if
+        /a b def
+        /b c def
+    } loop
+    c limit 1 sub 1 getinterval
+    end
+} bind def
+
+(1234) (5678) 51 fibstr (7) eq { (Pass) } { (FAIL) } ifelse =
