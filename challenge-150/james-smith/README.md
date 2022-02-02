@@ -1,6 +1,6 @@
-[< Previous 148](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-148/james-smith) |
-[Next 150 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-150/james-smith)
-# Perl Weekly Challenge #149
+[< Previous 149](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-149/james-smith) |
+[Next 151 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-151/james-smith)
+# Perl Weekly Challenge #150
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,82 +12,61 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-149/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-150/james-smith
 
-# Challenge 1 - Fibonacci Digit Sum
+# Challenge 1 - Fibonacci Words
 
-***Given an input $N, generate the first $N numbers for which the sum of their digits is a Fibonacci number.***
-
-## The solution
-
-```perl
-for( my($n,$ds,$i,$fa,$fb,%fib)=(@ARGV?$ARGV[0]:20,0,0,1,1,0,1,1,1);
-     $n; $i++,$ds=0 ) {                                 ## 1
-  $ds+=$_ foreach split //,$i;                          ## 2
-  ($fib{$fa+$fb},$fa,$fb)=(1,$fb,$fa+$fb) if $ds > $fb; ## 3
-  $n--,say $i if exists $fib{$ds};                      ## 4
-}
-```
-
-**Notes:**
-
- * Line 1 - We initialise everything inside the for loop
-   * `$n` is the number to print (and is based on what is passed at the command line)
-   * `$ds` is the digit sum (Note we reset it everytime through the loop in the incremement part of the loop
-   * `$i`  current value being considered
-   * `$fa` & `$fb` - the highest two fibonacci numbers 
-   * `%fib` hash whose keys are fibonacci numbers
- * Line 2 - Computes the digit sum by splitting number on `//` I split into 1 character blocks
- * Line 3 - Expand the fibonacci hash by 1 if the digit sum is greater than the highest fibonnaci number {we don't need to loop this as the digit sum of `$n+1` can only be at most 1 higher than that for `$n`. Note we just update $fb and $fa in this line
- * Line 4 - Check to see if the digit sum exists, print and decrement counter - and return to the start of the loop.
-
-# Challenge 2 - Largest Square
-
-***Given a number base, derive the largest perfect square with no repeated digits and return it as a string. (For base>10, use ‘A’..‘Z’.)***
+***You are given two strings having same number of digits, $a and $b. Write a script to generate Fibonacci Words by concatenation of the previous two strings. Finally print 51st digit of the first term having at least 51 digits.***
 
 ## The solution
 
+As we are not interested in the full 'fibonnaci' sequence - we just need to keep the last two entries.
+
+We use Perl's ability to update two variables at once with the line `( $r, $s ) = ( $s, $r.$s )` which means that the original `$r` is used in the evaluation of `$s` which is often very useful. We repeat this until the last string is long enough to find the 51st element.
+
+We then just use `substr` to extract it (remembering `substr` is `0`-based so we only need character `50`.)
+
 ```perl
-sub biggest_perfect_square {
-  my $nt = my $m = (my $n = shift) -1;                       ## 1
-  $m=$m*$n+$nt while $nt--;                                  ## 2
-  O: for( my $t = int sqrt $m; ; $t -- ) {                   ## 3
-    my ($q,%seen) = $t**2;                                   ## 4
-    $seen{$q%$n}++?(next O):($q=int($q/$n)) while $q;        ## 5
-    return $t;                                               ## 6
-  }
+sub fibnum {
+  my ( $r, $s ) = @_;
+  ( $r, $s ) = ( $s, $r.$s ) while 51 > length $s;
+  substr $s, 50, 1;
 }
 ```
 
-**Notes:**
+A slightly more compact version is achieved by:
+ * By rewriting `( $r, $s ) = ( $s, $r.$s )` as the slightly less readable `$s = $r.( $r=$s )` here you have to realise that `$r` has the old value outside the brackets, and the new value (or `$s`) inside the brackets. So even though it looks like `$r.$r` it is infact `$r.$s`. Yargh!!
+ * Using `$a`, `$b` instead of `$r`, `$s`. The former are *special* variables (for the comparision function in `sort`) and therefore they don't have to be `my`ed even when strict mode is enabled.
 
- * Line 1 - initialise `$n` the base we are looking at, and variables to compute the maximum possible square
- * Line 2 - Compute the maximum possible pandigital value for the given base - it is the digits in descending order *e.g.* `BA9876543210` for `$n=12`
- * Line 3 - Here we just loop from the maximum possible square (sqrt of max pandigital number rounded down). Loop will finish for all +be bases as `1` is a solution in all cases.
- * Line 4/5 - We loop through all digits to see if we have already seen the digit if so we skip to the next value of `$t` by using `next` with a label to not just out of this loop but to go to the next element of the outer loop.
- * If we get through the while loop we have a value - and it must be the highest.
+```perl
+sub fibnum_messy {
+  ($a,$b)=@_;$b=$a.($a=$b)while 51>length$b;
+  substr$b,50,1;
+}
+```
 
-## Results
+# Challenge 2 - Square-free Integer
 
-The values for each value of $N are given below up to (base 15) - the largest value for which we can compute in perl's 64-bit architecture.
+***Write a script to generate all square-free integers <= 500. In mathematics, a square-free integer (or squarefree integer) is an integer which is divisible by no perfect square other than 1. That is, its prime factorization has exactly one factor for each prime that appears in it. For example, 10 = 2 x 5 is square-free, but 18 = 2 x 3 x 3 is not, because 18 is divisible by 9 = 3**2
 
-|  N | v         | v^2                | v^2 (base N)    | Time      | Evals    |
-| -: | --------: | -----------------: | --------------: | --------: | -------: |
-|  2 |         1 |                  1 |               1 |  0.000020 |        1 |
-|  3 |         1 |                  1 |               1 |  0.000022 |        4 |
-|  4 |        15 |                225 |            3201 |  0.000014 |        1 |
-|  5 |        24 |                576 |            4301 |  0.000043 |       31 |
-|  6 |       195 |              38025 |          452013 |  0.000029 |       17 |
-|  7 |       867 |             751689 |         6250341 |  0.000045 |       28 |
-|  8 |      3213 |           10323369 |        47302651 |  0.001050 |      841 |
-|  9 |     18858 |          355624164 |       823146570 |  0.000947 |      671 |
-| 10 |     99066 |         9814072356 |      9814072356 |  0.000476 |      315 |
-| 11 |    528905 |       279740499025 |     A8701245369 |  0.004091 |     2564 |
-| 12 |   2950717 |      8706730814089 |    B8750A649321 |  0.035980 |    22903 |
-| 13 |   4809627 |     23132511879129 |    CBA504216873 | 18.936489 | 12533147 |
-| 14 | 105011842 |  11027486960232964 |  DC71B30685A924 |  0.143197 |    89326 |
-| 15 | 659854601 | 435408094460869201 | EDAC93B24658701 |  0.315265 |   190654 |
+## The solution
 
+Rather than searching for all square factors, we realise that we only need to search for the squares of primes {e.g. a number which is a multiple of `36=6*6` is also a multiple of both `4=2*2` and `9=3*3`.
 
-You will note that most time is taken where `$n` is 13. You will note that for `$n` in `2`, `3`, `5`, `13` there are no pan-digital solutions so we have to loop through all the 13 digit numbers and reach the 12 digit numbers before we find a solution. **97.6%** of the checks for matching digits are in the case where `$n` is 13 (approximately **97%** of the time in the code).
+So we do passes first we create a list of prime squares. Again we use our *nasty* 2 line "prime" generator. Except this time we store and check against `prime^2` rather than just prime.
 
+**Note** we do the extra work of getting the square of the primes, rather than just the primes themselves, here. We do the "squaring operation" once only - and not every time through the second loop from `1..$N`.
+
+The second pass (OK in compact form - may not be the most efficient as `$N` gets large) is a set of nested greps. The inner one returns an empty list if there are is a prime squared factor - and so negating it returns true.
+
+```perl
+my($N,@p2) = (@ARGV?$ARGV[0]:500,4);
+
+for(my$c=3;$c*$c<$N;$c+=2){
+  ($_>$c)?((push@p2,$c*$c),last):$c*$c%$_||last for@p2;
+}
+
+say for grep{my$t=$_;!grep{!($t%$_)}@p2}1..$N;
+```
+
+**Note** `say` without any parameters - outputs the contents of `$_` and then sends a carriage return. so `say for @A;` outputs all elements of the array `@A` on separate lines.
