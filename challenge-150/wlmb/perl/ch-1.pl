@@ -10,7 +10,7 @@ die "Usage: ./ch-1.pl word word [N]" .
     unless @ARGV>=2;
 my ($x, $y, $N)=@ARGV;
 $N//=51;
-die "N should be >=1 0" unless $N>=1;
+die "N should be >=1" unless $N>=1;
 die "Words should not be empty"
     unless length $x > 0 && length $y > 0;
 say "Fibonacci sequence:";
