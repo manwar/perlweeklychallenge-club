@@ -1,40 +1,60 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
    "legend" : {
       "enabled" : 0
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 1,
+               "drilldown" : "Andrew Shitov",
+               "name" : "Andrew Shitov"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West",
+               "y" : 4
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 150"
       }
-   },
+   ],
    "drilldown" : {
       "series" : [
          {
+            "name" : "Andrew Shitov",
+            "id" : "Andrew Shitov",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ],
-            "id" : "Andrew Shitov",
-            "name" : "Andrew Shitov"
+            ]
          },
          {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
             "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
+         },
+         {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
                [
                   "Raku",
                   2
@@ -44,33 +64,32 @@
       ]
    },
    "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2022-02-02 06:11:07 GMT"
+      "text" : "[Champions: 3] Last updated at 2022-02-02 06:59:14 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "title" : {
       "text" : "The Weekly Challenge - 150"
    },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 150",
-         "data" : [
-            {
-               "drilldown" : "Andrew Shitov",
-               "y" : 1,
-               "name" : "Andrew Shitov"
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "y" : 2,
-               "name" : "Mark Anderson"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "chart" : {
       "type" : "column"
