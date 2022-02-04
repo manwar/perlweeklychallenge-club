@@ -11,6 +11,7 @@ use English;
 my $n = 500;
 my @square_frees = find_square_free_integers($n);
 
+printf("\nThe smallest positive square-free integers <= %d are:\n", $n);
 output_data_table(\*STDOUT, ceil(log($n)/log(10)), 80, \@square_frees);
 
 exit(0);
