@@ -44,7 +44,7 @@ sub run() {
     # characters. (Actually it doesn't even matter that they are of the same
     # length, but I will work with that restriction)
     die "Expect two input words of equal length!\n"
-      unless length($a) && length($a) == length($b);
+      unless length($a) && length($a) == ( length($b) // 0 );
 
     # Now we pass both words to the meat of this solution, the `fibonacci_word`
     # routine. We additionaly pass the minimum length of 51 charachters up to
