@@ -66,8 +66,6 @@ sub primes($n) {
         push @primes, $i if is_prime($i);
     }
 
-    say join(", ", @primes);
-
     return $primes[$n];
 }
 
