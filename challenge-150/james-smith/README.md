@@ -76,7 +76,7 @@ say for grep{my$t=$_;!grep{!($t%$_)}@p2}1..$N;
 We can re-write the inefficient double `grep` more elegantly with nested `for`*each* loops. The new code becomes:
 
 ```perl
-my ( $N, @p2, @r ) = ( @ARGV ? $ARGV[0] : 500 , 4 );
+my ( $N, @p2 ) = ( @ARGV ? $ARGV[0] : 500 , 4 );
 
 P: for ( my $c = 3; $c*$c <= $N; $c += 2 ) {
   $_ > $c  ? last : $c*$c % $_ || next P for @p2;
