@@ -1,0 +1,40 @@
+#!/usr/bin/bc
+
+#
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-150
+#
+
+#
+# Run as: bc ch-1.bc < input-file
+#
+
+while (1) {
+    fib_prev = read ()
+    if (fib_prev == 0) {
+        break
+    }
+    fib_last = read ()
+    if (fib_last == 0) {
+        break
+    }
+
+    while (fib_last < 10 ^ 51) {
+        fib_tmp = fib_last
+        t = fib_last
+        fib_last = fib_prev
+        while (t > 0) {
+            fib_last = fib_last * 10
+            t = t / 10
+        }
+        fib_last = fib_last + fib_tmp
+        fib_prev = fib_tmp
+    }
+
+    while (fib_last > 10 ^ 51) {
+        fib_last = fib_last / 10
+    }
+
+    fib_last % 10
+}
+
+halt
