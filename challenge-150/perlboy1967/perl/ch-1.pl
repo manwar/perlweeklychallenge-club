@@ -22,6 +22,8 @@ use v5.16;
 use strict;
 use constant LEN => 51;
 
+use Data::Printer;
+
 # Prototype
 sub fibStr ($$$);
 
@@ -38,10 +40,16 @@ printf "The %dth digit in the first having at least 51 digits '%s' is '%s'\n",
 sub fibStr ($$$) {
   my ($s1, $s2, $n) = @_;
 
-  state $s = [$s1, $s2];
+  my $k = "$s1:$s2";
 
-  $s->[@$s] = $s->[@$s-2] . $s->[@$s-1] while (@$s < $n);
+  state $s = {};
+  $s->{$k} //= [$s1, $s2];
 
-  return $s->[$n-1]
+  my $r = $s->{$k};
+
+  $r->[@$r] = $r->[@$r-2] . $r->[@$r-1]
+    while (@$r < $n);
+
+  return $r->[$n-1]
 }
 
