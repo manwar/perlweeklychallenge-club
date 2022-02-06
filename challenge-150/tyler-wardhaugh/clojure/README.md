@@ -1,6 +1,6 @@
 # c148
 
-The Weekly Challenge — #148 — Tyler Wardhaugh
+The Weekly Challenge — #150 — Tyler Wardhaugh
 
 ## Usage
 
@@ -8,18 +8,21 @@ Clojure ([installation instructions](https://clojure.org/guides/getting_started#
 
 Run Task #1:
 
-    $ clojure -M:t1
+    $ clojure -M:t1 A B
     # ... or ...
-    $ bb run task-1
+    $ bb run task-1 A B
 
     # Alternatively, to run it via Babashka:
-    $ bb run task-1-bb
+    $ bb run task-1-bb A B
 
 Run Task #2:
 
     $ clojure -M:t2
     # ... or ...
     $ bb run task-2
+
+    # Alternatively, to run it via Babashka:
+    $ bb run task-2-bb
 
 Run the project's tests (which are samples from the task descriptions):
 
