@@ -1,31 +1,48 @@
-TASK #1 - Fibonacci Digit Sum
+TASK #1 - Fibonacci Words
 
-Given an input $N, generate the first $N numbers for which the sum of
-their digits is a Fibonacci number.
+You are given two strings having same number of digits, $a and $b.
 
-Example
-
-f(20)=[0, 1, 2, 3, 5, 8, 10, 11, 12, 14, 17, 20, 21, 23, 26, 30, 32, 35, 41, 44]
-
-MY NOTES: Pretty easy.  Only question: how many Fibonacci numbers do we
-need to compute?  Let's extend the sequence whenever we need..
-
-
-TASK #2 - Largest Square
-
-Given a number base, derive the largest perfect square with no repeated
-digits and return it as a string. (For base>10, use 'A'..'Z'.)
+Write a script to generate Fibonacci Words by concatenation of the
+previous two strings. Finally print 51st digit of the first term having
+at least 51 digits.
 
 Example:
 
-    f(2)="1"
-    f(4)="3201"
-    f(10)="9814072356"
-    f(12)="B8750A649321"
+    Input: $a = '1234' $b = '5678'
+    Output: 7
+
+    Fibonacci Words:
+
+    '1234'
+    '5678'
+    '12345678'
+    '567812345678'
+    '12345678567812345678'
+    '56781234567812345678567812345678'
+    '1234567856781234567856781234567812345678567812345678'
+
+    The 51st digit in the first term having at least 51 digits
+    '1234567856781234567856781234567812345678567812345678' is 7.
+
+MY NOTES: Pretty easy.  Fibonacci words == append two previous strings.
+Use -d (debug mode) to see all the above explanatory info.
 
 
-MY NOTES: Obvious technique is to compute all permutations of 0..B-1 (B the
-base), and check whether each is a perfect square, and track the largest
-perfect square we find.  I hate permutations, but I'm sure I have written
-a permutation generator in previous Perl Challenges...  Oh yes, I've stolen
-code from Challenge 134 (task 1) and made it into a simple Perms module here.
+TASK #2 - Square-free Integer
+
+Write a script to generate all square-free integers <= 500.
+
+In mathematics, a square-free integer (or squarefree integer) is an
+integer which is divisible by no perfect square other than 1. That is,
+its prime factorization has exactly one factor for each prime that
+appears in it. For example, 10 = 2 * 5 is square-free, but 18 = 2 *
+3 * 3 is not, because 18 is divisible by 9 = 3**2.
+
+Example
+
+The smallest positive square-free integers are
+    1, 2, 3, 5, 6, 7, 10, 11, 13, 14, 15, 17, 19, 21, 22, 23, 26, 29, 30, ...
+
+MY NOTES: also pretty easy.  The second definition above suggests using prime
+numbers, which is easy enough, especially as I have a prime generating module,
+but actually it's simpler to do it without primes as the first definition hints.
