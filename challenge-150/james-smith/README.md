@@ -70,3 +70,34 @@ say for grep{my$t=$_;!grep{!($t%$_)}@p2}1..$N;
 ```
 
 **Note** `say` without any parameters - outputs the contents of `$_` and then sends a carriage return. so `say for @A;` outputs all elements of the array `@A` on separate lines.
+
+## Follow up
+
+We can re-write the inefficient double `grep` more elegantly with nested `for`*each* loops. The new code becomes:
+
+```perl
+my ( $N, @p2 ) = ( @ARGV ? $ARGV[0] : 500 , 4 );
+
+P: for ( my $c = 3; $c*$c <= $N; $c += 2 ) {
+  $_ > $c  ? last : $c*$c % $_ || next P for @p2;
+  push @p2, $c*$c;
+}
+
+O: for my $t ( 1 .. $N ) {
+  $_ > $t  ? last :    $t % $_ || next O for @p2;
+  say  $t;
+}
+```
+
+### Notes:
+ * We optimize the inner loop by allowing it to finish early if:
+    * We have a prime^2 value greater than `$t`
+    * We have a square factor
+
+ * The difference in these two cases are:
+    * We end the inner loop and output the number as a square-free int (`last`)
+    * We skip to the next iteration of the outer loop (`next O`) without doing anything
+
+ * The optimized version gives anywhere between 75% and 90% speed up... (values of `$N` between 100 and 1,000,000)
+
+ * We have also re-written the prime generator to use the same `next {label}` trick, and this leads to a certain symmetry between the two loops. 
