@@ -8,21 +8,19 @@
 # Run as: awk -f ch-2.awk < input-file
 #
 
-function best (i, max, sum, k) {
-    if (!(i in cache)) {
-        max = 0
-        for (k = i + 2; k <= NF; k ++) {
-            sum = best(k)
-            if (sum > max) {
-                max = sum
-            }
-        }
-        cache [i] = $i + max
-    }
-    return cache [i]
+function max (a, b) {
+    return a < b ? b : a
 }
 
 {
-    delete cache
-    print best(1)
+    delete best
+    for (i = NF; i > 0; i --) {
+        best [i] = NF <= 2     ? $i                                     \
+                 : i == NF     ? $i                                     \
+                 : i == 1      ? $i     + best [i + 2]                  \
+                 : i == NF - 1 ? max($i,  best [i + 1])                 \
+                 :               max($i + best [i + 2], best [i + 1])
+    }
+    print best [1]
 }
+
