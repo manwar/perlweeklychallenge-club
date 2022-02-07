@@ -17,11 +17,6 @@ multi rob(+@houses where .elems == 2)
     return max(@houses[0], @houses[1]);
 }
 
-multi rob(+@houses where .elems == 3)
-{
-    return max(@houses[1], @houses[0] + @houses[2]);
-}
-
 multi rob(+@houses)
 {
     my $val1 = @houses[0];
