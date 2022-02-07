@@ -9,13 +9,13 @@ sub binary-tree-depth($tree)
 {
     my @tree = $tree.split(/\s\|\s/).map(*.split(/\s/));
     my $elems = 1;
-    my $depth;
+    my $depth = 0;
 
     while @tree
     {
-        my $node = shift @tree;
-        return $depth unless $node.elems == $elems;
-        $elems = ($elems - $node.comb('*')) * 2;
+        my $nodes := shift @tree;
+        return $depth unless $nodes.elems == $elems;
+        $elems = ($elems - $nodes.comb('*')) * 2;
         $depth++;
     }
 
