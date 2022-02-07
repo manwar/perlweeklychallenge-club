@@ -20,7 +20,6 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-151/ja
 
 ## The solution
 
-
 The method is to:
  * Split the string into the individual rows.
  * For each row check to see if the row is complete {has enough entries so that there are no parent nodes with no data}
@@ -46,20 +45,25 @@ sub depth {
 
 ## The solution
 
-We use a recursive solution. For any house the best solution can be found by. Either adding the value of the current house to the best solution for 2 doors down OR adding the value of the next house to the best solution for 3 doors down.
+We can walk along the house and work out what the best score we could get if we stopped the journey at any house. As we add in each extra house - best score depends on the best score of one of the last two houses visited and the points of the current house.
+
+Here we construct and array of the best total we could achieve if we stopped at the 1st, 2nd, 3rd houses etc...
+
+For the first two:
+  * best score for first house is the points for the first house.
+  * best score for the 2nd house is the maximum of the points for the first and second houses.
+For the rest
+  * best score for subsequent houses. Is either the points for the house added to the best score of the house before last which was visited **OR** the best score of the last house visited.
+
+We keep repeating the 2nd part until we get to the end house - and this gives us our score...
 
 ```perl
 sub rob {
-  my @b = my $v = shift;
-  $b[$_]=$b[$_-1]<($v=($_>1&&$b[$_-2])+shift)?$v:$b[$_-1]while@_;
-  $b[-1];
-sub rob {
   my @b = shift;
-  (push @b,$_+(@b>1&&$b[-2])),$b[-1]<$b[-2]&&($b[-1]=$b[-2]) for @_;
+  $b[1] = shift,       $b[-1]<$b[-2] && ($b[-1]=$b[-2]) if  @_;
+  (push @b,$_+$b[-2]), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) for @_;
   $b[-1];
 }
-
-}
-
 ```
 
+*We could have written the second line with `1` & `0` not `-1` and `-2` but there is something about the symmetry of the two lines which is poetic*
