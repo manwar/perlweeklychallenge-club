@@ -24,8 +24,9 @@ The method is to:
  * Split the string into the individual rows.
  * For each row check to see if the row is complete {has enough entries so that there are no parent nodes with no data}
    * If there are less than `2**$d-1` entries then this row is "incomplete" and we return the depth.
+   * We have an array/list difference here `scalar m{\S+}g` returns `1`, `scalar @{[m{\S+}g]}` returns the number of matches!
  * Check that there is no pair (with the same parent) for which both nodes are "`*`". Or if it is the last pair that it
-   contains a single "*". If either of the case the row is "incomplete" and we return the depth.
+   contains a single "`*`". If either of the case the row is "incomplete" and we return the depth.
 
 ```perl
 sub depth {
