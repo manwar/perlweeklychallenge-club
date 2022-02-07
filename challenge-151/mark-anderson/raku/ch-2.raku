@@ -9,12 +9,12 @@ is rob(4, 2, 3, 6, 5, 3), 13;
 
 multi rob(+@houses where .elems == 1)
 {
-    return @houses[0];
+    @houses[0];
 }
 
 multi rob(+@houses where .elems == 2)
 {
-    return max(@houses[0], @houses[1]);
+    max(@houses[0], @houses[1]);
 }
 
 multi rob(+@houses)
