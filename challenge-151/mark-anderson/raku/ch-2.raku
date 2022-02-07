@@ -7,14 +7,19 @@ use Test;
 is rob(2, 4, 5), 7;              
 is rob(4, 2, 3, 6, 5, 3), 13;     
 
-multi rob(+@houses where .elems < 3)
+multi rob(+@houses where .elems == 1)
 {
-    return @houses.head;
+    return @houses[0];
+}
+
+multi rob(+@houses where .elems == 2)
+{
+    return max(@houses[0], @houses[1]);
 }
 
 multi rob(+@houses where .elems == 3)
 {
-    return @houses[0] + @houses[2];
+    return max(@houses[1], @houses[0] + @houses[2]);
 }
 
 multi rob(+@houses)
