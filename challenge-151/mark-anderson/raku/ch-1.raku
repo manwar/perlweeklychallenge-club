@@ -11,10 +11,9 @@ sub binary-tree-depth($tree)
     my $elems = 1;
     my $depth = 0;
 
-    while @tree
+    for @tree -> $nodes
     {
-        my $nodes := shift @tree;
-        return $depth unless $nodes.elems == $elems;
+        last unless $nodes.elems == $elems;
         $elems = ($elems - $nodes.comb('*')) * 2;
         $depth++;
     }
