@@ -1,6 +1,6 @@
-[< Previous 149](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-149/james-smith) |
-[Next 151 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-151/james-smith)
-# Perl Weekly Challenge #150
+[< Previous 150](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-150/james-smith) |
+[Next 152 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-152/james-smith)
+# Perl Weekly Challenge #151
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,92 +12,60 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-150/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-151/james-smith
 
-# Challenge 1 - Fibonacci Words
+# Challenge 1 - Binary Tree Depth
 
-***You are given two strings having same number of digits, $a and $b. Write a script to generate Fibonacci Words by concatenation of the previous two strings. Finally print 51st digit of the first term having at least 51 digits.***
-
-## The solution
-
-As we are not interested in the full 'fibonnaci' sequence - we just need to keep the last two entries.
-
-We use Perl's ability to update two variables at once with the line `( $r, $s ) = ( $s, $r.$s )` which means that the original `$r` is used in the evaluation of `$s` which is often very useful. We repeat this until the last string is long enough to find the 51st element.
-
-We then just use `substr` to extract it (remembering `substr` is `0`-based so we only need character `50`.)
-
-```perl
-sub fibnum {
-  my ( $r, $s ) = @_;
-  ( $r, $s ) = ( $s, $r.$s ) while 51 > length $s;
-  substr $s, 50, 1;
-}
-```
-
-A slightly more compact version is achieved by:
- * By rewriting `( $r, $s ) = ( $s, $r.$s )` as the slightly less readable `$s = $r.( $r=$s )` here you have to realise that `$r` has the old value outside the brackets, and the new value (or `$s`) inside the brackets. So even though it looks like `$r.$r` it is infact `$r.$s`. Yargh!!
- * Using `$a`, `$b` instead of `$r`, `$s`. The former are *special* variables (for the comparision function in `sort`) and therefore they don't have to be `my`ed even when strict mode is enabled.
-
-```perl
-sub fibnum_messy {
-  ($a,$b)=@_;$b=$a.($a=$b)while 51>length$b;
-  substr$b,50,1;
-}
-```
-
-# Challenge 2 - Square-free Integer
-
-***Write a script to generate all square-free integers <= 500. In mathematics, a square-free integer (or squarefree integer) is an integer which is divisible by no perfect square other than 1. That is, its prime factorization has exactly one factor for each prime that appears in it. For example, 10 = 2 x 5 is square-free, but 18 = 2 x 3 x 3 is not, because 18 is divisible by 9 = 3**2
+***You are given binary tree. Write a script to find the minimum depth. The minimum depth is the number of nodes from the root to the nearest leaf node (node without any children).***
 
 ## The solution
 
-Rather than searching for all square factors, we realise that we only need to search for the squares of primes {e.g. a number which is a multiple of `36=6*6` is also a multiple of both `4=2*2` and `9=3*3`.
-
-So we do passes first we create a list of prime squares. Again we use our *nasty* 2 line "prime" generator. Except this time we store and check against `prime^2` rather than just prime.
-
-**Note** we do the extra work of getting the square of the primes, rather than just the primes themselves, here. We do the "squaring operation" once only - and not every time through the second loop from `1..$N`.
-
-The second pass (OK in compact form - may not be the most efficient as `$N` gets large) is a set of nested greps. The inner one returns an empty list if there are is a prime squared factor - and so negating it returns true.
-
-```perl
-my($N,@p2) = (@ARGV?$ARGV[0]:500,4);
-
-for(my$c=3;$c*$c<$N;$c+=2){
-  ($_>$c)?((push@p2,$c*$c),last):$c*$c%$_||last for@p2;
-}
-
-say for grep{my$t=$_;!grep{!($t%$_)}@p2}1..$N;
-```
-
-**Note** `say` without any parameters - outputs the contents of `$_` and then sends a carriage return. so `say for @A;` outputs all elements of the array `@A` on separate lines.
-
-## Follow up
-
-We can re-write the inefficient double `grep` more elegantly with nested `for`*each* loops. The new code becomes:
+The method is to:
+ * Split the string into the individual rows.
+ * For each row check to see if the row is complete {has enough entries so that there are no parent nodes with no data}
+   * If there are less than `2**$d-1` entries then this row is "incomplete" and we return the depth.
+   * We have an array/list difference here `scalar m{\S+}g` returns `1`, `scalar @{[m{\S+}g]}` returns the number of matches!
+ * Check that there is no pair (with the same parent) for which both nodes are "`*`". Or if it is the last pair that it
+   contains a single "`*`".
+   * If either of the case the row is "incomplete" and we return the depth.
 
 ```perl
-my ( $N, @p2 ) = ( @ARGV ? $ARGV[0] : 500 , 4 );
-
-P: for ( my $c = 3; $c*$c <= $N; $c += 2 ) {
-  $_ > $c  ? last : $c*$c % $_ || next P for @p2;
-  push @p2, $c*$c;
-}
-
-O: for my $t ( 1 .. $N ) {
-  $_ > $t  ? last :    $t % $_ || next O for @p2;
-  say  $t;
+sub depth {
+  my $d = 0;
+  for ( split m{\s*\|\s*}, $_[0] ) {
+    last if scalar @{[m{\S+}g]} < 2**$d - 1
+      || m{^\s*(?:\S+\s+\S+\s+)*?(\*\s+\*|\*\s*$)};
+    $d++;
+  }
+  $d;
 }
 ```
 
-### Notes:
- * We optimize the inner loop by allowing it to finish early if:
-    * We have a prime^2 value greater than `$t`
-    * We have a square factor
+# Challenge 2 - Rob the House
 
- * The difference in these two cases are:
-    * We end the inner loop and output the number as a square-free int (`last`)
-    * We skip to the next iteration of the outer loop (`next O`) without doing anything
+***You are planning to rob a row of houses, always starting with the first and moving in the same direction. However, you can’t rob two adjacent houses. Write a script to find the highest possible gain that can be achieved.***
 
- * The optimized version gives anywhere between 75% and 90% speed up... (values of `$N` between 100 and 1,000,000)
+## The solution
 
- * We have also re-written the prime generator to use the same `next {label}` trick, and this leads to a certain symmetry between the two loops. 
+We can walk along the house and work out what the best score we could get if we stopped the journey at any house. As we add in each extra house - best score depends on the best score of one of the last two houses visited and the points of the current house.
+
+Here we construct and array of the best total we could achieve if we stopped at the 1st, 2nd, 3rd houses etc...
+
+For the first two:
+  * best score for first house is the points for the first house.
+  * best score for the 2nd house is the maximum of the points for the first and second houses.
+For the rest
+  * best score for subsequent houses. Is either the points for the house added to the best score of the house before last which was visited **OR** the best score of the last house visited.
+
+We keep repeating the 2nd part until we get to the end house - and this gives us our score...
+
+```perl
+sub rob {
+  my @b = shift;
+  (push @b,shift    ), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) if  @_;
+  (push @b,$_+$b[-2]), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) for @_;
+  $b[-1];
+}
+```
+
+*We could have written the second line with `1` & `0` not `-1` and `-2` but there is something about the symmetry of the two lines which is poetic*
