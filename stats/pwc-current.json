@@ -1,87 +1,96 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2022-02-08 11:08:10 GMT"
-   },
    "title" : {
       "text" : "The Weekly Challenge - 151"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2022-02-08 20:11:37 GMT"
    },
    "series" : [
       {
          "data" : [
             {
-               "name" : "Dave Jacoby",
-               "y" : 3,
-               "drilldown" : "Dave Jacoby"
-            },
-            {
-               "drilldown" : "E. Choroba",
                "y" : 2,
-               "name" : "E. Choroba"
+               "name" : "Abigail",
+               "drilldown" : "Abigail"
+            },
+            {
+               "name" : "Dave Jacoby",
+               "drilldown" : "Dave Jacoby",
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba"
             },
             {
                "y" : 3,
-               "name" : "James Smith",
-               "drilldown" : "James Smith"
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
             },
             {
-               "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
                "y" : 2
             },
             {
-               "drilldown" : "Mohammad S Anwar",
                "y" : 1,
-               "name" : "Mohammad S Anwar"
+               "name" : "Mohammad S Anwar",
+               "drilldown" : "Mohammad S Anwar"
             },
             {
                "y" : 4,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
             },
             {
+               "y" : 4,
                "name" : "Ulrich Rieke",
-               "y" : 4,
                "drilldown" : "Ulrich Rieke"
             },
             {
                "drilldown" : "W. Luis Mochan",
-               "y" : 3,
-               "name" : "W. Luis Mochan"
+               "name" : "W. Luis Mochan",
+               "y" : 3
             }
          ],
-         "name" : "The Weekly Challenge - 151",
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 151"
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "drilldown" : {
       "series" : [
          {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Abigail",
+            "name" : "Abigail"
+         },
+         {
             "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -90,22 +99,22 @@
                [
                   "Blog",
                   1
-               ]
-            ],
-            "id" : "Dave Jacoby"
-         },
-         {
-            "name" : "E. Choroba",
-            "id" : "E. Choroba",
-            "data" : [
-               [
-                  "Perl",
-                  2
                ]
             ]
          },
          {
+            "name" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "E. Choroba"
+         },
+         {
             "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -115,30 +124,30 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "James Smith"
+            ]
          },
          {
-            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson"
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
          },
          {
-            "name" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "id" : "Mohammad S Anwar"
+            "name" : "Mohammad S Anwar"
          },
          {
+            "name" : "Roger Bell_West",
             "id" : "Roger Bell_West",
             "data" : [
                [
@@ -149,8 +158,7 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Roger Bell_West"
+            ]
          },
          {
             "name" : "Ulrich Rieke",
@@ -182,7 +190,14 @@
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
