@@ -21,6 +21,7 @@ my @TESTS = (
 );
 
 is( rob(     @{$_->[0]}), $_->[1] ) foreach @TESTS;
+is( rob2(    @{$_->[0]}), $_->[1] ) foreach @TESTS;
 
 done_testing();
 
@@ -40,7 +41,7 @@ sub rob {
     ##
     ## Comments this way so they don't hide the symmetry of the code
   my @b = shift;
-  $b[1] = shift,       $b[ 1]<$b[ 0] && ($b[ 1]=$b[ 0]) if  @_;
+  (push @b,shift    ), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) if  @_;
   (push @b,$_+$b[-2]), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) for @_;
   $b[-1];
 }

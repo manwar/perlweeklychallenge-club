@@ -62,7 +62,7 @@ We keep repeating the 2nd part until we get to the end house - and this gives us
 ```perl
 sub rob {
   my @b = shift;
-  $b[1] = shift,       $b[-1]<$b[-2] && ($b[-1]=$b[-2]) if  @_;
+  (push @b,shift    ), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) if  @_;
   (push @b,$_+$b[-2]), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) for @_;
   $b[-1];
 }
