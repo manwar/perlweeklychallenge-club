@@ -13,34 +13,14 @@ set -f
 declare -a best
 
 while read -a houses
-do    if   [[ ${#houses[@]} -lt 2 ]]
-      then echo ${houses[0]}
-           continue
-      fi
-
-      size=${#houses[@]}
-      for  ((i = size - 1; i >= 0; i --))
-      do   ((i1 = i + 1))
-           ((i2 = i + 2))
-           if ((i == size - 1))
-           then best[$i]=${houses[$i]}
-                continue
-           fi
-
-           if ((i == 0))
-           then best[$i]=$((${houses[$i]} + ${best[$i2]}))
-                continue
-           fi
-
-           if   ((i == size - 2))
-           then val1=${houses[$i]}
-                val2=${best[$i1]}
-           else val1=$((${houses[$i]} + ${best[$i2]}))
-                val2=${best[$i1]}
-           fi
-
+do    size=${#houses[@]}
+      best[$((size + 0))]=0
+      best[$((size + 1))]=0
+      for  ((i = size - 1; i >= 2; i --))
+      do   ((val1 = ${houses[$i]} + ${best[$((i + 2))]}))
+           ((val2 = ${best[$((i + 1))]}))
            best[$i]=$((val1 < val2 ? val2 : val1))
       done
 
-      echo ${best[0]}
+      echo $((${houses[0]} + ${best[2]}))
 done

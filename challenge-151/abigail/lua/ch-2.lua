@@ -15,19 +15,12 @@ for line in io . lines () do
         houses [#houses + 1] = val
     end
 
-    for i = #houses, 1, -1 do
-        if     2 >= #houses then
-            best [i] =             houses [i]
-        elseif i == #houses then
-            best [i] =             houses [i]
-        elseif i == 0       then
-            best [i] =             houses [i] + best [i + 2]
-        elseif i == #houses - 1 then
-            best [i] = math . max (houses [i],  best [i + 1])
-        else
-            best [i] = math . max (houses [i] + best [i + 2],
-                                                best [i + 1])
-        end
+    best [#houses + 1] = 0
+    best [#houses + 2] = 0
+
+    for i = #houses, 3, -1 do
+        best [i] = math . max (houses [i] + best [i + 2], best [i + 1])
     end
-    print (best [1])
+
+    print (houses [1] + best [3])
 end

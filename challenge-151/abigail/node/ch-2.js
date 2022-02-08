@@ -13,14 +13,11 @@
 . on              ('line', line => {
     let houses = line . trim () . split (/ +/) . map (n => +n)
     let best   = []
-    for (let i = houses . length - 1; i >= 0; i --) {
-        best [i] =
-            2 >  houses . length     ?             houses [i]
-          : i == houses . length - 1 ?             houses [i]
-          : i == 0                   ?             houses [i] + best [i + 2]
-          : i == houses . length - 2 ? Math . max (houses [i],  best [i + 1])
-          :                            Math . max (houses [i] + best [i + 2],
-                                                                best [i + 1])
+    let size   = houses . length
+    best [size + 0] = 0
+    best [size + 1] = 0
+    for (let i = size - 1; i >= 2; i --) {
+        best [i] = Math . max (houses [i] + best [i + 2], best [i + 1])
     }
-    console . log (best [0])
+    console . log (houses [0] + best [2])
 })

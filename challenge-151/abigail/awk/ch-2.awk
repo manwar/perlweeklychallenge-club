@@ -14,13 +14,11 @@ function max (a, b) {
 
 {
     delete best
-    for (i = NF; i > 0; i --) {
-        best [i] = NF <= 2     ? $i                                     \
-                 : i == NF     ? $i                                     \
-                 : i == 1      ? $i     + best [i + 2]                  \
-                 : i == NF - 1 ? max($i,  best [i + 1])                 \
-                 :               max($i + best [i + 2], best [i + 1])
+    best [NF + 1] = 0
+    best [NF + 2] = 0
+    for (i = NF; i > 2; i --) {
+        best [i] = max($i + best [i + 2], best [i + 1])
     }
-    print best [1]
+    print $1 + best [3]
 }
 

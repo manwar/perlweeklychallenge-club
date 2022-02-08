@@ -26,29 +26,22 @@ use List::Util qw [max];
 # the value of the current house, plus the maximum we can get
 # if we started two houses down. The maximum value we can get by
 # not robbing this house is the best we can get by starting from
-# the next house.
+# the next house. We'll add two empty houses to make everything work
+# out nicely.
 #
-# We need some fiddling around the edges:
-#    - Maximizing the value starting from the last house is by robbing it.
-#    - Maximizing the value starting from the penultimate house is
-#      robbing the most valuable of the last two houses.
-#    - If there are only two houses, rob the current house.
-#    - The first house should always be robbed (a requirement); the
-#      maximum value which can be achieved we get by starting from the
-#      third house, adding the value of the first.
+# Note that we don't have to calculate the best option starting
+# from the second house, as we will always skip the second house.
+# And we must always pick the first house.
 #
 
 sub best ($houses) {
     my @best;
-    foreach my $i (reverse keys @$houses) {
-        $best [$i] = @$houses < 2        ?     $$houses [$i]
-                   : $i == $#$houses     ?     $$houses [$i]
-                   : $i == 0             ?     $$houses [$i] + $best [$i + 2]
-                   : $i == $#$houses - 1 ? max $$houses [$i],  $best [$i + 1]
-                   :                       max $$houses [$i] + $best [$i + 2],
-                                                               $best [$i + 1];
+    $best [$#$houses + 1] = 0;
+    $best [$#$houses + 2] = 0;
+    for (my $i = $#$houses; $i >= 2; $i --) {
+        $best [$i] = max $$houses [$i] + $best [$i + 2], $best [$i + 1];
     }
-    $best [0];
+    $$houses [0] + $best [2];
 }
 
 

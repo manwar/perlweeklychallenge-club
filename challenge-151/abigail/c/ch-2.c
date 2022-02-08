@@ -37,21 +37,20 @@ int main (void) {
             line_ptr += offset;
         }
 
-        if ((best = (int *) malloc (nr_of_houses * sizeof (int))) == NULL) {
+        if ((best = (int *)
+             malloc ((nr_of_houses + 2) * sizeof (int))) == NULL) {
             perror ("Malloc failed");
             exit (1);
         }
 
-        for (int i = nr_of_houses - 1; i >= 0; i --) {
-            best [i] = nr_of_houses < 2      ? houses [i]
-                     : i == nr_of_houses - 1 ? houses [i]
-                     : i == 0                ? houses [i]      + best [i + 2]
-                     : i == nr_of_houses - 2 ? max (houses [i],  best [i + 1])
-                     :                         max (houses [i] + best [i + 2],
-                                                                 best [i + 1]);
+        best [nr_of_houses + 0] = 0;
+        best [nr_of_houses + 1] = 0;
+
+        for (int i = nr_of_houses - 1; i >= 2; i --) {
+            best [i] = max (houses [i] + best [i + 2], best [i + 1]);
         }
 
-        printf ("%d\n", best [0]);
+        printf ("%d\n", houses [0] + best [2]);
 
         free (houses);
         free (best);
