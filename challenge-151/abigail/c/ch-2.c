@@ -21,39 +21,30 @@ int main (void) {
 
     while ((str_len = getline (&line, &len, stdin)) != -1) {
         char * line_ptr = line;
-        int * houses = NULL;
-        int * best   = NULL;
+        int * h = NULL;
         int val;
         int offset;
-        int nr_of_houses = 0;
+        int sz = 0;
 
         while (sscanf (line_ptr, "%d%n", &val, &offset) == 1) {
-            if ((houses = (int *)
-                 realloc (houses, ++ nr_of_houses * sizeof (int))) == NULL) {
+            if ((h = (int *) realloc (h, (2 + ++ sz) * sizeof (int))) == NULL) {
                 perror ("Recalloc failed");
                 exit (1);
             }
-            houses [nr_of_houses - 1] = val;
+            h [sz - 1] = val;
             line_ptr += offset;
         }
 
-        if ((best = (int *)
-             malloc ((nr_of_houses + 2) * sizeof (int))) == NULL) {
-            perror ("Malloc failed");
-            exit (1);
+        h [sz + 0] = 0;
+        h [sz + 1] = 0;
+
+        for (int i = sz - 1; i >= 2; i --) {
+            h [i] = max (h [i] + h [i + 2], h [i + 1]);
         }
 
-        best [nr_of_houses + 0] = 0;
-        best [nr_of_houses + 1] = 0;
+        printf ("%d\n", h [0] + h [2]);
 
-        for (int i = nr_of_houses - 1; i >= 2; i --) {
-            best [i] = max (houses [i] + best [i + 2], best [i + 1]);
-        }
-
-        printf ("%d\n", houses [0] + best [2]);
-
-        free (houses);
-        free (best);
+        free (h);
     }
     free (line);
 

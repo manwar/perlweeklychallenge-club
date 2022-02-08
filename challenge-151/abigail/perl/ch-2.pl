@@ -34,15 +34,10 @@ use List::Util qw [max];
 # And we must always pick the first house.
 #
 
-sub best ($houses) {
-    my @best;
-    $best [$#$houses + 1] = 0;
-    $best [$#$houses + 2] = 0;
-    for (my $i = $#$houses; $i >= 2; $i --) {
-        $best [$i] = max $$houses [$i] + $best [$i + 2], $best [$i + 1];
-    }
-    $$houses [0] + $best [2];
+while (<>) {
+    my @h = (/[0-9]+/g, 0, 0);
+    $h [$_] = max $h [$_] + $h [$_ + 2], $h [$_ + 1] for reverse 2 .. $#h - 2;
+    say $h [0] + $h [2];
 }
 
-
-say best [/[0-9]+/g] while <>;
+__END__

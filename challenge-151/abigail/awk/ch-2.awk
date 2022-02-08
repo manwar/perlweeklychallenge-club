@@ -13,12 +13,9 @@ function max (a, b) {
 }
 
 {
-    delete best
-    best [NF + 1] = 0
-    best [NF + 2] = 0
     for (i = NF; i > 2; i --) {
-        best [i] = max($i + best [i + 2], best [i + 1])
+        $i = max($i + $(i + 2), $(i + 1))
     }
-    print $1 + best [3]
+    print $1 + $3
 }
 

@@ -11,13 +11,11 @@
   require ('readline')
 . createInterface ({input: process . stdin})   
 . on              ('line', line => {
-    let houses = line . trim () . split (/ +/) . map (n => +n)
-    let best   = []
-    let size   = houses . length
-    best [size + 0] = 0
-    best [size + 1] = 0
-    for (let i = size - 1; i >= 2; i --) {
-        best [i] = Math . max (houses [i] + best [i + 2], best [i + 1])
+    let h = line . trim () . split (/ +/) . map (n => +n)
+    h [h . length] = 0
+    h [h . length] = 0
+    for (let i = h . length - 3; i >= 2; i --) {
+        h [i] = Math . max (h [i] + h [i + 2], h [i + 1])
     }
-    console . log (houses [0] + best [2])
+    console . log (h [0] + h [2])
 })

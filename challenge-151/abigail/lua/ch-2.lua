@@ -9,18 +9,17 @@
 --
 
 for line in io . lines () do
-    local houses = {}
-    local best   = {}
+    local h = {}
     for val in line : gmatch ("%d+") do
-        houses [#houses + 1] = val
+        h [#h + 1] = val
     end
 
-    best [#houses + 1] = 0
-    best [#houses + 2] = 0
+    h [#h + 1] = 0
+    h [#h + 1] = 0
 
-    for i = #houses, 3, -1 do
-        best [i] = math . max (houses [i] + best [i + 2], best [i + 1])
+    for i = #h - 2, 3, -1 do
+        h [i] = math . max (h [i] + h [i + 2], h [i + 1])
     end
 
-    print (houses [1] + best [3])
+    print (h [1] + h [3])
 end
