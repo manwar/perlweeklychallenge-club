@@ -16,6 +16,7 @@
 
 * [AWK](awk/ch-2.awk)
 * [Bash](bash/ch-2.sh)
+* [bc](bc/ch-2.bc)
 * [C](c/ch-2.c)
 * [Go](go/ch-2.go)
 * [Java](java/ch-2.java)
