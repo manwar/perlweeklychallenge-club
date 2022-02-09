@@ -38,23 +38,13 @@ sub largest_revenue {
     my @house = @_;
     my @cand;
     my $num_of_houses = scalar @house;
-    return max @house if $num_of_houses <= 2;
+    return $house[0] if $num_of_houses <= 2;
     push @cand, Chain->new(
         0, 
         $house[0],
         [$house[0]]
     );
-    push @cand, Chain->new(
-        2, 
-        $house[0]+$house[2], 
-        [$house[0], $house[2]] 
-    );
-    push @cand, Chain->new(
-        1, 
-        $house[1], 
-        [$house[1]] 
-    );
-    my $cur_ind = 3;
+    my $cur_ind = 2;
     while ($cur_ind < $num_of_houses) {
         for (@cand) {
             if ($cur_ind - $_->last_ind == 2) {
@@ -85,16 +75,15 @@ sub largest_revenue {
         }
         $cur_ind++;
     }
-
     return max (map {$_->sum} @cand);
 }
 
 
 
 use Test::More tests => 6;
-ok largest_revenue( (1, 8, 9, 4, 2, 7, 6, 5, 3) ) == 24;
+ok largest_revenue( (1, 8, 9, 4, 2, 7, 6, 5, 3) ) == 22;
 ok largest_revenue( (4, 2, 3, 6, 5, 3) ) == 13;
-ok largest_revenue( (2, 8, 5) ) == 8;
+ok largest_revenue( (2, 8, 5) ) == 7;
 ok largest_revenue( (2, 6, 5) ) == 7;
-ok largest_revenue( (3, 8) ) == 8;
+ok largest_revenue( (3, 8) ) == 3;
 ok largest_revenue( (5, 2) ) == 5;
