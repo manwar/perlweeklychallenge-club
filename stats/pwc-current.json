@@ -1,27 +1,6 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "data" : [
             {
                "y" : 2,
@@ -29,44 +8,44 @@
                "name" : "Abigail"
             },
             {
-               "drilldown" : "Cheok-Yin Fung",
+               "y" : 1,
                "name" : "Cheok-Yin Fung",
-               "y" : 1
+               "drilldown" : "Cheok-Yin Fung"
             },
             {
-               "name" : "Dave Jacoby",
                "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
                "y" : 3
             },
             {
-               "name" : "E. Choroba",
+               "y" : 2,
                "drilldown" : "E. Choroba",
-               "y" : 2
+               "name" : "E. Choroba"
             },
             {
+               "y" : 6,
                "name" : "Flavio Poletti",
-               "drilldown" : "Flavio Poletti",
-               "y" : 6
+               "drilldown" : "Flavio Poletti"
             },
             {
                "y" : 3,
-               "name" : "James Smith",
-               "drilldown" : "James Smith"
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
             },
             {
-               "name" : "Mark Anderson",
                "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
                "y" : 2
             },
             {
-               "y" : 1,
+               "drilldown" : "Mohammad S Anwar",
                "name" : "Mohammad S Anwar",
-               "drilldown" : "Mohammad S Anwar"
+               "y" : 1
             },
             {
-               "name" : "Roger Bell_West",
+               "y" : 5,
                "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "name" : "Roger Bell_West"
             },
             {
                "drilldown" : "Ulrich Rieke",
@@ -79,36 +58,38 @@
                "name" : "W. Luis Mochan"
             }
          ],
-         "name" : "The Weekly Challenge - 151"
+         "name" : "The Weekly Challenge - 151",
+         "colorByPoint" : 1
       }
    ],
-   "xAxis" : {
-      "type" : "category"
+   "title" : {
+      "text" : "The Weekly Challenge - 151"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Abigail",
             "id" : "Abigail",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Abigail"
+            ]
          },
          {
+            "name" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "name" : "Cheok-Yin Fung",
             "id" : "Cheok-Yin Fung"
          },
          {
             "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -118,22 +99,20 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Dave Jacoby"
+            ]
          },
          {
-            "id" : "E. Choroba",
             "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "E. Choroba"
          },
          {
             "id" : "Flavio Poletti",
-            "name" : "Flavio Poletti",
             "data" : [
                [
                   "Perl",
@@ -147,7 +126,8 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Flavio Poletti"
          },
          {
             "data" : [
@@ -160,31 +140,49 @@
                   1
                ]
             ],
-            "name" : "James Smith",
-            "id" : "James Smith"
+            "id" : "James Smith",
+            "name" : "James Smith"
          },
          {
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mark Anderson"
          },
          {
-            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "name" : "Mohammad S Anwar"
+            "id" : "Mohammad S Anwar"
          },
          {
-            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
+         },
+         {
+            "id" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -195,23 +193,10 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West"
+            "name" : "Ulrich Rieke"
          },
          {
-            "name" : "Ulrich Rieke",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Ulrich Rieke"
-         },
-         {
+            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -222,20 +207,39 @@
                   1
                ]
             ],
-            "name" : "W. Luis Mochan",
             "id" : "W. Luis Mochan"
          }
       ]
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "tooltip" : {
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 151"
-   },
    "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2022-02-10 08:18:10 GMT"
+      "text" : "[Champions: 11] Last updated at 2022-02-10 10:18:41 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    }
 }
