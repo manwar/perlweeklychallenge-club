@@ -1,3 +1,3 @@
-# The Weekly Challenge 147
+# The Weekly Challenge 149
 
-Solution by Simon Green. [Blog - Look mum, no inputs 😛](https://dev.to/simongreennet/look-mum-no-inputs-3lon)
+Solution by Simon Green. [Weekly Challenge 149](https://dev.to/simongreennet/weekly-challenge-149-cln)
