@@ -5,7 +5,7 @@ unit sub MAIN(UInt:D \num = 20);
 my @lefty-primes = 2, 3, 5, 7;
 my ($start, $end) = 0, 3;
 
-my UInt $sz  = @lefty-primes.elems;
+my UInt $sz = @lefty-primes.elems;
 
 while $sz < num {
     for 1..9 -> \d {
