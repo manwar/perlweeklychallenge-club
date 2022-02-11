@@ -49,6 +49,19 @@ sub depth {
 
 We can walk along the house and work out what the best score we could get if we stopped the journey at any house. As we add in each extra house - best score depends on the best score of one of the last two houses visited and the points of the current house.
 
+We will only ever skip one or two houses at each "jump", we will never skip more than two. There is always a better option which is to select one of the nodes in the middle. So the jump from 1 to 5 (skipping three) will always score less than the jump from 1 to 3 and 3 to 5. This is because you will miss plundering house No 3....
+
+```
+  ======     ======     ======     ======     ======     ======
+ ========   ========   ========   ========   ========   ======== 
+ | No 1 |   | No 2 |   | No 3 |   | No 4 |   | No 5 |   | No 6 | 
+ --------   --------   --------   --------   --------   --------
+    |  |                |    |                |  |
+    |   `--->------>---'      `--->------>---'   |
+    |                                            |
+     `--->------>------>------>------>------>---'
+```
+
 Here we construct and array of the best total we could achieve if we stopped at the 1st, 2nd, 3rd houses etc...
 
 For the first two:
