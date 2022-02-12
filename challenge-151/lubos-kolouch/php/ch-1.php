@@ -31,3 +31,5 @@ function get_min_depth($input) {
 get_min_depth('1 | 2 3 | 4 5') == 2 or throw new Exception('Test failed');
 get_min_depth('1 | 2 3 | 4 *  * 5 | * 6') == 3 or throw new Exception('Test 2 failed');
 
+
+?>
