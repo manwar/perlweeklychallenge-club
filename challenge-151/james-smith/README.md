@@ -62,6 +62,8 @@ We will only ever skip one or two houses at each "jump", we will never skip more
      `--->------>------>------>------>------>---'
 ```
 
+### First attempt ...
+
 Here we construct and array of the best total we could achieve if we stopped at the 1st, 2nd, 3rd houses etc...
 
 For the first two:
@@ -82,3 +84,17 @@ sub rob {
 ```
 
 *We could have written the second line with `1` & `0` not `-1` and `-2` but there is something about the symmetry of the two lines which is poetic*
+
+### Second attempt ...
+
+As we only need the previous 2 houses, we can do away with the array and just work with the score of the two previous entries.
+
+```perl
+sub rob_no_array {
+  my$p=my$q=0;
+  ($p,$q)=($q,$q>$p+$_?$q:$p+$_)for@_;
+  $q;
+}
+```
+
+Speedwise this is about 10% faster...
