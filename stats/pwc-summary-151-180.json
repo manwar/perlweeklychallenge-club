@@ -1,4 +1,8 @@
 {
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "xAxis" : {
       "categories" : [
          "Miguel Prz",
@@ -33,21 +37,19 @@
          "Peter Meszaros"
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-02-12 00:52:33 GMT"
+      "text" : "[Champions: 30] Last updated at 2022-02-12 16:27:55 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             4,
             0,
@@ -79,7 +81,8 @@
             43,
             1,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -117,7 +120,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -149,19 +151,17 @@
             11,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    }
 }
