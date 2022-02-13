@@ -151,7 +151,7 @@ fun findall()
 			# extend path s by each unused word no in the inwords
 			push @$newpaths,
 				map {
-					# word no $_ no longer available.
+					# mark $wno no longer available.
 					my $newavail = $avail;
 					substr( $newavail, $_, 1 ) = 0;
 
