@@ -15,7 +15,19 @@ class Rectangle {
         * abs( $!corner-right.y - $!corner-left.y );
     }
 
+
+    method !is-overlapping( Rectangle $r ) {
+        ( $!corner-left.x <= $r.corner-left.x <= $!corner-right.x
+           ||  $!corner-left.x <= $r.corner-righ.x <= $!corner-right.x )
+        &&
+        ( $!corner-left.y <= $r.corner-left.y <= $!corner-right.y
+          ||  $!corner-left.y <= $r.corner-right.y <= $!corner-right.y );
+
+    }
+
     method overlapping-area( Rectangle $r ) {
+        return 0 if ! self!is-overlapping( $r );
+
         my $left = Point.new( x => max( $!corner-left.x, $r.corner-left.x ),
                               y => max( $!corner-left.y, $r.corner-left.y )
                             );
