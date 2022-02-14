@@ -2,24 +2,24 @@
 
 use Test;
 
-is rectangle-area((-1,0),  (2,2), (0,-1),  (4,4)), 22;
-is rectangle-area((-3,-1), (1,3), (-1,-3), (2,2)), 25;  
-is rectangle-area((1,1),   (2,2), (3,3),   (4,4)), 2;  
+is rectangle-area((-1,0),  (2,2),   (0,-1),  (4,4)),   22;
+is rectangle-area((-3,-1), (1,3),   (-1,-3), (2,2)),   25;  
+is rectangle-area((1,1),   (2,2),   (3,3),   (4,4)),   2;  
+is rectangle-area((-1,-1), (-2,-2), (1,1),   (2,2)),   2;  
+is rectangle-area((1,1),   (2,2),   (-1,-1), (-2,-2)), 2;  
+is rectangle-area((3,3),   (4,4),   (1,1),   (2,2)),   2;  
+is rectangle-area((4,2),   (7,5),   (2,3),   (5,7)),   19;
 
-sub rectangle-area($bl_1, $tr_1, $bl_2, $tr_2)
+sub rectangle-area(+@p)
 {
-    my $area_1 = abs($bl_1[0] - $tr_1[0]) * abs($bl_1[1] - $tr_1[1]);
-    my $area_2 = abs($bl_2[0] - $tr_2[0]) * abs($bl_2[1] - $tr_2[1]);
-
-    my $int_bl_x = max($bl_1[0], $bl_2[0]);
-    my $int_tr_x = min($tr_1[0], $tr_2[0]);
-    my $int_bl_y = max($bl_1[1], $bl_2[1]);
-    my $int_tr_y = min($tr_1[1], $tr_2[1]);
-
-    my $int_x_dist = $int_tr_x - $int_bl_x;
-    my $int_y_dist = $int_tr_y - $int_bl_y;
-
-    my $area_int = $int_x_dist|$int_y_dist < 0 ?? 0 !! $int_x_dist*$int_y_dist;
+    my $p = @p.map(|*);
     
-    return $area_1 + $area_2 - $area_int;
+    my $int = flat (($p[0,4], $p[1,5])>>.max, ($p[2,6], $p[3,7])>>.min);
+
+    my $int-x-dist = [-] $int[2,0];
+    my $int-y-dist = [-] $int[3,1];
+ 
+    my $int-area = $int-x-dist|$int-y-dist < 0 ?? 0 !! $int-x-dist * $int-y-dist;
+
+    abs(([-] $p[0,2]) * ([-] $p[1,3])) + abs(([-] $p[4,6]) * ([-] $p[5,7])) - $int-area;
 }
