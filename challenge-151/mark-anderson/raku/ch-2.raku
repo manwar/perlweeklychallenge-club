@@ -2,6 +2,10 @@
 
 # With help from https://www.geeksforgeeks.org/find-maximum-possible-stolen-value-houses/
 
+# I may have misunderstood the problem. At first I thought we have to rob the
+# first house but then I thought we just have to start at the first house and
+# consider robbing it. I went with my second instinct.
+
 use Test;
 
 is rob(2, 4, 5), 7;              
