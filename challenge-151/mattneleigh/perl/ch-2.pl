@@ -91,7 +91,7 @@ sub calculate_loot_yield_on_street{
     $loot[1] = max($ARG[0], $ARG[1]);
 
     for($i = 2; $i < scalar(@ARG); $i++){
-        $loot[$i] = max(@ARG[$i] + $loot[$i - 2], $loot[$i - 1]);
+        $loot[$i] = max($ARG[$i] + $loot[$i - 2], $loot[$i - 1]);
     }
 
     return($loot_initial + $loot[$#loot]);
