@@ -50,10 +50,9 @@ class Rectangle {
 # $ raku ch-2.p6 -3 -1 1 3 -1 -3 2 2
 # 25
 sub MAIN(  *@points where { @points.elems == 8 && @points.grep( * ~~ Int ) == @points.elems } ) {
-    my @corners;
-    @corners.push: Point.new( x => $_[ 0 ].Int, y => $_[ 1 ].Int ) for @points.rotor( 2 );
-    my Rectangle $r1 = Rectangle.new: corner-left => @corners[ 0 ], corner-right => @corners[ 1 ];
-    my Rectangle $r2 = Rectangle.new: corner-left => @corners[ 2 ], corner-right => @corners[ 3 ];
-
+    my @corners = @points.rotor( 2 ).map: { Point.new( x => $_[ 0 ].Int, y => $_[ 1 ].Int ) };
+    my Rectangle ( $r1, $r2 ) = @corners.rotor( 2 ).map: { Rectangle.new(
+                                                                 corner-left => $_[ 0 ],
+                                                                 corner-right => $_[ 1 ] ) };
     "{ $r1.area + $r2.area - $r1.overlapping-area( $r2 ) }".say;
 }
