@@ -92,18 +92,18 @@ sub my_area {
 
   ## Compute 3 widths and heights...
 
-  my $w3 = ( my $w2  = $r->[0] - $l->[0]           )  ## width rectangle 2
-         + ( my $w1  = $R->[0] - $L->[0]           )  ## width rectangle 1
+  my $w3 = ( my $w1  = $r->[0] - $l->[0]           )  ## width rectangle 1
+         + ( my $w2  = $R->[0] - $L->[0]           )  ## width rectangle 2
          - ( $r->[0] > $R->[0] ? $r->[0] : $R->[0] )  ## right most point
          + ( $l->[0] < $L->[0] ? $l->[0] : $L->[0] ); ## left most point
-  my $h3 = ( my $h2  = $r->[1] - $l->[1]           )  ## height rectangle 2
-         + ( my $h1  = $R->[1] - $L->[1]           )  ## height rectangle 1
+  my $h3 = ( my $h1  = $r->[1] - $l->[1]           )  ## height rectangle 1
+         + ( my $h2  = $R->[1] - $L->[1]           )  ## height rectangle 2
          - ( $r->[1] > $R->[1] ? $r->[1] : $R->[1] )  ## highest point
          + ( $l->[1] < $L->[1] ? $l->[1] : $L->[1] ); ## lowest point
 
   ## Return result...
 
-  $w1*$h1 + $w2*$h2 - ( $w3>0 && $h3>0 ? $w3*$h3 : 0 );
+  $w1*$h1 + $w2*$h2 - ($w3>0 && $h3>0 && $w3*$h3);
 }
 ```
 
