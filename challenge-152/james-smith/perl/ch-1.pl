@@ -21,20 +21,15 @@ is( min_path_anydir_total( $_->[0] ), $_->[2] ) foreach @TESTS;
 done_testing();
 
 sub min_path {
-  my @p = map { [0,[]] } 0,my @t = reverse @{$_[0]};
-  @p = map {
-         $p[0][0] < $p[1][0]
-       ? [ $_+$p[0][0], [ $_, @{$p[0][1]} ] ]
-       : [ $_+$p[1][0], [ $_, @{$p[1][1]} ] ],
-       (shift @p) x 0
-  } @{$_} for @t;
+  my @p = ( [0,[]] ) x (1 + @{$_[0]});
+  @p = map { $p[0][0] < $p[1][0] ? [ $_+$p[0][0], [ $_, @{$p[0][1]} ] ] : [ $_+$p[1][0], [ $_, @{$p[1][1]} ] ], (shift @p) x 0 } @{$_} for reverse @{$_[0]};
   say sprintf 'Minimum value %d: [ %s ]', $p[0][0], join ', ', @{$p[0][1]};
   $p[0][0];
 }
 
 sub min_path_total {
-  my @p = map { 0 } 0, my @t = reverse @{$_[0]};
-     @p = map { $_ + $p[ $p[0] < $p[1] ? 0 : 1 ], (shift @p)x 0 } @{$_} for @t;
+  my @p = (0) x (1+@{$_[0]});
+     @p = map { $_ + $p[$p[0]<$p[1]?0:1], (shift @p)x 0 } @{$_} for reverse @{$_[0]};
   $p[0];
 }
 
