@@ -47,7 +47,6 @@ sub min_path_total {
   my @p = (0) x (1+@{$_[0]});
      @p = map { $_ + $p[$p[0]<$p[1]?0:1], (shift @p)x 0 } @{$_} for reverse @{$_[0]};
   $p[0];
-
 }
 ```
 
