@@ -1,6 +1,6 @@
-[< Previous 150](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-150/james-smith) |
-[Next 152 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-152/james-smith)
-# Perl Weekly Challenge #151
+[< Previous 151](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-151/james-smith) |
+[Next 153 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-153/james-smith)
+# The Weekly Challenge #152
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,89 +12,98 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-151/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-152/james-smith
 
-# Challenge 1 - Binary Tree Depth
+# Challenge 1 - Triangle Sum Path
 
-***You are given binary tree. Write a script to find the minimum depth. The minimum depth is the number of nodes from the root to the nearest leaf node (node without any children).***
+***You are given a triangle array.  Write a script to find the minimum sum path from top to bottom.***
 
-## The solution
+## Solution a - can on move down and left or down and right
 
-The method is to:
- * Split the string into the individual rows.
- * For each row check to see if the row is complete {has enough entries so that there are no parent nodes with no data}
-   * If there are less than `2**$d-1` entries then this row is "incomplete" and we return the depth.
-   * We have an array/list difference here `scalar m{\S+}g` returns `1`, `scalar @{[m{\S+}g]}` returns the number of matches!
- * Check that there is no pair (with the same parent) for which both nodes are "`*`". Or if it is the last pair that it
-   contains a single "`*`".
-   * If either of the case the row is "incomplete" and we return the depth.
-
+This doesn't match the output supplied (but feels right)
 ```perl
-sub depth {
-  my $d = 0;
-  for ( split m{\s*\|\s*}, $_[0] ) {
-    last if scalar @{[m{\S+}g]} < 2**$d - 1
-      || m{^\s*(?:\S+\s+\S+\s+)*?(\*\s+\*|\*\s*$)};
-    $d++;
+sub min_path {
+  my @p = map { [0,[]] } 0,my @t = reverse @{$_[0]};
+  for my $r (@t) {
+    my($l,@q,$z) = shift @p;
+    ( push @q, $l->[0] < $p[0][0]
+       ? [ $_+$l->[0],  [ $_, @{$l->[1]}  ] ]
+       : [ $_+$p[0][0], [ $_, @{$p[0][1]} ] ]
+    ), $l = shift @p for @{$r};
+    @p = @q;
   }
-  $d;
+  $p[0][0];
 }
 ```
 
-# Challenge 2 - Rob the House
+## Solution b - can move to any node
 
-***You are planning to rob a row of houses, always starting with the first and moving in the same direction. However, you can’t rob two adjacent houses. Write a script to find the highest possible gain that can be achieved.***
+This matches the output supplied (but feels wrong)
+
+```perl
+sub min_path_anydir {
+  my $res = 0;
+  foreach(@{$_[0]}) {
+    my $min = 1e99;
+    $min = $_ < $min ? $_ : $min for @{$_};
+    $res+= $min;
+  }
+  $res;
+}
+```
+# Challange 2 - Rectangle Area
+
+***You are given coordinates bottom-left and top-right corner of two rectangles in a 2D plane.  Write a script to find the total area covered by the two rectangles.***
 
 ## The solution
 
-We can walk along the house and work out what the best score we could get if we stopped the journey at any house. As we add in each extra house - best score depends on the best score of one of the last two houses visited and the points of the current house.
+The area covered by the two rectangles is equal to the sum of the areas of the two rectangles minus the area of the intersection {as we count this twice}...
 
-We will only ever skip one or two houses at each "jump", we will never skip more than two. There is always a better option which is to select one of the nodes in the middle. So the jump from 1 to 5 (skipping three) will always score less than the jump from 1 to 3 and 3 to 5. This is because you will miss plundering house No 3....
+To compute the overlap we can define a bounding region..
 
 ```
-  ======     ======     ======     ======     ======     ======
- ========   ========   ========   ========   ========   ======== 
- | No 1 |   | No 2 |   | No 3 |   | No 4 |   | No 5 |   | No 6 | 
- --------   --------   --------   --------   --------   --------
-    |  |                |    |                |  |
-    |   `--->------>---'      `--->------>---'   |
-    |                                            |
-     `--->------>------>------>------>------>---'
+   ####################---------+
+   #                  #         |
+   #            #################
+   #            #     #         #
+   #            #     #         #
+   ####################         #
+   |            #               #
+   +------------#################
 ```
 
-### First attempt ...
+We note that the height of the bounding region is the *max-top* - *min-bottom* but is also *height-1* + *height-2* - *height-intersection* if they overlap. If they don't overlap it is greater than the sum of the heights.
 
-Here we construct and array of the best total we could achieve if we stopped at the 1st, 2nd, 3rd houses etc...
+So we can compute 3 heights:
+  * height of rectangle 1,
+  * height of rectangle 2, and
+  * height of the bounding-box minus the heights of rectangles 1 and 2.
 
-For the first two:
-  * best score for first house is the points for the first house.
-  * best score for the 2nd house is the maximum of the points for the first and second houses.
-For the rest
-  * best score for subsequent houses. Is either the points for the house added to the best score of the house before last which was visited **OR** the best score of the last house visited.
+We do similarly for the 3 widths.
 
-We keep repeating the 2nd part until we get to the end house - and this gives us our score...
+Then the area is `w1*12 + w2*h2` and if there is an itersection *i.e.* both w3 & h3 are positive - we subtract `w3*h3`.
+
+This gives us the solution:
 
 ```perl
-sub rob {
-  my @b = shift;
-  (push @b,shift    ), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) if  @_;
-  (push @b,$_+$b[-2]), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) for @_;
-  $b[-1];
+sub my_area {
+  my ($l,$r,$L,$R) = @_; ## $l,$r are the bottom-left & top-right corners of rectangle 1
+                         ## $L,$R are the bottom-left & top-right corners of rectangle 2
+
+  ## Compute 3 widths and heights...
+
+  my $w3 = ( my $w2  = $r->[0] - $l->[0]           )  ## width rectangle 2
+         + ( my $w1  = $R->[0] - $L->[0]           )  ## width rectangle 1
+         - ( $r->[0] > $R->[0] ? $r->[0] : $R->[0] )  ## right most point
+         + ( $l->[0] < $L->[0] ? $l->[0] : $L->[0] ); ## left most point
+  my $h3 = ( my $h2  = $r->[1] - $l->[1]           )  ## height rectangle 2
+         + ( my $h1  = $R->[1] - $L->[1]           )  ## height rectangle 1
+         - ( $r->[1] > $R->[1] ? $r->[1] : $R->[1] )  ## highest point
+         + ( $l->[1] < $L->[1] ? $l->[1] : $L->[1] ); ## lowest point
+
+  ## Return result...
+
+  $w1*$h1 + $w2*$h2 - ( $w3>0 && $h3>0 ? $w3*$h3 : 0 );
 }
 ```
 
-*We could have written the second line with `1` & `0` not `-1` and `-2` but there is something about the symmetry of the two lines which is poetic*
-
-### Second attempt ...
-
-As we only need the previous 2 houses, we can do away with the array and just work with the score of the two previous entries.
-
-```perl
-sub rob_no_array {
-  my$p=my$q=0;
-  ($p,$q)=($q,$q>$p+$_?$q:$p+$_)for@_;
-  $q;
-}
-```
-
-Speedwise this is about 10% faster...
