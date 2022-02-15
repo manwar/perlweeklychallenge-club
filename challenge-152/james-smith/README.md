@@ -32,24 +32,22 @@ Each time through the loop we generate a new version of `@p` with the best route
 
 ```perl
 sub min_path {
-  my @p = map { [0,[]] } 0,my @t = reverse @{$_[0]};
-  @p = map { $p[0][0] < $p[1][0]
-           ? [ $_+$p[0][0], [ $_, @{$p[0][1]} ] ]
-           : [ $_+$p[1][0], [ $_, @{$p[1][1]} ] ]
-           , (shift @p) x 0
-       } @{$_} for @t;
+  my @p = ( [0,[]] ) x (1 + @{$_[0]});
+  @p = map { $p[0][0] < $p[1][0] ? [ $_+$p[0][0], [ $_, @{$p[0][1]} ] ] : [ $_+$p[1][0], [ $_, @{$p[1][1]} ] ], (shift @p) x 0 } @{$_} for reverse @{$_[0]};
   say sprintf 'Minimum value %d: [ %s ]', $p[0][0], join ', ', @{$p[0][1]};
   $p[0][0];
 }
+
 ```
 
 We can simplify this if we are not worried by the order - by storing a simple value (the minimum total for the path) rather than the pair total/path.
 
 ```perl
 sub min_path_total {
-  my @p = map { 0 } 0, my @t = reverse @{$_[0]};
-     @p = map { $_ + $p[ $p[0] < $p[1] ? 0 : 1 ], (shift @p)x 0 } @{$_} for @t;
+  my @p = (0) x (1+@{$_[0]});
+     @p = map { $_ + $p[$p[0]<$p[1]?0:1], (shift @p)x 0 } @{$_} for reverse @{$_[0]};
   $p[0];
+
 }
 ```
 
