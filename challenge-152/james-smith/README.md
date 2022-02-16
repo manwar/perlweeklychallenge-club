@@ -1,6 +1,6 @@
-[< Previous 150](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-150/james-smith) |
-[Next 152 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-152/james-smith)
-# Perl Weekly Challenge #151
+[< Previous 151](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-151/james-smith) |
+[Next 153 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-153/james-smith)
+# The Weekly Challenge #152
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,89 +12,128 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-151/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-152/james-smith
 
-# Challenge 1 - Binary Tree Depth
+# Challenge 1 - Triangle Sum Path
 
-***You are given binary tree. Write a script to find the minimum depth. The minimum depth is the number of nodes from the root to the nearest leaf node (node without any children).***
+***You are given a triangle array.  Write a script to find the minimum sum path from top to bottom.***
 
-## The solution
+I'm going to outline two different solutions here - the first one is my first approach - which assumed that as
+you went down the triangle you could only move to the next line either to the one adjacent to the left or the
+right. The second solution removes this constraint and gives the answer in the question...
 
-The method is to:
- * Split the string into the individual rows.
- * For each row check to see if the row is complete {has enough entries so that there are no parent nodes with no data}
-   * If there are less than `2**$d-1` entries then this row is "incomplete" and we return the depth.
-   * We have an array/list difference here `scalar m{\S+}g` returns `1`, `scalar @{[m{\S+}g]}` returns the number of matches!
- * Check that there is no pair (with the same parent) for which both nodes are "`*`". Or if it is the last pair that it
-   contains a single "`*`".
-   * If either of the case the row is "incomplete" and we return the depth.
+## Solution a - can on move down and left or down and right
+
+This doesn't match the output supplied (but feels right). Note we are careful here to make the code "non-destructive" - care has to be taken that we do not shift/modify data from the rows passed in as this will affect the underlying structure. So we note that the `shift` is only done on the `@p` array of totals/paths.
+
+We start by initalizing a blank row {below the triangle} we than work up the triangle one row at a time, the lowest value for a given cell is the value of the cell plus the lowest value of either the left or right cell below. In the code `$p[0]` is the left hand cell and `$p[1]` is the right hand cell.
+
+Each time through the loop we generate a new version of `@p` with the best route for each entry. We can (with care) use a `map` to achieve this. We loop through each entry in the incoming data and combine this with the data for the two entries below. If the left hand entry is lower than the right we add the information from the left hand entry to the total, and to the list of numbers chosen to get there. We then need to remove the first entry of `@p` - we can do this with `shift @p` but we don't want that in the resultant array - to "hide" it we multiple the new array `($p[-1])` by `0` which gives us no copies of the array... bang the value we didn't want is gone...!
 
 ```perl
-sub depth {
-  my $d = 0;
-  for ( split m{\s*\|\s*}, $_[0] ) {
-    last if scalar @{[m{\S+}g]} < 2**$d - 1
-      || m{^\s*(?:\S+\s+\S+\s+)*?(\*\s+\*|\*\s*$)};
-    $d++;
+sub min_path {
+  my @p = ( [0,[]] ) x (1 + @{$_[0]});
+  @p = map { $p[0][0] < $p[1][0] ? [ $_+$p[0][0], [ $_, @{$p[0][1]} ] ] : [ $_+$p[1][0], [ $_, @{$p[1][1]} ] ], (shift @p) x 0 } @{$_} for reverse @{$_[0]};
+  say sprintf 'Minimum value %d: [ %s ]', $p[0][0], join ', ', @{$p[0][1]};
+  $p[0][0];
+}
+
+```
+
+We can simplify this if we are not worried by the order - by storing a simple value (the minimum total for the path) rather than the pair total/path.
+
+```perl
+sub min_path_total {
+  my @p = (0) x (1+@{$_[0]});
+     @p = map { $_ + $p[$p[0]<$p[1]?0:1], (shift @p)x 0 } @{$_} for reverse @{$_[0]};
+  $p[0];
+}
+```
+
+## Solution b - can move to any node
+
+This matches the output supplied (but feels wrong). In this case we just find the minimum value of each row and sum them together. Again we collect the values used in the path as we work down the triangle and display them at the end.
+
+```perl
+sub min_path_anydir {
+  my ($res,@order) = 0;
+  foreach(@{$_[0]}) {
+    my $min = $_->[0];
+    $_ < $min && ($min = $_) for @{$_};
+    $res += $min;
+    push @order, $min;   
   }
-  $d;
+  say sprintf 'Minimum value %d: [ %s ]', $res, join ', ', @order;
+  $res;
 }
 ```
 
-# Challenge 2 - Rob the House
+Again we can simplify this function by removing the need to store `@order`. This is simpler as we just need to remove the two lines containing `@order`. Giving us:
 
-***You are planning to rob a row of houses, always starting with the first and moving in the same direction. However, you can’t rob two adjacent houses. Write a script to find the highest possible gain that can be achieved.***
+```perl
+sub min_path_anydir_total {
+  my $res = 0;
+  foreach(@{$_[0]}) {
+    my $min = $_->[0];
+    $_ < $min && ($min = $_) for @{$_};
+    $res += $min;
+  }
+  $res;
+}
+```
+# Challange 2 - Rectangle Area
+
+***You are given coordinates bottom-left and top-right corner of two rectangles in a 2D plane.  Write a script to find the total area covered by the two rectangles.***
 
 ## The solution
 
-We can walk along the house and work out what the best score we could get if we stopped the journey at any house. As we add in each extra house - best score depends on the best score of one of the last two houses visited and the points of the current house.
+The area covered by the two rectangles is equal to the sum of the areas of the two rectangles minus the area of the intersection {as we count this twice}...
 
-We will only ever skip one or two houses at each "jump", we will never skip more than two. There is always a better option which is to select one of the nodes in the middle. So the jump from 1 to 5 (skipping three) will always score less than the jump from 1 to 3 and 3 to 5. This is because you will miss plundering house No 3....
+To compute the overlap we can define a bounding region..
 
 ```
-  ======     ======     ======     ======     ======     ======
- ========   ========   ========   ========   ========   ======== 
- | No 1 |   | No 2 |   | No 3 |   | No 4 |   | No 5 |   | No 6 | 
- --------   --------   --------   --------   --------   --------
-    |  |                |    |                |  |
-    |   `--->------>---'      `--->------>---'   |
-    |                                            |
-     `--->------>------>------>------>------>---'
+   ####################---------+
+   #                  #         |
+   #            #################
+   #            #     #         #
+   #            #     #         #
+   ####################         #
+   |            #               #
+   +------------#################
 ```
 
-### First attempt ...
+We note that the height of the bounding region is the *max-top* - *min-bottom* but is also *height-1* + *height-2* - *height-intersection* if they overlap. If they don't overlap it is greater than the sum of the heights.
 
-Here we construct and array of the best total we could achieve if we stopped at the 1st, 2nd, 3rd houses etc...
+So we can compute 3 heights:
+  * height of rectangle 1,
+  * height of rectangle 2, and
+  * height of the bounding-box minus the heights of rectangles 1 and 2.
 
-For the first two:
-  * best score for first house is the points for the first house.
-  * best score for the 2nd house is the maximum of the points for the first and second houses.
-For the rest
-  * best score for subsequent houses. Is either the points for the house added to the best score of the house before last which was visited **OR** the best score of the last house visited.
+We do similarly for the 3 widths.
 
-We keep repeating the 2nd part until we get to the end house - and this gives us our score...
+Then the area is `w1*12 + w2*h2` and if there is an itersection *i.e.* both w3 & h3 are positive - we subtract `w3*h3`.
+
+This gives us the solution:
 
 ```perl
-sub rob {
-  my @b = shift;
-  (push @b,shift    ), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) if  @_;
-  (push @b,$_+$b[-2]), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) for @_;
-  $b[-1];
+sub my_area {
+  my ($l,$r,$L,$R) = @_; ## $l,$r are the bottom-left & top-right corners of rectangle 1
+                         ## $L,$R are the bottom-left & top-right corners of rectangle 2
+
+  ## Compute 3 widths and heights...
+
+  my $w3 = ( my $w1  = $r->[0] - $l->[0]           )  ## width rectangle 1
+         + ( my $w2  = $R->[0] - $L->[0]           )  ## width rectangle 2
+         - ( $r->[0] > $R->[0] ? $r->[0] : $R->[0] )  ## right most point
+         + ( $l->[0] < $L->[0] ? $l->[0] : $L->[0] ); ## left most point
+  my $h3 = ( my $h1  = $r->[1] - $l->[1]           )  ## height rectangle 1
+         + ( my $h2  = $R->[1] - $L->[1]           )  ## height rectangle 2
+         - ( $r->[1] > $R->[1] ? $r->[1] : $R->[1] )  ## highest point
+         + ( $l->[1] < $L->[1] ? $l->[1] : $L->[1] ); ## lowest point
+
+  ## Return result...
+
+  $w1*$h1 + $w2*$h2 - ($w3>0 && $h3>0 && $w3*$h3);
 }
 ```
 
-*We could have written the second line with `1` & `0` not `-1` and `-2` but there is something about the symmetry of the two lines which is poetic*
-
-### Second attempt ...
-
-As we only need the previous 2 houses, we can do away with the array and just work with the score of the two previous entries.
-
-```perl
-sub rob_no_array {
-  my$p=my$q=0;
-  ($p,$q)=($q,$q>$p+$_?$q:$p+$_)for@_;
-  $q;
-}
-```
-
-Speedwise this is about 10% faster...
