@@ -1,46 +1,18 @@
 {
-   "legend" : {
-      "enabled" : "false"
-   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "y" : 10,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "rotation" : -90
-         },
-         "data" : [
-            [
-               "Blog",
-               2269
-            ],
-            [
-               "Perl",
-               7294
-            ],
-            [
-               "Raku",
-               4385
-            ]
-         ]
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
       }
-   ],
-   "subtitle" : {
-      "text" : "Last updated at 2022-02-16 10:12:40 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "labels" : {
@@ -51,13 +23,41 @@
       },
       "type" : "category"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
+   "series" : [
+      {
+         "data" : [
+            [
+               "Blog",
+               2271
+            ],
+            [
+               "Perl",
+               7294
+            ],
+            [
+               "Raku",
+               4387
+            ]
+         ],
+         "dataLabels" : {
+            "y" : 10,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "align" : "right"
+         },
+         "name" : "Contributions"
       }
+   ],
+   "legend" : {
+      "enabled" : "false"
    },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "Last updated at 2022-02-16 10:22:42 GMT"
    }
 }
