@@ -1,6 +1,28 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "drilldown" : {
       "series" : [
+         {
+            "name" : "E. Choroba",
+            "id" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
          {
             "name" : "James Smith",
             "id" : "James Smith",
@@ -40,7 +62,6 @@
             ]
          },
          {
-            "name" : "W. Luis Mochan",
             "id" : "W. Luis Mochan",
             "data" : [
                [
@@ -51,43 +72,47 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "W. Luis Mochan"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "xAxis" : {
       "type" : "category"
    },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2022-02-16 10:12:40 GMT"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "title" : {
       "text" : "The Weekly Challenge - 152"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "legend" : {
+      "enabled" : 0
    },
    "series" : [
       {
+         "name" : "The Weekly Challenge - 152",
+         "colorByPoint" : 1,
          "data" : [
             {
+               "name" : "E. Choroba",
+               "y" : 2,
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "name" : "James Smith",
                "drilldown" : "James Smith",
-               "y" : 3,
-               "name" : "James Smith"
+               "y" : 3
             },
             {
                "drilldown" : "Mark Anderson",
@@ -100,21 +125,11 @@
                "y" : 4
             },
             {
-               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan",
                "y" : 3,
-               "name" : "W. Luis Mochan"
+               "drilldown" : "W. Luis Mochan"
             }
-         ],
-         "name" : "The Weekly Challenge - 152",
-         "colorByPoint" : 1
+         ]
       }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2022-02-16 09:59:06 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   }
+   ]
 }
