@@ -23,6 +23,12 @@ is( min_path_anydir_stot(  $_->[0] ), $_->[2] ) foreach @TESTS;
 
 done_testing();
 
+## For each entry - we store tuple [ total, "path" ].
+## We create a "row" below the triangle with "0"s and empty paths...
+## We work back up the tree, and for each cell in the row we
+## add the left or right sub-tree depending on which has the lowest
+## value...
+
 sub min_path {
   my @p = ( [0,[]] ) x (1 + @{$_[0]});
   @p = map { $p[0][0] < $p[1][0] ? [ $_+$p[0][0], [ $_, @{$p[0][1]} ] ] : [ $_+$p[1][0], [ $_, @{$p[1][1]} ] ], (shift @p) x 0 } @{$_} for reverse @{$_[0]};
@@ -30,6 +36,7 @@ sub min_path {
   $p[0][0];
 }
 
+## Without he tuple containing the total/sequence
 sub min_path_total {
   my @p = (0) x (1+@{$_[0]});
      @p = map { $_ + $p[$p[0]<$p[1]?0:1], (shift @p)x 0 } @{$_} for reverse @{$_[0]};
@@ -48,6 +55,10 @@ sub min_path_anydir {
   $res;
 }
 
+## Cheeky "one-liner" version - use sort instead of for loop....
+##
+## After we have pushed the value we then update the total {which is the last element of order}
+
 sub min_path_anydir_sort {
   my($res,@order)= 0;
   (push @order, [sort {$a<=>$b} @{$_}]->[0]), $res+=$order[-1] for @{$_[0]};
@@ -64,6 +75,8 @@ sub min_path_anydir_total {
   }
   $res;
 }
+
+## Simpler version of the sort method above which only does total..
 
 sub min_path_anydir_stot {
   my $res=0;
