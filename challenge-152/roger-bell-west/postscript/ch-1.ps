@@ -1,0 +1,22 @@
+%!PS
+
+/tsp {
+    2 dict begin
+    /mp 0 def
+    {
+        dup 0 get /mr exch def
+        {
+            dup mr lt {
+                /mr exch def
+            } {
+                pop
+            } ifelse
+        } forall
+        /mp mp mr add def
+    } forall
+    mp
+    end
+} bind def
+
+[ [ 1 ] [ 5 3 ] [ 2 3 4 ] [ 7 1 0 2 ] [ 6 4 5 2 8 ] ] tsp 8 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+[ [ 5 ] [ 2 3 ] [ 4 1 4 ] [ 0 1 2 3 ] [ 7 2 4 1 9 ] ] tsp 9 eq { (Pass) } { (FAIL) } ifelse =
