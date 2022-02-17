@@ -14,9 +14,12 @@ my @TESTS = (
 );
 
 is( min_path(              $_->[0] ), $_->[1] ) foreach @TESTS;
-is( min_path_anydir(       $_->[0] ), $_->[2] ) foreach @TESTS;
 is( min_path_total(        $_->[0] ), $_->[1] ) foreach @TESTS;
+
+is( min_path_anydir(       $_->[0] ), $_->[2] ) foreach @TESTS;
+is( min_path_anydir_sort(  $_->[0] ), $_->[2] ) foreach @TESTS;
 is( min_path_anydir_total( $_->[0] ), $_->[2] ) foreach @TESTS;
+is( min_path_anydir_stot(  $_->[0] ), $_->[2] ) foreach @TESTS;
 
 done_testing();
 
@@ -45,6 +48,13 @@ sub min_path_anydir {
   $res;
 }
 
+sub min_path_anydir_sort {
+  my($res,@order)= 0;
+  (push @order, [sort {$a<=>$b} @{$_}]->[0]), $res+=$order[-1] for @{$_[0]};
+  say sprintf 'Minimum value %d: [ %s ]', $res, join ', ', @order;
+  $res;
+}
+
 sub min_path_anydir_total {
   my $res = 0;
   foreach(@{$_[0]}) {
@@ -54,3 +64,11 @@ sub min_path_anydir_total {
   }
   $res;
 }
+
+sub min_path_anydir_stot {
+  my $res=0;
+  $res += [sort {$a<=>$b} @{$_}]->[0] for @{$_[0]};
+  $res;
+}
+
+
