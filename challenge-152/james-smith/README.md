@@ -81,6 +81,25 @@ sub min_path_anydir_total {
   $res;
 }
 ```
+### Solution b - version 2... a 1-liner.
+
+To reduce the number of lines we can replace the minimum with a sort and take lowest value using `[sort {$a<=>$b} @{$_}]->[0]` this gives the following two functions...
+
+```perl
+sub min_path_anydir_sort {
+  my($res,@order)= 0;
+  (push @order, [sort {$a<=>$b} @{$_}]->[0]), $res+=$order[-1] for @{$_[0]};
+  say sprintf 'Minimum value %d: [ %s ]', $res, join ', ', @order;
+  $res;
+}
+
+sub min_path_anydir_stot {
+  my $res=0;
+  $res += [sort {$a<=>$b} @{$_}]->[0] for @{$_[0]};
+  $res;
+}
+
+```
 # Challange 2 - Rectangle Area
 
 ***You are given coordinates bottom-left and top-right corner of two rectangles in a 2D plane.  Write a script to find the total area covered by the two rectangles.***
