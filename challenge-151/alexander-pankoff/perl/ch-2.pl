@@ -29,31 +29,24 @@ no warnings qw'experimental::signatures';
 
 use List::Util qw(all reduce sum0);
 
-use Data::Dumper;
-
 run() unless caller();
 
 sub run() {
     my @valuables = @ARGV;
     die "Invalid input\n" unless all { m/^-?\d+$/ } @valuables;
 
-    rob_house(@valuables);
-
+    say rob_house(@valuables);
 }
 
 sub rob_house (@valuables) {
-    my @tours = plan_tour($#valuables);
+    my @tours = plan_tours($#valuables);
 
     my $best_tour = reduce sub {
         my @tour       = @$b;
         my $tour_value = sum0 map { $valuables[$_] } @tour;
-        if ( $tour_value > $a->{value} ) {
-            return {
-                value => $tour_value,
-                tour  => [@tour],
-            };
-        }
-        if ( $tour_value == $a->{value} && @tour < @{ $a->{tour} } ) {
+        if (   $tour_value > $a->{value}
+            || $tour_value == $a->{value} && @tour < @{ $a->{tour} } )
+        {
             return {
                 value => $tour_value,
                 tour  => [@tour],
@@ -64,14 +57,14 @@ sub rob_house (@valuables) {
 
     }, { value => 0, tour => [] }, @tours;
 
-    print Dumper $best_tour;
+    return $best_tour->{value};
 }
 
-sub plan_tour ( $max, $cur = 0 ) {
+sub plan_tours ( $max, $cur = 0 ) {
     return [] if $cur > $max;
     my @paths = (
-        ( map { [ $cur, @$_ ] } plan_tour( $max, $cur + 2 ) ),
-        plan_tour( $max, $cur + 1 )
+        ( map { [ $cur, @$_ ] } plan_tours( $max, $cur + 2 ) ),
+        plan_tours( $max, $cur + 1 )
     );
 
     return @paths;
