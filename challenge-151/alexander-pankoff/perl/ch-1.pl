@@ -61,7 +61,7 @@ sub minimum_binary_tree_depth ( @tokens) {
         my $num_elems = 2**$depth;
         for ( my $i = 0 ; $i < $num_elems ; $i++ ) {
 
-            if ( !@tokens || $tokens[0]->isa('SeperatorToken') ) {
+            if ( !@tokens || $tokens[0]->isa('SeparatorToken') ) {
                 ## fill row with dummy placeholder tokens.
                 unshift @tokens,
                   map { PlaceHolderToken->new(-1) }
@@ -94,8 +94,8 @@ sub minimum_binary_tree_depth ( @tokens) {
 
         $depth += 1;
 
-        # handle optional seperatortoken
-        if ( @tokens && $tokens[0]->isa("SeperatorToken") ) {
+        # handle optional separatortoken
+        if ( @tokens && $tokens[0]->isa("SeparatorToken") ) {
             shift @tokens;
         }
     }
@@ -110,7 +110,7 @@ sub tokenize ( $input) {
         my $cur = substr( $input, $pos, 1 );
 
         if ( $cur =~ m/\|/ ) {
-            push @tokens, SeperatorToken->new($pos);
+            push @tokens, SeparatorToken->new($pos);
             $pos += 1;
         }
         elsif ( $cur =~ m/\*/ ) {
@@ -164,7 +164,7 @@ package PlaceHolderToken {
     }
 }
 
-package SeperatorToken {
+package SeparatorToken {
     use base 'TokenType';
 
     sub new ( $class, $pos ) {
