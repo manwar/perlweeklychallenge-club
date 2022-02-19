@@ -53,12 +53,12 @@ say rectangle_area(map [split /[, ] */], @ARGV);
 # Find the total area of N (possibly overlapping) rectangles.
 sub rectangle_area (@vertices) {
     # Find grid subrectangles: center and area.
-    my @subrect = subrect(@vertices);
+    my $subrect = subrect(@vertices);
     # Create characteristic functions for all given rectangles.
     my @chi = pairmap {gen_chi($a, $b)} @vertices;
 
     # Get the sum of subrectangle areas within original rectangles.
-    reduce {$a + $b->[1] * any {$_->($b->[0]->@*)} @chi} 0, @subrect;
+    reduce {$a + $b->[1] * any {$_->($b->[0]->@*)} @chi} 0, @$subrect;
 }
 
 # Generate the characteristic function for a rectangle with given bottom
