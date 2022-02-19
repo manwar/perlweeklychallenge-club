@@ -36,7 +36,7 @@ sub recCov {
 				push @{$val->{r}->{$rec_id}->{$axis}}, shift @val;
 			}
 		}
-		$val->{r}->{$rec_id}->{c} = eval(join( "*", map{ "abs(".join( "-", @{$val->{r}->{$rec_id}->{$_}} ).")" } @axis ));
+		$val->{r}->{$rec_id}->{c} = eval(join( " * ", map{ "abs(".join( " - ", @{$val->{r}->{$rec_id}->{$_}} ).")" } @axis ));
 	}
 	sub cTree {
 		my($c,$n,$e,$res) = @_;
@@ -73,14 +73,14 @@ sub recCov {
 				$ra1 > $rb1 && $ra0 > $rb0 ? $rb1 - $ra0 :
 				$ra1 < $rb1 && $ra0 < $rb0 ? $ra1 - $rb0 : undef;
 		}
-		$val->{o}->{$o_pair}->{c} = eval(join("*",values %{$val->{o}->{$o_pair}}));
+		$val->{o}->{$o_pair}->{c} = eval(join(" * ",values %{$val->{o}->{$o_pair}}));
 	}
 	{
 		last unless $debug;
 		print Dumper $val;
 	}
-	my $sum_c = eval(join( "+", map{ $val->{r}->{$_}->{c} } @rec_id)); 
-	my $sum_o = eval(join( "+", map{ $val->{o}->{join("_",@$_)}->{c} } @$o_rec )); 
+	my $sum_c = eval(join( " + ", map{ $val->{r}->{$_}->{c} } @rec_id)); 
+	my $sum_o = eval(join( " + ", map{ $val->{o}->{join("_",@$_)}->{c} } @$o_rec )); 
 	return $sum_c - $sum_o;
 }
 
