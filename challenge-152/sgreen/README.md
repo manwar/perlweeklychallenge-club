@@ -1,3 +1,3 @@
-# The Weekly Challenge 151
+# The Weekly Challenge 152
 
-Solution by Simon Green. [Weekly Challenge 151](https://dev.to/simongreennet/weekly-challenge-151-2812)
+Blog: [Triangles and Rectangles](https://dev.to/simongreennet/triangles-and-rectangles-45p8)
