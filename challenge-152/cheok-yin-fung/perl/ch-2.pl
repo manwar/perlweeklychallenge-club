@@ -50,10 +50,10 @@ sub rect_area {
     }}
 
 =pod
-    Except one rectangle is inside the other rectangle,
+    Except the case that one rectangle is inside the other rectangle,
     the two rectangles can be enscribed into a larger rectangle
-    I divided the larger rectangle into 9 small rectangular regions;
-    then check if each small regions is inside rect. A or rect. B.
+    Dividing the large rectangle into 9 small rectangular regions,
+    then check one by one if a small region is inside rect A or rect B.
     If yes, add the area of the small region into $area.
 =cut
 
