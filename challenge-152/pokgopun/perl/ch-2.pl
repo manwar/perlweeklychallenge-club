@@ -6,6 +6,47 @@
 ###        Rectangle 2 => (-1,-3), (2,2)
 ### 
 ### Output: 25
+### 
+### the script actually supports n rectangles and also 3D rectangles where they align with x-y plane
+###
+### Input: Rectangle 1 => (-3,-1), (1,3)
+###        Rectangle 2 => (-1,-3), (2,2)
+###        Rectangle 3 => (0,1), (3,5)
+### 
+### Output: 34
+### 
+### Input: Rectangle 1 => (-3,-1), (1,3)
+###        Rectangle 2 => (-1,-3), (2,2)
+###        Rectangle 3 => (0,1), (3,5)
+###        Rectangle 4 => (3,3), (5,5)
+### 
+### Output: 38
+### 
+### Input: Rectangle 1 => (-3,-1), (1,3)
+###        Rectangle 2 => (-1,-3), (2,2)
+###        Rectangle 3 => (0,1), (3,5)
+###        Rectangle 4 => (3,3), (5,5)
+###        Rectangle 5 => (-5,-5), (5,5)
+### 
+### Output: 100
+### 
+### Input: Rectangle 1 => (0,0,0), (4,4,4)
+###        Rectangle 2 => (-3,-3,-3), (0,0,0)
+### 
+### Output: 91
+### 
+### Input: Rectangle 1 => (0,0,0), (4,4,4)
+###        Rectangle 2 => (-3,-3,-3), (0,0,0)
+###        Rectangle 3 => (-1,-1,-1), (1,1,1)
+### 
+### Output: 97
+### 
+### Input: Rectangle 1 => (0,0,0), (4,4,4)
+###        Rectangle 2 => (-3,-3,-3), (0,0,0)
+###        Rectangle 3 => (-1,-1,-1), (1,1,1)
+###        Rectangle 4 => (-5,-5,-5), (5,5,5)
+### 
+### Output: 1000
 ##
 #
 use strict;
@@ -19,6 +60,13 @@ use Data::Dumper;
 sub recCov {
 	### get array of rectangle's coordinates
 	my @rec = @{shift @_};
+	### get rid of duplicated rectangle array
+	my %seen;
+	my @temp;
+	foreach (0..$#rec) {
+		push @temp, $rec[$_] unless $seen{ join("_", map{@$_} @{$rec[$_]}) }++;
+	}
+	@rec = @temp;
 	### get debug toggle
 	my $debug = shift;
 	### every rectangle get an id start from 1
@@ -57,31 +105,50 @@ sub recCov {
 		}
 	}
 	my $o_rec = [];
-	&cTree([],2,[@rec_id],$o_rec);
-	foreach my $op (@$o_rec) {
-		my $o_pair = join("_",@$op);
-		my $ra = $val->{r}->{$op->[0]};
-		my $rb = $val->{r}->{$op->[1]};
-		foreach my $axis (@axis) {
-			my $ra0 = $ra->{$axis}->[0]; 
-			my $ra1 = $ra->{$axis}->[-1]; 
-			my $rb0 = $rb->{$axis}->[0]; 
-			my $rb1 = $rb->{$axis}->[-1]; 
-			$val->{o}->{$o_pair}->{$axis} = $ra0 >= $rb1 || $rb0 >= $ra1 ? 0 :
-				$ra1 <= $rb1 && $ra0 >= $rb0 ? $ra1 - $ra0 :
-				$ra1 >= $rb1 && $ra0 <= $rb0 ? $rb1 - $rb0 :
-				$ra1 > $rb1 && $ra0 > $rb0 ? $rb1 - $ra0 :
-				$ra1 < $rb1 && $ra0 < $rb0 ? $ra1 - $rb0 : undef;
+	{
+		last unless $#rec_id;
+		&cTree([],2,[@rec_id],$o_rec);
+		foreach my $op (@$o_rec) {
+			my $o_pair = join("_",@$op);
+			my $ra = $val->{r}->{$op->[0]};
+			my $rb = $val->{r}->{$op->[1]};
+			foreach my $axis (@axis) {
+				my $ra0 = $ra->{$axis}->[0]; 
+				my $ra1 = $ra->{$axis}->[-1]; 
+				my $rb0 = $rb->{$axis}->[0]; 
+				my $rb1 = $rb->{$axis}->[-1]; 
+				$val->{o}->{$o_pair}->{"$axis"} = $ra0 >= $rb1 || $rb0 >= $ra1 ? [] :
+					$ra1 <= $rb1 && $ra0 >= $rb0 ? [$ra0,$ra1] :
+					$ra1 >= $rb1 && $ra0 <= $rb0 ? [$rb0,$rb1] :
+					$ra1 > $rb1 && $ra0 > $rb0 ? [$ra0,$rb1] :
+					$ra1 < $rb1 && $ra0 < $rb0 ? [$rb0,$ra1] : [];
+			}
+			if ( scalar(map{@$_} @{$val->{o}->{$o_pair}}{@axis}) < @axis * 2 ){
+				delete $val->{o}->{$o_pair};
+				next;
+			}
+			$val->{o}->{$o_pair}->{c} = eval(join( " * ", map{ "abs(".join( " - ", @{$val->{o}->{$o_pair}->{$_}} ).")" } @axis ));
 		}
-		$val->{o}->{$o_pair}->{c} = eval(join(" * ",values %{$val->{o}->{$o_pair}}));
 	}
 	{
 		last unless $debug;
 		print Dumper $val;
 	}
 	my $sum_c = eval(join( " + ", map{ $val->{r}->{$_}->{c} } @rec_id)); 
-	my $sum_o = eval(join( " + ", map{ $val->{o}->{join("_",@$_)}->{c} } @$o_rec )); 
-	return $sum_c - $sum_o;
+	#my $sum_o = eval(join( " + ",  map{$val->{o}->{$_}->{c}} keys %{$val->{o}})); 
+	my $sum_o;
+	{
+		my @rec;
+		foreach my $rec_id (keys %{$val->{o}}){
+			my $rec;
+			foreach my $pos_id (@pos_id){
+				push @$rec, [ map{$val->{o}->{$rec_id}->{$_}->[$pos_id]} @axis ];
+			}
+			push @rec, $rec;
+		}
+		$sum_o = recCov(\@rec) if @rec;
+	}
+	return $sum_o ? $sum_c - $sum_o : $sum_c;
 }
 
 my @sample;
