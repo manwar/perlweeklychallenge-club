@@ -1,0 +1,33 @@
+%!PS
+
+/factorion {
+    dup 0 eq {
+        false
+    } {
+        3 dict begin
+        /fd 10 array def
+        fd 0 1 put
+        1
+        1 1 9 {
+            dup 3 1 roll mul
+            dup fd exch 4 -1 roll exch put
+        } for
+        pop
+        /input exch def
+        /working input def
+        0
+        {
+            working 0 gt {
+                fd working 10 mod get add
+                /working working 10 idiv def
+            } {
+                exit
+            } ifelse
+        } loop
+        input eq
+        end
+    } ifelse
+} bind def
+
+145 factorion { (Pass) } { (FAIL) } ifelse print ( ) print
+125 factorion not { (Pass) } { (FAIL) } ifelse =
