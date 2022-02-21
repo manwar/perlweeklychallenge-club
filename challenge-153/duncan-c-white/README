@@ -1,0 +1,61 @@
+TASK #1 - Triangle Sum Path
+
+You are given a triangle array.
+
+Write a script to find the minimum sum path from top to bottom.
+
+Example 1:
+
+	Input: $triangle = [ [1], [5,3], [2,3,4], [7,1,0,2], [6,4,5,2,8] ]
+
+			1
+		       5 3
+		      2 3 4
+		     7 1 0 2
+		    6 4 5 2 8
+
+	Output: 8
+
+	    Minimum Sum Path = 1 + 3 + 2 + 0 + 2 => 8
+
+Example 2:
+
+	Input: $triangle = [ [5], [2,3], [4,1,5], [0,1,2,3], [7,2,4,1,9] ]
+
+			5
+		       2 3
+		      4 1 5
+		     0 1 2 3
+		    7 2 4 1 9
+
+	Output: 9
+
+	    Minimum Sum Path = 5 + 2 + 1 + 0 + 1 => 9
+
+MY NOTES: So it appears at each row, we simply pick the minimum value.
+It doesn't have to be adjacent, or even close to, the one we picked
+on the row above.  Ok, so that's easy!  Actually, parsing the input
+may be the hardest part.
+
+
+TASK #2 - Rectangle Area
+
+You are given coordinates bottom-left and top-right corner of two rectangles in a 2D plane.
+
+Write a script to find the total area covered by the two rectangles.
+
+Example 1:
+
+	Input: Rectangle 1 => (-1,0), (2,2)
+	       Rectangle 2 => (0,-1), (4,4)
+
+	Output: 22
+
+Example 2:
+
+	Input: Rectangle 1 => (-3,-1), (1,3)
+	       Rectangle 2 => (-1,-3), (2,2)
+
+	Output: 25
+
+MY NOTES: Of course the tricky bit here is when the rectangles overlap.
