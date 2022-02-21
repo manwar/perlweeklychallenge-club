@@ -10,16 +10,12 @@ use Data::Dumper qw(Dumper);
 
 my @FACT = (1);
 push @FACT, $_*$FACT[-1] foreach 1..9;
-my @TESTS = (
-  [ 145, 1 ],
-  [ 125, 0 ],
-);
 
+my @TESTS = ( [ 145, 1 ], [ 125, 0 ], );
 is( factorion($_->[0]), $_->[1] ) foreach @TESTS;
-
 done_testing();
 
-factorion($_) && say for 1..2_177_282;
+factorion($_) && say for 1 .. 2_177_282;
 
 sub factorion {
   my $t=0;
