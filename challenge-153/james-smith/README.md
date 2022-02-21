@@ -70,17 +70,20 @@ Our is factorion function just adds the factorial digit sum and compares to the 
 
 We start with a pre-computed list of factorials as we only need the values for the integers 0..9;
 
+To avoid having to do a comparison at the end, rather than starting at zero we start at `$n`, so the comparison at the end is just whether or not the sum is `0`.
+
 ```perl
-my @FACT = (1);
-push @FACT, $_*$FACT[-1] foreach 1..9;
+my @f = (1);
+push @f, $_*$f[-1] foreach 1..9;
 
 is_factorion($_) && say for 1..2_177_282;
 
 sub is_factorion {
-  my $t=0;
-  $t+=$FACT[$_] for split //,$_[0];
-  $t==$_[0];
+  my $t = $_[0];
+  $t-=$f[$_] for split //,$_[0];
+  !$t;
 }
+
 ```
 
 Running this gives the only 4 factorions: `1`, `2`, `145`, `40585`;
