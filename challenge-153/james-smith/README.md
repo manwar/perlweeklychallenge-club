@@ -74,9 +74,9 @@ We start with a pre-computed list of factorials as we only need the values for t
 my @FACT = (1);
 push @FACT, $_*$FACT[-1] foreach 1..9;
 
-factorion($_) && say for 1..2_177_282;
+is_factorion($_) && say for 1..2_177_282;
 
-sub factorion {
+sub is_factorion {
   my $t=0;
   $t+=$FACT[$_] for split //,$_[0];
   $t==$_[0];
