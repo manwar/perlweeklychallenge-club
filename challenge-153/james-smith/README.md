@@ -62,7 +62,7 @@ to write out the first 21 (the largest number that can be represented as a an in
 Firstly we need to note that (in base 10) that the largest Factorion would have at most 7 digits. For a given number of digits (m) the largest value of the sum of the digits is
 `9! x m` or `362,880 x m`. For `m=7` we have the largest value being `2,540,160` which has 7-digits, for `m=8` we note that this value `2,903,040` also has 7 digits - so we can't have a solution with 8 or more digits.
 
-So when we loop through possibly values we know the limit is actually `2,177,282` greatly reducing our search space.
+So when we loop through possibly values we know the limit is actually `2,177,282` greatly reducing our search space (If the value has 7 digits, the first digit must be 1 or 2) then the highest value is `2 + 6 * 9!`.
 
 ## Solution
 
@@ -80,10 +80,38 @@ is_factorion($_) && say for 1..2_177_282;
 
 sub is_factorion {
   my $t = $_[0];
-  $t-=$f[$_] for split //,$_[0];
-  !$t;
+  ($t-=$f[$_])||return 1 for split //,$t;
+  return 0;
 }
-
 ```
 
 Running this gives the only 4 factorions: `1`, `2`, `145`, `40585`;
+
+This takes around 3 seconds to run on my test box. To speed this up we can work with groups of 3 digits - so we first create the sum arrays for 1, 2, 3 digits. Note the sum for `20` is different to the sum from `020` - as `0! = 1`.
+
+The code then becomes:
+
+```perl
+my @f = (1);
+push @f, $_*$f[-1] foreach 1..9;
+my @t = map { my $t = $_; map {$t+$_} @f } @f;
+my @q = map { my $t = $_; map {$t+$_} @f } @t;
+
+is_factorion_1k($_) && say for 1..2_177_282;
+
+sub is_factorion_1k {
+  my $t = $_[0];
+  return $t == (
+      $t >= 1e6 ? $f[ $t/1e6 ] + $q[ ($t/1e3)%1e3 ] + $q[ $t%1e3 ]
+    : $t >= 1e5 ? $q[ $t/1e3 ] + $q[ $t%1e3 ]
+    : $t >= 1e4 ? $t[ $t/1e3 ] + $q[ $t%1e3 ]
+    : $t >= 1e3 ? $f[ $t/1e3 ] + $q[ $t%1e3 ]
+    : $t >= 100 ? $q[ $t ]
+    : $t >=  10 ? $t[ $t ]
+    :             $f[ $t ]
+  );
+}
+```
+
+This comes in at just less than 1 second - and improvement of about 70%. Note the order of the ternaries is important - we start from highest to lowest as it minimizes the average number of comparisions performed.
+
