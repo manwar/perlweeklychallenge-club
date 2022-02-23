@@ -87,31 +87,32 @@ sub is_factorion {
 
 Running this gives the only 4 factorions: `1`, `2`, `145`, `40585`;
 
-This takes around 3 seconds to run on my test box. To speed this up we can work with groups of 3 digits - so we first create the sum arrays for 1, 2, 3 digits. Note the sum for `20` is different to the sum from `020` - as `0! = 1`.
+This takes around 3 seconds to run on my test box. To speed this up we can work with groups of up to 4 digits - so we first create the sum arrays for 1, 2, 3 and 4 digits. Note the sum for `20` is different to the sum from `0020` - as `0! = 1`.
 
 The code then becomes:
 
 ```perl
 my @f = (1);
 push @f, $_*$f[-1] foreach 1..9;
+my @z = map { my $t = $_; map {$t+$_} @f } 
+my @q = map { my $t = $_; map {$t+$_} @f } 
 my @t = map { my $t = $_; map {$t+$_} @f } @f;
-my @q = map { my $t = $_; map {$t+$_} @f } @t;
 
-is_factorion_1k($_) && say for 1..2_177_282;
+is_factorion_10k($_) && say for 1..2_177_282;
 
-sub is_factorion_1k {
+sub is_factorion_10k {
   my $t = $_[0];
   return $t == (
-      $t >= 1e6 ? $f[ $t/1e6 ] + $q[ ($t/1e3)%1e3 ] + $q[ $t%1e3 ]
+      $t >= 1e6 ? $z[ $t/1e3 ] + $q[ $t%1e3 ]
     : $t >= 1e5 ? $q[ $t/1e3 ] + $q[ $t%1e3 ]
     : $t >= 1e4 ? $t[ $t/1e3 ] + $q[ $t%1e3 ]
-    : $t >= 1e3 ? $f[ $t/1e3 ] + $q[ $t%1e3 ]
-    : $t >= 100 ? $q[ $t ]
-    : $t >=  10 ? $t[ $t ]
-    :             $f[ $t ]
+    : $t >= 1e3 ?                $z[ $t     ]
+    : $t >= 100 ?                $q[ $t     ]
+    : $t >=  10 ?                $t[ $t     ]
+    :                            $f[ $t     ]
   );
 }
+
 ```
 
-This comes in at just less than 1 second - and improvement of about 70%. Note the order of the ternaries is important - we start from highest to lowest as it minimizes the average number of comparisions performed.
-
+This comes in at just less than 1 second - a `4x` speed up. Note the order of the ternaries is important - we start from highest to lowest as it minimizes the average number of comparisions performed.
