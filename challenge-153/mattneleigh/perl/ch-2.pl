@@ -67,7 +67,7 @@ sub is_factorion{
         $sum += $factorials[$ARG];
     }
     
-    return($sum == $n);
+    return($sum == $n ? 1 : 0);
 
 }
 
