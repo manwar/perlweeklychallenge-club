@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (:c(:$count) = 10);
+
+my $fs := ( my $i = 1, { (++$i).comb.map({ [*] (1 .. $_) }).sum == $i ?? $i !! next } ... Inf);
+
+say $fs[^$count].join(", ");
