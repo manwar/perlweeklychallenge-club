@@ -57,3 +57,5 @@ array_diff($calculator->get_left_factorial(10), [
         46234,
         409114,
     ]) == [] or throw new Exception("Failed test 1");
+
+?>
