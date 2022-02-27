@@ -9,7 +9,6 @@ use constant UPPER_BOUND => INT_MAX/1000;
 sub left_factorials_sieve{
     my($n) = @_;
     my @sieve = (0 .. UPPER_BOUND);
-    my @left_factorials;
     my $x = 2;
     {
         my @sieve_indices = grep { $_ <= $x || $_ % $x == 0 } 0 .. @sieve - 1; 
