@@ -1,61 +1,45 @@
-TASK #1 - Triangle Sum Path
+TASK #1 - Left Factorials
 
-You are given a triangle array.
+Write a script to compute Left Factorials of 1 to 10. Please refer OEIS
+A003422 for more information.
 
-Write a script to find the minimum sum path from top to bottom.
+(My summary: left factorial N = sum k! for k in (0..N-1), remembering that
+ 0! = 1! = 1.  So lf(N+1) = lf(N) + N!)
 
-Example 1:
+Expected Output:
 
-	Input: $triangle = [ [1], [5,3], [2,3,4], [7,1,0,2], [6,4,5,2,8] ]
+1, 2, 4, 10, 34, 154, 874, 5914, 46234, 409114
 
-			1
-		       5 3
-		      2 3 4
-		     7 1 0 2
-		    6 4 5 2 8
-
-	Output: 8
-
-	    Minimum Sum Path = 1 + 3 + 2 + 0 + 2 => 8
-
-Example 2:
-
-	Input: $triangle = [ [5], [2,3], [4,1,5], [0,1,2,3], [7,2,4,1,9] ]
-
-			5
-		       2 3
-		      4 1 5
-		     0 1 2 3
-		    7 2 4 1 9
-
-	Output: 9
-
-	    Minimum Sum Path = 5 + 2 + 1 + 0 + 1 => 9
-
-MY NOTES: So it appears at each row, we simply pick the minimum value.
-It doesn't have to be adjacent, or even close to, the one we picked
-on the row above.  Ok, so that's easy!  Actually, parsing the input
-may be the hardest part.
+MY NOTES: easy, 1 pass, calc N! on the fly (by multiplying (N-1)! by N)
+and add (N-1)! to lf(N-1) to give lf(N).
 
 
-TASK #2 - Rectangle Area
+TASK #2 - Factorions
 
-You are given coordinates bottom-left and top-right corner of two rectangles in a 2D plane.
+You are given an integer, $n.
 
-Write a script to find the total area covered by the two rectangles.
+Write a script to figure out if the given integer is factorion.
+
+A factorion is a natural number that equals the sum of the factorials of its digits.
 
 Example 1:
 
-	Input: Rectangle 1 => (-1,0), (2,2)
-	       Rectangle 2 => (0,-1), (4,4)
+  Input: $n = 145
+  Output: 1
 
-	Output: 22
+    Since 1! + 4! + 5! => 1 + 24 + 120 = 145
 
 Example 2:
 
-	Input: Rectangle 1 => (-3,-1), (1,3)
-	       Rectangle 2 => (-1,-3), (2,2)
+  Input: $n = 123
+  Output: 0
 
-	Output: 25
+    Since 1! + 2! + 3! => 1 + 2 + 6 <> 123
 
-MY NOTES: Of course the tricky bit here is when the rectangles overlap.
+MY NOTES: cool, precompute 0..9! in a 10 element array, split number into
+digits, sum their factorials and check if the result if the number you
+first thought of.  Let's add a tabulating mode (invoked if --tab given) that
+shows, which numbers (1..$n) are factorian.  Running this as:
+	./ch-2.pl -t 1000000
+reveals that the only base 10 factorians under 1000000 are:
+        1, 2, 145, 40585
