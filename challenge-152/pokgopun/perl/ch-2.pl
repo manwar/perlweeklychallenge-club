@@ -6,8 +6,8 @@
 ###        Rectangle 2 => (-1,-3), (2,2)
 ### 
 ### Output: 25
-### 
-### the script actually supports n rectangles and also 3D rectangles where they align with x-y plane
+###
+### the script also try to supports n rectangles and also 3D rectangles where they align with x-y plane, limited test data, not sure if all correct
 ###
 ### Input: Rectangle 1 => (-3,-1), (1,3)
 ###        Rectangle 2 => (-1,-3), (2,2)
@@ -55,18 +55,11 @@ use Data::Dumper;
 
 ### Take four arguments as lower (i.e. botton-left) and higher (i.e. top-right) coordinates of 1st and 2nd rectangles
 ### For example "rec1_xl,rec1_yl" "rec1_xh,rec1_yh" "rec2_xl,rec2_yl" "rec2_xh,rec2_yh"
-### Parse arguments and assign to array which is in turn used to create data structure to href by the order of labes 
+### Parse arguments and assign to array which is in turn used to create data structure to href by the order of label 
 
 sub recCov {
 	### get array of rectangle's coordinates
 	my @rec = @{shift @_};
-	### get rid of duplicated rectangle array
-	my %seen;
-	my @temp;
-	foreach (0..$#rec) {
-		push @temp, $rec[$_] unless $seen{ join("_", map{@$_} @{$rec[$_]}) }++;
-	}
-	@rec = @temp;
 	### get debug toggle
 	my $debug = shift;
 	### every rectangle get an id start from 1
@@ -84,8 +77,10 @@ sub recCov {
 				push @{$val->{r}->{$rec_id}->{$axis}}, shift @val;
 			}
 		}
+		### Coverage of each rectangle equals to multiplication of the length of each sides
 		$val->{r}->{$rec_id}->{c} = eval(join( " * ", map{ "abs(".join( " - ", @{$val->{r}->{$rec_id}->{$_}} ).")" } @axis ));
 	}
+	### subroutine combination of $n elements from an aref $e and write the result to  aref $res
 	sub cTree {
 		my($c,$n,$e,$res) = @_;
 		if ( @$c == $n || @$c + @$e == $n ) {
@@ -104,50 +99,41 @@ sub recCov {
 			}
 		}
 	}
-	my $o_rec = [];
 	{
+		### only more than one rectangle cause overlap 
 		last unless $#rec_id;
-		&cTree([],2,[@rec_id],$o_rec);
-		foreach my $op (@$o_rec) {
-			my $o_pair = join("_",@$op);
-			my $ra = $val->{r}->{$op->[0]};
-			my $rb = $val->{r}->{$op->[1]};
-			foreach my $axis (@axis) {
-				my $ra0 = $ra->{$axis}->[0]; 
-				my $ra1 = $ra->{$axis}->[-1]; 
-				my $rb0 = $rb->{$axis}->[0]; 
-				my $rb1 = $rb->{$axis}->[-1]; 
-				$val->{o}->{$o_pair}->{"$axis"} = $ra0 >= $rb1 || $rb0 >= $ra1 ? [] :
-					$ra1 <= $rb1 && $ra0 >= $rb0 ? [$ra0,$ra1] :
-					$ra1 >= $rb1 && $ra0 <= $rb0 ? [$rb0,$rb1] :
-					$ra1 > $rb1 && $ra0 > $rb0 ? [$ra0,$rb1] :
-					$ra1 < $rb1 && $ra0 < $rb0 ? [$rb0,$ra1] : [];
+		### combination of rectangle that overlap each others, start from two to the total number of rectangles
+		foreach my $o_n (2..@rec_id) {
+			my @o_rec;
+			&cTree([],$o_n,[@rec_id],\@o_rec);
+			foreach my $o_rec (@o_rec) {
+				### id of new rectangle create by overlapped rectagles will be named like "1_2"
+				my $o_rec_id = join("_",@$o_rec);
+				### assign boundaries of each axis overlap to the new rectangle, incomplete overlap will get blank aref instead
+				foreach my $axis (@axis){
+					my $x = [ map{ $val->{r}->{$_}->{$axis} } @$o_rec ];
+					my $max_low = [sort {$a <=> $b} map{ $_->[0] } @$x]->[-1];
+					my $min_high = [sort {$a <=> $b} map{ $_->[-1] } @$x]->[0];
+					$val->{o}->{$o_rec_id}->{$axis} = $max_low < $min_high ? [$max_low,$min_high] : [];
+				}
+				### rectangle with incomplete overlap in any axis will be removed
+				if ( scalar(map{@$_} @{$val->{o}->{$o_rec_id}}{@axis}) < @axis * 2 ){
+					delete $val->{o}->{$o_rec_id};
+					next;
+				}
+				### Calculate overlap coverage
+				$val->{o}->{$o_rec_id}->{c} = eval(join( " * ", map{ "abs(".join( " - ", @{$val->{o}->{$o_rec_id}->{$_}} ).")" } @axis ));
 			}
-			if ( scalar(map{@$_} @{$val->{o}->{$o_pair}}{@axis}) < @axis * 2 ){
-				delete $val->{o}->{$o_pair};
-				next;
-			}
-			$val->{o}->{$o_pair}->{c} = eval(join( " * ", map{ "abs(".join( " - ", @{$val->{o}->{$o_pair}->{$_}} ).")" } @axis ));
 		}
 	}
 	{
 		last unless $debug;
 		print Dumper $val;
 	}
+	### sum of input rectangle coverage
 	my $sum_c = eval(join( " + ", map{ $val->{r}->{$_}->{c} } @rec_id)); 
-	#my $sum_o = eval(join( " + ",  map{$val->{o}->{$_}->{c}} keys %{$val->{o}})); 
-	my $sum_o;
-	{
-		my @rec;
-		foreach my $rec_id (keys %{$val->{o}}){
-			my $rec;
-			foreach my $pos_id (@pos_id){
-				push @$rec, [ map{$val->{o}->{$rec_id}->{$_}->[$pos_id]} @axis ];
-			}
-			push @rec, $rec;
-		}
-		$sum_o = recCov(\@rec) if @rec;
-	}
+	### sum of overlap coverage, overlap combination with odd number of rectangle will get minus sign; inclusion-exclusion principle 
+	my $sum_o = eval(join( " + ",  map{$val->{o}->{$_}->{c} * (-1)**split(/_/,$_) } keys %{$val->{o}})); 
 	return $sum_o ? $sum_c - $sum_o : $sum_c;
 }
 

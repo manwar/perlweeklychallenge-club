@@ -2,7 +2,8 @@
 
 use v5.16;
 use Test2::V0;
-use List::AllUtils qw(frequency max pairvalues);
+use List::Util qw(max pairvalues);
+use List::MoreUtils 'frequency';
 use Math::Prime::Util qw(fromdigits todigits todigitstring);
 use experimental 'signatures';
 
