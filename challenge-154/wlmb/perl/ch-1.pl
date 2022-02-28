@@ -1,5 +1,5 @@
 #!/usr/bin/env perl
-# Perl weekly challenge 153
+# Perl weekly challenge 154
 # Task 1: Missing permutation
 #
 # See https://wlmb.github.io/2022/02/28/PWC154/#task-1-missing-permutation
