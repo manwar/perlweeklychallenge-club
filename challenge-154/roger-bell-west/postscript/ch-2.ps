@@ -1,0 +1,153 @@
+%!PS
+
+/quicksort { % [ a c b ] -> [ a b c ]
+    1 dict begin
+    /arr exch def
+    0 arr length 1 sub quicksort.main
+    arr
+    end
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/aeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/isprime {
+    4 dict begin
+    /candidate exch def
+    /prime true def
+    candidate 2 eq candidate 3 eq or not {
+        candidate 2 mod 0 eq {
+            /prime false def
+        } {
+            candidate 3 mod 0 eq {
+                /prime false def
+            } {
+                /limit candidate sqrt cvi 1 add def
+                /anchor 0 def
+                {
+                    /anchor anchor 6 add def
+                    anchor limit gt {
+                        exit
+                    } if
+                    [ -1 1 ] {
+                        anchor add candidate exch mod 0 eq {
+                            /prime false def
+                            exit
+                        } if
+                    } forall
+                    prime false eq {
+                        exit
+                    } if
+                } loop
+            } ifelse
+        } ifelse
+    } if
+    prime
+    end
+} bind def
+
+/padovanprime {
+    5 dict begin
+    /ct exch def
+    /pp ct dict def
+    /padovans [ 1 1 1 1 ] def
+    {
+        0 1 2 {
+            /a exch def
+            /b a 1 add def
+            padovans a padovans b get put
+        } for
+        padovans 0 get padovans 1 get add dup padovans exch 3 exch put
+        dup isprime {
+            pp exch true put
+            pp length ct ge {
+                exit
+            } if
+        } {
+            pop
+        } ifelse
+    } loop
+    [ pp { pop } forall ] quicksort
+    end
+} bind def
+
+10 padovanprime
+[ 2 3 5 7 37 151 3329 23833 13091204281 3093215881333057 ]
+aeq { (Pass) } { (FAIL) } ifelse =
