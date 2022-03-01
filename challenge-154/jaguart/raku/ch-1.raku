@@ -1,60 +1,39 @@
 #!/usr/bin/env raku
 use v6;
-
 =begin pod
 
-=head1 Challenge-154 Missing Permutation
+=begin CHALLENGE
 
 TASK #1: Missing Permutation
 
-You are given possible permutations of the string 'PERL'. Write a script to find any permutations missing from the list.
+You are given possible permutations of the string 'PERL'.
+Write a script to find any permutations missing from the list.
 
-=begin SYNOPSIS
-=begin code
-
-  ./ch-1.raku PERL | wc -l # 24 permutations
-  ./ch-1.raku PERL LERP ERPL | wc -l # 22 permutations
-
-=end code
-=end SYNOPSIS
-
-=begin CAVEATS
-Does NOT filter out duplicates when the same character occurs multiple times.
-
-=begin code
-  ./ch-1.raku aab
-  aab
-  aba
-  aab
-  aba
-  baa
-  baa
-=end code
-
-=end CAVEATS
-
-=AUTHOR
-Solutions by git:jaguart Jeff Armstrong.
-
-=begin NOTE
-
-=item1 First contribution to https://theweeklychallenge.org/
-=item1 Raku newbie, ex Perl
-
-=end NOTE
+=end CHALLENGE
 
 =end pod
 
+# V2 - no need to write your own permutations, use Raku's
 
+#| Generate permutations from $str and list those NOT on the remainder of the command-line.
 sub MAIN ( Str:D $str, +@not ) {
-  my %not = @not.map({$_ => True});
-  permutate( $str )
-    .grep({ !%not{$_} })
-    .map({ say $_});
+
+  # Notes:
+  #   Str.comb          -> List of chars
+  #   List.permutations -> all possible combinations as Lists
+  #   >>.join           -> reassemble permutation Lists into strings using hyper
+  #   (-)               -> Set substraction, returns Set
+  #   Set.keys          -> we want the elements as a List
+
+  say 'Permutations:  ', $str.comb.permutations>>.join;
+  say 'Exclude:       ', ( |@not );
+  say 'Leaving:       ', ( $str.comb.permutations>>.join (-) |@not ).keys;
 
 }
 
-sub permutate( Str:D $str, Int $at = 0 ) returns List {
+#| UNUSED - Long-form algorithm to generate permutations.
+#| Returns an Array, retained for hysterical raisens.
+sub permutate( Str:D $str, Int $at = 0 ) returns Array of Str {
   my @result;
   if $at == $str.chars-1 {
     @result.push($str);
