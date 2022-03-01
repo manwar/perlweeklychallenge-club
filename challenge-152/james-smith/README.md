@@ -136,23 +136,23 @@ This gives us the solution:
 
 ```perl
 sub my_area {
-  my ($l,$r,$L,$R) = @_; ## $l,$r are the bottom-left & top-right corners of rectangle 1
-                         ## $L,$R are the bottom-left & top-right corners of rectangle 2
+     ## Lower case letter are the co-ordinates of triangle one
+     ## Upper case letters are the co-ordinates of triangle two
 
-  ## Compute 3 widths and heights...
+  my ($l,$b,$r,$t,$L,$B,$R,$T) = map { @{$_} } @_;
 
-  my $w3 = ( my $w1  = $r->[0] - $l->[0]           )  ## width rectangle 1
-         + ( my $w2  = $R->[0] - $L->[0]           )  ## width rectangle 2
-         - ( $r->[0] > $R->[0] ? $r->[0] : $R->[0] )  ## right most point
-         + ( $l->[0] < $L->[0] ? $l->[0] : $L->[0] ); ## left most point
-  my $h3 = ( my $h1  = $r->[1] - $l->[1]           )  ## height rectangle 1
-         + ( my $h2  = $R->[1] - $L->[1]           )  ## height rectangle 2
-         - ( $r->[1] > $R->[1] ? $r->[1] : $R->[1] )  ## highest point
-         + ( $l->[1] < $L->[1] ? $l->[1] : $L->[1] ); ## lowest point
+     ## The 3rd/4th brackets are the min/max of bounding box...
 
-  ## Return result...
+     ## w1 - width 1st rect, w2 - width 2nd rect, w3 - width of overlap (if > 0)
+
+  my $w3 = (my $w1=$r-$l)+(my $w2=$R-$L)+($l<$L?$l:$L)-($r<$R?$R:$r);
+
+     ## h1 - height 1st rect, h2 - height 2nd rect, h3 - height of overlap (if > 0)
+
+  my $h3 = (my $h1=$t-$b)+(my $h2=$T-$B)+($b<$B?$b:$B)-($t<$T?$T:$t);
+
+     ## return result
 
   $w1*$h1 + $w2*$h2 - ($w3>0 && $h3>0 && $w3*$h3);
 }
-```
 
