@@ -1,6 +1,6 @@
 // The Weekly Challenge 153
 // Task 1: Left Factorials
-// Usage: dart ch-1.dart
+// Usage: $ dart ch-1.dart
 
 void main() {
   const arg = 10;
