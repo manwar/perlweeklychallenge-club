@@ -13,7 +13,7 @@ Write a script to find any permutations missing from the list.
 
 =end pod
 
-# V2 - no need to write your own permutations, use Raku's
+# V2 - mark-anderson++ - no need to write permutations, use Raku's
 
 #| Generate permutations from $str and list those NOT on the remainder of the command-line.
 sub MAIN ( Str:D $str, +@not ) {
