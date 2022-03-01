@@ -14,6 +14,24 @@ END
 $CODE$
 LANGUAGE plpgsql;
 
+CREATE OR REPLACE FUNCTION
+pwc154.is_prime( n int )
+RETURNS bool
+AS $CODE$
+DECLARE
+    i int;
+BEGIN
+    FOR i IN 2 .. n - 1 LOOP
+        IF n % i = 0 THEN
+           RETURN false;
+        END IF;
+    END LOOP;
+
+    RETURN true;
+END
+$CODE$
+LANGUAGE plpgsql;
+
 /**
 p
 ----
@@ -30,11 +48,18 @@ p
 (10 rows)
 */
 WITH
-padovan_20 AS (
+padovan AS (
    SELECT n, pwc154.padovan( n ) AS p
-   FROM generate_series( 0, 20 ) n
+   FROM generate_series( 0, 50 ) n
 )
-SELECT distinct( p.p )
-FROM padovan_20 p
+, padovan_prime
+AS (
+  SELECT p, pwc154.is_prime( p ) AS prime
+  FROM padovan p
+)
+SELECT distinct( p )
+FROM padovan_prime
+WHERE prime
 ORDER BY 1
-LIMIT 10;
+LIMIT 10
+;

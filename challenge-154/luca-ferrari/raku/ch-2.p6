@@ -12,9 +12,9 @@ sub MAIN( Int $limit where { $limit > 0 } = 10 ) {
 
     my $current-index = 0;
     my @unique-padovan-numbers;
-    while ( @unique-padovan-numbers.elems < $limit ) {
+    while ( @unique-padovan-numbers.elems <= $limit ) {
         my $current = @padovan-numbers[ $current-index ];
-        while ( @unique-padovan-numbers.grep( $current ) ) {
+        while ( @unique-padovan-numbers.grep( $current ) || ! $current.is-prime ) {
             $current = @padovan-numbers[ ++$current-index ];
         }
 
