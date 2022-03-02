@@ -15,10 +15,10 @@ my @words = qw(
   LEPR LRPE LREP
 );
 
-# We enumerate the combinations in "alphabetic" order
+# We enumerate the permutations in "alphabetic" order
 # Rather than returning an array - which uses extra
 # memory we effectively have a generator giving the
-# next combination... In this case permutation/combination
+# next permutation... In this case permutation
 # are equivalent as all letters are unique...
 
 # This is a standard algorithm - so I won't include
@@ -29,7 +29,7 @@ my @words = qw(
 #   PELR PERL PLER PLRE PREL PRLE
 #   RELP REPL RLEP RLPE RPEL RPLE
 
-sub next_comb {
+sub next_perm {
   my( $i, $j );
   ( $s[$_] lt $s[$_+1] ) && ( $i = $_ ) for 0    .. @s-2;
   return unless defined $i;
@@ -49,9 +49,9 @@ my %check = map { $_=>1 } @words;
 
 # We have to use "do/while" here rather than just "while" to
 # make sure we include the first term, o/w we would miss it
-# out with the update $_ = next_comb happening first
+# out with the update $_ = next_perm happening first
 
-do { exists $check{$w} || say "  * $w" } while $w = next_comb;
+do { exists $check{$w} || say "  * $w" } while $w = next_perm;
 
 ## "Hack" solution
 
