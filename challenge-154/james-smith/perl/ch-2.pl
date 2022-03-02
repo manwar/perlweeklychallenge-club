@@ -5,43 +5,30 @@ use strict;
 use warnings;
 use feature qw(say);
 use Time::HiRes qw(time);
+use Math::Prime::Util qw(is_prime);
 
-my($count,$t0,$pr,@primes) = (10,time,3,2,3);
-my $pad0 = my $pad1 = my $pad2 = 1;
+# We only keep the last 3 Padovan numbers as that is all we need
+# to generate the next one... We use the variables $p,$q,$r for
+# this..
 
-## Minor "buglet" in the loop is the first two values 2 & 3
-## do not appear in the output (this is due to them being less
-## than the square of the maximum value of the primes array,
-## so we just output them...
 
-$count--, say sprintf '%11.6f %20d', -$t0+($t0=time), $_ for @primes;
+# We use a little used perl construct here - `redo` which restarts
+# the loop everytime we have a Padovan number which is composite
+# with updating "$_" - so we get 10 results.
 
-T: while($count) {
+# "1-liner" solution...
 
-  ## Update padovan number...
+my$p=my$q=my$r=1;
+($p,$q,$r)=($q,$r,$p+$q),$r!=$q&&is_prime($r)?say$r:redo for 1..10;
 
-  ( $pad0, $pad1, $pad2 ) = ( $pad1, $pad2, $pad0+$pad1 );
+# "expanded" solution...
 
-  ## Skip early duplicates...
+$p=$q=$r=1;
 
-  next if $pad2 == $pad1;
-
-  ## Extend our prime array if required
-
-  O: for( ; $primes[-1]*$primes[-1] < $pad2; $pr += 2) {
-    $_*$_ > $pad2 ? last : $pr % $_ || next O for @primes;
-    push @primes, $pr;
-  }
-
-  ## Now check for prime factors, if we find one we bomb
-  ## out! It doesn't matter than we compute more primes
-  ## than we need for composite numbers as we will need
-  ## them for the next padovan prime....
-
-  $pad2 % $_ || next T for @primes;
-
-  say sprintf '%11.6f %20d', -$t0+($t0=time), $pad2;
-
-  $count--;
+for (1..10) {
+  ($p,$q,$r) = ($q,$r,$p+$q);
+  redo if     $r == $q;       ## skip (redo loop) if same as previous value
+  redo unless is_prime($r);   ## skip (redo loop) if not prime
+  say $r;                     ## output if we get here!
 }
 
