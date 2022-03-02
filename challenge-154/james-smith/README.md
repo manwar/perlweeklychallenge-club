@@ -1,6 +1,6 @@
-[< Previous 152](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-152/james-smith) |
-[Next 154 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-154/james-smith)
-# The Weekly Challenge #152
+[< Previous 153](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-153/james-smith) |
+[Next 155 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-155/james-smith)
+# The Weekly Challenge #154 - Not `do` or `do not` but `do` and `redo`!
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -17,6 +17,60 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-154/ja
 # Challenge 1 - Missing Permutation
 
 ***You are given possible permutations of the string 'PERL'. Find any missing ones***
+
+## Solution 1 - answering the question - not the input data!
+
+The input is a special case of the data where there is only one missing solution. We will show
+in solution 2 how this can be "solved" with much smaller code!
+
+For solving for the general case we need to work through all the permutations and see if they
+are not present in our list. To do the check we start by using the classic Perl solution of making
+the words the keys of a hash!
+
+For the permutations, we create an array of the letters in the words in alphabetic order in this
+case `('E','L','P','R')`, and each stage we rearrange the letters so they are next in alphabetic
+order `('E','L','P','R')` to `('E','L','R','P')` to `('E','P','L','R')` ... `('R','P','L','E')`
+
+The code to do this is.
+```perl
+sub next_perm {
+  my( $i, $j );
+  ( $s[$_] lt $s[$_+1] ) && ( $i = $_ ) for 0    .. @s-2;
+  return unless defined $i;
+  ( $s[$i] lt $s[$_  ] ) && ( $j = $_ ) for $i+1 .. @s-1;
+  @s[ $i, $j       ] = @s[ $j, $i               ];
+  @s[ $i+1 .. @s-1 ] = @s[ reverse $i+1 .. @s-1 ];
+  return join '',@s;
+}
+```
+
+This was written up for a previous challenge. It avoids having to use a recursive call. Due to
+the way the code is written it automatically removes duplicates.
+
+The overall code then reduces to:
+
+```perl
+my $w = join '', @s = sort split //, 'PERL';                   ## set up initial word
+my %check = map { $_=>1 } @words;                              ## create look up
+do { exists $check{$w} || say "  * $w" } while $w = next_perm; ## loop until complete
+```
+
+We have to use `do { } while` rather than `while() { }` so that
+we execute the functions in the loop BEFORE the check, otherwise
+we miss the first order "`ELPR`".
+
+## Solution 2 - if we know there is only 1 missing permutation and all words in the list are unique!!
+
+```perl
+my $r ='';
+$r^=$_ for @words;
+say $r;
+```
+
+This works by bit flipping each of the words in the list of permutations. For each letter - if flipped
+twice it returns to the null `\0` character - so if flipped an odd number of times is the letter itself.
+We note that in the permutation list - for the 23 combinations, each character is flipped 6 times in
+each location EXCEPT for the characters of the missing word (where it will be 5)...!
 
 # Challange 2 - Padovan Prime
 
@@ -44,4 +98,4 @@ for (1..10) {
 }
 ```
 
-Note we use a *little used* perl construct - redo which restarts the loop without incrementing the counter. So in this case finds the next padovan number without incrementing the counter in the outside loop. So to find 10, we just loop from 1 to 10.
+Note we use a *little used* perl construct - `redo` which restarts the loop without incrementing the counter. So in this case finds the next padovan number without incrementing the counter in the outside loop. So to find 10 answers, we just loop from 1 to 10.
