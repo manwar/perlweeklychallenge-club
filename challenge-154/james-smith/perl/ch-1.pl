@@ -44,7 +44,7 @@ say '';
 say 'Solution - with no assumptions about uniqueness/# missing:';
 say '';
 
-my $w = $_ = join '', @s = sort split //, 'PERL';
+my $w = join '', @s = sort split //, 'PERL';
 my %check = map { $_=>1 } @words;
 
 # We have to use "do/while" here rather than just "while" to
