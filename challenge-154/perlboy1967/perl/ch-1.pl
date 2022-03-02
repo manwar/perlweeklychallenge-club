@@ -25,7 +25,6 @@ use strict;
 
 use Algorithm::Combinatorics qw(permutations);
 use List::MoreUtils qw(singleton);
-use Data::Printer;
 
 my @s = singleton(
   qw(
