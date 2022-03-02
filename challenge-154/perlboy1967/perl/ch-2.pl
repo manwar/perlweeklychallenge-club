@@ -38,7 +38,7 @@ use Math::Primality qw(is_prime);
 
 sub PadovanN($);
 
-my ($n,$i) = (0,0);
+my ($n, $i) = (0, 0);
 my %padovanPrimes;
 
 while ($i < 10) {
