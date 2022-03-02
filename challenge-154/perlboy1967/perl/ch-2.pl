@@ -54,6 +54,8 @@ sub PadovanN($) {
   my ($n) = @_;
   state $p = [1,1,1];
 
+  $p->[$n-3] //= PadovanN($n-3);
+  $p->[$n-2] //= PadovanN($n-2);
   $p->[$n] = $p->[$n-2] + $p->[$n-3] if ($n > 2);
 
   return $p->[$n];
