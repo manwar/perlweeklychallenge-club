@@ -1,6 +1,6 @@
 [< Previous 153](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-153/james-smith) |
 [Next 155 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-155/james-smith)
-# The Weekly Challenge #154 - Not `do` or `do not` but `do` and `redo`!
+# The Weekly Challenge #154 - `do` and `redo` there is no `try`!
 
 You can find more information about this weeks, and previous weeks challenges at:
 
