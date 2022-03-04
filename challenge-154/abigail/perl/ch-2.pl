@@ -1,13 +1,5 @@
 #!/opt/perl/bin/perl
 
-use 5.032;
-
-no strict;
-no warnings;
-
-use experimental 'signatures';
-use experimental 'lexical_subs';
-
 #
 # See https://theweeklychallenge.org/blog/perl-weekly-challenge-154
 #
@@ -37,12 +29,10 @@ use experimental 'lexical_subs';
 #
 
 #
-# To find out whether a number is prime, we could use 
-#
-# Math::Util::Prime, but we have seen this a gazillion times recently
-# in the Colins weekly review. We could use trial division, but we
-# have seen that one a gazillion times in the same review as well.
-# Same with using a sieve.
+# To find out whether a number is prime, we could use Math::Util::Prime,
+# but we have seen this a gazillion times recently in Colins weekly review.
+# We could use trial division, but we have seen that one a gazillion times
+# in the same review as well. Same with using a sieve.
 #
 # It'll be fucking boring to see the same copy and pasted code over
 # and over again.
@@ -61,10 +51,10 @@ use experimental 'lexical_subs';
 #
 # You might get a cup of tea when running this program. Better, get two cups.
 #
-# Oh, and we cram the entire program in just three lines. Just to make the
-# challenge a bit interesting.
+# Oh, and we cram the entire program in just a little over two lines.
+# Just to make the challenge a bit interesting.
 #
 
-sub _($n){%;=();while(%;<$n-2){$n%($;=2+int(rand($n-2)))||return;$;{$;}=1}1}
-($-,$:,@:)=(10,(1)x3,2);
-++$:&&($:==$:[-2]+$:[-3])&&(push@:,$:)&&_($:)&&say($:)&&$---while$-
+sub _{($=,%;)=@_;while(%;<$=-2){$=%($;=2+int rand($=-2))||return;$;{$;}=1}1}($\
+,$-,$:,@:)=($/,10,(1)x3,2);++$:&&($:==$:[-2]+$:[-3])&&(push@:,$:)&&_($:)&&print
+($:)&&$---while$-
