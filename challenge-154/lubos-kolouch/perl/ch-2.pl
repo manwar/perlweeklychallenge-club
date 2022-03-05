@@ -14,7 +14,7 @@ sub get_n_unique {
     my $counter = 0;
     my @output;
 
-    while ( $counter < 10 ) {
+    while ( $counter < $what ) {
         gen_next_num;
 
         next unless is_prime( $nums_cache[-1] );
