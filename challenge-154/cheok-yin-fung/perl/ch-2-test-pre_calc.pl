@@ -7,7 +7,7 @@ use warnings;
 use Math::BigInt;
 
 use Math::Prime::Util qw/prime_precalc is_prime/;
-prime_precalc(100_000_000);
+prime_precalc(10_000_000);
 
 
 
@@ -35,7 +35,7 @@ sub core {
     while (scalar @ans < $NUM_OF_TERMS) {
         my $Pk = pdv_iter();
         if (is_prime($Pk)) {
-            say update_ans($Pk);
+            update_ans($Pk);
         }
         $ind++;
     }

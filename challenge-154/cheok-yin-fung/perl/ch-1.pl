@@ -24,6 +24,7 @@ sub look_for {
 
     my @sw = split "", $word;
 
+    # all permutations
     my $iter = Algorithm::Permute->new(\@sw, length($word));
     my @words;
     while (my @res = $iter->next) {
@@ -31,6 +32,7 @@ sub look_for {
     }
     @words = uniqstr @words;
 
+    # use a hash to determine whether a permutation has appeared
     my %bucket = map {$_ => 0} @words;
 
     for (@collection) {
