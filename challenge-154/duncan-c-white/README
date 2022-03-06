@@ -1,45 +1,43 @@
-TASK #1 - Left Factorials
+TASK #1 - Missing Permutation
 
-Write a script to compute Left Factorials of 1 to 10. Please refer OEIS
-A003422 for more information.
+You are given possible permutations of the string 'PERL'.
 
-(My summary: left factorial N = sum k! for k in (0..N-1), remembering that
- 0! = 1! = 1.  So lf(N+1) = lf(N) + N!)
+PELR, PREL, PERL, PRLE, PLER, PLRE, EPRL, EPLR, ERPL,
+ERLP, ELPR, ELRP, RPEL, RPLE, REPL, RELP, RLPE, RLEP,
+LPER, LPRE, LEPR, LRPE, LREP
 
-Expected Output:
+Write a script to find any permutations missing from the list.
 
-1, 2, 4, 10, 34, 154, 874, 5914, 46234, 409114
-
-MY NOTES: easy, 1 pass, calc N! on the fly (by multiplying (N-1)! by N)
-and add (N-1)! to lf(N-1) to give lf(N).
+MY NOTES: should be easy, find all permutations and set subtract.
+Reuse my Perms module from challenge 149.
 
 
-TASK #2 - Factorions
+TASK #2 - Padovan Prime
 
-You are given an integer, $n.
+A Padovan Prime is a Padovan Number that's also prime.
 
-Write a script to figure out if the given integer is factorion.
+In number theory, the Padovan sequence is the sequence of integers P(n)
+defined by the initial values.
 
-A factorion is a natural number that equals the sum of the factorials of its digits.
+P(0) = P(1) = P(2) = 1
 
-Example 1:
+and then followed by
 
-  Input: $n = 145
-  Output: 1
+P(n) = P(n-2) + P(n-3)
 
-    Since 1! + 4! + 5! => 1 + 24 + 120 = 145
+First few Padovan Numbers are as below:
 
-Example 2:
+1, 1, 1, 2, 2, 3, 4, 5, 7, 9, 12, 16, 21, 28, 37, ...
 
-  Input: $n = 123
-  Output: 0
+Write a script to compute first 10 distinct Padovan Primes.
+Expected Output
 
-    Since 1! + 2! + 3! => 1 + 2 + 6 <> 123
+2, 3, 5, 7, 37, 151, 3329, 23833, 13091204281, 3093215881333057
 
-MY NOTES: cool, precompute 0..9! in a 10 element array, split number into
-digits, sum their factorials and check if the result if the number you
-first thought of.  Let's add a tabulating mode (invoked if --tab given) that
-shows, which numbers (1..$n) are factorian.  Running this as:
-	./ch-2.pl -t 1000000
-reveals that the only base 10 factorians under 1000000 are:
-        1, 2, 145, 40585
+MY NOTES: ok, Padovan numbers are rather like Fibonacci numbers,
+and easy enought to calculate.  Then we must check isprime().
+Should be pretty easy in principle, but in practice I note how big
+answers get very quickly, this code finds the first 8 Padovan
+Primes but would take ludicrously long amounts of time - and ludicrously
+large amounts of RAM to store all the prime numbers.  It's never
+finished for N==9 or 10.
