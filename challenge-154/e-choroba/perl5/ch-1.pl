@@ -17,4 +17,4 @@ my @possible = qw( PELR PREL PERL PRLE PLER PLRE EPRL EPLR ERPL ERLP
                    ELPR ELRP RPEL RPLE REPL RELP RLPE RLEP LPER LPRE
                    LEPR LRPE LREP );
 
-say missing_permutation(@possible);  # LERP
+say join ' ', missing_permutation(@possible);  # LERP
