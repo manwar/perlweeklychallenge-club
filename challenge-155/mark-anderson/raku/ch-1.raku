@@ -1,6 +1,15 @@
 #!/usr/bin/env raku
 
-say squish sort (1..*).map(&fortunate).head(8);
+my @fortunates;
+
+for 1..*
+{
+     my $f = fortunate($_);
+     @fortunates.push: $f unless $f (elem) @fortunates;
+     last if @fortunates == 8;
+}
+
+say sort @fortunates;
 
 sub fortunate(\n)
 {
