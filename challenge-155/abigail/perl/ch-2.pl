@@ -31,7 +31,7 @@ use experimental 'lexical_subs';
 #   with an odd index, the period is 4 times the index. - Kerry Mitchell,
 #   Dec 11 2005
 #
-# We have a module base of 3. 3 is a Fibonnacci number, is >= 3, and
+# We have a modulo base of 3. 3 is a Fibonnacci number, is >= 3, and
 # is on index 4. 4 is even. Hence, the third Pisano period is 8.
 #
 # Which leaves us exactly nothing to compute. (Unless one needs a
