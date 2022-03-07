@@ -2,11 +2,13 @@
 
 use Test;
 
+my $fibs := 0, 1, * + * ... *;
+
 is pisano-period(3), 8;
 
 sub pisano-period(\n)
 {
-    my $mods := (0, 1, * + * ... *).map(* mod n).head(1000).List;
+    my $mods := $fibs.map(* mod n).head(1000).List;
 
     for 1..500
     {
