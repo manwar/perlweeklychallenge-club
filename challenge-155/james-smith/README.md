@@ -29,16 +29,17 @@ We use it two ways:
 
 Doing this gives a list of unique fortunate numbers, which we then sort to display them
 
-Note without doing an exhaustive search there may be a prime product for which `m` is 11 (for instance)
+Note without doing an exhaustive search there may be a prime product for which `m` is `11` (for instance).
 
 ```perl
 use Math::Prime::Util qw(next_prime);
 
 my %res;
 
-for( my $p = my $pp = 2;
-     $pp < 1<<63;
-     $pp *= $p = next_prime($p)
+for(
+  my $p = my $pp = 2;
+  $pp < 1<<63;
+  $pp *= $p = next_prime($p)
 ) {
   $res{ next_prime($pp+2) - $pp } = 1;
 }
