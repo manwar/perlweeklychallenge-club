@@ -1,6 +1,6 @@
 #!/usr/bin/env raku
 
-say sort unique (1..*).map(&fortunate).head(8);
+say squish sort (1..*).map(&fortunate).head(8);
 
 sub fortunate(\n)
 {
