@@ -1,8 +1,8 @@
 #!/usr/bin/env raku
 
-while my @fortunates <= 8
+while my @fortunates < 8
 {
-     my $f = fortunate($++);
+     my $f = fortunate(++$);
      @fortunates.push: $f unless $f (elem) @fortunates;
 }
 
