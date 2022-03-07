@@ -18,5 +18,5 @@ sub MAIN( Int $limit where { $limit > 0 } = 8 ) {
         @unique-fortunate-numbers.push: $fortunate if ! @unique-fortunate-numbers.grep: * ~~ $fortunate;
     }
 
-    @unique-fortunate-numbers[ 0 .. $limit ].sort.join( "\n" ).say;
+    @unique-fortunate-numbers[ 0 .. $limit - 1 ].sort.join( "\n" ).say;
 }
