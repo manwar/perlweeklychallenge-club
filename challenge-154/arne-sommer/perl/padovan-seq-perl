@@ -1,0 +1,27 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+use feature 'say';
+use feature 'signatures';
+use feature 'state';
+
+no warnings qw(experimental::signatures);
+
+my $count = $ARGV[0] || 10;
+
+sub padovan ($index)
+{
+  state @padovan = (1, 1, 1);
+
+  while (@padovan <= $index)
+  {
+    push(@padovan, $padovan[-2] + $padovan[-3]);
+  }
+
+  return $padovan[$index];
+}
+
+my @ps = map { padovan($_) } (0 .. $count -1);
+
+say join(", ", @ps);
