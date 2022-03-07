@@ -1,12 +1,9 @@
 #!/usr/bin/env raku
 
-my @fortunates;
-
-for 1..*
+while my @fortunates <= 8
 {
-     my $f = fortunate($_);
+     my $f = fortunate($++);
      @fortunates.push: $f unless $f (elem) @fortunates;
-     last if @fortunates == 8;
 }
 
 say sort @fortunates;
