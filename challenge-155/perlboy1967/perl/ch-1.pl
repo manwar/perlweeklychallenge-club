@@ -25,12 +25,11 @@ use bigint;
 
 use Math::Primality qw(next_prime);
 
-my $N = 8;
-
 my %fortunateNumbers;
-my $fNfound = 0;
 my @primes;
 my @product;
+
+my $N = 8;
 
 while ($N > 0) {
   push(@primes, next_prime($primes[-1] // 0));
