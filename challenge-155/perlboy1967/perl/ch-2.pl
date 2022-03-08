@@ -40,9 +40,9 @@ use bigint;
 # Prototype(s)
 sub fib($);
 
-my $N = shift // 3;
-
 my @fibMod;
+
+my $N = shift // 3;
 
 my $i = 0;
 while(1) {
