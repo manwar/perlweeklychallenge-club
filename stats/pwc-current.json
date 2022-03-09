@@ -1,50 +1,36 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 155"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
+   "legend" : {
+      "enabled" : 0
    },
    "series" : [
       {
          "name" : "The Weekly Challenge - 155",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Dave Jacoby",
-               "y" : 3,
-               "drilldown" : "Dave Jacoby"
+               "y" : 2,
+               "name" : "Abigail",
+               "drilldown" : "Abigail"
             },
             {
-               "name" : "E. Choroba",
+               "y" : 3,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
+            {
                "y" : 2,
+               "name" : "E. Choroba",
                "drilldown" : "E. Choroba"
             },
             {
+               "y" : 3,
                "name" : "James Smith",
-               "drilldown" : "James Smith",
-               "y" : 3
+               "drilldown" : "James Smith"
             },
             {
-               "y" : 6,
+               "name" : "Luca Ferrari",
                "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari"
+               "y" : 6
             },
             {
                "name" : "Mark Anderson",
@@ -52,32 +38,44 @@
                "y" : 2
             },
             {
-               "name" : "Niels van Dijke",
                "y" : 2,
-               "drilldown" : "Niels van Dijke"
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke"
             },
             {
                "drilldown" : "PokGoPun",
-               "y" : 2,
-               "name" : "PokGoPun"
+               "name" : "PokGoPun",
+               "y" : 2
             },
             {
-               "name" : "W. Luis Mochan",
                "y" : 3,
-               "drilldown" : "W. Luis Mochan"
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan"
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2022-03-09 16:48:20 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
    },
    "drilldown" : {
       "series" : [
+         {
+            "name" : "Abigail",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Abigail"
+         },
          {
             "name" : "Dave Jacoby",
             "id" : "Dave Jacoby",
@@ -93,18 +91,16 @@
             ]
          },
          {
-            "id" : "E. Choroba",
             "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "E. Choroba"
          },
          {
-            "id" : "James Smith",
-            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -114,10 +110,11 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "James Smith",
+            "name" : "James Smith"
          },
          {
-            "name" : "Luca Ferrari",
             "id" : "Luca Ferrari",
             "data" : [
                [
@@ -128,17 +125,18 @@
                   "Blog",
                   4
                ]
-            ]
+            ],
+            "name" : "Luca Ferrari"
          },
          {
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "id" : "Mark Anderson"
          },
          {
             "name" : "Niels van Dijke",
@@ -151,14 +149,14 @@
             ]
          },
          {
+            "name" : "PokGoPun",
+            "id" : "PokGoPun",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "PokGoPun",
-            "name" : "PokGoPun"
+            ]
          },
          {
             "name" : "W. Luis Mochan",
@@ -176,9 +174,26 @@
          }
       ]
    },
+   "xAxis" : {
+      "type" : "category"
+   },
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2022-03-09 17:34:47 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 155"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
