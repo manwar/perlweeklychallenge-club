@@ -38,7 +38,7 @@ use warnings;
 use bigint;
 
 # Prototype(s)
-sub fibModN($$);
+sub fibModN($;$);
 
 my (@fibMod,@fModLh,@fModUh);
 
@@ -58,9 +58,9 @@ do {
 printf "%dth Pisano Period: %d (%s)\n",$N,scalar @fModLh,join(',',@fModLh);
 
 
-sub fibModN($$) {
+sub fibModN($;$) {
   my ($i,$n) = @_;
   state $fN = [0,1];
-  $fN->[$i] //= (fibModN($i-2,$n) + fibModN($i-1,$n)) % $n;
-  return $fN->[$i];
+  $fN->[$i] //= fibModN($i-2) + fibModN($i-1);
+  return (defined $n ? $fN->[$i] % $n : $fN->[$i]);
 }
