@@ -38,15 +38,15 @@ use warnings;
 use bigint;
 
 # Prototype(s)
-sub fib($);
+sub fibModN($$);
 
-my (@fibMod, @fModLh, @fModUh);
+my (@fibMod,@fModLh,@fModUh);
 
 my $N = shift // 3;
 
 my $i = 0;
 do {
-  push(@fibMod, fib($i++) % $N, fib($i++) % $N);
+  push(@fibMod,fibModN($i++,$N),fibModN($i++,$N));
 
   # Split fibMod in two halves
   @fModLh = @fibMod[0 .. int($i/2)-1];
@@ -55,12 +55,12 @@ do {
   # Compare lower and upper half
 } until (join('',@fModLh) eq join('',@fModUh));
 
-printf "%dth Pisano Period: %d (%s)\n", $N, scalar @fModLh, join(',',@fModLh);
+printf "%dth Pisano Period: %d (%s)\n",$N,scalar @fModLh,join(',',@fModLh);
 
 
-sub fib($) {
-  my ($n) = @_;
-  state $f = [0,1];
-  $f->[$n] //= fib($n-2) + fib($n-1);
-  return $f->[$n];
+sub fibModN($$) {
+  my ($i,$n) = @_;
+  state $fN = [0,1];
+  $fN->[$i] //= (fibModN($i-2,$n) + fibModN($i-1,$n)) % $n;
+  return $fN->[$i];
 }
