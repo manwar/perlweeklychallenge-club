@@ -1,18 +1,18 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-03-09 17:34:47 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -48,13 +48,10 @@
          "Jared Martin"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
    },
    "series" : [
@@ -94,7 +91,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -126,9 +122,11 @@
             144,
             4,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             53,
             0,
@@ -160,8 +158,10 @@
             0,
             0,
             12
-         ],
-         "name" : "Blog"
+         ]
       }
-   ]
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-03-09 18:02:38 GMT"
+   }
 }
