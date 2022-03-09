@@ -46,12 +46,20 @@ say '';
 
 my $w = join '', @s = sort split //, 'PERL';
 my %check = map { $_=>1 } @words;
+do { exists $check{ $w } || say "  * $w"; } while $w = next_perm;
 
 # We have to use "do/while" here rather than just "while" to
 # make sure we include the first term, o/w we would miss it
 # out with the update $_ = next_perm happening first
 
-do { exists $check{$w} || say "  * $w" } while $w = next_perm;
+$w = join '', @s = sort split //, 'PERL';
+my @sorted = sort @words;
+
+say '';
+say 'Solution - with no assumptions about # missing - sorted strings (unique)';
+say '';
+
+do { $w lt $sorted[0] ? say "  * $w" : shift @sorted } while $w = next_perm;
 
 ## "Hack" solution
 
