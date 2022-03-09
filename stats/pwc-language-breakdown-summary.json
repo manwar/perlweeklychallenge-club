@@ -1,9 +1,49 @@
 {
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "series" : [
+      {
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "y" : 10,
+            "enabled" : "true",
+            "rotation" : -90
+         },
+         "data" : [
+            [
+               "Blog",
+               2333
+            ],
+            [
+               "Perl",
+               7435
+            ],
+            [
+               "Raku",
+               4468
+            ]
+         ],
+         "name" : "Contributions"
+      }
+   ],
+   "subtitle" : {
+      "text" : "Last updated at 2022-03-09 16:48:20 GMT"
    },
    "legend" : {
       "enabled" : "false"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
    "xAxis" : {
       "type" : "category",
@@ -14,50 +54,10 @@
          }
       }
    },
-   "subtitle" : {
-      "text" : "Last updated at 2022-03-09 16:37:21 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "align" : "right",
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            }
-         },
-         "data" : [
-            [
-               "Blog",
-               2333
-            ],
-            [
-               "Perl",
-               7433
-            ],
-            [
-               "Raku",
-               4468
-            ]
-         ]
-      }
-   ],
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
