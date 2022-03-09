@@ -45,7 +45,7 @@ if (check_commandline_args()) {
 sub pisano_period {
     my ($N, $t, $rec, $seq) = @_;
     die "(Some of) Parameters are too large.\n"
-        if $N**$t + $t - 1 > 20_000;
+        if $N**$t + $t - 1 > 8_000_000;
 
     my $ori_seqstate = [map {$_ % $N} @$seq];
     my $new_seqstate = [@$ori_seqstate];
