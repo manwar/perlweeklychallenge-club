@@ -4,7 +4,7 @@
 
 use v5.22.0;
 use warnings;
-use List::Util qw/any/;
+use List::Util qw/any sum/;
 
 =pod
 for command-line input:
@@ -47,14 +47,12 @@ sub pisano_period {
     die "(Some of) Parameters are too large.\n"
         if $N**$t + $t - 1 > 8_000_000;
 
-    my $ori_seqstate = [map {$_ % $N} @$seq];
+    @$seq = map {$_ % $N} @$seq;
+    my $ori_seqstate = [@$seq];
     my $new_seqstate = [@$ori_seqstate];
     my $count = 0;
     do { 
-        my $new_val = 0;
-        for my $i (0..$t-1) {
-            $new_val += $new_seqstate->[$i]*$rec->[$i];
-        }
+        my $new_val = sum map {$rec->[$_]*$new_seqstate->[$_]} (0..$t-1);
         $new_val = $new_val % $N;
         push @{$seq}, $new_val;
         shift @{$new_seqstate};
