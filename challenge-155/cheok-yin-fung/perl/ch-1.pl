@@ -16,9 +16,9 @@ my @fort_sorted = ();
 
 
 
-while ( (scalar @fort_sorted < $N) 
+while ( !defined($fort_sorted[$N-1]) 
                ||
-        (defined($fort_sorted[$N-1]) && $fort_sorted[$N-1] > $ch_primes[-1])
+        $fort_sorted[$N-1] > $ch_primes[-1]
 ) {
     my $k = scalar @fort_unsort;
     my $tmp_int = $ch_primes[$k];
@@ -31,7 +31,6 @@ while ( (scalar @fort_sorted < $N)
     @fort_sorted = uniqint sort {$a<=>$b} @fort_unsort;
 }
 
-say scalar @fort_unsort;
 say "Answer: \n", join ", ", @fort_sorted[0..$N-1];
 
 
