@@ -15,7 +15,7 @@ ch-2.pl $N 2   1 1       0 1   # Fibonacci numbers
 
 ch-2.pl $N 2   1 1       2 1   # Lucas numbers    #OEIS:A000032
 
-ch-2.pl $N 2   1 2       0 1   # Pell numbers     #OEIS:A000032
+ch-2.pl $N 2   1 2       0 1   # Pell numbers     #OEIS:A000129
 
 ch-2.pl $N 3   1 1 0  1 1 1 # Padovan numbers     #OEIS:A000931
 
