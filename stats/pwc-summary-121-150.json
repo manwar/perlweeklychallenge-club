@@ -1,6 +1,8 @@
 {
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -36,14 +38,9 @@
          "Michael Hamlin"
       ]
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             4,
             4,
@@ -75,11 +72,9 @@
             12,
             12,
             4
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -111,7 +106,8 @@
             1,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "data" : [
@@ -150,18 +146,22 @@
       }
    ],
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-03-09 18:02:38 GMT"
+      "text" : "[Champions: 30] Last updated at 2022-03-10 11:16:37 GMT"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+   "chart" : {
+      "type" : "column"
    },
    "tooltip" : {
       "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
       "shared" : 1
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    }
 }
