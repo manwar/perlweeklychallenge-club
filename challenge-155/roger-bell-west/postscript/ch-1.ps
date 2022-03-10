@@ -1,0 +1,237 @@
+%!PS
+
+/aeq {
+    3 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/quicksort { % [ a c b ] -> [ a b c ]
+    1 dict begin
+    /arr exch def
+    0 arr length 1 sub quicksort.main
+    arr
+    end
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/genprimes {
+    /mx exch def
+    /primesh mx dict def
+    2 1 3 {
+        primesh exch true put
+    } for
+    6 6 mx 1 add {
+        dup 1 sub exch 1 add 2 exch {
+            dup mx le {
+                primesh exch true put
+            } {
+                pop
+            } ifelse
+        } for
+    } for
+    /q [ 3 5 7 ] def
+    /qi 0 def
+    /p 2 def
+    /mr mx sqrt cvi def
+    {
+        p mr le not {
+            exit
+        } if
+        primesh p known {
+            p dup mul p mx {
+                primesh exch undef
+            } for
+        } if
+        q length qi sub 2 le {
+            /q q q q length 1 sub get 4 add apush def
+            /q q q q length 1 sub get 2 add apush def
+        } if
+        /p q qi get def
+        /qi qi 1 add def
+    } loop
+    [ primesh { pop } forall ] quicksort
+} bind def
+
+/isprime {
+    4 dict begin
+    /candidate exch def
+    /prime true def
+    candidate 2 eq candidate 3 eq or not {
+        candidate 2 mod 0 eq {
+            /prime false def
+        } {
+            candidate 3 mod 0 eq {
+                /prime false def
+            } {
+                /limit candidate sqrt cvi 1 add def
+                /anchor 0 def
+                {
+                    /anchor anchor 6 add def
+                    anchor limit gt {
+                        exit
+                    } if
+                    [ -1 1 ] {
+                        anchor add candidate exch mod 0 eq {
+                            /prime false def
+                            exit
+                        } if
+                    } forall
+                    prime false eq {
+                        exit
+                    } if
+                } loop
+            } ifelse
+        } ifelse
+    } if
+    prime
+    end
+} bind def
+
+/arrmax {
+    dup length 0 eq {
+        pop
+        0
+    } {
+        1 dict begin
+        dup 0 get /a exch def
+        {
+            dup a gt {
+                /a exch def
+            } {
+                pop
+            } ifelse
+        } forall
+        a
+        end
+    } ifelse
+} bind def
+
+/nthprimelimit {
+    2 dict begin
+    /n exch def
+    /m 15 def
+    n 6 ge {
+        /m n ln n mul ln n mul 1 add cvi def
+    } if
+    m
+    end
+} bind def
+
+/fortunate {
+    10 dict begin
+    /ct exch def
+    /n ct 2 mul def
+    /pr n nthprimelimit genprimes def
+    /o n dict def
+    /ll 0 array def
+    /ph 1 def
+    pr {
+        /p exch def
+        /ph ph p mul def
+        o length ct ge {
+            p [ o { pop } forall ] arrmax ge {
+                exit
+            } if
+        } if
+        /l p 1 add def
+        {
+            l ph add isprime {
+                exit
+            } if
+            /l l 1 add def
+        } loop
+        o l true put
+        o length ct gt {
+            /ll [ o { pop } forall ] quicksort 0 ct getinterval def
+            /o ll length dict def
+            ll {
+                o exch true put
+            } forall
+        } if
+    } forall
+    ll
+    end
+} bind def
+
+8 fortunate
+[ 3 5 7 13 17 19 23 37 ]
+aeq { (Pass) } { (FAIL) } ifelse =
