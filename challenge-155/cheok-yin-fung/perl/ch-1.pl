@@ -53,9 +53,7 @@ sub iter_prime {
 
 
 sub iter_primorial {
-    while (scalar @ch_primes <= scalar @primorials) {
-        iter_prime();
-    }
+    iter_prime() while scalar @ch_primes <= scalar @primorials;
     push @primorials, 
-        $primorials[-1]*$ch_primes[ scalar @primorials ];
+      $primorials[-1]*$ch_primes[ scalar @primorials ];
 }
