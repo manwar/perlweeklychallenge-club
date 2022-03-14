@@ -39,7 +39,7 @@ for (1..10) {
 }
 ```
 
-# Challange 2 - Weird numbers
+# Challenge 2 - Weird numbers
 
 ***You are given number, $n > 0. Write a script to find out if the given number is a Weird Number - a number for which the sum of the proper divisors (divisors including 1 but not itself) of the number is greater than the number, but no subset of those divisors sums to the number itself.***
 
