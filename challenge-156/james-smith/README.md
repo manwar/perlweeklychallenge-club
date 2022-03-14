@@ -20,6 +20,12 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-156/ja
 
 ## The solution
 
+First of all we note that we don't need that large a number of primes - for values up to 1,000 we only need 2, 3, 5 & 7; for values up to 1 million 2, 3, 5, 7, 11, 13, 17 & 19. So we therefore hard code our list of primes.
+
+Counting the number of `1`s in the binary representation of the number is as simple as `spintf` the number in binary (`%b`) and then countins the `1s` with `tr/1/1/`.
+
+We use the `redo` trick of last week to get the first `$N` or in this case first `10` - we restart the loop each time we fail to find a perminicious number without moving the the next entry in the array.
+
 ```perl
 my %primes = map { $_ => 1 } 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37;
 
@@ -45,6 +51,12 @@ for (1..10) {
 
 ## The solution
 
+Our function `is_weird` can be split into 3 parts:
+
+ * Get the proper factors and their sum of the proper factors and check to see if the first condition is not true - return `0`.
+ * For every combination of factors see if their sum is `$n` - if true for any combination we return `0` as not weird.
+ * Return `1` as the number is weird.
+
 ```perl
 sub is_weird {
   my($s,$n) = (0,shift);
@@ -63,3 +75,8 @@ sub is_weird {
 }
 ```
 
+**Notes:**
+
+ * If we push both `$_` and `$n/$_` if `$_` is a factor - we have to check to see that `$n/$_` is not `$_` or `$_*$_ != $n`.
+ * With `map` - to remove the entry the block needs to *return* an empty array rather than a `undef` value.
+ * In part two we use the bit shift operators twice. Once when getting the number of combinations which is `2^#factors` which can be re-written as `1<<#factors`. We also use it to division by 2 (throwing away remainder) inside the inner loop.
