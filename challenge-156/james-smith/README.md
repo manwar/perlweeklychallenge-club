@@ -65,9 +65,9 @@ sub is_weird {
 
   return 0 if $s <= $n;
 
-  for my $ind ( 0..(1<<@fact) ) {
+  for my $ind ( 0..(1<<@fact)-1 ) {
     my $t = -$n;
-    ($ind & 1 && ($t+=$fact[$_]) ),$ind>>=1 for 0..$#fact;
+    $ind ? ($ind & 1 && ($t+=$fact[$_]) ) : last, $ind>>=1 for 0..$#fact;
     return 0 unless $t;
   }
 
@@ -80,3 +80,10 @@ sub is_weird {
  * If we push both `$_` and `$n/$_` if `$_` is a factor - we have to check to see that `$n/$_` is not `$_` or `$_*$_ != $n`.
  * With `map` - to remove the entry the block needs to *return* an empty array rather than a `undef` value.
  * In part two we use the bit shift operators twice. Once when getting the number of combinations which is `2^#factors` which can be re-written as `1<<#factors`. We also use it to division by 2 (throwing away remainder) inside the inner loop.
+ * Once index `$ind` is 0 we can exit the loop early to avoid unnecessary calculations - reduces the processing time by about 20%. This is achieved by the: `$ind ? ... : last` phrase
+ * We can use "`,`" to stitch multiple simple commands together in a postfix `for` loop. *Not always a good thing - but in tight inner code can make the "structure" of the overall code easier to read.
+
+***Note:***
+
+ * That last comment may be a bit frivolous - but sometimes if you expand out the inner of a loop too much you cannot see the whole of the code - and so you lose the "macro"-picture for the "micro"-picture. Someone who is looking at the code than has less idea of what is actually going on overall! You can for-instance take it for granted that the code copes the sum of each combination of factors - and then see what the overall code does with this information!
+ * 
