@@ -86,4 +86,3 @@ sub is_weird {
 ***Note:***
 
  * That last comment may be a bit frivolous - but sometimes if you expand out the inner of a loop too much you cannot see the whole of the code - and so you lose the "macro"-picture for the "micro"-picture. Someone who is looking at the code than has less idea of what is actually going on overall! You can for-instance take it for granted that the code copes the sum of each combination of factors - and then see what the overall code does with this information!
- * 
