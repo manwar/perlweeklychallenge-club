@@ -16,6 +16,7 @@ my @TESTS = (
 is( is_weird($_->[0]), $_->[1] ) for @TESTS;
 
 done_testing();
+is_weird($_) && say for 1..5000;
 
 sub is_weird {
   my($s,$n) = (0,shift);
@@ -24,9 +25,9 @@ sub is_weird {
 
   return 0 if $s <= $n; ## Not weird... as sum of factors <= $n
 
-  for my $ind ( 0..(1<<@fact) ) {
+  for my $ind ( 0..(1<<@fact)-1 ) {
     my $t = -$n;
-    ($ind & 1 && ($t+=$fact[$_]) ),$ind>>=1 for 0..$#fact;
+    $ind ? ($ind & 1 && ($t+=$fact[$_]) ) : last, $ind>>=1 for 0..$#fact;
     return 0 unless $t; ## Not weird as sum of factors is 0...
   }
 
