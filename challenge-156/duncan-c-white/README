@@ -1,0 +1,66 @@
+TASK #1 - Fortunate Numbers
+
+Write a script to produce first 8 Fortunate Numbers (unique and sorted).
+
+According to Wikipedia
+
+A Fortunate number, named after Reo Fortune, is the smallest integer m >
+1 such that, for a given positive integer n, pn# + m is a prime number,
+where the primorial pn# is the product of the first n prime numbers.
+
+Expected Output
+
+3, 5, 7, 13, 17, 19, 23, 37
+
+MY NOTES: ok.  Note that the Wikipedia article is not clear whether the
+Nth Fortunate number is the smallest integer m>1 s.t. pN# + m is prime,
+or whether that Nth value found is **A* Fortunate number, but the Fortunate
+numbers themselves are sorted and have duplicates removed - and the Nth
+Fortunate number is the Nth term of the sorted and deduped list.  I think
+we want the latter, because the unsorted Fortunate numbers corresponding to
+pn# for n=1..8 are 3, 5, 7, 13, 23, 17, 19, 23, i.e. they are not sorted and
+contain a duplicate of 23.
+
+Once you sort and dedup these, you get the desired sequence
+3, 5, 7, 13, 17, 19, 23, 37
+
+HOWEVER, it's not obvious how many unsorted Fortunate numbers we have
+to calculate to know that we've found the first N sorted ones.  Let's keep
+going until we have found N distinct Fortunate numbers and then sort them.
+Is it possible for a later unsorted Fortunate number to be smaller
+than one of the ones we've # found so far?  Yes, blast it:
+The output of this program for N=1 is 3,5,7,13,17,19,23,37,61,67,71
+and for N=12 is 3,5,7,13,17,19,23,37,47,61,67,71
+(showing that the 12th distinct value found is 47, smaller than the 9th..11th
+distinct value found)
+
+Also, this program won't work for N>12 because the primorial values get so
+enormous, like factorials.  I tried bigint but that slowed everything down
+so much that I couldn't find the answers in the time I had available.
+
+
+TASK #2 - Pisano Period
+
+Write a script to find the period of the 3rd Pisano Period.
+
+In number theory, the nth Pisano period, written as pi(n), is the period
+with which the sequence of Fibonacci numbers taken modulo n repeats.
+
+The Fibonacci numbers are the numbers in the integer sequence:
+
+0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, ...
+
+For any integer n, the sequence of Fibonacci numbers F(i) taken modulo
+n is periodic. The Pisano period, denoted pi(n), is the value of the
+period of this sequence. For example, the sequence of Fibonacci numbers
+modulo 3 begins:
+
+0, 1, 1, 2, 0, 2, 2, 1,
+0, 1, 1, 2, 0, 2, 2, 1,
+0, 1, 1, 2, 0, 2, 2, 1, ...
+
+This sequence has period 8, so pi(3) = 8.
+
+MY NOTES: ok.  Once we've found a sequence of length L that immediately
+repeats, i.e. that the first 2L entries comprise the same length L sequence
+repeated twice, How do we know that this sequence repeats forever?
