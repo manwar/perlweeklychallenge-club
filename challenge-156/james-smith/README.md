@@ -27,20 +27,21 @@ Counting the number of `1`s in the binary representation of the number is as sim
 We use the `redo` trick of last week to get the first `$N` or in this case first `10` - we restart the loop each time we fail to find a perminicious number without moving the the next entry in the array.
 
 ```perl
-my %primes = map { $_ => 1 } 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37;
+my %p = map { $_ => 1 } 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37;
 
 my $n=0;
 
-$n++, exists $primes{(sprintf '%b', $n)=~tr/1/1/} ? (say $n) : redo for 1..10;
+$n++, exists $p{(sprintf '%b', $n)=~tr/1/1/} ? (say $n) : redo for 1..10;
 ```
 
 Expanding out the `for` loop we have the slightly more readable code:
 
 ```perl
+my %p = map { $_ => 1 } 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37;
 my $n = 0;
 for (1..10) {
   $n++;
-  redo unless exists $primes{(sprintf '%b', $n)=~tr/1/1/};
+  redo unless exists $p{(sprintf '%b', $n)=~tr/1/1/};
   say $n;
 }
 ```
