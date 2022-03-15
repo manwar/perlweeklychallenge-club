@@ -14,7 +14,6 @@ ok  weird(10792);
 ok  weird(12670);
 ok  weird(14770);
 
-
 sub weird($n)
 {
     my @p = proper-divisors($n);
