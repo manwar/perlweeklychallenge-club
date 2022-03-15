@@ -34,7 +34,7 @@ sub subset-sum($sum, @n)
         {
             if @curr[$i] == 0
             {
-                @curr[$i] = 1 if @prev[$i-$n] == 1;
+                @curr[$i] = @prev[$i-$n];
             }
         }
     }
