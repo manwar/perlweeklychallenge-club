@@ -23,18 +23,16 @@ sub weird($n)
 
 sub subset-sum($sum, @n)
 {
-    my @curr = 1, |(0 xx $sum);
-    @curr[@n.head] = 1;
+    my @a = 1, |(0 xx $sum);
+    @a[@n.head] = 1;
 
     for @n.skip -> $n
     {
-        my @prev = @curr;
-
-        for $n..$sum -> $i
+        for ($n..$sum).reverse -> $i
         {
-            @curr[$i] = @prev[$i-$n] unless @curr[$i]
+            @a[$i] = @a[$i-$n] unless @a[$i]
         }
     }
 
-    @curr.tail
+    @a.tail
 }
