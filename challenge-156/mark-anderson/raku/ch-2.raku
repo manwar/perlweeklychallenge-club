@@ -32,10 +32,7 @@ sub subset-sum($sum, @n)
 
         for $n..$sum -> $i
         {
-            if @curr[$i] == 0
-            {
-                @curr[$i] = @prev[$i-$n];
-            }
+            @curr[$i] = @prev[$i-$n] unless @curr[$i]
         }
     }
 
