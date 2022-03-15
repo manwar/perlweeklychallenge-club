@@ -1,47 +1,6 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge - 156"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "drilldown" : "Dave Jacoby",
-               "y" : 3,
-               "name" : "Dave Jacoby"
-            },
-            {
-               "drilldown" : "James Smith",
-               "y" : 3,
-               "name" : "James Smith"
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 2,
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "name" : "PokGoPun",
-               "y" : 2,
-               "drilldown" : "PokGoPun"
-            },
-            {
-               "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
-            },
-            {
-               "y" : 3,
-               "drilldown" : "W. Luis Mochan",
-               "name" : "W. Luis Mochan"
-            }
-         ],
-         "name" : "The Weekly Challenge - 156"
-      }
-   ],
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
@@ -52,13 +11,13 @@
          "borderWidth" : 0
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "chart" : {
+      "type" : "column"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
@@ -87,8 +46,8 @@
                   1
                ]
             ],
-            "name" : "James Smith",
-            "id" : "James Smith"
+            "id" : "James Smith",
+            "name" : "James Smith"
          },
          {
             "id" : "Mark Anderson",
@@ -101,16 +60,17 @@
             "name" : "Mark Anderson"
          },
          {
-            "id" : "PokGoPun",
             "name" : "PokGoPun",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "PokGoPun"
          },
          {
+            "name" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
@@ -121,8 +81,21 @@
                   2
                ]
             ],
+            "id" : "Robert DiCicco"
+         },
+         {
             "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West"
+            "id" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ]
          },
          {
             "name" : "W. Luis Mochan",
@@ -141,14 +114,60 @@
       ]
    },
    "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2022-03-15 23:12:36 GMT"
+      "text" : "[Champions: 7] Last updated at 2022-03-15 23:28:52 GMT"
    },
-   "xAxis" : {
-      "type" : "category"
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 156",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 3,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "James Smith",
+               "name" : "James Smith"
+            },
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "name" : "PokGoPun",
+               "drilldown" : "PokGoPun",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Robert DiCicco",
+               "name" : "Robert DiCicco",
+               "y" : 4
+            },
+            {
+               "y" : 4,
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan"
+            }
+         ]
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 156"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "legend" : {
+      "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
