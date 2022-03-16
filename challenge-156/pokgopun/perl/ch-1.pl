@@ -6,7 +6,7 @@ my $n = shift;
 $n = 10 unless $n && $n =~ /^\d+$/;
 my $i;
 my %is_prime;
-my @prime;
+my @pn;
 {
 	my $j = ++$i;
 	my $sum;
@@ -17,14 +17,14 @@ my @prime;
 	}
 	if (defined $is_prime{$sum})
 	{
-		push @prime, $i if $is_prime{$sum};
+		push @pn, $i if $is_prime{$sum};
 	} else {
 		$is_prime{$sum} = 0;
 		if (is_prime($sum)){
 			$is_prime{$sum} = 1;
-			push @prime, $i
+			push @pn, $i
 		}
 	}
-	redo if @prime < $n;
+	redo if @pn < $n;
 }
-printf "%s\n", join(", ",@prime);
+printf "%s\n", join(", ",@pn);
