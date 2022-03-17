@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 # The Weekly Challenge 156
-# Task 2 Weired Number 
+# Task 2 Weird Number 
 # references:
 # https://www.geeksforgeeks.org/subset-sum-problem-dp-25/
+# Usage: $ ch-2.pl $N
 
 use v5.22.0;
 use warnings;
@@ -83,8 +84,8 @@ sub subset_sum {
 
 
 use Test::More tests => 6;
-ok !weird(12), "n=12";
-ok weird(70), "n=70";
+ok !weird(12), "n=12 (Example 1)";
+ok weird(70), "n=70 (Example 2)";
 ok !weird(100), "n=100";
 ok weird(4030), "n=4030 (term from wikipedia)";
 ok !weird(6000), "n=6000";
