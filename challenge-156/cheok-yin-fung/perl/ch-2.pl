@@ -6,7 +6,7 @@
 
 use v5.22.0;
 use warnings;
-use List::Util qw/uniqint/;
+use List::Util qw/uniqint sum/;
 use Math::Prime::Util qw/next_prime/;
 
 if (defined($ARGV[0])) {
@@ -18,8 +18,9 @@ if (defined($ARGV[0])) {
 
 sub weird {
     my $num = $_[0];
-    my @divisor = proper_factors($num);
-    return subset_sum($num, [@divisor]);
+    my @proper_divisors = proper_divisors($num);
+    return 0 if (sum @proper_divisors) < $num;
+    return !subset_sum($num, [@proper_divisors]);
 }
 
 
@@ -43,7 +44,7 @@ sub factorization {
 
 
 
-sub proper_factors {
+sub proper_divisors {
     my @prime_factors = factorization($_[0]);
     my @pf = (1);
     while (scalar @prime_factors > 0) {
@@ -76,7 +77,7 @@ sub subset_sum {
             }
         }
     }
-    return !$DP->[$sum][scalar @A];
+    return $DP->[$sum][scalar @A];
 }
 
 
