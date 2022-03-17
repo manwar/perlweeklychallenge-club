@@ -48,15 +48,15 @@ sub factorization {
 
 sub proper_divisors {
     my @prime_factors = factorization($_[0]);
-    my @pf = (1);
+    my @pd = (1);
     while (scalar @prime_factors > 0) {
         my $n = shift @prime_factors;
-        my @temp_pf = @pf;
-        push @pf, $n*$_ for @temp_pf;
+        my @temp_pd = @pd;
+        push @pd, $n*$_ for @temp_pd;
     }
-    @pf = sort {$a<=>$b} uniqint @pf;
-    pop @pf;    # remove the largest factor -> the number itself
-    return @pf;
+    @pd = sort {$a<=>$b} uniqint @pd;
+    pop @pd;    # remove the largest factor -> the number itself
+    return @pd;
 }
 
 
