@@ -19,6 +19,7 @@ if (defined($ARGV[0])) {
 
 sub weird {
     my $num = $_[0];
+    return 0 if $num == 1;
     my @proper_divisors = proper_divisors($num);
     return 0 if (sum @proper_divisors) < $num;
     return !subset_sum($num, [@proper_divisors]);
