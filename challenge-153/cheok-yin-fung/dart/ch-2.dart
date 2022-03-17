@@ -1,6 +1,6 @@
 // The Weekly Challenge 153
 // Task 2: Factorions
-// Usage: dart ch-2.dart [Positive Integer]
+// Usage: $ dart ch-2.dart [Positive Integer]
 
 void main(List<String> arguments) {
 // define factorial
@@ -9,7 +9,7 @@ void main(List<String> arguments) {
     factorial.add(factorial[i-1]*i);
   }
 
-// convert input into a list of positive integers < 10
+// convert input into a list of non-negative integers < 10
   String mystr = arguments[0];
   var myint = int.parse(mystr);
   mystr = myint.toString();   // avoid leading zeros
