@@ -1,27 +1,36 @@
 #!/usr/bin/perl
 use v5.22.0;
 use warnings;
-use Math::Prime::Util qw 'is_prime';
+use Math::Prime::Util qw /next_prime/;
+use Algorithm::Combinatorics qw/combinations/;
 
 my $N = $ARGV[0] || 10;
 
-my $count = 0;
+my $list_size = $N;
+my $ub = 3*$N;
 
-for (1..3*$N) {
-    if (pernicious_simple($_)) {
-        say $_;
-        $count++;
+my @pern_num = ();
+
+for my $k (2..$ub) {
+    my $prime = 2;
+    while ($prime <= $k) {
+        my @weight_k_pern_num = ();
+        my $iter = combinations([1..$k-1], $prime-1);
+        while (my $c = $iter->next) {
+            my @ch = ((1), (0) x ($k-1));
+            $ch[$_] = 1 for @{$c};
+            my $new_pern_num = oct("0b".(join "", @ch));
+            push @weight_k_pern_num, $new_pern_num;
+        }
+        push @pern_num, @weight_k_pern_num;
+        $prime = next_prime($prime);
     }
-    last if $count == $N;
+    last if scalar @pern_num >= $N;
 }
 
-die "bound too small\n" if $count < $N;
+
+@pern_num = sort {$a<=>$b} @pern_num;
+say join ", ", @pern_num[0..$N-1]; 
 
 
 
-sub pernicious_simple {
-    my $num = $_[0];
-    my $count_one = scalar 
-                      grep { $_ == 1 } split "", sprintf("%b",$num);
-    return is_prime($count_one) ? 1 : 0;
-}
