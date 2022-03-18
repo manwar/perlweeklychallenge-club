@@ -1,0 +1,38 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $n where $n > 0);
+
+my @proper-divisors = divisors($n, :not-self);
+
+if (@proper-divisors.sum  > $n)
+{
+  for @proper-divisors.combinations -> @combination
+  {
+    if @combination.sum == $n
+    {
+      say 0;
+      exit;
+    }
+  }
+  
+  say 1;
+  exit;
+}  
+
+say 0;
+
+sub divisors ($number, :$not-self, :$not-one)
+{
+  my @divisors;
+  
+  for ($not-one ?? 2 !! 1) .. $number/2 -> $candidate
+  {
+    @divisors.push: $candidate if $number %% $candidate;
+  }
+  
+  @divisors.push: $number unless $not-self;
+
+  # say ": $number has { @divisors.elems } divisors: { @divisors.join(", ") }" if $verbose;
+
+  return @divisors;
+}
