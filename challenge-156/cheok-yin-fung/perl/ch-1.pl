@@ -1,4 +1,8 @@
 #!/usr/bin/perl
+# The Weekly Challenge 156
+# Task 1 Pernicious Number
+# Usage: 
+# ch-1.pl [$N, for an output with the first $N pernicious number]
 use v5.22.0;
 use warnings;
 use Math::Prime::Util qw /next_prime/;
@@ -14,15 +18,15 @@ my @pern_num = ();
 for my $k (2..$ub) {
     my $prime = 2;
     while ($prime <= $k) {
-        my @weight_k_pern_num = ();
+        my @length_k_weight_p_num = ();
         my $iter = combinations([1..$k-1], $prime-1);
         while (my $c = $iter->next) {
             my @ch = ((1), (0) x ($k-1));
             $ch[$_] = 1 for @{$c};
             my $new_pern_num = oct("0b".(join "", @ch));
-            push @weight_k_pern_num, $new_pern_num;
+            push @length_k_weight_p_num, $new_pern_num;
         }
-        push @pern_num, @weight_k_pern_num;
+        push @pern_num, @length_k_weight_p_num;
         $prime = next_prime($prime);
     }
     last if scalar @pern_num >= $N;

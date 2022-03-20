@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # The Weekly Challenge 156
 # Task 2 Weird Number 
-# references:
+# references on subset sum:
 # https://www.geeksforgeeks.org/subset-sum-problem-dp-25/
 # Usage: $ ch-2.pl $N
 
