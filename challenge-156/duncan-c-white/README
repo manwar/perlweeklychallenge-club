@@ -1,66 +1,52 @@
-TASK #1 - Fortunate Numbers
+TASK #1 - Pernicious Numbers
 
-Write a script to produce first 8 Fortunate Numbers (unique and sorted).
+Write a script to permute first 10 Pernicious Numbers.
 
-According to Wikipedia
+A pernicious number is a positive integer which has prime number of ones
+in its binary representation.
 
-A Fortunate number, named after Reo Fortune, is the smallest integer m >
-1 such that, for a given positive integer n, pn# + m is a prime number,
-where the primorial pn# is the product of the first n prime numbers.
+The first pernicious number is 3 since binary representation of 3 =
+(11) and 1 + 1 = 2, which is a prime.
 
 Expected Output
 
-3, 5, 7, 13, 17, 19, 23, 37
+3, 5, 6, 7, 9, 10, 11, 12, 13, 14
 
-MY NOTES: ok.  Note that the Wikipedia article is not clear whether the
-Nth Fortunate number is the smallest integer m>1 s.t. pN# + m is prime,
-or whether that Nth value found is **A* Fortunate number, but the Fortunate
-numbers themselves are sorted and have duplicates removed - and the Nth
-Fortunate number is the Nth term of the sorted and deduped list.  I think
-we want the latter, because the unsorted Fortunate numbers corresponding to
-pn# for n=1..8 are 3, 5, 7, 13, 23, 17, 19, 23, i.e. they are not sorted and
-contain a duplicate of 23.
-
-Once you sort and dedup these, you get the desired sequence
-3, 5, 7, 13, 17, 19, 23, 37
-
-HOWEVER, it's not obvious how many unsorted Fortunate numbers we have
-to calculate to know that we've found the first N sorted ones.  Let's keep
-going until we have found N distinct Fortunate numbers and then sort them.
-Is it possible for a later unsorted Fortunate number to be smaller
-than one of the ones we've # found so far?  Yes, blast it:
-The output of this program for N=1 is 3,5,7,13,17,19,23,37,61,67,71
-and for N=12 is 3,5,7,13,17,19,23,37,47,61,67,71
-(showing that the 12th distinct value found is 47, smaller than the 9th..11th
-distinct value found)
-
-Also, this program won't work for N>12 because the primorial values get so
-enormous, like factorials.  I tried bigint but that slowed everything down
-so much that I couldn't find the answers in the time I had available.
+MY NOTES: ok.  Pretty easy.  pernicious(n) = isprime(countones(binary(n)))
 
 
-TASK #2 - Pisano Period
+TASK #2 - Weird Number
 
-Write a script to find the period of the 3rd Pisano Period.
+You are given number, $n > 0.
 
-In number theory, the nth Pisano period, written as pi(n), is the period
-with which the sequence of Fibonacci numbers taken modulo n repeats.
+Write a script to find out if the given number is a Weird Number.
 
-The Fibonacci numbers are the numbers in the integer sequence:
+According to Wikipedia, it is defined as:
 
-0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, ...
+The sum of the proper divisors (divisors including 1 but not itself) of
+the number is greater than the number, but no subset of those divisors
+sums to the number itself.
 
-For any integer n, the sequence of Fibonacci numbers F(i) taken modulo
-n is periodic. The Pisano period, denoted pi(n), is the value of the
-period of this sequence. For example, the sequence of Fibonacci numbers
-modulo 3 begins:
+Example 1:
 
-0, 1, 1, 2, 0, 2, 2, 1,
-0, 1, 1, 2, 0, 2, 2, 1,
-0, 1, 1, 2, 0, 2, 2, 1, ...
+	Input: $n = 12
+	Output: 0
 
-This sequence has period 8, so pi(3) = 8.
+Since the proper divisors of 12 are 1, 2, 3, 4, and 6, which sum to 16;
+but 2 + 4 + 6 = 12.
 
-MY NOTES: ok.  Once we've found a sequence of length L that immediately
-repeats, i.e. that the first 2L entries comprise the same length L sequence
-repeated twice, How do we know that this sequence repeats forever?
+Example 2:
+
+	Input: $n = 70
+	Output: 1
+
+As the proper divisors of 70 are 1, 2, 5, 7, 10, 14, and 35; these sum
+to 74, but no subset of these sums to 70.
+
+MY NOTES: ok.  Handle "sum of subsets of these items" by noting that
+each item may be present or absent, so have a counting loop from 0..
+2**(nitems)-1 and compute the sum of just those items selected by the
+binary bits of the count that are 1.
+
+Bonus: I added a "tabulate" facility (eg. run with --tabulate 5 to
+see the first 5 Weird numbers).
