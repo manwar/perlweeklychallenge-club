@@ -40,16 +40,20 @@ sub means {
 
 ## The solution
 
-For any value of `$B` we can check that the digits are the same by repeated integer division. We first store the last digit `$last` below, and compare each digit with this value. If they are the not the same we jump out of the inner loop to the next value of the outer loop `next O`. So if they are the same it falls down to the `return 1;` inside the outer loop. If all fail we never get to the `return 1;` so return `0` from the last line of the function.
+For any value of `$B` we can check that the digits are the same by repeated integer division. We first store the last digit `$last` below, and compare each digit with this value. If they are the not the same we jump out of the inner loop to the next value of the outer loop `next OUTER`. So if they are the same it falls down to the `return 1;` inside the outer loop. If all fail we never get to the `return 1;` so return `0` from the last line of the function.
+
 ```perl
 sub is_brazilian {
-  O: for my $b (2..($_[0]-2)) {
+  OUTER: for my $b (2..($_[0]-2)) {
     my $last = (my $n=$_[0])%$b;
-    $n%$b==$last || next O while $n=int($n/$b);
+    $n%$b == $last || next OUTER while $n=int($n/$b);
     return 1;
   }
   0;
 }
 ```
 
-**Note** - `next {label}` is useful in many examples to jump out of inner loop without using *flag* variables to know whether the inner loop returned a *true* or *false* value.
+### Note
+ * `next {label}` is useful in many examples to jump out of inner loop without using *flag* variables to know whether the inner loop returned a *true* or *false* value.
+ * Conway frowns on this in PBP - but with such a short loop it is easy at a glance to see what the `next OUTER` does.
+   ( If the code was longer it may no longer be possible to see the outside of the loop when looking at in a "normal" terminal window. )
