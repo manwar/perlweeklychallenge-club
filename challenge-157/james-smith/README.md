@@ -44,9 +44,9 @@ For any value of `$B` we can check that the digits are the same by repeated inte
 
 ```perl
 sub is_brazilian {
-  O: for my $b (2..$_[0]/2-1) {
-    my $last = (my $n=$_[0])%$b;
-    $n%$b == $last || next OUTER while $n=int($n/$b);
+  OUTER: for my $b (2..$_[0]/2-1) {
+    my $last = (my $n=$_[0]) % $b;
+    $n % $b == $last || next OUTER while $n = int( $n/$b );
     return 1;
   }
   0;
@@ -54,6 +54,7 @@ sub is_brazilian {
 ```
 
 ### Notes
+ * `{condition} || {command}` inside a `for` or `while` loop is the same as `unless( {condition} ) {command}` - it is often used when it makes a multi-line block into a single lined block with a postfix loop. This is useful to keep the overall code length shorter and therefore more-readable. Similarly can use `&&` for `if` and `?:` for `if`/`else`.
  * We do not need to loop up to `$N-2` as the brazilian number will always be less than half this. So the `$b` loop is shorter - and makes the code run around 40-50% faster.
  * `next {label}` is useful in many examples to jump out of inner loop without using *flag* variables to know whether the inner loop returned a *true* or *false* value.
  * Conway frowns on this in PBP - but with such a short loop it is easy at a glance to see what the `next OUTER` does.
