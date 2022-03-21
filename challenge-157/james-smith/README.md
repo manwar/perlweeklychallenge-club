@@ -1,6 +1,6 @@
 [< Previous 156](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-156/james-smith) |
 [Next 158 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-158/james-smith)
-# The Weekly Challenge #157
+# The Weekly Challenge 157
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -20,6 +20,10 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-157/ja
 
 ## The solution
 
+Computing the means is relatively straight forward. We just need to keep the sum of values, the product of values & the sum of their reciprocals.
+
+Once we have these sums, it is easy to return the respective means - dividing by `$N`, taking the `$N`-th root and taking `$N` divided by the sum.
+
 ```perl
 sub means {
   my ($am, $gm, $hm) = (0, 1, 0);
@@ -28,19 +32,28 @@ sub means {
 }
 ```
 
+**Note** - we assume all integer values are not equal to `0`.
+
 # Challenge 2 - Brazilian Number
 
 ***You are given a number `$n > 3`. Write a script to find out if the given number is a Brazilian Number. A positive integer number `N` has at least one natural number `B` where `1 < B < N-1` where the representation of N in base B has same digits.
 
 ## The solution
 
+For any value of `$B` we can check that the digits are the same by repeated integer division. We first store the last digit `$last` below, and compare each digit with this value. If they are the not the same we jump out of the inner loop to the next value of the outer loop `next OUTER`. So if they are the same it falls down to the `return 1;` inside the outer loop. If all fail we never get to the `return 1;` so return `0` from the last line of the function.
+
 ```perl
 sub is_brazilian {
-  O: for my $b (2..($_[0]-2)) {
+  OUTER: for my $b (2..($_[0]-2)) {
     my $last = (my $n=$_[0])%$b;
-    $n%$b==$last || next O while $n=int($n/$b);
+    $n%$b == $last || next OUTER while $n=int($n/$b);
     return 1;
   }
   0;
 }
 ```
+
+### Note
+ * `next {label}` is useful in many examples to jump out of inner loop without using *flag* variables to know whether the inner loop returned a *true* or *false* value.
+ * Conway frowns on this in PBP - but with such a short loop it is easy at a glance to see what the `next OUTER` does.
+   ( If the code was longer it may no longer be possible to see the outside of the loop when looking at in a "normal" terminal window. )
