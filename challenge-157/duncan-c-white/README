@@ -1,0 +1,52 @@
+TASK #1 - Pernicious Numbers
+
+Write a script to permute first 10 Pernicious Numbers.
+
+A pernicious number is a positive integer which has prime number of ones
+in its binary representation.
+
+The first pernicious number is 3 since binary representation of 3 =
+(11) and 1 + 1 = 2, which is a prime.
+
+Expected Output
+
+3, 5, 6, 7, 9, 10, 11, 12, 13, 14
+
+MY NOTES: ok.  Pretty easy.  pernicious(n) = isprime(countones(binary(n)))
+
+
+TASK #2 - Weird Number
+
+You are given number, $n > 0.
+
+Write a script to find out if the given number is a Weird Number.
+
+According to Wikipedia, it is defined as:
+
+The sum of the proper divisors (divisors including 1 but not itself) of
+the number is greater than the number, but no subset of those divisors
+sums to the number itself.
+
+Example 1:
+
+	Input: $n = 12
+	Output: 0
+
+Since the proper divisors of 12 are 1, 2, 3, 4, and 6, which sum to 16;
+but 2 + 4 + 6 = 12.
+
+Example 2:
+
+	Input: $n = 70
+	Output: 1
+
+As the proper divisors of 70 are 1, 2, 5, 7, 10, 14, and 35; these sum
+to 74, but no subset of these sums to 70.
+
+MY NOTES: ok.  Handle "sum of subsets of these items" by noting that
+each item may be present or absent, so have a counting loop from 0..
+2**(nitems)-1 and compute the sum of just those items selected by the
+binary bits of the count that are 1.
+
+Bonus: I added a "tabulate" facility (eg. run with --tabulate 5 to
+see the first 5 Weird numbers).
