@@ -36,7 +36,7 @@ sub means {
 
 # Challenge 2 - Brazilian Number
 
-***You are given a number `$n > 3`. Write a script to find out if the given number is a Brazilian Number. A positive integer number `N` has at least one natural number `B` where `1 < B < N-1` where the representation of N in base B has same digits.
+***You are given a number `N > 3`. Write a script to find out if the given number is a Brazilian Number. A positive integer number `N` has at least one natural number `B` where `1 < B < N-1` where the representation of N in base B has same digits.***
 
 ## The solution
 
@@ -44,7 +44,7 @@ For any value of `$B` we can check that the digits are the same by repeated inte
 
 ```perl
 sub is_brazilian {
-  OUTER: for my $b (2..($_[0]-2)) {
+  O: for my $b (2..$_[0]/2-1) {
     my $last = (my $n=$_[0])%$b;
     $n%$b == $last || next OUTER while $n=int($n/$b);
     return 1;
@@ -53,7 +53,8 @@ sub is_brazilian {
 }
 ```
 
-### Note
+### Notes
+ * We do not need to loop up to `$N-2` as the brazilian number will always be less than half this. So the `$b` loop is shorter - and makes the code run around 40-50% faster.
  * `next {label}` is useful in many examples to jump out of inner loop without using *flag* variables to know whether the inner loop returned a *true* or *false* value.
  * Conway frowns on this in PBP - but with such a short loop it is easy at a glance to see what the `next OUTER` does.
    ( If the code was longer it may no longer be possible to see the outside of the loop when looking at in a "normal" terminal window. )
