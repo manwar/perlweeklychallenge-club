@@ -1,7 +1,7 @@
-CREATE SCHEMA IF NOT EXISTS pwc158;
+CREATE SCHEMA IF NOT EXISTS pwc157;
 
 CREATE OR REPLACE FUNCTION
-pwc158.am( int[] )
+pwc157.am( int[] )
 RETURNS numeric
 AS $CODE$
 my $counter = 0;
@@ -19,7 +19,7 @@ LANGUAGE plperl;
 
 
 CREATE OR REPLACE FUNCTION
-pwc158.gm( int[] )
+pwc157.gm( int[] )
 RETURNS numeric
 AS $CODE$
 my $counter = 0;
@@ -36,7 +36,7 @@ LANGUAGE plperl;
 
 
 CREATE OR REPLACE FUNCTION
-pwc158.hm( int[] )
+pwc157.hm( int[] )
 RETURNS numeric
 AS $CODE$
 my $counter = 0;
