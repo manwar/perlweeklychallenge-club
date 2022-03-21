@@ -16,7 +16,7 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-157/ja
 
 # Challenge 1 - Pythagorean Means
 
-***You are given a set of integers. Write a script to compute all three Pythagorean Means i.e Arithmetic Mean, Geometric Mean and Harmonic Mean of the given set of integers.***
+***You are given a set of integers. Write a script to compute all three Pythagorean Means i.e. Arithmetic Mean, Geometric Mean and Harmonic Mean of the given set of integers.***
 
 ## The solution
 
@@ -32,7 +32,17 @@ sub means {
 }
 ```
 
-**Note** - we assume all integer values are not equal to `0`.
+### Notes:
+ * we assume that (a) the list is not empty, and (b) all integer values are not equal to `0`.
+ * the code is optimal in the number of operators. We should note that if the array size is large the geometric mean product can get large (prior to taking the *n*th root). So the value of `$gm` could be multipled by the *n*th root of each number in turn. So the middle line would be `$gm*=$_**(1/@_)` and the last line would just contain `$gm`.
+ * the other two means this shouldn't be an issue.
+```perl
+sub means {
+  my ($am, $gm, $hm) = (0, 1, 0);
+  $am+=$_, $gm*=$_**(1/@_), $hm+=1/$_ for @_;
+  ( $am/@_, $gm, @_/$hm );
+}
+```
 
 # Challenge 2 - Brazilian Number
 
