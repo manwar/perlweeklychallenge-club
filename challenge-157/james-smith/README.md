@@ -20,6 +20,10 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-157/ja
 
 ## The solution
 
+Computing the means is relatively straight forward. We just need to keep the sum of values, the product of values & the sum of their reciprocals.
+
+Once we have these sums, it is easy to return the respective means - dividing by `$N`, taking the `$N`-th root and taking `$N` divided by the sum.
+
 ```perl
 sub means {
   my ($am, $gm, $hm) = (0, 1, 0);
@@ -28,12 +32,15 @@ sub means {
 }
 ```
 
+**Note** - we assume all integer values are not equal to `0`.
+
 # Challenge 2 - Brazilian Number
 
 ***You are given a number `$n > 3`. Write a script to find out if the given number is a Brazilian Number. A positive integer number `N` has at least one natural number `B` where `1 < B < N-1` where the representation of N in base B has same digits.
 
 ## The solution
 
+For any value of `$B` we can check that the digits are the same by repeated integer division. We first store the last digit `$last` below, and compare each digit with this value. If they are the not the same we jump out of the inner loop to the next value of the outer loop `next O`. So if they are the same it falls down to the `return 1;` inside the outer loop. If all fail we never get to the `return 1;` so return `0` from the last line of the function.
 ```perl
 sub is_brazilian {
   O: for my $b (2..($_[0]-2)) {
@@ -44,3 +51,5 @@ sub is_brazilian {
   0;
 }
 ```
+
+**Note** - `next {label}` is useful in many examples to jump out of inner loop without using *flag* variables to know whether the inner loop returned a *true* or *false* value.
