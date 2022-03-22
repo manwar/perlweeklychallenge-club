@@ -93,7 +93,7 @@ sub min_path_anydir_sort {
   $res;
 }
 
-sub min_path_anydir_stot {
+sub min_path_anydir_sort {
   my $res=0;
   $res += [sort {$a<=>$b} @{$_}]->[0] for @{$_[0]};
   $res;
@@ -130,7 +130,7 @@ So we can compute 3 heights:
 
 We do similarly for the 3 widths.
 
-Then the area is `w1*12 + w2*h2` and if there is an itersection *i.e.* both w3 & h3 are positive - we subtract `w3*h3`.
+Then the area is `w1*h1 + w2*h2` and if there is an itersection *i.e.* both w3 & h3 are positive - we subtract `w3*h3`.
 
 This gives us the solution:
 
