@@ -3,6 +3,9 @@
 unit sub MAIN(*@a);
 
 my UInt \n = @a.elems;
-put 'AM = ', (@a.sum / n)         .fmt('%.2f'), ', ',
-    'GM = ', (([*] @a) ** (1/n))  .fmt('%.2f'), ', ',
-    'HM = ', (n / @a.map(1/*).sum).fmt('%.2f');
+my %medians =
+    'AM' => @a.sum / n,
+    'GM' => ([*] @a) ** (1/n),
+    'HM' => n / @a.map(1/*).sum;
+
+put %medians.keys.sort.map({ "$_ = ", %medians{$_}.fmt('%.2f') }).join(', ');
