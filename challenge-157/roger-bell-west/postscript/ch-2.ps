@@ -1,0 +1,70 @@
+%!PS
+
+% begin included library code
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+% end included library code
+
+/brazilian {
+    6 dict begin
+    /n exch def
+    /brazilian false def
+    2 1 n 2 sub {
+        /b exch def
+        /nn n def
+        /braz true def
+        /digit nn b mod def
+        {
+            nn 0 le {
+                exit
+            } if
+            digit nn b mod eq {
+                /nn nn b idiv def
+            } {
+                /braz false def
+                exit
+            } ifelse
+        } loop
+        braz {
+            /brazilian true def
+            exit
+        } if
+    } for
+    brazilian
+    end
+} bind def
+
+(brazilian) test.start
+7 brazilian test
+6 brazilian not test
+8 brazilian test
+test.end
