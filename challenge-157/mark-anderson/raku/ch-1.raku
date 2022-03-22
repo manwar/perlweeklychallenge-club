@@ -6,7 +6,7 @@ say pyth-means([1, 2, 3, 4, 5]);
 
 sub pyth-means(@n)
 {
-    (([+] @n) / @n.elems).fmt("%.1f"),
-    (([*] @n) ** (1/@n.elems)).fmt("%.1f"),
-    ((@n.map(* ** -1).sum / @n.elems) ** -1).fmt("%.1f")
+     (([+] @n) / @n).fmt("%.1f"),
+     (([*] @n) ** (1 / @n)).fmt("%.1f"),
+    ((([+] @n >>**>> -1) / @n) ** -1).fmt("%.1f")
 }
