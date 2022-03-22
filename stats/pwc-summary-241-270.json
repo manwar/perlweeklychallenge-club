@@ -1,10 +1,20 @@
 {
    "subtitle" : {
-      "text" : "[Champions: 13] Last updated at 2022-03-22 18:27:21 GMT"
+      "text" : "[Champions: 13] Last updated at 2022-03-22 18:32:41 GMT"
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -23,19 +33,16 @@
          "Yozen Hernandez"
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             24,
             17,
@@ -50,8 +57,7 @@
             3,
             86,
             21
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -89,11 +95,5 @@
             14
          ]
       }
-   ],
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   }
+   ]
 }
