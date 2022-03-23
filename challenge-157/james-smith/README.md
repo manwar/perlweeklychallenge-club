@@ -34,10 +34,12 @@ sub means {
 
 ### Notes:
  * we assume that (a) the list is not empty, and (b) all integer values are not equal to `0`.
- * the code is optimal in the number of operators. We should note that if the array size is large the geometric mean product can get large (prior to taking the *n*th root). So the value of `$gm` could be multipled by the *n*th root of each number in turn. So the middle line would be `$gm*=$_**(1/@_)` and the last line would just contain `$gm`.
- * the other two means this shouldn't be an issue.
+ * the code is optimal in the number of operators.
+   * We should note that if the array size is large the geometric mean product can get large (prior to taking the *n*th root). So the value of `$gm` could be multipled by the *n*th root of each number in turn. So the middle line would be `$gm*=$_**(1/@_)` and the last line would just contain `$gm`.
+   * If we look at the geometric mean of the numbers `1` .. `$N` then the naive method above fails when `$N` is `171` just returning `Inf`, whereas the code below continues working giving the right answer 
+   * the other two means this shouldn't be an issue (the intermediate calculation is a summation)
 ```perl
-sub means {
+sub means_scalable {
   my ($am, $gm, $hm) = (0, 1, 0);
   $am+=$_, $gm*=$_**(1/@_), $hm+=1/$_ for @_;
   ( $am/@_, $gm, @_/$hm );
