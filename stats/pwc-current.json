@@ -1,12 +1,12 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge - 157"
+   "legend" : {
+      "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
       }
@@ -16,7 +16,6 @@
    },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 157",
          "data" : [
             {
@@ -25,29 +24,34 @@
                "drilldown" : "Cheok-Yin Fung"
             },
             {
-               "drilldown" : "E. Choroba",
-               "y" : 2,
-               "name" : "E. Choroba"
-            },
-            {
-               "name" : "James Smith",
-               "drilldown" : "James Smith",
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
                "y" : 3
             },
             {
-               "name" : "Luca Ferrari",
+               "name" : "E. Choroba",
+               "y" : 2,
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "name" : "James Smith",
+               "y" : 3,
+               "drilldown" : "James Smith"
+            },
+            {
                "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
                "y" : 6
             },
             {
-               "drilldown" : "Mark Anderson",
                "y" : 2,
-               "name" : "Mark Anderson"
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson"
             },
             {
-               "drilldown" : "Matthew Neleigh",
+               "name" : "Matthew Neleigh",
                "y" : 2,
-               "name" : "Matthew Neleigh"
+               "drilldown" : "Matthew Neleigh"
             },
             {
                "drilldown" : "Niels van Dijke",
@@ -55,14 +59,14 @@
                "name" : "Niels van Dijke"
             },
             {
+               "drilldown" : "Peter Campbell Smith",
                "name" : "Peter Campbell Smith",
-               "y" : 3,
-               "drilldown" : "Peter Campbell Smith"
+               "y" : 3
             },
             {
                "drilldown" : "PokGoPun",
-               "y" : 2,
-               "name" : "PokGoPun"
+               "name" : "PokGoPun",
+               "y" : 2
             },
             {
                "name" : "Robert DiCicco",
@@ -70,56 +74,46 @@
                "drilldown" : "Robert DiCicco"
             },
             {
+               "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
-            },
-            {
-               "name" : "Ulrich Rieke",
-               "drilldown" : "Ulrich Rieke",
                "y" : 4
             },
             {
-               "name" : "W. Luis Mochan",
+               "y" : 4,
+               "name" : "Ulrich Rieke",
+               "drilldown" : "Ulrich Rieke"
+            },
+            {
+               "drilldown" : "W. Luis Mochan",
                "y" : 3,
-               "drilldown" : "W. Luis Mochan"
+               "name" : "W. Luis Mochan"
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 13] Last updated at 2022-03-23 15:59:17 GMT"
+   "chart" : {
+      "type" : "column"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
          {
             "name" : "Cheok-Yin Fung",
-            "id" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Cheok-Yin Fung"
          },
          {
-            "name" : "E. Choroba",
-            "id" : "E. Choroba",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "James Smith",
-            "id" : "James Smith",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -129,9 +123,35 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Dave Jacoby"
          },
          {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "E. Choroba",
+            "id" : "E. Choroba"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "James Smith",
+            "name" : "James Smith"
+         },
+         {
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -142,28 +162,27 @@
                   4
                ]
             ],
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari"
+            "name" : "Luca Ferrari"
          },
          {
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mark Anderson"
          },
          {
             "name" : "Matthew Neleigh",
-            "id" : "Matthew Neleigh",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Matthew Neleigh"
          },
          {
             "data" : [
@@ -176,6 +195,7 @@
             "name" : "Niels van Dijke"
          },
          {
+            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -186,20 +206,20 @@
                   1
                ]
             ],
-            "name" : "Peter Campbell Smith",
-            "id" : "Peter Campbell Smith"
+            "name" : "Peter Campbell Smith"
          },
          {
+            "id" : "PokGoPun",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "PokGoPun",
-            "id" : "PokGoPun"
+            "name" : "PokGoPun"
          },
          {
+            "name" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
@@ -210,7 +230,6 @@
                   2
                ]
             ],
-            "name" : "Robert DiCicco",
             "id" : "Robert DiCicco"
          },
          {
@@ -224,10 +243,11 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          },
          {
+            "name" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -238,12 +258,10 @@
                   2
                ]
             ],
-            "id" : "Ulrich Rieke",
-            "name" : "Ulrich Rieke"
+            "id" : "Ulrich Rieke"
          },
          {
             "id" : "W. Luis Mochan",
-            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -253,19 +271,20 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "W. Luis Mochan"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "The Weekly Challenge - 157"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "subtitle" : {
+      "text" : "[Champions: 14] Last updated at 2022-03-23 17:53:44 GMT"
    },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
