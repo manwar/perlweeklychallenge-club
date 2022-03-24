@@ -1,0 +1,17 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $count where $count > 0);
+
+(4..Inf).grep( *.&is-brazilian ).head($count).join(", ").say;
+
+sub is-brazilian ($number)
+{
+  for 2 .. $number -2 -> $base
+  {
+    my @digits = $number.polymod($base, $base ... *);
+
+    return True if [==] @digits;
+  }
+  
+  return False;
+}
