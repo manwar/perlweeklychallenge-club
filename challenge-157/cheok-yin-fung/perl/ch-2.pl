@@ -8,7 +8,7 @@ my $N = $ARGV[0] || 10;
 
 my $ans = find($N);
 if ($ans) {
-    say "$N is a repdigit in base-", find($N), "; therefore it's Brazilian.";
+    say "$N is a repdigit in base-", $ans, "; therefore it's Brazilian.";
 }
 else {
     say "$N is not a Brazilian number."
