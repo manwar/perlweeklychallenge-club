@@ -17,11 +17,15 @@ my @TESTS = (
   [ 1..170 ],
   [ 1..171 ],
   [ 1..999 ],
+  [ 1..9999 ],
+  [ 1..99999 ],
+  [ 1..999999 ],
+  [ 1..9999999 ],
 );
 
-say sprintf 'AM = %10.6f, GM = %10.6f, HM = %10.6f', means( @{$_} )          for @TESTS;
+say sprintf 'AM = %15.6f, GM = %15.6f, HM = %15.6f', means( @{$_} )          for @TESTS;
 say '';
-say sprintf 'AM = %10.6f, GM = %10.6f, HM = %10.6f', means_scalable( @{$_} ) for @TESTS;
+say sprintf 'AM = %15.6f, GM = %15.6f, HM = %15.6f', means_scalable( @{$_} ) for @TESTS;
 
 sub means {
   my ($am, $gm, $hm) = (0, 1, 0);
