@@ -15,7 +15,7 @@ is-deeply (1, 3...*).hyper.grep(&Brazilian)[3981..4000],
 # Composite Brazilian numbers https://oeis.org/A220571/b220571.txt
 is-deeply (^Inf).hyper.grep(*.is-prime.not).grep(&Brazilian)[9981..10000], 
 (11382, 11384, 11385, 11386, 11387, 11388, 11389, 11390, 11391, 11392,
-11394, 11395, 11396, 11397, 11398, 11400, 11401, 11402, 11403, 11404);
+ 11394, 11395, 11396, 11397, 11398, 11400, 11401, 11402, 11403, 11404);
 
 #Prime Brazilian numbers https://oeis.org/A085104 
 is-deeply (^Inf).hyper.grep(&is-prime).grep(&Brazilian)[81..100],
