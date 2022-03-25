@@ -40,10 +40,7 @@ sub Brazilian(\n)
 
             for 2..e**(.log / 4) -> \b 
             {
-                if (1, b, b**2, b**3...b**.log(b)).sum == $_ 
-                {
-                    return True 
-                }
+                return True if (1, b, b**2, b**3...b**.log(b)).sum == $_ 
             }
         }
     }
