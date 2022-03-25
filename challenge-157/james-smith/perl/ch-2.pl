@@ -17,7 +17,7 @@ my %T = map { $_ => 1 } qw(
   81 82    84 85 86 87 88    90 91 92 93 94 95 96    98 99 100
 );
 
-is( is_brazilian( $_ ), $T{$_}||0 ) for 1..100;
+is( is_brazilian( $_ ), $T{$_}||0 ) for 4..100;
 
 done_testing();
 
