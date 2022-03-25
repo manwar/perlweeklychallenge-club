@@ -2,42 +2,49 @@
 
 use Test;
 
-for <7 13 31 43 73 127 157 211 241 307 421 463 601 757 1093 
-     1123 1483 1723 2551 2801 2971 3307 3541 3907 4423>
+# Brazilian numbers https://oeis.org/A125134/b125134.txt
+is-deeply (^Inf).hyper.grep(&Brazilian)[3981..4000], 
+(4598, 4599, 4600, 4601, 4602, 4604, 4605, 4606, 4607, 4608,
+ 4609, 4610, 4611, 4612, 4613, 4614, 4615, 4616, 4617, 4618);
+                                             
+# Odd Brazilian numbers https://oeis.org/A257521/b257521.txt
+is-deeply (1, 3...*).hyper.grep(&Brazilian)[3981..4000], 
+(10511, 10515, 10517, 10519, 10521, 10523, 10525, 10527, 10533, 10535, 
+ 10537, 10539, 10541, 10543, 10545, 10547, 10549, 10551, 10553, 10555);
+
+# Composite Brazilian numbers https://oeis.org/A220571/b220571.txt
+is-deeply (^Inf).hyper.grep(*.is-prime.not).grep(&Brazilian)[9981..10000], 
+(11382, 11384, 11385, 11386, 11387, 11388, 11389, 11390, 11391, 11392,
+ 11394, 11395, 11396, 11397, 11398, 11400, 11401, 11402, 11403, 11404);
+
+#Prime Brazilian numbers https://oeis.org/A085104 
+is-deeply (^Inf).hyper.grep(&is-prime).grep(&Brazilian)[81..100],
+(95791,  98911,  108571, 110557, 113233, 117307, 118681, 121453, 123553, 127807,
+ 131071, 136531, 143263, 145543, 147073, 154057, 156421, 158803, 162007, 163621);
+
+sub Brazilian(\n)
 {
-    ok Brazilian($_), "$_ is a Brazilian prime"
-}
-
-for <23 89 131 181 389 541 557 599 659 997 1103 1459 1861 
-     2417 2683 3167 3583 3797 3881 4261>
-{
-    nok Brazilian($_), "$_ is not a Brazilian prime"
-}
-
-for <8 121 265 326 404 674 749 884 1043 1648 1671 1710 1941 2168 
-     2379 2674 2811 3028 3218 3345 3796 4030 4390 4453 4538>
-{
-    ok Brazilian($_), "$_ is a Brazilian composite"
-}
-
-for <4 6 9 25 49 169 289 361 529 841 961 1369 1681 1849 2209 
-     2809 3481 3721 4489>
-{
-    nok Brazilian($_), "$_ is not a Brazilian composite"
-}
-
-multi Brazilian($n where * < 7)          { return False         }
-
-multi Brazilian($n where * == 121)       { return True          }
-
-multi Brazilian($n where not *.is-prime) { not $n.sqrt.is-prime } 
-
-multi Brazilian($n)
-{
-    for $n.sqrt.floor...2 -> $b
+    given n
     {
-        return True if (1, $b, $b**2, $b**3...$b**$n.log($b).floor).sum == $n 
-    }
+        when 1..6          { False              }
 
-    return False
+        when 121           { True               }
+
+        when .is-prime.not { .sqrt.is-prime.not } 
+    
+        default
+        {
+            my \b = .sqrt.floor;
+
+            return True if (1, b, b**2, b**3...b**.log(b)).sum == $_; 
+
+            for 2..e**(.log / 4) -> \b 
+            {
+                if (1, b, b**2, b**3...b**.log(b)).sum == $_ 
+                {
+                    return True 
+                }
+            }
+        }
+    }
 }
