@@ -1,6 +1,21 @@
 {
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             26,
             0,
@@ -32,8 +47,7 @@
             4,
             38,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -106,11 +120,15 @@
          "name" : "Blog"
       }
    ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-03-26 13:39:09 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "xAxis" : {
       "categories" : [
@@ -145,23 +163,5 @@
          "Kian-Meng Ang",
          "Kiran Kumar"
       ]
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-03-26 13:31:00 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
    }
 }
