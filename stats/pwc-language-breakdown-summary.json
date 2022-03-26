@@ -1,19 +1,6 @@
 {
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "y" : 10,
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "enabled" : "true"
-         },
          "data" : [
             [
                "Blog",
@@ -21,26 +8,45 @@
             ],
             [
                "Perl",
-               7571
+               7573
             ],
             [
                "Raku",
                4539
             ]
-         ]
+         ],
+         "name" : "Contributions",
+         "dataLabels" : {
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right",
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "color" : "#FFFFFF"
+         }
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-03-26 13:39:09 GMT"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
    },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
+      },
+      "min" : 0
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "chart" : {
       "type" : "column"
@@ -48,16 +54,10 @@
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
+   "subtitle" : {
+      "text" : "Last updated at 2022-03-26 13:54:27 GMT"
    },
-   "legend" : {
-      "enabled" : "false"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
