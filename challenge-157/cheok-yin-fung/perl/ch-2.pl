@@ -8,7 +8,7 @@ my $N = $ARGV[0] || 10;
 
 my $ans = find($N);
 if ($ans) {
-    say "$N is a repdigit in base-", find($N), "; therefore it's Brazilian.";
+    say "$N is a repdigit in base-", $ans, "; therefore it's Brazilian.";
 }
 else {
     say "$N is not a Brazilian number."
@@ -32,10 +32,14 @@ sub proper_divisors_lt_one {
 # lazy way to find divisors
     my $num = $_[0];
     my @pd = ();
-    for my $i (2..$num/2) {
-        push @pd, $i if $num % $i == 0;
+    my @rev_pd = ();
+    for my $i (2..int sqrt $num) {
+        if ($num % $i == 0) {
+            push @pd, $i;
+            unshift @rev_pd, $num/$i;
+        }
     }
-    return [@pd];
+    return [@pd, @rev_pd];
 }
 
 

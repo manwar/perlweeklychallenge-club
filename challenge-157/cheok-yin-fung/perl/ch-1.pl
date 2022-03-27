@@ -29,17 +29,17 @@ sub mean {
 
 use Test::More tests => 3;
 is_deeply(
-    [4.8, 3.8, 2.8],
     [sort {$b<=>$a} map {sprintf("%.1f", $_)} values mean(1,3,5,6,9)->%*],
+    [4.8, 3.8, 2.8],
     "Example 1"
 );
 is_deeply(
-    ["6.0", 5.2, 4.4],
     [sort {$b<=>$a} map {sprintf("%.1f", $_)} values mean(2,4,6,8,10)->%*],
+    ["6.0", 5.2, 4.4],
     "Example 2"
 );
 is_deeply(
-    ["3.0", 2.6, 2.2],
     [sort {$b<=>$a} map {sprintf("%.1f", $_)} values mean(1,2,3,4,5)->%*],
+    ["3.0", 2.6, 2.2],
     "Example 3"
 );
