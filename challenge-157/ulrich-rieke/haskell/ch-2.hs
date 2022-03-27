@@ -28,10 +28,10 @@ where
 
 askForCorrectNumber ::IO Int
 askForCorrectNumber = do
-  putStrLn "Please enter an integer greater than 3!"
+  putStrLn "Please enter an integer greater than 3 and smaller than 39!"
   num <- getLine
   let n = read num
-  if n > 3 then return n
+  if (n > 3 && n < 39) then return n
   else do
       askForCorrectNumber
 
