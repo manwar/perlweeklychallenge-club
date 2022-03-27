@@ -1,52 +1,67 @@
-TASK #1 - Pernicious Numbers
+TASK #1 - Pythagorean Means
 
-Write a script to permute first 10 Pernicious Numbers.
+You are given a set of integers.
 
-A pernicious number is a positive integer which has prime number of ones
-in its binary representation.
-
-The first pernicious number is 3 since binary representation of 3 =
-(11) and 1 + 1 = 2, which is a prime.
-
-Expected Output
-
-3, 5, 6, 7, 9, 10, 11, 12, 13, 14
-
-MY NOTES: ok.  Pretty easy.  pernicious(n) = isprime(countones(binary(n)))
-
-
-TASK #2 - Weird Number
-
-You are given number, $n > 0.
-
-Write a script to find out if the given number is a Weird Number.
-
-According to Wikipedia, it is defined as:
-
-The sum of the proper divisors (divisors including 1 but not itself) of
-the number is greater than the number, but no subset of those divisors
-sums to the number itself.
+Write a script to compute all three Pythagorean Means i.e Arithmetic Mean,
+Geometric Mean and Harmonic Mean of the given set of integers. Please
+refer to wikipedia page for more informations.
 
 Example 1:
 
-	Input: $n = 12
-	Output: 0
-
-Since the proper divisors of 12 are 1, 2, 3, 4, and 6, which sum to 16;
-but 2 + 4 + 6 = 12.
+	Input: @n = (1,3,5,6,9)
+	Output: AM = 4.8, GM = 3.9, HM = 2.8
 
 Example 2:
 
-	Input: $n = 70
-	Output: 1
+	Input: @n = (2,4,6,8,10)
+	Output: AM = 6.0, GM = 5.2, HM = 4.4
 
-As the proper divisors of 70 are 1, 2, 5, 7, 10, 14, and 35; these sum
-to 74, but no subset of these sums to 70.
+Example 3:
 
-MY NOTES: ok.  Handle "sum of subsets of these items" by noting that
-each item may be present or absent, so have a counting loop from 0..
-2**(nitems)-1 and compute the sum of just those items selected by the
-binary bits of the count that are 1.
+	Input: @n = (1,2,3,4,5)
+	Output: AM = 3.0, GM = 2.6, HM = 2.2
 
-Bonus: I added a "tabulate" facility (eg. run with --tabulate 5 to
-see the first 5 Weird numbers).
+MY NOTES: ok.  Pretty easy, although the geometric mean involves
+calculating the product of the numbers, which may get pretty huge.
+Tried bigrat, but it broke the nth-root calculation using **.
+
+
+TASK #2 - Brazilian Number
+
+You are given a number $n > 3.
+
+Write a script to find out if the given number is a Brazilian Number.
+
+A positive integer number N has at least one natural number B where
+1 < B < N-1 where the representation of N in base B has same digits.
+
+
+Example 1:
+
+Input: $n = 7
+Output: 1
+
+Since 7 in base 2 is 111.
+
+Example 2:
+
+Input: $n = 6
+Output: 0
+
+Since 6 in base 2 is 110,
+      6 in base 3 is 20 and
+      6 in base 4 is 12.
+
+Example 3:
+
+Input: $n = 8
+Output: 1
+
+Since 8 in base 3 is 22.
+
+
+MY NOTES: ok, so "same digits" really means "the same base-b digit
+repeated throughout the entire string".  Sounds pretty easy.
+Added debugging mode to produce and display the "Since" messages,
+formatted nicely.  Then added tabulate mode to show the first N
+Brazilian numbers (this interoperates nicely with -d).
