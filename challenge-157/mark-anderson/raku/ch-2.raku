@@ -29,15 +29,14 @@ sub Brazilian(\n)
         when ^7            { False }
         when 121           { True  }
         when not .is-prime { not .sqrt.is-prime } 
-    
         default
         {
             my \b = .sqrt.floor;
-            return True if .item == [+] 1, b, b², b³...b**.log(b); 
+            return True if .item == [+] 1, b, b², b³...n; 
 
             for 2..e**(.log/4) -> \b 
             {
-                return True if .item == [+] 1, b, b², b³...b**.log(b) 
+                return True if .item == [+] 1, b, b², b³...n; 
             }
         }
     }
