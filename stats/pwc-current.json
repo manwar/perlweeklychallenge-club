@@ -7,15 +7,18 @@
    },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
    },
    "xAxis" : {
       "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
@@ -30,27 +33,28 @@
             "name" : "Mark Anderson"
          },
          {
+            "id" : "Marton Polgar",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Marton Polgar",
-            "id" : "Marton Polgar"
+            "name" : "Marton Polgar"
          },
          {
+            "id" : "Niels van Dijke",
             "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Niels van Dijke"
+            ]
          },
          {
             "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -60,53 +64,68 @@
                   "Raku",
                   2
                ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
             ],
-            "name" : "Roger Bell_West"
+            "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan"
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 158",
-         "data" : [
-            {
-               "drilldown" : "Mark Anderson",
-               "y" : 2,
-               "name" : "Mark Anderson"
-            },
-            {
-               "drilldown" : "Marton Polgar",
-               "y" : 2,
-               "name" : "Marton Polgar"
-            },
-            {
-               "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "y" : 4,
-               "name" : "Roger Bell_West"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "name" : "Marton Polgar",
+               "drilldown" : "Marton Polgar",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
+               "y" : 3,
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan"
+            }
+         ],
+         "name" : "The Weekly Challenge - 158"
+      }
+   ],
    "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2022-03-28 19:29:53 GMT"
+      "text" : "[Champions: 5] Last updated at 2022-03-28 19:35:11 GMT"
    }
 }
