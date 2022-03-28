@@ -1,0 +1,67 @@
+TASK #1 - Pythagorean Means
+
+You are given a set of integers.
+
+Write a script to compute all three Pythagorean Means i.e Arithmetic Mean,
+Geometric Mean and Harmonic Mean of the given set of integers. Please
+refer to wikipedia page for more informations.
+
+Example 1:
+
+	Input: @n = (1,3,5,6,9)
+	Output: AM = 4.8, GM = 3.9, HM = 2.8
+
+Example 2:
+
+	Input: @n = (2,4,6,8,10)
+	Output: AM = 6.0, GM = 5.2, HM = 4.4
+
+Example 3:
+
+	Input: @n = (1,2,3,4,5)
+	Output: AM = 3.0, GM = 2.6, HM = 2.2
+
+MY NOTES: ok.  Pretty easy, although the geometric mean involves
+calculating the product of the numbers, which may get pretty huge.
+Tried bigrat, but it broke the nth-root calculation using **.
+
+
+TASK #2 - Brazilian Number
+
+You are given a number $n > 3.
+
+Write a script to find out if the given number is a Brazilian Number.
+
+A positive integer number N has at least one natural number B where
+1 < B < N-1 where the representation of N in base B has same digits.
+
+
+Example 1:
+
+Input: $n = 7
+Output: 1
+
+Since 7 in base 2 is 111.
+
+Example 2:
+
+Input: $n = 6
+Output: 0
+
+Since 6 in base 2 is 110,
+      6 in base 3 is 20 and
+      6 in base 4 is 12.
+
+Example 3:
+
+Input: $n = 8
+Output: 1
+
+Since 8 in base 3 is 22.
+
+
+MY NOTES: ok, so "same digits" really means "the same base-b digit
+repeated throughout the entire string".  Sounds pretty easy.
+Added debugging mode to produce and display the "Since" messages,
+formatted nicely.  Then added tabulate mode to show the first N
+Brazilian numbers (this interoperates nicely with -d).
