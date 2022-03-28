@@ -1,9 +1,15 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-03-28 19:24:42 GMT"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-03-28 19:29:52 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -39,16 +45,8 @@
          "Duane Powell"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             36,
             2,
@@ -80,7 +78,8 @@
             0,
             0,
             82
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -153,15 +152,16 @@
          ]
       }
    ],
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+      },
+      "min" : 0
    }
 }
