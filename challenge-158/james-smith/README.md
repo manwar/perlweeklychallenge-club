@@ -46,7 +46,7 @@ We output each value which in turn is prime.
 ```perl
 (is_prime $_) && say while $N >= ($_ = 3*$x*++$x+1);
 ```
-###Notes
+### Notes
  * As we use `$_` as our temporary variable we can use `say` by itself to output it.
  * We use our common trick of `(condition) && (command)` to work as an `command if(condition)` which can be embedded in a postfix loop.
  * There is a "trick" as we increment `$x` half way through the calculation of `$_`.
