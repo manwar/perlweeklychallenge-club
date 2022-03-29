@@ -51,7 +51,8 @@ sub additive_primes {
 
 ## Extra code
 
-Rewritten with single line for ...
+Rewritten with single line `for` ... (the original version of the code)
+
 ```perl
 sub additive_primes_div {
   my @res;
@@ -74,6 +75,25 @@ sub additive_primes_split {
   @res;
 }
 ```
+
+And an alternate using `sum0`...
+
+```perl
+sub additive_primes_split_sum0 {
+  my @res;
+  for( my $p = 2; $p <= $N ; $p = next_prime $p ) {
+    push @res, $p if is_prime sum0 split //, $p;
+  }
+  @res;
+}
+```
+
+### Relative performance
+
+ * `div`/`mod` method - 100%
+ * `split`            -  75%
+ * `sum0 split`       -  45%
+
 # Challenge 2 - First series buban primes
 
 ***Write a script to compute first series cuban primes <= 1000. (First series cuban primes have the form `((x+1)^3-x^3)/(x+1-x)` = `3x^2+3x+1`)***
