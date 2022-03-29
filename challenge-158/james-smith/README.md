@@ -24,19 +24,34 @@ We loop through each prime p, work out the digit sum (by repeated modulo 10/divi
 We craft this as two loops - an outer `for` loop and an inner `do {} while`.
 
 ```perl
+use Math::Prime::Util qw(next_prime is_prime);
+
 sub additive_primes {
   my @res;
-  for( my $p = 2; my $s=0, (my $q=$p)<=$N; $p = next_prime $p ) {
-    do { $s += $q%10 } while $q = int $q/10;
-    push @res, $p if is_prime $s;
+  for(
+    my $p = 2                                             ;
+    my $s = 0,                        ( my $q = $p ) <= $N;
+    (is_prime $s) && (push @res, $p), $p = next_prime $p
+  ) {
+    do { $s += $q % 10 } while $q = int $q / 10;
   }
   @res;
 }
 ```
+## Output
+```
+2, 3, 5, 7, 11, 23, 29, 41, 43, 47, 61, 67, 83, 89
+```
+## Notes
+ * We use a C-style `for` loop, with it's three parts *initialization*, *condition* and *increment*.
+ * The *condition* and *increment* statements are complicated, each with two parts separated by `,`s.
+ * The *condition* block is called at the start of each loop, and so we use it to initialise the variables as the loop, as well as checking the condition.
+ * The *increment* block is called at the end of the loop and so stores the value of `$p` if it is an additive prime, then it increments the loop with the next prime.
+ * Rather than doing a split and sum we use repeated dividing and summing, as it is more efficient around 20-30% more efficient. The increased performance is probably due to avoiding the "duality" of perl variables storing numbers as numbers/strings.
 
 # Challenge 2 - First Series Cuban Primes
 
-***Write a script to compute first series Cuban Primes <= 1000. (First series cuban primes have the form `3x^2+3x+1`)***
+***Write a script to compute first series Cuban Primes <= 1000. (First series cuban primes have the form `((x+1)^3-x^3)/(x+1-x)` = `3x^2+3x+1`)***
 
 ## The solution
 
@@ -46,9 +61,26 @@ We output each value which in turn is prime.
 ```perl
 (is_prime $_) && say while $N >= ($_ = 3*$x*++$x+1);
 ```
-### Notes
+## Output
+```
+7, 19, 37, 61, 127, 271, 331, 397, 547, 631, 919
+```
+## Notes
  * As we use `$_` as our temporary variable we can use `say` by itself to output it.
  * We use our common trick of `(condition) && (command)` to work as an `command if(condition)` which can be embedded in a postfix loop.
  * There is a "trick" as we increment `$x` half way through the calculation of `$_`.
    * `$_ = 3*$x**2 + 3*$x + 1` => `$_ = 3 * $x * ($x+1) + 1` => `$_ = 3 * $x * ++$x + 1`
    * We can replace the `$x+1` by the pre increment operator `++$x` so this becomes `3 * $x * ++$x + 1`.
+
+## Aside
+
+Second series cuban primes have the form `((x+2)^3-x^3)/(x+2-x)` = `3x^2+3.2x+4`. We can tweak the code to give:
+
+```perl
+(is_prime $_) && say while $N >= ($_ = 3 * $x * (2 + $x++) + 4);
+```
+
+which outputs:
+```
+13, 109, 193, 433, 769
+```
