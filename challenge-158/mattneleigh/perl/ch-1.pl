@@ -28,7 +28,7 @@ exit(0);
 # prime number- that are less than or equal to a number N, which must be at
 # least 2
 # Takes one argument:
-# * The number N, which must be an integer equal to 2 or greater
+# * The number N, which must be greater than or equal to 2
 # Returns on success:
 # * A list of additive prime numbers
 # Returns on error:
