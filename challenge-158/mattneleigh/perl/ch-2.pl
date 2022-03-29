@@ -48,7 +48,9 @@ sub calculate_cuban_primes{
 
     while(1){
         # Calculate a prospective cuban prime
-        # number
+        # number; see https://oeis.org/A002407
+        # and note the comment added on Nov 28,
+        # 2007
         my $p = 1 + 3 * $k * ($k + 1);
 
         $k++;
