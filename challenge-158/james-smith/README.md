@@ -20,10 +20,13 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-158/ja
 
 ## The solution
 
+We loop through each prime p, work out the digit sum (by repeated modulo 10/divide by 10) and check that it is prime.
+We craft this as two loops - an outer `for` loop and an inner `do {} while`.
+
 ```perl
 sub additive_primes {
   my @res;
-  for( my $p = 2; (my $s=0) || (my $q=$p)<=$N; $p = next_prime $p ) {
+  for( my $p = 2; my $s=0, (my $q=$p)<=$N; $p = next_prime $p ) {
     do { $s += $q%10 } while $q = int $q/10;
     push @res, $p if is_prime $s;
   }
@@ -37,13 +40,15 @@ sub additive_primes {
 
 ## The solution
 
-```perl
-for(
-  my $x = 1;
-  ( my $y = 3 * $x * ($x+1) + 1 ) <= $N;
-  $x++
-) {
-  say $y if is_prime $y;
-}
-```
+The solution is rather short. We try each of the value of the sequence `3*$x**2+3*$x+1` in turn up to the value of 1000 (`$N`).
+We output each value which in turn is prime.
 
+```perl
+(is_prime $_) && say while $N >= ($_ = 3*$x*++$x+1);
+```
+### Notes
+ * As we use `$_` as our temporary variable we can use `say` by itself to output it.
+ * We use our common trick of `(condition) && (command)` to work as an `command if(condition)` which can be embedded in a postfix loop.
+ * There is a "trick" as we increment `$x` half way through the calculation of `$_`.
+   * `$_ = 3*$x**2 + 3*$x + 1` => `$_ = 3 * $x * ($x+1) + 1` => `$_ = 3 * $x * ++$x + 1`
+   * We can replace the `$x+1` by the pre increment operator `++$x` so this becomes `3 * $x * ++$x + 1`.
