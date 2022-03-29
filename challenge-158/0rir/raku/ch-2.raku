@@ -24,4 +24,4 @@ my @cuban-prime;
 };
 
 die 'Logic error.' unless @cuban-prime eqv @expect;
-print @cuban-prime.join( ', '), '.';
+say @cuban-prime.join( ', '), '.';
