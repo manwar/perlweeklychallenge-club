@@ -49,9 +49,9 @@ sub additive_primes {
  * The *increment* block is called at the end of the loop and so stores the value of `$p` if it is an additive prime, then it increments the loop with the next prime.
  * Rather than doing a split and sum we use repeated dividing and summing, as it is more efficient around 20-30% more efficient. The increased performance is probably due to avoiding the "duality" of perl variables storing numbers as numbers/strings.
 
-# Challenge 2 - First Series Cuban Primes
+# Challenge 2 - First series buban primes
 
-***Write a script to compute first series Cuban Primes <= 1000. (First series cuban primes have the form `((x+1)^3-x^3)/(x+1-x)` = `3x^2+3x+1`)***
+***Write a script to compute first series cuban primes <= 1000. (First series cuban primes have the form `((x+1)^3-x^3)/(x+1-x)` = `3x^2+3x+1`)***
 
 ## The solution
 
