@@ -32,7 +32,7 @@ exit(0);
 # Returns on success:
 # * A list of cuban prime numbers
 # Returns on error:
-# * Undef if N is not at least 2
+# * undef if N is not at least 2
 ################################################################################
 sub calculate_cuban_primes{
     my $n = int(shift());
