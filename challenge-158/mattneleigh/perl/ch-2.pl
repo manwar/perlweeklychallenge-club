@@ -51,9 +51,7 @@ sub calculate_cuban_primes{
         # number; see https://oeis.org/A002407
         # and note the comment added on Nov 28,
         # 2007
-        my $p = 1 + 3 * $k * ($k + 1);
-
-        $k++;
+        my $p = 1 + 3 * $k * ++$k;
 
         # Break out of the loop if $p has
         # exceeded $n
