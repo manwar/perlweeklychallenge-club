@@ -1,6 +1,6 @@
-[< Previous 156](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-156/james-smith) |
-[Next 158 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-158/james-smith)
-# The Weekly Challenge 157
+[< Previous 157](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-157/james-smith) |
+[Next 159 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-159/james-smith)
+# The Weekly Challenge 158
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,62 +12,120 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-157/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-158/james-smith
 
-# Challenge 1 - Pythagorean Means
+# Challenge 1 - Additive primes
 
-***You are given a set of integers. Write a script to compute all three Pythagorean Means i.e. Arithmetic Mean, Geometric Mean and Harmonic Mean of the given set of integers.***
-
-## The solution
-
-Computing the means is relatively straight forward. We just need to keep the sum of values, the product of values & the sum of their reciprocals.
-
-Once we have these sums, it is easy to return the respective means - dividing by `$N`, taking the `$N`-th root and taking `$N` divided by the sum.
-
-```perl
-sub means {
-  my ($am, $gm, $hm) = (0, 1, 0);
-  $am+=$_, $gm*=$_, $hm+=1/$_ for @_;
-  ( $am/@_, $gm**(1/@_), @_/$hm );
-}
-```
-
-### Notes:
- * we assume that (a) the list is not empty, and (b) all integer values are not equal to `0`.
- * the code is optimal in the number of operators.
-   * We should note that if the array size is large the geometric mean product can get large (prior to taking the *n*th root). So the value of `$gm` could be multipled by the *n*th root of each number in turn. So the middle line would be `$gm*=$_**(1/@_)` and the last line would just contain `$gm`.
-   * If we look at the geometric mean of the numbers `1` .. `$N` then the naive method above fails when `$N` is `171` just returning `Inf`, whereas the code below continues working giving the right answer 
-   * the other two means this shouldn't be an issue (the intermediate calculation is a summation)
-```perl
-sub means_scalable {
-  my ($am, $gm, $hm) = (0, 1, 0);
-  $am+=$_, $gm*=$_**(1/@_), $hm+=1/$_ for @_;
-  ( $am/@_, $gm, @_/$hm );
-}
-```
-
-# Challenge 2 - Brazilian Number
-
-***You are given a number `N > 3`. Write a script to find out if the given number is a Brazilian Number. A positive integer number `N` has at least one natural number `B` where `1 < B < N-1` where the representation of N in base B has same digits.***
+***Additive primes are prime numbers for which the sum of their decimal digits are also primes.***
 
 ## The solution
 
-For any value of `$B` we can check that the digits are the same by repeated integer division. We first store the last digit `$last` below, and compare each digit with this value. If they are the not the same we jump out of the inner loop to the next value of the outer loop `next OUTER`. So if they are the same it falls down to the `return 1;` inside the outer loop. If all fail we never get to the `return 1;` so return `0` from the last line of the function.
+We loop through each prime p, work out the digit sum (by repeated modulo 10/divide by 10) and check that it is prime.
+We craft this as two loops - an outer `for` loop and an inner `do {} while`.
 
 ```perl
-sub is_brazilian {
-  OUTER: for my $b (2..$_[0]/2-1) {
-    my $last = (my $n=$_[0]) % $b;
-    $n % $b == $last || next OUTER while $n = int( $n/$b );
-    return 1;
+use Math::Prime::Util qw(next_prime is_prime);
+
+sub additive_primes {
+  my @res;
+  for(
+    my $p = 2                                             ;
+    my $s = 0,                        ( my $q = $p ) <= $N;
+    (is_prime $s) && (push @res, $p), $p = next_prime $p
+  ) {
+    do { $s += $q % 10 } while $q = int $q / 10;
   }
-  0;
+  @res;
+}
+```
+## Output
+```
+2, 3, 5, 7, 11, 23, 29, 41, 43, 47, 61, 67, 83, 89
+```
+## Notes
+ * We use a C-style `for` loop, with it's three parts *initialization*, *condition* and *increment*.
+ * The *condition* and *increment* statements are complicated, each with two parts separated by `,`s.
+ * The *condition* block is called at the start of each loop, and so we use it to initialise the variables as the loop, as well as checking the condition.
+ * The *increment* block is called at the end of the loop and so stores the value of `$p` if it is an additive prime, then it increments the loop with the next prime.
+ * Rather than doing a split and sum we use repeated dividing and summing, as it is more efficient around 20-30% more efficient. The increased performance is probably due to avoiding the "duality" of perl variables storing numbers as numbers/strings.
+
+## Extra code
+
+Rewritten with single line `for` ... (the original version of the code)
+
+```perl
+sub additive_primes_div {
+  my @res;
+  for(my$p=2; my$s=0,(my $q=$p)<=$N;(is_prime$s)&&(push@res,$p),$p=next_prime$p) {
+    do { $s += $q % 10 } while $q = int $q / 10;
+  }
+  @res;
 }
 ```
 
-### Notes
- * `{condition} || {command}` inside a `for` or `while` loop is the same as `unless( {condition} ) {command}` - it is often used when it makes a multi-line block into a single lined block with a postfix loop. This is useful to keep the overall code length shorter and therefore more-readable. Similarly can use `&&` for `if` and `?:` for `if`/`else`.
- * We do not need to loop up to `$N-2` as the brazilian number will always be less than half this. So the `$b` loop is shorter - and makes the code run around 40-50% faster.
- * `next {label}` is useful in many examples to jump out of inner loop without using *flag* variables to know whether the inner loop returned a *true* or *false* value.
- * Conway frowns on this in PBP - but with such a short loop it is easy at a glance to see what the `next OUTER` does.
-   ( If the code was longer it may no longer be possible to see the outside of the loop when looking at in a "normal" terminal window. )
+Alternative form with `for split`:
+
+```perl
+sub additive_primes_split {
+  my @res;
+  for( my $p = 2; my $s = 0, $p <= $N ; $p = next_prime $p ) {
+    $s+=$_ for split //, $p;
+    push @res, $p if is_prime $s;
+  }
+  @res;
+}
+```
+
+And an alternate using `sum0`...
+
+```perl
+sub additive_primes_split_sum0 {
+  my @res;
+  for( my $p = 2; $p <= $N ; $p = next_prime $p ) {
+    push @res, $p if is_prime sum0 split //, $p;
+  }
+  @res;
+}
+```
+
+### Relative performance
+
+ * `div`/`mod` method - 100%
+ * `split`            -  75%
+ * `sum0 split`       -  45%
+
+# Challenge 2 - First series buban primes
+
+***Write a script to compute first series cuban primes <= 1000. (First series cuban primes have the form `((x+1)^3-x^3)/(x+1-x)` = `3x^2+3x+1`)***
+
+## The solution
+
+The solution is rather short. We try each of the value of the sequence `3*$x**2+3*$x+1` in turn up to the value of 1000 (`$N`).
+We output each value which in turn is prime.
+
+```perl
+(is_prime $_) && say while $N >= ($_ = 3*$x*++$x+1);
+```
+## Output
+```
+7, 19, 37, 61, 127, 271, 331, 397, 547, 631, 919
+```
+## Notes
+ * As we use `$_` as our temporary variable we can use `say` by itself to output it.
+ * We use our common trick of `(condition) && (command)` to work as an `command if(condition)` which can be embedded in a postfix loop.
+ * There is a "trick" as we increment `$x` half way through the calculation of `$_`.
+   * `$_ = 3*$x**2 + 3*$x + 1` => `$_ = 3 * $x * ($x+1) + 1` => `$_ = 3 * $x * ++$x + 1`
+   * We can replace the `$x+1` by the pre increment operator `++$x` so this becomes `3 * $x * ++$x + 1`.
+
+## Aside
+
+Second series cuban primes have the form `((x+2)^3-x^3)/(x+2-x)` = `3x^2+3.2x+4`. We can tweak the code to give:
+
+```perl
+(is_prime $_) && say while $N >= ($_ = 3 * $x * (2 + $x++) + 4);
+```
+
+which outputs:
+```
+13, 109, 193, 433, 769
+```
