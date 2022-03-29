@@ -49,6 +49,31 @@ sub additive_primes {
  * The *increment* block is called at the end of the loop and so stores the value of `$p` if it is an additive prime, then it increments the loop with the next prime.
  * Rather than doing a split and sum we use repeated dividing and summing, as it is more efficient around 20-30% more efficient. The increased performance is probably due to avoiding the "duality" of perl variables storing numbers as numbers/strings.
 
+## Extra code
+
+Rewritten with single line for ...
+```perl
+sub additive_primes_div {
+  my @res;
+  for(my$p=2; my$s=0,(my $q=$p)<=$N;(is_prime$s)&&(push@res,$p),$p=next_prime$p) {
+    do { $s += $q % 10 } while $q = int $q / 10;
+  }
+  @res;
+}
+```
+
+Alternative form with `for split`:
+
+```perl
+sub additive_primes_split {
+  my @res;
+  for( my $p = 2; my $s = 0, $p <= $N ; $p = next_prime $p ) {
+    $s+=$_ for split //, $p;
+    push @res, $p if is_prime $s;
+  }
+  @res;
+}
+```
 # Challenge 2 - First series buban primes
 
 ***Write a script to compute first series cuban primes <= 1000. (First series cuban primes have the form `((x+1)^3-x^3)/(x+1-x)` = `3x^2+3x+1`)***
