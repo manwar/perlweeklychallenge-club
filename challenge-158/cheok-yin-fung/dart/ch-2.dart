@@ -18,7 +18,8 @@ void main(List<String> args) {
   while (pp <= arg) {
     if (pp % 5 == 0) continue;  // pp must be coprime to 2 and 3.
     if (spokes.last <= sqrt(pp)) {
-      for (int k=1; k*30 <= sqrt(pp); k++)
+      var k = ((spokes.last+1)/30).floor();
+      for (; k*30 <= sqrt(pp); k++)
         rp_to_30.forEach( (e) => spokes.add(e+k*30) );
     }
     y++;
