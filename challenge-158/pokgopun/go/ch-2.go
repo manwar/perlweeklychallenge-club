@@ -2,16 +2,17 @@ package main
 
 import (
 	"fmt"
-	"math"
 )
 
 const max = 1000
 
 func main() {
-	i := 2
+	//i := 2
+	i := 1
 	var cp string
 	for {
-		n := int(math.Pow(float64(i), 3) - math.Pow(float64(i-1), 3))
+		//n := int(math.Pow(float64(i), 3) - math.Pow(float64(i-1), 3))
+		n := 3*i*i + 3*i + 1
 		if n > max {
 			break
 		}
