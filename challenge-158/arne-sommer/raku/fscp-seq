@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (UInt $length = 10);
+
+my $fscp := (1..Inf).map( { 3 * $_ ** 2 + 3 * $_ + 1 } ).grep( *.is-prime );
+
+$fscp.head($length).join(", ").say;
