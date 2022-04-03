@@ -1,3 +1,3 @@
-# The Weekly Challenge 157
+# The Weekly Challenge 158
 
-Blog: [Three means and big bases](https://dev.to/simongreennet/three-means-and-big-bases-3o2f)
+Blog: [It's a primathon! ](https://dev.to/simongreennet/its-a-primathon-5aki)
