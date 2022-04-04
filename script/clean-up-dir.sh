@@ -1,3 +1,4 @@
+find . -name "*.plperl" -delete
 find . -name "*.w" -delete
 find . -name "*.wl" -delete
 find . -name "*.c" -delete
