@@ -32,7 +32,8 @@ warn "exp";
 is( moebius_exp(     $_->[0] ), $_->[1] ) for @TESTS;
 warn "opt";
 is( moebius_div_opt( $_->[0] ), $_->[1] ) for @TESTS;
-timethis( 500_000, sub { moebius_div_opt( $_->[0] ) for @TESTS } );
+#timethis( 500_000, sub { moebius_div_opt( $_->[0] ) for @TESTS } );
+exit;
 warn "div";
 is( moebius_div(     $_->[0] ), $_->[1] ) for @TESTS;
 timethis(     100, sub { moebius_div(     $_->[0] ) for @TESTS } );
@@ -59,7 +60,7 @@ sub moebius_div {
 sub moebius_div_opt {
   my ($n,$p,$r) = (shift,1,1);
   return -1 if is_prime $n;
-  $n%$p || ($r=-$r,$n/=$p) && ( $n%$p ? ( (is_prime $n) && (return -$r) ) : return 0 ) while ($p = next_prime $p)**2 <= $n;
+  $n%$p || ($n/=$p) && $n%$p ? ( is_prime $n ? (return $r) : ($r=-$r) ) : return 0 while ($p = next_prime $p)**2 <= $n;
   $r;
 }
 
