@@ -16,9 +16,13 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-159/ja
 
 # Challenge 1 - Farey Sequence
 
-*** You are given a positive number, `$n`. Write a script to compute Farey Sequence of the order `$n`. All rational numbers less than with with denominators less than `$n`
+***You are given a positive number, `$n`. Write a script to compute Farey Sequence of the order `$n`. All rational numbers less than with with denominators less than `$n`***
 
 ## The solution
+
+This is a relatively simple piece of code - we loop through the denominators `1`..`$n` and compute all the fractions greater than 0 and less than or equal to 1.
+We use the value as the key to the hash and "`$_/$d`" as the values.
+We start with the lower denominators so if we find the same fraction twice (e.g. `1/2` & `2/4`) the value we always store has the lowest denominator and so the fraction is in its simplest form. A simple (key based) sort at the end and returning the list of strings of fractions...
 
 ```perl
 sub farley {
@@ -32,7 +36,7 @@ sub farley {
 
 # Challenge 2 - Moebius Number
 
-***You are given a positive number `$n`. Write a script to generate the Moebius Number for the given number (see defn below)
+***You are given a positive number `$n`. Write a script to generate the Moebius Number for the given number (see defn below)***
 
 ## Definition
 
@@ -42,7 +46,7 @@ The value of the Moebius number is:
  * `1` if the number has an even number of prime factors
  * `-1` otherwise
 
-## The solution
+## First pass... *naive* approach
 
 ```perl
 sub moebius {
@@ -53,17 +57,59 @@ sub moebius {
 }
 ```
 
-Expanding this out gives the more readable (but longer)...
+Here we just look for prime factors less than `$n` - for large `$n` - the number of primes checked is `$n/log $n`.
+
+## Second pass... *first-pass* optimization
+
+We can reduce the number of primes checked by reducing `$n` each time a prime is found, by dividing `$n` by the prime factor.
+
+```perl
+sub moebius_div {
+  my ($n,$p,$r) = (shift,1,1);
+  return -1 if is_prime $n;
+  $n%($p**2) ? ( $n%$p || ($r=-$r,$n/=$p)) : return 0 while ($p = next_prime $p) && $n>1;
+  $r;
+}
+```
+
+## Third pass... *improved* performance
+
+Finally we ideally want to restrict the number of primes checked further. We know that if `$n/$p` is prime we can stop there when looking for factors. It then also reduces the number primes to check to the square root of `$n`, so the maximum number of primes needed to check is `sqrt($n)/log $n/2`.
+
+```perl
+sub moebius_div_opt {
+  my ($n,$p,$r) = (shift,1,1);
+  return -1 if is_prime $n;
+  $n%$p || ($n/=$p) && $n%$p ? ( is_prime $n ? (return $r) : ($r=-$r) ) : return 0 while ($p = next_prime $p)**2 <= $n;
+  $r;
+}
+```
+
+## Relative performance
+
+On our extended test set the relative performance of the three methods is:
+
+| Method  | Calls/second | Relative performance |
+| :-----: | -----------: | -------------------: |
+| simple  |     0.0025/s |                  1 x |
+| divide  |        3.0/s |              1,200 x |
+| div opt |     38,000/s |         16,000,000 x |
+
+## Expanded version of optimal solution..
+
+The format of the optimized code is compact - here is an expanded version of the code to show the logic.
 
 ```
-sub moebius_exp {
+sub moebius {
   my ($n,$p,$r) = (shift,1,1);
-  return -1 if is_prime($n);
-  while( ($p = next_prime $p ) < $n ) {
-    return 0 unless $n%($p**2);
-    $r=-$r unless $n%$p;
+  return -1 if is_prime $n;
+  while( ($p = next_prime $p )**2 <= $n ) {
+    next if $n%$p;
+    $n/=$p;
+    return 0 unless $n%$p;
+    return $r if is_prime $n;
+    $r=-$r;
   }
   $r;
 }
-
 ```
