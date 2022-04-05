@@ -94,7 +94,7 @@ sub additive_primes_split_sum0 {
  * `split`            -  75%
  * `sum0 split`       -  45%
 
-# Challenge 2 - First series buban primes
+# Challenge 2 - First series cuban primes
 
 ***Write a script to compute first series cuban primes <= 1000. (First series cuban primes have the form `((x+1)^3-x^3)/(x+1-x)` = `3x^2+3x+1`)***
 
