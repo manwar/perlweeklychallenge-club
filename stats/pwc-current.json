@@ -2,27 +2,50 @@
    "legend" : {
       "enabled" : 0
    },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    },
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "series" : [
       {
          "data" : [
             {
+               "name" : "James Smith",
+               "y" : 3,
+               "drilldown" : "James Smith"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
                "y" : 4,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
+               "name" : "Roger Bell_West"
             }
          ],
          "name" : "The Weekly Challenge - 159",
          "colorByPoint" : 1
       }
    ],
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 159"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2022-04-05 12:52:32 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
@@ -31,7 +54,21 @@
    "drilldown" : {
       "series" : [
          {
-            "id" : "Roger Bell_West",
+            "id" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "James Smith"
+         },
+         {
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -42,26 +79,8 @@
                   2
                ]
             ],
-            "name" : "Roger Bell_West"
+            "id" : "Roger Bell_West"
          }
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2022-04-05 12:28:24 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 159"
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
