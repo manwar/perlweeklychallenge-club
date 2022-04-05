@@ -1,4 +1,13 @@
 {
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-04-05 12:58:21 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Samir Parikh",
@@ -33,19 +42,13 @@
          "Ulrich Rieke"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             10,
             10,
@@ -77,9 +80,11 @@
             5,
             0,
             187
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             10,
@@ -111,11 +116,9 @@
             0,
             2,
             205
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             4,
             0,
@@ -147,21 +150,18 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-04-05 12:52:32 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
