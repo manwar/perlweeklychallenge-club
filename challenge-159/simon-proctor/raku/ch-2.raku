@@ -5,10 +5,13 @@ sub MAIN( Int() \n ) {
     say Möbius(n);
 }
 
+subset Prime of Int where *.is-prime;
+
 multi sub prime-factors(1) { [] }
-multi sub prime-factors(Int() $x) {
-    my $p = (2..^$x).first($x %% *);
-    return $p ?? [$p, |prime-factors($x div $p)] !! [$x]
+multi sub prime-factors(Prime \n) { [n] }
+multi sub prime-factors(Int() \x) {
+    my \p = (2..^x).first(x %% *);
+    return [p, |prime-factors(x div p)];
 }
 sub square-free(Int() $x) {
     my @p = prime-factors($x);
