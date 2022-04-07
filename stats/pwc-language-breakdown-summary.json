@@ -1,12 +1,6 @@
 {
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "legend" : {
       "enabled" : "false"
@@ -14,14 +8,21 @@
    "chart" : {
       "type" : "column"
    },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-04-07 14:14:26 GMT"
-   },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "enabled" : "true",
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "color" : "#FFFFFF"
+         },
          "data" : [
             [
                "Blog",
@@ -29,35 +30,34 @@
             ],
             [
                "Perl",
-               7695
+               7697
             ],
             [
                "Raku",
                4597
             ]
-         ],
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "y" : 10,
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "rotation" : -90,
-            "format" : "{point.y:.0f}"
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
+   "subtitle" : {
+      "text" : "Last updated at 2022-04-07 17:22:12 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
    "yAxis" : {
       "title" : {
          "text" : null
       },
       "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
