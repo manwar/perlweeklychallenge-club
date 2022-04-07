@@ -56,8 +56,8 @@ sub calculate_farey_sequence{
         [ 1, $n ]
     );
 
-    # Loop until we see we have unity at the
-    # end of the sequence
+    # Loop until we have unity at the end
+    # of the sequence
     while($sequence[$#sequence][0] != $sequence[$#sequence][1]){
         my $k = floor(
             ($n + $sequence[$#sequence - 1][1])

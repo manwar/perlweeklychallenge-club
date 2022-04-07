@@ -35,7 +35,7 @@ exit(0);
 # * The Moebius number for N, which will be 0 if N has a squared prime factor,
 #   1 if N is square-free and has an even number of prime factors, and -1 if N
 #   is square-free and has an odd number of prime factors
-# Returns on failure:
+# Returns on error:
 # * undef if N is less than 1
 ################################################################################
 sub calculate_moebius_number{
