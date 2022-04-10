@@ -30,12 +30,12 @@ sub mertens{
     return Re($mertens);
 }
 
-sub mobius{
+sub moebius{
     my($n) = @_;
     return 1 if $n == 1;
     return sprintf("%.f", (mertens($n) - mertens($n - 1)));
 }
 
 MAIN:{
-    map {print mobius($_) . "\n"} (5, 10, 20);
+    map {print moebius($_) . "\n"} (5, 10, 20);
 }
