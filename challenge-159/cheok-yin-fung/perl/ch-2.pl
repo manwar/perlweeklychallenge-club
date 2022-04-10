@@ -11,10 +11,8 @@ use POSIX;
 use constant PI => 2*acos(0);
 
 
-if (defined($ARGV[0])) {
-    my $N =  $ARGV[0];
-    say "mu($N) = ", mo($N);
-}
+my $N =  $ARGV[0] if defined($ARGV[0]);
+say "mu($N) = ", mo($N) if defined($ARGV[0]);
 
 
 sub irn {
