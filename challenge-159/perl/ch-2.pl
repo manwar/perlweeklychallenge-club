@@ -25,6 +25,8 @@ sub irn {
     );
 }
 
+
+
 sub mo {
     my $n = $_[0];
     return 1 if $n == 1;
@@ -37,6 +39,8 @@ sub mo {
     # say "# intermediate sum: ", Re($sum), "\n\n";
     return floor(Re($sum)+0.5);
 }
+
+
 
 use Test::More tests => 18;
 ok mo(2) == -1, "test for 2";
