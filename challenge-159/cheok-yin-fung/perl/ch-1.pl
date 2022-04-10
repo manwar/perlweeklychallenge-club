@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # The Weekly Challenge 159
 # Task 1 Farey Sequence
-
+# Usage: ch-1.pl $N
 # https://en.wikipedia.org/wiki/Farey_sequence#Next_term
 
 use v5.22.0;
