@@ -37,4 +37,3 @@ for my $k (2..$ub) {
 say join ", ", @pern_num[0..$N-1]; 
 
 
-
