@@ -43,8 +43,10 @@ use MakePrimes;
 use PrimeFactors;
 
 my $debug=0;
-die "Usage: moebius [--debug] [N] (default 5)\n"
-	unless GetOptions( "debug"=>\$debug ) && @ARGV<2;
+my $tabulate=0;
+die "Usage: moebius [--debug] [--tabulate] [N] (default 5)\n"
+	unless GetOptions( "debug"=>\$debug, "tabulate"=>\$tabulate )
+	    && @ARGV<2;
 
 my $n = shift // 5;
 
@@ -57,7 +59,9 @@ fun moeb( $n )
 {
 	my @primes = primes_upto( $n );
 
-	my @factors = prime_factors( $n, @primes );
+	my @factors;
+	@factors = prime_factors( $n, @primes ) if $n>1;
+	@factors = () if $n==1;
 
 	my %factorbag;
 	$factorbag{$_}++ for @factors;
@@ -86,4 +90,22 @@ fun moeb( $n )
 	return -1;
 }
 
-say moeb( $n );
+if( $tabulate )
+{
+	my @lines;
+	my $line = '';
+	foreach my $i (1..$n)
+	{
+		$line .= sprintf( "%2d: %2d", $i, moeb($i) );
+		$line .= ', ';
+		if( $i % 10 == 0 )
+		{
+			push @lines, $line;
+			$line = '';
+		}
+	}
+	say for @lines;
+} else
+{
+	say moeb( $n );
+}
