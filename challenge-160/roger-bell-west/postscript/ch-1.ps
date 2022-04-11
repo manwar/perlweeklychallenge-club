@@ -1,0 +1,169 @@
+%!PS
+
+% begin library code
+
+/strconcat % (a) (b) -> (ab)  
+{ exch dup length
+  2 index length add string
+  dup dup 4 2 roll copy length
+  4 -1 roll putinterval
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} def
+
+/apush { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+% end library code
+
+/fid {
+    3 dict begin
+    /words [ (zero) (one) (two) (three) (four)
+             (five) (six) (seven) (eight) (nine) ] def
+    /p 0 array def
+        {
+            dup
+            words exch get ( is ) strconcat /s exch def
+            dup 4 eq {
+                pop
+                /s s (magic.) strconcat def
+                /p p s apush def
+                exit
+            } {
+                words exch get length
+                dup words exch get s exch strconcat /s exch def
+                /p p s apush def
+            } ifelse
+        } loop
+    p (, ) strjoin
+    dup 0 get 32 sub exch dup 3 -1 roll 0 exch put
+    end
+} bind def
+
+(fid) test.start
+
+5 fid
+(Five is four, four is magic.)
+deepeq test
+
+7 fid
+(Seven is five, five is four, four is magic.)
+deepeq test
+
+6 fid
+(Six is three, three is five, five is four, four is magic.)
+deepeq test
+
+4 fid
+(Four is magic.)
+deepeq test
+
+test.end
