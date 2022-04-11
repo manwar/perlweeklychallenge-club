@@ -9,16 +9,17 @@ use English;
 ################################################################################
 
 my @table = (
-    [ "zero",  4 ],
-    [ "one",   3 ],
-    [ "two",   3 ],
-    [ "three", 5 ],
-    [ "four",  4 ],
-    [ "five",  4 ],
-    [ "six",   3 ],
-    [ "seven", 5 ],
-    [ "eight", 5 ],
-    [ "nine",  4 ]
+    [ "zero",    4 ],
+    [ "one",     3 ],
+    [ "two",     3 ],
+    [ "three",   5 ],
+    [ "four",   10 ],
+    [ "five",    4 ],
+    [ "six",     3 ],
+    [ "seven",   5 ],
+    [ "eight",   5 ],
+    [ "nine",    4 ],
+    [ "magic",  -1 ]
 );
 my @numbers = ( 5, 7, 6 );
 my $number;
@@ -34,9 +35,9 @@ foreach $number (@numbers){
 
     print("Input: \$n = ", $number, "\n");
     print("Output: ");
-    until($number == 4){
-        # This number isn't four; add its count details
-        # and advance to the next number
+    while($number < 10){
+        # This number is less than 10; add its count
+        # details and advance to the next number
         $string .= 
             $table[$number][0] .
             " is " .
@@ -45,10 +46,7 @@ foreach $number (@numbers){
         $number = $table[$number][1];
     }
     
-    # We must have hit four, so add the magical
-    # sentiment, upper-case what's first, and
-    # output...
-    $string .= "four is magic.";
+    # Upper-case what's first, and output...
     $string =~ s/^(.)/uc($1)/e;
     print($string, "\n\n");
 }
