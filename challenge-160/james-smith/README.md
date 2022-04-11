@@ -1,6 +1,6 @@
-[< Previous 156](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-156/james-smith) |
-[Next 160 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-160/james-smith)
-# The Weekly Challenge 159
+[< Previous 158](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-158/james-smith) |
+[Next 161 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-161/james-smith)
+# The Weekly Challenge 160
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,104 +12,53 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-159/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-160/james-smith
 
-# Challenge 1 - Farey Sequence
+# Challenge 1 - Four Is Magic
 
-***You are given a positive number, `$n`. Write a script to compute Farey Sequence of the order `$n`. All rational numbers less than with with denominators less than `$n`***
+***You are given a positive number, `$n < 10`.  Write a script to generate english text sequence starting with the English cardinal representation of the given number, the word ‘is’ and then the English cardinal representation of the count of characters that made up the first word, followed by a comma. Continue until you reach four.***
 
 ## The solution
 
-This is a relatively simple piece of code - we loop through the denominators `1`..`$n` and compute all the fractions greater than 0 and less than or equal to 1.
-We use the value as the key to the hash and "`$_/$d`" as the values.
-We start with the lower denominators so if we find the same fraction twice (e.g. `1/2` & `2/4`) the value we always store has the lowest denominator and so the fraction is in its simplest form. A simple (key based) sort at the end and returning the list of strings of fractions...
+We use `num2en` from `Lingua::EN::Numbers` for this to simplify things - it converts a number into the string representation.
+
+We simplify loop through making `$n` the length of the string until we get to the case where `$n==4`.
 
 ```perl
-sub farley {
-  my($n,%v) = shift;
-  for my $d (1..$n) {
-    $v{$_/$d}||="$_/$d" for 1..$d;
-  }
-  map{$v{$_}}sort{$a<=>$b}keys%v;
+sub magic {
+  my $r = ucfirst num2en( my $n = shift ).' is ';
+  $r .= join num2en( $n = length num2en($n)=~s/\W//rg ), '', ', ', ' is ' until $n==4;
+  $r.'magic.';
 }
 ```
 
-# Challenge 2 - Moebius Number
+### Notes
+ * The second line looks a bit odd - we can use join to insert the number string in twice without recalulating by making it the "connector" rather than one of the strings to join together.
 
-***You are given a positive number `$n`. Write a script to generate the Moebius Number for the given number (see defn below)***
+# Challenge 2 - Equilibrium Index
+
+***You are give an array of integers, `@n`.  Write a script to find out the Equilibrium Index of the given array, if found. For an array `@n` consisting n elements, index `$i` is an equilibrium index if the sum of elements of subarray `@n[0..$i-1]` is equal to the sum of elements of subarray `@n[$i+1..-1]`.
 
 ## Definition
 
-The value of the Moebius number is:
+Instead of computing the sum for values either side of the `$i`th index. We note that the sum of values to the right of the index is the total value minus the value at the index and the sum of the values to the left of the index. We therefore compute the sum of the values first, and iterate through the loop from the start seeing if:
 
- * `0` if `$n` has a prime factor
- * `1` if the number has an even number of prime factors
- * `-1` otherwise
+  * `sum @n[0..$i-1] == sum @n[$i+1..-1]`
+  * `sum @n[0..$i-1] == sum @n - sum @n[0..$i-1] - $n[$i]`
+  * `$n[$i] = sum @n - 2 * sum @n[0..$i-1]`
 
-## First pass... *naive* approach
+We further note that this can be simplified again as if we design `$s = sum @n`;
+ 
+  * This simlifies to `$s == $n[$i]` {we know one value is `$i` - so return it}
+  * subtract `2*$n[$i]` from `$s` and repeat;
 
-```perl
-sub moebius {
-  my ($n,$p,$r) = (shift,1,1);
-  return -1 if is_prime($n);
-  $n%($p**2) ? ($n%$p && ($r=-$r)) : return 0 while ($p = next_prime $p) < $n;
-  $r;
-}
-```
-
-Here we just look for prime factors less than `$n` - for large `$n` - the number of primes checked is `$n/log $n`.
-
-## Second pass... *first-pass* optimization
-
-We can reduce the number of primes checked by reducing `$n` each time a prime is found, by dividing `$n` by the prime factor.
 
 ```perl
-sub moebius_div {
-  my ($n,$p,$r) = (shift,1,1);
-  return -1 if is_prime $n;
-  $n%($p**2) ? ( $n%$p || ($r=-$r,$n/=$p)) : return 0 while ($p = next_prime $p) && $n>1;
-  $r;
+sub equilibrium_index {
+  my $s = 0;
+  $s += $_ for @_;
+  ($s==$_[$_]) ? (return $_) : ($s-=2*$_[$_]) for 0..$#_;
+  -1;
 }
 ```
 
-## Third pass... *improved* performance
-
-Finally we ideally want to restrict the number of primes checked further. We know that if `$n/$p` is prime we can stop there when looking for factors. It then also reduces the number primes to check to the square root of `$n`, so the maximum number of primes needed to check is `sqrt($n)/log $n/2`.
-
-```perl
-sub moebius_div_opt {
-  my ($n,$p,$r) = (shift,1,1);
-  return -1 if is_prime $n;
-  $n%$p || ($n/=$p) && $n%$p ? ( is_prime $n ? (return $r) : ($r=-$r) ) : return 0 while ($p = next_prime $p)**2 <= $n;
-  $r;
-}
-```
-
-## Relative performance
-
-On our extended test set the relative performance of the three methods is:
-
-| Method  | Calls/second | Relative performance |
-| :-----: | -----------: | -------------------: |
-| simple  |     0.0025/s |                  1 x |
-| divide  |        3.0/s |              1,200 x |
-| div opt |     38,000/s |         16,000,000 x |
-
-## Expanded version of optimal solution..
-
-The format of the optimized code is compact - here is an expanded version of the code to show the logic.
-
-```
-sub moebius {
-  my ($n,$p,$r) = (shift,1,1);
-  return -1 if is_prime $n;
-  while( ($p = next_prime $p )**2 <= $n ) {
-    next if $n%$p;
-    $n/=$p;
-    return 0 unless $n%$p;
-    return $r if is_prime $n;
-    $r=-$r;
-  }
-  $r;
-}
-```
