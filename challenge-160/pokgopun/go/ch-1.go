@@ -10,17 +10,7 @@ import (
 )
 
 func main() {
-	m := map[int]string{
-		1: "one",
-		2: "two",
-		3: "three",
-		4: "four",
-		5: "five",
-		6: "six",
-		7: "seven",
-		8: "eight",
-		9: "nine",
-	}
+	m := []string{"one", "two", "three", "four", "five", "six", "seven", "eight", "nine"}
 	//fmt.Println(m)
 	re := regexp.MustCompile(`\S+$`)
 	var num []int
@@ -31,14 +21,14 @@ func main() {
 	}
 	for _, n := range num {
 		fmt.Println("Input: $n =", n)
-		str := m[n]
+		str := m[n-1]
 		for {
 			r := re.FindString(str)
 			if r == "four" {
 				str += " is magic"
 				break
 			} else {
-				nxt := m[len(r)]
+				nxt := m[len(r)-1]
 				str += " is " + nxt + ", " + nxt
 				r = str
 
