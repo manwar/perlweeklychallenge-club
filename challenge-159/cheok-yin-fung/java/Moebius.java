@@ -9,6 +9,8 @@ public class Moebius
         int N = 1;
         try {
             N = Integer.parseInt(args[0]);
+            if (N==0)
+                throw new ArithmeticException(); 
         } catch (Exception e) {
             System.err.print("Please use a positive integer ");
             System.err.println("as your parameter.");
