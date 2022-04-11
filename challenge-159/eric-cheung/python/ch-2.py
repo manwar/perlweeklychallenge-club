@@ -1,70 +1,41 @@
 ## Remarks
-## https://www.geeksforgeeks.org/program-mobius-function/
+## https://www.geeksforgeeks.org/equilibrium-index-of-an-array/
 
-## Python program to evaluate
-## Mobius def M(N) = 1 if N = 1
-## M(N) = 0 if any prime factor of N is contained twice
-## M(N) = (-1) ^ (no of distinct prime factors)
+## Python Program to Find Equilibrium Index of an Array
 
+## Function to Find the Equilibrium Index
+def equilibrium(arr):
+    leftsum = 0
+    rightsum = 0
 
-import math
+    n = len(arr)
 
+	## Check for Indexes one by one until an equilibrium index is found
+    for i in range(n):
+        leftsum = 0
+        rightsum = 0
 
-## def to check if n is prime or not
-def isPrime(n) :
+		## Get Left Sum
+        for j in range(i):
+            leftsum = leftsum + arr[j]
 
-    if (n < 2) :
-        return False
+		## Get Right Sum
+        for j in range(i + 1, n):
+            rightsum = rightsum + arr[j]
 
-    for i in range(2, n + 1) :
-        if (n % i == 0) :
-            return False
- 
-        i = i * i
- 
-    return True
-
-
-def mobius(n) :
-
-    p = 0
-
-	## Handling 2 separately
-    if (n % 2 == 0) :
-
-        n = int(n / 2)
-        p = p + 1
-
-        ## If 2^2 also divides N
-        if (n % 2 == 0) :
-            return 0
-
-    ## Check for all other prime factors
-    for i in range(3, int(math.sqrt(n)) + 1) :
-
-        ## If i divides n
-        if (n % i == 0) :
-
-            n = int(n / i)
-            p = p + 1
-
-            ## If i ^ 2 also divides N
-            if (n % i == 0) :
-                return 0
-
-        i = i + 2
-
-    if(p % 2 == 0) :
-        return -1
-
-    return 1
+		## If Left Sum and Right Sum are same, then we are done
+        if leftsum == rightsum:
+            return i
+	
+	## return -1 if no equilibrium index is found
+    return -1
+			
 
 ## Driver Code
-## N = 5 ## Example: 1
-## N = 10 ## Example: 2
-N = 20 ## Example: 3
+arr = [1, 3, 5, 7, 9] ## Example 1:
+## arr = [1, 2, 3, 4, 5] ## Example 2:
+## arr = [2, 4, 2] ## Example 3:
 
-print ("Mobius defs M(N) at N = {} is: {}\n" . format(N, mobius(N)));
+print (equilibrium(arr))
 
-							
-## This code is contributed by Manish Shaw (manishshaw1)
+## This code is contributed by Abhishek Sharama
