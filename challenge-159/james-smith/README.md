@@ -1,6 +1,6 @@
-[< Previous 157](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-157/james-smith) |
-[Next 159 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-159/james-smith)
-# The Weekly Challenge 158
+[< Previous 156](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-156/james-smith) |
+[Next 160 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-160/james-smith)
+# The Weekly Challenge 159
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,120 +12,104 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-158/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-159/james-smith
 
-# Challenge 1 - Additive primes
+# Challenge 1 - Farey Sequence
 
-***Additive primes are prime numbers for which the sum of their decimal digits are also primes.***
-
-## The solution
-
-We loop through each prime p, work out the digit sum (by repeated modulo 10/divide by 10) and check that it is prime.
-We craft this as two loops - an outer `for` loop and an inner `do {} while`.
-
-```perl
-use Math::Prime::Util qw(next_prime is_prime);
-
-sub additive_primes {
-  my @res;
-  for(
-    my $p = 2                                             ;
-    my $s = 0,                        ( my $q = $p ) <= $N;
-    (is_prime $s) && (push @res, $p), $p = next_prime $p
-  ) {
-    do { $s += $q % 10 } while $q = int $q / 10;
-  }
-  @res;
-}
-```
-## Output
-```
-2, 3, 5, 7, 11, 23, 29, 41, 43, 47, 61, 67, 83, 89
-```
-## Notes
- * We use a C-style `for` loop, with it's three parts *initialization*, *condition* and *increment*.
- * The *condition* and *increment* statements are complicated, each with two parts separated by `,`s.
- * The *condition* block is called at the start of each loop, and so we use it to initialise the variables as the loop, as well as checking the condition.
- * The *increment* block is called at the end of the loop and so stores the value of `$p` if it is an additive prime, then it increments the loop with the next prime.
- * Rather than doing a split and sum we use repeated dividing and summing, as it is more efficient around 20-30% more efficient. The increased performance is probably due to avoiding the "duality" of perl variables storing numbers as numbers/strings.
-
-## Extra code
-
-Rewritten with single line `for` ... (the original version of the code)
-
-```perl
-sub additive_primes_div {
-  my @res;
-  for(my$p=2; my$s=0,(my $q=$p)<=$N;(is_prime$s)&&(push@res,$p),$p=next_prime$p) {
-    do { $s += $q % 10 } while $q = int $q / 10;
-  }
-  @res;
-}
-```
-
-Alternative form with `for split`:
-
-```perl
-sub additive_primes_split {
-  my @res;
-  for( my $p = 2; my $s = 0, $p <= $N ; $p = next_prime $p ) {
-    $s+=$_ for split //, $p;
-    push @res, $p if is_prime $s;
-  }
-  @res;
-}
-```
-
-And an alternate using `sum0`...
-
-```perl
-sub additive_primes_split_sum0 {
-  my @res;
-  for( my $p = 2; $p <= $N ; $p = next_prime $p ) {
-    push @res, $p if is_prime sum0 split //, $p;
-  }
-  @res;
-}
-```
-
-### Relative performance
-
- * `div`/`mod` method - 100%
- * `split`            -  75%
- * `sum0 split`       -  45%
-
-# Challenge 2 - First series buban primes
-
-***Write a script to compute first series cuban primes <= 1000. (First series cuban primes have the form `((x+1)^3-x^3)/(x+1-x)` = `3x^2+3x+1`)***
+***You are given a positive number, `$n`. Write a script to compute Farey Sequence of the order `$n`. All rational numbers less than with with denominators less than `$n`***
 
 ## The solution
 
-The solution is rather short. We try each of the value of the sequence `3*$x**2+3*$x+1` in turn up to the value of 1000 (`$N`).
-We output each value which in turn is prime.
+This is a relatively simple piece of code - we loop through the denominators `1`..`$n` and compute all the fractions greater than 0 and less than or equal to 1.
+We use the value as the key to the hash and "`$_/$d`" as the values.
+We start with the lower denominators so if we find the same fraction twice (e.g. `1/2` & `2/4`) the value we always store has the lowest denominator and so the fraction is in its simplest form. A simple (key based) sort at the end and returning the list of strings of fractions...
 
 ```perl
-(is_prime $_) && say while $N >= ($_ = 3*$x*++$x+1);
+sub farley {
+  my($n,%v) = shift;
+  for my $d (1..$n) {
+    $v{$_/$d}||="$_/$d" for 1..$d;
+  }
+  map{$v{$_}}sort{$a<=>$b}keys%v;
+}
 ```
-## Output
-```
-7, 19, 37, 61, 127, 271, 331, 397, 547, 631, 919
-```
-## Notes
- * As we use `$_` as our temporary variable we can use `say` by itself to output it.
- * We use our common trick of `(condition) && (command)` to work as an `command if(condition)` which can be embedded in a postfix loop.
- * There is a "trick" as we increment `$x` half way through the calculation of `$_`.
-   * `$_ = 3*$x**2 + 3*$x + 1` => `$_ = 3 * $x * ($x+1) + 1` => `$_ = 3 * $x * ++$x + 1`
-   * We can replace the `$x+1` by the pre increment operator `++$x` so this becomes `3 * $x * ++$x + 1`.
 
-## Aside
+# Challenge 2 - Moebius Number
 
-Second series cuban primes have the form `((x+2)^3-x^3)/(x+2-x)` = `3x^2+3.2x+4`. We can tweak the code to give:
+***You are given a positive number `$n`. Write a script to generate the Moebius Number for the given number (see defn below)***
+
+## Definition
+
+The value of the Moebius number is:
+
+ * `0` if `$n` has a prime factor
+ * `1` if the number has an even number of prime factors
+ * `-1` otherwise
+
+## First pass... *naive* approach
 
 ```perl
-(is_prime $_) && say while $N >= ($_ = 3 * $x * (2 + $x++) + 4);
+sub moebius {
+  my ($n,$p,$r) = (shift,1,1);
+  return -1 if is_prime($n);
+  $n%($p**2) ? ($n%$p && ($r=-$r)) : return 0 while ($p = next_prime $p) < $n;
+  $r;
+}
 ```
 
-which outputs:
+Here we just look for prime factors less than `$n` - for large `$n` - the number of primes checked is `$n/log $n`.
+
+## Second pass... *first-pass* optimization
+
+We can reduce the number of primes checked by reducing `$n` each time a prime is found, by dividing `$n` by the prime factor.
+
+```perl
+sub moebius_div {
+  my ($n,$p,$r) = (shift,1,1);
+  return -1 if is_prime $n;
+  $n%($p**2) ? ( $n%$p || ($r=-$r,$n/=$p)) : return 0 while ($p = next_prime $p) && $n>1;
+  $r;
+}
 ```
-13, 109, 193, 433, 769
+
+## Third pass... *improved* performance
+
+Finally we ideally want to restrict the number of primes checked further. We know that if `$n/$p` is prime we can stop there when looking for factors. It then also reduces the number primes to check to the square root of `$n`, so the maximum number of primes needed to check is `sqrt($n)/log $n/2`.
+
+```perl
+sub moebius_div_opt {
+  my ($n,$p,$r) = (shift,1,1);
+  return -1 if is_prime $n;
+  $n%$p || ($n/=$p) && $n%$p ? ( is_prime $n ? (return $r) : ($r=-$r) ) : return 0 while ($p = next_prime $p)**2 <= $n;
+  $r;
+}
+```
+
+## Relative performance
+
+On our extended test set the relative performance of the three methods is:
+
+| Method  | Calls/second | Relative performance |
+| :-----: | -----------: | -------------------: |
+| simple  |     0.0025/s |                  1 x |
+| divide  |        3.0/s |              1,200 x |
+| div opt |     38,000/s |         16,000,000 x |
+
+## Expanded version of optimal solution..
+
+The format of the optimized code is compact - here is an expanded version of the code to show the logic.
+
+```
+sub moebius {
+  my ($n,$p,$r) = (shift,1,1);
+  return -1 if is_prime $n;
+  while( ($p = next_prime $p )**2 <= $n ) {
+    next if $n%$p;
+    $n/=$p;
+    return 0 unless $n%$p;
+    return $r if is_prime $n;
+    $r=-$r;
+  }
+  $r;
+}
 ```
