@@ -1,34 +1,26 @@
-# AddBinary
-## Java Solution
+# Equilibrium Index
 
 To compile the code run
 ```java
-javac AddBinary.java
+javac EquilibriumIndex.java
 ```
 To run
 ```java
-java AddBinary
+java EquilibriumIndex
 ```
 ### Example
 ```bash
-~/study/github/perlweeklychallenge-club/challenge-140/ziameraj16/java$ javac AddBinary.java
-~/study/github/perlweeklychallenge-club/challenge-140/ziameraj16/java$ java AddBinary
-Enter first number in Binary format
-11
-Enter second number in Binary format
+~/study/PerlWeeklyChallenge/src/main/java$ javac EquilibriumIndex.java
+~/study/PerlWeeklyChallenge/src/main/java$ java EquilibriumIndex
+Enter comma separated elements of the list
+1,3,5,7,9
+3
+~/study/PerlWeeklyChallenge/src/main/java$ java EquilibriumIndex
+Enter comma separated elements of the list
+1,2,3,4,5
+-1 as no Equilibrium Index found
+~/study/PerlWeeklyChallenge/src/main/java$ java EquilibriumIndex
+Enter comma separated elements of the list
+2,4,2
 1
-100
-~/study/github/perlweeklychallenge-club/challenge-140/ziameraj16/java$ java AddBinary
-Enter first number in Binary format
-101
-Enter second number in Binary format
-1
-110
-~/study/github/perlweeklychallenge-club/challenge-140/ziameraj16/java$ java AddBinary
-Enter first number in Binary format
-100
-Enter second number in Binary format
-11
-111
-~/study/github/perlweeklychallenge-club/challenge-140/ziameraj16/java$ 
 ```
