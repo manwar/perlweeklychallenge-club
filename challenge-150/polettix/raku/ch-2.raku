@@ -18,7 +18,7 @@ sub is-square-free ($N is copy) {
    return False if $N %% 4;
    my $divisor = 3;
    while $N > $divisor {
-      if $N %% $divisor == 0 {
+      if $N %% $divisor {
          $N = ($N / $divisor).Int;
          return False if $N %% $divisor;
       }

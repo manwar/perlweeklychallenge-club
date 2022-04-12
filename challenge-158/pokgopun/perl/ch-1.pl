@@ -9,7 +9,7 @@ my $ap = $p;
 {
 	$p = next_prime($p);
 	last if $p > $n;
-	$ap .= ", $p" if is_prime(eval(join(" + ", $p =~ /(\d)/g)));
+	$ap .= ", $p" if $p < 10 || is_prime(eval(join(" + ", $p =~ /(.)/g)));
 	redo;
 }
 printf "%s\n", $ap;

@@ -1,0 +1,217 @@
+%!PS
+
+% begin library code
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/quicksort { % [ a c b ] -> [ a b c ]
+    1 dict begin
+    /arr exch def
+    0 arr length 1 sub quicksort.main
+    arr
+    end
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/apush { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+% end library code
+
+/genprimes {
+    /mx exch def
+    /primesh mx dict def
+    2 1 3 {
+        primesh exch true put
+    } for
+    6 6 mx 1 add {
+        dup 1 sub exch 1 add 2 exch {
+            dup mx le {
+                primesh exch true put
+            } {
+                pop
+            } ifelse
+        } for
+    } for
+    /q [ 3 5 7 ] def
+    /qi 0 def
+    /p 2 def
+    /mr mx sqrt cvi def
+    {
+        p mr le not {
+            exit
+        } if
+        primesh p known {
+            p dup mul p mx {
+                primesh exch undef
+            } for
+        } if
+        q length qi sub 2 le {
+            /q q q q length 1 sub get 4 add apush def
+            /q q q q length 1 sub get 2 add apush def
+        } if
+        /p q qi get def
+        /qi qi 1 add def
+    } loop
+    [ primesh { pop } forall ] quicksort
+} bind def
+
+/primefactor {
+    4 dict begin
+    /n exch def
+    /f 1 dict def
+    /m n def
+    n sqrt cvi genprimes {
+        /p exch def
+        {
+            m p mod 0 eq {
+                f p known {
+                    f p f p get 1 add put
+                } {
+                    f p 1 put
+                } ifelse
+                /m m p idiv def
+            } {
+                exit
+            } ifelse
+        } loop
+        m 1 eq {
+            exit
+        }
+    } forall
+    m 1 gt {
+        f m known {
+            f m f m get 1 add put
+        } {
+            f m 1 put
+        } ifelse
+    } if
+    f
+    end
+} bind def
+
+/moebius {
+    1 dict begin
+    /z 0 def
+    primefactor values {
+        1 gt {
+            /z 0 def
+            exit
+        } if
+        /z z 1 add def
+    } forall
+    z 0 eq {
+        0
+    } {
+        z 2 mod 0 eq {
+            1
+        } {
+            -1
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+(moebius) test.start
+5 moebius -1 eq test
+10 moebius 1 eq test
+20 moebius 0 eq test
+test.end
