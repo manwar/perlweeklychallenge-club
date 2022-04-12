@@ -42,7 +42,7 @@ foreach $number (@numbers){
             $table[$number][0] .
             " is " .
             $table[$table[$number][1]][0] .
-            ", ";
+            ($table[$number][1] == 10 ? "." : ", ");
         $number = $table[$number][1];
     }
     
