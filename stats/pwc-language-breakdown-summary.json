@@ -1,15 +1,49 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "chart" : {
       "type" : "column"
    },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "series" : [
+      {
+         "dataLabels" : {
+            "align" : "right",
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "enabled" : "true",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         },
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               2433
+            ],
+            [
+               "Perl",
+               7728
+            ],
+            [
+               "Raku",
+               4622
+            ]
+         ]
+      }
+   ],
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "subtitle" : {
-      "text" : "Last updated at 2022-04-12 13:27:35 GMT"
+      "text" : "Last updated at 2022-04-13 02:35:05 GMT"
    },
    "yAxis" : {
       "title" : {
@@ -18,46 +52,12 @@
       "min" : 0
    },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      }
-   },
-   "series" : [
-      {
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "enabled" : "true",
-            "color" : "#FFFFFF"
-         },
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               2431
-            ],
-            [
-               "Perl",
-               7728
-            ],
-            [
-               "Raku",
-               4620
-            ]
-         ]
-      }
-   ],
-   "legend" : {
-      "enabled" : "false"
+      },
+      "type" : "category"
    }
 }
