@@ -3,12 +3,13 @@
 unit sub MAIN(*@n);
 
 for ^@n.elems -> $i {
-    my $ind = -1;
+    my $idx;
+    FIRST { $idx = -1 }
 
     if @n[^$i].sum == @n[$i ^.. *].sum {
-        $ind = $i;
+        $idx = $i;
         last;
     }
 
-    LAST { put $ind }
+    LAST { put $idx }
 }
