@@ -5,11 +5,13 @@ import (
 	"math"
 )
 
+// Set to 0 to have idxPtg() return only positive index, set to 1 the fuction will also return negative index
+const minusIdx = 1
+
 func main() {
-	i := 0
+	i := -20
 	maxIdx := 3_000
 	for {
-		i++
 		if i > maxIdx-1 {
 			break
 		}
@@ -25,16 +27,23 @@ func main() {
 				break
 			}
 			sumIdx := idxPtg(pj + pi)
-			if sumIdx > 0 {
+			if sumIdx != 0 {
 				diffIdx := idxPtg(pj - pi)
-				if diffIdx > 0 {
+				if diffIdx != 0 {
+					if minusIdx == 1 && i > 0 && j > 0 && sumIdx > 0 && diffIdx > 0 {
+						fmt.Println("#################### Positive Index Only ####################")
+					}
 					fmt.Printf("P(%v) + P(%v) => %v + %v = %v <= P(%v)\n", j, i, pj, pi, pj+pi, sumIdx)
 					fmt.Printf("P(%v) - P(%v) => %v - %v = %v <= P(%v)\n", j, i, pj, pi, pj-pi, diffIdx)
+					if minusIdx == 1 && i > 0 && j > 0 && sumIdx > 0 && diffIdx > 0 {
+						fmt.Println("#############################################################")
+					}
 					fmt.Print("\n")
 					break
 				}
 			}
 		}
+		i++
 	}
 }
 
@@ -44,21 +53,13 @@ func calPtg(i int) int {
 
 // idxPtg check if n is a Pentagon number and return its index if it is, it returns 0 if it is not
 func idxPtg(n int) int {
-	// find approximation of index of Pentagon number to start iterate up to find the actual index
-	// p = i(3i - 1)/2 => 2p = 3i^2 - i => 3i^2 = 2p + i => i^2 = 2*p/3 + i/3 => i ~~ sqrt(2*p/3)
-	i := int(math.Ceil(math.Sqrt(2 * float64(n) / 3)))
-	//fmt.Println("i=", i, "=>p=", n)
-	var p int
-	for {
-		p = (3*i - 1) * i / 2
-		if p >= n {
-			break
+	// p = i(3i - 1)/j2 => 3*i^2 - i -2*p = 0
+	// 1 +/- sqrt(1 + 24*p)/6
+	for j := 1; j >= 0-minusIdx; j -= 2 {
+		i, f := math.Modf((1 + float64(j)*math.Sqrt(1+24*float64(n))) / 6)
+		if f == 0 {
+			return int(i)
 		}
-		i++
-	}
-	//return p - n
-	if p-n == 0 {
-		return i
 	}
 	return 0
 }
