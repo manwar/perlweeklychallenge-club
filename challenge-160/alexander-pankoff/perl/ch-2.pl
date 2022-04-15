@@ -47,9 +47,6 @@ sub equilibrium_index(@xs) {
     for my $i ( 0 .. $#xs  ) {
         my $lower = sum0( @xs[ 0 .. $i - 1 ] );
         my $upper = sum0( @xs[ $i + 1 .. $#xs ] );
-        say $i;
-        say $lower;
-        say $upper;
         return $i if $lower == $upper;
     }
 
