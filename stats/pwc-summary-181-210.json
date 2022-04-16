@@ -1,10 +1,8 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "yAxis" : {
       "min" : 0,
@@ -12,11 +10,16 @@
          "text" : ""
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-04-16 17:02:38 GMT"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             59,
             1,
@@ -48,10 +51,10 @@
             113,
             59,
             54
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -83,8 +86,7 @@
             113,
             53,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -122,6 +124,9 @@
          ]
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-04-16 19:39:20 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Peter Campbell Smith",
@@ -156,12 +161,7 @@
          "Saif Ahmed"
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    }
 }
