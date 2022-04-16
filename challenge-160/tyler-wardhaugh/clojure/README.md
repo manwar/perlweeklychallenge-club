@@ -1,6 +1,6 @@
-# c157
+# c160
 
-The Weekly Challenge — #157 — Tyler Wardhaugh
+The Weekly Challenge — #160 — Tyler Wardhaugh
 
 ## Usage
 
@@ -21,14 +21,14 @@ Run Task #2:
     # ... or ...
     $ bb run task-2 N
 
+    # Alternatively, to run it via Babashka:
+    $ bb run task-2-bb N
+
 Run the project's tests (which are samples from the task descriptions):
 
     $ clojure -T:build test
     # ... or ...
     $ bb run test
-
-    # Alternatively, to run it via Babashka:
-    $ bb run task-2-bb N
 
 View available tasks Babashka can run:
 
