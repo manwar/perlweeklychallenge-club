@@ -1,0 +1,111 @@
+%!PS
+
+
+/quicksort { % [ a c b ] -> [ a b c ]
+    1 dict begin
+    /arr exch def
+    0 arr length 1 sub quicksort.main
+    arr
+    end
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get length def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get length pivot le {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get length pivot ge {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/d 400000 string def
+
+(%stdin) (r) file d readstring pop /d exch def
+
+/b 0 array def
+{
+    d (\n) search {
+        /w exch def
+        /u true def
+        0 1 w length 2 sub  {
+            dup
+            w exch get
+            exch
+            1 add w exch get
+            gt {
+                /u false def
+                exit
+            } if
+        } for
+        u {
+            /b b w apush.right def
+        } if
+        pop
+        /d exch def
+    } {
+        pop
+        exit
+    } ifelse
+} loop
+
+/b b quicksort def
+
+b {
+    print (\n) print
+} forall
