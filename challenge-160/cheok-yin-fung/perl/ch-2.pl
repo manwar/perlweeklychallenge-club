@@ -49,30 +49,18 @@ sub ei {
             $new_ind = $ind-1;
         }
         elsif ($hint_lower+$cur_val == $hint_upper) {
-            $new_ind = $ind+$step;
+            $new_ind = $ind+$step;  # follow the previous direction
         }
         elsif ($hint_lower == $hint_upper+$cur_val) {
-            $new_ind = $ind+$step;
+            $new_ind = $ind+$step;  # follow the previous direction
         }
 
         else {    
             if ($hint_lower+$cur_val > $hint_upper) {
-                if ($hint_lower+$cur_val >= $hint_upper-$n[$ind+1]) {
-                    $new_ind = $ind+1;
-                }
-                else {
-                    $new_ind = $ind-1;
-                }
+                $new_ind = $ind+1;
             }
             if ($hint_lower < $hint_upper+$cur_val) {
                 $new_ind = $ind-1;
-            }
-
-            if ($hint_lower == $hint_upper+$cur_val 
-                            or 
-                $hint_lower+$cur_val == $hint_upper)
-            {
-                $new_ind = $ind+$step; # follow the previous direction
             }
         }    
 
@@ -88,10 +76,10 @@ sub ei {
 
 
 
-use Test::More tests=>50;
+use Test::More tests=>500;
 say "TESTING:";
 my @n_temp;
-for my $case (1..50) {
+for my $case (1..500) {
     $n_temp[$_] = 1 + int rand(40) for (0..31);
     ok ei_simple(@n_temp) == ei(@n_temp);
 }
@@ -106,4 +94,3 @@ sub ei_simple {
     }
     return -1;
 }
-
