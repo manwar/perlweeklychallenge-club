@@ -1,0 +1,33 @@
+- setup:
+  cleanup:
+  args:
+  input:    |
+            |name@example.org
+            |rjt@cpan.org
+            |abc@cpan.org
+            |Name@example.org
+            |rjt@CPAN.org
+            |user@alpha.example.org
+  output:   |
+            |user@alpha.example.org
+            |abc@cpan.org
+            |rjt@cpan.org
+            |rjt@CPAN.org
+            |Name@example.org
+            |name@example.org
+- setup:
+  cleanup:
+  args:     -u
+  input:    |
+            |name@example.org
+            |rjt@cpan.org
+            |abc@cpan.org
+            |Name@example.org
+            |rjt@CPAN.org
+            |user@alpha.example.org
+  output:   |
+            |user@alpha.example.org
+            |abc@cpan.org
+            |rjt@cpan.org
+            |Name@example.org
+            |name@example.org
