@@ -1,6 +1,6 @@
 #!/usr/bin/env raku
 
-#I'm going with a pangram in which each word solves exactly 1 new letter.
+# I'm going with a pangram in which each word solves exactly 1 new letter.
 
 my $ltrs = 'a'..'z';
 my $set  = SetHash.new;
