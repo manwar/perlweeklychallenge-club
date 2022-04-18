@@ -5,6 +5,7 @@ find . -name "*.c" -delete
 find . -name "*.logo" -delete
 find . -name "*.ring" -delete
 find . -name "*.amx" -delete
+find . -name "*.yab" -delete
 find . -name "*.wat" -delete
 find . -name "*.svg" -delete
 find . -name "*.mms" -delete
