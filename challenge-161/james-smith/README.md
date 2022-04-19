@@ -1,6 +1,6 @@
-[< Previous 158](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-158/james-smith) |
-[Next 161 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-161/james-smith)
-# The Weekly Challenge 160
+[< Previous 160](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-160/james-smith) |
+[Next 162 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-162/james-smith)
+# The Weekly Challenge 161
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,53 +12,151 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-160/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-161/james-smith
 
-# Challenge 1 - Four Is Magic
+# Challenge 1 - Abecedarian Words
 
-***You are given a positive number, `$n < 10`.  Write a script to generate english text sequence starting with the English cardinal representation of the given number, the word ‘is’ and then the English cardinal representation of the count of characters that made up the first word, followed by a comma. Continue until you reach four.***
+***An abecedarian word is a word whose letters are arranged in alphabetical order. For example, “knotty” is an abecedarian word, but “knots” is not. Output or return a list of all abecedarian words in the dictionary, sorted in decreasing order of length. Optionally, using only abecedarian words, leave a short comment in your code to make your reviewer smile.***
 
 ## The solution
 
-We use `num2en` from `Lingua::EN::Numbers` for this to simplify things - it converts a number into the string representation.
-
-We simplify loop through making `$n` the length of the string until we get to the case where `$n==4`.
 
 ```perl
-sub magic {
-  my $r = ucfirst num2en( my $n = shift ).' is ';
-  $r .= join num2en( $n = length num2en($n)=~s/\W//rg ), '', ', ', ' is ' until $n==4;
-  $r.'magic.';
+open my $d, q(<), 'dictionary.txt';
+
+my @abcde;
+
+O: while( my $f='', chomp(my $w =<$d>) ) {
+  $f gt $_ ? (next O) : ($f=$_) for split //, $w;
+  push @abcde, $w;
+}
+
+$a=$_, say "$a: ", join q(, ), grep { $a == length $_ } @abcde for 1..6;
+```
+
+The list of words are:
+```
+1: a, i, m, x
+2: ad, ah, am, an, as, at, ax, be, by, cc, cs, do, eh, em, go, hi, ho, ii, in, is, it,
+   iv, ix, ms, mu, my, no, or, ox, qt, xx
+3: ace, act, add, ado, ads, ago, ail, aim, air, all, amp, ant, any, apt, art, ass, bee,
+   beg, bet, bin, bit, boo, bop, bow, box, boy, buy, chi, coo, cop, cot, cow, cox, coy,
+   cry, den, dew, dim, din, dip, dos, dot, dry, eel, egg, ego, elm, err, fin, fir, fit,
+   fix, flu, fly, for, fox, fry, gin, gnu, goo, got, guy, him, hip, his, hit, hop, hot,
+   how, iii, ill, imp, inn, ins, ivy, jot, joy, lop, lot, low, moo, mop, mow, nor, not,
+   now, opt, pry, xxx
+4: abet, ably, aces, adds, ahoy, ails, aims, airs, airy, ally, alms, amps, beef, been,
+   beer, bees, beet, begs, bell, belt, bent, best, bill, bins, blot, blow, boor, boos,
+   boot, boss, buzz, cell, cent, chin, chip, chop, chow, city, clot, coop, coos, cops,
+   copy, cost, crux, deem, deep, deer, deft, defy, dens, dent, deny, dill, dims, dins,
+   dips, dirt, door, eels, eggs, egos, elms, envy, errs, fill, film, fins, firs, fist,
+   fizz, flop, flow, flux, foot, fort, foxy, fuzz, gill, gilt, gins, gist, glow, gory,
+   hill, hilt, hims, hint, hips, hiss, hoop, hoot, hops, host, ills, imps, inns, knot,
+   know, loop, loot, lops, loss, lost, moor, moos, moot, mops, moss, most, nosy
+5: abbey, abbot, abhor, abort, adept, adopt, affix, afoot, aglow, allot, allow, alloy,
+   annoy, beefs, beefy, beers, befit, begin, bells, belly, below, berry, bills, boors,
+   boost, booty, bossy, cello, cells, chill, chimp, chins, chips, chops, coops, deems,
+   deeps, deity, dills, dirty, ditty, doors, empty, fills, filly, films, filmy, first,
+   floor, flops, floss, forty, ghost, gills, glory, gloss, hills, hilly, hippy, hoops,
+   loops, lorry, moors, mossy
+6: abhors, accent, accept, access, accost, almost, begins, bellow, billow, cellos,
+   chills, chilly, chimps, chintz, choosy, choppy, effort, floors, floppy, glossy,
+   knotty
+```
+
+# Challenge 2 - Pangrams
+
+***A pangram is a sentence or phrase that uses every letter in the English alphabet at least once. For example, perhaps the most well known pangram is: "the quick brown fox jumps over the lazy dog"***.
+
+```perl
+sub generate_a_pangram_random {
+  my ($list,$c,%letters,@pangram) = (shift,0,map { $_ => 0 } 'a'..'z');
+  O: while( $c < 26 ) {
+    my($f,@l) = (1,split //, my $word = $list->[rand @{$list}]);
+    $f *= $letters{$_} foreach @l;
+    next if $f;
+    push @pangram, $word;
+    $letters{$_} || ( $letters{$_}=1, $c++ ) for @l;
+  }
+  @pangram;
 }
 ```
 
-### Notes
- * The second line looks a bit odd - we can use join to insert the number string in twice without recalulating by making it the "connector" rather than one of the strings to join together.
+## Bonus challenge #1 *"cabbed fad high jackal moping ventriloquist waxy fez"*
 
-# Challenge 2 - Equilibrium Index
+I set myself the following challenge: choose a pangram where - for each word we add we can only add the
+next consecutive letters in the alphabet. *e.g.*
+  * the first word could be `cab` as it contains `a`, `b`, and `c`;
+  * the second word could be `bead` as it contains `e` and `d`.
+We then look for the shortest word which introduces the most letters.
 
-***You are give an array of integers, `@n`.  Write a script to find out the Equilibrium Index of the given array, if found. For an array `@n` consisting n elements, index `$i` is an equilibrium index if the sum of elements of subarray `@n[0..$i-1]` is equal to the sum of elements of subarray `@n[$i+1..-1]`.
+```
+sub generate_a_pangram_alpha_order {
+  my ($list,$next,%letters,@pangram) = (shift,'a',map { $_ => 0 } 'a'..'z');
+  O: until( 'aa' eq $next ) { ## If we get to "aa" we know that we have finished
+    my($best,$best_length,$best_word) = (0,0,'');
+    W: foreach my $word ( @{$list} ) {
+      my %t = map { $_=>1 } split //, $word;
+      my ($score,$ch) = (0,$next);
+      ($_ gt $ch) ? next W : ($score++,$ch++) for sort grep { $_ ge $next } keys %t;
+            ## Get a list of letters in alphabetical order which are greater that the ones
+            ## we already have in the pangram, and find out how many we have that are
+            ## consecutive as $next. If they aren't all consecutive or start with $next
+            ## we jump out of the loop and look at the next word
+      next if $score < $best;
+      if( $score > $best ) {
+        ($best,$best_word,$best_length) = ($score,$word,length $word);
+            ## Update best word {and reset associated "metadata")
+      } elsif( $best_length > length $word ) {
+        ($best_word,$best_length) = ($word,length $word);
+            ## score is equal to best update if shorter word
+      }
+    }
+    push @pangram, $best_word;
+    $next++ foreach 1..$best;         ## Find next letter to add
+  }
+  @pangram;
+}
+```
 
-## Definition
+### The solution *"cabbed fad high jackal moping ventriloquist waxy fez"*
 
-Instead of computing the sum for values either side of the `$i`th index. We note that the sum of values to the right of the index is the total value minus the value at the index and the sum of the values to the left of the index. We therefore compute the sum of the values first, and iterate through the loop from the start seeing if:
+I like that the solution contains very few words - and a total of only 45 characters - the star being *ventriloquist*:
 
-  * `sum @n[0..$i-1] == sum @n[$i+1..-1]`
-  * `sum @n[0..$i-1] == sum @n - sum @n[0..$i-1] - $n[$i]`
-  * `$n[$i] = sum @n - 2 * sum @n[0..$i-1]`
-
-We further note that this can be simplified again as if we design `$s = sum @n`;
+ | Word          | Extra letters | Letters |
+ | ------------- | ------------- | ------: |
+ | cabbed        | 5 - *abcde*   |       6 |
+ | fad           | 1 - *f*       |       3 |
+ | high          | 3 - *ghi*     |       4 |
+ | jackal        | 3 - *jkl*     |       6 |
+ | moping        | 4 - *mnop*    |       6 |
+ | ventriloquist | 6 - *qrstuv*  |      13 |
+ | waxy          | 3 - *wxy*     |       4 | 
+ | fez           | 1 - *fez*     |       3 |
+ | TOTAL         |               |      45 |
  
-  * This simlifies to `$s == $n[$i]` {we know one value is `$i` - so return it}
-  * subtract `2*$n[$i]` from `$s` and repeat;
+***Note:** This isn't the shortest pangram - e.g. you can replace **cabbed fad** with **cab fed** to reduce the length to 42 characters. **cab fed  high jackal moping ventriloquist waxy fez**.*
+ 
+## Bonus challenge #2 *"a baa cc ad be fad age ah i jab eke ail m an do pa qi or as at mu iv we x by fez"*
 
+***Note:** to achieve this we have added 3 words to the dictionary "baa", "i" and "qi" which give a solution*
+
+This is a pangram which a word which includes the same letter as previous words plus the next letter in the alphabet. This is similar (but slightly simplified) version of the previous one:
 
 ```perl
-sub equilibrium_index {
-  my $s = 0;
-  $s += $_ for @_;
-  ($s==$_[$_]) ? (return $_) : ($s-=2*$_[$_]) for 0..$#_;
-  -1;
+sub generate_one_letter_at_time {
+  my ($list,$next,%letters,@pangram) = (shift,'a',map { $_ => 0 } 'a'..'z');
+  O: until( 'aa' eq $next ) {
+    my($best,$best_length,$best_word) = (0,1e6,'');
+    W: foreach my $word ( @{$list} ) {
+      my %t = map { $_=>1 } split //, $word;
+      my @T = grep { $_ ge $next } keys %t;
+      ($best_word,$best_length) = ($word,length $word) if @T == 1 && $T[0] eq $next && $best_length > length $word;
+    }
+    push @pangram, $best_word;
+    $next++;
+  }
+  @pangram;
 }
 ```
 
