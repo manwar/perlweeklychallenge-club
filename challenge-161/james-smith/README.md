@@ -135,7 +135,7 @@ I like that the solution contains very few words - and a total of only 45 charac
  | fez           | 1 - *fez*     |       3 |
  | TOTAL         |               |      45 |
  
-***Note:** This isn't the shortest pangram - e.g. you can replace **cabbed fad** with **cab fed** to reduce the length to 42 charachters.*
+***Note:** This isn't the shortest pangram - e.g. you can replace **cabbed fad** with **cab fed** to reduce the length to 42 characters. **cab fed  high jackal moping ventriloquist waxy fez**.*
  
 ## Bonus challenge #2 *"a baa cc ad be fad age ah i jab eke ail m an do pa qi or as at mu iv we x by fez"*
 
