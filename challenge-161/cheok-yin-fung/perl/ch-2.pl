@@ -27,8 +27,10 @@ foreach (<DICT>) {
 }
 
 
-my @three_letter_words = grep {length $_ == 3} @words;
-my @four_letter_words = grep {length $_ == 4} @words;
+# if the dictionary is very large, 
+# using only 3- and 4-letter words might improve the execution time
+# my @three_letter_words = grep {length $_ == 3} @words;
+# my @four_letter_words = grep {length $_ == 4} @words;
 
 
 
@@ -62,7 +64,7 @@ sub update_found {
 sub next_pan {
     my $new_word;
     my $fine = 0;
-    for my $w (shuffle (@three_letter_words, @four_letter_words)) {
+    for my $w (shuffle (@words)) {
         if ((scalar grep { !$found_alphabet{$_} } split "", $w) == 1) {
             $new_word = $w;
             $fine = 1;
