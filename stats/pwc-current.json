@@ -1,17 +1,13 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 161",
          "data" : [
             {
-               "drilldown" : "Cheok-Yin Fung",
+               "name" : "Cheok-Yin Fung",
                "y" : 2,
-               "name" : "Cheok-Yin Fung"
+               "drilldown" : "Cheok-Yin Fung"
             },
             {
                "drilldown" : "Mark Anderson",
@@ -19,23 +15,23 @@
                "name" : "Mark Anderson"
             },
             {
-               "name" : "Paulo Custodio",
+               "drilldown" : "Paulo Custodio",
                "y" : 2,
-               "drilldown" : "Paulo Custodio"
+               "name" : "Paulo Custodio"
             },
             {
+               "y" : 3,
                "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith",
-               "y" : 3
+               "name" : "Peter Campbell Smith"
             },
             {
-               "y" : 2,
                "name" : "PokGoPun",
+               "y" : 2,
                "drilldown" : "PokGoPun"
             },
             {
-               "y" : 2,
                "name" : "Robert DiCicco",
+               "y" : 2,
                "drilldown" : "Robert DiCicco"
             },
             {
@@ -44,64 +40,53 @@
                "name" : "Roger Bell_West"
             },
             {
-               "name" : "W. Luis Mochan",
+               "name" : "Ulrich Rieke",
+               "y" : 4,
+               "drilldown" : "Ulrich Rieke"
+            },
+            {
+               "drilldown" : "W. Luis Mochan",
                "y" : 3,
-               "drilldown" : "W. Luis Mochan"
+               "name" : "W. Luis Mochan"
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 161"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2022-04-19 18:07:36 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "legend" : {
       "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2022-04-19 17:42:57 GMT"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Cheok-Yin Fung",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Cheok-Yin Fung",
             "name" : "Cheok-Yin Fung"
          },
          {
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mark Anderson"
          },
          {
             "id" : "Paulo Custodio",
@@ -114,7 +99,6 @@
             "name" : "Paulo Custodio"
          },
          {
-            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -125,6 +109,7 @@
                   1
                ]
             ],
+            "id" : "Peter Campbell Smith",
             "name" : "Peter Campbell Smith"
          },
          {
@@ -138,17 +123,17 @@
             "id" : "PokGoPun"
          },
          {
-            "id" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Robert DiCicco",
             "name" : "Robert DiCicco"
          },
          {
-            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -159,7 +144,21 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West"
+            "name" : "Roger Bell_West"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Ulrich Rieke",
+            "name" : "Ulrich Rieke"
          },
          {
             "name" : "W. Luis Mochan",
@@ -176,5 +175,25 @@
             "id" : "W. Luis Mochan"
          }
       ]
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 161"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    }
 }
