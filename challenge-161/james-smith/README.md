@@ -160,3 +160,29 @@ sub generate_one_letter_at_time {
 }
 ```
 
+## Bonus challenge #3 *"oversimplification ladybug hawk jazz equinox"*
+
+A different one now - choose the sentance by finding a word that is as short as possible but contains as many different letters as possible, and repeat for all 26 letters....
+
+```perl
+sub most_letters {
+  my ($list,$c,%letters,@pangram) = (shift,0,map{$_=>1}'a'..'z');
+  while($c<26) {
+    my( $most, $length, $best )=(0,1000,'');
+    I: foreach my $word (@{$list}) {
+      my %t = map { $_ => 1 } grep { $letters{$_} } split //, $word;
+      if( $most < scalar keys %t ) {
+        ($length,$best,$most) = (length $word,$word,scalar keys %t);
+      } elsif( scalar keys %t == $most && $length > length $word ) {
+        $length = length ($best=$word);
+      }
+    }
+    $c+=$most;
+    $letters{$_}=0 foreach split//,$best;
+    push @pangram, $best;
+  }
+  @pangram;
+}
+```
+
+This gives us *"**oversimpl**i**f**i**cat**io**n** la**dybug** **h**a**wk** **j**a**z**z e**q**uino**x**"*
