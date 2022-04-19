@@ -4,19 +4,14 @@ use strict;
 
 use warnings;
 use feature qw(say);
-use Test::More;
-use Benchmark qw(cmpthese timethis);
-use Data::Dumper qw(Dumper);
 
-my @TESTS = (
-  [ 0, 1 ],
-);
+open my $d, q(<), 'dictionary.txt';
 
-is( my_function($_->[0]), $_->[1] ) foreach @TESTS;
+my %a;
 
-done_testing();
-
-sub my_function {
-  return 1;
+O:while( my $f = '', chomp( my $w = <$d> // '' ) ) {
+  $f gt $_ ? next O : ( $f = $_ ) for split //, $w;
+  push @{$a{ length $w }}, $w;
 }
 
+say "$_: ", join ', ', @{$a{$_}} for sort { $a<=>$b } keys %a;
