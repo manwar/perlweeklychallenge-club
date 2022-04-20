@@ -1,6 +1,7 @@
 use strict;
 use warnings;
 use List::Util qw/uniq/;
+
 my $debug = 1;
 
 my $dict = @ARGV ? shift : "../../../data/dictionary.txt";
