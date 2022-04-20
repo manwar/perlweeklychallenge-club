@@ -1,5 +1,6 @@
 use strict;
 use warnings;
+use List::Util qw/uniq/;
 
 my $debug = 1;
 
@@ -19,7 +20,7 @@ my $i = 0;
 		chomp $line;
 		$best = $line unless defined $best;
 		if (substr($best,0,1) eq substr($line,0,1)){
-			next if scalar( grep{ $seen !~ /\b$_\b/ } split //, $best ) >= scalar( grep{ $seen !~ /\b$_\b/ } split //, $line );
+			next if scalar( grep{ $seen !~ /\b$_\b/ } uniq(split //, $best) ) >= scalar( grep{ $seen !~ /\b$_\b/ } uniq(split //, $line) );
 			$best = $line;
 			next;
 		}
