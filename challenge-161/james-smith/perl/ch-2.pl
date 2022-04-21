@@ -19,6 +19,7 @@ O: for my $w (@words) {
   push @abcde,$w;
 }
 
+
 say "\nML:";
 say join ' ', ' * [W]', most_letters(       \@words );
 say join ' ', ' * [A]', most_letters(       \@abcde );
@@ -38,8 +39,9 @@ say join ' ', ' * [W]', generate_a_pangram_alpha_order(  \@words );
 
 say "\nOne letter at a time (alpha):";
 say join ' ', ' * [W]', generate_one_letter_at_time(     \@words );
+say join ' ', ' * [W]', generate_one_letter_at_time_longest( \@words );
 
-say "\n";
+
 
 sub generate_a_pangram_random {
   my ($list,$c,%letters,@pangram) = (shift,0,map { $_ => 0 } 'a'..'z');
@@ -95,6 +97,21 @@ sub generate_one_letter_at_time {
       my %t = map { $_=>1 } split //, $word;
       my @T = grep { $_ ge $next } keys %t;
       ($best_word,$best_length) = ($word,length $word) if @T == 1 && $T[0] eq $next && $best_length > length $word;
+    }
+    push @pangram, $best_word;
+    $next++;
+  }
+  @pangram;
+}
+
+sub generate_one_letter_at_time_longest {
+  my ($list,$next,%letters,@pangram) = (shift,'a',map { $_ => 0 } 'a'..'z');
+  O: until( 'aa' eq $next ) {
+    my($best,$best_length,$best_word) = (0,0,'');
+    W: foreach my $word ( @{$list} ) {
+      my %t = map { $_=>1 } split //, $word;
+      my @T = grep { $_ ge $next } keys %t;
+      ($best_word,$best_length) = ($word,length $word) if @T == 1 && $T[0] eq $next && $best_length < length $word;
     }
     push @pangram, $best_word;
     $next++;
