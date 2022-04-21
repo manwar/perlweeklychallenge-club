@@ -160,6 +160,10 @@ sub generate_one_letter_at_time {
 }
 ```
 
+If we change the inequality from "`>`" to "`<`" in the inner loop we get the longest word that can be made with only adding that letter - then we get the following:
+
+***a baa cab add acceded defaced baggage beheaded caddied jabbed feedback blackjacked blackmailed blackjacking blindfolding handicapping qi archaeological incomprehensible misrepresentations telecommunications oversimplification counterclockwise extraterrestrials characteristically institutionalizing***
+
 ## Bonus challenge #3 *"oversimplification ladybug hawk jazz equinox"*
 
 A different one now - choose the sentance by finding a word that is as short as possible but contains as many different letters as possible, and repeat for all 26 letters....
@@ -186,3 +190,5 @@ sub most_letters {
 ```
 
 This gives us *"**oversimpl**i**f**i**cat**io**n** la**dybug** **h**a**wk** **j**a**z**z e**q**uino**x**"*
+
+If we stick to the words from challenge 1 - we get *"abhors deity flux know chimp go iv qt jot buzz"*.
