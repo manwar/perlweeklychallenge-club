@@ -2,6 +2,7 @@ use strict;
 use warnings;
 
 my $dict = @ARGV ? shift : "../../../data/dictionary.txt";
+printf "%s\n", join(", ",abc($dict));
 
 sub abc{
 	my $dict = shift;
@@ -12,20 +13,20 @@ sub abc{
 	my @abc;
 	while (my $line = ref $IN eq 'GLOB' ? <$IN> : shift @$IN){
 		chomp $line;
-		my @a = split //,$line;
-		my @b;
-		{
-			push @b, shift @a;
-			last unless @a;
-			last if $b[-1] gt $a[0];
-			redo;
-		}
-		push @abc,$line if length($line)==@b;
+		push @abc,$line if isAbc($line);
 	}
 	@abc = sort{ length $b <=> length $a} @abc unless ref $IN eq 'ARRAY'; 
 	return @abc
 }
 
-printf "%s\n", join(", ",abc($dict));
+sub isAbc{
+	my @a = split //, shift;
+	if (@a > 1) {
+		for (my $i = 1; $i < @a; $i++){
+			return 0 if $a[$i] lt $a[$i-1];
+		}
+	}
+	return 1;
+}
 
 

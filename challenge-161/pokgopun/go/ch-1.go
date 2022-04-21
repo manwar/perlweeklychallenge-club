@@ -9,7 +9,11 @@ import (
 )
 
 func main() {
-	f, err := os.Open("../../../data/dictionary.txt")
+	dict := "../../../data/dictionary.txt"
+	if len(os.Args) > 1 {
+		dict = os.Args[1]
+	}
+	f, err := os.Open(dict)
 	if err != nil {
 		log.Fatal(err)
 	}
