@@ -38,9 +38,8 @@ sub get_abcdrian_pangram {
 
     while (<$file>) {
         chomp;
+        next unless is_abcd($_);
         process_word($_);
-
-        # seen all letters?
         return join( ' ', @output ) if scalar keys %seen_letters == 26;
     }
     close $file;
@@ -50,7 +49,7 @@ sub get_abcdrian_pangram {
 use Test::More;
 
 is( get_abcdrian_pangram(),
-    'a ad added adds ado adobe adore adorn adverb adversaries adversary adversely adversest advertisement advertising advice aerospace aesthetic afar affix affluence afterward agonize ajar akin antiquate'
+    'a ad adds ado ago ah ahoy all allot allow almost amp an art ax blot buy buzz cc cell chi deft envy jot knot qt'
 );
 
 done_testing;
