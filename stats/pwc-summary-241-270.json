@@ -1,8 +1,16 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -20,6 +28,12 @@
          "Yet Ebreo",
          "Yozen Hernandez"
       ]
+   },
+   "subtitle" : {
+      "text" : "[Champions: 13] Last updated at 2022-04-23 18:04:50 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "series" : [
       {
@@ -59,6 +73,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             3,
@@ -73,27 +88,12 @@
             1,
             6,
             14
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 13] Last updated at 2022-04-23 17:58:20 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
