@@ -28,8 +28,7 @@ my $words = {};
 while (my $word = <$DICT>) {
     chomp $word;
     my $len = length($word);
-    next unless $len >= 2;
-    $words->{$word} = $len if is_abecedarian_word($word);
+    $words->{$word} = $len if $len >= 2 && is_abecedarian_word($word);
 }
 close $DICT;
 
