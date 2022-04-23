@@ -28,7 +28,7 @@ my $words = {};
 while (my $word = <$DICT>) {
     chomp $word;
     my $len = length($word);
-    $words->{$word} = $len if $len >= 2 && is_abecedarian_word($word);
+    $words->{$word} = $len if $len >= 2 && is_abecedarian($word);
 }
 close $DICT;
 
@@ -38,7 +38,7 @@ printf("%s\n", join("\n", sort { $words->{$b} <=> $words->{$a} } sort keys %$wor
 #
 # METHOD
 
-sub is_abecedarian_word {
+sub is_abecedarian {
     my ($word) = @_;
 
     return 0 unless defined $word;
