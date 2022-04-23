@@ -31,7 +31,7 @@ GetOptions(\%o, qw< dict=s test benchmark >)
 # Challenge output requirement
 
 our @words = read_lines($o{dict}); # "our" helps Benchmark. Use my normally.
-say for sort { length $a <=> length $b } abcd_words(@words);
+say for sort { length $b <=> length $a } abcd_words(@words);
 
 
 # Here are the abecedarian filters themselves
