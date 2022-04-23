@@ -1,0 +1,5 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (:d(:$dictionary) where $dictionary.IO.r = 'dictionary.txt');
+
+$dictionary.IO.lines.grep({ $_ eq $_.comb.sort.join })>>.say;

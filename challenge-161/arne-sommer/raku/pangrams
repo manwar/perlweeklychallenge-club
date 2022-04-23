@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (:d(:$dictionary) where $dictionary.IO.r = 'dictionary.txt');
+
+my @dict = $dictionary.IO.lines;
+my @sentence;
+my %letters;
+
+while %letters.keys.elems != 26
+{
+  my $word = @dict.pick;
+
+  @sentence.push: $word;
+
+  $word.comb.map({ %letters{$_} = True });
+}
+
+say @sentence.join(" ");
