@@ -1,58 +1,52 @@
-TASK #1 - Four Is Magic
+TASK #1 - Abecedarian Words
 
-You are given a positive number, $n < 10.
+An abecedarian word is a word whose letters are arranged in alphabetical
+order. For example, 'knotty' is an abecedarian word, but 'knots'
+is not. Output or return a list of all abecedarian words in the
+dictionary, sorted in decreasing order of length.
 
-Write a script to generate english text sequence starting with the English
-cardinal representation of the given number, the word 'is' and then
-the English cardinal representation of the count of characters that made
-up the first word, followed by a comma. Continue until you reach four.
-
-Example 1:
-
-	Input: $n = 5
-	Output: Five is four, four is magic.
-
-Example 2:
-
-	Input: $n = 7
-	Output: Seven is five, five is four, four is magic.
-
-Example 3:
-
-	Input: $n = 6
-	Output: Six is three, three is five, five is four, four is magic.
+Optionally, using only abecedarian words, leave a short comment in your code to make your reviewer smile.
 
 MY NOTES: ok.  Pretty easy.
 
-GUEST LANGUAGE: As a bonus, I'd also have a go at translating ch-1.pl into C,
-look in the C directory.
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl into C,
+look in the C directory for that.
 
 
-TASK #2 - Equilibrium Index
+TASK #2 - Pangrams
 
-You are give an array of integers, @n.
+A pangram is a sentence or phrase that uses every letter in the English
+alphabet at least once. For example, perhaps the most well known
+pangram is:
 
-Write a script to find out the Equilibrium Index of the given array, if found.
+the quick brown fox jumps over the lazy dog
 
-For an array A consisting n elements, index i is an equilibrium index
-if the sum of elements of subarray A[0..i-1] is equal to the sum of
-elements of subarray A[i+1..n-1].
+Using the provided dictionary, so that you don't need to include
+individual copy, generate at least one pangram.
 
-Example 1:
+Your pangram does not have to be a syntactically valid English sentence
+(doing so would require far more work, and a dictionary of nouns, verbs,
+adjectives, adverbs, and conjunctions). Also note that repeated letters,
+and even repeated words, are permitted.
 
-	Input: @n = (1, 3, 5, 7, 9)
-	Output: 3
+BONUS: Constrain or optimize for something interesting (completely up
+to you), such as:
 
-Example 2:
+Shortest possible pangram (difficult)
 
-	Input: @n = (1, 2, 3, 4, 5)
-	Output: -1 as no Equilibrium Index found.
+Pangram which contains only abecedarian words (see challenge 1)
 
-Example 3:
+Pangram such that each word "solves" exactly one new letter. For example,
+such a pangram might begin with (newly solved letters in bold):
+    a ah hi hid die ice tea ...
 
-	Input: @n = (2, 4, 2)
-	Output: 1
+    (What is the longest possible pangram generated with this method? All
+    solutions will contain 26 words, so focus on the letter count.)
 
-MY NOTES: ok.  Pretty easy.  Rather than recomputing sums each time,
-let's keep track of "the sum before i" and "the sum after i" and
-adjust them each pass..
+Pangrams that have the weirdest (PG-13) Google image search results
+
+Anything interesting goes!
+
+
+MY NOTES: hmmm.  Pretty easy to find a pangram in a brute force fashion,
+but anything more constrained sounds pretty hard.
