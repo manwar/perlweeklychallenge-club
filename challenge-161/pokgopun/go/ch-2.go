@@ -3,7 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
+	"io"
 	"os"
 	"sort"
 	"strings"
@@ -35,20 +35,35 @@ func main() {
 	if len(os.Args) > 1 {
 		dict = os.Args[1]
 	}
+	var r io.Reader
 	f, err := os.Open(dict)
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
+		s := `the
+quick
+brown
+fox
+jumps
+over
+the
+lazy
+dog
+`
+		r = strings.NewReader(s)
+	} else {
+		defer f.Close()
+		r = f
 	}
-	defer f.Close()
 	pngrm := []string{}
 	letters := byteSeen{}
 	var best string
-	scanner := bufio.NewScanner(f)
+	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
-		if len(best) == 0 {
-			best = "a"
-		}
 		b := scanner.Text()
+		if len(best) == 0 {
+			//best = "a"
+			best = b[0:1]
+		}
 		if b[:1] == best[:1] {
 			if letters.countUnseen(best) >= letters.countUnseen(b) {
 				continue
@@ -67,9 +82,17 @@ func main() {
 			break
 		}
 	}
+	if len(letters) < 26 {
+		pngrm = append(pngrm, best)
+		for _, v := range []byte(best) {
+			letters[v] = struct{}{}
+		}
+	}
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
 	}
-	fmt.Println(pngrm)
-	fmt.Printf("=> %d words, %d letters and %d unique letters\n", len(pngrm), len(strings.Join(pngrm, "")), len(letters))
+	if len(letters) == 26 {
+		fmt.Println(pngrm)
+		fmt.Printf("=> %d words, %d letters and %d unique letters\n", len(pngrm), len(strings.Join(pngrm, "")), len(letters))
+	}
 }
