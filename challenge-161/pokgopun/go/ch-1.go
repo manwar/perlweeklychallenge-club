@@ -3,9 +3,10 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
+	"io"
 	"os"
 	"sort"
+	"strings"
 )
 
 func main() {
@@ -13,13 +14,26 @@ func main() {
 	if len(os.Args) > 1 {
 		dict = os.Args[1]
 	}
+	var r io.Reader
 	f, err := os.Open(dict)
 	if err != nil {
-		log.Fatal(err)
+		//log.Fatal(err)
+		s := `forty
+hippy
+bees
+buzz
+a
+dirty
+nosy
+chimp
+`
+		r = strings.NewReader(s)
+	} else {
+		defer f.Close()
+		r = f
 	}
-	defer f.Close()
 	abc := []string{}
-	scanner := bufio.NewScanner(f)
+	scanner := bufio.NewScanner(r)
 	for scanner.Scan() {
 		s := scanner.Text()
 		if isAbc(s) {
@@ -29,9 +43,12 @@ func main() {
 	if err := scanner.Err(); err != nil {
 		fmt.Fprintln(os.Stderr, "reading standard input:", err)
 	}
-	sort.SliceStable(abc, func(i, j int) bool {
-		return len(abc[i]) > len(abc[j])
-	})
+	_, ok := r.(*os.File)
+	if ok {
+		sort.SliceStable(abc, func(i, j int) bool {
+			return len(abc[i]) > len(abc[j])
+		})
+	}
 	fmt.Println(abc)
 }
 func isAbc(s string) bool {
