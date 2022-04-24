@@ -23,13 +23,14 @@ sub MAIN(
   @lines .= sort: *.chars;
   my @solution;
   my $covered-letters = Set.new;
-  for @lines -> $current-word {
-    if $current-word.comb (-) $covered-letters == 1 {
-      @solution.push: $current-word;
-      $covered-letters (|)= $current-word.comb;
-      last if 'a' .. 'z' ~~ $covered-letters; 
+  until 'a' .. 'z' ~~ $covered-letters {
+    with @lines.first(*.comb (-) $covered-letters == 1) {
+      @solution.push: $_;
+      $covered-letters (|)= .comb;
+    }
+    else {
+      die 'No solution available.';
     }
   }
-  die 'No solution available.' unless 'a' .. 'z' ~~ $covered-letters;
   @solution.join(' ').say;
 }
