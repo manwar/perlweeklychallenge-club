@@ -71,10 +71,10 @@ The list of words are:
 ```perl
 sub generate_a_pangram_random {
   my ($list,$c,%letters,@pangram) = (shift,0,map { $_ => 0 } 'a'..'z');
-  O: while( $c < 26 ) {
+  O: while( $c < 26 ) {            ## Keep a counter of letters used...
     my($f,@l) = (1,split //, my $word = $list->[rand @{$list}]);
     $f *= $letters{$_} foreach @l;
-    next if $f;
+    next if $f;                    ## Only choose words which have at least one new unique letter
     push @pangram, $word;
     $letters{$_} || ( $letters{$_}=1, $c++ ) for @l;
   }
@@ -190,5 +190,7 @@ sub most_letters {
 ```
 
 This gives us *"**oversimpl**i**f**i**cat**io**n** la**dybug** **h**a**wk** **j**a**z**z e**q**uino**x**"*
+
+If we replace "equinox" with "quixotic" which introduces the same two letters "q" and "x" you could rearrange this to: **Ladybug Hawk - Quixotic jazz oversimplification**. This just sounds like an NME headline!
 
 If we stick to the words from challenge 1 - we get *"abhors deity flux know chimp go iv qt jot buzz"*.
