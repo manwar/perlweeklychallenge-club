@@ -1,6 +1,7 @@
 find . -name "*.plperl" -delete
 find . -name "*.w" -delete
 find . -name "*.wl" -delete
+find . -name "*.ex" -delete
 find . -name "*.c" -delete
 find . -name "*.logo" -delete
 find . -name "*.ring" -delete
