@@ -1,0 +1,87 @@
+%!PS
+
+% begin library code
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+% end library code
+
+/generate {
+    3 dict begin
+    /l 0 def
+    /s 0 def
+    /m 1 def
+    {
+        dup dup 48 ge exch 57 le and {
+            /l l 1 add def
+            48 sub m mul s add /s exch def
+            /m 4 m sub def
+            l 12 ge {
+                exit
+            } if
+        } if
+    } forall
+    l 12 lt {
+        99
+    } {
+        10 s 10 mod sub 10 mod
+    } ifelse
+    (..) cvs
+    end
+} bind def
+
+/validate {
+    3 dict begin
+    /partial 12 string def
+    /check 0 def
+    /l 0 def
+    {
+        dup dup 48 ge exch 57 le and {
+            l 11 le {
+                partial exch l exch put
+                /l l 1 add def
+            } {
+                48 sub /check exch def
+                exit
+            } ifelse
+        } if
+    } forall
+    partial generate cvi check eq
+    end
+} bind def
+
+(isbn) test.start
+(978-0-306-40615-) generate (7) eq test
+(978-0-306-40615-7) generate (7) eq test
+(978-0-306-40615-7) validate test
+(978-0-306-46015-7) validate not test
+test.end
