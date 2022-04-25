@@ -22,4 +22,4 @@ use List::MoreUtils qw(pairwise);
 
 my @isbnDigits = (grep/\d/,split//,shift // '978-0-306-40615-7')[0..11];
 my @factors = split//,1313131313131;
-printf "%d\n", (10 - (sum0 pairwise {$a*$b} @isbnDigits,@factors) % 10) % 10;
+say -(sum0 pairwise {$a*$b} @isbnDigits,@factors) % 10;
