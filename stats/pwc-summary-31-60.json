@@ -1,13 +1,17 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -42,12 +46,6 @@
          "Doug Schrag",
          "Duane Powell"
       ]
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-04-26 17:47:47 GMT"
    },
    "series" : [
       {
@@ -121,6 +119,7 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             10,
             0,
@@ -152,14 +151,15 @@
             7,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-04-26 17:58:25 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"

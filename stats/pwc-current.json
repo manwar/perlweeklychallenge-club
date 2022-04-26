@@ -1,30 +1,12 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "chart" : {
       "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2022-04-26 17:47:47 GMT"
    },
    "legend" : {
       "enabled" : 0
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
    "series" : [
       {
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 162",
          "data" : [
             {
                "name" : "James Smith",
@@ -32,18 +14,18 @@
                "drilldown" : "James Smith"
             },
             {
-               "y" : 2,
                "name" : "Julien Fiegehenn",
+               "y" : 2,
                "drilldown" : "Julien Fiegehenn"
             },
             {
-               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
                "y" : 2,
-               "name" : "Luca Ferrari"
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "y" : 1,
                "name" : "Mark Anderson",
+               "y" : 1,
                "drilldown" : "Mark Anderson"
             },
             {
@@ -52,23 +34,38 @@
                "drilldown" : "Niels van Dijke"
             },
             {
-               "drilldown" : "PokGoPun",
-               "y" : 2,
-               "name" : "PokGoPun"
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 4
-            },
-            {
-               "name" : "W. Luis Mochan",
+               "drilldown" : "Peter Campbell Smith",
                "y" : 3,
-               "drilldown" : "W. Luis Mochan"
+               "name" : "Peter Campbell Smith"
+            },
+            {
+               "name" : "PokGoPun",
+               "drilldown" : "PokGoPun",
+               "y" : 2
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan"
             }
-         ]
+         ],
+         "name" : "The Weekly Challenge - 162",
+         "colorByPoint" : 1
       }
    ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
@@ -81,6 +78,61 @@
    "drilldown" : {
       "series" : [
          {
+            "id" : "James Smith",
+            "name" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
+            "id" : "Julien Fiegehenn",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Julien Fiegehenn"
+         },
+         {
+            "name" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Luca Ferrari"
+         },
+         {
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "id" : "Mark Anderson"
+         },
+         {
+            "id" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Niels van Dijke"
+         },
+         {
+            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -91,8 +143,7 @@
                   1
                ]
             ],
-            "name" : "James Smith",
-            "id" : "James Smith"
+            "id" : "Peter Campbell Smith"
          },
          {
             "data" : [
@@ -101,51 +152,10 @@
                   2
                ]
             ],
-            "name" : "Julien Fiegehenn",
-            "id" : "Julien Fiegehenn"
-         },
-         {
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  1
-               ]
-            ]
-         },
-         {
-            "id" : "Niels van Dijke",
-            "name" : "Niels van Dijke",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "PokGoPun",
             "name" : "PokGoPun",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
+            "id" : "PokGoPun"
          },
          {
-            "name" : "Roger Bell_West",
             "id" : "Roger Bell_West",
             "data" : [
                [
@@ -156,7 +166,8 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell_West"
          },
          {
             "id" : "W. Luis Mochan",
@@ -176,5 +187,13 @@
    },
    "title" : {
       "text" : "The Weekly Challenge - 162"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2022-04-26 17:58:25 GMT"
    }
 }
