@@ -20,8 +20,8 @@ is( validate_isbn13($_->[0]) || 0, $_->[1] ) foreach @TESTS;
 done_testing();
 
 sub validate_isbn13 {
-  my( $s, @p ) = ( 0, grep {/\d/} split //, $_[0] );
-  $s -= shift(@p) + 3*shift @p for 0..5;
-  $p[0] == $s%10;
+  my @p = ( my $s = 0, grep {/\d/} split //, $_[0] );
+  $s += 3*shift(@p) + shift @p for 0..6;
+  !($s%10);
 }
 
