@@ -1,0 +1,257 @@
+%!PS
+
+% begin library code
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+% end library code
+
+/encrypt {
+    1 3 1 roll playfair
+} bind def
+
+/decrypt {
+    -1 3 1 roll playfair
+} bind def
+
+/posmod {
+    1 dict begin
+    dup /b exch def
+    mod
+    {
+        dup 0 lt {
+            b add
+        } {
+            exit
+        } ifelse
+    } loop
+    end
+} bind def
+
+/playfair {
+    3 dict begin
+    /input exch def
+    /kwi exch def
+    /dir exch def
+    /ii input length string def
+    /l 0 def
+    input {
+        dup dup 65 ge exch 90 le and {
+            32 add
+        } if
+        dup 106 eq {
+            pop 105
+        } if
+        dup dup 97 ge exch 122 le and {
+            ii exch l exch put
+            /l l 1 add def
+        } {
+            pop
+        } ifelse
+    } forall
+    ii 0 l getinterval s2a /ichars exch def
+    /kw 26 string def
+    /k 26 dict def
+    /l 0 def
+    kwi {
+        dup dup 65 ge exch 90 le and {
+            32 add
+        } if
+        dup dup 97 ge exch 122 le and {
+            dup k exch known not {
+                dup kw exch l exch put
+                /l l 1 add def
+                k exch true put
+            } {
+                pop
+            } ifelse
+        } {
+            pop
+        } ifelse
+    } forall
+    (j) { k exch true put } forall
+    97 1 122 {
+        dup k exch known not {
+            kw exch l exch put
+            /l l 1 add def
+            l 26 ge {
+                exit
+            } if
+        } {
+            pop
+        } ifelse
+    } for
+    /grid 5 array def
+    /gc 26 dict def
+    /ix 0 def
+    0 1 4 {
+        /row exch def
+        /r 5 array def
+        0 1 4 {
+            /column exch def
+            r column kw ix get put
+            gc kw ix get [ row column ] put
+            /ix ix 1 add def
+        } for
+        grid row r put
+    } for
+    /ix 0 def
+    [
+        {
+            ix ichars length ge {
+                exit
+            } if
+            /ca ichars ix get def
+            /cb
+            ix 1 add ichars length ge {
+                (x) { } forall
+            } {
+                ichars ix 1 add get 
+            } ifelse
+            def
+            /ix ix 2 add def
+            ca cb eq {
+                /cb (x) { } forall def
+                /ix ix 1 sub def
+            } if
+            /car gc ca get 0 get def
+            /cac gc ca get 1 get def
+            /cbr gc cb get 0 get def
+            /cbc gc cb get 1 get def
+            /oar car def
+            /oac cac def
+            /obr cbr def
+            /obc cbc def
+            1 {
+                car cbr eq {
+                    /oac cac dir add 5 posmod def
+                    /obc cbc dir add 5 posmod def
+                    exit
+                } if
+                cac cbc eq {
+                    /oar car dir add 5 posmod def
+                    /obr cbr dir add 5 posmod def
+                    exit
+                } if
+                /oac cbc def
+                /obc cac def
+            } repeat
+            grid oar get oac get
+            grid obr get obc get
+        } loop
+    ]
+    a2s
+    end
+} bind def
+
+(playfair) test.start
+(playfair example) (hide the gold in the tree stump) encrypt (bmodzbxdnabekudmuixmmouvif) deepeq test
+(perl and raku) (siderwrdulfipaarkcrw) decrypt (thewexeklychallengex) deepeq test
+test.end

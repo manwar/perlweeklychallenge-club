@@ -1,0 +1,6 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (:d(:$dictionary) where $dictionary.IO.r = 'dictionary.txt');
+
+$dictionary.IO.lines.map: { .say if $_ eq $_.comb.sort.join };
+
