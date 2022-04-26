@@ -30,7 +30,7 @@ sub _crypt {
   my( $o, $key, $p, $out, @r, %l ) = ( shift, shift, 0, '' );               ## Initialise variables and get mapping...
   exists $l{$_} || ( $l{$_}=[int $p/5,($p++)%5] )                           ## %l maps letter to position
     for grep { /[a-z]/ } split ( //, $key =~s/j/i/gr ), 'a'..'i', 'k'..'z'; ## values are ["row no", "column no"]
-  $r[ $l{$_}[0] ] [$l{$_}[1] ] = $_ for keys %l;                            ## @r maps position to letter, first
+  $r[ $l{$_}[0] ][ $l{$_}[1] ] = $_ for keys %l;                            ## @r maps position to letter, first
                                                                             ## index row, 2nd column.
   my @seq = grep {/[a-z]/} split //, lc shift =~ s{j}{i}gr;                 ## Prep sequence, remove non-letters,
                                                                             ## lower case, convert "j" to "i"
