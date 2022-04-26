@@ -10,7 +10,8 @@ use Data::Dumper qw(Dumper);
 
 is( encrypt('playfair example', 'hide the gold in the tree stump'), 'bmodzbxdnabekudmuixmmouvif' );
 is( decrypt('perl and raku',    'siderwrdulfipaarkcrw'),            'thewexeklychallengex' );
-
+is( encrypt('abc','xxx'),                                           'yyyyyy' );
+is( decrypt('abc','yyyyyy'),                                        'xxxxxx' );
 done_testing();
 
 sub encrypt { return _crypt( 1,@_); }
@@ -22,10 +23,11 @@ sub _crypt {
     for grep { /[a-z]/ } split(//,$key),'a'..'i','k'..'z';
   $r[$l{$_}[0]][$l{$_}[1]]=$_ for keys %l;                               ## @r maps position to letter
 
-  my @seq = grep {/[a-z]/} split //, shift =~ s{j}{i}gr;                 ## Prep sequence
+  my @seq = grep {/[a-z]/} split //, lc shift =~ s{j}{i}gr;              ## Prep sequence
 
   while(my($m,$n)=splice @seq,0,2) {                                     ## Loop through letter pairs
-    unshift(@seq,$n), $n='x' if $n && $n eq $m && $n ne 'x';             ## Deal with case when both letters the same
+    unshift(@seq,$n), $n='x' if $n && $n eq $m && $o == 1;               ## Deal with case when both letters the same
+                                                                         ## Only do when encrypting..
     $n ||= 'x';                                                          ## Pad if required...
     $out.= $l{$m}[0] eq $l{$n}[0] ? $r[ $l{$m}[0]      ][($l{$m}[1]+$o)%5].
                                     $r[ $l{$n}[0]      ][($l{$n}[1]+$o)%5]
