@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 037
 #
@@ -7,9 +7,9 @@
 # 2019 as compared to November 2019 in the city of London. You can find out
 # sunrise and sunset data for November 2019 and December 2019 for London.
 
-use Modern::Perl;
+import re
 
-my $november_data = <<'END';
+november_data = """
 2019    Sunrise/Sunset  Daylength   Astronomical Twilight   Nautical Twilight   Civil Twilight  Solar Noon
 Nov Sunrise Sunset  Length  Diff.   Start   End Start   End Start   End Time    Mil. km
 1   06:53 ? 16:34 ? 9:40:44 -3:35   05:00   18:27   05:38   17:48   06:18   17:09   11:44   148.491
@@ -43,9 +43,9 @@ Nov Sunrise Sunset  Length  Diff.   Start   End Start   End Start   End Time    
 29  07:40 ? 15:56 ? 8:16:09 -2:15   05:39   17:57   06:19   17:17   07:01   16:35   11:48   147.570
 30  07:41 ? 15:55 ? 8:13:59 -2:10   05:40   17:57   06:20   17:16   07:02   16:34   11:49   147.544
 * All times are local time for London. They take into account refraction. Dates are based on the Gregorian calendar.
-END
+"""
 
-my $december_data = <<'END';
+december_data = """
 2019    Sunrise/Sunset  Daylength   Astronomical Twilight   Nautical Twilight   Civil Twilight  Solar Noon
 Dec Sunrise Sunset  Length  Diff.   Start   End Start   End Start   End Time    Mil. km
 1   07:43 ? 15:55 ? 8:11:53 -2:05   05:41   17:56   06:22   17:16   07:04   16:34   11:49   147.518
@@ -80,29 +80,23 @@ Dec Sunrise Sunset  Length  Diff.   Start   End Start   End Start   End Time    
 30  08:06 ? 15:59 ? 7:53:28 +0:50   06:02   18:03   06:43   17:22   07:26   16:39   12:02   147.104
 31  08:06 ? 16:00 ? 7:54:24 +0:56   06:02   18:04   06:43   17:23   07:26   16:40   12:03   147.100
 * All times are local time for London. They take into account refraction. Dates are based on the Gregorian calendar.
-END
+"""
 
-my $november_sun_length = parse_sun_length($november_data);
-my $december_sun_length = parse_sun_length($december_data);
-say(sprintf("%.1f",($december_sun_length-$november_sun_length)/60), " minutes gained");
+def parse_sun_length(data):
+    sun_length_seconds = 0
+    for line in data.split("\n"):
+        if m := re.match(r"^(\d+)", line):
+            day = int(m.group(1))
+            # check only 30 days so that periods are same
+            if 1 <= day <= 30:
+                if m := re.search(r"\s(\d+):(\d+):(\d+)\s", line):
+                    hour = int(m.group(1))
+                    minute = int(m.group(2))
+                    second = int(m.group(3))
+                    day_seconds = 3600*hour+60*minute+second
+                    sun_length_seconds += day_seconds
+    return sun_length_seconds
 
-sub parse_sun_length {
-    my($data) = @_;
-    my $sun_lenght_seconds;
-    open(my $fh, "<", \$data) or die;
-    while (<$fh>) {
-        next unless /^(\d+)/;
-        # check only 30 days so that periods are same
-        next unless $1 >= 1 && $1 <= 30;
-        my @f = split(' ', $_);
-        my $day_seconds = parse_hms_seconds($f[5]);
-        $sun_lenght_seconds += $day_seconds;
-    }
-    return $sun_lenght_seconds;
-}
-
-sub parse_hms_seconds {
-    my($hms) = @_;
-    my($h, $m, $s) = split /\D/, $hms;
-    return 3600*$h+60*$m+$s;
-}
+november_sun_length = parse_sun_length(november_data)
+december_sun_length = parse_sun_length(december_data)
+print("{:.1f} minutes gained".format((december_sun_length-november_sun_length)/60))
