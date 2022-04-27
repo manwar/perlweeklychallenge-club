@@ -16,8 +16,8 @@ class playfair
     {
         @!table  = ($!key ~ ('a'..'z')).comb(/\S/).unique;
         my $i    =  @!table.first('i'|'j', :k).succ;
-        my $tail =  @!table[$i..@!table.end].grep(/<-[ij]>/);
-        @!table  = (@!table[^$i], $tail)>>.Slip.flat.rotor(5);
+        my @tail =  @!table[$i..@!table.end].grep(/<-[ij]>/);
+        @!table  = (@!table[^$i].Array.append(@tail)).rotor(5);
     }
 
     method coordinates
