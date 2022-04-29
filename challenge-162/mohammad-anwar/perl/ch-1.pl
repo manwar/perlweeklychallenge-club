@@ -28,8 +28,12 @@ done_testing;
 sub isbn_13_check_digit {
     my ($code) = @_;
 
+    return unless defined $code;
+
     $code =~ s/(.*)\-\d/$1/;
     $code =~ s/\-//g;
+
+    die "ERROR: Invalid ISBN-13 code.\n" unless $code =~ /^\d{12}$/;
 
     my @keys = (1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3);
     my @vals = split //,$code;
