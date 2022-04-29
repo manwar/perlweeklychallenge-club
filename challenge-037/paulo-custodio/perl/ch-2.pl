@@ -92,7 +92,8 @@ sub parse_sun_length {
     open(my $fh, "<", \$data) or die;
     while (<$fh>) {
         next unless /^(\d+)/;
-        next unless $1 >= 1 && $1 <= 30;    # check only 30 days so that periods are same
+        # check only 30 days so that periods are same
+        next unless $1 >= 1 && $1 <= 30;
         my @f = split(' ', $_);
         my $day_seconds = parse_hms_seconds($f[5]);
         $sun_lenght_seconds += $day_seconds;
