@@ -2,12 +2,34 @@
    "chart" : {
       "type" : "column"
    },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
    "series" : [
       {
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "align" : "right",
+            "y" : 10,
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               2477
+               2478
             ],
             [
                "Perl",
@@ -17,47 +39,25 @@
                "Raku",
                4682
             ]
-         ],
-         "dataLabels" : {
-            "rotation" : -90,
-            "y" : 10,
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "align" : "right",
-            "format" : "{point.y:.0f}"
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
-   "legend" : {
-      "enabled" : "false"
-   },
    "yAxis" : {
       "title" : {
          "text" : null
       },
       "min" : 0
    },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "subtitle" : {
-      "text" : "Last updated at 2022-04-28 10:20:00 GMT"
+      "text" : "Last updated at 2022-04-28 18:13:19 GMT"
    },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
+   "legend" : {
+      "enabled" : "false"
    }
 }
