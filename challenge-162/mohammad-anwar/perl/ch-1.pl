@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/perl
 
 =head1
 
@@ -8,7 +8,7 @@ Week 162:
 
 Task #1: ISBN-13
 
-Write a script to generate the check digit of given ISBN-13 code.
+    Write a script to generate the check digit of given ISBN-13 code.
 
 =cut
 
