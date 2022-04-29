@@ -24,9 +24,15 @@ Rather than computing the checksum - as we have ISBN numbers with the checksum w
 
 ```perl
 sub validate_isbn13 {
-  my( $s, @p ) = ( 0, grep {/\d/} split //, $_[0] );
-  $s -= shift(@p) + 3*shift @p for 0..5;
-  $p[0] == $s%10;
+  my @p = ( my $s = 0, grep {/\d/} split //, $_[0] );
+  $s += 3*shift(@p) + shift @p while @p;
+  !($s%10);
+}
+
+sub checksum_isbn13 {
+  my($s,@p) = ( 0, @{[grep {/\d/} split //, $_[0]]}[0..11] ); ## Remove checksum if present..
+  $s -= shift(@p) + 3*shift @p while @p;
+  $s%10;
 }
 ```
 
@@ -48,7 +54,7 @@ sub _crypt {
   ($_ eq 'j' && ($_='i')), exists $l{$_} || ($l{$_}=[int $p/5,($p++)%5]) for grep { /[a-z]/ } split(//,$key),'a'..'i','j'..'z';
   $r[$l{$_}[0]][$l{$_}[1]]=$_ for keys %l;
 
-  my @seq = grep {/[a-z]/} split //, shift =~ s{j}{j}gr;      ## Prep sequence
+  my @seq = grep {/[a-z]/} split //, shift =~ s{j}{i}gr;      ## Prep sequence
 
   while(my($m,$n)=splice @seq,0,2) {                          ## Loop through letter pairs
     unshift(@seq,$n), $n='x' if $n && $n eq $m and $n ne 'x'; ## Deal with case when both letters the same
@@ -61,4 +67,3 @@ sub _crypt {
   $out;
 }
 ```
-
