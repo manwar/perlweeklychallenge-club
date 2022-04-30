@@ -34,8 +34,9 @@ sub valid {
 
 
 
-use Test::More tests => 4;
+use Test::More tests => 5;
 ok valid("978-0-306-40615-7"), "task example";
 ok valid("978-1-492-04503-8"), "Think Julia";
 ok valid("978-1-59327-666-9"), "How Software Works";
 ok valid("978-1-260-08450-4"), "Database System Concepts";
+ok !valid("123-4-567-89123-4"), "random strings of digits";
