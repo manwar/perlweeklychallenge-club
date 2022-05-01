@@ -1,0 +1,122 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Str :k(:$key), Str :s(:$string), :d(:$decode), :v(:$verbose));
+
+my %todo    = ('A' .. 'I', 'K' .. 'Z').Set;
+my @key;
+my $padding = 'X';
+my $one     = $decode ?? -1 !! 1;
+
+for $key.uc.comb -> $char
+{
+  next if $char eq " ";
+  next unless %todo{$char};
+  %todo{$char} :delete;
+  @key.push: $char;
+}
+
+for sort keys %todo -> $todo
+{
+  @key.push: $todo;
+}
+
+if $verbose
+{
+  say ": Key: @key[ 0 ..  4]";
+  say ": Key: @key[ 5 ..  9]";
+  say ": Key: @key[10 .. 14]";
+  say ": Key: @key[15 .. 19]";
+  say ": Key: @key[20 .. 24]";
+}
+
+my %index-trans =
+(
+   0 => "0.0",  1 => "0.1",  2 => "0.2",  3 => "0.3",  4 => "0.4",
+   5 => "1.0",  6 => "1.1",  7 => "1.2",  8 => "1.3",  9 => "1.4",
+  10 => "2.0", 11 => "2.1", 12 => "2.2", 13 => "2.3", 14 => "2.4",
+  15 => "3.0", 16 => "3.1", 17 => "3.2", 18 => "3.3", 19 => "3.4",
+  20 => "4.0", 21 => "4.1", 22 => "4.2", 23 => "4.3", 24 => "4.4",
+);
+
+my %rev;
+
+for sort keys %index-trans -> $key
+{
+  %rev{%index-trans{$key}} = $key;
+}
+
+my @x = $string.uc.words>>.comb.flat.map: { $_ eq "J" ?? "I" !! $_ };
+
+say ": String: { @x.join }" if $verbose;
+
+my @pairs;
+
+my $first = @x.shift;
+
+while (@x)
+{
+  if @x[0] eq $first
+  {
+    @pairs.push: $first ~ $padding;
+  }
+  else
+  {
+    @pairs.push: $first ~ @x.shift;
+  }
+  $first = @x.elems ?? @x.shift !! Any;
+}
+
+@pairs.push: $first ~ $padding if $first;
+
+say ": Pairs: { @pairs.join(" ") }" if $verbose;
+
+my @result;
+
+for @pairs -> $pair
+{
+  @result.push: wheatstone-playfair($pair);
+}
+
+say @result>>.lc.join;
+
+sub get-index ($letter)
+{
+  for ^@key.chars -> $index
+  {
+    return %index-trans{$index} if @key[$index] eq $letter;
+  }
+  die "Not found";
+}
+
+sub wheatstone-playfair ($pair)
+{
+  my ($a, $b)         = $pair.comb;
+  my ($a-row, $a-col) = get-index($a).split(".");
+  my ($b-row, $b-col) = get-index($b).split(".");
+
+  my $trans = "";
+  my $rule  = "";
+  
+  if $a-row != $b-row && $a-col != $b-col
+  {
+    $trans = @key[%rev{$a-row ~ "." ~ $b-col}] ~
+             @key[%rev{$b-row ~ "." ~ $a-col}];
+    $rule = 'rect';	     
+  }
+  elsif $a-row == $b-row
+  {
+    $trans = @key[%rev{$a-row ~ "." ~ ( ($a-col + $one) % 5 ) }] ~
+             @key[%rev{$b-row ~ "." ~ ( ($b-col + $one) % 5 ) }];
+    $rule = 'row';	     
+  }
+  elsif $a-col == $b-col
+  {
+    $trans = @key[%rev{ ( ($a-row + $one) % 5) ~ "." ~ $a-col }] ~
+             @key[%rev{ ( ($b-row + $one) % 5) ~ "." ~ $b-col }];
+    $rule = 'col';
+  }
+
+  say ": $pair -> $a-row $a-col + $b-row $b-col -> $trans [$rule]" if $verbose;
+
+  return $trans;
+}
