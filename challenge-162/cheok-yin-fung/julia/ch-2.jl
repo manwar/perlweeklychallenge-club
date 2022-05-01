@@ -3,7 +3,7 @@
 # Julia Solution, 
 #     Partial (only encrypt has been implemented yet)
 #         -- 1st May 2022 11AM HKT
-# Usage: codify( key , word-to-be-encrypted)
+# Usage: codify( key , text-to-be-encrypted)
 
 using LinearAlgebra
 
