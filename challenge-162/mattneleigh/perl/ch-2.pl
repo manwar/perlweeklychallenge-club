@@ -161,7 +161,7 @@ sub playfair_encrypt{
 
     }
 
-    # $plaingext now actually contains a reference
+    # $plaintext now actually contains a reference
     # to ciphertext...
     $plaintext = _playfair_process_core($key, \$ARG, 1);
 
