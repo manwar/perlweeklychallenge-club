@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+subset ISBN where /^ <[0..9]>**3 "-" <[0..9]> "-" <[0..9]>**3 "-" <[0..9]>**5 "-" <[0..9]> $ /;
+
+unit sub MAIN (ISBN $isbn13);
+
+say $isbn13.substr(16);
