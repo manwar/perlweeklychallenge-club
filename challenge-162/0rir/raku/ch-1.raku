@@ -2,7 +2,7 @@
 # :vim ft=raku sw=4 expandtab
 use v6.d;
 
-my constant TEST = False;
+my constant TEST = True;
 
 #    ISBN-13 check or make the checksum.
 
@@ -100,8 +100,8 @@ class ISBN_13 {
         my $ret = (
             ([+] $s.comb[0, 2 … 10]) + ([+] 3 «*« $s.comb[1, 3 … 11])
         ) % 10;
-        ( $ret == 0 ??  0 !! 10 - $ret
-        ).Str;
+
+        ( $ret == 0 ??  0 !! 10 - $ret ).Str;
     }
 
     method check-sum( --> Str) {
