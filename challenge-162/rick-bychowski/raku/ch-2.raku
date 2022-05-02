@@ -5,7 +5,7 @@
 sub MAIN(
     Str  $cmd where {$cmd ~~ /^'encrypt'|'decrypt'$/} = 'encrypt',
     Str :$key = 'Playfair Example',         # can contain non-alpha chars
-    Str :$secret = 'Meet me at the Whisky a Go Go', # the text to encrypt or decrypt
+    Str :$secret = 'Hide the gold in the tree stump', # the text to encrypt or decrypt
     Str :$ij where {$ij.chars > 1}  = 'ij', # the two redundant chars, keep first
     Str :$xq where {$xq.chars > 1} = 'xq'   # padding for double letter or odd secret
 ) {
@@ -19,14 +19,14 @@ sub MAIN(
         loop ( my $n=0; $n < 5; $n++ ){
             %matrix{"@matrix[$m][$n]"} = [$m,$n];
         }
-    }        
+    }
     my @result;
     my $plaintext = $secret.lc.subst(/<-[a .. z]>/,'', :g).subst(/$j/,$i, :g);
     $plaintext = $plaintext.chars % 2 == 1 ?? $plaintext ~ $xq.comb.[0] !! $plaintext;
     for $plaintext.comb -> $a, $beta {
         my $b  = $beta; # make copy in case it needs to be substituted
         $b = $a eq $beta ?? $xq.comb.[0] !! $beta; # try subs to 'x'
-        $b = $a eq $b    ?? $xq.comb.[1] !! $beta; # 'x' fails, subs to 'q'
+        $b = $a eq $b    ?? $xq.comb.[1] !! $b; # 'x' fails, subs to 'q'
         my $am = %matrix{$a}[0];
         my $an = %matrix{$a}[1];
         my $bm = %matrix{$b}[0];
