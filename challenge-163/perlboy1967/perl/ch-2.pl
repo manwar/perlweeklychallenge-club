@@ -3,7 +3,7 @@
 =pod
 
 The Weekly Challenge - 163
- - https://perlweeklychallenge.org/blog/perl-weekly-challenge-163/#TASK2
+ - https://theweeklychallenge.org/blog/perl-weekly-challenge-163/#TASK2
 
 Author: Niels 'PerlBoy' van Dijke
 
