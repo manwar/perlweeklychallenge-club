@@ -22,12 +22,12 @@ say '';
 sub summation_with_table {
   my $t;
   say "@_";
-  shift, ($t=0), say "@{[ @_ = map { $t+=$_ } @_ ]}" while @_>1;
+  shift, ($t=0), say join ' ', @_ = map { $t+=$_ } @_ while @_>1;
   shift;
 }
 
 sub summation {
   my $t;
-  shift, ($t=0), (@_ = map { $t+=$_ } @_) while @_>1;
+  shift, ($t=0), @_ = map { $t+=$_ } @_ while @_>1;
   shift;
 }
