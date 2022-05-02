@@ -16,6 +16,8 @@ my @TESTS = (
 
 is( bit_sum(         @{$_->[0]} ), $_->[1] ) for @TESTS;
 is( bit_sum_compact( @{$_->[0]} ), $_->[1] ) for @TESTS;
+is( bit_sum_splat(   @{$_->[0]} ), $_->[1] ) for @TESTS;
+
 done_testing();
 
 
@@ -36,8 +38,16 @@ sub bit_sum {
 }
 
 sub bit_sum_compact {
-  my $t = 0; my %hash = map { $_ => 1 } @_; @_ = keys %hash;
+  my $t = 0, my %h = map { $_ => 1 } @_;
+  @_ = keys %h;
   while(@_>1) { my $a = shift; $t+= $a&$_ for @_; }
   $t;
+}
+
+sub bit_sum_splat {
+  for($a=0,(%^H=map{$_=>1}@_),(@_=keys%^H),$b=shift;@_;$b=shift){
+    $a+=$b&$_ for@_;
+  }
+  $a;
 }
 

@@ -34,7 +34,7 @@ extra part to the initial phase to remove these duplicates.
 This gives us:
 
 ```perl
-sub bit_sum_compact {
+sub bit_sum {
   my $t = 0;
 
   my %hash = map { $_ => 1 } @_;
@@ -49,6 +49,22 @@ sub bit_sum_compact {
 }
 
 ```
+
+We can write a shorter version by converting the outer loop and the initial phase into a C-style for loop.
+
+```perl
+sub bit_sum_splat {
+  for($a=0,(%^H=map{$_=>1}@_),(@_=keys%^H),$b=shift;@_;$b=shift){
+    $a+=$b&$_ for@_;
+  }
+  $a;
+}
+```
+
+***Notes:*** to remove the need for `my` and to resolve a related issue (`my` in comma-separated statements) we use
+some special variables which we don't use here (in the special way) `$a`, `$b` the sort variables and `%^H` the only
+special hash that you can safely use in most cases. Note we have to do the `$b=shift` twice - once before the first
+loop and once after each loop, it's just the way that the C-loop works...
 
 # Challenge 2 - Summations
 
