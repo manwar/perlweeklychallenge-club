@@ -95,3 +95,17 @@ sub summation {
 ```
 
 In both these challenges we use the *perl*ism that within a postfix loop we can stitch together multiple statements into a single statement by the use of `,` (or any operator usually `||`, `&&` or `?:`). This leaves the beauty of the postfix loop while allowing multiple statements.
+
+### Pretty print.
+
+The print above is rudimentary to say the least, this does a pretty print version with columns lining up.
+
+```perl
+sub summation_with_pretty_table {
+  my ($in,$t)='';
+  say map { sprintf ' %11d', $_ } @_;
+  ($in.='            '),shift, ($t=0), say $in, map { sprintf ' %11d', $_ } @_ = map { $t+=$_ } @_ while @_>1;
+  shift;
+}
+```
+
