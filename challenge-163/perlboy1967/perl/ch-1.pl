@@ -51,7 +51,7 @@ done_testing();
 # 
 # as left hand side and right hand side of the '&' is three time q unique combination
 #
-# Note: Add (0,0) to always have two or more (harmless) values in the list
+# Note: Add (0,0) to always have two harmless values in the list
 sub andSum1 {
   return sum map{$_->[0]&$_->[1]}combinations([0,0,singleton(@_),map{($_)x2}duplicates(@_)],2);
 }
@@ -59,7 +59,7 @@ sub andSum1 {
 # andSum2 is a more simplistic algorithm:
 # Work on the unique numbers given (remove duplicates)
 #
-# Note: Add (0,0) to always have two or more (harmless) values in the list
+# Note: Add (0,0) to always have two harmless values in the list
 sub andSum2 {
   return sum map{$_->[0]&$_->[1]}combinations([0,0,uniq@_],2);
 }
