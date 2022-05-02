@@ -17,6 +17,7 @@ my @TESTS = (
 is( bit_sum(         @{$_->[0]} ), $_->[1] ) for @TESTS;
 is( bit_sum_compact( @{$_->[0]} ), $_->[1] ) for @TESTS;
 is( bit_sum_splat(   @{$_->[0]} ), $_->[1] ) for @TESTS;
+is( bit_sum_splat_unique( @{$_->[0]} ), $_->[1] ) for @TESTS;
 
 done_testing();
 
@@ -44,10 +45,11 @@ sub bit_sum_compact {
   $t;
 }
 
-sub bit_sum_splat {
-  for($a=0,(%^H=map{$_=>1}@_),(@_=keys%^H),$b=shift;@_;$b=shift){
-    $a+=$b&$_ for@_;
-  }
-  $a;
+sub bit_sum_splat{
+for($a=0,(%^H=map{$_,1}@_),(@_=keys%^H);@_;){$b=shift;$a+=$b&$_ for@_};$a
+}
+
+sub bit_sum_splat_unique{
+for($a=0;@_;){$b=shift;$a+=$b&$_ for@_};$a
 }
 
