@@ -27,14 +27,14 @@ say '';
 sub summation_with_table {
   my $t;
   say "@_";
-  shift, ($t=0), say join ' ', @_ = map { $t+=$_ } @_ while @_>1;
+  shift, $t=0, say join ' ', @_ = map { $t+=$_ } @_ while @_>1;
   shift;
 }
 
 sub summation_with_pretty_table {
   my ($in,$t)='';
   say map { sprintf ' %11d', $_ } @_;
-  ($in.='            '),shift, ($t=0), say $in, map { sprintf ' %11d', $_ } @_ = map { $t+=$_ } @_ while @_>1;
+  ($in.='            '), shift, $t=0, say $in, map { sprintf ' %11d', $_ } @_ = map { $t+=$_ } @_ while @_>1;
   shift;
 }
 
