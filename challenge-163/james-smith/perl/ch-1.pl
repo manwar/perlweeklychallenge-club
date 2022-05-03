@@ -14,10 +14,12 @@ my @TESTS = (
   [ [2..4,2..4], 2 ], ## Check uniquification...
 );
 
-is( bit_sum(         @{$_->[0]} ), $_->[1] ) for @TESTS;
-is( bit_sum_compact( @{$_->[0]} ), $_->[1] ) for @TESTS;
-is( bit_sum_splat(   @{$_->[0]} ), $_->[1] ) for @TESTS;
-is( bit_sum_splat_unique( @{$_->[0]} ), $_->[1] ) for @TESTS;
+is( bit_sum(         @{$_->[0]} ), $_->[1] ) for @TESTS; say'';
+is( bit_sum_compact( @{$_->[0]} ), $_->[1] ) for @TESTS; say'';
+is( bit_sum_splat(   @{$_->[0]} ), $_->[1] ) for @TESTS; say'';
+is( bit_sum_splat_unique( @{$_->[0]} ), $_->[1] ) for @TESTS; say'';
+is( bsm( @{$_->[0]} ), $_->[1] ) for @TESTS; say'';
+is( bsu( @{$_->[0]} ), $_->[1] ) for @TESTS; say'';
 
 done_testing();
 
@@ -41,15 +43,14 @@ sub bit_sum {
 sub bit_sum_compact {
   my $t = 0, my %h = map { $_ => 1 } @_;
   @_ = keys %h;
-  while(@_>1) { my $a = shift; $t+= $a&$_ for @_; }
-  $t;
+  while(@_>1) { my $a = shift; $t+= $a&$_ for @_ }
+  $t
 }
 
-sub bit_sum_splat{
-for($a=0,(%^H=map{$_,1}@_),(@_=keys%^H);@_;){$b=shift;$a+=$b&$_ for@_};$a
-}
 
-sub bit_sum_splat_unique{
-for($a=0;@_;){$b=shift;$a+=$b&$_ for@_};$a
-}
+##########----------##########----------##########----------##########----------##########----------
+sub bit_sum_splat{for($a=0,(%^H=map{$_,1}@_),(@_=keys%^H);@_;){$b=shift;$a+=$b&$_ for@_};$a}
+sub bit_sum_splat_unique{for($a=0;@_;){$b=shift;$a+=$b&$_ for@_};$a}
+sub bsm{%^H=map{$_,1}@_;@_=keys%^H;$a=0;$b=shift,map{$a+=$b&$_}@_ while@_;$a}
+sub bsu{$a=0;$b=shift,map{$a+=$b&$_}@_ while@_;$a}
 
