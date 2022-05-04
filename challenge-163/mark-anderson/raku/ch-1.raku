@@ -11,6 +11,5 @@ is bitwise-sum(2, 2, 2, 3, 3, 3, 4, 4, 4), 11;
 
 sub bitwise-sum(+@n)
 {
-    @n.sort.combinations(2)>>.join.unique>>.comb>>.List
-                             .map({.head +& .tail}).sum
+    @n.combinations(2).unique(:with(&[eqv])).map({.head +& .tail}).sum
 }
