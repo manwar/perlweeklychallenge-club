@@ -29,7 +29,8 @@ As with all code there is:
  * a final phase where we just return this sum.
 
 If we can't guarantee there are no duplicates in the list we add an 
-extra part to the initial phase to remove these duplicates.
+extra part to the initial phase to remove these duplicates. Note we include the `map { $_ + 0 }` to guarentee that the numbers are all numbers rather than strings.
+If they get treated as strings then `15 & 16` becomes `('1'&'1').('5'&'6') = '14'` rather than `0`.
 
 This gives us:
 
@@ -38,7 +39,7 @@ sub bit_sum {
   my $t = 0;
 
   my %hash = map { $_ => 1 } @_;
-  @_ = keys %hash;
+  @_ = map { $_ + 0 } keys %hash;
 
   while(@_>1) {
     my $a = shift;
@@ -54,7 +55,7 @@ We can write a shorter version by converting the outer loop and the initial phas
 
 ```perl
 sub bit_sum_splat {
-  for($a=0,(%^H=map{$_=>1}@_),(@_=keys%^H),$b=shift;@_;$b=shift){
+  for($a=0,(%^H=map{$_=>1}@_),(@_=map{$_+0}keys%^H),$b=shift;@_;$b=shift){
     $a+=$b&$_ for@_;
   }
   $a;
@@ -65,6 +66,19 @@ sub bit_sum_splat {
 some special variables which we don't use here (in the special way) `$a`, `$b` the sort variables and `%^H` the only
 special hash that you can safely use in most cases. Note we have to do the `$b=shift` twice - once before the first
 loop and once after each loop, it's just the way that the C-loop works...
+
+### "Unreadable" versions of the code.
+
+Below are code equivalent to the above - but written in as compact as possible. To avoid `my` we use the special
+variables `%^H`, `$a` and `$b`. All of which are safe to be written to (usually!). Note although `shift` feels
+the most natural way of executing the code - in fact it doesn't matter which way we reduce the array so we can
+also use `pop` which is two bytes shorter..
+
+```perl
+#123456789----------#123456789----------#123456789----------#123456789----------#123456789
+sub bsm{%^H=map{$_,1}@_;@_=map{$_+($a=0)}keys%^H;$b=pop,map{$a+=$b&$_}@_ while@_;$a}  ## 84 chars
+sub bsu{@_=map{$_+($a=0)}@_;$b=pop,map{$a+=$b&$_}@_ while@_;$a}                       ## 63 chars
+```
 
 # Challenge 2 - Summations
 
@@ -125,3 +139,9 @@ sub summation_with_pretty_table {
 }
 ```
 
+### No so "pretty print"... 
+
+Below are code equivalent to the above - with all spaces removed - we use the special variable `$a` to store the total to avoid `my` again.
+```perl
+#123456789----------#123456789----------#123456789
+sub sum{shift,$a=0,@_=map{$a+=$_}@_ while@_>1;pop}      ## 50 chars
