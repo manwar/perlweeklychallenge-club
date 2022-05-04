@@ -58,7 +58,7 @@ sub bit_sum_compact {
 
 ##########----------##########----------##########----------##########----------##########----------
 sub bit_sum_splat{for($a=0,(%^H=map{$_,1}@_),(@_=map{$_+0}keys%^H);@_;){$b=shift;$a+=$b&$_ for@_};$a}
-sub bsm{%^H=map{$_,1}@_;@_=map{$_+0}keys%^H;$a=0;$b=shift,(map{$a+=$b&$_}@_) while@_;$a}
+sub bsm{%^H=map{$_,1}@_;@_=map{$_+($a=0)}keys%^H;$b=pop,map{$a+=$b&$_}@_ while@_;$a}
 sub bit_sum_splat_unique{@_=map{$_+0}@_;for($a=0;@_;){$b=shift;$a+=$b&$_ for@_};$a}
-sub bsu{@_=map{$_+0}@_;$a=0;$b=shift,(map{$a+=$b&$_}@_) while@_;$a}
+sub bsu{@_=map{$_+($a=0)}@_;$b=pop,map{$a+=$b&$_}@_ while@_;$a}
 
