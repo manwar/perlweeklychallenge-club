@@ -75,9 +75,11 @@ the most natural way of executing the code - in fact it doesn't matter which way
 also use `pop` which is two bytes shorter..
 
 ```perl
-#123456789----------#123456789----------#123456789----------#123456789----------#123456789
-sub bsm{%^H=map{$_,1}@_;@_=map{$_+($a=0)}keys%^H;$b=pop,map{$a+=$b&$_}@_ while@_;$a}  ## 84 chars
-sub bsu{@_=map{$_+($a=0)}@_;$b=pop,map{$a+=$b&$_}@_ while@_;$a}                       ## 63 chars
+#--------1---------2---------3---------4---------5---------6---------7---------8---------9
+#23456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
+
+sub bsm{$a=0;%^H=map{$_,1}@_;@_=map{$_+0}keys%^H;$b=pop,map{$a+=$b&$_}@_ while@_;$a}  ## 84 chars
+sub bsu{$a=0;@_=map{$_+0}@_;$b=pop,map{$a+=$b&$_}@_ while@_;$a}                       ## 63 chars
 ```
 
 # Challenge 2 - Summations
@@ -143,5 +145,7 @@ sub summation_with_pretty_table {
 
 Below are code equivalent to the above - with all spaces removed - we use the special variable `$a` to store the total to avoid `my` again.
 ```perl
-#123456789----------#123456789----------#123456789
-sub sum{shift,$a=0,@_=map{$a+=$_}@_ while@_>1;pop}      ## 50 chars
+#--------1---------2---------3---------4---------5
+#2345678901234567890123456789012345678901234567890
+
+sub sum{shift,$a=0,@_=map{$a+=$_}@_ while@_>1;$a}      ## 49 chars
