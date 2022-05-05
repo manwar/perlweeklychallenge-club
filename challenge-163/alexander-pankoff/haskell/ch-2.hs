@@ -4,6 +4,9 @@ main :: IO ()
 main = print $ summations [1 .. 5]
 
 summations :: [Int] -> Int
-summations [] = 0
-summations [x] = x
-summations (_ : xs) = summations $ scanl1 (+) xs
+summations = untilOneLeft (scanl1 (+) . tail) 0
+
+untilOneLeft :: ([a] -> [a]) -> a -> [a] -> a
+untilOneLeft _ d [] = d
+untilOneLeft _ _ [a] = a
+untilOneLeft aa d as = untilOneLeft aa d (aa as)
