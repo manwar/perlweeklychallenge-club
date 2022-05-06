@@ -1,14 +1,6 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-05-06 22:48:30 GMT"
+      "text" : "[Champions: 30] Last updated at 2022-05-06 22:55:18 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -44,9 +36,20 @@
          "Max Kossek"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             16,
@@ -78,9 +81,11 @@
             0,
             4,
             6
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -112,8 +117,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -152,14 +156,10 @@
       }
    ],
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      },
+      "min" : 0
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
