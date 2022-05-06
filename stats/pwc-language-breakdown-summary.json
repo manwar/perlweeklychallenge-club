@@ -1,12 +1,37 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
+   "series" : [
+      {
+         "dataLabels" : {
+            "rotation" : -90,
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            }
+         },
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               2496
+            ],
+            [
+               "Perl",
+               7935
+            ],
+            [
+               "Raku",
+               4702
+            ]
+         ]
       }
+   ],
+   "legend" : {
+      "enabled" : "false"
    },
    "xAxis" : {
       "labels" : {
@@ -17,46 +42,21 @@
       },
       "type" : "category"
    },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-05-06 21:20:44 GMT"
+   },
    "chart" : {
       "type" : "column"
    },
-   "legend" : {
-      "enabled" : "false"
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
    },
-   "subtitle" : {
-      "text" : "Last updated at 2022-05-06 21:01:20 GMT"
-   },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               2496
-            ],
-            [
-               "Perl",
-               7933
-            ],
-            [
-               "Raku",
-               4702
-            ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "align" : "right",
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90
-         }
-      }
-   ],
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    }

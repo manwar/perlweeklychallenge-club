@@ -1,63 +1,27 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2022-05-06 21:01:20 GMT"
-   },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "name" : "Bruce Gray",
-               "y" : 2,
-               "drilldown" : "Bruce Gray"
-            },
-            {
-               "drilldown" : "James Smith",
-               "name" : "James Smith",
-               "y" : 3
-            },
-            {
-               "drilldown" : "Luca Ferrari",
-               "y" : 8,
-               "name" : "Luca Ferrari"
-            },
-            {
-               "y" : 2,
-               "name" : "PokGoPun",
-               "drilldown" : "PokGoPun"
-            },
-            {
-               "y" : 5,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
-            }
-         ],
-         "name" : "The Weekly Challenge - 163"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
-   ],
-   "title" : {
-      "text" : "The Weekly Challenge - 163"
-   },
-   "xAxis" : {
-      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Bruce Gray",
+            "id" : "Bruce Gray",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Bruce Gray",
-            "id" : "Bruce Gray"
+            ]
          },
          {
-            "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -68,10 +32,10 @@
                   1
                ]
             ],
-            "name" : "James Smith"
+            "id" : "James Smith"
          },
          {
-            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -82,7 +46,7 @@
                   6
                ]
             ],
-            "id" : "Luca Ferrari"
+            "name" : "Luca Ferrari"
          },
          {
             "data" : [
@@ -91,8 +55,18 @@
                   2
                ]
             ],
-            "name" : "PokGoPun",
-            "id" : "PokGoPun"
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "PokGoPun",
+            "name" : "PokGoPun"
          },
          {
             "id" : "Roger Bell_West",
@@ -114,22 +88,63 @@
          }
       ]
    },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 163",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Bruce Gray",
+               "drilldown" : "Bruce Gray"
+            },
+            {
+               "drilldown" : "James Smith",
+               "y" : 3,
+               "name" : "James Smith"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "y" : 8,
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "name" : "Niels van Dijke",
+               "y" : 2,
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "y" : 2,
+               "name" : "PokGoPun",
+               "drilldown" : "PokGoPun"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
+               "y" : 5
+            }
+         ]
+      }
+   ],
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2022-05-06 21:20:44 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 163"
+   },
    "chart" : {
       "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "yAxis" : {
       "title" : {
