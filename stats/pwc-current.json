@@ -1,96 +1,47 @@
 {
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2022-05-06 22:00:17 GMT"
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Bruce Gray",
-               "name" : "Bruce Gray",
-               "y" : 2
-            },
-            {
-               "y" : 3,
-               "name" : "James Smith",
-               "drilldown" : "James Smith"
-            },
-            {
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari",
-               "y" : 8
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "name" : "PokGoPun",
-               "drilldown" : "PokGoPun"
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 5
-            },
-            {
-               "name" : "W. Luis Mochan",
-               "drilldown" : "W. Luis Mochan",
-               "y" : 3
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 163"
-      }
-   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 163"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 163"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2022-05-06 21:46:23 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Bruce Gray",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "id" : "Bruce Gray",
             "name" : "Bruce Gray"
          },
          {
-            "name" : "James Smith",
+            "name" : "Dave Jacoby",
+            "id" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
             "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -117,27 +68,28 @@
             "name" : "Luca Ferrari"
          },
          {
-            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Niels van Dijke"
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
          },
          {
+            "id" : "PokGoPun",
             "name" : "PokGoPun",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "PokGoPun"
+            ]
          },
          {
             "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -151,11 +103,9 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Roger Bell_West"
+            ]
          },
          {
-            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -166,8 +116,77 @@
                   1
                ]
             ],
-            "name" : "W. Luis Mochan"
+            "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan"
          }
       ]
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 163",
+         "data" : [
+            {
+               "drilldown" : "Bruce Gray",
+               "y" : 2,
+               "name" : "Bruce Gray"
+            },
+            {
+               "name" : "Dave Jacoby",
+               "y" : 3,
+               "drilldown" : "Dave Jacoby"
+            },
+            {
+               "name" : "James Smith",
+               "y" : 3,
+               "drilldown" : "James Smith"
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "y" : 8,
+               "name" : "Luca Ferrari"
+            },
+            {
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "PokGoPun",
+               "drilldown" : "PokGoPun"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 5,
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "y" : 3,
+               "name" : "W. Luis Mochan",
+               "drilldown" : "W. Luis Mochan"
+            }
+         ]
+      }
+   ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
