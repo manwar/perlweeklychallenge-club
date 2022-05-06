@@ -1,31 +1,15 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2022-05-06 20:46:01 GMT"
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -36,11 +20,24 @@
                   1
                ]
             ],
+            "id" : "James Smith",
             "name" : "James Smith"
          },
          {
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  6
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -54,37 +51,59 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2022-05-06 20:36:37 GMT"
+   "legend" : {
+      "enabled" : 0
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "The Weekly Challenge - 163"
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 163",
          "data" : [
             {
-               "drilldown" : "James Smith",
+               "y" : 3,
                "name" : "James Smith",
-               "y" : 3
+               "drilldown" : "James Smith"
+            },
+            {
+               "y" : 8,
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
             },
             {
                "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West",
                "y" : 5
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
    ]
 }
