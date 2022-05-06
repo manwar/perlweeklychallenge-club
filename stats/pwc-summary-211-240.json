@@ -1,9 +1,4 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "xAxis" : {
       "categories" : [
          "Ryan Thompson",
@@ -38,16 +33,8 @@
          "Trenton Langer"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-05-06 22:20:09 GMT"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             63,
             54,
@@ -79,10 +66,10 @@
             0,
             2,
             5
-         ]
+         ],
+         "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             53,
             0,
@@ -114,10 +101,10 @@
             4,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             37,
             1,
@@ -149,19 +136,32 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
    "chart" : {
       "type" : "column"
    },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-05-06 22:26:14 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
