@@ -1,6 +1,6 @@
-# c160
+# c163
 
-The Weekly Challenge — #160 — Tyler Wardhaugh
+The Weekly Challenge — #163 — Tyler Wardhaugh
 
 ## Usage
 
@@ -11,9 +11,6 @@ Run Task #1:
     $ clojure -M:t1 N
     # ... or ...
     $ bb run task-1 N
-
-    # Alternatively, to run it via Babashka:
-    $ bb run task-1-bb N
 
 Run Task #2:
 
