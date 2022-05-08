@@ -1,4 +1,3 @@
-#!/usr/bin/perl
 # The Weekly Challenge 163
 # Task 2 Summation
 # Python script
