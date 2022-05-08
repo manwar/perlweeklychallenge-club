@@ -75,11 +75,10 @@ the most natural way of executing the code - in fact it doesn't matter which way
 also use `pop` which is two bytes shorter..
 
 ```perl
-#--------1---------2---------3---------4---------5---------6---------7---------8---------9
-#23456789012345678901234567890123456789012345678901234567890123456789012345678901234567890
-
-sub bsm{$a=0;%^H=map{$_,1}@_;@_=map{$_+0}keys%^H;$b=pop,map{$a+=$b&$_}@_ while@_;$a}  ## 84 chars
-sub bsu{$a=0;@_=map{$_+0}@_;$b=pop,map{$a+=$b&$_}@_ while@_;$a}                       ## 63 chars
+#--------1---------2---------3---------4---------5---------6---------7---------8
+#2345678901234567890123456789012345678901234567890123456789012345678901234567890
+sub bsm{$a=0;%^H=map{$_,1}@_;@_=keys%^H;$b=0+pop,map{$a+=$b&$_}@_ while@_;$a}         ## 77 chars
+sub bsu{$a=0;$b=pop,map{$a+=$b&$_}@_ while@_;$a}                                      ## 48 chars
 ```
 
 # Challenge 2 - Summations
@@ -147,5 +146,4 @@ Below are code equivalent to the above - with all spaces removed - we use the sp
 ```perl
 #--------1---------2---------3---------4---------5
 #2345678901234567890123456789012345678901234567890
-
 sub sum{shift,$a=0,@_=map{$a+=$_}@_ while@_>1;$a}      ## 49 chars
