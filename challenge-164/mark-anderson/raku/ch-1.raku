@@ -1,5 +1,4 @@
 #!/usr/bin/env raku
-
 use Test;
 
 is-deeply (2, 3, 5, 7 ... 999).grep({.is-prime and .item eq .flip}),
