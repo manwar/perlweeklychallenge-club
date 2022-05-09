@@ -10,13 +10,13 @@ RETURNS boolean
 AS $CODE$
 DECLARE
 BEGIN
-FOR i IN 2 .. n - 1 LOOP
-IF n % i = 0 THEN
-RETURN false;
-END IF;
-END LOOP;
+   FOR i IN 2 .. n - 1 LOOP
+     IF n % i = 0 THEN
+       RETURN false;
+     END IF;
+   END LOOP;
 
-RETURN true;
+   RETURN true;
 END
 $CODE$
 LANGUAGE plpgsql;
@@ -28,14 +28,14 @@ AS $CODE$
 DECLARE
 BEGIN
 
-FOR n IN 10 .. l LOOP
-IF pwc164.is_prime( n ) AND n = reverse( n::text )::int THEN
-RETURN NEXT n;
-l := l - 1;
-END IF;
+     FOR n IN 10 .. l LOOP
+         IF pwc164.is_prime( n ) AND n = reverse( n::text )::int THEN
+            RETURN NEXT n;
+            l := l - 1;
+         END IF;
 
-EXIT WHEN l = 0;
-END LOOP;
+         EXIT WHEN l = 0;
+     END LOOP;
 
 RETURN;
 END
