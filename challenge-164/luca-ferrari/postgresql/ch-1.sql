@@ -1,0 +1,11 @@
+-- Perl Weekly Challenge 164
+-- Task 1
+
+CREATE SCHEMA IF NOT EXISTS pwc164;
+
+CREATE OR REPLACE FUNCTION
+pwc164.task1_plpgsql()
+RETURNS VOID
+AS $CODE$
+$CODE$
+LANGUAGE plpgsql;
