@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 
 sub is-abecedarian($word) {
-    $word eq $word.comb.sort.join
+     [le] $word.comb
 }
 
 multi MAIN (  ) {

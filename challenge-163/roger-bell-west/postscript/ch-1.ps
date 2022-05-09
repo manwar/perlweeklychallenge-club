@@ -1,0 +1,58 @@
+%!PS
+
+% begin library code
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+% end library code
+
+/sumbitwise {
+    2 dict begin
+    /ls exch def
+    /s 0 def
+    0 1 ls length 2 sub {
+        dup
+        ls exch get
+        exch
+        1 add 1 ls length 1 sub {
+            ls exch get 1 index and s add /s exch def
+        } for
+        pop
+    } for
+    s
+    end
+} bind def
+
+(sumbitwise) test.start
+[1 2 3] sumbitwise 3 eq test
+[2 3 4] sumbitwise 2 eq test
+test.end

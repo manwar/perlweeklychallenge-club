@@ -1,28 +1,26 @@
 #!/usr/bin/raku
 
-sub makePangram(%wordlists, @completeOrder) {
+sub makePangram(%wordlists, @order) {
     my @pangram = ();
     my @used;
-    my @order = @completeOrder;
-    my $count = 0;
 
     loop {
         my $letter = @order[0];
-        my @choices = (| %wordlists{$letter}).sort({ $^b.chars <=> $^a.chars });
+        my @choices = (| %wordlists{$letter}).sort({ $^a.chars <=> $^b.chars });
         my $word = q{};
+
+        my $best = 26;
         for @choices -> $choice {
-            if $choice.comb ∩ @used == ∅ {
+            my $matches = ($choice.comb ∩ @used).elems; 
+            if  $matches <= $best {
+                $best = $matches;
                 $word = $choice;
-                last;
             }
         }
-        if $word eq q{} {
-            $word = @choices[0];
-        };
+
         @pangram.push($word);
         @used.push(| $word.comb);
         @order = @order.grep({ $_ ne @used.any; });
-        $count += $word.chars;
         if @order.elems == 0 {
             last;
         }
@@ -42,15 +40,13 @@ sub MAIN() {
     for @words -> $word {
         my @letters = $word.comb;
         if $word eq @letters.sort.join && (@letters.categorize({ $_ })).values.all == 1 {
-            for $word.comb -> $letter {
+            for @letters -> $letter {
                 %wordlists{$letter}.push($word);
             }
         }
     }
 
-    my @order = %wordlists
-        .keys
-        .sort({ %wordlists{$^a}.elems <=> %wordlists{$^b}.elems });
+    my @order = ('a' .. 'z').sort({ %wordlists{$^a}.elems <=> %wordlists{$^b}.elems });
 
     my @pangram = makePangram(%wordlists, @order);
 
