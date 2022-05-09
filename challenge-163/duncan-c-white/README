@@ -1,37 +1,66 @@
-TASK #1 - ISBN-13
+TASK #1 - Sum Bitwise Operator
 
-Write a script to generate the check digit of given ISBN-13 code. Please
-refer to
+You are given list positive numbers, @n.
 
-https://en.wikipedia.org/wiki/ISBN#ISBN-13_check_digit_calculation
+Write script to calculate the sum of bitwise & operator for all unique pairs.
 
-for more information.  In summary, take each of the first 12 digits of
-an ISBN code, from left to right, multiple 1st, 3rd, 5th etc by 1, and
-the 2nd, 4th, 6th etc by 3, sum the result.  Mod 10 the sum.  Subtract
-the sum from 10.  Mod 10 the result.
+Example 1
 
-Example
+	Input: @n = (1, 2, 3)
+	Output: 3
 
-ISBN-13 check digit for '978-0-306-40615-7' is 7.
+	Since (1 & 2) + (2 & 3) + (1 & 3) => 0 + 2 + 1 =>  3.
 
-MY NOTES: ok.  Pretty easy.
+Example 2
 
-GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl into C,
-look in the C directory for that.
+	Input: @n = (2, 3, 4)
+	Output: 2
+
+	Since (2 & 3) + (2 & 4) + (3 & 4) => 2 + 0 + 0 =>  2.
+
+MY NOTES: ok.  Pretty easy.  Identify all pairs, xor each, sum results.
+	I did ch-1.pl and an optimized ch-1a.pl
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1a.pl
+into C (look in the C directory for that), and then into Pascal
+(look in the pascal directory for that).
 
 
-TASK #2 - Wheatstone-Playfair
+TASK #2 - Summations
 
-Implement encryption and decryption using the Wheatstone-Playfair cipher:
+You are given a list of positive numbers, @n.
 
-https://en.wikipedia.org/wiki/Playfair_cipher
+Write a script to find out the summations as described below.
 
-Examples:
+Example 1
 
-(These combine I and J, and use X as padding.)
+Input: @n = (1, 2, 3, 4, 5)
+Output: 42
 
-encrypt("playfair example", "hide the gold in the tree stump") = "bmodzbxdnabekudmuixmmouvif"
+    1 2 3  4  5
+      2 5  9 14
+        5 14 28
+          14 42
+             42
 
-decrypt("perl and raku", "siderwrdulfipaarkcrw") = "thewexeklychallengex"
+The nth Row starts with the second element of the (n-1)th row.
+The following element is sum of all elements except first element of previous row.
+You stop once you have just one element in the row.
 
-MY NOTES: hmmm.  Not too hard.
+Example 2
+
+Input: @n = (1, 3, 5, 7, 9)
+Output: 70
+
+    1 3  5  7  9
+      3  8 15 24
+         8 23 47
+           23 70
+              70
+
+MY NOTES: hmmm.  Terrible explanation, but I think the examples show what
+it means, which is quite easy.  Could do that in different languages too:-)
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
+into C (look in the C directory for that), and then into Pascal
+(look in the pascal directory for that).
