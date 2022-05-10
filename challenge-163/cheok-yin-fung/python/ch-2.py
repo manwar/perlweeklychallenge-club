@@ -11,6 +11,8 @@ import sys
 def compute(array):
     NUM = len(array)
     v = array
+    if NUM == 1
+        return v[0]
     new_v = []
     for r in range(1, NUM):
         new_v = []

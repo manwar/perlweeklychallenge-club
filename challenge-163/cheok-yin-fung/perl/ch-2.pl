@@ -11,6 +11,7 @@ say compute(@ARGV) if defined($ARGV[0]);
 sub compute {
     my @v = @_;
     my $NUM = scalar @v;
+    return $v[0] if $NUM == 1;
 
     my @new_v;
 
