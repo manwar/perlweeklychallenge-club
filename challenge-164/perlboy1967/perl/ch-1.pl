@@ -21,4 +21,4 @@ use v5.16;
 
 use Math::Prime::XS qw(primes);
 
-say join ', ', grep { (join '', reverse split//) == $_ } primes(1000);
+say join ', ', grep { $_ == reverse $_ } primes(1000);
