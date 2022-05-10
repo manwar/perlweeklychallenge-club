@@ -1,23 +1,96 @@
 {
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
    },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 164",
+         "data" : [
+            {
+               "y" : 2,
+               "name" : "Cheok-Yin Fung",
+               "drilldown" : "Cheok-Yin Fung"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
+            },
+            {
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba",
+               "y" : 2
+            },
+            {
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Julien Fiegehenn",
+               "name" : "Julien Fiegehenn"
+            },
+            {
+               "y" : 2,
+               "name" : "Kjetil Skotheim",
+               "drilldown" : "Kjetil Skotheim"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
+               "y" : 8
+            },
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke"
+            },
+            {
+               "y" : 3,
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "PokGoPun",
+               "name" : "PokGoPun"
+            },
+            {
+               "y" : 4,
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "y" : 4,
+               "name" : "Ulrich Rieke",
+               "drilldown" : "Ulrich Rieke"
+            }
+         ]
+      }
+   ],
    "subtitle" : {
-      "text" : "[Champions: 12] Last updated at 2022-05-10 22:43:41 GMT"
+      "text" : "[Champions: 13] Last updated at 2022-05-10 22:56:46 GMT"
    },
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "title" : {
       "text" : "The Weekly Challenge - 164"
@@ -25,17 +98,49 @@
    "xAxis" : {
       "type" : "category"
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
    "drilldown" : {
       "series" : [
          {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
             "name" : "Cheok-Yin Fung",
-            "id" : "Cheok-Yin Fung"
+            "id" : "Cheok-Yin Fung",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
+            "id" : "E. Choroba",
+            "name" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          },
          {
             "data" : [
@@ -48,32 +153,8 @@
                   1
                ]
             ],
-            "id" : "Dave Jacoby",
-            "name" : "Dave Jacoby"
-         },
-         {
-            "name" : "E. Choroba",
-            "id" : "E. Choroba",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "James Smith",
             "id" : "James Smith",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ]
+            "name" : "James Smith"
          },
          {
             "name" : "Julien Fiegehenn",
@@ -86,14 +167,14 @@
             ]
          },
          {
-            "id" : "Kjetil Skotheim",
-            "name" : "Kjetil Skotheim",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Kjetil Skotheim",
+            "id" : "Kjetil Skotheim"
          },
          {
             "data" : [
@@ -120,8 +201,8 @@
             ]
          },
          {
-            "id" : "Niels van Dijke",
             "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
@@ -130,8 +211,6 @@
             ]
          },
          {
-            "name" : "Peter Campbell Smith",
-            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -141,7 +220,9 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Peter Campbell Smith",
+            "id" : "Peter Campbell Smith"
          },
          {
             "id" : "PokGoPun",
@@ -164,85 +245,23 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
+         },
+         {
+            "id" : "Ulrich Rieke",
+            "name" : "Ulrich Rieke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ]
          }
       ]
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Cheok-Yin Fung",
-               "drilldown" : "Cheok-Yin Fung",
-               "y" : 2
-            },
-            {
-               "name" : "Dave Jacoby",
-               "y" : 3,
-               "drilldown" : "Dave Jacoby"
-            },
-            {
-               "name" : "E. Choroba",
-               "drilldown" : "E. Choroba",
-               "y" : 2
-            },
-            {
-               "name" : "James Smith",
-               "drilldown" : "James Smith",
-               "y" : 3
-            },
-            {
-               "name" : "Julien Fiegehenn",
-               "drilldown" : "Julien Fiegehenn",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Kjetil Skotheim",
-               "name" : "Kjetil Skotheim"
-            },
-            {
-               "y" : 8,
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari"
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 2,
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke"
-            },
-            {
-               "name" : "Peter Campbell Smith",
-               "drilldown" : "Peter Campbell Smith",
-               "y" : 3
-            },
-            {
-               "name" : "PokGoPun",
-               "drilldown" : "PokGoPun",
-               "y" : 2
-            },
-            {
-               "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 164"
-      }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
    }
 }
