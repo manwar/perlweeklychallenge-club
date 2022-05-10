@@ -1,6 +1,6 @@
-[< Previous 162](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-162/james-smith) |
-[Next 164 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-164/james-smith)
-# The Weekly Challenge 163
+[< Previous 163](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-163/james-smith) |
+[Next 165 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-164/james-smith)
+# The Weekly Challenge 164
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,138 +12,196 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-163/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-164/james-smith
 
-# Challenge 1 - Sum bitwise operator
+# Challenge 1 - Prime Palindrome
 
-***You are given list positive numbers, `@n`. Write script to calculate the sum of bitwise `&` operator for all unique pairs.***
+***Write a script to find all prime numbers less than 1000, which are also palindromes in base 10. Palindromic numbers are numbers whose digits are the same in reverse. For example, 313 is a palindromic prime, but 337 is not, even though 733 (337 reversed) is also prime.***
 
 ## The solution
 
-As with all code there is:
-
- * an initial phase where we set the sum to 0.
- * a processing phase where we compute the sum:
-   * In this we repeatedly shift the first element of the list and:
-   * and it with all remaining elements keeping the sum.
- * a final phase where we just return this sum.
-
-If we can't guarantee there are no duplicates in the list we add an 
-extra part to the initial phase to remove these duplicates. Note we include the `map { $_ + 0 }` to guarentee that the numbers are all numbers rather than strings.
-If they get treated as strings then `15 & 16` becomes `('1'&'1').('5'&'6') = '14'` rather than `0`.
-
-This gives us:
+We use `Math::Prime::Util` and it's functions `is_prime` and `next_prime` to check for primality and to loop through primes.... So the code is quite simple..
 
 ```perl
-sub bit_sum {
-  my $t = 0;
-
-  my %hash = map { $_ => 1 } @_;
-  @_ = map { $_ + 0 } keys %hash;
-
-  while(@_>1) {
-    my $a = shift;
-    $t+= $a&$_ for @_;
-  }
-
-  $t;
-}
-
+my ($p,$lim,@pal)=(1,@ARGV?$ARGV[0]:1e3);
+is_prime(reverse $p) && (push @pal,$p) while ($p=next_prime $p) < $lim;
+say for @pal;
 ```
 
-We can write a shorter version by converting the outer loop and the initial phase into a C-style for loop.
+If we don't want to store the values in `@pal` but instead just print them as generated we can simplify this to:
 
 ```perl
-sub bit_sum_splat {
-  for($a=0,(%^H=map{$_=>1}@_),(@_=map{$_+0}keys%^H),$b=shift;@_;$b=shift){
-    $a+=$b&$_ for@_;
-  }
-  $a;
-}
+$_=1,my$LIM=@ARGV?$ARGV[0]:1e3;
+is_prime(reverse$_)&&say while($_=next_prime$_)<$lim;
 ```
 
-***Notes:*** to remove the need for `my` and to resolve a related issue (`my` in comma-separated statements) we use
-some special variables which we don't use here (in the special way) `$a`, `$b` the sort variables and `%^H` the only
-special hash that you can safely use in most cases. Note we have to do the `$b=shift` twice - once before the first
-loop and once after each loop, it's just the way that the C-loop works...
+# Challenge 2 - Happy Numbers
 
-### "Unreadable" versions of the code.
+***Write a script to find the first 8 Happy Numbers in base 10.***
 
-Below are code equivalent to the above - but written in as compact as possible. To avoid `my` we use the special
-variables `%^H`, `$a` and `$b`. All of which are safe to be written to (usually!). Note although `shift` feels
-the most natural way of executing the code - in fact it doesn't matter which way we reduce the array so we can
-also use `pop` which is two bytes shorter..
-
-```perl
-#--------1---------2---------3---------4---------5---------6---------7---------8
-#2345678901234567890123456789012345678901234567890123456789012345678901234567890
-sub bsm{$a=0;%^H=map{$_,1}@_;@_=keys%^H;$b=0+pop,map{$a+=$b&$_}@_ while@_;$a}         ## 77 chars
-sub bsu{$a=0;$b=pop,map{$a+=$b&$_}@_ while@_;$a}                                      ## 48 chars
-```
-
-# Challenge 2 - Summations
-
-***You are given a list of positive numbers, `@n`. Write a script to find out the summations as described below.***
+***Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process end in 1 are happy numbers, while those numbers that do not end in 1 are unhappy numbers.***
 
 ## Solution.
 
-For a given row we drop the first element, then the remaining cells are the cumulative sum of the previous row. *e.g.*
-
+```perl
+sub is_happy {
+  my($n,$t,%seen) = shift;
+  while($n>1) {
+    return 0 if $seen{$n};
+    $seen{$t=$n}=1,$n=0;
+    do {$n+=($t%10)**2} while $t=int($t/10);
+  }
+  1;
+}
 ```
-  a   b   c   d
-      b   b+c b+c+d
-          b+c b+c+b+c+d
-              b+c+b+c+d = 2b+2c+d
-```
+### Optimized solution
 
-Similarly to the first element we at each interation shift of the first element.
-
- * This time our initial phase is empty (except for showing the input when dumping the table)
- * Our loop phase:
-   * throws away the first entry (`shift`)
-   * initializes the cumulative sum (`t=0`)
-   * computes the next row `@_ = map { $t+$_ } @_`
-   * {we just `say @_` at each loop if we want to see the table}
- * The final stage again just returns the last element of the array - the total we want.
+If memory is no issue then you can cache the answers (happy/unhappy) for every number in the chain and if you see them for subsequent calculations you can just return that number. Obviously this requires lots of memory if you are working with lists of larger numbers....
 
 ```perl
-sub summation_with_table {
-  my $t;
-  say "@_";
-  shift, ($t=0), say join ' ', @_ = map { $t+=$_ } @_ while @_>1;
-  shift;
+sub happy_list_cache {
+  my $count= @_ ? $_[0] : 8, my %seen, my $t, state @happy = (0,my @ret = my $N = 1);
+  OUT: for (2..$count) {
+    %seen=();
+    my $n = ++$N;
+    while($n>1) {
+      last if defined $happy[$n] && $happy[$n]==1;
+      if(defined $happy[$n] || $seen{$n}) { ## Unhappy no...
+        $happy[$_] = 0 foreach keys %seen;
+        redo OUT;
+      }
+      $seen{$t=$n}=1,$n=0;
+      do {$n+=($t%10)**2} while $t=int($t/10);
+    }
+    $happy[$_]=1 for keys %seen;
+    $happy[$N]=1;
+    push @ret,$N;
+  }
+  @ret;
 }
 ```
 
-If we don't need the table but just the final value at the end, we can simplify this to:
+**Notes**
+
+  * If you don't have unlimited memory you could consider only cacheing lower values of "happy".... for a larger value of `n` - we note that the sum of the digits is only going to be at most `81 x #digits` so you could consider only storing the first `1,539` to allow you quickly compute the happy status of all 64-bit signed integers (9,223,372,036,854,775,808) - the second iteration will always be below `1,539`...
 
 ```perl
-sub summation {
-  my $t;
-  shift, ($t=0), @_ = map { $t+=$_ } @_ while @_>1;
-  shift;
+sub happy_list_cache_limited {
+  my $count= @_ ? $_[0] : 8, my %seen, my $t, state @happy = (0,my @ret = my $N = 1);
+  OUT: for (2..$count) {
+    %seen=();
+    my $n = ++$N;
+    while($n>1) {
+      last if defined $happy[$n] && $happy[$n]==1;
+      if(defined $happy[$n] || $seen{$n}) { ## Unhappy no...
+        ($_<1540) && ($happy[$_] = 0) for keys %seen;
+        redo OUT;
+      }
+      $seen{$t=$n}=1,$n=0;
+      do {$n+=($t%10)**2} while $t=int($t/10);
+    }
+    ($_<1540) && ($happy[$_]=1) for $N, keys %seen;
+    push @ret,$N;
+  }
+  @ret;
+}
+
+```
+
+### Pre-computing cache
+
+```
+sub happy_list_precache {
+  state @happy;
+  my( $L, $count, $t, @ret, %seen ) = ( 1_640, @_ ? $_[0] : 8 );
+
+  unless( @happy ) {
+    @happy=(0,1);
+    O: for my $N ( 2..$L ) {
+      my $n = $N;%seen=();
+      while($n>1){
+        last if defined $happy[$n] && $happy[$n]==1;
+        if( defined $happy[$n] || $seen{$n} ) {
+          $happy[$_]=0 for keys %seen;
+          next O;
+        }
+        $seen{$t=$n}=1,$n=0;
+        do {$n+=($t%10)**2} while $t=int($t/10);
+      }
+      $happy[$_]=1 for $N, keys %seen;
+    }
+  }
+
+  ## Now loop through until we have a list of first $count happy
+  ## numbers.
+  ## If we wanted to use this method in an if_happy function - could
+  ## equally replace this with
+  ## return $happy[$N] if $N <= $L;
+  ## my $n=0;
+  ## do {$n+=($N%10)**2} while $N=int($N/10);
+  ## return $happy[$n];
+  my $N=0;
+  for (1..$count) {
+    $N++;
+    if( $N <= $L ) {
+      $happy[$N] || redo;
+    } else {
+      my $n=0,$t=$N;
+      do {$n+=($t%10)**2} while $t=int($t/10);
+      $happy[$n] || redo;
+    }
+    push @ret,$N;
+  }
+  @ret;
 }
 ```
 
-In both these challenges we use the *perl*ism that within a postfix loop we can stitch together multiple statements into a single statement by the use of `,` (or any operator usually `||`, `&&` or `?:`). This leaves the beauty of the postfix loop while allowing multiple statements.
-
-### Pretty print.
-
-The print above is rudimentary to say the least, this does a pretty print version with columns lining up.
+We can use this technique to create an optimized version of `is_happy` - as we are using a `state` variable to store the cache
 
 ```perl
-sub summation_with_pretty_table {
-  my ($in,$t)='';
-  say map { sprintf ' %11d', $_ } @_;
-  ($in.='            '),shift, ($t=0), say $in, map { sprintf ' %11d', $_ } @_ = map { $t+=$_ } @_ while @_>1;
-  shift;
+sub is_happy_precache {
+  state @happy;
+  my( $L, $N, $t, @ret, %seen ) = ( 1_640, $_[0] );
+
+  ## Set up cache if empty
+  unless( @happy ) {
+    @happy=(0,1);
+    O: for my $N ( 2..$L ) {
+      my $n = $N;%seen=();
+      while($n>1){
+        last if defined $happy[$n] && $happy[$n]==1;
+        if( defined $happy[$n] || $seen{$n} ) {
+          $happy[$_]=0 for keys %seen;
+          next O;
+        }
+        $seen{$t=$n}=1,$n=0;
+        do {$n+=($t%10)**2} while $t=int($t/10);
+      }
+      $happy[$_]=1 for $N, keys %seen;
+    }
+  }
+
+  ## Get value from cache....
+  if( $N > $L ) {    ## If not in cached array we compute
+    my $n=$N,$N=0;   ## the sum of digits squared....
+    do {$N+=($n%10)**2} while $n = int($n/10);
+  }
+  $happy[$N];        ## And look up value in the cache..
 }
 ```
 
-### No so "pretty print"... 
+### Relative performance:
 
-Below are code equivalent to the above - with all spaces removed - we use the special variable `$a` to store the total to avoid `my` again.
-```perl
-#--------1---------2---------3---------4---------5
-#2345678901234567890123456789012345678901234567890
-sub sum{shift,$a=0,@_=map{$a+=$_}@_ while@_>1;$a}      ## 49 chars
+Computing list of first 1,000,000 happy values
+
+|                   | time  | is_happy | list_cache | list_cache_limit | is_precache | list_precache |
+| :---------------- | ----: | -------: | ---------: | ---------------: | ----------: | ------------: |
+| is_happy          |  69.1 |       -- |       -75% |             -78% |        -84% |          -87% |
+| list_cache        |  17.0 |     306% |         -- |             -11% |        -37% |          -47% |
+| list_cache_limit  |  15.1 |     356% |        12% |               -- |        -29% |          -40% |
+| is_precache       |  10.8 |     542% |        58% |              41% |          -- |          -16% |
+| list_precache     |  9.04 |     664% |        88% |              67% |         19% |            -- |
+
+ * So we can see both `precache` methods `work` the best being over **40%** more efficient that every other method.
+ * The best method `list_precache` is nearly **8** times faster than the naive looping and calling `is_happy`.
+ * Limiting the cache to just those numbers below 1540 has a slight performance gain about `1/8` over the one where we store the cache value
