@@ -32,7 +32,7 @@ If we don't want to store the values in `@pal` but instead just print them as ge
 
 ```perl
 $_=1,my$LIM=@ARGV?$ARGV[0]:1e3;
-is_prime(reverse$_)&&say while($_=next_prime$_)<$lim;
+is_prime(reverse$_)&&say while($_=next_prime$_)<$LIM;
 ```
 
 # Challenge 2 - Happy Numbers
