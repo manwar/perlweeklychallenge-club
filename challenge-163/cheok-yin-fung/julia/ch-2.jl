@@ -5,6 +5,9 @@
 function compute(arr)
     v = arr
     NUM = length(arr)
+    if NUM == 1
+        return v[1]
+    end
     new_v = []
 
     for r in 1:(NUM-1)
