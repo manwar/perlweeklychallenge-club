@@ -24,7 +24,7 @@ sub verify_happy {
         $number = sum map {$_**2} @arr;
     }
 
-    my @appeared;
+    my @appeared = ($number);
     my $loop_control = 244;  # 243 = 9**2 + 9**2 + 9**2
     do {
         return 1 if $number == 1;
