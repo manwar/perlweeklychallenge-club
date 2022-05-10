@@ -38,7 +38,7 @@ sub isHappy ($) {
 
   while ($n != 1 and !exists $seen{$n}) {
     $seen{$n}++;
-    $n = sum map { $_*$_ } split //, $n;
+    $n = sum map { $_*$_ } unpack '(A1)*', $n;
   }
 
   return $n == 1;
