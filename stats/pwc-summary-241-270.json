@@ -1,4 +1,9 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
          "name" : "Perl",
@@ -22,7 +27,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             2,
@@ -40,10 +44,10 @@
             3,
             21,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -61,22 +65,10 @@
             1,
             6,
             14
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 16] Last updated at 2022-05-10 20:15:29 GMT"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
    "xAxis" : {
       "categories" : [
          "Trenton Langer",
@@ -100,12 +92,20 @@
    "chart" : {
       "type" : "column"
    },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 16] Last updated at 2022-05-10 20:31:20 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }

@@ -1,27 +1,26 @@
 {
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 3,
-               "name" : "James Smith",
-               "drilldown" : "James Smith"
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 4
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 164"
+   "title" : {
+      "text" : "The Weekly Challenge - 164"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
-   ],
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2022-05-10 20:31:20 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "James Smith",
-            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -31,7 +30,19 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "James Smith",
+            "id" : "James Smith"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke"
          },
          {
             "data" : [
@@ -49,38 +60,42 @@
          }
       ]
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2022-05-10 20:15:29 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 3
+            },
+            {
+               "drilldown" : "Niels van Dijke",
+               "y" : 2,
+               "name" : "Niels van Dijke"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            }
+         ],
+         "name" : "The Weekly Challenge - 164",
+         "colorByPoint" : 1
       }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
+   ],
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
             "enabled" : 1,
             "format" : "{point.y}"
-         },
-         "borderWidth" : 0
+         }
       }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 164"
    }
 }

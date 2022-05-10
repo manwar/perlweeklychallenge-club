@@ -1,20 +1,22 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
    },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-05-10 20:31:20 GMT"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -49,9 +51,6 @@
          "Doug Schrag",
          "Duane Powell"
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-05-10 20:15:29 GMT"
    },
    "series" : [
       {
@@ -90,7 +89,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             48,
             0,
@@ -122,9 +120,11 @@
             8,
             10,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             10,
             0,
@@ -156,12 +156,12 @@
             7,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
