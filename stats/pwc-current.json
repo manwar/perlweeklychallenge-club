@@ -1,31 +1,26 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2022-05-10 20:39:27 GMT"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
                "y" : 3,
@@ -33,28 +28,29 @@
                "drilldown" : "James Smith"
             },
             {
-               "drilldown" : "Mark Anderson",
+               "drilldown" : "Luca Ferrari",
+               "y" : 8,
+               "name" : "Luca Ferrari"
+            },
+            {
+               "name" : "Mark Anderson",
                "y" : 2,
-               "name" : "Mark Anderson"
+               "drilldown" : "Mark Anderson"
             },
             {
                "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
-               "y" : 2
+               "y" : 2,
+               "name" : "Niels van Dijke"
             },
             {
-               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West",
                "y" : 4,
-               "drilldown" : "Roger Bell_West"
+               "name" : "Roger Bell_West"
             }
          ],
-         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 164"
       }
    ],
-   "xAxis" : {
-      "type" : "category"
-   },
    "drilldown" : {
       "series" : [
          {
@@ -72,14 +68,28 @@
             "name" : "James Smith"
          },
          {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
+            "id" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  6
+               ]
+            ],
+            "name" : "Luca Ferrari"
+         },
+         {
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
          },
          {
             "data" : [
@@ -88,12 +98,10 @@
                   2
                ]
             ],
-            "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke"
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
          },
          {
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -103,14 +111,25 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          }
       ]
    },
    "legend" : {
       "enabled" : 0
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2022-05-10 20:51:56 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge - 164"
+   },
+   "xAxis" : {
+      "type" : "category"
    }
 }
