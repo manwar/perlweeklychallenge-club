@@ -1,16 +1,13 @@
 use v6;
-sub sum-square-digits(\i) { i.comb.map(*²).sum }
+sub sum-square-digits(\i) is pure { i.comb.map(*²).sum }
 sub is-happy(\i) {
-  state %knowingly-sad;
-  my %visited;
+  state %what-i-know-about = 0 => False, 1 => True;
   $_ = i;
+  my %visited;
   loop {
-    when 1              { return True }
-    when %knowingly-sad { return False }
-    when %visited       { last }
-    default             { %visited{$_} = True; $_ = sum-square-digits $_ }
+    with %what-i-know-about{$_} { %what-i-know-about{%visited.keys} = $_ xx *; .return }
+    when %visited               { %what-i-know-about{$_, |%visited.keys} = False xx *; return False }
+    default                     { %visited{$_}++; $_ = sum-square-digits $_ }
   }
-  %knowingly-sad{%visited.keys}»++;
-  False
 }
 (^∞).grep(*.&is-happy)[^8].say
