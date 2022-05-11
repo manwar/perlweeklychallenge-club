@@ -32,7 +32,7 @@ If we don't want to store the values in `@pal` but instead just print them as ge
 
 ```perl
 $_=1,my$LIM=@ARGV?$ARGV[0]:1e3;
-is_prime(reverse$_)&&say while($_=next_prime$_)<$lim;
+is_prime(reverse$_)&&say while($_=next_prime$_)<$LIM;
 ```
 
 # Challenge 2 - Happy Numbers
@@ -54,6 +54,10 @@ sub is_happy {
   1;
 }
 ```
+Not much to see in this code - we loop through the function until we see the same value twice (or we get to `1`). We simply store the values seen as the keys to a hash to achieve this.
+
+**Note:** We use `do { } until` rather than just `{ } until` as this force the block of code within the `{ }` to be executed before the check for the conditional, rather than afterwards.
+
 ### Optimized solution
 
 If memory is no issue then you can cache the answers (happy/unhappy) for every number in the chain and if you see them for subsequent calculations you can just return that number. Obviously this requires lots of memory if you are working with lists of larger numbers....
@@ -105,8 +109,9 @@ sub happy_list_cache_limited {
   }
   @ret;
 }
-
 ```
+
+**Note** This value is roughly linear in `n` - asymptotic value is around `24.4 x n`.
 
 ### Pre-computing cache
 
@@ -182,8 +187,8 @@ sub is_happy_precache {
   }
 
   ## Get value from cache....
-  if( $N > $L ) {    ## If not in cached array we compute
-    my $n=$N,$N=0;   ## the sum of digits squared....
+  if( $N > $L ) {    ## If not in cached array we replace
+    my $n=$N,$N=0;   ## $N by the sum of it's digits squared
     do {$N+=($n%10)**2} while $n = int($n/10);
   }
   $happy[$N];        ## And look up value in the cache..
@@ -202,6 +207,6 @@ Computing list of first 1,000,000 happy values
 | is_precache       |  10.8 |     542% |        58% |              41% |          -- |          -16% |
 | list_precache     |  9.04 |     664% |        88% |              67% |         19% |            -- |
 
- * So we can see both `precache` methods `work` the best being over **40%** more efficient that every other method.
- * The best method `list_precache` is nearly **8** times faster than the naive looping and calling `is_happy`.
- * Limiting the cache to just those numbers below 1540 has a slight performance gain about `1/8` over the one where we store the cache value
+ * So we can see both `precache` methods are most efficient being over **40%** faster that every other method.
+ * The best method `list_precache` is nearly **8** times faster than the naive looping and calling our `is_happy` function repeatedly.
+ * Limiting the cache to just those numbers below 1540 has a slight performance gain about `1/8` over the one where we store every value in the cache. For values over `1540` we only ever store data in the cache and not retrieve it.
