@@ -6,7 +6,7 @@ sub is-happy(\i) {
   my %visited;
   loop {
     with %what-i-know-about{$_} { %what-i-know-about{%visited.keys} = $_ xx *; .return }
-    when %visited               { %what-i-know-about{$_, |%visited.keys} = False xx *; return False }
+    when %visited               { %what-i-know-about{%visited.keys} = False xx *; return False }
     default                     { %visited{$_}++; $_ = sum-square-digits $_ }
   }
 }
