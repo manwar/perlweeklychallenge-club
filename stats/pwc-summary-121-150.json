@@ -1,4 +1,9 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
          "data" : [
@@ -106,14 +111,17 @@
          ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-05-13 17:41:59 GMT"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "xAxis" : {
       "categories" : [
@@ -152,16 +160,8 @@
    "chart" : {
       "type" : "column"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-05-13 00:34:36 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
