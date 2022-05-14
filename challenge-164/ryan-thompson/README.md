@@ -1,17 +1,16 @@
 # Ryan Thompson
 
-## Week 163 Solutions
+## Week 164 Solutions
 
-### Task 1 › Bitwise Sum
+### Task 1 › Palindromic Primes
 
  * [Perl](perl/ch-1.pl)
- * [Raku](raku/ch-1.raku)
 
-### Task 2 › Summations
+### Task 2 › Happy Numbers
 
  * [Perl](perl/ch-2.pl)
- * [Raku](raku/ch-2.raku)
 
 ## Blogs
 
- * [A Tail of Two Sums](https://ry.ca/2022/05/a-tail-of-two-sums/)
+ * [Palindromic Primes](https://ry.ca/2022/05/palindromic-primes/)
+ * [Happy Numbers](https://ry.ca/2022/05/happy-numbers/)
