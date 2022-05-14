@@ -23,8 +23,6 @@ sub is_happy {
 }
 
 sub get_happy_numbers {
-    my $what = shift;
-
     my @output;
 
     my $pos = 1;
