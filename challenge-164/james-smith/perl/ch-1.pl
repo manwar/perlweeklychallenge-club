@@ -9,10 +9,11 @@ use Benchmark qw(cmpthese timethis);
 use Data::Dumper qw(Dumper);
 use Math::Prime::Util qw(next_prime is_prime);
 
-my ($p,$lim,@pal)=(1,@ARGV?$ARGV[0]:1e3);
-is_prime(reverse $p) && (push @pal,$p) while ($p=next_prime $p) < $lim;
+my ($p,$lim,@pal)=(1,shift//1e3);
+($p ^ reverse $p) || (push @pal,$p) while ($p=next_prime $p) < $lim;
 
 say for @pal;
 
-$_=1,my$LIM=@ARGV?$ARGV[0]:1e3;
-is_prime(reverse$_)&&say while($_=next_prime$_)<$lim;
+$_=1,my$LIM=shift//1e3;
+($_^reverse$_)||say while($_=next_prime$_)<$LIM;
+
