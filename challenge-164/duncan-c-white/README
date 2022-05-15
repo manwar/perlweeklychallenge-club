@@ -1,66 +1,45 @@
-TASK #1 - Sum Bitwise Operator
+TASK #1 - Prime Palindrome
 
-You are given list positive numbers, @n.
+Write a script to find all prime numbers less than 1000, which are also
+palindromes in base 10. Palindromic numbers are numbers whose digits
+are the same in reverse. For example, 313 is a palindromic prime, but
+337 is not, even though 733 (337 reversed) is also prime.
 
-Write script to calculate the sum of bitwise & operator for all unique pairs.
+MY NOTES: ok.  Pretty easy.
 
-Example 1
-
-	Input: @n = (1, 2, 3)
-	Output: 3
-
-	Since (1 & 2) + (2 & 3) + (1 & 3) => 0 + 2 + 1 =>  3.
-
-Example 2
-
-	Input: @n = (2, 3, 4)
-	Output: 2
-
-	Since (2 & 3) + (2 & 4) + (3 & 4) => 2 + 0 + 0 =>  2.
-
-MY NOTES: ok.  Pretty easy.  Identify all pairs, xor each, sum results.
-	I did ch-1.pl and an optimized ch-1a.pl
-
-GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1a.pl
-into C (look in the C directory for that), and then into Pascal
-(look in the pascal directory for that).
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
+into C (look in the C directory for that).
 
 
-TASK #2 - Summations
+TASK #2 - Happy Numbers
 
-You are given a list of positive numbers, @n.
+Write a script to find the first 8 Happy Numbers in base 10. For more
+information, please check out https://en.wikipedia.org/wiki/Happy_number
 
-Write a script to find out the summations as described below.
+Starting with any positive integer, replace the number by the sum of the
+squares of its digits, and repeat the process until the number equals 1
+(where it will stay), or it loops endlessly in a cycle which does not
+include 1.
 
-Example 1
+Those numbers for which this process end in 1 are happy numbers, while
+those numbers that do not end in 1 are unhappy numbers.
 
-Input: @n = (1, 2, 3, 4, 5)
-Output: 42
+Example
 
-    1 2 3  4  5
-      2 5  9 14
-        5 14 28
-          14 42
-             42
+19 is a Happy Number in base 10, as shown:
 
-The nth Row starts with the second element of the (n-1)th row.
-The following element is sum of all elements except first element of previous row.
-You stop once you have just one element in the row.
+19 => 1^2 + 9^2
+   => 1   + 81
+   => 82 => 8^2 + 2^2
+         => 64  + 4
+         => 68 => 6^2 + 8^2
+               => 36  + 64
+               => 100 => 1^2 + 0^2 + 0^2
+                      => 1 + 0 + 0
+                      => 1
 
-Example 2
-
-Input: @n = (1, 3, 5, 7, 9)
-Output: 70
-
-    1 3  5  7  9
-      3  8 15 24
-         8 23 47
-           23 70
-              70
-
-MY NOTES: hmmm.  Terrible explanation, but I think the examples show what
-it means, which is quite easy.  Could do that in different languages too:-)
+MY NOTES: seems very easy.  Loop detection is surely just a set of values
+that we've already seen.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
-into C (look in the C directory for that), and then into Pascal
-(look in the pascal directory for that).
+into C (look in the C directory for that).
