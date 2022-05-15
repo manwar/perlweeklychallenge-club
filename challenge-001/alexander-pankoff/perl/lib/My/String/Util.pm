@@ -7,7 +7,7 @@ no warnings qw'experimental::signatures';
 
 use Exporter qw(import);
 
-our @EXPORT_OK = qw(explode implode contains str_map);
+our @EXPORT_OK = qw(explode implode contains str_map is_palindromic);
 
 # explode : String -> [Char]
 sub explode($str) {
@@ -27,6 +27,11 @@ sub contains ( $str, $char ) {
 # str_map: (Char -> Char) -> String -> String
 sub str_map ( $fn, $str ) {
     return implode( map { $fn->($_) } explode($str) );
+}
+
+# is_palindromic: String -> Boolean
+sub is_palindromic($s) {
+    return $s eq reverse $s;
 }
 
 1;
