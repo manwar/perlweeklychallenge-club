@@ -20,20 +20,22 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-164/ja
 
 ## The solution
 
-We use `Math::Prime::Util` and it's functions `is_prime` and `next_prime` to check for primality and to loop through primes.... So the code is quite simple..
+We use `Math::Prime::Util` and it's functions `next_prime` to loop through primes.... So the code is quite simple..
 
 ```perl
-my ($p,$lim,@pal)=(1,@ARGV?$ARGV[0]:1e3);
-is_prime(reverse $p) && (push @pal,$p) while ($p=next_prime $p) < $lim;
+my ($p,$lim,@pal)=(1,shift//1e3);
+($p ^ reverse $p) || (push @pal,$p) while ($p=next_prime $p) < $lim;
 say for @pal;
 ```
 
 If we don't want to store the values in `@pal` but instead just print them as generated we can simplify this to:
 
 ```perl
-$_=1,my$LIM=@ARGV?$ARGV[0]:1e3;
-is_prime(reverse$_)&&say while($_=next_prime$_)<$LIM;
+$_=1,my$lim=shift//1e3;
+($_^reverse$_)||say while($_=next_prime$_)<$lim;
 ```
+
+**Note** we use the `//` operator to set a default value `shift//1e3` sets the parameter to the first command line argument or 1000 if there is nothing passed.
 
 # Challenge 2 - Happy Numbers
 
