@@ -4,9 +4,6 @@ use strict;
 
 use warnings;
 use feature qw(say);
-use Test::More;
-use Benchmark qw(cmpthese timethis);
-use Data::Dumper qw(Dumper);
 
 my $margin = 10;
 my $extn   = 20;
@@ -19,7 +16,6 @@ my(@t,@lines,@pts);
 ## Note we allow multiple data points on the same line (as per example 2)
 while(<>) {
   chomp;
-  warn $_;
   4==(@t = split /,/) ? (push @lines,[@t]) : (push @pts,[@t]) for split;
 }
 
@@ -27,22 +23,28 @@ while(<>) {
 ## and compute where it crosses the sizes of our box....
 
 if( $0 eq 'ch-2.pl' ) {
-  my ($a,$b) = best_fit(   \@pts );
-  my ($min_x, $max_x, $min_y, $max_y) = get_ranges( \@pts );
+## This computes the line of best fix,
+## then works out where the lines cross the edge of the region
+## around the points {including a small margin}
+## and adds it to the list of lines to render...
+  my( $a, $b                         ) = best_fit(   \@pts );
+  my( $min_x, $max_x, $min_y, $max_y ) = get_ranges( \@pts );
 
   my $l_y = $a + $b * ($min_x - $extn);
   my $r_y = $a + $b * ($max_x + $extn);
-  my $l_x = $min_x - $extn;
-  my $r_x = $max_x + $extn;
-
-  $l_x = ( ($l_y = $min_y - $extn ) - $a)/$b if $l_y < $min_y - $extn;
-  $l_x = ( ($l_y = $max_y + $extn ) - $a)/$b if $l_y > $max_y + $extn;
-  $r_x = ( ($r_y = $min_y - $extn ) - $a)/$b if $r_y < $min_y - $extn;
-  $r_x = ( ($r_y = $max_y + $extn ) - $a)/$b if $r_y > $max_y + $extn;
+  my $l_x = $l_y < $min_y - $extn ? ( ($l_y = $min_y - $extn ) - $a)/$b
+          : $l_y > $max_y + $extn ? ( ($l_y = $max_y + $extn ) - $a)/$b
+          :                         $min_x - $extn
+          ;
+  my $r_x = $r_y < $min_y - $extn ? ( ($r_y = $min_y - $extn ) - $a)/$b
+          : $r_y > $max_y + $extn ? ( ($r_y = $max_y + $extn ) - $a)/$b
+          :                         $max_x + $extn
+          ;
 
   push @lines, [ $l_x,$l_y,$r_x,$r_y ];
 }
 
+## We call the "renderer"
 say render_svg( \@pts, \@lines, { 'max_w' => 960, 'max_h' => 540 } );
 
 ## This computes the equation for the regression line...
