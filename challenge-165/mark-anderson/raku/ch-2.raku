@@ -24,10 +24,10 @@ my \sum_y    = [+] @y;
 my \sum_xy   = [+] @x >>*<< @y;
 my \sum_x_sq = [+] @x >>**>> 2;
 
-my \n = $input.elems;
-my \m = (n * sum_xy - sum_x * sum_y) / (n * sum_x_sq - sum_x**2);
-my \b = (sum_y - m * sum_x) / n;
-my (\rise, \run) = m.nude;
+my \n    = $input.elems;
+my \rise = n * sum_xy - sum_x * sum_y;
+my \run  = n * sum_x_sq - sum_x**2;
+my \b    = (sum_y - rise/run * sum_x) / n;
 my $line = line => [ :x1(0), :y1(b), :x2(run), :y2(b+rise), :stroke<blue> ];
 
 print SVG.serialize(svg => [ :width(400), :height(400), |@points, $line ]);
