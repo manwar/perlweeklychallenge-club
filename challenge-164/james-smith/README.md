@@ -87,20 +87,21 @@ sub get_ranges {
   my( $pts, $lines ) = @_;
   my $min_x = my $max_x = @{$pts} ? $pts->[0][0] : $lines->[0][0];
   my $min_y = my $max_y = @{$pts} ? $pts->[0][1] : $lines->[0][1];
-  ( $_->[0] < $min_x ) && ( $min_x = $_->[0] ), ( $_->[0] > $max_x ) && ( $max_x = $_->[0] ),
-  ( $_->[1] < $min_y ) && ( $min_y = $_->[1] ), ( $_->[1] > $max_y ) && ( $max_y = $_->[1] ) for @{$pts}, map { ($_, [$_->[2],$_->[3]]) } @{$lines};
+  ($_->[0]<$min_x)&&($min_x=$_->[0]), ($_->[0]>$max_x)&&($max_x=$_->[0]),
+  ($_->[1]<$min_y)&&($min_y=$_->[1]), ($_->[1]>$max_y)&&($max_y=$_->[1]) for @{$pts}, map {($_,$_->[2],$_->[3]])} @{$lines};
   ( $min_x, $max_x, $min_y, $max_y );
 }
 
 sub render_svg {
   my( $pts, $lines, $config          ) = @_;
   my( $min_x, $max_x, $min_y, $max_y ) = get_ranges( $pts, $0 eq 'ch-2.pl' ? [] : $lines );
-  my( $W, $H, $width,$height         ) = ( $config->{'max_w'}//800, $config->{'max_h'}//600, $max_x - $min_x + 2 * $margin, $max_y - $min_y + 2 * $margin );
+  my($W,$H,$width,$height) = ($config->{'max_w'}//800,$config->{'max_h'}//600,$max_x-$min_x+2*$margin,$max_y-$min_y+2*$margin);
   ( $width/$height > $W/$H ) ? ( $H = $height/$width*$W ) : ( $W = $width/$height*$H );
   my $sf = $width/$W;
   return sprintf '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg height="%s" width="%s" viewBox="%s %s %s %s" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<svg height="%s" width="%s" viewBox="%s %s %s %s" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
   <rect stroke="#000" stroke-width="%s" fill="#eee" x="%s" y="%s" width="%s" height="%s" />
   <g stroke="#900" stroke-width="%s">
     %s
