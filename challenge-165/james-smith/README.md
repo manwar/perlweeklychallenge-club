@@ -1,5 +1,5 @@
 [< Previous 164](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-164/james-smith) |
-[Next 166 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-165/james-smith)
+[Next 166 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-166/james-smith)
 # The Weekly Challenge 165
 
 You can find more information about this weeks, and previous weeks challenges at:
