@@ -14,10 +14,8 @@ my (@x, @y, @points);
 for $input.split(/\s+/)
 {
     my (\x, \y) = .split(',');
-
     @x.push: +x;
     @y.push: +y;
-
     @points.push: .item with circle => [ :cx(x), :cy(y), :r(3), :fill<red> ];
 }
 
@@ -29,7 +27,7 @@ my \sum_x_sq = [+] @x >>**>> 2;
 my \n = $input.elems;
 my \m = (n * sum_xy - sum_x * sum_y) / (n * sum_x_sq - sum_x**2);
 my \b = (sum_y - m * sum_x) / n;
-my (\y, \x) = m.nude;
-my $line = line => [ :x1(0), :y1(b), :x2(x), :y2(b+y), :stroke<blue> ];
+my (\rise, \run) = m.nude;
+my $line = line => [ :x1(0), :y1(b), :x2(run), :y2(b+rise), :stroke<blue> ];
 
 print SVG.serialize(svg => [ :width(400), :height(400), |@points, $line ]);
