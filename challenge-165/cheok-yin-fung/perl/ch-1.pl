@@ -9,17 +9,20 @@ use SVG;
 use ARGV::OrDATA;
 
 my $img = SVG->new;
+my @points;
 
 while (<>) {
     chomp;
     my @nums = split ",", $_;
     if (scalar @nums == 2) {
-        new_point(@nums);
+        push @points, [@nums];
     }
     elsif (scalar @nums == 4) {
         new_line(@nums);
     }
 }
+
+new_point($_->@*) foreach @points; #so that the lines won't be over points
 
 
 
