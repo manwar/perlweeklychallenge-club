@@ -37,6 +37,7 @@ sub get_points_and_lines {
 sub best_fit {
   my $sx = my $sy = my $sxy = my $sxx = 0, my $n = @{$_[0]};
   $sx += $_->[0], $sxy += $_->[0]*$_->[1], $sy += $_->[1], $sxx += $_->[0]*$_->[0] foreach @{$_[0]};
+  return $sx/$n unless $n*$sxx - $sx*$sx;
   my $b = ( $n*$sxy-$sx*$sy ) / ( $n*$sxx - $sx*$sx );
   ( ($sy-$b*$sx)/$n, $b );
 }
@@ -61,6 +62,10 @@ sub add_best_fit_line {
   $extn //= 40;
   my( $a, $b                         ) = best_fit(   $ps );
   my( $min_x, $max_x, $min_y, $max_y ) = get_ranges( $ps );
+  unless( defined $b ) {
+    push @{$ls}, [ $a, $min_y - $extn, $a, $max_y + $extn];
+    return;
+  }
   my $l_y = $a + $b * ($min_x - $extn);
   my $r_y = $a + $b * ($max_x + $extn);
   my $l_x = $l_y < $min_y - $extn ? ( ($l_y = $min_y - $extn ) - $a)/$b
