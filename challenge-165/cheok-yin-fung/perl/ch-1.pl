@@ -6,10 +6,11 @@
 use v5.24.0;
 use warnings;
 use SVG;
+use ARGV::OrDATA;
 
 my $img = SVG->new;
 
-while (<STDIN>) {
+while (<>) {
     chomp;
     my @nums = split ",", $_;
     if (scalar @nums == 2) {
@@ -40,3 +41,8 @@ sub new_line {
 
 
 print $img->xmlify(-namespace=>'svg');
+
+__DATA__
+53,10
+53,10,23,30
+23,30
