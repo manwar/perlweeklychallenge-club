@@ -1,6 +1,7 @@
-[< Previous 163](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-163/james-smith) |
-[Next 165 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-164/james-smith)
-# The Weekly Challenge 164
+[< Previous 164](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-164/james-smith) |
+[Next 166 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-166/james-smith)
+
+# The Weekly Challenge 165 - straight through the point!
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,203 +13,334 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-164/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-165/james-smith
 
-# Challenge 1 - Prime Palindrome
+# Challenge 1 - Scalable Vector Graphics (SVG) & Challenge 2 - Line of Best Fit
 
-***Write a script to find all prime numbers less than 1000, which are also palindromes in base 10. Palindromic numbers are numbers whose digits are the same in reverse. For example, 313 is a palindromic prime, but 337 is not, even though 733 (337 reversed) is also prime.***
+Usually I write up to separate pieces for our weekly challenge - but as these are linked I though I would write this as a single blog.
 
-## The solution
+**NOTE we will assume:**
+ * that there is at least one point or line to draw;
+ * and at least one point to compute the best fit line through (it will work with 1 point as it will treat this in the "infinite" case of a vertical line.)
 
-We use `Math::Prime::Util` and it's functions `next_prime` to loop through primes.... So the code is quite simple..
+## Line of best fit
 
-```perl
-my ($p,$lim,@pal)=(1,shift//1e3);
-($p ^ reverse $p) || (push @pal,$p) while ($p=next_prime $p) < $lim;
-say for @pal;
+Although this is challenge 2, let me start by computing explaining how to compute the best fit line (using linear regression) of a set of points.
+
+The equation for the gradient is:
+
+```
+       n * sum(xy) - sum(x) * sum(y)
+   b = -----------------------------
+       n * sum(xx) - sum(x) * sum(x)
 ```
 
-If we don't want to store the values in `@pal` but instead just print them as generated we can simplify this to:
+we can then get the intercept as:
 
-```perl
-$_=1,my$lim=shift//1e3;
-($_^reverse$_)||say while($_=next_prime$_)<$lim;
+```
+       s(y) - b * s(x)
+   a = ---------------
+              n
 ```
 
-**Note** we use the `//` operator to set a default value `shift//1e3` sets the parameter to the first command line argument or 1000 if there is nothing passed.
-
-# Challenge 2 - Happy Numbers
-
-***Write a script to find the first 8 Happy Numbers in base 10.***
-
-***Starting with any positive integer, replace the number by the sum of the squares of its digits, and repeat the process until the number equals 1 (where it will stay), or it loops endlessly in a cycle which does not include 1. Those numbers for which this process end in 1 are happy numbers, while those numbers that do not end in 1 are unhappy numbers.***
-
-## Solution.
+This is encaptulated in the function:
 
 ```perl
-sub is_happy {
-  my($n,$t,%seen) = shift;
-  while($n>1) {
-    return 0 if $seen{$n};
-    $seen{$t=$n}=1,$n=0;
-    do {$n+=($t%10)**2} while $t=int($t/10);
-  }
-  1;
-}
-```
-Not much to see in this code - we loop through the function until we see the same value twice (or we get to `1`). We simply store the values seen as the keys to a hash to achieve this.
-
-**Note:** We use `do { } until` rather than just `{ } until` as this force the block of code within the `{ }` to be executed before the check for the conditional, rather than afterwards.
-
-### Optimized solution
-
-If memory is no issue then you can cache the answers (happy/unhappy) for every number in the chain and if you see them for subsequent calculations you can just return that number. Obviously this requires lots of memory if you are working with lists of larger numbers....
-
-```perl
-sub happy_list_cache {
-  my $count= @_ ? $_[0] : 8, my %seen, my $t, state @happy = (0,my @ret = my $N = 1);
-  OUT: for (2..$count) {
-    %seen=();
-    my $n = ++$N;
-    while($n>1) {
-      last if defined $happy[$n] && $happy[$n]==1;
-      if(defined $happy[$n] || $seen{$n}) { ## Unhappy no...
-        $happy[$_] = 0 foreach keys %seen;
-        redo OUT;
-      }
-      $seen{$t=$n}=1,$n=0;
-      do {$n+=($t%10)**2} while $t=int($t/10);
-    }
-    $happy[$_]=1 for keys %seen;
-    $happy[$N]=1;
-    push @ret,$N;
-  }
-  @ret;
+sub best_fit {
+  my $sx = my $sy = my $sxy = my $sxx = 0, my $n = @{$_[0]};
+  $sx += $_->[0], $sxy += $_->[0]*$_->[1],
+  $sy += $_->[1], $sxx += $_->[0]*$_->[0] foreach @{$_[0]};
+  return $sx/$n unless $n*$sxx - $sx*$sx;                     ## Clause works out if all the points have the same x
+  my $b = ( $n*$sxy-$sx*$sy ) / ( $n*$sxx - $sx*$sx );
+  return ( ($sy-$b*$sx)/$n, $b );
 }
 ```
 
-**Notes**
+There is a special case in which `$n*$sxx - $sx*$sx` *i.e.* all points on a single vertical line - which means that the
+calculation will fail. In this case we just return a single value which is this x-coordinate. And later the code
+uses this to draw a vertical line.
 
-  * If you don't have unlimited memory you could consider only cacheing lower values of "happy".... for a larger value of `n` - we note that the sum of the digits is only going to be at most `81 x #digits` so you could consider only storing the first `1,539` to allow you quickly compute the happy status of all 64-bit signed integers (9,223,372,036,854,775,808) - the second iteration will always be below `1,539`...
+## Parsing the input
 
-```perl
-sub happy_list_cache_limited {
-  my $count= @_ ? $_[0] : 8, my %seen, my $t, state @happy = (0,my @ret = my $N = 1);
-  OUT: for (2..$count) {
-    %seen=();
-    my $n = ++$N;
-    while($n>1) {
-      last if defined $happy[$n] && $happy[$n]==1;
-      if(defined $happy[$n] || $seen{$n}) { ## Unhappy no...
-        ($_<1540) && ($happy[$_] = 0) for keys %seen;
-        redo OUT;
-      }
-      $seen{$t=$n}=1,$n=0;
-      do {$n+=($t%10)**2} while $t=int($t/10);
-    }
-    ($_<1540) && ($happy[$_]=1) for $N, keys %seen;
-    push @ret,$N;
-  }
-  @ret;
-}
-```
+Probably the easiest part of the process - note this is written as the short version,
+the examples had two cases where there were one or more entries per line. This treats
+the whole file as a single line, and splits on whitespace which avoids the need
+for nested loops. ***Note** this is not ideal if the file is large - because working one line at a time is better for memory management.*
 
-**Note** This value is roughly linear in `n` - asymptotic value is around `24.4 x n`.
-
-### Pre-computing cache
-
-```
-sub happy_list_precache {
-  state @happy;
-  my( $L, $count, $t, @ret, %seen ) = ( 1_640, @_ ? $_[0] : 8 );
-
-  unless( @happy ) {
-    @happy=(0,1);
-    O: for my $N ( 2..$L ) {
-      my $n = $N;%seen=();
-      while($n>1){
-        last if defined $happy[$n] && $happy[$n]==1;
-        if( defined $happy[$n] || $seen{$n} ) {
-          $happy[$_]=0 for keys %seen;
-          next O;
-        }
-        $seen{$t=$n}=1,$n=0;
-        do {$n+=($t%10)**2} while $t=int($t/10);
-      }
-      $happy[$_]=1 for $N, keys %seen;
-    }
-  }
-
-  ## Now loop through until we have a list of first $count happy
-  ## numbers.
-  ## If we wanted to use this method in an if_happy function - could
-  ## equally replace this with
-  ## return $happy[$N] if $N <= $L;
-  ## my $n=0;
-  ## do {$n+=($N%10)**2} while $N=int($N/10);
-  ## return $happy[$n];
-  my $N=0;
-  for (1..$count) {
-    $N++;
-    if( $N <= $L ) {
-      $happy[$N] || redo;
-    } else {
-      my $n=0,$t=$N;
-      do {$n+=($t%10)**2} while $t=int($t/10);
-      $happy[$n] || redo;
-    }
-    push @ret,$N;
-  }
-  @ret;
-}
-```
-
-We can use this technique to create an optimized version of `is_happy` - as we are using a `state` variable to store the cache
+We use ternary operators to replace `if`/`elsif`/`else` structure - which again allows
+us to use a single postfix `for`.
 
 ```perl
-sub is_happy_precache {
-  state @happy;
-  my( $L, $N, $t, @ret, %seen ) = ( 1_640, $_[0] );
+sub get_points_and_lines {
+  my($ps,$ls,@t)=([],[]);
+  local $/ = undef;
 
-  ## Set up cache if empty
-  unless( @happy ) {
-    @happy=(0,1);
-    O: for my $N ( 2..$L ) {
-      my $n = $N;%seen=();
-      while($n>1){
-        last if defined $happy[$n] && $happy[$n]==1;
-        if( defined $happy[$n] || $seen{$n} ) {
-          $happy[$_]=0 for keys %seen;
-          next O;
-        }
-        $seen{$t=$n}=1,$n=0;
-        do {$n+=($t%10)**2} while $t=int($t/10);
-      }
-      $happy[$_]=1 for $N, keys %seen;
-    }
-  }
-
-  ## Get value from cache....
-  if( $N > $L ) {    ## If not in cached array we replace
-    my $n=$N,$N=0;   ## $N by the sum of it's digits squared
-    do {$N+=($n%10)**2} while $n = int($n/10);
-  }
-  $happy[$N];        ## And look up value in the cache..
+    4 == (@t = split /,/) ? ( push @{$ls}, [@t]      )       ## Length 4 - line
+  : 2 == @t               ? ( push @{$ps}, [@t]      )       ## Length 2 - point
+  :                         ( warn "input error: $_" )       ## o/w error
+                                                       for grep { $_ } split /\s+/, <>;
+  return ($ps,$ls);
 }
 ```
 
-### Relative performance:
+***Gotcha:** There is a gotcha here - it is an example where `\@t` and `[@t]` are different, if you use the latter `\@t` every
+element in the arrays will be the same, as they will all be the same pointer!!!*
 
-Computing list of first 1,000,000 happy values
+## Computing the range of points
 
-|                   | time  | is_happy | list_cache | list_cache_limit | is_precache | list_precache |
-| :---------------- | ----: | -------: | ---------: | ---------------: | ----------: | ------------: |
-| is_happy          |  69.1 |       -- |       -75% |             -78% |        -84% |          -87% |
-| list_cache        |  17.0 |     306% |         -- |             -11% |        -37% |          -47% |
-| list_cache_limit  |  15.1 |     356% |        12% |               -- |        -29% |          -40% |
-| is_precache       |  10.8 |     542% |        58% |              41% |          -- |          -16% |
-| list_precache     |  9.04 |     664% |        88% |              67% |         19% |            -- |
+By breaking the code down each part is *relatively* simple. To avoid external libraries, we do this in standard way. Loop through
+points if less than min, update min etc.... By using comma-separated clauses we can use a single `for` loop, and to achieve this
+we use the `(X)&(Y)` to replace `Y if X`.
 
- * So we can see both `precache` methods are most efficient being over **40%** faster that every other method.
- * The best method `list_precache` is nearly **8** times faster than the naive looping and calling our `is_happy` function repeatedly.
- * Limiting the cache to just those numbers below 1540 has a slight performance gain about `1/8` over the one where we store every value in the cache. For values over `1540` we only ever store data in the cache and not retrieve it.
+```perl
+sub get_ranges {
+  my( $ps, $ls ) = @_;
+  my( $min_x,$min_y ) = my( $max_x,$max_y ) = @{$ps} ? @{$pts->[0]} : @{$ls->[0]};
+  ($_->[0]<$min_x)&&($min_x=$_->[0]), ($_->[0]>$max_x)&&($max_x=$_->[0]),
+  ($_->[1]<$min_y)&&($min_y=$_->[1]), ($_->[1]>$max_y)&&($max_y=$_->[1]) for @{$ps}, map {($_,[$_->[2],$_->[3]])} @{$ls||[]};
+  ( $min_x, $max_x, $min_y, $max_y );
+}
+```
+
+## Finding the line to draw for best fit
+
+This bit of code hides away the computation of the best fit line, and computing the start/end of the visible part.
+We get the best fit line, and the range of the points.
+
+If we have a vertical line (special case) we just draw the line from top to bottom of the points at the x-value of 
+all the points.
+
+If we don't we have a slightly more interesting challenge - on which sides do the regression lines leave the drawing area:
+
+To do this we:
+  * Compute the vertical position of the line at the left and right of the image
+  * If it is above the box we have to set it to the top of the box and adjust the x location accordingly
+  * If it is below the box we have to set it to the bottom of the box and adjust the x location accordingly
+  * otherwise we just set the x-location to the left or right end of the image.
+
+```perl
+sub add_best_fit_line {
+  my ( $ps, $ls, $extn ) = @_;
+  $extn //= 40;
+  my( $a, $b                         ) = best_fit(   $ps );
+  my( $min_x, $max_x, $min_y, $max_y ) = get_ranges( $ps );
+  unless( defined $b ) {
+    push @{$ls}, [ $a, $min_y - $extn, $a, $max_y + $extn ];
+    return;
+  }
+  my $l_y = $a + $b * ($min_x - $extn);
+  my $r_y = $a + $b * ($max_x + $extn);
+  my $l_x = $l_y < $min_y - $extn ? ( ($l_y = $min_y - $extn ) - $a)/$b
+          : $l_y > $max_y + $extn ? ( ($l_y = $max_y + $extn ) - $a)/$b : $min_x - $extn;
+  my $r_x = $r_y < $min_y - $extn ? ( ($r_y = $min_y - $extn ) - $a)/$b
+          : $r_y > $max_y + $extn ? ( ($r_y = $max_y + $extn ) - $a)/$b : $max_x + $extn;
+  push @{$ls}, [ $l_x,$l_y,$r_x,$r_y ];
+}
+```
+
+**Notes:**
+  * We update `$l_y` at the same time as working out the new value of `$l_x` etc...
+  * This is our first use of `//=` we have in this code - this allows you to set the value a variable if it is undefined - `$extn//=40` -
+    this is really good for default values for function calls (either with assignment `$a//=$b` or just simply `$a//$b`.
+
+## Rendering the SVG
+
+There are three parts to the SVG render.
+
+ * Working out what range to draw;
+ * Working out the dimensions of the point space and image (and any related scaling);
+ * Rendering the points.
+
+The first part we have already solved above - again we create a margin round the points - so we don't lose the edge of points.
+
+The second part we can get the apsect ratio of our image from the range above. But then we need to find an image that fits our bounding box.
+
+If the aspect ratio of our image is taller than the aspect ratio of the points we want to draw, then we have to reduce the image vertically.
+
+   `img_width = DEFAULT_WIDTH; img_height = height/width * DEFAULT_WIDTH`
+
+otherwise we need to make it narrower.
+
+   `img_width = width/height * DEFAULT_HEIGHT; img_height = DEFAULT_HEIGHT`
+
+Once we have worked out the height/width of the image and the plot space we can work out what the scale-factor is. We can use this to choose the
+radius/thicknes of lines/dots etc to keep them the same size irrespective of the dimensions.
+
+Scale factors is given by `width/img_width`
+
+Finally we get to the renderering which gives us the `sprintf` from hell... saying that `sprintf` is one of the most useful parts of perl!
+
+```perl
+sub render_svg {
+  my( $ps, $ls, $config          ) = @_;
+  my( $min_x, $max_x, $min_y, $max_y ) = get_ranges( $pts, $0 eq 'ch-2.pl' ? [] : $lines );
+  my $margin = $config->{'margin'}//20;
+
+  ## Adjust height and width so it fits the size from the config.
+  my($W,$H,$width,$height) = ($config->{'max_w'}//800,$config->{'max_h'}//600,$max_x-$min_x+2*$margin,$max_y-$min_y+2*$margin);
+  ( $width/$height > $W/$H ) ? ( $H = $height/$width*$W ) : ( $W = $width/$height*$H );
+  ## Calculate the scale factor so that we keep spots/lines the same size irrespective of the ranges.
+  my $sf = $width/$W;
+
+  sprintf '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg height="%s" width="%s" viewBox="%s %s %s %s" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rect stroke="%s" stroke-width="%s" fill="%s" x="%s" y="%s" width="%s" height="%s" />
+  <g stroke="%s" stroke-width="%s">
+    %s
+  </g>
+  <g fill="%s">
+    %s
+  </g>
+</svg>',
+    $H, $W, $min_x - $margin, $min_y - $margin, $width, $height,                   ## svg element
+    $config->{'border'}//'#000', $sf, $config->{'bg'}//'#eee',                     ## background rectangle
+      $min_x - $margin, $min_y - $margin, $width, $height,
+    $config->{'fill'}//'#000', ($config->{'stroke'}//5) * $sf,                     ## lines
+      join( qq(\n    ), map { sprintf '<line x1="%s" y1="%s" x2="%s" y2="%s" />', @{$_} } @{$ls} ),
+    $config->{'color'}//'#ccc',                                                    ## dots
+      join( qq(\n    ), map { sprintf '<circle cx="%s" cy="%s" r="%s" />',  @{$_}, ($config->{'radius'}//10)*$sf  } @{$ps}   )
+}
+
+```
+## Using `$0`
+
+Rather than writing two programmes this week - I have written a single program - and used `$0` the programme name two switch on/off parts of the code.
+
+ * If we are running `ch-1.pl` we need to include the lines in the range calculation in the renderer, if we are running `ch-2.pl` we don't want to (it adds the margins a second time which we don't want)
+
+ * If we are running `ch-2.pl` we need to compute the line of best fit, but obviously in `ch-1.pl` we don't.
+
+So (pseudo code) we have:
+
+```
+  get_data()
+  get_best_fit_and_limit_to_box() if $0 eq 'ch-2.pl';
+  ## Render
+  get_range( $0 eq 'ch-1.pl' ? "include lines" : "points only" );
+  get_sizes_and_rescale()
+  render();
+```
+
+This is a common practice amongst many system utilities where the name of the script alters the functionality. It avoids duplicating code without the need of an external library or module. Symlinks are just used to set the aliases. A common example of these are start/stop/log viewing scripts for applications.
+
+## Altogether now - this is the full code (annotated)
+
+```perl
+#!/usr/local/bin/perl
+use strict;
+
+use warnings;
+use feature qw(say);
+
+my $CONFIG = {
+  'margin' =>     40, 'max_w' =>    960, 'max_h' => 540,   ## Size of image & margins
+  'stroke' =>      5, 'color' => '#900',                   ## Style for lines
+  'radius' =>     10, 'fill'  => '#090',                   ## Style for dots
+  'border' => '#009', 'bg'    => '#ffd',                   ## Style for "page"....
+};
+
+my ($pts,$lines) = get_points_and_lines( );                                ## Parses file to get lines/points
+add_best_fit_line( $pts, $lines, $CONFIG->{'margin'} ) if $0 eq 'ch-2.pl'; ## Only if fitting line (ch-2.pl)
+say render_svg(    $pts, $lines, $CONFIG );                                ## Pass in config to render
+
+##----------------------------------------------------------------------
+## Now the code does the real work....
+##----------------------------------------------------------------------
+
+## Parse stdin / files given on command line, to return a list of points and lines..
+
+sub get_points_and_lines {
+  my($ps,$ls,@t)=([],[]);
+  local $/ = undef;
+
+    4 == (@t = split /,/) ? ( push @{$ls}, [@t]      )       ## Length 4 - line
+  : 2 == @t               ? ( push @{$ps}, [@t]      )       ## Length 2 - point
+  :                         ( warn "input error: $_" )       ## o/w error
+                                                       for grep { $_ } split /\s+/, <>;
+  return ($ps,$ls);
+}
+
+## Compute the best fit line for the points array (using linear regression...
+## Assumes a dependency of y on x....
+
+sub best_fit {
+  my $sx = my $sy = my $sxy = my $sxx = 0, my $n = @{$_[0]};
+  $sx += $_->[0], $sxy += $_->[0]*$_->[1], $sy += $_->[1], $sxx += $_->[0]*$_->[0] foreach @{$_[0]};
+  my $b = ( $n*$sxy-$sx*$sy ) / ( $n*$sxx - $sx*$sx );
+  ( ($sy-$b*$sx)/$n, $b );
+}
+
+## Get the range of x,y values for the given list of lines/points
+## Returns a tuple of min & max x and min & max y.
+
+sub get_ranges {
+  my( $ps, $ls ) = @_;
+  my( $min_x,$min_y ) = my( $max_x,$max_y ) = @{$ps} ? @{$pts->[0]} : @{$ls->[0]};
+  ($_->[0]<$min_x)&&($min_x=$_->[0]), ($_->[0]>$max_x)&&($max_x=$_->[0]),
+  ($_->[1]<$min_y)&&($min_y=$_->[1]), ($_->[1]>$max_y)&&($max_y=$_->[1]) for @{$ps}, map {($_,[$_->[2],$_->[3]])} @{$ls||[]};
+  ( $min_x, $max_x, $min_y, $max_y );
+}
+
+## Get the best fit line, and then add extend it to edge of the box - by default we assume that the line will start/end on
+## the side of the box, but just to be sure - we check to see if the pts lie above or below the top/bottom of the box and
+## move them appropriately.
+
+sub add_best_fit_line {
+  my ($ps,$ls,$extn) = @_;
+  $extn //= 40;
+  my( $a, $b                         ) = best_fit(   $ps );
+  my( $min_x, $max_x, $min_y, $max_y ) = get_ranges( $ps );
+  my $l_y = $a + $b * ($min_x - $extn);
+  my $r_y = $a + $b * ($max_x + $extn);
+  my $l_x = $l_y < $min_y - $extn ? ( ($l_y = $min_y - $extn ) - $a)/$b
+          : $l_y > $max_y + $extn ? ( ($l_y = $max_y + $extn ) - $a)/$b : $min_x - $extn;
+  my $r_x = $r_y < $min_y - $extn ? ( ($r_y = $min_y - $extn ) - $a)/$b
+          : $r_y > $max_y + $extn ? ( ($r_y = $max_y + $extn ) - $a)/$b : $max_x + $extn;
+  push @{$ls}, [ $l_x,$l_y,$r_x,$r_y ];
+}
+
+## Finally the rendering of the points/lines, this uses most of the config entries to deal with colour, size etc.
+## We get the range and again add the margin { we don't include the lines in the equation if we are doing challenge 2
+## the line fitting as otherwise we would extend the region twice... }
+##
+## Once we have the size of the image - we work out it's aspect ratio and work out whether we have to make the image
+## narrower or shorter so that the image is no-bigger than the suggested size and that the image is as big as possible
+##
+## As we have a scaling between the x+y values and the size of the image - we need to adjust the size of dots/width of lines
+## by multiplying these all by a scale factor
+
+sub render_svg {
+  my( $ps, $ls, $config          ) = @_;
+                                         ## Ignore lines if doing challenge 2 (best fit)
+  my( $min_x, $max_x, $min_y, $max_y ) = get_ranges( $pts, $0 eq 'ch-2.pl' ? [] : $lines );
+  my $margin = $config->{'margin'}//20;
+
+  ## Adjust height and width so it fits the size from the config.
+  my($W,$H,$width,$height) = ($config->{'max_w'}//800,$config->{'max_h'}//600,$max_x-$min_x+2*$margin,$max_y-$min_y+2*$margin);
+  ( $width/$height > $W/$H ) ? ( $H = $height/$width*$W ) : ( $W = $width/$height*$H );
+  ## Calculate the scale factor so that we keep spots/lines the same size irrespective of the ranges.
+  my $sf = $width/$W;
+
+  sprintf '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg height="%s" width="%s" viewBox="%s %s %s %s" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink">
+  <rect stroke="%s" stroke-width="%s" fill="%s" x="%s" y="%s" width="%s" height="%s" />
+  <g stroke="%s" stroke-width="%s">
+    %s
+  </g>
+  <g fill="%s">
+    %s
+  </g>
+</svg>',
+    $H, $W, $min_x - $margin, $min_y - $margin, $width, $height,                   ## svg element
+    $config->{'border'}//'#000', $sf, $config->{'bg'}//'#eee',                     ## background rectangle
+      $min_x - $margin, $min_y - $margin, $width, $height,
+    $config->{'fill'}//'#000', ($config->{'stroke'}//5) * $sf,                     ## lines
+      join( qq(\n    ), map { sprintf '<line x1="%s" y1="%s" x2="%s" y2="%s" />', @{$_} } @{$ls} ),
+    $config->{'color'}//'#ccc',                                                    ## dots
+      join( qq(\n    ), map { sprintf '<circle cx="%s" cy="%s" r="%s" />',  @{$_}, ($config->{'radius'}//10)*$sf  } @{$ps}   )
+}
+```
