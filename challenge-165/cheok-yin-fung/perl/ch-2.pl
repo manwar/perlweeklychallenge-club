@@ -19,17 +19,16 @@ while (<>) {
 my $n = scalar @points;
 
 my $slope = 
-     (  $n * sum(map {$_->[0]*$_->[1]} @points)
-      - sum(map{$_->[0]} @points) * sum(map{$_->[1]} @points) )
-    / ( $n * sum(map{$_->[0]**2} @points)
+     (  $n * sum(map {$_->[0]*$_->[1]} @points)  # n sum(xy) - sum(x) sum(y)
+      - sum(map{$_->[0]} @points) * sum(map{$_->[1]} @points) ) 
+    / ( $n * sum(map{$_->[0]**2} @points)        # n sum(sq x) - sq(sum x)
          - (sum( map { $_->[0]} @points ))**2) ;
 
 
 my $intercept =
-     ( sum( map {$_->[1]} @points ) 
+     ( sum( map {$_->[1]} @points )             # sum(y) - slope * sum(x)
     - $slope * sum( map {$_->[0]} @points) )
     / $n ;
-
 
 sub y_best_fit {
     my $x = $_[0];
