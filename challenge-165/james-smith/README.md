@@ -1,7 +1,7 @@
 [< Previous 164](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-164/james-smith) |
 [Next 166 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-166/james-smith)
 
-# The Weekly Challenge 165
+# The Weekly Challenge 165 - spots in front of my eyes.
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -21,7 +21,7 @@ Usually I write up to separate pieces for our weekly challenge - but as these ar
 
 **NOTE we will assume:**
  * that there is at least one point or line to draw;
- * for the `ch-2.pl` there are at least two points to be drawn; {and the slope of the line is not infinite}
+ * and at least one point to compute the best fit line through (it will work with 1 point as it will treat this in the "infinite" case of a vertical line.)
 
 ## Line of best fit
 
