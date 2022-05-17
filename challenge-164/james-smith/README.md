@@ -52,17 +52,57 @@ sub best_fit {
 
 ## SVG
 
+There are two parts to the SVG render.
+
+ * Working out what range of points to draw;
+ * rendering the points
+
+## Using `$0`
+
+Rather than writing two programmes this week - I have written a single program - and used `$0` the programme name two switch on/off parts of the code.
+
+ * If we are running `ch-1.pl` we need to include the lines in the range calculation in the renderer, if we are running `ch-2.pl` we don't want to (it adds the margins a second time which we don't want)
+
+ * If we are running `ch-2.pl` we need to compute the line of best fit, but obviously in `ch-1.pl` we don't.
+
+So (pseudo code) we have:
+
+```
+  get_data()
+  get_best_fit_and_limit_to_box() if $0 eq 'ch-2.pl';
+  ## Render
+  get_range( $0 eq 'ch-1.pl' ? "include lines" : "points only" );
+  get_sizes_and_rescale()
+  render();
+```
+  
 ## Altogether now:
 
 ```perl
-my( $margin, $extn, $radius, $stroke, @t,@lines,@pts ) = (10, 20, 10, 5);
+get_points_and_lines( 20 );
+add_best_fit_line() if $0 eq 'ch-2.pl';
+say render_svg( \@pts, \@lines, {
+  'max_w' => 960, 'max_h' => 540,
+  'margin' => 10, 'radius' => 10, 'fill' => '#090', 'stroke' => 5, 'color' => '#900'
+} );
 
-while(<>) {
-  chomp;
-  4==(@t = split /,/) ? (push @lines,[@t]) : (push @pts,[@t]) for split;
+sub best_fit {
+  my $sx = my $sy = my $sxy = my $sxx = 0, my $n = @{$_[0]};
+  $sx += $_->[0], $sxy += $_->[0]*$_->[1], $sy += $_->[1], $sxx += $_->[0]*$_->[0] foreach @{$_[0]};
+  my $b = ( $n*$sxy-$sx*$sy ) / ( $n*$sxx - $sx*$sx );
+  ( ($sy-$b*$sx)/$n, $b );
 }
 
-if( $0 eq 'ch-2.pl' ) {
+sub get_points_and_lines {
+  my @t;
+  while(<>) {
+    chomp;
+    4 == (@t = split /,/) ? ( push @lines, [@t] ) : ( push @pts, [@t] ) for split;
+  }
+}
+
+sub add_best_fit_line {
+  my $extn = shift;
   my( $a, $b                         ) = best_fit(   \@pts );
   my( $min_x, $max_x, $min_y, $max_y ) = get_ranges( \@pts );
   my $l_y = $a + $b * ($min_x - $extn);
@@ -72,15 +112,6 @@ if( $0 eq 'ch-2.pl' ) {
   my $r_x = $r_y < $min_y - $extn ? ( ($r_y = $min_y - $extn ) - $a)/$b
           : $r_y > $max_y + $extn ? ( ($r_y = $max_y + $extn ) - $a)/$b : $max_x + $extn;
   push @lines, [ $l_x,$l_y,$r_x,$r_y ];
-}
-
-say render_svg( \@pts, \@lines, { 'max_w' => 960, 'max_h' => 540 } );
-
-sub best_fit {
-  my $sx = my $sy = my $sxy = my $sxx = 0, my $n = @{$_[0]};
-  $sx += $_->[0], $sxy += $_->[0]*$_->[1], $sy += $_->[1], $sxx += $_->[0]*$_->[0] foreach @{$_[0]};
-  my $b = ( $n*$sxy-$sx*$sy ) / ( $n*$sxx - $sx*$sx );
-  ( ($sy-$b*$sx)/$n, $b );
 }
 
 sub get_ranges {
@@ -95,6 +126,7 @@ sub get_ranges {
 sub render_svg {
   my( $pts, $lines, $config          ) = @_;
   my( $min_x, $max_x, $min_y, $max_y ) = get_ranges( $pts, $0 eq 'ch-2.pl' ? [] : $lines );
+  my $margin = $config->{'margin'}//20;
   my($W,$H,$width,$height) = ($config->{'max_w'}//800,$config->{'max_h'}//600,$max_x-$min_x+2*$margin,$max_y-$min_y+2*$margin);
   ( $width/$height > $W/$H ) ? ( $H = $height/$width*$W ) : ( $W = $width/$height*$H );
   my $sf = $width/$W;
@@ -102,16 +134,18 @@ sub render_svg {
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
 <svg height="%s" width="%s" viewBox="%s %s %s %s" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink">
-  <rect stroke="#000" stroke-width="%s" fill="#eee" x="%s" y="%s" width="%s" height="%s" />
-  <g stroke="#900" stroke-width="%s">
+  <rect stroke="%s" stroke-width="%s" fill="%s" x="%s" y="%s" width="%s" height="%s" />
+  <g stroke="%s" stroke-width="%s">
     %s
   </g>
-  <g fill="#090">
+  <g fill="%s">
     %s
   </g>
 </svg>', $H, $W, $min_x - $margin, $min_y - $margin, $width, $height,
-         $sf, $min_x - $margin, $min_y - $margin, $width, $height, $stroke*$sf,
-         join( qq(\n    ), map { sprintf '<line x1="%s" y1="%s" x2="%s" y2="%s" />', @{$_}               } @{$lines} ),
-         join( qq(\n    ), map { sprintf '<circle cx="%s" cy="%s" r="%s" />',        @{$_}, $radius*$sf  } @{$pts}   );
+         $config->{'border'}//'#000', $sf, $min_x - $margin, $min_y - $margin, $width, $height,
+         $config->{'fill'}//'#000', ($config->{'stroke'}//5) * $sf, $config->{'bg'}//'#eee',
+         join( qq(\n    ), map { sprintf '<line x1="%s" y1="%s" x2="%s" y2="%s" />', @{$_}                                 } @{$lines} ),
+         $config->{'color'}//'#ccc',
+         join( qq(\n    ), map { sprintf '<circle cx="%s" cy="%s" r="%s" />',        @{$_}, ($config->{'radius'}//10)*$sf  } @{$pts}   );
 }
 ```
