@@ -76,6 +76,10 @@ A = convert(Matrix{Float64}, hcat(xs, ones(length(xs))))
 
 slope, intercept = inv(transpose(A)*A)*transpose(A) * ys
 
-plot!(x -> slope*x + intercept, legend = :none)
+plot!(
+    x -> slope*x + intercept, 
+    legend = :none,
+#    ratio = 1,  #optional
+)
 
 savefig("new_julia.svg")
