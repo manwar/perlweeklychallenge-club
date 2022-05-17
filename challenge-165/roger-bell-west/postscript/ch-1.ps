@@ -1,0 +1,180 @@
+%!PS
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{ exch dup length
+  2 index length add string
+  dup dup 4 2 roll copy length
+  4 -1 roll putinterval
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/listmin {
+    { min } reduce
+} bind def
+
+(%stdin) (r) file 400000 string readstring pop
+
+/x 0 array def
+/y 0 array def
+/lines 0 array def
+/points 0 array def
+
+(\n) strsplit {
+    (,) strsplit { cvi } map /f exch def
+    0 1 f length 1 sub {
+        /i exch def
+        i 2 mod 0 eq {
+            /x x f i get apush.right def
+        } {
+            /y y f i get apush.right def
+        } ifelse
+    } for
+    f length 4 eq {
+        /lines lines f apush.right def
+    } if
+    f length 2 eq {
+        /points points f apush.right def
+    } if
+} forall
+
+/mnx x listmin def
+/mxx x listmax def
+/mny y listmin def
+/mxy y listmax def
+/lo [ mnx mxx mnx sub 10 div sub
+      mny mxy mny sub 10 div sub ] def
+/hi [ mxx mxx mnx sub 10 div add
+      mxy mxy mny sub 10 div add ] def
+/w hi 0 get lo 0 get sub def
+/h hi 1 get lo 1 get sub def
+
+(<?xml version="1.0" encoding="UTF-8" standalone="yes"?>\n) print
+(<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">\n) print
+[
+    (<svg width=")
+    w cvi 10 string cvs
+    (" height=")
+    h cvi 10 string cvs
+    (" viewBox=")
+    lo 0 get cvi 10 string cvs
+    ( )
+    lo 1 get cvi 10 string cvs
+    ( )
+    w cvi 10 string cvs
+    ( )
+    h cvi 10 string cvs
+    (" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">)
+    (\n)
+] () strjoin print
+
+lines length 0 gt {
+    (  <g id="lines" stroke="#369" stroke-width="4">\n) print
+    lines {
+        /p exch def
+        [
+            (    <line x1=")
+            p 0 get cvi 10 string cvs
+            (" y1=")
+            p 1 get cvi 10 string cvs
+            (" x2=")
+            p 2 get cvi 10 string cvs
+            (" y2=")
+            p 3 get cvi 10 string cvs
+            (" />\n)
+        ] () strjoin print
+    } forall
+    (  </g>\n) print
+} if
+
+points length 0 gt {
+    (  <g fill="#f73" id="points">\n) print
+    points {
+        /p exch def
+        [
+            (    <circle cx=")
+            p 0 get cvi 10 string cvs
+            (" cy=")
+            p 1 get cvi 10 string cvs
+            (" r="3" />\n)
+        ] () strjoin print
+    } forall
+    (  </g>\n) print
+} if
+
+(</svg>\n) print
