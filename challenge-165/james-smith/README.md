@@ -1,7 +1,7 @@
 [< Previous 164](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-164/james-smith) |
 [Next 166 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-166/james-smith)
 
-# The Weekly Challenge 165 - spots in front of my eyes.
+# The Weekly Challenge 165 - straight through the point!
 
 You can find more information about this weeks, and previous weeks challenges at:
 
