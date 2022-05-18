@@ -1,0 +1,70 @@
+-- Perl Weekly Challenge 165
+-- Task 1
+
+CREATE SCHEMA IF NOT EXISTS pwc165;
+
+CREATE TABLE points( x1 int, y1 int, x2 int, y2 int );
+
+TRUNCATE points;
+
+INSERT INTO points
+VALUES
+(53,10, NULL, NULL)
+,(53,10,23,30)
+,(23,30, NULL, NULL)
+;
+
+--
+-- This function generates the SVG XML document
+-- from the 'points' table.
+--
+CREATE OR REPLACE FUNCTION
+pwc165.plperl_generate_svg_xml( text )
+RETURNS TEXT[]
+AS $CODE$
+
+my ( $filename ) = @_;
+
+my @lines;
+my @points;
+
+my $result_set = spi_exec_query( 'SELECT * FROM points;' );
+for my $row_number ( 0 .. $result_set->{ processed } - 1 ) {
+    my $row = $result_set->{ rows }[ $row_number ];
+
+    # if it has a single couple, it is a point
+    my ( $x1, $y1, $x2, $y2 ) = map { $row->{ $_ } } qw<x1 y1 x2 y2>;
+    my $is_line = $x1 && $y1 && $x2 && $y2;
+
+    push @points, [ $x1, $y1 ] if ! $is_line && $x1 && $y1;
+    push @points, [ $x2, $y2 ] if ! $is_line && $x2 && $y2;
+    push @lines, [ $x1, $y1, $x2, $y2 ] if $is_line;
+
+}
+
+
+my $svg = q{<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg height="400" width="400" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"> };
+
+for my $line ( @lines ) {
+   $svg .=  sprintf( '<polyline points="%s" stroke="#ff0000" stroke-width="6" />', join( ' ', @$line ) );
+}
+
+for my $point ( @points ) {
+  $svg .= sprintf( '<circle r="4" cx="%d" cy="%d" stroke-width="0" fill="#000000" />', $point->[ 0 ], $point->[ 1 ] );
+}
+
+
+if ( $filename ) {
+   open my $fh, ">", $filename || die "Cannot open $filename !";
+   print { $fh } $svg;
+   close $fh;
+}
+
+return( [ $svg, $filename ] );
+
+$CODE$
+LANGUAGE plperlu;
+
+
