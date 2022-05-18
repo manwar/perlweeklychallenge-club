@@ -95,7 +95,8 @@ sub best_fit {
 sub add_line_of_best_fit {
   my $self = shift;
   my ($a,$b) = $self->best_fit;
-  my ($min_x, $max_x, $min_y, $max_y, $extn) = ( $self->{'min_x'}, $self->{'max_x'}, $self->{'min_y'}, $self->{'max_y'}, $self->{'config'}{'margin'} );
+  my ( $min_x,           $max_x,           $min_y,           $max_y,           $extn                       ) =
+     ( $self->{'min_x'}, $self->{'max_x'}, $self->{'min_y'}, $self->{'max_y'}, $self->{'config'}{'margin'} );
   ## special case of a vertical line
   $self->add_lines( [ $a, $min_y - $extn, $a, $max_y + $extn] ), return $self unless defined $b;
 
@@ -114,7 +115,8 @@ sub calculate_image_size {
   my $margin = $self->{'config'}{'margin'};
 
   ## Adjust height and width so it fits the size from the self->{'config'}ig.
-  my($W,$H,$width,$height) = ($self->{'config'}{'max_w'},$self->{'config'}{'max_h'},$self->{'max_x'}-$self->{'min_x'}+2*$margin,$self->{'max_y'}-$self->{'min_y'}+2*$margin);
+  my($W,$H,$width,$height) = ($self->{'config'}{'max_w'},$self->{'config'}{'max_h'},
+                              $self->{'max_x'}-$self->{'min_x'}+2*$margin,$self->{'max_y'}-$self->{'min_y'}+2*$margin);
   ( $width/$height > $W/$H ) ? ( $H = $height/$width*$W ) : ( $W = $width/$height*$H );
   ## Calculate the scale factor so that we keep spots/lines the same size irrespective of the ranges.
   ( $self->{'width'}, $self->{'height'}, $self->{'scale'} ) = ( $W, $H, $width/$W );
@@ -133,8 +135,8 @@ sub render {
 
 sub _render {
   my $self = shift;
-  $self->calculate_image_size();
-  my $margin = $self->{'config'}{'margin'};
+  $self->calculate_image_size();                  ## Given max height/width work out the dimensions of image and the scale factor.
+  my $margin = $self->{'config'}{'margin'};       ## Get margin...
   sprintf $SVG_TEMPLATE,
     $self->{'height'}, $self->{'width'},  $self->{'min_x'} - $margin, $self->{'min_y'} - $margin,
                                           $self->{'max_x'} - $self->{'min_x'} + 2 * $margin,
@@ -142,8 +144,10 @@ sub _render {
     $self->{'config'}{'border'}, $self->{'scale'}, $self->{'config'}{'bg'}, $self->{'min_x'} - $margin, $self->{'min_y'} - $margin,
                                           $self->{'max_x'} - $self->{'min_x'} + 2 * $margin,
                                           $self->{'max_y'} - $self->{'min_y'} + 2 * $margin,
-    $self->{'config'}{'color'}, $self->{'config'}{'stroke'} * $self->{'scale'}, join( qq(\n    ), map { sprintf $LINE_TEMPLATE,   @{$_} } @{$self->{'lines'}} ), ## lines
-    $self->{'config'}{'fill'}, join( qq(\n    ), map { sprintf $POINT_TEMPLATE,  @{$_}, $self->{'config'}{'radius'}*$self->{'scale'}  } @{$self->{'points'}}   )  ## points
+    $self->{'config'}{'color'}, $self->{'config'}{'stroke'} * $self->{'scale'},
+      join( qq(\n    ), map { sprintf $LINE_TEMPLATE,   @{$_} } @{$self->{'lines'}} ), ## lines
+    $self->{'config'}{'fill'}, join( qq(\n    ),
+      map { sprintf $POINT_TEMPLATE,  @{$_}, $self->{'config'}{'radius'}*$self->{'scale'}  } @{$self->{'points'}}   )  ## points
 
 }
 
