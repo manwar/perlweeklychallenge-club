@@ -16,6 +16,7 @@ my $config = {
 };
 
 my $method = $0 eq 'fit.pl' ? 'render_with_best_fit' : 'render';
+
 say sprintf '<html>
   <head>
     <title>Examples: $0</title>
