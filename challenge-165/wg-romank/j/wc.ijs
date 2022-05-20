@@ -24,3 +24,4 @@ learn =: ] - lr * (loss D 1)
 
 NB. to run until convergence
 NB. learn^:_ w
+NB. _5.00505e_8 _0.914934
