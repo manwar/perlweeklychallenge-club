@@ -15,11 +15,13 @@ my $SVG_TEMPLATE   = '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <svg height="%s" width="%s" viewBox="%s %s %s %s" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink">
   <rect stroke="%s" stroke-width="%s" fill="%s" x="%s" y="%s" width="%s" height="%s" />
+  <g transform="scale(1,-1) translate(0,%s)">
   <g stroke="%s" stroke-width="%s">
     %s
   </g>
   <g fill="%s">
     %s
+  </g>
   </g>
 </svg>';
 
@@ -141,6 +143,7 @@ sub render_svg {
   sprintf $SVG_TEMPLATE,
     $H,              $W,               $min_x - $margin, $min_y - $margin, $width, $height,                    ## svg element
     $conf{'border'}, $sf, $conf{'bg'}, $min_x - $margin, $min_y - $margin, $width, $height,                    ## bg rect
+    -$min_y-$max_y,
     $conf{'color'}, $conf{'stroke'} * $sf, join( qq(\n    ), map { sprintf $LINE_TEMPLATE,   @{$_} } @{$ls} ), ## lines
     $conf{'fill'}, join( qq(\n    ), map { sprintf $POINT_TEMPLATE,  @{$_}, $conf{'radius'}*$sf  } @{$ps}   )  ## points
 }
