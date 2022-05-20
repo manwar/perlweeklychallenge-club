@@ -404,7 +404,7 @@ use Data::Dumper qw(Dumper);
 use Const::Fast qw(const);
 
 ## -----------------------------------
-## Constants - cnfuration & SVG templates...
+## Constants - configuration & SVG templates...
 ## -----------------------------------
 
 const my %DEF_CNF  => ( 'margin' => 40, 'max_w' => 960, 'max_h' => 540, 'color' => '#000',  'stroke' => 3,
@@ -424,7 +424,6 @@ const my $SVG_TMPL => '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
     %s
   </g>
 </svg>';
-
 
 ## -----------------------------------
 ## Constructor
