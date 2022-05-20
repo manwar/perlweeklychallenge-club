@@ -310,6 +310,12 @@ sub add_best_fit_line {
 ##
 ## As we have a scaling between the x+y values and the size of the image - we need to adjust the size of dots/width of lines
 ## by multiplying these all by a scale factor
+##
+## We add a transform round everything to flip the direction of the points to the usual low to high rather than high to low
+## ( y-axis -ve values are above +ve values )
+##
+## This and the scaling allows us to plot points with the "correct" value but at the same time scale the image to the
+## appropriate image size...
 
 sub render_svg {
   my( $ps, $ls, $config          ) = @_;
@@ -328,16 +334,19 @@ sub render_svg {
 <svg height="%s" width="%s" viewBox="%s %s %s %s" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg"
   xmlns:xlink="http://www.w3.org/1999/xlink">
   <rect stroke="%s" stroke-width="%s" fill="%s" x="%s" y="%s" width="%s" height="%s" />
+  <g transform="scale(1,-1) translate(0,%s)">
   <g stroke="%s" stroke-width="%s">
     %s
   </g>
   <g fill="%s">
     %s
   </g>
+  </g>
 </svg>',
     $H, $W, $min_x - $margin, $min_y - $margin, $width, $height,                   ## svg element
     $config->{'border'}//'#000', $sf, $config->{'bg'}//'#eee',                     ## background rectangle
       $min_x - $margin, $min_y - $margin, $width, $height,
+    -$min_y-$max_y,
     $config->{'fill'}//'#000', ($config->{'stroke'}//5) * $sf,                     ## lines
       join( qq(\n    ), map { sprintf '<line x1="%s" y1="%s" x2="%s" y2="%s" />', @{$_} } @{$ls} ),
     $config->{'color'}//'#ccc',                                                    ## dots
