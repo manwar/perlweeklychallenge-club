@@ -27,11 +27,15 @@
 // Then, generate an SVG file plotting all points, and all lines.
 // If done correctly, you can view the output .svg file in your browser.
 
-import { Plot, PlotData } from "./plot";
+import { Plot, PlotPoint, PlotLine } from "./plot";
 
 const input: string = `53,10
 53,10,23,30
 23,30`;
 
-const plot = new Plot(input.split("\n").map((line) => line.split(",")));
+const plot: Plot = new Plot(
+  input
+    .split("\n")
+    .map((line) => line.split(",").map(parseInt) as PlotPoint | PlotLine)
+);
 plot.toSvg();

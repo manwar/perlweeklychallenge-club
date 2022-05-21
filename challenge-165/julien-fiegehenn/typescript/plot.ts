@@ -3,30 +3,33 @@ import * as svg from "svg-builder";
 import { SvgBuilder } from "svg-builder";
 import * as fs from "fs";
 
-type PlotPoint = [number, number];
-type PlotLine = [number, number, number, number];
-export type PlotData = [PlotPoint | PlotLine];
+export type PlotPoint = [number, number];
+export type PlotLine = [number, number, number, number];
+// export type PlotPoint = number[];
+// export type PlotLine = number[];
+export type PlotData = Array<PlotPoint | PlotLine>;
 
 export class Plot {
-  svg: SvgBuilder = svg;
+  private svg: SvgBuilder = svg;
+
+  private size: number = 200;
 
   input: PlotData;
-  constructor(input: any) {
+
+  constructor(input: PlotData) {
     this.input = input;
-    console.log(input);
   }
 
   toSvg(): boolean {
     this.input.forEach((record) => {
       if (record.length === 2) {
-        console.log(record);
         this.addPoint(record);
       } else {
         this.addLine(record);
       }
     });
 
-    this.svg = this.svg.width(200).height(200);
+    this.svg = this.svg.width(this.size).height(this.size);
 
     try {
       fs.writeFileSync("output.svg", this.svg.render());
@@ -44,6 +47,8 @@ export class Plot {
       cx: point[0],
       cy: point[1],
     });
+
+    this.size = Math.max(this.size, ...point);
   }
 
   addLine(line: PlotLine): void {
@@ -56,5 +61,7 @@ export class Plot {
       x2: line[2],
       y2: line[3],
     });
+
+    this.size = Math.max(this.size, ...line);
   }
 }
