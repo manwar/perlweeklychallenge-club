@@ -10,7 +10,8 @@
  
 # Challenge two does the same but also draws the best fit straight line
 # using least squares method.  this is the default operation and uses data
-# provided 
+# provided. Note if lines are included, they are drawn but not added to the data
+# for line of best fit
 
 # Usage:  ch-1or2.pl   Default...just does challenge 2 using data in __DATA__
 #         ch-1or2.pl <-i inputFile> <-o outputfile> specify input and output files
@@ -93,6 +94,7 @@ sub bestFitLine{
 }
 
 # notice data can be spearted by spaces or new lines
+# lines are ignored for data for line of best fit
 __DATA__
 333,129 39,189 140,156 292,134 393,52  160,166 362,122  13,193
 341,104 320,113 109,177 203,152 343,100 225,110  23,186 282,102
