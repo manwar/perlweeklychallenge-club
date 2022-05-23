@@ -1,16 +1,10 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 165"
-   },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          }
       }
    },
@@ -19,10 +13,21 @@
          "text" : "Total Solutions"
       }
    },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 165"
+   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Adam Russell",
             "data" : [
                [
                   "Perl",
@@ -33,17 +38,32 @@
                   2
                ]
             ],
-            "id" : "Adam Russell"
+            "id" : "Adam Russell",
+            "name" : "Adam Russell"
          },
          {
-            "name" : "Athanasius",
-            "id" : "Athanasius",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Arne Sommer",
+            "id" : "Arne Sommer"
+         },
+         {
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Athanasius",
+            "id" : "Athanasius"
          },
          {
             "id" : "Cheok-Yin Fung",
@@ -78,7 +98,7 @@
             "name" : "Flavio Poletti"
          },
          {
-            "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -89,7 +109,7 @@
                   1
                ]
             ],
-            "id" : "James Smith"
+            "name" : "James Smith"
          },
          {
             "id" : "Jorg Sommrey",
@@ -113,7 +133,6 @@
          },
          {
             "name" : "Laurent Rosenfeld",
-            "id" : "Laurent Rosenfeld",
             "data" : [
                [
                   "Perl",
@@ -127,11 +146,10 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Laurent Rosenfeld"
          },
          {
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -141,19 +159,22 @@
                   "Blog",
                   6
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
          },
          {
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson"
          },
          {
+            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -164,31 +185,30 @@
                   1
                ]
             ],
-            "id" : "Peter Campbell Smith",
             "name" : "Peter Campbell Smith"
          },
          {
-            "id" : "Rick Bychowski",
+            "name" : "Rick Bychowski",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Rick Bychowski"
+            "id" : "Rick Bychowski"
          },
          {
+            "name" : "Robert Ransbottom",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Robert Ransbottom",
-            "name" : "Robert Ransbottom"
+            "id" : "Robert Ransbottom"
          },
          {
-            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -203,10 +223,9 @@
                   1
                ]
             ],
-            "name" : "Roger Bell_West"
+            "id" : "Roger Bell_West"
          },
          {
-            "id" : "Ryan Thompson",
             "data" : [
                [
                   "Perl",
@@ -217,7 +236,8 @@
                   1
                ]
             ],
-            "name" : "Ryan Thompson"
+            "name" : "Ryan Thompson",
+            "id" : "Ryan Thompson"
          },
          {
             "name" : "Ulrich Rieke",
@@ -230,7 +250,6 @@
             "id" : "Ulrich Rieke"
          },
          {
-            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -241,33 +260,25 @@
                   1
                ]
             ],
-            "id" : "W. Luis Mochan"
+            "id" : "W. Luis Mochan",
+            "name" : "W. Luis Mochan"
          },
          {
-            "name" : "Wanderdoc",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "name" : "Wanderdoc",
             "id" : "Wanderdoc"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 18] Last updated at 2022-05-22 23:52:19 GMT"
-   },
    "tooltip" : {
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "series" : [
       {
@@ -275,28 +286,33 @@
          "data" : [
             {
                "drilldown" : "Adam Russell",
-               "name" : "Adam Russell",
-               "y" : 4
+               "y" : 4,
+               "name" : "Adam Russell"
             },
             {
-               "drilldown" : "Athanasius",
+               "drilldown" : "Arne Sommer",
+               "y" : 3,
+               "name" : "Arne Sommer"
+            },
+            {
                "y" : 2,
-               "name" : "Athanasius"
+               "name" : "Athanasius",
+               "drilldown" : "Athanasius"
             },
             {
                "drilldown" : "Cheok-Yin Fung",
-               "name" : "Cheok-Yin Fung",
-               "y" : 3
-            },
-            {
-               "drilldown" : "Flavio Poletti",
-               "name" : "Flavio Poletti",
-               "y" : 6
-            },
-            {
-               "name" : "James Smith",
                "y" : 3,
-               "drilldown" : "James Smith"
+               "name" : "Cheok-Yin Fung"
+            },
+            {
+               "y" : 6,
+               "name" : "Flavio Poletti",
+               "drilldown" : "Flavio Poletti"
+            },
+            {
+               "drilldown" : "James Smith",
+               "y" : 3,
+               "name" : "James Smith"
             },
             {
                "name" : "Jorg Sommrey",
@@ -304,19 +320,19 @@
                "drilldown" : "Jorg Sommrey"
             },
             {
+               "drilldown" : "Julien Fiegehenn",
                "name" : "Julien Fiegehenn",
-               "y" : 2,
-               "drilldown" : "Julien Fiegehenn"
+               "y" : 2
             },
             {
+               "drilldown" : "Laurent Rosenfeld",
                "y" : 3,
-               "name" : "Laurent Rosenfeld",
-               "drilldown" : "Laurent Rosenfeld"
+               "name" : "Laurent Rosenfeld"
             },
             {
-               "drilldown" : "Luca Ferrari",
                "y" : 8,
-               "name" : "Luca Ferrari"
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
             },
             {
                "drilldown" : "Mark Anderson",
@@ -329,8 +345,8 @@
                "y" : 3
             },
             {
-               "name" : "Rick Bychowski",
                "y" : 2,
+               "name" : "Rick Bychowski",
                "drilldown" : "Rick Bychowski"
             },
             {
@@ -339,32 +355,35 @@
                "name" : "Robert Ransbottom"
             },
             {
-               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
                "y" : 5,
-               "name" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West"
             },
             {
+               "drilldown" : "Ryan Thompson",
                "name" : "Ryan Thompson",
-               "y" : 3,
-               "drilldown" : "Ryan Thompson"
-            },
-            {
-               "drilldown" : "Ulrich Rieke",
-               "name" : "Ulrich Rieke",
-               "y" : 2
-            },
-            {
-               "drilldown" : "W. Luis Mochan",
-               "name" : "W. Luis Mochan",
                "y" : 3
             },
             {
-               "drilldown" : "Wanderdoc",
+               "name" : "Ulrich Rieke",
                "y" : 2,
-               "name" : "Wanderdoc"
+               "drilldown" : "Ulrich Rieke"
+            },
+            {
+               "drilldown" : "W. Luis Mochan",
+               "y" : 3,
+               "name" : "W. Luis Mochan"
+            },
+            {
+               "name" : "Wanderdoc",
+               "y" : 2,
+               "drilldown" : "Wanderdoc"
             }
          ],
          "colorByPoint" : 1
       }
-   ]
+   ],
+   "subtitle" : {
+      "text" : "[Champions: 19] Last updated at 2022-05-23 00:00:11 GMT"
+   }
 }
