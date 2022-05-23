@@ -1,0 +1,165 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($file where $file.IO.f && $file.IO.r, :l(:$lsm));
+
+my $height           = 0;
+my $width            = 0;
+my $padding          = 0;
+my $line-width       = 4;
+my $line-colour      = "#336699";
+my $circle-radius    = 3;
+my $circle-colour    = "#FF7733";
+my $fill-colour      = "#000000";
+my $text-height      = 8;
+my $text-font        = "sans-serif";
+my $text-colour      = "#ffffff";
+my $letter-spacing   = 'normal';
+my $fixed-height     = False;
+my $fixed-width      = False;
+my @svg;
+my @points;
+
+for $file.IO.lines.words -> $element
+{
+  my (@elems) = $element.split(",");
+
+  if (@elems.elems == 1)
+  {
+    if    @elems[0] ~~ /^\:h\:(\d+)$/
+    {
+      $height = $0.Numeric; $fixed-height = True;
+    }
+    elsif @elems[0] ~~ /^\:w\:(\d+)$/
+    {
+      $width = $0.Numeric;  $fixed-width = True;
+    }
+    elsif @elems[0] ~~ /^\:p\:(\d+)$/
+    {
+      $padding = $0.Numeric;
+    }
+    elsif @elems[0] ~~ /^\:cr\:(\d+)$/
+    {
+      $circle-radius = $0.Numeric;
+    }
+    elsif @elems[0] ~~ /^\:lw\:(\d+)$/
+    {
+      $line-width = $0.Numeric;
+    }
+    elsif @elems[0] ~~ /^\:lc\:(\#......)$/
+    {
+      $line-colour = $0.Str;
+    }
+    elsif @elems[0] ~~ /^\:fc\:(\#......)$/
+    {
+      $fill-colour = $0.Str;
+    }
+    elsif @elems[0] ~~ /^\:cc\:(\#......)$/
+    {
+      $circle-colour = $0.Str;
+    }
+    elsif @elems[0] ~~ /^\:tc\:(\#......)$/
+    {
+      $text-colour = $0.Str;
+    }
+    elsif @elems[0] ~~ /^\:tf\:(.+)$/
+    {
+      $text-font = $0.Str;
+    }
+    elsif @elems[0] ~~ /^\:th\:(\d+)$/
+    {
+      $text-height = $0.Numeric;
+    }
+    elsif @elems[0] ~~ /^\:ls\:(.+)$/
+    {
+      $letter-spacing = $0.Str;
+    }
+    else {
+      die "Illegal: @elems[0]";
+    }
+   }
+
+  elsif (@elems.elems == 2)
+  {
+    @svg.push: '<circle cx="' ~ @elems[0] ~ '" cy="' ~ @elems[1] ~ '" r="' ~ $circle-radius ~ '" fill="' ~ $circle-colour ~ '"/>';
+
+    @points.push: @elems if $lsm;
+
+    $height = max($height, @elems[1].Numeric) unless $fixed-height;
+    $width  = max($width,  @elems[0].Numeric) unless $fixed-width;
+  }
+  elsif (@elems[0] eq "p")
+  {
+    my $svg = '<polygon points="';
+
+    my @points = @elems[1 .. Inf];
+    while (@points.elems >= 2)
+    {
+      $svg ~= @points.shift ~ "," ~ @points.shift ~ " ";
+    }    
+    $svg ~= '" style="fill: ' ~  $fill-colour ~ ';"/>';
+    @svg.push: $svg;
+  }
+  elsif (@elems.elems == 4 && @elems[0] eq "t")
+  {
+    @svg.push: '<text x="' ~ @elems[1] ~ '" y="' ~ @elems[2] ~ '" style="font-family: ' ~ $text-font ~ '; font-size: ' 
+        ~ $text-height ~ 'pt; stroke: none; fill:' ~ $text-colour ~ '; letter-spacing: ' ~ $letter-spacing ~ ';">' ~ @elems[3] ~ '</text>';
+  }
+  elsif (@elems.elems == 4)
+  {
+    @svg.push: '<line x1="' ~ @elems[0] ~ '" x2="' ~ @elems[2] ~ '" y1="' ~ @elems[1] ~ '" y2="' ~ @elems[3] ~ '" stroke-width="' ~ $line-width ~ '" stroke="' ~ $line-colour ~ '"/>';
+
+    $height = max($height, @elems[1], @elems[3].Numeric) unless $fixed-height; 
+    $width  = max($width,  @elems[0], @elems[2].Numeric) unless $fixed-width;
+  }
+  elsif (@elems.elems == 5 && @elems[0] eq "r")
+  {
+    @svg.push: '<rect x="' ~ @elems[1] ~ '" y="' ~ @elems[2] ~ '" width="' ~ @elems[3] ~ '" height="' ~ @elems[4] ~ '" fill="' ~ $fill-colour ~ '"/>';
+
+    $height = max($height, @elems[2] + @elems[4]) unless $fixed-height; 
+    $width  = max($width,  @elems[1] + @elems[3]) unless $fixed-width;
+  }
+
+
+  else
+  {
+    die "Wrong number of values; use 2 or 4 only";
+  }
+}
+
+if $lsm
+{
+  my $x  = 0;
+  my $y  = 0;
+  my $xx = 0;
+  my $xy = 0;
+
+  my $N = @points.elems;
+
+  my $min-x = Inf;
+  my $max-x = 0;
+
+  for @points -> @point
+  {
+    my ($X, $Y) = @point;
+
+    $min-x = min($min-x, $X.Numeric);
+    $max-x = max($max-x, $X.Numeric);
+
+    $x  += $X;
+    $y  += $Y;
+    $xx += $X ** 2;
+    $xy += $X * $Y;
+  }
+
+  my $m = ($N * $xy - $x * $y) / ($N * $xx - $x ** 2);
+  my $b = ($y - $m * $x) / $N;
+
+  @svg.push: ' <line x1="' ~ $min-x ~ '" y1="' ~ ($m * $min-x) + $b ~ '" x2="' ~ $max-x ~ '" y2="' ~ ($m * $max-x) + $b ~ '" stroke-width="' ~ $line-width  ~ '" stroke="' ~ $line-colour ~ '"/>';
+}
+
+say '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
+<svg height="' ~ $height + $padding ~ '" width="' ~ $width + $padding ~'" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">';
+
+say @svg.join("\n");
+say '</svg>';
