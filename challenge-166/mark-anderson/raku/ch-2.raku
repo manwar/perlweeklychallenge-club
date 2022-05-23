@@ -6,14 +6,14 @@ use Test;
 
 dir_a              dir_b               dir_c               dir_d
 -------------------------------------------------------------------------
-Arial.ttf	       Arial.ttf	       Arial.ttf	       Arial.ttf
-Comic_Sans.ttf	   Comic_Sans.ttf	   Courier_New.ttf	   Georgia.ttf
-Georgia.ttf	       Courier_New.ttf	   Helvetica.ttf	   Helvetica.ttf
-Helvetica.ttf	   Helvetica.ttf	   Impact.otf	       Impact.otf
-Impact.otf	       Impact.otf	       Monaco.ttf	       Monaco.ttf
-Old_Fonts/	       Tahoma.ttf	       Verdana.ttf	       Old_Fonts/
-Verdana.ttf	       Verdana.ttf		                       Tahoma.ttf
-			                                               Verdana.ttf
+Arial.ttf          Arial.ttf           Arial.ttf           Arial.ttf
+Comic_Sans.ttf     Comic_Sans.ttf      Courier_New.ttf     Georgia.ttf
+Georgia.ttf        Courier_New.ttf     Helvetica.ttf       Helvetica.ttf
+Helvetica.ttf      Helvetica.ttf       Impact.otf          Impact.otf
+Impact.otf         Impact.otf          Monaco.ttf          Monaco.ttf
+Old_Fonts/         Tahoma.ttf          Verdana.ttf         Old_Fonts/
+Verdana.ttf        Verdana.ttf                             Tahoma.ttf
+                                                           Verdana.ttf
 =end dir_contents
 
 is k-dir-diff(<dir_a dir_b>), q:to/END/;
