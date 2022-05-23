@@ -3,7 +3,6 @@
 use Test;
 
 =begin dir_contents
-
 dir_a              dir_b               dir_c               dir_d
 -------------------------------------------------------------------------
 Arial.ttf          Arial.ttf           Arial.ttf           Arial.ttf
