@@ -403,7 +403,13 @@ say SVG->new( $config )->load_data( $fn )->$method;
 
 which choose which method we are going to use to render (fit.pl - fit line). Once we have decided this we create and configure the SVG object, load the data in and render...
 
-The definition of the class is, which has many of the same methods as the functional version, but the arrays of points and lines, the configuration and additional information about the size of the image are stored in the object so don't have to be passed around as function parameters or left as global variables which makes things 
+The class code is similar to the functional code but the arrays of points and lines, the configuration and additional information about the size of the image are stored in the object so don't have to be passed around as function parameters or left as global variables which makes things.
+
+There is some advantages to the logic this way to allow us to avoid some code duplication - without having to routinely pass additional variables into functions.
+
+A good example of this is that we store the bounding box information in the object itself - so we don't have to recalculate this twice in the regression example.
+
+Other advantages are having the direct accessors to the bounding box of the image {based on the range of points + the marging}
 
 ```perl
 package SVG;
