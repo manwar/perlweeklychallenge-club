@@ -1,7 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "categories" : [
          "Bruce Gray",
@@ -35,10 +32,6 @@
          "Doug Schrag",
          "Duane Powell"
       ]
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
    },
    "series" : [
       {
@@ -112,6 +105,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             10,
             0,
@@ -143,8 +137,7 @@
             7,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
    "title" : {
@@ -155,13 +148,20 @@
          "stacking" : "percent"
       }
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-05-23 20:14:49 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-05-23 20:05:04 GMT"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
