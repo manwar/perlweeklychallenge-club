@@ -1,7 +1,11 @@
 /*
-### To pipe output to ch1.go to create svg file
+### Pass output to ch-1.go to create svg file
 
 go run ch-2.go | go run ch-1.go ch-2.svg
+
+### Pass output to ch-1.go and start http.Server at localhost:8080 to show the result:
+
+go run ch-2.go | go run ch-1.go :8080
 
 */
 package main
@@ -11,7 +15,7 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"regexp"
+	"strings"
 )
 
 func main() {
@@ -24,18 +28,24 @@ func main() {
 			215,136 153,137 390,104 100,180  76,188  77,181  69,195  92,186
 			275,96  250,147  34,174 213,134 186,129 189,154 361,82  363,89`
 	/**/
-	var ds struct{ count, x, y, sumx, sumy, sumxx, sumxy, m, b, x1, x2, y1, y2 float64 }
+	var ds struct {
+		count, x, y, sumx, sumy, sumxx, sumxy, m, b, x1, x2, y1, y2 float64
+		xy                                                          string
+	}
 	_, err := fmt.Sscanf(rawin, "%f,%f %f,%f", &ds.x1, &ds.y1, &ds.x2, &ds.y2)
 	if err != nil {
 		log.Fatal(err)
 	}
 	w := bufio.NewWriter(os.Stdout)
-	for _, v := range regexp.MustCompile(`\d+,\d+`).FindAllString(rawin, -1) {
-		_, err := fmt.Sscanf(v, "%f,%f", &ds.x, &ds.y)
+	scanner := bufio.NewScanner(strings.NewReader(rawin))
+	scanner.Split(bufio.ScanWords)
+	for scanner.Scan() {
+		ds.xy = scanner.Text()
+		_, err := fmt.Sscanf(ds.xy, "%f,%f", &ds.x, &ds.y)
 		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Fprintln(w, v)
+		fmt.Fprintln(w, ds.xy)
 		ds.count++
 		ds.sumx += ds.x
 		ds.sumy += ds.y
@@ -47,14 +57,6 @@ func main() {
 		if ds.x2 < ds.x {
 			ds.x2 = ds.x
 		}
-		/*
-			if ds.y1 > ds.y {
-				ds.y1 = ds.y
-			}
-			if ds.y2 < ds.y {
-				ds.y2 = ds.y
-			}
-		*/
 	}
 	ds.m = (ds.count*ds.sumxy - ds.sumx*ds.sumy) / (ds.count*ds.sumxx - ds.sumx*ds.sumx)
 	ds.b = (ds.sumy - ds.m*ds.sumx) / ds.count
