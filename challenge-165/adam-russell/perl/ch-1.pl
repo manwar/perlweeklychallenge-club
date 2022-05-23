@@ -20,7 +20,7 @@ sub svg_point{
 
 sub svg_line{
     my($x0, $y0, $x1, $y1) = @_;
-    return "<line x1=\"$x0\" x2=\"$x1\" y1=\"$y0\" y2=\"$y1\" />";          
+    return "<line x1=\"$x0\" x2=\"$x1\" y1=\"$y0\" y2=\"$y1\" style=\"stroke:#006600;\" />";          
 }
 
 sub svg{
