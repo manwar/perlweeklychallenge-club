@@ -1,22 +1,29 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2022-05-23 20:05:04 GMT"
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 166"
+   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
          "borderWidth" : 0
       }
    },
    "series" : [
       {
-         "name" : "The Weekly Challenge - 166",
-         "colorByPoint" : 1,
          "data" : [
             {
                "y" : 2,
@@ -24,37 +31,40 @@
                "drilldown" : "Dave Jacoby"
             },
             {
+               "y" : 2,
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba"
+            },
+            {
                "name" : "Mark Anderson",
                "y" : 2,
                "drilldown" : "Mark Anderson"
             },
             {
+               "drilldown" : "Roger Bell_West",
                "y" : 4,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
+               "name" : "Roger Bell_West"
             }
-         ]
+         ],
+         "name" : "The Weekly Challenge - 166",
+         "colorByPoint" : 1
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge - 166"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "drilldown" : {
       "series" : [
          {
             "id" : "Dave Jacoby",
-            "name" : "Dave Jacoby",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Dave Jacoby"
+         },
+         {
+            "id" : "E. Choroba",
+            "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
@@ -63,16 +73,17 @@
             ]
          },
          {
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
+            ]
          },
          {
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -83,15 +94,19 @@
                   2
                ]
             ],
-            "name" : "Roger Bell_West",
             "id" : "Roger Bell_West"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2022-05-23 19:59:21 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "xAxis" : {
       "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
