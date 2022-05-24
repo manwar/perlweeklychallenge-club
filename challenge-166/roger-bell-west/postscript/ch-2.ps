@@ -1,0 +1,206 @@
+%! PS
+
+/quicksort { % [ a c b ] -> [ a b c ]
+    1 dict begin
+    /arr exch def
+    0 arr length 1 sub quicksort.main
+    arr
+    end
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{ exch dup length
+  2 index length add string
+  dup dup 4 2 roll copy length
+  4 -1 roll putinterval
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/toset { % array -> dict of (array, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+} bind def
+
+/kdd {
+    2 dict begin
+    /dirlist exch quicksort def
+    /fx dirlist length dict def
+    dirlist {
+        /d exch def
+        [
+            d (/*/) strconcat
+            {
+                dup length d length 1 add dup 3 1 roll sub 2 -1 roll exch getinterval
+                dup length string cvs
+            } 50 string filenameforall
+        ] {
+            /f exch def
+            fx f known not {
+                fx f dirlist length dict put
+            } if
+            fx f get d true put
+        } forall
+    } forall
+    /mm dirlist length def
+    [
+        dirlist
+         fx keys { dup length string cvs } map quicksort {
+            /f exch def
+            fx f get length mm ne {
+                [
+                    dirlist {
+                        fx f get exch
+                        known {
+                            f
+                        } {
+                            ()
+                        } ifelse
+                    } forall
+                ]
+            } if
+        } forall
+    ]
+    end
+} bind def
+
+/spaces {
+    2 dict begin
+    /space ( ) 0 get def
+    dup /st exch string def
+    0 exch 1 exch 1 sub {
+        st exch space put
+    } for
+    st
+    end
+} bind def
+
+/tabular {
+    1 dict begin
+    /d exch def
+    /columnlength [
+        d 0 get {
+            pop 0
+        } forall
+    ] def
+    d {
+        /row exch def
+        0 1 row length 1 sub {
+            /i exch def
+            columnlength i columnlength i get row i get length max put
+        } for
+    } forall
+    d {
+        /row exch def
+        0 1 row length 1 sub {
+            /i exch def
+            i 0 gt {
+                ( | ) print
+            } if
+            columnlength i get spaces dup 0 row i get putinterval print
+        } for
+        (\n) print
+    } forall
+    end
+} bind def
+
+[ (dir_a) (dir_b) (dir_c) ] kdd tabular
