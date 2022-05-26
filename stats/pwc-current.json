@@ -1,35 +1,40 @@
 {
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 166"
    },
    "series" : [
       {
          "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "Dave Jacoby",
                "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
                "y" : 3
             },
             {
+               "y" : 2,
                "name" : "E. Choroba",
-               "drilldown" : "E. Choroba",
-               "y" : 2
+               "drilldown" : "E. Choroba"
             },
             {
                "drilldown" : "Luca Ferrari",
-               "y" : 8,
-               "name" : "Luca Ferrari"
+               "name" : "Luca Ferrari",
+               "y" : 8
             },
             {
+               "name" : "Mark Anderson",
                "y" : 2,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
+               "drilldown" : "Mark Anderson"
             },
             {
-               "drilldown" : "Peter Campbell Smith",
                "y" : 3,
-               "name" : "Peter Campbell Smith"
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith"
             },
             {
                "drilldown" : "Robert DiCicco",
@@ -37,19 +42,42 @@
                "name" : "Robert DiCicco"
             },
             {
-               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
                "y" : 4,
-               "name" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West"
             },
             {
-               "name" : "Ulrich Rieke",
                "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke",
                "y" : 2
+            },
+            {
+               "y" : 3,
+               "name" : "W. Luis Mochan",
+               "drilldown" : "W. Luis Mochan"
             }
          ],
          "name" : "The Weekly Challenge - 166"
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2022-05-26 00:54:56 GMT"
+   },
    "drilldown" : {
       "series" : [
          {
@@ -67,16 +95,18 @@
             "id" : "Dave Jacoby"
          },
          {
+            "name" : "E. Choroba",
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "E. Choroba",
-            "id" : "E. Choroba"
+            ]
          },
          {
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -86,19 +116,17 @@
                   "Blog",
                   6
                ]
-            ],
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari"
+            ]
          },
          {
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            ]
          },
          {
             "data" : [
@@ -115,6 +143,8 @@
             "id" : "Peter Campbell Smith"
          },
          {
+            "id" : "Robert DiCicco",
+            "name" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
@@ -122,71 +152,60 @@
                ],
                [
                   "Raku",
+                  1
+               ]
+            ]
+         },
+         {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Ulrich Rieke",
+            "name" : "Ulrich Rieke",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Raku",
+                  1
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
                   1
                ]
             ],
-            "name" : "Robert DiCicco",
-            "id" : "Robert DiCicco"
-         },
-         {
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Ulrich Rieke",
-            "id" : "Ulrich Rieke",
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ],
-               [
-                  "Raku",
-                  1
-               ]
-            ]
+            "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan"
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "legend" : {
       "enabled" : 0
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2022-05-25 22:20:31 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 166"
    }
 }
