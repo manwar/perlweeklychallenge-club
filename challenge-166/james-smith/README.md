@@ -147,7 +147,7 @@ The simplest approach is to use 3/4.
   say $HORIZONTAL_LINE;
 ```
 
-### Workout what to print:
+### Workout what to print and printing
 
 ``perl
   ## map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':
@@ -168,6 +168,9 @@ The simplest approach is to use 3/4.
     say sprintf $TEMPLATE, @columns;
   }
 ```
+
+## Just a minor block at the end
+say $1
 ## The full code (with comments)
 
 ```perl
