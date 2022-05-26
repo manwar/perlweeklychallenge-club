@@ -98,3 +98,27 @@ If we include the g->9 mapping we can have:
 ```
 # Challenge 2 - Z-diff
 
+## Obfurscated/Golf code...
+
+I started with a simple compact version of the code and then came
+discussions with Eliza on Facebook and things slowly got smaller.
+
+```perl
+sub z{my($l,$F,%d,%u,$T,$H)=0;(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]
+for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,
+@_=keys%u;say for$H=join('-'x($l+2),('+')x(1+@p)),sprintf($T="| %-${l}s "x@p.'|'
+,@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':shift@{$d{$_}}}@p
+:map{shift@{$d{$_}};()}@p}sort@_),$H}
+```
+
+**or** if we "allow" return characters inside strings - this is 351 bytes of
+perly goodness...
+
+```perl
+sub x{my($l,$F,%d,%u,$T,$H)=0;(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]
+for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,
+@_=keys%u;say$H=join('-'x($l+2),('+')x@p,'+
+'),sprintf($T="| %-${l}s "x@p.'|
+',@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':shift@{$d{$_}}
+}@p:map{shift@{$d{$_}};()}@p}sort@_),$H}
+```
