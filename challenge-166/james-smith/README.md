@@ -96,10 +96,78 @@ If we include the g->9 mapping we can have:
 ```
  glossologists     0x 0000 91055 0109 1575 (     2,551,232,066,033,013)
 ```
-# Challenge 2 - Z-diff
+# Challenge 2 - k-diff
 
 ## The solution
 
+I approached this in a few different ways:
+
+### Getting the filenames...
+
+We can:
+ 1) Cheat - and create a hash of arrays;
+ 2) Use `opendir`/`readdir`/`closedir`;
+ 3) Use `blob '*/*'`;
+ 4) Use `<*/*>`.
+
+Each have advantages/disadvantages:
+
+ * the first doesn't require us to create files on disk for testing;
+ * 2 allows you to find hidden file names but then you have to be careful with `.` & `..`. You have to join directory and filename to get the path
+ * 3 & 4 are essentially the same and get all "folders/entries". You have to split the path to get the directory and filename.
+
+The simplest approach is to use 3/4.
+
+```perl
+  my %directories;
+  for my $path ( sort blob '*/*' ) {
+    my( $dir, $file ) = split m{/}, $path;
+    push @{ $directories{$dir} }, -d $path ? "$file/" : $file;
+  }
+```
+
+### Finding a complete list of different filenames
+
+```perl
+  my @paths = sort keys %directories;
+  my %filename_counts;
+  for my $path ( @paths ) {
+    $filename_counts{ $_ }++ for @{$directories{ $path }};
+  }
+```
+
+### Build templates for printing page horizontal line, sprintf table of heading/contents
+
+```perl
+  my $HORIZONTAL_LINE = join '-' x ( $length+2 ), ('+') x (1+@paths);
+  my $TEMPLATE        = '|' . " %-${length}s |" x @paths;
+
+  say $HORIZONTAL_LINE;
+  say sprintf $TEMPLATE, @paths;
+  say $HORIZONTAL_LINE;
+```
+
+### Workout what to print:
+
+``perl
+  ## map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':
+  ##   shift@{$d{$_}}}@p:map{shift@{$d{$_}};()}@p}sort keys%u)
+  for my $filename ( sort keys %filename_counts ) {
+    if( $filename_counts{ $filename } == @paths ) {
+      shift @{$_} for values %directories;
+      next;
+    }
+    my @columns;
+    for (@paths) {
+      if( @{$directories{$_}} && $directories{$_}[0] eq $filename ) {
+        push @columns, shift @{$directories{$_}};
+      } else {
+        push @columns, '';
+      }
+    }
+    say sprintf $TEMPLATE, @columns;
+  }
+```
 ## The full code (with comments)
 
 ```perl
@@ -115,9 +183,9 @@ sub z_diff {
   ## For directories add a trailing slash...
 
     ## (@_=split/\//),push@{$d{$_[0]}},-d$_?"$_[1]/":$_[1]for sort<*/*>;
-  for( sort <*/*> ) {
-    my($dir,$file) = split m{/};
-    push @{ $directories{$dir}}, -d $_ ? "$file/" : $file;
+  for my $pat ( sort blob '*/*' ) {
+    my( $dir, $file ) = split m{/}, $path;
+    push @{ $directories{$dir} }, -d $path ? "$file/" : $file;
   }
 
   ## Get out an ordered list of directories...
@@ -227,3 +295,5 @@ for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,
  - When a "string" starts with a number than has a letter in it treats it as if
    to add a space between the number and the rest of the string so we can rewrite
    `1 for $condition` as `1for$condition`.
+ - we don't need to do `sort blob '*/*'` or `sort <*/*>` as for all "current"
+   versions of Perl we can assume that perl does this for us.
