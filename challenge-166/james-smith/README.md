@@ -98,10 +98,108 @@ If we include the g->9 mapping we can have:
 ```
 # Challenge 2 - Z-diff
 
+## The solution
+
+## The full code (with comments)
+
+```perl
+sub z_diff {
+
+  ## Declare variables
+
+    ## my($l,%d,$F,@p,%u,$T,$H)=0;
+  my( $length, %directories, %filename_counts )=0;
+
+  ## Read all sub-directories containing files and store
+  ## in data structure as a hash of ordered arrays
+  ## For directories add a trailing slash...
+
+    ## (@_=split/\//),push@{$d{$_[0]}},-d$_?"$_[1]/":$_[1]for sort<*/*>;
+  for( sort <*/*> ) {
+    my($dir,$file) = split m{/};
+    push @{ $directories{$dir}}, -d $_ ? "$file/" : $file;
+  }
+
+  ## Get out an ordered list of directories...
+
+    ## $u{$_}++for map{@{$d{$_}}}@p=sort keys%d;
+  my @paths = sort keys %directories;
+
+  ## Find the length of the longest directory name, and
+  ## keep a record of the number of times each filename
+  ## has been seen (also gives list of all unique filenames)
+
+  for my $path ( @paths ) {
+    $filename_counts{ $_ }++ for @{$directories{$path}};
+  }
+
+  ## Now find the length of the longest filename or directory name
+  ## This gives us the column widths for the pretty display...
+
+    ## (length$_>$l)&&($l=length$_)for@p,keys%u;
+  for ( @paths, keys %filename_counts ) {
+    $length = length $_ if length $_ > $length;
+  }
+
+  ## Generate the ASCII code for a horizontal bar in the table
+  ## and a template for sprintf for the rows of the table
+
+  my $HORIZONTAL_LINE = join '-' x ( $length+2 ), ('+') x (1+@paths);
+  my $TEMPLATE        = '|' . " %-${length}s |" x @paths;
+
+  ## Draw the header {directory names} of the table....
+
+    ## say for$H=join('-'x($l+2),('+')x(1+@p)),
+    ##     sprintf($T='|'." %-${l}s |"x@p,@p),$H,
+  say $HORIZONTAL_LINE;
+  say sprintf $TEMPLATE, @paths;
+  say $HORIZONTAL_LINE;
+
+  ## Now draw the body - we loop through each of the unique filenames
+  ## and see whether it is in all 4 columns (in which case we skip)
+  ## otherwise we look to see which entries are present in each
+  ## directory and show those....
+
+    ## map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':
+    ##   shift@{$d{$_}}}@p:map{shift@{$d{$_}};()}@p}sort keys%u)
+  for my $filename ( sort keys %filename_counts ) {
+
+    ## If we have seen the file in all directories - we remove
+    ## it from all directory lists {and do nothing}
+
+    if( $filename_counts{ $filename } == @paths ) {
+      shift @{$_} for values %directories;
+      next;
+    }
+
+    ## If we haven't we loop through the rows if
+    ## the first entry is the file then we push it
+    ## on the list to print {and remove it from the directory list}
+    ## if not we just push an empty string to the
+    ## list
+
+    my @columns;
+    for (@paths) {
+      if( @{$directories{$_}} && $directories{$_}[0] eq $filename ) {
+        push @columns, shift @{$directories{$_}};
+      } else {
+        push @columns, '';
+      }
+    }
+    say sprintf $TEMPLATE, @columns;
+  }
+
+  ## Finally print out the bottom line
+
+    ## $H
+  say $HORIZONTAL_LINE;
+}
+```
 ## Obfurscated/Golf code...
 
-I started with a simple compact version of the code and then came
-discussions with Eliza on Facebook and things slowly got smaller.
+I started with a "simple" compact version of the code and then came
+discussions with Eliza on the Perl Programmers Facebook group and things
+slowly got smaller. A few bytes at a time...
 
 ```perl
 sub z{my($l,$F,%d,%u,$T,$H)=0;(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]
@@ -122,3 +220,10 @@ for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,
 ',@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':shift@{$d{$_}}
 }@p:map{shift@{$d{$_}};()}@p}sort@_),$H}
 ```
+
+**Notes**
+ - Where we use `$_` there are numerous function calls which use this when no
+   parameter is passed - in this case `length`, `split`, `-d`.
+ - When a "string" starts with a number than has a letter in it treats it as if
+   to add a space between the number and the rest of the string so we can rewrite
+   `1 for $condition` as `1for$condition`.
