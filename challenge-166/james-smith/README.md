@@ -128,6 +128,10 @@ The simplest approach is to use 3/4.
 
 ### Finding a complete list of different filenames
 
+We collect a unique list of filenames, by putting them as the keys of a hash. We
+could do this with a map - but it is useful to keep track of the number of times
+we see each file.
+
 ```perl
   my @paths = sort keys %directories;
   my %filename_counts;
@@ -136,7 +140,21 @@ The simplest approach is to use 3/4.
   }
 ```
 
+### Compute the length of the longest directory or filename
+
+For the output we will want to pretty print it - and so need to work out the width
+of the columns - this is a simple loop over the directories and filenames.
+```perl
+  for ( @paths, keys %filename_counts ) {
+    $length = length $_ if length $_ > $length;
+  }
+```
 ### Build templates for printing page horizontal line, sprintf table of heading/contents
+
+We draw the horizontal line three times, so it is useful to keep a copy of it, we
+in the code also need a template to sprintf the header and the body of the table.
+So we generate these now. We use the length we computed above to compute the runs of
+characters needed.
 
 ```perl
   my $HORIZONTAL_LINE = join '-' x ( $length+2 ), ('+') x (1+@paths);
@@ -147,7 +165,22 @@ The simplest approach is to use 3/4.
   say $HORIZONTAL_LINE;
 ```
 
-### Workout what to print and printing
+#### Workout what to print and printing
+
+This loops through the unique filenames we stored earlier. Then
+for each filename we first check that it is present in all lists.
+If it is we remove it and go onto the next filename. As we kept
+counts of each filename this is as easy as checking that the
+count is the same as the number of directories - this is the
+first if in the loop.
+
+We then loop through each column - if the filename is present
+we shift it off and add it to the column array, if not we just
+push a space onto the column array. Note we have to check that
+their are entries left (*i.e.* we have got to the end of the
+files in the directory otherwise it will throw a warning of
+undefined value). Once we use this array we use the template
+we produced above to print it.
 
 ``perl
   ## map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':
@@ -169,12 +202,18 @@ The simplest approach is to use 3/4.
   }
 ```
 
-## Just a minor block at the end
-say $1
+### Add the last line...
+
+We print the bottom of the table:
+
+```perl
+say $1;
+```
+
 ## The full code (with comments)
 
 ```perl
-sub z_diff {
+sub k_diff {
 
   ## Declare variables
 
@@ -270,10 +309,10 @@ sub z_diff {
 
 I started with a "simple" compact version of the code and then came
 discussions with Eliza on the Perl Programmers Facebook group and things
-slowly got smaller. A few bytes at a time...
+slowly got smaller. A few bytes at a time to the 354 byte:
 
 ```perl
-sub z{my($l,$F,%d,%u,$T,$H)=0;(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]
+sub k{my($l,$F,%d,%u,$T,$H)=0;(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]
 for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,
 @_=keys%u;say for$H=join('-'x($l+2),('+')x(1+@p)),sprintf($T="| %-${l}s "x@p.'|'
 ,@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':shift@{$d{$_}}}@p
@@ -293,10 +332,37 @@ for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,
 ```
 
 **Notes**
+ - We replace many of the loops and conditionals with `map`s and `_?_:_`
  - Where we use `$_` there are numerous function calls which use this when no
    parameter is passed - in this case `length`, `split`, `-d`.
  - When a "string" starts with a number than has a letter in it treats it as if
    to add a space between the number and the rest of the string so we can rewrite
-   `1 for $condition` as `1for$condition`.
+   `1 for @array` as `1for@array`.
  - we don't need to do `sort blob '*/*'` or `sort <*/*>` as for all "current"
    versions of Perl we can assume that perl does this for us.
+
+## Coda - taking the brakes off...
+
+For ultimate compactness we can remove the function overhead off, turn off both
+`strict` and `warnings`. We can reduce this to either 317 bytes (or 315 bytes)
+
+```perl
+(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,@_=keys%u;print$H=join('-'x($l+2),('+')x@p,'+
+'),sprintf($T="| %-${l}s "x@p.'|
+',@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{$d{$_}[0]ne$F?'':shift@{$d{$_}}}@p:map{shift@{$d{$_}};()}@p}sort@_),$H
+```
+This is the 317 byte version - we could reduce it to 315 bytes by replacing
+`print` with `say` again... But ultimately that makes the execution more bytes.
+
+Command line with `print`:
+
+```perl
+perl ch-2-ns.pl
+```
+
+Command line with `say` 
+
+```perl
+perl -M5.10.0 ch-2-ns.pl
+```
+So to save 2 bytes we use 9 more to run the command... of course you could just run it as a 1-liner on the command line (with the -E) but that would just be silly!
