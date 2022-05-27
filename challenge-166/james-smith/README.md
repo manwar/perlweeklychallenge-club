@@ -20,9 +20,25 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-166/ja
 Now I've concentrated on challenge 2 this week but here is some of my code for Challenge 1
 
 ## Solution
-Find all hex words...
-```perl
+Find all hex words, this generates all words, with options for adding filters - to
+restrict the number of numbers - to only letters or all letters. By commenting/uncommenting
+the filter lines.... I have added one more mapping that is in standard use which is
+`g` -> `9` {others use `6` but it still works}
 
+```perl
+while(<>) {
+  chomp;
+  next unless m{^[abcdefoilstg]+$};
+  my $t = $_;
+  my $N = tr/oilstg/011579/;
+  next if $N < length $_;
+  #next if $N > 0;
+  #next if $N > 15;
+  warn "$N\t$t\t$_\n" if $N == length $_;
+  $words->[length $_]{$N}{$t}="$_ (".hex($_).")";
+}
+
+print Dumper( $words );
 ```
 
 ## Some observations
@@ -33,7 +49,7 @@ Find all hex words...
  dissociabilities  0x d155 0c1a b111 71e5  (15,083,975,835,726,737,893)
  lactobacillaceae  0x 1ac7 0bac 111a ceae  ( 1,929,523,799,000,796,846)
 ```
-Can add (if we include the g->9 mapping {could also do g->6}):
+Can add (if we include the g->9 mapping):
 ```
  silicoflagellate  0x 5111 c0f1 a9e1 1a7e  ( 5,841,662,335,845,997,182)
 ```
@@ -96,6 +112,7 @@ If we include the g->9 mapping we can have:
 ```
  glossologists     0x 0000 91055 0109 1575 (     2,551,232,066,033,013)
 ```
+
 # Challenge 2 - k-diff
 
 ## The solution
