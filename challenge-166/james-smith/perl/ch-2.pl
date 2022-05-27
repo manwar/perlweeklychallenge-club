@@ -17,6 +17,7 @@ say 'Compact  - dir. data';  k( f() );             say '';
 say 'Non compact';           z_diff();             say '';
 say 'No comments';           z_diff_no_comments(); say '';
 say 'Super compact';         z();                  say '';
+say 'Super compact';         x();                  say '';
 
 ##
 ## Data produces/fetches
@@ -249,12 +250,19 @@ sub z_diff_no_comments {
   say $HORIZONTAL_LINE;
 }
 
-## Merging the fetch/parse into the a single function gives us just 369 bytes
-## of perlly goodness {362 without the fn call overhead}
+## Merging the fetch/parse into the a single function gives us just 357 bytes
+## of perlly goodness {350 without the fn call overhead}
 #23456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789#
-sub z{my($l,%d,$F,@p,%u,$T,$H)=0;(@_=split/\//),push@{$d{$_[0]}},-d$_?"$_[1]/":
-$_[1]for sort<*/*>;$u{$_}++for map{@{$d{$_}}}@p=sort keys%d;length$_>$l?$l=
-length:1for@p,keys%u;say for$H=join('-'x($l+2),('+')x(1+@p)),sprintf($T='|'.
-" %-${l}s |"x@p,@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':
-shift@{$d{$_}}}@p:map{shift@{$d{$_}};()}@p}sort keys%u),$H}
+sub z{my($l,$F,%d,%u,$T,$H)=0;(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]
+for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,
+@_=keys%u;say for$H=join('-'x($l+2),('+')x(1+@p)),sprintf($T="| %-${l}s "x@p.'|'
+,@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':shift@{$d{$_}}}@p
+:map{shift@{$d{$_}};()}@p}sort@_),$H}
+
+sub x{my($l,$F,%d,%u,$T,$H)=0;(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]
+for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,
+@_=keys%u;say$H=join('-'x($l+2),('+')x@p,'+
+'),sprintf($T="| %-${l}s "x@p.'|
+',@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':shift@{$d{$_}}
+}@p:map{shift@{$d{$_}};()}@p}sort@_),$H}
 
