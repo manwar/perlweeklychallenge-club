@@ -165,7 +165,7 @@ characters needed.
   say $HORIZONTAL_LINE;
 ```
 
-#### Workout what to print and printing
+### Workout what to print and printing
 
 This loops through the unique filenames we stored earlier. Then
 for each filename we first check that it is present in all lists.
