@@ -182,7 +182,7 @@ files in the directory otherwise it will throw a warning of
 undefined value). Once we use this array we use the template
 we produced above to print it.
 
-``perl
+```perl
   ## map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':
   ##   shift@{$d{$_}}}@p:map{shift@{$d{$_}};()}@p}sort keys%u)
   for my $filename ( sort keys %filename_counts ) {
