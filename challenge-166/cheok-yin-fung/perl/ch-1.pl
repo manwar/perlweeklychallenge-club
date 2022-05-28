@@ -64,7 +64,8 @@ sub input {
         or die "Dictionary IS NOT FOUND.";
     while (<FH>) {
         chomp;
-        push @w, $_ if /^[abcdefolist]+$/ && length $_ <= 8;
+        push @w, $_ if   lc($_) =~  /^[abcdefolist0-9]+$/ 
+                       && length $_ <= 8;
     }
     close FH;
     return @w;
@@ -96,7 +97,9 @@ sub filter {
 
 sub transform {
     $_ = $_[0];
-    die "Not transformable!" unless /^[abcdefolist]+$/ && length $_ <= 8;
+    die "Not transformable!" unless     lc($_) =~ /^[abcdefolist0-9]+$/ 
+                                     && length $_ <= 8;
     tr/olist/01157/;
+    tr/OLIST/01157/;
     return "0x". "0" x (8 - length $_) . $_;
 }
