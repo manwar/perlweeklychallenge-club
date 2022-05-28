@@ -51,7 +51,7 @@ sub decrypt { return _crypt(-1,@_); }
 
 sub _crypt {
   my($off,$key,$p,$out,@r,%l) = (shift,shift,0,'');           ## Initialise variables and get mapping...
-  ($_ eq 'j' && ($_='i')), exists $l{$_} || ($l{$_}=[int $p/5,($p++)%5]) for grep { /[a-z]/ } split(//,$key),'a'..'i','j'..'z';
+  ($_ eq 'j' && ($_='i')), exists $l{$_} || ($l{$_}=[int $p/5,($p++)%5]) for grep { /[a-z]/ } split(//,$key),'a'..'i','k'..'z';
   $r[$l{$_}[0]][$l{$_}[1]]=$_ for keys %l;
 
   my @seq = grep {/[a-z]/} split //, shift =~ s{j}{i}gr;      ## Prep sequence
