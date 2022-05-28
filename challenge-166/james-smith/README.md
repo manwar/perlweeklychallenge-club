@@ -364,9 +364,9 @@ For ultimate compactness we can remove the function overhead off, turn off both
 ```perl
 /\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,'+
 '),sprintf($b="| %-${l}s "x@p.'|
-',@p),$a,map({$l=$_;@p>keys%{$u{$l}}?sprintf$b,map{$u{$l}{$_}?$l:''}@p:()}sort@_),$a
+',@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$' x$u{$'}{$_}}@p:()}sort@_),$a
 ```
-This is the 242 byte version - we could reduce it to 240 bytes by replacing
+This is the 233 byte version - we could reduce it to 231 bytes by replacing
 `print` with `say` again... But ultimately that makes the execution more bytes.
 
 Command line with `print`:
