@@ -4,7 +4,6 @@
 use v5.24.0;
 use warnings;
 use Cwd;
-use Data::Printer;
 use List::Util qw/uniqstr any/;
 
 kd(@ARGV) if defined($ARGV[1]);
