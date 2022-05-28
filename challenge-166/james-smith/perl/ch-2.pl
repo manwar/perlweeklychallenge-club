@@ -30,7 +30,7 @@ sub z_diff {
   ## Declare variables
 
     ## my($l,%d,$F,@p,%u,$T,$H)=0;
-  my( $length, %directories, %filenames =0;
+  my( $length, %directories, %filenames)=0;
 
   ## Read all sub-directories containing files and store
   ## in data structure as a hash of ordered arrays
@@ -146,20 +146,20 @@ sub z_diff_no_comments {
   say $HORIZONTAL_LINE;
 }
 
-## Merging the fetch/parse into the a single function gives us just 272 bytes
-## of perlly goodness {265 without the fn call overhead}
+## Merging the fetch/parse into the a single function gives us just 265 bytes
+## of perlly goodness {258 without the fn call overhead}
 
 #23456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789#
 sub x{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=
 length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,"+\n"),
-sprintf($b="| %-${l}s "x@p."|\n",@p),$a,map({$l=$_;@p>keys%{$u{$l}}?sprintf$b,
-map{$u{$l}{$_}?$l:''}@p:()}sort@_),$a}
+sprintf($b="| %-${l}s "x@p."|\n",@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$u{$'
+}{$_}?$':''}@p:()}sort@_),$a}
 
-## 270 bytes (263 without fn overhead)
+## 263 bytes (256 without fn overhead)
 #23456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789#
 sub z{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=
 length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,'+
 '),sprintf($b="| %-${l}s "x@p.'|
-',@p),$a,map({$l=$_;@p>keys%{$u{$l}}?sprintf$b,map{$u{$l}{$_}?$l:''}@p:()}sort@_
+',@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$u{$'}{$_}?$':''}@p:()}sort@_
 ),$a}
 
