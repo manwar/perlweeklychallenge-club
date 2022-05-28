@@ -1,3 +1,3 @@
-(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,@_=keys%u;print$H=join('-'x($l+2),('+')x@p,'+
-'),sprintf($T="| %-${l}s "x@p.'|
-',@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{$d{$_}[0]ne$F?'':shift@{$d{$_}}}@p:map{shift@{$d{$_}};()}@p}sort@_),$H
+/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,'+
+'),sprintf($b="| %-${l}s "x@p.'|
+',@p),$a,map({$l=$_;@p>keys%{$u{$l}}?sprintf$b,map{$u{$l}{$_}?$l:''}@p:()}sort@_),$a
