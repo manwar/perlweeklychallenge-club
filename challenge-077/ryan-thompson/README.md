@@ -1,19 +1,15 @@
 # Ryan Thompson
 
-## Week 056 Solutions
+## Week 077 Solutions
 
-### Task 1 › Diff-K
+### Task 1 › Fibonacci Sum
 
  * [Perl](perl/ch-1.pl)
- * [Raku](raku/ch-1.p6)
 
-### Task 2 › Path Sum
+### Task 2 › Lonely X
 
  * [Perl](perl/ch-2.pl)
- * [Raku](raku/ch-2.p6)
 
 ## Blogs
 
- * [Diff-K](https://ry.ca/2020/04/diff-k/)
- * [Path Sum](https://ry.ca/2020/04/path-sum/)
-
+ * None this week.
