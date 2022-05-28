@@ -326,26 +326,24 @@ sub k_diff {
 
 I started with a "simple" compact version of the code and then came
 discussions with Eliza on the Perl Programmers Facebook group and things
-slowly got smaller. A few bytes at a time to the 354 byte:
+slowly got smaller. A few bytes at a time to the 272 byte:
 
 ```perl
-sub k{my($l,$F,%d,%u,$T,$H)=0;(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]
-for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,
-@_=keys%u;say for$H=join('-'x($l+2),('+')x(1+@p)),sprintf($T="| %-${l}s "x@p.'|'
-,@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':shift@{$d{$_}}}@p
-:map{shift@{$d{$_}};()}@p}sort@_),$H}
+sub x{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=
+length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,"+\n"),
+sprintf($b="| %-${l}s "x@p."|\n",@p),$a,map({$l=$_;@p>keys%{$u{$l}}?sprintf$b,
+map{$u{$l}{$_}?$l:''}@p:()}sort@_),$a}
 ```
 
-**or** if we "allow" return characters inside strings - this is 351 bytes of
+**or** if we "allow" return characters inside strings - this is 270 bytes of
 perly goodness...
 
 ```perl
-sub x{my($l,$F,%d,%u,$T,$H)=0;(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]
-for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,
-@_=keys%u;say$H=join('-'x($l+2),('+')x@p,'+
-'),sprintf($T="| %-${l}s "x@p.'|
-',@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':shift@{$d{$_}}
-}@p:map{shift@{$d{$_}};()}@p}sort@_),$H}
+sub z{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=
+length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,'+
+'),sprintf($b="| %-${l}s "x@p.'|
+',@p),$a,map({$l=$_;@p>keys%{$u{$l}}?sprintf$b,map{$u{$l}{$_}?$l:''}@p:()}sort@_
+),$a}
 ```
 
 **Notes**
@@ -364,11 +362,11 @@ For ultimate compactness we can remove the function overhead off, turn off both
 `strict` and `warnings`. We can reduce this to either 317 bytes (or 315 bytes)
 
 ```perl
-(@_=split'/'),push@{$d{$_[0]}},-d?"$_[1]/":$_[1]for<*/*>;$u{$_}++for map{@{$d{$_}}}my@p=sort keys%d;$l<length?$l=length:1for@p,@_=keys%u;print$H=join('-'x($l+2),('+')x@p,'+
-'),sprintf($T="| %-${l}s "x@p.'|
-',@p),$H,map({$u{$F=$_}<@p?sprintf$T,map{$d{$_}[0]ne$F?'':shift@{$d{$_}}}@p:map{shift@{$d{$_}};()}@p}sort@_),$H
+/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,'+
+'),sprintf($b="| %-${l}s "x@p.'|
+',@p),$a,map({$l=$_;@p>keys%{$u{$l}}?sprintf$b,map{$u{$l}{$_}?$l:''}@p:()}sort@_),$a
 ```
-This is the 317 byte version - we could reduce it to 315 bytes by replacing
+This is the 242 byte version - we could reduce it to 240 bytes by replacing
 `print` with `say` again... But ultimately that makes the execution more bytes.
 
 Command line with `print`:
