@@ -135,14 +135,6 @@ Each have advantages/disadvantages:
 
 The simplest approach is to use 3/4.
 
-```perl
-  my %directories;
-  for my $path ( sort blob '*/*' ) {
-    my( $dir, $file ) = split m{/}, $path;
-    push @{ $directories{$dir} }, -d $path ? "$file/" : $file;
-  }
-```
-
 ### Finding a complete list of different filenames
 
 We collect a unique list of filenames, by putting them as the keys of a hash. We
@@ -150,11 +142,14 @@ could do this with a map - but it is useful to keep track of the number of times
 we see each file.
 
 ```perl
-  my @paths = sort keys %directories;
-  my %filename_counts;
-  for my $path ( @paths ) {
-    $filename_counts{ $_ }++ for @{$directories{ $path }};
+  my( %directories, %filenames );
+  for( sort <*/*> ) {
+    my( $dir, $file ) = split m{/}, $_;
+    $directories{$dir}=1;
+    $file.='/' if -d $_;
+    $filenames{ $file }{ $dir } = 1;
   }
+  my @paths = sort keys %directories;
 ```
 
 ### Compute the length of the longest directory or filename
@@ -162,7 +157,8 @@ we see each file.
 For the output we will want to pretty print it - and so need to work out the width
 of the columns - this is a simple loop over the directories and filenames.
 ```perl
-  for ( @paths, keys %filename_counts ) {
+  my $length = 0;
+  for ( @paths, keys %filenames ) {
     $length = length $_ if length $_ > $length;
   }
 ```
@@ -192,25 +188,15 @@ count is the same as the number of directories - this is the
 first if in the loop.
 
 We then loop through each column - if the filename is present
-we shift it off and add it to the column array, if not we just
-push a space onto the column array. Note we have to check that
-their are entries left (*i.e.* we have got to the end of the
-files in the directory otherwise it will throw a warning of
-undefined value). Once we use this array we use the template
-we produced above to print it.
+we display it o/w we display a blank string.
 
 ```perl
-  ## map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':
-  ##   shift@{$d{$_}}}@p:map{shift@{$d{$_}};()}@p}sort keys%u)
-  for my $filename ( sort keys %filename_counts ) {
-    if( $filename_counts{ $filename } == @paths ) {
-      shift @{$_} for values %directories;
-      next;
-    }
+  for my $filename ( sort keys %filenames ) {
+    next if @paths == keys %{$filenames{$filename}};
     my @columns;
     for (@paths) {
-      if( @{$directories{$_}} && $directories{$_}[0] eq $filename ) {
-        push @columns, shift @{$directories{$_}};
+      if( exists $filenames{$filename}{$_} ) {
+        push @columns, $filename;
       } else {
         push @columns, '';
       }
@@ -231,84 +217,37 @@ say $1;
 
 ```perl
 sub k_diff {
+        ## my($l,%d,%u)=0;
+  my( $length, %directories, %filenames )=0;
 
-  ## Declare variables
-
-    ## my($l,%d,$F,@p,%u,$T,$H)=0;
-  my( $length, %directories, %filename_counts )=0;
-
-  ## Read all sub-directories containing files and store
-  ## in data structure as a hash of ordered arrays
-  ## For directories add a trailing slash...
-
-    ## (@_=split/\//),push@{$d{$_[0]}},-d$_?"$_[1]/":$_[1]for sort<*/*>;
-  for my $pat ( sort blob '*/*' ) {
-    my( $dir, $file ) = split m{/}, $path;
-    push @{ $directories{$dir} }, -d $path ? "$file/" : $file;
+        ## /\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>
+  for( sort <*/*> ) {
+    my( $dir, $file ) = split m{/}, $_;
+    $directories{$dir}=1;
+    $file.='/' if -d $_;
+    $filenames{ $file }{ $dir } = 1;
   }
 
-  ## Get out an ordered list of directories...
-
-    ## $u{$_}++for map{@{$d{$_}}}@p=sort keys%d;
+        ## $l<length?$l=length:1for(my@p=sort keys%d),@_=keys%u
   my @paths = sort keys %directories;
-
-  ## Find the length of the longest directory name, and
-  ## keep a record of the number of times each filename
-  ## has been seen (also gives list of all unique filenames)
-
-  for my $path ( @paths ) {
-    $filename_counts{ $_ }++ for @{$directories{$path}};
-  }
-
-  ## Now find the length of the longest filename or directory name
-  ## This gives us the column widths for the pretty display...
-
-    ## (length$_>$l)&&($l=length$_)for@p,keys%u;
-  for ( @paths, keys %filename_counts ) {
+  for ( @paths, keys %filenames ) {
     $length = length $_ if length $_ > $length;
   }
 
-  ## Generate the ASCII code for a horizontal bar in the table
-  ## and a template for sprintf for the rows of the table
-
+        ## say$a=join('-'x$l,('+--')x@p,"+\n"),sprintf($b="| %-${l}s "x@p."|\n",@p),$a,
   my $HORIZONTAL_LINE = join '-' x ( $length+2 ), ('+') x (1+@paths);
   my $TEMPLATE        = '|' . " %-${length}s |" x @paths;
-
-  ## Draw the header {directory names} of the table....
-
-    ## say for$H=join('-'x($l+2),('+')x(1+@p)),
-    ##     sprintf($T='|'." %-${l}s |"x@p,@p),$H,
   say $HORIZONTAL_LINE;
   say sprintf $TEMPLATE, @paths;
   say $HORIZONTAL_LINE;
 
-  ## Now draw the body - we loop through each of the unique filenames
-  ## and see whether it is in all 4 columns (in which case we skip)
-  ## otherwise we look to see which entries are present in each
-  ## directory and show those....
-
-    ## map({$u{$F=$_}<@p?sprintf$T,map{($d{$_}[0]//'')ne$F?'':
-    ##   shift@{$d{$_}}}@p:map{shift@{$d{$_}};()}@p}sort keys%u)
-  for my $filename ( sort keys %filename_counts ) {
-
-    ## If we have seen the file in all directories - we remove
-    ## it from all directory lists {and do nothing}
-
-    if( $filename_counts{ $filename } == @paths ) {
-      shift @{$_} for values %directories;
-      next;
-    }
-
-    ## If we haven't we loop through the rows if
-    ## the first entry is the file then we push it
-    ## on the list to print {and remove it from the directory list}
-    ## if not we just push an empty string to the
-    ## list
-
+        ## map({//;@p-%{$u{$'}}?sprintf$b,map{$u{$'}{$_}?$':''}@p:()}sort@_)
+  for my $filename ( sort keys %filenames ) {
+    next if @paths == keys %{$filenames{$filename}};
     my @columns;
     for (@paths) {
-      if( @{$directories{$_}} && $directories{$_}[0] eq $filename ) {
-        push @columns, shift @{$directories{$_}};
+      if( exists $filenames{$filename}{$_} ) {
+        push @columns, $filename;
       } else {
         push @columns, '';
       }
@@ -316,9 +255,7 @@ sub k_diff {
     say sprintf $TEMPLATE, @columns;
   }
 
-  ## Finally print out the bottom line
-
-    ## $H
+        ## $a
   say $HORIZONTAL_LINE;
 }
 ```
@@ -326,25 +263,23 @@ sub k_diff {
 
 I started with a "simple" compact version of the code and then came
 discussions with Eliza on the Perl Programmers Facebook group and things
-slowly got smaller. A few bytes at a time to the 272 byte:
+slowly got smaller. A few bytes at a time to the 259 bytes:
 
 ```perl
-123456789-123456789-123456789-123456789-123456789-123456789-123456789-123456789-
-sub z{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=
-length:1for(@p=sort keys%d),@_=keys%u;say$a=join('-'x$l,('+--')x@p,"+\n"),
-sprintf($b="| %-${l}s "x@p."\n",@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$' x
-$u{$'}{$_}}@p:()}sort@_),$a}
+sub z{my($l,%d,%u)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=length
+:1for(my@p=sort keys%d),@_=keys%u;say$a=join('-'x$l,('+--')x@p,"+\n"),sprintf($b
+="| %-${l}s "x@p."|\n",@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$u{$'}{$_}?$':
+''}@p:()}sort@_),$a}
 ```
 
-**or** if we "allow" return characters inside strings - this is 270 bytes of
+**or** if we "allow" return characters inside strings - this is 257 bytes of
 perly goodness...
 
 ```perl
-sub z{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;
-$l<length?$l=length:1for(@p=sort keys%d),@_=keys%u;
-print$a=join('-'x$l,('+--')x@p,'+
+sub z{my($l,%d,%u)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=length
+:1for(my@p=sort keys%d),@_=keys%u;say$a=join('-'x$l,('+--')x@p,'+
 '),sprintf($b="| %-${l}s "x@p.'|
-',@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$' x$u{$'}{$_}}@p:()}sort@_),$a}
+',@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$u{$'}{$_}?$':''}@p:()}sort@_),$a}
 ```
 
 **Notes**
@@ -365,7 +300,7 @@ print$a=join('-'x$l,('+--')x@p,'+
 ## Coda - taking the brakes off...
 
 For ultimate compactness we can remove the function overhead off, turn off both
-`strict` and `warnings`. We can reduce this to either 317 bytes (or 315 bytes)
+`strict` and `warnings`. We can reduce this to either 233 bytes (or 231 bytes)
 
 ```perl
 /\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,'+
