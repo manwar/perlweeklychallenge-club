@@ -1,46 +1,28 @@
 # Ryan Thompson
 
-## Week 165 Solutions
+## Week 166 Solutions
 
-### Task 1 › SVG
+### Task 1 › Hexadecimal Words
 
  * [Perl](perl/ch-1.pl)
 
     $ ./ch-1.pl [options]
 
-        --height=N          Height in pixels
-        --width=N           Width in pixels
-        --stroke=N          Stroke width
-        --line-color=str    Line color (CSS color value)
-        --point-color=str   Point color (CSS color value)
-        --radius=N          Point radius
-        --nocredits         Disable credits in SVG file
+        --dict=/path/to/dict    Dictionary location
+        --length=8              Target word or phrase length
+        --max-sub=0.2           Ratio of # substitutions / word length
+        --min-length=3          Minimum word length
+        --nopretty              Print hex only, otherwise, pretty print
 
-### Task 2 › Line of Best Fit
+ * [Perl, simplified](perl/ch-1-short.pl)
+
+### Task 2 › K-Directory Diff
 
  * [Perl](perl/ch-2.pl)
 
-    $ ./ch-2.pl
-
-### Bonus › Point Generator
-
- * [Perl](perl/gen_points.pl)
-
-    $ ./gen_points.pl [options]
-
-        --height=N      Height in pixels
-        --width=N       Width in pixels
-
-        --slope=N       Slope
-        --m=N
-
-        --intercept=N   y-intercept
-        --b=N
-
-### Recommended Pipeline
-
-    $ ./gen_points.pl [options] | ./ch-2.pl | ./ch-1.pl
+    $ ./ch-2.pl dir1 dir2 ...
 
 ## Blogs
 
- * [Simple SVG Generator](https://ry.ca/2022/05/simple-svg-generator/)
+ * [Hexadecimal Words](https://ry.ca/2022/05/hexadecimal-words/)
+ * [K-Directory Diff](https://ry.ca/2022/05/k-directory-diff/)
