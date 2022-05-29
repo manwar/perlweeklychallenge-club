@@ -1,21 +1,12 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
-      },
-      "type" : "category"
+      }
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
@@ -23,41 +14,50 @@
    "legend" : {
       "enabled" : "false"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2022-05-29 01:06:40 GMT"
-   },
    "chart" : {
       "type" : "column"
    },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-05-29 01:18:09 GMT"
+   },
    "series" : [
       {
-         "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "align" : "right"
+         },
          "data" : [
             [
                "Blog",
-               2566
+               2568
             ],
             [
                "Perl",
-               8100
+               8104
             ],
             [
                "Raku",
                4796
             ]
          ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "y" : 10,
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "rotation" : -90
-         }
+         "name" : "Contributions"
       }
    ]
 }
