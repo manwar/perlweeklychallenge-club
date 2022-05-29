@@ -329,21 +329,22 @@ discussions with Eliza on the Perl Programmers Facebook group and things
 slowly got smaller. A few bytes at a time to the 272 byte:
 
 ```perl
-sub x{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=
-length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,"+\n"),
-sprintf($b="| %-${l}s "x@p."|\n",@p),$a,map({$l=$_;@p>keys%{$u{$l}}?sprintf$b,
-map{$u{$l}{$_}?$l:''}@p:()}sort@_),$a}
+123456789-123456789-123456789-123456789-123456789-123456789-123456789-123456789-
+sub z{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=
+length:1for(@p=sort keys%d),@_=keys%u;say$a=join('-'x$l,('+--')x@p,"+\n"),
+sprintf($b="| %-${l}s "x@p."\n",@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$' x
+$u{$'}{$_}}@p:()}sort@_),$a}
 ```
 
 **or** if we "allow" return characters inside strings - this is 270 bytes of
 perly goodness...
 
 ```perl
-sub z{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=
-length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,'+
+sub z{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;
+$l<length?$l=length:1for(@p=sort keys%d),@_=keys%u;
+print$a=join('-'x$l,('+--')x@p,'+
 '),sprintf($b="| %-${l}s "x@p.'|
-',@p),$a,map({$l=$_;@p>keys%{$u{$l}}?sprintf$b,map{$u{$l}{$_}?$l:''}@p:()}sort@_
-),$a}
+',@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$' x$u{$'}{$_}}@p:()}sort@_),$a}
 ```
 
 **Notes**
@@ -355,7 +356,12 @@ length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,'+
    `1 for @array` as `1for@array`.
  - we don't need to do `sort blob '*/*'` or `sort <*/*>` as for all "current"
    versions of Perl we can assume that perl does this for us.
-
+ - Rather than using `split /\//`, we use the match operator `/\//` in one place
+   and `//` in another to split - the first half goes in `$`` and the second half
+   in `$'`.
+ - When using `//` this just copies `$_` into `$'`.
+ - if you subtract a hash in scalar context then it subtracts the numbers of keys.
+   Sp we can compute the number ot times a file is missing by doing `@p-%u`.
 ## Coda - taking the brakes off...
 
 For ultimate compactness we can remove the function overhead off, turn off both
