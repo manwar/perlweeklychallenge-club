@@ -1,9 +1,6 @@
 {
-   "subtitle" : {
-      "text" : "Last updated at 2022-05-29 11:37:46 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "legend" : {
       "enabled" : "false"
@@ -11,23 +8,11 @@
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
-   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
+      }
    },
    "series" : [
       {
@@ -38,26 +23,41 @@
             ],
             [
                "Perl",
-               8104
+               8106
             ],
             [
                "Raku",
-               4798
+               4800
             ]
          ],
+         "name" : "Contributions",
          "dataLabels" : {
-            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "align" : "right",
             "y" : 10,
             "enabled" : "true",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
+            "rotation" : -90,
             "color" : "#FFFFFF",
-            "align" : "right",
-            "format" : "{point.y:.0f}"
-         },
-         "name" : "Contributions"
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         }
       }
-   ]
+   ],
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-05-29 13:44:19 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   }
 }
