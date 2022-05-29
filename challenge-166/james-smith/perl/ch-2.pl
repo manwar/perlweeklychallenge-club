@@ -11,7 +11,8 @@ use Data::Dumper qw(Dumper);
 #        1         2         3         4         5         6         7         8         9
 say 'Super compact';         x();                  say '';
 say 'Super compact';         z();                  say '';
-say 'No comments';           z_diff_no_comments(); say '';
+say 'Super compact';         g();                  say '';
+#say 'No comments';           z_diff_no_comments(); say '';
 
 exit;
 say 'Original - fake data';  k_diff( data() );     say '';
@@ -146,20 +147,29 @@ sub z_diff_no_comments {
   say $HORIZONTAL_LINE;
 }
 
-## Merging the fetch/parse into the a single function gives us just 265 bytes
-## of perlly goodness {258 without the fn call overhead}
+## Merging the fetch/parse into the a single function gives us just 259 bytes
+## of perlly goodness {252 without the fn call overhead}
 
 #23456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789#
-sub x{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=
-length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,"+\n"),
-sprintf($b="| %-${l}s "x@p."|\n",@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$u{$'
-}{$_}?$':''}@p:()}sort@_),$a}
+sub g{my($l,%d,%u)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=length
+:1for(my@p=sort keys%d),@_=keys%u;say$a=join('-'x$l,('+--')x@p,"+\n"),sprintf($b
+="| %-${l}s "x@p."|\n",@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$u{$'}{$_}?$':
+''}@p:()}sort@_),$a}
 
-## 263 bytes (256 without fn overhead)
+sub x{
+  my($l,%d,%u)=0;
+  /\//,$u{$'.'/'x-d}{$d{$`}=$`}++ for <*/*>;
+  $l<length?$l=length:1 fo r(my@p=sort keys%d), @_=keys%u;
+  say $a=join( '-'x$l,('+--')x@p,"+\n" ),
+      sprintf( $b="| %-${l}s "x@p."|\n", @p ),
+      $a,
+      map( {//;@p-%{$u{$'}}?sprintf$b,map{$u{$'}{$_}?$':''}@p:() } sort @_ ),
+      $a
+}
+
+## 257 bytes (250 without fn overhead)
 #23456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789#
-sub z{my($l,$F,%d,%u,@p)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=
-length:1for(@p=sort keys%d),@_=keys%u;print$a=join('-'x$l,('+--')x@p,'+
+sub z{my($l,%d,%u)=0;/\//,$u{$'.'/'x-d}{$d{$`}=$`}++for<*/*>;$l<length?$l=length
+:1for(my@p=sort keys%d),@_=keys%u;say$a=join('-'x$l,('+--')x@p,'+
 '),sprintf($b="| %-${l}s "x@p.'|
-',@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$u{$'}{$_}?$':''}@p:()}sort@_
-),$a}
-
+',@p),$a,map({//;@p-%{$u{$'}}?sprintf$b,map{$u{$'}{$_}?$':''}@p:()}sort@_),$a}
