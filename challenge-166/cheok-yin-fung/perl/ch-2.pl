@@ -6,9 +6,9 @@ use warnings;
 use Cwd;
 use List::Util qw/uniqstr any/;
 
-kd(@ARGV) if defined($ARGV[1]);
-
 my $TEMP_CWD = getcwd;
+
+kd(@ARGV) if defined($ARGV[1]);
 
 
 
