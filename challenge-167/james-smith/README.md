@@ -67,7 +67,7 @@ We will use Lanczos approximation...
  * If z is less than 0.5 - we use the calulation beased on `gamma(1-z)` multiplied the the factor `PI/sin(PI * z)`
  * Finally we use the lanczos approximation.
    * This starts by computing the sum in the map, then computing the value based on this sum
-   * we use `( map() @PV, fn(z,x) )[-1]` to put this all in one line, we also re-use `$i` after the loop, to store the value of `$z+@PV-1.5` which is used twice AND again to store the final value - so we can decide to round it back down to an integer if we are close to integer value. This I agree is nasty!!!
+   * we use `( map( {} @PV ), fn(z,x) )[-1]` to put this all in one line, we also re-use `$i` after the loop, to store the value of `$z+@PV-1.5` which is used twice AND again to store the final value - so we can decide to round it back down to an integer if we are close to integer value. This I agree is nasty!!!
    * `$RP` is `sqrt(2*$PI)` but evaluated for speed 
  
 ```perl
