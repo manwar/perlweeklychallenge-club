@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (:d(:$dictionary) where $dictionary.IO.r = 'dictionary.txt');
+
+my @dict = $dictionary.IO.lines.grep( 1 < *.chars <= 8 ).grep( * ~~ /^<[abcdefolist]>+$/);
+
+@dict.map({ say "0x" ~ TR/olist/01157/ });
