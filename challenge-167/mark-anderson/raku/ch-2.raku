@@ -1,5 +1,7 @@
 #!/usr/bin/env raku
 
+# A translation of the Python code at https://en.wikipedia.org/wiki/Lanczos_approximation
+
 use Test;
 
 is-approx Γ(3), 2;
