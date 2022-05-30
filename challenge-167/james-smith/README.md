@@ -21,15 +21,35 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-167/ja
 
 ## Solution
 
+*We are going to slightly extend this to find the first 19 circular primes - includes 4 1-digit primes and 5 2-digit circular primes and the 10 3+-digit ciruclar primes < one-million - After the largest 6-digit circular prime the next circular prime is the 19 digit prime - 1,111,111,111,111,111,111*
+
+We use `Math::Prime::Util`s `next_prime` function to loop through the primes. Before we check for primality of each of the permutations we can remove trivial cases:
+ 
+ * We know all 1-digit primes are circular so we take these out first `#1` - in fact the remaining logic does not work as we assume there are other rotations - and the regex we see next would remove `2` & `5` the only primes that contain either of these digits;
+ * We then remove numbers containing `0`, `2`, `4`, `5`, `6` or `8` as at least one rotation would end in this digit and therefore the number sould not be prime;
+ * As we are looking for an exemplar for each rotation we take the lowest one - we just check that the supplied prime is less than any of the rotations.
+
+   **Note** we use next here to short cut the map and jump to the next loop element.
+
+   In this line we use `@q` to initially be the individual digits, but at the end we reuse it to conatain all the rotations.
+
+ * Now we look to see if we have any non-primes in the rotation using `is_prime`.. If we do then we skip the loop
+
+ * Finally if we have got through all the filters we push the prime `$p` on to the results array.>
+
 ```perl
-my($p,$N,@res) = (99,10);
-O: while( @res < $N ) {
-  next O if ($p = next_prime $p)=~/[024568]/;
-  my @q = split//, $p;
-  push @res, $p unless
-    ( grep { $p>$_ } @q = map { push @q, shift @q; join '',@q } 2..@q )
-    || grep { !is_prime( $_ ) } @q;
+use Math::Prime::Util qw(next_prime is_prime);
+my( $p, $N, @q, @res ) = ( 1, 19 );
+
+while( @res < $N ) {
+  ( ( $p = next_prime $p ) < 10 #1
+    || $p !~ /[024568]/
+    && ( @q = split//, $p )
+    && ( @q = map { push @q, shift @q; ( $_ = join '', @q ) < $p ? (next) : $_ } 2..@q )
+    && ( ! grep { ! is_prime( $_ ) } @q )
+  ) && ( push @res, $p )
 }
+
 say for @res;
 ```
 
