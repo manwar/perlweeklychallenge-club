@@ -59,7 +59,27 @@ say for @res;
 
 ## Solution
 
+The gamma function is the genaralisation of the factorial function `Gamma(n) = (n-1)!` for positive integers.
+
+We will use Lanczos approximation...
+
+ * If z is an integer and less than or equal to 0 - we return the special string 'inf' as the value is infinite.
+ * If z is less than 0.5 - we use the calulation beased on `gamma(1-z)` multiplied the the factor `PI/sin(PI * z)`
+ * Finally we use the lanczos approximation.
+   * This starts by computing the sum in the map, then computing the value based on this sum
+   * we use `( map() @PV, fn(z,x) )[-1]` to put this all in one line, we also re-use `$i` after the loop, to store the value of `$z+@PV-1.5` which is used twice AND again to store the final value - so we can decide to round it back down to an integer if we are close to integer value. This I agree is nasty!!!
+   * `$RP` is `sqrt(2*$PI)` but evaluated for speed 
+ 
 ```perl
+const my $PI => 3.1415926535897932384626433832;
+const my $RP => 2.5066282746310002416123552393;
+const my $EP => 0.000000000001;
+const my $X  => 0.99999999999980993;
+const my @PV => (
+  676.5203681218851,  -1259.1392167224028,    771.32342877765313,     -176.61502916214059,
+   12.507343278686905,   -0.13857109526572012,  9.9843695780195716e-6,   1.5056327351493116e-7,
+);
+
 sub gamma {
   my($i,$x,$z)=(0,$X,$_[0]);
   return ($z<=0 && abs($z-int$z)<$EP) ? 'inf'
