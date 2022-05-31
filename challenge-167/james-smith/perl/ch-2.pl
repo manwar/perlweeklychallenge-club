@@ -19,9 +19,8 @@ say sprintf( '%5.2f - %30.4f', $_/2, gamma($_/2) ) =~ s{[.]0000$}{}r  for -40..4
 
 sub gamma {
   my($i,$x,$z)=(0,$X,$_[0]);
-  return ($z<=0 && abs($z-int$z)<$EP) ? 'inf'
-       : $z < 0.5                     ? $PI / sin($PI*$z) * gamma( 1-$z )
-       : (map({$x+=$_/($z+$i++)}@PV),abs(($i=$RP*($i=$z+@PV-1.5)**($z-0.5)*exp(-$i)*$x)-int$i)<$EP?int$i:$i)[-1]
-       ;
+  ($z<=0 && abs($z-int$z)<$EP) ? 'inf'
+  : $z < 0.5                   ? $PI / sin($PI*$z) * gamma( 1-$z )
+  : (map({$x+=$_/($z+$i++)}@PV),abs(($i=$RP*($i=$z+@PV-1.5)**($z-0.5)*exp(-$i)*$x)-int$i)<$EP?int$i:$i)[-1]
 }
 
