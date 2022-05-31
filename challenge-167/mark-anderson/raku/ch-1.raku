@@ -19,7 +19,6 @@ sub circular($n is copy)
     {
         @n .= rotate;
         %seen{@n.join} = True;
-
         return False unless @n.join.is-prime;
     }  
 
