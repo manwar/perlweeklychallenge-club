@@ -41,7 +41,7 @@ sub isCircularPrime ($) {
   state $circularPrimes = {};
 
   # Below 10 are straight circular primes
-  if (length($p) == 1) {
+  if ($p < 10) {
     $circularPrimes->{$p}++;
     return 1;
   }
