@@ -2,7 +2,8 @@
 
 my %seen;
 
-say (101, 103, 105 ... *).grep(&is-prime)
+say (101, 103, 105 ... *).hyper
+                         .grep(&is-prime)
                          .grep(&circular)
                          .head(10);
 
