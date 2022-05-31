@@ -2,6 +2,20 @@
    "drilldown" : {
       "series" : [
          {
+            "name" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  4
+               ]
+            ],
+            "id" : "Luca Ferrari"
+         },
+         {
             "name" : "Roger Bell_West",
             "id" : "Roger Bell_West",
             "data" : [
@@ -17,42 +31,47 @@
          }
       ]
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 4
-            }
-         ],
-         "name" : "The Weekly Challenge - 167",
-         "colorByPoint" : 1
-      }
-   ],
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2022-05-31 17:09:07 GMT"
-   },
    "legend" : {
       "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 167"
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+            "enabled" : 1,
+            "format" : "{point.y}"
          }
       }
+   },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 167",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "Luca Ferrari",
+               "y" : 6,
+               "name" : "Luca Ferrari"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            }
+         ]
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 167"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2022-05-31 17:22:21 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
@@ -60,8 +79,8 @@
       }
    },
    "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    }
 }
