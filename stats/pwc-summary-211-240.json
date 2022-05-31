@@ -1,10 +1,9 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "chart" : {
+      "type" : "column"
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-05-31 20:22:31 GMT"
    },
    "series" : [
       {
@@ -43,6 +42,7 @@
          ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             263,
@@ -74,11 +74,9 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             146,
@@ -110,11 +108,21 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -149,14 +157,6 @@
          "Tester R59",
          "Tiago Stock"
       ]
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-05-31 20:13:31 GMT"
    },
    "yAxis" : {
       "min" : 0,
