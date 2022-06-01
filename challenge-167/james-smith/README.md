@@ -31,8 +31,10 @@ We use `Math::Prime::Util`s `next_prime` function to loop through the primes. Be
 
    **Note** we use next here to short cut the map and jump to the next loop element.
 
-   In this line we use `@q` to initially be the individual digits, but at the end we reuse it to conatain all the rotations.
+   To rotate the digits we use the 4 parameter version of `substr` - `substr $string, $start, $length, $replacement` returns the substring from `$start`, but replaces the section returned with the contents of the fourth parameter...
 
+   In this case we do `substr $a, 0, 0, substr $a, -1, 1, ''`. Firstly the right hand `substr` is evaluated - which takes the last element of `$a` and returns it, and replaces this with an empty string so if `$a` was `1234` then it has becomes `123` and returns `4`. We now then evaluate the first `substr` which returns the `0` character string from the start of `$a` (*i.e.* an empty string) and replaces it with the `4` from before so we end up with `4123` and sunsequent class give `3412` and `2341`.
+   
  * Now we look to see if we have any non-primes in the rotation using `is_prime`.. If we do then we skip the loop
 
  * Finally if we have got through all the filters we push the prime `$p` on to the results array.>
@@ -42,16 +44,23 @@ use Math::Prime::Util qw(next_prime is_prime);
 my( $p, $N, @q, @res ) = ( 1, 19 );
 
 while( @res < $N ) {
-  ( ( $p = next_prime $p ) < 10 #1
+  ( ( $t = $p = next_prime $p ) < 10
     || $p !~ /[024568]/
-    && ( @q = split//, $p )
-    && ( @q = map { push @q, shift @q; ( $_ = join '', @q ) < $p ? (next) : $_ } 2..@q )
-    && ( ! grep { ! is_prime( $_ ) } @q )
+    && ( ! grep { !is_prime( $_ )                             && (next)      }
+           map  { ( substr$t,0,0,substr$t,-1,1,'' ) || $t < $p ? (next) : $t }
+           2 .. length $p )
   ) && ( push @res, $p )
 }
 
 say for @res;
 ```
+
+Now some notes on efficiency.
+
+ * To generate the 19 exemplars - we loop through 17,981 primes. The regex filter (and the <10) filters out 18,422 of these to leave just 559 primes
+   that go through the rotation code.
+ * This filters our another 347 primes leaving just 212 sets of primes to check for primality.
+ * We then just do 346 prime checks on these sets to rule in/rule out the number
 
 # Challenge 2 - Gamma function
 
@@ -82,10 +91,10 @@ const my @PV => (
 
 sub gamma {
   my($i,$x,$z)=(0,$X,$_[0]);
-  ( $z<=0 && abs( $z - int$z ) < $EP ) ? 'inf'
-  : $z < 0.5                     ? $PI / sin( $PI * $z ) * gamma( 1 - $z )
-  : ( map( { $x += $_ / ( $z + $i++ ) } @PV ),
-      abs( ( $i = $RP * ( $i = $z + @PV - 1.5 ) ** ( $z - 0.5 ) * $x * exp -$i ) - int $i
-    ) < $EP ? int $i : $i )[-1]
+  ( $z<=0 && abs($z-int$z) < $EP ) ? 'inf'
+  : $z < 0.5 ? $PI / sin($PI*$z) * gamma(1-$z)
+  : ( map( {$x+=$_/($z+$i++)} @PV ),
+      abs( ( $i = $RP*( $i = $z+@PV-1.5 )**($z-0.5) * $x / exp $i ) - int $i ) < $EP ? int $i : $i
+    )[-1]
 }
 ```
