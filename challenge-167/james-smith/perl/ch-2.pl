@@ -21,6 +21,6 @@ sub gamma {
   my($i,$x,$z)=(0,$X,$_[0]);
   ($z<=0 && abs($z-int$z)<$EP) ? 'inf'
   : $z < 0.5                   ? $PI / sin($PI*$z) * gamma( 1-$z )
-  : (map({$x+=$_/($z+$i++)}@PV),abs(($i=$RP*($i=$z+@PV-1.5)**($z-0.5)*exp(-$i)*$x)-int$i)<$EP?int$i:$i)[-1]
+  : (map({$x+=$_/($z+$i++)}@PV),abs(($i=$RP*($i=$z+@PV-1.5)**($z-0.5)*$x/exp$i)-int$i)<$EP?int$i:$i)[-1]
 }
 
