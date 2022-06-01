@@ -5,9 +5,8 @@ use strict;
 use warnings;
 use feature qw(say);
 use Math::Prime::Util qw(next_prime is_prime);
-use Time::HiRes 'time';
 
-my($p,$N,$T0,$t,@res) = (1,19,time);
+my($p,$N,$t,@res) = (1,19);
 
 # Cannot raise $N above 10 as the 11th value is:
 #   1,111,111,111,111,111,111
@@ -19,6 +18,7 @@ while(@res<$N) {
     ## a circular prime... (also skip 5 for a similar reason)
     ## Include exception for 1 digit primes { as we don't want to block
     ## 2 and 5 }
+    ##
     ## We rotate the string n-1 times using the 4 parameter version of
     ## substr (twice), and Check $p is the lowest of the rotations
     ## We short cut where possible - if the value is larger than p
@@ -45,5 +45,3 @@ while(@res<$N) {
 }
 
 say for @res;
-
-say sprintf "\nDuration: %10.6f",time-$T0;
