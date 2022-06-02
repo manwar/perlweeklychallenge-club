@@ -12,7 +12,7 @@ number generated at each intermediate step when rotating its
 =end comment
 
 my %seen;
-my constant @cp = gather for 100 … ∞ -> $n {
+my constant @circular-prime = gather for 100 … ∞ -> $n {
     if $n.is-prime {
         next if %seen{$n}:exists;
         my @a = $n.split('', :skip-empty);
@@ -30,8 +30,8 @@ my constant @cp = gather for 100 … ∞ -> $n {
         }
     }
 }
-say @cp[ 0..9].join( ', ');
-die unless @cp[ 0..9].join( ', ')
+say @circular-prime[ 0..9].join( ', ');
+die unless @circular-prime[ 0..9].join( ', ')
     eq '113, 197, 199, 337, 1193, 3779, 11939, 19937, 193939, 199933';
 
 exit;
