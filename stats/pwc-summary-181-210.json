@@ -1,19 +1,12 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-06-03 10:35:04 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             7,
             0,
@@ -45,8 +38,7 @@
             46,
             2,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -84,7 +76,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -116,19 +107,12 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-06-03 14:51:05 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -163,5 +147,21 @@
          "Robert Gratza",
          "Robert Ransbottom"
       ]
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    }
 }
