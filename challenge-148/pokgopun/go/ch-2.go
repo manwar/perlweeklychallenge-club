@@ -5,13 +5,24 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"math"
+	"os"
 	"sort"
+	"strconv"
 	"strings"
 )
 
 func main() {
-	cdn := newCdn3(400)
+	var i uint = 2
+	if len(os.Args) > 1 {
+		n, err := strconv.ParseUint(os.Args[1], 10, 64)
+		if err != nil {
+			log.Fatal(err)
+		}
+		i = uint(n)
+	}
+	cdn := newCdn3(i)
 	fmt.Println(cdn)
 }
 
@@ -39,8 +50,6 @@ type cdn3 struct {
 
 func newCdn3(n uint) (c cdn3) {
 	c.k = n
-	// create prime map as large as sqrt of (8k + 5) which is the term we need to do factoriing
-	//c.pmap = pmap(uint(math.Floor(math.Sqrt(float64(8*n) + 5))))
 	// create prime map as large as (8k + 5) to make it easy to check prime for factoring the number
 	c.pmap = pmap(uint((8 * n) + 5))
 	for i := 2; i < len(c.pmap); i++ {
@@ -56,57 +65,67 @@ func (cdn cdn3) a(k uint) int {
 }
 
 func (cdn cdn3) bc(k uint) (s [][2]int) {
-	b := int(k + 1)
-	c := int(8*k + 5)
-	//bIsPrime := big.NewInt(int64(b)).ProbablyPrime(10)
-	//cIsPrime := big.NewInt(int64(c)).ProbablyPrime(10)
-	s = append(s, [2]int{1, b * b * c})
-	factor := []int{}
-	if cdn.pmap[c] {
-		if b == 1 {
+	t1 := int(k + 1)
+	t2 := int(8*k + 5)
+	t := t1 * t1 * t2
+	s = append(s, [2]int{1, t})
+	factor := make(map[int]int)
+	if cdn.pmap[t2] {
+		if t1 == 1 {
 			return s
 		}
-		if cdn.pmap[b] {
-			s = append(s, [2]int{b, c})
+		if cdn.pmap[t1] {
+			s = append(s, [2]int{t1, t2})
 			return s
 		} else {
-			factor = append(factor, cdn.factor(b)...)
-			factor = append(factor, factor...)
-			factor = append(factor, c)
+			factor[t2] += 1
 		}
 	} else {
-		if cdn.pmap[b] {
-			factor = append(factor, b, b)
-		} else {
-			factor = append(factor, cdn.factor(b)...)
-			factor = append(factor, factor...)
+		for _, v := range cdn.factor(t2) {
+			factor[v] += 1
 		}
-		factor = append(factor, cdn.factor(c)...)
 	}
-	sort.SliceStable(factor, func(i, j int) bool {
-		return factor[i] < factor[j]
+	if cdn.pmap[t1] {
+		factor[t1] += 2
+	} else {
+		for _, v := range cdn.factor(t1) {
+			factor[v] += 2
+		}
+	}
+	var pair []uint
+	for k, v := range factor {
+		if v >= 2 {
+			pair = append(pair, uint(k))
+		}
+	}
+	sort.SliceStable(pair, func(i, j int) bool {
+		return pair[i] < pair[j]
 	})
-	fmt.Println("b =", b, "c =", c, "factor =>", factor, len(factor))
-	var (
-		prev       int
-		pair, lone []int
-	)
-	for _, v := range factor {
-		if prev == v {
-			pair = append(pair, v)
-			prev = 0
-		} else if prev == 0 {
-			prev = v
-		} else {
-			lone = append(lone, prev)
-			prev = v
+	for i := 1; i <= len(pair); i++ {
+		getC, _ := getCombo(i, pair)
+		for cmb := range getC {
+			res := make(chan int)
+			go func(cmb []uint) {
+				findB(cmb, factor, 1, res)
+				close(res)
+			}(cmb)
+			for v := range res {
+				s = append(s, [2]int{v, t / (v * v)})
+			}
 		}
 	}
-	if prev != 0 {
-		lone = append(lone, prev)
-	}
-	fmt.Println("factor =>", "pair =", pair, "lone =", lone)
 	return s
+}
+
+func findB(s []uint, m map[int]int, b int, res chan<- int) {
+	if len(s) == 0 {
+		res <- b
+		return
+	}
+	for i := 1; i <= m[int(s[0])]/2; i++ {
+		b *= int(s[0])
+		findB(s[1:], m, b, res)
+	}
 }
 
 func (cdn cdn3) factor(n int) (s []int) {
@@ -149,4 +168,35 @@ func (cdn cdn3) String() string {
 		}
 	}
 	return b.String()
+}
+func getCombo(r int, e []uint) (<-chan []uint, func()) {
+	c := []uint{}
+	res := make(chan []uint, 50)
+	done := make(chan struct{})
+	go func() {
+		cTree(r, e, c, res, done)
+		close(res)
+	}()
+	return res, func() {
+		close(done)
+	}
+}
+
+func cTree(r int, e []uint, c []uint, res chan<- []uint, done chan struct{}) {
+	if len(c) == r || len(c)+len(e) == r {
+		s := make([]uint, r)
+		l := copy(s, c)
+		if l < r {
+			copy(s[l:], e)
+		}
+		select {
+		case <-done:
+			return
+		case res <- s:
+		}
+	} else {
+		for i := 0; len(c)+len(e)-i >= r; i++ {
+			cTree(r, e[i+1:], append(c, e[i]), res, done)
+		}
+	}
 }
