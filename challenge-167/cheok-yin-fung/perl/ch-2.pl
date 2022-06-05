@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # The Weekly Challenge 167
 # Task 2 Gamma Function
-# simplified "translated" from Maxima code: 
+# simplified "translation" from Maxima code: 
 #     https://mrob.com/pub/ries/lanczos-gamma.html
 use v5.24.0;
 use warnings;
@@ -16,6 +16,7 @@ sub lanczos_log_gamma {
     my $ln_sqrt_2_pi = log sqrt (2*$pi);
 
     my $LG_g = 5;
+    # (from mrob.com) set of parameters from: Takusagawa, Press, Borgelt
     my @lct = (
          1.000000000190015,
         76.18009172947146,
@@ -70,18 +71,25 @@ sub l_gamma {
 }
 
 
+
 use Test::More tests => 10;
 # ref: https://en.wikipedia.org/wiki/Gamma_function#Particular_values
-my $acceptable_error = 1e-5;
-# my $acceptable_error = 1e-7; # Test gamma(11) will fail
 
-ok abs(l_gamma(1) - 1) < $acceptable_error;
-ok abs(l_gamma(1.5) - 0.88622_69254_52758_01364) < $acceptable_error;
-ok abs(l_gamma(2) - 1) < $acceptable_error;
-ok abs(l_gamma(2.5) - 1.32934_03881_79137_02047) < $acceptable_error;
-ok abs(l_gamma(3) - 2) < $acceptable_error;
-ok abs(l_gamma(3.5) - 3.32335_09704_47842_55118) < $acceptable_error;
-ok abs(l_gamma(4) - 6) < $acceptable_error;
-ok abs(l_gamma(5) - 24) < $acceptable_error;
-ok abs(l_gamma(7) - 720) < $acceptable_error;
-ok abs(l_gamma(11) - 3628800) < $acceptable_error;
+sub accept_test {
+    my $parameter = $_[0];
+    my $part_val = $_[1];
+    my $acceptable_error = 1e-5;
+    ok abs( l_gamma($parameter) - $part_val ) < $acceptable_error;
+}
+
+accept_test(1, 1);
+accept_test(1.5, 0.88622_69254_52758_01364);
+accept_test(2, 1);
+accept_test(2.5, 1.32934_03881_79137_02047);
+accept_test(3, 2);
+accept_test(3.5, 3.32335_09704_47842_55118);
+accept_test(4, 6);
+accept_test(5, 24);
+accept_test(7, 720);
+accept_test(11, 3628800);
+

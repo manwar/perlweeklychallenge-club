@@ -13,7 +13,7 @@ use List::Util qw/min reduce pairmap any all/;
 my @c_prime = ("-1", 2, 3, 5, 7, 11, 13, 17, 31, 37, 71, 73, 79, 97);
 my @circular_prime = (2, 3, 5, 7, 11, 13, 17, 37, 79);
 
-my $num = 19;
+my $num = 10 + scalar @circular_prime;
 
 
 
@@ -75,10 +75,6 @@ sub prime_test {
         $k++;
     }
     return 1;
-    # return (1 x $_[0]) !~ /^1?$|^(11+?)\1+$/;
-    # unable to using Abigail's regex to test for prime numbers
-    #
-    # Complex regular subexpression recursion limit (65534) exceeded at ch-1.pl line xxx.
 }
 
 
@@ -97,13 +93,12 @@ sub cyclic {
 
 sub min_self {
     return min(cyclic($_[0])->@*);
-    # not an effective implementation, can be further edited
 }
 
 
 
 
-use Test::More tests=>2;
+use Test::More tests => 2;
 my $task_requirement = join ", ", @circular_prime[9..9+9];
 ok 
     $task_requirement eq
