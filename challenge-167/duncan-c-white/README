@@ -1,75 +1,51 @@
-TASK 1: Hexadecimal Words
+TASK 1: Circular Prime
 
-As an old systems programmer, whenever I needed to come up with a 32-bit
-number, I would reach for the tired old examples like 0xDeadBeef and
-0xC0dedBad. I want more!
+Write a script to find out first 10 circular primes having at least 3
+digits (base 10).
 
-Write a program that will read from a dictionary and find 2- to 8-letter
-words that can be "spelled" in hexadecimal, with the addition of the
-following letter substitutions:
+Please checkout https://en.wikipedia.org/wiki/Circular_prime for more information.
 
-    o -> 0 (e.g., 0xf00d = "food")
-    l -> 1
-    i -> 1
-    s -> 5
-    t -> 7
+A circular prime is a prime number with the property that the number
+generated at each intermediate step when cyclically permuting its (base
+10) digits will also be prime.
 
-You can use your own dictionary or you can simply open
-../../../data/dictionary.txt (relative to your script's location in
-our GitHub repository) to access the dictionary of common words from
-Week #161.
+Quote from the Wikipedia page:
 
-Optional Extras (for an 0xAddedFee, of course!)
+"For example, 1193 is a circular prime, since 1931, 9311 and 3119 all
+are also prime.[3] A circular prime with at least two digits can only
+consist of combinations of the digits 1, 3, 7 or 9, because having 0, 2,
+4, 6 or 8 as the last digit makes the number divisible by 2, and having
+0 or 5 as the last digit makes it divisible by 5"
 
-    Limit the number of "special" letter substitutions in any one result
-    to keep that result at least somewhat comprehensible. (0x51105010
-    is an actual example from my sample solution you may wish to avoid!)
+OUTPUT
 
-    Find phrases of words that total 8 characters in length (e.g.,
-    0xFee1Face), rather than just individual words.
-
-MY NOTES: ok.  Not a terribly fascinating task, forget the optional extras.
-Should be simple enough.
+113, 197, 199, 337, 1193, 3779, 11939, 19937, 193939, 199933
 
 
-Task 2: K-Directory Diff
+MY NOTES: ok, sounds relatively easy.  The wikipedia page clarifies it.
+I'm reusing my old favourite MakePrimes.pm.
 
-Given a few (three or more) directories (non-recursively), display a
-side-by-side difference of files that are missing from at least one of
-the directories. Do not display files that exist in every directory.
+HOWEVER, my solution finds far more circular primes than the above output
+shows.  If 113 is a CP (and it is cos 131 and 311 are also prime), then SO
+IS 131 AND SO IS 311, but the above list doesn't show it.  Also, my solution
+computes ALL CPs with exactly N digits, rather than the first 10 with N or
+more digits.
 
-Since the task is non-recursive, if you encounter a subdirectory, append
-a /, but otherwise treat it the same as a regular file.
+
+Task 2: Task 2: Gamma Function
+
+Implement subroutine gamma() using the Lanczos approximation method.
+
+Ryan Thompson wrote an interesting blog explaining the subject in
+details. Highly recommended if you are looking for more information:
+https://ry.ca/2022/05/lanczos-approximation
 
 Example
 
-Given the following directory structure:
+print gamma(3); # 1.99
+print gamma(5); # 24
+print gamma(7); # 719.99
 
-dir_a:
-Arial.ttf  Comic_Sans.ttf  Georgia.ttf  Helvetica.ttf  Impact.otf  Verdana.ttf  Old_Fonts/
-
-dir_b:
-Arial.ttf  Comic_Sans.ttf  Courier_New.ttf  Helvetica.ttf  Impact.otf  Tahoma.ttf  Verdana.ttf
-
-dir_c:
-Arial.ttf  Courier_New.ttf  Helvetica.ttf  Impact.otf  Monaco.ttf  Verdana.ttf
-
-The output should look similar to the following:
-
-dir_a          | dir_b           | dir_c
--------------- | --------------- | ---------------
-Comic_Sans.ttf | Comic_Sans.ttf  |
-               | Courier_New.ttf | Courier_New.ttf
-Georgia.ttf    |                 |
-               |                 | Monaco.ttf
-Old_Fonts/     |                 |
-               | Tahoma.ttf      |
-
-
-MY NOTES: this is much more appealing to me; right up my street.  Generally,
-it seems pretty simple, build a "fileindirs" mapping from file -> a list of
-which directories it's in, and form a set of all named files, then iterate
-over the "all named files" set, skipping files present in all the dirs,
-then iterating over all the dirs, using the fileindirs info to determine
-which columns to leave blank.  Need to auto-width each dir column, but that's
-trivial to do.
+MY NOTES: Hell no.  Complex numbers, ridiculously complicated formula,
+plus I've no idea what the Gamma function even is.  This is far too
+mathematical for me, so I've no interest in doing it.
