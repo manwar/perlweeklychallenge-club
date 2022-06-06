@@ -7,13 +7,16 @@ use boolean;
 use Math::Primality qw/is_prime/;
 
 sub is_circular_prime{
-    my($x) = @_;
+    my($x, $circular) = @_;
     my @digits = split(//, $x);
+    my @rotations;
     for my $i (0 .. @digits - 1){
         @digits = (@digits[1 .. @digits - 1], $digits[0]);
         my $candidate = join("", @digits) + 0;
+        push @rotations, $candidate;
         return false if !is_prime($candidate);
     }
+    map{$circular->{$_} = -1} @rotations;
     return true;
 }
 
@@ -23,9 +26,8 @@ sub first_n_circular_primes{
     my %circular;
     my @circular_primes;
     {
-        if(is_circular_prime($i) && !$circular{join("", sort {$a <=> $b} split(//, $i))}){
+        if(!$circular{$i} && is_circular_prime($i, \%circular)){
             push @circular_primes, $i; 
-            $circular{join("", sort {$a <=> $b} split(//, $i))} = -1;
         }
         $i++;
         redo if @circular_primes < $n;
