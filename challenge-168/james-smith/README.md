@@ -1,7 +1,7 @@
-[< Previous 166](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-166/james-smith) |
-[Next 168 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-168/james-smith)
+[< Previous 167](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-167/james-smith) |
+[Next 169 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-169/james-smith)
 
-# The Weekly Challenge 167
+# The Weekly Challenge 168
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,88 +13,49 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-167/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-168/james-smith
 
-# Challenge 1 - Circular Prime
+# Challenge 1 - Perrin Prime
 
-***Write a script to find out first 10 circular primes having at least 3 digits (base 10). A circular prime is a prime number with the property that the number generated at each intermediate step when cyclically permuting its (base 10) digits will also be prime.***
+***The Perrin sequence is defined to start with [3, 0, 2]; after that, term N is the sum of terms N-2 and N-3. (So it continues 3, 2, 5, 5, 7, ...) A Perrin prime is a number in the Perrin sequence which is also a prime number. Calculate the first 13 Perrin primes***
 
-## Solution
-
-*We are going to slightly extend this to find the first 19 circular primes - includes 4 1-digit primes and 5 2-digit circular primes and the 10 3+-digit ciruclar primes < one-million - After the largest 6-digit circular prime the next circular prime is the 19 digit prime - 1,111,111,111,111,111,111*
-
-We use `Math::Prime::Util`s `next_prime` function to loop through the primes. Before we check for primality of each of the permutations we can remove trivial cases:
- 
- * We know all 1-digit primes are circular so we take these out first `#1` - in fact the remaining logic does not work as we assume there are other rotations - and the regex we see next would remove `2` & `5` the only primes that contain either of these digits;
- * We then remove numbers containing `0`, `2`, `4`, `5`, `6` or `8` as at least one rotation would end in this digit and therefore the number sould not be prime;
- * As we are looking for an exemplar for each rotation we take the lowest one - we just check that the supplied prime is less than any of the rotations.
-
-   **Note** we use next here to short cut the map and jump to the next loop element.
-
-   To rotate the digits we use the 4 parameter version of `substr` - `substr $string, $start, $length, $replacement` returns the substring from `$start`, but replaces the section returned with the contents of the fourth parameter...
-
-   In this case we do `substr $a, 0, 0, substr $a, -1, 1, ''`. Firstly the right hand `substr` is evaluated - which takes the last element of `$a` and returns it, and replaces this with an empty string so if `$a` was `1234` then it has becomes `123` and returns `4`. We now then evaluate the first `substr` which returns the `0` character string from the start of `$a` (*i.e.* an empty string) and replaces it with the `4` from before so we end up with `4123` and sunsequent class give `3412` and `2341`.
-   
- * Now we look to see if we have any non-primes in the rotation using `is_prime`.. If we do then we skip the loop
-
- * Finally if we have got through all the filters we push the prime `$p` on to the results array.>
-
-```perl
-use Math::Prime::Util qw(next_prime is_prime);
-my( $p, $N, @q, @res ) = ( 1, 19 );
-
-while( @res < $N ) {
-  ( ( $t = $p = next_prime $p ) < 10
-    || $p !~ /[024568]/
-    && ( ! grep { !is_prime( $_ )                             && (next)      }
-           map  { ( substr$t,0,0,substr$t,-1,1,'' ) || $t < $p ? (next) : $t }
-           2 .. length $p )
-  ) && ( push @res, $p )
-}
-
-say for @res;
-```
-
-Now some notes on efficiency.
-
- * To generate the 19 exemplars - we loop through 17,981 primes. The regex filter (and the <10) filters out 18,422 of these to leave just 559 primes
-   that go through the rotation code.
- * This filters our another 347 primes leaving just 212 sets of primes to check for primality.
- * We then just do 346 prime checks on these sets to rule in/rule out the number
-
-# Challenge 2 - Gamma function
-
-***Implement subroutine gamma() using the Lanczos approximation method.***
 
 ## Solution
 
-The gamma function is the genaralisation of the factorial function `Gamma(n) = (n-1)!` for positive integers.
+Using our favourite is_prime library we loop through the Perrin numbers and checking to see if they are prime, if they are we display them - if not we restart the loop with `redo`.
 
-We will use Lanczos approximation...
+Rather than keep the whole array we only need the last 3 numbers in the sequence to generate the next so we have: `$s -> $r`, `$t -> $s` and `$r+$s -> $t`. Once nice feature of perl is that you can do multiple parallel definitions inside a list. The final quirk you see here is `$t!=$` - there is one duplicate value in the list (5) which would mean we saw 5 twice in our output which we don't want....
 
- * If z is an integer and less than or equal to 0 - we return the special string 'inf' as the value is infinite.
- * If z is less than 0.5 - we use the calulation beased on `gamma(1-z)` multiplied the the factor `PI/sin(PI * z)`
- * Finally we use the lanczos approximation.
-   * This starts by computing the sum in the map, then computing the value based on this sum
-   * we use `( map( {} @PV ), fn(z,x) )[-1]` to put this all in one line, we also re-use `$i` after the loop, to store the value of `$z+@PV-1.5` which is used twice AND again to store the final value - so we can decide to round it back down to an integer if we are close to integer value. This I agree is nasty!!!
-   * `$RP` is `sqrt(2*$PI)` but evaluated for speed 
- 
 ```perl
-const my $PI => 3.1415926535897932384626433832;
-const my $RP => 2.5066282746310002416123552393;
-const my $EP => 0.000000000001;
-const my $X  => 0.99999999999980993;
-const my @PV => (
-  676.5203681218851,  -1259.1392167224028,    771.32342877765313,     -176.61502916214059,
-   12.507343278686905,   -0.13857109526572012,  9.9843695780195716e-6,   1.5056327351493116e-7,
-);
+my ($r,$s,$t)=(3,0,2);
+($r,$s,$t)=($s,$t,$r+$s), is_prime($t) && $t!=$s ? (say $t) : (redo) for 1..13;
+```
+# Challenge 2 - Home Prime
 
-sub gamma {
-  my($i,$x,$z)=(0,$X,$_[0]);
-  ( $z<=0 && abs($z-int$z) < $EP ) ? 'inf'
-  : $z < 0.5 ? $PI / sin($PI*$z) * gamma(1-$z)
-  : ( map( {$x+=$_/($z+$i++)} @PV ),
-      abs( ( $i = $RP*( $i = $z+@PV-1.5 )**($z-0.5) * $x / exp $i ) - int $i ) < $EP ? int $i : $i
-    )[-1]
+***You are given an integer greater than 1. Write a script to find the home prime of the given number. In number theory, the home prime HP(n) of an integer n greater than 1 is the prime number obtained by repeatedly factoring the increasing concatenation of prime factors including repetitions.***
+
+**Example: **
+```
+  10 = 2 x 5  ->   10
+  25 = 5 x 5  ->   25
+  55 = 5 x 11 ->  511
+ 511 = 7 x 73 ->  773
+ 773 = 773
+```
+
+So `HP(10) = 773`.
+
+## Solution
+
+Our favourite prime libray also has a `factor` function which returns a list of sorted prime factors (including duplicates). This simplfies the problem...
+
+```perl
+sub home_prime {
+  return if (my$t=shift)<2;
+  is_prime($t)?(return$t):($t=join'',factor$t)while 1;
 }
 ```
+
+We first check to see if the parameter passed in is `0` or `1` in which case we return nothing.
+Otherwise if the value of the parameter is prime we return that and don't do anything else. o/w
+we update it via the rule above and repeat
