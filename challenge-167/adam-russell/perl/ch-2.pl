@@ -34,7 +34,7 @@ sub gamma{
 }
 
 MAIN:{
-    print gamma(3) . "\n";
-    print gamma(5) . "\n";
-    print gamma(7) . "\n";
+    printf("%.2f\n",gamma(3));
+    printf("%.2f\n",gamma(5));
+    printf("%.2f\n",gamma(7));
 }
