@@ -1,3 +1,5 @@
+# CAN BE IMPROVED
+
 #!/usr/bin/perl
 # The Weekly Challenge 168
 # Task 2 Home Prime 
@@ -39,7 +41,7 @@ sub my_hp {
             $num /= $p;
         }
         else {
-            $p = next_prime($p);
+            $p = next_prime($p);    # CAN BE IMPROVED
         }
     } while ($num != 1);
     my $nxt = (reduce { $a . $b } @factors);
