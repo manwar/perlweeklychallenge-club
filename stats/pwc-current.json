@@ -1,43 +1,43 @@
 {
-   "legend" : {
-      "enabled" : 0
-   },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 168",
+         "data" : [
+            {
+               "drilldown" : "Luca Ferrari",
+               "y" : 8,
+               "name" : "Luca Ferrari"
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "y" : 2,
+               "name" : "Mark Anderson"
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
+            },
+            {
+               "name" : "Ryan Thompson",
+               "y" : 6,
+               "drilldown" : "Ryan Thompson"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "chart" : {
+      "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2022-06-07 12:12:06 GMT"
    },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 168",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "y" : 8,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 2,
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "y" : 4,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
-            }
-         ]
-      }
-   ],
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
@@ -50,7 +50,6 @@
    "drilldown" : {
       "series" : [
          {
-            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari",
             "data" : [
                [
@@ -61,7 +60,8 @@
                   "Blog",
                   6
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari"
          },
          {
             "id" : "Mark Anderson",
@@ -74,8 +74,6 @@
             ]
          },
          {
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -85,17 +83,42 @@
                   "Raku",
                   2
                ]
+            ],
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
+         },
+         {
+            "id" : "Ryan Thompson",
+            "name" : "Ryan Thompson",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
             ]
          }
       ]
    },
+   "xAxis" : {
+      "type" : "category"
+   },
    "title" : {
       "text" : "The Weekly Challenge - 168"
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2022-06-07 11:25:04 GMT"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    }
 }
