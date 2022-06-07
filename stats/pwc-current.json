@@ -1,23 +1,35 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge - 168"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2022-06-07 10:37:14 GMT"
-   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 168",
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "y" : 4,
+               "name" : "Roger Bell_West"
+            }
+         ]
+      }
+   ],
    "xAxis" : {
       "type" : "category"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2022-06-07 11:14:56 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
@@ -28,22 +40,24 @@
          }
       }
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
-            }
-         ],
-         "name" : "The Weekly Challenge - 168"
-      }
-   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 168"
+   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -53,15 +67,16 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West"
+            ]
          }
       ]
    },
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
