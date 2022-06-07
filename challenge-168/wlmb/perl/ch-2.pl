@@ -2,7 +2,7 @@
 # Perl weekly challenge 168
 # Task 2: Home prime
 #
-# See https://wlmb.github.io/2022/06/06/PWC168/#task-1-perrin-prime
+# See https://wlmb.github.io/2022/06/06/PWC168/#task-2-home-prime
 use v5.12;
 use warnings;
 use Math::Prime::Util qw(is_prime factor);
