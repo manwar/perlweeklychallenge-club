@@ -11,7 +11,8 @@ import (
 
 func main() {
 	var hp homePrime
-	hp.buildPrime(1_000_000)
+	hp.buildPrime(5_000_000, 0)
+	//fmt.Println(hp.plist, len(hp.plist))
 	if len(os.Args) > 1 {
 		for _, v := range os.Args[1:] {
 			n, err := strconv.Atoi(v)
@@ -55,22 +56,42 @@ func (hp homePrime) find(n int) *big.Int {
 	return bi
 }
 
-func (hp *homePrime) buildPrime(n int) {
+func (hp *homePrime) buildPrime(n int, o int) {
 	hp.pmap = make([]bool, int(n)+1)
-	for i := 2; i <= n; i++ {
+	//for i := 2; i <= n; i++ {
+	for i := 1; i <= n; i++ {
 		hp.pmap[i] = true
 	}
-	for i := 2; float64(i) <= math.Sqrt(float64(n)); i++ {
+	if o < 1 {
+		hp.pmap[1] = false
+	}
+	//for i := 2; float64(i) <= math.Sqrt(float64(n)); i++ {
+	for i := 2; float64(i) <= math.Sqrt(float64(n+o)); i++ {
 		j := i * i
-		for j <= n {
-			hp.pmap[j] = false
+		/*
+			for j <= n {
+				hp.pmap[j] = false
+				j += i
+			}
+		*/
+		for j <= n+o {
+			if j > o {
+				hp.pmap[j-o] = false
+			}
 			j += i
 		}
-
 	}
-	for i := 2; i < len(hp.pmap); i++ {
+	hp.plist = []int{}
+	/*
+		for i := 2; i < len(hp.pmap); i++ {
+			if hp.pmap[i] {
+				hp.plist = append(hp.plist, i)
+			}
+		}
+	*/
+	for i := 1; i < len(hp.pmap); i++ {
 		if hp.pmap[i] {
-			hp.plist = append(hp.plist, i)
+			hp.plist = append(hp.plist, i+o)
 		}
 	}
 }
@@ -90,14 +111,19 @@ func (hp *homePrime) factor(n *big.Int) (s []int) {
 		i := 0
 		m := new(big.Int)
 		nextPrime := big.NewInt(2)
+		if hp.plist[0] != 2 {
+			hp.buildPrime(5_000_000, 0)
+		}
+		o := 0
 		for {
-
 			if m.Mod(n, nextPrime).Cmp(big.NewInt(0)) != 0 {
 				i++
 				if i+1 > len(hp.plist) {
-					l := len(hp.pmap)
-					if l < 1_000_000_000 {
-						hp.buildPrime(l * 1_000)
+					if o < 100_000_000_000 {
+						//hp.buildPrime(l * 1_000)
+						o += 5_000_000
+						hp.buildPrime(5_000_000, o)
+						i = 0
 					} else {
 						return []int{}
 					}
