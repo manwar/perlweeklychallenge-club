@@ -33,14 +33,23 @@
          "Kevin Colyer"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "yAxis" : {
       "title" : {
          "text" : ""
       },
       "min" : 0
    },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -72,11 +81,9 @@
             6,
             2,
             2
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             164,
@@ -108,10 +115,10 @@
             38,
             0,
             84
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -143,25 +150,18 @@
             15,
             1,
             2
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-06-09 11:43:18 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-06-09 21:14:31 GMT"
    }
 }
