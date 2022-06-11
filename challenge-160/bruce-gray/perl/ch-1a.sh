@@ -1,0 +1,1 @@
+perl -MLingua::EN::Numbers=num2en -wE 'die if !@ARGV; my @s = num2en shift; push @s, num2en(length $s[-1]) while $s[-1] ne "four"; push @s, "magic"; say ucfirst(join(", ", map { join " is ", @s[$_-1, $_] } 1 .. $#s)) . ".";' $@

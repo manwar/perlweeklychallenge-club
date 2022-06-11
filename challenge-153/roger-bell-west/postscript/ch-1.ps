@@ -1,0 +1,43 @@
+%!PS
+
+/aeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/leftfactorial {
+    4 dict begin
+    /mx exch def
+    /out mx array def
+    /fact 1 def
+    /sum 0 def
+    0 1 mx 1 sub {
+        dup
+        dup 0 eq {
+            pop
+        } {
+            fact mul /fact exch def
+        } ifelse
+        sum fact add /sum exch def
+        out exch sum put
+    } for
+    out
+    end
+} bind def
+
+10 leftfactorial [ 1 2 4 10 34 154 874 5914 46234 409114 ] aeq { (Pass) } { (FAIL) } ifelse =

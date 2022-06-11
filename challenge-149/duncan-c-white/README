@@ -1,0 +1,31 @@
+TASK #1 - Fibonacci Digit Sum
+
+Given an input $N, generate the first $N numbers for which the sum of
+their digits is a Fibonacci number.
+
+Example
+
+f(20)=[0, 1, 2, 3, 5, 8, 10, 11, 12, 14, 17, 20, 21, 23, 26, 30, 32, 35, 41, 44]
+
+MY NOTES: Pretty easy.  Only question: how many Fibonacci numbers do we
+need to compute?  Let's extend the sequence whenever we need..
+
+
+TASK #2 - Largest Square
+
+Given a number base, derive the largest perfect square with no repeated
+digits and return it as a string. (For base>10, use 'A'..'Z'.)
+
+Example:
+
+    f(2)="1"
+    f(4)="3201"
+    f(10)="9814072356"
+    f(12)="B8750A649321"
+
+
+MY NOTES: Obvious technique is to compute all permutations of 0..B-1 (B the
+base), and check whether each is a perfect square, and track the largest
+perfect square we find.  I hate permutations, but I'm sure I have written
+a permutation generator in previous Perl Challenges...  Oh yes, I've stolen
+code from Challenge 134 (task 1) and made it into a simple Perms module here.

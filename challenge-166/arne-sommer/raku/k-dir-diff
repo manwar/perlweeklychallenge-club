@@ -1,0 +1,27 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($dir1 where $dir1.IO.d && $dir1.IO.r = 'dir_a',
+               $dir2 where $dir2.IO.d && $dir2.IO.r = 'dir_b',
+               $dir3 where $dir3.IO.d && $dir3.IO.r = 'dir_c',
+);
+
+my %dir1 = $dir1.IO.dir.map({ .d ?? .basename ~ '/' !! .basename }).Set;
+my %dir2 = $dir2.IO.dir.map({ .d ?? .basename ~ '/' !! .basename }).Set;
+my %dir3 = $dir3.IO.dir.map({ .d ?? .basename ~ '/' !! .basename }).Set;
+
+my %all = %dir1 (|) %dir2 (|) %dir3;
+
+my $max-length = (%all.keys>>.chars.max, $dir1.chars, $dir2.chars, $dir3.chars).max;
+
+say "{ $dir1.fmt("%-{$max-length}s") } | { $dir2.fmt("%-{$max-length}s") } | { $dir3.fmt("%-{$max-length}s") }";
+
+say "-" x $max-length * 3 + 6;
+
+for sort keys %all -> $file
+{
+  next if %dir1{$file} && %dir2{$file} && %dir3{$file};
+
+  say "{ (%dir1{$file} ?? $file !! '').fmt("%-{$max-length}s") } | "
+    ~ "{ (%dir2{$file} ?? $file !! '').fmt("%-{$max-length}s") } | "
+    ~ "{ (%dir3{$file} ?? $file !! '').fmt("%-{$max-length}s") }";
+}

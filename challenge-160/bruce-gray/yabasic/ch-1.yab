@@ -1,0 +1,108 @@
+rem http://2484.de/yabasic/support.html     Home site of YaBasic
+rem To run this code online, paste it either of these site:
+rem https://www.tutorialspoint.com/execute_basic_online.php
+rem https://www.jdoodle.com/execute-yabasic-online/
+
+rem Utility subs
+sub push ( a$(), s$ )                   // Faking dynamic arrays
+    redim a$( arraysize(a$(),1) + 1 )
+    a$( arraysize(a$(),1) ) = s$
+end sub
+sub last_element_of$ ( a$() )
+    return a$( arraysize(a$(),1) )
+end sub
+sub ucfirst$( s$ )
+    left$(s$,1) = upper$(left$(s$,1))
+    return s$
+end sub
+sub join$ ( separator$, a$(), count )
+    local ret$
+
+    if ( numparams < 3 ) count = arraysize(a$(),1)
+
+    if ( count >= 1 ) ret$ = a$(1)
+    for i=2 to count
+        ret$ = ret$ + separator$ + a$(i)
+    next i
+
+    return ret$
+end sub
+sub join_neighbors ( separator$, a$(), ret$() )
+    for i=1 to arraysize(a$(),1)-1
+        ret$(i) = a$(i) + separator$ + a$(i + 1)
+    next i
+
+    return
+end sub
+
+
+rem Task solution
+sub magic_four$ ( n )
+    local n_english_chain$(1), junk, next_word$
+    static words$(1)
+
+    if ( words$(1) = "" ) then
+        junk = split("zero one two three four five six seven eight nine", words$())
+    endif
+
+    n_english_chain$(1) = words$(n + 1)
+
+    while ( last_element_of$(n_english_chain$()) <> "four" )
+        next_word$ = words$( len(last_element_of$(n_english_chain$())) + 1 )
+
+        push( n_english_chain$(), next_word$ )
+    wend
+    
+    push( n_english_chain$(), "magic" )
+
+    local joined_neighbors$( arraysize(n_english_chain$(),1) - 1 )
+    join_neighbors( " is ", n_english_chain$(), joined_neighbors$() )
+
+    return ucfirst$( join$( ", ", joined_neighbors$() ) + "." )
+end sub
+
+
+rem Testing, using TAP protocol
+test_number = 0
+failed_count = 0
+sub is ( got$, expected$, desc$ )
+    test_number = test_number + 1
+
+    if ( got$ <> expected$ )  failed_count = failed_count + 1 : print "not ";
+    print "ok " + str$(test_number) + " - " + desc$
+end sub
+sub test_it ( n, expected$ )
+    local desc$
+    desc$ = "magic_four(" + str$(n) + ") eq '" + expected$ + "'"
+    is( magic_four$(n), expected$, desc$ )
+end sub
+test_it( 0, "Zero is four, four is magic." )
+test_it( 1, "One is three, three is five, five is four, four is magic." )
+test_it( 2, "Two is three, three is five, five is four, four is magic." )
+test_it( 3, "Three is five, five is four, four is magic." )
+test_it( 4, "Four is magic." )
+test_it( 5, "Five is four, four is magic." )
+test_it( 6, "Six is three, three is five, five is four, four is magic." )
+test_it( 7, "Seven is five, five is four, four is magic." )
+test_it( 8, "Eight is five, five is four, four is magic." )
+test_it( 9, "Nine is four, four is magic." )
+print "1.." + str$(test_number)
+if failed_count <> 0 print "FAILED " + str$(failed_count) + " tests"
+
+rem YaBasic syntax quirks:
+//  `;` at end of `print` suppresses newline.
+//  Variables, arrays, and subs that end in `$` are strings, otherwise are numbers.
+//      The error messages for getting that wrong are woefully generic and unhelpful.
+//  `if` has a one-line (prefix) form, omitting `then` and `fi`.
+//  `redim` is needed to fake dynamic arrays.
+//  `redim` cannot shrink an array. See `split` for a limited workaround.
+//  `local` applies to whole subroutine, not just the block it is in.
+//  `split` defaults to splitting on whitespace.
+//  `split` uses *any* *of* the delimiting characters if given a multi-character delimiter.
+//  `split` *will* resize the array as needed, bigger or *smaller*!
+//  `numparams` is needed for optional params.
+//  Subroutine parameters are always local.
+//  `//`  starts a comment
+//  `#`   starts a comment, but *only* when in position 1 on the line; no leading whitespace allowed!
+//  `rem` starts a comment, *and* is recognized as such by online syntax colorizers!
+//  Arrays cannot (usefully) have zero elements. If they do, they can never redim to have more-than-zero elements. So, useless.

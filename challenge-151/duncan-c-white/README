@@ -1,0 +1,74 @@
+TASK #1 - Binary Tree Depth
+
+You are given binary tree.
+
+Write a script to find the minimum depth.
+
+The minimum depth is the number of nodes from the root to the nearest
+leaf node (node without any children).
+
+Example 1:
+
+  Input: '1 | 2 3 | 4 5'
+
+                1
+               / \
+              2   3
+             / \
+            4   5
+
+  Output: 2
+
+Example 2:
+
+  Input: '1 | 2 3 | 4 *  * 5 | * 6'
+
+                1
+               / \
+              2   3
+             /     \
+            4       5
+             \
+              6
+  Output: 3
+
+MY NOTES: well, if I built a binary tree from the input, it would be quite
+simple to find the minimum depth.  But there must be a way to solve the
+problem using only the input syntax.  Something like: split into rows on '|'.
+Each row has 2 * (rowno-1) elements (starting at row 1).  If a row hasn't
+got that many elements, pad it with '*'s.  Now, find the first non-full row,
+ie. with one or more '*'s.  Take the row a pair of elements at a time. If
+any pair are both '*'s, then the min depth is rowno-1.  Otherwise proceed
+to the next row, and keep going down the rows.
+
+
+TASK #2 - Rob The House
+
+You are planning to rob a row of houses, always starting with the first
+and moving in the same direction. However, you can't rob two adjacent
+houses.
+
+Write a script to find the highest possible gain that can be achieved.
+
+Example 1:
+
+  Input: @valuables = (2, 4, 5);
+  Output: 7
+
+If we rob house 0 we get 2 and then the only house we can rob is house
+2 where we have 5.  So the total valuables in this case is (2 + 5) = 7.
+
+
+Example 2:
+
+  Input: @valuables = (4, 2, 3, 6, 5, 3);
+  Output: 13
+
+The best choice would be to first rob house 0 then rob house 3 then finally
+house 5.  This would give us 4 + 6 + 3 =13.
+
+
+MY NOTES: Hmm.. some sort of recursive "find all paths" method.
+It always helps to pick the right function purpose and name.
+I think the recursive function we need is: 
+my $maxvaluables = maxrobbery( startpos ), invoked as my $max=maxrobbery(0)?

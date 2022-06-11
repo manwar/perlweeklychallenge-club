@@ -1,0 +1,90 @@
+%!PS
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/strtok {
+    1 dict begin
+    /out 0 array def
+    {
+        ( ) search
+        {
+            out exch apush /out exch def
+            pop
+        } {
+            out exch apush /out exch def
+            exit
+        } ifelse
+    } loop
+    out
+    end
+} bind def
+
+/str2tree {
+    7 dict begin
+    /o [ 0 ] def
+    /d 0 def
+    /p 0 def
+    strtok {
+        dup (|) eq {
+            pop
+            /d d 1 add def
+            /p 0 def
+            /m 1 d 1 add bitshift 1 sub def
+            o length m lt {
+                m o length sub {
+                    /o o 0 apush def
+                } repeat
+            } if
+        } {
+            dup (*) eq {
+                pop
+                /y 0 def
+            } {
+                cvi /y exch def
+            } ifelse
+            o 1 d bitshift 1 sub p add y put
+            /p p 1 add def
+        } ifelse
+    } forall
+    o
+    end
+} bind def
+
+/mindepth {
+    5 dict begin
+    /tree exch def
+    tree length /firstleaf exch def
+    /i 0 def
+    0 1 tree length 1 sub {
+        0 ne {
+            i 1 add 1 bitshift tree length ge {
+                /firstleaf i def
+                exit
+            } {
+                /ni i 1 add 1 bitshift 1 sub def
+                tree ni get 0 eq tree ni 1 add get 0 eq and {
+                    /firstleaf i def
+                    exit
+                } if
+            } ifelse
+        } if
+        /i i 1 add def
+    } for
+    /t firstleaf 1 add def
+    /d 0 def
+    {
+        t 0 le {
+            exit
+        } if
+        /t t -1 bitshift def
+        /d d 1 add def
+    } loop
+    d
+    end
+} bind def
+
+(1 | 2 3 | 4 5) str2tree mindepth 2 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+(1 | 2 3 | 4 * * 5 | * 6) str2tree mindepth 3 eq { (Pass) } { (FAIL) } ifelse =

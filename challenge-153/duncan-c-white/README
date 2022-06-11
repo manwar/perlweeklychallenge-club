@@ -1,0 +1,45 @@
+TASK #1 - Left Factorials
+
+Write a script to compute Left Factorials of 1 to 10. Please refer OEIS
+A003422 for more information.
+
+(My summary: left factorial N = sum k! for k in (0..N-1), remembering that
+ 0! = 1! = 1.  So lf(N+1) = lf(N) + N!)
+
+Expected Output:
+
+1, 2, 4, 10, 34, 154, 874, 5914, 46234, 409114
+
+MY NOTES: easy, 1 pass, calc N! on the fly (by multiplying (N-1)! by N)
+and add (N-1)! to lf(N-1) to give lf(N).
+
+
+TASK #2 - Factorions
+
+You are given an integer, $n.
+
+Write a script to figure out if the given integer is factorion.
+
+A factorion is a natural number that equals the sum of the factorials of its digits.
+
+Example 1:
+
+  Input: $n = 145
+  Output: 1
+
+    Since 1! + 4! + 5! => 1 + 24 + 120 = 145
+
+Example 2:
+
+  Input: $n = 123
+  Output: 0
+
+    Since 1! + 2! + 3! => 1 + 2 + 6 <> 123
+
+MY NOTES: cool, precompute 0..9! in a 10 element array, split number into
+digits, sum their factorials and check if the result if the number you
+first thought of.  Let's add a tabulating mode (invoked if --tab given) that
+shows, which numbers (1..$n) are factorian.  Running this as:
+	./ch-2.pl -t 1000000
+reveals that the only base 10 factorians under 1000000 are:
+        1, 2, 145, 40585

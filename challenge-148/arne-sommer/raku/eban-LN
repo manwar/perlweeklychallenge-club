@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+use Lingua::Number;
+
+unit sub MAIN (Int $limit = 100);
+
+(1 .. $limit).grep( { ! cardinal($_, 'en').contains('e') } ).join(", ").say;

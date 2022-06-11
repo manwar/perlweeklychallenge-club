@@ -1,0 +1,8 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int :$n where $n != 0 = 3, :l(:$length) = 30);
+
+my $fibonacci     := (0, 1, * + * ... *);
+my $pisano-period := $fibonacci.map( * % $n);
+
+say $pisano-period[^$length];

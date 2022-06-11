@@ -1,0 +1,20 @@
+#! /usr/bin/env raku
+
+subset DigitStr where * ~~ /^<[0..9]>+$/;
+
+unit sub MAIN (DigitStr $a, DigitStr $b, :v(:$verbose)); 
+
+my $fw := ($a, $b, * ~ * ... *);
+
+for ^Inf -> $index
+{
+  my $current = $fw[$index];
+
+  say ": { $index +1 }: $current" if $verbose;
+
+  if $current.chars >= 51
+  {
+    say $current.substr(50, 1);
+    last;
+  }
+}

@@ -1,0 +1,14 @@
+#! /usr/bin/env raku
+
+my $lf := gather
+{
+  my $index = 0;
+  my $prev  = 0;
+
+  loop
+  {
+    take $prev += ( [*] (1 .. $index++) ).sum;
+  }
+}
+
+say $lf[^10].join(", ");

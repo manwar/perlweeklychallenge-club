@@ -1,0 +1,93 @@
+%!PS
+
+/aeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/permute { % [array] {proc} permute runs proc on each permutation of array
+    7 dict begin
+    /subproc exch def
+    /a exch def
+    /n a length def
+    /c [ n { 0 } repeat ] def
+    mark a subproc cleartomark
+    /i 0 def
+    {
+        i n ge {
+            exit
+        } if
+        c i get i lt {
+            i 2 mod 0 eq {
+                0 i permute.swap
+            } {
+                c i get i permute.swap
+            } ifelse
+            mark a subproc cleartomark
+            c i get 1 add c exch i exch put
+            /i 0 def
+        } {
+            c i 0 put
+            /i i 1 add def
+        } ifelse
+    } loop
+    end
+} bind def
+
+/permute.swap {
+    /bi exch def
+    /ai exch def
+    a ai get
+    a bi get
+    a exch ai exch put
+    a exch bi exch put
+} bind def
+
+/factorial {
+    1 dict begin
+    /f 1 def
+    2 exch 1 exch {
+        f mul /f exch def
+    } for
+    f
+    end
+} bind def
+
+/missingpermutations {
+    2 dict begin
+    /list exch def
+    /perms list 0 get length factorial dict def
+    list 0 get dup length string copy { perms exch true put } permute
+    list {
+        perms exch undef
+    } forall
+    [
+    perms {
+        pop
+        list 0 get length string cvs
+    } forall
+    ]
+    end
+} bind def
+
+[ (PELR) (PREL) (PERL) (PRLE) (PLER) (PLRE) (EPRL) (EPLR) (ERPL) (ERLP)
+(ELPR) (ELRP) (RPEL) (RPLE) (REPL) (RELP) (RLPE) (RLEP) (LPER) (LPRE)
+(LEPR) (LRPE) (LREP) ] missingpermutations
+[ (LERP) ]
+aeq { (Pass) } { (FAIL) } ifelse =
+

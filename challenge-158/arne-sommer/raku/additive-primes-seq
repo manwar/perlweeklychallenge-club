@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $length where $length > 0 = 10);
+
+my $ap := (1..Inf).grep( *.is-prime ).grep( *.comb.sum.is-prime );
+
+$ap.head($length).join(", ").say;

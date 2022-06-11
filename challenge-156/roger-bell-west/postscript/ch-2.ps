@@ -1,0 +1,63 @@
+%!PS
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/divisors {
+    4 dict begin
+    /n exch def
+    /ff [ 1 ] def
+    n 1 ge {
+        /s n sqrt cvi def
+        s s mul n eq {
+            /ff ff s apush def
+            /s s 1 sub def
+        } if
+        2 1 s {
+            /pf exch def
+            n pf mod 0 eq {
+                /ff ff pf apush def
+                /ff ff n pf idiv apush def
+            } if
+        } for
+    } if
+    ff
+    end
+} bind def
+
+/is_weird {
+    6 dict begin
+    /n exch def
+    /dd n divisors def
+    0 dd { add } forall n le {
+        false
+    } {
+        /r true def
+        1 1 1 dd length bitshift 1 sub {
+            /mask exch def
+            /ss 0 def
+            0 1 dd length 1 sub {
+                /i exch def
+                mask 1 i bitshift and 0 ne {
+                    /ss ss dd i get add def
+                    ss n gt {
+                        exit
+                    } if
+                } if
+            } for
+            ss n eq {
+                /r false def
+                exit
+            } if
+        } for
+        r
+    } ifelse
+    end
+} bind def
+
+12 is_weird not { (Pass) } { (FAIL) } ifelse print ( ) print
+13 is_weird not { (Pass) } { (FAIL) } ifelse print ( ) print
+70 is_weird { (Pass) } { (FAIL) } ifelse =
+

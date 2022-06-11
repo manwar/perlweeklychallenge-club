@@ -1,0 +1,43 @@
+TASK #1 - Missing Permutation
+
+You are given possible permutations of the string 'PERL'.
+
+PELR, PREL, PERL, PRLE, PLER, PLRE, EPRL, EPLR, ERPL,
+ERLP, ELPR, ELRP, RPEL, RPLE, REPL, RELP, RLPE, RLEP,
+LPER, LPRE, LEPR, LRPE, LREP
+
+Write a script to find any permutations missing from the list.
+
+MY NOTES: should be easy, find all permutations and set subtract.
+Reuse my Perms module from challenge 149.
+
+
+TASK #2 - Padovan Prime
+
+A Padovan Prime is a Padovan Number that's also prime.
+
+In number theory, the Padovan sequence is the sequence of integers P(n)
+defined by the initial values.
+
+P(0) = P(1) = P(2) = 1
+
+and then followed by
+
+P(n) = P(n-2) + P(n-3)
+
+First few Padovan Numbers are as below:
+
+1, 1, 1, 2, 2, 3, 4, 5, 7, 9, 12, 16, 21, 28, 37, ...
+
+Write a script to compute first 10 distinct Padovan Primes.
+Expected Output
+
+2, 3, 5, 7, 37, 151, 3329, 23833, 13091204281, 3093215881333057
+
+MY NOTES: ok, Padovan numbers are rather like Fibonacci numbers,
+and easy enought to calculate.  Then we must check isprime().
+Should be pretty easy in principle, but in practice I note how big
+answers get very quickly, this code finds the first 8 Padovan
+Primes but would take ludicrously long amounts of time - and ludicrously
+large amounts of RAM to store all the prime numbers.  It's never
+finished for N==9 or 10.

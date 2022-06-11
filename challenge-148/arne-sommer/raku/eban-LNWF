@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+use Lingua::NumericWordForms;
+
+unit sub MAIN (Int $limit = 100);
+
+(1 .. $limit).grep( { ! to-numeric-word-form($_).contains('e') } ).join(", ").say;

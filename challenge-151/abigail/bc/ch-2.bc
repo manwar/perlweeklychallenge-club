@@ -1,0 +1,37 @@
+#!/usr/bin/bc
+
+#
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-151
+#
+
+#
+# Run as: bc ch-2.bc < input-file
+#
+# End each line of input with a 0
+# End input with a -1
+
+while (1) {
+    n = read ()
+    if (n < 0) {
+        break
+    }
+    sz = 0
+    while (n > 0) {
+        h [sz] = n
+        sz = sz + 1
+        n = read ()
+    }
+    h [sz + 0] = 0
+    h [sz + 1] = 0
+    for (i = sz - i; i >= 2; i --) {
+        if (h [i] + h [i + 2] > h [i + 1]) {
+            h [i] = h [i] + h [i + 2]
+        } else {
+            h [i] = h [i + 1]
+        }
+    }
+    h [0] + h [2]
+}
+
+
+halt

@@ -1,0 +1,14 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $n where 3 < $n <= 38, :v(:$verbose));
+
+for 2 .. $n -2 -> $base
+{
+  my $digits = $n.base($base);
+
+  say ":N:$n in base $base -> $digits" if $verbose;
+
+  if [eq] $digits.comb { say 1; exit; }
+}
+
+say 0;

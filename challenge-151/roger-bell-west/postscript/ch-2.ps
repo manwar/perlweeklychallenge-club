@@ -1,0 +1,52 @@
+%!PS
+
+/apush { % [a b] c -> [a b c]
+    1 dict begin
+    /t exch def
+    [ exch aload pop t ]
+    end
+} bind def
+
+/apop { % [a b c] -> [a b] c
+    1 dict begin
+    [ exch aload pop /t exch def ] t
+    end
+} bind def
+
+/plan {
+    8 dict begin
+    /houses exch def
+    /terminal houses length 2 sub def
+    /b [ [ 0 ] ] def
+    /reward 0 def
+    {
+        b length 0 le {
+            exit
+        } if
+        b apop /c exch def /b exch def
+        /c1 c c length 1 sub get def
+        c1 terminal ge {
+            /r 0 def
+            c {
+                houses exch get r add /r exch def
+            } forall
+            r reward gt {
+                /reward r def
+            } if
+        } {
+            c1 2 add 1 c1 3 add {
+                /n exch def
+                n houses length ge {
+                    exit
+                } if
+                b [ c aload pop n ] apush /b exch def
+            } for
+        } ifelse
+    } loop
+    reward
+    end
+} bind def
+
+[ 2 4 5 ] plan 7 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+
+[ 4 2 3 6 5 3 ] plan 13 eq { (Pass) } { (FAIL) } ifelse =

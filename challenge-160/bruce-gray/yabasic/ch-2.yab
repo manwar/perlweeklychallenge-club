@@ -1,0 +1,103 @@
+rem http://2484.de/yabasic/support.html     Home site of YaBasic
+rem To run this code online, paste it either of these site:
+rem https://www.tutorialspoint.com/execute_basic_online.php
+rem https://www.jdoodle.com/execute-yabasic-online/
+rem See also my notes on Yabasic syntax quirks at the bottom of ./ch-1.yab .
+
+rem Utility subs
+sub sum ( a() )
+    local total
+    total = 0
+    for i=1 to arraysize(a(),1)
+        total = total + a(i)
+    next i
+    return total
+end sub
+sub array_n2s ( n(), s$() )
+    redim  s$( arraysize(n(),1) )
+    for i=1 to arraysize(n(),1)
+        s$(i) = str$(n(i))
+    next i
+end sub
+sub array_s2n ( s$(), n() )
+    redim   n( arraysize(s$(),1) )
+    for i=1 to arraysize(s$(),1)
+        n(i) = val(s$(i))
+    next i
+end sub
+sub join$ ( separator$, a$(), count )
+    local ret$
+
+    if ( numparams < 3 ) count = arraysize(a$(),1)
+
+    if ( count >= 1 ) ret$ = a$(1)
+    for i=2 to count
+        ret$ = ret$ + separator$ + a$(i)
+    next i
+
+    return ret$
+end sub
+
+
+rem Task solution; Numeric input and output
+rem Populates out(), and returns the populated size of out().
+sub equilibrium_index ( in(), out() )
+    local left, right, i, x, out_i
+    left  = 0
+    right = sum( in() )
+
+    out_i = 1
+    for i=1 to arraysize(in(),1)
+        x = in(i)
+        right = right - x
+        if (left = right) then
+            // Faking "push"
+            out(out_i) = i-1
+            out_i = out_i + 1
+        endif
+        left = left + x
+    next i
+
+    return out_i - 1
+end sub
+
+
+rem Convenience wrapper that converts to and from strings.
+sub eq_index$ ( list$ )
+    local in$(1), count
+
+    count = split(list$, in$())
+
+    local in(count),  out(count), out$(count)
+
+    array_s2n( in$(), in() )
+    count = equilibrium_index( in(), out() )
+    array_n2s( out(), out$() )
+
+    return join$(" ", out$(), count)
+end sub
+
+
+rem Testing, using TAP protocol
+test_number = 0
+failed_count = 0
+sub is ( got$, expected$, desc$ )
+    test_number = test_number + 1
+
+    if ( got$ <> expected$ )  failed_count = failed_count + 1 : print "not ";
+    print "ok " + str$(test_number) + " - " + desc$
+end sub
+sub test_it ( list$, expected$ )
+    local desc$
+    desc$ = "equilibrium_index('" + list$ + "') eq '" + expected$ + "'"
+    is( eq_index$(list$), expected$, desc$ )
+end sub
+test_it( "1 3 5 7 9"        , "3" )
+test_it( "1 2 3 4 5"        , "" )
+test_it( "2 4 2"            , "1" )
+test_it( "-7 1 5 2 -4 3 0"  , "3 6" )
+test_it( "2 4 6"            , "" )
+test_it( "2 9 2"            , "1" )
+test_it( "1 -1 1 -1 1 -1 1" , "0 1 2 3 4 5 6" )
+print "1.." + str$(test_number)
+if failed_count <> 0 print "FAILED " + str$(failed_count) + " tests"

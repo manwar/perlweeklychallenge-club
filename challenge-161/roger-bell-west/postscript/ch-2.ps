@@ -1,0 +1,139 @@
+%!PS
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{ exch dup length
+  2 index length add string
+  dup dup 4 2 roll copy length
+  4 -1 roll putinterval
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} def
+
+/d 400000 string def
+
+(%stdin) (r) file d readstring pop /d exch def
+
+/f 0 dict def
+/r 0 dict def
+
+{
+    d (\n) search {
+        /w exch def
+        /b 1 def
+        /v 0 def
+        (a) 0 get 1 (z) 0 get {
+            /c (.) def c exch 0 exch put
+            w c search {
+                pop pop pop
+                /v v b or def
+            } {
+                pop
+            } ifelse
+            /b b 1 bitshift def
+        } for
+        /s false def
+        r v known {
+            r v get length w length gt {
+              /s true def
+            } if
+        } {
+            /s true def
+        } ifelse
+        s {
+            f w v put
+            r v w put
+        } if
+        pop
+        /d exch def
+    } {
+        pop
+        exit
+    } ifelse
+} loop
+
+/w 0 array def
+/lt 1 26 bitshift 1 sub def
+/lu [ 0 ] def
+{
+    /lx lu lu length 1 sub get def
+    lx lt eq {
+        exit
+    } if
+    /wn () def
+    w length 0 gt {
+        /mode 0 def
+        /sc 0 array def
+        r keys {
+            /wv exch def
+            wv lx and 0 eq {
+                mode 0 eq {
+                    /mode 1 def
+                    /sc 0 array def
+                } if
+                /sc sc r wv get apush.right def
+            } {
+                mode 0 eq wv lx or lx ne and {
+                    /sc sc r wv get apush.right def
+                } if
+            } ifelse
+        } forall
+        sc length 0 eq {
+            /w w apop pop def
+            /lu lu apop pop def
+        } {
+            /wn sc rand sc length mod get def
+        } ifelse
+    } {
+        /sc r values def
+        /wn sc rand sc length mod get def
+    } ifelse
+    wn length 0 gt {
+        /w w wn apush.right def
+        /lu lu lx f wn get or apush.right def
+    } if
+} loop
+
+w ( ) strjoin =

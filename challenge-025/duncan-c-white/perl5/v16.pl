@@ -37,15 +37,11 @@ my @words = qw(audino bagon baltoy banette bidoof braviary bronzor carracosta
 	wartortle whismur wingull yamask);
 #@words = qw(hello ollie excellent thanks shelter runaround set to);
 
-#die scalar(@words);
-
 my %sw;	     # hash from letter L to list of word nos of words STARTING with L
 
-my @outword; # array from word no N to array of wordnos of words going "out"
-	     # from word N, i.e. starting with the last letter of word N
-	     # if there are no such words, then []
-
-my @stopword;# list of stop word nos (word nos of words with no outwords)
+my @stopword;# list of stop word nos (word nos of words with no words going
+	     # "out" from them onto another word, ie. word numbers N where
+	     # no other word starts with the last letter of word N)
 
 my %ew;	     # hash from letter L to list of word nos of words ENDING with L
 
@@ -75,17 +71,15 @@ foreach my $wn (0..$#words)
 }
 #die Dumper \%ew;
 
-# build @outword and @stopword, using %sw
+# build @stopword, using %sw
 foreach my $wn (0..$#words)
 {
 	my $word = $words[$wn];
 	$word =~ /(.)$/;
 	my $lastletter = $1;
 	my $aref = $sw{$lastletter} // [];
-	$outword[$wn]= $aref;
 	push @stopword, $wn if @$aref==0;
 }
-#die Dumper \@outword;
 #die Dumper [ map { $words[$_] } @stopword ];
 
 # build @inword, using %ew
@@ -106,6 +100,46 @@ my @seqs = findall();
 show_seqs( @seqs ) if $debug;
 
 exit 0;
+
+
+#
+# my @suset = suset( $wno );
+#	Form a SUset in which all word nos are unused, except $wno.
+#
+fun suset( $wno )
+{
+	my @suset = (0) x scalar(@words);
+	$suset[$wno] = 1;
+	return @suset;
+}
+
+
+#
+# show_seqs( @seqs );
+#	Show the sequences (as words, not word nos)
+#
+fun show_seqs( @seqs )
+{
+	foreach my $s (@seqs)
+	{
+		my $str = join( ',', map { $words[$_] } split(/,/,$s) );
+		print "$str\n";
+	}
+}
+
+
+#
+# show_sus( @sus );
+#	Show the sequences (as words, not word nos) contained in SUlist @sus
+#
+fun show_sus( @sus )
+{
+	foreach my $s (@sus)
+	{
+		my $str = $s->[1];
+		print "$str\n";
+	}
+}
 
 
 #
@@ -183,45 +217,4 @@ fun findall(  )
 
 	my $currsus = $sus[$curr];
 	return map { $_->[1] } @$currsus;
-}
-
-
-
-#
-# my @suset = suset( $wno );
-#	Form a SUset in which all word nos are unused, except $wno.
-#
-fun suset( $wno )
-{
-	my @suset = (0) x scalar(@words);
-	$suset[$wno] = 1;
-	return @suset;
-}
-
-
-#
-# show_sus( @sus );
-#	Show the sequences (as words, not word nos) contained in SUlist @sus
-#
-fun show_sus( @sus )
-{
-	foreach my $s (@sus)
-	{
-		my $str = $s->[1];
-		print "$str\n";
-	}
-}
-
-
-#
-# show_seqs( @seqs );
-#	Show the sequences (as words, not word nos)
-#
-fun show_seqs( @seqs )
-{
-	foreach my $s (@seqs)
-	{
-		my $str = join( ',', map { $words[$_] } split(/,/,$s) );
-		print "$str\n";
-	}
 }

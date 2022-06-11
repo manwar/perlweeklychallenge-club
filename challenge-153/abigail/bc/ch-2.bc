@@ -1,0 +1,34 @@
+#!/usr/bin/bc
+
+#
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-153
+#
+
+#
+# Run as: bc ch-2.bc < input-file
+#
+
+fac [0] = 1
+for (n = 1; n <= 9; n ++) {
+    fac [n] = n * fac [n - 1]
+}
+
+while (1) {
+    num = read ()
+    if (num == 0) {
+        break
+    }
+    n = num
+    sum = 0
+    while (n > 0) {
+        sum += fac [n % 10]
+        n   /= 10
+    }
+    if (num == sum) {
+        1
+    } else {
+        0
+    }
+}
+
+halt

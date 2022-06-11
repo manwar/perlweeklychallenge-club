@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (:z(:$zero-based));
+
+my $lf := gather
+{
+  my $index = 0;
+  my $prev  = 0;
+
+  take 0 if $zero-based;
+
+  loop
+  {
+    take $prev += ( [*] (1 .. $index++) ).sum;
+  }
+}
+
+say $lf[^10].join(", ");

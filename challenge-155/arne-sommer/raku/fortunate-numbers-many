@@ -1,0 +1,27 @@
+#! /usr/bin/env raku
+
+subset PositiveInt of Int where * >= 1;
+
+unit sub MAIN (PositiveInt $limit = 20, :v(:$verbose));
+
+my $primes := (2 .. Inf).grep( *.is-prime );
+
+my @result;
+
+for 1 .. $limit -> $index
+{
+  my $product = [*] $primes[^$index];
+
+  say ": Index: $index. Prime: $primes[$index-1]. Product: $product" if $verbose;
+
+  for 2 .. Inf -> $add
+  {
+    if ($product + $add).is-prime
+    {
+      @result.push: $add;
+      last;
+    }
+  }
+}
+
+say @result.join(", ");

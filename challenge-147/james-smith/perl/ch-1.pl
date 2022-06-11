@@ -34,8 +34,8 @@ my @tprimes_current = (3,7);
 
 printf $T, ++$index, $_, time-$t0 for 2,3,5,7;
 while(1) {
-  last unless @tprimes_current; ## Exit if there are no current l-trunc primes
-                                ## We are at the end of the list...
+  @tprimes_current||last; ## Exit if there are no current l-trunc primes
+                          ## We are at the end of the list...
 
   my @tprimes_new = ();
 

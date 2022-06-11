@@ -1,6 +1,6 @@
-[< Previous 146](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-146/james-smith) |
-[Next 148 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-148/james-smith)
-# Perl Weekly Challenge #147
+[< Previous 147](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-145/james-smith) |
+[Next 149 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-149/james-smith)
+# Perl Weekly Challenge #148
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -12,201 +12,103 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-147/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-148/james-smith
 
-# Challenge 1 - Truncatable Prime
+# Challenge 1 - Eban Numbers
 
-***Write a script to generate first 20 left-truncatable prime numbers in base 10. In number theory, a left-truncatable prime is a prime number which, in a given base, contains no 0, and if the leading left digit is successively removed, then all resulting numbers are primes.***
-
-## The solution
-
-Another prime problem this week so we can reuse our generator from last week...
-
-```perl
-for(;;$c+=2){
-  ($_*$_>$c)?((push@p,$c),last):$c%$_||last for@p;
-}
-```
-
-We are asked to find the first 20 left-truncatable primes. Primes which when you repeatedly remove the first digit you get another prime.
-
-The naïve approach is to loop through all numbers and the check that any prime found has this property. Well this works OK for `N = 20`, but what if `N = 100` or `N = 1000` or larger. This approach doesn't scale well.
-
-So how can we resolve this. We note that for left-truncatable prime of length `n+1` is a prime, whose first digit is one of `1 .. 9`, and the remaining digits are a left-truncatable prime of length `n`.
-
-This means we can create a series of left-truncatable primes of a given length, by using the short left-truncatable primes. This may slow down things when `n` is small - but it greatly reduces the search space as `n` increases.
-
-We still need to keep a list of all prime numbers, but only up to the square root of the left-truncatable prime. Greatly reducing the number we have to find/store.
-
-Now there are 4,260 such numbers the largest having 24 digits: 357,686,312,646,216,567,629,137. The code works up until left-truncatable prime 4,241 - as this is the largest l-truncatable prime less than `2^63` the largest 64-bit unsigned integer. It took about 15.5 hours to generate this list.
-
-```perl
-## Set up primes
-my( $TEMPLATE, $t0, $index, $N, $c, @primes ) =
-  ( "%6d\t%28d\t%15.6f\n", time, 0, @ARGV ? $ARGV[0] : 20, 5, 3 );
-my @tprimes_current = (3,7);
-
-printf $TEMPLATE, ++$index, $_, time-$t0 for 2,3,5,7;
-while(1) {
-  # ** Stop if there are no primes of length `n`.
-  last unless @tprimes_current;
-  my @tprimes_new = ();
-  # ** Loop through each of possible left-truncatable primes...
-  for my $first ( 1..9 ) {
-    B: for my $base ( @tprimes_current ) {
-      # ** New left-truncated prime candidate.
-      my $p = $first.$base;
-      # ** Use our prime generator this stopping when we have enough
-      #    primes - to sqrt of left-truncatable prime.
-      for( ;$primes[-1]*$primes[-1]<$p;$c+=2) {
-        ($_*$_>$c)?(push(@primes,$c),last):$c%$_||last for @primes;
-      }
-      # ** See if left-truncatable prime is prime...
-      $p%$_||next B for @primes;
-      push @tprimes_new, $p;
-      printf $TEMPLATE, ++$index, $p, time - $t0;
-      exit if $index >= $N;
-    }
-  }
-  ## Replace current list with new list for the next loop round.
-  @tprimes_current = @tprimes_new;
-}
-```
-
-### Notes:
-
- * As we are printing out the truncatable primes we don't keep a record of them, only the list of length `n` (`@tprimes_current`) and those of length `n+1` (`@tprimes_new`).
- * Although primes of length 1 can end in `2` and `5`, all other left-truncatable primes end in `3` or `7`. So we initialise `@tprimes_current` with 2 values `3` and `7`.
- * We know the number of left-truncatable primes as there are no 25 digit left-truncatable primes...
- * We use the label version of `next` - `next B` to jump out of the loop through the primes and also the inner loop ( `@tprimes_current` ).
-
-### Results..
-
-There are 4260 left-truncatable primes - 4241 are less than the max integer value in perl (2^63) - and takes about 15.5 hours.
-
-```
-     1                                   2           0.000006
-     2                                   3           0.000467
-     3                                   5           0.000721
-     4                                   7           0.000930
-     5                                  13           0.000025
-...
-...
-...
-  4238           6,918,997,653,319,693,967       46025.573958
-  4239           7,986,315,421,273,233,617       50835.182091
-  4240           8,918,997,653,319,693,967       54882.080819
-  4241           8,963,315,421,273,233,617       55078.314226
-```
-## Aside - Right-truncatable primes
-
-We can modify our script slightly to handle right truncatable primes - this is actually a simpler problem to the left truncatable primes, as there is a lot less of them, as they all have the form `[2357][1379]*`. Obviously we have to modify the code to add the extra digit at the end of the number rather than at the front but we also have to switch the order of the two for loops. Rather than the outer one being the digit added and the inner one the list of truncatable primes of length `n-1` we have to make the outer loop as the list of right truncatable primes and the inner loop the additional digits - there are only 4 options here 1, 3, 7 & 9. This ensures the primes come out in numerical order.
-
-```perl
-my ( $TEMPLATE, $idx, $t0, $c, @primes ) =
-   ( "%6d\t%28d\t%15.6f\n", 0, time, 5, 3 );
-my @tprimes_current = (2,3,5,7);
-printf $TEMPLATE, ++$idx, $_, time - $t0 foreach @tprimes_current;
-
-for my $p ( 1 .. 100 ) {
-  last unless @tprimes_current;
-  my @tprimes_new = ();
-  foreach my $base ( @tprimes_current ) {
-    B: foreach my $last ( 1,3,7,9 ) {
-      my $n = $base.$last;
-      foreach( ;$primes[-1]*$primes[-1]<$n;$c+=2) {
-        ($_*$_>$c)?(push(@primes,$c),last):$c%$_||last for @primes;
-      }
-      $n%$_||next B foreach @primes;
-      push @tprimes_new, $n;
-      printf $TEMPLATE, ++$idx, $n, time - $t0;
-    }
-  }
-  @tprimes_current = @tprimes_new;
-}
-```
-
-### Results..
-
-There are 83 right-truncatable primes - the script runs for less than 0.02 seconds.
-
-```
-     1                               2           0.000006
-     2                               3           0.000467
-     3                               5           0.000721
-     4                               7           0.000930
-     5                              23           0.001119
-...
-...
-...
-    81                      37,337,999           0.011444
-    82                      59,393,339           0.012381
-    83                      73,939,133           0.013005
-```
-
-# Challenge 2 - Pentagon Numbers
-
-***Write a sript to find the first pair of Pentagon Numbers whose sum and difference are also a Pentagon Number. A pentagon number has the form: `P(n) = n(3n - 1)/2`***
+***Write a script to generate all Eban Numbers <= 100. An Eban number is a number that has no letter ‘e’ in it when the number is spelled in English (American or British).***
 
 ## The solution
 
-We create an array of pentagon numbers, along with a map from value to key. The while loop makes sure that we have enough pentagonal numbers to be greater than the sum of the two pentagonal numbers (indexed by by `$o` and `$i`).
+I will present two different solutions for the more general problem of large Eban numbers, but for numbers less than 1,000 we have:
 
- 
+* The units must be 0, 2, 4, 6
+* The tens must be 0, 30, 40,50, 60, 
+
+So to compute the eban numbers less than 100 (and consequently all eban numbers less than one thousand) we can use:
+
 ```perl
-my %q = map { $_=>$_ } (my @p = (0,1)); #1
-for(my $o=2;;$o++) {
-  for(my $i=1, ($q{$p[$o]||=$o*(3*$o-1)/2}||=$o); $i<$o; $i++) { #2
-    (my $d=$q{$p[$o]-$p[$i]}) || next;                           #3
-    (push(@p, @p * (3*@p-1)/2), $q{$p[-1]}=@p) while $p[$o]+$p[$i] > $p[-1];  #4
-    (my $s=$q{$p[$o]+$p[$i]}) || next;                           #5
-    die "First 2 pents are:\n  p($o) = $p[$o]\n  p($i) = $p[$i],\n  p($o) + p($i) = $p[$s] = p($s),\n  p($o) - p($i) = $p[$d] = p($d).\n" #6
+say for map{my$a=$_;map{10*$a+2*$_||()}(0..3)}(0,3..6);
+```
+
+The `||()` removes the zero value which is not an eban number.
+
+This gives us the following numbers less than 1,000:
+
+`2 4 6 30 32 34 36 40 42 44 46 50 52 54 56 60 62 64 66`
+
+Now we can use this sequence to generate all eban numbers.
+
+For eban numbers of order *1000^n* we just need to multiply all the eban numbers of order "*1000^(n-1)*" these by 1000 and add each one add each of the eban numbers less than 100 (this time including 0). This assumes that for values of 1000, 1000000 etc we say *one thousand*, *one million*, ...
+
+```perl
+say for my@e=grep{$_}my@n=map{my$a=$_;map{10*$a+2*$_}(0..3)}(0,3..6);
+for(2..$N){
+  say for@e=map{my$a=$_;map{$a*1e3+$_}@n}@e;
+}
+```
+
+The second removes the need to use `sprintf` everytime in the subsequent loops, by generating the list of numbers padded with 0s - we can see this with the performance gain in all but the first case (the first loop is made slightly more complex).
+
+### Notes: Timings
+
+| Max   | (in words)  | Rate            | Count      |
+| ----: | :---------: | --------------: | ---------: |
+|  10^3 | Thousand    |   200,481.00 /s |         19 |
+|  10^6 | Million     |    18,214.94 /s |        399 |
+|  10^9 | Billion     |       971.82 /s |      7,999 |
+| 10^12 | Trillion    |        49.41 /s |    159,999 |
+| 10^15 | Quadrillion |         2.27 /s |  3,199,999 |
+| 10^18 | Quintillion |         0.10 /s | 63,999,999 |
+
+Unable to proceed with values of n greater than 6, as we are hitting memory limits, and the size of integer perl can store by default (64-bit).
+
+ * Would need to look at using `bigint` for working with arbitrary sized integers or reverting to a string based solution (although this uses a even more memory)
+
+# Challenge 2 - Cardano Triplets
+***Write a script to generate first 5 Cardano Triplets. A triplet of positive integers (a,b,c) is called a Cardano Triplet if it satisfies the below condition.***
+
+*(a+b.sqrt(c))^(1/3) + (a-b.sqrt(c))^(1/3) = 1*
+
+## The solution
+
+There is a very naive solution which tries all combinations of *a*,*b*,*c*. But there is a more performant solution.
+
+You can rewrite the equation in the form:
+
+*8.a^3 + 15.a^2 + 6.a - 27.b^2.c = 1*
+
+Which can be further parametrized as:
+
+*b^2.c = k^2 . (8.k-3)*
+
+Where *a=3.k-1*. and *k* starts at 1.
+
+So the first entry *k=1*, *b^2.c=5* - so is solved by *a=2*, *b=1*, *c=5*.
+
+So the code to find all cardano triplets with *a<10,000* is:
+
+```perl
+for my $k (1..3333) {
+  for( my ($b, $n) = (1, $k*$k*(8*$k-3) ); $n > $b*$b; $b++ ) {
+    say join "\t", 3*$k-1, $b, $n/$b/$b unless $n%($b*$b);
   }
 }
 ```
-### The result
 
-The output of the script is:
-```
-First 2 pents are:
-  p(2167) = 7042750
-  p(1020) = 1560090,
-  p(2167) + p(1020) = 8610026 = p(2396),
-  p(2167) - p(1020) = 5488397 = p(1913).
-```
+We loop through each value of `$k` up to 3,333, this gives the maximum value of `$a` 9,998. Largest less than or equal to 10,000.
+We then loop `$b` from 1 up to the value where `$c < 1`. Rather than computing `$c` at this stage (there could be rounding errors).
+We just compare the numerator (*k^2 . (8.k-3)*) with the denominator (*b^2*). We then check to see `$c` is an integer - we again
+do this without computing `$c` to avoid rounding errors - to compute the results and display them.
 
-### Notes:
- * #1 - initialise the map of pentagonal numbers.
- * #2 - make sure that the next entry in the pentagonal numbers is present
- * #3 - try next combination if the difference is not a pentagonal number
- * #4 - extend pentagonal number list so that it contains all pentagonal numbers up to and including the sum of the two pentagonal numbers.
- * #5 - try next combination if the sum is not a pentagonal number
- * #6 - we display the summary information about the pentagonal numbers
+Time taken to calculate these **32,235** cardano triplets is **78.5sec**.
 
-## Expanded solution.
+If we go back to the original problem and look at the first 5 cardano triplets we have either:
 
-For those that want this a bit more expanded this is the same code expanded out. 
+The first 5 (if you sort by *a* and *b*) are:
 
-```perl
-my @pents     = ( 0, 1 );
-my %rev_pents = ( 0 => 0, 1 => 1 );
+    (2,1,5), (5,1,52), (5,2,13), (8,1,189), (8,3,21).
 
-for( my $o=2; ; $o++ ) {
-  $pents[$o]               ||= $o * (3 * $o - 1 ) / 2;
-  $rev_pents{ $pents[$o] } ||= $o;
-  for my $i ( 1 .. $o-1 ) {
-    next unless my $diff_idx = $rev_pents{ $pents[$o] - $pents[$i] };
-    while( $pents[-1] < $pents[$o] + $pents[$i] ) {
-      push @pents, @pents * ( 3 * @pents - 1 ) / 2;
-      $rev_pents{ $pents[-1] } = @pents;
-    }
-    next unless my $sum_idx  = $rev_pents{ $pents[$o] + $pents[$i] };
-    say 'First 2 pents are:';
-    say '  p($i) = $pents[$i],';
-    say '  p($o) = $pents[$o],';
-    say '  p($o) + p($i) = $pents[$sum_idx] = p($sum_idx),';
-    say '  p($o) - p($i) = $pents[$diff_idx] = p($diff_idx).';
-    exit;
-  }
-}
-```
+The first 5 (if you sort by total *a+b+c*) are:
+
+    (2,1,5), (5,2,13), (8,3,21), (17,18,5), (11,4,29).

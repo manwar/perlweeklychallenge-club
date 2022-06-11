@@ -1,0 +1,57 @@
+#!/usr/bin/bc
+
+#
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-147
+#
+
+#
+# Run as: bc ch-1.bc
+#
+
+define is_prime (p) {
+    auto d
+    if (p == 2) {return 1}
+    if (p % 2 == 0) {return 0}
+    for (d = 3; d * d <= p; d += 2) {
+        if (p % d == 0) {return 0}
+    }
+    return 1
+}
+
+todo [1] = 2
+todo [2] = 3
+todo [3] = 5
+todo [4] = 7
+high = 4
+
+for (i = 1; i <= high; i ++) {
+    print todo [i], " "
+}
+
+count = 20 - high
+
+pow = 10
+while (count > 0) {
+    new_high = 0
+    for (d = 1; d <= 9 && count > 0; d ++) {
+        for (i = 1; i <= high && count > 0; i ++) {
+            candidate = d * pow + todo [i]
+            if (is_prime (candidate)) {
+                print candidate, " "
+                new_high = new_high + 1
+                count = count - 1
+                next [new_high] = candidate
+            }
+        }
+    }
+    for (j = 1; j <= new_high; j ++) {
+        todo [j] = next [j]
+    }
+    high = new_high
+    pow = pow * 10
+}
+
+"
+"
+
+halt

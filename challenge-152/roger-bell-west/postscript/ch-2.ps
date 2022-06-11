@@ -1,0 +1,65 @@
+%!PS
+
+/rect.new {
+    2 dict begin
+    dup
+    0 get /a exch def
+    1 get /b exch def
+    [
+        [
+            a 0 get b 0 get min
+            a 1 get b 1 get min
+        ]
+        [
+            a 0 get b 0 get max
+            a 1 get b 1 get max
+        ]
+    ]
+    end
+} bind def
+
+/rect.area {
+    2 dict begin
+    dup
+    0 get /a exch def
+    1 get /b exch def
+    b 0 get a 0 get sub
+    b 1 get a 1 get sub
+    mul
+    end
+} bind def
+
+/rect.overlap {
+    5 dict begin
+    dup
+    0 get /a exch def
+    1 get /b exch def
+    dup
+    0 get /c exch def
+    1 get /d exch def
+    /area 1 def
+    0 1 1 {
+        /axis exch def
+        b axis get d axis get min
+        a axis get c axis get max
+        sub
+        0 max area mul /area exch def
+    } for
+    area
+    end
+} bind def
+
+/rect.fullarea {
+    1 dict begin
+    /area 0 def
+    dup rect.area area add /area exch def
+    exch
+    dup rect.area area add /area exch def
+    rect.overlap area exch sub
+    end
+} bind def
+
+[ [ -1 0 ] [ 2 2 ] ] rect.new [ [ 0 -1 ] [ 4 4 ] ] rect.new rect.fullarea
+22 eq { (Pass) } { (FAIL) } ifelse print ( ) print
+[ [ -3 -1 ] [ 1 3 ] ] rect.new [ [ -1 -3 ] [ 2 2 ] ] rect.new rect.fullarea
+25 eq { (Pass) } { (FAIL) } ifelse =

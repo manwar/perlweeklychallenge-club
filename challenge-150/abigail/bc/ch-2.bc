@@ -1,0 +1,34 @@
+#!/usr/bin/bc
+
+#
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-150
+#
+
+#
+# Run as: bc ch-2.bc
+#
+
+primes [1] =  2
+primes [2] =  3
+primes [3] =  5
+primes [4] =  7
+primes [5] = 11
+primes [6] = 13
+primes [7] = 17
+primes [8] = 19
+
+for (n = 1; n <= 500; n ++) {
+    s = 0
+    for (p = 1; p <= 8 && !s; p ++) {
+        if (n % (primes [p] * primes [p]) == 0) {
+            s = 1
+        }
+    }
+    if (!s) {
+        print n, " "
+    }
+}
+"
+"
+
+halt

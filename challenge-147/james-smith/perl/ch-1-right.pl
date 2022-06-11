@@ -12,7 +12,7 @@ my @tprimes_current = (2,3,5,7);
 printf $TEMPLATE, ++$idx, $_, time - $t0 foreach @tprimes_current;
 
 for my $p ( 1 .. 100 ) {
-  last unless @tprimes_current;
+  @tprimes_current||last;
   my @tprimes_new = ();
   foreach my $base ( @tprimes_current ) {
     B: foreach my $last ( 1,3,7,9 ) {

@@ -1,0 +1,226 @@
+%!PS
+
+/aeq {
+    3 dict begin
+    /a exch def
+    /b exch def
+    a length b length eq {
+        /e true def
+        0 1 a length 1 sub {
+            dup a exch get
+            exch b exch get ne {
+                /e false def
+                exit
+            } if
+        } for
+        e
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/quicksort { % [ a c b ] -> [ a b c ]
+    1 dict begin
+    /arr exch def
+    0 arr length 1 sub quicksort.main
+    arr
+    end
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/apush { % [a b] c -> [a b c]
+    /t exch def
+    [ exch aload pop t ]
+} bind def
+
+/genprimes {
+    /mx exch def
+    /primesh mx dict def
+    2 1 3 {
+        primesh exch true put
+    } for
+    6 6 mx 1 add {
+        dup 1 sub exch 1 add 2 exch {
+            dup mx le {
+                primesh exch true put
+            } {
+                pop
+            } ifelse
+        } for
+    } for
+    /q [ 3 5 7 ] def
+    /qi 0 def
+    /p 2 def
+    /mr mx sqrt cvi def
+    {
+        p mr le not {
+            exit
+        } if
+        primesh p known {
+            p dup mul p mx {
+                primesh exch undef
+            } for
+        } if
+        q length qi sub 2 le {
+            /q q q q length 1 sub get 4 add apush def
+            /q q q q length 1 sub get 2 add apush def
+        } if
+        /p q qi get def
+        /qi qi 1 add def
+    } loop
+    /primes 0 array def
+    primesh {
+        pop
+        /primes exch primes exch apush def
+    } forall
+    primes quicksort
+} bind def
+
+/squarefree {
+    8 dict begin
+    /max exch def
+    /out 0 array def
+    /primes max sqrt cvi genprimes def
+    /plimit 1 def
+    1 1 max {
+        /candidate exch def
+        /sf true def
+        {
+            plimit plimit mul candidate lt {
+                /plimit plimit 1 add def
+            } {
+                exit
+            } ifelse
+        } loop
+        /cc candidate def
+        primes {
+            /pr exch def
+            pr plimit gt {
+                exit
+            } if
+            /n 0 def
+            {
+                cc pr mod 0 eq {
+                    /n n 1 add def
+                    n 1 gt {
+                        /sf false def
+                        exit
+                    } if
+                    /cc cc pr idiv def
+                } {
+                    exit
+                } ifelse
+            } loop
+            sf not {
+                exit
+            } if
+        } forall
+        sf {
+            /out out candidate apush def
+        } if
+    } for
+    out
+    end
+} bind def
+
+30 squarefree [ 1 2 3 5 6 7 10 11 13 14 15 17 19 21 22 23 26 29 30 ]
+aeq { (Pass) } { (FAIL) } ifelse print ( ) print
+
+
+113 squarefree [ 1 2 3 5 6 7 10 11 13 14 15 17 19 21 22 23
+                 26 29 30 31 33 34 35 37 38 39 41 42 43 46
+                 47 51 53 55 57 58 59 61 62 65 66 67 69 70
+                 71 73 74 77 78 79 82 83 85 86 87 89 91 93
+                 94 95 97 101 102 103 105 106 107 109 110 111
+                 113 ]
+aeq { (Pass) } { (FAIL) } ifelse print ( ) print
+
+
+500 squarefree [ 1 2 3 5 6 7 10 11 13 14 15 17 19 21 22 23
+                 26 29 30 31 33 34 35 37 38 39 41 42 43 46
+                 47 51 53 55 57 58 59 61 62 65 66 67 69 70
+                 71 73 74 77 78 79 82 83 85 86 87 89 91 93
+                 94 95 97 101 102 103 105 106 107 109 110 111
+                 113 114 115 118 119 122 123 127 129 130 131
+                 133 134 137 138 139 141 142 143 145 146 149
+                 151 154 155 157 158 159 161 163 165 166 167
+                 170 173 174 177 178 179 181 182 183 185 186
+                 187 190 191 193 194 195 197 199 201 202 203
+                 205 206 209 210 211 213 214 215 217 218 219
+                 221 222 223 226 227 229 230 231 233 235 237
+                 238 239 241 246 247 249 251 253 254 255 257
+                 258 259 262 263 265 266 267 269 271 273 274
+                 277 278 281 282 283 285 286 287 290 291 293
+                 295 298 299 301 302 303 305 307 309 310 311
+                 313 314 317 318 319 321 322 323 326 327 329
+                 330 331 334 335 337 339 341 345 346 347 349
+                 353 354 355 357 358 359 362 365 366 367 370
+                 371 373 374 377 379 381 382 383 385 386 389
+                 390 391 393 394 395 397 398 399 401 402 403
+                 406 407 409 410 411 413 415 417 418 419 421
+                 422 426 427 429 430 431 433 434 435 437 438
+                 439 442 443 445 446 447 449 451 453 454 455
+                 457 458 461 462 463 465 466 467 469 470 471
+                 473 474 478 479 481 482 483 485 487 489 491
+                 493 494 497 498 499 ]
+aeq { (Pass) } { (FAIL) } ifelse =

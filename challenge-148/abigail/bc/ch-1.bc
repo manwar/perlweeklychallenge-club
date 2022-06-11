@@ -1,0 +1,24 @@
+#!/usr/bin/bc
+
+#
+# See https://theweeklychallenge.org/blog/perl-weekly-challenge-148
+#
+
+#
+# Run as: bc ch-1.bc
+#
+
+for (i = 0; i <= 100; i ++) {
+    t = i / 10
+    u = i % 10
+    if (!(i == 0 || t == 1 || u == 1 || t == 7 || u == 7 \
+                 || t == 8 || u == 8 || t == 9 || u == 9 \
+                 || t == 2 || u == 3 || u == 5 || i == 100)) {
+        print i, " "
+    }
+}
+
+"
+"
+
+halt

@@ -1,0 +1,41 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Str $tree = "1 | 5 3 | 2 3 4 | 7 1 0 2 | 6 4 5 2 8", :v(:$verbose), :m($max));
+
+my @tree = $tree.split("|")>>.words>>.Numeric;
+my $rows = @tree.elems;
+
+for 1 .. $rows -> $row
+{
+  die "Wrong number of elements in row $row ({ (@tree[$row - 1]).elems } instead of $row)" unless @tree[$row - 1] == $row;
+}
+
+say ": Tree height: $rows";
+
+my @paths;
+my @values;
+
+traverse(0, (), ());
+
+sub traverse ($current, @path is copy, @value is copy)
+{
+  @value.push: @tree[@path.elems][$current];
+
+  @path.push: $current;
+
+  if (@path.elems < $rows)
+  {
+    traverse($current,    @path, @value);
+    traverse($current +1, @path, @value);
+  }
+  else
+  {
+    say ": Values: [{ @value.join(", ") }] (indices [{ @path.join(", ") }) - sum { @value.sum }" if $verbose;
+    @paths.push:  @path;
+    @values.push: @value;
+
+    return;
+  }
+}
+
+say $max ?? @values>>.sum.max !! @values>>.sum.min;

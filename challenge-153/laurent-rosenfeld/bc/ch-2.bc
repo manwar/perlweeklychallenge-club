@@ -1,0 +1,16 @@
+fact[0] = 1
+for (n = 1; n <= 9; n++) {
+    fact[n] = n * fact[n - 1]
+}
+for (n = 1; n <= 50000; n++) {
+    sum = 0
+    i = n
+    while (i > 0) {
+        sum += fact[i % 10]
+        i /= 10
+    }
+    if (sum == n) {
+        print n, " "
+    }
+}
+halt
