@@ -4,8 +4,10 @@ use Math::Prime::XS qw(is_prime);
 
 print &home_prime(10),"\n";
 #773
+
 print &home_prime(16),"\n";
 #31636373
+
 print &home_prime(20),"\n";
 #3318308475676071413
 
@@ -43,3 +45,6 @@ sub factors {
 	}
 	return $retstring;	
 }
+
+1;
+
