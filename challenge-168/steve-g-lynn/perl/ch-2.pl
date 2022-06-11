@@ -10,6 +10,7 @@ print &home_prime(20),"\n";
 #3318308475676071413
 
 
+
 sub home_prime {
 	my ($n)=@_;
 	is_prime($n) && return $n;
@@ -19,6 +20,7 @@ sub home_prime {
 	}
 	return $n;
 }
+
 
 
 sub factors {
