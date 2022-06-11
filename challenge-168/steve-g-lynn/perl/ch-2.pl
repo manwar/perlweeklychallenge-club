@@ -1,13 +1,17 @@
 #!/usr/bin/perl
 
-use Math::Prime::XS qw(is_prime sieve_primes);
+use Math::Prime::XS qw(is_prime);
 
-
+print &home_prime(10),"\n";
+#773
 print &home_prime(16),"\n";
-#-- should be 31636373 [wikipedia example]
+#31636373
+print &home_prime(20),"\n";
+#3318308475676071413
 
 sub home_prime {
-	local ($n)=@_;
+	my ($n)=@_;
+	is_prime($n) && return $n;
 	while (1){
 		$n=&factors($n);
 		(is_prime($n)) && last;
@@ -18,20 +22,25 @@ sub home_prime {
 
 sub factors {
 	#--return concatenated prime factors of a number n 
-	local ($n)=@_;
-	local @primes=sieve_primes($n);
-	local $retstring="";
+	my ($n)=@_;
+	local $sqrt_n=int(sqrt($n));
+
+	my $retstring="";
 	
 	if (is_prime($n)){
 		return $n;
 	}
 	else {
-		foreach $prime (sort{$a<=>$b} @primes){
+		for $prime (2 .. $sqrt_n){
+		#-- no need to get primes first
+		#-- routine automatically finds only prime factors
 			while ( ($n % $prime) == 0){
 				$n /= $prime;
 				$retstring .= $prime;
 			}
+			(is_prime($n)) && last; 
 		}
+		($n > 1) && ($retstring .= $n);
 	}
 	return $retstring;	
 }
