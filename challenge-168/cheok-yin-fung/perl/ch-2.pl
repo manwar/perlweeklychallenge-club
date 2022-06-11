@@ -28,7 +28,7 @@ sub my_hp {
     my $recur_depth = $_[1];
 
     die "Walk so far but still cannot get result. :(\n" if $recur_depth > 20;
-    my $num = $_[0];
+    my $num = Math::BigInt->new($_[0]);
     if (is_prime($num) == 2) {
         return $num;
     }
@@ -36,24 +36,28 @@ sub my_hp {
     my @factors = ();
     my $p = 2;
     while ($num != 1) {
-        if (!($num % $p)) {
+        my $temp_num = $num;
+        if ( $num->bmod($p) == 0 ) {
+            say $p;
             push @factors, $p;
-            $num /= $p;
+            $num = $num->bdiv($p);
         }
         else {
             $p = next_prime($p);
         }
-        if ($p > sqrt $num) {
+        if ($p > $temp_num->bsqrt()) {
             push @factors, $num;
             last;
         }
     }
-    my $nxt = (reduce { $a . $b } @factors);
+    my $nxt = join "", @factors;
     say "  $nxt";
     return my_hp($nxt, ++$recur_depth);
 }
 
-use Test::More tests => 7;
+
+=pod
+use Test::More tests => 8;
 # test data from OEIS
 ok hp(10) == 773;
 ok hp(24) == 331_319;
@@ -61,9 +65,16 @@ ok hp(32) == 241_271;
 ok hp(40) == 3314192745739;  
 ok hp(44) == 22815088913;  
 ok hp(45) == 3_411_949;
-ok hp(8) == 3331113965338635107;
+ok hp( 8) == 3331113965338635107;
+ok hp(48) == 6161791591356884791277;
 
-# time:
+# time without the last hp(48) test case:
 # real	0m1.963s
 # user	0m1.946s
 # sys	0m0.016s
+#
+# time without the last hp(48) test case and use simply Math::Prime::Util :
+# real	0m0.133s
+# user	0m0.115s
+# sys	0m0.011s
+
