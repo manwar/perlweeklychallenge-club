@@ -4,7 +4,6 @@
 # Usage: ch-2.pl [integer > 1]
 use v5.24.0;
 use warnings;
-use List::Util qw/reduce/;
 use Math::Prime::Util qw/is_prime next_prime/;
 use Math::BigInt;
 
