@@ -27,7 +27,7 @@ sub hp {
 sub my_hp {
     my $recur_depth = $_[1];
 
-    die "Walk so far but still cannot get result. :(\n" if $recur_depth > 10;
+    die "Walk so far but still cannot get result. :(\n" if $recur_depth > 20;
     my $num = $_[0];
     if (is_prime($num) == 2) {
         return $num;
@@ -35,27 +35,35 @@ sub my_hp {
 
     my @factors = ();
     my $p = 2;
-    do {
+    while ($num != 1) {
         if (!($num % $p)) {
             push @factors, $p;
             $num /= $p;
         }
         else {
-            $p = next_prime($p);    # CAN BE IMPROVED
+            $p = next_prime($p);
         }
-    } while ($num != 1);
+        if ($p > sqrt $num) {
+            push @factors, $num;
+            last;
+        }
+    }
     my $nxt = (reduce { $a . $b } @factors);
     say "  $nxt";
     return my_hp($nxt, ++$recur_depth);
 }
 
-use Test::More tests => 5;
+use Test::More tests => 7;
 # test data from OEIS
 ok hp(10) == 773;
 ok hp(24) == 331_319;
 ok hp(32) == 241_271;
+ok hp(40) == 3314192745739;  
+ok hp(44) == 22815088913;  
 ok hp(45) == 3_411_949;
+ok hp(8) == 3331113965338635107;
 
-ok hp(44) == 22815088913;  # this test spends approx 0.5 min (on CY's laptop).
-
-# ok hp(40) == 3314192745739;  # this test spends approx. 2 min.
+# time:
+# real	0m1.963s
+# user	0m1.946s
+# sys	0m0.016s
