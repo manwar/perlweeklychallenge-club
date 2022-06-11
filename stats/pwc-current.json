@@ -1,25 +1,13 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
    "series" : [
       {
+         "name" : "The Weekly Challenge - 168",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "name" : "E. Choroba",
                "y" : 2,
-               "drilldown" : "E. Choroba"
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba"
             },
             {
                "drilldown" : "Humberto Massa",
@@ -32,19 +20,19 @@
                "y" : 3
             },
             {
-               "drilldown" : "Jorg Sommrey",
+               "name" : "Jorg Sommrey",
                "y" : 1,
-               "name" : "Jorg Sommrey"
+               "drilldown" : "Jorg Sommrey"
             },
             {
+               "name" : "Julien Fiegehenn",
                "y" : 2,
-               "drilldown" : "Julien Fiegehenn",
-               "name" : "Julien Fiegehenn"
+               "drilldown" : "Julien Fiegehenn"
             },
             {
-               "name" : "Lubos Kolouch",
+               "drilldown" : "Lubos Kolouch",
                "y" : 1,
-               "drilldown" : "Lubos Kolouch"
+               "name" : "Lubos Kolouch"
             },
             {
                "drilldown" : "Luca Ferrari",
@@ -52,9 +40,9 @@
                "name" : "Luca Ferrari"
             },
             {
-               "name" : "Mark Anderson",
                "drilldown" : "Mark Anderson",
-               "y" : 2
+               "y" : 2,
+               "name" : "Mark Anderson"
             },
             {
                "drilldown" : "Marton Polgar",
@@ -63,18 +51,23 @@
             },
             {
                "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Niels van Dijke"
             },
             {
                "name" : "Peter Campbell Smith",
-               "y" : 3,
-               "drilldown" : "Peter Campbell Smith"
+               "drilldown" : "Peter Campbell Smith",
+               "y" : 3
             },
             {
                "name" : "Robert DiCicco",
                "drilldown" : "Robert DiCicco",
                "y" : 4
+            },
+            {
+               "name" : "Robert Ransbottom",
+               "y" : 2,
+               "drilldown" : "Robert Ransbottom"
             },
             {
                "y" : 5,
@@ -92,39 +85,68 @@
                "name" : "Stephen G Lynn"
             },
             {
+               "name" : "W. Luis Mochan",
                "y" : 3,
-               "drilldown" : "W. Luis Mochan",
-               "name" : "W. Luis Mochan"
+               "drilldown" : "W. Luis Mochan"
             }
-         ],
-         "name" : "The Weekly Challenge - 168",
-         "colorByPoint" : 1
+         ]
       }
    ],
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "chart" : {
       "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 168"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 17] Last updated at 2022-06-11 09:33:35 GMT"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "E. Choroba",
-            "id" : "E. Choroba"
+            "name" : "E. Choroba"
          },
          {
             "id" : "Humberto Massa",
-            "name" : "Humberto Massa",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Humberto Massa"
          },
          {
             "id" : "James Smith",
@@ -162,13 +184,13 @@
          },
          {
             "id" : "Lubos Kolouch",
-            "name" : "Lubos Kolouch",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ]
+            ],
+            "name" : "Lubos Kolouch"
          },
          {
             "id" : "Luca Ferrari",
@@ -185,24 +207,24 @@
             "name" : "Luca Ferrari"
          },
          {
-            "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Mark Anderson"
+            "id" : "Mark Anderson"
          },
          {
+            "id" : "Marton Polgar",
             "name" : "Marton Polgar",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Marton Polgar"
+            ]
          },
          {
             "name" : "Niels van Dijke",
@@ -215,7 +237,7 @@
             "id" : "Niels van Dijke"
          },
          {
-            "name" : "Peter Campbell Smith",
+            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -226,10 +248,9 @@
                   1
                ]
             ],
-            "id" : "Peter Campbell Smith"
+            "name" : "Peter Campbell Smith"
          },
          {
-            "name" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
@@ -240,10 +261,21 @@
                   2
                ]
             ],
+            "name" : "Robert DiCicco",
             "id" : "Robert DiCicco"
          },
          {
-            "name" : "Roger Bell_West",
+            "id" : "Robert Ransbottom",
+            "name" : "Robert Ransbottom",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -258,7 +290,7 @@
                   1
                ]
             ],
-            "id" : "Roger Bell_West"
+            "name" : "Roger Bell_West"
          },
          {
             "data" : [
@@ -279,7 +311,6 @@
             "id" : "Ryan Thompson"
          },
          {
-            "id" : "Stephen G Lynn",
             "data" : [
                [
                   "Perl",
@@ -290,9 +321,12 @@
                   2
                ]
             ],
-            "name" : "Stephen G Lynn"
+            "name" : "Stephen G Lynn",
+            "id" : "Stephen G Lynn"
          },
          {
+            "id" : "W. Luis Mochan",
+            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -302,27 +336,8 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "W. Luis Mochan",
-            "id" : "W. Luis Mochan"
+            ]
          }
       ]
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 168"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 16] Last updated at 2022-06-11 09:16:39 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
    }
 }
