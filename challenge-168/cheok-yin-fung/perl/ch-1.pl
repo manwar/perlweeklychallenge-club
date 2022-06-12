@@ -3,12 +3,8 @@
 # Task 1 Perrin Prime 
 use v5.24.0;
 use warnings;
-use List::Util qw/reduce none/;
-use Math::BigInt::GMP;          # [remark]
-use Math::BigInt::Pari;         # [remark]
-use Math::Prime::Util::GMP qw/is_prime next_prime/;
-use bigint try => 'GMP,Pari';   # [remark]
-# remark: follow suggestions on POD of Math::Prime::Util
+use List::Util qw/none/;
+use Math::Prime::Util qw/is_prime next_prime/;
 
 my @perrin_primes = (2,3);
 my ($ppnm3,$ppnm2,$ppnm1, $ppn) = (3,0,2,3);
@@ -27,7 +23,7 @@ while (scalar @perrin_primes < 13) {
 say join ", ", @perrin_primes;
 
 # time: 
-# real	0m0.078s
-# user	0m0.056s
-# sys	0m0.008s
+# real	0m0.025s
+# user	0m0.017s
+# sys	0m0.009s
 

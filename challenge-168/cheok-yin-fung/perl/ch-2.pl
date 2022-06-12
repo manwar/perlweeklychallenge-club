@@ -43,6 +43,7 @@ sub my_hp {
             $p = next_prime($p);
         }
         if ($p > sqrt $num) {
+            say "useful";
             push @factors, $num;
             last;
         }
