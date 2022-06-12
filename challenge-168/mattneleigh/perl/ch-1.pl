@@ -37,7 +37,7 @@ exit(0);
 
 
 ################################################################################
-# Calculae the next number in the Perrin sequence, adding it to an existing
+# Calculate the next number in the Perrin sequence, adding it to an existing
 # list of Perrin numbers; see https://en.wikipedia.org/wiki/Perrin_number for
 # details about this type of number
 # Takes one or two arguments:
