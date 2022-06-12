@@ -5,6 +5,13 @@
 #user	0m0.382s
 #sys	0m0.054s
 
+#time if homeprime(48), homeprime(65) and homeprime(96) are also printed:
+#real	2m23.931s
+#user	2m23.527s
+#sys	0m0.071s
+#
+#  ( real 11.512s with homeprime (10,16,20,48,65)
+#    real 0.922s with homeprime (10,16,20,48) )
 
 use Prime::Factor;
 
