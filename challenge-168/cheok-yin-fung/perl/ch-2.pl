@@ -18,19 +18,19 @@ sub hp {
 
 
 sub my_hp {
-    my $recur_depth = $_[1];
-
-    die "Number involed too large.\n" 
-        if  
-            Math::BigInt->new(18446744073709551616) # 2**64
-                        ->bcmp( Math::BigInt->new($_[0]) )
-              == -1;
-
-    die "Walk so far but still cannot get result. :(\n" if $recur_depth > 20;
     my $num = $_[0];
+    my $recur_depth = $_[1];
+    die "Number involved too large.\n" 
+        if  
+            Math::BigInt->new("18446744073709551616") # 2**64
+                        ->ble( Math::BigInt->new($num) );
+    
+
     if (is_prime($num) == 2) {
         return $num;
     }
+
+    die "Walk so far but still cannot get result. :(\n" if $recur_depth > 20;
 
     my @factors = ();
     my $p = 2;
@@ -47,7 +47,7 @@ sub my_hp {
             last;
         }
     }
-    my $nxt = (reduce { $a . $b } @factors);
+    my $nxt = join "", @factors;
     say "  $nxt";
     return my_hp($nxt, ++$recur_depth);
 }
