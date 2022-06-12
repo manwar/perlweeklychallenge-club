@@ -1,6 +1,19 @@
 #!/usr/bin/perl
 
-use Math::Prime::XS qw(is_prime);
+#time (bash) output:
+#real	0m0.026s
+#user	0m0.019s
+#sys	0m0.007s
+
+# but this fast time degrades sharply with larger problems
+#
+# real is 0m45.199s if home_prime(48) also printed
+# real is 5m5.662s if home_prime of 48 and 65 also printed
+# real is 8m50.059s if home_prime of 48, 65 and 96 also printed
+#
+# probably some slowdown in factor(.) for factors of very large primes 
+
+use Math::Prime::Util qw(is_prime factor);
 
 print &home_prime(10),"\n";
 #773
@@ -14,37 +27,9 @@ print &home_prime(20),"\n";
 sub home_prime {
 	my ($n)=@_;
 	is_prime($n) && return $n;
-	while (1){
-		$n=&factors($n);
-		(is_prime($n)) && last;
-	}
-	return $n;
+	return	&home_prime(join('',sort{$a<=>$b}(factor($n))));
 }
 
-sub factors {
-	#--return concatenated prime factors of a number n 
-	my ($n)=@_;
-	local $sqrt_n=floor(sqrt($n));
-
-	my $retstring="";
-	
-	if (is_prime($n)){
-		return $n;
-	}
-	else {
-		for $prime (2 .. $sqrt_n){
-		#-- no need to get primes first
-		#-- routine automatically finds only prime factors
-			while ( ($n % $prime) == 0){
-				$n /= $prime;
-				$retstring .= $prime;
-			}
-			(is_prime($n)) && last; 
-		}
-		($n > 1) && ($retstring .= $n);
-	}
-	return $retstring;	
-}
 
 1;
 
