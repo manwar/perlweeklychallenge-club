@@ -4,7 +4,7 @@
 use v5.24.0;
 use warnings;
 use List::Util qw/none/;
-use Math::Prime::Util qw/is_prime next_prime/;
+use Math::Prime::Util qw/is_prime/;
 
 my @perrin_primes = (2,3);
 my ($ppnm3,$ppnm2,$ppnm1, $ppn) = (3,0,2,3);
