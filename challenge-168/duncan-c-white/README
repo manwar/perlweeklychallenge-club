@@ -1,51 +1,43 @@
-TASK 1: Circular Prime
+TASK 1: Perrin Prime
 
-Write a script to find out first 10 circular primes having at least 3
-digits (base 10).
+The Perrin sequence is defined to start with [3, 0, 2]; after that, term
+N is the sum of terms N-2 and N-3. (So it continues 3, 2, 5, 5, 7, ....)
 
-Please checkout https://en.wikipedia.org/wiki/Circular_prime for more information.
+A Perrin prime is a number in the Perrin sequence which is also a prime number.
 
-A circular prime is a prime number with the property that the number
-generated at each intermediate step when cyclically permuting its (base
-10) digits will also be prime.
+Calculate the first 13 Perrin Primes.
 
-Quote from the Wikipedia page:
+f(13) = [2, 3, 5, 7, 17, 29, 277, 367, 853, 14197, 43721, 1442968193, 792606555396977]
 
-"For example, 1193 is a circular prime, since 1931, 9311 and 3119 all
-are also prime.[3] A circular prime with at least two digits can only
-consist of combinations of the digits 1, 3, 7 or 9, because having 0, 2,
-4, 6 or 8 as the last digit makes the number divisible by 2, and having
-0 or 5 as the last digit makes it divisible by 5"
-
-OUTPUT
-
-113, 197, 199, 337, 1193, 3779, 11939, 19937, 193939, 199933
+MY NOTES: ok, sounds relatively easy, except that the 12th and 13th PP are
+enormous.  I normally reusing my old favourite MakePrimes.pm (Sieve of
+Eratosthenes based) but this time I think I'll have to do it the old
+fashioned "try all factors up to sqrt()" approach.
 
 
-MY NOTES: ok, sounds relatively easy.  The wikipedia page clarifies it.
-I'm reusing my old favourite MakePrimes.pm.
+Task 2: Home Prime
 
-HOWEVER, my solution finds far more circular primes than the above output
-shows.  If 113 is a CP (and it is cos 131 and 311 are also prime), then SO
-IS 131 AND SO IS 311, but the above list doesn't show it.  Also, my solution
-computes ALL CPs with exactly N digits, rather than the first 10 with N or
-more digits.
+You are given an integer greater than 1.
 
+Write a script to find the home prime of the given number.
 
-Task 2: Task 2: Gamma Function
+In number theory, the home prime HP(n) of an integer n greater than
+1 is the prime number obtained by repeatedly factoring the increasing
+concatenation of prime factors including repetitions.
 
-Implement subroutine gamma() using the Lanczos approximation method.
+Further information can be found on Wikipedia
 
-Ryan Thompson wrote an interesting blog explaining the subject in
-details. Highly recommended if you are looking for more information:
-https://ry.ca/2022/05/lanczos-approximation
+https://en.wikipedia.org/wiki/Home_prime
 
 Example
 
-print gamma(3); # 1.99
-print gamma(5); # 24
-print gamma(7); # 719.99
+As given in the Wikipedia page:
 
-MY NOTES: Hell no.  Complex numbers, ridiculously complicated formula,
-plus I've no idea what the Gamma function even is.  This is far too
-mathematical for me, so I've no interest in doing it.
+HP(10) = 773, as 10 factors as 2x5 yielding HP10(1) = 25, 25 factors
+as 5x5 yielding HP10(2) = HP25(1) = 55, 55 = 5x11 implies HP10(3)
+= HP25(2) = HP55(1) = 511, and 511 = 7x73 gives HP10(4) = HP25(3) =
+HP55(2) = HP511(1) = 773, a prime number.
+
+MY NOTES: Ok, yet another prime variant.  I'll have a go, but I note that
+the numbers get enormous, to the point where it's not even known if HP(49)
+can be calculated.  Again can't use MakePrimes.pm..
