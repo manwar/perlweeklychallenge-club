@@ -15,8 +15,8 @@ is-deeply Achilles[^100],
           15488, 15552, 16000, 16200, 16875, 16928, 17496, 17672, 18000, 18252,
           18432, 19208, 19652, 19773, 20000, 20808, 21125, 21168, 21296, 21600);
 
-sub Achilles { 
-
+sub Achilles 
+{ 
     sub Achilles(\n)
     {
         my \pf = prime-factors(n).List;
