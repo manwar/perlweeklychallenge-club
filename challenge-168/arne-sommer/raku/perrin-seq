@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int :c(:$count) where $count > 1 = 10);
+
+my $perrin := ( 3, 0, 2, ( * + * + * * 0 ) ... Inf);
+
+say $perrin[^$count].join(", ");
