@@ -1,63 +1,54 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 169",
-         "data" : [
-            {
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson",
-               "y" : 2
-            },
-            {
-               "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
-            },
-            {
-               "name" : "Simon Green",
-               "y" : 3,
-               "drilldown" : "Simon Green"
-            },
-            {
-               "name" : "Stephen G Lynn",
-               "y" : 4,
-               "drilldown" : "Stephen G Lynn"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
    "title" : {
       "text" : "The Weekly Challenge - 169"
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Peter Campbell Smith",
+            "name" : "Peter Campbell Smith"
          },
          {
             "name" : "Roger Bell_West",
@@ -74,7 +65,6 @@
             "id" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -85,10 +75,11 @@
                   1
                ]
             ],
+            "id" : "Simon Green",
             "name" : "Simon Green"
          },
          {
-            "id" : "Stephen G Lynn",
+            "name" : "Stephen G Lynn",
             "data" : [
                [
                   "Perl",
@@ -99,10 +90,43 @@
                   2
                ]
             ],
-            "name" : "Stephen G Lynn"
+            "id" : "Stephen G Lynn"
          }
       ]
    },
+   "series" : [
+      {
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "y" : 3,
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
+               "name" : "Simon Green",
+               "drilldown" : "Simon Green",
+               "y" : 3
+            },
+            {
+               "y" : 4,
+               "name" : "Stephen G Lynn",
+               "drilldown" : "Stephen G Lynn"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 169"
+      }
+   ],
    "xAxis" : {
       "type" : "category"
    },
@@ -110,11 +134,6 @@
       "type" : "column"
    },
    "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2022-06-13 18:01:25 GMT"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "text" : "[Champions: 5] Last updated at 2022-06-13 19:34:40 GMT"
    }
 }
