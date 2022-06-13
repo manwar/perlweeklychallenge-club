@@ -8,13 +8,10 @@ is-deeply brilliant[990..999], (50429, 50467, 50573, 50621, 50629, 50657, 50689,
 
 is-deeply brilliant[9990..9999], (694151, 694691, 694921, 694931, 695027, 695273, 695399, 695531, 695683, 696191);
 
-sub brilliant
+multi brilliant { (1, 10, 100...*).map(&brilliant).flat }
+
+multi brilliant(\n)
 {
-    sub brilliant(\n)
-    {
-        my \primes = (n..^n*10).grep(&is-prime).List;
-        sort unique primes X* primes;
-    }
-    
-    (1, 10, 100...*).map(&brilliant).flat
+    my \primes = (n..^n*10).grep(&is-prime).List;
+    sort unique primes X* primes
 }
