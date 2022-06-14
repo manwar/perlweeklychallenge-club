@@ -12,8 +12,8 @@ open my $fh, '>', 'achilles.txt';
 
 for( my( $n, $c, $MAX ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
   my %factors;
-  $factors{$_}++ foreach factor $n;
-  say {$fh} sprintf '%6d: %15d - %s', ++$c, $n,
+  $factors{$_}++ for factor $n;
+  say {$fh} sprintf '%6d: %15d = %s', ++$c, $n,
       join ' . ',
       map  { "$_^$factors{$_}" }
       sort { $a <=> $b }
