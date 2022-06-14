@@ -91,7 +91,7 @@ The output is the brilliant number and the two primes which are it's factors.
 
 # Challenge 2 - Achilles Number
 
-***Write a script to generate first 20 Achilles Numbers. An Achilles number is a number that is powerful but imperfect (not a perfect power). Named after Achilles, a hero of the Trojan war, who was also powerful but imperfect.  A positive integer n is a powerful number if, for every prime factor p of n, p^2 is also a divisor, AND that the GCD of the powers is 1.  A number is a perfect power if it has any integer roots (square root, cube root, etc.).
+***Write a script to generate first 20 Achilles Numbers. An Achilles number is a number that is powerful but imperfect (not a perfect power). Named after Achilles, a hero of the Trojan war, who was also powerful but imperfect.  A positive integer n is a powerful number if, for every prime factor p of n, p^2 is also a divisor, AND that the GCD of the powers is 1.  A number is a perfect power if it has any integer roots (square root, cube root, etc.).***
 
 ## Solution
 
