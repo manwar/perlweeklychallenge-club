@@ -1,3 +1,3 @@
-# The Weekly Challenge 158
+# The Weekly Challenge 169
 
-Blog: [Weekly Challenge 160](https://dev.to/simongreennet/weekly-challenge-160-3206)
+Blog: [It's all about the numbers](https://dev.to/simongreennet/its-all-about-the-numbers-4fh5)

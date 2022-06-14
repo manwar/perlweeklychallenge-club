@@ -23,7 +23,6 @@ sub isPrime {
 }
 
 my @perrins = (3, 0, 2);
-my $i = 2;
 my @perrinPrimes;
 
 while (scalar @perrinPrimes < 13) {
