@@ -1,18 +1,28 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2022-06-14 20:05:56 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 169"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
             "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -22,20 +32,22 @@
                   "Blog",
                   6
                ]
-            ]
+            ],
+            "name" : "Luca Ferrari"
          },
          {
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mark Anderson"
          },
          {
             "id" : "Peter Campbell Smith",
+            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -43,23 +55,31 @@
                ],
                [
                   "Blog",
-                  1
-               ]
-            ],
-            "name" : "Peter Campbell Smith"
-         },
-         {
-            "id" : "Robert DiCicco",
-            "name" : "Robert DiCicco",
-            "data" : [
-               [
-                  "Raku",
                   1
                ]
             ]
          },
          {
-            "id" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "PokGoPun",
+            "id" : "PokGoPun"
+         },
+         {
+            "id" : "Robert DiCicco",
+            "data" : [
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "name" : "Robert DiCicco"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -70,10 +90,11 @@
                   2
                ]
             ],
-            "name" : "Roger Bell_West"
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Green",
+            "name" : "Simon Green",
             "data" : [
                [
                   "Perl",
@@ -84,10 +105,10 @@
                   1
                ]
             ],
-            "name" : "Simon Green"
+            "id" : "Simon Green"
          },
          {
-            "id" : "Stephen G Lynn",
+            "name" : "Stephen G Lynn",
             "data" : [
                [
                   "Perl",
@@ -98,7 +119,7 @@
                   2
                ]
             ],
-            "name" : "Stephen G Lynn"
+            "id" : "Stephen G Lynn"
          },
          {
             "data" : [
@@ -116,44 +137,33 @@
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2022-06-14 09:46:32 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
    },
    "tooltip" : {
       "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 169"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "series" : [
       {
-         "name" : "The Weekly Challenge - 169",
+         "colorByPoint" : 1,
          "data" : [
             {
+               "y" : 8,
                "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 8
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "name" : "Mark Anderson",
+               "y" : 2,
                "drilldown" : "Mark Anderson",
-               "y" : 2
+               "name" : "Mark Anderson"
             },
             {
                "y" : 3,
@@ -161,32 +171,37 @@
                "name" : "Peter Campbell Smith"
             },
             {
-               "y" : 1,
-               "drilldown" : "Robert DiCicco",
-               "name" : "Robert DiCicco"
+               "y" : 2,
+               "name" : "PokGoPun",
+               "drilldown" : "PokGoPun"
             },
             {
-               "drilldown" : "Roger Bell_West",
+               "drilldown" : "Robert DiCicco",
+               "name" : "Robert DiCicco",
+               "y" : 1
+            },
+            {
                "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West",
                "y" : 4
             },
             {
-               "drilldown" : "Simon Green",
                "name" : "Simon Green",
+               "drilldown" : "Simon Green",
                "y" : 3
             },
             {
                "y" : 4,
-               "name" : "Stephen G Lynn",
-               "drilldown" : "Stephen G Lynn"
+               "drilldown" : "Stephen G Lynn",
+               "name" : "Stephen G Lynn"
             },
             {
                "y" : 3,
-               "name" : "W. Luis Mochan",
-               "drilldown" : "W. Luis Mochan"
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan"
             }
          ],
-         "colorByPoint" : 1
+         "name" : "The Weekly Challenge - 169"
       }
    ]
 }
