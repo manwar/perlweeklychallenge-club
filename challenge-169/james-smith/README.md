@@ -30,8 +30,7 @@ For flexibility we define the max count `$MAX` as the command-line argument if o
 
 ```perl
 for( my( $n, $c, $MAX, @f ) = ( 0, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  say sprintf '%7d: %10d = %5d x %d', ++$c, $n, @f
-    if 2 == ( @f=factor($n) ) && length( $f[0] ) == length $f[1];
+  say sprintf '%7d: %10d = %5d x %d', ++$c, $n, @f if 2 == ( @f = factor $n ) && length $f[0] == length $f[1];
 }
 ```
 
@@ -102,7 +101,7 @@ If we remove the pretty print this reduces to:
 
 ```perl
 for( my( $n, $c, $MAX, @f ) = ( 0, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  $c++, say $n if 2 == ( @f=factor($n) ) && length( $f[0] ) == length $f[1];
+  $c++, say $n if 2 == ( @f = factor $n ) && length $f[0] == length $f[1];
 }
 ```
 
@@ -125,11 +124,9 @@ We then check to see if any of the factors does not have its square as a factor.
 We then compute the `gcd` of these powers - if it is 1 then we display the result - our output is index, value and the prime factorisation, most of the loop is for the pretty print.
 
 ```perl
-for( my( $n, $c, $MAX ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  say sprintf '%6d: %15d = %s', ++$c, $n,
-      join ' . ', map  { "$_->[0]^$_->[1]" } @f
+for( my( $n, $c, $MAX, @f ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c < $MAX; $n++ ) {
+  say sprintf '%6d: %15d = %s', ++$c, $n, join ' . ', map { "$_->[0]^$_->[1]" } @f
     if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp $n;
-
 }
 ```
 
@@ -191,7 +188,7 @@ The following are the first 50 achilles numbers.
 If we remove the pretty print this reduces to:
 
 ```perl
-for( my( $n, $c, $MAX ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
+for( my( $n, $c, $MAX, @f ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
   $c++, say $n if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp $n;
 }
 ```
