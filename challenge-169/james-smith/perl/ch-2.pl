@@ -39,11 +39,12 @@ for( my( $n, $c, $MAX ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
       map  { "$_^$factors{$_}" }
       sort { $a <=> $b }
       keys  %factors
-    if 1 == gcd( grep { $_ < 2 ? next : 1 } values %factors )
+    if 1 == gcd grep { $_ < 2 ? next : 1 } values %factors
+
     ## Any of the factors is not squared we try the next number in the loop!
-
     ## The `next` out of grep jumps to the next loop of the foor loop...
-
+    ## Then we check to see if the number is imperfect by looking for a
+    ## GCD of 1 between the indecies.
 }
 close $fh;
 warn 'Time taken: ', time-$time, "\n";
