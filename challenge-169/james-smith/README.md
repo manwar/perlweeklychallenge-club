@@ -102,7 +102,7 @@ If we remove the pretty print this reduces to:
 
 ```perl
 for( my( $n, $c, $MAX, @f ) = ( 0, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  say $n if 2 == ( @f=factor($n) ) && length( $f[0] ) == length $f[1];
+  $c++, say $n if 2 == ( @f=factor($n) ) && length( $f[0] ) == length $f[1];
 }
 ```
 
@@ -118,22 +118,18 @@ for( my( $n, $c, $MAX, @f ) = ( 0, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) 
 
 ## Solution
 
-Again `Math::Prime::Util` has the two methods we need `factor` and `gcd`. The latter a function we haven't used before takes a list of numbers and computes there greatest common divisor. This simplfies the problem... for each value we generate a hash of their prime factors, the key being the prime and the value the power (using `factor`)
+Again `Math::Prime::Util` has the two methods we need `factor_exp` and `gcd`. The former a modification to `factor` returns a list of tuples, each containing the prime and its exponent so rather than returning say `2, 2, 2, 3, 3` it returns `[2, 3], [3, 2]`. The latter a function we haven't used before takes a list of numbers and computes there greatest common divisor. This simplfies the problem... for each value we generate a hash of their prime factors, the key being the prime and the value the power (using `factor`)
 
-We then check to see if any of the factors does not have its square as a factor. We do this in the grep - by using `next` we jump out of the `grep` back to the next entry in the `for` loop.
+We then check to see if any of the factors does not have its square as a factor. We do this in the grep - by using `next` we jump out of the `map` back to the next entry in the `for` loop.
 
 We then compute the `gcd` of these powers - if it is 1 then we display the result - our output is index, value and the prime factorisation, most of the loop is for the pretty print.
 
 ```perl
 for( my( $n, $c, $MAX ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  my %factors;
-  $factors{$_}++ for factor $n;
   say sprintf '%6d: %15d = %s', ++$c, $n,
-      join ' . ',
-      map  { "$_^$factors{$_}" }
-      sort { $a <=> $b }
-      keys  %factors
-    if 1 == gcd grep { $_ < 2 ? next : 1 } values %factors
+      join ' . ', map  { "$_->[0]^$_->[1]" } @f
+    if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp $n;
+
 }
 ```
 
@@ -196,8 +192,16 @@ If we remove the pretty print this reduces to:
 
 ```perl
 for( my( $n, $c, $MAX ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  my %factors;
-  $factors{$_}++ for factor $n;
-  say $n if 1 == gcd grep { $_ < 2 ? next : 1 } values %factors
+  $c++, say $n if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp $n;
 }
 ```
+
+# Note - product vs factor
+
+There is a different method which is to generate a list of numbers for both problems from a list of primes.
+
+For both challenges I looked at this "product" version of the code (generate a list of primes) and multiplying - rather the factor method. This proved to be slower than the loop through all values of `$n` and filter by factoring. Whether this continues for larger values of `$n` I don't know by I know that producing the first 1 million of each number it was slower, and at that point the product methods then started to hit memory problems.
+
+One of the memory issues is the `sort` a list issue - having to keep multiple large lists in memory. There are work arounds (like using a modified merge sort) but again these have their coding overheads.
+
+If I had to roll my own "factor" code it would almost certainly have been a better option - but the `Math::Prime::Util` methods are plenty fast enough.
