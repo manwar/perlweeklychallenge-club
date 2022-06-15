@@ -8,16 +8,15 @@ use Math::Prime::Util qw(factor);
 use Time::HiRes qw(time);
 
 my $time = time;
-open my $fh, '>', 'factor.txt';
 
-## Within each loop we get a factorisation
-## must have preciesely 2 prime factors
-## THEN each factor must be the same length;
+# Within each loop we get a factorisation
+# must have preciesely 2 prime factors
+# THEN each factor must be the same length;
+
 for( my( $n, $c, $MAX, @f ) = ( 0, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  say {$fh} sprintf '%8d: %10d = %5d x %d', ++$c, $n, @f
-    if 2 == ( @f=factor $n ) && length( $f[0] ) == length $f[1];
+  say sprintf '%8d: %10d = %5d x %d', ++$c, $n, @f
+    if 2 == ( @f = factor $n ) && length $f[0] == length $f[1];
 }
 
-close $fh;
 warn 'Time taken: ', time-$time, "\n";
 
