@@ -40,6 +40,8 @@ The output in each row is the brilliant number and the two primes which are it's
 
 **Note:** Both in this and the next challenge we utilise a classic "c-style" `for`-loop. This construct allows us to combine the variable initialized (and declaration), the end condition, and the increment of the number into a single statement. We code rewrite this a postfix `for(each)` in this case, but would need an declaration/initialisation statement for `$n` and `@f` anyway. Also in challenge 2 it isn't possible to use a postfix for `for` as this doesn't allow us to use the `next` trick to short cut the `grep` inside the `gcd` call.
 
+**Note:** to make the code easier to read we use a *Yoda* condition, where we reverse the value and the code evaluation - so instead if say `$a == 2` we say `2 == $a`.
+
 **Moan:** Why is there no `sayf` function similar to `printf` - using `say sprintf` seems a bit "messy" each time...
 
 ```
