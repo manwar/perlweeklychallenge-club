@@ -29,8 +29,8 @@ We loop through all numbers, checking to see if (a) the number has exactly 2 pri
 For flexibility we define the max count `$MAX` as the command-line argument if one is supplied (or 100 if not).
 
 ```perl
-for( my( $n, $c, $MAX, @f ) = ( 0, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  say sprintf '%7d: %10d = %5d x %d', ++$c, $n, @f if 2 == ( @f = factor $n ) && length $f[0] == length $f[1];
+for( my( $n, $c, $MAX, @f ) = ( 0, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; ) {
+  say sprintf '%7d: %10d = %5d x %d', ++$c, $n, @f if 2 == ( @f = factor ++$n ) && length $f[0] == length $f[1];
 }
 ```
 
@@ -102,8 +102,8 @@ The output in each row is the brilliant number and the two primes which are it's
 If we remove the pretty print this reduces to:
 
 ```perl
-for( my( $n, $c, $MAX, @f ) = ( 0, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  $c++, say $n if 2 == ( @f = factor $n ) && length $f[0] == length $f[1];
+for( my($n,$c,@f) = (0,100); $c; ) {
+  $c--, say $n if 2 == ( @f = factor ++$n ) && length $f[0] == length $f[1];
 }
 ```
 
@@ -190,8 +190,8 @@ The following are the first 50 achilles numbers.
 If we remove the pretty print this reduces to:
 
 ```perl
-for( my( $n, $c, $MAX, @f ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  $c++, say $n if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp $n;
+for( my( $n, $c ) = ( 2, 100 ); $c; $n++ ) {
+  $c--, say $n if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } factor_exp $n;
 }
 ```
 
