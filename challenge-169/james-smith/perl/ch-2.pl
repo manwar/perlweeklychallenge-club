@@ -26,9 +26,9 @@ my $time = time;
 # To pretty print the archilles numbers - we use our counter, and display
 # it alongside the number and the factorisation.
 
-for( my( $n, $c, $MAX, @f ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  say sprintf '%6d: %15d = %s', ++$c, $n, join ' . ', map  { "$_->[0]^$_->[1]" } @f
-    if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp $n;
+for( my( $MAX, $c, $n, @f ) = ($ARGV[0] // 1e2,0); $c<$MAX; ) {
+  say sprintf '%6d: %15d = %s', ++$c, $n, join ' . ', map  { join '^', @$_ } @f
+    if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp ++$n;
 }
 
 warn 'Time taken: ', time-$time, "\n";

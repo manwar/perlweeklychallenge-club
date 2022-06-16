@@ -29,12 +29,12 @@ We loop through all numbers, checking to see if (a) the number has exactly 2 pri
 For flexibility we define the max count `$MAX` as the command-line argument if one is supplied (or 100 if not).
 
 ```perl
-for( my( $n, $c, $MAX, @f ) = ( 0, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  say sprintf '%7d: %10d = %5d x %d', ++$c, $n, @f if 2 == ( @f = factor $n ) && length $f[0] == length $f[1];
+for( my( $MAX, $c, $n, @f ) = ($ARGV[0] // 1e2, 0); $c<$MAX; ) {
+  printf "%8d: %10d = %5d x %d\n", ++$c, $n, @f if 2 == ( @f = factor ++$n ) && length $f[0] == length $f[1];
 }
 ```
 
-This logic is wrapped up int the single `if`. As we check the number of factors, we store these in an array, so that we can check the 2nd condition.
+This logic is wrapped up in the single `if`. As we check the number of factors, we store these in an array, so that we can check the 2nd condition.
 
 The output in each row is the brilliant number and the two primes which are it's factors.
 
@@ -42,7 +42,7 @@ The output in each row is the brilliant number and the two primes which are it's
 
 **Note:** to make the code easier to read we use a *Yoda* condition, where we reverse the value and the code evaluation - so instead if say `$a == 2` we say `2 == $a`.
 
-**Moan:** Why is there no `sayf` function similar to `printf` - using `say sprintf` seems a bit "messy" each time...
+**Moan:** Why is there no `sayf` function similar to `printf` - using `say sprintf` is just "messy" each time...
 
 ```
        1:          4 =     2 x 2
@@ -102,10 +102,15 @@ The output in each row is the brilliant number and the two primes which are it's
 If we remove the pretty print this reduces to:
 
 ```perl
-for( my( $n, $c, $MAX, @f ) = ( 0, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  $c++, say $n if 2 == ( @f = factor $n ) && length $f[0] == length $f[1];
+for( my( $c, $n, @f ) = 100; $c; ) {
+  $c--, say $n if 2 == ( @f = factor ++$n ) && length $f[0] == length $f[1];
 }
 ```
+
+**Notes:** As well as moving the pretty print (and the $MAX for simplicity) we do three things:
+ * We start $c at the number of entries we want, and decrement the counter each time - the end condition is then simple `$c == 0` or as we write a "continue" condition that is just `$c`.
+ * As above we remove the increment from the `for()` to the entry - in this case ++$n. As we don't initialize `$n`, we have to "pre-increment" so that `$n` is defined when factor is called.
+ * Finally to display the brilliant number AND decrement `$c`, we separate the two commands with a `,` as `$c--, say $n`.
 
 # Challenge 2 - Achilles Number
 
@@ -126,9 +131,9 @@ We then check to see if any of the factors does not have its square as a factor.
 We then compute the `gcd` of these powers - if it is 1 then we display the result - our output is index, value and the prime factorisation, most of the loop is for the pretty print.
 
 ```perl
-for( my( $n, $c, $MAX, @f ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c < $MAX; $n++ ) {
-  say sprintf '%6d: %15d = %s', ++$c, $n, join ' . ', map { "$_->[0]^$_->[1]" } @f
-    if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp $n;
+for( my( $MAX, $c, $n, @f ) = ($ARGV[0] // 1e2, 0); $c<$MAX; ) {
+  printf "%6d: %15d = %s\n", ++$c, $n, join ' . ', map  { join '^', @$_ } @f
+    if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp ++$n;
 }
 ```
 
@@ -190,8 +195,8 @@ The following are the first 50 achilles numbers.
 If we remove the pretty print this reduces to:
 
 ```perl
-for( my( $n, $c, $MAX, @f ) = ( 2, 0, @ARGV ? $ARGV[0] : 1e2 ); $c<$MAX; $n++ ) {
-  $c++, say $n if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp $n;
+for( my( $c, $n ) = 100; $c; ) {
+  $c--, say $n if 1 == gcd map{ $_->[1] < 2 ? next : $_->[1] } factor_exp ++$n;
 }
 ```
 
