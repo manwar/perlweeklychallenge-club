@@ -1,22 +1,24 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-06-17 19:25:02 GMT"
-   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
    },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-06-17 21:05:30 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -52,8 +54,12 @@
          "Ted Leahy"
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -85,14 +91,13 @@
             66,
             2,
             4
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
          "data" : [
             6,
-            33,
+            35,
             0,
             267,
             113,
@@ -158,10 +163,5 @@
             0
          ]
       }
-   ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   }
+   ]
 }
