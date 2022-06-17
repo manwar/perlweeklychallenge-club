@@ -27,6 +27,7 @@ for my $i (2..-1+72*($prime[-1]+2)) {
     }
     next if !$powerful;
     next if scalar @prime_factors == 0;
+    next if scalar @prime_factors == 1;
     my @ppower;
     for my $pf (@prime_factors) {
         my $ind = 2;
@@ -37,7 +38,6 @@ for my $i (2..-1+72*($prime[-1]+2)) {
         } 
         push @ppower, $ind;
     }
-    next if scalar @ppower == 1;
     $imperfect = gcd(@ppower);
 
     if ($imperfect == 1) {
