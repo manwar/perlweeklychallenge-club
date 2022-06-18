@@ -13,7 +13,7 @@ die "You're asking too many, or I am too little!\n"
     if $req > 241;  # 21*20/2 +  21 + 4*3/2 + 4
 
 
-my $pt = 24;
+my $pt = ceil( ( sqrt(8*$req-79) +7 )/2 ) - 1;
 
 my @brilliant = (-1, 4, 6, 9, 10, 14, 15, 21, 25, 35, 49);
 
