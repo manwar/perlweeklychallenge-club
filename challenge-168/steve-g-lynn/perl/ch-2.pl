@@ -1,37 +1,40 @@
 #!/usr/bin/perl
 
-use Math::Prime::XS qw(is_prime sieve_primes);
+#time (bash) output:
+#real	0m0.177s
+#user	0m0.170s
+#sys	0m0.006s
 
+
+use bigint;
+
+use Math::Prime::Util::GMP qw(is_prime factor); # very fast!
+
+print &home_prime(10),"\n";
+#773
 
 print &home_prime(16),"\n";
-#-- should be 31636373 [wikipedia example]
+#31636373
+
+print &home_prime(20),"\n";
+#3318308475676071413
+
+print &home_prime(48),"\n";
+#6161791591356884791277
+
+print &home_prime(65),"\n";
+#1381321118321175157763339900357651
+
+print &home_prime(96),"\n";
+#172929671097972226356946608292031596899264419
+
 
 sub home_prime {
-	local ($n)=@_;
-	while (1){
-		$n=&factors($n);
-		(is_prime($n)) && last;
-	}
-	return $n;
+	my ($n)=@_;
+	is_prime($n) && return $n;
+	return	&home_prime(join('',sort{$a<=>$b}(factor($n))));
 }
 
 
-sub factors {
-	#--return concatenated prime factors of a number n 
-	local ($n)=@_;
-	local @primes=sieve_primes($n);
-	local $retstring="";
-	
-	if (is_prime($n)){
-		return $n;
-	}
-	else {
-		foreach $prime (sort{$a<=>$b} @primes){
-			while ( ($n % $prime) == 0){
-				$n /= $prime;
-				$retstring .= $prime;
-			}
-		}
-	}
-	return $retstring;	
-}
+1;
+

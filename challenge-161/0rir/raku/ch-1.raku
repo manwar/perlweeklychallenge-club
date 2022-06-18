@@ -8,7 +8,7 @@ use v6.d;
 
 # Do not accept a lossy loop.  All is best DRY.
 
-$?FILE.IO.parent(1).add("dictionary.txt").lines(:chomp).grep {
+$?FILE.IO.parent(4).add("data/dictionary.txt").lines(:chomp).grep( {
         .comb.sort.join eq $_ }
     ).sort(
         { $^b.chars <=> $^a.chars }
