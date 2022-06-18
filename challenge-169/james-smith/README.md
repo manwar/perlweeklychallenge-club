@@ -30,7 +30,7 @@ For flexibility we define the max count `$MAX` as the command-line argument if o
 
 ```perl
 for( my( $MAX, $c, $n, @f ) = ($ARGV[0] // 1e2, 0); $c<$MAX; ) {
-  printf "%8d: %10d = %5d x %d\n", ++$c, $n, @f if 2 == ( @f = factor ++$n ) && length $f[0] == length $f[1];
+  printf "%8d: %10d = %5d x %d\n", ++$c, $n, @f if 2 == ( @f = factor ++$n ) && length $f[0] == length $f[1]
 }
 ```
 
@@ -103,7 +103,7 @@ If we remove the pretty print this reduces to:
 
 ```perl
 for( my( $c, $n, @f ) = 100; $c; ) {
-  $c--, say $n if 2 == ( @f = factor ++$n ) && length $f[0] == length $f[1];
+  $c--, say $n if 2 == ( @f = factor ++$n ) && length $f[0] == length $f[1]
 }
 ```
 
@@ -133,7 +133,7 @@ We then compute the `gcd` of these powers - if it is 1 then we display the resul
 ```perl
 for( my( $MAX, $c, $n, @f ) = ($ARGV[0] // 1e2, 0); $c<$MAX; ) {
   printf "%6d: %15d = %s\n", ++$c, $n, join ' . ', map  { join '^', @$_ } @f
-    if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp ++$n;
+    if 1 == gcd map { $_->[1] < 2 ? next : $_->[1] } @f = factor_exp ++$n
 }
 ```
 
@@ -196,7 +196,7 @@ If we remove the pretty print this reduces to:
 
 ```perl
 for( my( $c, $n ) = 100; $c; ) {
-  $c--, say $n if 1 == gcd map{ $_->[1] < 2 ? next : $_->[1] } factor_exp ++$n;
+  $c--, say $n if 1 == gcd map{ $_->[1] < 2 ? next : $_->[1] } factor_exp ++$n
 }
 ```
 
