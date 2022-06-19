@@ -45,9 +45,9 @@ sub bn {
 
     given ($req) {
         $digit_len = 1 when $_ <= 10;
-        $digit_len = 2 when $_ > 10 && $_ <= 241;
-        $digit_len = 3 when $_ > 241 && $_ <= 10537;
-        $digit_len = 4 when $_ > 10537 && $_ <= 573928;
+        $digit_len = 2 when $_ <= 241;
+        $digit_len = 3 when $_ <= 10537;
+        $digit_len = 4 when $_ <= 573928;
         default {die "You're asking too many!\n";}
     }
 
