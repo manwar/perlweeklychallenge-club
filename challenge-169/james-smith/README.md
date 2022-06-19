@@ -44,61 +44,60 @@ The output in each row is the brilliant number and the two primes which are it's
 
 **Moan:** Why is there no `sayf` function similar to `printf` - using `say sprintf` is just "messy" each time...
 
-| Index        | Value                | Factors                                                      |
-| -----------: | -------------------: | ------------------------------------------------------------ |
-|            1 |                   72 | 2<sup>3</sup>.3<sup>2</sup>                                  |
-|            2 |                  108 | 2<sup>2</sup>.3<sup>3</sup>                                  |
-|            3 |                  200 | 2<sup>3</sup>.5<sup>2</sup>                                  |
-|            4 |                  288 | 2<sup>5</sup>.3<sup>2</sup>                                  |
-|            5 |                  392 | 2<sup>3</sup>.7<sup>2</sup>                                  |
-|            6 |                  432 | 2<sup>4</sup>.3<sup>3</sup>                                  |
-|            7 |                  500 | 2<sup>2</sup>.5<sup>3</sup>                                  |
-|            8 |                  648 | 2<sup>3</sup>.3<sup>4</sup>                                  |
-|            9 |                  675 | 3<sup>3</sup>.5<sup>2</sup>                                  |
-|           10 |                  800 | 2<sup>5</sup>.5<sup>2</sup>                                  |
-|           11 |                  864 | 2<sup>5</sup>.3<sup>3</sup>                                  |
-|           12 |                  968 | 2<sup>3</sup>.11<sup>2</sup>                                 |
-|           13 |                  972 | 2<sup>2</sup>.3<sup>5</sup>                                  |
-|           14 |                1,125 | 3<sup>2</sup>.5<sup>3</sup>                                  |
-|           15 |                1,152 | 2<sup>7</sup>.3<sup>2</sup>                                  |
-|           16 |                1,323 | 3<sup>3</sup>.7<sup>2</sup>                                  |
-|           17 |                1,352 | 2<sup>3</sup>.13<sup>2</sup>                                 |
-|           18 |                1,372 | 2<sup>2</sup>.7<sup>3</sup>                                  |
-|           19 |                1,568 | 2<sup>5</sup>.7<sup>2</sup>                                  |
-|           20 |                1,800 | 2<sup>3</sup>.3<sup>2</sup>.5<sup>2</sup>                    |
-|           21 |                1,944 | 2<sup>3</sup>.3<sup>5</sup>                                  |
-|           22 |                2,000 | 2<sup>4</sup>.5<sup>3</sup>                                  |
-|           23 |                2,312 | 2<sup>3</sup>.17<sup>2</sup>                                 |
-|           24 |                2,592 | 2<sup>5</sup>.3<sup>4</sup>                                  |
-|           25 |                2,700 | 2<sup>2</sup>.3<sup>3</sup>.5<sup>2</sup>                    |
-|           26 |                2,888 | 2<sup>3</sup>.19<sup>2</sup>                                 |
-|           27 |                3,087 | 3<sup>2</sup>.7<sup>3</sup>                                  |
-|           28 |                3,200 | 2<sup>7</sup>.5<sup>2</sup>                                  |
-|           29 |                3,267 | 3<sup>3</sup>.11<sup>2</sup>                                 |
-|           30 |                3,456 | 2<sup>7</sup>.3<sup>3</sup>                                  |
-|           31 |                3,528 | 2<sup>3</sup>.3<sup>2</sup>.7<sup>2</sup>                    |
-|           32 |                3,872 | 2<sup>5</sup>.11<sup>2</sup>                                 |
-|           33 |                3,888 | 2<sup>4</sup>.3<sup>5</sup>                                  |
-|           34 |                4,000 | 2<sup>5</sup>.5<sup>3</sup>                                  |
-|           35 |                4,232 | 2<sup>3</sup>.23<sup>2</sup>                                 |
-|           36 |                4,500 | 2<sup>2</sup>.3<sup>2</sup>.5<sup>3</sup>                    |
-|           37 |                4,563 | 3<sup>3</sup>.13<sup>2</sup>                                 |
-|           38 |                4,608 | 2<sup>9</sup>.3<sup>2</sup>                                  |
-|           39 |                5,000 | 2<sup>3</sup>.5<sup>4</sup>                                  |
-|           40 |                5,292 | 2<sup>2</sup>.3<sup>3</sup>.7<sup>2</sup>                    |
-|           41 |                5,324 | 2<sup>2</sup>.11<sup>3</sup>                                 |
-|           42 |                5,400 | 2<sup>3</sup>.3<sup>3</sup>.5<sup>2</sup>                    |
-|           43 |                5,408 | 2<sup>5</sup>.13<sup>2</sup>                                 |
-|           44 |                5,488 | 2<sup>4</sup>.7<sup>3</sup>                                  |
-|           45 |                6,075 | 3<sup>5</sup>.5<sup>2</sup>                                  |
-|           46 |                6,125 | 5<sup>3</sup>.7<sup>2</sup>                                  |
-|           47 |                6,272 | 2<sup>7</sup>.7<sup>2</sup>                                  |
-|           48 |                6,728 | 2<sup>3</sup>.29<sup>2</sup>                                 |
-|           49 |                6,912 | 2<sup>8</sup>.3<sup>3</sup>                                  |
-|           50 |                7,200 | 2<sup>5</sup>.3<sup>2</sup>.5<sup>2</sup>                    |
+The first 50 brilliant numbers are:
 
-
-
+```
+       1:          4 =     2 x 2
+       2:          6 =     2 x 3
+       3:          9 =     3 x 3
+       4:         10 =     2 x 5
+       5:         14 =     2 x 7
+       6:         15 =     3 x 5
+       7:         21 =     3 x 7
+       8:         25 =     5 x 5
+       9:         35 =     5 x 7
+      10:         49 =     7 x 7
+      11:        121 =    11 x 11
+      12:        143 =    11 x 13
+      13:        169 =    13 x 13
+      14:        187 =    11 x 17
+      15:        209 =    11 x 19
+      16:        221 =    13 x 17
+      17:        247 =    13 x 19
+      18:        253 =    11 x 23
+      19:        289 =    17 x 17
+      20:        299 =    13 x 23
+      21:        319 =    11 x 29
+      22:        323 =    17 x 19
+      23:        341 =    11 x 31
+      24:        361 =    19 x 19
+      25:        377 =    13 x 29
+      26:        391 =    17 x 23
+      27:        403 =    13 x 31
+      28:        407 =    11 x 37
+      29:        437 =    19 x 23
+      30:        451 =    11 x 41
+      31:        473 =    11 x 43
+      32:        481 =    13 x 37
+      33:        493 =    17 x 29
+      34:        517 =    11 x 47
+      35:        527 =    17 x 31
+      36:        529 =    23 x 23
+      37:        533 =    13 x 41
+      38:        551 =    19 x 29
+      39:        559 =    13 x 43
+      40:        583 =    11 x 53
+      41:        589 =    19 x 31
+      42:        611 =    13 x 47
+      43:        629 =    17 x 37
+      44:        649 =    11 x 59
+      45:        667 =    23 x 29
+      46:        671 =    11 x 61
+      47:        689 =    13 x 53
+      48:        697 =    17 x 41
+      49:        703 =    19 x 37
+      50:        713 =    23 x 31
+```
 ### Removing pretty print
 
 If we remove the pretty print this reduces to:
@@ -236,6 +235,7 @@ Some examples for larger values of `n` are:
 |      275,000 |       58,919,206,088 | 2<sup>3</sup>.85819<sup>2</sup>                              |
 |      300,000 |       69,976,609,587 | 3<sup>3</sup>.50909<sup>2</sup>                              |
 |      325,000 |       81,981,196,443 | 3<sup>3</sup>.55103<sup>2</sup>                              |
+|      350,000 |       94,917,245,000 | 2<sup>3</sup>.5<sup>4</sup>.4357<sup>2</sup>                 |
 
 And these are the first numbers with `n` digits...
 
@@ -251,6 +251,7 @@ And these are the first numbers with `n` digits...
 |       10,554 |          100,018,800 | 2<sup>4</sup>.3<sup>6</sup>.5<sup>2</sup>.7<sup>3</sup>      |
 |       34,562 |        1,000,042,200 | 2<sup>3</sup>.3<sup>6</sup>.5<sup>2</sup>.19<sup>3</sup>     |
 |      111,892 |       10,000,373,888 | 2<sup>7</sup>.8839<sup>2</sup>                               |
+|      359,341 |      100,001,075,328 | 2<sup>7</sup>.3<sup>2</sup>.7<sup>2</sup>.11<sup>6</sup>     |
 
 ### Github formatting script....
 
