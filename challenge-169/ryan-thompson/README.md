@@ -1,18 +1,15 @@
 # Ryan Thompson
 
-## Week 168 Solutions
+## Week 169 Solutions
 
-### Task 1 › Perrin Primes
+### Task 1 › Brilliant Numbers
 
  * [Perl](perl/ch-1.pl)
- * [Raku](raku/ch-1.raku)
 
-### Task 2 › Home Prime
+### Task 2 › Achilles Numbers
 
  * [Perl](perl/ch-2.pl)
- * [Raku](raku/ch-2.raku)
 
 ## Blogs
 
- * [Perrin Primes](https://ry.ca/2022/06/perrin-primes/)
- * [Home Prime](https://ry.ca/2022/06/home-prime/)
+ * [Brilliant and Achilles Numbers](https://ry.ca/2022/06/brilliant-and-achilles-numbers/)
