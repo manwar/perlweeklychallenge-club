@@ -2,7 +2,7 @@
 # The Weekly Challenge 169
 # Task 1 Brilliant Numbers Version 3.0
 # See https://e7-87-83.github.io/coding/challenge_169.html
-#  for a simpler version, up to first 241 brilliant numbers
+#     for a simpler version, up to first 241 brilliant numbers
 
 =pod DATA
     number of 1-digit primes =    4
@@ -64,8 +64,10 @@ sub bn {
     my @temp;
 
     for my $i (0..$c) {
-        for my $j ($i..scalar $prime{$digit_len}->@* - 1) {
-            my $product = $prime{$digit_len}[$i]*$prime{$digit_len}[$j];
+        my $I = $prime{$digit_len}[$i];
+        my $_j = scalar $prime{$digit_len}->@* - 1;
+        for my $J ($prime{$digit_len}->@[$i..$_j]) {
+            my $product = $I*$J;
             push @temp, $product;
         }
     }
@@ -81,7 +83,7 @@ sub bn {
 
 
 
-use Test::More tests=> 13;
+use Test::More tests=> 14;
 ok bn(60) == 841;
 ok bn(80) == 1079;
 ok bn(100) == 1369;
@@ -94,6 +96,7 @@ ok bn(10000) == 696191;
 ok bn(10416) == 851927;
 ok bn(10537) == 994009;
 ok bn(10538) == 1009*1009;
+ok bn(573927) == 9967*9973;
 ok bn(573928) == 9973*9973;
 
 # ref: OEIS:A078972
