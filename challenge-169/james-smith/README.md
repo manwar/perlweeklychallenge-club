@@ -251,6 +251,7 @@ And these are the first numbers with `n` digits...
 |       10,554 |          100,018,800 | 2<sup>4</sup>.3<sup>6</sup>.5<sup>2</sup>.7<sup>3</sup>      |
 |       34,562 |        1,000,042,200 | 2<sup>3</sup>.3<sup>6</sup>.5<sup>2</sup>.19<sup>3</sup>     |
 |      111,892 |       10,000,373,888 | 2<sup>7</sup>.8839<sup>2</sup>                               |
+|      359,341 |      100,001,075,328 | 2<sup>7</sup>.3<sup>2</sup>.7<sup>2</sup>.11<sup>6</sup>     |
 
 ### Github formatting script....
 
