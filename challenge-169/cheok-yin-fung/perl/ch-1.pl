@@ -48,7 +48,7 @@ sub bn {
         $digit_len = 2 when $_ > 10 && $_ <= 241;
         $digit_len = 3 when $_ > 241 && $_ <= 10537;
         $digit_len = 4 when $_ > 10537 && $_ <= 573928;
-        die "You're asking too many!\n" when $_ > 573928;
+        default {die "You're asking too many!\n";}
     }
 
     eval { forprimes {push $prime{3}->@*, $_}  100, 999; } if $digit_len >= 3; 
