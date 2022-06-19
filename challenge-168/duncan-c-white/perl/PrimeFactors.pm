@@ -40,7 +40,7 @@ fun prime_factors( $n )
 {
 	die "prime_factors: n ($n) must be >1\n" if $n<=1;
 	my @result;
-	my $lim = int(sqrt($n));
+	my $lim = $n;
 	my $orign = $n;
 	foreach my $f (2..$lim)
 	{
@@ -50,8 +50,6 @@ fun prime_factors( $n )
 		{
 			say "pf($orign): n=$n, adding $f to result" if $debug;
 			push @result, $f;
-			my $other = $orign / $f;
-			push @result, $other if isprime($other) && $other != $f;
 			$n /= $f;
 			say "pf($orign): n /= $f (so n=$n now)" if $debug;
 		}
