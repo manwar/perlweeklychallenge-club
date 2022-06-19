@@ -235,6 +235,7 @@ Some examples for larger values of `n` are:
 |      275,000 |       58,919,206,088 | 2<sup>3</sup>.85819<sup>2</sup>                              |
 |      300,000 |       69,976,609,587 | 3<sup>3</sup>.50909<sup>2</sup>                              |
 |      325,000 |       81,981,196,443 | 3<sup>3</sup>.55103<sup>2</sup>                              |
+|      350,000 |       94,917,245,000 | 2<sup>3</sup>.5<sup>4</sup>.4357<sup>2</sup>                 |
 
 And these are the first numbers with `n` digits...
 
