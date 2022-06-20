@@ -1,15 +1,43 @@
 {
-   "legend" : {
-      "enabled" : "false"
+   "series" : [
+      {
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               2634
+            ],
+            [
+               "Perl",
+               8246
+            ],
+            [
+               "Raku",
+               4894
+            ]
+         ],
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "align" : "right",
+            "y" : 10,
+            "rotation" : -90,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "color" : "#FFFFFF"
+         }
+      }
+   ],
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+      }
    },
    "xAxis" : {
       "labels" : {
@@ -20,44 +48,16 @@
       },
       "type" : "category"
    },
+   "subtitle" : {
+      "text" : "Last updated at 2022-06-20 05:22:17 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "series" : [
-      {
-         "dataLabels" : {
-            "align" : "right",
-            "enabled" : "true",
-            "rotation" : -90,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "y" : 10
-         },
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               2633
-            ],
-            [
-               "Perl",
-               8244
-            ],
-            [
-               "Raku",
-               4892
-            ]
-         ]
-      }
-   ],
-   "subtitle" : {
-      "text" : "Last updated at 2022-06-20 00:20:58 GMT"
    }
 }
