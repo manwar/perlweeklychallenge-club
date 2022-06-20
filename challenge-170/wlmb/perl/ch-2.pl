@@ -13,8 +13,9 @@ die "Usage: ./ch-2.pl A B\nto obtain the Kronecker product of A and B" unless @A
 # for a 2x3 matrix
 my ($A, $B)=map {pdl $_} @ARGV;
 my $C=$A(*1,*1,:,:)*$B(:,:,*1,*1); #use dummy indices to build tensor
-				#product # C_{ijkl}=A_{ij}B_{kl}
-# get size of each dimension
+                                   #product # C_{ijkl}=A_{ij}B_{kl}
+# Notice: PDL uses column,row notation, not the algebraic row, column
+# Get size of each dimension
 my ($I, $J, $K, $L)=($A->dim(1), $A->dim(0), $B->dim(1), $B->dim(0));
 my $Kronecker=$C->mv(1,2) # change indices to ikjl
     ->reshape($J*$L, $I*$K); # clump indices i and k, and j and l
