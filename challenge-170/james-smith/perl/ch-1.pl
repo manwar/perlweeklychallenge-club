@@ -6,15 +6,13 @@ use warnings;
 use feature qw(say);
 use Test::More;
 use Benchmark qw(cmpthese timethis);
-use Math::Prime::Util qw(next_prime);
+use Math::Prime::Util qw(nth_prime forprimes);
 use Data::Dumper qw(Dumper);
-use bigint;
+use bignum;
 
-my(@x)= my $p = 1;
+my @x = (1); forprimes { push @x, $x[-1] * $_ } nth_prime ($ARGV[0]//10);
 
-push @x, $x[-1] * ($p = next_prime $p) for 1..100;
-
-say sprintf '%300s', th($_) for @x;
+say sprintf '%'.int(2+4/3*log($x[-1])/log 10).'s', th($_) for @x;
 
 sub th { scalar reverse( (reverse $_[0]) =~ s/(\d\d\d)(?=\d)(?!\d*\.)/$1,/gr ) }
 
