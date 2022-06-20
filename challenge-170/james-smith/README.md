@@ -35,6 +35,16 @@ say sprintf '%'.int(2+4/3*log($x[-1])/log 10).'s', th($_) for @x;
 sub th { scalar reverse( (reverse $_[0]) =~ s/(\d\d\d)(?=\d)(?!\d*\.)/$1,/gr ) }
 ```
 
+### Short version....
+
+A short version of this - we remove the flexibility of using the parameters (`N=10`) and instead of working out he 9th prime in code replacing it with 23, gives, the 30 byte code..
+
+```perl
+say$a=1;forprimes{say$a*=$_}nth_prime($ARGV[0]//10)-1  # 53 bytes
+say$a=1;forprimes{say$a*=$_}nth_prime 9                # 39 bytes
+say$a=1;forprimes{say$a*=$_}23                         # 30 bytes
+```
+
 # Challenge 2 - Kronecker Product
 
 ***Write a script to implement Kronecker Product on the given 2 matrices. e.g.***
