@@ -55,7 +55,7 @@ fun prime_factors( $n )
 		}
 		last if $n==1;
 	}
-	say "pf($orign): factors are @result";
+	say "pf($orign): prime factors are @result" if $debug;
 	return @result;
 }
 

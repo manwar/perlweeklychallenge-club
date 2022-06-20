@@ -1,43 +1,56 @@
-TASK 1: Perrin Prime
+TASK 1: Brilliant Numbers
 
-The Perrin sequence is defined to start with [3, 0, 2]; after that, term
-N is the sum of terms N-2 and N-3. (So it continues 3, 2, 5, 5, 7, ....)
+Write a script to generate first 20 Brilliant Numbers.
 
-A Perrin prime is a number in the Perrin sequence which is also a prime number.
+    Brilliant numbers are numbers with two prime factors of the same length.
 
-Calculate the first 13 Perrin Primes.
+The number should have exactly two prime factors, i.e. it's the product
+of two primes of the same length.
 
-f(13) = [2, 3, 5, 7, 17, 29, 277, 367, 853, 14197, 43721, 1442968193, 792606555396977]
+For example,
 
-MY NOTES: ok, sounds relatively easy, except that the 12th and 13th PP are
-enormous.  I normally reusing my old favourite MakePrimes.pm (Sieve of
-Eratosthenes based) but this time I think I'll have to do it the old
-fashioned "try all factors up to sqrt()" approach.
+24287 = 149 x 163
+24289 = 107 x 227
+
+Therefore 24287 and 24289 are 2-brilliant numbers.  These two brilliant
+numbers happen to be consecutive as there are no even brilliant numbers
+greater than 14.
+
+Output
+
+4, 6, 9, 10, 14, 15, 21, 25, 35, 49, 121, 143, 169, 187, 209, 221, 247, 253, 289, 299
+
+MY NOTES: ok, sounds relatively easy, but I'm getting very bored of
+"tasks to do with Number Theory and (especially) Primes".
 
 
-Task 2: Home Prime
+Task 2: Achilles Numbers
 
-You are given an integer greater than 1.
+Write a script to generate first 20 Achilles Numbers. Please checkout
+wikipedia for more information.
 
-Write a script to find the home prime of the given number.
+An Achilles number is a number that is powerful but imperfect (not a
+perfect power). Named after Achilles, a hero of the Trojan war, who was
+also powerful but imperfect.
 
-In number theory, the home prime HP(n) of an integer n greater than
-1 is the prime number obtained by repeatedly factoring the increasing
-concatenation of prime factors including repetitions.
+A positive integer n is a powerful number if, for every prime factor p
+of n, p^2 is also a divisor.
 
-Further information can be found on Wikipedia
+A number is a perfect power if it has any integer roots (square root,
+cube root, etc.).
 
-https://en.wikipedia.org/wiki/Home_prime
+For example 36 factors to (2, 2, 3, 3) - every prime factor (2, 3) also
+has its square as a divisor (4, 9). But 36 has an integer square root,
+6, so the number is a perfect power.
 
-Example
+But 72 factors to (2, 2, 2, 3, 3); it similarly has 4 and 9 as divisors,
+but it has no integer roots. This is an Achilles number.
 
-As given in the Wikipedia page:
+Output
 
-HP(10) = 773, as 10 factors as 2x5 yielding HP10(1) = 25, 25 factors
-as 5x5 yielding HP10(2) = HP25(1) = 55, 55 = 5x11 implies HP10(3)
-= HP25(2) = HP55(1) = 511, and 511 = 7x73 gives HP10(4) = HP25(3) =
-HP55(2) = HP511(1) = 773, a prime number.
+ 72, 108,  200,  288,  392,  432,  500,  648,  675,  800,  864, 968, 972, 1125, 1152, 1323, 1352, 1372, 1568, 1800
 
-MY NOTES: Ok, yet another prime variant.  I'll have a go, but I note that
-the numbers get enormous, to the point where it's not even known if HP(49)
-can be calculated.  Again can't use MakePrimes.pm..
+
+MY NOTES: Ok, yet another prime variant.  I can immediately see some mileage
+in pre-computing a lookup table of all perfect-powers up to N.  Perhaps N=1800
+as we know the answer:-)
