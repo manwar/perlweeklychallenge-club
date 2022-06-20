@@ -90,3 +90,31 @@ This gives a slightly more compact version (73 characters!)
 ```perl
 sub k{[map{$b=$_;map{$a=$_;[map{//;map{$'*$_}@$a}@$b]}@{$_[1]}}@{$_[0]}]}
 ```
+
+### Pretty print dumper...
+
+To display the data we have a lightweight pretty print function which displays the matricies:
+
+```perl
+sub d{say'[',(map{sprintf' %6d',$_}@{$_}),' ]'for@{$_[0]};say''}
+```
+
+Example output for the matrices A & B above, along with the output of `k_product` and the shorter `k`.
+
+```
+[      1      2 ]
+[      3      4 ]
+
+[      5      6 ]
+[      7      8 ]
+
+[      5      6     10     12 ]
+[      7      8     14     16 ]
+[     15     18     20     24 ]
+[     21     24     28     32 ]
+
+[      5      6     10     12 ]
+[      7      8     14     16 ]
+[     15     18     20     24 ]
+[     21     24     28     32 ]
+```
