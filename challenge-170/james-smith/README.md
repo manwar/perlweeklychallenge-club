@@ -15,20 +15,20 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-170/james-smith
 
-# Challenge 1 - Primordial Numbers
+# Challenge 1 - Primorial Numbers
 
-***Write a script to generate first 10 Primorial Numbers - like factorials but multiply by succesive primes***
+***Write a script to generate first 10 Primorial Numbers - like factorials but multiply by succesive primes.***
 
 ## Solution
 
 Another prime problem, in this one we revert to using next_prime to get successive primes. We use a couple more of the methods from `Math::Prime::Util`, `nth_prime` and `forprimes`.
 
-`forprimes {block} $n` executes `{block}` with primes up to and including `$n`. This isn't quite what we want as we want to have `$n` primes - we can get the *n*th prime with suprisingly `nth_prime`. Combining the two gices us `forprimes {block} nth_prime $n`.
+`forprimes {block} $n` executes `{block}` with primes up to and including `$n`. This isn't quite what we want as we want to have `$n` primes - we can get the *n*th prime with suprisingly `nth_prime`. Combining the two gives us `forprimes {block} nth_prime $n`.
 
-We use `bignum` to allow arbitrary integers, so can compute the primordial numbers for large `$n`. In this case to pretty print we use the `commify` method from the perl cookbook {here renamed `th`}. To pretty print the numbers. To right align these numbers we need the maximum length of the numbers - which is `log($x[-1])/log(10)` to get the digits and multiple by 4/3 to add the commas and add 2 for good measure...
+We use `bignum` to allow arbitrary integers, so can compute the primorial numbers for large `$n`. In this case to pretty print we use the `commify` method from the perl cookbook {here renamed `th`}. To right align these numbers we need the maximum length of the numbers - which is given by `log($x[-1])/log(10)` to get the digits and multiple by 4/3 to add the commas and add 2 for good measure...
 
 ```perl
-my @x = (1); forprimes { push @x, $x[-1] * $_ } nth_prime ($ARGV[0]//10);
+my @x = (1); forprimes { push @x, $x[-1] * $_ } nth_prime (($ARGV[0]//10)-1);
 
 say sprintf '%'.int(2+4/3*log($x[-1])/log 10).'s', th($_) for @x;
 
