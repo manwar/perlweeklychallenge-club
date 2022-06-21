@@ -1,45 +1,26 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2022-06-21 20:58:21 GMT"
-   },
    "title" : {
       "text" : "The Weekly Challenge - 170"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
    },
    "series" : [
       {
          "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 170",
          "data" : [
             {
-               "drilldown" : "Cheok-Yin Fung",
                "y" : 2,
-               "name" : "Cheok-Yin Fung"
+               "name" : "Cheok-Yin Fung",
+               "drilldown" : "Cheok-Yin Fung"
             },
             {
-               "drilldown" : "Dave Jacoby",
                "y" : 2,
-               "name" : "Dave Jacoby"
+               "name" : "Dave Jacoby",
+               "drilldown" : "Dave Jacoby"
             },
             {
-               "name" : "E. Choroba",
                "y" : 2,
-               "drilldown" : "E. Choroba"
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba"
             },
             {
                "y" : 3,
@@ -47,74 +28,87 @@
                "name" : "James Smith"
             },
             {
-               "name" : "Marton Polgar",
+               "y" : 2,
                "drilldown" : "Marton Polgar",
+               "name" : "Marton Polgar"
+            },
+            {
+               "drilldown" : "Matthew Neleigh",
+               "name" : "Matthew Neleigh",
                "y" : 2
             },
             {
+               "drilldown" : "Peter Campbell Smith",
                "name" : "Peter Campbell Smith",
-               "y" : 3,
-               "drilldown" : "Peter Campbell Smith"
+               "y" : 3
             },
             {
-               "drilldown" : "Roger Bell_West",
                "y" : 4,
+               "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West"
             },
             {
+               "name" : "Stephen G Lynn",
                "drilldown" : "Stephen G Lynn",
-               "y" : 4,
-               "name" : "Stephen G Lynn"
+               "y" : 4
             },
             {
                "name" : "W. Luis Mochan",
-               "y" : 3,
-               "drilldown" : "W. Luis Mochan"
+               "drilldown" : "W. Luis Mochan",
+               "y" : 3
             }
-         ],
-         "name" : "The Weekly Challenge - 170"
+         ]
       }
    ],
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "type" : "category"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
          {
             "id" : "Cheok-Yin Fung",
-            "name" : "Cheok-Yin Fung",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby"
+            "name" : "Cheok-Yin Fung"
          },
          {
-            "name" : "E. Choroba",
+            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "E. Choroba"
+            "name" : "Dave Jacoby"
          },
          {
-            "id" : "James Smith",
+            "id" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "E. Choroba"
+         },
+         {
             "name" : "James Smith",
             "data" : [
                [
@@ -125,17 +119,28 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "James Smith"
          },
          {
-            "name" : "Marton Polgar",
+            "id" : "Marton Polgar",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Marton Polgar"
+            "name" : "Marton Polgar"
+         },
+         {
+            "id" : "Matthew Neleigh",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Matthew Neleigh"
          },
          {
             "name" : "Peter Campbell Smith",
@@ -153,6 +158,7 @@
          },
          {
             "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -162,10 +168,10 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Roger Bell_West"
+            ]
          },
          {
+            "id" : "Stephen G Lynn",
             "name" : "Stephen G Lynn",
             "data" : [
                [
@@ -176,8 +182,7 @@
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Stephen G Lynn"
+            ]
          },
          {
             "data" : [
@@ -195,9 +200,19 @@
          }
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2022-06-21 21:07:07 GMT"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    }
 }
