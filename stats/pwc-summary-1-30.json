@@ -1,7 +1,4 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
    "xAxis" : {
       "categories" : [
          "3ter",
@@ -36,13 +33,8 @@
          "Bob Lied"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "yAxis" : {
       "min" : 0,
@@ -50,11 +42,13 @@
          "text" : ""
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-06-21 19:37:17 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -86,11 +80,9 @@
             0,
             4,
             54
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -122,9 +114,11 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -156,12 +150,18 @@
             0,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-06-21 20:17:05 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
