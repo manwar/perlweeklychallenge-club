@@ -1,14 +1,10 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "xAxis" : {
       "categories" : [
@@ -35,12 +31,19 @@
          "Yozen Hernandez"
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             4,
             2,
@@ -63,7 +66,8 @@
             3,
             86,
             21
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -119,13 +123,9 @@
       }
    ],
    "subtitle" : {
-      "text" : "[Champions: 21] Last updated at 2022-06-21 22:29:29 GMT"
+      "text" : "[Champions: 21] Last updated at 2022-06-22 07:21:31 GMT"
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    }
 }
