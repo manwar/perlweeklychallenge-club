@@ -41,9 +41,7 @@ my @matrix_pairs = (
 
 print("\n");
 foreach my $pair (@matrix_pairs){
-    my @k_prod = @{kronecker_product($pair->[0], $pair->[1])};
-
-    print_matrix(\@k_prod, "    ");
+    print_matrix(kronecker_product($pair->[0], $pair->[1]), "    ");
     print("\n");
 }
 
