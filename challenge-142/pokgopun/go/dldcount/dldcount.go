@@ -15,6 +15,9 @@ func Count(m, n uint) (c uint) {
 				if v%10 == n {
 					c++
 				}
+				if d == m/d {
+					break
+				}
 			}
 		}
 	}

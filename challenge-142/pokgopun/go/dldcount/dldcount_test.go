@@ -12,6 +12,7 @@ func TestDldCount(t *testing.T) {
 		{30, 5, 2},
 		{30, 0, 1},
 		{30, 6, 1},
+		{64, 8, 1},
 	}
 	for _, d := range data {
 		res := Count(d.m, d.n)
