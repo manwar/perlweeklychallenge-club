@@ -45,6 +45,21 @@ say$a=1;forprimes{say$a*=$_}nth_prime 9                # 39 bytes
 say$a=1;forprimes{say$a*=$_}23                         # 30 bytes
 ```
 
+### Aside - Last week's challenge - Achilles numbers.
+
+There is a connection with last weeks challenge here. The lowest Achilles number with `n` distinct prime factors is `2 * P(n)^2`
+
+So we have:
+
+| n  | P(n)     | 2 * P(n)^2      | achilles idx | Factorisation |
+| -: | -------: | --------------: | -----------: | ------------- |
+|  2 |       6  |              72 |            1 | 2<sup>3</sup>.3<sup>2</sup> |
+|  3 |      30  |           1,800 |           20 | 2<sup>3</sup>.3<sup>2</sup>.5<sup>2</sup> |
+|  4 |     210  |          88,200 |          237 | 2<sup>3</sup>.3<sup>2</sup>.5<sup>2</sup>.7<sup>2</sup> |
+|  5 |   2,310  |      10,672,200 |        3,268 | 2<sup>3</sup>.3<sup>2</sup>.5<sup>2</sup>.7<sup>2</sup>.11<sup>2</sup> |
+|  6 |  30,030  |   1,803,601,800 |       46,747 | 2<sup>3</sup>.3<sup>2</sup>.5<sup>2</sup>.7<sup>2</sup>.11<sup>2</sup>.13<sup>2</sup> |
+|  7 | 510,510  | 521,240,920,200 |      826,862 | 2<sup>3</sup>.3<sup>2</sup>.5<sup>2</sup>.7<sup>2</sup>.11<sup>2</sup>.13<sup>2</sup>.17<sup>2</sup> |
+
 # Challenge 2 - Kronecker Product
 
 ***Write a script to implement Kronecker Product on the given 2 matrices. e.g.***
