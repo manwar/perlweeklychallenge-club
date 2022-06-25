@@ -47,9 +47,7 @@ say$a=1;forprimes{say$a*=$_}23                         # 30 bytes
 
 ### Aside - Last week's challenge - Achilles numbers.
 
-There is a connection with last weeks challenge here. The lowest Achilles number with `n` distinct prime factors is
-
-`    2 * P(n)^2`
+There is a connection with last weeks challenge here. The lowest Achilles number with `n` distinct prime factors is `2 * P(n)^2`
 
 So we have:
 
