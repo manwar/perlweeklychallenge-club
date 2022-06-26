@@ -111,7 +111,7 @@ sub k{[map{$b=$_;map{$a=$_;[map{//;map{$'*$_}@$a}@$b]}@{$_[1]}}@{$_[0]}]}
 To display the data we have a lightweight pretty print function which displays the matricies:
 
 ```perl
-sub d{say'[',(map{sprintf' %6d',$_}@{$_}),' ]'for@{$_[0]};say''}
+sub d{say"[ @{[map{sprintf'%6d',$_}@$_]} ]"for@{$_[0]};say''}
 ```
 
 Example output for the matrices A & B above, along with the output of `k_product` and the shorter `k`.
@@ -132,4 +132,122 @@ Example output for the matrices A & B above, along with the output of `k_product
 [      7      8     14     16 ]
 [     15     18     20     24 ]
 [     21     24     28     32 ]
+```
+
+The `d` method uses the nice feature in perl of interpolating the result of an artibrary function
+within a string. You can use `"@array"` to insert all values of the array into a string (separated with a space.
+(e.g. `print @a` and `print "@a"` do subtly different things - the first the elements of `@a` are not separated.
+In the second they are separated by ` `s.
+
+But I digress - you can actually use the output of any function to produce array. A simple function can be interpolated
+as `"@{[ my_fun() ]}"`. Commonly you can use a `map`.
+
+```perl
+"Output:  @{[ map { qq('$_') } @array ]}"
+```
+
+This can be quite useful.
+
+
+### Aside
+
+This was code I wrote about 20 years ago to produce a nicely formatted HTML table (note the HTML 3 standard `valign="middle"`)
+Yes - it is basically one string.... Full code plus examples is in: <a href="perl/original-spreadsheet-code.pl">perl/original-spreadsheet-code.pl</a>.
+
+
+```perl
+sub produce_table{
+  my( $C,$T ) = (0,{});
+## no critic (ImplicitNewlines)
+  return map {
+    qq(<table cellpadding="2" cellspacing="0" align="@{[
+      exists $_[2]{align} ?
+        $_[2]{align} :
+        'center'
+    ]}" width="@{[
+      exists $_[2]{width} ?
+      $_[2]{width} :
+      '$MAX_VALUE0%'
+    ]}">@{[
+      map( {
+        $T->{$_->{key}||$C}=0 if exists $_->{total};
+        $C++;
+        ()
+      }@{$_[0]} ), ($_[2]{'header'}||'' eq 'no' ?
+        () :
+        qq(<tr valign="middle">@{[
+          map{
+            $T->{$_->{key}||$C}=0 if exists $_->{total};
+            $C++;
+            qq(<th>$_->{title}</th>)
+          }@{$_[0]}
+        ]}</tr>))
+    ]}@{[
+      map{
+        my $a=$_;
+        $C=0;
+        qq(<tr valign="@{[
+          exists $_[2]{valign} ?
+          $_[2]{valign} :
+          'top'
+        ]}" @{[
+          exists $_[2]{rows} ?
+            qq( class="@{[
+              [ push( @{$_[2]{rows}},shift @{$_[2]{rows}}) , $_[2]{rows}[-1] ]->[1]
+            ]}") :
+            ''
+        ]}>@{[
+          map{
+            my $b = ref($a) eq 'ARRAY' ?
+              $a->[$C] :
+              ref($a) eq 'HASH' ?
+                $a->{$_->{key}} :
+                $a->${\$_->{key}};
+            exists $_->{total} and $T->{$_->{key}||$C}+=$b;
+            $C++;
+            qq(<td@{[
+              $_->{align} ?
+                qq( align="$_->{align}") :
+                ''
+            ]}@{[
+              $_->{width} ?
+                qq( width="$_->{width}") :
+                ''
+            ]}>@{[
+              $b eq'' ?
+                '&nbsp;' :
+                $_->{format} ?
+                  $_->{format}->($b,$a) :
+                  $b
+            ]}</td>)
+          }@{$_[0]}
+        ]}</tr>)
+      }@{$_[1]}
+    ]}@{[
+      ($C=-1)&&%$T ?
+        qq(<tr valign="@{[
+          exists $_[2]{valign} ?
+          $_[2]{valign} :
+          'top'
+        ]}">@{[
+          map {
+            $C++;
+            qq(<td @{[
+              $_->{align} ?
+                qq( align="$_->{align}") :
+                ''
+            ]}>@{[
+              !exists $_->{total} ?
+                '&nbsp;' :
+                ref $_->{total} eq 'CODE' ?
+                  $_->{total}->($T->{$_->{key}||$C},$T) :
+                  $_->{total} || $T->{$_->{key}||$C}
+            ]}</td>)
+          } @{$_[0]}
+        ]}</tr>) :
+        ''
+    ]}</table>)
+  } 1;
+## use critic;
+}
 ```
