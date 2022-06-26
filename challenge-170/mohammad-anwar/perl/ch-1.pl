@@ -17,7 +17,8 @@ use Test2::V0;
 use experimental qw(builtin);
 use builtin   qw(true false);
 
-is primorial_numbers(10), [ 2, 3, 5, 7, 11, 13, 17, 19, 23, 29 ];
+is primorial_numbers(10),
+   [2, 6, 30, 210, 2310, 30030, 510510, 9699690, 223092870, 6469693230];
 
 done_testing;
 
@@ -33,12 +34,13 @@ sub is_prime($n) {
 
 sub primorial_numbers($n) {
     my @pn = ();
-    my $i  = 1;
+    my $i  = 0;
     my $j  = 1;
     while (@pn < $n) {
         $i++;
         next unless is_prime $i;
-        push @pn, $i * $j;
+        $j = $i * $j;
+        push @pn, $j;
     }
 
     return \@pn;
