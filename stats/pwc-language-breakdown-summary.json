@@ -1,18 +1,19 @@
 {
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-06-26 16:24:08 GMT"
-   },
    "series" : [
       {
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "align" : "right",
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -24,40 +25,39 @@
             ],
             [
                "Raku",
-               4921
+               4923
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "y" : 10
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
    "chart" : {
       "type" : "column"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
+   "legend" : {
+      "enabled" : "false"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
       }
    },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-06-26 20:23:43 GMT"
    }
 }
