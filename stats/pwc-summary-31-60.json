@@ -1,10 +1,4 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-06-26 23:50:55 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
    "xAxis" : {
       "categories" : [
          "Bruce Gray",
@@ -39,9 +33,10 @@
          "Doug Schrag"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -80,6 +75,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             54,
             0,
@@ -111,11 +107,9 @@
             0,
             8,
             10
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             10,
             0,
@@ -147,21 +141,27 @@
             0,
             7,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
    "chart" : {
       "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-06-27 04:07:45 GMT"
    }
 }
