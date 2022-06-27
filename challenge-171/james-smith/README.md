@@ -46,7 +46,7 @@ This leads to our first instance of *back to front* - we are so used to always u
 ```perl
 sub compose {
   my( $g, $f ) = pop;
-  @_ && ( $f = pop ) ? compose( @_, sub { $f->($g->(@_)) } ) : $g;
+  @_ && ( $f = pop ) ? compose( @_, sub { $f->($g->(@_)) } ) : $g
 }
 ```
 

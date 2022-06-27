@@ -12,7 +12,7 @@ sub comp_sm {
 
 sub compose {
   my($g,$f) = pop;
-  @_ && ($f = pop) ? compose( @_, sub { $f->($g->(@_)) } ) : $g;
+  @_ && ($f = pop) ? compose( @_, sub { $f->($g->(@_)) } ) : $g
 }
 
 my $x_r = compose( sub { $_[0]*2 }, sub { $_[0]-20 }  );

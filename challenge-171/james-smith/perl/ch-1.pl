@@ -13,7 +13,7 @@ my $N = $ARGV[0]//20;
 
 sub compose {
   my($g,$f) = pop;
-  @_ && ($f = pop) ? compose( @_, sub { $f->($g->(@_)) } ) : $g;
+  @_ && ($f = pop) ? compose( @_, sub { $f->($g->(@_)) } ) : $g
 }
 
 sub is_abundant {
