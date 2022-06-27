@@ -2,16 +2,29 @@
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-06-27 20:52:33 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             49,
             2,
@@ -43,7 +56,8 @@
             97,
             66,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -81,7 +95,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -113,7 +126,8 @@
             5,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
    "xAxis" : {
@@ -149,19 +163,5 @@
          "Stuart Little",
          "Svetlana Nesterova"
       ]
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-06-27 20:40:14 GMT"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
    }
 }
