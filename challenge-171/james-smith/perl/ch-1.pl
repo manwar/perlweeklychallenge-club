@@ -5,14 +5,15 @@ use strict;
 use warnings;
 use feature qw(say);
 
+my $N = $ARGV[0]//20;
 ##
 ## Fron task 1 we steal our "recursive" compose function
 ## so we can stitch methods together.
 ##
 
 sub compose {
-  my $g = pop; return $g unless @_;
-  my $f = pop; compose( @_, sub { &$f(&$g(@_)) } );
+  my($g,$f) = pop;
+  @_ && ($f = pop) ? compose( @_, sub { $f->($g->(@_)) } ) : $g;
 }
 
 sub is_abundant {
@@ -38,10 +39,10 @@ my $is_abundant = compose
 
 ## Loop one - using the simple function...
 say '';
-my $k = 1;    is_abundant($k+=2) ? say $k : redo for 1..20;
-say '';
-## Loop two - using the chained methods using compose...
-my $t = 1; $is_abundant->($t+=2) ? say $t : redo for 1..20;
+my $k = 1;    is_abundant($k+=2) ? say $k : redo for 1..$N;
 say '';
 
+## Loop two - using the chained methods using compose...
+my $t = 1; $is_abundant->($t+=2) ? say $t : redo for 1..$N;
+say '';
 

@@ -26,8 +26,8 @@ The simple solution is:
 
 ```perl
 sub compose {
-  my($f,$g)=@_;
-  return sub { &$f( &$g (@_) ) };
+  my( $f, $g ) = @_;
+  sub { $f->( $g->(@_) ) }
 }
 ```
 
@@ -45,11 +45,12 @@ This leads to our first instance of *back to front* - we are so used to always u
 
 ```perl
 sub compose {
-  my $g = pop; return $g unless @_;
-  my $f = pop; compose( @_, sub { &$f(&$g(@_)) } );
+  my( $g, $f ) = pop;
+  @_ && ( $f = pop ) ? compose( @_, sub { $f->($g->(@_)) } ) : $g;
 }
 ```
-We grab the first function (and if it is the only function on the stack we return it. We the grab the next function and composite it with the first one, and push the resultant function back on the end of the list - and call `compose` again! Simples!
+
+We grab the first function (and if it is the only function on the stack we return it) We the grab the next function and composite it with the first one, and push the resultant function back on the end of the list - and call `compose` again! Simples!
 
 # Challenge 1 - Abundant Number
 
@@ -57,9 +58,18 @@ We grab the first function (and if it is the only function on the stack we retur
 
 ## Solution
 
-There are three stages to this - find all the factors, sum them up and compare them... There are methods available to get all factors of a number {Math::Prime::Util has one) but this week we are going to roll our own. Firstly looping between `1` and `n` is a long loop especially is `n` is large. But we know that all factors (well nearly all) come in pairs if `f` is a factor of `n` then `f/n` is also a factor. This allows us to short cut the factor finding by only going as far as `sqrt(n)` to find the factors and include `f` and `n/f`. This is where we get to the gotcha if `f` is the `sqrt(n)` we have to avoid including it twice! See the second line of the equation...
+There are three stages to this:
+  * find all the factors;
+  * sum them up and
+  * compare them...
 
-Now note we usually sum from `0` - but we do something slightly different here (1) we start from `1` not zero as we don't include `1` in our search for facotrs. Additionally we subtract `n` as that leads a simple to read comparision of `$s>0`.
+There are methods available to get all factors of a number (Math::Prime::Util has one) but this week we are going to roll our own.
+
+Firstly looping between `1` and `n` is a long loop especially is `n` is large. But we know that all factors (well nearly all) come in pairs if `f` is a factor of `n` then `f/n` is also a factor. This allows us to short cut the factor finding by only going as far as `sqrt(n)` to find the factors and include `f` and `n/f`. This is where we get to the little gotcha if `f` is the `sqrt(n)` we have to avoid including it twice! See the second line of the equation...
+
+Now note we usually sum from `0` - but we do something slightly different here (1) we start from `1` not zero as we don't include `1` in our search for facotrs. Additionally we subtract `n` as that leads a simpler to read comparision of `$s>0`.
+
+In this example we merge the factor/sum stages together into a single loop.
 
 ```perl
 sub is_abundant {
@@ -78,9 +88,9 @@ We use the `redo` trick to return 20 results - `redo` calls the method in the lo
 
 ### Why we wrote about 2 before 1...
 
-I need to function to test challenge 2 out on - so thought this would be a good problem.
+I need a function to test task 2 out - so thought this would be a good problem.
 
-In this method we separate the code for factoring and summing in to two separate subs...
+We have the three stages -> factor -> sum -> test which we can male into 3 subs which we can compose together. Note we still do the `-n` trick to avoid passing `n` through from method to method.
 
 ```perl
 my $is_abundant = compose
@@ -89,5 +99,6 @@ my $is_abundant = compose
   sub { my $t = pop; -$t, 1, map { $t%$_ ? () : $t-$_*$_ ? ($_,$t/$_) : $_ } 2..sqrt $t }; ## factor
 
 my $t = 1; $is_abundant->($t+=2) ? say $t : redo for 1..20;
-
 ```
+
+**Note:** we use `pop` here again - as `shift` and `pop` are identical when you have just one parameter - and `pop` is two bytes shorter!
