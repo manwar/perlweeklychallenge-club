@@ -1,22 +1,6 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-06-27 04:07:45 GMT"
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "chart" : {
-      "type" : "column"
    },
    "series" : [
       {
@@ -90,7 +74,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -122,13 +105,22 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "xAxis" : {
       "categories" : [
@@ -163,5 +155,13 @@
          "Pablo Saavedra",
          "Paul Fajman"
       ]
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-06-27 05:37:09 GMT"
    }
 }
