@@ -1,0 +1,62 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/compose {
+    2 dict begin
+    /f1 exch cvlit def
+    /f2 exch cvlit def
+    [ f1 aload pop f2 aload pop ] cvx
+    end
+} bind def
+
+(compose) test.start
+
+/f {
+  1 add
+} bind def
+
+/g {
+  2 mul
+} bind def
+
+/h { f } { g } compose bind def
+
+1 1 10 {
+  dup g f exch h eq test
+} for
+test.end

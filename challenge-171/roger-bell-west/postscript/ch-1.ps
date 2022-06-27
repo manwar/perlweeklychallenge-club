@@ -1,0 +1,148 @@
+%!PS
+
+% begin included library code
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+% end included library code
+
+/abundant {
+    dup 1 eq {
+        pop false
+    } {
+        4 dict begin
+        /n exch def
+        /ff 1 def
+        /s n sqrt cvi def
+        false
+        s s mul n eq {
+            /ff ff s add def
+            /s s 1 sub def
+        } if
+        2 1 s {
+            /pf exch def
+            n pf mod 0 eq {
+                /ff ff pf add n pf idiv add def
+                ff n gt {
+                    pop true
+                    exit
+                } if
+            } if
+        } for
+        end
+    } ifelse
+} bind def
+
+/oddabundant {
+    2 dict begin
+    /ct exch def
+    [
+        /n 1 def
+        {
+            n abundant {
+                n
+                /ct ct 1 sub def
+                ct 0 le {
+                    exit
+                } if
+            } if
+            /n n 2 add def
+        } loop
+    ]
+    end
+} bind def
+
+(oddabundant) test.start
+20 oddabundant
+[ 945 1575 2205 2835 3465 4095 4725 5355 5775 5985 6435 6615 6825 7245
+  7425 7875 8085 8415 8505 8925 ]
+deepeq test
+test.end
+
