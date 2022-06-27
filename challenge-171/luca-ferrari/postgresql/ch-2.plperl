@@ -22,20 +22,33 @@ AS $CODE$
 $CODE$
 LANGUAGE plperl;
 
+
+/*
+testdb=> select * from pwc171.task2_plperl( 'pwc171.task2_f', 'pwc171.task2_g', 'Hello World' );
+DEBUG:  Query [SELECT pwc171.task2_f( pwc171.task2_g( 'Hello World' ) ) AS compose;]
+DEBUG:  G( Hello World )
+DEBUG:  F( Hello World )
+ task2_plperl 
+--------------
+ Hello World
+*/
 CREATE OR REPLACE FUNCTION
-pwc171.task2_plperl( text )
+pwc171.task2_plperl( text, text, text )
 RETURNS TEXT
 AS $CODE$
 
 
 
 my $compose = sub {
-   my $query = sprintf( "SELECT pwc171.task2_f( pwc171.task2_g( '%s' ) ) AS compose;", $_[0] );
+   my $query = sprintf( "SELECT %s( %s( '%s' ) ) AS compose;",
+               $_[ 0 ],
+               $_[ 1 ],
+               $_[ 2 ] );
    elog( DEBUG, "Query [$query]" );
    my $result_set = spi_exec_query( $query );
    return $result_set->{ rows }[ 0 ]->{ compose };
 };
 
-return $compose->( $_[0] );
+return $compose->( @_ );
 $CODE$
 LANGUAGE plperl;
