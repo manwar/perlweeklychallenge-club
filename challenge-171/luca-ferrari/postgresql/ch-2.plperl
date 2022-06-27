@@ -1,0 +1,41 @@
+-- Perl Weekly Challenge 171
+-- Task 2
+
+CREATE SCHEMA IF NOT EXISTS pwc171;
+
+CREATE OR REPLACE FUNCTION
+pwc171.task2_f( text )
+RETURNS TEXT
+AS $CODE$
+   elog( DEBUG, "F( $_[0] )" );
+   return $_[0];
+$CODE$
+LANGUAGE plperl;
+
+
+CREATE OR REPLACE FUNCTION
+pwc171.task2_g( text )
+RETURNS TEXT
+AS $CODE$
+   elog( DEBUG, "G( $_[0] )" );
+   return $_[0];
+$CODE$
+LANGUAGE plperl;
+
+CREATE OR REPLACE FUNCTION
+pwc171.task2_plperl( text )
+RETURNS TEXT
+AS $CODE$
+
+
+
+my $compose = sub {
+   my $query = sprintf( "SELECT pwc171.task2_f( pwc171.task2_g( '%s' ) ) AS compose;", $_[0] );
+   elog( DEBUG, "Query [$query]" );
+   my $result_set = spi_exec_query( $query );
+   return $result_set->{ rows }[ 0 ]->{ compose };
+};
+
+return $compose->( $_[0] );
+$CODE$
+LANGUAGE plperl;
