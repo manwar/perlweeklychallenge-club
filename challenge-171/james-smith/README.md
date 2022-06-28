@@ -74,7 +74,7 @@ In this example we merge the factor/sum stages together into a single loop.
 ```perl
 sub is_abundant {
   my $s = 1 - (my $t = pop);
-  $s += $t%$_ ? 0 : $t-$_*$_ ? $_+$t/$_ : $_ for 2 .. sqrt $t;
+  $s += $t%$_ ? 0 : $_ + ( $t-$_*$_ && $t/$_ ) for 2 .. sqrt $t;
   $s>0
 }
 ```
@@ -93,10 +93,11 @@ I need a function to test task 2 out - so thought this would be a good problem.
 We have the three stages -> factor -> sum -> test which we can male into 3 subs which we can compose together. Note we still do the `-n` trick to avoid passing `n` through from method to method.
 
 ```perl
-my $is_abundant = compose
-  sub { pop > 0 },                              ## check
-  sub { my $s = 0; $s+=$_ for @_; $s },         ## sum
-  sub { my $t = pop; -$t, 1, map { $t%$_ ? () : $t-$_*$_ ? ($_,$t/$_) : $_ } 2..sqrt $t }; ## factor
+my $factor = sub { my $t = pop; -$t, 1, map { $t%$_ ? () : $t-$_*$_ ? ($_,$t/$_) : $_ } 2..sqrt $t };
+my $sum    = sub { my $s = 0; $s+=$_ for @_; $s };
+my $check  = sub { pop > 0 };
+
+my $is_abundant = compose $check, $sum, $factor;
 
 my $t = 1; $is_abundant->($t+=2) ? say $t : redo for 1..20;
 ```
