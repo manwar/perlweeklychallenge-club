@@ -15,9 +15,9 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-171/james-smith
 
-# Topsy turvey week!
+# The last shall be first, and the first last.
 
-This week we will do two things which are contra to the norm - we will use `pop` to get parameters AND we write up Challenge 2 before Challenge - you will understand when we get to challenge 1..
+This week we will do two things which are contra to the norm - we will use `pop` to get parameters of a subroutine **AND** we write up task 2 before task 1 - you will understand when we get to challenge 1..
 
 # Challenge 2 - First-class Function
 ***Create `sub compose($f, $g)` which takes in two parameters `$f` and `$g` as subroutine refs and returns subroutine ref i.e. `compose($f, $g)->($x) = $f->($g->($x))`***
@@ -39,7 +39,7 @@ Now it would be good if we could do this for multiple functions functions rather
   my $f = compose( sub {}, compose( sub {}, compose( sub {}, sub {} ) ) );
 ```
 
-We can re-write `compose` to be a recursive function which composites the last two functions in the supplied list, and repeats until the list has just a single function in it.
+We can re-write `compose` to be a recursive function which composits the last two functions in the supplied list (and adds that composite to the end of the list), and repeats until the list has just a single function in it.
 
 This leads to our first instance of *back to front* - we are so used to always using `shift` to remove parameters within a function, we rarely use `pop`. But in this case `pop` is the right method:
 
@@ -50,7 +50,7 @@ sub compose {
 }
 ```
 
-We grab the first function (and if it is the only function on the stack we return it) We the grab the next function and composite it with the first one, and push the resultant function back on the end of the list - and call `compose` again! Simples!
+We grab the inner (first to be executed) function (and if it is the only function on the stack we return it) We the grab the next function and composit it with the first one, and push the resultant function back on the end of the list - and call `compose` again! Simples! As I said this is a case first shall be last, and last shall be first, as the first function that we will execute is the last one in the supplied list. Hence why `pop` is appropriate.
 
 # Challenge 1 - Abundant Number
 
