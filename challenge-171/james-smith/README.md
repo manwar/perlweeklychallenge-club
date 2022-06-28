@@ -74,8 +74,8 @@ In this example we merge the factor/sum stages together into a single loop.
 ```perl
 sub is_abundant {
   my $s = 1 - (my $t = pop);
-  $s += $_ for map { $t%$_ ? 0 : $t-$_*$_ ? $_+$t/$_ : $_ } 2..sqrt $t;
-  $s>0;
+  $s += $t%$_ ? 0 : $t-$_*$_ ? $_+$t/$_ : $_ for 2 .. sqrt $t;
+  $s>0
 }
 ```
 We just then use this to loop through odd numbers until we get 20 abundant numbers.
