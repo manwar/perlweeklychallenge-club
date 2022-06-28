@@ -18,7 +18,7 @@ sub compose {
 
 sub is_abundant {
   my $s = 1 - (my $t = pop);
-  $s += $_ for map { $t%$_ ? 0 : $t-$_*$_ ? $_+$t/$_ : $_ } 2..sqrt $t;
+  $s += $t%$_ ? 0 : $t-$_*$_ ? $_+$t/$_ : $_ for 2..sqrt $t;
   $s>0;
 }
 
