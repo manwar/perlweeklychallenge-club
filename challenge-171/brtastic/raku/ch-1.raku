@@ -10,8 +10,7 @@ sub get-divisors (Int $for-number) returns Iterable
 }
 
 sub MAIN() {
-	my Int @list = (1 .. *).grep({ !($_ %% 2) && get-divisors($_).sum > $_ });
-
-	say @list[^20];
+	my $list = (1 .. *).hyper.grep({ !($_ %% 2) && get-divisors($_).sum > $_ });
+	say $list[^20];
 }
 
