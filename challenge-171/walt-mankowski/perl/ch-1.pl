@@ -36,5 +36,5 @@ while (@abundant < 20) {
     }
     $n += 2;
 }
-$, = " ";
-say @abundant;
+$" = ", ";
+say "[@abundant]";
