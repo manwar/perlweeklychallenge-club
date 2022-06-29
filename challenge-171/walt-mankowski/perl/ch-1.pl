@@ -18,9 +18,9 @@ use List::Util qw(sum);
 # 1 + 3 + 5 + 7 + 9 + 15 + 21 + 27 + 35 + 45 + 63 + 105 + 135 + 189 + 315 = 975
 
 sub odd_divisors($n) {
-    my @od;
+    my @od = (1);
     my $max = $n / 2;
-    for (my $i = 1; $i <= $max; $i += 2) {
+    for (my $i = 3; $i <= $max; $i += 2) {
         push @od, $i if $n % $i == 0;
     }
     return @od;
