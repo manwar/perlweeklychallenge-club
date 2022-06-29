@@ -32,7 +32,7 @@ while (@abundant < 20) {
     my @od = odd_divisors($n);
     if (sum(@od) > $n) {
         push @abundant, $n;
-        printf "%2d: %s = %d\n", scalar @abundant, join(" + ", @od), sum(@od);
+        printf "%2d: %s = %d > %d\n", scalar @abundant, join(" + ", @od), sum(@od), $n;
     }
     $n += 2;
 }
