@@ -2,7 +2,7 @@
 use List::Util 'sum';
 my $want = shift // 20;
 my($have,$n)=(0,1);
-sum( grep $n % $_ == 0, 1..$n-1) > $n
+sum( grep $n % $_ == 0, 1..$n-1 ) > $n
     and print "$n\n"
     and $have++
     while $have < $want
