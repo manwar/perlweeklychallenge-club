@@ -1,14 +1,15 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 262] Last updated at 2022-06-30 22:38:46 GMT"
+   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+      },
+      "min" : 0
    },
    "xAxis" : {
       "categories" : [
@@ -277,20 +278,12 @@
       ]
    },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 262] Last updated at 2022-06-29 22:29:29 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "chart" : {
-      "type" : "column"
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             1,
             0,
@@ -554,11 +547,9 @@
             3,
             44,
             11
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -822,9 +813,11 @@
             3,
             11,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -1040,7 +1033,7 @@
             0,
             0,
             0,
-            150,
+            151,
             0,
             28,
             1,
@@ -1088,8 +1081,15 @@
             1,
             5,
             10
-         ],
-         "name" : "Blog"
+         ]
       }
-   ]
+   ],
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   }
 }
