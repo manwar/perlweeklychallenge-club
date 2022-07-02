@@ -1,11 +1,13 @@
-(ns c171.t2
-  (:require [clojure.edn :as edn]))
+(ns c171.t2)
 
-(def DEFAULT-INPUT [])
+; compose is built in as (comp)
+(def compose comp)
+
+(defn f [& args] (conj args 'f))
+(defn g [& args] (conj args 'g))
 
 (defn -main
-  "Run Task 2 with a given input N, defaulting to the first example from the
-  task description."
+  "Run Task 2."
   [& args]
-  (let [[N] (or (some->> args (map edn/read-string)) DEFAULT-INPUT)]
-    N))
+  (let [h (compose f g)]
+    (prn (h "Hello" "there."))))
