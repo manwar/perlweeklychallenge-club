@@ -1,13 +1,12 @@
-#include<iostream>
-#include<unordered_map>
-#include<cmath>
+import std.stdio;
+import std.math:pow;
 
 int sum_squares(int n)
 {
-  int sum{};
+  int sum = 0;
   while(n)
   {
-    sum += (int)std::pow(n % 10, 2);
+    sum += cast(int)pow(n % 10, 2);
     n /= 10;
   }
   return sum;
@@ -15,32 +14,31 @@ int sum_squares(int n)
 
 bool is_happy(int n)
 {
-  std::unordered_map<int, int> map{};
+  int[int] map;
   while(1)
   {
     map[n]++;
     n = sum_squares(n);
     if(n == 1) return true;
-    if(map[n] != 0) return false;
+    if(n in map) return false;
   }
 }
 
 void happy_numbers()
 {
-  int i{}, count{};
+  int i = 0, count = 0;
   while(count < 8)
   {
     if(is_happy(i))
     {
-      std::cout << i << ' ';
+      write(i, ' ');
       count++;
     }
     i++;
   }
 }
 
-int main()
+void main()
 {
   happy_numbers();
-  return 0;
 }
