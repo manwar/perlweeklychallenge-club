@@ -1,11 +1,14 @@
 /* https://theweeklychallenge.org/blog/perl-weekly-challenge-171/
 Task 2: First-class Function
-Submitted by: Mohammad S Anwar
-Create sub compose($f, $g) which takes in two parameters $f and $g as subroutine refs and returns subroutine ref i.e. compose($f, $g)->($x) = $f->($g->($x))
 
+Submitted by: [52]Mohammad S Anwar
+     __________________________________________________________________
 
-e.g.
+   Create sub compose($f, $g) which takes in two parameters $f and $g as
+   subroutine refs and returns subroutine ref i.e. compose($f, $g)->($x) =
+   $f->($g->($x))
 
+   e.g.
 $f = (one or more parameters function)
 $g = (one or more parameters function)
 
@@ -35,13 +38,17 @@ func main() {
 	fmt.Println("\n")
 }
 func Compose(f ...func([]uint) []uint) func([]uint) []uint {
-	if len(f) < 1 {
+	switch len(f) {
+	case 0:
 		return func(s []uint) []uint {
 			return s
 		}
-	}
-	return func(s []uint) []uint {
-		return f[0](Compose(f[1:]...)(s))
+	case 1:
+		return f[0]
+	default:
+		return func(s []uint) []uint {
+			return f[0](Compose(f[1:]...)(s))
+		}
 	}
 }
 func Square(s []uint) (r []uint) {
