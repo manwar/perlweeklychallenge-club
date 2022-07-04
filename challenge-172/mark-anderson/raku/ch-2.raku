@@ -12,13 +12,14 @@ is five-number-summary(7, 15, 36, 39, 40, 41),
 
 sub five-number-summary(+@a)
 {
-    @a .= sort;
+    @a    .= sort;
+    my $q := quartile();
 
-    return {
-               min     => @a.head,
-               lower-q => quartile('lower'),
+    return { 
+               min     => @a.head, 
+               lower-q => $q.head, 
                median  => median(@a),
-               upper-q => quartile('upper'),
+               upper-q => $q.tail,
                max     => @a.tail
            }
 
@@ -26,14 +27,14 @@ sub five-number-summary(+@a)
     {
         my $r = @a.elems div 2;
         @a.elems mod 2 ?? @a[$r] !! (.head.tail + .tail.head) / 2 
-        given @a.rotor($r).cache
+                                     given @a.rotor($r).cache
     }
 
-    sub quartile($s)
+    sub quartile
     {
         # method 1 from https://en.wikipedia.org/wiki/Quartile
         my $r = @a.elems div 2;
         my @t = @a.elems mod 2 ?? @a.rotor($r, 1, $r) !! @a.rotor($r);
-        $s eq 'lower' ?? median(@t.head) !! median(@t.tail)
+        median(@t.head), median(@t.tail)
     }
 }

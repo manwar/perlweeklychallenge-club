@@ -12,5 +12,5 @@ is-deeply prime-partition(95, 8), ((2, 3, 5, 7, 11, 13, 17, 37),
 
 sub prime-partition($m, $n)
 {
-   (2,3,5,7...$m-2).grep(&is-prime).combinations($n).grep({ .sum == $m })
+    (2,3,5,7...$m-2).grep(&is-prime).combinations($n).grep({ .sum == $m })
 }
