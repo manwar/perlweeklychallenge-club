@@ -1,22 +1,18 @@
 {
+   "legend" : {
+      "enabled" : "false"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-07-04 20:27:18 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
    "series" : [
       {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "align" : "right",
-            "y" : 10,
-            "rotation" : -90,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}"
-         },
          "data" : [
             [
                "Blog",
@@ -28,36 +24,40 @@
             ],
             [
                "Raku",
-               4964
+               4966
             ]
-         ]
+         ],
+         "name" : "Contributions",
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "rotation" : -90,
+            "y" : 10,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         }
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
-      },
-      "type" : "category"
+      }
    },
    "chart" : {
       "type" : "column"
    },
-   "legend" : {
-      "enabled" : "false"
-   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-07-04 20:17:57 GMT"
+      }
    }
 }
