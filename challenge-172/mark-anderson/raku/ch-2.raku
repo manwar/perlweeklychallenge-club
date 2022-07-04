@@ -34,6 +34,6 @@ sub five-number-summary(+@a)
         # method 1 from https://en.wikipedia.org/wiki/Quartile
         my $r = @a.elems div 2;
         my @t = @a.elems mod 2 ?? @a.rotor($r, 1, $r) !! @a.rotor($r);
-        $s eq 'lower' ?? median(@t.head) !! median(@t.tail);
+        $s eq 'lower' ?? median(@t.head) !! median(@t.tail)
     }
 }
