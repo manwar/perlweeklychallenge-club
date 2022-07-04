@@ -1,6 +1,10 @@
 {
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-07-04 08:10:45 GMT"
+      "text" : "[Champions: 30] Last updated at 2022-07-04 20:57:22 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
@@ -39,7 +43,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -71,7 +74,8 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "data" : [
@@ -109,15 +113,10 @@
          "name" : "Blog"
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "yAxis" : {
       "min" : 0,
@@ -125,10 +124,8 @@
          "text" : ""
       }
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -163,5 +160,8 @@
          "Bob Kleemann",
          "Bob Lied"
       ]
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    }
 }
