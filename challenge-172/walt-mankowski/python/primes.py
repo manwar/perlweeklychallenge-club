@@ -1,7 +1,7 @@
 from math import sqrt
 
 # find the primes up to n using the sieve of Eratosthenes and return
-# them as list
+# them as a list
 def primes_to(n):
     is_prime = [True] * (n+1)
     is_prime[0] = is_prime[1] = False
