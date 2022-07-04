@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # Perl weekly challenge 172
-# Task 2: Prime partition
+# Task 2: Five number summary
 #
 # See https://wlmb.github.io/2022/07/04/PWC172/#task-1-five-number-summary
 use v5.36;
