@@ -10,10 +10,10 @@ use Data::Dumper qw(Dumper);
 
 my($C,$I) = (100,100_000);
 #say foreach sp_loop(100);exit;
-cmpthese( 100, {
+cmpthese( 5, {
   'sp' => sub { semiprimes($I); },
   'sl' => sub { sp_loop(   $I); },
-  'sm' => sub { sp_map(    $I); },
+#  'sm' => sub { sp_map(    $I); },
 });
 
 sub sp_loop {

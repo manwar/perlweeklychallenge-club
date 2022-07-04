@@ -6,7 +6,6 @@ use warnings;
 use feature qw(say);
 
 my $N = $ARGV[0]//20;
-##
 
 ##----------------------------------------------------------------------
 ## Fron task 1 we steal our "recursive" compose function

@@ -17,5 +17,6 @@ sub k_product {
 #73 chars...
 sub k{[map{$b=$_;map{$a=$_;[map{//;map{$'*$_}@$a}@$b]}@{$_[1]}}@{$_[0]}]}
 
-sub d{say'[',(map{sprintf' %6d',$_}@{$_}),' ]'for@{$_[0]};say''}
+#61 chars...
+sub d{say"[ @{[map{sprintf'%6d',$_}@$_]} ]"for@{$_[0]};say''}
 
