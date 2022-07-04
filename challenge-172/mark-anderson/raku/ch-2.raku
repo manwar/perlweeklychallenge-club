@@ -2,13 +2,13 @@
 use Test;
 
 is five-number-summary(1, 2, 3, 4, 5, 6),    
-   {:lower-q(2), :median(3.5), :min(1), :upper-q(5)};
+   {:lower-q(2), :median(3.5), :min(1), :upper-q(5), :max(6)};
 is five-number-summary(1, 2, 3, 4, 5, 6, 7), 
-   {:lower-q(2), :median(4), :min(1), :upper-q(6)}
+   {:lower-q(2), :median(4), :min(1), :upper-q(6), :max(7)}
 is five-number-summary(6, 7, 15, 36, 39, 40, 41, 42, 43, 47, 49),
-   {:lower-q(15), :median(40), :min(6), :upper-q(43)}
+   {:lower-q(15), :median(40), :min(6), :upper-q(43), :max(49)}
 is five-number-summary(7, 15, 36, 39, 40, 41),
-   {:lower-q(15), :median(37.5), :min(7), :upper-q(40)}
+   {:lower-q(15), :median(37.5), :min(7), :upper-q(40), :max(41)}
 
 sub five-number-summary(+@a)
 {
@@ -16,9 +16,10 @@ sub five-number-summary(+@a)
 
     return {
                min     => @a.head,
-               median  => median(@a),
                lower-q => quartile('lower'),
-               upper-q => quartile('upper')
+               median  => median(@a),
+               upper-q => quartile('upper'),
+               max     => @a.tail
            }
 
     sub median(@a) 
