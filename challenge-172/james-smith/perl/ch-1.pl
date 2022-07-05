@@ -30,7 +30,7 @@ sub partition {
   ? map { $p = $_;
           map { [ $p, @{$_} ] }
               partition( $m-$p, $n-1, $p )
-        } @{ primes $p+1, int $m/$n }
+        } @{ primes $p+1, int( ($m-$n/2+1/2)/$n)  }
   : $m > $p && is_prime $m ? [$m] : ();
 }
 
