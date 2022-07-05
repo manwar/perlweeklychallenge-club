@@ -1,4 +1,6 @@
 #!/usr/bin/env perl 
+use strict;
+use warnings;
 use re 'eval';
 
 # 1) change the integer ($m) in string. For example 7 becomes 'NNNNNNN'
