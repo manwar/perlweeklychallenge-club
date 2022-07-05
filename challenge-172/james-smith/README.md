@@ -42,6 +42,21 @@ sub partition {
 
 **Note** we add a `0` to `@_` so that if (in the first call) `@_` only has two numbers `$p` is set to zero.
 
+### Only one partition
+
+If you only wish to get **a** partition then we simply tweak the code to have a return in the inner map - to return the entry if we find it!
+
+```perl
+sub first_partition {
+  my ( $m, $n, $p ) = ( @_, 0 );
+    $n > 1
+  ? map { $p = $_;
+          map { return [ $p, @{$_} ] } first_partition( $m-$p, $n-1, $p )
+        } @{ primes $p+1, int( ( $m - $n/2 + 1/2 ) / $n ) }
+  : $m > $p && is_prime $m ? [ $m ] : ();
+}
+```
+
 # Task 2 - Five number summary
 
 ***You are given an array of integers.  Write a script to compute the five-number summary of the given set of integers. (min,lower-quartile,median,upper-quarile,max)***
