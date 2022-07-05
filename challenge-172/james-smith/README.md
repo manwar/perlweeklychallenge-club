@@ -21,28 +21,26 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-172/ja
 
 ## Solution
 
-
 The first thing to note that this is perfect case for a recursive solution.
 
-If `$n` is one - then a partition exists iff `$m` is prime (We use `is_prime` from  `Math::Prime::Util` to check this.
+If `$n` is one - then a partition exists iff `$m` is prime (We use `is_prime` from  `Math::Prime::Util` to check this. In this case we return `[$m]` or `()` respectively.
 
-Our first digit is going to be from `2` to the largest prime below `($m-($n-1)/2)/$n`. Again `Math::Prime::Util` has a method `primes` for this. We tnen recurse with the `partition` function but this time we replace `$m` with `$m-$p`, `$n` with `$n-1` and `2` with the next prime after `$p`.
+If not our first digit is going to be from `2` to the largest prime below `($m-($n-1)/2)/$n`. Again `Math::Prime::Util` has a method `primes` method for this. We then recurse with the `partition` function but this time we replace `$m` with `$m-$p`, `$n` with `$n-1` and `2` with the next prime after `$p`.
 
 This gives us:
 
 ```perl
 sub partition {
-  my ( $m, $n, $p ) = (@_,0);
-  $n > 1
+  my ( $m, $n, $p ) = ( @_, 0 );
+    $n > 1
   ? map { $p = $_;
-          map { [ $p, @{$_} ] }
-              partition( $m-$p, $n-1, $p )
-        } @{ primes $p+1, int( ($m-$n/2+1/2)/$n ) }
-  : $m > $p && is_prime $m ? [$m] : ();
+          map { [ $p, @{$_} ] } partition( $m-$p, $n-1, $p )
+        } @{ primes $p+1, int( ( $m - $n/2 + 1/2 ) / $n ) }
+  : $m > $p && is_prime $m ? [ $m ] : ();
 }
 ```
 
-Note we add a `0` to `@_` so that if (in the first call) `@_` only has two numbers `$p` is set to zero.
+**Note** we add a `0` to `@_` so that if (in the first call) `@_` only has two numbers `$p` is set to zero.
 
 # Task 2 - Five number summary
 
@@ -52,31 +50,45 @@ Note we add a `0` to `@_` so that if (in the first call) `@_` only has two numbe
 
 We will present three code solutions as the quartiles and median are not-uniquely defined in some cases.
 
+ * `fivenum_range` - if the median/quartile falls between two entries {and the entries are different} - we return the two values as a "range"
+ * `fivenum_med` -  if the median/quartile falls between two entries - then the average of the two values is used
+ * `fivenum_avg` - if the median/quartile falls between two entries - then a weighted average is used. With more weight given to the point nearest the fraction { for median this will be the mid-point } but for the quartiles the weighting could be 1/4 : 3/4.
+
 ```perl
 sub fivenum_avg {
-  my @sort = sort { $a <=> $b } @_;
+  my @sort = sort { $a <=> $b } @_;                 # sort values
   [
-    map { $sort[$_->[0]] * (1 - $_->[1]) + ( $_->[1] ? $_->[1] * $sort[$_->[0]+1] : 0 ) }
-    map { [ int $_, $_ - int $_ ] }
-    map { $_/4*(@_-1) } 0..4
+    map { $_->[1]                                   # If lies between 2 points
+        ? ( 1 - $_->[1] ) * $sort[ $_->[0]     ] +  # compute weighted average
+                $_->[1]   * $sort[ $_->[0] + 1 ]
+        : $sort[ $_->[0] ]                          # o/w return value
+        }
+    map { [ int $_, $_ - int $_ ] }                 # get LH-index, and distance of point from this
+    map { $_/4*(@_-1) } 0..4                        # calculate index
   ];
 }
 
 sub fivenum_mid {
-  my @sort = sort { $a <=> $b } @_;
+  my @sort = sort { $a <=> $b } @_;                 # sort values
   [
-    map { $_->[1] ? ($sort[$_->[0]] + $sort[$_->[0]+1])/2 : $sort[$_->[0]] }
-    map { [ int $_, ($_ == int $_) ? 0 : 1 ] }
-    map { $_/4*(@_-1) } 0..4
+    map { $_->[1]                                   # If lies between 2 points
+        ? ($sort[$_->[0]] + $sort[$_->[0]+1])/2     # compute average
+        : $sort[$_->[0]]                            # o/w return value
+        }                                      
+    map { [ int $_, ($_ == int $_) ? 0 : 1 ] }      # get LH-index {and flag if point lies between 2 numbers
+    map { $_/4*(@_-1) } 0..4                        # calculate index
   ];
 }
 
 sub fivenum_range {
-  my @sort = sort { $a <=> $b } @_;
+  my @sort = sort { $a <=> $b } @_;                      # sort values
   [
-    map { $_->[1] ? '<'.$sort[$_->[0]].'-'.$sort[$_->[0]+1].'>' : $sort[$_->[0]] }
-    map { [ int $_, ($_ == int $_) ? 0 : 1 ] }
-    map { $_/4*(@_-1) } 0..4
+    map { $_->[1] && $sort[$_->[0]] != $sort[$_->[0]+1]  # If lies between 2 points
+      ? '<'.$sort[$_->[0]].'-'.$sort[$_->[0]+1].'>'      # return "range"
+      : $sort[$_->[0]]                                   # o/w return value
+      }
+    map { [ int $_, ($_ == int $_) ? 0 : 1 ] }           # get LH-index {and flag if point lies between 2 numbers
+    map { $_/4*(@_-1) } 0..4                             # calculate index
   ];
 }
 ```
