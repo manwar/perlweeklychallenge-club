@@ -66,8 +66,17 @@ is( home_prime($_), $TESTS[$_] ) for 2..48,50..76,78..100;
 
 done_testing();
 
+say sprintf '%4d: %64s',$_, $_==49 || $_ == 77 ? "***": th(home_prime($_)) for 2..100;
+
 sub home_prime {
   return if (my$t=shift)<2;  ## Skip in t is 0 or 1 which would loop infinitely...
   is_prime($t)?(return$t):($t=join'',factor$t)while 1; ## If prime we return o/w we compute sum of factors
 }
 
+sub th {
+  my $t = reverse $_[0];
+  $t =~ s{(\d{3})}{$1,}g;
+  $t = reverse $t;
+  $t =~ s{^,}{};
+  $t;
+}

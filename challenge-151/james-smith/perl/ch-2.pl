@@ -20,12 +20,15 @@ my @TESTS = (
   [ [map {ord$_} split //,long()], 668_385 ],
 );
 
-is( rob(     @{$_->[0]}), $_->[1] ) foreach @TESTS;
-is( rob2(    @{$_->[0]}), $_->[1] ) foreach @TESTS;
+is( rob(      @{$_->[0]}), $_->[1] ) foreach @TESTS;
+is( rob_no_array(      @{$_->[0]}), $_->[1] ) foreach @TESTS;
 
 done_testing();
 
-timethis( 2_000, sub { rob( @{$_->[0]} ) foreach @TESTS; } );
+cmpthese( 1_000, {
+  'arr' => sub { rob( @{$_->[0]} ) foreach @TESTS; },
+  'pair' => sub { rob_no_array( @{$_->[0]} ) foreach @TESTS; },
+});
 
 sub rob {
     ## Line 1 - Trip finishing at the first house the value is the
@@ -44,6 +47,11 @@ sub rob {
   (push @b,shift    ), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) if  @_;
   (push @b,$_+$b[-2]), $b[-1]<$b[-2] && ($b[-1]=$b[-2]) for @_;
   $b[-1];
+}
+sub rob_no_array {
+  my$p=my$q=0;
+  ($p,$q)=($q,$q>$p+$_?$q:$p+$_)for@_;
+  $q;
 }
 
 sub long {

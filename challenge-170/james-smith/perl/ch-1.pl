@@ -19,5 +19,5 @@ sub th { scalar reverse( (reverse $_[0]) =~ s/(\d\d\d)(?=\d)(?!\d*\.)/$1,/gr ) }
 
 #----|----#----|----#----|----#----|----#----|----#----|----
 say$a=1;forprimes{say$a*=$_}nth_prime($ARGV[0]//10)-1;
-say$a=1;forprimes{say$a*=$_}nth_prime 9;
+say$a=1;forprimes{say 2*($a*=$_)**2}nth_prime 9;
 say$a=1;forprimes{say$a*=$_}23

@@ -13,6 +13,7 @@ my @TESTS = (
   [ 5, 'Five is four, four is magic.' ],
   [ 7, 'Seven is five, five is four, four is magic.' ],
   [ 6, 'Six is three, three is five, five is four, four is magic.' ],
+  [ 4, 'Four is magic.' ],
 );
 
 say magic($_) for 0..1000;

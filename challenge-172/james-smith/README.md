@@ -1,7 +1,7 @@
-[< Previous 170](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-170/james-smith) |
-[Next 172 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-172/james-smith)
+[< Previous 171](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-171/james-smith) |
+[Next 173 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-173/james-smith)
 
-# The Weekly Challenge 171
+# The Weekly Challenge 172
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,92 +13,112 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-171/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-172/james-smith
 
-# Topsy turvey week!
+# Task 1 - Prime partition
 
-This week we will do two things which are contra to the norm - we will use `pop` to get parameters AND we write up Challenge 2 before Challenge - you will understand when we get to challenge 1..
-
-# Challenge 2 - First-class Function
-***Create `sub compose($f, $g)` which takes in two parameters `$f` and `$g` as subroutine refs and returns subroutine ref i.e. `compose($f, $g)->($x) = $f->($g->($x))`***
-
-The simple solution is:
-
-```perl
-sub compose {
-  my( $f, $g ) = @_;
-  sub { $f->( $g->(@_) ) }
-}
-```
-
-We take the two methods `$f`, `$g` and composit this into a single function with sub. we then return this code reference.
-
-Now it would be good if we could do this for multiple functions functions rather than having to do the long winded:
-
-```perl
-  my $f = compose( sub {}, compose( sub {}, compose( sub {}, sub {} ) ) );
-```
-
-We can re-write `compose` to be a recursive function which composites the last two functions in the supplied list, and repeats until the list has just a single function in it.
-
-This leads to our first instance of *back to front* - we are so used to always using `shift` to remove parameters within a function, we rarely use `pop`. But in this case `pop` is the right method:
-
-```perl
-sub compose {
-  my( $g, $f ) = pop;
-  @_ && ( $f = pop ) ? compose( @_, sub { $f->($g->(@_)) } ) : $g
-}
-```
-
-We grab the first function (and if it is the only function on the stack we return it) We the grab the next function and composite it with the first one, and push the resultant function back on the end of the list - and call `compose` again! Simples!
-
-# Challenge 1 - Abundant Number
-
-***Write a script to generate first 20 Abundant Odd Numbers. A number `n` for which the sum of divisors `σ(n) > 2n`, or, equivalently, the sum of proper divisors (or aliquot sum) `s(n) > n`.***
+***You are given two positive integers, `$m` and `$n`.  Write a script to find out the Prime Partition of the given number. No duplicates allowed.***
 
 ## Solution
 
-There are three stages to this:
-  * find all the factors;
-  * sum them up and
-  * compare them...
+The first thing to note that this is perfect case for a recursive solution.
 
-There are methods available to get all factors of a number (Math::Prime::Util has one) but this week we are going to roll our own.
+If `$n` is one - then a partition exists iff `$m` is prime (We use `is_prime` from  `Math::Prime::Util` to check this. In this case we return `[$m]` or `()` respectively.
 
-Firstly looping between `1` and `n` is a long loop especially is `n` is large. But we know that all factors (well nearly all) come in pairs if `f` is a factor of `n` then `f/n` is also a factor. This allows us to short cut the factor finding by only going as far as `sqrt(n)` to find the factors and include `f` and `n/f`. This is where we get to the little gotcha if `f` is the `sqrt(n)` we have to avoid including it twice! See the second line of the equation...
+If not our first digit is going to be from `2` to the largest prime below `($m-($n-1)/2)/$n`. Again `Math::Prime::Util` has a method `primes` method for this. We then recurse with the `partition` function but this time we replace `$m` with `$m-$p`, `$n` with `$n-1` and `2` with the next prime after `$p`.
 
-Now note we usually sum from `0` - but we do something slightly different here (1) we start from `1` not zero as we don't include `1` in our search for facotrs. Additionally we subtract `n` as that leads a simpler to read comparision of `$s>0`.
-
-In this example we merge the factor/sum stages together into a single loop.
+This gives us:
 
 ```perl
-sub is_abundant {
-  my $s = 1 - (my $t = pop);
-  $s += $_ for map { $t%$_ ? 0 : $t-$_*$_ ? $_+$t/$_ : $_ } 2..sqrt $t;
-  $s>0;
+sub partition {
+  my ( $m, $n, $p ) = ( @_, 0 );
+    $n > 1
+  ? map { $p = $_;
+          map { [ $p, @{$_} ] } partition( $m-$p, $n-1, $p )
+        } @{ primes $p+1, int( ( $m - $n/2 + 1/2 ) / $n ) }
+  : $m > $p && is_prime $m ? [ $m ] : ();
 }
 ```
-We just then use this to loop through odd numbers until we get 20 abundant numbers.
 
-```
-my $k = 1;    is_abundant($k+=2) ? say $k : redo for 1..20;
-```
+**Note** we add a `0` to `@_` so that if (in the first call) `@_` only has two numbers `$p` is set to zero.
 
-We use the `redo` trick to return 20 results - `redo` calls the method in the loop again, but doens't move to the next iteration of the loop.
+### Only one partition
 
-### Why we wrote about 2 before 1...
-
-I need a function to test task 2 out - so thought this would be a good problem.
-
-We have the three stages -> factor -> sum -> test which we can male into 3 subs which we can compose together. Note we still do the `-n` trick to avoid passing `n` through from method to method.
+If you only wish to get **a** partition then we simply tweak the code to have a return in the inner map - to return the entry if we find it!
 
 ```perl
-my $is_abundant = compose
-  sub { pop > 0 },                              ## check
-  sub { my $s = 0; $s+=$_ for @_; $s },         ## sum
-  sub { my $t = pop; -$t, 1, map { $t%$_ ? () : $t-$_*$_ ? ($_,$t/$_) : $_ } 2..sqrt $t }; ## factor
-
-my $t = 1; $is_abundant->($t+=2) ? say $t : redo for 1..20;
+sub first_partition {
+  my ( $m, $n, $p ) = ( @_, 0 );
+    $n > 1
+  ? map { $p = $_;
+          map { return [ $p, @{$_} ] } first_partition( $m-$p, $n-1, $p )
+        } @{ primes $p+1, int( ( $m - $n/2 + 1/2 ) / $n ) }
+  : $m > $p && is_prime $m ? [ $m ] : ();
+}
 ```
 
-**Note:** we use `pop` here again - as `shift` and `pop` are identical when you have just one parameter - and `pop` is two bytes shorter!
+# Task 2 - Five number summary
+
+***You are given an array of integers.  Write a script to compute the five-number summary of the given set of integers. (min,lower-quartile,median,upper-quarile,max)***
+
+## Solution
+
+We will present three code solutions as the quartiles and median are not-uniquely defined in some cases.
+
+ * `fivenum_range` - if the median/quartile falls between two entries {and the entries are different} - we return the two values as a "range"
+ * `fivenum_med` -  if the median/quartile falls between two entries - then the average of the two values is used
+ * `fivenum_avg` - if the median/quartile falls between two entries - then a weighted average is used. With more weight given to the point nearest the fraction { for median this will be the mid-point } but for the quartiles the weighting could be 1/4 : 3/4.
+
+These each take a similar form.
+
+  * Sort the values lowest to highest - the only real way to do this;
+  * Then we run a series of maps.
+     * Firstly get the index of the points
+        * min is `0`;
+        * max is `$N-1`;
+        * the other three are distributed evenly between them
+     * We then convert them to an integer index and:
+        * the fractional part (`fivenum_avg`) OR
+        * indicator whether there is a factional part (`fivenum_mid` and `fivenum_range`)
+     * We then compute the value for that index
+```perl
+sub fivenum_avg {
+  my @sort = sort { $a <=> $b } @_;                      # sort values
+  [
+    map { $_->[1]                                        # If lies between 2 points
+        ? ( 1 - $_->[1] ) * $sort[ $_->[0]     ] +       # compute weighted average
+                $_->[1]   * $sort[ $_->[0] + 1 ]
+        : $sort[ $_->[0] ]                               # o/w return value
+        }
+    map { [ int $_, $_ - int $_ ] }                      # get LH-index, and distance of point from this
+    map { $_/4*$#_ }                                     # calculate index
+    0 .. 4
+  ];
+}
+
+sub fivenum_mid {
+  my @sort = sort { $a <=> $b } @_;                      # sort values
+  [
+    map { $_->[1]                                        # If lies between 2 points
+        ? ($sort[$_->[0]] + $sort[$_->[0]+1])/2          # compute average
+        : $sort[$_->[0]]                                 # o/w return value
+        }                                      
+    map { [ int $_, ($_ == int $_) ? 0 : 1 ] }           # get LH-index {and flag if point lies between 2 numbers}
+    map { $_/4*$#_ }                                     # calculate index
+    0 .. 4
+  ];
+}
+
+sub fivenum_range {
+  my @sort = sort { $a <=> $b } @_;                      # sort values
+  [
+    map { $_->[1] && $sort[$_->[0]] != $sort[$_->[0]+1]  # If lies between 2 points
+        ? '<'.$sort[$_->[0]].'-'.$sort[$_->[0]+1].'>'    # return "range"
+        : $sort[$_->[0]]                                 # o/w return value
+        }
+    map { [ int $_, ($_ == int $_) ? 0 : 1 ] }           # get LH-index {and flag if point lies between 2 numbers}
+    map { $_/4*$#_ }                                     # calculate index
+    0 .. 4
+  ];
+}
+```
