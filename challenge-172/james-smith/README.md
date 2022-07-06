@@ -83,27 +83,29 @@ These each take a similar form.
      * We then compute the value for that index
 ```perl
 sub fivenum_avg {
-  my @sort = sort { $a <=> $b } @_;                 # sort values
+  my @sort = sort { $a <=> $b } @_;                      # sort values
   [
-    map { $_->[1]                                   # If lies between 2 points
-        ? ( 1 - $_->[1] ) * $sort[ $_->[0]     ] +  # compute weighted average
+    map { $_->[1]                                        # If lies between 2 points
+        ? ( 1 - $_->[1] ) * $sort[ $_->[0]     ] +       # compute weighted average
                 $_->[1]   * $sort[ $_->[0] + 1 ]
-        : $sort[ $_->[0] ]                          # o/w return value
+        : $sort[ $_->[0] ]                               # o/w return value
         }
-    map { [ int $_, $_ - int $_ ] }                 # get LH-index, and distance of point from this
-    map { $_/4*(@_-1) } 0..4                        # calculate index
+    map { [ int $_, $_ - int $_ ] }                      # get LH-index, and distance of point from this
+    map { $_/4*$#_ }                                     # calculate index
+    0 .. 4
   ];
 }
 
 sub fivenum_mid {
-  my @sort = sort { $a <=> $b } @_;                 # sort values
+  my @sort = sort { $a <=> $b } @_;                      # sort values
   [
-    map { $_->[1]                                   # If lies between 2 points
-        ? ($sort[$_->[0]] + $sort[$_->[0]+1])/2     # compute average
-        : $sort[$_->[0]]                            # o/w return value
+    map { $_->[1]                                        # If lies between 2 points
+        ? ($sort[$_->[0]] + $sort[$_->[0]+1])/2          # compute average
+        : $sort[$_->[0]]                                 # o/w return value
         }                                      
-    map { [ int $_, ($_ == int $_) ? 0 : 1 ] }      # get LH-index {and flag if point lies between 2 numbers
-    map { $_/4*(@_-1) } 0..4                        # calculate index
+    map { [ int $_, ($_ == int $_) ? 0 : 1 ] }           # get LH-index {and flag if point lies between 2 numbers}
+    map { $_/4*$#_ }                                     # calculate index
+    0 .. 4
   ];
 }
 
@@ -111,11 +113,12 @@ sub fivenum_range {
   my @sort = sort { $a <=> $b } @_;                      # sort values
   [
     map { $_->[1] && $sort[$_->[0]] != $sort[$_->[0]+1]  # If lies between 2 points
-      ? '<'.$sort[$_->[0]].'-'.$sort[$_->[0]+1].'>'      # return "range"
-      : $sort[$_->[0]]                                   # o/w return value
-      }
-    map { [ int $_, ($_ == int $_) ? 0 : 1 ] }           # get LH-index {and flag if point lies between 2 numbers
-    map { $_/4*(@_-1) } 0..4                             # calculate index
+        ? '<'.$sort[$_->[0]].'-'.$sort[$_->[0]+1].'>'    # return "range"
+        : $sort[$_->[0]]                                 # o/w return value
+        }
+    map { [ int $_, ($_ == int $_) ? 0 : 1 ] }           # get LH-index {and flag if point lies between 2 numbers}
+    map { $_/4*$#_ }                                     # calculate index
+    0 .. 4
   ];
 }
 ```
