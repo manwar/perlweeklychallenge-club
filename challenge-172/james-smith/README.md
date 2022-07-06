@@ -69,6 +69,18 @@ We will present three code solutions as the quartiles and median are not-uniquel
  * `fivenum_med` -  if the median/quartile falls between two entries - then the average of the two values is used
  * `fivenum_avg` - if the median/quartile falls between two entries - then a weighted average is used. With more weight given to the point nearest the fraction { for median this will be the mid-point } but for the quartiles the weighting could be 1/4 : 3/4.
 
+These each take a similar form.
+
+  * Sort the values lowest to highest - the only real way to do this;
+  * Then we run a series of maps.
+     * Firstly get the index of the points
+        * min is `0`;
+        * max is `$N-1`;
+        * the other three are distributed evenly between them
+     * We then convert them to an integer index and:
+        * the fractional part (`fivenum_avg`) OR
+        * indicator whether there is a factional part (`fivenum_mid` and `fivenum_range`)
+     * We then compute the value for that index
 ```perl
 sub fivenum_avg {
   my @sort = sort { $a <=> $b } @_;                 # sort values
