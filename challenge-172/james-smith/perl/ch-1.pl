@@ -14,7 +14,7 @@ my @TESTS = (
 );
 
 my @t;
-say "***  @{$_}\n\n", _dump( partition(@{$_}) ), "\n" for @TESTS;
+say "***  @{$_}\n", _dump( first_partition(@{$_}) ), "\n--\n", _dump( partition(@{$_}) ), "\n" for @TESTS;
 
 if(0){
 say '===============================';
@@ -30,6 +30,16 @@ sub partition {
   ? map { $p = $_;
           map { [ $p, @{$_} ] }
               partition( $m-$p, $n-1, $p )
+        } @{ primes $p+1, int( ($m-$n/2+1/2)/$n)  }
+  : $m > $p && is_prime $m ? [$m] : ();
+}
+
+sub first_partition {
+  my ( $m, $n, $p ) = (@_,0);
+  $n > 1
+  ? map { $p = $_;
+          map { return [$p, @{$_}] }
+              first_partition( $m-$p, $n-1, $p )
         } @{ primes $p+1, int( ($m-$n/2+1/2)/$n)  }
   : $m > $p && is_prime $m ? [$m] : ();
 }
