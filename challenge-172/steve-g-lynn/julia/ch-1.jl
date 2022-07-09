@@ -3,16 +3,21 @@
 using Primes
 
 function prime_partition(m::Int, n::Int)::Matrix{Int}
-	retval=Array{Int}(undef,0,n)                
+
+	if (n > m/2)
+		return Array{Int}(undef,0,n)
+	end                
+
+	retval=Array{Int}(undef,0,n)
 	if (n==2)
 		for i in primes(m ÷ 2)
 			if (isprime(m-i))
 				retval=[retval;i m-i]
 			end
+			if ( (m % 2) > 0) #for odd m: (m-i) is even for i > 2
+				break
+			end
 		end
-		retval=sort_partition(retval)
-		retval=delete_equal_rows(retval)
-		return retval
 	end
 	if  (n > 2)
 		for i in primes(m ÷ n)
@@ -22,10 +27,10 @@ function prime_partition(m::Int, n::Int)::Matrix{Int}
 				retval=[retval; (i .* ones(Int,sizep[1])) p]
 			end
 		end
-		retval=sort_partition(retval)
-		retval=delete_equal_rows(retval)
-		return retval
 	end
+	retval=sort_partition(retval)
+	retval=delete_equal_rows(retval)
+	return retval
 end
 
 function sort_partition(p::Matrix{Int})::Matrix{Int}
@@ -46,5 +51,4 @@ end
 println(prime_partition(18,2))
 println(prime_partition(19,3))
 println(prime_partition(20,4))
-
 
