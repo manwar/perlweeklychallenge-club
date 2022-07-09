@@ -1,15 +1,36 @@
 {
+   "legend" : {
+      "enabled" : "false"
+   },
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       },
       "type" : "category"
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "series" : [
       {
+         "dataLabels" : {
+            "align" : "right",
+            "enabled" : "true",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "y" : 10,
+            "color" : "#FFFFFF"
+         },
          "name" : "Contributions",
          "data" : [
             [
@@ -18,44 +39,23 @@
             ],
             [
                "Perl",
-               8378
+               8380
             ],
             [
                "Raku",
                4979
             ]
-         ],
-         "dataLabels" : {
-            "enabled" : "true",
-            "rotation" : -90,
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "y" : 10
-         }
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2022-07-09 21:58:03 GMT"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
       "title" : {
          "text" : null
       },
       "min" : 0
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-07-09 22:05:31 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
