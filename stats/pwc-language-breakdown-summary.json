@@ -1,19 +1,16 @@
 {
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
    "series" : [
       {
          "name" : "Contributions",
-         "dataLabels" : {
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            }
-         },
          "data" : [
             [
                "Blog",
@@ -25,39 +22,42 @@
             ],
             [
                "Raku",
-               4977
+               4979
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "enabled" : "true",
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "y" : 10
+         }
       }
    ],
+   "subtitle" : {
+      "text" : "Last updated at 2022-07-09 21:58:03 GMT"
+   },
    "legend" : {
       "enabled" : "false"
    },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "chart" : {
       "type" : "column"
    },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-07-08 20:24:53 GMT"
-   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
+      },
+      "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    }
 }
