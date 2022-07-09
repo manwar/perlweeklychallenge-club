@@ -26,7 +26,7 @@ if TEST {
     my @std = 6,  7, 15, 36, 39,   40,   41, 42, 43, 47,  49;
     my @ti83 = 6, 15, 40, 43, 49;
 
-    my @test =
+my @test =
     { in => @std , expect => @ti83 },
     { in => @moon , expect => @moon-sumry },
     { in => [1,2,3,4,5,6,7,8], expect => [1,2.5,4.5,6.5,8] },
@@ -76,8 +76,6 @@ sub naive-five-num( @ary --> Array) {
     }
     @ret;
 }
-
-exit if TEST;
 
 sub MAIN( @arg = @moon ) {
     say "Input:  ", @arg.raku();
