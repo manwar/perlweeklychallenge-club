@@ -1,8 +1,7 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "series" : [
       {
@@ -41,7 +40,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             3,
             10,
@@ -73,9 +71,11 @@
             30,
             0,
             38
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             78,
@@ -107,13 +107,11 @@
             0,
             0,
             15
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -149,19 +147,21 @@
          "Kang-min Liu"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-07-10 17:46:08 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-07-10 15:17:46 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+      }
    }
 }
