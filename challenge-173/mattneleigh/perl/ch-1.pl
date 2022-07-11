@@ -51,7 +51,7 @@ sub is_esthetic_number{
 
     for my $i (0 .. ($#digits - 1)){
         return(0)
-            if(abs($digits[$i] - $digits[$i + 1]) == 1);
+            if(abs($digits[$i] - $digits[$i + 1]) != 1);
     }
 
     return(1);
