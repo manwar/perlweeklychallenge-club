@@ -1,23 +1,19 @@
 #!/usr/bin/raku
 
-# time:
-#
-#real	0m41.596s
-#user	0m41.284s
-#sys	0m0.215s
+#real	0m38.303s
+#user	0m37.857s
+#sys	0m0.229s
 
-use Statistics; 
+use Statistics;
 
-my @test = ();
-for (1..998_438) {
+my @test=();
+for (1..925_089) {
 	push @test, rand;
 }
 
-say &fivenum(@test); #-- ready-made library function
+say fivenum(@test); #-- built-in
 
-#(2.9838094933731796e-06 0.24999500930783614 0.5003205594513298
-#0.750393377736879 0.9999998988183594)
-#
-#-- for a large sample from a uniform distribution over [0,1], 
-#--- asymptotically will be equal to (0, 0.25, 0.5, 0.75, 1).
+#(1.9337635626115457e-06 0.2505242942758381 0.5005684431380041
+# 0.7503169554857986 0.9999993436204229)
+
 

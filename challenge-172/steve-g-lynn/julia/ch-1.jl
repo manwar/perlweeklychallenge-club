@@ -1,24 +1,23 @@
 #!/usr/bin/julia
 
-#real	0m3.733s
-#user	0m3.713s
-#sys	0m0.476s
+using Primes
 
-
-using Primes;
-
-#-- functions
 function prime_partition(m::Int, n::Int)::Matrix{Int}
-	retval=Array{Int}(undef,0,n)                
+
+	if (n > m/2)
+		return Array{Int}(undef,0,n)
+	end                
+
+	retval=Array{Int}(undef,0,n)
 	if (n==2)
 		for i in primes(m ÷ 2)
 			if (isprime(m-i))
 				retval=[retval;i m-i]
 			end
+			if ( (m % 2) > 0) #for odd m: (m-i) is even for i > 2
+				break
+			end
 		end
-		retval=sort_partition(retval)
-		retval=delete_equal_rows(retval)
-		return retval
 	end
 	if  (n > 2)
 		for i in primes(m ÷ n)
@@ -28,10 +27,10 @@ function prime_partition(m::Int, n::Int)::Matrix{Int}
 				retval=[retval; (i .* ones(Int,sizep[1])) p]
 			end
 		end
-		retval=sort_partition(retval)
-		retval=delete_equal_rows(retval)
-		return retval
 	end
+	retval=sort_partition(retval)
+	retval=delete_equal_rows(retval)
+	return retval
 end
 
 function sort_partition(p::Matrix{Int})::Matrix{Int}
@@ -39,8 +38,8 @@ function sort_partition(p::Matrix{Int})::Matrix{Int}
 end
 
 function delete_equal_rows(p::Matrix{Int})::Matrix{Int}
-#-- matrix must be sorted first by sort_partition
-	list_equal=Vector{Int}();	
+	#-- matrix must be sorted first by sort_partition
+	list_equal=Vector{Int64}();        
 	for i in 1:size(p,1)-1
 		if p[i+1,:]==p[i,:]
 			append!(list_equal,i+1)
@@ -49,13 +48,8 @@ function delete_equal_rows(p::Matrix{Int})::Matrix{Int}
 	return p[setdiff(1:size(p,1),list_equal),:]
 end
 
-#-- main
 println(prime_partition(18,2))
 println(prime_partition(19,3))
-println(prime_partition(200,3))
-println(prime_partition(200,4))
-println(prime_partition(1000,3))
-println(prime_partition(10000,3))
-println(prime_partition(80000,3))
-println(prime_partition(200,5))
+println(prime_partition(20,4))
+
 

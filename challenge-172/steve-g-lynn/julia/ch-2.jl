@@ -1,24 +1,25 @@
 #!/usr/bin/julia
 
-#real	0m1.056s
-#user	0m1.092s
-#sys	0m0.432s
+#real	0m1.088s
+#user	0m1.117s
+#sys	0m0.445s
 
-using Statistics;
+using Statistics
 
 function fivenum(x::Vector{Float64})
 	retval=zeros(5)
-	index=1
+	ctr=1
 	for i in 0:0.25:1
-		retval[index]=quantile(x,i)
-		index += 1    #-- no x++ in julia
+		retval[ctr]=quantile(x,i)
+		ctr += 1
 	end
-	return retval
+        return retval
 end
 
-test=rand(913613)
+test=rand(925089)
 println(fivenum(test))
 
-#[7.201802328937745e-7, 0.24952215316332127, 0.4996753331905286,
-# 0.7502263126585448, 0.9999999848985451]
+#[7.335486141846204e-7, 0.24913072314183482, 0.49950102601650026,
+# 0.749602495312535, 0.9999999579699111]
+
 
