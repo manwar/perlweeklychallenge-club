@@ -39,7 +39,7 @@ exit(0);
 # Returns on error:
 # * undef if N is less than 1 (not positive)
 # NOTE: Traditionally single-digit numbers are considered esthetic and will be
-# treated as such
+# treated as such here
 ################################################################################
 sub is_esthetic_number{
     my $n = int(shift());
