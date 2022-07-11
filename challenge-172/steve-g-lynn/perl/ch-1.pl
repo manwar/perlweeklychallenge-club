@@ -50,7 +50,4 @@ sub prime_partition {
 	}
 	return qsortvec(qsort($retval))->uniqvec;
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> upstream/master

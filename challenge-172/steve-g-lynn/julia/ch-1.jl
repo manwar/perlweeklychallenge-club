@@ -52,7 +52,3 @@ println(prime_partition(18,2))
 println(prime_partition(19,3))
 println(prime_partition(20,4))
 
-<<<<<<< HEAD
-
-=======
->>>>>>> upstream/master
