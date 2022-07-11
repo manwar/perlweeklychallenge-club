@@ -30,3 +30,18 @@ RETURN TRUE;
 END
 $CODE$
 LANGUAGE plpgsql;
+
+
+
+-- a single query approach
+-- returns true if the number is esthetic
+WITH nums AS
+(
+        SELECT v::int, v::int - lag( v::int, 1, 0 ) OVER () AS diff
+        FROM regexp_split_to_table( 12345::text, '' ) v
+)
+SELECT NOT EXISTS(
+       SELECT *
+       FROM nums
+       WHERE abs( diff ) <> 1
+);

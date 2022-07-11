@@ -29,3 +29,23 @@ RETURN;
 END
 $CODE$
 LANGUAGE plpgsql;
+
+
+
+-- query only result
+WITH RECURSIVE numbers AS
+(
+        SELECT 2::numeric AS v, 0::numeric AS p, 1 AS r
+        UNION
+        SELECT 3 AS v, 6 as p, 2 AS r
+
+        UNION
+
+        SELECT p + 1, (p + 1) * p, r + 1
+        FROM numbers
+        WHERE p <> 0
+
+)
+SELECT v
+FROM numbers
+LIMIT 10;
