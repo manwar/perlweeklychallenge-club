@@ -62,4 +62,3 @@ multi sub prime-partition (Int $m where $m > 0, Int $n where $n > 2) {
 sub distinct-prime-partition (Int $m where $m > 0, Int $n where $n > 2) {
 	return ($p.primes($m-2)).combinations($n).grep(*.sum==$m);
 }
-

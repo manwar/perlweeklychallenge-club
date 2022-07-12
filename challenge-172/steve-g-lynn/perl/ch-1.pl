@@ -50,4 +50,3 @@ sub prime_partition {
 	}
 	return qsortvec(qsort($retval))->uniqvec;
 }
-
