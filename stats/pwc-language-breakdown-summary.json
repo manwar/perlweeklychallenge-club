@@ -1,21 +1,49 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
+   "series" : [
+      {
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               2694
+            ],
+            [
+               "Perl",
+               8399
+            ],
+            [
+               "Raku",
+               4993
+            ]
+         ],
+         "dataLabels" : {
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "enabled" : "true",
+            "y" : 10
+         }
+      }
+   ],
    "xAxis" : {
       "type" : "category",
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
       }
    },
    "legend" : {
       "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-07-12 22:00:22 GMT"
    },
    "yAxis" : {
       "title" : {
@@ -23,41 +51,13 @@
       },
       "min" : 0
    },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "y" : 10,
-            "rotation" : -90,
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "color" : "#FFFFFF"
-         },
-         "data" : [
-            [
-               "Blog",
-               2693
-            ],
-            [
-               "Perl",
-               8397
-            ],
-            [
-               "Raku",
-               4993
-            ]
-         ]
-      }
-   ],
-   "subtitle" : {
-      "text" : "Last updated at 2022-07-12 14:50:08 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
    "chart" : {
       "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
