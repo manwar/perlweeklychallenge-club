@@ -25,9 +25,9 @@ We split the number up into it's individual digits. We then compare each digit w
 
 ```perl
 sub is_esthetic {
-  my($f,@n) = split //, shift;
-  ( $_ == $f+1 || $_ == $f-1 ) ? ($f=$_) : return 0 for @n;
-  1;
+  my($f,@n) = split //, pop;
+  abs( $_-$f ) == 1 ? ($f=$_) : return 0 for @n;
+  1
 }
 ```
 
@@ -42,8 +42,8 @@ We note that `S(n)` is the product of all prior terms plus 1, and so `S(n-1)` is
 This reduces our problem considerably and we have the following code. To get the values our for `n` bigger than 7 we have to resort the the `bigint` directive.
 
 ```perl
-my $n =2,
-my @list = ( 2, map { $n = $n*($n-1) + 1 } 2..10 );
+my $n=2;
+say for 2, map{ $n*=$n-1; ++$n } 1..9;
 ```
 
 ## Answers
