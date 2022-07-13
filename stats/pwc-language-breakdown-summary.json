@@ -1,28 +1,19 @@
 {
-   "legend" : {
-      "enabled" : "false"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "enabled" : "true",
+            "y" : 10,
+            "rotation" : -90,
+            "align" : "right",
+            "format" : "{point.y:.0f}"
+         },
          "data" : [
             [
                "Blog",
@@ -30,27 +21,30 @@
             ],
             [
                "Perl",
-               8424
+               8425
             ],
             [
                "Raku",
                5011
             ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "rotation" : -90,
-            "enabled" : "true"
-         }
+         ]
       }
    ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
@@ -58,6 +52,12 @@
       "type" : "column"
    },
    "subtitle" : {
-      "text" : "Last updated at 2022-07-13 21:17:15 GMT"
+      "text" : "Last updated at 2022-07-13 21:27:23 GMT"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    }
 }

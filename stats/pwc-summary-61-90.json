@@ -1,7 +1,9 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "xAxis" : {
       "categories" : [
@@ -37,11 +39,19 @@
          "James Marquis"
       ]
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-07-13 21:27:23 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -115,6 +125,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             1,
@@ -146,22 +157,11 @@
             0,
             134,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-07-13 21:17:15 GMT"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }

@@ -1,7 +1,9 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -37,11 +39,11 @@
          "Marton Polgar"
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-07-13 21:27:23 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "series" : [
       {
@@ -80,6 +82,7 @@
          ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             84,
@@ -111,11 +114,9 @@
             3,
             2,
             42
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             1,
             2,
@@ -147,21 +148,20 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-07-13 21:17:15 GMT"
+   "chart" : {
+      "type" : "column"
    }
 }
