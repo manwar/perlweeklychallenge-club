@@ -27,7 +27,7 @@ def is_esthetic_number(n):
 #
 # Unit test class
 
-class TestPrimePartition(unittest.TestCase):
+class TestEstheticNumber(unittest.TestCase):
 
     def test_example_1(self):
         self.assertTrue(is_esthetic_number(5456))
