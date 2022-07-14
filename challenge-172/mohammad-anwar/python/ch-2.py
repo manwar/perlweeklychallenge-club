@@ -38,7 +38,7 @@ def five_number_summary(n):
 #
 # Unit test class
 
-class TestPrimePartition(unittest.TestCase):
+class TestFiveNumberSummary(unittest.TestCase):
 
     def test_example(self):
         self.assertEqual(
