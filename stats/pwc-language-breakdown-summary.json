@@ -1,37 +1,15 @@
 {
-   "series" : [
-      {
-         "dataLabels" : {
-            "enabled" : "true",
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF"
-         },
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               2702
-            ],
-            [
-               "Perl",
-               8432
-            ],
-            [
-               "Raku",
-               5018
-            ]
-         ]
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
       }
-   ],
-   "legend" : {
-      "enabled" : "false"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "chart" : {
       "type" : "column"
@@ -42,22 +20,44 @@
          "text" : null
       }
    },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-07-16 10:15:18 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2022-07-16 10:06:59 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
+   "series" : [
+      {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "rotation" : -90,
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "align" : "right"
+         },
+         "data" : [
+            [
+               "Blog",
+               2702
+            ],
+            [
+               "Perl",
+               8434
+            ],
+            [
+               "Raku",
+               5018
+            ]
+         ]
       }
-   }
+   ]
 }
