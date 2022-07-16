@@ -1,23 +1,26 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
    },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-07-16 10:39:44 GMT"
+   },
    "chart" : {
       "type" : "column"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
    },
    "xAxis" : {
@@ -53,9 +56,6 @@
          "Kai Burgdorf",
          "Kang-min Liu"
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-07-16 10:23:33 GMT"
    },
    "series" : [
       {
@@ -94,7 +94,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             3,
             10,
@@ -126,9 +125,11 @@
             30,
             0,
             38
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             79,
@@ -160,8 +161,7 @@
             0,
             0,
             15
-         ],
-         "name" : "Blog"
+         ]
       }
    ]
 }
