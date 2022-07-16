@@ -20,7 +20,7 @@ sub is_esthetic($n) {
 
 ## Task 2: Sylvester's Sequence
 
-For this task we need to generate the first 10 terms of (Sylvester's Sequence)[https://en.wikipedia.org/wiki/Sylvester%27s_sequence]. **Sylvester's Sequence** is an integer sequence where every term is the product of all the previous terms, plus one.
+For this task we need to generate the first 10 terms of [Sylvester's Sequence](https://en.wikipedia.org/wiki/Sylvester%27s_sequence). **Sylvester's Sequence** is an integer sequence where every term is the product of all the previous terms, plus one.
 
 Terms in Sylvester's Sequence get very large very fast (the 10th term has 20 digits) so we need to use the `bigint` module. I also used the `prod` function from `List::Util` to do the multiplication. With those modules in hand, we can solve this challenge in just a few lines of code:
 
