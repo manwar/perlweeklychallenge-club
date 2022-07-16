@@ -2,29 +2,33 @@
    "chart" : {
       "type" : "column"
    },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   "subtitle" : {
+      "text" : "Last updated at 2022-07-16 11:13:44 GMT"
    },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
-      }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-07-16 10:50:13 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+      },
+      "type" : "category"
    },
    "series" : [
       {
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right",
+            "y" : 10,
+            "enabled" : "true",
+            "rotation" : -90,
+            "color" : "#FFFFFF"
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -36,28 +40,24 @@
             ],
             [
                "Raku",
-               5020
+               5022
             ]
-         ],
-         "dataLabels" : {
-            "align" : "right",
-            "rotation" : -90,
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            }
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
+      }
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
