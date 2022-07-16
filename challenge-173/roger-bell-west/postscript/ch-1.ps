@@ -1,0 +1,74 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/esthetic10 {
+    10 esthetic
+} bind def
+
+/esthetic {
+    5 dict begin
+    /base exch def
+    /n exch def
+    /pdigit 0 def
+    /ch false def
+    true
+    {
+        n 0 le {
+            exit
+        } if
+        /digit n base mod def
+        ch {
+            digit pdigit sub abs 1 ne {
+                pop false
+                exit
+            } if
+        } if
+        /ch true def
+        /pdigit digit def
+        /n n base idiv def
+    } loop
+    end
+} bind def
+
+(esthetic) test.start
+5456 esthetic10 test
+120 esthetic10 not test
+12 esthetic10 test
+5654 esthetic10 test
+890 esthetic10 not test
+test.end
