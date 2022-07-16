@@ -1,106 +1,34 @@
 Solutions by Walt Mankowski.
 
-# Task #1: Prime Partition
+# Perl Weekly Challenge #173: Esthetic Numbers and Sylvester's Sequence
 
-For this task we're given 2 positive integers _m_ and _n_, and we need to find _n_ unique prime numbers that add up to _m_.
+## Task #1: Esthetic Numbers
 
-To solve this I made use of the `primes_to()` function I wrote for Challenge 169. I also used `Algorithm::Combinatorics` to find combinations of primes taking _n_ at time, and `sum()` from `List::Utils` to find the sum. Using those 3 functions this challenge was easy to solve:
+For this task we're given a number _n_ and need to determine if it's an Esthetic Number. An **Esthetic Number** is a positive integer where every pair of adjacent digits differ in value by exactly 1.
 
-```perl
-$, = " ";
-my ($m, $n) = @ARGV;
-my $primes = primes_to($m);
-my $iter = combinations($primes, $n);
-while (my $p = $iter->next) {
-    say $p->@* if sum($p->@*) == $m;
-}
-```
-
-I also wrote a version in Python. First I needed to port `primes_to()` to Python:
-
-```python
-# find the primes up to n using the sieve of Eratosthenes and return
-# them as a list
-def primes_to(n):
-    is_prime = [True] * (n+1)
-    is_prime[0] = is_prime[1] = False
-    for i in range(2, int(sqrt(n))+1):
-        if is_prime[i]:
-            for j in range(i+i, n+1, i):
-                is_prime[j] = False
-
-    return [i for i,val in enumerate(is_prime) if val]
-```
-
-Then the actual code to solve the challenge ended up looking very similar to the Perl version:
-
-```python
-import sys
-from itertools import combinations
-from primes import primes_to
-
-m, n = [int(x) for x in sys.argv[1:]]
-primes = primes_to(m)
-
-for comb in combinations(primes, n):
-    if sum(comb) == m:
-        print(comb)
-```
-
-# Task 2: Five-number Summary
-
-For this task we're given a list of numbers and need to compute their (Five-number Summary)[https://en.wikipedia.org/wiki/Five-number_summary], which consists of
-
-1. The minimum value
-2. The lower quartile
-3. The median
-4. The upper quartile
-5. The maximum value
-
-To solve this I first sorted the list. The minimum and maximum values are just the first and last element of the sorted list. Then I wrote a function to compute the median of a sorted list.
+The only real trick to solve this in Perl is that we can turn a number `$n` into an array of digits `@d` with the statement `@d = split //, $n;`. Then we can wrap that in a function that checks the absolute value of each pair of points:
 
 ```perl
-sub median_sorted(@a) {
-    my $len2 = int(@a / 2);
-    return @a % 2 == 1 ? $a[$len2] : ($a[$len2-1] + $a[$len2]) / 2;
-}
-```
-Once we have that, then the lower quartile is the median of the values before the median in the sorted list, and the upper quartile is the median of the values after the median.
-
-```perl
-sub fivenum(@a) {
-    my @sorted = sort {$a <=> $b} @a;
-    my $min = $sorted[0];
-    my $max = $sorted[-1];
-    my $median = median_sorted(@sorted);
-
-    my $len2 = int(@sorted / 2);
-    my $lower = median_sorted(@sorted[0..$len2-1]);
-    my $upper;
-    if (@sorted % 2 == 1) { # odd number of elements
-        $upper = median_sorted(@sorted[$len2+1..$#sorted]);
-    } else {
-        $upper = median_sorted(@sorted[$len2..$#sorted]);
+sub is_esthetic($n) {
+    my @d = split //, $n;
+    for my $i (1..$#d) {
+        return 0 unless abs($d[$i-1] - $d[$i]) == 1;
     }
-    return ($min, $lower, $median, $upper, $max);
+    return 1;
 }
 ```
 
-`fivenum()` was a little tricky to port to Python. First, `sorted`, `min`, and `max` are all reserved words to Python, so I had to come up with different names for them. I decided to just prefix all the variable names with an underscore. I also had to be careful because the upper range of slices is inclusive in Perl but exclusive in Python. Here's my version:
+## Task 2: Sylvester's Sequence
 
-```python
-def fivenum(a):
-    _sorted = sorted(a)
-    _min = _sorted[0]
-    _max = _sorted[-1]
-    _median = median_sorted(_sorted)
+For this task we need to generate the first 10 terms of [Sylvester's Sequence](https://en.wikipedia.org/wiki/Sylvester%27s_sequence). **Sylvester's Sequence** is an integer sequence where every term is the product of all the previous terms, plus one.
 
-    len2 = len(a) // 2
-    _lower = median_sorted(_sorted[0:len2])
-    if len(a) % 2 == 1: # odd number of elements
-        _upper = median_sorted(_sorted[len2+1:])
-    else:
-        _upper = median_sorted(_sorted[len2:])
+Terms in Sylvester's Sequence get very large very fast (the 10th term has 20 digits) so we need to use the `bigint` module. I also used the `prod` function from `List::Util` to do the multiplication. With those modules in hand, we can solve this challenge in just a few lines of code:
 
-    return _min, _lower, _median, _upper, _max
+```perl
+use bigint;
+use List::Util qw(product);
+
+my @sylvester;
+push @sylvester, 1 + product @sylvester while @sylvester < 10;
+say for @sylvester;
 ```
