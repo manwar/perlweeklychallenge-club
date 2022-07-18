@@ -35,3 +35,26 @@ RETURN;
 END
 $CODE$
 LANGUAGE plpgsql;
+
+
+-- single query approach
+WITH digits AS
+(
+   SELECT v, digits.*, pow( digits.d, digits.rn) AS p
+   FROM generate_series( 10, 99999 ) v
+   , LATERAL ( SELECT d::bigint, row_number() over () AS rn
+       FROM regexp_split_to_table( v::text, '') d
+     ) digits
+
+)
+, comparison AS
+(
+   SELECT v, sum( p ) as s
+   FROM digits
+   GROUP BY v
+)
+SELECT *
+FROM comparison
+WHERE v = s
+ORDER BY v
+;
