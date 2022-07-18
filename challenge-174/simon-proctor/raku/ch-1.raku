@@ -4,7 +4,7 @@
 multi sub MAIN (
     UInt \n = 19 #= Number of Disarium Numbers to generate
 ) {
-    .say for (1..*).race.grep( { is-disarium( $_ ) } )[^n];
+    .say for (0..*).race.grep( { is-disarium( $_ ) } )[^n];
 }
 
 multi sub MAIN( "TEST" ) is hidden-from-USAGE {
