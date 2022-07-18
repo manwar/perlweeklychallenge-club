@@ -1,7 +1,7 @@
-[< Previous 172](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-172/james-smith) |
-[Next 174 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-174/james-smith)
+[< Previous 173](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-173/james-smith) |
+[Next 175 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-175/james-smith)
 
-# The Weekly Challenge 173
+# The Weekly Challenge 174
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,58 +13,56 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-173/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-174/james-smith
 
-# Task 1 - Esthetic Number
+# Task 1 - Disarium Numbers
 
-***You are given a positive integer, `$n`. Write a script to find out if the given number is Esthetic Number. An esthetic number is a positive integer where every adjacent digit differs from its neighbour by 1.***
+***Write a script to generate first 19 Disarium Numbers. A disarium number is an integer where the sum of each digit raised to the power of its position in the number, is equal to the number.***
 
 ## Solution
 
-We split the number up into it's individual digits. We then compare each digit with the previous one, if they are `+1` or `-1` we then update the "last" digit and repeat otherwise we short cut the loop and return 0.
-
 ```perl
-sub is_esthetic {
-  my($f,@n) = split //, pop;
-  abs( $_-$f ) == 1 ? ($f=$_) : return 0 for @n;
-  1
+my $n = -1;
+for(1..19) {
+  my($c,$t) = (0,++$n);
+  $t-= $_ ** ++ $c for split //,$n;
+  $t ? (redo) : say $n;
 }
 ```
 
-# Task 2 - Sylvester’s sequence
+### Complex map
 
-***Write a script to generate first 10 members of Sylvester's sequence. For each member of the sequence the value is equal to the product of previous terms + 1***
+```perl
+$n = -1;
+say for map { while(1) { my($c,$t)=(0,++$n); $t-=$_**++$c for split//,$n; $t || last }; $n } 1..19;
+
+```
+
+# Task 2 - Permutation Ranking
+
+***You are given a list of integers with no duplicates, e.g. [0, 1, 2]. Write two functions, permutation2rank() which will take the list and determine its rank (starting at 0) in the set of possible permutations arranged in lexicographic order, and rank2permutation() which will take the list and a rank number and produce just that permutation.***
 
 ## Solution
 
-We note that `S(n)` is the product of all prior terms plus 1, and so `S(n-1)` is similar. So this gives us that `S(n+1) = S(n)*( S(n) - 1 ) + 1`.
-
-This reduces our problem considerably and we have the following code. To get the values our for `n` bigger than 7 we have to resort the the `bigint` directive.
+The one obvious thing we don't want to do is generate a complete list of permutations and display that - so we have to work out an algoritm to convert rank to values!
 
 ```perl
-my $n=2;
-say for 2, map{ $n*=$n-1; ++$n } 1..9;
-```
+sub permutation2rank {
+  my($r,$f,@l,$c,$x) = (0,1,@{$_[0]}), my @p = @{$_[1]};
+  $f *= $_ for 1 .. @l;
+  O: for ( reverse 1 .. @l ) {
+    $f/=$_, $c = 0, $x = shift @p;
+    ($x-$_) ? $c++ : ( $r+=$c*$f, splice(@l,$c,1), next O ) for @l;
+    return -1;
+  }
+  $r;
+}
 
-## Answers
-```
- 1                                                                                                                                            2
- 2                                                                                                                                            3
- 3                                                                                                                                            7
- 4                                                                                                                                           43
- 5                                                                                                                                        1,807
- 6                                                                                                                                    3,263,443
- 7                                                                                                                           10,650,056,950,807
- 8                                                                                                          113,423,713,055,421,844,361,000,443
- 9                                                                       12,864,938,683,278,671,740,537,145,998,360,961,546,653,259,485,195,807
-10  165,506,647,324,519,964,198,468,195,444,439,180,017,513,152,706,377,497,841,851,388,766,535,868,639,572,406,808,911,988,131,737,645,185,443
-```
-
-## Calculation showing S(n+1) can be written in terms of S(n) only
-```
-               S(n) = S(n-1)S(n-2)...S(1) + 1'
-S(n-1)S(n-2)...S(1) = S(n) - 1
-
-             S(n+1) = S(n)S(n-1)S(n-2)...S(1) + 1'
-             S(n+1) = S(n)( S(n) - 1 ) + 1
+sub rank2permutation {
+  my( $r, $f, @index, @res ) = ( $_[1], 1, 0 .. (my $n = my @l = @{$_[0]}) -1 );
+  $f *= $_ for 1 .. $n;
+  return [] if $r >= $f;  ## rank out of range!
+  push @res, $l[ splice @index, ($r%=$f) / ($f/=$_), 1 ] for reverse 1..$n;
+  \@res;
+}
 ```
