@@ -49,9 +49,14 @@ while ( my @current = $permutator->next ) {
 
 @permutations = sort @permutations;
 
+
 my $found = 0;
 for ( 0 .. $#permutations ) {
-    $found = 1 and next if ( $permutations[ $_ ] == join( '-', @{ $input } ) );
+    if ( $permutations[ $_ ] eq join( '-', @{ $input } ) ) {
+       $found = 1;
+       next;
+    }
+
     $index-- if $found;
     return [ split( '-', $permutations[ $_ ] ) ] if $index == 0
 }
