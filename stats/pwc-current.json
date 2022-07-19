@@ -1,29 +1,28 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2022-07-19 22:30:45 GMT"
-   },
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 12] Last updated at 2022-07-19 23:37:45 GMT"
    },
    "legend" : {
       "enabled" : 0
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 174"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "chart" : {
       "type" : "column"
@@ -41,7 +40,7 @@
             "id" : "E. Choroba"
          },
          {
-            "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -52,7 +51,7 @@
                   1
                ]
             ],
-            "name" : "James Smith"
+            "id" : "James Smith"
          },
          {
             "id" : "Laurent Rosenfeld",
@@ -87,16 +86,17 @@
             ]
          },
          {
+            "id" : "Mark Anderson",
             "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Mark Anderson"
+            ]
          },
          {
+            "id" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -107,20 +107,20 @@
                   1
                ]
             ],
-            "name" : "Mohammad S Anwar",
-            "id" : "Mohammad S Anwar"
+            "name" : "Mohammad S Anwar"
          },
          {
-            "id" : "PokGoPun",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "PokGoPun"
+            "name" : "PokGoPun",
+            "id" : "PokGoPun"
          },
          {
+            "id" : "Robert DiCicco",
             "name" : "Robert DiCicco",
             "data" : [
                [
@@ -131,11 +131,9 @@
                   "Raku",
                   1
                ]
-            ],
-            "id" : "Robert DiCicco"
+            ]
          },
          {
-            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West",
             "data" : [
                [
@@ -146,20 +144,34 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "id" : "Simon Proctor"
+            "name" : "Simon Proctor"
          },
          {
-            "name" : "W. Luis Mochan",
+            "id" : "Ulrich Rieke",
+            "name" : "Ulrich Rieke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  1
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -170,23 +182,26 @@
                   1
                ]
             ],
+            "name" : "W. Luis Mochan",
             "id" : "W. Luis Mochan"
          }
       ]
    },
+   "title" : {
+      "text" : "The Weekly Challenge - 174"
+   },
    "series" : [
       {
-         "name" : "The Weekly Challenge - 174",
          "data" : [
             {
-               "name" : "E. Choroba",
                "y" : 2,
-               "drilldown" : "E. Choroba"
+               "drilldown" : "E. Choroba",
+               "name" : "E. Choroba"
             },
             {
                "name" : "James Smith",
-               "y" : 3,
-               "drilldown" : "James Smith"
+               "drilldown" : "James Smith",
+               "y" : 3
             },
             {
                "name" : "Laurent Rosenfeld",
@@ -195,33 +210,33 @@
             },
             {
                "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 8
-            },
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
+               "y" : 8,
+               "drilldown" : "Luca Ferrari"
             },
             {
                "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
                "drilldown" : "Mohammad S Anwar",
+               "y" : 2,
                "name" : "Mohammad S Anwar"
             },
             {
-               "y" : 2,
                "drilldown" : "PokGoPun",
+               "y" : 2,
                "name" : "PokGoPun"
             },
             {
-               "name" : "Robert DiCicco",
+               "drilldown" : "Robert DiCicco",
                "y" : 2,
-               "drilldown" : "Robert DiCicco"
+               "name" : "Robert DiCicco"
             },
             {
-               "name" : "Roger Bell_West",
+               "y" : 4,
                "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "name" : "Roger Bell_West"
             },
             {
                "y" : 1,
@@ -229,17 +244,21 @@
                "name" : "Simon Proctor"
             },
             {
+               "name" : "Ulrich Rieke",
                "y" : 3,
+               "drilldown" : "Ulrich Rieke"
+            },
+            {
                "drilldown" : "W. Luis Mochan",
+               "y" : 3,
                "name" : "W. Luis Mochan"
             }
          ],
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 174"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "xAxis" : {
+      "type" : "category"
    }
 }
