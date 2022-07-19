@@ -1,0 +1,160 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/apush.left { % [b c] a -> [a b c]
+    exch % a [b c]
+    [ 3 1 roll aload pop ]
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+
+% end included library code
+
+/disarium {
+    9 dict begin
+    /ct exch def
+    /pows [ [ 10 { 1 } repeat ] ] def
+    /c 0 def
+    [
+        {
+            /disar 0 def
+            c 0 ge {
+                /ca c def
+                /cl 0 array def
+                {
+                    ca 0 le {
+                        exit
+                    } if
+                    /cl cl ca 10 mod apush.left def
+                    /ca ca 10 idiv def
+                } loop
+                cl length pows length ge {
+                    pows length 1 cl length {
+                        /power exch def
+                        /pows pows
+                        [
+                            0 1 9 {
+                                /digit exch def
+                                pows power 1 sub get digit get digit mul
+                            } for
+                        ]
+                        apush.right def
+                    } for
+                } if
+                0 1 cl length 1 sub {
+                    /i exch def
+                    /disar disar pows i 1 add get cl i get get add def
+                } for
+            } if
+            disar c eq {
+                c
+                /ct ct 1 sub def
+                ct 0 le {
+                    exit
+                } if
+            } if
+            /c c 1 add def
+        } loop
+    ]
+    end
+} bind def
+
+(disarium) test.start
+19 disarium
+[ 0 1 2 3 4 5 6 7 8 9 89 135 175 518 598 1306 1676 2427 2646798 ]
+deepeq test
+test.end
