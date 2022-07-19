@@ -2,8 +2,8 @@
    "drilldown" : {
       "series" : [
          {
-            "id" : "E. Choroba",
             "name" : "E. Choroba",
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
@@ -12,6 +12,17 @@
             ]
          },
          {
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
+            "name" : "Roger Bell_West",
             "id" : "Roger Bell_West",
             "data" : [
                [
@@ -22,76 +33,80 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Roger Bell_West"
+            ]
          },
          {
             "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ],
-            "name" : "Simon Proctor"
+            ]
          }
       ]
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 174"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2022-07-19 10:57:57 GMT"
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 174"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "chart" : {
+      "type" : "column"
    },
    "tooltip" : {
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1
    },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2022-07-19 10:47:25 GMT"
-   },
    "series" : [
       {
          "name" : "The Weekly Challenge - 174",
          "data" : [
             {
+               "name" : "E. Choroba",
                "y" : 2,
-               "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "y" : 2,
+               "name" : "Mark Anderson"
             },
             {
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
             },
             {
-               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor",
                "y" : 1,
-               "name" : "Simon Proctor"
+               "drilldown" : "Simon Proctor"
             }
          ],
          "colorByPoint" : 1
       }
-   ],
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
-   }
+   ]
 }
