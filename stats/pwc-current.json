@@ -1,90 +1,70 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2022-07-19 22:30:45 GMT"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
    "legend" : {
       "enabled" : 0
    },
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 174",
-         "data" : [
-            {
-               "drilldown" : "E. Choroba",
-               "y" : 2,
-               "name" : "E. Choroba"
-            },
-            {
-               "drilldown" : "James Smith",
-               "y" : 3,
-               "name" : "James Smith"
-            },
-            {
-               "drilldown" : "Luca Ferrari",
-               "y" : 8,
-               "name" : "Luca Ferrari"
-            },
-            {
-               "name" : "Mark Anderson",
-               "y" : 2,
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "name" : "Mohammad S Anwar",
-               "y" : 2,
-               "drilldown" : "Mohammad S Anwar"
-            },
-            {
-               "drilldown" : "PokGoPun",
-               "name" : "PokGoPun",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "name" : "Robert DiCicco",
-               "drilldown" : "Robert DiCicco"
-            },
-            {
-               "y" : 4,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
-            },
-            {
-               "name" : "Simon Proctor",
-               "y" : 1,
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "drilldown" : "W. Luis Mochan",
-               "name" : "W. Luis Mochan",
-               "y" : 3
-            }
-         ]
-      }
-   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 174"
+   },
    "chart" : {
       "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
             "name" : "E. Choroba",
-            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "E. Choroba"
          },
          {
-            "name" : "James Smith",
             "id" : "James Smith",
             "data" : [
                [
                   "Perl",
                   2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "James Smith"
+         },
+         {
+            "id" : "Laurent Rosenfeld",
+            "name" : "Laurent Rosenfeld",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Raku",
+                  1
                ],
                [
                   "Blog",
@@ -108,17 +88,40 @@
          },
          {
             "name" : "Mark Anderson",
-            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mark Anderson"
          },
          {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Raku",
+                  1
+               ]
+            ],
             "name" : "Mohammad S Anwar",
-            "id" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar"
+         },
+         {
+            "id" : "PokGoPun",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "PokGoPun"
+         },
+         {
+            "name" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
@@ -127,58 +130,36 @@
                [
                   "Raku",
                   1
+               ]
+            ],
+            "id" : "Robert DiCicco"
+         },
+         {
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
                ]
             ]
          },
          {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "name" : "PokGoPun",
-            "id" : "PokGoPun"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  1
-               ],
-               [
-                  "Raku",
-                  1
-               ]
-            ],
-            "id" : "Robert DiCicco",
-            "name" : "Robert DiCicco"
-         },
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
-         },
-         {
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            "id" : "Simon Proctor"
          },
          {
+            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -189,34 +170,76 @@
                   1
                ]
             ],
-            "name" : "W. Luis Mochan",
             "id" : "W. Luis Mochan"
          }
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 174"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2022-07-19 22:17:19 GMT"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 174",
+         "data" : [
+            {
+               "name" : "E. Choroba",
+               "y" : 2,
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "name" : "James Smith",
+               "y" : 3,
+               "drilldown" : "James Smith"
+            },
+            {
+               "name" : "Laurent Rosenfeld",
+               "y" : 3,
+               "drilldown" : "Laurent Rosenfeld"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
+               "y" : 8
+            },
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mohammad S Anwar",
+               "name" : "Mohammad S Anwar"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "PokGoPun",
+               "name" : "PokGoPun"
+            },
+            {
+               "name" : "Robert DiCicco",
+               "y" : 2,
+               "drilldown" : "Robert DiCicco"
+            },
+            {
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
+               "y" : 1,
+               "drilldown" : "Simon Proctor",
+               "name" : "Simon Proctor"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
       }
    }
 }
