@@ -15,13 +15,15 @@ sub isDisarium{
 }
 ### take 1st argument as a number and return an array of digits made from it
 sub digit{
-	my $n = shift;
-	{
-		unshift @_, $n % 10;
-		$n = int($n/10);
-		redo if $n;
-	}
-	return @_;
+	### use regex is faster
+	return split //, shift;
+#	my $n = shift;
+#	{
+#		unshift @_, $n % 10;
+#		$n = int($n/10);
+#		redo if $n;
+#	}
+#	return @_;
 }
 ### takes all arguments as numbers and return summation of them
 sub sum{
