@@ -23,8 +23,10 @@ sub rank_permutation(){
 		$q = int($r / $fact);			# by decomposing r = q * fact + rest
 		$r %= $fact;
 		push @p, $digits[$q];
-		$digits[$q] = undef;			# remove this digit p[i];
-		@digits = grep{defined} @digits;
+#		$digits[$q] = undef;			# remove this digit p[i];
+#		@digits = grep{defined} @digits;
+		#		use splice instead
+		splice @digits, $q, 1;
 		$fact /= $n - 1 - $i if $i != $n - 1;	# weight of next digit
 	}
 	return @p;
@@ -44,8 +46,10 @@ sub permutation_rank{
 			redo;
 		}
 		$r += $fact * $q;
-		$digits[$q] = undef;
-		@digits = grep{defined} @digits;	# remove this digit p[i]
+#		$digits[$q] = undef;
+#		@digits = grep{defined} @digits;	# remove this digit p[i]
+		#		use splice instead
+		splice @digits, $q, 1;
 		$fact /= $n - 1 - $i;			# weight of next digit
 	}
 	return $r
