@@ -1,3 +1,3 @@
-# The Weekly Challenge 173
+# The Weekly Challenge 174
 
-[Blog](https://dev.to/simongreennet/weekly-challenge-173-1kli)
+[Blog](https://dev.to/simongreennet/weekly-challenge-174-5ga6)
