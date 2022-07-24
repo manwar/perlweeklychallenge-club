@@ -1,12 +1,21 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontSize" : "13px",
             "fontFamily" : "Verdana, sans-serif"
          }
-      },
-      "type" : "category"
+      }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-07-24 01:04:17 GMT"
    },
    "yAxis" : {
       "title" : {
@@ -14,30 +23,18 @@
       },
       "min" : 0
    },
-   "chart" : {
-      "type" : "column"
-   },
    "legend" : {
       "enabled" : "false"
    },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   },
    "series" : [
       {
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "enabled" : "true",
-            "y" : 10,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "align" : "right",
-            "color" : "#FFFFFF"
-         },
          "data" : [
             [
                "Blog",
-               2721
+               2722
             ],
             [
                "Perl",
@@ -45,19 +42,22 @@
             ],
             [
                "Raku",
-               5046
+               5048
             ]
          ],
-         "name" : "Contributions"
+         "name" : "Contributions",
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "enabled" : "true",
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            }
+         }
       }
-   ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-07-23 19:25:35 GMT"
-   }
+   ]
 }
