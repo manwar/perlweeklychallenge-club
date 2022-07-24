@@ -1,6 +1,6 @@
 #!/usr/bin/env perl
 # Perl weekly challenge 174
-# Task 1: Disarium numbers
+# Task 1: Disarium numbers. Brute force
 #
 # See https://wlmb.github.io/2022/07/18/PWC174/#task-1-disarium-numbers
 use v5.12;
