@@ -1,46 +1,27 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
-   },
-   "series" : [
-      {
-         "data" : [
-            [
-               "Blog",
-               2723
-            ],
-            [
-               "Perl",
-               8484
-            ],
-            [
-               "Raku",
-               5048
-            ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "enabled" : "true",
-            "y" : 10
-         }
-      }
-   ],
    "chart" : {
       "type" : "column"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-07-24 14:34:25 GMT"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "legend" : {
       "enabled" : "false"
@@ -48,16 +29,35 @@
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2022-07-24 09:12:07 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
+   "series" : [
+      {
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               2723
+            ],
+            [
+               "Perl",
+               8485
+            ],
+            [
+               "Raku",
+               5049
+            ]
+         ],
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "rotation" : -90,
+            "align" : "right",
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "enabled" : "true"
+         }
       }
-   }
+   ]
 }
