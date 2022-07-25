@@ -1,38 +1,37 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2022-07-25 18:13:28 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge - 175"
    },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2022-07-25 18:27:52 GMT"
    },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
          {
             "id" : "Dave Cross",
+            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Dave Cross"
+            ]
          },
          {
-            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -43,21 +42,20 @@
                   6
                ]
             ],
-            "name" : "Luca Ferrari"
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
          },
          {
             "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Blog",
                   2
                ]
-            ],
-            "name" : "Mark Anderson"
+            ]
          },
          {
-            "name" : "Peter Campbell Smith",
-            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -67,11 +65,13 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Peter Campbell Smith",
+            "id" : "Peter Campbell Smith"
          },
          {
-            "name" : "Roger Bell_West",
             "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -82,24 +82,48 @@
                   2
                ]
             ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "Stephen G Lynn",
+            "name" : "Stephen G Lynn"
          }
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 175"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "xAxis" : {
+      "type" : "category"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "series" : [
       {
          "data" : [
             {
-               "name" : "Dave Cross",
                "y" : 2,
-               "drilldown" : "Dave Cross"
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross"
             },
             {
                "y" : 8,
@@ -107,29 +131,28 @@
                "drilldown" : "Luca Ferrari"
             },
             {
+               "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson",
-               "y" : 2,
-               "drilldown" : "Mark Anderson"
+               "y" : 2
             },
             {
-               "drilldown" : "Peter Campbell Smith",
                "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith",
                "y" : 3
             },
             {
-               "y" : 4,
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
+               "drilldown" : "Stephen G Lynn",
+               "name" : "Stephen G Lynn",
+               "y" : 5
             }
          ],
          "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 175"
       }
-   ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   }
+   ]
 }
