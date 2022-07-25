@@ -1,7 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "categories" : [
          "Matt Latusek",
@@ -40,15 +37,22 @@
       "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
       "shared" : 1
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-07-25 19:01:26 GMT"
+   },
    "yAxis" : {
       "title" : {
          "text" : ""
       },
       "min" : 0
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             4,
             95,
@@ -80,7 +84,8 @@
             0,
             0,
             8
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -153,15 +158,10 @@
          "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-07-25 18:53:38 GMT"
    }
 }
