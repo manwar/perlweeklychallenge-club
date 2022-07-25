@@ -19,7 +19,7 @@ sub last_sun_year ($year) {
         @ans.push($n);
     }
     my $ny = Date.new("{$year+1}-01-01");
-    my $n = $ny.earlier(days => $ny.day-of-week);
+    my $n = lastsun $ny;
     @ans.push($n);
     return @ans;
 }
