@@ -1,0 +1,57 @@
+Task 1: Disarium Numbers
+
+Write a script to generate first 19 Disarium Numbers.
+
+A disarium number is an integer where the sum of each digit raised to the power of its position in the number, is equal to the number.
+
+For example,
+
+518 is a disarium number as (5 ** 1) + (1 ** 2) + (8 ** 3) => 5 + 1 + 512 => 518
+
+
+MY NOTES: ok, sounds pretty easy.  Once I'd solved it, as it seemed rather
+slow, I profiled it with NYTProf and generated successive optimised versions
+ch-1[a-g].pl - and ch-1g.pl runs about 7 times faster than the initial version.
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
+into C (look in the C directory for that).
+
+
+Task 2: Permutation Ranking
+
+You are given a list of integers with no duplicates, e.g. [0, 1, 2].
+
+Write two functions, permutation2rank() which will take the list and
+determine its rank (starting at 0) in the set of possible permutations
+arranged in lexicographic order, and rank2permutation() which will take
+the list and a rank number and produce just that permutation.
+
+Please checkout this post for more informations and algorithm:
+  https://tryalgo.org/en/permutations/2016/09/05/permutation-rank/
+
+Given the list [0, 1, 2] the ordered permutations are:
+
+0: [0, 1, 2]
+1: [0, 2, 1]
+2: [1, 0, 2]
+3: [1, 2, 0]
+4: [2, 0, 1]
+5: [2, 1, 0]
+
+and therefore:
+
+permutation2rank([1, 0, 2]) = 2
+
+rank2permutation([0, 1, 2], 1) = [0, 2, 1]
+
+
+MY NOTES: hmm.. I hate permutations, never managed to memorise the
+algorithm in all my years of programming.  However, I've got a module
+Perm.pm which permutes the digits in a number, so let's reuse it to solve
+this pesky problem in the simplest possible way: Perms' "next_perm()"
+function generates all the perms in order, so sticking that inside
+various simple counting loops does the trick, albeit very inefficiently.
+That'll do!
+
+I didn't have time to translate this (and the Perms module) to C, although it
+should be pretty straightforward.
