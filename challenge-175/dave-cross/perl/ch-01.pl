@@ -21,7 +21,7 @@ for (2 .. 13) {
   my $date = Time::Piece->strptime($date_str, '%Y-%m-%d');
 
   $date -= ONE_DAY;
-  $date -= ONE_DAY until $date->day eq 'Sun';
+  $date -= (ONE_DAY * $date->_wday) if $date->day ne 'Sun';
 
   say $date->ymd;
 }
