@@ -21,12 +21,13 @@ import (
 )
 
 func main() {
-	p := totient.New()
-	cntdwn := 20
+	var cntdwn uint = 20
+	p := totient.New(cntdwn)
 	var b strings.Builder
-	for i := uint(0); i < 10_000; i++ {
+	for i := uint(3); i < 200_000; i += 2 {
 		if p.IsPerfect(i) {
 			b.WriteString(", " + strconv.FormatUint(uint64(i), 10))
+			//fmt.Println(i)
 			cntdwn--
 		}
 		if cntdwn == 0 {
