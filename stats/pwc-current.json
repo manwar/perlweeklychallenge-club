@@ -2,16 +2,19 @@
    "title" : {
       "text" : "The Weekly Challenge - 175"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 12] Last updated at 2022-07-27 10:41:11 GMT"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "legend" : {
       "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
    },
    "drilldown" : {
       "series" : [
@@ -22,22 +25,38 @@
                   2
                ]
             ],
-            "name" : "Dave Cross",
-            "id" : "Dave Cross"
+            "id" : "Dave Cross",
+            "name" : "Dave Cross"
          },
          {
             "data" : [
                [
                   "Perl",
                   2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
                ]
             ],
+            "id" : "Flavio Poletti",
+            "name" : "Flavio Poletti"
+         },
+         {
             "name" : "Kjetil Skotheim",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
             "id" : "Kjetil Skotheim"
          },
          {
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -47,17 +66,19 @@
                   "Blog",
                   6
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
          },
          {
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Blog",
                   2
                ]
             ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "id" : "Mark Anderson"
          },
          {
             "data" : [
@@ -70,11 +91,10 @@
                   1
                ]
             ],
-            "name" : "Mohammad S Anwar",
-            "id" : "Mohammad S Anwar"
+            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar"
          },
          {
-            "id" : "Peter Campbell Smith",
             "name" : "Peter Campbell Smith",
             "data" : [
                [
@@ -85,9 +105,12 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Peter Campbell Smith"
          },
          {
+            "name" : "Robert DiCicco",
+            "id" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
@@ -97,13 +120,10 @@
                   "Raku",
                   1
                ]
-            ],
-            "name" : "Robert DiCicco",
-            "id" : "Robert DiCicco"
+            ]
          },
          {
             "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -117,19 +137,21 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Proctor",
             "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   1
                ]
-            ]
+            ],
+            "id" : "Simon Proctor"
          },
          {
+            "id" : "Stephen G Lynn",
             "data" : [
                [
                   "Perl",
@@ -144,10 +166,10 @@
                   1
                ]
             ],
-            "name" : "Stephen G Lynn",
-            "id" : "Stephen G Lynn"
+            "name" : "Stephen G Lynn"
          },
          {
+            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -158,32 +180,55 @@
                   1
                ]
             ],
-            "name" : "W. Luis Mochan",
-            "id" : "W. Luis Mochan"
+            "name" : "W. Luis Mochan"
          }
       ]
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 175",
          "data" : [
             {
                "y" : 2,
-               "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
+               "name" : "Dave Cross",
+               "drilldown" : "Dave Cross"
             },
             {
-               "drilldown" : "Kjetil Skotheim",
-               "name" : "Kjetil Skotheim",
-               "y" : 2
-            },
-            {
-               "y" : 8,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
+               "drilldown" : "Flavio Poletti",
+               "y" : 6,
+               "name" : "Flavio Poletti"
             },
             {
                "y" : 2,
+               "name" : "Kjetil Skotheim",
+               "drilldown" : "Kjetil Skotheim"
+            },
+            {
+               "name" : "Luca Ferrari",
+               "y" : 8,
+               "drilldown" : "Luca Ferrari"
+            },
+            {
                "drilldown" : "Mark Anderson",
+               "y" : 2,
                "name" : "Mark Anderson"
             },
             {
@@ -192,58 +237,36 @@
                "drilldown" : "Mohammad S Anwar"
             },
             {
-               "y" : 3,
                "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith"
+               "name" : "Peter Campbell Smith",
+               "y" : 3
             },
             {
+               "name" : "Robert DiCicco",
                "y" : 2,
-               "drilldown" : "Robert DiCicco",
-               "name" : "Robert DiCicco"
+               "drilldown" : "Robert DiCicco"
             },
             {
-               "drilldown" : "Roger Bell_West",
+               "y" : 5,
                "name" : "Roger Bell_West",
-               "y" : 5
+               "drilldown" : "Roger Bell_West"
             },
             {
                "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor",
-               "y" : 1
+               "y" : 1,
+               "drilldown" : "Simon Proctor"
             },
             {
-               "drilldown" : "Stephen G Lynn",
+               "y" : 5,
                "name" : "Stephen G Lynn",
-               "y" : 5
+               "drilldown" : "Stephen G Lynn"
             },
             {
-               "y" : 3,
                "drilldown" : "W. Luis Mochan",
+               "y" : 3,
                "name" : "W. Luis Mochan"
             }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 175"
+         ]
       }
-   ],
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2022-07-27 08:25:54 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   }
+   ]
 }
