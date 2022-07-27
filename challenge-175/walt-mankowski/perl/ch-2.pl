@@ -18,7 +18,9 @@ for my $n (2..$MAX) {
     }
 }
 
-for my $i (2..$MAX) {
+my @perfect;
+my $i = 2;
+while (@perfect < 20) {
     my $tot = $totient[$i];
     my $sum = $tot;
     while ($tot != 1) {
@@ -26,5 +28,8 @@ for my $i (2..$MAX) {
         $tot = $totient[$tot];
         $sum += $tot;
     }
-    say $i if $sum == $i;
+    push @perfect, $i if $sum == $i;
+    $i++;
 }
+
+say "@perfect";
