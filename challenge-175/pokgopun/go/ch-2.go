@@ -12,6 +12,7 @@ Output
 package main
 
 import (
+	"fmt"
 	"io"
 	"os"
 	"strconv"
@@ -21,18 +22,11 @@ import (
 )
 
 func main() {
-	var cntdwn uint = 20
-	p := totient.New(cntdwn)
+	var count, start uint64 = 20, 3
+	fmt.Sscanf(strings.Join(os.Args[1:], " "), "%d %d", &count, &start)
 	var b strings.Builder
-	for i := uint(3); i < 200_000; i += 2 {
-		if p.IsPerfect(i) {
-			b.WriteString(", " + strconv.FormatUint(uint64(i), 10))
-			//fmt.Println(i)
-			cntdwn--
-		}
-		if cntdwn == 0 {
-			break
-		}
+	for _, v := range totient.New().ListPerfect(start, count) {
+		b.WriteString(", " + strconv.FormatUint(v, 10))
 	}
 	io.WriteString(os.Stdout, (b.String()[2:])+"\n")
 }
