@@ -26,11 +26,14 @@ my @L = (31,31,28,31,30,31,30,31,31,30,31,30,31);
 
 sub last_day_of_months {
   my $yr = shift;
-  $L[2] = (my $ly  = !( $yr%400 && ( ($yr%4) || !($yr%100) ) )) ? 29 : 28;
-  my $last = 31 - ( int(($yr%100)/4) - $ly + 2 * (int(3 - $yr/100)%4) + $yr%100 ) % 7;
+                        ## Compute if leap year - set the length of feb accordingly.
+  $L[2] = (my $ly  = !($yr%400) ^ !($yr%100) ^ !($yr%4) ) ? 29 : 28;
+                        ## Compute the last Sunday in december of the previous year
+  my $last = 31 - ( int($yr%100/4) - $ly + 6 - 2*$yr/100%4 + $yr%100 ) % 7;
+                        ## Finally work out the last days of the following 2 months.
   map { ( ($last += 35 - $L[$_-1]) > $L[$_] ) && ($last-=7);
         sprintf '%04d-%02d-%02d', $yr, $_, $last
-      } 1..12;
+      } 1..12
 }
 ```
 ### Notes

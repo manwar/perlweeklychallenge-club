@@ -33,10 +33,9 @@ say sprintf 'Expanded  - %10.6f %10.6f', $t2-$t1, 100*($t2-$t1)/($t1-$t0);
 
 sub st {
   state @T = (0,0);
-  $T[ $_[0] ] //= sub{$_[0]+st($_[0])}->(
-                  product
-                    map { $_->[0]**($_->[1]-1) * ($_->[0]-1) }
-                    factor_exp $_[0]);
+  $T[ $_[0] ] //= sub{ $_[0]+st($_[0]) }->(
+    product map { $_->[0]**($_->[1]-1) * ($_->[0]-1) } factor_exp $_[0]
+  );
 }
 
 sub sum_totients {
