@@ -1,62 +1,110 @@
 Solutions by Walt Mankowski.
 
-# Perl Weekly Challenge #173: Esthetic Numbers and Sylvester's Sequence
+# Perl Weekly Challenge #175: Last Sunday and Perfect Totient Numbers
 
-I did this week's challenge in Perl and Python.
+I did this week's challenge in Perl and C.
 
-## Task #1: Esthetic Numbers
+## Task #1: Last Sunday
 
-For this task we're given a number _n_ and need to determine if it's an Esthetic Number. An **Esthetic Number** is a positive integer where every pair of adjacent digits differ in value by exactly 1.
+For this task we're given a year and need to list the last Sunday of each month in that year.
 
-The only real trick to solve this in Perl is that we can turn a number `$n` into an array of digits `@d` with the statement `@d = split //, $n;`. Then we can wrap that in a function that checks the absolute value of each pair of points:
+My approach here was to find the day of the week for the final day of each month, then use that to determine the final Sunday. That's easy in Perl, since `DateTime.pm` has a `last_day_of_month` method. We can call the `day_of_week` method on the object it returns, which encodes Monday through Sunday as integers 1 through 7. If we take that value modulus 7 then we know how many days to subtract to get the final Sunday. Here's my full program:
 
 ```perl
-sub is_esthetic($n) {
-    my @d = split //, $n;
-    for my $i (1..$#d) {
-        return 0 unless abs($d[$i-1] - $d[$i]) == 1;
-    }
-    return 1;
+use v5.36;
+use DateTime;
+
+my $year = $ARGV[0];
+for my $month (1..12) {
+    my $dt = DateTime->last_day_of_month(year => $year, month => $month);
+    my $days_to_sunday = $dt->day_of_week % 7;
+    my $final_sunday = $dt->day - $days_to_sunday;
+    printf "%d-%02d-%02d\n", $year, $month, $final_sunday;
 }
 ```
 
-Python is more of a stickler about types than Perl, so to turn it into an array of digits I had to first turn it into a string. Then you can treat it as an array, and I turned each character back into an integer. That sounds like a lot of work, but it's just a one-liner with a linst comprehension:
-
-```python
-d = [int(c) for c in str(n)]
+It's a bit more work in C. First we need a function to determine if `year` is a leap year:
+```c
+const bool is_leap_year(const int year) {
+    if (year % 4)
+        return false;
+    else if (year % 100)
+        return true;
+    else if (year % 400)
+        return false;
+    else
+        return true;
+}
 ```
 
-## Task 2: Sylvester's Sequence
+We also need encode how many days are in each month, for both non-leap and leap years:
+```c
+const int days_in_month[2][12] = {
+    { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 },
+    { 31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 }
+};
+```
+I used `mktime(3)` to find the day of week of the last day of the month. It's got a few differences from `DateTime.pm`, namely:
 
-For this task we need to generate the first 10 terms of [Sylvester's Sequence](https://en.wikipedia.org/wiki/Sylvester%27s_sequence). **Sylvester's Sequence** is an integer sequence where every term is the product of all the previous terms, plus one.
+* The months run from 0 to 11 instead of 1 to 12.
+* Years start at 1900 instead of 0, so we need to subtract 1900 from the year.
+* Sunday is day 0 instead of day 7.
 
-Terms in Sylvester's Sequence get very large very fast (the 10th term has 20 digits) so we need to use the `bigint` module. I also used the `prod` function from `List::Util` to do the multiplication. With those modules in hand, we can solve this challenge in just a few lines of code:
+Here's my main loop:
+```c
+const int year = atoi(argv[1]);
+const int leap = is_leap_year(year);
+for (int month = 0; month < 12; month++) {
+    struct tm ts;
+    memset(&ts, 0, sizeof(ts));
+    ts.tm_mon = month;
+    ts.tm_year = year - 1900;
+    ts.tm_mday = days_in_month[leap][month];
+    ts.tm_isdst = -1;
+    mktime(&ts);
+    printf("%d-%02d-%2d\n", ts.tm_year + 1900, month+1, ts.tm_mday - ts.tm_wday);
+}
+```
 
+## Task 2: Perfect Totient Numbers
+
+For this task we need to generate the first 20 [Perfect Totient Numbers](https://en.wikipedia.org/wiki/Perfect_totient_number). A perfect totient number is an integer that's equal to the sum of its iterated totients. The **totient** of an integer _n_ is the number of positive integers less than _n_ which are relatively prime to _n_. 
+
+Two integers are relatively prime if their greatest common divisor (GCD) is 1. I used the elegant [Euclidian Algorithm](https://en.wikipedia.org/wiki/Euclidean_algorithm) to compute the GCD:
 ```perl
-use bigint;
-use List::Util qw(product);
-
-my @sylvester;
-push @sylvester, 1 + product @sylvester while @sylvester < 10;
-say for @sylvester;
+sub gcd($a, $b) {
+    return $b ? gcd($b, $a % $b) : $a;
+}
 ```
 
-Python has the equivalent of `bigint` built-in, so I didn't need to do anything special there. Python has `sum` as a built-in function but it doesn't have `prod`. There are a few different ways to do write it; I chose to use the `reduce` function from the `functools` package:
-
-```python
-def product(lst):
-    return reduce(lambda x,y: x*y, lst, 1)
+To solve the problem I first computed the totient for every number up to 6000. Why 6000? Well, we know from the problem definition that the 20th perfect totient number is 5571, so I figured I'd go a little higher.
+```perl
+my @totient = (0,0);
+my $MAX = 6000;
+for my $n (2..$MAX) {
+    for my $i (1..$n-1) {
+        $totient[$n]++ if gcd($n, $i) == 1;
+    }
+}
 ```
 
-But it's so short that I decided to just write it inline. Here's my full program:
+Then it's easy to loop over `@totient` and find all the perfect values:
+```perl
+my @perfect;
+my $i = 2;
+while (@perfect < 20) {
+    my $tot = $totient[$i];
+    my $sum = $tot;
+    while ($tot != 1) {
+        last if $sum > $i;
+        $tot = $totient[$tot];
+        $sum += $tot;
+    }
+    push @perfect, $i if $sum == $i;
+    $i++;
+}
 
-```python
-from functools import reduce
-
-sylvester = []
-while len(sylvester) < 10:
-    sylvester.append(reduce(lambda x,y: x*y, sylvester, 1) + 1)
-
-for syl in sylvester:
-    print(syl)
+say "@perfect";
 ```
+
+This runs in a little over 40 seconds on my home Linux box using perl 5.36.0. My C solution, which uses exactly the same algorithm, runs in about 0.7 seconds.
