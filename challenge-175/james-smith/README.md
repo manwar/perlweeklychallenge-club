@@ -31,7 +31,7 @@ sub last_day_of_months {
                         ## Compute the last Sunday in december of the previous year
   my $last = 31 - ( int($yr%100/4) - $ly + 6 - 2*$yr/100%4 + $yr%100 ) % 7;
                         ## Finally work out the last days of the following 2 months.
-  map { ( ($last += 35 - $L[$_-1]) > $L[$_] ) && ($last-=7);
+  map { $last-=7 if $L[$_] < ($last += 35 - $L[$_-1]);
         sprintf '%04d-%02d-%02d', $yr, $_, $last
       } 1..12
 }
@@ -95,7 +95,7 @@ We can rewrite this as a 1-liner using `List::Util`s product function.
 Now there is a second nasty trick here - which if you are used to javascript *self-executing closure*. The trick allows us here to
 use the result of the totient calculation and use it to calculate the `t(n) + S( t(n) )` calculation without a *temporary* variable.
 
-The code reduces to, watch out for the two difference `$_[]` and the `$_->[]`...:
+The code reduces to this, watch out for the two difference `$_[]` and the `$_->[]`...:
 
 ```perl
 sub st {
@@ -107,3 +107,5 @@ sub st {
                   );
 }
 ```
+
+The longer form is about 10-15% faster - due to the map and use of external method product...
