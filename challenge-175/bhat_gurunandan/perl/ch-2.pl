@@ -40,7 +40,7 @@ my $this	= 2;
 
 while (@perfect < $MAX) {
 
-    my $sum = 1;
+    my $sum = 0;
     my $totient = $this;
     while ($totient = ($cache {$totient} //= totient ($totient))) {
 

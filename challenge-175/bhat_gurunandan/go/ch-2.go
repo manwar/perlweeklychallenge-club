@@ -49,7 +49,7 @@ func main() {
 
 	for len(perfect) < max {
 
-		sum, iter := 1, this
+		sum, iter := 0, this
 		for iter > 1 {
 
 			if cache[iter] == 0 {
