@@ -1,0 +1,12 @@
+#! /usr/bin/env raku
+
+-> $year
+{
+  -> $month
+  {
+    -> $date
+    {
+      say $date.earlier(days => $date.day-of-week == 7 ?? ( 0 ) !! ( $date.day-of-week ) )
+    }(Date.new($year, $month, Date.new($year, $month, 1).days-in-month))
+  }($_) for 1 .. 12
+}(@*ARGS[0] // Date.today.year);
