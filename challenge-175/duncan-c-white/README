@@ -1,57 +1,62 @@
-Task 1: Disarium Numbers
+Task 1: Last Sunday
 
-Write a script to generate first 19 Disarium Numbers.
+Write a script to list Last Sunday of every month in the given year.
 
-A disarium number is an integer where the sum of each digit raised to the power of its position in the number, is equal to the number.
+For example, for year 2022, we should get the following:
 
-For example,
+2022-01-30
+2022-02-27
+2022-03-27
+2022-04-24
+2022-05-29
+2022-06-26
+2022-07-31
+2022-08-28
+2022-09-25
+2022-10-30
+2022-11-27
+2022-12-25
 
-518 is a disarium number as (5 ** 1) + (1 ** 2) + (8 ** 3) => 5 + 1 + 512 => 518
-
-
-MY NOTES: ok, sounds pretty easy.  Once I'd solved it, as it seemed rather
-slow, I profiled it with NYTProf and generated successive optimised versions
-ch-1[a-g].pl - and ch-1g.pl runs about 7 times faster than the initial version.
+MY NOTES: ok, sounds pretty easy: basically, start on the 1st of the
+month, and walk forwards hitting the date when we hit a Sunday.  The
+hardest part is, as always, choosing which date manipulation module to use.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for that).
 
 
-Task 2: Permutation Ranking
+Task 2: Perfect Totient Numbers
 
-You are given a list of integers with no duplicates, e.g. [0, 1, 2].
+Write a script to generate first 20 Perfect Totient Numbers. Please
+checkout the following wikipedia page for more information:
 
-Write two functions, permutation2rank() which will take the list and
-determine its rank (starting at 0) in the set of possible permutations
-arranged in lexicographic order, and rank2permutation() which will take
-the list and a rank number and produce just that permutation.
+  https://en.wikipedia.org/wiki/Perfect_totient_number
 
-Please checkout this post for more informations and algorithm:
-  https://tryalgo.org/en/permutations/2016/09/05/permutation-rank/
+Explanation gleaned from those notes:
 
-Given the list [0, 1, 2] the ordered permutations are:
+A perfect totient number is an integer that is equal to the sum of its
+iterated totients. That is, we apply the totient function to a number n,
+apply it again to the resulting totient, and so on, until the number 1
+is reached, and add together the resulting sequence of numbers; if the
+sum equals n, then n is a perfect totient number.
 
-0: [0, 1, 2]
-1: [0, 2, 1]
-2: [1, 0, 2]
-3: [1, 2, 0]
-4: [2, 0, 1]
-5: [2, 1, 0]
+The totient function counts the positive integers up to a given integer
+n that are relatively prime to n.  In other words, it is the number of
+integers k in the range 1 <= k <= n for which gcd(n, k) is equal to 1.
 
-and therefore:
+For example, there are six positive integers less than 9 and relatively
+prime to it, so the totient of 9 is 6; there are two numbers less than
+6 and relatively prime to it, so the totient of 6 is 2; and there is one
+number less than 2 and relatively prime to it, so the totient of 2 is 1;
+and 9 = 6 + 2 + 1, so 9 is a perfect totient number.
 
-permutation2rank([1, 0, 2]) = 2
+Output
 
-rank2permutation([0, 1, 2], 1) = [0, 2, 1]
+3, 9, 15, 27, 39, 81, 111, 183, 243, 255, 327, 363, 471, 729,
+2187, 2199, 3063, 4359, 4375, 5571
 
+MY NOTES: given a gcd() function it seems relatively straightforward.
+We last used gcd() in challenge 136.
 
-MY NOTES: hmm.. I hate permutations, never managed to memorise the
-algorithm in all my years of programming.  However, I've got a module
-Perm.pm which permutes the digits in a number, so let's reuse it to solve
-this pesky problem in the simplest possible way: Perms' "next_perm()"
-function generates all the perms in order, so sticking that inside
-various simple counting loops does the trick, albeit very inefficiently.
-That'll do!
-
-I didn't have time to translate this (and the Perms module) to C, although it
-should be pretty straightforward.
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
+into C (look in the C directory for that).
