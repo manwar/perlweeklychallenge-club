@@ -1,18 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2022-08-01 11:16:56 GMT"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "series" : [
       {
          "data" : [
@@ -22,25 +8,25 @@
                "name" : "Kjetil Skotheim"
             },
             {
+               "drilldown" : "Mark Anderson",
                "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
+               "name" : "Mark Anderson"
             },
             {
+               "name" : "Mohammad S Anwar",
                "drilldown" : "Mohammad S Anwar",
+               "y" : 4
+            },
+            {
+               "name" : "Roger Bell_West",
                "y" : 4,
-               "name" : "Mohammad S Anwar"
+               "drilldown" : "Roger Bell_West"
             }
          ],
          "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 176"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "drilldown" : {
       "series" : [
          {
@@ -64,8 +50,6 @@
             "id" : "Mark Anderson"
          },
          {
-            "id" : "Mohammad S Anwar",
-            "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -75,12 +59,25 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          }
       ]
-   },
-   "xAxis" : {
-      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
@@ -91,7 +88,29 @@
          "borderWidth" : 0
       }
    },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2022-08-01 11:22:50 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge - 176"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
