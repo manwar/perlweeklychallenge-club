@@ -1,0 +1,147 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/cvss {
+    dup log cvi 1 add string cvs
+} bind def
+
+% from https://www.rosettacode.org/wiki/Reverse_a_string#PostScript
+
+/reverse {
+    3 dict begin
+    /str exch def
+    /temp str 0 get def
+    /i 0 def
+    str length 2 idiv {
+        /temp str i get def
+        str i str str length i sub 1 sub get put
+        str str length i sub 1 sub temp put
+        /i i 1 add def
+    } repeat
+    str
+    end
+} bind def
+
+/reversible {
+    4 dict begin
+    /mx exch def
+    [
+        1 1 mx {
+            /n exch def
+            /t n cvss reverse cvi n add def
+            /q true def
+            {
+                t 0 le {
+                    exit
+                } if
+                t 2 mod 0 eq {
+                    /q false def
+                    exit
+                } if
+                /t t 10 idiv def
+            } loop
+            q {
+                n
+            } if
+        } for
+    ]
+    end
+} bind def
+
+(reversible) test.start
+99 reversible [ 10 12 14 16 18 21 23 25 27 30 32 34 36 41 43 45 50 52
+                54 61 63 70 72 81 90 ] deepeq test
+test.end
