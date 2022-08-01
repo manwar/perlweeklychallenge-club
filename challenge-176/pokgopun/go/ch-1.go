@@ -41,16 +41,12 @@ func main() {
 			}
 			/**/
 			//fmt.Println(v)
-			m := make(map[string]bool)
 			var p string
 			for _, a := range strings.Split(permute(v, "", &p), " ") {
-				m[a] = true
-			}
-			for a, _ := range m {
 				n, _ := strconv.Atoi(a)
 				var j int
 				for j = 6; j > 1; j-- {
-					if !m[strconv.Itoa(j*n)] {
+					if !strings.Contains(p, strconv.Itoa(j*n)) {
 						break
 					}
 				}
