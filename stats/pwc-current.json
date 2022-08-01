@@ -1,42 +1,67 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2022-08-01 11:16:56 GMT"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "series" : [
       {
          "data" : [
             {
+               "drilldown" : "Kjetil Skotheim",
                "y" : 2,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
+               "name" : "Kjetil Skotheim"
             },
             {
+               "y" : 2,
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Mohammad S Anwar",
                "y" : 4,
-               "name" : "Mohammad S Anwar",
-               "drilldown" : "Mohammad S Anwar"
+               "name" : "Mohammad S Anwar"
             }
          ],
-         "name" : "The Weekly Challenge - 176",
-         "colorByPoint" : 1
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 176"
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
+            "name" : "Kjetil Skotheim",
+            "id" : "Kjetil Skotheim",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
          },
          {
             "id" : "Mohammad S Anwar",
@@ -54,29 +79,19 @@
          }
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 176"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2022-08-01 11:07:21 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 176"
    }
 }
