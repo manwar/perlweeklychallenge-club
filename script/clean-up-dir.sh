@@ -3,6 +3,9 @@ find . -name "*.gpr" -delete
 find . -name "Makefile" -delete
 find . -name "m3makefile" -delete
 find . -name "*.m3" -delete
+find . -name "cpanfile*" -delete
+find . -name "*.f" -delete
+find . -name "*.h" -delete
 find . -name "*.dc" -delete
 find . -name "*.w" -delete
 find . -name "*.wl" -delete
