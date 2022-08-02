@@ -15,7 +15,5 @@ sub is_reversible($n){   # read the comments from the bottom up
         split "",        # split the digits of the result
             $n           # the original number
             +            # add it to
-            join "",     # join them to make the reversed number (base 10)
-            reverse      # reverse them
-            split "", $n # separate the digits
+            reverse $n   # reverse digits
 }
