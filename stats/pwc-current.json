@@ -1,22 +1,33 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge - 176"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Dave Cross",
             "id" : "Dave Cross"
          },
          {
-            "id" : "James Smith",
-            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -26,29 +37,32 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "James Smith",
+            "id" : "James Smith"
          },
          {
-            "name" : "Kjetil Skotheim",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "name" : "Kjetil Skotheim",
             "id" : "Kjetil Skotheim"
          },
          {
+            "id" : "Mark Anderson",
             "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Mark Anderson"
+            ]
          },
          {
+            "id" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -59,11 +73,9 @@
                   2
                ]
             ],
-            "name" : "Mohammad S Anwar",
-            "id" : "Mohammad S Anwar"
+            "name" : "Mohammad S Anwar"
          },
          {
-            "id" : "Peter Campbell Smith",
             "name" : "Peter Campbell Smith",
             "data" : [
                [
@@ -74,17 +86,18 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Peter Campbell Smith"
          },
          {
+            "id" : "PokGoPun",
+            "name" : "PokGoPun",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "PokGoPun",
-            "id" : "PokGoPun"
+            ]
          },
          {
             "id" : "Robert DiCicco",
@@ -101,7 +114,7 @@
             ]
          },
          {
-            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -112,11 +125,10 @@
                   2
                ]
             ],
-            "name" : "Roger Bell_West"
+            "id" : "Roger Bell_West"
          },
          {
             "id" : "Stephen G Lynn",
-            "name" : "Stephen G Lynn",
             "data" : [
                [
                   "Perl",
@@ -130,9 +142,11 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Stephen G Lynn"
          },
          {
+            "id" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -143,51 +157,57 @@
                   2
                ]
             ],
-            "name" : "Ulrich Rieke",
-            "id" : "Ulrich Rieke"
+            "name" : "Ulrich Rieke"
+         },
+         {
+            "id" : "Walt Mankowski",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Walt Mankowski"
          }
       ]
    },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         }
+         },
+         "borderWidth" : 0
       }
    },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 12] Last updated at 2022-08-02 13:32:46 GMT"
    },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2022-08-01 18:16:22 GMT"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "title" : {
+      "text" : "The Weekly Challenge - 176"
    },
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 176",
          "data" : [
             {
-               "drilldown" : "Dave Cross",
                "name" : "Dave Cross",
+               "drilldown" : "Dave Cross",
                "y" : 2
             },
             {
-               "y" : 3,
                "name" : "James Smith",
-               "drilldown" : "James Smith"
+               "drilldown" : "James Smith",
+               "y" : 3
             },
             {
+               "drilldown" : "Kjetil Skotheim",
                "y" : 2,
-               "name" : "Kjetil Skotheim",
-               "drilldown" : "Kjetil Skotheim"
+               "name" : "Kjetil Skotheim"
             },
             {
                "drilldown" : "Mark Anderson",
@@ -195,14 +215,14 @@
                "name" : "Mark Anderson"
             },
             {
+               "drilldown" : "Mohammad S Anwar",
                "y" : 4,
-               "name" : "Mohammad S Anwar",
-               "drilldown" : "Mohammad S Anwar"
+               "name" : "Mohammad S Anwar"
             },
             {
-               "y" : 3,
+               "drilldown" : "Peter Campbell Smith",
                "name" : "Peter Campbell Smith",
-               "drilldown" : "Peter Campbell Smith"
+               "y" : 3
             },
             {
                "drilldown" : "PokGoPun",
@@ -211,8 +231,8 @@
             },
             {
                "drilldown" : "Robert DiCicco",
-               "y" : 2,
-               "name" : "Robert DiCicco"
+               "name" : "Robert DiCicco",
+               "y" : 2
             },
             {
                "drilldown" : "Roger Bell_West",
@@ -220,26 +240,21 @@
                "y" : 4
             },
             {
-               "name" : "Stephen G Lynn",
+               "drilldown" : "Stephen G Lynn",
                "y" : 5,
-               "drilldown" : "Stephen G Lynn"
+               "name" : "Stephen G Lynn"
             },
             {
+               "name" : "Ulrich Rieke",
                "drilldown" : "Ulrich Rieke",
-               "y" : 4,
-               "name" : "Ulrich Rieke"
+               "y" : 4
+            },
+            {
+               "name" : "Walt Mankowski",
+               "drilldown" : "Walt Mankowski",
+               "y" : 2
             }
-         ],
-         "name" : "The Weekly Challenge - 176",
-         "colorByPoint" : 1
+         ]
       }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   }
+   ]
 }
