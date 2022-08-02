@@ -12,11 +12,8 @@ my ( $limit ) = @_;
 $limit //= 100;
 
 for my $current ( 1 .. $limit ) {
-
     my $sum = $current + reverse( $current );
-
     my @digits = split( '', $sum );
-        elog( DEBUG, "Current is $current, sum is $sum -> " . join( ',',  @digits) );
     return_next( $current ) if ( ! grep( { $_ % 2 == 0 } @digits ) );
 }
 
