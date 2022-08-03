@@ -1,6 +1,16 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-08-02 16:27:07 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             57,
@@ -32,8 +42,7 @@
             0,
             99,
             66
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -56,7 +65,7 @@
             0,
             0,
             0,
-            232,
+            234,
             0,
             0,
             0,
@@ -71,7 +80,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -103,27 +111,17 @@
             0,
             5,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-08-01 18:16:22 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -159,9 +157,11 @@
          "Stuart Little"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
