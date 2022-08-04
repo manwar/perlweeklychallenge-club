@@ -113,6 +113,26 @@ Timings for this below are:
 | 4,500 | 128,033 |      8,535 |   18,095,741 |    7.56670 sec | 189 min  2 sec |
 | 5,000 | 144,983 |      9,665 |   22,642,428 |    9.94132 sec | 263 min 39 sec |
 
+For large `p` there are some memory issues - hence the convulted map...
+
+```perl
+  sort
+    map { substr $cr, 0, 0, substr $cr,-1,1,"";
+          ( substr $cr,0,1 eq "1" && $cr lt $th ) ? $cr : () }
+    1 .. $p-1;
+```
+
+rather than the simpler `grep`/`map`
+
+```perl
+  sort
+    grep { substr $_,0,1 eq "1" && $_ lt $th }
+    map { substr $cr, 0, 0, substr $cr,-1,1,""; $cr }
+    1 .. $p-1;
+```
+For the larges `$p` above this is the difference between the first one uses roughly `$p**2/15` bytes the second `$p**2/30` bytes.
+This is the difference between 1.3 Gbytes & 20.9 Gbytes memory consumed! If we separated the conditions in to two `grep`s this would increase to 22.8 Gbytes, and that is without array overheads.
+
 # Task 2 - Reversible Numbers
 
 ***Write a script to find out all Reversible Numbers below 100. A number is said to be a reversible if sum of the number and its reverse had only odd digits.***
