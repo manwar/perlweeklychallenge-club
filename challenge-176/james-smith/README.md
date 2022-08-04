@@ -45,11 +45,11 @@ If we were worried that there were no answers then we coould add a limit to the 
 
 Testing on my usual test box comes back in around 0.045 seconds for the loop.
 
-##Bonus##
+## Bonus
 
 We note 142857 is a number any high-school mathematician will recognise - it is the repeating part of `1/7 = 0.142857142857...`
 
-This leads us to the observation that the following integers work {with leading 0}.
+This leads us to the observation that the following integers also work {with leading 0}.
 
 | Number                                | Length | repeat unit of | Number without leading zero that works for 6 |
 | ------------------------------------: | -----: | -------------: | -------------------------------------------: |
@@ -62,7 +62,7 @@ This leads us to the observation that the following integers work {with leading 
 
 This works for any prime `$p` for which the repeating sequence has size `$p-1`. Now if we go back to **Challenge 139 - Task 2 - Long Primes** we just worked these out. So we have a quick way to find solutions {not guaranteeing there are no others in between)
 
-We generate these with this code... we have our long prime code for before. But for each long prime we keep the sequence and find any rotation which starts with a "1" and is less that "10/6" or "1666666............." This is in the `map` (rotations) `grep` starts with ` `grep` less than `16666...`. There are roughly "`p/15`" solutions for each value of long prime `p`.
+We generate these with this code... we have our long prime code from before. But for each long prime we keep the sequence and find any rotation which starts with a "1" and is less that "10/6" or "1666666............." This is in the `map` (rotations) `grep` starts with ` `grep` less than `16666...`. There are roughly "`p/15`" solutions for each value of long prime `p`.
 
 This becomes the code below. If we run this to the 5,000th long prime `144,983`. This generates `22,642,428` solutions to this problem - on the test machine this took about 4 hours 15 minutes. {Output file size is approx 1.95 Tbytes)
 
