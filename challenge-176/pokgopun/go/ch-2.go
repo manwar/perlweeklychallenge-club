@@ -24,24 +24,27 @@ package main
 import (
 	"io"
 	"os"
-	"sort"
 	"strconv"
 	"strings"
 )
 
 func main() {
 	var sb strings.Builder
+	var n int
 	for i := 10; i < 100; i++ {
-		b := []byte(strconv.Itoa(i))
-		sort.SliceStable(b, func(i, j int) bool {
-			return true
-		})
-		n, _ := strconv.Atoi(string(b))
-		//fmt.Println(i, "+", n, "=", i+n)
-		for _, v := range []byte(strconv.Itoa(i + n)) {
-			if (v-48)%2 == 0 {
+		n = i
+		var r int
+		for n > 0 {
+			r *= 10
+			r += n % 10
+			n /= 10
+		}
+		n = i + r
+		for n > 0 {
+			if n%2 == 0 {
 				goto skip
 			}
+			n /= 10
 		}
 		sb.WriteString(", " + strconv.Itoa(i))
 	skip:

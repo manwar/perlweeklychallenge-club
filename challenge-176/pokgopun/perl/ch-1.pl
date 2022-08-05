@@ -25,6 +25,7 @@ for my $i (3..9){
 			my $j;
 			for ($j=6; $j>1; $j--){
 				if (index($permute, $pmt * $j)== -1){
+					#if (index($permute, sprintf("%0*d", $i, $pmt * $j))== -1){
 					last;
 				}
 			}
@@ -51,6 +52,7 @@ sub permute{
 		}
 	} else {
 		${$res} .= " $t";
+		return;
 	}
 	return substr(${$res},1)
 }
@@ -60,6 +62,7 @@ sub combo{
 	my($lc, $le) = (length $c, length $e);
 	if ($lc == $r || $lc + $le == $r){
 		${$res} .= " ".substr $c.$e, 0, $r;
+		return;
 	} else {
 		foreach my $i (0 .. $lc + $le - $r){
 			combo($r, substr($e, $i + 1), $c.substr($e, $i, 1), $res); 
