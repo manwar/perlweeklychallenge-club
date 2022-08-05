@@ -19,7 +19,6 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-176/ja
 
 ***Write a script to find the smallest integer x such that x, 2x, 3x, 4x, 5x and 6x are permuted multiples of each other. For example, the integers 125874 and 251748 are permutated multiples of each other as 251784 = 2 x 125874 and also both have the same digits but in different order.***
 
-
 ## Solution
 
 We simply loop through all possible solutions.
@@ -40,9 +39,99 @@ O: while( my $z = join '', sort split //, ++$t ) {
 say $t;
 ```
 
+If we were worried that there were no answers then we coould add a limit to the while statement that checks to see if `$t` is less than or equal to 166,666. The largest value of `$t` for which `6*$t` has 9 digits.
+
 ### Performance
 
 Testing on my usual test box comes back in around 0.045 seconds for the loop.
+
+## Bonus
+
+We note 142857 is a number any high-school mathematician will recognise - it is the repeating part of `1/7 = 0.142857142857...`
+
+This leads us to the observation that the following integers also work {with leading 0}.
+
+| Number                                | Length | repeat unit of | Number without leading zero that works for 6 |
+| ------------------------------------: | -----: | -------------: | -------------------------------------------: |
+|                 0,588,235,294,117,647 | 16     | 1/17           |                        1,176,470,588,235,294 |
+|               052,631,578,947,368,421 | 18     | 1/19           |                      105,263,157,894,736,842 |
+|                                       |        |                |                      157,894,736,842,105,263 |
+|         0,434,782,608,695,652,173,913 | 22     | 1/23           |                1,304,347,826,086,956,521,739 |
+| 0,344,827,586,206,896,551,724,137,931 | 28     | 1/29           |        1,034,482,758,620,689,655,172,413,793 |
+|                                       |        |                |        1,379,310,344,827,586,206,896,551,724 |
+
+This works for any prime `$p` for which the repeating sequence has size `$p-1`. Now if we go back to **Challenge 139 - Task 2 - Long Primes** we just worked these out. So we have a quick way to find solutions {not guaranteeing there are no others in between)
+
+We generate these with this code... we have our long prime code from before. But for each long prime we keep the sequence and find any rotation which starts with a "`1`" and is less that "`1/6`" or "`1666666.............`". There are roughly "`p/15`" solutions for each value of long prime `p`.
+
+This becomes the code below. If we run this to the 5,000th long prime `144,983`. This generates `22,642,428` solutions to this problem - on the test machine this took about 4 hours 15 minutes. {Output file size is approx 1.95 Tbytes - so we wrote to `/dev/null` in this case!!!
+
+```perl
+my($N,$p,@primes) = ($ARGV[0]//20,1);
+
+Z: for ( 1 .. $N ) {
+  $p+=2;
+  ($p % $_) || (redo Z) for @primes;
+  push @primes, $p;
+
+  my( $N, $s ) = ( 1, '' );
+  $s .= int( $N/$p ), $N %= $p, $N .= 0 for 0 .. 2 * $p + length $p;
+
+  redo unless $s =~ /(.+?)\1+$/;
+  redo if     $p - 1 - length $1;
+
+  my( $cr, $th ) = ( $1, '1'.('6' x ($p-2)) );
+  say for sort
+    map { substr $cr, 0, 0, substr $cr,-1,1,"";
+          ( substr $cr,0,1 eq "1" && $cr lt $th ) ? $cr : () }
+    1 .. $p-1;
+}
+```
+Timings for this below are:
+
+| Idx   | Prime   | #Sol for p | $Solns cumul | Time for p     | Cumul. time    |
+| ----: | ------: | ---------: | -----------: | -------------: | -------------: |
+|     1 |       7 |          1 |            1 |    0.00005 sec |      0.000 sec |
+|     5 |      29 |          2 |            7 |    0.00005 sec |      0.000 sec |
+|    10 |     109 |          8 |           33 |    0.00060 sec |      0.002 sec |
+|    20 |     233 |         15 |          152 |    0.00048 sec |      0.009 sec |
+|    30 |     419 |         28 |          378 |    0.00249 sec |      0.024 sec |
+|    40 |     577 |         39 |          716 |    0.00118 sec |      0.044 sec |
+|    50 |     821 |         54 |        1,184 |    0.00170 sec |      0.083 sec |
+|   100 |   1,619 |        108 |        5,269 |    0.00859 sec |      0.343 sec |
+|   200 |   3,581 |        238 |       22,587 |    0.01193 sec |      1.656 sec |
+|   300 |   5,927 |        395 |       54,329 |    0.03394 sec |      4.770 sec |
+|   400 |   8,269 |        552 |      101,541 |    0.04372 sec |      9.866 sec |
+|   500 |  10,687 |        713 |      165,007 |    0.08683 sec |     17.831 sec |
+| 1,000 |  23,669 |      1,578 |      731,816 |    0.28995 sec |   2 min  4 sec |
+| 1,500 |  37,579 |      2,506 |    1,748,190 |    1.58653 sec |   6 min 44 sec |
+| 2,000 |  51,419 |      3,428 |    3,236,184 |    1.35020 sec |  15 min 44 sec |
+| 2,500 |  66,109 |      4,408 |    5,195,043 |    2.16593 sec |  30 min 46 sec |
+| 3,000 |  80,737 |      5,383 |    7,640,222 |    3.25390 sec |  53 min 24 sec |
+| 3,500 |  96,353 |      6,423 |   10,595,919 |    4.42871 sec |  80 min 55 sec |
+| 4,000 | 112,663 |      7,511 |   14,080,184 |    6.78954 sec | 130 min 39 sec |
+| 4,500 | 128,033 |      8,535 |   18,095,741 |    7.56670 sec | 189 min  2 sec |
+| 5,000 | 144,983 |      9,665 |   22,642,428 |    9.94132 sec | 263 min 39 sec |
+
+For large `p` there are some memory issues - hence the convulted map...
+
+```perl
+  sort
+    map { substr $cr, 0, 0, substr $cr,-1,1,"";
+          ( substr $cr,0,1 eq "1" && $cr lt $th ) ? $cr : () }
+    1 .. $p-1;
+```
+
+rather than the simpler `grep`/`map`
+
+```perl
+  sort
+    grep { substr $_,0,1 eq "1" && $_ lt $th }
+    map { substr $cr, 0, 0, substr $cr,-1,1,""; $cr }
+    1 .. $p-1;
+```
+For the larges `$p` above this is the difference between the first one uses roughly `$p**2/15` bytes the second `$p**2/30` bytes.
+This is the difference between 1.3 Gbytes & 20.9 Gbytes memory consumed! If we separated the conditions in to two `grep`s this would increase to 22.8 Gbytes, and that is without array overheads.
 
 # Task 2 - Reversible Numbers
 
@@ -63,13 +152,13 @@ sub reversible_regex {
 }
 ```
 
-We know regex's are slow - so we can replace this by a maths formula. Last digit is odd `$v&1` is `1`, tens digit is `($v/10)&1` is `1`.
+We know regex's are slow - so we can replace this by a maths formula. Last digit is odd `$v%2` is `1`, tens digit is `($v/10)%2` is `1`. Interestingly you would expect `& 1` to be quicker - but it isn't I'm guessing that is because `%` is only an integer operation where `&` can work on numbers and/or strings.
 
 ```perl
 sub reversible_maths {
   my $q;
-  grep { ($q = ($_+reverse) )&1 && int($q/10)&1 } 10..99;
+  grep { ($q = ($_+reverse) )%2 && int($q/10)%2 } 10..99;
 }
 ```
 
-The second version is approximately 80% faster... 22 ms vs 40 ms.
+The second version is approximately 80% faster... 23 ms vs 40 ms. In the scale of things this is not a huge difference - but if this or similar calculations are repeated again and again then that time can build up in the execution of the code.
