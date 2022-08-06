@@ -1,0 +1,30 @@
+define reverse (n) {
+    sum = 0
+    j = 10 ^ (length(n) - 1)
+    while (n > 0) {
+        sum += (n % 10) * j
+        n = n/10
+        j /= 10
+    }
+    return (sum )
+}
+
+define is_reversible(m) {
+    sum = m + reverse(m)
+    while (sum > 0) {
+        k = sum % 10
+        if (k % 2 == 0) {
+            return 0
+        }
+        sum /= 10
+    }
+    return 1
+}
+
+for (i = 1; i <= 100; i++) {
+    # print i, " "
+    if (is_reversible(i)) {
+        print i, " "
+    }
+}
+quit
