@@ -13,10 +13,5 @@
 (defun is-reversible (n)
   "n is a reversible number"
   (odd-digits (digits (+ n (reverse-digits n)))))
-;; search for reversible numbers below 100
-(let ((n 10) (result '()))
-  (while (< n 100)
-    (if (is-reversible n)
-	(setq result (cons n result)))
-    (setq n (+ n 1)))
-  (print (reverse result)))
+;; search and print reversible numbers below 100
+(print (cl-loop for n from 10 below 100 append (if (is-reversible n) (list n) '())))

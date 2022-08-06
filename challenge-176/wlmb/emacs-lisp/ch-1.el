@@ -15,17 +15,12 @@
     (eqlist nl rl)))
 (defun permuted-multiples (n)
   "Check if the number n has permuted multiples"
-  (let
-      ((m 2) (success t))
-    (while (and (<= m 6) success)
-      (setq success (check-multiplier n m))
-      (setq m (+ m 1)))
-    success))
+  (cl-loop for m from 2 to 6 for success = t then (check-multiplier n m)
+    until (not success) finally return success))
 (defun search ()
   "Search integers from 1 onward looking for permuted multiples"
-  (let ((n 0)(found nil))
-    (while (not found)
-      (setq n (+ n 1) found (permuted-multiples n)))
-    n))
+  (cl-loop
+    for n from 1 for found = nil then (permuted-multiples n)
+      until found finally return n))
 ;; Run the search and print the result
 (print (search))
