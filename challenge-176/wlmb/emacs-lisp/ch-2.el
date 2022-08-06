@@ -14,7 +14,7 @@
   "n is a reversible number"
   (odd-digits (digits (+ n (reverse-digits n)))))
 ;; search for reversible numbers below 100
-(let ((n 10) (result nil))
+(let ((n 10) (result '()))
   (while (< n 100)
     (if (is-reversible n)
 	(setq result (cons n result)))
