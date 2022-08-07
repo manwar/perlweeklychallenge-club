@@ -1,3 +1,3 @@
-# The Weekly Challenge 174
+# The Weekly Challenge 176
 
-[Blog](https://dev.to/simongreennet/weekly-challenge-174-5ga6)
+Blog [Big number, small numbers](https://dev.to/simongreennet/big-number-small-numbers-49h4)

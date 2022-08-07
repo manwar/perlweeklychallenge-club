@@ -1,3 +1,3 @@
-# The Weekly Challenge 174
+# The Weekly Challenge 175
 
-[Blog](https://dev.to/simongreennet/weekly-challenge-174-5ga6)
+Blog: [Totient numbers on a Sunday](https://dev.to/simongreennet/totient-numbers-on-a-sunday-5fnc)
