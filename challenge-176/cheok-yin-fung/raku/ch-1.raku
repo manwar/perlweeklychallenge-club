@@ -21,7 +21,7 @@ sub check_good ($i, @arr) {
     my $count = 0;
     my $dc = arrange($i);
     for (@arr) {
-        if (arrange($_*$i) == $dc) {
+        if (arrange($_*$i) eq $dc) {
             $count++;
         } 
         else {
