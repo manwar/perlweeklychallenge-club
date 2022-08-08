@@ -7,6 +7,7 @@ find . -name "cpanfile*" -delete
 find . -name "*.f" -delete
 find . -name "*.h" -delete
 find . -name "*.dc" -delete
+find . -name "*.el" -delete
 find . -name "*.w" -delete
 find . -name "*.wl" -delete
 find . -name "*.yml" -delete
