@@ -6,11 +6,14 @@ my $want = 20;
 /^(([1-9])(?1)\2|0)$/ and is_prime($_) and say and --$want||exit while ++$_;
 
 __END__
-# the recursive regex is true for palindromic positive integers
-# (which reads the same backward as forward)
-# with one and only one 0 digit which must be in the middle
+https://theweeklychallenge.org/blog/perl-weekly-challenge-177/
 
-# https://theweeklychallenge.org/blog/perl-weekly-challenge-177/
+The recursive regex above is true for palindromic positive integers, which
+reads the same backward as forward, which is also "cyclopsic" (one eyed)
+with one and only one zero digit which must be in the middle.
+
+Output:
+
 101
 16061
 31013
