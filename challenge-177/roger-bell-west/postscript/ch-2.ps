@@ -1,0 +1,240 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/isprime {
+    4 dict begin
+    /candidate exch def
+    1 {
+        candidate 2 lt {
+            false
+            exit
+        } if
+        candidate 2 eq {
+            true
+            exit
+        } if
+        candidate 2 mod 0 eq {
+            false
+            exit
+        } if
+        candidate 3 eq {
+            true
+            exit
+        } if
+        candidate 3 mod 0 eq {
+            false
+            exit
+        } if
+        /prime true def
+        /limit candidate sqrt cvi 1 add def
+        /anchor 0 def
+        {
+            /anchor anchor 6 add def
+            anchor limit gt {
+                exit
+            } if
+            [ -1 1 ] {
+                anchor add candidate exch mod 0 eq {
+                    /prime false def
+                    exit
+                } if
+            } forall
+            prime false eq {
+                exit
+            } if
+        } loop
+        prime
+    } repeat
+    end
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{ exch dup length
+  2 index length add string
+  dup dup 4 2 roll copy length
+  4 -1 roll putinterval
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/cvss {
+    dup log cvi 1 add string cvs
+} bind def
+
+% from https://www.rosettacode.org/wiki/Reverse_a_string#PostScript
+
+/reverse {
+    3 dict begin
+    /str exch def
+    /temp str 0 get def
+    /i 0 def
+    str length 2 idiv {
+        /temp str i get def
+        str i str str length i sub 1 sub get put
+        str str length i sub 1 sub temp put
+        /i i 1 add def
+    } repeat
+    str
+    end
+} bind def
+
+/ppc {
+    4 dict begin
+    /ct exch def
+    [
+        /fh 0 def
+        {
+            /fh fh 1 add def
+            /q true def
+            fh {
+                dup 0 gt {
+                    dup 10 mod 0 eq
+                    {
+                        /q false def
+                        pop
+                        exit
+                    } {
+                        10 idiv
+                    } ifelse
+                } {
+                    pop
+                    exit
+                } ifelse
+            } loop
+            q {
+                [ fh cvss dup dup length string cvs reverse (0) exch ] () strjoin cvi
+                dup isprime {
+                    /ct ct 1 sub def
+                    ct 0 le {
+                        exit
+                    } if
+                } {
+                    pop
+                } ifelse
+            } if
+            ct 0 le {
+                exit
+            } if
+        } loop
+    ]
+    end
+} bind def
+
+(ppc) test.start
+20 ppc
+[ 101 16061 31013 35053 38083 73037 74047 91019 94049 1120211 1150511
+  1160611 1180811 1190911 1250521 1280821 1360631 1390931 1490941
+  1520251 ]
+deepeq test
+test.end
