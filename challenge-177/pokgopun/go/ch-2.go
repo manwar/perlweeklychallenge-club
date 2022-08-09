@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"sort"
 	"strconv"
 	"strings"
 
@@ -18,32 +17,41 @@ func main() {
 	pg := primegen.New()
 	var skipTo uint64 = 100
 	pg.SkipTo(skipTo)
+	skipLim := skipTo * 10
+	var n uint64
 	for count > 0 {
-		n := strconv.FormatUint(pg.Next(), 10)
-		l := len(n)
-		if l%2 == 0 {
+		n = pg.Next()
+		if n >= skipLim {
 			skipTo *= 100
 			pg.SkipTo(skipTo)
-			continue
+			skipLim = skipTo * 10
 		}
-		bs := []byte(n)
-		var z int
-		for _, v := range bs {
-			if v == 48 {
-				z++
-				if z > 1 {
-					goto skip
-				}
-			}
-		}
-		sort.SliceStable(bs, func(i, j int) bool {
-			return true
-		})
-		if n[l/2]-48 == 0 && n == string(bs) {
-			b.WriteString(", " + n)
+		if isValid(makeDigits(n)) {
+			b.WriteString(", " + strconv.FormatUint(n, 10))
 			count--
 		}
-	skip:
 	}
 	io.WriteString(os.Stdout, b.String()[2:]+"\n")
+}
+
+func makeDigits(n uint64) (s []uint64) {
+	for n > 0 {
+		s = append(s, n%10)
+		n /= 10
+	}
+	return s
+}
+
+func isValid(s []uint64) bool {
+	l := len(s)
+	m := l / 2
+	if s[m] != 0 {
+		return false
+	}
+	for i := 0; i < m; i++ {
+		if s[i] == 0 || s[i] != s[l-1-i] {
+			return false
+		}
+	}
+	return true
 }

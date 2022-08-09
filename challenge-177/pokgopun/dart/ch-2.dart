@@ -24,27 +24,36 @@ void main() {
       lim = start * 10;
     }
     if (pp[i]) {
-      var p = i.toString();
-      var digits = p.split("");
-      int z = 0;
-      for (int j = 0; j < digits.length; j++) {
-        if (digits[j] == "0") {
-          z++;
-          if (z > 1) {
-            break;
-          }
-        }
-      }
-      if (z == 1 &&
-          digits[digits.length ~/ 2] == "0" &&
-          p == digits.reversed.join("")) {
-        output += ", $p";
-        count--;
-        if (count == 0) {
+      if (isValid(makeDigits(i))) {
+        output += ", ${i.toString()}";
+        if (--count == 0) {
           break;
         }
       }
     }
   }
   print(output.substring(2));
+}
+
+bool isValid(List<int> digits) {
+  final l = digits.length;
+  final m = l ~/ 2;
+  if (digits[m] != 0) {
+    return false;
+  }
+  for (var i = 0; i < m; i++) {
+    if (digits[i] == 0 || digits[i] != digits[l - 1 - i]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+List<int> makeDigits(int n) {
+  final digits = <int>[];
+  while (n > 0) {
+    digits.add(n % 10);
+    n ~/= 10;
+  }
+  return digits;
 }
