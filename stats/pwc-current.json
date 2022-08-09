@@ -1,4 +1,37 @@
 {
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "James Smith",
+               "y" : 3,
+               "name" : "James Smith"
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "name" : "Mohammad S Anwar",
+               "y" : 2,
+               "drilldown" : "Mohammad S Anwar"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "y" : 4,
+               "name" : "Roger Bell_West"
+            },
+            {
+               "name" : "Simon Proctor",
+               "y" : 2,
+               "drilldown" : "Simon Proctor"
+            }
+         ],
+         "name" : "The Weekly Challenge - 177"
+      }
+   ],
    "chart" : {
       "type" : "column"
    },
@@ -7,20 +40,48 @@
          "text" : "Total Solutions"
       }
    },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2022-08-09 16:39:11 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 177"
+   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "James Smith"
+         },
+         {
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson"
          },
          {
-            "name" : "Mohammad S Anwar",
             "id" : "Mohammad S Anwar",
             "data" : [
                [
@@ -31,10 +92,11 @@
                   "Raku",
                   1
                ]
-            ]
+            ],
+            "name" : "Mohammad S Anwar"
          },
          {
-            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -45,72 +107,29 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West"
+            "name" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Simon Proctor"
+            "id" : "Simon Proctor"
          }
       ]
    },
    "legend" : {
       "enabled" : 0
    },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2022-08-09 16:32:30 GMT"
-   },
    "xAxis" : {
       "type" : "category"
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "Mark Anderson",
-               "y" : 2,
-               "name" : "Mark Anderson"
-            },
-            {
-               "drilldown" : "Mohammad S Anwar",
-               "name" : "Mohammad S Anwar",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "y" : 4,
-               "name" : "Roger Bell_West"
-            },
-            {
-               "drilldown" : "Simon Proctor",
-               "y" : 2,
-               "name" : "Simon Proctor"
-            }
-         ],
-         "name" : "The Weekly Challenge - 177",
-         "colorByPoint" : 1
-      }
-   ],
-   "title" : {
-      "text" : "The Weekly Challenge - 177"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
    "tooltip" : {
-      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    }
 }
