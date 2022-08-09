@@ -1,63 +1,52 @@
 {
+   "legend" : {
+      "enabled" : 0
+   },
    "series" : [
       {
          "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "James Smith",
+               "name" : "James Smith",
                "y" : 3,
-               "name" : "James Smith"
+               "drilldown" : "James Smith"
             },
             {
+               "y" : 2,
+               "name" : "Kjetil Skotheim",
+               "drilldown" : "Kjetil Skotheim"
+            },
+            {
+               "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson",
-               "y" : 2,
-               "drilldown" : "Mark Anderson"
+               "y" : 2
             },
             {
+               "drilldown" : "Mohammad S Anwar",
                "name" : "Mohammad S Anwar",
-               "y" : 2,
-               "drilldown" : "Mohammad S Anwar"
+               "y" : 2
             },
             {
-               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
                "y" : 4,
-               "name" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West"
             },
             {
-               "name" : "Simon Proctor",
                "y" : 2,
+               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor"
             }
          ],
          "name" : "The Weekly Challenge - 177"
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2022-08-09 16:39:11 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 177"
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "James Smith",
             "name" : "James Smith",
             "data" : [
                [
@@ -68,8 +57,17 @@
                   "Blog",
                   1
                ]
+            ]
+         },
+         {
+            "name" : "Kjetil Skotheim",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
             ],
-            "id" : "James Smith"
+            "id" : "Kjetil Skotheim"
          },
          {
             "id" : "Mark Anderson",
@@ -82,7 +80,7 @@
             "name" : "Mark Anderson"
          },
          {
-            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar",
             "data" : [
                [
                   "Perl",
@@ -93,7 +91,7 @@
                   1
                ]
             ],
-            "name" : "Mohammad S Anwar"
+            "id" : "Mohammad S Anwar"
          },
          {
             "id" : "Roger Bell_West",
@@ -121,15 +119,32 @@
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2022-08-09 16:51:33 GMT"
    },
-   "xAxis" : {
-      "type" : "category"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "tooltip" : {
+      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 177"
    }
 }
