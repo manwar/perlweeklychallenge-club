@@ -79,22 +79,37 @@ Which suggest the first algorithm will be faster - to make this generic we chang
 my($i,$t)=0;
 
 for(1..$K) {
-  is_prime( $t = (++$i).'0'.(reverse $i) ) ? say $t : redo;
+  ($++$i)!~/0/ && is_prime( $t = $i.'0'.reverse$i ) ? say $t : redo;
 }
 ```
 
-In fact this is efficient enough to get the first 1,000,000 such numbers back in slightly over 10 seconds. The millionth one being the 17 digit number: `19,773,421,012,437,791`
+In fact this is efficient enough to get the first 1,000,000 such numbers back in slightly under 30 seconds. The millionth one being the 17 digit number: `76,276,363,036,367,267`.
 
-But we can get better performance as we are currently scanning all numbers which start with 2,4,6,8 which we know are not prime - this leads us to a slightly more complex but faster piece of code:
+But we can get better performance as we are currently scanning all numbers which start with 2,4,5,6,8 which we know are not prime {first digit -> last digit!} - this leads us to a slightly more complex but faster piece of code:
 
 ```perl
 my $m = 1;
 my $c = $K;
 O: while(1) {
-  for my $f (1,3,5,7,9) {
-    is_prime( $_.='0'.reverse$_ ) && ( $c-- ? say : last O ) for $f*$m .. ($f+1)*$m-1;
+  for my $f (1,3,7,9) {
+    !/0/ && is_prime( $_.='0'.reverse$_ ) && ( $c-- ? say : last O ) for $f*$m .. ($f+1)*$m-1;
   }
   $m *= 10;
 }
 ```
+Where we scan from 100.. to 199.., 300.. to 399.., 700.. to 799.., 900.. to 999.., 
 
+With this new version of the code we get this 1,000,000 entry coming back in around 18 seconds. Running a bit longer gives the 10,000,000th entry in a little under 2.5 minutes.
+
+| $K          | Time v1   | Time v2   | $Kth value                     | Notes                         |
+| ----------: | --------: | --------: | -----------------------------: | ----------------------------- |
+|           1 |  0.000040 |  0.000051 |                            101 |                               |
+|          10 |  0.000152 |  0.000154 |                      1,120,211 |                               |
+|         100 |  0.001353 |  0.001168 |                    146,505,641 |                               |
+|       1,000 |  0.015938 |  0.014217 |                 19,178,087,191 |                               |
+|      10,000 |  0.204487 |  0.137040 |              3,446,840,486,443 |                               |
+|             |           |           |                                |                               |
+|     100,000 |     2.000 |     1.594 |            387,695,909,596,783 |                               |
+|   1,000,000 |    31.372 |    17.619 |         76,276,363,036,367,267 |                               |
+|  10,000,000 |   323.708 |   205.956 |      9,523,518,610,168,153,259 | ~ 5.5 minutes / ~ 3.5 minutes |
+| 100,000,000 | 8,952.287 | 7,236.552 | 11,459,314,276,067,241,395,411 | ~ 2.5 hours / ~ 2 hours       |
