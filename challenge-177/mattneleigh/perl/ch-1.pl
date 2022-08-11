@@ -82,7 +82,7 @@ sub validate_damm_checksum{
 
     # We require at least two digits
     return(undef)
-        if(length($n < 2));
+        if(length($n) < 2);
 
     # The checksum of a valid number should be
     # zero...
