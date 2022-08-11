@@ -109,7 +109,7 @@ warn time-$start, "\t", $result, "\n";
 
 Where we scan from 111.. to 199.., 311.. to 399.., 711.. to 799.., 911.. to 999...
 
-With this new version of the code we get this 1,000,000 entry coming back in around 10 seconds. Running a bit longer gives the 10,000,000th entry in a little under 2.5 minutes.
+With this new version of the code we get this 1,000,000 entry coming back in around 10 seconds. Running a bit longer gives the 10,000,000th entry in a little over 2 minutes.
 
 | $K          | Time v1    | Time v2    | $Kth value                |
 | ----------: | ---------: | ---------: | ------------------------: |
