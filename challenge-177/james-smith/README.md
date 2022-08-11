@@ -92,16 +92,19 @@ Reducing to numbers that start in 1,3,5,7 reduces the search space by a factor o
 By removing those that line between say 100... and 111... which must contain at least one zero further reduces this by 8/9 - giving us a reduction of 32/81 numbers or roughly 39.5%.
 
 ```perl
-my($t0,$m,$c,$ones) = (time,1,$ARGV[0]//100_000,0);
+my( $magnitude, $ones, $start, $count,       $result ) =
+  (          1,     0,   time, $ARGV[0]//20, '-'     );
 O: while(1) {
-  for my $f (1,3,7,9) {
-    !/0/ && is_prime( $_.='0'.reverse$_ ) &&
-    say  && ( --$c || ($c=$_) && last O )      for $f*$m+$ones .. ($f+1)*$m-1;
+  for my $first (1,3,7,9) {
+    !/0/ && is_prime( $_ .= '0' . reverse $_ ) &&
+    say  && ( --$count || ( $result = $_ ) && last O )
+      for $first * $magnitude + $ones .. ( $first + 1 ) * $magnitude - 1;
   }
-  $m    *= 10;
-  $ones  = $ones*10+1;
+  $magnitude *= 10;
+  $ones      *= 10;
+  $ones++;
 }
-warn time-$t0,"\t",$c,"\n";
+warn time-$start, "\t", $result, "\n";
 ```
 
 Where we scan from 111.. to 199.., 311.. to 399.., 711.. to 799.., 911.. to 999...
