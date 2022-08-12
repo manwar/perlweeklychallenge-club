@@ -79,22 +79,46 @@ Which suggest the first algorithm will be faster - to make this generic we chang
 my($i,$t)=0;
 
 for(1..$K) {
-  is_prime( $t = (++$i).'0'.(reverse $i) ) ? say $t : redo;
+  ($++$i)!~/0/ && is_prime( $t = $i.'0'.reverse$i ) ? say $t : redo;
 }
 ```
 
-In fact this is efficient enough to get the first 1,000,000 such numbers back in slightly over 10 seconds. The millionth one being the 17 digit number: `19,773,421,012,437,791`
+In fact this is efficient enough to get the first 1,000,000 such numbers back in slightly under 30 seconds. The millionth one being the 17 digit number: `76,276,363,036,367,267`.
 
-But we can get better performance as we are currently scanning all numbers which start with 2,4,6,8 which we know are not prime - this leads us to a slightly more complex but faster piece of code:
+But we can get better performance as we are currently scanning all numbers which start with 2,4,5,6,8 which we know are not prime {first digit -> last digit!} - this leads us to a slightly more complex but faster piece of code:
+
+Reducing to numbers that start in 1,3,5,7 reduces the search space by a factor of 4/9.
+
+By removing those that line between say 100... and 111... which must contain at least one zero further reduces this by 8/9 - giving us a reduction of 32/81 numbers or roughly 39.5%.
 
 ```perl
-my $m = 1;
-my $c = $K;
+my( $magnitude, $ones, $start, $count,       $result ) =
+  (          1,     0,   time, $ARGV[0]//20, '-'     );
 O: while(1) {
-  for my $f (1,3,5,7,9) {
-    is_prime( $_.='0'.reverse$_ ) && ( $c-- ? say : last O ) for $f*$m .. ($f+1)*$m-1;
+  for my $first (1,3,7,9) {
+    !/0/ && is_prime( $_ .= '0' . reverse $_ ) &&
+    say  && ( --$count || ( $result = $_ ) && last O )
+      for $first * $magnitude + $ones .. ( $first + 1 ) * $magnitude - 1;
   }
-  $m *= 10;
+  $magnitude *= 10;
+  $ones      *= 10;
+  $ones++;
 }
+warn time-$start, "\t", $result, "\n";
 ```
+
+Where we scan from 111.. to 199.., 311.. to 399.., 711.. to 799.., 911.. to 999...
+
+With this new version of the code we get this 1,000,000 entry coming back in around 10 seconds. Running a bit longer gives the 10,000,000th entry in a little over 2 minutes.
+
+| $K          | Time v1    | Time v2    | $Kth value                |
+| ----------: | ---------: | ---------: | ------------------------: |
+|           1 |   0.000018 |   0.000018 |                       101 |
+|          10 |   0.000056 |   0.000039 |                 1,120,211 |
+|         100 |   0.000498 |   0.000309 |               146,505,641 |
+|       1,000 |   0.006829 |   0.004846 |            19,178,087,191 |
+|      10,000 |   0.114116 |   0.064679 |         3,446,840,486,443 |
+|     100,000 |   1.286905 |   0.787072 |       387,695,909,596,783 |
+|   1,000,000 |  23.104720 |   9.993216 |    76,276,363,036,367,267 |
+|  10,000,000 | 250.055394 | 124.405436 | 9,523,518,610,168,153,259 |
 
