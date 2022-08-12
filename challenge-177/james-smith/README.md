@@ -83,7 +83,7 @@ for(1..$K) {
 }
 ```
 
-In fact this is efficient enough to get the first 1,000,000 such numbers back in slightly under 30 seconds. The millionth one being the 17 digit number: `76,276,363,036,367,267`.
+In fact this is efficient enough to get the first 1,000,000 such numbers back in slightly under 10 seconds. The millionth one being the 17 digit number: `76,276,363,036,367,267`.
 
 But we can get better performance as we are currently scanning all numbers which start with 2,4,5,6,8 which we know are not prime {first digit -> last digit!} - this leads us to a slightly more complex but faster piece of code:
 
@@ -121,4 +121,3 @@ With this new version of the code we get this 1,000,000 entry coming back in aro
 |     100,000 |   1.286905 |   0.787072 |       387,695,909,596,783 |
 |   1,000,000 |  23.104720 |   9.993216 |    76,276,363,036,367,267 |
 |  10,000,000 | 250.055394 | 124.405436 | 9,523,518,610,168,153,259 |
-
