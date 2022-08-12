@@ -46,6 +46,27 @@ say for map { while(1) { my($c,$t)=(0,++$n); $t-=$_**++$c for split//,$n; $t || 
 
 The one obvious thing we don't want to do is generate a complete list of permutations and display that - so we have to work out an algoritm to convert rank to values!
 
+## Rank to permutation
+
+Perhaps the simpler of the two is to find the *n*th permutation. First we note there are *k!* permutations where *k* is the number of entries in the list.
+
+We can number these by at each turn the *n*th permutation is the *floor n/i!* element {where *i* is the number of remaining digits}. So we extract that digit and repeat with the remaining digits....
+
+This leads us to:
+
+```perl
+sub rank2permutation {
+  my( $r, $f, @index, @res ) = ( $_[1], 1, 0 .. (my $n = my @l = @{$_[0]}) -1 );
+  $f *= $_ for 1 .. $n;
+  return [] if $r >= $f;  ## rank out of range!
+  push @res, $l[ splice @index, ($r%=$f) / ($f/=$_), 1 ] for reverse 1..$n;
+  \@res;
+}
+```
+
+## Permutation to rank
+
+This is slightly more complicated
 ```perl
 sub permutation2rank {
   my($r,$f,@l,$c,$x) = (0,1,@{$_[0]}), my @p = @{$_[1]};
@@ -56,13 +77,5 @@ sub permutation2rank {
     return -1;
   }
   $r;
-}
-
-sub rank2permutation {
-  my( $r, $f, @index, @res ) = ( $_[1], 1, 0 .. (my $n = my @l = @{$_[0]}) -1 );
-  $f *= $_ for 1 .. $n;
-  return [] if $r >= $f;  ## rank out of range!
-  push @res, $l[ splice @index, ($r%=$f) / ($f/=$_), 1 ] for reverse 1..$n;
-  \@res;
 }
 ```
