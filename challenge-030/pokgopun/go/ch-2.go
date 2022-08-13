@@ -15,8 +15,20 @@ func main() {
 	w := bufio.NewWriter(os.Stdout)
 	n := 12
 	for i := 0; i <= n; i++ {
-		for j := 0; j <= 12-i; j++ {
-			fmt.Fprintf(w, "%d, %d, %d\n", i, j, 12-i-j)
+		//for j := 0; j <= n-i; j++ {
+		/*
+			for j := i; j <= n-i; j++ {
+				if n-i-j < j {
+					break
+				}
+		*/
+		/**/
+		for j := i + 1; j <= n-i; j++ {
+			if n-i-j <= j {
+				break
+			}
+			/**/
+			fmt.Fprintf(w, "%2d, %2d, %2d\n", i, j, n-i-j)
 		}
 	}
 	w.Flush()
