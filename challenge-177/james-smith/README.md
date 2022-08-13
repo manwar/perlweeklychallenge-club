@@ -122,4 +122,11 @@ With this new version of the code we get this 1,000,000 entry coming back in aro
 |   1,000,000 |  23.104720 |   9.993216 |    76,276,363,036,367,267 |
 |  10,000,000 | 250.055394 | 124.405436 | 9,523,518,610,168,153,259 |
 
-Flipping to use `Math::Perl::Util::GMP` and `is_provable_prime` we can get a "guess" at the 100,000,000th entry {11,459,314,276,067,241,395,411} in around one and 3/4 hours. "Guess" because the `is_provable_prime` can return NO, YES and or probably, as there is compromise between accuracy and performance.
+Flipping to use `Math::Perl::Util::GMP` and `is_provable_prime` we can get a "guess" at even longer entries. "Guess" because the `is_provable_prime` can return NO, YES or probably, as there is compromise between accuracy and performance when it comes to checking these large primes. So for 100 million and 1 billion we get the following
+answers and timings. The latter being a smidge under 21 hours.
+
+| $K            | Time v1    | Time v2    | $Kth value                        | Time                |
+| ------------: | ---------: | ---------: | --------------------------------: | ------------------: |
+|   100,000,000 |          - |   6370.062 |    11,459,314,276,067,241,395,411 |  1 hr 46 min 10 sec |
+| 1,000,000,000 |          - |  75584.858 | 1,255,854,925,630,365,294,585,521 | 20 hr 59 min 45 sec |
+
