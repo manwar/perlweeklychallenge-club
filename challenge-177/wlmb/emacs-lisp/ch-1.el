@@ -1,3 +1,9 @@
+ ;; Perl weekly challenge 177
+ ;; Task 1: Damm algorithm
+
+ ;; See https://wlmb.github.io/2022/08/08/PWC177/#task-1-damm-algorithm
+
+
 (defun show-damm (n)
   "Print if string of digits n is correct by applying Damm's algorithm"
   (princ (format "%s %s correct " n (if (test-damm n) "is" "isn't"))))
