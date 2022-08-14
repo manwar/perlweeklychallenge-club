@@ -17,7 +17,7 @@ palindrome(X):-
 
 palindrome_prime(Prime):-
     current_prolog_flag(max_integer, MAX_INTEGER),
-    between(100, MAX_INTEGER, Prime),
+    between(1, MAX_INTEGER, Prime),
     palindrome(Prime),
     fd_prime(Prime).
 
