@@ -4,7 +4,9 @@ use strict;
 
 use warnings;
 use feature qw(say);
+use Time::HiRes qw(time);
 
+$|=1;
 my $t=123_455;
 
 O: while( my $z = join '', sort split //, ++$t ) {
@@ -32,6 +34,7 @@ say $t;
 ## "1" followed by p-2 "6"s - faster as we don't need to
 ## big ints...
 
+my $t0 = time;
 my($N,$p,$c,@primes) = ($ARGV[0]//20,1,0);
                                      ## $N is the number of long
                                      ## primes to generate....
@@ -62,12 +65,18 @@ Z: for ( 1 .. $N ) {
                                      ##   extra digit 16666....
                                      ## $tc is just so we can
                                      ## have a 2nd counter
-  say join "\t", ++$c, $c-$tc, $p-1, $_ for sort
-    grep { $th gt $_ }               ## All values less than 1666...
-    grep { '1' eq substr $_,0,1  }   ## All values start with 1
-    map  { substr $cr, 0, 0, substr $cr,-1,1,''; $cr }
+  #say join "\t", ++$c, $c-$tc, $p-1, $_ for sort
+  (++$c)&&(say sprintf '%10.3f %7d %4d %900s', time-$t0,$p, $c, th($_) ) for sort
+    map { substr $cr, 0, 0, substr $cr,-1,1,'';
+      ('1' eq substr $cr,0,1) && ($th gt $cr) ? $cr : () }
                                      ## rotate $cr using 4 parameter
                                      ## substr
+                                     ## Then filter out numbers not starting
+                                     ## with 1 and greater than 166666666...
     1..$p-1;
 }
 
+#say time - $t0,' ',$p,' ',$c;
+printf "| %4d | %6d | %9d | %8.3f sec |\n", $N, $p, $c, time - $t0;
+
+sub th { scalar reverse( (reverse $_[0]) =~ s/(\d\d\d)(?=\d)(?!\d*\.)/$1,/gr ) }

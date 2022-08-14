@@ -3,6 +3,7 @@
 use strict;
 use warnings;
 use feature qw(say);
+use bigint;
 
 my( $N, @primes, @long_primes ) = ( $ARGV[0]||5 );
 
