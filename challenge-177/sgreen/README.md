@@ -1,3 +1,3 @@
-# The Weekly Challenge 176
+# The Weekly Challenge 177
 
-Blog [Big number, small numbers](https://dev.to/simongreennet/big-number-small-numbers-49h4)
+Blog [The Palindromic Prime Cyclops Algorithm](https://dev.to/simongreennet/the-palindromic-prime-cyclops-algorithm-4c0h)
