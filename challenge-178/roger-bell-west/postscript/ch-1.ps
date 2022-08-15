@@ -1,0 +1,236 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/strconcat % (a) (b) -> (ab)  
+{ exch dup length
+  2 index length add string
+  dup dup 4 2 roll copy length
+  4 -1 roll putinterval
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/apush.left { % [b c] a -> [a b c]
+    exch % a [b c]
+    [ 3 1 roll aload pop ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+} bind def
+
+
+% end included library code
+
+% from https://www.rosettacode.org/wiki/Reverse_a_string#PostScript
+
+/reverse {
+    3 dict begin
+    /str exch def
+    /temp str 0 get def
+    /i 0 def
+    str length 2 idiv {
+        /temp str i get def
+        str i str str length i sub 1 sub get put
+        str str length i sub 1 sub temp put
+        /i i 1 add def
+    } repeat
+    str
+    end
+} bind def
+
+/r2qi {
+    0 c2qi
+} bind def
+
+/c2qi {
+    7 dict begin
+    /i0 exch def
+    /r0 exch def
+    /l [
+        [ i0 r0 ] {
+            /n exch def
+            [
+                {
+                    n 0 eq {
+                        exit
+                    } if
+                    /digit n -4 mod def
+                    /n n -4 idiv def
+                    digit 0 lt {
+                        /digit digit 4 add def
+                        /n n 1 add def
+                    } if
+                    digit
+                } loop
+            ]
+        } forall
+    ] def
+    /ld l 0 get length l 1 get length sub def
+    ld 0 lt {
+        ld neg 1 sub {
+            l 0 l 0 get 0 apush.left put
+        } repeat
+    } if
+    ld 1 gt {
+        ld {
+            l 1 l 1 get 0 apush.left put
+        } repeat
+    } if
+    [
+        l 1 get length 1 sub -1 0 {
+            /i exch def
+            [ 0 1 ] {
+                /b exch def
+                l b get length i gt {
+                    l b get i get
+                } if
+            } forall
+        } for
+    ] { 1 string cvs dup length string cvs } map 0 string strjoin
+    end
+} bind def
+
+/qi2r {
+    qi2c 0 get
+} bind def
+
+/qi2c {
+    4 dict begin
+    /pow 1 def
+    /ri 0 def
+    /o [ 0 0 ] def
+    reverse {
+        /ch 1 string def
+        ch exch 0 exch put ch cvi pow mul
+        o ri get add
+        o ri 3 -1 roll put
+        /ri ri 1 add def
+        /pow pow 2 mul def
+        ri 2 eq {
+            /ri 0 def
+            /pow pow neg def
+        } if
+    } forall
+    o
+    end
+} bind def
+
+(qi) test.start
+4 r2qi (10300) deepeq test
+(10300) qi2r 4 eq test
+test.end
