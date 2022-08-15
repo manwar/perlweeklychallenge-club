@@ -1,15 +1,12 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "legend" : {
-      "enabled" : "false"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
    "chart" : {
       "type" : "column"
@@ -17,47 +14,50 @@
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-08-14 13:08:02 GMT"
-   },
    "series" : [
       {
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               2789
-            ],
-            [
-               "Perl",
-               8640
-            ],
-            [
-               "Raku",
-               5158
-            ]
-         ],
          "dataLabels" : {
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "align" : "right",
             "style" : {
                "fontFamily" : "Verdana, sans-serif",
                "fontSize" : "13px"
             },
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
             "y" : 10,
-            "enabled" : "true"
+            "enabled" : "true",
+            "align" : "right"
+         },
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               2791
+            ],
+            [
+               "Perl",
+               8643
+            ],
+            [
+               "Raku",
+               5160
+            ]
+         ]
+      }
+   ],
+   "subtitle" : {
+      "text" : "Last updated at 2022-08-15 02:22:08 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
       }
-   ]
+   }
 }
