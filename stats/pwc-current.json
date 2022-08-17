@@ -2,23 +2,35 @@
    "title" : {
       "text" : "The Weekly Challenge - 178"
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2022-08-16 23:29:26 GMT"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "tooltip" : {
-      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+      "followPointer" : 1
    },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 2,
                "drilldown" : "E. Choroba",
+               "y" : 2,
                "name" : "E. Choroba"
             },
             {
@@ -27,32 +39,34 @@
                "drilldown" : "Flavio Poletti"
             },
             {
-               "name" : "Mark Anderson",
                "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
                "y" : 2
             },
             {
+               "y" : 3,
                "name" : "Peter Campbell Smith",
-               "drilldown" : "Peter Campbell Smith",
-               "y" : 3
+               "drilldown" : "Peter Campbell Smith"
             },
             {
-               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West",
                "y" : 4,
-               "drilldown" : "Roger Bell_West"
+               "name" : "Roger Bell_West"
+            },
+            {
+               "y" : 3,
+               "name" : "W. Luis Mochan",
+               "drilldown" : "W. Luis Mochan"
             }
          ],
-         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 178"
       }
    ],
    "xAxis" : {
       "type" : "category"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2022-08-17 10:44:09 GMT"
    },
    "legend" : {
       "enabled" : 0
@@ -61,13 +75,13 @@
       "series" : [
          {
             "name" : "E. Choroba",
-            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "E. Choroba"
          },
          {
             "data" : [
@@ -84,20 +98,21 @@
                   2
                ]
             ],
-            "name" : "Flavio Poletti",
-            "id" : "Flavio Poletti"
+            "id" : "Flavio Poletti",
+            "name" : "Flavio Poletti"
          },
          {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
          },
          {
+            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -108,12 +123,10 @@
                   1
                ]
             ],
-            "name" : "Peter Campbell Smith",
-            "id" : "Peter Campbell Smith"
+            "name" : "Peter Campbell Smith"
          },
          {
             "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -123,17 +136,23 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell_West"
+         },
+         {
+            "name" : "W. Luis Mochan",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "W. Luis Mochan"
          }
       ]
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
    }
 }
