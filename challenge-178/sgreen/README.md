@@ -1,3 +1,3 @@
-# The Weekly Challenge 177
+# The Weekly Challenge 178
 
-Blog [The Palindromic Prime Cyclops Algorithm](https://dev.to/simongreennet/the-palindromic-prime-cyclops-algorithm-4c0h)
+Blog [Quater-imaginary Business Date](https://dev.to/simongreennet/quater-imaginary-business-date-58ln)
