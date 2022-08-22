@@ -43,11 +43,12 @@ AS $CODE$
                     /;
 
      my ( $n ) = @_;
-     
+     return 'Cannot spell'                 if ( $n >= 100 );     
      return $units[ $n - 1 ]               if ( $n <= 10 );
      return $teens[ ( $n - 1 ) % 10  ]     if ( $n > 10 && $n < 20 );
      return $non_teens[ ( $n / 10 ) - 2 ]  if ( $n >= 20 && $n % 10 == 0 );
      return $non_teens[ ( $n / 10 ) - 2 ] . $units[ ( $n % 10 ) - 1 ] if ( $n > 20 );
+
 
 $CODE$
 LANGUAGE plperl;

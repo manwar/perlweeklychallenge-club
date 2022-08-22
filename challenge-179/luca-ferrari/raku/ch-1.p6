@@ -2,7 +2,7 @@
 
 # Perl Weekly Challenge 179
 
-sub MAIN( Int $n where { 0 < $n < 1000 } ) {
+sub MAIN( Int $n where { 0 < $n < 100 } ) {
 
     my @units = 'first',
                 'second',
@@ -26,7 +26,7 @@ sub MAIN( Int $n where { 0 < $n < 1000 } ) {
             say @non-teens[ ( $n / 10 ).Int - 2 ]
                 ~ ( $n %% 10 ?? '' !! @units[ ( $n % 10 ) - 1 ] );
         }
-
+        default { "Cannot spell $n".say; }
     }
 
 }
