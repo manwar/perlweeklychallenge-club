@@ -1,0 +1,56 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/listmin {
+    { min } reduce
+} bind def
+
+
+% end included library code
+
+/sparkline {
+    9 dict begin
+    /nn exch def
+    /bar 8 array def
+    0 1 7 {
+        /i exch def
+        /cc 3 string def
+        cc 0 16#e2 put
+        cc 1 16#96 put
+        cc 2 16#81 i add put
+        bar i cc put
+    } for
+    /mn nn listmin def
+    /mx nn listmax def
+    /inscale mx mn sub def
+    /outscale bar length def
+    /out nn length 3 mul string def
+    0 1 nn length 1 sub {
+        /i exch def
+        out i 3 mul
+        bar nn i get mn sub inscale div outscale mul cvi outscale 1 sub min get
+        putinterval
+    } for
+    out
+    end
+} bind def
+
+[ 0 10 ] sparkline print () =
+[ 1 2 3 4 5 6 7 8 ] sparkline print () =
