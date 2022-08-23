@@ -1,46 +1,58 @@
-Task 1: Permuted Multiples
+Task 1: Damm Algorithm
 
-Write a script to find the smallest positive integer x such that x, 2x,
-3x, 4x, 5x and 6x are permuted multiples of each other.
+You are given a positive number, $n.
 
-For example, the integers 125874 and 251748 are permutated multiples of
-each other as
+Write a script to validate the given number against the included check digit.
 
-251784 = 2 x 125874
+Please checkout the wikipedia page
+	https://en.wikipedia.org/wiki/Damm_algorithm
+for more information.
 
-and also both have the same digits but in different order.
+Example 1
 
-Output
+	Input: $n = 5724
+	Output: 1 as it is valid number
 
-  142857
+Example 2
 
-MY NOTES: ok, sounds pretty easy.  Compare permutation either by forming
-bags of digits and comparing them, or simply by sorting the digits
-numerically (a signature) and comparing signatures.
+	Input: $n = 5727
+	Output: 0 as it is invalid number
+
+MY NOTES: ok, sounds pretty easy.  The Damn algorithm uses a specific
+10x10 matrix, and a very simple validation algorithm (and the check
+digit validation algorithm is almost identical to the validation algorithm)
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for that).
 
 
-Task 2: Reversible Numbers
+Task 2: Palindromic Prime Cyclops
 
-Write a script to find out all Reversible Numbers below 100.
+Write a script to generate first 20 Palindromic Prime Cyclops Numbers.
 
-A number is said to be a reversible if sum of the number and its reverse
-had only odd digits.
-
-For example,
-
-36 is reversible number as 36 + 63 = 99 i.e. all digits are odd.
-17 is not reversible as 17 + 71 = 88, none of the digits are odd.
+A cyclops number is a number with an odd number of digits that has a
+zero in the center only.
 
 Output
 
-10, 12, 14, 16, 18, 21, 23, 25, 27,
-30, 32, 34, 36, 41, 43, 45, 50, 52,
-54, 61, 63, 70, 72, 81, 90
+101, 16061, 31013, 35053, 38083, 73037, 74047, 91019, 94049,
+1120211, 1150511, 1160611, 1180811, 1190911, 1250521, 1280821,
+1360631, 1390931, 1490941, 1520251
 
-MY NOTES: Unusually, this seems even easier than task 1.
+
+MY NOTES: This seems pretty easy.  Find numbers that are
+a). cyclops numbers and
+b). prime numbers and
+c). palindromic numbers
+(although, as the late great Eric Morecambe would say: but not
+necessarily in that order).
+
+- Obvious way to generate palindromic cyclops numbers is to append
+  x + 0 + rev(x)
+  for each small integer x = 1, 2...
+- and then test each such number for primality
+- extracted isprime() function from my solution to challenge 156 task 1,
+  and put it in it's own IsPrime module.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
 into C (look in the C directory for that).
