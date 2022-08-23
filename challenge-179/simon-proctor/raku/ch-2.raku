@@ -1,6 +1,6 @@
 #!/usr/bin/env raku
 
-constant @SPARKS = <<▁ ▂ ▃ ▄ ▅ ▆ ▇ ██>>;
+constant @SPARKS = <<▁ ▂ ▃ ▄ ▅ ▆ ▇ █>>;
 
 #| Draw a sparkline for the given list of positive numbers
 sub MAIN( *@values where { all(@values).Num() >= 0 } ) {
