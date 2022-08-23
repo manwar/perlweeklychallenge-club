@@ -1,24 +1,6 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-08-23 13:32:19 GMT"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             302,
             1,
@@ -50,9 +32,11 @@
             2,
             16,
             28
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             301,
             0,
@@ -84,11 +68,9 @@
             0,
             0,
             30
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             139,
             0,
@@ -120,9 +102,14 @@
             0,
             1,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
    "xAxis" : {
       "categories" : [
          "Jaldhar H. Vyas",
@@ -157,11 +144,24 @@
          "Julio de Castro"
       ]
    },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-08-23 22:00:18 GMT"
+   },
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
