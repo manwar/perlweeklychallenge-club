@@ -1,25 +1,13 @@
 {
-   "legend" : {
-      "enabled" : "false"
+   "chart" : {
+      "type" : "column"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
    "series" : [
       {
          "name" : "Contributions",
-         "dataLabels" : {
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "rotation" : -90
-         },
          "data" : [
             [
                "Blog",
@@ -27,37 +15,49 @@
             ],
             [
                "Perl",
-               8686
+               8687
             ],
             [
                "Raku",
                5194
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "y" : 10,
+            "rotation" : -90,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "enabled" : "true"
+         }
       }
    ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "yAxis" : {
       "title" : {
          "text" : null
       },
       "min" : 0
    },
+   "subtitle" : {
+      "text" : "Last updated at 2022-08-24 12:09:09 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-08-23 22:22:10 GMT"
+      },
+      "type" : "category"
    }
 }
