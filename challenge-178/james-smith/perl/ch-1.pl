@@ -45,6 +45,7 @@ sub toComplex            { Complex->new_from_QIB( $_[0] ) }
 sub new_from_Real {
   my $class = shift;
   return $class->new(0) unless $_[0]; ## Null case!
+  ##
   state @LOOK = qw(0000 0103 0102 0101 0100 0203 0202 0201 0200 0303 0302 0301 0300 0003 0002 0001);
 
   my ( $re, $n, @Q ) = ( $_[0]>0 ? '..$' : '$', $_[0]<0 ? -shift : 4*shift );
