@@ -2,7 +2,7 @@
 
 use v5.16;
 use List::MoreUtils 'minmax';
-use Math::Round 'round';
+use Math::Utils 'floor';
 
 die <<EOS unless @ARGV;
 usage: $0 N1 N2 ...
@@ -32,6 +32,6 @@ say barchart(@ARGV);
 
 sub barchart {
     my ($min, $max) = minmax @_;
-    my $scale = 7 / (($max - $min) || 1);
-    map chr(0x2581 + round(($_ - $min) * $scale)), @_;
+    my $scale = 7.999 / (($max - $min) || 1);
+    map chr(0x2581 + floor(($_ - $min) * $scale)), @_;
 }
