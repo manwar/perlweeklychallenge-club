@@ -1,3 +1,3 @@
-# The Weekly Challenge 178
+# The Weekly Challenge 179
 
-Blog [Quater-imaginary Business Date](https://dev.to/simongreennet/quater-imaginary-business-date-58ln)
+Blog [The Ordinal Sparkline](https://dev.to/simongreennet/the-ordinal-sparkline-dn5)
