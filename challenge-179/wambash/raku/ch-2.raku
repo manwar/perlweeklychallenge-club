@@ -1,9 +1,10 @@
 #!/usr/bin/env raku
+constant @bar = |('▁'..'█'), '█';
 
 sub unicode-sparkline (+@n) {
    @n
-   andthen 8 «*« $_ »/» max($_)
-   andthen .map: { ( |('▁'..'█'), '█' )[$_] }\
+   andthen 8 «*« $_ »/» max $_
+   andthen @bar[$_]
    andthen .join
 }
 
