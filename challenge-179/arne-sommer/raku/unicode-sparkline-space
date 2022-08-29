@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+subset PositiveInt of Int where * > 0;
+
+unit sub MAIN (*@numbers where @numbers.elems > 0 && all(@numbers) ~~ PositiveInt, :s(:$use-space));
+
+my $max = max(@numbers);
+
+my @chars = $use-space
+  ?? " ▁▂▃▄▅▆▇█".comb
+  !! "▁▂▃▄▅▆▇█".comb;
+
+for @numbers -> $c
+{
+  print @chars[$c / $max * (@chars.elems - 1)];
+}
+
+say "";

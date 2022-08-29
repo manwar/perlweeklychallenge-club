@@ -1,0 +1,22 @@
+#! /usr/bin/env raku
+
+subset PositiveInt of Int where * > 0;
+
+unit sub MAIN (*@numbers where @numbers.elems > 0 && all(@numbers) ~~ PositiveInt, :v(:$verbose));
+
+my $max = max(@numbers);
+
+my @chars = "▁▂▃▄▅▆▇█".comb;
+
+my @output;
+
+for @numbers -> $c
+{
+  my $index = $c / $max * (@chars.elems - 1);
+
+  say ": $c -> $index" if $verbose;
+
+  @output.push: @chars[$index];
+}
+
+say @output.join;
