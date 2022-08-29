@@ -1,18 +1,7 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-08-29 02:40:58 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "xAxis" : {
       "categories" : [
@@ -47,6 +36,11 @@
          "Julien Fiegehenn",
          "Julio de Castro"
       ]
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -85,6 +79,7 @@
          ]
       },
       {
+         "name" : "Raku",
          "data" : [
             301,
             0,
@@ -116,8 +111,7 @@
             0,
             0,
             30
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -155,13 +149,19 @@
          "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-08-29 03:11:45 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
