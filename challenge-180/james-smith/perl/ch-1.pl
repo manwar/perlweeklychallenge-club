@@ -5,8 +5,6 @@ use strict;
 use warnings;
 use feature qw(say);
 use Test::More;
-use Benchmark qw(cmpthese timethis);
-use Data::Dumper qw(Dumper);
 use List::MoreUtils qw(firstidx);
 
 my @TESTS = (
@@ -17,6 +15,7 @@ my @TESTS = (
 );
 
 is( first_unique($_->[0]), $_->[1] ) foreach @TESTS;
+is( u($_->[0]),            $_->[1] ) foreach @TESTS;
 
 done_testing();
 
@@ -26,3 +25,4 @@ sub first_unique {
   firstidx { $counts{$_} < 2 } @p;
 }
 
+sub u{my%c;$c{$_}++for@_=split//,pop;firstidx{$c{$_}<2}@_}
