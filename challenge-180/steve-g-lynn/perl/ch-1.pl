@@ -10,7 +10,7 @@ sub print_1st_unique_char_indx {
 	local ($s) = shift;	
 	local (@s, %s);
 	@s = split //, $s;
-	foreach (@s) {$s{$_}++;}
+	for $s (@s) {$s{$s}++;}
 	for $s (0 .. scalar(@s)-1) { 
 		if ($s{$s[$s]}==1) {
 			print $s,"\n";
