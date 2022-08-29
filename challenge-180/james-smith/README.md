@@ -21,15 +21,15 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-180/ja
 
 ## Solution
 
-We could loop forward through the loop - but that would require us to remember if we had already seen each letter - and then once we have a unique list of letters working out which was first. Alternatively we could `reverse` the problem quite literally and work backwards through the list. The position then being the last unique character that we see. This greatly reduces the complexity.
+The first stage of this is to count the instances of each letter - this just loops over each character and increments the count.
 
-We loop backwards from the end of the string (`$#p` is the last index of the array). We keep a hash of the letters we have seen `%seen`. We update the count using `++` so the value *returned* is the previous value of the count. If this is zero (*i.e.* the first time we see the character) we update `$last` - to indicate this is the last seen index (working backwards).... The value of `$last` when we get to the end of the loop is therefore the **first** seen value going forward.... I hope the backwards logic makes sense.
+We then want to *grep* over the array and find the first character who has a count less than 2 and return the index. We could write this long-hand but `List::MoreUtils` has the perfect *helper* here `firstidx` which does just that. So the code becomes. Note although not in the *spec* this returns `-1` if there are no unique letters.
 
 ```perl
 sub first_unique {
-  my( @p, $last, %seen ) = split //, pop;
-  ( $seen{ $p[$_] } ++ ) || ( $last = $_ ) for reverse 0 .. $#p;
-  $last;
+  my %counts;
+  $counts{$_}++ for my @p = split //, pop;
+  firstidx { $counts{$_} < 2 } @p;
 }
 ```
 
