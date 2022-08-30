@@ -21,14 +21,13 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-180/ja
 
 ## Solution
 
-The first stage of this is to count the instances of each letter - this just loops over each character and increments the count.
+The first stage of this is to count the instances of each letter - here we use `List::MoreUtils`'s method `frequency` - this just loops over each character and increments the count.
 
 We then want to *grep* over the array and find the first character who has a count less than 2 and return the index. We could write this long-hand but `List::MoreUtils` has the perfect *helper* here `firstidx` which does just that. So the code becomes. Note although not in the *spec* this returns `-1` if there are no unique letters.
 
 ```perl
 sub first_unique {
-  my %counts;
-  $counts{$_}++ for my @p = split //, pop;
+  my %counts = frequency my @p = split //, pop;
   firstidx { $counts{$_} < 2 } @p;
 }
 ```
