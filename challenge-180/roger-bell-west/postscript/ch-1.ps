@@ -1,0 +1,73 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/firstunique {
+    1 dict begin
+    /s exch def
+    /cc s length dict def
+    s {
+        dup
+        cc exch known {
+            dup cc exch get
+        } {
+            0
+        } ifelse
+        1 add
+        cc 3 1 roll put
+    } forall
+    mark
+    0 1 s length 1 sub {
+        dup cc exch s exch get get 1 eq {
+            exit
+        } {
+            pop
+        } ifelse
+    } for
+    counttomark 0 eq {
+        pop -1
+    } {
+        exch pop
+    } ifelse
+    end
+} bind def
+
+(firstunique) test.start
+(Perl Weekly Challenge) firstunique 0 eq test
+(Long Live Perl) firstunique 1 eq test
+(aabbcc) firstunique -1 eq test
+test.end
