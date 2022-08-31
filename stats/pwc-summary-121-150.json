@@ -1,19 +1,7 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "series" : [
       {
@@ -52,7 +40,6 @@
          ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             38,
@@ -84,10 +71,10 @@
             49,
             91,
             3
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             15,
@@ -119,9 +106,24 @@
             29,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-08-31 19:05:03 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "xAxis" : {
       "categories" : [
          "Kai Burgdorf",
@@ -156,12 +158,10 @@
          "Martin Barth"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-08-31 18:52:51 GMT"
    }
 }

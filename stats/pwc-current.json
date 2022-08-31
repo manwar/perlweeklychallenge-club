@@ -1,33 +1,28 @@
 {
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2022-08-31 18:52:51 GMT"
+   "legend" : {
+      "enabled" : 0
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "xAxis" : {
+      "type" : "category"
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2022-08-31 19:05:03 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 180"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -38,7 +33,7 @@
                   1
                ]
             ],
-            "id" : "James Smith"
+            "name" : "James Smith"
          },
          {
             "id" : "Mark Anderson",
@@ -61,7 +56,6 @@
             ]
          },
          {
-            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -72,20 +66,20 @@
                   2
                ]
             ],
+            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West"
          },
          {
-            "name" : "Simon Proctor",
             "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Simon Proctor"
          },
          {
-            "id" : "Stephen G Lynn",
             "data" : [
                [
                   "Perl",
@@ -100,32 +94,52 @@
                   1
                ]
             ],
+            "id" : "Stephen G Lynn",
             "name" : "Stephen G Lynn"
+         },
+         {
+            "id" : "W. Luis Mochan",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "W. Luis Mochan"
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 180"
-   },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
    },
    "series" : [
       {
-         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 180",
          "data" : [
             {
-               "drilldown" : "James Smith",
                "y" : 3,
-               "name" : "James Smith"
+               "name" : "James Smith",
+               "drilldown" : "James Smith"
             },
             {
                "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
             },
             {
                "drilldown" : "Marton Polgar",
@@ -134,8 +148,8 @@
             },
             {
                "drilldown" : "Roger Bell_West",
-               "y" : 4,
-               "name" : "Roger Bell_West"
+               "name" : "Roger Bell_West",
+               "y" : 4
             },
             {
                "name" : "Simon Proctor",
@@ -143,12 +157,17 @@
                "drilldown" : "Simon Proctor"
             },
             {
-               "name" : "Stephen G Lynn",
                "y" : 5,
+               "name" : "Stephen G Lynn",
                "drilldown" : "Stephen G Lynn"
+            },
+            {
+               "name" : "W. Luis Mochan",
+               "y" : 3,
+               "drilldown" : "W. Luis Mochan"
             }
          ],
-         "name" : "The Weekly Challenge - 180"
+         "colorByPoint" : 1
       }
    ]
 }
