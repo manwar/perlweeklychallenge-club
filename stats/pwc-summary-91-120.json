@@ -1,6 +1,6 @@
 {
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-08-31 18:20:47 GMT"
+      "text" : "[Champions: 30] Last updated at 2022-08-31 18:31:15 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -36,15 +36,26 @@
          "Julio de Castro"
       ]
    },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             302,
             1,
@@ -76,9 +87,11 @@
             2,
             16,
             28
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             301,
             0,
@@ -110,8 +123,7 @@
             0,
             0,
             30
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -149,19 +161,7 @@
          ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }

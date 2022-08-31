@@ -1,36 +1,37 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-08-31 18:31:15 GMT"
+   },
    "legend" : {
       "enabled" : "false"
    },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
-      },
-      "type" : "category"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
       }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-08-31 18:20:47 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "y" : 10,
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         },
          "data" : [
             [
                "Blog",
@@ -42,22 +43,21 @@
             ],
             [
                "Raku",
-               5211
+               5213
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "enabled" : "true",
-            "rotation" : -90,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "align" : "right",
-            "color" : "#FFFFFF"
-         },
-         "name" : "Contributions"
+         ]
       }
-   ]
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   }
 }
