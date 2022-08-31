@@ -2,13 +2,39 @@
    "title" : {
       "text" : "The Weekly Challenge - 180"
    },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2022-08-31 17:40:27 GMT"
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "James Smith",
+            "name" : "James Smith"
+         },
+         {
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -19,16 +45,28 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West"
+            "name" : "Roger Bell_West"
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "series" : [
       {
          "data" : [
+            {
+               "name" : "James Smith",
+               "y" : 3,
+               "drilldown" : "James Smith"
+            },
             {
                "name" : "Roger Bell_West",
                "y" : 4,
@@ -39,29 +77,10 @@
          "name" : "The Weekly Challenge - 180"
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
    "chart" : {
       "type" : "column"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2022-08-31 17:58:48 GMT"
    }
 }
