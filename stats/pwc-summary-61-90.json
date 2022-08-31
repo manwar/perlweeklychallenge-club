@@ -1,7 +1,6 @@
 {
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             0,
@@ -33,10 +32,10 @@
             0,
             12,
             6
-         ]
+         ],
+         "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             8,
             10,
@@ -68,7 +67,8 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -106,21 +106,25 @@
          ]
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-08-31 20:21:45 GMT"
    },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
+      },
+      "min" : 0
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -156,12 +160,8 @@
          "Jake"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-08-31 20:14:13 GMT"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }

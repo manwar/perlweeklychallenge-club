@@ -1,18 +1,6 @@
 {
    "series" : [
       {
-         "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "enabled" : "true",
-            "y" : 10
-         },
          "name" : "Contributions",
          "data" : [
             [
@@ -25,39 +13,51 @@
             ],
             [
                "Raku",
-               5217
+               5219
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "y" : 10,
+            "rotation" : -90
+         }
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "Last updated at 2022-08-31 20:21:45 GMT"
    },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
-   },
-   "legend" : {
-      "enabled" : "false"
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       },
       "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-08-31 20:14:13 GMT"
    }
 }
