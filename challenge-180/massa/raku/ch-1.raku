@@ -1,4 +1,5 @@
 use v6;
 
-unit sub MAIN(*@args);
-m/:my %visited; . :my $c = $¢; <!{ %visited{$c}++ }> <!before .* $c>/.&{ .pos // 0 - 1 }.say for @args
+my regex first-unique { :my %visited; . :my $c = $¢; <!{ %visited{$c}++ }> <!before .* $c> }
+
+@*ARGS.map({ $^s ~~ &first-unique ?? $/.pos - 1 !! -1 })».say
