@@ -1,4 +1,7 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "legend" : {
       "enabled" : "false"
    },
@@ -6,29 +9,22 @@
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : null
-      },
-      "min" : 0
+      }
    },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
    },
    "series" : [
       {
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "rotation" : -90
-         },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -40,24 +36,28 @@
             ],
             [
                "Raku",
-               5227
+               5229
             ]
-         ]
+         ],
+         "name" : "Contributions",
+         "dataLabels" : {
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "rotation" : -90
+         }
       }
    ],
+   "subtitle" : {
+      "text" : "Last updated at 2022-09-02 10:01:37 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-09-02 09:40:56 GMT"
    }
 }
