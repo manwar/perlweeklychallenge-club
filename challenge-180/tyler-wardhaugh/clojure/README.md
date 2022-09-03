@@ -8,12 +8,12 @@ Clojure ([installation instructions](https://clojure.org/guides/getting_started#
 
 Run Task #1:
 
-    $ clojure -M:t1 N
+    $ clojure -M:t1 S
     # ... or ...
-    $ bb run task-1 N
+    $ bb run task-1 S
 
     # Alternatively, to run it via Babashka:
-    $ bb run task-1-bb N
+    $ bb run task-1-bb S
 
 Run Task #2:
 
