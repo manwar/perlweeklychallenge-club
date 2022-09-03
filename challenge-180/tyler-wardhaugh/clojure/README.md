@@ -19,10 +19,10 @@ Run Task #2:
 
     $ clojure -M:t2
     # ... or ...
-    $ bb run task-2
+    $ bb run task-2 N I
 
     # Alternatively, to run it via Babashka:
-    $ bb run task-2-bb
+    $ bb run task-2-bb N I
 
 Run the project's tests (which are samples from the task descriptions):
 
