@@ -1,29 +1,49 @@
-Task 1: Ordinal Number Spelling
+Task 1: First Unique Character
 
-You are given a positive number, $n.
-Write a script to spell the ordinal number.
+You are given a string, $s.
+Write a script to find out the first unique character in the given string
+and print its index (0-based).
 
-For example,
+Example 1
 
-11 => eleventh
-62 => sixty-second
-99 => ninety-ninth
+Input: $s = "Perl Weekly Challenge"
+Output: 0 as 'P' is the first unique character
 
-MY NOTES: ok, sounds pretty easy for n>0; let's arbitrarily deal with
-n < 1000000 (although millions, billions etc would be pretty easy to add).
-Let's do this via formwords(n) which converts (eg) n=17 to "seventeen" and
-then use that to generate the final "seventeeth" (nth, ordinal, form) by
-mucking about with the ending (and using some special case rules for English,
-eg mapping one->first)
+Example 2
+
+Input: $s = "Long Live Perl"
+Output: 1 as 'o' is the first unique character
+
+MY NOTES: ok, sounds extremely easy, first pass: build a freq hash (a bag),
+second pass: sequence through the string, print index of first char
+with freq 1.  There is one case where the behaviour is undefined: what if
+there are no unique characters in the string? I've decided to produce pos -1
+in that case.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for that).
 
 
-Task 2: Unicode Sparkline
+Task 2: Trim List
 
-You are given a list of positive numbers, @n.
+You are given list of numbers, @n and an integer $i.
+Write a script to trim the given list where element is less than or
+equal to the given integer.
 
-Write a script to print sparkline in Unicode for the given list of numbers.
+Example 1
 
-MY NOTES: What on earth is "sparkline"?  Not a fan of Unicode either, forget it.
+Input: @n = (1,4,2,3,5) and $i = 3
+Output: (4,5)
+
+Example 2
+
+Input: @n = (9,0,6,2,3,8,5) and $i = 4
+Output: (9,6,8,5)
+
+MY NOTES: also looks incredibly easy, basically grep { $_ >= $i }.
+Just to bulk the task up a little, I allowed the input list to be
+spread across multiple arguments, each of which can either store a
+simple +ve int, or a comma-separated list of one or more +ve ints.
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
+into C (look in the C directory for that).
