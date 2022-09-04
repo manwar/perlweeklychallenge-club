@@ -1,3 +1,3 @@
-# The Weekly Challenge 179
+# The Weekly Challenge 180
 
-Blog [The Ordinal Sparkline](https://dev.to/simongreennet/the-ordinal-sparkline-dn5)
+[Blog](https://dev.to/simongreennet/weekly-challenge-180-4mi5)
