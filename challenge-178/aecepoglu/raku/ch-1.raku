@@ -1,3 +1,6 @@
+# This is my first time writing raku (or perl) code
+#  so don't take this as a standard for what good raku code should look like
+
 my $b = -4
 my $k = Complex($b).sqrt;
 
