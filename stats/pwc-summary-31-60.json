@@ -1,12 +1,12 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-09-05 14:30:29 GMT"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             4,
@@ -38,10 +38,10 @@
             8,
             0,
             6
-         ]
+         ],
+         "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -73,7 +73,8 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "data" : [
@@ -112,23 +113,17 @@
       }
    ],
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "chart" : {
       "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-09-05 14:18:39 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
    },
    "xAxis" : {
       "categories" : [
@@ -163,5 +158,10 @@
          "Denis Yurashku",
          "Dieter Dobbelaere"
       ]
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }

@@ -1,15 +1,4 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "series" : [
       {
          "data" : [
@@ -36,7 +25,7 @@
             7,
             8,
             1,
-            186,
+            188,
             3,
             0,
             52,
@@ -82,6 +71,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -113,12 +103,24 @@
             0,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-09-05 14:30:29 GMT"
    },
    "chart" : {
       "type" : "column"
@@ -157,11 +159,9 @@
          "Olli-Antti Kivilahti"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-09-05 14:18:39 GMT"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
