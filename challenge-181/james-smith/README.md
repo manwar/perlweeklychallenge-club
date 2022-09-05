@@ -23,12 +23,10 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-181/ja
 
 ```perl
 sub parse {
-  ( join '. ',                   ## join back paragraph
-               ## sort into order first case insensitive
-               ## duplicate words sorted upper case first!
+  ( join '. ',
     map { join ' ', sort { lc($a) cmp lc($b) || $a cmp $b } split }
-    split /[.]\s*/, $_[0]        ## Split into sentences
-  ).'.';                         ## We have to add the trailing dot
+    split /[.]\s*/, $_[0]
+  ).'.'
 }
 ```
 
@@ -59,7 +57,7 @@ We will split the code in two
 ```perl
 sub get_file {
   open my $fh, q(<), $_[0];
-  map { m{(\d{4}-\d\d-\d\d),\s+(\d+)}?[$1,$2]:() } sort <$fh>;
+  map { m{(\d{4}-\d\d-\d\d),\s+(\d+)}?[$1,$2]:() } sort <$fh>
 }
 ```
 
@@ -72,7 +70,7 @@ To sort the file into date order we just need to sort the lines of the file - as
 ```perl
 sub hot_day {
   my $day = shift;
-  map { $_->[1] > $day->[1] ? $_->[0] : (), ($day=$_)x 0 } @_;
+  map { $_->[1] > $day->[1] ? $_->[0] : (), ($day=$_)x 0 } @_
 }
 ```
 
