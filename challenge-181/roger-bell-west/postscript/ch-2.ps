@@ -1,0 +1,135 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+} bind def
+
+/quicksort { % [ a c b ] -> [ a b c ]
+    1 dict begin
+    /arr exch def
+    0 arr length 1 sub quicksort.main
+    arr
+    end
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+
+% end included library code
+
+/t 0 dict def
+
+(temperature.txt) (r) file dup bytesavailable string readstring pop
+(\n) strsplit {
+    (,) strsplit /l exch def
+    t l 0 get l 1 get cvi put
+} forall
+
+/xlt 999 def
+t keys { 10 string cvs } map quicksort {
+    /k exch def
+    t k get xlt gt {
+        k =
+    } if
+    /xlt t k get def
+} forall
