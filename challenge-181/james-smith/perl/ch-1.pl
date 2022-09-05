@@ -24,8 +24,8 @@ sub parse {
                ## sort into order first case insensitive
                ## duplicate words sorted upper case first!
     map { join ' ', sort { lc($a) cmp lc($b) || $a cmp $b } split }
-    split /[.]\s*/,              ## Split into sentences
-    $_[0] =~ s{\s+}{ }rsmg       ## Remove duplicate whitespace
+    split /[.]\s*/, $_[0]        ## Split into sentences
+#    $_[0] =~ s{\s+}{ }rsmg       ## Remove duplicate whitespace
   ).'.';                         ## We have to add the trailing dot
 }
 

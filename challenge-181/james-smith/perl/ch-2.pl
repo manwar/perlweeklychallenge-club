@@ -16,7 +16,7 @@ say $_ for hot_day( get_file( 'temp.txt' ) );
 
 sub get_file {
   open my $fh, q(<), $_[0];
-  map { [m{(\d{4}-\d\d-\d\d),\s+(\d+)}] } sort <$fh>;
+  map { m{(\d{4}-\d\d-\d\d),\s+(\d+)}?[$1,$2]:() } sort <$fh>;
 }
 
 sub hot_day {
