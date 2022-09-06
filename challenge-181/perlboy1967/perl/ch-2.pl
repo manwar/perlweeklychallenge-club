@@ -23,7 +23,8 @@ use File::Slurp;
 use List::MoreUtils qw(slide);
 
 sub hotDay ($) {
-  grep{defined}slide{$a->[1]<$b->[1]?$b->[0]:undef}sort{$a->[0]cmp$b->[0]}map{[split(/,/)]}read_file($_[0]);
+  no warnings 'once';
+  grep/\S/,slide{$$a[1]<$$b[1]?$$b[0]:''}map{[split/,/]}sort(read_file($_[0]));
 }
 
 say join "\n", hotDay(shift // 'temperature.txt');
