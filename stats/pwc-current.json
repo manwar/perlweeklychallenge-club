@@ -1,16 +1,14 @@
 {
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   "title" : {
+      "text" : "The Weekly Challenge - 181"
    },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
    },
    "series" : [
@@ -20,17 +18,17 @@
          "data" : [
             {
                "drilldown" : "E. Choroba",
-               "y" : 2,
-               "name" : "E. Choroba"
+               "name" : "E. Choroba",
+               "y" : 2
             },
             {
-               "name" : "Humberto Massa",
                "y" : 2,
+               "name" : "Humberto Massa",
                "drilldown" : "Humberto Massa"
             },
             {
-               "y" : 3,
                "drilldown" : "James Smith",
+               "y" : 3,
                "name" : "James Smith"
             },
             {
@@ -39,23 +37,38 @@
                "name" : "Mark Anderson"
             },
             {
+               "name" : "Niels van Dijke",
                "y" : 2,
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke"
+               "drilldown" : "Niels van Dijke"
             },
             {
                "name" : "Peter Campbell Smith",
-               "drilldown" : "Peter Campbell Smith",
-               "y" : 3
+               "y" : 3,
+               "drilldown" : "Peter Campbell Smith"
             },
             {
                "drilldown" : "Roger Bell_West",
-               "y" : 4,
-               "name" : "Roger Bell_West"
+               "name" : "Roger Bell_West",
+               "y" : 4
+            },
+            {
+               "y" : 3,
+               "name" : "W. Luis Mochan",
+               "drilldown" : "W. Luis Mochan"
             }
          ]
       }
    ],
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "xAxis" : {
       "type" : "category"
    },
@@ -63,26 +76,27 @@
       "series" : [
          {
             "name" : "E. Choroba",
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "E. Choroba"
+            ]
          },
          {
             "id" : "Humberto Massa",
+            "name" : "Humberto Massa",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Humberto Massa"
+            ]
          },
          {
             "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -92,31 +106,31 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "James Smith"
+            ]
          },
          {
+            "id" : "Mark Anderson",
             "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Mark Anderson"
+            ]
          },
          {
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke"
+            ]
          },
          {
             "id" : "Peter Campbell Smith",
+            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -126,11 +140,9 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Peter Campbell Smith"
+            ]
          },
          {
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -141,25 +153,32 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West"
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
+         },
+         {
+            "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
          }
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
    "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2022-09-06 07:52:18 GMT"
+      "text" : "[Champions: 8] Last updated at 2022-09-06 08:02:17 GMT"
    },
    "legend" : {
       "enabled" : 0
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 181"
+   "chart" : {
+      "type" : "column"
    }
 }
