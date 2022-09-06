@@ -1,43 +1,32 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
+      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 181"
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
             "enabled" : 1,
             "format" : "{point.y}"
-         },
-         "borderWidth" : 0
+         }
       }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2022-09-05 18:59:15 GMT"
    },
    "series" : [
       {
+         "name" : "The Weekly Challenge - 181",
          "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Humberto Massa",
+               "drilldown" : "E. Choroba",
                "y" : 2,
-               "name" : "Humberto Massa"
+               "name" : "E. Choroba"
+            },
+            {
+               "name" : "Humberto Massa",
+               "y" : 2,
+               "drilldown" : "Humberto Massa"
             },
             {
                "y" : 3,
@@ -45,42 +34,55 @@
                "name" : "James Smith"
             },
             {
-               "y" : 2,
                "drilldown" : "Mark Anderson",
+               "y" : 2,
                "name" : "Mark Anderson"
             },
             {
-               "drilldown" : "Niels van Dijke",
                "y" : 2,
+               "drilldown" : "Niels van Dijke",
                "name" : "Niels van Dijke"
             },
             {
+               "name" : "Peter Campbell Smith",
                "drilldown" : "Peter Campbell Smith",
-               "y" : 3,
-               "name" : "Peter Campbell Smith"
+               "y" : 3
             },
             {
-               "y" : 4,
                "drilldown" : "Roger Bell_West",
+               "y" : 4,
                "name" : "Roger Bell_West"
             }
-         ],
-         "name" : "The Weekly Challenge - 181"
+         ]
       }
    ],
+   "xAxis" : {
+      "type" : "category"
+   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "E. Choroba"
+         },
+         {
+            "id" : "Humberto Massa",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Humberto Massa",
             "name" : "Humberto Massa"
          },
          {
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -91,18 +93,17 @@
                   1
                ]
             ],
-            "name" : "James Smith",
             "id" : "James Smith"
          },
          {
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "id" : "Mark Anderson"
          },
          {
             "data" : [
@@ -115,6 +116,7 @@
             "id" : "Niels van Dijke"
          },
          {
+            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -125,10 +127,10 @@
                   1
                ]
             ],
-            "id" : "Peter Campbell Smith",
             "name" : "Peter Campbell Smith"
          },
          {
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -139,12 +141,25 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            "id" : "Roger Bell_West"
          }
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2022-09-06 07:52:18 GMT"
+   },
    "legend" : {
       "enabled" : 0
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 181"
    }
 }
