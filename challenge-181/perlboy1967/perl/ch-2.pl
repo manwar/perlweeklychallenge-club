@@ -14,6 +14,9 @@ You are given file with daily temperature record in random order.
 
 Write a script to find out days hotter than previous day.
 
+Credits: Some input from James Curtis-Smith' solution was used
+(the '()' part in slide())
+
 =cut
 
 use v5.16;
@@ -23,7 +26,8 @@ use File::Slurp;
 use List::MoreUtils qw(slide);
 
 sub hotDay ($) {
-  grep{defined}slide{$a->[1]<$b->[1]?$b->[0]:undef}sort{$a->[0]cmp$b->[0]}map{[split(/,/)]}read_file($_[0]);
+  no warnings 'once';
+  slide{$$a[1]<$$b[1]?$$b[0]:()}map{[split/,/]}sort(read_file($_[0]));
 }
 
 say join "\n", hotDay(shift // 'temperature.txt');
