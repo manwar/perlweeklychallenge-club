@@ -1,6 +1,6 @@
 {
- :paths ["src"]
- :deps {}
+ :paths ["src" "resources"]
+ :deps {local/deps {:local/root "."}}
  
  :tasks
  {
@@ -46,22 +46,7 @@
                          [".nrepl-port" ".cpcache" ".lsp" ".clj-kondo"]))}
 
   generate-jar {:doc "Generate JAR file"
-                :depends [generate-pom]
                 :task (clojure "-X:jar")}
-
-  publish {:doc "Publish branch via git-push to REPO (default: origin)"
-           :requires ([clojure.string :as str]
-                      [babashka.process :as p :refer [process]])
-           :task (let [repo (or (first *command-line-args*) "origin")
-                       current-branch (-> (p/$ git branch --show-current)
-                                          p/check
-                                          :out
-                                          slurp
-                                          str/trim-newline)
-                       cmd '[git push --force-with-lease --set-upstream]
-                       args [repo current-branch]]
-                   (-> (process (concat cmd args) {:inherit true})
-                       p/check))}
 
   test {:doc "Run tests"
         :task (clojure "-T:build test")}
@@ -78,6 +63,6 @@
           :task (run-task-clj :t2 *command-line-args*)}
 
   task-2-bb {:doc "Run Task 2 (via Babashka)"
-             :task (run-task-bb :t2 *command-line-args*)}
+             :task (bb-no-go :t2 *command-line-args*)}
   }
 }
