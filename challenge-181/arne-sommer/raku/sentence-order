@@ -1,0 +1,10 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($file where $file.IO.f && $file.IO.r = "paragraph.txt", :v(:$verbose));
+
+my @sentences = (slurp $file).split(".");
+
+say ":sentences: { @sentences.raku}" if $verbose;
+
+say @sentences>>.words>>.sort({ $^a.lc cmp $^b.lc })>>.join(" ").join(". ");
+
