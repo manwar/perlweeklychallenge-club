@@ -1,49 +1,60 @@
-Task 1: First Unique Character
+Task 1: Sentence Order
 
-You are given a string, $s.
-Write a script to find out the first unique character in the given string
-and print its index (0-based).
+You are given a paragraph.
 
-Example 1
+Write a script to order each sentence alphanumerically and print the
+whole paragraph.
 
-Input: $s = "Perl Weekly Challenge"
-Output: 0 as 'P' is the first unique character
+Example
 
-Example 2
+Input:
+    All he could think about was how it would all end. There was
+    still a bit of uncertainty in the equation, but the basics
+    were there for anyone to see. No matter how much he tried to
+    see the positive, it wasn't anywhere to be seen. The end was
+    coming and it wasn't going to be pretty.
 
-Input: $s = "Long Live Perl"
-Output: 1 as 'o' is the first unique character
+Output:
+    about All all could end he how it think was would. a anyone
+    basics bit but equation, for in of see still the the There
+    there to uncertainty was were. anywhere be he how it matter
+    much No positive, see seen the to to tried wasn't. and be
+    coming end going it pretty The to was wasn't.
 
-MY NOTES: ok, sounds extremely easy, first pass: build a freq hash (a bag),
-second pass: sequence through the string, print index of first char
-with freq 1.  There is one case where the behaviour is undefined: what if
-there are no unique characters in the string? I've decided to produce pos -1
-in that case.
-
-GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
-into C (look in the C directory for that).
+MY NOTES: hmm, sounds surprisingly tricky, we have to read all the input,
+identify all the sentences (a sentence can span multiple lines), for each
+sentence split off the trailing '. ', sort the words in the sentence in
+case-insensitive order, add the '. ' back again, accumulate all the
+output words in a single array, and then print it out with width formatting.
+Stole width formatting code from challenge 177.
 
 
-Task 2: Trim List
+Task 2: Hot Day
 
-You are given list of numbers, @n and an integer $i.
-Write a script to trim the given list where element is less than or
-equal to the given integer.
+You are given file with daily temperature record in random order.
+Write a script to find out days hotter than previous day.
 
-Example 1
+Example
 
-Input: @n = (1,4,2,3,5) and $i = 3
-Output: (4,5)
+Input File: (temperature.txt)
 
-Example 2
+2022-08-01, 20
+2022-08-09, 10
+2022-08-03, 19
+2022-08-06, 24
+2022-08-05, 22
+2022-08-10, 28
+2022-08-07, 20
+2022-08-04, 18
+2022-08-08, 21
+2022-08-02, 25
 
-Input: @n = (9,0,6,2,3,8,5) and $i = 4
-Output: (9,6,8,5)
+Output:
+2022-08-02
+2022-08-05
+2022-08-06
+2022-08-08
+2022-08-10
 
-MY NOTES: also looks incredibly easy, basically grep { $_ >= $i }.
-Just to bulk the task up a little, I allowed the input list to be
-spread across multiple arguments, each of which can either store a
-simple +ve int, or a comma-separated list of one or more +ve ints.
-
-GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
-into C (look in the C directory for that).
+MY NOTES: looks pretty easy (easier than first task).  Could parse dates, but
+technically as the dates are all ISO dates, they can be sorted as strings.
