@@ -40,8 +40,8 @@ this everytime the value at the entry is greater than the value at the max index
 ```perl
 sub max_index {
   my $m=0;
-  $_[$_]>$_[$m] && ($m=$_) for 0..$#_;
-  $m;
+  $_[$_] > $_[$m] && ( $m = $_ ) for 0 .. $#_;
+  $m
 }
 ```
 
