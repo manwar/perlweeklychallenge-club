@@ -31,15 +31,11 @@ my @l = qw(
 
 sub commonPath (@) {
 
-  my @c;
+  my (@c,@s);
 
   my $ea = each_arrayref map{ [ split '/' ] } @_;
-  while (my @s = $ea->()) {
-    if (scalar uniq(@s) == 1) {
-      push(@c,shift @s);
-    } else {
-      last;
-    }
+  while (@s = $ea->() and scalar uniq(@s) == 1) {
+    push(@c,shift @s);
   }
 
   return (scalar @c ? join('/',@c) : '/');
