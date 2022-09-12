@@ -13,6 +13,7 @@ my @TESTS = (
   [ [qw(/a/b/a.txt /a/b/c/d/e/q.txt /a/b/c.txt)], '/a/b' ],
   [ [qw(a/b/a.txt a/b/c/d/e/q.txt a/b/c.txt)], 'a/b' ],
   [ [qw(ab.txt ac.txt)], '' ],
+  [ [qw(a ab/q.txt)], '' ],
   [ [qw(ab ab/q.txt)], '' ],
   [ [qw(/ab /ab/q.txt)], '' ],
   [ [qw(ab/ ab/q.txt)], 'ab' ],
