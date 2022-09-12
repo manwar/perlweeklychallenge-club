@@ -1,17 +1,9 @@
 use v6.d;
 
 my sub parents(\f) {
-  $_ = f.IO.resolve;
-  reverse gather loop { .Str.take if .d; last when '/'; $_.=parent }
+  $_ = f.IO.cleanup;
+  [ reverse gather { .Str.take if .d; loop { $_.=parent; .Str.take; last when '/' } } ]
 }
 
-my sub common-parent(\f1, \f2) {
-  for parents(f1) Z parents(f2) -> ($a, $b) {
-    last unless $a eq $b;
-    $_ = $a
-  }
-  $_
-}
-
-@*ARGS.reduce(&common-parent).say
+@*ARGS.map(&parents).&zip.grep({ last unless [eq] $_; True }).tail.tail.say
 
