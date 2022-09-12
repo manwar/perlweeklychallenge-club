@@ -1,3 +1,3 @@
 use v6.d;
 
-@*ARGS.pairs.max(+ *.value).key.say
+@*ARGS.map(+*).maxpairs.head.key.say
