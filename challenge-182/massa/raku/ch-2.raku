@@ -2,7 +2,7 @@ use v6.d;
 
 my sub parents(\f) {
   $_ = f.IO.resolve;
-  reverse gather loop { .Str.take; last when '/'; $_.=parent }
+  reverse gather loop { .Str.take if .d; last when '/'; $_.=parent }
 }
 
 my sub common-parent(\f1, \f2) {
