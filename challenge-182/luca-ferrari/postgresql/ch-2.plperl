@@ -21,7 +21,6 @@ AS $CODE$
        for my $current_dir ( @{ $_[0] } ) {
            my @pieces = split( '/', $current_dir );
            $min_index = $#pieces if ( $#pieces < $min_index );
-           elog(INFO, "$pieces[ $index ] index $index $current_pieces[ $index ]" );
            $found = 0 if ( $pieces[ $index ] != $current_pieces[ $index ] );
        }
 
