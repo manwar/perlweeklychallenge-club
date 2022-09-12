@@ -47,7 +47,7 @@ sub sort_sentence
 	my( $sentence ) = @_;
 	my @word = split( /\s+/, $sentence );
 	@word = sort { lc($a) cmp lc($b) } @word;
-	return join( ' ', @word );
+	return join( ' ', @word ) . ".";
 }
 
 
@@ -79,7 +79,7 @@ if( $input )
 	push @sentence, $input;
 }
 
-my $str = join( ' ', map { sort_sentence($_) } @sentence ) . '.';
+my $str = join( ' ', map { sort_sentence($_) } @sentence );
 
 # format $str with lines <= maxw chars long.
 my $maxw = 62;
