@@ -1,7 +1,22 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "y" : 10,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right"
+         },
          "data" : [
             [
                "Blog",
@@ -9,55 +24,40 @@
             ],
             [
                "Perl",
-               8814
+               8815
             ],
             [
                "Raku",
                5272
             ]
-         ],
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "enabled" : "true",
-            "align" : "right",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "y" : 10
-         }
+         ]
       }
    ],
+   "subtitle" : {
+      "text" : "Last updated at 2022-09-12 01:29:59 GMT"
+   },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
       },
-      "min" : 0
+      "type" : "category"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-09-12 01:20:24 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
    "chart" : {
       "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    }
 }
