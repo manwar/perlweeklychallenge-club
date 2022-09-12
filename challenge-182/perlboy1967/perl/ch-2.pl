@@ -32,9 +32,8 @@ my @l = qw(
 sub commonPath (@) {
 
   my @c;
-  my @p = map { [split '/'] } @_;
 
-  my $ea = each_arrayref(@p);
+  my $ea = each_arrayref map{ [ split '/' ] } @_;
   while (my @s = $ea->()) {
     if (scalar uniq(@s) == 1) {
       push(@c,shift @s);
