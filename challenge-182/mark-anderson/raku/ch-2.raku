@@ -24,6 +24,6 @@ sub common-path(+@dirs)
 {
     @dirs .= map({ .split('/').List });
     my $z  = ([Zeq] @dirs).List;
-    my $i  = $z.first({ not $_ }, :k) || $z.elems;
+    my $i  = $z.first({ .not }, :k) || $z.elems;
     @dirs.head[^$i].join('/')
 }
