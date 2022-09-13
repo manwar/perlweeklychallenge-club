@@ -13,6 +13,9 @@ my @TESTS = (
 );
 
 say $_ for hot_day( get_file( 'temp.txt' ) );
+say '';
+say $_ for hot_day_single( 'temp.txt' );
+say '';
 
 sub get_file {
   open my $fh, q(<), $_[0];
@@ -22,5 +25,14 @@ sub get_file {
 sub hot_day {
   my $day = shift;
   map { $_->[1] > $day->[1] ? $_->[0] : (), ($day=$_)x 0 } @_
+}
+
+sub hot_day_single {
+  die "Unknown file $_[0]" unless open my $fh, q(<), $_[0];
+  my $t;
+  map { m{ (\d\d\d\d-\d\d-\d\d) , \s+ (\d+) }x
+        ? ( $t && $2 > $t ? $1 :() , ( $t = $2 ) x 0 )
+        : ()
+      } sort <$fh>;
 }
 
