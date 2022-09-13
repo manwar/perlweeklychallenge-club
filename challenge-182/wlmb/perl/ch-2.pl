@@ -10,9 +10,8 @@ my $dirs;
 while(<>){
     die "Not an absolute directory: $_" unless m(^\s*/);
     my @parts=split '/';
-    shift @parts; # remove empty string at start
     pop @parts;   # remove non-directory or empty at end
-    $dirs=trim($dirs,"", @parts);
+    $dirs=trim($dirs, @parts);
 }
 say join("/", @$dirs), "/";
 
@@ -20,7 +19,6 @@ sub trim($previous, @current){
     $previous=\@current unless defined $previous;
     my @new=map {$_->[0]}
         grep {(all {defined $_}(@$_)) && $_->[0] eq $_->[1]}
-#        grep {defined $_->[0] && defined $_->[1] && $_->[0] eq $_->[1]}
         zip6 @$previous, @current;
     return \@new;
 }
