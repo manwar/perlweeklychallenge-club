@@ -44,7 +44,7 @@ sub common_path($paths) {
 
     my @common_path = ('');
     foreach my $j (0 .. $i-1) {
-        my %paths = map { $_->[$j] => 1 } @dirs;;
+        my %paths = map { $_->[$j] => 1 } @dirs;
         last if (keys %paths != 1);
         push @common_path, keys %paths;
     }
