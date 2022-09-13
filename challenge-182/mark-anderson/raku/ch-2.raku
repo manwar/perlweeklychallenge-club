@@ -15,7 +15,7 @@ is common-path(< /ab/bc/cd/de/ef
 is common-path(< /a/b/c
                  /a/c/e
                  /a/d/z >), '/a';
-              
+
 is common-path(< /a/b/c
                  /b/c/d
                  /c/d/e >), q{};
@@ -23,7 +23,7 @@ is common-path(< /a/b/c
 sub common-path(+@dirs)
 {
     @dirs .= map({ .split('/').List });
-    my $z  = ([Z] @dirs).List;
-    my $i  = $z.first({ not [eq] $_ }, :k) || $z.elems;
+    my $z  = ([Zeq] @dirs).List;
+    my $i  = $z.first({ not $_ }, :k) || $z.elems;
     @dirs.head[^$i].join('/')
 }
