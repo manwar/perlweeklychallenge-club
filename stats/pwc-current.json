@@ -1,6 +1,8 @@
 {
    "series" : [
       {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 182",
          "data" : [
             {
                "name" : "Dario Mazzeo",
@@ -13,24 +15,29 @@
                "name" : "Humberto Massa"
             },
             {
+               "drilldown" : "James Smith",
                "name" : "James Smith",
-               "y" : 3,
-               "drilldown" : "James Smith"
+               "y" : 3
             },
             {
-               "drilldown" : "Luca Ferrari",
+               "y" : 5,
+               "drilldown" : "Laurent Rosenfeld",
+               "name" : "Laurent Rosenfeld"
+            },
+            {
                "y" : 8,
+               "drilldown" : "Luca Ferrari",
                "name" : "Luca Ferrari"
             },
             {
-               "y" : 2,
+               "name" : "Mark Anderson",
                "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
+               "y" : 2
             },
             {
-               "y" : 2,
+               "name" : "Matthew Neleigh",
                "drilldown" : "Matthew Neleigh",
-               "name" : "Matthew Neleigh"
+               "y" : 2
             },
             {
                "y" : 2,
@@ -38,70 +45,42 @@
                "name" : "Niels van Dijke"
             },
             {
-               "drilldown" : "Roger Bell_West",
                "y" : 4,
-               "name" : "Roger Bell_West"
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
             },
             {
-               "name" : "W. Luis Mochan",
                "y" : 3,
-               "drilldown" : "W. Luis Mochan"
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan"
             }
-         ],
-         "name" : "The Weekly Challenge - 182",
-         "colorByPoint" : 1
+         ]
       }
    ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2022-09-13 17:34:51 GMT"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 182"
-   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Dario Mazzeo",
             "name" : "Dario Mazzeo",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "id" : "Dario Mazzeo"
+            ]
          },
          {
-            "name" : "Humberto Massa",
+            "id" : "Humberto Massa",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Humberto Massa"
+            "name" : "Humberto Massa"
          },
          {
-            "name" : "James Smith",
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -112,9 +91,28 @@
                   1
                ]
             ],
-            "id" : "James Smith"
+            "name" : "James Smith"
          },
          {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Laurent Rosenfeld",
+            "id" : "Laurent Rosenfeld"
+         },
+         {
+            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari",
             "data" : [
                [
@@ -125,8 +123,7 @@
                   "Blog",
                   6
                ]
-            ],
-            "id" : "Luca Ferrari"
+            ]
          },
          {
             "name" : "Mark Anderson",
@@ -139,35 +136,21 @@
             "id" : "Mark Anderson"
          },
          {
+            "id" : "Matthew Neleigh",
             "name" : "Matthew Neleigh",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Matthew Neleigh"
+            ]
          },
          {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
             "id" : "Niels van Dijke",
-            "name" : "Niels van Dijke"
-         },
-         {
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West",
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
-                  2
-               ],
-               [
-                  "Raku",
                   2
                ]
             ]
@@ -179,21 +162,61 @@
                   2
                ],
                [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
+         },
+         {
+            "id" : "W. Luis Mochan",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
                   "Blog",
                   1
                ]
             ],
-            "id" : "W. Luis Mochan",
             "name" : "W. Luis Mochan"
          }
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
    },
    "chart" : {
       "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2022-09-13 17:54:59 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 182"
    }
 }
