@@ -1,0 +1,70 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/maxindex {
+    4 dict begin
+    /mxv 0 def
+    /mxi 0 def
+    enumerate.array {
+        dup 0 get /i exch def
+        1 get /v exch def
+        i 0 eq v mxv gt or {
+            /mxv v def
+            /mxi i def
+        } if
+    } forall
+    mxi
+    end
+} bind def
+
+(maxindex) test.start
+[5 2 9 1 7 6] maxindex 2 eq test
+[4 2 3 1 5 0] maxindex 4 eq test
+[4 2 3 1 4 0] maxindex 0 eq test
+test.end
