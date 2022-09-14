@@ -1,0 +1,15 @@
+Thought I'd also have a go at translating ch-1.pl and ch-2.pl into C..
+
+ch-1.c and ch-2.c produces identical (non-debugging) output to my Perl
+originals.
+
+Both use the command-line argument processing module args.[ch], and ch-2.c
+also uses a pre-written readline() routine and a string trimming routine
+(both not used in these Challenges before).
+
+They were both quite straightforward to translate, it's just that we have to
+write a lot more low-level support code that Perl does for us..  however,
+in ch-1, I folded all the stages together to avoid having to store all the
+input, whether as a single huge string or as a single huge array of words.
+Now I'm curious as to what the Perl ch-1 solution might have looked like if
+I'd done it that way - perhaps it would be neater.
