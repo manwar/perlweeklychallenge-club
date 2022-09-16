@@ -30,7 +30,7 @@ say common_base_dir(@ARGV);
 
 ### Implementation
 
-# The example seams to be easy, but a closer look uncovers some issues:
+# The example seems to be easy, but a closer look uncovers some issues:
 # - The result in the example does not end in a slash.  However, this
 #   cannot not affect the leading slash.  A common root path still
 #   consists of a single slash.
