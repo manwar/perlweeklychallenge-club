@@ -4,9 +4,10 @@
 #
 # See https://wlmb.github.io/2022/09/12/PWC182/#task-2-common-path
 use v5.36;
+use Cwd qw(getcwd);
 my $dirs;
 while(<>){
-    die "Not an absolute directory: $_" unless m(^\s*/);
+    canonical($_);
     my @parts=split '/';
     pop @parts;   # remove non-directory or empty at end
     my $d=$dirs->{shift @parts}//={};
@@ -19,4 +20,14 @@ while(1){
     say(""), last unless @subdirs==1;
     print "@subdirs/";
     $d=$d->{"@subdirs"}
+}
+sub canonical{
+    for($_[0]){                         # localize $_
+        s{^\s*}{};                      # remove leading space
+        s{^([^/])}{getcwd . "/$1"}e;    # convert to absolute if relative
+	s{/\./}{/}g;                    # /a/./->/a/
+	1 while s{/[^/]*/\.\.(/|$)}{/}; # /a/b/../->/a/
+        s{/\.\.(/|$)}{/}g;              # /..->/ at beginning
+        1 while s{//}{/};               # //->/
+    }
 }
