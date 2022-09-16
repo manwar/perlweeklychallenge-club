@@ -15,7 +15,6 @@
 
 use strict;
 use warnings;
-use File::Basename;
 
 my @filepaths = ( '/a/b/c/1/x.pl', '/a/b/c/d/e/2/x.pl', '/a/b/c/d/3/x.pl', 
 				'/a/b/c/4/x.pl', '/a/b/c/d/5/x.pl', '/a/b/c/d/x.pl' );
