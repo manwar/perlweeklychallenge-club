@@ -1,4 +1,10 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-09-17 21:10:47 GMT"
+   },
    "series" : [
       {
          "name" : "Perl",
@@ -36,6 +42,7 @@
          ]
       },
       {
+         "name" : "Raku",
          "data" : [
             1,
             4,
@@ -67,10 +74,10 @@
             0,
             0,
             29
-         ],
-         "name" : "Raku"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -102,25 +109,9 @@
             0,
             0,
             13
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-09-16 17:38:33 GMT"
-   },
    "xAxis" : {
       "categories" : [
          "Richard Hainsworth",
@@ -155,13 +146,22 @@
          "Stephen G. Lynn"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    }
 }
