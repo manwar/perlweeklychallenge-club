@@ -44,23 +44,24 @@ sub max_index_var {
 
  * We use `{condition} && ({assignment}) for {list}`
 
-   To allow us the compactness of an `if` and a post-prefix `for`
+   to allow us the compactness of an `if` and a post-prefix `for`.
 
- * As we need the index we can't loop over the array `@_`, instead we loop over it's index.
+ * As we need the index we can't loop over the array `@_`, instead we loop over it's index:
 
    Often we use `@_` which in scalar context is the length of the list, and `@_-1` for the last
    index. But perl (as usual) has another way to do that - and that is to use the special
    variable `$#_` which gives the last index of the array.
 
- * Now, which one is better? Well this depends on the numbers... If you find max index on a "semi-sorted" increasing list then
-   the first method is faster, if you find max index on a "semi-sorted" decreasing list the second method is better.
+ * Now, the question of the two methods is which one is better? Well this depends on the numbers...
 
-   If we try it on a truly random list of numbers {well as good as `rand`} is we see the variable method is better by about 40%...
+   * If you find max index on a "semi-sorted" increasing list then the first method is faster.
+   * If you find max index on a "semi-sorted" decreasing list the second method is better.
 
-   Why then is bad for a "semi-sorted" list. The slowdown is caused by the number of variable updates. With a sorted list there
-   would be `n` comparisons and `2n` updates [one for `$v` & one for `$m` for each number]- a reversed list there would be `n` comparisons but only `2` updates.
+   If we try it on a truly random list of numbers {well as good as `rand` is at being truly random} we see the variable method is better by about 40%.
 
-   For a random list of `1,000` numbers the number of updates is around `20` so we can see it is nearer the "semi-sorted" list.
+   Why then is it bad for the "semi-sorted" list. The slowdown is caused by the number of variable assignments. With a sorted list there would be `n` comparisons and `2n` updates [one for `$v` & one for `$m` for each number] - a reversed list there would be `n` comparisons but only `2` updates.
+
+   For a random list of `1,000` numbers the number of updates is around `10`-`20` so we can see it is nearer the "semi-sorted" list.
 
 # Task 2 - Common path
 
