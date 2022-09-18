@@ -26,6 +26,7 @@ this everytime the value at the entry is greater than the value at the max index
 
 ```perl
 sub max_index {
+  return unless @_;
   my $m=0;
   $_[$_] > $_[$m] && ( $m = $_ ) for 1 .. $#_;
   $m
