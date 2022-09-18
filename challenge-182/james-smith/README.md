@@ -22,28 +22,47 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-182/ja
 ## Solution
 
 A relatively simple first challenge - we keep a track of the max index `$m`, looping through the array and updating
-this everytime the value at the entry is greater than the value at the max index.
+this everytime the value at the entry is greater than the value at the max index. We can do this two ways: (a) without keeping a separate variable for the max value and (b) with, giving us:
 
+```perl
+sub max_index {
+  return unless @_;
+  my $m=0;
+  $_[$_] > $_[$m] && ( $m = $_ ) for 1 .. $#_;
+  $m
+}
+```
+and
+```perl
+sub max_index_var {
+  return unless @_;
+  my $v = $_[ my $m=0 ];
+  $_[$_] > $v && ( $v = $_[$m=$_] ) for 1 .. $#_;
+  $m
+}
+```
 **Notes:**
 
  * We use `{condition} && ({assignment}) for {list}`
 
-   To allow us the compactness of an `if` and a post-prefix `for`
+   to allow us the compactness of an `if` and a post-prefix `for`.
 
- * As we need the index we can't loop over the array `@_`, instead we loop over it's index.
+ * As we need the index we can't loop over the array `@_`, instead we loop over it's index:
 
    Often we use `@_` which in scalar context is the length of the list, and `@_-1` for the last
    index. But perl (as usual) has another way to do that - and that is to use the special
    variable `$#_` which gives the last index of the array.
-   
 
-```perl
-sub max_index {
-  my $m=0;
-  $_[$_] > $_[$m] && ( $m = $_ ) for 0 .. $#_;
-  $m
-}
-```
+ * Now, the question of the two methods is which one is better? Well this depends on the numbers...
+
+   * If you find max index on a "semi-sorted" increasing list then the first method is faster.
+   * If you find max index on a "semi-sorted" decreasing list the second method is better.
+
+   If we try it on a truly random list of numbers {well as good as `rand` is at being truly random} we see the variable method is better by about 40%.
+
+   Why then is it bad for the "semi-sorted" list. The slowdown is caused by the number of variable assignments. With a sorted list there would be `n` comparisons and `2n` updates [one for `$v` & one for `$m` for each number] - a reversed list there would be `n` comparisons but only `2` updates.
+
+   For a random list of `1,000` numbers the number of updates is around `10`-`20` so we can see it is nearer the "semi-sorted" list.
 
 # Task 2 - Common path
 
