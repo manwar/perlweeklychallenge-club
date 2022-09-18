@@ -7,10 +7,16 @@ use warnings;
 ##
 sub deepest_path{
     my(@paths) = @_;
-    my @path_lengths_sorted = sort { $a cmp $b } map { length($_) } @paths;
+    my @sub_paths = map { [split(/\//, $_)] } @paths; 
+    my @path_lengths_sorted = sort { $a <=> $b } map { 0 + @{$_} } @sub_paths;    
+    my $deepest_path = q//; 
     for my $i (0 .. $path_lengths_sorted[0] - 1){
-
-    }    
+        my @column =  map { $_->[$i] } @sub_paths;
+        my %h;
+        map { $h{$_} = undef } @column;
+        $deepest_path .= (keys %h)[0] . q#/# if 1 == keys %h;  
+    }   
+    return $deepest_path;  
 }
 
 MAIN:{
