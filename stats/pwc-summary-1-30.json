@@ -1,4 +1,15 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-09-18 21:41:16 GMT"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "xAxis" : {
       "categories" : [
          "3ter",
@@ -33,24 +44,14 @@
          "Ben Davies"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -82,7 +83,8 @@
             3,
             2,
             0
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -155,13 +157,11 @@
          ]
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-09-18 21:33:22 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    }
 }
