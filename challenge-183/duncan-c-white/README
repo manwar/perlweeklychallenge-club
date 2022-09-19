@@ -1,0 +1,51 @@
+Task 1: Max Index
+
+You are given a list of integers.
+Write a script to find the index of the first biggest number in the list.
+
+Example
+
+Input: @n = (5, 2, 9, 1, 7, 6)
+Output: 2 (as 3rd element in the list is the biggest number)
+
+
+Input: @n = (4, 2, 3, 1, 5, 0)
+Output: 4 (as 5th element in the list is the biggest number)
+
+MY NOTES: nice and easy.
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
+into C (look in the C directory for that).
+
+
+Task 2: Common Path
+Submitted by: Julien Fiegehenn
+
+Given a list of absolute Linux file paths, determine the deepest path
+to the directory that contains all of them.
+
+Example
+
+Input:
+    /a/b/c/1/x.pl
+    /a/b/c/d/e/2/x.pl
+    /a/b/c/d/3/x.pl
+    /a/b/c/4/x.pl
+    /a/b/c/d/5/x.pl
+
+Output:
+    /a/b/c
+
+MY NOTES: that's a really interesting problem, and I like ones related to
+filesystems as I'm a sysadmin.  Now, what data structure would be perfect
+to help us answer this question?  Is it as simple as "longest common path
+prefix so far", i.e. start as the whole dirname (remove only the file part),
+and then for each new filepath entry check whether the new entry shares the
+whole "longest common path prefix", and if not, repeatedly remove the last
+dir part until it does:-)  The point is that the common path only ever gets
+shorter as we process more paths.  Will need to ensure that the code also
+handles the / (no common path other than root) case properly.
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
+into C (look in the C directory for that).
+
