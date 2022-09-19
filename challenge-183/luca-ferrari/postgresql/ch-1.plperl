@@ -1,0 +1,37 @@
+-- Perl Weekly Challenge 183
+-- Task 1
+
+CREATE SCHEMA IF NOT EXISTS pwc183;
+
+CREATE OR REPLACE FUNCTION
+pwc183.task1_plperl()
+RETURNS int[]
+AS $CODE$
+
+my @list = ( [1,2], [3,4], [5,6], [1,2] );
+my @clear;
+
+
+for my $index1 ( 0 .. $#list - 1 ) {
+    my $array_found = 0;
+    for my $index2 ( $index1 + 1 .. $#list ) {
+        my $left  = $list[ $index1 ];
+        my $right = $list[ $index2 ];
+
+        my $found = 0;
+        for my $item_left ( @$left ) {
+            for my $item_right ( @$right ) {
+                $found++ and last if $item_left == $item_right;
+            }
+        }
+
+        $array_found++ if ( $found == scalar( @$left ) );
+    }
+
+    push @clear, $list[ $index1 ] if ( ! $array_found );
+}
+
+return \@clear;
+
+$CODE$
+LANGUAGE plperl;
