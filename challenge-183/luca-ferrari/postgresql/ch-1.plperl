@@ -21,7 +21,6 @@ for my $index1 ( 0 .. $#list - 1 ) {
         my $found = 0;
         for my $item_left ( @$left ) {
             for my $item_right ( @$right ) {
-                elog( INFO, "Item $item_left vs $item_right" );
                 $found++ and last if $item_left == $item_right;
             }
         }
