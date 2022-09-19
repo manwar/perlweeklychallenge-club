@@ -1,0 +1,38 @@
+Task 1: Prime Partition
+
+You are given two positive integers, $m and $n.
+
+Write a script to find out the Prime Partition of the given number $m that
+contains $n elements. No duplicates allowed.
+
+For example,
+
+  Input: $m = 18, $n = 2
+  Output: 5, 13 or 7, 11
+
+  Input: $m = 19, $n = 3
+  Output: 3, 5, 11
+
+MY NOTES: ok, sounds quite easy, even if it is to do with Primes.  Without
+duplicates means that each prime p < m is either present or absent in a
+given partition, so we can use our old trick of having a counting loop from
+0..2**(nitems)-1 and compute the sum of just those items selected by the
+binary bits of the count that are 1 (then check that the sum is $m and
+the number of elements being summed is $n)
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
+into C (look in the C directory for that).
+
+
+Task 2: Five-number Summary
+
+You are given an array of integers.
+
+Write a script to compute the five-number summary of the given set of integers.
+
+You can find the definition and example in the wikipedia page:
+  https://en.wikipedia.org/wiki/Five-number_summary
+
+MY NOTES: Nice and simple: sort the data, pick the median, first and third
+quartile values.  Note that the median can be the average (mean) of the
+two central values if the #values is even.

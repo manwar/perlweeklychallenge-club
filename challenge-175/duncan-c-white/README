@@ -1,0 +1,62 @@
+Task 1: Last Sunday
+
+Write a script to list Last Sunday of every month in the given year.
+
+For example, for year 2022, we should get the following:
+
+2022-01-30
+2022-02-27
+2022-03-27
+2022-04-24
+2022-05-29
+2022-06-26
+2022-07-31
+2022-08-28
+2022-09-25
+2022-10-30
+2022-11-27
+2022-12-25
+
+MY NOTES: ok, sounds pretty easy: basically, start on the 1st of the
+month, and walk forwards hitting the date when we hit a Sunday.  The
+hardest part is, as always, choosing which date manipulation module to use.
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
+into C (look in the C directory for that).
+
+
+Task 2: Perfect Totient Numbers
+
+Write a script to generate first 20 Perfect Totient Numbers. Please
+checkout the following wikipedia page for more information:
+
+  https://en.wikipedia.org/wiki/Perfect_totient_number
+
+Explanation gleaned from those notes:
+
+A perfect totient number is an integer that is equal to the sum of its
+iterated totients. That is, we apply the totient function to a number n,
+apply it again to the resulting totient, and so on, until the number 1
+is reached, and add together the resulting sequence of numbers; if the
+sum equals n, then n is a perfect totient number.
+
+The totient function counts the positive integers up to a given integer
+n that are relatively prime to n.  In other words, it is the number of
+integers k in the range 1 <= k <= n for which gcd(n, k) is equal to 1.
+
+For example, there are six positive integers less than 9 and relatively
+prime to it, so the totient of 9 is 6; there are two numbers less than
+6 and relatively prime to it, so the totient of 6 is 2; and there is one
+number less than 2 and relatively prime to it, so the totient of 2 is 1;
+and 9 = 6 + 2 + 1, so 9 is a perfect totient number.
+
+Output
+
+3, 9, 15, 27, 39, 81, 111, 183, 243, 255, 327, 363, 471, 729,
+2187, 2199, 3063, 4359, 4375, 5571
+
+MY NOTES: given a gcd() function it seems relatively straightforward.
+We last used gcd() in challenge 136.
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
+into C (look in the C directory for that).

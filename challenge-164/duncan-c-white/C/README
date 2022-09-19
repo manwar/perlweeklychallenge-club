@@ -1,0 +1,13 @@
+Thought I'd also have a go at translating ch-1.pl and ch-2.pl into C..
+
+Both C versions produce identical (non-debugging) output to my Perl originals
+
+ch-1.c uses primes.[ch], a prime number generator module that I wrote ages ago.
+
+ch-2-slow.c was my original implementation of the ch02.pl in C, but it was
+hopelessly slow - The only tricky issue is how to represent the seen set.
+Here I went for the obvious bitmap approach, but initializing the seen bitmap
+in ishappy() takes a long time.
+
+ch-2.c is the tweaked version which stores the seen set as a "dynamically
+growable bitmap", this is very much faster than ch-2-slow.c

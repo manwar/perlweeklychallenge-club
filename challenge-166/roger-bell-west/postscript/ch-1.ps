@@ -1,0 +1,263 @@
+%!PS
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/reduce_init { % value array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    0 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{ exch dup length
+  2 index length add string
+  dup dup 4 2 roll copy length
+  4 -1 roll putinterval
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/cartesianproduct { % [ [ a b ] [ c d ] ] -> [ [ a c ] [ a d ] [ b c ] [ b d ] ]
+    5 dict begin
+    /pat exch def
+    /c [ pat length { 0 } repeat ] def
+    /cm [ pat { length 1 sub } forall ] def 
+    /ex false def
+    [
+        {
+            ex {
+                exit
+            } if
+            [
+                0 1 c length 1 sub {
+                    /i exch def
+                    pat i get c i get get
+                } for
+            ]
+            /ss c length 1 sub def
+            {
+                c ss c ss get 1 add put
+                c ss get cm ss get gt {
+                    ss 0 eq {
+                        /ex true def
+                        exit
+                    } if
+                    c ss 0 put
+                    /ss ss 1 sub def
+                } {
+                    exit
+                } ifelse
+            } loop
+        } loop
+        end
+    ]
+} bind def
+
+/hexwords {
+    7 dict begin
+    /sb exch def
+    /hi exch def
+    /lo exch def
+    /abcdef (abcdef) def
+    /oilst (oilst) def
+    [
+        (dictionary.txt) (r) file dup bytesavailable string readstring pop
+        (\n) strsplit {
+            dup length dup lo ge exch hi le and {
+                /valid true def
+                /sbc 0 def
+                dup {
+                    (.) dup 0 3 index put exch pop
+                    dup oilst exch search {
+                        pop pop pop pop
+                        /sbc sbc 1 add def
+                        sbc sb gt {
+                            /valid false def
+                        } if
+                    } {
+                        pop
+                        abcdef exch search {
+                            pop pop pop
+                        } {
+                            pop
+                            /valid false def
+                        } ifelse
+                    } ifelse
+                    valid not {
+                        exit
+                    } if
+                } forall
+                valid not {
+                    pop
+                } if
+            } {
+                pop
+            } ifelse
+        } forall
+    ]
+    end
+} bind def
+
+/combiwords {
+    7 dict begin
+    /l exch def
+    /wh 0 dict def
+    {
+        dup length /lx exch def
+        wh lx known not {
+            wh lx 0 array put
+        } if
+        wh lx get exch apush.right wh exch lx exch put
+    } forall
+    /tmap [ 0 array ] def
+    /omap 0 array def
+    {
+        tmap length 0 eq {
+            exit
+        } if
+        tmap apop.right /c exch def /tmap exch def
+        /s 0 c { add } reduce_init def
+        1 1 l s sub {
+            /j exch def
+            wh j known {
+                /tmap tmap c j apush.right apush.right def
+            } if
+        } for
+        wh l s sub known {
+            /omap omap c l s sub apush.right apush.right def
+        } if
+    } loop
+    [
+        omap {
+            [ exch
+              { wh exch get } forall
+            ]
+            cartesianproduct
+            {
+                () strjoin
+            } forall
+        } forall
+    ]
+    end
+} bind def
+
+(hexwords) test.start
+2 8 8 hexwords length 1463 eq test
+8 8 8 hexwords length 164 eq test
+2 8 0 hexwords length 45 eq test
+2 8 1 hexwords length 244 eq test
+test.end
+
+(combiwords) test.start
+4 4 0 hexwords 8 combiwords length 144 eq test
+3 5 0 hexwords 8 combiwords length 274 eq test
+test.end

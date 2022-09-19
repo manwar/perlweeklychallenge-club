@@ -1,0 +1,28 @@
+#! /usr/bin/env perl
+
+use strict;
+use warnings;
+use feature 'say';
+use feature 'signatures';
+use feature 'state';
+
+no warnings qw(experimental::signatures);
+
+my $count = $ARGV[0] || 10;
+
+sub next_perrin
+{
+  state @perrin = (3, 0, 2);
+  state $index   = 0;
+  
+  while (@perrin <= $index)
+  {
+    push(@perrin, $perrin[-2] + $perrin[-3]);
+  }
+
+  return $perrin[$index++];
+}
+
+my @ps; push(@ps, next_perrin($_)) for 1..$count;
+
+say join(", ", @ps);

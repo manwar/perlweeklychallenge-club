@@ -1,0 +1,48 @@
+Task 1: Esthetic Number
+
+You are given a positive integer, $n.
+
+Write a script to find out if the given number is Esthetic Number.
+
+An esthetic number is a positive integer where every adjacent digit
+differs from its neighbour by +-1.
+
+For example,
+
+5456 is an esthetic number as |5 - 4| = |4 - 5| = |5 - 6| = 1
+120 is not an esthetic numner as |2 - 0| != 1
+
+MY NOTES: ok, sounds quite easy.  Let's make it slightly harder by allowing
+ourselves (in debug mode) to reproduce the examples as written.. although
+note that I've cheated slighltly: I've simplified the "not" output format
+above to show only the first "|a-b| != 1", because it's not quite clear
+what the output should be in all cases.
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
+into C (look in the C directory for that).
+
+
+Task 2: Sylvester's sequence
+
+Write a script to generate first 10 members of Sylvester's sequence. For
+more informations, please refer to the wikipedia page:
+  https://en.wikipedia.org/wiki/Sylvester%27s_sequence
+
+(In summary, each term of the sequence is the product of the previous
+terms, plus one. The first few terms of the sequence are 2, 3, 7, 43, 1807)
+
+Output
+
+2
+3
+7
+43
+1807
+3263443
+10650056950807
+113423713055421844361000443
+12864938683278671740537145998360961546653259485195807
+165506647324519964198468195444439180017513152706377497841851388766535868639572406808911988131737645185443
+
+MY NOTES: Also very easy, although the numbers grow ridiculously fast.
+Sounds like a job for BigInt.

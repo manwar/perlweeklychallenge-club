@@ -1,0 +1,199 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/jd2ymd {
+    15 dict begin
+    /y 4716 def
+    /v 3 def
+    /j 1401 def
+    /u 5 def
+    /m 2 def
+    /s 153 def
+    /n 12 def
+    /w 2 def
+    /r 4 def
+    /B 274277 def
+    /p 1461 def
+    /C -38 def
+    dup
+    4 mul B add 146097 idiv 3 mul 4 idiv C add j add add /f exch def
+    r f mul v add /e exch def
+    e p mod r idiv u mul w add /h exch def
+    /day h s mod u idiv 1 add def
+    /month h s idiv m add n mod 1 add def
+    /year e p idiv y sub n m add month sub n idiv add def
+    [ year month day ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{ exch dup length
+  2 index length add string
+  dup dup 4 2 roll copy length
+  4 -1 roll putinterval
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/ymd2jd {
+    4 dict begin
+    aload pop
+    /d exch def
+    /m exch def
+    /y exch def
+    /mn m 14 sub 12 idiv def
+    y 4800 add mn add 1461 mul 4 idiv
+    mn 12 mul neg 2 sub m add 367 mul 12 idiv add
+    y 4900 add mn add 100 idiv 3 mul 4 idiv sub
+    d add
+    32075 sub
+    end
+} bind def
+
+/jd2dow {
+    1 add 7 mod 
+} bind def
+
+
+% end included library code
+
+/lastsunday {
+    3 dict begin
+    /year exch def
+    [
+        2 1 13 {
+            /month exch def
+            month 13 eq {
+                /month month 12 sub def
+                /year year 1 add def
+            } if
+            [ year month 1 ] ymd2jd 1 sub dup jd2dow sub jd2ymd /od exch def
+            [
+                od 0 get (....) cvs
+                od 1 get dup 10 lt {
+                    (.) cvs (0) exch strconcat
+                } {
+                    (..) cvs
+                } ifelse
+                od 2 get (..) cvs
+            ] (-) strjoin
+        } for
+    ]
+    end
+} bind def
+
+(lastsunday) test.start
+2022 lastsunday
+[ (2022-01-30) (2022-02-27) (2022-03-27) (2022-04-24) (2022-05-29)
+  (2022-06-26) (2022-07-31) (2022-08-28) (2022-09-25) (2022-10-30)
+  (2022-11-27) (2022-12-25) ]
+deepeq test
+test.end

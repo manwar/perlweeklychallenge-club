@@ -1,0 +1,6 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($file where $file.IO.f && $file.IO.r = "paragraph.txt");
+
+(slurp $file).split(".")>>.words>>.sort({ $^a.lc cmp $^b.lc })>>.join(" ").join(". ").say;
+

@@ -1,0 +1,57 @@
+Task 1: Quater-imaginary Base
+
+Write a script to convert a given number (base 10) to quater-imaginary
+base number and vice-versa. For more informations, please checkout
+the wiki page: https://en.wikipedia.org/wiki/Quater-imaginary_base
+
+For example,
+
+$number_base_10 = 4
+$number_quater_imaginary_base = 10300
+
+MY NOTES: seriously?  base -2i, and for task 1?  what was Knuth smoking
+in 1960?  First, we have to define "number" more carefully.  I'm going to
+choose "positive integer", because that reduces the problem from base -2i
+to base -4 with zeroes between every pair of digits, and that's already
+much too horrible for a "task 1".
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
+into C (look in the C directory for that).
+
+
+Task 2: Business Date
+
+You are given $timestamp (date with time) and $duration in hours.
+
+Write a script to find the time that occurs $duration business hours
+after $timestamp. For the sake of this task, let us assume the working
+hours is 9am to 6pm, Monday to Friday. Please ignore timezone too.
+
+For example,
+
+Suppose the given timestamp is 2022-08-01 10:30 and the duration is 4 hours:
+then the next business date would be 2022-08-01 14:30.
+
+Similar if the given timestamp is 2022-08-01 17:00 and the duration
+is 3.5 hours, then the next business date would be 2022-08-02 11:30.
+
+MY NOTES: ok, at least this is more straightforward.  We sort of "wrap
+around" from date D, time 18:00 to date D+1 time 09:00 (when D is
+Mon..Thur), and similarly wrap around from Friday 18:00 to the following
+Monday 09:00..
+
+My first version (ch-2.pl) shows how to cheat using Date::Manip, which
+already has a concept of business days which does of the work.
+
+My second version (ch-2a.pl) shows an alternative where we do most of the
+work ourselves, needing only routines to:
+   - parse a calendar date and time, and
+   - move to the next calendar date, and
+   - determine which day of the week (Mon..Sun, 1..7) a date is
+   - break a date down into (year, month, day, hour, minutes)
+
+GUEST LANGUAGE: obviously ch-2.pl could only be translated into C
+by translating all the built-in business day logic of Date::Manip
+to C as well.  But, having effectively done all that in the Perl
+universe in ch-2a.pl, I then had a go at translating ch-2a.pl into C
+(look in the C directory for that)

@@ -1,0 +1,60 @@
+Task 1: Sentence Order
+
+You are given a paragraph.
+
+Write a script to order each sentence alphanumerically and print the
+whole paragraph.
+
+Example
+
+Input:
+    All he could think about was how it would all end. There was
+    still a bit of uncertainty in the equation, but the basics
+    were there for anyone to see. No matter how much he tried to
+    see the positive, it wasn't anywhere to be seen. The end was
+    coming and it wasn't going to be pretty.
+
+Output:
+    about All all could end he how it think was would. a anyone
+    basics bit but equation, for in of see still the the There
+    there to uncertainty was were. anywhere be he how it matter
+    much No positive, see seen the to to tried wasn't. and be
+    coming end going it pretty The to was wasn't.
+
+MY NOTES: hmm, sounds surprisingly tricky, we have to read all the input,
+identify all the sentences (a sentence can span multiple lines), for each
+sentence split off the trailing '. ', sort the words in the sentence in
+case-insensitive order, add the '. ' back again, accumulate all the
+output words in a single array, and then print it out with width formatting.
+Stole width formatting code from challenge 177.
+
+
+Task 2: Hot Day
+
+You are given file with daily temperature record in random order.
+Write a script to find out days hotter than previous day.
+
+Example
+
+Input File: (temperature.txt)
+
+2022-08-01, 20
+2022-08-09, 10
+2022-08-03, 19
+2022-08-06, 24
+2022-08-05, 22
+2022-08-10, 28
+2022-08-07, 20
+2022-08-04, 18
+2022-08-08, 21
+2022-08-02, 25
+
+Output:
+2022-08-02
+2022-08-05
+2022-08-06
+2022-08-08
+2022-08-10
+
+MY NOTES: looks pretty easy (easier than first task).  Could parse dates, but
+technically as the dates are all ISO dates, they can be sorted as strings.

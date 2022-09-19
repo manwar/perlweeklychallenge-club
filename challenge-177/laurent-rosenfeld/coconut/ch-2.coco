@@ -1,0 +1,37 @@
+import math
+from re import search
+
+def is_prime(n):
+    case n:
+        match 0:
+            return False
+        match 1:
+            return False
+        match 2:
+            return True
+        match _ is int if n > 2:
+            if n % 2 == 0:
+                return False
+            p = 3
+            sqrt_n = math.sqrt(n)
+            while (p <= sqrt_n):
+                if (n % p) == 0:
+                    return False
+                p += 2
+            return True
+
+def is_cyclops (num):
+  s = str(num)
+  size = len(s)
+  mid = int((size - 1) / 2)
+  if s[mid] != '0':
+    return False
+  if search(r"0", s[0:mid-1]) or search(r"0", s[mid+1:size-1]):
+    return False
+  return True
+
+range(100, 999) :: range(10000, 99999) :: range(1000000, 9000000) \
+|> filter$( -> str(_) == str(_)[::-1]) \    # palindrome
+|> filter$( -> len(str(_)) %2 != 0) \       # odd number of digits
+|> filter$(is_cyclops) |> filter$(is_prime) \
+|>  list |> .$[:20] |> print

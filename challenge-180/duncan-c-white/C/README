@@ -1,0 +1,12 @@
+Thought I'd also have a go at translating ch-1.pl and ch-2.pl into C..
+
+ch-1.c and ch-2.c produces identical (non-debugging) output to my Perl
+originals.
+
+Both use the command-line argument processing module args.[ch], and ch-2.c
+also uses the prarray.[ch] array printing function, and a new int (or comma-sep
+lists of int) argument parsing function in parseints.[ch].
+
+They were both very straightforward to translate, it's just that we have to
+write a lot more low-level support code that Perl does for us..  for instance,
+in ch-1, the frequency hash over characters became a 256-element int array.

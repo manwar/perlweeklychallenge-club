@@ -1,0 +1,19 @@
+2sn     # push 2 on the stack, pop 2 off the top of the stack
+        # and store it into register n
+lnp     # copy the value back on the stack and print it
+9sc     # give counter c an initial value of 9
+[       # start of macro
+  1-    # subtract 1 from stack (value n-1)
+  ln    # load n to stack
+  *1+p  # compute product n * n-1, add 1 and print
+  sn    # pop new value and store it in register n
+  ln    # copy new value in  n to stack
+  lc    # copy counter to stack
+  1-    # decrement counter (subtract 1 from c)
+  sc    # store decremented counter in c
+  0 lc  # store 0 and counter on stack
+  >m    # compare c to 0 and, if c > 0, run recursively macro in m
+]       # end of macro
+d       # duplicate macro on stack
+sm      # store macro in register m
+x       # execute first iteration of macro

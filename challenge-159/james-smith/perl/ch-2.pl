@@ -33,7 +33,6 @@ is( moebius_exp(     $_->[0] ), $_->[1] ) for @TESTS;
 warn "opt";
 is( moebius_div_opt( $_->[0] ), $_->[1] ) for @TESTS;
 #timethis( 500_000, sub { moebius_div_opt( $_->[0] ) for @TESTS } );
-exit;
 warn "div";
 is( moebius_div(     $_->[0] ), $_->[1] ) for @TESTS;
 timethis(     100, sub { moebius_div(     $_->[0] ) for @TESTS } );

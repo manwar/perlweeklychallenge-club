@@ -1,0 +1,128 @@
+%!PS
+
+% begin included library code
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+% end included library code
+
+/kronecker {
+    12 dict begin
+    /b exch def
+    /a exch def
+    /ax a 0 get length def
+    /ay a length def
+    /bx b 0 get length def
+    /by b length def
+    [
+        0 1 ay by mul 1 sub {
+            /y exch def
+            /byi y by mod def
+            /ayi y by idiv def
+            [
+                0 1 ax bx mul 1 sub {
+                    /x exch def
+                    /bxi x bx mod def
+                    /axi x bx idiv def
+                    a ayi get axi get b byi get bxi get mul
+                } for
+            ]
+        } for
+    ]
+    end
+} bind def
+
+(kronecker) test.start
+[ [1 2] [3 4] ] [ [5 6] [7 8] ] kronecker
+[ [ 5   6  10  12] 
+  [ 7   8  14  16] 
+  [15  18  20  24] 
+  [21  24  28  32] ] deepeq test
+test.end

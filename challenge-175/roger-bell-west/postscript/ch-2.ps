@@ -1,0 +1,163 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/gcd {
+    {
+        dup
+        3 1 roll
+        mod
+        dup 0 eq {
+            pop exit
+        } if
+    } loop
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/eulertotient {
+    2 dict begin
+    /n exch def
+    0
+    1 1 n {
+        n gcd 1 eq {
+            1 add
+        } if
+    } for
+    end
+} bind def
+
+/iteratedtotient {
+    2 dict begin
+    /n0 exch def
+    /n n0 def
+    /p 0 def
+    {
+        /n n eulertotient def
+        /p p n add def
+        n 1 eq {
+            exit
+        } if
+        p n0 gt {
+            exit
+        } if
+    } loop
+    p
+    end
+} bind def
+
+/perfecttotient {
+    2 dict begin
+    /ct exch def
+    /n 1 def
+    [
+        {
+            /n n 1 add def
+            n dup iteratedtotient eq {
+                n
+                /ct ct 1 sub def
+                ct 0 le {
+                    exit
+                } if
+            } if
+        } loop
+    ]
+    end
+} bind def
+
+(perfecttotient) test.start
+20 perfecttotient
+[ 3 9 15 27 39 81 111 183 243 255 327 363 471 729 2187 2199 3063 4359
+  4375 5571 ]
+deepeq test
+test.end
