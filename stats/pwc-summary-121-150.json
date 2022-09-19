@@ -1,6 +1,7 @@
 {
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             17,
             28,
@@ -32,11 +33,9 @@
             20,
             1,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             30,
@@ -59,7 +58,7 @@
             0,
             0,
             0,
-            228,
+            230,
             14,
             4,
             0,
@@ -68,7 +67,8 @@
             247,
             1,
             49
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "data" : [
@@ -93,7 +93,7 @@
             0,
             0,
             3,
-            338,
+            344,
             0,
             0,
             0,
@@ -106,14 +106,8 @@
          "name" : "Blog"
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -149,19 +143,25 @@
          "Mark Senn"
       ]
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-09-19 18:26:01 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-09-19 09:45:42 GMT"
-   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
-   },
-   "chart" : {
-      "type" : "column"
+      },
+      "min" : 0
    }
 }
