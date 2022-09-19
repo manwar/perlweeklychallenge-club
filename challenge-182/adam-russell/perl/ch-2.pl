@@ -16,6 +16,7 @@ sub deepest_path{
         map { $h{$_} = undef } @column;
         $deepest_path .= (keys %h)[0] . q#/# if 1 == keys %h;  
     }   
+    chop $deepest_path;
     return $deepest_path;  
 }
 
