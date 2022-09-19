@@ -1,0 +1,147 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/ymd2jd {
+    4 dict begin
+    aload pop
+    /d exch def
+    /m exch def
+    /y exch def
+    /mn m 14 sub 12 idiv def
+    y 4800 add mn add 1461 mul 4 idiv
+    mn 12 mul neg 2 sub m add 367 mul 12 idiv add
+    y 4900 add mn add 100 idiv 3 mul 4 idiv sub
+    d add
+    32075 sub
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/parse {
+    1 dict begin
+    /ds exch def
+    [
+        ds 0 4 getinterval cvi
+        ds 5 2 getinterval cvi
+        ds 8 2 getinterval cvi
+    ]
+    end
+} bind def
+
+/datedifference {
+    4 dict begin
+    parse /d2 exch def
+    parse /d1 exch def
+    d1 ymd2jd d2 ymd2jd sub 0 gt {
+        d1 d2
+        /d1 exch def
+        /d2 exch def
+    } if
+    /yd d2 0 get d1 0 get sub def
+    /inter [ d2 0 get d1 1 get d1 2 get ] def
+    d1 1 get d2 1 get gt
+    d1 1 get d2 1 get eq
+    d1 2 get d2 2 get gt and or {
+        /inter [ d2 0 get 1 sub d1 1 get d1 2 get ] def
+        /yd yd 1 sub def
+    } if
+    [ yd d2 ymd2jd inter ymd2jd sub ]
+    end
+} bind def
+
+(datedifference) test.start
+(2019-02-10) (2022-11-01) datedifference [ 3 264 ] deepeq test
+(2020-09-15) (2022-03-29) datedifference [ 1 195 ] deepeq test
+test.end
