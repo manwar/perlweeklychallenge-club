@@ -37,14 +37,9 @@ sub dateDifference($$) {
   my $year = DateTime::Duration->new(years => 1);
 
   my $y = 0;
-  while ($f < $t) {
+  while ($f <= $t - $year) {
+    $f += $year;
     $y++;
-    $f->add_duration($year);
-    if ($f > $t) {
-      $y--;
-      $f->subtract_duration($year);
-      last;
-    }
   }
 
   return [$y,$f->delta_days($t)->{days}];
