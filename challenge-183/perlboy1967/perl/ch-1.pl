@@ -22,7 +22,7 @@ use warnings;
 use Test::More;
 use Test::Deep qw(cmp_deeply);
 
-use Data::Compare;
+use Data::Compare qw();
 
 ####################################################################
 # sub uuniq(@list)
