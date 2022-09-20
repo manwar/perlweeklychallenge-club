@@ -17,7 +17,14 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-182/ja
 
 # Task 1 - Unique array
 
-***You are given a list of integers. Write a script to find the index of the first biggest number in the list.***
+***You are given list of arrayrefs. Write a script to remove the duplicate arrayrefs from the given list.***
+
+## Examples
+
+| Input                          | Output                   |
+| ------------------------------ | ------------------------ |
+| `([1,2], [3,4], [5,6], [1,2])` | `([1,2], [3,4], [5,6])`  |
+| `([9,1], [3,7], [2,5], [2,5])` | `([9, 1], [3,7], [2,5])` |
 
 ## Solution
 
@@ -30,25 +37,30 @@ We will then look to see which is the better solution! Which is not always as ob
 
 ```perl
 sub unique_array_stringify {
-  my @r    = (shift);
-  my %seen = ("@{$r[0]}" => 1);
-  (!$seen{"@{$_}"}++) && (push @r,$_) for @_;
-  \@r;
+  my(@r,%seen);
+  $seen{ "@{$_}" } ++ || push @r, $_ for @_;
+  \@r 
 }
 ```
 
 We can simply stringify an array by embedding it in a double quoted string *e.g.* `$Q=[1,2,3]` to stringify this
 we just do "@{$Q}" and this gives '`1 2 3`'. We just see if the string is an a list of seen strings...
 
+We use our usual trick of using `&&`, `||` and `?:` to replicate if, unless & if/else blocks inside a postfix
+loop which can't have them
+
+In this case we have `$seen{ "K" }++ || push @r`. If $seen has no key `"K"` then the first parts is zero, so
+we execute the the `push @r, $_`. If already seen then the left hand evaluates to 1 or more and therefor does
+not execute the last bit.
+
 ### Solution 2 using a stringified array - but fixing a bug.
 
 ```perl
 sub unique_array_stringify_fixed {
   local $" = '\0\0\0';
-  my @r    = (shift);
-  my %seen = ("@{$r[0]}" => 1);
-  (!$seen{"@{$_}"}++) && (push @r,$_) for @_;
-  \@r;
+  my(@r,%seen);
+  $seen{ "@{$_}" } ++ || push @r, $_ for @_;
+  \@r
 }
 ```
 
@@ -63,13 +75,13 @@ sub unique_array_array {
   my @r = (shift);
   O: for my $e (@_) {
     R: for my $s (@r) {
-      next unless @{$s} == @{$e};
-      ($_->[0] ne $_->[1]) && (next R) for zip6 @$e, @$s;
+      next if @{$s} != @{$e};
+      $_->[0] eq $_->[1] || next R for zip6 @{$e}, @{$s};
       next O;
     }
-    push @r,$e;
+    push @r, $e;
   }
-  \@r;
+  \@r
 }
 ```
 
@@ -83,3 +95,50 @@ array method now takes around 4 seconds BUT the string mehod now takes 200 secon
 
 The string based solution is about `2x` - `2.5x` faster than the array solution **BUT** the array solution uses
 less memory - so if large arrays is an issue or a small server - then better performance
+
+# Task 2 - Date Difference
+
+***You are given two dates, $date1 and $date2 in the format YYYY-MM-DD. Write a script to find the difference between the given dates in terms on years and days only.***
+
+## Solution
+
+This one may be a bit left field so I'll explain the process..
+
+  #1 foreach date convert YYYY-MM-DD into to YYYY, MM, DD
+  #2 foreach each get value of "special variable"
+  #3 merge together and work out the day of year and whether year is leap year for both ends
+  #4 format output
+
+```perl
+sub date_diff {
+  sub {
+    join ' ', map {
+                $_[$_]
+              ? $_[$_]
+                . ' '
+                . ( $_         ? 'day' : 'year' )
+                . ( $_[$_] > 1 ? 's'   : ''     )
+              : ()
+              } 0 , 1
+  }->(
+    sub {
+       $_[1][3] >= $_[0][3]
+     ? ( $_[1][0] - $_[0][0],       $_[1][3] - $_[0][3]
+                                  - ( $_[1][1] > 2 && $_[0][1] < 3 && $_[1][2] && 1 ) )
+     : ( $_[1][0] - $_[0][0] - 1,   $_[1][3] - $_[0][3] + 366
+                                  - ( $_[1][1] > 2 &&                 $_[1][2] && 1 )
+                                  + (                 $_[0][1] < 3 && $_[0][2] && 1 ) )
+    }->(
+      map {
+        [ $_->[0], $_->[1],
+          ( $_->[0] % 400 ) ^ ( $_->[0] % 100 ) ^ ( $_ ->[0] % 4 ),
+          $FIRST_OF_MONTH[ $_->[1] ] + $_->[2]
+        ]
+      }
+      map { [ split/-/ ] } @_
+    )
+  );
+}
+
+
+  
