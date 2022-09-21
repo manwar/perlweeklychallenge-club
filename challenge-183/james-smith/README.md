@@ -104,10 +104,23 @@ less memory - so if large arrays is an issue or a small server - then better per
 
 This one may be a bit left field so I'll explain the process..
 
-  #1 foreach date convert YYYY-MM-DD into to YYYY, MM, DD
-  #2 foreach each get value of "special variable"
-  #3 merge together and work out the day of year and whether year is leap year for both ends
-  #4 format output
+  1. for each of the two dates convert `YYYY-MM-DD` into to `YYYY`, `MM`, `DD` by splitting on `-`
+  2. for each of these array refs, compute
+     1. whether or not the year is a leap year (here we store a leap year as `0` and a non-leap year as non-zero value)
+     1. the day of the year
+
+        **Note** we assume that a year has 366 days for every year - we do the leap year adjustment later} otherwise the day-of-year comparison fails
+  3. now we pass thes two array refs to an anonymous function (closure) which calculates the years/days
+     1. if the to day-of-year is greater (or equal) to the from day-of-year we calculate the difference in years and days, and make the leap year adjustment if
+        1. the year is not a leap year,
+        1. the from date in January or February,
+        1. and the to date is not we make an adjustment;
+     1. otherwise we compute the difference in years and days and adjust both by a year - the year by -1 year, and the day by +366 days, and then make the leap year adjusments
+        1. if the from year is not a leap year,
+        1. and the from month is January or February we make an adjustment;
+        1. if the to year is not a leap year,
+        1. the month is not January or February we make an adjusment.        
+  4. finally we pass they year/month to another closure which formats it as required. We use a ternary operator with a "false" value of `()` to remove the `0` elements and just join together.
 
 ```perl
 sub date_diff {
