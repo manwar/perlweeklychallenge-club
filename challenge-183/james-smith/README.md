@@ -33,7 +33,7 @@ through the sub-arrays.
 
 We will then look to see which is the better solution! Which is not always as obvious as you think!
 
-### Solution 1 using a stingified array
+### Solution 1 - using a stingified array
 
 ```perl
 sub unique_array_stringify {
@@ -53,7 +53,7 @@ In this case we have `$seen{ "K" }++ || push @r`. If $seen has no key `"K"` then
 we execute the the `push @r, $_`. If already seen then the left hand evaluates to 1 or more and therefor does
 not execute the last bit.
 
-### Solution 2 using a stringified array - but fixing a bug.
+### Solution 2 - using a stringified array - but fixing a bug.
 
 ```perl
 sub unique_array_stringify_fixed {
@@ -68,7 +68,7 @@ We have a problem if any of the strings contain a "space" we can't tell the diff
 strings, i.e. if we stringify `['1 2']` and `[1,2]` we end up with "`1 2`" in both cases. We can "fix" this
 by using a different separator (setting `$"` to something VERY unlikely)....
 
-### Solution 2 comparing arrays
+### Solution 3 - comparing arrays
 
 ```perl
 sub unique_array_array {
