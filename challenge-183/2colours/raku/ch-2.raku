@@ -26,4 +26,8 @@ given $delta-days {
   @output-parts.push: "$_ day" if $_ > 0;
   @output-parts ~= 's' if $_ > 1; 
 }
-say @output-parts.join: ' ';
+given @output-parts {
+  say .join: ' ' if $_;
+  say 'The dates match.' unless $_
+} 
+  
