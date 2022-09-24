@@ -15,8 +15,8 @@ my \try-list = try $input.&from-json;
 when not try-list.defined {
   say 'The elements of the list should be valid according to JSON.';
 }
-when try-list.first(* !~~ Array).defined {
-  say 'The elements should all be arrays.'
+when try-list.are !~~ Array {
+  say 'The elements should all be arrays.';
 }
 my @output-arrays <==
   try-list
