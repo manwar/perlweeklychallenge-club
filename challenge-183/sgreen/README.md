@@ -1,3 +1,3 @@
-# The Weekly Challenge 180
+# The Weekly Challenge 183
 
-[Blog](https://dev.to/simongreennet/weekly-challenge-180-4mi5)
+Blog: [Unique differences](https://dev.to/simongreennet/unique-differences-1cci)
