@@ -1,0 +1,16 @@
+Thought I'd also have a go at translating ch-1.pl into C..
+
+ch-1.c produces identical (non-debugging) output to my Perl original.
+
+It uses the command-line argument processing module args.[ch], and the
+integer-list parsing (parseints.[ch]) module, and the integer-list printing
+module (printarray.[ch]) from earlier challenges, tweaked slightly.
+
+Note that it's not a direct translation of the Perl solution because that
+involves joined strings and then storing a set of such joined strings.
+Instead it does it the obvious low-tech way: finding duplicate arrays and
+deleting them.
+
+I didn't have time to try ch-2.pl into C, although that should be
+straightforward using mktime() and friends like I did in challenge 176.
+Maybe I'll do that a bit later.
