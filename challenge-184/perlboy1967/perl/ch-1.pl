@@ -27,7 +27,7 @@ use Test::Deep qw(cmp_deeply);
 
 sub seqNr (@) {
   my ($i,@s) = (0,@_);
-  map { s/^..(.*)/sprintf("%02d$1",$i++)/re; } @s;
+  map { s/^../sprintf('%02d',$i++)/re; } @s;
 }
 
 
