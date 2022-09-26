@@ -1,24 +1,35 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
    "plotOptions" : {
       "series" : {
+         "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
       }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 184"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Dave Cross"
+         },
+         {
             "id" : "James Smith",
-            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -28,27 +39,18 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "James Smith"
          },
          {
-            "id" : "Matthew Neleigh",
             "name" : "Matthew Neleigh",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
-         },
-         {
-            "id" : "Mohammad S Anwar",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
             ],
-            "name" : "Mohammad S Anwar"
+            "id" : "Matthew Neleigh"
          },
          {
             "data" : [
@@ -57,56 +59,69 @@
                   2
                ]
             ],
+            "name" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar"
+         },
+         {
             "name" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
             "id" : "Niels van Dijke"
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
+   "title" : {
+      "text" : "The Weekly Challenge - 184"
    },
-   "series" : [
-      {
-         "data" : [
-            {
-               "drilldown" : "James Smith",
-               "name" : "James Smith",
-               "y" : 3
-            },
-            {
-               "drilldown" : "Matthew Neleigh",
-               "y" : 2,
-               "name" : "Matthew Neleigh"
-            },
-            {
-               "drilldown" : "Mohammad S Anwar",
-               "y" : 2,
-               "name" : "Mohammad S Anwar"
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "y" : 2,
-               "name" : "Niels van Dijke"
-            }
-         ],
-         "name" : "The Weekly Challenge - 184",
-         "colorByPoint" : 1
-      }
-   ],
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2022-09-26 09:10:07 GMT"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "chart" : {
+      "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2022-09-26 08:53:22 GMT"
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross"
+            },
+            {
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 3
+            },
+            {
+               "name" : "Matthew Neleigh",
+               "drilldown" : "Matthew Neleigh",
+               "y" : 2
+            },
+            {
+               "name" : "Mohammad S Anwar",
+               "drilldown" : "Mohammad S Anwar",
+               "y" : 2
+            },
+            {
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke",
+               "y" : 2
+            }
+         ],
+         "name" : "The Weekly Challenge - 184"
+      }
+   ],
+   "legend" : {
+      "enabled" : 0
    }
 }
