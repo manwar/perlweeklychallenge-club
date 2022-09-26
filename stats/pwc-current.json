@@ -1,43 +1,27 @@
 {
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "name" : "James Smith",
-               "y" : 3,
-               "drilldown" : "James Smith"
-            }
-         ],
-         "name" : "The Weekly Challenge - 184"
-      }
-   ],
-   "legend" : {
-      "enabled" : 0
-   },
    "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2022-09-26 07:46:04 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge - 184"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "legend" : {
+      "enabled" : 0
    },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2022-09-26 07:37:07 GMT"
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "James Smith",
             "id" : "James Smith",
             "data" : [
                [
@@ -48,20 +32,51 @@
                   "Blog",
                   1
                ]
+            ],
+            "name" : "James Smith"
+         },
+         {
+            "name" : "Mohammad S Anwar",
+            "id" : "Mohammad S Anwar",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
             ]
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
-   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
-   }
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 184",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 3,
+               "name" : "James Smith",
+               "drilldown" : "James Smith"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mohammad S Anwar",
+               "name" : "Mohammad S Anwar"
+            }
+         ]
+      }
+   ]
 }
