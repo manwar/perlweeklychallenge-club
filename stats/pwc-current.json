@@ -1,44 +1,36 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
    "chart" : {
       "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 184"
-   },
-   "xAxis" : {
-      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Dave Cross",
             "name" : "Dave Cross"
          },
          {
+            "id" : "Humberto Massa",
             "name" : "Humberto Massa",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Humberto Massa"
+            ]
          },
          {
+            "id" : "James Smith",
             "name" : "James Smith",
             "data" : [
                [
@@ -49,18 +41,17 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "James Smith"
+            ]
          },
          {
+            "id" : "Kjetil Skotheim",
+            "name" : "Kjetil Skotheim",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Kjetil Skotheim",
-            "name" : "Kjetil Skotheim"
+            ]
          },
          {
             "name" : "Luca Ferrari",
@@ -77,47 +68,62 @@
             ]
          },
          {
-            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Mark Anderson"
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
          },
          {
-            "name" : "Matthew Neleigh",
-            "id" : "Matthew Neleigh",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Mohammad S Anwar",
-            "id" : "Mohammad S Anwar",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Niels van Dijke"
+            "name" : "Matthew Neleigh",
+            "id" : "Matthew Neleigh"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Mohammad S Anwar",
+            "name" : "Mohammad S Anwar"
+         },
+         {
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
+            "id" : "Robert DiCicco",
+            "name" : "Robert DiCicco",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Raku",
+                  1
+               ]
+            ]
          },
          {
             "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -127,8 +133,7 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Roger Bell_West"
+            ]
          }
       ]
    },
@@ -137,43 +142,50 @@
          "text" : "Total Solutions"
       }
    },
+   "xAxis" : {
+      "type" : "category"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 184"
    },
    "series" : [
       {
          "name" : "The Weekly Challenge - 184",
+         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 2,
                "name" : "Dave Cross",
-               "drilldown" : "Dave Cross"
-            },
-            {
-               "drilldown" : "Humberto Massa",
-               "name" : "Humberto Massa",
+               "drilldown" : "Dave Cross",
                "y" : 2
             },
             {
-               "y" : 3,
+               "name" : "Humberto Massa",
+               "drilldown" : "Humberto Massa",
+               "y" : 2
+            },
+            {
                "name" : "James Smith",
+               "y" : 3,
                "drilldown" : "James Smith"
             },
             {
-               "y" : 2,
                "name" : "Kjetil Skotheim",
-               "drilldown" : "Kjetil Skotheim"
+               "drilldown" : "Kjetil Skotheim",
+               "y" : 2
             },
             {
                "y" : 8,
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari"
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
             },
             {
                "name" : "Mark Anderson",
@@ -181,30 +193,37 @@
                "drilldown" : "Mark Anderson"
             },
             {
-               "y" : 2,
                "name" : "Matthew Neleigh",
-               "drilldown" : "Matthew Neleigh"
+               "drilldown" : "Matthew Neleigh",
+               "y" : 2
             },
             {
-               "drilldown" : "Mohammad S Anwar",
                "name" : "Mohammad S Anwar",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Mohammad S Anwar"
             },
             {
                "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
-               "y" : 2
+               "y" : 2,
+               "name" : "Niels van Dijke"
+            },
+            {
+               "name" : "Robert DiCicco",
+               "y" : 2,
+               "drilldown" : "Robert DiCicco"
             },
             {
                "drilldown" : "Roger Bell_West",
                "y" : 4,
                "name" : "Roger Bell_West"
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
    ],
+   "legend" : {
+      "enabled" : 0
+   },
    "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2022-09-26 15:30:15 GMT"
+      "text" : "[Champions: 11] Last updated at 2022-09-26 16:13:15 GMT"
    }
 }
