@@ -1,7 +1,7 @@
 [< Previous 181](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-181/james-smith) |
-[Next 183 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-183/james-smith)
+[Next 185 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-185/james-smith)
 
-# The Weekly Challenge 182
+# The Weekly Challenge 184
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,85 +13,80 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-182/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-184/james-smith
 
-# Task 1 - Max index
+# Task 1 - Sequence number
 
-***You are given a list of integers. Write a script to find the index of the first biggest number in the list.***
-
-## Solution
-
-A relatively simple first challenge - we keep a track of the max index `$m`, looping through the array and updating
-this everytime the value at the entry is greater than the value at the max index. We can do this two ways: (a) without keeping a separate variable for the max value and (b) with, giving us:
-
-```perl
-sub max_index {
-  return unless @_;
-  my $m=0;
-  $_[$_] > $_[$m] && ( $m = $_ ) for 1 .. $#_;
-  $m
-}
-```
-and
-```perl
-sub max_index_var {
-  return unless @_;
-  my $v = $_[ my $m=0 ];
-  $_[$_] > $v && ( $v = $_[$m=$_] ) for 1 .. $#_;
-  $m
-}
-```
-**Notes:**
-
- * We use `{condition} && ({assignment}) for {list}`
-
-   to allow us the compactness of an `if` and a post-prefix `for`.
-
- * As we need the index we can't loop over the array `@_`, instead we loop over it's index:
-
-   Often we use `@_` which in scalar context is the length of the list, and `@_-1` for the last
-   index. But perl (as usual) has another way to do that - and that is to use the special
-   variable `$#_` which gives the last index of the array.
-
- * Now, the question of the two methods is which one is better? Well this depends on the numbers...
-
-   * If you find max index on a "semi-sorted" increasing list then the first method is faster.
-   * If you find max index on a "semi-sorted" decreasing list the second method is better.
-
-   If we try it on a truly random list of numbers {well as good as `rand` is at being truly random} we see the variable method is better by about 40%.
-
-   Why then is it bad for the "semi-sorted" list. The slowdown is caused by the number of variable assignments. With a sorted list there would be `n` comparisons and `2n` updates [one for `$v` & one for `$m` for each number] - a reversed list there would be `n` comparisons but only `2` updates.
-
-   For a random list of `1,000` numbers the number of updates is around `10`-`20` so we can see it is nearer the "semi-sorted" list.
-
-# Task 2 - Common path
-
-***Given a list of absolute Linux file paths, determine the deepest path to the directory that contains all of them.***
+***You are given list of strings in the format aa9999 i.e. first 2 characters can be anything 'a-z' followed by 4 digits '0-9'. Write a script to replace the first two characters with sequence starting with '00', '01', '02' etc***
 
 ## Solution
 
-We could use lots of comparison operators here, but instead we are going to go for a different solution for finding the common string.
+This weeks challenge is relatively simple. We start by making the assumption that the input sequence is valid, and has less than 101 entries (as ill defined if there are more).
 
-If you use the XOR-operator `^` in perl on a string then it XORs each character. If two characters are the same then `$a^$b` is `\0`.
+We then need to
 
-So to get the common prefix of two strings we XOR them together, grab the sequence of `\0`s from the start of the string, the common
-string has the same length;
+  1. Create the sequence '00', '01', '02', ....
+  2. Replace the first two characters with this sequence
 
-This is what `substr $l, 0, length( (($_^$l) =~ m{^(\0+)})[0])` does. We repeat this comparing the common string with all the rest of
-the paths.
+The first is simple - perl's pre/post increment '`++`' is 'clever' in that if it is given an integer it returns the value and increments the number, IF it is given a string then it returns the value increments the last character, and wraps the next digit, ... This increment is intelligent - if all the characters are numbers then it wraps when you get to '9', if letters (followed by numbers) it wraps the letters on 'z'.
 
-This isn't quite what we want as `/a/bc.txt` and `/a/bd.txt` have the common string `/a/b`, so we can remove the trailing directory
-by removing anything after the last `/`.
+The second we can try three approaches.
 
-This works when we are working with absolute paths... if we are working with relative paths it can't handle the "null" case of not
-having a common directory BUT the top-level directory having a common prefix `ab` & `ac/q.txt` have common string `a`. So we return
-the empty sting `''` if the shortest path does not contain a `/`.
+  * We can get the numeric part of the number with the 2/3 parameter version of `substr`
+  * We can replace the two letters in the string by using the 4 parameter version for `substr`
+  * We can replace the first two letters in the string with a regular expression
 
+These are the codes:
 
 ```perl
-sub common_path {
-  my $l = shift;
-  $l = substr $l, 0, length( (($_^$l) =~ m{^(\0+)})[0]) for @_;
-  $l=~m{/} ? substr $l, 0, rindex $l, '/' : ''
+sub seq_number_substr { my $s = '00'; return map { ($s++).substr $_,2 }     @_ }
+sub seq_number_subrep { my $s = '00'; return map { substr $_,0,2,$s++; $_ } @_ }
+sub seq_number_regexp { my $s = '00'; return map { s/../$s++/re }           @_ }
+```
+
+The ratio of speeds for the three methods is 3 : 2.25 : 1.
+
+# Task 2 - Split array
+
+***You are given list of strings containing 0-9 and a-z separated by space only.  Write a script to split the data into two arrays, one for integers and one for alphabets only.***
+
+## Solution
+
+Our first solution creates two arrays, the array of arrays of numbers `@r` and the array of arrays of letters `@s`.
+
+If the loops through the input, creating two more arrays `@n` and `@l` which contain the numbers/letters in each entry.
+
+We then push these arrays onto `@r`, `@s` if they have entries.
+
+**Notes:** We use split with no parameters to split `$_` on whitespace; we use ` ? : ` to replicate an `if then else` inside a post-fix `for` loop.
+
+```perl
+sub split_array_code {
+  my (@r,@s);
+  for (@_) {
+    my(@n,@l);
+    m{\d} ? push( @n,$_ ) : push( @l,$_ ) for split;
+    push @r, \@n if @n;
+    push @s, \@l if @l;
+  }
+  [\@r,\@s]
 }
 ```
+
+We can write this more simply as a nested `map`/`grep`. So we don't need to use variables. This involves us looping over `@_` twice, once to find the numbers, once to find the letter.
+
+We use `grep` twice - firstly to extract the numbers of letter, and secondly to remove any empty arrays.
+
+```perl
+sub split_array_map {
+  return [
+    [ grep { @{$_} } map { [ grep { m/\d/ } split ] } @_ ],
+    [ grep { @{$_} } map { [ grep { m/\D/ } split ] } @_ ],
+  ]
+}
+```
+
+Performance wise - the first will be penalised by the need to create variables, the second because we have to loop through the input array twice.
+
+The penalty for the latter is much higher the first method being about 84% faster
+
