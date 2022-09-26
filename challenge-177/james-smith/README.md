@@ -87,7 +87,7 @@ In fact this is efficient enough to get the first 1,000,000 such numbers back in
 
 But we can get better performance as we are currently scanning all numbers which start with 2,4,5,6,8 which we know are not prime {first digit -> last digit!} - this leads us to a slightly more complex but faster piece of code:
 
-Reducing to numbers that start in 1,3,5,7 reduces the search space by a factor of 4/9.
+Reducing to numbers that start in 1,3,7,9 reduces the search space by a factor of 4/9.
 
 By removing those that line between say 100... and 111... which must contain at least one zero further reduces this by 8/9 - giving us a reduction of 32/81 numbers or roughly 39.5%.
 
@@ -122,8 +122,7 @@ With this new version of the code we get this 1,000,000 entry coming back in aro
 |   1,000,000 |  23.104720 |   9.993216 |    76,276,363,036,367,267 |
 |  10,000,000 | 250.055394 | 124.405436 | 9,523,518,610,168,153,259 |
 
-Flipping to use `Math::Perl::Util::GMP` and `is_provable_prime` we can get a "guess" at even longer entries. "Guess" because the `is_provable_prime` can return NO, YES or probably, as there is compromise between accuracy and performance when it comes to checking these large primes. So for 100 million and 1 billion we get the following
-answers and timings. The latter being a smidge under 21 hours.
+Flipping to use `Math::Perl::Util::GMP` and `is_provable_prime` we can get a "guess" at even longer entries. "Guess" because the `is_provable_prime` can return NO, YES or probably, as there is compromise between accuracy and performance when it comes to checking these large primes. So for 100 million and 1 billion we get the following answers and timings. The latter being a smidge under 21 hours.
 
 | $K            | Time v1    | Time v2    | $Kth value                        | Time                |
 | ------------: | ---------: | ---------: | --------------------------------: | ------------------: |
