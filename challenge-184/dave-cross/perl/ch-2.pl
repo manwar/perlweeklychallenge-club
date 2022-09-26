@@ -19,8 +19,6 @@ for (@ARGV) {
   push @$alpha,  [ grep { /[a-z]/ } split ];
 }
 
-$digits = [ grep { @$_ } @$digits ];
-$alpha  = [ grep { @$_ } @$alpha ];
+say Dumper [ grep { @$_ } @$digits ];
+say Dumper [ grep { @$_ } @$alpha ];
 
-say Dumper $digits;
-say Dumper $alpha;
