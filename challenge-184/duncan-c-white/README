@@ -1,0 +1,82 @@
+Task 1: Unique Array
+
+You are given list of arrayrefs.
+Write a script to remove the duplicate arrayrefs from the given list.
+
+Example 1
+
+Input: @list = ([1,2], [3,4], [5,6], [1,2])
+Output: ([1,2], [3,4], [5,6])
+
+Example 2
+
+Input: @list = ([9,1], [3,7], [2,5], [2,5])
+Output: ([9, 1], [3,7], [2,5])
+
+MY NOTES: nice and easy, only challenge is how to store a representation
+of an entire array as a hash key: obvious option is to join(',',@items)
+
+GUEST LANGUAGE: As a bonus, I also had a go at implementing ch-1.pl
+into C (look in the C directory for that).  It's not a direct translation
+of the Perl solution because that involves sets of joined strings, instead
+it does it the obvious low-tech way: finding duplicate arrays and deleting
+them.
+
+
+Task 2: Date Difference
+
+You are given two dates, $date1 and $date2 in the format YYYY-MM-DD.
+Write a script to find the difference between the given dates in terms on years and days only.
+
+Example 1
+
+Input: $date1 = '2019-02-10'
+       $date2 = '2022-11-01'
+Output: 3 years 264 days
+
+Example 2
+
+Input: $date1 = '2020-09-15'
+       $date2 = '2022-03-29'
+Output: 1 year 195 days
+
+Example 3
+
+Input: $date1 = '2019-12-31'
+       $date2 = '2020-01-01'
+Output: 1 day
+
+Example 4
+
+Input: $date1 = '2019-12-01'
+       $date2 = '2019-12-31'
+Output: 30 days
+
+Example 5
+
+Input: $date1 = '2019-12-31'
+       $date2 = '2020-12-31'
+Output: 1 year
+
+Example 6
+
+Input: $date1 = '2019-12-31'
+       $date2 = '2021-12-31'
+Output: 2 years
+
+Example 7
+
+Input: $date1 = '2020-09-15'
+       $date2 = '2021-09-16'
+Output: 1 year 1 day
+
+Example 8
+
+Input: $date1 = '2019-09-15'
+       $date2 = '2021-09-16'
+Output: 2 years 1 day
+
+MY NOTES: Should be a simple task for Date::Simple or Date::Manup.
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
+into C (look in the C directory for that).
