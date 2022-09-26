@@ -1,6 +1,11 @@
 {
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-09-26 00:06:10 GMT"
    },
    "yAxis" : {
       "title" : {
@@ -8,12 +13,15 @@
       },
       "min" : 0
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "xAxis" : {
       "categories" : [
+         "Ben Davies",
          "Bill Palmer",
          "Bob Kleemann",
          "Bob Lied",
@@ -42,14 +50,14 @@
          "Dave Jacoby",
          "David Kayal",
          "David Santiago",
-         "David Schwartz",
-         "Denis Yurashku"
+         "David Schwartz"
       ]
    },
    "series" : [
       {
          "name" : "Perl",
          "data" : [
+            0,
             0,
             4,
             54,
@@ -78,22 +86,23 @@
             306,
             4,
             0,
-            8,
-            0
+            8
          ]
       },
       {
+         "name" : "Raku",
          "data" : [
+            31,
             0,
             0,
             0,
             0,
-            70,
+            72,
             0,
             0,
             8,
             6,
-            8,
+            9,
             0,
             2,
             0,
@@ -112,14 +121,13 @@
             1,
             0,
             7,
-            0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
          "data" : [
+            0,
             0,
             0,
             0,
@@ -148,20 +156,12 @@
             123,
             0,
             0,
-            0,
             0
          ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-09-22 17:00:32 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
