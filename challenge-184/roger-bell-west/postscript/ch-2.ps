@@ -1,0 +1,153 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/apush { apush.right } bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+
+% end included library code
+
+/splitarray {
+    6 dict begin
+    /outa 0 array def
+    /outb 0 array def
+    /zero (0) 0 get def
+    /nine (9) 0 get def
+    /a (a) 0 get def
+    /z (z) 0 get def
+    {
+        /av 0 array def
+        /bv 0 array def
+        {
+            1 {
+                dup
+                dup zero ge exch nine le and {
+                    (.) dup 0 4 -1 roll put cvi
+                    av exch apush /av exch def
+                    exit
+                } if
+                dup
+                dup a ge exch z le and {
+                    (.) dup 0 4 -1 roll put dup length string cvs
+                    bv exch apush /bv exch def
+                    exit
+                } if
+                pop
+            } repeat
+        } forall
+        av length 0 gt {
+            outa av apush /outa exch def
+        } if
+        bv length 0 gt {
+            outb bv apush /outb exch def
+        } if
+    } forall
+    [ outa outb ]
+    end
+} bind def
+
+(splitarray) test.start
+
+[(a 1 2 b 0) (3 c 4 d)] splitarray
+[ [[1 2 0] [3 4]]
+  [[(a) (b)] [(c) (d)]] ] deepeq test
+
+[(1 2) (p q r) (s 3) (4 5 t)] splitarray
+[ [[1 2] [3] [4 5]]
+  [[(p) (q) (r)] [(s)] [(t)]] ] deepeq test
+
+test.end
