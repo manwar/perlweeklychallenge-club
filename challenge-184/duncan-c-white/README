@@ -1,82 +1,43 @@
-Task 1: Unique Array
+Task 1: Sequence Number
 
-You are given list of arrayrefs.
-Write a script to remove the duplicate arrayrefs from the given list.
+You are given list of strings in the format aa9999 i.e. first 2 characters
+can be anything 'a-z' followed by 4 digits '0-9'.
+Write a script to replace the first two characters with sequence starting
+with '00', '01', '02' etc.
 
 Example 1
 
-Input: @list = ([1,2], [3,4], [5,6], [1,2])
-Output: ([1,2], [3,4], [5,6])
+	Input: @list = ( 'ab1234', 'cd5678', 'ef1342')
+	Output: ('001234', '015678', '021342')
 
 Example 2
 
-Input: @list = ([9,1], [3,7], [2,5], [2,5])
-Output: ([9, 1], [3,7], [2,5])
+	Input: @list = ( 'pq1122', 'rs3334')
+	Output: ('001122', '013334')
 
-MY NOTES: nice and easy, only challenge is how to store a representation
-of an entire array as a hash key: obvious option is to join(',',@items)
+MY NOTES: nice and easy. Trivial in fact.
 
 GUEST LANGUAGE: As a bonus, I also had a go at implementing ch-1.pl
-into C (look in the C directory for that).  It's not a direct translation
-of the Perl solution because that involves sets of joined strings, instead
-it does it the obvious low-tech way: finding duplicate arrays and deleting
-them.
+into C (look in the C directory for that).
 
 
-Task 2: Date Difference
+Task 2: Split Array
 
-You are given two dates, $date1 and $date2 in the format YYYY-MM-DD.
-Write a script to find the difference between the given dates in terms on years and days only.
+You are given list of strings containing 0-9 and a-z separated by space only.
+Write a script to split the data into two arrays, one for integers and
+one for alphabets only.
 
 Example 1
 
-Input: $date1 = '2019-02-10'
-       $date2 = '2022-11-01'
-Output: 3 years 264 days
+	Input: @list = ( 'a 1 2 b 0', '3 c 4 d')
+	Output: [[1,2,0], [3,4]] and [['a','b'], ['c','d']]
 
 Example 2
 
-Input: $date1 = '2020-09-15'
-       $date2 = '2022-03-29'
-Output: 1 year 195 days
+	Input: @list = ( '1 2', 'p q r', 's 3', '4 5 t')
+	Output: [[1,2], [3], [4,5]] and [['p','q','r'], ['s'], ['t']]
 
-Example 3
-
-Input: $date1 = '2019-12-31'
-       $date2 = '2020-01-01'
-Output: 1 day
-
-Example 4
-
-Input: $date1 = '2019-12-01'
-       $date2 = '2019-12-31'
-Output: 30 days
-
-Example 5
-
-Input: $date1 = '2019-12-31'
-       $date2 = '2020-12-31'
-Output: 1 year
-
-Example 6
-
-Input: $date1 = '2019-12-31'
-       $date2 = '2021-12-31'
-Output: 2 years
-
-Example 7
-
-Input: $date1 = '2020-09-15'
-       $date2 = '2021-09-16'
-Output: 1 year 1 day
-
-Example 8
-
-Input: $date1 = '2019-09-15'
-       $date2 = '2021-09-16'
-Output: 2 years 1 day
-
-MY NOTES: Should be a simple task for Date::Simple or Date::Manup.
+MY NOTES: Also seems pretty simple.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
 into C (look in the C directory for that).
