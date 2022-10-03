@@ -1,12 +1,47 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge - 185"
-   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 185",
+         "data" : [
+            {
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
+               "y" : 8
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "y" : 2,
+               "name" : "Mark Anderson"
+            },
+            {
+               "y" : 2,
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke"
+            }
+         ]
+      }
+   ],
    "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2022-10-03 12:08:31 GMT"
+      "text" : "[Champions: 4] Last updated at 2022-10-03 12:18:35 GMT"
    },
    "drilldown" : {
       "series" : [
+         {
+            "name" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Dave Cross"
+         },
          {
             "id" : "Luca Ferrari",
             "data" : [
@@ -22,63 +57,26 @@
             "name" : "Luca Ferrari"
          },
          {
-            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson"
+            "name" : "Mark Anderson"
          },
          {
-            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "name" : "Niels van Dijke",
             "id" : "Niels van Dijke"
          }
       ]
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 8
-            },
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke"
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 185"
-      }
-   ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
@@ -89,9 +87,26 @@
          "borderWidth" : 0
       }
    },
+   "title" : {
+      "text" : "The Weekly Challenge - 185"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
    }
 }
