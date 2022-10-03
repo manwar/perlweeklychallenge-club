@@ -1,7 +1,7 @@
-[< Previous 181](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-181/james-smith) |
-[Next 185 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-185/james-smith)
+[< Previous 184](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-184/james-smith) |
+[Next 186 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-186/james-smith)
 
-# The Weekly Challenge 184
+# The Weekly Challenge 185
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -15,78 +15,63 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-184/james-smith
 
-# Task 1 - Sequence number
+# Task 1 - MAC Address
 
-***You are given list of strings in the format aa9999 i.e. first 2 characters can be anything 'a-z' followed by 4 digits '0-9'. Write a script to replace the first two characters with sequence starting with '00', '01', '02' etc***
-
-## Solution
-
-This weeks challenge is relatively simple. We start by making the assumption that the input sequence is valid, and has less than 101 entries (as ill defined if there are more).
-
-We then need to
-
-  1. Create the sequence '00', '01', '02', ....
-  2. Replace the first two characters with this sequence
-
-The first is simple - perl's pre/post increment '`++`' is 'clever' in that if it is given an integer it returns the value and increments the number, IF it is given a string then it returns the value increments the last character, and wraps the next digit, ... This increment is intelligent - if all the characters are numbers then it wraps when you get to '9', if letters (followed by numbers) it wraps the letters on 'z'.
-
-The second we can try three approaches.
-
-  * We can get the numeric part of the number with the 2/3 parameter version of `substr`
-  * We can replace the two letters in the string by using the 4 parameter version for `substr`
-  * We can replace the first two letters in the string with a regular expression
-
-These are the codes:
-
-```perl
-sub seq_number_substr { my $s = '00'; return map { ($s++).substr $_,2 }     @_ }
-sub seq_number_subrep { my $s = '00'; return map { substr $_,0,2,$s++; $_ } @_ }
-sub seq_number_regexp { my $s = '00'; return map { s/../$s++/re }           @_ }
-```
-
-The ratio of speeds for the three methods is 3 : 2.25 : 1.
-
-# Task 2 - Split array
-
-***You are given list of strings containing 0-9 and a-z separated by space only.  Write a script to split the data into two arrays, one for integers and one for alphabets only.***
+***You are given MAC address in the form i.e. `hhhh.hhhh.hhhh`. Write a script to convert the address in the form `hh:hh:hh:hh:hh:hh`.***
 
 ## Solution
 
-Our first solution creates two arrays, the array of arrays of numbers `@r` and the array of arrays of letters `@s`.
-
-If the loops through the input, creating two more arrays `@n` and `@l` which contain the numbers/letters in each entry.
-
-We then push these arrays onto `@r`, `@s` if they have entries.
-
-**Notes:** We use split with no parameters to split `$_` on whitespace; we use ` ? : ` to replicate an `if then else` inside a post-fix `for` loop.
+There are a number of different approaches to this problem, use `substr`, use `pack`/`unpack`, use `split`, use `s///`.
 
 ```perl
-sub split_array_code {
-  my (@r,@s);
-  for (@_) {
-    my(@n,@l);
-    m{\d} ? push( @n,$_ ) : push( @l,$_ ) for split;
-    push @r, \@n if @n;
-    push @s, \@l if @l;
-  }
-  [\@r,\@s]
-}
+sub mac_regex  { pop =~ s{(\w\w)(\w\w)[.](\w\w)(\w\w)[.](\w\w)(\w\w)}
+                         {$1:$2:$3:$4:$5:$6}r }
+sub mac_submap { join ':', map { substr $_[0], $_, 2 } 0,2,5,7,10,12 }
+sub mac_substr { join ':', substr($_[0],0,2), substr($_[0],2,2), substr($_[0],5,2),
+                           substr($_[0],7,2), substr($_[0],10,2), substr($_[0],12,2) }
+sub mac_pack   { sub { pack 'ScScScScScS', $_[0],58, $_[1],58, $_[3],58,
+                       $_[4],58, $_[6],58,$_[7] }->( unpack 'SScSScSS', $_[0] ) }
+sub mac_split  { join ':', @{[split /(\w\w)/, pop]}[1,3,5,7,9,11] }
 ```
 
-We can write this more simply as a nested `map`/`grep`. So we don't need to use variables. This involves us looping over `@_` twice, once to find the numbers, once to find the letter.
+Most of the methods are relatively simple:
+ * First method - we write a regex to replace the '`.`'s with '`:`'s, and also to split each pair in two and separate with a `:`.
+ * Two and three are variants on grabbing the elements of the string representing the digits and stitching them back together.
+ * Method 4 uses `unpack` to unpack the string into 16-bit integers and then pack it with 
+ * Last method uses split with capture brackets which keeps the separators as well as the parts of the string between the seprators. In this case the separators are the hex-pairs, and when we join together using an array slice we only keep the separators {the odd elements of the array}
 
-We use `grep` twice - firstly to extract the numbers of letter, and secondly to remove any empty arrays.
+### How do they perform?
+
+Method name | Rate(/s)  | Relative rate
+----------- | --------: | ------------:
+mac_regex   | 2,272,727 |          1.00
+mac_substr  |   568,182 |          0.25
+mac_submap  |   555,556 |          0.24
+mac_pack    |   374,222 |          0.15
+mac_split   |   101,215 |          0.04
+
+So we see (unlike the last week) the regex version is the most efficient by a factor of 4...
+
+# Task 2 - Mask Code
+
+***You are given a list of codes in many random format. Write a script to mask first four characters (`a`-`z`,`0`-`9`) and keep the rest as it is***
+
+## Solution
+
+Again this is string manipulation so that we can think of the all the tools in our arsenal... but in this case looks like `s{}{}r` or `sprintf` our our easiest solutions...
 
 ```perl
-sub split_array_map {
-  return [
-    [ grep { @{$_} } map { [ grep { m/\d/ } split ] } @_ ],
-    [ grep { @{$_} } map { [ grep { m/\D/ } split ] } @_ ],
-  ]
-}
+sub mask_reghc { map {
+  s{[0-9a-z]([^0-9a-z]*)[0-9a-z]([^0-9a-z]*)[0-9a-z]([^0-9a-z]*)[0-9a-z]}
+  {x$1x$2x$3x}r
+} @_ }
+
+sub mask_split { map { join 'x', split /[0-9a-z]/, $_, 5 } @_ }
 ```
+Our first solution looks for the first alphnumeric character, we then skip anynumber of non-alphanumeric - alternating until we have 4 matches, we then replace those characters.
 
-Performance wise - the first will be penalised by the need to create variables, the second because we have to loop through the input array twice.
+Our second uses the 3 parameter version of `split` which allows you to stipulate how many matches we make - as we have 4 separators that we wish to replace we need 5 stings. When we have these we just stitch the strings back together.
 
-The penalty for the latter is much higher the first method being about 84% faster
+### Performance
 
+In this case the second method (`split`) is approximately 50% faster than the regex method.
