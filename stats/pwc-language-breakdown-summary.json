@@ -1,24 +1,42 @@
 {
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-10-03 18:47:52 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2022-10-03 18:40:44 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
    "series" : [
       {
+         "dataLabels" : {
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "y" : 10,
+            "rotation" : -90,
+            "align" : "right",
+            "format" : "{point.y:.0f}"
+         },
          "name" : "Contributions",
          "data" : [
             [
@@ -27,37 +45,19 @@
             ],
             [
                "Perl",
-               8979
+               8981
             ],
             [
                "Raku",
                5368
             ]
-         ],
-         "dataLabels" : {
-            "y" : 10,
-            "rotation" : -90,
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "align" : "right"
-         }
+         ]
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "legend" : {
-      "enabled" : "false"
+   "chart" : {
+      "type" : "column"
    }
 }
