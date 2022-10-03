@@ -27,7 +27,7 @@ sub maskcode {
   state $re = '([^0-9a-z]*)([0-9a-z])' x 4;
   my @r;
   for (@_) {
-    push(@r,s/^$re/$1x$3x$5x$7x/or);
+    push(@r,s/(?i)^$re/$1x$3x$5x$7x/or);
   }
   @r;
 }
