@@ -23,7 +23,7 @@ use Test::More;
 
 
 sub macFormat ($) {
-  state $re = join '\.', map { '([0-9a-f]{2})' x 2 } (1 .. 3);
+  state $re = join '\.', ('([0-9a-f]{2})' x 2) x 3;
   return join(':',$1,$2,$3,$4,$5,$6)
     if ($_[0] =~ /(?i)^$re$/o);
 }
