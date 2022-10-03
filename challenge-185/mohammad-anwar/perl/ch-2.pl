@@ -39,18 +39,10 @@ sub mask_code(@list) {
         my $i    = 0;
 
         foreach my $char (split //, $entry) {
-            if ($i < 4) {
-                if ($char =~ /^[a-z0-9]$/) {
-                    $mask .= 'x';
-                    $i++
-                }
-                else {
-                    $mask .= $char;
-                }
-            }
-            else {
-                $mask .= $char;
-            }
+            ($i >= 4) && ($mask .= $char) && next;
+            ($char !~ /^[a-z0-9]$/) && ($mask .= $char) && next;
+            $mask .= 'x';
+            $i++;
         }
 
         push @mc, $mask;
