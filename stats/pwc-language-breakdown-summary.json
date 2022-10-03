@@ -2,17 +2,18 @@
    "series" : [
       {
          "dataLabels" : {
-            "align" : "right",
-            "enabled" : "true",
+            "rotation" : -90,
+            "color" : "#FFFFFF",
             "style" : {
                "fontSize" : "13px",
                "fontFamily" : "Verdana, sans-serif"
             },
-            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
             "y" : 10,
-            "rotation" : -90,
-            "format" : "{point.y:.0f}"
+            "align" : "right"
          },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -20,44 +21,43 @@
             ],
             [
                "Perl",
-               8971
+               8973
             ],
             [
                "Raku",
                5366
             ]
-         ],
-         "name" : "Contributions"
+         ]
       }
    ],
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-10-03 12:08:31 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : null
       }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-10-03 11:57:26 GMT"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    }
 }
