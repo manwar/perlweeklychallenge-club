@@ -39,8 +39,8 @@ sub mask_code(@list) {
         my $i    = 0;
 
         foreach my $char (split //, $entry) {
-            ($i >= 4) && ($mask .= $char) && next;
-            ($char !~ /^[a-z0-9]$/) && ($mask .= $char) && next;
+            ($i >= 4) and ($mask .= $char) and next;
+            ($char !~ /^[a-z0-9]$/) and ($mask .= $char) and next;
             $mask .= 'x';
             $i++;
         }
