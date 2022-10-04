@@ -1,15 +1,6 @@
 {
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   "subtitle" : {
+      "text" : "Last updated at 2022-10-04 19:16:12 GMT"
    },
    "legend" : {
       "enabled" : "false"
@@ -20,21 +11,26 @@
          "text" : null
       }
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   },
    "series" : [
       {
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "enabled" : "true",
-            "y" : 10,
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "rotation" : -90
-         },
-         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -42,22 +38,26 @@
             ],
             [
                "Perl",
-               8998
+               9000
             ],
             [
                "Raku",
-               5375
+               5377
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "align" : "right",
+            "enabled" : "true"
+         },
+         "name" : "Contributions"
       }
-   ],
-   "subtitle" : {
-      "text" : "Last updated at 2022-10-04 18:32:28 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "chart" : {
-      "type" : "column"
-   }
+   ]
 }
