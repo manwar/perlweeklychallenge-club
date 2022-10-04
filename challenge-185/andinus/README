@@ -1,113 +1,96 @@
                             ━━━━━━━━━━━━━━━
-                             CHALLENGE 160
+                             CHALLENGE 185
 
                                 Andinus
                             ━━━━━━━━━━━━━━━
 
 
-                               2022-04-12
+                               2022-10-04
 
 
 
 
 
-Task 1 - Four Is Magic
+1 Task 1 - MAC Address
 ══════════════════════
 
-  You are given a positive number, $n < 10.
+  You are given MAC address in the form i.e. `hhhh.hhhh.hhhh'.
 
-  Write a script to generate english text sequence starting with the
-  English cardinal representation of the given number, the word ‘is’ and
-  then the English cardinal representation of the count of characters
-  that made up the first word, followed by a comma. Continue until you
-  reach four.
+  Write a script to convert the address in the form `hh:hh:hh:hh:hh:hh'.
 
   ┌────
-  │ Input: $n = 5
-  │ Output: Five is four, four is magic.
+  │ Example 1
   │
-  │ Input: $n = 7
-  │ Output: Seven is five, five is four, four is magic.
+  │ Input:  1ac2.34f0.b1c2
+  │ Output: 1a:c2:34:f0:b1:c2
   │
-  │ Input: $n = 6
-  │ Output: Six is three, three is five, five is four, four is magic.
+  │ Example 2
+  │
+  │ Input:  abc1.20f1.345a
+  │ Output: ab:c1:20:f1:34:5a
   └────
 
 
-Raku
-────
+1.1 Raku
+────────
 
-  Take a positive number, less than 10 as input from MAIN. Then we
-  define an array that holds the string representation of integers. The
-  `multi sub' `four-is-magic' is called on the input. It runs
-  recursively until `4' is called.
-
-  `.tc' is called on the result to make the first character uppercase.
+  `comb' combs out alphanumeric characters and we simply print them. ":"
+  is printed after every 2 characters but not at the end.
 
   ┌────
   │ unit sub MAIN(
-  │     UInt $n where * < 10, #= positive number, less than 10
+  │     Str $mac-address, #= MAC address (hhhh.hhhh.hhhh)
   │ );
   │
-  │ my @num-to-str = <zero one two three four five six seven eight nine>;
-  │
-  │ multi sub four-is-magic(4 --> Str) {
-  │     return "four is magic.";
-  │ }
-  │
-  │ multi sub four-is-magic(Int $n where * < 10 --> Str) {
-  │     my $n-str = @num-to-str[$n];
-  │     return "$n-str is { @num-to-str[$n-str.chars] }, " ~ four-is-magic($n-str.chars);
-  │ }
-  │
-  │ put four-is-magic($n).tc;
-  └────
-
-
-Task 2 - Equilibrium Index
-══════════════════════════
-
-  You are give an array of integers, @n.
-
-  Write a script to find out the Equilibrium Index of the given array,
-  if found.
-
-        For an array A consisting n elements, index i is an
-        equilibrium index if the sum of elements of subarray
-        A[0…i-1] is equal to the sum of elements of subarray
-        A[i+1…n-1].
-
-  ┌────
-  │ Input: @n = (1, 3, 5, 7, 9)
-  │ Output: 3
-  │
-  │ Input: @n = (1, 2, 3, 4, 5)
-  │ Output: -1 as no Equilibrium Index found.
-  │
-  │ Input: @n = (2, 4, 2)
-  │ Output: 1
-  └────
-
-
-Raku
-────
-
-  Takes an array of integers as input. Then it loops over the array by
-  index and does as the problem states, takes sum of all elements before
-  the index and compares it with the sum of all elements after the
-  index, if they're equal it prints the index and exits. If there is no
-  Equilibrium Index then it prints -1.
-
-  ┌────
-  │ unit sub MAIN(
-  │     *@n, #= array of integers
-  │ );
-  │
-  │ for 0 .. @n.end -> $i {
-  │     if @n[0 .. $i - 1].sum == @n[$i + 1 .. *].sum {
-  │         put $i;
-  │         exit;
+  │ # Converts in hh:hh:hh:hh:hh:hh form.
+  │ for $mac-address.comb(/\w/) {
+  │     .print;
+  │     given $++ {
+  │         when 11 { succeed; }
+  │         when $_ !%% 2 { print ":" }
   │     }
   │ }
-  │ put -1;
+  └────
+
+
+2 Task 2 - Mask Code
+════════════════════
+
+  You are given a list of codes in many random format.
+
+  Write a script to mask first four characters (a-z,0-9) and keep the
+  rest as it is.
+
+  ┌────
+  │ Example 1
+  │
+  │ Input: @list = ('ab-cde-123', '123.abc.420', '3abc-0010.xy')
+  │ Output: ('xx-xxe-123', 'xxx.xbc.420', 'xxxx-0010.xy')
+  │
+  │ Example 2
+  │
+  │ Input: @list = ('1234567.a', 'a-1234-bc', 'a.b.c.d.e.f')
+  │ Output: ('xxxx567.a', 'x-xxx4-bc', 'x.x.x.x.e.f')
+  └────
+
+
+2.1 Raku
+────────
+
+  Takes an array of codes as input. Loops over characters of a code and
+  prints every character except first four matching the regex "\w".
+
+  ┌────
+  │ unit sub MAIN(*@codes);
+  │
+  │ for @codes -> $code {
+  │     my Int $count;
+  │     for $code.comb {
+  │         given $_ {
+  │             when /\w/ { print ($count++ < 4 ?? "x" !! $_) }
+  │             default { .print }
+  │         }
+  │     }
+  │     put "";
+  │ }
   └────
