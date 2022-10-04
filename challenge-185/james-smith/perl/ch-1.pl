@@ -35,10 +35,10 @@ done_testing();
 sub mac_split  { join ':', @{[split /(\w\w)/, pop]}[1,3,5,7,9,11] }
 sub mac_regex2 { join':',pop=~/(..)(..).?/g }
 sub mac_pack   { sub { pack 'ScScScScScS', $_[0],58, $_[1],58, $_[3],58, $_[4],58, $_[6],58,$_[7] }->( unpack 'SScSScSS', $_[0] ) }
-sub mac_regex  { pop =~ s{(\w\w)(\w\w)[.](\w\w)(\w\w)[.](\w\w)(\w\w)} {$1:$2:$3:$4:$5:$6}r }
+sub mac_regexg { join':',pop=~/(\w.)(\w+)/g }
 sub mac_submap { join ':', map { substr $_[0], $_, 2 } 0,2,5,7,10,12 }
 sub mac_substr { join ':', substr($_[0],0,2), substr($_[0],2,2), substr($_[0],5,2), substr($_[0],7,2), substr($_[0],10,2), substr($_[0],12,2) }
-sub mac_regexg { join':',pop=~/(\w.)(\w+)/g }
+sub mac_regex  { pop =~ s{(\w\w)(\w\w)[.](\w\w)(\w\w)[.](\w\w)(\w\w)} {$1:$2:$3:$4:$5:$6}r }
 
 __END__
             Rate  split regex2   pack regexg submap substr  regex
