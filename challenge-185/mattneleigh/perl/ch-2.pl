@@ -83,7 +83,10 @@ sub mask_alphanumerics{
     if($direction){
         # Operate on the end of the string
         while($num--){
-            # This isn't pretty, but it works
+            # This isn't pretty, but it works...
+            # Everything after the next character we convert
+            # is stripped off, so if there was anything there,
+            # capture it and tack it back on
             $code =~ s/[0-9A-Za-wy-z]{1}([^0-9A-Za-wy-z]{0,})$/x/;
             $code .= $1
                 if(length($1));
