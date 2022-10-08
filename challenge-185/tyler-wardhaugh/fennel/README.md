@@ -1,6 +1,6 @@
-# Challenge #181
+# Challenge #185
 
-The Weekly Challenge — #182 — Tyler Wardhaugh
+The Weekly Challenge — #185 — Tyler Wardhaugh
 
 ## Requirements
 
@@ -14,15 +14,15 @@ Fennel does not currently have a convention for source files to be both modules 
 
 Run Task #1:
 
-    $ bb task-1 N1 [N2 ...]
+    $ bb task-1 N
     # ... or ...
-    $ fennel -e '((. (require :t1) :main))' N1 [N2 ...] 
+    $ fennel -e '((. (require :t1) :main))' N
 
 Run Task #2:
 
-    $ bb task-2 P1 [P2 ...]
+    $ bb task-2
     # ... or ...
-    $ fennel -e '((. (require :t2) :main))' P1 [P2 ...] 
+    $ fennel -e '((. (require :t2) :main))'
 
 Compile all Fennel files to Lua:
 
