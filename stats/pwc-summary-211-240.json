@@ -1,19 +1,24 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "chart" : {
       "type" : "column"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             3,
             0,
@@ -45,8 +50,7 @@
             1,
             3,
             14
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -84,7 +88,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -116,9 +119,17 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-10-08 19:20:05 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Rich Snyder",
@@ -152,16 +163,5 @@
          "Sol DeMuth",
          "Solathian"
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-10-08 16:23:46 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
