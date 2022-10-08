@@ -1,0 +1,17 @@
+"should format dot-delimited mac-address":
+  input:
+    - '1ac2.34f0.b1c2'
+  expect:
+    - '1a:c2:34:f0:b1:c2'
+
+"should format already formatted mac address":
+  input:
+    - '1a:c2:34:f0:b1:c2'
+  expect:
+    - '1a:c2:34:f0:b1:c2'
+
+"should format mac address without separators":
+  input:
+    - '1ac234f0b1c2'
+  expect:
+    - '1a:c2:34:f0:b1:c2'

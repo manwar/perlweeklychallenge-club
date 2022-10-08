@@ -1,0 +1,148 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+
+% end included library code
+
+/recomposemask {
+    7 dict begin
+    /zero (0) 0 get def
+    /nine (9) 0 get def
+    /a (a) 0 get def
+    /z (z) 0 get def
+    /x (x) 0 get def
+    [ exch
+      {
+          /ct 0 def
+          [ exch
+            {
+                /c exch def
+                c zero ge c nine le and
+                c a ge c z le and or {
+                    ct 4 lt {
+                        /ct ct 1 add def
+                        x
+                    } {
+                        c
+                    } ifelse
+                } {
+                    c
+                } ifelse
+            } forall
+          ] a2s
+      } forall
+    ]
+    end
+} bind def
+
+(recomposemask) test.start
+
+[(ab-cde-123) (123.abc.420) (3abc-0010.xy)] recomposemask
+[(xx-xxe-123) (xxx.xbc.420) (xxxx-0010.xy)] deepeq test
+
+
+[(1234567.a) (a-1234-bc) (a.b.c.d.e.f)] recomposemask
+[(xxxx567.a) (x-xxx4-bc) (x.x.x.x.e.f)] deepeq test
+
+test.end

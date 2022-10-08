@@ -39,12 +39,28 @@ The second we can try three approaches.
 These are the codes:
 
 ```perl
-sub seq_number_substr { my $s = '00'; return map { ($s++).substr $_,2 }     @_ }
-sub seq_number_subrep { my $s = '00'; return map { substr $_,0,2,$s++; $_ } @_ }
-sub seq_number_regexp { my $s = '00'; return map { s/../$s++/re }           @_ }
+sub seq_no_regexp { my $s = '00'; map { s/../$s++/re }                      @_ }
+sub seq_no_subrep { my $s = '00'; map { substr $_, 0, 2, $s++; $_ }         @_ }
+sub seq_no_substr { my $s = '00'; map { $s++ . substr $_,2 }                @_ }
 ```
 
 The ratio of speeds for the three methods is 3 : 2.25 : 1.
+
+Additionally in the code we show that the string increment is more efficient than the integer increment - with or without `sprintf`.
+
+```perl
+sub seq_no_sprint { my $s = 0;    map { sprintf('%02d',$s++). substr $_,2 } @_ }
+sub seq_no_number { my $s = 0;    map { (($s<10)?'0':'').$s++.substr $_,2 } @_ }
+```
+
+These are slower than the simple string increment version, the `sprintf` versions is 80% of the speed of the fast version, but the version with without `sprintf` is closer - running at around 95% of the speed of the fastest...
+
+
+This just goes to show you - even with a very simple problem - looking at different approaches can get you better performance..
+
+## Rule: regex are good except when they aren't! sprintf is your friend except when it isn't!
+
+Well general use of `sprintf` and regular expressions is good - it is often worth while for speed to forgo the niceties - here just proves it! We can with our domain knowledge optimize the code!
 
 # Task 2 - Split array
 
@@ -65,7 +81,7 @@ sub split_array_code {
   my (@r,@s);
   for (@_) {
     my(@n,@l);
-    m{\d} ? push( @n,$_ ) : push( @l,$_ ) for split;
+    $_ lt '@' ? push( @n,$_ ) : push( @l,$_ ) for split;
     push @r, \@n if @n;
     push @s, \@l if @l;
   }
