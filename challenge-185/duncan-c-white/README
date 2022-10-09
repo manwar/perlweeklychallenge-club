@@ -1,43 +1,43 @@
-Task 1: Sequence Number
+Task 1: MAC Address
 
-You are given list of strings in the format aa9999 i.e. first 2 characters
-can be anything 'a-z' followed by 4 digits '0-9'.
-Write a script to replace the first two characters with sequence starting
-with '00', '01', '02' etc.
+You are given MAC address in the form i.e. hhhh.hhhh.hhhh.
+
+Write a script to convert the address in the form hh:hh:hh:hh:hh:hh.
 
 Example 1
 
-	Input: @list = ( 'ab1234', 'cd5678', 'ef1342')
-	Output: ('001234', '015678', '021342')
+Input:  1ac2.34f0.b1c2
+Output: 1a:c2:34:f0:b1:c2
 
 Example 2
 
-	Input: @list = ( 'pq1122', 'rs3334')
-	Output: ('001122', '013334')
+Input:  abc1.20f1.345a
+Output: ab:c1:20:f1:34:5a
 
-MY NOTES: nice and easy. Trivial in fact.
+MY NOTES: nice and easy.
 
-GUEST LANGUAGE: As a bonus, I also had a go at implementing ch-1.pl
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for that).
 
 
-Task 2: Split Array
+Task 2: Mask Code
 
-You are given list of strings containing 0-9 and a-z separated by space only.
-Write a script to split the data into two arrays, one for integers and
-one for alphabets only.
+You are given a list of codes in many random format.
+Write a script to mask first four characters (a-z,0-9) and keep the rest as it is.
 
 Example 1
 
-	Input: @list = ( 'a 1 2 b 0', '3 c 4 d')
-	Output: [[1,2,0], [3,4]] and [['a','b'], ['c','d']]
+Input: @list = ('ab-cde-123', '123.abc.420', '3abc-0010.xy')
+Output: ('xx-xxe-123', 'xxx.xbc.420', 'xxxx-0010.xy')
 
 Example 2
 
-	Input: @list = ( '1 2', 'p q r', 's 3', '4 5 t')
-	Output: [[1,2], [3], [4,5]] and [['p','q','r'], ['s'], ['t']]
+Input: @list = ('1234567.a', 'a-1234-bc', 'a.b.c.d.e.f')
+Output: ('xxxx567.a', 'x-xxx4-bc', 'x.x.x.x.e.f')
 
-MY NOTES: Also seems pretty simple.
+MY NOTES: Also seems pretty simple.  Decided to generalise: --firstn N
+does the masking for the first N alphanumeric chars.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
 into C (look in the C directory for that).
+
