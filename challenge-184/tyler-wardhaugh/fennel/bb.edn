@@ -1,0 +1,37 @@
+{:tasks
+ {:requires ([babashka.fs :as fs]
+             [babashka.process :as p])
+  :init (do
+          (defn run-task
+            [task args]
+            (let [form (str  "((. (require :" (name task) ") :main))")]
+                    (apply shell "fennel" "-e" form args)))
+
+          (defn compile-file
+            [path]
+            (let [new-path (-> path fs/strip-ext (str ".lua") fs/file)]
+                    (println (format "compiling '%s' -> '%s'" path new-path))
+                    (-> (p/process ["fennel" "-c" path] {:out :write :out-file new-path})
+                        p/check))))
+
+  compile {:doc "Compile all Fennel files into Lua"
+           :task (fs/walk-file-tree
+                         "."
+                         {:visit-file (fn [path _]
+                                              (when (= (fs/extension path) "fnl")
+                                                      (compile-file path))
+                                              :continue)})}
+
+  test {:depends [compile]
+        :doc "Run tests (NB. forces compilation)"
+        :task (shell "lua" "test.lua")}
+
+  c**** {:doc "CHALLENGE TASKS"}
+
+  task-1 {:doc "Run Task 1"
+          :task (run-task :t1 *command-line-args*)}
+
+  task-2 {:doc "Run Task 2"
+          :task (run-task :t2 *command-line-args*)}
+  }
+}

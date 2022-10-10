@@ -1,5 +1,8 @@
 find . -name "*.plperl" -delete
+find . -name "*.ipynb" -delete
+find . -name "*.Mod" -delete
 find . -name "*.gpr" -delete
+find . -name "*.pdl" -delete
 find . -name "Makefile" -delete
 find . -name "m3makefile" -delete
 find . -name "*.m3" -delete

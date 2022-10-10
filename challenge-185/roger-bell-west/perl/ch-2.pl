@@ -1,0 +1,37 @@
+#! /usr/bin/perl
+
+use strict;
+use warnings;
+use experimental 'signatures';
+
+use Test::More tests => 2;
+
+is_deeply(recomposemaskcode(["ab-cde-123", "123.abc.420", "3abc-0010.xy"]),
+          ["xx-xxe-123", "xxx.xbc.420", "xxxx-0010.xy"],
+          'example 1');
+
+is_deeply(recomposemaskcode(["1234567.a", "a-1234-bc", "a.b.c.d.e.f"]),
+          ["xxxx567.a", "x-xxx4-bc", "x.x.x.x.e.f"],
+          'example 2');
+
+sub recomposemaskcode($list) {
+  my @out;
+  foreach my $ins (@{$list}) {
+    my $count = 0;
+    my $os = '';
+    foreach my $c (split '',$ins) {
+      if (($c ge '0' && $c le '9') || ($c ge 'a' && $c le 'z')) {
+        if ($count < 4) {
+          $count++;
+          $os .= 'x';
+        } else {
+          $os .= $c;
+        }
+      } else {
+          $os .= $c;
+      }
+    }
+    push @out,$os;
+  }
+  return \@out;
+}
