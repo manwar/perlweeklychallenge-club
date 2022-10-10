@@ -1,30 +1,52 @@
 {
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 186",
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Dave Cross",
+               "name" : "Dave Cross"
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "y" : 2,
+               "name" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Tim Potapov",
+               "y" : 2,
+               "name" : "Tim Potapov"
+            }
+         ]
+      }
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 186"
+   },
    "xAxis" : {
       "type" : "category"
    },
-   "drilldown" : {
-      "series" : [
-         {
-            "name" : "Dave Cross",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ],
-            "id" : "Dave Cross"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2022-10-10 18:33:36 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
          },
-         {
-            "id" : "Mark Anderson",
-            "data" : [
-               [
-                  "Raku",
-                  2
-               ]
-            ],
-            "name" : "Mark Anderson"
-         }
-      ]
+         "borderWidth" : 0
+      }
    },
    "yAxis" : {
       "title" : {
@@ -34,45 +56,38 @@
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2022-10-10 18:26:20 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 186"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
+   "drilldown" : {
+      "series" : [
+         {
+            "id" : "Dave Cross",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Dave Cross"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
+         },
+         {
+            "name" : "Tim Potapov",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Tim Potapov"
          }
-      }
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 2,
-               "drilldown" : "Dave Cross",
-               "name" : "Dave Cross"
-            },
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
-            }
-         ],
-         "name" : "The Weekly Challenge - 186",
-         "colorByPoint" : 1
-      }
-   ]
+      ]
+   }
 }
