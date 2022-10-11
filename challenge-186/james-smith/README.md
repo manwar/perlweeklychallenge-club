@@ -93,7 +93,7 @@ more significant.
 
 # Task 2 - Unicode Makeover
 
-*** You are given a string with possible unicode characters. Create a subroutine `sub makeover($str)` that replace the unicode characters with ascii equivalent. For this task, let us assume it only contains alphabets.
+***You are given a string with possible unicode characters. Create a subroutine `sub makeover($str)` that replace the unicode characters with ascii equivalent. For this task, let us assume it only contains alphabets.***
 
 ## Solution
 
@@ -121,6 +121,8 @@ no direct mapping.
           m m n x x x x x x x y ? ? ? ? ? lb ie ce uo a)],
 }
 ```
+Now note we allow "ligatures" & "diagraphs" in the array so there is a potential
+for a 1-many mapping.
 
 And now `makeover` - this might be seen as nasty code! But we will explain below
 
@@ -168,10 +170,13 @@ bracket will be an array with one or two values
 So getting the zero-th element we have the mapped character if there is one or the original character if there isn't.
 
 We know output is going to be UTF-8 ans we changed the *binmode*
-of STDOUT to be UTF-8
+of STDOUT to be UTF-8.
+
+Here are some examples....
 
 ```
                  ÃÊÍÒÙ! => AEIOU!
                   âÊíÒÙ => aEiOU
     Ƭȟȩ Ẇḕȅǩȴƴ Ćħąỻḝṅḡể => The Weekly Challenge
 ```
+
