@@ -1,7 +1,7 @@
-[< Previous 184](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-184/james-smith) |
-[Next 186 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-186/james-smith)
+[< Previous 185](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-185/james-smith) |
+[Next 187 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-187/james-smith)
 
-# The Weekly Challenge 185
+# The Weekly Challenge 186
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,65 +13,165 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-184/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-186/james-smith
 
-# Task 1 - MAC Address
+# Task 1 - Zip List
 
-***You are given MAC address in the form i.e. `hhhh.hhhh.hhhh`. Write a script to convert the address in the form `hh:hh:hh:hh:hh:hh`.***
-
-## Solution
-
-There are a number of different approaches to this problem, use `substr`, use `pack`/`unpack`, use `split`, use `s///`.
-
-```perl
-sub mac_regex  { pop =~ s{(\w\w)(\w\w)[.](\w\w)(\w\w)[.](\w\w)(\w\w)}
-                         {$1:$2:$3:$4:$5:$6}r }
-sub mac_submap { join ':', map { substr $_[0], $_, 2 } 0,2,5,7,10,12 }
-sub mac_substr { join ':', substr($_[0],0,2), substr($_[0],2,2), substr($_[0],5,2),
-                           substr($_[0],7,2), substr($_[0],10,2), substr($_[0],12,2) }
-sub mac_pack   { sub { pack 'ScScScScScS', $_[0],58, $_[1],58, $_[3],58,
-                       $_[4],58, $_[6],58,$_[7] }->( unpack 'SScSScSS', $_[0] ) }
-sub mac_split  { join ':', @{[split /(\w\w)/, pop]}[1,3,5,7,9,11] }
-```
-
-Most of the methods are relatively simple:
- * First method - we write a regex to replace the '`.`'s with '`:`'s, and also to split each pair in two and separate with a `:`.
- * Two and three are variants on grabbing the elements of the string representing the digits and stitching them back together.
- * Method 4 uses `unpack` to unpack the string into 16-bit integers and then pack it with 
- * Last method uses split with capture brackets which keeps the separators as well as the parts of the string between the seprators. In this case the separators are the hex-pairs, and when we join together using an array slice we only keep the separators {the odd elements of the array}
-
-### How do they perform?
-
-Method name | Rate(/s)  | Relative rate
------------ | --------: | ------------:
-mac_regex   | 2,272,727 |          1.00
-mac_substr  |   568,182 |          0.25
-mac_submap  |   555,556 |          0.24
-mac_pack    |   374,222 |          0.15
-mac_split   |   101,215 |          0.04
-
-So we see (unlike the last week) the regex version is the most efficient by a factor of 4...
-
-# Task 2 - Mask Code
-
-***You are given a list of codes in many random format. Write a script to mask first four characters (`a`-`z`,`0`-`9`) and keep the rest as it is***
+***You are given two list `@a` and `@b` of same size. Create a subroutine `sub zip(@a, @b)` that merge the two list as shown in the example below.***
 
 ## Solution
 
-Again this is string manipulation so that we can think of the all the tools in our arsenal... but in this case looks like `s{}{}r` or `sprintf` our our easiest solutions...
+This is a problem where perl signatures come into play. We use a signature so that we can
+use arrays in call rather than references to arrays. The signature `(\@\@)` then converts
+the arrays in the call into references.
+
+### Solution 1 - Simple code:
+
+Rather using a loop variable and select out of the two arrays
+we loop through 1 and use a pointer to loop through the
+other.
 
 ```perl
-sub mask_reghc { map {
-  s{[0-9a-z]([^0-9a-z]*)[0-9a-z]([^0-9a-z]*)[0-9a-z]([^0-9a-z]*)[0-9a-z]}
-  {x$1x$2x$3x}r
-} @_ }
-
-sub mask_split { map { join 'x', split /[0-9a-z]/, $_, 5 } @_ }
+sub zip (\@\@) {
+  my $c = 0;
+  map { $_, $_[1][$c++] } @{$_[0]}
+}
 ```
-Our first solution looks for the first alphnumeric character, we then skip anynumber of non-alphanumeric - alternating until we have 4 matches, we then replace those characters.
 
-Our second uses the 3 parameter version of `split` which allows you to stipulate how many matches we make - as we have 4 separators that we wish to replace we need 5 stings. When we have these we just stitch the strings back together.
+### Solution 2 - Using a pointer for both arrays..
 
-### Performance
+This is the naive version where we have a counter and use it to index both arrays.
 
-In this case the second method (`split`) is approximately 50% faster than the regex method.
+Pro is that it is a single line, no need for a variable.
+
+```perl
+sub zipt (\@\@) {
+  map { $_[0][$_], $_[1][$_] } 0..@{$_[0]}-1;
+}
+```
+
+### Solution 3 - Golfed code:
+
+Now I couldn't go a week without putting in some golf code - which is slightly
+off the wall! We loop through one array and shift off the other
+
+As we are golfing we try and avoid new variables, we can therefore reuse/abuse `@_`
+(if we are careful)...
+
+This is the reason for `local` which stops are changes affecting the loop variable
+outside the function call.
+
+Not only does using `@_` avoid using `my` when we loop through the array as we
+`shift` off the first entry we can use the bare `shift` as it assumes that the
+array is `@_`...
+
+Finally we have to do `@{shift()}` as perl can't distinguish between this meaning
+the variable `@shift` or `@{$_[-1]}`.
+
+```perl
+sub zipx (\@\@) {
+  local($_,@_)=(shift,@{shift()});
+  map{$_,shift}@$_
+}
+```
+
+## Performance
+
+With out original tests of up to 10 entries in the array we came up
+with an ord ering of `zip`, `zipt`, `zipx` as faster to slowest -
+although with only about a 10-15% difference.
+
+We then tried with a larger array (initially 1000) and sptted that
+`zipx` is now the fastest, about 20% faster than `zip` and 50% faster
+then `zipt`.
+
+The break even point is around `35` entries in each array. So the
+`zipx` is probably a better method to use as if the size is small
+all are lightning fast - around 1 micro-second, but as the array
+gets larger this gets around the millisecond - which could well be
+more significant.
+
+# Task 2 - Unicode Makeover
+
+*** You are given a string with possible unicode characters. Create a subroutine `sub makeover($str)` that replace the unicode characters with ascii equivalent. For this task, let us assume it only contains alphabets.
+
+## Solution
+
+We first need to define a data structure where we can define the mapping between unicode symbol and plain latin ASCII character.
+We could use a straight hash. But as the blocks of letters are in Unicode 'code blocks' we can use this to define the arrays
+more efficiently.
+
+`%blocks` is a hash whose key is the numeric value of the first character in the block `ord($ch)`.
+the second is a series of letter substitutions for that block. If the value in array is `?` then we assume there is
+no direct mapping.
+
+```perl
+%blocks = (
+ 192 => [qw(
+          A A A A A A A C E E E E I I I I TH N O O O O O x O U U U U Y TH SS
+          ...
+          q ? ? dz ? dz ts ? tc ? ls lz ? ? h h)],
+  7680 => [qw(
+          A a B b B b B b C c D d D d D d D d D d E e E e E e E e E e F f
+          ...
+          O o O o U u U u U u U u U u U u U u Y y Y y Y y Y y LL ll V v Y y)],
+  ...
+  43824 => [qw(
+          a ae e e e f g l l l m n n ? ? c oe oe ee co co y r r r r r r r s n n
+          m m n x x x x x x x y ? ? ? ? ? lb ie ce uo a)],
+}
+```
+
+And now `makeover` - this might be seen as nasty code! But we will explain below
+
+```perl
+sub makeover { join '', map { my $t = ord $_;
+  ( grep( { $_ ne '?' }
+      map { $t >= $_ && $t-$_ < @{$blocks{$_}}
+          ? $blocks{$_}[$t-$_] : () }
+      keys %blocks
+    ), chr $t )[0]
+} split //, shift }
+
+```
+
+```
+    shift -> split -> map -> join
+```
+
+Remember with nested blocks we work backwards. The outer map is simple, we
+split the parameter, and then process each character in turn, and join them
+together. We split the string into chunks we assume it is a UTF-8 string, and
+not a byte string, as the examples are the perl code - we can guarantee that
+as we `use utf8`, for file/command line - we can use *e.g.*
+
+```perl
+binmode(STDIN, "encoding(UTF-8)");
+```
+
+There are similar was to ensure that database results are UTF-8
+
+```
+    keys -> map -> grep
+```
+
+Now for the inner loop - We loop through each block and see if the character
+would be in that block - if it is we grab the mapped version of the character
+- this is the `map` portion. This `map` returns at most one character.
+We then `grep` out any `?` character
+
+We then add the original symbol to the list... So the results of the outer
+bracket will be an array with one or two values
+
+    `[ mapped, original ]` or `[ original ]`.
+
+So getting the zero-th element we have the mapped character if there is one or the original character if there isn't.
+
+We know output is going to be UTF-8 ans we changed the *binmode*
+of STDOUT to be UTF-8
+
+```
+                 ÃÊÍÒÙ! => AEIOU!
+                  âÊíÒÙ => aEiOU
+    Ƭȟȩ Ẇḕȅǩȴƴ Ćħąỻḝṅḡể => The Weekly Challenge
+```
