@@ -1,41 +1,33 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2022-10-10 22:45:31 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
    "legend" : {
       "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Dave Cross",
+            "name" : "Dave Cross",
             "data" : [
                [
                   "Perl",
                   2
                ]
+            ]
+         },
+         {
+            "name" : "Feng Chang",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
             ],
-            "id" : "Dave Cross",
-            "name" : "Dave Cross"
+            "id" : "Feng Chang"
          },
          {
             "id" : "Mark Anderson",
@@ -49,15 +41,17 @@
          },
          {
             "id" : "Matthew Neleigh",
-            "name" : "Matthew Neleigh",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Matthew Neleigh"
          },
          {
+            "id" : "Peter Campbell Smith",
+            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -67,11 +61,11 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Peter Campbell Smith",
-            "name" : "Peter Campbell Smith"
+            ]
          },
          {
+            "id" : "Robert DiCicco",
+            "name" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
@@ -81,19 +75,17 @@
                   "Raku",
                   1
                ]
-            ],
-            "name" : "Robert DiCicco",
-            "id" : "Robert DiCicco"
+            ]
          },
          {
+            "id" : "Tim Potapov",
+            "name" : "Tim Potapov",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Tim Potapov",
-            "name" : "Tim Potapov"
+            ]
          },
          {
             "id" : "W. Luis Mochan",
@@ -111,55 +103,78 @@
          }
       ]
    },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2022-10-11 13:28:00 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
+               "y" : 2,
                "drilldown" : "Dave Cross",
-               "name" : "Dave Cross",
-               "y" : 2
+               "name" : "Dave Cross"
             },
             {
-               "drilldown" : "Mark Anderson",
+               "name" : "Feng Chang",
+               "y" : 2,
+               "drilldown" : "Feng Chang"
+            },
+            {
                "name" : "Mark Anderson",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
             },
             {
                "name" : "Matthew Neleigh",
-               "y" : 2,
-               "drilldown" : "Matthew Neleigh"
-            },
-            {
-               "y" : 3,
-               "name" : "Peter Campbell Smith",
-               "drilldown" : "Peter Campbell Smith"
-            },
-            {
-               "drilldown" : "Robert DiCicco",
-               "y" : 3,
-               "name" : "Robert DiCicco"
-            },
-            {
-               "drilldown" : "Tim Potapov",
-               "name" : "Tim Potapov",
+               "drilldown" : "Matthew Neleigh",
                "y" : 2
             },
             {
-               "name" : "W. Luis Mochan",
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith",
+               "y" : 3
+            },
+            {
+               "name" : "Robert DiCicco",
+               "drilldown" : "Robert DiCicco",
+               "y" : 3
+            },
+            {
+               "name" : "Tim Potapov",
+               "drilldown" : "Tim Potapov",
+               "y" : 2
+            },
+            {
                "y" : 3,
-               "drilldown" : "W. Luis Mochan"
+               "drilldown" : "W. Luis Mochan",
+               "name" : "W. Luis Mochan"
             }
          ],
-         "name" : "The Weekly Challenge - 186",
-         "colorByPoint" : 1
+         "name" : "The Weekly Challenge - 186"
       }
    ],
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
    "title" : {
       "text" : "The Weekly Challenge - 186"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
