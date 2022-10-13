@@ -1,6 +1,6 @@
 {
  :paths ["src" "resources"]
- :deps {c185/c185 {:local/root "."}}
+ :deps {c186/c186 {:local/root "."}}
  
  :tasks
  {
@@ -63,6 +63,6 @@
           :task (run-task-clj :t2 *command-line-args*)}
 
   task-2-bb {:doc "Run Task 2 (via Babashka)"
-             :task (run-task-bb :t2 *command-line-args*)}
+             :task (bb-no-go :t2 *command-line-args*)}
   }
 }
