@@ -8,7 +8,7 @@ use Encode qw(decode encode);
 use Unicode::Collate;
 sub char2ascii($char){ # Convert single char to ascii
     state $coll=Unicode::Collate->new(level=>3, ignore_level2=>1); #Ignore accents, check case
-    state @ascii=("a".."z", "A".."Z", "0".."9");
+    state @ascii=map {chr} (0x20..0x7e);
     $coll->cmp($_, $char)==0 && return $_ for @ascii; #return ascii if found
     $char # default
 }
