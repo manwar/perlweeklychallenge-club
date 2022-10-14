@@ -1,27 +1,12 @@
 {
-   "subtitle" : {
-      "text" : "Last updated at 2022-10-14 00:39:58 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "legend" : {
       "enabled" : "false"
    },
+   "subtitle" : {
+      "text" : "Last updated at 2022-10-14 07:10:32 GMT"
+   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
    },
    "yAxis" : {
       "min" : 0,
@@ -29,35 +14,50 @@
          "text" : null
       }
    },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
+   },
    "series" : [
       {
+         "dataLabels" : {
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "align" : "right"
+         },
          "data" : [
             [
                "Blog",
-               2931
+               2932
             ],
             [
                "Perl",
-               9064
+               9066
             ],
             [
                "Raku",
                5433
             ]
          ],
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "rotation" : -90
-         },
          "name" : "Contributions"
       }
-   ]
+   ],
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   }
 }
