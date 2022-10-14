@@ -22,6 +22,10 @@ binmode(STDOUT, "encoding(UTF-8)");
 
 my %blocks = code_blocks();
 
+my %map = map { my $c = $_; map { $_ ne '?' ? ($c++,$_) : ($c++) x 0 } @{$blocks{$_}} } keys %blocks;
+my @inv;
+push @{$inv[length $map{$_}]{$map{$_}}},$_ for keys %map;
+
 ## This might be seen as nasty code!!
 ##
 ## We split the string into chunks
@@ -45,7 +49,8 @@ my %blocks = code_blocks();
 ## character if there is one or the original character
 ## if there isn't
 
-sub plain { join '', map { my $t = ord $_;
+sub makeover2 { join '', map { $map{ord $_}//$_ } split //, shift }
+sub makeover { join '', map { my $t = ord $_;
   ( grep( { $_ ne '?' }
       map { $t >= $_ && $t-$_ < @{$blocks{$_}}
           ? $blocks{$_}[$t-$_] : () }
@@ -53,6 +58,57 @@ sub plain { join '', map { my $t = ord $_;
     ), chr $t )[0]
 } split //, pop }
 
+sub makeunder_nolig {
+  return join '', map { $inv[1]{$_} && 0.8 > rand ? chr $inv[1]{$_}[rand @{$inv[1]{$_}}] : $_ } split //,$_[0];
+}
+
+sub makeunder {
+  my $res = '';
+  my @T = split //,$_[0];
+  while(@T) {
+    my $x = shift @T;
+    $res .=
+      @T && exists $inv[2]{$x.$T[0]} && 0.8 > rand
+    ? chr($inv[2]{$x.$T[0]}[rand @{$inv[2]{$x.$T[0]}}]).(shift @T)x 0
+    : exists $inv[1]{$x} && 0.8 > rand
+    ? chr $inv[1]{$x}[rand @{$inv[1]{$x}}]
+    : $x
+  }
+  $res;
+}
+
+say makeunder_nolig( '
+Task 1: Zip List
+Submitted by: Mohammad S Anwar
+You are given two list @a and @b of same size.
+
+Create a subroutine sub zip(@a, @b) that merge the two
+list as shown in the example below.
+
+Task 2: Unicode Makeover
+Submitted by: Mohammad S Anwar
+You are given a string with possible unicode characters.
+
+Create a subroutine sub makeover($str) that replace the
+unicode characters with ascii equivalent. For this task,
+let us assume it only contains alphabets.
+');
+say makeunder( '
+Task 1: Zip List
+Submitted by: Mohammad S Anwar
+You are given two list @a and @b of same size.
+
+Create a subroutine sub zip(@a, @b) that merge the two
+list as shown in the example below.
+
+Task 2: Unicode Makeover
+Submitted by: Mohammad S Anwar
+You are given a string with possible unicode characters.
+
+Create a subroutine sub makeover($str) that replace the
+unicode characters with ascii equivalent. For this task,
+let us assume it only contains alphabets.
+');
 ## These strings are UTF-8 as we have a `use utf8;` statement at
 ## the start of the code..
 ##
@@ -64,9 +120,16 @@ my @TESTS = (
   [ 'âÊíÒÙ',               'aEiOU'  ],
   [ 'Ƭȟȩ Ẇḕȅǩȴƴ Ćħąỻḝṅḡể', 'The Weekly Challenge' ],
 );
-say sprintf '-%30s => %s', $_->[0], plain( $_->[0] ) for @TESTS;
+say sprintf '-%30s => %s', $_->[0], makeover( $_->[0] ) for @TESTS;
 
-is( plain($_->[0]), $_->[1] ) for @TESTS; done_testing();
+is( makeover($_->[0]), $_->[1] ) for @TESTS;
+is( makeover2($_->[0]), $_->[1] ) for @TESTS;
+
+cmpthese( 100_000, {
+  'map'  => sub { makeover( $_->[0]) for @TESTS },
+  'hash' => sub { makeover2($_->[0]) for @TESTS },
+});
+done_testing();
 
 sub code_blocks {
  192 => [qw(
