@@ -58,10 +58,30 @@ sub makeover { join '', map { my $t = ord $_;
     ), chr $t )[0]
 } split //, pop }
 
+## Now let us reverse this - we can reverse the map
+## and create a hash of arrays for each symbol, where the value of
+## the hash is an array of code point.
+## To speed up the difference between single characters and ligatures
+## we split this hash by length of sequence. So $inv[1] contains
+## the single characters and $inv[2] the digraphs.
+
+## We run two versions of this code
+##
+## One a simple one-lner which handles the case where we only use
+## single characters
+##
+## and a second more complex one which looks to see if a digraph
+## is available and possibly uses that
+## in each case we use a fall through random number to allow
+## plain letters to be used as well.
+
 sub makeunder_nolig {
-  return join '', map { $inv[1]{$_} && 0.8 > rand ? chr $inv[1]{$_}[rand @{$inv[1]{$_}}] : $_ } split //,$_[0];
+  join '', map { $inv[1]{$_} && 0.8 > rand ? chr $inv[1]{$_}[rand @{$inv[1]{$_}}] : $_ } split //,$_[0];
 }
 
+## Couldn't really (without going to convoluted lengths) write this
+## map and one liner (you can't do map easily because of sometimes
+## taking one character - and other times taking two....
 sub makeunder {
   my $res = '';
   my @T = split //,$_[0];
@@ -124,6 +144,7 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-186/james-smith
 ');
+
 ## These strings are UTF-8 as we have a `use utf8;` statement at
 ## the start of the code..
 ##

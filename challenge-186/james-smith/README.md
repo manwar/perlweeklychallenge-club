@@ -207,3 +207,81 @@ Here are some examples....
 
 With these three examples the 2nd method is 4-5x faster than the previous method... Pre-computing is always the way to go,
 if you have a complex function and not too much memory is required to store the mappings.
+
+## Now lets go the other way...
+
+This is interesting - but it was hard to write examples - so I thought why don't I go the other way and produce
+the "decorated" code from the plain text - I find it weird calling it "`makeunder`" but as it is opposite over
+`makeover` so be it. I think switching names would be more understandable.
+
+Now there are two ways we can do this - we can either just use the single character mappings or we can look to see if we
+can include the ligatures/digraphs.
+
+We also add in a small random feature meaning we don't necessarily modify all characters...
+
+### Getting the mapping
+
+```perl
+my @inv;
+push @{$inv[length $map{$_}]{$map{$_}}},$_ for keys %map;
+```
+
+We have made this slightly more complex by splitting the mapping into two hashs - `$inv[1]` the mapping of characters and
+`$inv[2]` the mapping of digraphs.
+
+### First pass no ligatures
+
+This one is relatively simple - lookup character in list - if is mappable map it - if not just copy it, and we use the
+`join map split` mode...
+
+```perl
+sub makeunder_nolig {
+  join '', map {
+    $inv[1]{$_} && 0.8 > rand ? chr $inv[1]{$_}[rand @{$inv[1]{$_}}] : $_
+  } split //,$_[0];
+}
+```
+
+### Now with ligatures
+
+```perl
+sub makeunder {
+  my $res = '';
+  my @T = split //,$_[0];
+  while(@T) {
+    my $x = shift @T;
+    $res .=
+      @T && exists $inv[2]{$x.$T[0]} && 0.8 > rand
+    ? chr($inv[2]{$x.$T[0]}[rand @{$inv[2]{$x.$T[0]}}]).(shift @T)x 0
+    : exists $inv[1]{$x} && 0.8 > rand
+    ? chr $inv[1]{$x}[rand @{$inv[1]{$x}}]
+    : $x
+  }
+  $res;
+}
+```
+
+We can't use the `join map split` model this time - as the `map` section is looking at one or two characters at a time.
+So through the loop we first look for a ligature - if we have one we use that (OK - we might not with a random change).
+If we don't we then try a single character, or if not fall through.
+
+**Notes:** We use our favourite `x 0` trick to shift the 2nd character from a digraph, without it affecting the output...
+
+Here is some output (this weeks challenges) you will already have seen some at the top of this document!
+
+```
+Ṫaṩḵ 1: Zįƥ Ḽiẛƭ
+Ṧuɓṃïtŧȩƍ ḅꭅ: Ḿoḧǟmꭐaƌ Ṧ Ḁŉẁẳr
+Ỵồŭ äɺɞ ɡɪʌȅṅ țẅồ ƚīṧẖ @à ãɴḓ @b ōf ṥąꬺⱻ ṥĩȥe.
+
+Čʁeꭤťꬲ a ṧuɓꭆȣtȋñḛ ẜȕƃ ẕĩṗ(@ḁ, @ɓ) ðằṫ ṃềrĝe ðɚ ʈẇợ
+łıẛƫ aṣ ẜhowṇ ɪn ðⱻ ềẋaꭑpɭȇ ḃʚꬸȯw.
+
+Ṭẫꭍḳ 2: Ʊꬼıꭄȡɜ Ṁắƙẹȱỽėȓ
+ſȗḇɯïţⱦɜȡ bʏ: Ṁổɦẩɰṃåḋ S Ấꬼwǡɾ
+Ÿȣ äꭋe ǥiṿȩȵ ȃ śẖȑḭnĝ ẁịʇḧ ṕȱṣẝɨḇlé uņĩꭄdě ċȟắꭇäȼṱḕȓȿ.
+
+Çɹḛaƭe ậ ẝửḃꭊôuṫiꭎḗ ṩṳƃ ɯắkeṓỽeꭆ($ṩẖꭋ) ðat rȩpḷāče ƫḣẹ
+uꭎịʗɔdē cḫắɾȁḉțễꭈʂ ẁĭð aẜḉɨĭ ɘɋữǐṿaļėꭎť. Ƒỏꭊ ðis ṯꭤśk,
+ḷeƭ ǘʂ aʂṣụɯȩ ḯŧ ȭṉḹꭅ ꭄṋʈấïṋș alṕẗǎƀeʦ.
+```
