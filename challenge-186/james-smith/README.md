@@ -1,17 +1,17 @@
 [< Previous 185](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-185/james-smith) |
 [Next 187 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-187/james-smith)
 
-# The Weekly Challenge 186
+# Ʈʯḗ Ŵꭂḵⱡʏ Chåɫleŋȅ 186
 
-You can find more information about this weeks, and previous weeks challenges at:
+Ỷȣ ʗầņ fɪƞẟ ḿồṛĕ ĩƞꬵõɽɯɑẖıọǹ ꬰƀȣƫ ðiŝ ŵꭂḵꭍ, ẚꬻḋ ṗʁeỽíȣẜ ẅꭂks cẗâỻɛŋɘṧ ẩṱ:
 
-  https://theweeklychallenge.org/
+  ɥtțṗs://ðewꭂǩlyƈhäỻḝŋⱻ.ṓrǧ/
 
-If you are not already doing the challenge - it is a good place to practise your
-**perl** or **raku**. If it is not **perl** or **raku** you develop in - you can
-submit solutions in whichever language you feel comfortable with.
+Ïf ỿȣ ḁrẽ ṇọť aľɻəǻďƴ ẟƣŋ ðe ĉʮảꬸḽeŋḗ - íṯ ȉṥ ẫ ġỏoď plẵꭢ ʈⱺ ṗꭉaꬿŧiśe ɏỗůꭆ
+**ƥěꭈⱡ** öṟ **ꭉakū**. Įƒ ȋt iȿ nóť **ṗḙɽl** oṙ **rakʊ** ẏȣ ƍȩvȅŀơƥ in - ỿȣ ĉẚṅ
+ṡūḃꭑĭƫ šôȴuʈīoňẛ įṋ ẉɥḯċʯḝʋḕr ʟaŋʉaĝe ꭅȣ ꬵꭂⱡ cőmḟởrṯaƀłꬳ ẁið.
 
-You can find the solutions here on github at:
+Ȳȣ ɕañ ḟḭꬻḑ þe sȯḹȕțḭǫṋs ʯeɿe ốņ gɩʇḥùɓ ấţ:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-186/james-smith
 
@@ -38,11 +38,11 @@ sub zip (\@\@) {
 }
 ```
 
-### Solution 2 - Using a pointer for both arrays..
+### Solution 2 - Using a pointer for both arrays:
 
 This is the naive version where we have a counter and use it to index both arrays.
 
-Pro is that it is a single line, no need for a variable.
+The plus is that it is a single line, no need for a variable.
 
 ```perl
 sub zipt (\@\@) {
@@ -56,10 +56,8 @@ Now I couldn't go a week without putting in some golf code - which is slightly
 off the wall! We loop through one array and shift off the other
 
 As we are golfing we try and avoid new variables, we can therefore reuse/abuse `@_`
-(if we are careful)...
-
-This is the reason for `local` which stops are changes affecting the loop variable
-outside the function call.
+(if we are careful)... this is the reason for `local` which stops our changes
+affecting the loop variable outside the function call.
 
 Not only does using `@_` avoid using `my` when we loop through the array as we
 `shift` off the first entry we can use the bare `shift` as it assumes that the
@@ -78,8 +76,8 @@ sub zipx (\@\@) {
 ## Performance
 
 With out original tests of up to 10 entries in the array we came up
-with an ord ering of `zip`, `zipt`, `zipx` as faster to slowest -
-although with only about a 10-15% difference.
+with an ordering of `zip`, `zipt`, `zipx` as faster to slowest -
+although with only about a 10-15% difference between all 3.
 
 We then tried with a larger array (initially 1000) and sptted that
 `zipx` is now the fastest, about 20% faster than `zip` and 50% faster
@@ -96,6 +94,9 @@ more significant.
 ***You are given a string with possible unicode characters. Create a subroutine `sub makeover($str)` that replace the unicode characters with ascii equivalent. For this task, let us assume it only contains alphabets.***
 
 ## Solution
+
+We could use packages/built in support for UTF-8. But where would be the fun in that... can we replicate this
+in compact perl!
 
 We first need to define a data structure where we can define the mapping between unicode symbol and plain latin ASCII character.
 We could use a straight hash. But as the blocks of letters are in Unicode 'code blocks' we can use this to define the arrays
@@ -122,7 +123,8 @@ no direct mapping.
 }
 ```
 Now note we allow "ligatures" & "diagraphs" in the array so there is a potential
-for a 1-many mapping.
+for a 1-many mapping. (Diagraphs may be written as two letters, but sometimes the
+letters are merged into a ligature, e.g. oe as in Phoenix; ss; ll in welsh ...)
 
 And now `makeover` - this might be seen as nasty code! But we will explain below
 
@@ -172,6 +174,29 @@ So getting the zero-th element we have the mapped character if there is one or t
 We know output is going to be UTF-8 ans we changed the *binmode*
 of STDOUT to be UTF-8.
 
+This is a bit messy and slow - so can we think of a different way of using our data structure:
+
+### A simpler solution!!
+
+Well we can convert the data structure into a hash... and see how the code works - this is an initial overhead
+but each symbol is a lot quicker!
+
+```perl
+my %map = map {
+  my $c = $_;
+  map { $_ eq '?' ? ($c++,$_) : ($c++) x 0 }
+  @{$blocks{$_}}
+} keys %blocks;
+```
+
+This then gives us a `makeover` function of:
+
+```perl
+sub makeover { join '', map { $map{ord $_}//$_ } split //, shift }
+```
+
+### Some examples and performance...
+
 Here are some examples....
 
 ```
@@ -180,3 +205,5 @@ Here are some examples....
     Ƭȟȩ Ẇḕȅǩȴƴ Ćħąỻḝṅḡể => The Weekly Challenge
 ```
 
+With these three examples the 2nd method is 4-5x faster than the previous method... Pre-computing is always the way to go,
+if you have a complex function and not too much memory is required to store the mappings.
