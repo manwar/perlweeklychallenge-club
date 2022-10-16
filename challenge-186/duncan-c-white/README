@@ -1,43 +1,40 @@
-Task 1: MAC Address
+Task 1: Zip List
 
-You are given MAC address in the form i.e. hhhh.hhhh.hhhh.
+You are given two list @a and @b of same size.
+Create a subroutine sub zip(@a, @b) that merge the two list as shown in
+the example below.
 
-Write a script to convert the address in the form hh:hh:hh:hh:hh:hh.
+Example
 
-Example 1
+Input:  @a = qw/1 2 3/; @b = qw/a b c/;
+Output: zip(@a, @b) should return qw/1 a 2 b 3 c/;
+        zip(@b, @a) should return qw/a 1 b 2 c 3/;
 
-Input:  1ac2.34f0.b1c2
-Output: 1a:c2:34:f0:b1:c2
 
-Example 2
-
-Input:  abc1.20f1.345a
-Output: ab:c1:20:f1:34:5a
-
-MY NOTES: nice and easy.
+MY NOTES: very easy, except for the fact that a Perl subroutine CAN'T
+take 2 arrays.  Guess he meant array-refs?
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
-into C (look in the C directory for that).
+into C (look in the C directory for that).  Of course, that could
+only deal with lists of integers, so the examples above have to change.
 
 
-Task 2: Mask Code
+Task 2: Unicode Makeover
 
-You are given a list of codes in many random format.
-Write a script to mask first four characters (a-z,0-9) and keep the rest as it is.
+You are given a string with possible unicode characters.
+Create a subroutine sub makeover($str) that replace the unicode characters with ascii equivalent. For this task, let us assume it only contains alphabets.
 
 Example 1
 
-Input: @list = ('ab-cde-123', '123.abc.420', '3abc-0010.xy')
-Output: ('xx-xxe-123', 'xxx.xbc.420', 'xxxx-0010.xy')
+Input: $str = 'ÃÊÍÒÙ';
+Output: 'AEIOU'
 
 Example 2
 
-Input: @list = ('1234567.a', 'a-1234-bc', 'a.b.c.d.e.f')
-Output: ('xxxx567.a', 'x-xxx4-bc', 'x.x.x.x.e.f')
+Input: $str = 'âÊíÒÙ';
+Output: 'aEiOU'
 
-MY NOTES: Also seems pretty simple.  Decided to generalise: --firstn N
-does the masking for the first N alphanumeric chars.
 
-GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
-into C (look in the C directory for that).
-
+MY NOTES: Unicode: just say no - hell no.
+My terminal doesn't even display the horrible input strings right.
+I'm not doing this.  Forget it.
