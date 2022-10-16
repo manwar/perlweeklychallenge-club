@@ -1,6 +1,8 @@
 {
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -36,19 +38,8 @@
          "Mark Anderson"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-10-16 21:44:58 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -87,6 +78,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -118,8 +110,7 @@
             1,
             0,
             253
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -157,11 +148,20 @@
          "name" : "Blog"
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-10-16 22:27:39 GMT"
+   },
    "tooltip" : {
       "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
       "shared" : 1
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    }
 }
