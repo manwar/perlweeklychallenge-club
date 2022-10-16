@@ -1,12 +1,9 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             8,
             2,
@@ -38,7 +35,8 @@
             1,
             3,
             20
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -76,6 +74,7 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -107,25 +106,22 @@
             0,
             0,
             2
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-10-16 15:13:36 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "xAxis" : {
       "categories" : [
@@ -161,7 +157,11 @@
          "Mark Anderson"
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-10-16 15:36:08 GMT"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
