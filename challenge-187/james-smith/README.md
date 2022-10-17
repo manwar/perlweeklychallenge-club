@@ -37,9 +37,17 @@ We:
 
 ```perl
 sub days_together {
+  # *4* If start [0] > end[1] then return the difference + 1 otherwise return 0
   sub { $_>[1]<$_[0] ? 0 : $_[1]-$_[0]+1 }->(
+    # *3* Calculate max start & min end...
+    # If bar->start [2] > foo->start [0] then overlap->start = bar->start else it's foo->start
+    # If bar->end   [3] < foo->end   [1] then overlap->end   = bar->end   else it's foo->end
     sub { ( $_[2]>$_[0]?$_[2]:$_[0], $_[3]<$_[1]?$_[3]:$_[1] ) }->(
+      # *2* Compute year day - array contains offsets for the start of each month [ there is a
+      # padding 0 so we don't have to adjust month by 1...
       map { [ 0,0,31,59,90,120,151,181,212,243,273,304,334 ]->[substr $_,3] + substr$_,0,2 }
+      # *1* Flatten two arrays into one... could have written this as @{$_[0]}, @{$_[1]} to avoid
+      # the map.
       map { @{$_} }
       @_
     )
