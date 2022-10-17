@@ -9,12 +9,11 @@ is-deeply max-magical-triplet(2, 4, 3),    (4, 3, 2);
 sub max-magical-triplet(+$list)
 {
     $list.combinations(3)
-         .map({ |.permutations })
-         .unique(with => &[eqv])
          .flat
          .grep({ [and] $^a + $^b > $^c,
                        $^b + $^c > $^a, 
                        $^a + $^c > $^b })
+         .map({ .sort: -* })
          andthen
          .elems ?? .max !! Empty.List
 }
