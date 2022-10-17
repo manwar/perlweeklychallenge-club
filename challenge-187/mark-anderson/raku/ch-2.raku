@@ -13,7 +13,7 @@ sub max-magical-triplet(+$list)
          .grep({ [and] $^a + $^b > $^c,
                        $^b + $^c > $^a, 
                        $^a + $^c > $^b })
-         .map({ .sort: -* })
+         .map({ .sort(-*) })
          andthen
          .elems ?? .max !! Empty.List
 }
