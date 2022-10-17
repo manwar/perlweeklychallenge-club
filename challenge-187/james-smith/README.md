@@ -25,7 +25,17 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-187/ja
 
 ## Solution
 
-A slightly contrived one liner, which uses *closures* to perform the calculations without the need for intermediate variables...
+A slightly contrived one liner, which uses *self-executing closures* to perform the calculations without the need for creating intermediate variables.
+
+We are used to using *closures* or *anonymous functions* as callbacks in various functions - like `sort`, `map`, `grep` etc, but we can also use them
+as self executing functions `sub { ..code.. }->( ..data.. )`, this is similar to the approach used in javascript to alias methods/variables.
+
+e.g.
+```php
+(function($){
+  $.fn.function_name = function(x){};
+})(jQuery);
+```
 
 Working inward to outward, and bottom to top...
 
@@ -37,24 +47,41 @@ We:
 
 ```perl
 sub days_together {
-  # *4* If start [0] > end[1] then return the difference + 1 otherwise return 0
   sub { $_>[1]<$_[0] ? 0 : $_[1]-$_[0]+1 }->(
-    # *3* Calculate max start & min end...
-    # If bar->start [2] > foo->start [0] then overlap->start = bar->start else it's foo->start
-    # If bar->end   [3] < foo->end   [1] then overlap->end   = bar->end   else it's foo->end
-    sub { ( $_[2]>$_[0]?$_[2]:$_[0], $_[3]<$_[1]?$_[3]:$_[1] ) }->(
-      # *2* Compute year day - array contains offsets for the start of each month [ there is a
-      # padding 0 so we don't have to adjust month by 1...
-      map { [ 0,0,31,59,90,120,151,181,212,243,273,304,334 ]->[substr $_,3] + substr$_,0,2 }
-      # *1* Flatten two arrays into one... could have written this as @{$_[0]}, @{$_[1]} to avoid
-      # the map.
+    # *4* If start [0] > end[1] then return the difference + 1 otherwise return 0
+
+    sub { ( $_[2] > $_[0] ? $_[2] : $_[0], $_[3] < $_[1] ? $_[3] : $_[1] ) }->(
+      # *3* Calculate max start & min end...
+      #     If bar->start [2] > foo->start [0] then overlap->start = bar->start else it's foo->start
+      #     If bar->end   [3] < foo->end   [1] then overlap->end   = bar->end   else it's foo->end
+
+      map { [ 0,0,31,59,90,120,151,181,212,243,273,304,334 ]->[ substr $_,3 ] + substr $_,0,2 }
+        # *2* Compute year day - array contains offsets for the start of each month [ there is a
+        #     padding 0 so we don't have to adjust month by 1...
+
       map { @{$_} }
+        # *1* Flatten two arrays into one... could have written this as @{$_[0]}, @{$_[1]} to avoid
+        # the map.
+
       @_
     )
   )
 }
 ```
 
+and now without the comments:
+
+```perl
+sub days_together {
+  sub { $_>[1]<$_[0] ? 0 : $_[1]-$_[0]+1 }->(
+    sub { ( $_[2] > $_[0] ? $_[2] : $_[0], $_[3] < $_[1] ? $_[3] : $_[1] ) }->(
+      map { [ 0,0,31,59,90,120,151,181,212,243,273,304,334 ]->[ substr $_,3 ] + substr $_,0,2 }
+      map { @{$_} }
+      @_
+    )
+  )
+}
+```
 # Task 2 - Split array
 
 ***You are given a list of positive numbers, `@n`, having at least 3 numbers. Write a script to find the triplets `(a, b, c)` from the given list that satisfies the following rules.***
