@@ -47,7 +47,7 @@ We:
 
 ```perl
 sub days_together {
-  sub { $_>[1]<$_[0] ? 0 : $_[1]-$_[0]+1 }->(
+  sub { $_[1]<$_[0] ? 0 : $_[1]-$_[0]+1 }->(
     # *4* If start [0] > end[1] then return the difference + 1 otherwise return 0
 
     sub { ( $_[2] > $_[0] ? $_[2] : $_[0], $_[3] < $_[1] ? $_[3] : $_[1] ) }->(
