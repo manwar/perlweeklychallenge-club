@@ -20,7 +20,7 @@ is( "@{[magical(@{$_->[0]})]}", $_->[1] ) foreach @TESTS;
 done_testing();
 
 sub magical {
-  @_ = sort { $b<=>$a } @_;
+  @_ = sort { $b <=> $a } @_;
   my @max = (0);
   while(@_>2) {
     my($a,$b,@c)=@_;
