@@ -15,9 +15,15 @@ sub MAIN( Str $start-foo, Str $end-foo, Str $start-bar, Str $end-bar ) {
     my $bar-days-end = DateTime.new: year => 2022, day => $/[0], month => $/[1];
 
     my $days = 0;
-    while ( $foo-days-start < $foo-days-end ) {
-    	  $days++ if ( $bar-days-end >= $foo-days-start >= $bar-days-start );
-	  $foo-days-start .= later( days => 1 );
+    my $start = $foo-days-start >= $bar-days-start ?? $bar-days-start !! $foo-days-start;
+    my $end   = $foo-days-end >= $bar-days-end ?? $foo-days-end !! $bar-days-end;
+    
+    while ( $start < $end ) {
+    	  $days++ if ( $start >= $foo-days-start
+	  && $start <= $foo-days-end
+	  && $start >= $bar-days-start
+	  && $start <= $bar-days-end );
+	  $start .= later( days => 1 );
     }
 
     say $days;
