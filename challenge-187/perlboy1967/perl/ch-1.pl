@@ -25,7 +25,6 @@ together in the city, if at all.
 use v5.16;
 use warnings;
 
-use DateTime;
 use Date::Simple qw(ymd);
 use Date::Range;
 
