@@ -92,21 +92,24 @@ This is a permutation challenge, so we loop through the values with 3 nested loo
 
 By sorting we can make the assumption that `$a,$b,$c` are automatically sorted highest to lowest..
 
+This has two advantages:
+ 1. The results will always be sorted `$a>=$b>=$c`
+ 2. The 3 inequalities can reduce to a single inequality - all three are satisfied if `$b+$c > $a`, as this is the smallest sum of two numbers and the largest single number;
+ 3. The first solution we find will have the largest sum of `$a+$b+$c` so we don't need to keep track of the maximum solution - but return the first we can find...
+
 Each time through we use shift to get the first element of each loop until there are no values left. Note in this case we use `while` for the outer two loops...
 
 ```perl
 sub magical {
   @_ = sort { $b <=> $a } @_;
-  my @max = (0);
   while(@_>2) {
     my($a,$b,@c)=@_;
     while(@c) {
-      ($a+$b>$_) && ($b+$_>$a) && ($a+$_>$b) && ($a+$b+$_>$max[0]) && (@max=($a+$b+$_,$a,$b,$_)) for @c;
+      ( $b+$_ > $a ) && ( return $a,$b,$_ ) for @c;
       $b = shift @c;
     }
     shift;
   }
-  shift @max;
-  @max;
+  ();
 }
 ```

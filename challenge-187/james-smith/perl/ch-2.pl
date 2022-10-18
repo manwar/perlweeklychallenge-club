@@ -35,7 +35,7 @@ sub magical {
   while(@_>2) {
     my($a,$b,@c)=@_;
     while(@c) {
-      ($b+$_>$a) ? (return $a,$b,$_ ) : last for @c;
+      ($b+$_>$a) && (return $a,$b,$_ ) for @c;
       $b = shift @c;
     }
     shift;
