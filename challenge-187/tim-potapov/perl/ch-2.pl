@@ -1,41 +1,108 @@
 #!/usr/bin/env perl
 
-use utf8;
 use strict;
 use warnings;
 use Test::More;
-use Unicode::Normalize;
+use Math::Combinatorics qw( permute );
 
-sub makeover {
-    my ( $str ) = @_;
-    my $ascii = join "",      # Put it back together.
-      map { /(.)/ }           # Get the first character fragment.
-      map { /(\X)/g }         # Get each character.
-      NFD $str;               # Incase the string is wierd.
+sub triplet {
+    my @triplets;
+    my %stored;
 
-    $ascii;
+    for ( permute(@_) ){
+
+        # Rules:
+        # 1. a + b > c
+        # 2. b + c > a
+        # 3. a + c > b
+        # 4. a + b + c is maximum.
+
+        my ($a,$b,$c) = @$_;
+        next unless $a + $b > $c;
+        next unless $b + $c > $a;
+        next unless $a + $c > $b;
+
+        my $key = "$a $b $c";
+        next if $stored{$key};
+
+        push @triplets, [$a,$b,$c, $a+$b+$c ];
+        $stored{$key}++;
+    }
+
+    # When multiple triplets, pick where:
+    # a >= b >= c
+
+    my $triplet;
+    my @max;
+    my @ordered;
+
+    # Multiple triplets.
+    if (@triplets > 1) {
+        for (@triplets) {
+            my ($a,$b,$c,$sum) = @$_;
+            if ( not @max or $sum > $max[0][-1] ) {
+                @max = ();
+                push @max, $_;
+            }
+            elsif($sum == $max[0][-1]){
+                push @max, $_;
+            }
+        }
+
+        # Multiple maximums.
+        if (@max > 1) {
+            for (@max) {
+                my ($a,$b,$c,$sum) = @$_;
+                next unless $a >= $b and $b >= $c;
+                push @ordered, $_;
+            }
+            $triplet = $ordered[0];
+        }
+        else {
+            $triplet = $max[0];
+        }
+    }
+    else {
+        $triplet = $triplets[0];
+    }
+
+    $triplet //= [];
+    my @trip = @$triplet;
+    pop @trip if @trip;
+
+    @trip;
 }
 
 my @cases = (
     {
-        name   => "Uppercase",
-        input  => "ÃÊÍÒÙ",
-        output => "AEIOU",
+        name   => 'Example 1',
+        input  => [ 1, 2, 3, 2 ],
+        output => [ 3, 2, 2 ],
     },
     {
-        name   => "Mixed case",
-        input  => "âÊíÒÙ",
-        output => "aEiOU",
+        name   => 'Example 2',
+        input  => [ 1, 3, 2 ],
+        output => [],
     },
     {
-        name   => "Really mixed case",
-        input  => "âaÊíoÒÜuÙ",
-        output => "aaEioOUuU",
+        name   => 'Example 3',
+        input  => [ 1, 1, 2, 3 ],
+        output => [],
     },
+    {
+        name   => 'Example 4',
+        input  => [ 2, 4, 3 ],
+        output => [ 4, 3, 2 ],
+    },
+
 );
 
 for ( @cases ) {
-    is( makeover( $_->{input} ), $_->{output}, $_->{name} );
+    is_deeply(
+        [ triplet( $_->{input}->@* ) ],
+        $_->{output},
+        $_->{name}
+    );
 }
 
 done_testing();
