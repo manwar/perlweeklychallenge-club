@@ -1,7 +1,4 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "xAxis" : {
       "categories" : [
          "Ben Davies",
@@ -36,6 +33,9 @@
          "David Schwartz"
       ]
    },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
    "yAxis" : {
       "min" : 0,
       "title" : {
@@ -47,8 +47,12 @@
          "stacking" : "percent"
       }
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-10-20 17:30:30 GMT"
    },
    "series" : [
       {
@@ -87,7 +91,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             31,
             0,
@@ -119,9 +122,11 @@
             0,
             7,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -153,15 +158,10 @@
             0,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-10-20 17:22:50 GMT"
+   "chart" : {
+      "type" : "column"
    }
 }

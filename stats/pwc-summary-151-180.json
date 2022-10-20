@@ -1,15 +1,9 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-10-20 17:30:30 GMT"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             0,
@@ -41,9 +35,11 @@
             3,
             0,
             52
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             1,
             49,
@@ -75,8 +71,7 @@
             0,
             93,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -114,12 +109,8 @@
          ]
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-10-20 17:22:50 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -155,13 +146,22 @@
          "Nuno Vieira"
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
+      },
+      "min" : 0
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    }
 }

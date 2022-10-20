@@ -1,23 +1,26 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "title" : {
       "text" : "The Weekly Challenge - 187"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2022-10-20 17:30:30 GMT"
    },
    "series" : [
       {
+         "name" : "The Weekly Challenge - 187",
          "data" : [
             {
-               "y" : 2,
                "name" : "Humberto Massa",
-               "drilldown" : "Humberto Massa"
+               "drilldown" : "Humberto Massa",
+               "y" : 2
             },
             {
                "y" : 3,
@@ -25,19 +28,24 @@
                "drilldown" : "James Smith"
             },
             {
+               "y" : 8,
                "name" : "Luca Ferrari",
-               "drilldown" : "Luca Ferrari",
-               "y" : 8
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West",
+               "y" : 5
             },
             {
                "y" : 2,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
-            },
-            {
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 5
+               "name" : "Tim Potapov",
+               "drilldown" : "Tim Potapov"
             },
             {
                "name" : "W. Luis Mochan",
@@ -45,37 +53,26 @@
                "y" : 3
             }
          ],
-         "name" : "The Weekly Challenge - 187",
          "colorByPoint" : 1
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2022-10-20 17:22:51 GMT"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Humberto Massa",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Humberto Massa",
-            "name" : "Humberto Massa"
+            "id" : "Humberto Massa"
          },
          {
+            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -86,11 +83,9 @@
                   1
                ]
             ],
-            "name" : "James Smith",
-            "id" : "James Smith"
+            "name" : "James Smith"
          },
          {
-            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari",
             "data" : [
                [
@@ -101,7 +96,8 @@
                   "Blog",
                   6
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari"
          },
          {
             "data" : [
@@ -110,12 +106,10 @@
                   2
                ]
             ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
          },
          {
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -129,11 +123,22 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
+         },
+         {
+            "name" : "Tim Potapov",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Tim Potapov"
          },
          {
             "name" : "W. Luis Mochan",
-            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -143,16 +148,26 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "W. Luis Mochan"
          }
       ]
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
-   },
-   "legend" : {
-      "enabled" : 0
    }
 }
