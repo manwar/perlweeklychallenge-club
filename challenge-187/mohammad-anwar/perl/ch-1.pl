@@ -44,10 +44,7 @@ sub days_together($sd_1, $ed_1, $sd_2, $ed_2) {
 
     return $days if ($ed_1 < $sd_2);
 
-    if ($ed_1 <= $sd_2) {
-        $days = _days_together($ed_1, $ed_2);
-    }
-    elsif ($sd_2 <= $sd_1) {
+    if ($sd_2 <= $sd_1) {
         $days = _days_together($sd_1, $ed_1, $ed_2);
     }
     elsif ($sd_2 <= $ed_2) {
@@ -67,7 +64,7 @@ sub _date($date) {
 
 sub _days_together($from, $to, $_to) {
     my $days = 1; # inclusive day
-    $to = (defined $_to && ($to > $_to))?($_to):($to);
+    $to = ($to > $_to)?($_to):($to);
     while ($from < $to) {
         $from = $from->add(days => 1);
         $days++;

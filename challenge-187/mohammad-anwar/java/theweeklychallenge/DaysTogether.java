@@ -57,10 +57,7 @@ public class DaysTogether extends TestCase {
             return days;
         }
 
-        if (_sd2.compareTo(_ed1) > 0) {
-            days = _daysTogether(_ed1, _ed2, null);
-        }
-        else if (_sd1.compareTo(_sd2) > 0) {
+        if (_sd1.compareTo(_sd2) > 0) {
             days = _daysTogether(_sd1, _ed1, _ed2);
         }
         else if (_ed2.compareTo(_sd2) > 0) {
@@ -80,7 +77,7 @@ public class DaysTogether extends TestCase {
 
     public static int _daysTogether(
         LocalDate from, LocalDate to, LocalDate _to) {
-        if ((_to != null) && (to.compareTo(_to) > 0)) {
+        if (to.compareTo(_to) > 0) {
             to = _to;
         }
 

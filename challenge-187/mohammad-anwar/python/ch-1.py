@@ -27,9 +27,8 @@ def _date(dateStr) -> date:
     return date(2022, int(month), int(day))
 
 def _days_together(fromDate, toDate, _toDate) -> int:
-    if _toDate is not None:
-        if toDate > _toDate:
-            toDate = _toDate
+    if toDate > _toDate:
+        toDate = _toDate
 
     delta = toDate - fromDate
     return delta.days + 1
@@ -45,9 +44,7 @@ def daysTogether(sd1, ed1, sd2, ed2) -> int:
     if _ed1 < _sd2:
         return days
 
-    if _ed1 <= _sd2:
-        days = _days_together(_ed1, _ed2)
-    elif _sd2 <= _sd1:
+    if _sd2 <= _sd1:
         days = _days_together(_sd1, _ed1, _ed2)
     elif _sd2 <= _ed2:
         days = _days_together(_sd2, _ed1, _ed2)
