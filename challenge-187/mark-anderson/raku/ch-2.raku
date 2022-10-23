@@ -8,12 +8,7 @@ is-deeply max-magical-triplet(2, 4, 3),    (4, 3, 2);
 
 sub max-magical-triplet(+$list)
 {
-    $list.combinations(3)
-         .flat
-         .grep({ [and] $^a + $^b > $^c,
-                       $^b + $^c > $^a, 
-                       $^a + $^c > $^b })
-         .map({ .sort(-*) })
-         andthen
-         .elems ?? .max !! Empty.List
+    $list.sort(-*)
+         .rotor(3 => -2)
+         .first({ .[0] < .[1] + .[2] }) // Empty.List
 }
