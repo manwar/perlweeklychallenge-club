@@ -1,3 +1,3 @@
-# The Weekly Challenge 183
+# The Weekly Challenge 187
 
-Blog: [Unique differences](https://dev.to/simongreennet/unique-differences-1cci)
+Blog: [Magical Days Together with Triplets](https://dev.to/simongreennet/magical-days-together-with-triplets-3lci)
