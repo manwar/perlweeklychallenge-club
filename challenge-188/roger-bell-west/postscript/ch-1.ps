@@ -1,0 +1,66 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/divisiblepairs {
+    4 dict begin
+    /k exch def
+    /a exch def
+    0
+    0
+    1
+    a length 2 sub {
+        /ai exch def
+        ai 1 add
+        1
+        a length 1 sub {
+            /bi exch def
+            a ai get a bi get add k mod 0 eq {
+                1 add
+            } if
+        } for
+    } for
+    end
+} bind def
+
+(divisiblepairs) test.start
+[ 4 5 1 6 ] 2 divisiblepairs 2 eq test
+[ 1 2 3 4 ] 2 divisiblepairs 2 eq test
+[ 1 3 4 5 ] 3 divisiblepairs 2 eq test
+[ 5 1 2 3 ] 4 divisiblepairs 2 eq test
+[ 7 2 4 5 ] 4 divisiblepairs 1 eq test
+test.end
