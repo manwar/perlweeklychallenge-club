@@ -27,21 +27,19 @@ cmpthese( 500_000, {
   'tl' => sub { total_lh(   $_->[0], $_->[1] ) for @TESTS },
 });
 
+## We could just do the steps one at a time - but note
+## that we can repeat one of the steps multiple times
+## if $a >= $n.$b we can repeat the $a - $b $n times
+## before we have to swap $a & $b over...
+
 sub total_zero {
   my($t,$x,$y) = (0,@_);
-
-  ## We could just do the steps one at a time - but note
-  ## that we can repeat one of the steps multiple times
-  ## if $a >= $n.$b we can repeat the $a - $b $n times
-  ## before we have to swap $a & $b over...
-
-  ($t,$x,$y) = $x > $y ? ($t+int($x/$y),$y,$x%$y) : ($t+int($y/$x),$x,$y%$x) while $x&&$y;
-
-  $t;
+  ($t,$x,$y) = $x > $y ? ($t+int($x/$y),$y,$x%$y) : ($t+int($y/$x),$y%$x,$x) while $x&&$y;
+  $t
 }
 
 sub total_lh {
   my($t,$x,$y) = (0,@_);
   ($t,$x,$y) = $x > $y ? ($t+1,$y,$x-$y) : ($t+1,$x,$y-$x) while $x&&$y;
-  $t;
+  $t
 }
