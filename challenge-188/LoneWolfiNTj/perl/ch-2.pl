@@ -45,10 +45,10 @@ Output: 5
 =cut
 
 # NOTE: Input is via command-line arguments, which should be
-#       a space-separated list of integers followed by a divisor.
+#       a space-separated pair of positive integers.
 
-# NOTE: Output is to stdout and will be a non-negative integer giving
-#       "number of pairs whose sum is divisible by divisor".
+# NOTE: Output is to stdout and will be a non-negative integer
+#       giving number of operations till both numbers are 0.
 
 use v5.36;
 die if scalar(@ARGV) != 2;                         # Must have 2 numbers.
