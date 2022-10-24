@@ -33,22 +33,23 @@
          "Jorg Sommrey"
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-10-24 04:59:35 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-10-24 00:24:46 GMT"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -80,7 +81,8 @@
             7,
             0,
             239
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -153,10 +155,8 @@
          "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "min" : 0,
