@@ -62,7 +62,7 @@ sub dp_other { $b=shift; 0+map{$a=pop;grep{!(($a+$_)%$b)}@_}1..@_               
 Performance wise the we have:
 
 | version           | Rate | Rel performance |
-| :---------------- | ---: | --------------- |
+| :---------------- | ---: | --------------: |
 | divisible_pairs_x | 150k |           1.45x |
 | divisible_pairs   | 130k |           1.25x |
 | dp_other          | 133k |           1.3x  |
@@ -85,12 +85,12 @@ This version - even for the example data is around 20-25% faster. For larger `x`
 sub total_zero {
   my($t,$x,$y) = (0,@_);
   ($t,$x,$y) = $x > $y ? ($t+int($x/$y),$y,$x%$y) : ($t+int($y/$x),$x,$y%$x) while $x&&$y;
-  $t;
+  $t
 }
 
 sub total_single_step {
   my($t,$x,$y) = (0,@_);
   ($t,$x,$y) = $x > $y ? ($t+1,$y,$x-$y) : ($t+1,$x,$y-$x) while $x&&$y;
-  $t;
+  $t
 }
 ```
