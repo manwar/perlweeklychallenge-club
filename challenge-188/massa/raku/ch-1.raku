@@ -33,6 +33,6 @@ is 6, divisible-pairs 2, (2, 2, 2, 2);
 done-testing;
 
 sub divisible-pairs($k, @list) {
-    @list.combinations(2)».sum.grep(* %% $k).elems
+    + @list.combinations(2)».sum.grep: * %% $k
 }
 

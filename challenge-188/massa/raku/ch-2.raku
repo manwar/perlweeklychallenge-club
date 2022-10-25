@@ -41,8 +41,6 @@ done-testing;
 subset Positive of UInt where *;
 
 sub make-total-zero(Positive $x, Positive $y) {
-  my $count = 1;
-  sink $x, $y, { ++$count if $^x > $^y; abs $^x - $^y } ... 0;
-  $count
+  + ($x, $y, (* - *).abs ... 0).rotor(2=>-1).grep: {[>] $_}
 }
 
