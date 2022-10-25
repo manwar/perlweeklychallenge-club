@@ -10,8 +10,5 @@ is divisible-pairs((2, 2, 2, 2), 2), 6;
 
 sub divisible-pairs($list, $k)
 {
-    $list.keys
-         .combinations(2)
-         .grep({ $list[.[0], .[1]].sum %% $k })
-         .elems
+    +$list.combinations(2).grep({ .sum %% $k })
 }
