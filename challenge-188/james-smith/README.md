@@ -1,7 +1,7 @@
-[< Previous 186](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-186/james-smith) |
-[Next 188 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-188/james-smith)
+[< Previous 187](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-187/james-smith) |
+[Next 189 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-189/james-smith)
 
-# The Weekly Challenge 187
+# The Weekly Challenge 188
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,103 +13,96 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-187/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-188/james-smith
 
-# Task 1 - Days Together
+# Task 1 - Divisible Pairs
 
-***Two friends, Foo and Bar gone on holidays seperately to the same city. You are given their schedule i.e. start date and end date.***
+***You are given list of integers `@list` of size `$n` and divisor `$k`. Write a script to find out count of pairs in the given list that satisfies the following rules.***
 
-***To keep the task simple, the date is in the form DD-MM and all dates belong to the same calendar year i.e. between 01-01 and 31-12. Also the year is non-leap year and both dates are inclusive.***
-
-***Write a script to find out for the given schedule, how many days they spent together in the city, if at all.***
 
 ## Solution
 
-A slightly contrived one liner, which uses *self-executing closures* to perform the calculations without the need for creating intermediate variables.
+We will try a number of different solutions. From some golfed solutions to a longer hand version...
 
-We are used to using *closures* or *anonymous functions* as callbacks in various functions - like `sort`, `map`, `grep` etc, but we can also use them
-as self executing functions `sub { ..code.. }->( ..data.. )`, this is similar to the approach used in javascript to alias methods/variables.
-
-e.g.
-```php
-(function($){
-  $.fn.function_name = function(x){};
-})(jQuery);
-```
-
-Working inward to outward, and bottom to top...
-
-We:
-  * flatten the array refs into a single array;
-  * compute their year-day;
-  * from this we compute the last start & the first end;
-  * check to see if the last start < first end if so returns the value o/w returns 0.
+ * The first version - we use a `while` loop to shift entries off the list. (This gives us the `$i<$j` constraint). We then use grep to get all the valid values and them to the count.
+ * The second version replaces the `grep` with a `for` loop (and uses the `||` trick to avoid an inner `if`.
+ * The 3rd - is a very muched golfed solution - in avoiding an array variable for the list. This unfortunately makes the function destructive in that it empties the array, inside and outside the function.
+ * The 4th - makes a local copy of the array - so is non-destructive
+ * The 5th - we don't pass an arrayref - but an array (and we put the `$k` variable at the front of the list
+ * Finally using indexes rather than `shifting`....
 
 ```perl
-sub days_together {
-  sub { $_[1]<$_[0] ? 0 : $_[1]-$_[0]+1 }->(
-    # *4* If start [0] > end[1] then return the difference + 1 otherwise return 0
 
-    sub { ( $_[2] > $_[0] ? $_[2] : $_[0], $_[3] < $_[1] ? $_[3] : $_[1] ) }->(
-      # *3* Calculate max start & min end...
-      #     If bar->start [2] > foo->start [0] then overlap->start = bar->start else it's foo->start
-      #     If bar->end   [3] < foo->end   [1] then overlap->end   = bar->end   else it's foo->end
+## Use grep for inner loop
 
-      map { [ 0,0,31,59,90,120,151,181,212,243,273,304,334 ]->[ substr $_,3 ] + substr $_,0,2 }
-        # *2* Compute year day - array contains offsets for the start of each month [ there is a
-        #     padding 0 so we don't have to adjust month by 1...
-
-      map { @{$_} }
-        # *1* Flatten two arrays into one... could have written this as @{$_[0]}, @{$_[1]} to avoid
-        # the map.
-
-      @_
-    )
-  )
-}
-```
-
-and now without the comments:
-
-```perl
-sub days_together {
-  sub { $_>[1]<$_[0] ? 0 : $_[1]-$_[0]+1 }->(
-    sub { ( $_[2] > $_[0] ? $_[2] : $_[0], $_[3] < $_[1] ? $_[3] : $_[1] ) }->(
-      map { [ 0,0,31,59,90,120,151,181,212,243,273,304,334 ]->[ substr $_,3 ] + substr $_,0,2 }
-      map { @{$_} }
-      @_
-    )
-  )
-}
-```
-# Task 2 - Split array
-
-***You are given a list of positive numbers, `@n`, having at least 3 numbers. Write a script to find the triplets `(a, b, c)` from the given list that satisfies the following rules.***
-
-## Solution
-
-This is a permutation challenge, so we loop through the values with 3 nested loops.
-
-By sorting we can make the assumption that `$a,$b,$c` are automatically sorted highest to lowest..
-
-This has two advantages:
- 1. The results will always be sorted `$a>=$b>=$c`
- 2. The 3 inequalities can reduce to a single inequality - all three are satisfied if `$b+$c > $a`, as this is the smallest sum of two numbers and the largest single number;
- 3. The first solution we find will have the largest sum of `$a+$b+$c` so we don't need to keep track of the maximum solution - but return the first we can find...
-
-Each time through we use shift to get the first element of each loop until there are no values left. Note in this case we use `while` for the outer two loops...
-
-```perl
-sub magical {
-  @_ = sort { $b <=> $a } @_;
-  while(@_>2) {
-    my($a,$b,@c)=@_;
-    while(@c) {
-      ( $b+$_ > $a ) && ( return $a,$b,$_ ) for @c;
-      $b = shift @c;
-    }
-    shift;
+sub divisible_pairs {
+  my( $c, $k, @l ) = ( 0, $_[1], @{$_[0]} );
+  while(@l>1){
+    my $a = shift@l;
+    $c+=grep{ !(($a+$_)%$k) } @l;
   }
-  ();
+  $c
+}
+
+## Use for for inner loop
+
+sub divisible_pairs_x {
+  my( $c, $k, @l ) = ( 0, $_[1], @{$_[0]} );
+  while(@l>1){
+    $a = shift@l;
+    ($a+$_)%$k || $c++ for @l;
+  }
+  $c
+}
+
+sub dp       { 0 + map { $a = pop @{$_[0]}; grep { !(($a+$_)% $_[1]) } @{$_[0]} } 1..@{$_[0]} }
+sub dp_nd    { my @T=@{$_[0]}; 0 + map { $a = pop @T; grep { !(($a+$_)%$_[1]) } @T} 1..@T     }
+sub dp_other { $b=shift; 0+map{$a=pop;grep{!(($a+$_)%$b)}@_}1..@_                             }
+
+sub dp_index {
+  my( $t,$list,$k ) = (0,@_);
+  for my $i (0..$#$list-1) {
+    ($list->[$i]+$list->[$_]) % $k || $t++ for $i+1..$#$list;
+  }
+  $t;
+}
+```
+
+Performance wise the we have:
+
+| version           | Rate | Rel performance |
+| :---------------- | ---: | --------------: |
+| divisible_pairs_x | 150k |           1.45x |
+| dp_other          | 133k |           1.30x |
+| divisible_pairs   | 130k |           1.30x |
+| dp_nd             | 124k |           1.20x |
+| dp_index          | 117k |           1.15x |
+| dp                | 103k |           1.00x |
+
+# Task 2 - Total Zero
+
+***You are given two positive integers $x and $y.  Write a script to find out the number of operations needed to make both ZERO. Each operation is made up either of the followings:***
+
+## Solution
+
+We can just step through one at a time - where we subtract either `y` from `x` or `x` from `y` repeatedly and increment the count.
+
+We can also short cut this - by reducing `y` to `y%x` or `x` to `x%y`, and increasing `t` by `|y/x|`...
+
+This version - even for the example data is around 20-25% faster. For larger `x` & `y` we see a much greater increase in performance...
+
+```perl
+sub total_zero {
+  my( $t, $x, $y ) = ( 0, @_ );
+  $x>$y ? ( $t += int($x/$y), $x %= $y ) 
+        : ( $t += int($y/$x), $y %= $x ) while $x && $y;
+  $t
+}
+
+sub total_one_step {
+  my($t,$x,$y) = (0,@_);
+  $x>$y ? ( $t++, $x-=$y )
+        : ( $t++, $y-=$x ) while $x && $y;
+  $t
 }
 ```
