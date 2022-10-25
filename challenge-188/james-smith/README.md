@@ -28,7 +28,8 @@ We will try a number of different solutions. From some golfed solutions to a lon
  * The second version replaces the `grep` with a `for` loop (and uses the `||` trick to avoid an inner `if`.
  * The 3rd - is a very muched golfed solution - in avoiding an array variable for the list. This unfortunately makes the function destructive in that it empties the array, inside and outside the function.
  * The 4th - makes a local copy of the array - so is non-destructive
- * Finally we don't pass an arrayref - but an array (and we put the `$k` variable at the front of the list
+ * The 5th - we don't pass an arrayref - but an array (and we put the `$k` variable at the front of the list
+ * Finally using indexes rather than `shifting`....
 
 ```perl
 
@@ -57,6 +58,14 @@ sub divisible_pairs_x {
 sub dp       { 0 + map { $a = pop @{$_[0]}; grep { !(($a+$_)% $_[1]) } @{$_[0]} } 1..@{$_[0]} }
 sub dp_nd    { my @T=@{$_[0]}; 0 + map { $a = pop @T; grep { !(($a+$_)%$_[1]) } @T} 1..@T     }
 sub dp_other { $b=shift; 0+map{$a=pop;grep{!(($a+$_)%$b)}@_}1..@_                             }
+
+sub dp_index {
+  my( $t,$list,$k ) = (0,@_);
+  for my $i (0..$#$list-1) {
+    ($list->[$i]+$list->[$_]) % $k || $t++ for $i+1..$#$list;
+  }
+  $t;
+}
 ```
 
 Performance wise the we have:
@@ -64,10 +73,11 @@ Performance wise the we have:
 | version           | Rate | Rel performance |
 | :---------------- | ---: | --------------: |
 | divisible_pairs_x | 150k |           1.45x |
-| divisible_pairs   | 130k |           1.25x |
-| dp_other          | 133k |           1.3x  |
-| dp_nd             | 124k |           1.2x  |
-| dp                | 103k |           1.0x  |
+| dp_other          | 133k |           1.30x |
+| divisible_pairs   | 130k |           1.30x |
+| dp_nd             | 124k |           1.20x |
+| dp_index          | 117k |           1.15x |
+| dp                | 103k |           1.00x |
 
 # Task 2 - Total Zero
 

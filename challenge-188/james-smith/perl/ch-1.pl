@@ -17,16 +17,18 @@ my @TESTS = (
 );
 
 is( divisible_pairs_x($_->[0], $_->[1]    ), $_->[2] ) for @TESTS;
-is( divisible_pairs($_->[0], $_->[1]    ), $_->[2] ) for @TESTS;
-is( dp_nd(          $_->[0], $_->[1]    ), $_->[2] ) for @TESTS;
-is( dp_other(       $_->[1], @{$_->[0]} ), $_->[2] ) for @TESTS;
-is( dp(             [@{$_->[0]}],$_->[1]    ), $_->[2] ) for @TESTS;
+is( divisible_pairs($_->[0], $_->[1]      ), $_->[2] ) for @TESTS;
+is( dp_nd(          $_->[0], $_->[1]      ), $_->[2] ) for @TESTS;
+is( dp_other(       $_->[1], @{$_->[0]}   ), $_->[2] ) for @TESTS;
+is( dp(             [@{$_->[0]}],$_->[1]  ), $_->[2] ) for @TESTS;
+is( dp_index(       $_->[0], $_->[1]      ), $_->[2] ) for @TESTS;
 
 done_testing();
 
 cmpthese( 250_000, {
   'd_pairs' => sub { divisible_pairs($_->[0], $_->[1]    ) for @TESTS },
   'd_pairx' => sub { divisible_pairs_x($_->[0], $_->[1]    ) for @TESTS },
+  'dp_index'=> sub { dp_index(       $_->[0], $_->[1] ) for @TESTS },
   'dp_nd'   => sub { dp_nd(          $_->[0], $_->[1] ) for @TESTS },
   'd_other' => sub { dp_other(       $_->[1], @{$_->[0]}  ) for @TESTS },
   'dp'      => sub { dp(             [@{$_->[0]}], $_->[1]    ) for @TESTS },
@@ -64,3 +66,11 @@ sub dp_nd {
 ## converting it to an array within function (like dp_nd)
 
 sub dp_other { $b=shift; 0+map{$a=pop;grep{!(($a+$_)%$b)}@_}1..@_ }
+
+sub dp_index {
+  my( $t,$list,$k ) = (0,@_);
+  for my $i (0..$#$list-1) {
+    ($list->[$i]+$list->[$_]) % $k || $t++ for $i+1..$#$list;
+  }
+  $t;
+}
