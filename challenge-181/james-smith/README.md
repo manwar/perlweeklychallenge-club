@@ -103,9 +103,8 @@ The 2nd group of digits is version of perl - but written in 0-padded 3 value col
 
 You can rewrite this a `perl` one-liner - but due to a quirk in `bash` - we either need to:
 
- * use single quotes and escape the `'`s to give us either:
- * use double quotes - escape all the `$` and back-ticks or
- 
+ * use single quotes and escape the `'`s to give us ***AND/OR***
+ * use double quotes - escape all the `$` and back-ticks
 
 ```bash
 #--------/,/,$a&&$'>$a?say$`:0,$a=$' for sort<>##34567
