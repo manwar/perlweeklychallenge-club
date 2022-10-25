@@ -18,4 +18,4 @@ while(my $z=$iter->next){
     ++$count if ($x+$y)%$divisor==0;
 }
 say "The number of pairs from the list ",
-    join(", ", @ARGV), " divisible by $divisor is $count";
+    join(", ", @ARGV), " with sum divisible by $divisor is $count";
