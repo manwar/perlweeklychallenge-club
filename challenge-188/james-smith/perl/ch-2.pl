@@ -18,13 +18,13 @@ my @TESTS = (
 );
 
 is( total_zero( $_->[0], $_->[1] ), $_->[2] ) for @TESTS;
-is( total_lh(   $_->[0], $_->[1] ), $_->[2] ) for @TESTS;
+is( total_one_step(   $_->[0], $_->[1] ), $_->[2] ) for @TESTS;
 
 done_testing();
 
-cmpthese( 500_000, {
+cmpthese( 50_000, {
   'tz' => sub { total_zero( $_->[0], $_->[1] ) for @TESTS },
-  'tl' => sub { total_lh(   $_->[0], $_->[1] ) for @TESTS },
+  'tl' => sub { total_one_step(   $_->[0], $_->[1] ) for @TESTS },
 });
 
 ## We could just do the steps one at a time - but note
@@ -34,12 +34,12 @@ cmpthese( 500_000, {
 
 sub total_zero {
   my($t,$x,$y) = (0,@_);
-  ($t,$x,$y) = $x > $y ? ($t+int($x/$y),$y,$x%$y) : ($t+int($y/$x),$y%$x,$x) while $x&&$y;
+  $x>$y ? ($t+=int($x/$y),$x%=$y) : ($t+=int($y/$x),$y%=$x) while $x&&$y;
   $t
 }
 
-sub total_lh {
+sub total_one_step {
   my($t,$x,$y) = (0,@_);
-  ($t,$x,$y) = $x > $y ? ($t+1,$y,$x-$y) : ($t+1,$x,$y-$x) while $x&&$y;
+  $x>$y ? ($t++,$x-=$y) : ($t++,$y-=$x) while $x&&$y;
   $t
 }

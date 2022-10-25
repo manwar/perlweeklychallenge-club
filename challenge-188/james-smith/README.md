@@ -83,14 +83,16 @@ This version - even for the example data is around 20-25% faster. For larger `x`
 
 ```perl
 sub total_zero {
-  my($t,$x,$y) = (0,@_);
-  ($t,$x,$y) = $x > $y ? ($t+int($x/$y),$y,$x%$y) : ($t+int($y/$x),$x,$y%$x) while $x&&$y;
+  my( $t, $x, $y ) = ( 0, @_ );
+  $x>$y ? ( $t += int($x/$y), $x %= $y ) 
+        : ( $t += int($y/$x), $y %= $x ) while $x && $y;
   $t
 }
 
-sub total_single_step {
+sub total_one_step {
   my($t,$x,$y) = (0,@_);
-  ($t,$x,$y) = $x > $y ? ($t+1,$y,$x-$y) : ($t+1,$x,$y-$x) while $x&&$y;
+  $x>$y ? ( $t++, $x-=$y )
+        : ( $t++, $y-=$x ) while $x && $y;
   $t
 }
 ```
