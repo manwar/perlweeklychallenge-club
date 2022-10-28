@@ -23,18 +23,11 @@ Task #2: Total Zero
 
 use Test;
 
-my Int $x; my Int $y;
-
-($x, $y) = (5, 4);
-is total-zero($x, $y), 5, 'Example 1';
-($x, $y) = (4, 6);
-is total-zero($x, $y), 3, 'Example 2';
-($x, $y) = (2, 5);
-is total-zero($x, $y), 4, 'Example 3';
-($x, $y) = (3, 1);
-is total-zero($x, $y), 3, 'Example 4';
-($x, $y) = (7, 4);
-is total-zero($x, $y), 5, 'Example 5';
+is total-zero(5, 4), 5, 'Example 1';
+is total-zero(4, 6), 3, 'Example 2';
+is total-zero(2, 5), 4, 'Example 3';
+is total-zero(3, 1), 3, 'Example 4';
+is total-zero(7, 4), 5, 'Example 5';
 
 done-testing;
 
@@ -42,7 +35,7 @@ done-testing;
 #
 # METHOD
 
-sub total-zero(Int $x is rw, Int $y is rw --> Int) {
+sub total-zero(Int $x is copy, Int $y is copy --> Int) {
     my Int $count = 0;
     while $x > 0 && $y > 0 {
         ($x >= $y)??($x = $x - $y)!!($y = $y - $x);
