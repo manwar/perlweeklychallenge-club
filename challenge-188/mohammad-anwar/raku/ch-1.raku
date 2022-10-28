@@ -37,7 +37,7 @@ sub count-divisibles($list, Int $k --> Int) {
     my Int $count = 0;
     my Int $size  = $list.elems;
     for ^$size -> $i {
-        for $i+1 .. $size-1 -> $j {
+        for $i ^..^ $size -> $j {
             $count++ if ($list.[$i] + $list.[$j]) %% $k;
         }
     }
