@@ -1,7 +1,5 @@
-local function total_zero(x,y)
-  assert(type(x) == 'number' and type(y) == 'number',
-	 'x,y must be numbers!')
-  local count = 0
+local function total_zero(x:integer,y:integer)
+  local count:integer = 0
   while x > 0 and y > 0 do
     if x >= y then x = x - y else y = y - x end
     count = count + 1
