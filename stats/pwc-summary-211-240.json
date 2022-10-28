@@ -1,8 +1,6 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -41,7 +39,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             17,
             0,
@@ -73,7 +70,8 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "data" : [
@@ -112,17 +110,14 @@
       }
    ],
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-10-28 20:33:56 GMT"
+      "text" : "[Champions: 30] Last updated at 2022-10-28 20:40:50 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -158,10 +153,15 @@
          "Sol DeMuth"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    }
 }
