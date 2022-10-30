@@ -64,11 +64,13 @@ sub dp_index {
   for my $i (0..$#$list-1) {
     ($list->[$i]+$list->[$_]) % $k || $t++ for $i+1..$#$list;
   }
-  $t;
+  $t
 }
 ```
 
-Performance wise the we have:
+### Performance
+
+We have the following results:
 
 | version           | Rate | Rel performance |
 | :---------------- | ---: | --------------: |
@@ -78,6 +80,8 @@ Performance wise the we have:
 | dp_nd             | 124k |           1.20x |
 | dp_index          | 117k |           1.15x |
 | dp                | 103k |           1.00x |
+
+The fastest method is the using `while`/`shift` for the outer loop and `for` for the inner loop. Using this we don't need the additional overhead of an index - as seen by the fact that the indexed version is only faster than the contrived grep solution.
 
 # Task 2 - Total Zero
 
