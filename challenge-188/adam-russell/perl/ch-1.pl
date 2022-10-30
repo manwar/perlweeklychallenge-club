@@ -8,7 +8,6 @@ use warnings;
 #    a) 0 <= i < j < len(list)
 #    b) list[i] + list[j] is divisible by k
 ##
-
 sub divisible_pairs{
     my($numbers, $k) = @_;
     my @pairs;
