@@ -1,83 +1,34 @@
-#+title: Challenge 185
-#+date: 2022-10-04
+#+title: Challenge 186
+#+date: 2022-10-27
 #+html_link_up: ../
 #+export_file_name: index
 #+options: toc:nil
 #+setupfile: ~/.emacs.d/org-templates/level-2.org
 
-* Task 1 - MAC Address
+* Task 1 - Zip List
 
-You are given MAC address in the form i.e. ~hhhh.hhhh.hhhh~.
+You are given two list @a and @b of same size.
 
-Write a script to convert the address in the form ~hh:hh:hh:hh:hh:hh~.
+Create a subroutine sub zip(@a, @b) that merge the two list as shown in
+the example below.
 
 #+begin_src
-Example 1
-
-Input:  1ac2.34f0.b1c2
-Output: 1a:c2:34:f0:b1:c2
-
-Example 2
-
-Input:  abc1.20f1.345a
-Output: ab:c1:20:f1:34:5a
+Input:  @a = qw/1 2 3/; @b = qw/a b c/;
+Output: zip(@a, @b) should return qw/1 a 2 b 3 c/;
+        zip(@b, @a) should return qw/a 1 b 2 c 3/;
 #+end_src
 
 ** Raku
 
-~comb~ combs out alphanumeric characters and we simply print them. ":" is
-printed after every 2 characters but not at the end.
+~zip~ takes two arrays, iterates over ~0...elems~ and takes entries from
+both arrays, stores them in third array & returns that.
 
 #+begin_src raku
-unit sub MAIN(
-    Str $mac-address, #= MAC address (hhhh.hhhh.hhhh)
-);
-
-# Converts in hh:hh:hh:hh:hh:hh form.
-for $mac-address.comb(/\w/) {
-    .print;
-    given $++ {
-        when 11 { succeed; }
-        when $_ !%% 2 { print ":" }
-    }
-}
-#+end_src
-
-* Task 2 - Mask Code
-
-You are given a list of codes in many random format.
-
-Write a script to mask first four characters (a-z,0-9) and keep the rest
-as it is.
-
-#+begin_src
-Example 1
-
-Input: @list = ('ab-cde-123', '123.abc.420', '3abc-0010.xy')
-Output: ('xx-xxe-123', 'xxx.xbc.420', 'xxxx-0010.xy')
-
-Example 2
-
-Input: @list = ('1234567.a', 'a-1234-bc', 'a.b.c.d.e.f')
-Output: ('xxxx567.a', 'x-xxx4-bc', 'x.x.x.x.e.f')
-#+end_src
-
-** Raku
-
-Takes an array of codes as input. Loops over characters of a code and
-prints every character except first four matching the regex "\w".
-
-#+begin_src raku
-unit sub MAIN(*@codes);
-
-for @codes -> $code {
-    my Int $count;
-    for $code.comb {
-        given $_ {
-            when /\w/ { print ($count++ < 4 ?? "x" !! $_) }
-            default { .print }
-        }
-    }
-    put "";
+# zip takes two arrays and returns a list.
+sub zip(@a, @b --> List) {
+    die if @a.elems !== @b.elems;
+    my @c;
+    @c.push(@a[$_], @b[$_]) for ^@a.elems;
+    return @c;
 }
 #+end_src

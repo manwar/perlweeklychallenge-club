@@ -9,8 +9,8 @@ local function total_zero(x,y)
   return count
 end
 
-print(total_zero(5,4));
-print(total_zero(4,6));
-print(total_zero(2,5));
-print(total_zero(3,1));
-print(total_zero(7,4));
+print(total_zero(5,4))
+print(total_zero(4,6))
+print(total_zero(2,5))
+print(total_zero(3,1))
+print(total_zero(7,4))

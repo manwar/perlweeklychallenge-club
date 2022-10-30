@@ -10,8 +10,8 @@ local function divisible_pairs(t,k)
   return count
 end
 
-print(divisible_pairs({4,5,1,6}, 2));
-print(divisible_pairs({1,2,3,4}, 2));
-print(divisible_pairs({1,3,4,5}, 3));
-print(divisible_pairs({5,1,2,3}, 4));
-print(divisible_pairs({7,2,4,5}, 4));
+print(divisible_pairs({4,5,1,6}, 2))
+print(divisible_pairs({1,2,3,4}, 2))
+print(divisible_pairs({1,3,4,5}, 3))
+print(divisible_pairs({5,1,2,3}, 4))
+print(divisible_pairs({7,2,4,5}, 4))

@@ -1,96 +1,69 @@
                             ━━━━━━━━━━━━━━━
-                             CHALLENGE 185
+                             CHALLENGE 188
 
                                 Andinus
                             ━━━━━━━━━━━━━━━
 
 
-                               2022-10-04
+                               2022-10-27
 
 
 
 
 
-1 Task 1 - MAC Address
-══════════════════════
+1 Task 1 - Divisible Pairs
+══════════════════════════
 
-  You are given MAC address in the form i.e. `hhhh.hhhh.hhhh'.
+  You are given list of integers @list of size $n and divisor $k.
 
-  Write a script to convert the address in the form `hh:hh:hh:hh:hh:hh'.
+  Write a script to find out count of pairs in the given list that
+  satisfies the following rules.
+
+  The pair (i, j) is eligible if and only if a) 0 <= i < j < len(list)
+  b) list[i] + list[j] is divisible by k
+
 
   ┌────
   │ Example 1
-  │
-  │ Input:  1ac2.34f0.b1c2
-  │ Output: 1a:c2:34:f0:b1:c2
+  │ Input: @list = (4, 5, 1, 6), $k = 2
+  │ Output: 2
   │
   │ Example 2
+  │ Input: @list = (1, 2, 3, 4), $k = 2
+  │ Output: 2
   │
-  │ Input:  abc1.20f1.345a
-  │ Output: ab:c1:20:f1:34:5a
+  │ Example 3
+  │ Input: @list = (1, 3, 4, 5), $k = 3
+  │ Output: 2
+  │
+  │ Example 4
+  │ Input: @list = (5, 1, 2, 3), $k = 4
+  │ Output: 2
+  │
+  │ Example 5
+  │ Input: @list = (7, 2, 4, 5), $k = 4
+  │ Output: 1
   └────
 
 
 1.1 Raku
 ────────
 
-  `comb' combs out alphanumeric characters and we simply print them. ":"
-  is printed after every 2 characters but not at the end.
+  Go over all combinations of elements as per rules and check if their
+  sum is divisible by divisor.
 
   ┌────
   │ unit sub MAIN(
-  │     Str $mac-address, #= MAC address (hhhh.hhhh.hhhh)
+  │     Int $divisor, *@list is copy where *.elems > 0
   │ );
+  │ @list = @list>>.Int;
   │
-  │ # Converts in hh:hh:hh:hh:hh:hh form.
-  │ for $mac-address.comb(/\w/) {
-  │     .print;
-  │     given $++ {
-  │         when 11 { succeed; }
-  │         when $_ !%% 2 { print ":" }
+  │ my Int $pairs;
+  │ for 0 ... @list.end -> $i {
+  │     for $i ... @list.end -> $j {
+  │         next if $i == $j;
+  │         $pairs++ if (@list[$i] + @list[$j]) %% $divisor;
   │     }
   │ }
-  └────
-
-
-2 Task 2 - Mask Code
-════════════════════
-
-  You are given a list of codes in many random format.
-
-  Write a script to mask first four characters (a-z,0-9) and keep the
-  rest as it is.
-
-  ┌────
-  │ Example 1
-  │
-  │ Input: @list = ('ab-cde-123', '123.abc.420', '3abc-0010.xy')
-  │ Output: ('xx-xxe-123', 'xxx.xbc.420', 'xxxx-0010.xy')
-  │
-  │ Example 2
-  │
-  │ Input: @list = ('1234567.a', 'a-1234-bc', 'a.b.c.d.e.f')
-  │ Output: ('xxxx567.a', 'x-xxx4-bc', 'x.x.x.x.e.f')
-  └────
-
-
-2.1 Raku
-────────
-
-  Takes an array of codes as input. Loops over characters of a code and
-  prints every character except first four matching the regex "\w".
-
-  ┌────
-  │ unit sub MAIN(*@codes);
-  │
-  │ for @codes -> $code {
-  │     my Int $count;
-  │     for $code.comb {
-  │         given $_ {
-  │             when /\w/ { print ($count++ < 4 ?? "x" !! $_) }
-  │             default { .print }
-  │         }
-  │     }
-  │     put "";
-  │ }
+  │ put $pairs;
   └────
