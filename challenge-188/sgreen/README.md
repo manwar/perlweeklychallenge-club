@@ -1,3 +1,3 @@
-# The Weekly Challenge 187
+# The Weekly Challenge 188
 
-Blog: [Magical Days Together with Triplets](https://dev.to/simongreennet/magical-days-together-with-triplets-3lci)
+[Blog](https://dev.to/simongreennet/weekly-challenge-188-3477)
