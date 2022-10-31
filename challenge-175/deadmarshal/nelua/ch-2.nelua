@@ -1,6 +1,7 @@
-local function phi(n)
-  assert(type(n) == 'number', 'n must be a number!')
-  local result, i = n, 2
+local io = require'io'
+
+local function phi(n:integer)
+  local result,i = n,2
   while i <= n do
     if n % i == 0 then
       while n % i == 0 do n = n // i end
@@ -13,8 +14,7 @@ local function phi(n)
   return result
 end
 
-local function phi_iter(n)
-  assert(type(n) == 'number', 'n must be a number!')
+local function phi_iter(n:integer)
   if n == 2 then
     return phi(n)
   else
@@ -22,7 +22,7 @@ local function phi_iter(n)
   end
 end
 
-local i, count = 2, 0
+local i,count = 2,0
 while count ~= 20 do
   if i == phi_iter(i) then
     io.write(i, ' ')

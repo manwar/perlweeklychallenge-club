@@ -25,7 +25,7 @@ PROCEDURE Phi(N:INTEGER):INTEGER =
 
 PROCEDURE PhiIter(N:INTEGER):INTEGER =
   BEGIN
-    IF N = 2 THEN RETURN Phi(N) + 0; END;
+    IF N = 2 THEN RETURN Phi(N) END;
     RETURN Phi(N) + PhiIter(Phi(N));
   END PhiIter;
 

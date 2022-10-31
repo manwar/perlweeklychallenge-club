@@ -28,8 +28,7 @@ end;
 
 function PhiIter(N:Integer):Integer;
 begin
-  if N = 2 then
-    Exit(Phi(N) + 0);
+  if N = 2 then Exit(Phi(N));
   PhiIter := Phi(N) + PhiIter(Phi(N));
 end;
 

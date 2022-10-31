@@ -1,0 +1,28 @@
+local arg = require'arg'
+local io = require'io'
+local os = require'os'
+
+if #arg ~= 1 then
+  io.stderr:write('No arg(s) provided!')
+  os.exit(1)
+end
+
+local function is_leap_year(year:integer)
+  if year % 100 == 0 then return year % 400 == 0 end
+  return year % 4 == 0
+end
+
+local function last_sunday(year:integer)
+  local days:[12]integer = {31,28,31,30,31,30,31,31,30,31,30,31}
+  if is_leap_year(year) then days[1] = 29 end
+  local week:integer = year * 365 + 97 * (year-1) + 4
+  for month=0, <#days do
+    week = (week + days[month]) % 7
+    print(string.format('%d-%02d-%d',
+			year,
+			month+1,
+			days[month] - week))
+  end
+end
+
+last_sunday(tonumber(arg[1]))
