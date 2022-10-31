@@ -22,6 +22,8 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-189/ja
 
 ## Solution
 
+This is relatively simple - if the letter matches the requirement that it is bigger than the test value, we just keep track of the lowest value, if it is less than this we set that as the best solution and continue:
+
 ```perl
 sub greater_char {
   my $best;
@@ -61,3 +63,43 @@ sub array_degree {
   @_[$start..$end];
 }
 ```
+
+## Solution 2 - an improvement.
+
+The nested loop makes the above problem `O(n^2)`. The question is "Can we make it `O(n)`?". Fortunately the answer to that is **YES**.
+
+Firstly we note that for any array. The shortest length sub-slice which contains the most of one particular number will always start
+and end with the same digit! This gives us a way in to the `O(n)` solution.
+
+As we loop through the elemens - we don't just store the count of time seen, but the location of the first occurance and the location
+of the last. (the first for loop)
+
+Now to find the shortest best solution we loop through the values of this array.
+
+If the frequency _(first value)_ is greater than the best solution so far we replace the best value.
+
+If the frequency is the same, and the length _( third value - second value + 1 )_ is less then we also update the best value. Note in the code we don't include the + 1 - as it appears on both sides so we cancel it out.
+
+Finally we as above return the slice from start to end...
+
+```perl
+sub array_degree_linear {
+  my($c,%f)=0;
+
+  ( $f{$_} = $f{$_} ? [ $f{$_}[0]+1 , $f{$_}[1], $c ] : [ 1, $c, $c ] ), $c++ for @_;
+
+  my( $best, @rest ) = values %f;
+
+  for( @rest ) {
+    $best = $_ if $_->[0] > $best->[0]
+               || $best->[0] == $_->[0]
+                  && $_->[2]-$_->[1] < $best->[2] - $best->[1];
+  }
+
+  @_[ $best->[1]..$best->[2] ]
+}
+```
+
+## Performance
+
+Testing on the test arrays, even when `n` is in the 3-5 range the second solution is approxmately 2.7 times faster than the naive solution.

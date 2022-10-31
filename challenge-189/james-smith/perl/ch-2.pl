@@ -20,7 +20,7 @@ is( "@{[ array_degree(        @{$_->[0]} ) ]}", $_->[1] ) for @TESTS;
 
 done_testing();
 
-cmpthese( 200_000, {
+cmpthese( 80_000, {
   'n^2' => sub { array_degree(        @{$_->[0]} ) for @TESTS },
   'n'   => sub { array_degree_linear( @{$_->[0]} ) for @TESTS },
 });
@@ -41,26 +41,31 @@ sub array_degree {
       last;
     }
   }
-  @_[$start..$end];
+  @_[$start..$end]
 }
 
 sub array_degree_linear {
-  my($c,$max_freq,%f)=(0,0);
+  my($c,%f)=0;
 
-  ## For each number compute the frequency and the maximum/minimum index...
+                              ## For each number compute the frequency
+                              ## and the maximum/minimum index...
+
   ( $f{$_} = $f{$_} ? [$f{$_}[0]+1,$f{$_}[1],$c] : [1,$c,$c] ), $c++ for @_;
 
-  ## Find the maximum frequency...
-  ($_->[0]>$max_freq)&&($max_freq=$_->[0]) for values %f;
+                              ## Find the maximum frequency, with
+                              ## shortest length!
 
-  ## Seek optimal value
-  my $best = [$_[0],0,$#_];
+  my( $best, @rest ) = values %f;
 
-  ## If the number is max_frequency - we see it's length if less than the length
-  ## o best - and if so replace best..
+  for( @rest ) {
+    $best = $_ if $_->[0] > $best->[0]
+               || $best->[0] == $_->[0]
+                  && $_->[2]-$_->[1] < $best->[2] - $best->[1];
+  }
 
-  ($_->[0]==$max_freq) && ($best->[2]-$best->[1] > $_[2]-$_[1] ) && ( $best = $_ ) for values %f;
+                              ## Return the best value....
 
-  ## Return the slice of the array...
   @_[ $best->[1]..$best->[2] ]
 }
+
+
