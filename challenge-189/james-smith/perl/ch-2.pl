@@ -45,12 +45,12 @@ sub array_degree {
 }
 
 sub array_degree_linear {
-  my($c,%f)=0;
+  my( $c, %f ) = 0;
 
                               ## For each number compute the frequency
                               ## and the maximum/minimum index...
 
-  ( $f{$_} = $f{$_} ? [$f{$_}[0]+1,$f{$_}[1],$c] : [1,$c,$c] ), $c++ for @_;
+  ( $f{$_} = $f{$_} ? [ $f{$_}[0] + 1, $f{$_}[1], $c ] : [ 1, $c, $c ] ), $c++ for @_;
 
                               ## Find the maximum frequency, with
                               ## shortest length!
@@ -58,9 +58,9 @@ sub array_degree_linear {
   my( $best, @rest ) = values %f;
 
   for( @rest ) {
-    $best = $_ if $_->[0] > $best->[0]
-               || $best->[0] == $_->[0]
-                  && $_->[2]-$_->[1] < $best->[2] - $best->[1];
+    $best = $_ if $_->[0] >  $best->[0]
+               || $_->[0] == $best->[0]
+                  && $_->[2] - $_->[1] < $best->[2] - $best->[1];
   }
 
                               ## Return the best value....
