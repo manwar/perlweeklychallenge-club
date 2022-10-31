@@ -103,3 +103,5 @@ sub array_degree_linear {
 ## Performance
 
 Testing on the test arrays, even when `n` is in the 3-5 range the second solution is approxmately 2.7 times faster than the naive solution.
+
+If we include the array `[1,2,3,...,99,100,100,99,...,3,2,1]` in our testing we can immediately see the issue with the first code and performance. In this case the naive solution has a rate of about `20` - `25` per second, where the latter `O(n)` solution can execute approximately `8000` - `8500`, this gives of betwween `350x` and `400x`.
