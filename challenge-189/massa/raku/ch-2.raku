@@ -42,7 +42,7 @@ sub degree-of(NonNegatives $_) {
 
 sub array-degree(NonNegatives $_) {
     my \d = .&degree-of;
-    for 2 .. .elems -> $n {
+    for d .. .elems -> $n {
         .return with .rotor($n => -( $n - 1 )).grep({.&degree-of == d}).head
     }
 }
