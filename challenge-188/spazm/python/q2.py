@@ -14,7 +14,7 @@ $y = $y - $x if $y >= $x (using the original value of $x)
 
 
 def total_zero(x, y):
-    count = 0;
+    count = 0
     assert x == int(x) and y == int(y)
     while True:
         count += 1
@@ -26,18 +26,24 @@ def total_zero(x, y):
             return count
     return
 
+
 def total_zero_recursive(x, y):
-    return 1 + (total_zero_recursive(x-y, y) if x > y else
-                total_zero_recursive(x, y-x) if y > x else
-                0)
+    return 1 + (
+        total_zero_recursive(x - y, y)
+        if x > y
+        else total_zero_recursive(x, y - x)
+        if y > x
+        else 0
+    )
+
 
 if __name__ == "__main__":
     test_data = [
-        [ [ 5, 4 ], 5 ],
-        [ [ 4, 6 ], 3 ],
-        [ [ 2, 5 ], 4 ],
-        [ [ 3, 1 ], 3 ],
-        [ [ 7, 4 ], 5 ],
+        [[5, 4], 5],
+        [[4, 6], 3],
+        [[2, 5], 4],
+        [[3, 1], 3],
+        [[7, 4], 5],
     ]
 
     for (x, y), expected in test_data:
