@@ -1,1 +1,0 @@
-Overdue solutions by AhmetEmre
