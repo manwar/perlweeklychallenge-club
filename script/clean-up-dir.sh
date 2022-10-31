@@ -1,3 +1,4 @@
+find . -name "*.nelua" -delete
 find . -name "*.plperl" -delete
 find . -name "*.ipynb" -delete
 find . -name "*.Mod" -delete
