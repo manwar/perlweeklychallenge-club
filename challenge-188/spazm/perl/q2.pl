@@ -41,7 +41,7 @@ sub total_zero
 
 sub total_zero_recursive
 {
-    my ( $x, $y, $count ) = @_;
+    my ( $x, $y ) = @_;
     return 1 + (
           $x > $y ? total_zero_recursive( $x - $y, $y )
         : $x < $y ? total_zero_recursive( $x,      $y - $x )
