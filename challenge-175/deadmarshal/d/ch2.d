@@ -19,7 +19,7 @@ int phi(int n)
 
 int phi_iter(int n)
 {
-  if(n == 2) return phi(n) + 0;
+  if(n == 2) return phi(n);
   return phi(n) + phi_iter(phi(n));
 }
 
