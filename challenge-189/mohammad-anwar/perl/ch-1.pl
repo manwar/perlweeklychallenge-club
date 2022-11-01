@@ -31,6 +31,7 @@ done_testing;
 # METHOD
 
 sub greater_character($t, @chars) {
-    for (sort @chars) { return $_ if ord > ord $t }
+    my $ord_t = ord $t;
+    for (sort @chars) { return $_ if ord > $ord_t }
     return $t;
 }
