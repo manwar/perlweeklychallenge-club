@@ -1,0 +1,186 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+
+% end included library code
+
+/arraydegree {
+    10 dict begin
+    /a exch def
+    /f 0 dict def
+    a {
+        /x exch def
+        f x known {
+            f x f x get 1 add put
+        } {
+            f x 0 put
+        } ifelse
+    } forall
+    /degree f values listmax def
+    /inverse 0 dict def
+    0 1 a length 1 sub {
+        /i exch def
+        /x a i get def
+        inverse x known {
+            inverse x inverse x get dup 1 i put put
+        } {
+            inverse x [ i i ] put
+        } ifelse
+    } for
+    /minlen 1 a length add def
+    /se [ 0 0 ] def
+    f keys { f exch get degree eq } filter {
+        /n exch def
+        /ll 1 inverse n get 1 get add inverse n get 0 get sub def
+        ll minlen lt {
+            /minlen ll def
+            /se [ inverse n get 0 get inverse n get 1 get ] def
+        } if
+    } forall
+    a se 0 get se 1 get se 0 get sub 1 add getinterval
+    end
+} bind def
+
+(arraydegree) test.start
+[1 3 3 2] arraydegree [3 3] deepeq test
+[1 2 1 3] arraydegree [1 2 1] deepeq test
+[1 3 2 1 2] arraydegree [2 1 2] deepeq test
+[1 1 2 3 2] arraydegree [1 1] deepeq test
+[2 1 2 1 1] arraydegree [1 2 1 1] deepeq test
+test.end
