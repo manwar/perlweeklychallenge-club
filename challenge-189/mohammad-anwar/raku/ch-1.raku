@@ -30,7 +30,8 @@ done-testing;
 # METHOD
 
 subset Char of Str where { $_.chars == 1 };
-sub greater-character(Char $target, @chars --> Char) {
+sub greater-character(
+    Char $target, @chars where all(@chars) ~~ Char --> Char) {
     my Int $ord_target = $target.ord;
     for @chars.sort -> $char {
         return $char if $char.ord > $ord_target;
