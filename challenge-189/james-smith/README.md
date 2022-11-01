@@ -1,7 +1,7 @@
-[< Previous 187](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-187/james-smith) |
-[Next 189 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-189/james-smith)
+[< Previous 188](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-188/james-smith) |
+[Next 190 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-190/james-smith)
 
-# The Weekly Challenge 188
+# The Weekly Challenge 189
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,100 +13,95 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-188/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-189/james-smith
 
-# Task 1 - Divisible Pairs
+# Task 1 - Greater Character
 
-***You are given list of integers `@list` of size `$n` and divisor `$k`. Write a script to find out count of pairs in the given list that satisfies the following rules.***
+***You are given an array of characters (a..z) and a target character.  Write a script to find out the smallest character in the given array lexicographically greater than the target character.***
 
-
-## Solution
-
-We will try a number of different solutions. From some golfed solutions to a longer hand version...
-
- * The first version - we use a `while` loop to shift entries off the list. (This gives us the `$i<$j` constraint). We then use grep to get all the valid values and them to the count.
- * The second version replaces the `grep` with a `for` loop (and uses the `||` trick to avoid an inner `if`.
- * The 3rd - is a very muched golfed solution - in avoiding an array variable for the list. This unfortunately makes the function destructive in that it empties the array, inside and outside the function.
- * The 4th - makes a local copy of the array - so is non-destructive
- * The 5th - we don't pass an arrayref - but an array (and we put the `$k` variable at the front of the list
- * Finally using indexes rather than `shifting`....
-
-```perl
-
-## Use grep for inner loop
-
-sub divisible_pairs {
-  my( $c, $k, @l ) = ( 0, $_[1], @{$_[0]} );
-  while(@l>1){
-    my $a = shift@l;
-    $c+=grep{ !(($a+$_)%$k) } @l;
-  }
-  $c
-}
-
-## Use for for inner loop
-
-sub divisible_pairs_x {
-  my( $c, $k, @l ) = ( 0, $_[1], @{$_[0]} );
-  while(@l>1){
-    $a = shift@l;
-    ($a+$_)%$k || $c++ for @l;
-  }
-  $c
-}
-
-sub dp       { 0 + map { $a = pop @{$_[0]}; grep { !(($a+$_)% $_[1]) } @{$_[0]} } 1..@{$_[0]} }
-sub dp_nd    { my @T=@{$_[0]}; 0 + map { $a = pop @T; grep { !(($a+$_)%$_[1]) } @T} 1..@T     }
-sub dp_other { $b=shift; 0+map{$a=pop;grep{!(($a+$_)%$b)}@_}1..@_                             }
-
-sub dp_index {
-  my( $t,$list,$k ) = (0,@_);
-  for my $i (0..$#$list-1) {
-    ($list->[$i]+$list->[$_]) % $k || $t++ for $i+1..$#$list;
-  }
-  $t
-}
-```
-
-### Performance
-
-We have the following results:
-
-| version           | Rate | Rel performance |
-| :---------------- | ---: | --------------: |
-| divisible_pairs_x | 150k |           1.45x |
-| dp_other          | 133k |           1.30x |
-| divisible_pairs   | 130k |           1.30x |
-| dp_nd             | 124k |           1.20x |
-| dp_index          | 117k |           1.15x |
-| dp                | 103k |           1.00x |
-
-The fastest method is the using `while`/`shift` for the outer loop and `for` for the inner loop. Using this we don't need the additional overhead of an index - as seen by the fact that the indexed version is only faster than the contrived grep solution.
-
-# Task 2 - Total Zero
-
-***You are given two positive integers $x and $y.  Write a script to find out the number of operations needed to make both ZERO. Each operation is made up either of the followings:***
 
 ## Solution
 
-We can just step through one at a time - where we subtract either `y` from `x` or `x` from `y` repeatedly and increment the count.
-
-We can also short cut this - by reducing `y` to `y%x` or `x` to `x%y`, and increasing `t` by `|y/x|`...
-
-This version - even for the example data is around 20-25% faster. For larger `x` & `y` we see a much greater increase in performance...
+This is relatively simple - if the letter matches the requirement that it is bigger than the test value, we just keep track of the lowest value, if it is less than this we set that as the best solution and continue:
 
 ```perl
-sub total_zero {
-  my( $t, $x, $y ) = ( 0, @_ );
-  $x>$y ? ( $t += int($x/$y), $x %= $y ) 
-        : ( $t += int($y/$x), $y %= $x ) while $x && $y;
-  $t
-}
-
-sub total_one_step {
-  my($t,$x,$y) = (0,@_);
-  $x>$y ? ( $t++, $x-=$y )
-        : ( $t++, $y-=$x ) while $x && $y;
-  $t
+sub greater_char {
+  my $best;
+  $_ gt $_[1] && !( defined $best && $_ ge $best ) && ($best=$_) for @{$_[0]};
+  return $best || $_[1];
 }
 ```
+
+# Task 2 - Array Degree
+
+***You are given an array of 2 or more non-negative integers.  Write a script to find out the smallest slice, i.e. contiguous subarray of the original array, having the degree of the given array.  The degree of an array is the maximum frequency of an element in the array.***
+
+## Solution
+
+We first define the "score" function `sc` which works out the degree of teh array.
+
+We then loop through all contigous array splice (this has size `$n x ($n-1)`) looking for the smallets with the same score.
+
+```perl
+sub sc {
+  my($v,%f)=0;
+  $f{$_}++ for @_;
+  ($_>$v)&&($v=$_) for values %f;
+  $v
+}
+
+sub array_degree {
+  my( $start, $end, $target ) = ( 0, $#_, sc( @_ ) );
+  for my $st ( 0 .. @_ - $target + 1 ) {
+    for ( $st + $target - 1 .. $#_ ) {
+      last if     $_ - $st > $end - $start;
+      next unless sc( @_[ $st .. $_ ] ) == $target;
+      $start=$st, $end=$_;
+      last;
+    }
+  }
+  @_[$start..$end];
+}
+```
+
+## Solution 2 - an improvement.
+
+The nested loop makes the above problem `O(n^2)`. The question is "Can we make it `O(n)`?". Fortunately the answer to that is **YES**.
+
+Firstly we note that for any array. The shortest length sub-slice which contains the most of one particular number will always start
+and end with the same digit! This gives us a way in to the `O(n)` solution.
+
+As we loop through the elemens - we don't just store the count of time seen, but the location of the first occurance and the location
+of the last. (the first for loop)
+
+Now to find the shortest best solution we loop through the values of this array.
+
+If the frequency _(first value)_ is greater than the best solution so far we replace the best value.
+
+If the frequency is the same, and the length _( third value - second value + 1 )_ is less then we also update the best value. Note in the code we don't include the + 1 - as it appears on both sides so we cancel it out.
+
+Finally we as above return the slice from start to end...
+
+```perl
+sub array_degree_linear {
+  my($c,%f)=0;
+
+  ( $f{$_} = $f{$_} ? [ $f{$_}[0]+1 , $f{$_}[1], $c ] : [ 1, $c, $c ] ), $c++ for @_;
+
+  my( $best, @rest ) = values %f;
+
+  for( @rest ) {
+    $best = $_ if $_->[0] > $best->[0]
+               || $best->[0] == $_->[0]
+                  && $_->[2]-$_->[1] < $best->[2] - $best->[1];
+  }
+
+  @_[ $best->[1]..$best->[2] ]
+}
+```
+
+## Performance
+
+Testing on the test arrays, even when `n` is in the 3-5 range the second solution is approxmately 2.7 times faster than the naive solution.
+
+If we include the array `[1,2,3,...,99,100,100,99,...,3,2,1]` in our testing we can immediately see the issue with the first code and performance. In this case the naive solution has a rate of about `20` - `25` per second, where the latter `O(n)` solution can execute approximately `8000` - `8500`, this gives of betwween `350x` and `400x`.
