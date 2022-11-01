@@ -2,18 +2,21 @@
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
-   },
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            }
+         },
          "data" : [
             [
                "Blog",
@@ -25,32 +28,11 @@
             ],
             [
                "Raku",
-               5521
+               5523
             ]
-         ],
-         "dataLabels" : {
-            "enabled" : "true",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "align" : "right",
-            "format" : "{point.y:.0f}"
-         }
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2022-11-01 11:46:07 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
    "yAxis" : {
       "title" : {
          "text" : null
@@ -59,5 +41,23 @@
    },
    "legend" : {
       "enabled" : "false"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-11-01 11:54:23 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    }
 }
