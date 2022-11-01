@@ -1,18 +1,6 @@
 {
    "series" : [
       {
-         "dataLabels" : {
-            "enabled" : "true",
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "y" : 10,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "rotation" : -90,
-            "format" : "{point.y:.0f}"
-         },
          "name" : "Contributions",
          "data" : [
             [
@@ -21,17 +9,32 @@
             ],
             [
                "Perl",
-               9204
+               9206
             ],
             [
                "Raku",
                5521
             ]
-         ]
+         ],
+         "dataLabels" : {
+            "align" : "right",
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "color" : "#FFFFFF",
+            "y" : 10
+         }
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
    "yAxis" : {
       "title" : {
@@ -39,25 +42,22 @@
       },
       "min" : 0
    },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   "subtitle" : {
+      "text" : "Last updated at 2022-11-01 10:44:24 GMT"
    },
    "xAxis" : {
       "type" : "category",
       "labels" : {
          "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
          }
       }
    },
-   "subtitle" : {
-      "text" : "Last updated at 2022-11-01 10:34:30 GMT"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "legend" : {
       "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
