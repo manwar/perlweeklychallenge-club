@@ -1,0 +1,34 @@
+require'io'
+
+local function array_degree(s:sequence(integer)):void
+  local left:hashmap(integer,integer)
+  local count:hashmap(integer,integer)
+  local index,max,min:integer
+  for i=1, #s do
+    if not count:has(s[i]) then
+      left[s[i]] = i
+      count[s[i]] = 1
+    else
+      count[s[i]] = count[s[i]] + 1
+    end
+    if count[s[i]] > max then
+      max = count[s[i]]
+      min = i - left[s[i]]
+      index = left[s[i]]
+    elseif(count[s[i]] == max) and (i - left[s[i]] < min) then
+      min = i - left[s[i]]
+      index = left[s[i]]
+    end
+  end
+  for i=index, index+min do
+    io.write(s[i], ' ')
+  end
+  print()
+end
+
+array_degree({1,3,3,2})
+array_degree({1,2,1,3})
+array_degree({1,3,2,1,2})
+array_degree({1,1,2,3,2})
+array_degree({2,1,2,1,1})
+
