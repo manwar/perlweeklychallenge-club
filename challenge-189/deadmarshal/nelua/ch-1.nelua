@@ -1,0 +1,35 @@
+require'string'
+
+local function quick_sort(s:sequence(string),
+			  left:integer,
+			  right:integer):void
+  local i,j:integer = left,right
+  local pivot = s[(left + right) // 2]
+  repeat
+    while string.byte(pivot) > string.byte(s[i]) do i = i + 1 end
+    while string.byte(pivot) < string.byte(s[j]) do j = j - 1 end
+    if i <= j then
+      s[i],s[j] = s[j],s[i]
+      i = i + 1
+      j = j - 1
+    end
+  until i > j
+  if left < j then quick_sort(s,left,j) end
+  if i < right then quick_sort(s,i,right) end
+end
+
+local function greater_character(s:sequence(string),
+				 target:string):string
+  quick_sort(s,0,#s)
+  for i=1, #s do
+    if s[i] > target then return s[i] end
+  end
+  return target
+end
+
+print(greater_character({'e','m','u','g'}, 'b'))
+print(greater_character({'d','c','e','f'}, 'a'))
+print(greater_character({'j','a','r'}, 'o'))
+print(greater_character({'d','c','a','f'}, 'a'))
+print(greater_character({'t','g','a','l'}, 'v'))
+
