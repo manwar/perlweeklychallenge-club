@@ -35,9 +35,8 @@ exit(0);
 ################################################################################
 # Find the shortest slice of an array with the same degree (maximum frequency
 # of any given element) as the original
-# integers.
 # Takes one argument:
-# * The list to examine (e.g. ( 1, 1, 2, 3, 2 ) )
+# * The array to examine (e.g. ( 1, 1, 2, 3, 2 ) )
 # Returns:
 # * The shortest slice of the original array that also has the same degree as
 #   the original (e.g. ( 1, 1 ) )
