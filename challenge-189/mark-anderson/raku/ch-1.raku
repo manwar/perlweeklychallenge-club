@@ -10,7 +10,7 @@ is greater-character(<o p n m>, 'y'),  ∞ ;
 
 sub greater-character($list, $target)
 {
-    # This was my original solution 🤦
+    # This was my original solution <facepalm>
     # $list.unique.grep(* gt $target).sort.head
 
     # After looking at solutions from Laurent, Feng, and others
