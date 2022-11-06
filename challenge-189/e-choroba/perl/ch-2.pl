@@ -11,24 +11,23 @@ sub array_degree (@array) {
 
     my %freq;
     my %from_to;
-    my @max = ([0, 0]);
+    my @max = (undef, 0);
     for my $pos (0 .. $#array) {
         my $e = $array[$pos];
         ++$freq{$e};
         if (exists $from_to{$e}) {
             $from_to{$e}[1] = $pos;
         } else {
-            $from_to{$e} = [$pos];
+            $from_to{$e} = [$pos, $pos];
         }
-        if ($freq{$e} >= $max[0][0]) {
-            @max = () if $freq{$e} > $max[0][0];
-            unshift @max, [$freq{$e}, $e];
+        if ($freq{$e} >= $max[-1]) {
+            @max = ($freq{$e}) if $freq{$e} > $max[-1];
+            unshift @max, $e;
         }
     }
-    return [$array[0]] if $max[0][0] == 1;
 
     my %by_length = map +($_->[1] - $_->[0] => $_),
-                    @from_to{ map $_->[1], @max };
+                    @from_to{@max[ 0 .. $#max - 1 ]};
     my $shortest = $by_length{ min(keys %by_length) };
     return [@array[ $shortest->[0] .. $shortest->[1] ]]
 }
