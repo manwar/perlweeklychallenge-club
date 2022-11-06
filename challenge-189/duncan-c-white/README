@@ -1,87 +1,96 @@
-Task 1: Divisible Pairs
+Task 1: Greater Character
 
-You are given list of integers @list of size $n and divisor $k.
+You are given an array of characters (a..z) and a target character.
 
-Write a script to find out count of pairs in the given list that satisfies
-the following rules.
-
-The pair (i, j) is eligible if and only if
-a) 0 <= i < j < len(list)
-b) list[i] + list[j] is divisible by k
+Write a script to find out the smallest character in the given array
+lexicographically greater than the target character.
 
 Example 1
 
-	Input: @list = (4, 5, 1, 6), $k = 2
-	Output: 2
+	Input: @array = qw/e m u g/, $target = 'b'
+	Output: e
 
 Example 2
 
-	Input: @list = (1, 2, 3, 4), $k = 2
-	Output: 2
+	Input: @array = qw/d c e f/, $target = 'a'
+	Output: c
 
 Example 3
 
-	Input: @list = (1, 3, 4, 5), $k = 3
-	Output: 2
+	Input: @array = qw/j a r/, $target = 'o'
+	Output: r
 
 Example 4
 
-	Input: @list = (5, 1, 2, 3), $k = 4
-	Output: 2
+	Input: @array = qw/d c a f/, $target = 'a'
+	Output: c
 
 Example 5
 
-	Input: @list = (7, 2, 4, 5), $k = 4
-	Output: 1
+	Input: @array = qw/t g a l/, $target = 'v'
+	Output: v
 
-MY NOTES: pretty easy.  Generate all pairs of indices, and test each pair
-for property (2).
+MY NOTES: pretty easy, although example 5 seems to imply that the spec
+should say, "... or the target if no character in the array is bigger
+than the target".  So that's the basis on which I'm proceeding:
+
+Note that "an array of characters" is awfully like "a string + split",
+so let's do that.
+
+Can do it as a one-liner:
+perl -MList::Util=minstr -E '( $target, $str ) = @ARGV; $x = minstr( grep { $_ gt $target } split( //, $str ) ) // ($target); say $x' a dcef
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
-into C (look in the C directory for that).
+into C and Pascal (look in the relevant direcories for
+those translations)
 
 
-Task 2: Total Zero
+Task 2: Array Degree
 
-You are given two positive integers $x and $y.
+You are given an array of 2 or more non-negative integers.
 
-Write a script to find out the number of operations needed to make both
-ZERO. Each operation is made up either of the following:
+Write a script to find out the smallest slice, i.e. contiguous subarray
+of the original array, having the degree of the given array.
 
-$x = $x - $y if $x >= $y
-
-or
-
-$y = $y - $x if $y >= $x (using the original value of $x)
+The degree of an array is the maximum frequency of an element in the array.
 
 Example 1
 
-	Input: $x = 5, $y = 4
-	Output: 5
+	Input: @array = (1, 3, 3, 2)
+	Output: (3, 3)
+
+	The degree of the given array is 2.
+	The possible subarrays having the degree 2 are as below:
+	(3, 3)
+	(1, 3, 3)
+	(3, 3, 2)
+	(1, 3, 3, 2)
+
+	And the smallest of all is (3, 3).
 
 Example 2
 
-	Input: $x = 4, $y = 6
-	Output: 3
+	Input: @array = (1, 2, 1, 3)
+	Output: (1, 2, 1)
 
 Example 3
 
-	Input: $x = 2, $y = 5
-	Output: 4
+	Input: @array = (1, 3, 2, 1, 2)
+	Output: (2, 1, 2)
 
 Example 4
 
-	Input: $x = 3, $y = 1
-	Output: 3
+	Input: @array = (1, 1, 2, 3, 2)
+	Output: (1, 1)
 
 Example 5
 
-	Input: $x = 7, $y = 4
-	Output: 5
+	Input: @array = (2, 1, 2, 1, 1)
+	Output: (1, 2, 1, 1)
 
-
-MY NOTES: Ok, sounds easy enough, especially with some debug mode code
-showing how x and y change, round by round.
+MY NOTES: Ok, sounds pretty easy.  Finding the degree of an array range
+involves building a frequency hash, the degree is max( values %freq ).
+Finding the smallest subarray is easier enough, although tedious.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
-into C (look in the C directory for that).
+into C and Pascal (look in the relevant direcories for those translations)
