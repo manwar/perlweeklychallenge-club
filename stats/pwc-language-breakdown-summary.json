@@ -1,9 +1,15 @@
 {
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   "legend" : {
+      "enabled" : "false"
    },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
@@ -14,36 +20,24 @@
       },
       "min" : 0
    },
-   "subtitle" : {
-      "text" : "Last updated at 2022-11-06 20:45:13 GMT"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
-   },
-   "legend" : {
-      "enabled" : "false"
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
    "series" : [
       {
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "rotation" : -90
-         },
          "name" : "Contributions",
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "y" : 10,
+            "rotation" : -90,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right",
+            "color" : "#FFFFFF"
+         },
          "data" : [
             [
                "Blog",
@@ -51,7 +45,7 @@
             ],
             [
                "Perl",
-               9250
+               9252
             ],
             [
                "Raku",
@@ -59,5 +53,11 @@
             ]
          ]
       }
-   ]
+   ],
+   "subtitle" : {
+      "text" : "Last updated at 2022-11-06 20:54:06 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   }
 }
