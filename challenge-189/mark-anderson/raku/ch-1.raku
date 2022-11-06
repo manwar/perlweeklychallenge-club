@@ -14,7 +14,7 @@ sub greater-character($list, $target)
     # $list.unique.grep(* gt $target).sort.head
 
     # After looking at solutions from Laurent, Feng, and others
-    # I am shamelessly changing my answer to this.
+    # I am shamelessly changing my answer to this
 
     min $list.grep(* gt $target)
 }
