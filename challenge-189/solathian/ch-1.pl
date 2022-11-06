@@ -14,15 +14,13 @@ my $testsEnabled = 0;
 
 sub greaterChar($target, @array)
 {
-    say("\nOutput:");
-    $target = ord($target);   
-    @array  = sort @array;
-    
-    # convert the ASCII character to their numerical value, keep only the values in the array which are greater than the target
-    @array  = map{ $_  = ord($_)} grep{ ord($_) > $target} @array;
+    # keep only the values in the array which are greater than the target
+    @array  = grep{ $_ gt $target} @array;
     
     # since the array is sorted the first value, if it exists shall contain the smallest character which is greater than the target
-    say( chr($array[0])) if(defined $array[0]);
+    @array  = sort @array;
+    print("\nOutput: ");
+    say( $array[0]) if(defined $array[0]);
 
 }
 
