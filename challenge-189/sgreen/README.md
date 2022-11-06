@@ -1,3 +1,3 @@
-# The Weekly Challenge 188
+# The Weekly Challenge 189
 
-[Blog](https://dev.to/simongreennet/weekly-challenge-188-3477)
+Blog [Letter and numbers](https://dev.to/simongreennet/letter-and-numbers-4jg0)
