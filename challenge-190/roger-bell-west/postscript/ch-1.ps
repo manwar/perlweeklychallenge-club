@@ -1,0 +1,74 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/uppercase {
+    (_) 0 get lt {
+        true
+    } {
+        false
+    } ifelse
+} bind def
+
+/capitaldetection {
+    4 dict begin
+    /s exch def
+    /first s 0 get uppercase def
+    /second s 1 get uppercase def
+    first not second and {
+        false
+    } {
+        true
+        2 1 s length 1 sub {
+            s exch get uppercase /this exch def
+            first second and this not and { % ABc
+                pop false exit
+            } if
+            second not this and { % AbC or abC
+                pop false exit
+            } if
+        } for
+    } ifelse
+    end
+} bind def
+
+(capitaldetection) test.start
+(Perl) capitaldetection test
+(TPF) capitaldetection test
+(PyThon) capitaldetection not test
+(raku) capitaldetection test
+test.end
