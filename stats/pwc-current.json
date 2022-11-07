@@ -1,23 +1,26 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 190"
-   },
-   "legend" : {
-      "enabled" : 0
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  6
+               ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -27,21 +30,36 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
          }
       ]
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "series" : [
       {
-         "name" : "The Weekly Challenge - 190",
+         "colorByPoint" : 1,
          "data" : [
+            {
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
+               "y" : 8
+            },
             {
                "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West",
                "y" : 4
             }
          ],
-         "colorByPoint" : 1
+         "name" : "The Weekly Challenge - 190"
       }
    ],
    "plotOptions" : {
@@ -53,15 +71,16 @@
          }
       }
    },
+   "legend" : {
+      "enabled" : 0
+   },
    "xAxis" : {
       "type" : "category"
    },
    "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2022-11-07 13:46:55 GMT"
+      "text" : "[Champions: 2] Last updated at 2022-11-07 13:59:13 GMT"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
+   "title" : {
+      "text" : "The Weekly Challenge - 190"
    }
 }
