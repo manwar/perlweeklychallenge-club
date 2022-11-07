@@ -8,7 +8,6 @@ pwc190.task1_plperl( text )
 RETURNS int
 AS $CODE$
  my ( $word ) = @_;
- elog( INFO, "Word $word ");
  return 1 if ( $word =~ / ^ [A-Z] [a-z]+ $ /x
              || $word =~ / ^ [a-z]+ $ /x
 	     || $word =~ / ^ [A-Z]+ $ /x );
