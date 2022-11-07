@@ -4,7 +4,7 @@ use strict;
 use warnings;
 
 use Test::More;
-use List::Util qw/ first /;
+use List::Util qw/first/;
 
 sub find_greater_char {
     my ( $array, $target ) = @_;
@@ -21,6 +21,6 @@ my @samples  = (
     [ [ qw/t g a l/ ], q/v/ ]
 );
 
-is_deeply( $expected, [ map { find_greater_char( @$_ ) } @samples ], 'found the correct chars?' );
+is_deeply( [ map { find_greater_char( @$_ ) } @samples ], $expected, 'found the correct chars?' );
 
 done_testing( 1 );
