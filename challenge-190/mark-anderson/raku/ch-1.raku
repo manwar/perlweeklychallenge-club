@@ -8,5 +8,5 @@ ok  capital-detection("raku");
 
 sub capital-detection($s)
 {
-    any($s eq $s.tclc, $s eq $s.lc, $s eq $s.uc)
+    $s eq any($s.tclc, $s.lc, $s.uc)
 }
