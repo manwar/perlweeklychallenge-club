@@ -1,22 +1,35 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
+   "series" : [
+      {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "y" : 10,
+            "align" : "right",
+            "format" : "{point.y:.0f}",
+            "rotation" : -90,
+            "enabled" : "true",
+            "color" : "#FFFFFF"
+         },
+         "data" : [
+            [
+               "Blog",
+               3000
+            ],
+            [
+               "Perl",
+               9275
+            ],
+            [
+               "Raku",
+               5567
+            ]
+         ]
       }
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2022-11-09 20:08:23 GMT"
-   },
+   ],
    "xAxis" : {
       "labels" : {
          "style" : {
@@ -26,38 +39,25 @@
       },
       "type" : "category"
    },
-   "series" : [
-      {
-         "data" : [
-            [
-               "Blog",
-               3000
-            ],
-            [
-               "Perl",
-               9273
-            ],
-            [
-               "Raku",
-               5566
-            ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "rotation" : -90,
-            "enabled" : "true",
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "align" : "right"
-         }
-      }
-   ],
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2022-11-09 20:19:43 GMT"
    }
 }
