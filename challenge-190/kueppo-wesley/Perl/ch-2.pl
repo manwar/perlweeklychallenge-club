@@ -12,9 +12,10 @@ use Test::Deep;
 =head1 PROBLEM
 
 Given C<X> and C<Y>, words from different encodings and C<F>, a function
-which transliterates the alphabets between these encodings. The
-primary issue is that composed alphabets are also alphabets.
+which transliterates the alphabets between these encodings.
+The primary issue is that the results of composed alphabets are also alphabets.
 
+So, get all possible C<Y>s from C<X>.
 
 =head1 SOLUTION
 
