@@ -15,93 +15,134 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-189/james-smith
 
-# Task 1 - Greater Character
+# Task 1 - Capital Dectection
 
-***You are given an array of characters (a..z) and a target character.  Write a script to find out the smallest character in the given array lexicographically greater than the target character.***
-
+***You are given a string with alphabetic characters only: `A..Z` and `a..z`. Write a script to find out if the usage of Capital is appropriate if it satisfies at least one of the following rules:***
 
 ## Solution
 
-This is relatively simple - if the letter matches the requirement that it is bigger than the test value, we just keep track of the lowest value, if it is less than this we set that as the best solution and continue:
+This is relatively simple - there are two cases:
+
+ * a string made entirely of captial letters
+ * a string characters two onwards are lower case.
+
+OR we can invert it and say that it does not match if we have either
+
+ * a lower case followed by an upper case letter
+ * two upper case letters followed by a lower case letter.
+
+It is surprising though how we can apply these rules.
+
+ * a single regular expression
+ * two regular expressions
+
+and even then the two parts can be re-ordered...
+
+I will include just two of those here..
 
 ```perl
-sub greater_char {
-  my $best;
-  $_ gt $_[1] && !( defined $best && $_ ge $best ) && ($best=$_) for @{$_[0]};
-  return $best || $_[1];
+## Positive - two regexs
+sub capital_split { $_[0] =~ m{^[a-zA-Z][a-z]*$} || $_[0] =~ m{^[A-Z]+$} ? 1 : 0 }
+## Negatice - one regex
+sub capital_neg1  { $_[0] =~ m{(?:[a-z][A-Z]|[A-Z]{2}[a-z])}             ? 0 : 1 }
+```
+
+Using real world text - 90%+ lowercase / capitalised lowercase - gives the positive method as the fastest AND splitting the regular expression into two separate parts with the lowercase expression first gives best performance.
+
+# Task 2 - Decoded list
+
+***You are given an encoded string consisting of a sequence of numeric characters: 0..9, $s.  Write a script to find the all valid different decodings in sorted order.  Encoding is simply done by mapping A,B,C,D,... to 1,2,3,4,... etc.
+
+## Solution
+
+This one as a much more interesting challenge. A first pass gives us a recursive solution.
+
+ * If the first characters is between 1 and 9 we decode to A to I and then work out the encodings for the remainder of the string...
+ * If the first character is 1 OR the first character is 2 and the second between 0 and 6 then we encode to J to Z and then find all the codings for the rest of the string... 
+
+This gives:
+
+```perl
+sub decoded_rec {
+  return $_[0] eq '' ? '' : $_[0] eq '0' ? () : chr(64 + $_[0]) if 2 > length $_[0];
+  my($f,$s,$r) = split m{}, $_[0], 3;
+  $r ||= '';
+  ( $f      && $s                ? ( map { chr(           $f + 64 ) . $_ } decoded_rec($s.$r) ) : (),
+    $f == 1 || $f == 2 && $s < 7 ? ( map { chr( $f * 10 + $s + 64 ) . $_ } decoded_rec($r   ) ) : () );
 }
 ```
 
-# Task 2 - Array Degree
+We get the first & second characters by splitting the string into characters. We use the three parameter version of split which limits the number of pieces the string is split into.
 
-***You are given an array of 2 or more non-negative integers.  Write a script to find out the smallest slice, i.e. contiguous subarray of the original array, having the degree of the given array.  The degree of an array is the maximum frequency of an element in the array.***
+## Every recursive solution can be converted into an iterative solution....
 
-## Solution
+People say you can take any recursive solution and convert to an iterative solution. This is perfectly true - but often to do it we have to jump through hoops.
 
-We first define the "score" function `sc` which works out the degree of teh array.
+Our first challenge is to enumerate the solutions.
 
-We then loop through all contigous array splice (this has size `$n x ($n-1)`) looking for the smallets with the same score.
+The initial thought is that at each stage we have two decisions - choose one letter or choose two letters. So we can think of this a purely binary.
+
+From `0 .. 2^(n-1)-1` we use a bit mask to chose whether to chose one or two digits. Until we get to the end of the string.
 
 ```perl
-sub sc {
-  my($v,%f)=0;
-  $f{$_}++ for @_;
-  ($_>$v)&&($v=$_) for values %f;
-  $v
-}
-
-sub array_degree {
-  my( $start, $end, $target ) = ( 0, $#_, sc( @_ ) );
-  for my $st ( 0 .. @_ - $target + 1 ) {
-    for ( $st + $target - 1 .. $#_ ) {
-      last if     $_ - $st > $end - $start;
-      next unless sc( @_[ $st .. $_ ] ) == $target;
-      $start=$st, $end=$_;
-      last;
+sub decoded_nonrec {
+  my @res;
+  O: for my $s ( 0 .. 1 << length $_[0]-1 ) {
+    my($n,$res,$x) = ($_[0],'');
+    while($n) {
+      #warn "** $n";
+        $s & 1  ? ( ($x = substr $n,0,1,'') eq '0' ? (next O) : ($res .= chr $x + 64) )
+      : $n < 10 ? (next O)
+      :           ( ($x = substr $n,0,2,'') < 10 || $x > 26 ? (next O) : ($res .= chr $x + 64) );
+      $s>>=1, $n eq '' && ( $s ? next O : last );
     }
+    unshift @res, $res;
   }
-  @_[$start..$end];
+  sort @res
 }
 ```
 
-## Solution 2 - an improvement.
+Now this is much worse than the recursive solution? Why? Well for a lot of the routes we get to the end of the string before we have looped through all the *bits* of the index - because we shift off two digits on many occassions. So? how can we improve?
 
-The nested loop makes the above problem `O(n^2)`. The question is "Can we make it `O(n)`?". Fortunately the answer to that is **YES**.
+Well first we note that the number of solutions for n digits is the sum of the number of solutions for n-1 & n-2 digits. This sequence is just the Fibonacci sequence.
 
-Firstly we note that for any array. The shortest length sub-slice which contains the most of one particular number will always start
-and end with the same digit! This gives us a way in to the `O(n)` solution.
+Firstly this indicates why we are much slower than the first solution.. The number of valid loops is `f(n-1)/2^n-1` which for 10 digits is approximately 10% of those tried...
 
-As we loop through the elemens - we don't just store the count of time seen, but the location of the first occurance and the location
-of the last. (the first for loop)
+So we then look to see if we can use the fibonnaci sequence to help decode the strings...
 
-Now to find the shortest best solution we loop through the values of this array.
+For a given index from `0 .. fib(n)-1` we look to see if the number is below `fib(n-1)` if it is we chose 1 digit o/w we choose 2. In the later case we reduce the index by `fib(n-1)` we repeate this for `n-2` etc....
 
-If the frequency _(first value)_ is greater than the best solution so far we replace the best value.
+We have some cases where we can speed performance up, e.g. if we find a `0` we know for the next `fib(k)` they will always fail so we can jump ahead. The same goes for two digits if we get a value of more than 26.
 
-If the frequency is the same, and the length _( third value - second value + 1 )_ is less then we also update the best value. Note in the code we don't include the + 1 - as it appears on both sides so we cancel it out.
-
-Finally we as above return the slice from start to end...
+This gives us the following code... Note we iterate backwards and `unshift` rather than forwards and `push`...
 
 ```perl
-sub array_degree_linear {
-  my($c,%f)=0;
-
-  ( $f{$_} = $f{$_} ? [ $f{$_}[0]+1 , $f{$_}[1], $c ] : [ 1, $c, $c ] ), $c++ for @_;
-
-  my( $best, @rest ) = values %f;
-
-  for( @rest ) {
-    $best = $_ if $_->[0] > $best->[0]
-               || $best->[0] == $_->[0]
-                  && $_->[2]-$_->[1] < $best->[2] - $best->[1];
+sub decoded_nonrec_fib {
+  my($s,$l,@res,$t,$k,$n,$res,$x) = ( $fib[length $_[0]], length $_[0] );
+  O: for (;$s>0;) {
+    ($t,$k,$n,$res) = ($s,$l,$_[0],'');
+    while( $n ) {
+      $t <= $fib[--$k]
+    ? (
+        ($x = substr $n,0,1,'') ? ($res.=chr $x+64) : ($s-=$fib[$k+1],next O)
+      )
+    : $n < 10 ? ($s-=$fib[$k+1],next O)
+    : ( ($x = 0+substr $n,0,2,'') < 10 || $x > 26 ? ($s-=$fib[$k-1],next O) : ($t-=$fib[$k],$res .= chr $x + 64,$k--) );
+    }
+    $s--;
+    unshift @res, $res;
   }
-
-  @_[ $best->[1]..$best->[2] ]
+  @res
 }
 ```
 
 ## Performance
 
-Testing on the test arrays, even when `n` is in the 3-5 range the second solution is approxmately 2.7 times faster than the naive solution.
+Using the recursive routine as the benchmark. The `2^n` iterative solution is much less efficient - for the test set I'm using with 10 digit numbers it is about 10% efficient (as given by the ration of fibonacci number to 2^n) - the fibonacci approach gives us an efficieny of out 95%...
 
-If we include the array `[1,2,3,...,99,100,100,99,...,3,2,1]` in our testing we can immediately see the issue with the first code and performance. In this case the naive solution has a rate of about `20` - `25` per second, where the latter `O(n)` solution can execute approximately `8000` - `8500`, this gives of betwween `350x` and `400x`.
+So I believe recursion wins out - I would say that if the number became very large - the fibonacci approach may eventually win out - because with all iterative (indexed) solutions you can stream the valid words and not have the recursion overhead.
+
+***Note:** Just tested this theory on my small (1G RAM) test box:*
+
+ * For 30 x "1" - recursion takes around 14 seconds vs 21 seconds for the fibonacci approach
+ * For 33 x "1" - the finonacci approach takes 66 seconds [ on par with the approx 1.6x time increase per number ] vs around 320 seconds for the recursive approach.
