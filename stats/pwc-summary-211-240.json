@@ -1,13 +1,12 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             0,
             9,
@@ -39,10 +38,10 @@
             5,
             4,
             1
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             1,
             17,
@@ -55,7 +54,7 @@
             0,
             55,
             6,
-            73,
+            75,
             0,
             308,
             113,
@@ -74,11 +73,9 @@
             239,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -110,18 +107,10 @@
             12,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-11-12 14:33:25 GMT"
-   },
    "xAxis" : {
       "categories" : [
          "Rakulius",
@@ -156,10 +145,21 @@
          "Sitaram Chamarty"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-11-12 14:53:06 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
