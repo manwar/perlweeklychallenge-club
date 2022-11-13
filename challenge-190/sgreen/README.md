@@ -1,3 +1,3 @@
-# The Weekly Challenge 189
+# The Weekly Challenge 190
 
-Blog [Letter and numbers](https://dev.to/simongreennet/letter-and-numbers-4jg0)
+Blog [Capital letters decoded!](https://dev.to/simongreennet/capital-letters-decoded-315f)
