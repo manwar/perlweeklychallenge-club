@@ -8,9 +8,9 @@
                "drilldown" : "Feng Chang"
             },
             {
-               "drilldown" : "Humberto Massa",
+               "y" : 2,
                "name" : "Humberto Massa",
-               "y" : 2
+               "drilldown" : "Humberto Massa"
             },
             {
                "drilldown" : "Luca Ferrari",
@@ -18,27 +18,38 @@
                "y" : 8
             },
             {
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke",
+               "y" : 2
+            },
+            {
                "y" : 4,
                "name" : "Roger Bell_West",
                "drilldown" : "Roger Bell_West"
             },
             {
+               "drilldown" : "Simon Proctor",
                "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
+               "name" : "Simon Proctor"
             },
             {
                "y" : 2,
-               "drilldown" : "Tim Potapov",
-               "name" : "Tim Potapov"
+               "name" : "Tim Potapov",
+               "drilldown" : "Tim Potapov"
             }
          ],
          "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 191"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2022-11-14 18:39:36 GMT"
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
    },
    "xAxis" : {
       "type" : "category"
@@ -46,14 +57,14 @@
    "drilldown" : {
       "series" : [
          {
-            "id" : "Feng Chang",
             "name" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Feng Chang"
          },
          {
             "data" : [
@@ -62,10 +73,11 @@
                   2
                ]
             ],
-            "name" : "Humberto Massa",
-            "id" : "Humberto Massa"
+            "id" : "Humberto Massa",
+            "name" : "Humberto Massa"
          },
          {
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -76,12 +88,20 @@
                   6
                ]
             ],
-            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari"
          },
          {
+            "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
             "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -91,56 +111,51 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell_West"
          },
          {
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            ]
          },
          {
+            "id" : "Tim Potapov",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Tim Potapov",
             "name" : "Tim Potapov"
          }
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 191"
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2022-11-14 19:01:37 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "tooltip" : {
-      "followPointer" : 1,
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "The Weekly Challenge - 191"
    }
 }
