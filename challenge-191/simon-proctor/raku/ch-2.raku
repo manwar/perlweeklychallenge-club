@@ -2,8 +2,6 @@
 
 subset ValidRange of Int where 0 < * <= 15;
 subset LargeRange of Int where 9 < * <= 15;
-subset EmptyList of List where *.elems == 0;
-subset NonEmptyList of List where *.elems > 0;
 
 #|( Given an int between 1 and 15 return the number of cute lists can be 
  made from the range 1..$n ) 
@@ -13,9 +11,13 @@ multi sub MAIN( ValidRange() $n ) {
 
 #|( Prints the list of cute counts for all values between 1 and 15)
 multi sub MAIN() {
-    for ( 1..15 ) {
-        say "$_ : {cute-count($_)}";
+    my @checks;
+    for (1..15) {
+        my $a = $_;
+        @checks.push( start { "$a : {cute-count($_)}" } );
     }
+    await @checks;
+    say $_.result for @checks;
 }
 
 multi sub MAIN( "TEST" ) is hidden-from-USAGE {
