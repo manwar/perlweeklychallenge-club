@@ -33,6 +33,7 @@ use List::MoreUtils qw(firstidx);
 
 sub isCuteEntry ($$) {
   state $c;
+
   my $idx = $_[0].'|'.$_[1];
 
   return $c->{$idx} if defined $c->{$idx};
@@ -44,8 +45,8 @@ sub isCuteEntry ($$) {
 
 
 sub nCuteLists {
-  my $n = 0;
-  my $m = 0;
+  my ($n,$m) = (0,0);
+
   my $p = Algorithm::Permute->new([1 .. $_[0]]);
   while (my @l = $p->next) {
     $m++;
