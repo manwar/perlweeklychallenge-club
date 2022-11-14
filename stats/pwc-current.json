@@ -1,22 +1,28 @@
 {
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 191"
-   },
    "legend" : {
       "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
    },
    "chart" : {
       "type" : "column"
@@ -24,28 +30,28 @@
    "drilldown" : {
       "series" : [
          {
+            "id" : "Feng Chang",
             "name" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Feng Chang"
+            ]
          },
          {
             "id" : "Humberto Massa",
+            "name" : "Humberto Massa",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Humberto Massa"
+            ]
          },
          {
-            "name" : "Luca Ferrari",
             "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -58,8 +64,8 @@
             ]
          },
          {
-            "name" : "Niels van Dijke",
             "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
@@ -68,7 +74,6 @@
             ]
          },
          {
-            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -79,10 +84,24 @@
                   1
                ]
             ],
+            "name" : "Peter Campbell Smith",
             "id" : "Peter Campbell Smith"
          },
          {
-            "name" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Raku",
+                  1
+               ]
+            ],
+            "name" : "Robert DiCicco",
+            "id" : "Robert DiCicco"
+         },
+         {
             "id" : "Roger Bell_West",
             "data" : [
                [
@@ -93,17 +112,18 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Proctor",
+            "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Simon Proctor"
+            "id" : "Simon Proctor"
          },
          {
             "id" : "Tim Potapov",
@@ -117,7 +137,6 @@
          },
          {
             "name" : "Ulrich Rieke",
-            "id" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -127,30 +146,23 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Ulrich Rieke"
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
    "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2022-11-14 20:06:34 GMT"
+      "text" : "[Champions: 10] Last updated at 2022-11-14 20:41:58 GMT"
    },
    "series" : [
       {
+         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 191",
          "data" : [
             {
-               "drilldown" : "Feng Chang",
+               "y" : 2,
                "name" : "Feng Chang",
-               "y" : 2
+               "drilldown" : "Feng Chang"
             },
             {
                "drilldown" : "Humberto Massa",
@@ -158,24 +170,29 @@
                "y" : 2
             },
             {
-               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
                "y" : 8,
-               "drilldown" : "Luca Ferrari"
+               "name" : "Luca Ferrari"
             },
             {
-               "drilldown" : "Niels van Dijke",
+               "y" : 2,
                "name" : "Niels van Dijke",
-               "y" : 2
+               "drilldown" : "Niels van Dijke"
             },
             {
-               "y" : 3,
                "name" : "Peter Campbell Smith",
+               "y" : 3,
                "drilldown" : "Peter Campbell Smith"
             },
             {
+               "y" : 2,
+               "name" : "Robert DiCicco",
+               "drilldown" : "Robert DiCicco"
+            },
+            {
+               "drilldown" : "Roger Bell_West",
                "y" : 4,
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West"
+               "name" : "Roger Bell_West"
             },
             {
                "name" : "Simon Proctor",
@@ -188,12 +205,14 @@
                "name" : "Tim Potapov"
             },
             {
-               "drilldown" : "Ulrich Rieke",
                "y" : 4,
-               "name" : "Ulrich Rieke"
+               "name" : "Ulrich Rieke",
+               "drilldown" : "Ulrich Rieke"
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
-   ]
+   ],
+   "title" : {
+      "text" : "The Weekly Challenge - 191"
+   }
 }
