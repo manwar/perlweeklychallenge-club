@@ -1,8 +1,4 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "series" : [
       {
          "data" : [
@@ -75,7 +71,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             2,
             0,
@@ -107,17 +102,33 @@
             0,
             0,
             1
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-11-14 17:19:30 GMT"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-11-14 17:37:46 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -152,16 +163,5 @@
          "Nikhil Prasanna",
          "Noud Aldenhoven"
       ]
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }

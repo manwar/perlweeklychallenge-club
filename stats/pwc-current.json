@@ -1,42 +1,82 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 191"
-   },
    "chart" : {
       "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
+   },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "y" : 2,
+               "drilldown" : "Feng Chang",
+               "name" : "Feng Chang"
+            },
+            {
+               "y" : 8,
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari"
+            },
+            {
+               "y" : 4,
+               "name" : "Roger Bell_West",
+               "drilldown" : "Roger Bell_West"
+            }
+         ],
+         "name" : "The Weekly Challenge - 191"
+      }
+   ],
+   "legend" : {
+      "enabled" : 0
    },
    "tooltip" : {
       "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
+   "xAxis" : {
+      "type" : "category"
+   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Feng Chang",
+            "name" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Feng Chang",
-            "id" : "Feng Chang"
+            ]
          },
          {
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  6
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -46,37 +86,16 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
-   },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 191",
-         "data" : [
-            {
-               "y" : 2,
-               "name" : "Feng Chang",
-               "drilldown" : "Feng Chang"
-            },
-            {
-               "drilldown" : "Roger Bell_West",
-               "y" : 4,
-               "name" : "Roger Bell_West"
-            }
-         ],
-         "colorByPoint" : 1
-      }
-   ],
    "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2022-11-14 17:19:30 GMT"
+      "text" : "[Champions: 3] Last updated at 2022-11-14 17:37:46 GMT"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "title" : {
+      "text" : "The Weekly Challenge - 191"
    }
 }
