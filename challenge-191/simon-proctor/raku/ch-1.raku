@@ -24,5 +24,5 @@ multi sub passes ( @list ) {
 multi sub MAIN(
     *@list where { *.all ~~ IntStr } #= List of ints to check
 ) {
-    
+    return passes( @list );
 }
