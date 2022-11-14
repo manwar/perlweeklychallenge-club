@@ -29,11 +29,7 @@ use warnings;
 use Time::HiRes qw(gettimeofday tv_interval);
 use Algorithm::Permute;
 use List::MoreUtils qw(firstidx);
-use Memoize;
 
-memoize('isCuteEntry');
-
-use Data::Printer output => 'stdout';
 
 sub isCuteEntry ($$) {
   state $c;
@@ -45,6 +41,7 @@ sub isCuteEntry ($$) {
 
   return $c->{$idx};
 }
+
 
 sub nCuteLists {
   my $n = 0;
@@ -58,6 +55,7 @@ sub nCuteLists {
 
   return "$n / $m";
 }
+
 
 # Note, testing up to 12 because of time lengthy
 
