@@ -12,6 +12,14 @@ sub MAIN( Int $n where { 0 < $n <= 15 } ) {
 	}
 
 	$cute-counter++ if $is-cute;
+
+	$is-cute = True;
+	for 0 ..^ $current-list.elems -> $i {
+	    $is-cute = False and last if ( $i + 1 ) !%% $current-list[ $i ]  ;
+	}
+
+	$cute-counter++ if $is-cute;
+
     }
     $cute-counter.say;
 }
