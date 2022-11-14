@@ -26,6 +26,17 @@ AS $CODE$
        }
 
        $cute_counter++ if ( $is_cute );
+
+       $is_cute = 1;		 
+       for my $i ( 0 .. $current_list->@* ) {
+
+       	   if ( ( $i + 1 ) % $current_list->[ $i ]  != 0 ) {
+	      $is_cute = 0;
+	      last;
+	   }
+       }
+
+       $cute_counter++ if ( $is_cute );
    }
 
    return $cute_counter;
