@@ -1,7 +1,7 @@
-[< Previous 188](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-188/james-smith) |
-[Next 190 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-190/james-smith)
+[< Previous 189](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-189/james-smith) |
+[Next 191 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-191/james-smith)
 
-# The Weekly Challenge 189
+# The Weekly Challenge 190
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,136 +13,156 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-189/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-190/james-smith
 
-# Task 1 - Capital Dectection
+# Task 1 - Twice Largest
 
-***You are given a string with alphabetic characters only: `A..Z` and `a..z`. Write a script to find out if the usage of Capital is appropriate if it satisfies at least one of the following rules:***
-
-## Solution
-
-This is relatively simple - there are two cases:
-
- * a string made entirely of captial letters
- * a string characters two onwards are lower case.
-
-OR we can invert it and say that it does not match if we have either
-
- * a lower case followed by an upper case letter
- * two upper case letters followed by a lower case letter.
-
-It is surprising though how we can apply these rules.
-
- * a single regular expression
- * two regular expressions
-
-and even then the two parts can be re-ordered...
-
-I will include just two of those here..
-
-```perl
-## Positive - two regexs
-sub capital_split { $_[0] =~ m{^[a-zA-Z][a-z]*$} || $_[0] =~ m{^[A-Z]+$} ? 1 : 0 }
-## Negatice - one regex
-sub capital_neg1  { $_[0] =~ m{(?:[a-z][A-Z]|[A-Z]{2}[a-z])}             ? 0 : 1 }
-```
-
-Using real world text - 90%+ lowercase / capitalised lowercase - gives the positive method as the fastest AND splitting the regular expression into two separate parts with the lowercase expression first gives best performance.
-
-# Task 2 - Decoded list
-
-***You are given an encoded string consisting of a sequence of numeric characters: 0..9, $s.  Write a script to find the all valid different decodings in sorted order.  Encoding is simply done by mapping A,B,C,D,... to 1,2,3,4,... etc.
+***You are given list of integers, `@list`. Write a script to find out whether the largest item in the list is at least twice as large as each of the other items.***
 
 ## Solution
 
-This one as a much more interesting challenge. A first pass gives us a recursive solution.
+We can simplify the condition to that the largest number is at least twice the value of the second largest number.
 
- * If the first characters is between 1 and 9 we decode to A to I and then work out the encodings for the remainder of the string...
- * If the first character is 1 OR the first character is 2 and the second between 0 and 6 then we encode to J to Z and then find all the codings for the rest of the string... 
+Our naive approach could be to sort the numbers and check `$list[-1] >= 2*$list[-2]`.
 
-This gives:
+But this isn't efficient if the list is large - instead we will just track the two largest numbers.
 
-```perl
-sub decoded_rec {
-  return $_[0] eq '' ? '' : $_[0] eq '0' ? () : chr(64 + $_[0]) if 2 > length $_[0];
-  my($f,$s,$r) = split m{}, $_[0], 3;
-  $r ||= '';
-  ( $f      && $s                ? ( map { chr(           $f + 64 ) . $_ } decoded_rec($s.$r) ) : (),
-    $f == 1 || $f == 2 && $s < 7 ? ( map { chr( $f * 10 + $s + 64 ) . $_ } decoded_rec($r   ) ) : () );
-}
-```
-
-We get the first & second characters by splitting the string into characters. We use the three parameter version of split which limits the number of pieces the string is split into.
-
-## Every recursive solution can be converted into an iterative solution....
-
-People say you can take any recursive solution and convert to an iterative solution. This is perfectly true - but often to do it we have to jump through hoops.
-
-Our first challenge is to enumerate the solutions.
-
-The initial thought is that at each stage we have two decisions - choose one letter or choose two letters. So we can think of this a purely binary.
-
-From `0 .. 2^(n-1)-1` we use a bit mask to chose whether to chose one or two digits. Until we get to the end of the string.
+ * We grab the first two numbers, and store the largest one in $f and the other one in $s.
+ * For each other number ($_):
+   * $_ <= $s - ignore do nothing
+   * $s < $_ && $_ <= $f - replace 2nd number $s with $_
+   * $f < $_ - replace 2nd number $s with $f, and replace $f with $_
+ * Return is based on whether `$f >= 2*$s`
 
 ```perl
-sub decoded_nonrec {
-  my @res;
-  O: for my $s ( 0 .. 1 << length $_[0]-1 ) {
-    my($n,$res,$x) = ($_[0],'');
-    while($n) {
-      #warn "** $n";
-        $s & 1  ? ( ($x = substr $n,0,1,'') eq '0' ? (next O) : ($res .= chr $x + 64) )
-      : $n < 10 ? (next O)
-      :           ( ($x = substr $n,0,2,'') < 10 || $x > 26 ? (next O) : ($res .= chr $x + 64) );
-      $s>>=1, $n eq '' && ( $s ? next O : last );
-    }
-    unshift @res, $res;
-  }
-  sort @res
+sub is_double {
+  my( $f, $s ) = ( shift, shift );           # First two numbers
+  ( $f, $s ) = ( $s, $f ) if $f < $s;        # Switch if 1st < 2nd
+  $_>$f ? ( ( $f, $s ) = ( $_, $f ) )        # For each number
+        : ( $_ > $s && ( $s = $_ ) ) for @_; #   if > 1st
+                                             #     demote 1st to 2nd
+                                             #     replace 1st
+                                             #   if > 2nd
+                                             #     demote 2nd
+  $f >= 2*$s ? 1 : -1                        # Check condition
 }
 ```
+# Task 2 - Cute List
 
-Now this is much worse than the recursive solution? Why? Well for a lot of the routes we get to the end of the string before we have looped through all the *bits* of the index - because we shift off two digits on many occassions. So? how can we improve?
+***You are given an integer, `0 < $n <= 15`. Write a script to find the number of orderings of numbers that form a cute list.***
 
-Well first we note that the number of solutions for n digits is the sum of the number of solutions for n-1 & n-2 digits. This sequence is just the Fibonacci sequence.
+***With an input `@list = (1, 2, 3, .. $n)` for positive integer `$n`, an ordering of `@list` is cute if for every entry, indexed with a base of 1, either:***
 
-Firstly this indicates why we are much slower than the first solution.. The number of valid loops is `f(n-1)/2^n-1` which for 10 digits is approximately 10% of those tried...
+ * ***`$list[$i]` is evenly divisible by `$i`***
+ * ***`$i` is evenly divisible by `$list[$i]`***
 
-So we then look to see if we can use the fibonnaci sequence to help decode the strings...
+## Solution
 
-For a given index from `0 .. fib(n)-1` we look to see if the number is below `fib(n-1)` if it is we chose 1 digit o/w we choose 2. In the later case we reduce the index by `fib(n-1)` we repeate this for `n-2` etc....
+Again this weeks task 2 is a much more interesting challenge. And has a number of different approaches we can find.
 
-We have some cases where we can speed performance up, e.g. if we find a `0` we know for the next `fib(k)` they will always fail so we can jump ahead. The same goes for two digits if we get a value of more than 26.
+ * Do we use recursion - or - interation?
+ * Do we memoize or not? if so what key do we use?
+ * Are there any simple optimizations - how to make the loop fail earlier?
 
-This gives us the following code... Note we iterate backwards and `unshift` rather than forwards and `push`...
+Firstly - we could use permutations - but this screams out initially at least for recursion.
 
+Before we start some observations:
+
+ * We can pre-compute which numbers can be at which position to give us an array like:
+
+   * `[1,2,3,4,5,6,7]`, `[1,2,4,6]`, `[1,3,6]`, `[1,2,4]`, `[1,5]`, `[1,2,3,6]`, `[1,7]`
+
+ * When we search we can re-order the lists to fill in numbers from the short lists first
+
+   * `[1,5]`, `[1,7]`, `[1,3,6]`, `[1,2,4]`, `[1,2,4,6]`, `[1,2,3,6]`, `[1,2,3,4,5,6,7]`
+
+ * Our keys are all integers and less than 64. We can therefore use a bit mask as the keys
+   for the cache...
+
+   Already placed `2`, `4`, `7` they key would be `10010100`
+
+These observations lead us to:
 ```perl
-sub decoded_nonrec_fib {
-  my($s,$l,@res,$t,$k,$n,$res,$x) = ( $fib[length $_[0]], length $_[0] );
-  O: for (;$s>0;) {
-    ($t,$k,$n,$res) = ($s,$l,$_[0],'');
-    while( $n ) {
-      $t <= $fib[--$k]
-    ? (
-        ($x = substr $n,0,1,'') ? ($res.=chr $x+64) : ($s-=$fib[$k+1],next O)
-      )
-    : $n < 10 ? ($s-=$fib[$k+1],next O)
-    : ( ($x = 0+substr $n,0,2,'') < 10 || $x > 26 ? ($s-=$fib[$k-1],next O) : ($t-=$fib[$k],$res .= chr $x + 64,$k--) );
-    }
-    $s--;
-    unshift @res, $res;
-  }
-  @res
+my %cache;
+
+sub cute {
+  %cache=(); ## Reset the count...
+  _cute_count( 0,
+      ## Return the list of values at a give index
+    map  { $_->[1] }
+      ## sort these lists into an array based on length of list and position
+    sort { @{$a->[1]} <=> @{$b->[1]} || $a->[0] <=> $b->[0] }
+      ## compute the list of numbers which are either factor or multiple
+    map { $a=$_; [ $a => [ grep { ! ( $_%$a && $a%$_ ) } 1 .. $_[0] ] ] }
+      ## for each position
+    1 .. $_[0]
+  );
+}
+
+sub _cute_count {
+  my( $seen, $next ) = ( shift, shift );
+  ## Now do the cute counting... if the length of the array is 1 then we know this is one response
+  ## and it will be valid - so return 1;
+  ## o/w we sum the counts of child elements
+  @_ ? $cache{$seen} //= sum0 map { ($seen & 1<<$_) ? 0 : _cute_count( $seen | 1<<$_ , @_ ) } @{$next}
+     : 1;
 }
 ```
+### Performance
 
-## Performance
+We compared this algorithm with various ones with ordering and without we have the following timings:
 
-Using the recursive routine as the benchmark. The `2^n` iterative solution is much less efficient - for the test set I'm using with 10 digit numbers it is about 10% efficient (as given by the ration of fibonacci number to 2^n) - the fibonacci approach gives us an efficieny of out 95%...
+| Method                      | Rate    | Gain |
+| :-------------------------- | ------: | ---: |
+| No-cache, no-ordering trick |  1.19/s |      |
+| No-cache, ordering trick    |  7.29/s |   6x |
+| Cache, no-ordering trick    |  17.4/s |  15x |
+| Cache, ordering trick       |  97.0/s |  80x |
 
-So I believe recursion wins out - I would say that if the number became very large - the fibonacci approach may eventually win out - because with all iterative (indexed) solutions you can stream the valid words and not have the recursion overhead.
+### Timings for increasing `$N`
 
-***Note:** Just tested this theory on my small (1G RAM) test box:*
+The original challenge asked us to compute values up to `n=15` - the cumulative time for this is between 1.05 and 1.30 seconds. We can continue on to `n=30` taking around 19 seconds.
 
- * For 30 x "1" - recursion takes around 14 seconds vs 21 seconds for the fibonacci approach
- * For 33 x "1" - the finonacci approach takes 66 seconds [ on par with the approx 1.6x time increase per number ] vs around 320 seconds for the recursive approach.
+The script finally crashes after `n=39` (with a count of around 5.5 trillion) - when the cache memory usage exceeds 7GBytes (the capacity of the machine) and starts to swap.
+
+| ind |             Count | Time loop  | Cumul time |
+| --: | ----------------: | ---------: | ---------: |
+|   1 |                 1 |   0.000010 |   0.000011 |
+|   2 |                 2 |   0.000018 |   0.000076 |
+|   3 |                 3 |   0.000016 |   0.000105 |
+|   4 |                 8 |   0.000022 |   0.000136 |
+|   5 |                10 |   0.000028 |   0.000175 |
+|   6 |                36 |   0.000067 |   0.000251 |
+|   7 |                41 |   0.000085 |   0.000346 |
+|   8 |               132 |   0.000177 |   0.000533 |
+|   9 |               250 |   0.000241 |   0.000790 |
+|  10 |               700 |   0.000493 |   0.001299 |
+|  11 |               750 |   0.000601 |   0.001916 |
+|  12 |             4,010 |   0.001535 |   0.003466 |
+|  13 |             4,237 |   0.001722 |   0.005206 |
+|  14 |            10,680 |   0.002893 |   0.008116 |
+|  15 |            24,679 |   0.005721 |   0.013854 |
+|  16 |            87,328 |   0.009010 |   0.022884 |
+|  17 |            90,478 |   0.010208 |   0.033113 |
+|  18 |           435,812 |   0.020486 |   0.053620 |
+|  19 |           449,586 |   0.023270 |   0.076913 |
+|  20 |         1,939,684 |   0.078741 |   0.155676 |
+|  21 |         3,853,278 |   0.125847 |   0.281549 |
+|  22 |         8,650,900 |   0.173449 |   0.455045 |
+|  23 |         8,840,110 |   0.224917 |   0.680006 |
+|  24 |        60,035,322 |   0.359825 |   1.039877 |
+|  25 |        80,605,209 |   0.511679 |   1.551599 |
+|  26 |       177,211,024 |   0.663506 |   2.215148 |
+|  27 |       368,759,752 |   1.033414 |   3.248616 |
+|  28 |     1,380,348,224 |   2.533999 |   5.782659 |
+|  29 |     1,401,414,640 |   2.951694 |   8.734403 |
+|  30 |     8,892,787,136 |  10.241124 |  18.975582 |
+|  31 |     9,014,369,784 |  11.076978 |  30.052606 |
+|  32 |    33,923,638,848 |  13.505877 |  43.558524 |
+|  33 |    59,455,553,072 |  20.499038 |  64.057609 |
+|  34 |   126,536,289,568 |  23.903329 |  87.960986 |
+|  35 |   207,587,882,368 |  57.064045 | 145.025074 |
+|  36 | 1,495,526,775,088 |  99.565625 | 244.590748 |
+|  37 | 1,510,769,105,288 | 109.442520 | 354.033321 |
+|  38 | 3,187,980,614,208 | 134.032712 | 488.066089 |
+|  39 | 5,415,462,995,568 | 175.846131 | 663.912274 |
