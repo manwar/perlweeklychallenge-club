@@ -1,21 +1,44 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "xAxis" : {
+      "categories" : [
+         "William Gilmore",
+         "William West",
+         "Yary Hluchan",
+         "Yet Ebreo",
+         "Yozen Hernandez"
+      ]
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 5] Last updated at 2022-11-15 19:18:32 GMT"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             3,
             3,
             86,
             21
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -28,40 +51,17 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
             1,
             6,
             14
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "xAxis" : {
-      "categories" : [
-         "William Gilmore",
-         "William West",
-         "Yary Hluchan",
-         "Yet Ebreo",
-         "Yozen Hernandez"
-      ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2022-11-15 08:17:53 GMT"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+   "chart" : {
+      "type" : "column"
    }
 }
