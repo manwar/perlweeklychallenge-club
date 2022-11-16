@@ -30,9 +30,9 @@ done_testing;
 # METHOD
 
 sub twice_largest(@list) {
-    my $max = [ sort @list ]->[-1];
+    @list   = sort { $a <=> $b } @list;
+    my $max = pop @list;
     foreach (@list) {
-        next if $_ == $max;
         ($_ * 2 > $max) and return -1;
     }
 
