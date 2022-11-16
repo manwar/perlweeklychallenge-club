@@ -40,7 +40,7 @@ do {
         var intArray = array.map { Int($0)! }
         let size     = intArray.count
 
-        iintArray.sort()
+        intArray.sort()
         let max = (intArray.last)!
 
         var found = 1
