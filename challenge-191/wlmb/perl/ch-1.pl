@@ -2,7 +2,7 @@
 # Perl weekly challenge 191
 # Task 1:  Twice Largest
 #
-# See https://wlmb.github.io/2022/11/15/PWC191/#task-1-twice-largest
+# See https://wlmb.github.io/2022/11/14/PWC191/#task-1-twice-largest
 use v5.36;
 use List::Util qw(all);
 use Scalar::Util qw(looks_like_number);
