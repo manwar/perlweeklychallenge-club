@@ -1,3 +1,5 @@
+digits([1, 2]).
+
 alphabet(1, 'A').
 alphabet(2, 'B').
 alphabet(3, 'C').
@@ -25,16 +27,35 @@ alphabet(24, 'X').
 alphabet(25, 'Y').
 alphabet(26, 'Z').
 
-digits([1, 2]).
+list_chunks(_, [], []).
+list_chunks(List, [H|T], [PrefixNumber|RestNumbers]):-
+    length(Prefix, H),
+    prefix(Prefix, List),
+    append(Prefix, Rest, List),
+    number_codes(PrefixNumber, Prefix),
+    list_chunks(Rest, T, RestNumbers).
 
-sum(Digits):-
-    sum([], Digits, 0).
+sum(Digits, Length):-
+    sum([], Digits, Length, 0).
 
-sum(Digits, Digits, _LENGTH_). 
-
-sum(Partial, Digits, Sum):-   
-    Sum < _LENGTH_, 
+sum(Digits, Digits, _, _). 
+sum(Partial, Digits, Length, Sum):-   
+    Sum < Length, 
     digits(L),
-    member(X,L),
+    member(X, L),
     S is Sum + X,
-    sum([X | Partial], Digits, S). 
+    sum([X | Partial], Digits, Length, S). 
+    
+decode(Encoded, Decoded):-
+    number_codes(Encoded, EncodedCodes),
+    length(EncodedCodes, EncodedLength),
+    findall(Digits,(
+        sum(Digits, EncodedLength), 
+        sum_list(Digits, EncodedLength)), DigitList),
+    findall(Chunks, (
+        member(ChunkSizes, DigitList),
+        list_chunks(EncodedCodes, ChunkSizes, Chunks)), ChunkList),
+    findall(DecodedChunk,(
+        member(C, ChunkList),
+        maplist(alphabet, C, DecodedChunkChars),
+        atom_chars(DecodedChunk, DecodedChunkChars)), Decoded).
