@@ -28,7 +28,7 @@ done-testing;
 
 sub twice-largest(@list) {
   my @li = @list».Int.sort(-*);
-  [&&] @li[0] X≥ @li[1..*].map(2 × *)
+  @li[0] ≥ 2 × @li[1]
 }
 
 
