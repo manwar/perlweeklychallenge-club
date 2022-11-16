@@ -2,7 +2,7 @@
 # Perl weekly challenge 191
 # Task 2:  Cute List
 #
-# See https://wlmb.github.io/2022/11/15/PWC191/#task-2-cute-list
+# See https://wlmb.github.io/2022/11/14/PWC191/#task-2-cute-list
 use v5.36;
 use Algorithm::Combinatorics qw(permutations);
 use List::Util qw(all);
