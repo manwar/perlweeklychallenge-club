@@ -11,19 +11,19 @@ sub cute($n){ # iterator over cute sequences
     for my $position(0..$n-1){
         for(1..$n){
             push @{$sets[$position]}, $_ if ($position+1)%$_==0 || $_%($position+1)==0;
-	}
+        }
     }
     my $iter=Set::CrossProduct->new([@sets]);
     return sub {
-	ITER: while(my $tuple=$iter->get()){
+        ITER: while(my $tuple=$iter->get()){
             my @seen;
             for(@$tuple){
-	        next ITER if $seen[$_];
+                next ITER if $seen[$_];
                 ++$seen[$_];
             }
-	    return $tuple;
-	}
-	return;
+            return $tuple;
+        }
+        return;
     }
 }
 die << "EOF" unless @ARGV;
