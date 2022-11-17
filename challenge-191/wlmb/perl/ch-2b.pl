@@ -11,7 +11,7 @@ sub cute($n){ # generate all cute sequences of length $n
     for my $position(0..$n-1){
         for(1..$n){ # Build sets of divisors and multiples of $position+1
             push @{$sets[$position]}, $_ if ($position+1)%$_==0 || $_%($position+1)==0;
-	}
+        }
     }
     my $x=reduce {cute_aux($a, $b)} [[]], @sets; # combine sets into cute sequences
     return $x;
@@ -24,9 +24,9 @@ sub cute_aux($seqs, $nums){ # combine an ongoing set of cute sequences with a se
         my $num=$tuple->[1];
         my @seen;
         map {$seen[$_]=1} @array; # Seen numbers
-	next if $seen[$num]; # Throw away repetitions
-	push @array, $num; # add number to current sequence
-	push @combined, [@array]; # add sequence to set of ongoing sequences
+        next if $seen[$num]; # Throw away repetitions
+        push @array, $num; # add number to current sequence
+        push @combined, [@array]; # add sequence to set of ongoing sequences
     }
     return [@combined];
 }
