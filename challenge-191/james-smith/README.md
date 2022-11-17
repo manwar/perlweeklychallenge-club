@@ -76,36 +76,102 @@ Before we start some observations:
 
    * `[1,5]`, `[1,7]`, `[1,3,6]`, `[1,2,4]`, `[1,2,4,6]`, `[1,2,3,6]`, `[1,2,3,4,5,6,7]`
 
+ * As a bonus - this reduces the search space further as the last list will ALWAYS contain
+   a valid digit. So we always know that will return a single value. This allows us the
+   shortenings (#1 & #10)
+
  * Our keys are all integers and less than 64. We can therefore use a bit mask as the keys
-   for the cache...
+   for the cache... {#9 & #11)
 
    Already placed `2`, `4`, `7` they key would be `10010100`
 
-These observations lead us to:
+ * Using a cache can greatly reduce the number of calls (at the expense of memory) see
+   #0 & #7. Note we use the `//=` operator here rather than the '||=' as a 0 value
+   being cached is as important as a non-zero value and `//=` is a defined check
+   rather than a check for true {which `0` would faile}
+
+ * #2, #3 & #4 use a similar {but sort of inverted logic} to a schwartzian transform,
+   which we carry over a variable which is important for the sort as a value in an
+   array ref only to throw it away with an extra `map`.
+
+ * #8 - we steal `sum0` from `List::Util` but we could equally write our own - to
+   avoid the library `sub sum0 { my $t=0; $t+=$_ for @_; $t }`
+
+These observations lead us to the following code...
+
 ```perl
 my %cache;
 
 sub cute {
-  %cache=(); ## Reset the count...
-  _cute_count( 0,
-      ## Return the list of values at a give index
+    ## (0) Clear cache...
+  %cache=();
+    ## (1) If n is 1 short cut and return 1
+  $_[0]==1 ? 1 : _cute_count( 0,
+      ## (2) Just keep the lists
     map  { $_->[1] }
-      ## sort these lists into an array based on length of list and position
-    sort { @{$a->[1]} <=> @{$b->[1]} || $a->[0] <=> $b->[0] }
-      ## compute the list of numbers which are either factor or multiple
-    map { $a=$_; [ $a => [ grep { ! ( $_%$a && $a%$_ ) } 1 .. $_[0] ] ] }
-      ## for each position
-    1 .. $_[0]
-  );
+      ## (3) Sort so the shortest lists are first - then sort by integer
+    sort { @{$a->[1]} <=> @{$b->[1]} ||
+             $a->[0]  <=>   $b->[0]
+         }
+      ## (4) Find all values between 1 & n which are either a factor or
+      ##     multiple. Store each as pair, of the number + all values.
+    map  {[ ($a=$_), [
+           grep { !( $_%$a && $a%$_ ) } 1 .. $_[0]
+         ] ]}
+      ## (5) Looping over 1 to n
+         1 .. $_[0]
+  )
+}
+
+sub _cute_count {
+  ## (6) We shift of the index number of seen numbers
+  ##     and also the next group of possible numbers...
+  my( $seen, $next ) = ( shift, shift );
+    ## (7) If we have already computed the value return...
+    ## (8) otherwise we loop over the values possible in the
+    ##     "nth" position (this is loose as they aren't ordered directly)
+    ##     by " but by the count {we are only counting so don't need to
+    ##     produce numbers}
+  $cache{$seen} //= sum0 map {
+    ## (9) We sum up the value for each value in this list which hasn't
+    ##     been seen (and return it!)
+      ($seen & 1<<$_) ? 0
+    ## (10) If there is only 1 number left in the list we count 1
+    ##     (as all numbers can be in the last position)
+    : @_ < 2          ? 1
+    ## (11) o/w we call this method again after knocking out the number
+    :                   _cute_count( $seen | 1<<$_ , @_ )
+  } @{$next}
+}
+    ## Note we don't use a string as a key - but use a bit mast -
+    ## #9 & #11 using "|" to set a bit & "&" to check it has
+    ## been set.
+```
+
+or without comments:
+
+```perl
+sub cute {
+  %cache=();
+  $_[0]==1 ? 1 : _cute_count( 0,
+    map  { $_->[1] }
+    sort { @{$a->[1]} <=> @{$b->[1]} ||
+             $a->[0]  <=>   $b->[0]
+         }
+    map  {[ ($a=$_), [
+           grep { !( $_%$a && $a%$_ ) } 1 .. $_[0]
+         ] ]}
+         1 .. $_[0]
+  )
 }
 
 sub _cute_count {
   my( $seen, $next ) = ( shift, shift );
-  ## Now do the cute counting... if the length of the array is 1 then we know this is one response
-  ## and it will be valid - so return 1;
-  ## o/w we sum the counts of child elements
-  @_ ? $cache{$seen} //= sum0 map { ($seen & 1<<$_) ? 0 : _cute_count( $seen | 1<<$_ , @_ ) } @{$next}
-     : 1;
+  $cache{$seen} //= sum0 map {
+      ($seen & 1<<$_) ? 0
+    : @_ < 2          ? 1
+    :                   _cute_count( $seen | 1<<$_ , @_ )
+  } @{$next}
 }
 ```
 ### Performance
@@ -119,11 +185,13 @@ We compared this algorithm with various ones with ordering and without we have t
 | Cache, no-ordering trick    |  17.4/s |  15x |
 | Cache, ordering trick       |  97.0/s |  80x |
 
+The difference expands rapdily as N increases - for `n=20` the optimal solution takes around 0.162 seconds - where the non-optimal solution 96, for an approximately `600x` speed up - this is approx `12x` for the ordering trick & `50x` for the cacheing.
+
 ### Timings for increasing `$N`
 
 The original challenge asked us to compute values up to `n=15` - the cumulative time for this is between 1.05 and 1.30 seconds. We can continue on to `n=30` taking around 19 seconds.
 
-The script finally crashes after `n=39` (with a count of around 5.5 trillion) - when the cache memory usage exceeds 7GBytes (the capacity of the machine) and starts to swap.
+The script finally crashes after `n=39` (with a count of around 5.5 trillion) - when the cache memory usage exceeds 7GBytes (the capacity of the machine) and starts to swap. {Note although this machine has more memory it also has a slower processor - so the times are approximately 30% longer than on the box used for the timings above}
 
 | ind |             Count | Time loop  | Cumul time |
 | --: | ----------------: | ---------: | ---------: |
