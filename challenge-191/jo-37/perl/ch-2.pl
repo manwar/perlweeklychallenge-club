@@ -70,6 +70,8 @@ say count_cute(shift, $permanent);
 # best of these attempts (that has more than twice the running time
 # compared to the B-B-F-G implementation).
 #
+# NB2: What a shame! wxMaxima finds the solution for N=28 in 5 min.
+#
 # References:
 # [1] http://oeis.org/A320843
 # [2] https://en.wikipedia.org/wiki/Permanent_(mathematics)
