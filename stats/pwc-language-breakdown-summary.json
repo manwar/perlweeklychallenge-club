@@ -1,9 +1,34 @@
 {
    "subtitle" : {
-      "text" : "Last updated at 2022-11-19 09:38:23 GMT"
+      "text" : "Last updated at 2022-11-19 10:00:34 GMT"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "series" : [
       {
+         "dataLabels" : {
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "align" : "right",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "y" : 10,
+            "format" : "{point.y:.0f}"
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -11,30 +36,17 @@
             ],
             [
                "Perl",
-               9337
+               9339
             ],
             [
                "Raku",
                5608
             ]
-         ],
-         "name" : "Contributions",
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "rotation" : -90,
-            "align" : "right",
-            "enabled" : "true",
-            "format" : "{point.y:.0f}"
-         }
+         ]
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
       "min" : 0,
@@ -42,22 +54,10 @@
          "text" : null
       }
    },
+   "chart" : {
+      "type" : "column"
+   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
    }
 }
