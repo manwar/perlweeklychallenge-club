@@ -8,7 +8,7 @@ def main(s):
     nums = [int(x) for x in s]
     nums.sort()
 
-    print(1 if nums[-1] > 2 * nums[-2] else -1)
+    print(1 if nums[-1] >= 2 * nums[-2] else -1)
 
 
 if __name__ == '__main__':

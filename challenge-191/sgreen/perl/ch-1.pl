@@ -9,7 +9,7 @@ sub main (@nums) {
     # Sort the list numerically
     @nums = sort { $a <=> $b } @nums;
 
-    say $nums[-1] > 2 * $nums[-2] ? 1 : -1;
+    say $nums[-1] >+ 2 * $nums[-2] ? 1 : -1;
 }
 
 main(@ARGV);
