@@ -1,4 +1,10 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-11-20 22:20:48 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
+   },
    "xAxis" : {
       "categories" : [
          "Ben Bullock",
@@ -33,11 +39,10 @@
          "David Santiago"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-11-20 22:04:20 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -76,6 +81,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             31,
@@ -107,11 +113,9 @@
             1,
             0,
             7
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -143,25 +147,21 @@
             123,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
