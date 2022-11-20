@@ -1,0 +1,116 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+
+% end included library code
+
+/cutelist {
+    11 dict begin
+    /n exch def
+    /tab [
+        [ ]
+        n {
+            [
+                false
+                n {
+                    dup
+                } repeat
+            ]
+        } repeat
+    ] def
+    1 1 n {
+        /x exch def
+        1 1 x {
+            /y exch def
+            x y mod 0 ne y x mod 0 ne and {
+                tab x get y true put
+                tab y get x true put
+            } if
+        } for
+    } for
+    /ct 0 def
+    /stackl [ [ ] ] def
+    /stackc [ [ 1 1 n {} for ] ] def
+    {
+        stackl length 0 eq {
+            exit
+        } if
+        stackl apop.right /l exch def /stackl exch def
+        stackc apop.right /c exch def /stackc exch def
+        c length 0 eq l length n eq and {
+            /ct ct 1 add def
+        } {
+            /place l length 1 add def
+            c {
+                /candidate exch def
+                tab place get candidate get not {
+                    /stackl stackl [ l aload pop candidate ] apush.right def
+                    /stackc stackc [ c { candidate ne } filter aload pop ] apush.right def
+                } if
+            } forall
+        } ifelse
+    } loop
+    ct
+    end
+} bind def
+
+(cutelist) test.start
+2 cutelist 2 eq test
+10 cutelist 700 eq test
+15 cutelist 24679 eq test
+test.end
