@@ -34,7 +34,7 @@ sub cute($n){ # return an iterator to generate all cute sequences of length $n
                         return([$candidate, @$cute], {$candidate, 1, %$seen})
 	                    unless $seen->{$candidate};
                     }
-                    return () unless ($cute, $seen)=$it->(); # next subsequence or return
+                    ($cute, $seen)=$it->() or return (); # next subsequence or return
                     $candidates=listit(@set); # reinitalize iterator for candidates
                }
             }
@@ -46,7 +46,7 @@ die << "EOF" unless @ARGV;
 Usage: $0 N1 [N2...]
 to count the cute orderings of 1..Ni
 EOF
-warn "Numbers beyond 20 will require patience" unless all {1<=$_<=18} @ARGV;
+warn "Numbers beyond 20 will require patience" unless all {1<=$_<=20} @ARGV;
 for(@ARGV){
     my $count=0;
     my $it=cute($_);
