@@ -43,7 +43,7 @@ begin
 	if nel <> n then
 	begin
 		writeln( stderr,
-			'Usage: cap-det [-d] target string' );
+			'Usage: cap-det [-d] string' );
 		halt;
 	end;
 

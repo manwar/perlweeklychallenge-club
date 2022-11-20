@@ -1,4 +1,4 @@
-BUILD	= ch-1 ch-2
+BUILD	= ch-1 #ch-2
 
 all:	$(BUILD)
 
