@@ -17,29 +17,29 @@ sub cute($n){ # return an iterator to generate all cute sequences of length $n
             push @{$sets[$position]}, $_ if ($position+1)%$_==0 || $_%($position+1)==0;
         }
     }
-    sub aux{# closure for an ancilliary iterator constructor
+    my $aux;
+    $aux = # closure for an ancilliary iterator constructor
         sub ($pos) { # Returns an iterator for position $pos
 	    #The iterator returns a cute subsecuence and a hash of seen values
 	    # Return a trivial iterator if beyond end
 	    return # trivial iterator beyond position
                sub { state $n=0; return $n++? ():([],{})} if $pos >=@sets;
 	    my @set=@{$sets[$pos]};
-	    my $it=aux($pos+1); # Iterator for next position
+	    my $it=$aux->($pos+1); # Iterator for next position
             my $candidates=listit(@set); # iterator for candidates
 	    my ($cute, $seen)=$it->(); # initial cute subsequence
 	    sub {
                 while(1){
                     while(my $candidate=$candidates->()){
                         return([$candidate, @$cute], {$candidate, 1, %$seen})
-	                    if !$seen->{$candidate};
+	                    unless $seen->{$candidate};
                     }
                     return () unless ($cute, $seen)=$it->(); # next subsequence or return
                     $candidates=listit(@set); # reinitalize iterator for candidates
                }
             }
-	}
-    }
-    aux(0); # return iterator for full sequence
+	};
+    $aux->(0); # return iterator for full sequence
 }
 
 die << "EOF" unless @ARGV;
