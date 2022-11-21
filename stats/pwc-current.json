@@ -1,11 +1,39 @@
 {
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 192"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 7] Last updated at 2022-11-21 17:22:06 GMT"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
    "series" : [
       {
          "data" : [
             {
-               "y" : 2,
+               "drilldown" : "Dario Mazzeo",
+               "y" : 1,
+               "name" : "Dario Mazzeo"
+            },
+            {
                "drilldown" : "Humberto Massa",
-               "name" : "Humberto Massa"
+               "name" : "Humberto Massa",
+               "y" : 2
             },
             {
                "drilldown" : "James Smith",
@@ -18,49 +46,52 @@
                "drilldown" : "Mark Anderson"
             },
             {
-               "drilldown" : "Niels van Dijke",
                "y" : 1,
-               "name" : "Niels van Dijke"
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke"
             },
             {
+               "y" : 4,
                "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "drilldown" : "Roger Bell_West"
             },
             {
+               "drilldown" : "Simon Proctor",
                "name" : "Simon Proctor",
-               "y" : 2,
-               "drilldown" : "Simon Proctor"
+               "y" : 2
             }
          ],
          "name" : "The Weekly Challenge - 192",
          "colorByPoint" : 1
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Dario Mazzeo",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "id" : "Dario Mazzeo"
+         },
+         {
             "name" : "Humberto Massa",
-            "id" : "Humberto Massa",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Humberto Massa"
          },
          {
             "name" : "James Smith",
-            "id" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -70,29 +101,31 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "James Smith"
          },
          {
             "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Mark Anderson"
+            ]
          },
          {
+            "id" : "Niels van Dijke",
             "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   1
                ]
-            ],
-            "id" : "Niels van Dijke"
+            ]
          },
          {
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -103,42 +136,24 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West",
             "name" : "Roger Bell_West"
          },
          {
+            "id" : "Simon Proctor",
             "name" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Simon Proctor"
+            ]
          }
       ]
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 192"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2022-11-21 17:02:01 GMT"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
    },
    "legend" : {
       "enabled" : 0
