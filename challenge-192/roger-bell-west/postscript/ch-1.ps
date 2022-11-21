@@ -1,0 +1,59 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/binaryflip {
+    3 dict begin
+    /n exch def
+    /m n def
+    /r 0 def
+    {
+        m 0 eq {
+            exit
+        } if
+        /m m -1 bitshift def
+        /r r 1 add def
+    } loop
+    1 r bitshift 1 sub n sub
+    end
+} bind def
+
+(binaryflip) test.start
+5 binaryflip 2 eq test
+4 binaryflip 3 eq test
+6 binaryflip 1 eq test
+test.end
