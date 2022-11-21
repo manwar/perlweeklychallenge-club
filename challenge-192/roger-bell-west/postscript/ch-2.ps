@@ -1,0 +1,103 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/all { % [a b] proc -> bool
+    1 dict begin
+    /p exch def
+    true exch
+    {
+        p not {
+            pop false
+            exit
+        } if
+    } forall
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/equaldistribution {
+    8 dict begin
+    /list exch def
+    /s list { add } reduce def
+    s list length mod 0 eq {
+        /m s list length idiv def
+        /out 0 def
+        /w [ list aload pop ] def
+        {
+            0 1 w length 2 sub {
+                /i exch def
+                w i get m gt {
+                    /v w i get m sub def
+                    w i 1 add w i 1 add get m add put
+                    /out out v add def
+                    w i m put
+                } if
+                w i get m lt {
+                    /v m w i get sub w i 1 add get min def
+                    w i 1 add w i 1 add get v sub put
+                    /out out v add def
+                    w i w i get v add put
+                } if
+            } for
+            w { m eq } all {
+                exit
+            } if
+        } loop
+        out
+    } {
+        -1
+    } ifelse
+    end
+} bind def
+
+(equaldistribution) test.start
+[ 1 0 5 ] equaldistribution 4 eq test
+[ 0 2 0 ] equaldistribution -1 eq test
+[ 0 3 0 ] equaldistribution 2 eq test
+test.end
