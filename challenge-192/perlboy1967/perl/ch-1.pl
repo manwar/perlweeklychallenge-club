@@ -21,6 +21,7 @@ use warnings;
 
 use Test::More;
 use Benchmark qw(:all);
+use Inline 'C';
 
 
 sub binaryFlipString ($) {
@@ -51,9 +52,31 @@ is(binaryFlipBinary(4),3);
 is(binaryFlipBinary(6),1);
 is(binaryFlipBinary(0b10101),0b1010);
 
+is(binaryFlipC(5),2);
+is(binaryFlipC(5),2);
+is(binaryFlipC(4),3);
+is(binaryFlipC(6),1);
+is(binaryFlipC(0b10101),0b1010);
 done_testing;
 
-cmpthese(1_000_000, {
+cmpthese(5_000_000, {
   'Binary' => sub{binaryFlipBinary(12345678)},
+  'BinaryC' => sub{binaryFlipC(12345678)},
   'String' => sub{binaryFlipString(12345678)},
 });
+
+__END__
+__C__
+
+int binaryFlipC (int i) {
+  int j = i;
+  int m = 0;
+
+  while (j) {
+    j >>= 1;
+    m <<= 1;
+    m++;
+  }
+
+  return ~i & m;
+}
