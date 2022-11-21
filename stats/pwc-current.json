@@ -1,53 +1,13 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge - 192"
-   },
    "tooltip" : {
       "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 3] Last updated at 2022-11-21 13:55:32 GMT"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "y" : 3,
-               "name" : "James Smith",
-               "drilldown" : "James Smith"
-            },
-            {
-               "y" : 1,
-               "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke"
-            },
-            {
-               "name" : "Roger Bell_West",
-               "drilldown" : "Roger Bell_West",
-               "y" : 4
-            }
-         ],
-         "name" : "The Weekly Challenge - 192",
-         "colorByPoint" : 1
-      }
-   ],
-   "chart" : {
-      "type" : "column"
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "James Smith",
+            "name" : "James Smith",
             "data" : [
                [
                   "Perl",
@@ -58,7 +18,7 @@
                   1
                ]
             ],
-            "name" : "James Smith"
+            "id" : "James Smith"
          },
          {
             "data" : [
@@ -67,12 +27,10 @@
                   1
                ]
             ],
-            "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke"
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
          },
          {
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -82,20 +40,77 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Roger Bell_West",
+            "name" : "Roger Bell_West"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Simon Proctor",
+            "name" : "Simon Proctor"
          }
       ]
    },
+   "series" : [
+      {
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "name" : "James Smith",
+               "y" : 3,
+               "drilldown" : "James Smith"
+            },
+            {
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke",
+               "y" : 1
+            },
+            {
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            },
+            {
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor",
+               "y" : 2
+            }
+         ],
+         "name" : "The Weekly Challenge - 192"
+      }
+   ],
+   "legend" : {
+      "enabled" : 0
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         }
+         },
+         "borderWidth" : 0
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2022-11-21 14:14:57 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 192"
    }
 }
