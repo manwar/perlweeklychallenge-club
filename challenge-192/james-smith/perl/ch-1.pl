@@ -15,6 +15,6 @@ done_testing();
 
 sub binary_flip {
   my($r,$k,$n) = (0,1,shift);
-  $r=(1-$n&1)*$k+$r,$k<<=1,$n>>=1 while $n;
+  $r|=(~$n&1)<<$k++, $n>>=1 while $n;
   $r;
 }
