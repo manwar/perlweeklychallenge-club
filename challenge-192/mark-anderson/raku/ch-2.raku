@@ -9,31 +9,21 @@ is equal-distribution(< 1 0 5 2 7 >), 14;
 is equal-distribution([1..101]),      85850;
 is equal-distribution([101...1]),     85850;
 
-# Please see the solution from James Smith (drbaggy)
-# Mine is more complicated than it needs to be 🤷  
+# Thanks to scimon, drbaggy, and others for simplifying this for me :)
 
 sub equal-distribution(*@a)
 {
     my $avg = @a.sum / @a.elems;
     return -1 unless $avg.narrow ~~ Int;
+    my $moves;
 
-    my ($min-ptr, $max-ptr, $moves) = 0 xx 3;
-     
-    loop
+    for @a.rotor(2 => -1)
     {
-        my $min = @a[$min-ptr..@a.end].first(* < $avg, :p);
-        my $max = @a[$max-ptr..@a.end].first(* > $avg, :p);
-
-        return $moves unless $min|$max;
-
-        my $amt = min($avg - $min.value, $max.value - $avg);
-
-        @a[$min-ptr..@a.end][$min.key] += $amt;
-        @a[$max-ptr..@a.end][$max.key] -= $amt;
-
-        $min-ptr += $min.key;
-        $max-ptr += $max.key;
-
-        $moves += abs($max-ptr - $min-ptr) * $amt;
+         my $n  = $avg - .[0];
+        .[0]   += $n;
+        .[1]   -= $n;
+        $moves += abs($n)
     }
+ 
+    $moves
 } 

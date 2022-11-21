@@ -7,5 +7,6 @@ is binary-flip(6), 1;
 
 sub binary-flip($n)
 {
-    (1 x $n.base(2).chars).parse-base(2) +^ $n;
+    #(1 x $n.base(2).chars).parse-base(2) +^ $n
+    $n.base(2).trans('01' => '10').parse-base(2)
 }
