@@ -54,7 +54,26 @@ We use `tr` with the `r` option to return the result of the translation...
 
 ### Performance...
 
-Well this is where Perl is uber fast when it comes to strings - the string solution is faster than the bit manipulation. This is probably due to the overhead of each separate operation in the numeric version.
+Well this is where Perl is uber fast when it comes to strings - the string solution is faster than the bit manipulation. This is probably due to the overhead of each separate operation in the numeric version. For a test example of "12345678" (`1011 1100 0110 0001 0100 1110`) the string method is 8x faster than the binary method.
+
+### Let's try again...
+
+Annoyed with the fact the elegant {bit operator based} solution is slower than the "hacky" string one - let's revisit the code using inline C - effectively it is EXACTLY the same algortihm as our first perl method.
+
+```C
+int c_flip(int n) {
+  int r=0;
+  int k=0;
+  while(n) {
+    r|=(1^n&1)<<k++;
+    n>>=1;
+  }
+  return r;
+}
+```
+
+Now - when comparing this to the other two: The C version is 4.5 times faster than the string version OR 35x faster than the equivalent Perl version.
+
 
 # Task 2 - Equal Distribution
 
