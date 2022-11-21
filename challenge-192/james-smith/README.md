@@ -21,6 +21,8 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-190/ja
 
 ## Solution
 
+### Use maths...
+
 This isn't as simple as using `~` as this will flip ALL the bits including those before the first 1.
 
 We need to therefore work through bit by bit reducing the number until we have reach zero.
@@ -39,7 +41,21 @@ sub binary_flip {
 }
 ```
 
-So instead we need to shift off the last bit until we get the zero value
+### Use strings...
+
+This can also be done by converting to a string and then coverting back again.
+
+```
+sub string_flip {
+  oct '0b'.sprintf('%b',$_[0])=~tr/01/10/r;
+```
+
+We use `tr` with the `r` option to return the result of the translation...
+
+### Performance...
+
+Well this is where Perl is uber fast when it comes to strings - the string solution is faster than the bit manipulation. This is probably due to the overhead of each separate operation in the numeric version.
+
 # Task 2 - Equal Distribution
 
 ***You are given a list of integers greater than or equal to zero, `@list`. Write a script to distribute the number so that each members are same. If you succeed then print the total moves otherwise print `-1`***
