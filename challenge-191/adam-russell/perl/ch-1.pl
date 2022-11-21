@@ -5,21 +5,15 @@ use warnings;
 # You are given list of integers, @list. Write a script to find out whether the largest 
 # item in the list is at least twice as large as each of the other items.
 ## 
-use boolean;
-
 sub twice_largest{
     my(@list_integers) = @_;
-    my $twice_max = -1;
-    for my $i (0 .. @list_integers - 1){
-        my $twice_rest = true;
-        for my $j (0 .. @list_integers - 1){    
-            unless($i == $j){
-                $twice_rest = $list_integers[$i] >= 2 * $list_integers[$j];
-            }
+    my @sorted_integers = sort {$a <=> $b} @list_integers;
+    for my $i (@sorted_integers[0 .. @sorted_integers - 1]){
+        unless($sorted_integers[@sorted_integers - 1] == $i){
+            return -1 unless $sorted_integers[@sorted_integers - 1] >= 2 * $i; 
         }
-        $twice_max = $list_integers[$i] if $twice_rest; 
-    } 
-    return $twice_max>-1?1:-1;
+    }
+    return 1;
 }
 
 MAIN:{
