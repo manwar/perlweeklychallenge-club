@@ -74,6 +74,21 @@ int c_flip(int n) {
 
 Now - when comparing this to the other two: The C version is 4.5 times faster than the string version OR 35x faster than the equivalent Perl version.
 
+A further re-write of the C gives:
+
+```C
+int c2(int n) {
+  int o = n;
+  int m = 1;
+  while(o>>=1) {
+    m<<=1;
+    m++;
+  }
+  return n^m;
+}
+```
+
+Here we compute a mask of `1`s as long as the binary representation of the number so for `25` = `11001` we have a mask of `11111` and so doing a bitwize XOR operation gives us `00110` or `6`. Which is even faster as it only does the XOR (`^`) once. {approx 5 times faster than the regex version}
 
 # Task 2 - Equal Distribution
 
