@@ -27,8 +27,8 @@ use warnings;
 
 use Test::More;
 
-use List::Util qw(sum max);
-use List::MoreUtils qw(firstidx);
+use List::Util qw(sum);
+use List::MoreUtils qw(firstidx minmax);
 
 my @t = (
   [[1,0,5], 4],
@@ -53,7 +53,7 @@ sub equalDistribution {
 
   my $m = 0;
   while (1) {
-    my $max = max(@_);
+    my ($min,$max) = minmax(@_);
     last if ($max == $avg);
 
     $m++;
@@ -61,19 +61,14 @@ sub equalDistribution {
     my $i = firstidx { $_ == $max } @_;
 
     # Which side needs the +1 the most?
-    if ($i == 0) {
-      $_[1]++;
-    } elsif ($i == $n-1) {
-      $_[-2]++;
-    } else {
-      my @l = @_[0 .. $i-1];
-      my @r = @_[$i+1 .. $n-1];
+    my @l = @_[0 .. $i-1];
+    my @r = @_[$i+1 .. $n-1];
 
-      if (sum(@l)/scalar(@l) < sum(@r)/scalar(@r)) {
-        $_[$i-1]++;
-      } else {
-        $_[$i+1]++;
-      }
+    if ((scalar(@l) ? sum(@l)/scalar(@l) : $min-1) < 
+        (scalar(@r) ? sum(@r)/scalar(@r) : $max+1)) {
+      $_[$i-1]++;
+    } else {
+      $_[$i+1]++;
     }
 
     $_[$i]--; 
