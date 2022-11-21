@@ -17,13 +17,13 @@ is( c2_flip(     $_->[0] ), $_->[1] ) for @TESTS;
 done_testing();
 
 sub string_flip {
-  oct '0b'.sprintf('%b',$_[0])=~tr/01/10/r;
+  $_[0] ? oct '0b'.sprintf('%b',$_[0])=~tr/01/10/r : 0
 }
 
 sub binary_flip {
   my($r,$k,$n) = (0,1,shift);
   $r|=(~$n&1)<<$k++, $n>>=1 while $n;
-  $r;
+  $r
 }
 
 __END__
@@ -40,10 +40,11 @@ int c_flip(int n) {
 
 int c2_flip(int n) {
   int o = n;
-  int m = 1;
-  while(o>>=1) {
+  int m = 0;
+  while(o) {
     m<<=1;
     m++;
+    o>>=1;
   }
   return n^m;
 }
