@@ -24,17 +24,17 @@ use Benchmark qw(:all);
 
 
 sub binaryFlipString ($) {
-  my $n = sprintf('%b',$_[0]);
-  $n =~ tr/01/10/;
-  return oct('0b'.$n);
+  return oct('0b'.sprintf('%b',$_[0]) =~ tr/01/10/r);
 }
 
 sub binaryFlipBinary ($) {
   my ($i,$m) = ($_[0],0);
+
   # Create bitmask for 'AND' below
   while ($i) {
     $i >>= 1; $m = ($m << 1) + 1;
   }
+
   return ~$_[0] & $m;
 }
   
