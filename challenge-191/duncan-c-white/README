@@ -1,73 +1,89 @@
-Task 1: Capital Detection
+Task 1: Task 1: Twice Largest
 
-You are given a string with alphabetic characters only: A..Z and a..z.
+You are given list of integers, @list.
 
-Write a script to find out if the usage of Capital is appropriate if it
-satisfies any of the following rules:
-
-1) Only first letter is capital and all others are small.
-2) Every letter is small.
-3) Every letter is capital.
+Write a script to find out whether the largest item in the list is at
+least twice as large as each of the other items.
 
 Example 1
-	Input: $s = 'Perl'
-	Output: 1
+
+Input: @list = (1,2,3,4)
+Output: -1
+
+The largest in the given list is 4.
+However 4 is not greater than (dcw:OR EQUAL TO) twice remaining element 3:
+2 x 3 >  4
 
 Example 2
-	Input: $s = 'TPF'
-	Output: 1
+
+Input: @list = (1,2,0,5)
+Output: 1
+
+The largest in the given list is 5.
+Also 5 is greater than (dcw:OR EQUAL TO) twice of every remaining element.
+1 x 2 <= 5
+2 x 2 <= 5
+0 x 2 <= 5
 
 Example 3
-	Input: $s = 'PyThon'
-	Output: 0
+
+Input: @list = (2,6,3,1)
+Output: 1
+
+The largest in the given list is 6.
+Also 6 is greater than (dcw:OR EQUAL TO) twice of every remaining element.
+2 x 2 <= 6
+3 x 2 <= 6
+1 x 2 <= 6
 
 Example 4
-	Input: $s = 'raku'
-	Output: 1
 
-MY NOTES: very easy.
+Input: @list = (4,5,2,3)
+Output: -1
+
+The largest in the given list is 5.
+Also 5 is not greater than (dcw:OR EQUAL TO) twice of every remaining element.
+4 x 2 >  5
+2 x 2 <= 5
+3 x 2 >  5
+
+MY NOTES: very easy, although there's an error in the wording of the examples
+above - to get eg3 to "succeed" (have result 1) it's got to be "max element
+is >= every other element * 2"...
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for the translation)
 
 
-Task 2: Decoded List
+Task 2: Cute List
 
-You are given an encoded string $s consisting of a sequence of numeric
-characters: 0..9.
+You are given an integer, 0 < $n <= 15.
 
-Write a script to find all valid different decodings in sorted order.
+Write a script to find the number of orderings of numbers that form a cute list.
 
-Encoding is simply done by mapping A,B,C,D,# to 1,2,3,4,# etc.
+With an input @list = (1, 2, 3, .. $n) for positive integer $n, an
+ordering of @list is cute if for every entry, indexed with a base index of
+1, either
 
-Example 1
-	Input: $s = 11
-	Output: AA, K
+1) $list[$i] is evenly divisible by $i
+or
+2) $i is evenly divisible by $list[$i]
 
-	11 can be decoded as (1 1) or (11) i.e. AA or K
+Example
 
-Example 2
-	Input: $s = 1115
-	Output: AAAE, AAO, AKE, KAE, KO
+Input: $n = 2
+Ouput: 2
 
-	Possible decoded data are:
-	(1 1 1 5) => (AAAE)
-	(1 1 15)  => (AAO)
-	(1 11 5)  => (AKE)
-	(11 1 5)  => (KAE)
-	(11 15)   => (KO)
+Since $n = 2, the list can be made up of two integers only i.e. 1 and 2.
+Therefore we can have two list i.e. (1,2) and (2,1).
 
-Example 3
-	Input: $s = 127
-	Output: ABG, LG
+@list = (1,2) is cute since $list[1] = 1 is divisible by 1 and $list[2]
+= 2 is divisible by 2.
 
-	Possible decoded data are:
-	(1 2 7) => (ABG)
-	(12 7)  => (LG)
-
-MY NOTES: Hmm.. may be simple "take 1 or 2 chars off the front" (if that
-front part is in 1..26 range), plus recursive processing of what's left, with a prefix
-added to each sub-solution..
+MY NOTES: Hmm.. isn't every number divisible by 1, doesn't that mean that
+the list[1] check is unnecessary?  Looks weird but otherwise reasonably
+straightforward.  Obviously need a "next permutation of the list" iterator,
+reusing the one from Challenge 134, adapted slightly.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
 into C (look in the C directory for the translation)
