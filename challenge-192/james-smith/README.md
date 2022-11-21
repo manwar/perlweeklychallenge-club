@@ -47,10 +47,13 @@ This can also be done by converting to a string and then coverting back again.
 
 ```
 sub string_flip {
-  oct '0b'.sprintf('%b',$_[0])=~tr/01/10/r;
+  $_[0] ? oct '0b'.sprintf('%b',$_[0])=~tr/01/10/r : 0;
+}
 ```
 
 We use `tr` with the `r` option to return the result of the translation...
+
+Note we have to check whether the input is `0` as in this case the output is also `0` as there is no leading 1.
 
 ### Performance...
 
@@ -79,10 +82,11 @@ A further re-write of the C gives:
 ```C
 int c2(int n) {
   int o = n;
-  int m = 1;
-  while(o>>=1) {
+  int m = 0;
+  while(o) {
     m<<=1;
     m++;
+    o>>=1
   }
   return n^m;
 }
