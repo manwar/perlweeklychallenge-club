@@ -31,9 +31,11 @@ sub binaryFlipString ($) {
 sub binaryFlipBinary ($) {
   my ($i,$m) = ($_[0],0);
 
-  # Create bitmask for 'AND' below
+  # Create bitmask for 'AND' in 'return'
   while ($i) {
-    $i >>= 1; $m = ($m << 1) + 1;
+    $i >>= 1; 
+    $m <<= 1;
+    $m++;
   }
 
   return ~$_[0] & $m;
