@@ -1,7 +1,7 @@
-[< Previous 189](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-189/james-smith) |
-[Next 191 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-191/james-smith)
+[< Previous 190](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-190/james-smith) |
+[Next 192 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-192/james-smith)
 
-# The Weekly Challenge 190
+# The Weekly Challenge 191
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -114,49 +114,35 @@ These observations lead us to the following code...
 my %cache;
 
 sub cute {
-    ## (0) Clear cache...
-  %cache=();
-    ## (1) If n is 1 short cut and return 1
-  $_[0]==1 ? 1 : _cute_count( 0,
-      ## (2) Just keep the lists
-    map  { $_->[1] }
-      ## (3) Sort so the shortest lists are first - then sort by integer
-    sort { @{$a->[1]} <=> @{$b->[1]} ||
-             $a->[0]  <=>   $b->[0]
-         }
-      ## (4) Find all values between 1 & n which are either a factor or
-      ##     multiple. Store each as pair, of the number + all values.
-    map  {[ ($a=$_), [
-           grep { !( $_%$a && $a%$_ ) } 1 .. $_[0]
-         ] ]}
-      ## (5) Looping over 1 to n
-         1 .. $_[0]
+  %cache=();                             ##  (0) Clear cache...
+  $_[0]==1 ? 1 : _cute( 0,               ##  (1) If n is 1 short cut and return 1
+    map  { $_->[1] }                     ##  (2) Just keep the lists
+    sort { @{$a->[1]} <=> @{$b->[1]} ||  ##  (3) Sort so the shortest lists are
+             $a->[0]  <=>   $b->[0]      ##      first - then sort by integer
+         }                               ##  (4) Find all values between 1 & n
+    map  {[ ($a=$_), [                   ##      which are either a factor
+           grep { !( $_%$a && $a%$_ ) }  ##      or multiple, store each as pair
+                1 .. $_[0]               ##      of number and list of values
+         ] ]}                            ##
+         1 .. $_[0]                      ##  (5) Looping over 1 to n
   )
 }
-
-sub _cute_count {
-  ## (6) We shift of the index number of seen numbers
-  ##     and also the next group of possible numbers...
-  my( $seen, $next ) = ( shift, shift );
-    ## (7) If we have already computed the value return...
-    ## (8) otherwise we loop over the values possible in the
-    ##     "nth" position (this is loose as they aren't ordered directly)
-    ##     by " but by the count {we are only counting so don't need to
-    ##     produce numbers}
-  $cache{$seen} //= sum0 map {
-    ## (9) We sum up the value for each value in this list which hasn't
-    ##     been seen (and return it!)
-      ($seen & 1<<$_) ? 0
-    ## (10) If there is only 1 number left in the list we count 1
-    ##     (as all numbers can be in the last position)
-    : @_ < 2          ? 1
-    ## (11) o/w we call this method again after knocking out the number
-    :                   _cute_count( $seen | 1<<$_ , @_ )
-  } @{$next}
-}
-    ## Note we don't use a string as a key - but use a bit mast -
-    ## #9 & #11 using "|" to set a bit & "&" to check it has
-    ## been set.
+sub _cute {
+  my( $seen, $next ) = ( shift, shift ); ##  (6) We shift of the index number of seen numbers
+                                         ##      and also the next group of possible numbers...
+  $cache{$seen} //= sum0 map {           ##  (7) If we have already computed the value return...
+                                         ##  (8) otherwise we loop over the values possible in the
+                                         ##      "nth" position (this is loose as they aren't
+                                         ##      ordered directly) by " but by the count {we are
+                                         ##      only counting so don't need to produce numbers}
+                                         ##  (9) We sum up the value for each value in this list
+      ($seen & 1<<$_) ? 0                ##      which hasn't been seen (and return it!)
+    : @_ < 2          ? 1                ## (10) If there is only 1 number left in the list we
+                                         ##      count 1 (as all numbers can be in the last position)
+    :   _cute( $seen | 1<<$_ , @_ )      ## (11) o/w we call this method again after tagging number seen
+  } @{$next}                             ## Note we don't use a string as a key - but use a bit mast -
+}                                        ##      #9 & #11 using "|" to set a bit & "&" to check
+                                         ##      it has been set.
 ```
 
 or without comments:
