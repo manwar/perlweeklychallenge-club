@@ -1,0 +1,27 @@
+require'sequence'
+require'string'
+
+local function is_cute(s:sequence(integer)):boolean
+  for i=1, #s do
+    if i % s[i] ~= 0 and s[i] % i ~= 0 then return false end
+  end
+  return true
+end
+
+local function permute(s:sequence(integer),
+		       i:integer,
+		       sz:integer,
+		       s2:sequence(integer)):void
+  if sz == i then if is_cute(s) then s2[1] = s2[1] + 1 return end end
+  for j=i, sz do
+    s[i],s[j] = s[j],s[i]
+    permute(s,i+1,sz,s2)
+    s[i],s[j] = s[j],s[i]
+  end
+  return
+end
+
+local s:sequence(integer),s2:sequence(integer) = {1,2},{0}
+permute(s, 1, 2, s2)
+print(string.format("%d",s2[1]))
+

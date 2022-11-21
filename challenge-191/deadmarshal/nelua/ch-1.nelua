@@ -1,0 +1,32 @@
+require'sequence'
+require'string'
+
+local function quick_sort(s:sequence(integer),
+			  left:integer,
+			  right:integer):void
+  local i,j:integer = left,right
+  local pivot = s[(left + right) // 2]
+  repeat
+    while pivot > s[i] do i = i + 1 end
+    while pivot < s[j] do j = j - 1 end
+    if i <= j then
+      s[i],s[j] = s[j],s[i]
+      i = i + 1
+      j = j - 1
+    end
+  until i > j
+  if left < j then quick_sort(s,left,j) end
+  if i < right then quick_sort(s,i,right) end
+end
+
+local function twice_largest(s:sequence(integer)):integer
+  quick_sort(s,1,#s)
+  if s[#s] >= 2 * s[#s-1] then return 1 end
+  return -1
+end
+
+print(string.format("%2d", twice_largest({1,2,3,4})))
+print(string.format("%2d", twice_largest({1,2,0,5})))
+print(string.format("%2d", twice_largest({2,6,3,1})))
+print(string.format("%2d", twice_largest({4,5,2,3})))
+
