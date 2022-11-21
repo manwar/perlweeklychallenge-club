@@ -1,7 +1,7 @@
-[< Previous 189](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-189/james-smith) |
-[Next 191 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-191/james-smith)
+[< Previous 190](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-190/james-smith) |
+[Next 192 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-192/james-smith)
 
-# The Weekly Challenge 190
+# The Weekly Challenge 191
 
 You can find more information about this weeks, and previous weeks challenges at:
 
