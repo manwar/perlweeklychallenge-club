@@ -49,12 +49,10 @@ sub equalDistribution {
 
   return -1 if ($sum % $n != 0);
 
-  my $avg = $sum/$n;
-
   my $m = 0;
   while (1) {
     my ($min,$max) = minmax(@_);
-    last if ($max == $avg);
+    last if ($min == $max);
 
     $m++;
 
