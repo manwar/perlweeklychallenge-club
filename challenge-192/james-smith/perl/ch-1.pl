@@ -13,6 +13,7 @@ my @TESTS = (  [5,2],[4,3],[6,1] );
 is( binary_flip( $_->[0] ), $_->[1] ) for @TESTS;
 is( string_flip( $_->[0] ), $_->[1] ) for @TESTS;
 is( c_flip(      $_->[0] ), $_->[1] ) for @TESTS;
+is( c2_flip(     $_->[0] ), $_->[1] ) for @TESTS;
 done_testing();
 
 sub string_flip {
@@ -35,4 +36,14 @@ int c_flip(int n) {
     n>>=1;
   }
   return r;
+}
+
+int c2_flip(int n) {
+  int o = n;
+  int m = 1;
+  while(o>>=1) {
+    m<<=1;
+    m++;
+  }
+  return n^m;
 }
