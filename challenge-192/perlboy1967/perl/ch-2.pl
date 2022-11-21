@@ -46,9 +46,10 @@ sub equalDistribution {
 
   my $sum = sum(@_);
   my $n = scalar(@_);
-  my $avg = $sum/$n;
 
-  return -1 if (int($sum/$n) != $avg);
+  return -1 if ($sum % $n != 0);
+
+  my $avg = $sum/$n;
 
   my $m = 0;
   while (1) {
