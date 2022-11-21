@@ -1,33 +1,4 @@
 {
-   "xAxis" : {
-      "type" : "category"
-   },
-   "drilldown" : {
-      "series" : [
-         {
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ],
-               [
-                  "Blog",
-                  1
-               ]
-            ],
-            "name" : "James Smith",
-            "id" : "James Smith"
-         }
-      ]
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
@@ -37,19 +8,24 @@
          "borderWidth" : 0
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2022-11-21 12:54:46 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 192"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2022-11-21 13:31:59 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "series" : [
       {
@@ -57,11 +33,50 @@
          "name" : "The Weekly Challenge - 192",
          "data" : [
             {
-               "drilldown" : "James Smith",
+               "name" : "James Smith",
                "y" : 3,
-               "name" : "James Smith"
+               "drilldown" : "James Smith"
+            },
+            {
+               "drilldown" : "Niels van Dijke",
+               "y" : 1,
+               "name" : "Niels van Dijke"
             }
          ]
       }
-   ]
+   ],
+   "drilldown" : {
+      "series" : [
+         {
+            "name" : "James Smith",
+            "id" : "James Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
+         }
+      ]
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 192"
+   },
+   "chart" : {
+      "type" : "column"
+   }
 }
