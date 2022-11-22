@@ -70,7 +70,10 @@ say count_cute(shift, $permanent);
 # best of these attempts (that has more than twice the running time
 # compared to the B-B-F-G implementation).
 #
-# NB2: What a shame! wxMaxima finds the solution for N=28 in 5 min.
+# NB2: [Edited] wxMaxima finds the solution for N=28 in 5 min, which is
+# very impressive.  Some further investigations lead to a new approach
+# following Maxima's implementation - but only after the deadline for
+# this challenge has exceeded.  See ch-2a.pl for the belated solution.
 #
 # References:
 # [1] http://oeis.org/A320843
