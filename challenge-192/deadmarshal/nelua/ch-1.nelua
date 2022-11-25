@@ -1,0 +1,10 @@
+require'math'
+
+local function binary_flip(n:integer):integer
+  return (~n) & integer(2 ^ (math.log(n) // math.log(2))-1)
+end
+
+print(binary_flip(5))
+print(binary_flip(4))
+print(binary_flip(6))
+
