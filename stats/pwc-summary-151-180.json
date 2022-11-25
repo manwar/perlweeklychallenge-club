@@ -1,15 +1,7 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             20,
             1,
@@ -41,8 +33,7 @@
             207,
             3,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -115,8 +106,19 @@
          ]
       }
    ],
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2022]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-11-25 08:25:00 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -152,16 +154,14 @@
          "Noud Aldenhoven"
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-11-24 20:20:02 GMT"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
