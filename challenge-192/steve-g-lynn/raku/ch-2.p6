@@ -4,6 +4,7 @@
 say &equal-distribution((1,0,5)); #4
 say &equal-distribution((0,2,0)); #-1
 say &equal-distribution((0,3,0)); #2
+say &equal-distribution((5,2,3,1,4)); #5
 
 #-- helper subs
 
@@ -15,14 +16,8 @@ sub maxindx (@list) {
     (0 .. @list.elems-1).grep( {@list[$_] == (@list.max)} );
 }
 
-sub distance (@list) {
-    min (
-        abs(&maxindx(@list).max - &minindx(@list).min),
-        abs(&maxindx(@list).min - &minindx(@list).max)
-    );
-}
 
-sub closest_pair (@list) {
+sub closest-pair (@list) {
     my (@retval);
       
     my @minindx=&minindx(@list);
@@ -54,14 +49,6 @@ sub is_equal( @list, $tgt ) {
     @list.map({$_==$tgt}).sum==@list;
 }
 
-sub iterate( @list )  {    
-    
-    my $distance=&distance(@list);
-    
-    my ($minindx,$maxindx)=&closest_pair(@list);    
-    
-    return ($distance, $minindx, $maxindx)
-}
 
 #-- root sub
 
@@ -82,9 +69,9 @@ sub equal-distribution(@list_) {
     
         (&is_equal(@list, $tgt)) && (return $count);
         
-        my ($distance, $minindx,  $maxindx) = &iterate(@list);
+        my ($minindx,  $maxindx) = &closest-pair(@list);
         
-        $count += $distance;
+        $count += ($minindx - $maxindx).abs;
         
         @list[$minindx] += 1;
         @list[$maxindx] -= 1;
