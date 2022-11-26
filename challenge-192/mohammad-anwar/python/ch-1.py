@@ -17,7 +17,8 @@ Task #1: Binary Flip
 import unittest
 
 def binaryFlip(n) -> int:
-    return int(''.join(['1' if i == '0' else '0' for i in "{0:b}".format(n)]),2)
+    return int(''.join([ '1' if i == '0' else '0' 
+                  for i in "{0:b}".format(n)]),2)
 
 #
 #
