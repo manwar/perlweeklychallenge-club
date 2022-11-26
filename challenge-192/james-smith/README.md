@@ -118,3 +118,19 @@ So first thing we do is work out the sum and see if it is divisible by the lengt
 Second is how to work out the number of steps. This is easier than you think. We only have to consider the case where we move numbers right to left or left to right, starting at the left. We are not bothered whether any number becomes negative.
 
 So (1) how much do we need to move? This is simply `$av - $A[$p]`. So we borrow it from the next number so `$A[$p+1] = $A[$p+1] - $av + $A[$p]` and the number of steps is just `abs($av-$A[$p])`. Giving the code above.
+
+### A minor optimization
+
+We can do away with the array - and just use a scalar for the "size" of the next bin - giving us:
+
+```perl
+sub equal_dis2 {
+  my($av,$k,$f) = (0,0,$_[0]);
+  $av+=$_ for @_;
+  return -1 if $av%@_;
+  $av/=@_;
+  $k+=abs($av-$f),$f=$_[$_]-$av+$f for 1..$#_;
+  $k;
+}
+```
+
