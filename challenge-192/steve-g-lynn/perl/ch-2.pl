@@ -7,30 +7,18 @@ local *equal_distribution=sub {
 
     #-- nested sub-subroutines
     local *minindx = sub {
-        local (@list)=@_;
         (grep {$list[$_] == (min @list)} (0 .. @list));
     };
     
     local *maxindx = sub {
-        local (@list)=@_;
         (grep {$list[$_] == (max @list)} (0 .. @list));
     };
 
-    local *distance = sub {
-        local (@list)=@_;
-        min (
-            abs((max &maxindx(@list))-(min &minindx(@list))),
-            abs((min &maxindx(@list))-(max &minindx(@list)))
-        );
-    };
-
     local *closest_pair = sub {
-        local (@list)=@_;
         local (@retval);
       
-        local (@minindx)=&minindx(@list);
-        local (@maxindx)=&maxindx(@list);
-            
+        local (@minindx) = &minindx;
+        local (@maxindx) = &maxindx;            
       
         local ($min_min,$max_min,$min_max,$max_max)=(
             (min @minindx), 
@@ -50,7 +38,7 @@ local *equal_distribution=sub {
                     $last_ctr=$ctr;             
                 }
             }
-       }  
+       }
        return @retval;     
     };
 
@@ -60,9 +48,9 @@ local *equal_distribution=sub {
     };
 
     local *iterate = sub {
-        local (@closest_pair)=&closest_pair(@list);
+        local (@closest_pair)=&closest_pair;
         
-        $count += &distance(@list);
+        $count += abs($closest_pair[0]-$closest_pair[1]);
         ($list[$closest_pair[0]]) += 1;
         ($list[$closest_pair[1]]) -= 1;
     };
@@ -86,7 +74,7 @@ local *equal_distribution=sub {
 print &equal_distribution(1,0,5),"\n"; #4
 print &equal_distribution(0,2,0),"\n"; #-1
 print &equal_distribution(0,3,0),"\n"; #2
-
+print &equal_distribution(5,2,3,1,4),"\n"; #5
 
 }
 
