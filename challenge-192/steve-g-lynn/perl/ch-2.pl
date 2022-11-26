@@ -43,7 +43,6 @@ local *equal_distribution=sub {
     };
 
     local *is_equal = sub {
-        local (@list)=@_;
         (sum map {$_==$tgt} @list)==@list;
     };
 
@@ -66,7 +65,7 @@ local *equal_distribution=sub {
     local $count = 0;
     
     while (1) {
-        &is_equal(@list) && return $count;
+        &is_equal && return $count;
         &iterate;
     }        
 };
