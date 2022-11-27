@@ -4,6 +4,7 @@ module Main where
 
 import           Test.HUnit
 import           Data.List (singleton)
+import           GHC.Natural (Natural)
 
 main = runTestTT
   $ TestList
@@ -18,12 +19,16 @@ main = runTestTT
         (Just 0)
         (equalDistribution $ singleton 4)]
 
-equalDistribution :: [Int] -> Maybe Int
+equalDistribution :: [Int] -> Maybe Natural
 equalDistribution [] = Just 0
 equalDistribution xs =
   let total = sum xs
       target = total `div` length xs
       isDistributable = total `mod` length xs == 0
   in if isDistributable
-     then Just $ sum $ map abs $ scanl (\a b -> a + b - target) 0 xs
+     then Just
+       $ fromIntegral
+       $ sum
+       $ map abs
+       $ scanl (\a b -> a + b - target) 0 xs
      else Nothing
