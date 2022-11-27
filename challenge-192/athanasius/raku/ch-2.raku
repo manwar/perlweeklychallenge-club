@@ -107,7 +107,7 @@ my Bool constant $VERBOSE  = True;
 BEGIN
 #------------------------------------------------------------------------------
 {
-    "\nChallenge 191, Task #2: Equal Distribution (Raku)\n".put;
+    "\nChallenge 192, Task #2: Equal Distribution (Raku)\n".put;
 }
 
 #==============================================================================
