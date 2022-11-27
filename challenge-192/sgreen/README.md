@@ -1,3 +1,3 @@
-# The Weekly Challenge 191
+# The Weekly Challenge 192
 
-Blog [The cute recursive function](https://dev.to/simongreennet/the-cute-recursive-function-2gdo)
+Blog [Weekly Challenge 192](https://dev.to/simongreennet/weekly-challenge-192-30a6)
