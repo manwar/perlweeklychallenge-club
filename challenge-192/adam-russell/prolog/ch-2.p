@@ -1,7 +1,7 @@
 :-dynamic(moves/1).
 moves(0).
 
-equal_distribution(ListIntegers, ListEqualDistribution):-
+equal_distribution(ListIntegers, _):-
     length(ListIntegers, L),
     sum_list(ListIntegers, S),
     Average is S / L,
