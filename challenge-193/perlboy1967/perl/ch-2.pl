@@ -23,7 +23,7 @@ the odd one out.
 use v5.16;
 use warnings;
 
-use List::MoreUtils qw(slide frequency);
+use List::MoreUtils qw(slide);
 use Test::More;
 
 
