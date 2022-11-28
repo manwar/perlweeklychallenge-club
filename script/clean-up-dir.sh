@@ -2,6 +2,8 @@ find . -name "*.nelua" -delete
 find . -name "*.plperl" -delete
 find . -name "*.ipynb" -delete
 find . -name "*.Mod" -delete
+find . -name "*.tex" -delete
+find . -name "*.pdf" -delete
 find . -name "*.gpr" -delete
 find . -name "*.wxm" -delete
 find . -name "*.pdl" -delete
