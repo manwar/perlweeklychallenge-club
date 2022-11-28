@@ -5,7 +5,16 @@
    "drilldown" : {
       "series" : [
          {
-            "name" : "Roger Bell_West",
+            "id" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Niels van Dijke"
+         },
+         {
             "id" : "Roger Bell_West",
             "data" : [
                [
@@ -16,67 +25,73 @@
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Roger Bell_West"
          },
          {
-            "id" : "Simon Proctor",
             "data" : [
                [
                   "Raku",
                   1
                ]
             ],
-            "name" : "Simon Proctor"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          }
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 2] Last updated at 2022-11-28 12:55:23 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "series" : [
       {
+         "colorByPoint" : 1,
          "data" : [
             {
-               "drilldown" : "Roger Bell_West",
+               "drilldown" : "Niels van Dijke",
+               "y" : 2,
+               "name" : "Niels van Dijke"
+            },
+            {
                "y" : 4,
+               "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West"
             },
             {
+               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
-               "y" : 1,
-               "name" : "Simon Proctor"
+               "y" : 1
             }
          ],
-         "name" : "The Weekly Challenge - 193",
-         "colorByPoint" : 1
+         "name" : "The Weekly Challenge - 193"
       }
    ],
    "xAxis" : {
       "type" : "category"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 3] Last updated at 2022-11-28 13:19:30 GMT"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    }
 }
