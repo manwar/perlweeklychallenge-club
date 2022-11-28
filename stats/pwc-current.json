@@ -1,59 +1,52 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  6
+               ]
+            ],
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
+         },
+         {
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
          },
          {
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Niels van Dijke",
-            "name" : "Niels van Dijke"
+            ]
          },
          {
+            "name" : "Olivier Delouya",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "id" : "Olivier Delouya",
-            "name" : "Olivier Delouya"
+            "id" : "Olivier Delouya"
          },
          {
+            "name" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -64,8 +57,7 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West",
-            "name" : "Roger Bell_West"
+            "id" : "Roger Bell_West"
          },
          {
             "data" : [
@@ -74,54 +66,81 @@
                   1
                ]
             ],
-            "id" : "Simon Proctor",
-            "name" : "Simon Proctor"
+            "name" : "Simon Proctor",
+            "id" : "Simon Proctor"
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
+   "title" : {
+      "text" : "The Weekly Challenge - 193"
    },
    "xAxis" : {
       "type" : "category"
    },
    "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2022-11-28 13:59:38 GMT"
+      "text" : "[Champions: 6] Last updated at 2022-11-28 14:20:11 GMT"
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 193"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "series" : [
       {
          "name" : "The Weekly Challenge - 193",
-         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 2,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
+               "name" : "Luca Ferrari",
+               "y" : 8,
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "name" : "Niels van Dijke",
+               "name" : "Mark Anderson",
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
+            },
+            {
                "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke",
                "y" : 2
             },
             {
-               "drilldown" : "Olivier Delouya",
                "y" : 1,
-               "name" : "Olivier Delouya"
+               "name" : "Olivier Delouya",
+               "drilldown" : "Olivier Delouya"
             },
             {
-               "name" : "Roger Bell_West",
                "drilldown" : "Roger Bell_West",
-               "y" : 4
+               "y" : 4,
+               "name" : "Roger Bell_West"
             },
             {
-               "name" : "Simon Proctor",
                "drilldown" : "Simon Proctor",
-               "y" : 1
+               "y" : 1,
+               "name" : "Simon Proctor"
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
    ]
 }
