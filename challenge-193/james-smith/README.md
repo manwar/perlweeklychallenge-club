@@ -41,89 +41,83 @@ You are given a list of integers greater than or equal to zero, `@list`. Write a
 
 ## Solution
 
-First pass - we compute a signature for each string, and store them in arrays, keyed by the signature... We use "100 * first difference + second difference".
+To find the unique string we note:
 
-Once we have the hash - we find the value {array} with only 1 element in it - and return that value...
+If word one isn't equivalent to word 2 then the word we are looking for is one of these two (the one which doesn't match the 3rd word)
+o/w we are looking for the first word that is not equivalent.
+
+### Try 1 - for every string compute a string signature
 
 ```perl
-sub odd_string_array {
-  my %x;
-  ## Keyed by signature - so one key will have
-  push @{$x{
-      ord( substr $_, 1 ) *  99
-    + ord( substr $_, 2 )
-    - ord( $_           ) * 100
-  }}, $_ for @_;
-  [ grep { @{$_}==1 } values %x ]->[0][0]
+sub sig_str {
+  my @Q = map { ord $_ } split //,$_[0];
+  join '', map { chr(96 + $Q[$_]-$Q[$_+1]) } 0..$#Q-1
+}
+
+sub odd_string_sig {
+  my $x = sig_str( $_[0] );
+  return $_[ $x eq sig_str( $_[2] ) ] if $x ne sig_str( $_[1] );
+  splice@_,0,2;
+  $x eq sig_str( $_ ) || return $_ for @_
 }
 ```
 
-### Faster solution..
-
-We note (1) this takes a lot of memory!, (2) we need to compute the signature of each number...
-
-So can we do better... First we note that we will need to compute the signatures of at least 3 entries. As we need to find two the same and one different.
-
-So we do this for the first three strings. If all strings have the same signature we need to loop through the remainder of the list to find one which is different.
-
-If they are not - we just use logic to work out which is different.
-
-  * first two the same - it must be the third
-  * first and third the same - must be second
-  * o/w first.
-
-We will try three different methods:
- 
-  * Calculate each difference on the fly
-  * Store the score for adjacent letters - and look up in a hash {hash size 676}
-  * Store a "score" for each triple - and look up in a a hash {hash size 17,576}
-
-The logic of all three code bases is the same - just how the "signature" is calculated. You can see this by the structure of the code
+### Try 2 - replace signature with an array ref, here we write an sig_check which compares a string against arrayref.
 
 ```perl
-sub odd_string_ord {
-  my($x1,$x2) = (   ord($_[0]) - ord(substr$_[0],1),          ord($_[0]) - ord(substr$_[0],2) );
-  return $_[ $x1 == ord($_[2]) - ord(substr$_[2],1) && $x2 == ord($_[2]) - ord(substr$_[2],2) ]
-      if     $x1 != ord($_[1]) - ord(substr$_[1],1) || $x2 != ord($_[1]) - ord(substr$_[1],2);
-  splice@_,0,2;
-  (          $x1 != ord($_   ) - ord(substr$_,1)    || $x2 != ord($_)    - ord(substr$_,2   ) ) && return $_ for @_;
+sub sig {
+  my @Q = map { ord $_ } split //,$_[0];
+  [ map { $Q[$_]-$Q[$_+1] } 0..$#Q-1 ]
 }
 
-my %map2  = map { my $a=$_; map { 
-  ("$a$_" => ord($a)-ord($_))
-} 'a'..'z' } 'a'..'z';
-
-sub odd_string_map_2 {
-  my($x1,$x2) = (   $map2{ substr $_[0],0,2 },          $map2{ substr $_[0],1,2 } );
-  return $_[ $x1 == $map2{ substr $_[2],0,2 } && $x2 == $map2{ substr $_[2],1,2 } ]
-      if     $x1 != $map2{ substr $_[1],0,2 } || $x2 != $map2{ substr $_[1],1,2 };
-  splice@_,0,2;
-  (          $x1 != $map2{ substr $_,   0,2 } || $x2 != $map2{ substr $_,   1,2 } ) && return $_ for @_;
+sub sig_check {
+  my( $sig, $str ) = @_;
+  my @Q = map { ord $_ } split //,$str;
+  $Q[$_]-$Q[$_+1] == $sig->[$_] || return 0 for 0..$#Q-1;
+  return 1
 }
 
-my %map3  = map { my $b = $_; map { my $a=$_; map {
-  ("$a$b$_" => ord($a)*99-ord($b)*100+ord($_))
-} 'a'..'z' } 'a'..'z' } 'a'..'z';
-
-sub odd_string_map_3 {
-  my         $x =  $map3{ $_[0] };
-  return $_[ $x == $map3{ $_[2] } ]
-      if     $x != $map3{ $_[1] };
+sub odd_string_sig_check {
+  my $x = sig( $_[0] );
+  return $_[ sig_check( $x, $_[2] ) ] if !sig_check( $x, $_[1] );
   splice@_,0,2;
-             $x == $map3{ $_    } || return $_ for @_;
+  sig_check( $x, $_ ) || return $_ for @_
 }
 ```
 
+### Try 3... A bit outside in...
+
+We start by working out which are the equivalent words to the first word.
+
+Any word is equivalent if it is in this list... So comparisons are light weight...
+
+```perl
+sub odd_string_eqs {
+  my @Q = map { ord $_ } split//,$_[0];
+  my $l=255;
+  $l > $_ && ($l=$_) for @Q;
+  my $h=0;
+  $h < $_ && ($h=$_) for @Q;
+  my %eqs = map {
+    my $o = $_;
+    join( '', map {chr $_+$o} @Q ) => 1
+  } 97-$l .. 122-$h;
+  return $_[ exists $eqs{$_[2]} ]
+    unless   exists $eqs{$_[1]};
+  splice@_,0,2;
+  exists $eqs{$_} || return $_ for @_
+}
+```
+The lines prior to the `return` - compute this map.
+  
 ### Performance
 
 How much faster are these... depends on how far along the list you need to go until you find the unique element.
 Testing a list of strings with the odd one in a random location - we saw:
 
-| Method    | Speed up |
-| --------- | -------: |
-| 2-chr map |   x  3.3 |
-| Ord       |   x  4.3 |
-| 3-chr map |   x 10.1 |
+| Method                 | Speed up |
+|----------------------- |--------: |
+| signature              |   x  1.0 |
+| signature array        |   x  1.4 |
+| Equalivalent strings   |   x  2.5 |
 
-I think the overhead of the `substr` and hash lookup for the 2-chr map is greater the `ord` lookups. But avoiding
-doing the `substr` makes the 3-chr map substantially faster...
