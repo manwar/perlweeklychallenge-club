@@ -7,8 +7,8 @@ our %code-hash;
 #-- assume input is conformable list of strings of same length
 #-- with exactly one string with the wrong difference array
 
-say &odd-string(["adc","wzy","abc"]); #(1,1)
-say &odd-string(["aaa","bob","ccc","ddd"]); #(13,-13)
+say &odd-string(["adc","wzy","abc"]); #(abc)
+say &odd-string(["aaa","bob","ccc","ddd"]); #(bob)
 
 multi sub difference-array( Str $s ) {
     (1 .. $s.chars-1).map({%code-hash{$s.comb[$_]}-%code-hash{$s.comb[$_-1]}});
