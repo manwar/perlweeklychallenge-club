@@ -72,22 +72,58 @@ If they are not - we just use logic to work out which is different.
   * first and third the same - must be second
   * o/w first.
 
+We will try three different methods:
+ 
+  * Calculate each difference on the fly
+  * Store the score for adjacent letters - and look up in a hash {hash size 676}
+  * Store a "score" for each triple - and look up in a a hash {hash size 17,576}
+
+The logic of all three code bases is the same - just how the "signature" is calculated. You can see this by the structure of the code
+
 ```perl
-sub odd_string_fast {
-  my($x1,$x2,$y1,$y2,$z1,$z2) = (
-    ord($_[0]) - ord(substr$_[0],1), ord($_[0]) - ord(substr$_[0],2),
-    ord($_[1]) - ord(substr$_[1],1), ord($_[1]) - ord(substr$_[1],2),
-    ord($_[2]) - ord(substr$_[2],1), ord($_[2]) - ord(substr$_[2],2),
-  );
-  if( $x1 == $y1 && $x2 == $y2 ) { ## First & second match so NOT 1st
-    if( $x1 == $z1 && $x2 == $z2 ) { ## Third matches first - so find first which doesn't
-      ( $x1 != ord($_) - ord(substr$_,1) || $x2 != ord($_) - ord(substr$_,2) ) && return $_ for @_[3..$#_];
-    } else {
-      return $_[2];
-    }
-  } ## Different so it must be 1st or ceons
-  $_[ $x1 == $z1 && $x2 == $z2 ? 1 : 0 ]
+sub odd_string_ord {
+  my($x1,$x2) = (   ord($_[0]) - ord(substr$_[0],1),          ord($_[0]) - ord(substr$_[0],2) );
+  return $_[ $x1 == ord($_[2]) - ord(substr$_[2],1) && $x2 == ord($_[2]) - ord(substr$_[2],2) ]
+      if     $x1 != ord($_[1]) - ord(substr$_[1],1) || $x2 != ord($_[1]) - ord(substr$_[1],2);
+  splice@_,0,2;
+  (          $x1 != ord($_   ) - ord(substr$_,1)    || $x2 != ord($_)    - ord(substr$_,2   ) ) && return $_ for @_;
+}
+
+my %map2  = map { my $a=$_; map { 
+  ("$a$_" => ord($a)-ord($_))
+} 'a'..'z' } 'a'..'z';
+
+sub odd_string_map_2 {
+  my($x1,$x2) = (   $map2{ substr $_[0],0,2 },          $map2{ substr $_[0],1,2 } );
+  return $_[ $x1 == $map2{ substr $_[2],0,2 } && $x2 == $map2{ substr $_[2],1,2 } ]
+      if     $x1 != $map2{ substr $_[1],0,2 } || $x2 != $map2{ substr $_[1],1,2 };
+  splice@_,0,2;
+  (          $x1 != $map2{ substr $_,   0,2 } || $x2 != $map2{ substr $_,   1,2 } ) && return $_ for @_;
+}
+
+my %map3  = map { my $b = $_; map { my $a=$_; map {
+  ("$a$b$_" => ord($a)*99-ord($b)*100+ord($_))
+} 'a'..'z' } 'a'..'z' } 'a'..'z';
+
+sub odd_string_map_3 {
+  my         $x =  $map3{ $_[0] };
+  return $_[ $x == $map3{ $_[2] } ]
+      if     $x != $map3{ $_[1] };
+  splice@_,0,2;
+             $x == $map3{ $_    } || return $_ for @_;
 }
 ```
 
-How much faster is this... depends on how far along the list you need to go until you find the unique element. Testing a list of strings with the odd one in a random location - we saw a speed up of around 3.5x.
+### Performance
+
+How much faster are these... depends on how far along the list you need to go until you find the unique element.
+Testing a list of strings with the odd one in a random location - we saw:
+
+| Method    | Speed up |
+| --------- | -------: |
+| 2-chr map |   x  3.3 |
+| Ord       |   x  4.3 |
+| 3-chr map |   x 10.1 |
+
+I think the overhead of the `substr` and hash lookup for the 2-chr map is greater the `ord` lookups. But avoiding
+doing the `substr` makes the 3-chr map substantially faster...
