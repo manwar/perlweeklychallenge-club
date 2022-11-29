@@ -9,7 +9,9 @@ my $SIZE = 100;
 
 my %map2  = map { my $a=$_; map { ("$a$_" => ord($a)-ord($_)) } 'a'..'z' } 'a'..'z';
 my %map3  = map { my $b = $_; map { my $a=$_; map { ("$a$b$_" => ord($a)*99-ord($b)*100+ord($_)) } 'a'..'z' } 'a'..'z' } 'a'..'z';
+
 my @list  = map { chr(97+rand(26)) x 3 } 1..$SIZE;
+
 my @TESTS = (
   [ [qw(adc wzy abc)], 'abc' ],
   [ [qw(bob bbb ccc ddd)], 'bob' ],
@@ -18,9 +20,6 @@ my @TESTS = (
   [ [qw(aaa bbb ccc bob)], 'bob' ],
   ## Put "bob" in every position within the list...
   map { my $t = [ @list ]; $t->[$_]='bob'; [ $t, 'bob' ] } 0..$SIZE-1
-);
-my @TESTS = 
-  @lists,
 );
 
 is( odd_string_array(  @{$_->[0]} ), $_->[1] ) for @TESTS;
@@ -40,9 +39,7 @@ sub odd_string {
 }
 
 sub odd_string_ord {
-  my($x1,$x2) = (
-                    ord($_[0]) - ord(substr$_[0],1),          ord($_[0]) - ord(substr$_[0],2),
-  );
+  my($x1,$x2) = (   ord($_[0]) - ord(substr$_[0],1),          ord($_[0]) - ord(substr$_[0],2) );
   ## The first two characters are different - so we need to check the first against the third
   ## If it is the same then the character we want is the second character o/w the first
   ## Note the comparison returns 1 if true & 0 if false so can use that as the index to @_
