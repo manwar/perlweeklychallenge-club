@@ -41,6 +41,10 @@ You are given a list of integers greater than or equal to zero, `@list`. Write a
 
 ## Solution
 
+First pass - we compute a signature for each string, and store them in arrays, keyed by the signature... We use "100 * first difference + second difference".
+
+Once we have the hash - we find the value {array} with only 1 element in it - and return that value...
+
 ```perl
 sub odd_string_array {
   my %x;
@@ -55,6 +59,18 @@ sub odd_string_array {
 ```
 
 ### Faster solution..
+
+We note (1) this takes a lot of memory!, (2) we need to compute the signature of each number...
+
+So can we do better... First we note that we will need to compute the signatures of at least 3 entries. As we need to find two the same and one different.
+
+So we do this for the first three strings. If all strings have the same signature we need to loop through the remainder of the list to find one which is different.
+
+If they are not - we just use logic to work out which is different.
+
+  * first two the same - it must be the third
+  * first and third the same - must be second
+  * o/w first.
 
 ```perl
 sub odd_string_fast {
@@ -73,3 +89,5 @@ sub odd_string_fast {
   $_[ $x1 == $z1 && $x2 == $z2 ? 1 : 0 ]
 }
 ```
+
+How much faster is this... depends on how far along the list you need to go until you find the unique element. Testing a list of strings with the odd one in a random location - we saw a speed up of around 3.5x.
