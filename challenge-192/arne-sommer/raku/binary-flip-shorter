@@ -1,0 +1,5 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $n where * > 0);
+
+say $n.base(2).comb.map({ $_ eq '1' ?? '0' !! '1' }).join.parse-base(2);
