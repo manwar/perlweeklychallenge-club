@@ -6,10 +6,6 @@ use feature qw(say);
 use Test::More;
 
 my $SIZE = 100;
-
-my %map2  = map { my $a=$_; map { ("$a$_" => ord($a)-ord($_)) } 'a'..'z' } 'a'..'z';
-my %map3  = map { my $b = $_; map { my $a=$_; map { ("$a$b$_" => ord($a)*99-ord($b)*100+ord($_)) } 'a'..'z' } 'a'..'z' } 'a'..'z';
-
 my @list  = map { chr(97+rand(26)) x 3 } 1..$SIZE;
 
 my @TESTS = (
@@ -22,56 +18,76 @@ my @TESTS = (
   map { my $t = [ @list ]; $t->[$_]='bob'; [ $t, 'bob' ] } 0..$SIZE-1
 );
 
-is( odd_string_array(  @{$_->[0]} ), $_->[1] ) for @TESTS;
-is( odd_string_ord(    @{$_->[0]} ), $_->[1] ) for @TESTS;
-is( odd_string_map_2(  @{$_->[0]} ), $_->[1] ) for @TESTS;
-is( odd_string_map_3(  @{$_->[0]} ), $_->[1] ) for @TESTS;
+is( odd_string_sig(       @{$_->[0]} ), $_->[1] ) for @TESTS;
+is( odd_string_sig_check( @{$_->[0]} ), $_->[1] ) for @TESTS;
+is( odd_string_eqs(       @{$_->[0]} ), $_->[1] ) for @TESTS;
 
-sub odd_string {
-  my %x;
-  ## Keyed by signature - so one key will have
-  push @{$x{
-      ord( substr $_, 1 ) *  99
-    + ord( substr $_, 2 )
-    - ord( $_           ) * 100
-  }}, $_ for @_;
-  [ grep { @{$_}==1 } values %x ]->[0][0]
+## Support method - create a signature string for the string
+## where strings are the difference in `ord` between pairs
+## adjusted so they are greater than 0 (and visible)
+
+sub sig_str {
+  my @Q = map { ord $_ } split //,$_[0];
+  join '', map { chr(96 + $Q[$_]-$Q[$_+1]) } 0..$#Q-1
 }
 
-sub odd_string_ord {
-  my($x1,$x2) = (   ord($_[0]) - ord(substr$_[0],1),          ord($_[0]) - ord(substr$_[0],2) );
-  ## The first two characters are different - so we need to check the first against the third
-  ## If it is the same then the character we want is the second character o/w the first
-  ## Note the comparison returns 1 if true & 0 if false so can use that as the index to @_
-  return $_[ $x1 == ord($_[2]) - ord(substr$_[2],1) && $x2 == ord($_[2]) - ord(substr$_[2],2) ]
-      if     $x1 != ord($_[1]) - ord(substr$_[1],1) || $x2 != ord($_[1]) - ord(substr$_[1],2);
-  ## We remove the first two strings as we don't need to compare them...
+## Rather than converting to a string - we store as an
+## arrayref of differences
+sub sig {
+  my @Q = map { ord $_ } split //,$_[0];
+  [ map { $Q[$_]-$Q[$_+1] } 0..$#Q-1 ]
+}
+
+## Now we do a comparison of pre-defined arrayref
+## and a string, we don't store the sig of the string
+## just a 0/1 return value...
+sub sig_check {
+  my( $sig, $str ) = @_;
+  my @Q = map { ord $_ } split //,$str;
+  $Q[$_]-$Q[$_+1] == $sig->[$_] || return 0 for 0..$#Q-1;
+  return 1
+}
+
+## Comparison by computing signature string of each sting
+## and comparing them..
+sub odd_string_sig {
+  my $x = sig_str( $_[0] );
+  return $_[ $x eq sig_str( $_[2] ) ] if $x ne sig_str( $_[1] );
   splice@_,0,2;
-  ## Compare all strings {we will end up with an answer as we know there is a unique string
-  (          $x1 != ord($_   ) - ord(substr$_,1)    || $x2 != ord($_)    - ord(substr$_,2   ) ) && return $_ for @_;
-  ## in the list...
+  $x eq sig_str( $_ ) || return $_ for @_
 }
 
-## Pre compute `ord($a) - ord($b)` for two letters [keyed with the string `"$a$b"`] and use
-## this to avoid the repeated ord calculation.... (676 entries)
-## This isn't as efficient as the ord calculation tho!
-sub odd_string_map_2 {
-  my($x1,$x2) = (   $map2{ substr $_[0],0,2 },          $map2{ substr $_[0],1,2 } );
-  return $_[ $x1 == $map2{ substr $_[2],0,2 } && $x2 == $map2{ substr $_[2],1,2 } ]
-      if     $x1 != $map2{ substr $_[1],0,2 } || $x2 != $map2{ substr $_[1],1,2 };
+## Use array version of signature and sig check..
+sub odd_string_sig_check {
+  my $x = sig( $_[0] );
+  return $_[ sig_check( $x, $_[2] ) ] if !sig_check( $x, $_[1] );
   splice@_,0,2;
-  (          $x1 != $map2{ substr $_,   0,2 } || $x2 != $map2{ substr $_,   1,2 } ) && return $_ for @_;
+  sig_check( $x, $_ ) || return $_ for @_
 }
 
-## Pre compute the signature for all triples (17,576 entries)
-## this to avoid the repeated ord calculation...., and now the `substr` operation
-## as well - this gives us the simpler code....
+## A slightly left field approach.
+## Take the first word and find all words that have the same
+## signature {we find lowest and highest letters in list to
+## reduce the search space for the list}
+## Now we check to see if subsequent words are in the list
+## If 2nd word is in the list then we look first the first
+##   word that isn't 
+## If 2nd wors isn't in the list then we need to check on
+## 3rd word - if in list then the first word is the one
+## we want - if not it's the 2nd.....
 
-sub odd_string_map_3 {
-  my         $x =  $map3{ $_[0] };
-  return $_[ $x == $map3{ $_[2] } ]
-      if     $x != $map3{ $_[1] };
+sub odd_string_eqs {
+  my @Q = map { ord $_ } split//,$_[0];
+  my $l=255;
+  $l > $_ && ($l=$_) for @Q;
+  my $h=0;
+  $h < $_ && ($h=$_) for @Q;
+  my %eqs = map {
+    my $o = $_;
+    join( '', map {chr $_+$o} @Q ) => 1
+  } 97-$l .. 122-$h;
+  return $_[ exists $eqs{$_[2]} ]
+    unless   exists $eqs{$_[1]};
   splice@_,0,2;
-             $x == $map3{ $_    } || return $_ for @_;
+  exists $eqs{$_} || return $_ for @_
 }
-
