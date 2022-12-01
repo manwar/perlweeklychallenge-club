@@ -1,7 +1,7 @@
 """
  Week 192:
 
-	https://theweeklychallenge.org/blog/perl-weekly-challenge-193
+    https://theweeklychallenge.org/blog/perl-weekly-challenge-193
 
     Task 1: Binary String
     Submitted by: Mohammad S Anwar

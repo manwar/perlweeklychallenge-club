@@ -26,12 +26,7 @@ is(binaryString(3), ['000', '001', '010', '011', '100', '101', '110', '111'], 'E
 sub binaryString {
     my ($binary_number_size) = @_;
 
-    my @binary_strings = ();
-    for (my $i = 0; $i < 2**$binary_number_size; $i++) {
-        push(@binary_strings, sprintf("%0${binary_number_size}b", $i))
-    }
-
-    return(\@binary_strings);
+    return [map {sprintf("%0${binary_number_size}b", $_)} (0..(2**$binary_number_size) - 1)];
 }
 
 done_testing();
