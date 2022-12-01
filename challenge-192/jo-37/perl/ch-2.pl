@@ -31,7 +31,7 @@ say num_moves(@ARGV);
 ### Implementation
 
 # See the blog
-# https://github.com/jo-37/perlweeklychallenge-club/blob/master/challenge-192/jo-37/blog.pdf
+# https://github.com/jo-37/perlweeklychallenge-club/blob/master/challenge-192/jo-37/ch-2.pdf
 # for a derivation of the formula behind this implementation.
 
 sub num_moves {
