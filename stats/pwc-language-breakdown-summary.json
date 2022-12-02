@@ -1,9 +1,9 @@
 {
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : null
-      }
+      },
+      "min" : 0
    },
    "legend" : {
       "enabled" : "false"
@@ -11,9 +11,40 @@
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "subtitle" : {
+      "text" : "Last updated at 2022-12-02 08:26:45 GMT"
    },
+   "series" : [
+      {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right",
+            "y" : 10,
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "rotation" : -90
+         },
+         "data" : [
+            [
+               "Blog",
+               3069
+            ],
+            [
+               "Perl",
+               9453
+            ],
+            [
+               "Raku",
+               5683
+            ]
+         ]
+      }
+   ],
    "chart" : {
       "type" : "column"
    },
@@ -26,38 +57,7 @@
          }
       }
    },
-   "subtitle" : {
-      "text" : "Last updated at 2022-12-02 07:49:12 GMT"
-   },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               3069
-            ],
-            [
-               "Perl",
-               9451
-            ],
-            [
-               "Raku",
-               5683
-            ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontFamily" : "Verdana, sans-serif",
-               "fontSize" : "13px"
-            },
-            "enabled" : "true",
-            "align" : "right",
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "format" : "{point.y:.0f}",
-            "y" : 10
-         }
-      }
-   ]
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   }
 }
