@@ -1,89 +1,75 @@
-Task 1: Task 1: Twice Largest
+Task 1: Binary String
 
-You are given list of integers, @list.
-
-Write a script to find out whether the largest item in the list is at
-least twice as large as each of the other items.
+You are given an integer, $n > 0.
+Write a script to find all possible binary numbers of size $n bits.
 
 Example 1
 
-Input: @list = (1,2,3,4)
-Output: -1
-
-The largest in the given list is 4.
-However 4 is not greater than (dcw:OR EQUAL TO) twice remaining element 3:
-2 x 3 >  4
+Input: $n = 2
+Output: 00, 11, 01, 10
 
 Example 2
 
-Input: @list = (1,2,0,5)
-Output: 1
+Input: $n = 3
+Output: 000, 001, 010, 100, 111, 110, 101, 011
 
-The largest in the given list is 5.
-Also 5 is greater than (dcw:OR EQUAL TO) twice of every remaining element.
-1 x 2 <= 5
-2 x 2 <= 5
-0 x 2 <= 5
-
-Example 3
-
-Input: @list = (2,6,3,1)
-Output: 1
-
-The largest in the given list is 6.
-Also 6 is greater than (dcw:OR EQUAL TO) twice of every remaining element.
-2 x 2 <= 6
-3 x 2 <= 6
-1 x 2 <= 6
-
-Example 4
-
-Input: @list = (4,5,2,3)
-Output: -1
-
-The largest in the given list is 5.
-Also 5 is not greater than (dcw:OR EQUAL TO) twice of every remaining element.
-4 x 2 >  5
-2 x 2 <= 5
-3 x 2 >  5
-
-MY NOTES: very easy, although there's an error in the wording of the examples
-above - to get eg3 to "succeed" (have result 1) it's got to be "max element
-is >= every other element * 2"...
+MY NOTES: very easy
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for the translation)
 
 
-Task 2: Cute List
+Task 2: Odd String
 
-You are given an integer, 0 < $n <= 15.
+You are given a list of strings of same length, @s.
 
-Write a script to find the number of orderings of numbers that form a cute list.
+Write a script to find the odd string in the given list. Use positional
+value of alphabet starting with 0, i.e. a = 0, b = 1, ... z = 25.
 
-With an input @list = (1, 2, 3, .. $n) for positive integer $n, an
-ordering of @list is cute if for every entry, indexed with a base index of
-1, either
+Find the difference array for each string as shown in the example. Then
+pick the odd one out.
 
-1) $list[$i] is evenly divisible by $i
-or
-2) $i is evenly divisible by $list[$i]
+Example 1:
 
-Example
+Input: @s = ("adc", "wzy", "abc")
+Output: "abc"
 
-Input: $n = 2
-Ouput: 2
+Difference array for "adc" => [ d - a, c - d ]
+                           => [ 3 - 0, 2 - 3 ]
+                           => [ 3, -1 ]
 
-Since $n = 2, the list can be made up of two integers only i.e. 1 and 2.
-Therefore we can have two list i.e. (1,2) and (2,1).
+Difference array for "wzy" => [ z - w, y - z ]
+                           => [ 25 - 22, 24 - 25 ]
+                           => [ 3, -1 ]
 
-@list = (1,2) is cute since $list[1] = 1 is divisible by 1 and $list[2]
-= 2 is divisible by 2.
+Difference array for "abc" => [ b - a, c - b ]
+                           => [ 1 - 0, 2 - 1 ]
+                           => [ 1, 1 ]
 
-MY NOTES: Hmm.. isn't every number divisible by 1, doesn't that mean that
-the list[1] check is unnecessary?  Looks weird but otherwise reasonably
-straightforward.  Obviously need a "next permutation of the list" iterator,
-reusing the one from Challenge 134, adapted slightly.
+The difference array for "abc" is the odd one.
 
-GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
-into C (look in the C directory for the translation)
+Example 2:
+
+Input: @s = ("aaa", "bob", "ccc", "ddd")
+Output: "bob"
+
+Difference array for "aaa" => [ a - a, a - a ]
+                           => [ 0 - 0, 0 - 0 ]
+                           => [ 0, 0 ]
+
+Difference array for "bob" => [ o - b, b - o ]
+                           => [ 14 - 1, 1 - 14 ]
+                           => [ 13, -13 ]
+
+Difference array for "ccc" => [ c - c, c - c ]
+                           => [ 2 - 2, 2 - 2 ]
+                           => [ 0, 0 ]
+
+Difference array for "ddd" => [ d - d, d - d ]
+                           => [ 3 - 3, 3 - 3 ]
+                           => [ 0, 0 ]
+
+The difference array for "bob" is the odd one.
+
+MY NOTES: Hmm..  not always a single odd one out.  What are we supposed
+to do if there is no odd one out?
