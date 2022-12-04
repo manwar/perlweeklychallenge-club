@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $n where $n > 0);
+
+my $decimal = 0;
+
+my @binary;
+
+loop
+{
+  my $binary = $decimal.fmt('%0' ~ $n ~ 'b');
+  last if $binary.chars > $n;
+
+  @binary.push: $binary;
+  $decimal++;
+}
+
+say @binary.join(", "); 
