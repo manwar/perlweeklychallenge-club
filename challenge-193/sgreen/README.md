@@ -1,3 +1,3 @@
-# The Weekly Challenge 192
+# The Weekly Challenge 193
 
-Blog [Weekly Challenge 192](https://dev.to/simongreennet/weekly-challenge-192-30a6)
+Blog [The odd binary string](https://dev.to/simongreennet/the-odd-binary-string-p64)
