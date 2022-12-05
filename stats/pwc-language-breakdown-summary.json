@@ -1,18 +1,21 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
-   },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
-      }
+      },
+      "type" : "category"
    },
    "chart" : {
       "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2022]"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "yAxis" : {
       "title" : {
@@ -20,23 +23,11 @@
       },
       "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "subtitle" : {
+      "text" : "Last updated at 2022-12-05 01:30:36 GMT"
    },
    "series" : [
       {
-         "dataLabels" : {
-            "enabled" : "true",
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "rotation" : -90,
-            "format" : "{point.y:.0f}"
-         },
          "data" : [
             [
                "Blog",
@@ -44,19 +35,28 @@
             ],
             [
                "Perl",
-               9474
+               9478
             ],
             [
                "Raku",
                5694
             ]
          ],
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "rotation" : -90,
+            "enabled" : "true",
+            "align" : "right"
+         },
          "name" : "Contributions"
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2022-12-05 01:05:27 GMT"
-   },
    "legend" : {
       "enabled" : "false"
    }
