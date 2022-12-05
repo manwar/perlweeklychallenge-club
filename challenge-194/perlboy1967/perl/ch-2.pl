@@ -26,8 +26,7 @@ use Test::More;
 
 
 sub freqEqual ($) {
-  my %f = frequency(split//,$_[0]);
-  my ($min,$max) = minmax(keys {reverse %f});
+  my ($min,$max) = minmax(keys{reverse frequency(split//,$_[0])});
   return $min == $max-1 ? 1 : 0;
 }
 
