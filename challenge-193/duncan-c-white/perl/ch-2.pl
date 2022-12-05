@@ -106,11 +106,7 @@ map { $freq{$_}++ } @diffsig;
 
 foreach my $k (keys %freq)
 {
-	delete $freq{$k} if $freq{$k}>1;
-}
-
-foreach my $k (keys %freq)
-{
+	next if $freq{$k}>1;
 	my $ref = $d2l{$k};
 	say join(',', @$ref);
 }
