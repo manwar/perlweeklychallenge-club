@@ -20,13 +20,21 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-193/ja
 ***You are given time in the format `hh:mm` with one missing digit. Write a script to find the highest digit between `0`-`9` that makes it valid time.***
 
 ## Solution
+Both solutions today use an ***IIFE*** (Immediately Invoked Function Expression) pronounced *iffy*. To remove the need for temporary variables. Each takes as input the result of an array method, here `split` and in the 2nd task `sort`.
+
+In this case we split the parameter into it's consitutant characters - the hours being in `0` & `1` and the minutes in `3` and `4`. Using a series of ternary operators we work out which position the "`?`" is in and work out what is the best digit for this place.
+
+If the "`?`" is in one of the minute slots this is easy as the value is either `5` or `9`.
+
+If it is in the hour slot we have to make sure the hour is less than 24. So if "`?`" is the first digit, we know that that can be a `2` only if the second digit is less than `4` and if it is in the second digit then the digit can only be `0` - `3` if the 1st digit is `2`.
 
 ```perl
 sub digit_2359 {
   sub {
     $_[0] eq '?' ? ( $_[1]<4 ? 2 : 1 )
   : $_[1] eq '?' ? ( $_[0]<2 ? 9 : 3 )
-  : $_[3] eq '?' ? 5 : 9
+  : $_[3] eq '?' ? 5
+  :                9
   }->( split //, $_[0] );
 }
 ```
@@ -38,7 +46,8 @@ sub digit_2400 {
   sub {
     $_[0] eq '?' ? ( $_[1]==4 && $_[3]==0 && $_[4]==0 || $_[1]<4 ? 2 : 1 )
   : $_[1] eq '?' ? ( $_[0]<2 ? 9 : $_[3]==0 && $_[4]==0 ? 4 : 3 )
-  : $_[3] eq '?' ? 5 : 9
+  : $_[3] eq '?' ? 5
+  :                9
   }->( split //, $_[0] );
 }
 ```
@@ -48,6 +57,12 @@ sub digit_2400 {
 ***You are given a string made of alphabetic characters only, `a`-`z`. Write a script to determine whether removing only one character can make the frequency of the remaining characters the same.***
 
 ## Solution
+
+Again we use and IIFE. This time taking the value of the sorted values from `%sc`. For the method to be true. The sorted values must be:
+
+ * `n`, `n`, `n`, ...., `n`, `n+1`
+
+So we just need to check the 1st with the (n-1)st and the (n-1)st with the last!
 
 ```perl
 sub check {
