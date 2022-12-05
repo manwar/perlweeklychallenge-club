@@ -29,8 +29,8 @@ sub highestDigit ($) {
   } else {
     my $i = index($_[0],'?');
     if (0) { } # Do nothing, just look pretty in code 
-    elsif ($i == 0) { return substr($_[0],1,1) < 4  ? 2 : 1 }
-    elsif ($i == 1) { return substr($_[0],0,1) == 2 ? 3 : 9 }
+    elsif ($i == 0) { return substr($_[0],1,1) < 4 ? 2 : 1 }
+    elsif ($i == 1) { return substr($_[0],0,1) < 2 ? 9 : 3 }
     elsif ($i == 2) { return -1 }
     elsif ($i == 3) { return  5 }
     elsif ($i == 4) { return  9 }
