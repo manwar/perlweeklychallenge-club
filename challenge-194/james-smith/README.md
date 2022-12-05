@@ -58,15 +58,21 @@ sub digit_2400 {
 
 ## Solution
 
-Again we use and IIFE. This time taking the value of the sorted values from `%sc`. For the method to be true. The sorted values must be:
+Again we use and IIFE. This time taking the value of the sorted values from `%f` (being the frequencies of each letter).
+For the method to be true. The sorted values must be:
 
  * `n`, `n`, `n`, ...., `n`, `n+1`
 
-So we just need to check the 1st with the (n-1)st and the (n-1)st with the last!
+In fact if we reverse the sort (switch `$a` and `$b` around in the comparison) we have:
+
+ * `n+1`, `n`, `n`, ...., `n`, `n`
+
+So check to see if the first is one more than the second and the second is the same
+as the last.
 
 ```perl
 sub check {
-  my %sc; $sc{$_} ++ for split //,$_[0];
-  sub { @_>2 && $_[0]==$_[1]+1 && $_[-1]==$_[1] ? 1 : 0 }->(sort {$b<=>$a} values %sc);
+  my %f; $f{$_} ++ for split //, $_[0];
+  sub { @_>2 && $_[0]==$_[1]+1 && $_[-1]==$_[1] }->(sort {$b<=>$a} values %f) || 0;
 }
 ```
