@@ -25,11 +25,11 @@ use Test::More;
 sub highestDigit ($) {
   state $c = { -1=>-1, 0=>2, 1=>9, 2=>-1, 3=>5, 4=>9 };
 
-  $c->{index($_[0],'?')}
+  ($_[0] =~ y/?/?/) != 1 ? -1 : $c->{index($_[0],'?')}
 }
 
 
-my %t = qw(?0:00 2 1?:00 9 10:?2 5 12:1? 9);
+my %t = qw(?0:00 2 1?:00 9 10:?2 5 12:1? 9 ??:00 -1 00?00 -1);
 
 for (sort keys %t) {
  is(highestDigit($_),$t{$_},"highestDigit('$_')");
