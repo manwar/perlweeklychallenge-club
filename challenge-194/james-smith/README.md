@@ -1,7 +1,7 @@
-[< Previous 192](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-192/james-smith) |
-[Next 194 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-194/james-smith)
+[< Previous 193](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-193/james-smith) |
+[Next 195 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-195/james-smith)
 
-# The Weekly Challenge 193
+# The Weekly Challenge 194 - *iffy* solutions
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -15,109 +15,43 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-193/james-smith
 
-# Task 1 - Binary string
+# Task 1 - Digital Clock
 
-***You are given an integer, `$n > 0`. Write a script to find all possible binary numbers of size `$n`.***
-
-## Solution
-
-This weeks task 1 is relatively simple. (1) We need to work out what the minimum and maximum
-integers are and then just print them padded to the right length. Thankfully Perl is great
-at this as it is integral to it's design.
-
-The largest value is '(2^n)-1' and the template for `sprintf` is '`%0{n}b`'. Which gives us
-
-```perl
-sub all_binary {                             ## Make a template so we don't have
-  my $t = "%0$_[0]b";                        ## to do interpolation everytime
-  map { sprintf $t, $_ } 0 .. (1<<$_[0])-1   ## Need brackets as - is actioned                                         
-}                                            ## before <<.
-```
-# Task 2 - Odd String
-
-***You are given a list of strings of same length, `@s`. Write a script to find the odd string in the given list. Use positional value of alphabet starting with 0, i.e. `a = 0`, `b = 1`, ... `z = 25`.***
-
-You are given a list of integers greater than or equal to zero, `@list`. Write a script to distribute the number so that each members are same. If you succeed then print the total moves otherwise print `-1`
+***You are given time in the format `hh:mm` with one missing digit. Write a script to find the highest digit between `0`-`9` that makes it valid time.***
 
 ## Solution
 
-To find the unique string we note:
-
-If word one isn't equivalent to word 2 then the word we are looking for is one of these two (the one which doesn't match the 3rd word)
-o/w we are looking for the first word that is not equivalent.
-
-### Try 1 - for every string compute a string signature
-
 ```perl
-sub sig_str {
-  my @Q = map { ord $_ } split //,$_[0];
-  join '', map { chr(96 + $Q[$_]-$Q[$_+1]) } 0..$#Q-1
-}
-
-sub odd_string_sig {
-  my $x = sig_str( $_[0] );
-  return $_[ $x eq sig_str( $_[2] ) ] if $x ne sig_str( $_[1] );
-  splice@_,0,2;
-  $x eq sig_str( $_ ) || return $_ for @_
+sub digit_2359 {
+  sub {
+    $_[0] eq '?' ? ( $_[1]<4 ? 2 : 1 )
+  : $_[1] eq '?' ? ( $_[0]<2 ? 9 : 3 )
+  : $_[3] eq '?' ? 5 : 9
+  }->( split //, $_[0] );
 }
 ```
 
-### Try 2 - replace signature with an array ref, here we write an sig_check which compares a string against arrayref.
+My original code allowed `24:00` as a valid value - this gave a slightly more complicated sub...
 
 ```perl
-sub sig {
-  my @Q = map { ord $_ } split //,$_[0];
-  [ map { $Q[$_]-$Q[$_+1] } 0..$#Q-1 ]
-}
-
-sub sig_check {
-  my( $sig, $str ) = @_;
-  my @Q = map { ord $_ } split //,$str;
-  $Q[$_]-$Q[$_+1] == $sig->[$_] || return 0 for 0..$#Q-1;
-  return 1
-}
-
-sub odd_string_sig_check {
-  my $x = sig( $_[0] );
-  return $_[ sig_check( $x, $_[2] ) ] if !sig_check( $x, $_[1] );
-  splice@_,0,2;
-  sig_check( $x, $_ ) || return $_ for @_
+sub digit_2400 {
+  sub {
+    $_[0] eq '?' ? ( $_[1]==4 && $_[3]==0 && $_[4]==0 || $_[1]<4 ? 2 : 1 )
+  : $_[1] eq '?' ? ( $_[0]<2 ? 9 : $_[3]==0 && $_[4]==0 ? 4 : 3 )
+  : $_[3] eq '?' ? 5 : 9
+  }->( split //, $_[0] );
 }
 ```
 
-### Try 3... A bit outside in...
+# Task 2 - Frequency Equalizer
 
-We start by working out which are the equivalent words to the first word.
+***You are given a string made of alphabetic characters only, `a`-`z`. Write a script to determine whether removing only one character can make the frequency of the remaining characters the same.***
 
-Any word is equivalent if it is in this list... So comparisons are light weight...
+## Solution
 
 ```perl
-sub odd_string_eqs {
-  my @Q = map { ord $_ } split//,$_[0];
-  my $l=255;
-  $l > $_ && ($l=$_) for @Q;
-  my $h=0;
-  $h < $_ && ($h=$_) for @Q;
-  my %eqs = map {
-    my $o = $_;
-    join( '', map {chr $_+$o} @Q ) => 1
-  } 97-$l .. 122-$h;
-  return $_[ exists $eqs{$_[2]} ]
-    unless   exists $eqs{$_[1]};
-  splice@_,0,2;
-  exists $eqs{$_} || return $_ for @_
+sub check {
+  my %sc; $sc{$_} ++ for split //,$_[0];
+  sub { @_>2 && $_[0]==$_[1]+1 && $_[-1]==$_[1] ? 1 : 0 }->(sort {$b<=>$a} values %sc);
 }
 ```
-The lines prior to the `return` - compute this map.
-  
-### Performance
-
-How much faster are these... depends on how far along the list you need to go until you find the unique element.
-Testing a list of strings with the odd one in a random location - we saw:
-
-| Method                 | Speed up |
-|----------------------- |--------: |
-| signature              |   x  1.0 |
-| signature array        |   x  1.4 |
-| Equalivalent strings   |   x  2.5 |
-
