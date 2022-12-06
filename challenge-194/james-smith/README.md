@@ -1,7 +1,7 @@
-[< Previous 192](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-192/james-smith) |
-[Next 194 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-194/james-smith)
+[< Previous 193](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-193/james-smith) |
+[Next 195 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-195/james-smith)
 
-# The Weekly Challenge 193
+# The Weekly Challenge 194 - *iffy* solutions
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -15,109 +15,64 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-193/james-smith
 
-# Task 1 - Binary string
+# Task 1 - Digital Clock
 
-***You are given an integer, `$n > 0`. Write a script to find all possible binary numbers of size `$n`.***
+***You are given time in the format `hh:mm` with one missing digit. Write a script to find the highest digit between `0`-`9` that makes it valid time.***
+
+## Solution
+Both solutions today use an ***IIFE*** (Immediately Invoked Function Expression) pronounced *iffy*. To remove the need for temporary variables. Each takes as input the result of an array method, here `split` and in the 2nd task `sort`.
+
+In this case we split the parameter into it's consitutant characters - the hours being in `0` & `1` and the minutes in `3` and `4`. Using a series of ternary operators we work out which position the "`?`" is in and work out what is the best digit for this place.
+
+If the "`?`" is in one of the minute slots this is easy as the value is either `5` or `9`.
+
+If it is in the hour slot we have to make sure the hour is less than 24. So if "`?`" is the first digit, we know that that can be a `2` only if the second digit is less than `4` and if it is in the second digit then the digit can only be `0` - `3` if the 1st digit is `2`.
+
+```perl
+sub digit_2359 {
+  sub {
+    $_[0] eq '?' ? ( $_[1]<4 ? 2 : 1 )
+  : $_[1] eq '?' ? ( $_[0]<2 ? 9 : 3 )
+  : $_[3] eq '?' ? 5
+  :                9
+  }->( split //, $_[0] );
+}
+```
+
+My original code allowed `24:00` as a valid value - this gave a slightly more complicated sub...
+
+```perl
+sub digit_2400 {
+  sub {
+    $_[0] eq '?' ? ( $_[1]<4 ? 2 : $_[1]==4 && $_[3]==0 && $_[4]==0 ? 2 : 1 )
+  : $_[1] eq '?' ? ( $_[0]<2 ? 9 :             $_[3]==0 && $_[4]==0 ? 4 : 3 )
+  : $_[3] eq '?' ? 5
+  :                9
+  }->( split //, $_[0] );
+}
+```
+
+# Task 2 - Frequency Equalizer
+
+***You are given a string made of alphabetic characters only, `a`-`z`. Write a script to determine whether removing only one character can make the frequency of the remaining characters the same.***
 
 ## Solution
 
-This weeks task 1 is relatively simple. (1) We need to work out what the minimum and maximum
-integers are and then just print them padded to the right length. Thankfully Perl is great
-at this as it is integral to it's design.
+Again we use and IIFE. This time taking the value of the sorted values from `%f` (being the frequencies of each letter).
+For the method to be true. The sorted values must be:
 
-The largest value is '(2^n)-1' and the template for `sprintf` is '`%0{n}b`'. Which gives us
+ * `n`, `n`, `n`, ...., `n`, `n+1`
 
-```perl
-sub all_binary {                             ## Make a template so we don't have
-  my $t = "%0$_[0]b";                        ## to do interpolation everytime
-  map { sprintf $t, $_ } 0 .. (1<<$_[0])-1   ## Need brackets as - is actioned                                         
-}                                            ## before <<.
-```
-# Task 2 - Odd String
+In fact if we reverse the sort (switch `$a` and `$b` around in the comparison) we have:
 
-***You are given a list of strings of same length, `@s`. Write a script to find the odd string in the given list. Use positional value of alphabet starting with 0, i.e. `a = 0`, `b = 1`, ... `z = 25`.***
+ * `n+1`, `n`, `n`, ...., `n`, `n`
 
-You are given a list of integers greater than or equal to zero, `@list`. Write a script to distribute the number so that each members are same. If you succeed then print the total moves otherwise print `-1`
-
-## Solution
-
-To find the unique string we note:
-
-If word one isn't equivalent to word 2 then the word we are looking for is one of these two (the one which doesn't match the 3rd word)
-o/w we are looking for the first word that is not equivalent.
-
-### Try 1 - for every string compute a string signature
+So check to see if the first is one more than the second and the second is the same
+as the last.
 
 ```perl
-sub sig_str {
-  my @Q = map { ord $_ } split //,$_[0];
-  join '', map { chr(96 + $Q[$_]-$Q[$_+1]) } 0..$#Q-1
-}
-
-sub odd_string_sig {
-  my $x = sig_str( $_[0] );
-  return $_[ $x eq sig_str( $_[2] ) ] if $x ne sig_str( $_[1] );
-  splice@_,0,2;
-  $x eq sig_str( $_ ) || return $_ for @_
+sub check {
+  my %f; $f{$_} ++ for split //, $_[0];
+  sub { @_>2 && $_[0]==$_[1]+1 && $_[-1]==$_[1] }->(sort {$b<=>$a} values %f) || 0;
 }
 ```
-
-### Try 2 - replace signature with an array ref, here we write an sig_check which compares a string against arrayref.
-
-```perl
-sub sig {
-  my @Q = map { ord $_ } split //,$_[0];
-  [ map { $Q[$_]-$Q[$_+1] } 0..$#Q-1 ]
-}
-
-sub sig_check {
-  my( $sig, $str ) = @_;
-  my @Q = map { ord $_ } split //,$str;
-  $Q[$_]-$Q[$_+1] == $sig->[$_] || return 0 for 0..$#Q-1;
-  return 1
-}
-
-sub odd_string_sig_check {
-  my $x = sig( $_[0] );
-  return $_[ sig_check( $x, $_[2] ) ] if !sig_check( $x, $_[1] );
-  splice@_,0,2;
-  sig_check( $x, $_ ) || return $_ for @_
-}
-```
-
-### Try 3... A bit outside in...
-
-We start by working out which are the equivalent words to the first word.
-
-Any word is equivalent if it is in this list... So comparisons are light weight...
-
-```perl
-sub odd_string_eqs {
-  my @Q = map { ord $_ } split//,$_[0];
-  my $l=255;
-  $l > $_ && ($l=$_) for @Q;
-  my $h=0;
-  $h < $_ && ($h=$_) for @Q;
-  my %eqs = map {
-    my $o = $_;
-    join( '', map {chr $_+$o} @Q ) => 1
-  } 97-$l .. 122-$h;
-  return $_[ exists $eqs{$_[2]} ]
-    unless   exists $eqs{$_[1]};
-  splice@_,0,2;
-  exists $eqs{$_} || return $_ for @_
-}
-```
-The lines prior to the `return` - compute this map.
-  
-### Performance
-
-How much faster are these... depends on how far along the list you need to go until you find the unique element.
-Testing a list of strings with the odd one in a random location - we saw:
-
-| Method                 | Speed up |
-|----------------------- |--------: |
-| signature              |   x  1.0 |
-| signature array        |   x  1.4 |
-| Equalivalent strings   |   x  2.5 |
-
