@@ -1,4 +1,8 @@
 {
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "xAxis" : {
       "categories" : [
          "Ivan Dimitrov",
@@ -33,24 +37,8 @@
          "John Barrett"
       ]
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             3,
             6,
@@ -82,9 +70,11 @@
             11,
             81,
             7
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -116,10 +106,10 @@
             0,
             81,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -151,17 +141,27 @@
             0,
             5,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-12-06 17:46:42 GMT"
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
+      },
+      "min" : 0
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-12-06 18:44:36 GMT"
    }
 }
