@@ -1,12 +1,11 @@
 {
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
-   "subtitle" : {
-      "text" : "[Champions: 1] Last updated at 2022-12-06 10:34:44 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 194"
+   "legend" : {
+      "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
@@ -17,11 +16,45 @@
          }
       }
    },
-   "legend" : {
-      "enabled" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
+   "series" : [
+      {
+         "data" : [
+            {
+               "name" : "James Smith",
+               "drilldown" : "James Smith",
+               "y" : 3
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
+            }
+         ],
+         "colorByPoint" : 1,
+         "name" : "The Weekly Challenge - 194"
+      }
+   ],
    "drilldown" : {
       "series" : [
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "James Smith",
+            "id" : "James Smith"
+         },
          {
             "data" : [
                [
@@ -38,30 +71,16 @@
          }
       ]
    },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "title" : {
+      "text" : "The Weekly Challenge - 194"
    },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 194",
-         "colorByPoint" : 1,
-         "data" : [
-            {
-               "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 4
-            }
-         ]
-      }
-   ],
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "type" : "category"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 2] Last updated at 2022-12-06 11:09:18 GMT"
    }
 }
