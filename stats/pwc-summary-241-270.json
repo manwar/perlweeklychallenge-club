@@ -1,9 +1,19 @@
 {
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2022]"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             1,
             3,
@@ -35,8 +45,7 @@
             0,
             4,
             206
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -115,16 +124,6 @@
       },
       "min" : 0
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2022-12-06 12:21:19 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2022]"
-   },
    "xAxis" : {
       "categories" : [
          "Sitaram Chamarty",
@@ -159,9 +158,10 @@
          "W. Luis Mochan"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2022-12-06 13:46:28 GMT"
    }
 }
