@@ -3,12 +3,11 @@
 use strict;
 use warnings;
 
-use List::Util qw(min max);
-
 print frequency_equalizer('abbc'),"\n"; #1
 print frequency_equalizer('xyzyyxz'),"\n"; #1 
 print frequency_equalizer('xzxz'),"\n"; #0
-
+print frequency_equalizer('abcde'),"\n"; #1 
+print frequency_equalizer('abbbccc'),"\n"; #1
 
 sub frequency_equalizer {
     my ($s) = @_;
@@ -27,7 +26,8 @@ sub frequency_equalizer {
     
     @s = sort keys %uniq;
     
-    ( (scalar(@s)==2) && (min(@s)==(max(@s)-1)) ) &&
+    ( (scalar(@s) <= 2) && ( ($s[0]==1) || 
+        ( exists($s[1]) && (abs($s[1] - $s[0])==1) ) ) ) &&
         (return 1);
     
     return 0; 
