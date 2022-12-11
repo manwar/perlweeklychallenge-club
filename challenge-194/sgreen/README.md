@@ -1,3 +1,3 @@
-# The Weekly Challenge 193
+# The Weekly Challenge 194
 
-Blog [The odd binary string](https://dev.to/simongreennet/the-odd-binary-string-p64)
+Blog [Digital frequency](https://dev.to/simongreennet/digital-frequency-l56)
