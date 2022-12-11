@@ -12,13 +12,9 @@ sub digital-clock($t)
 {
     return do given $t.index('?')
     {
-        when 4 { 9 }
-        when 3 { 5 }
-        default 
-        {
-            my $d = $t ~~ m:1st/\d/;
-            when 1  { $d < 2 ?? 9 !! 3 }
-            default { $d < 4 ?? 2 !! 1 }
-        }
+        when 4  { 9 }
+        when 3  { 5 }
+        when 1  { $t ~~ /\d/ < 2 ?? 9 !! 3 }
+        default { $t ~~ /\d/ < 4 ?? 2 !! 1 }
     }
 }
