@@ -16,13 +16,13 @@ sub freq-equalizer($_)
 
     if $bag.minpairs == 1  
     {
-        $bag{ $bag.antipairs.min.value }--;
+        $bag{ $bag.antipairs.min.value }--
     }
      
     else
     {
-        $bag{ $bag.antipairs.max.value }--;
+        $bag{ $bag.antipairs.max.value }--
     }
 
-    [==] $bag.values;
+    [==] $bag.values
 }
