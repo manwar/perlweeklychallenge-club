@@ -1,17 +1,41 @@
-Task 1: Binary String
+Task 1: Digital Clock
 
-You are given an integer, $n > 0.
-Write a script to find all possible binary numbers of size $n bits.
+You are given time in the format hh:mm with one missing digit.
+
+Write a script to find the highest digit between 0-9 that makes it valid time.
 
 Example 1
 
-Input: $n = 2
-Output: 00, 11, 01, 10
+Input: $time = '?5:00'
+Output: 1
+
+Since 05:00 and 15:00 are valid time and no other digits can fit in the
+missing place.
 
 Example 2
 
-Input: $n = 3
-Output: 000, 001, 010, 100, 111, 110, 101, 011
+Input: $time = '?3:00'
+Output: 2
+
+Example 3
+
+Input: $time = '1?:00'
+Output: 9
+
+Example 4
+
+Input: $time = '2?:00'
+Output: 3
+
+Example 5
+
+Input: $time = '12:?5'
+Output: 5
+
+Example 6
+
+Input: $time =  '12:5?'
+Output: 9
 
 MY NOTES: very easy
 
@@ -19,57 +43,29 @@ GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for the translation)
 
 
-Task 2: Odd String
+Task 2: Frequency Equalizer
 
-You are given a list of strings of same length, @s.
+You are given a string made of alphabetic characters only, a-z.
 
-Write a script to find the odd string in the given list. Use positional
-value of alphabet starting with 0, i.e. a = 0, b = 1, ... z = 25.
-
-Find the difference array for each string as shown in the example. Then
-pick the odd one out.
+Write a script to determine whether removing only one character can make
+the frequency of the remaining characters the same.
 
 Example 1:
 
-Input: @s = ("adc", "wzy", "abc")
-Output: "abc"
-
-Difference array for "adc" => [ d - a, c - d ]
-                           => [ 3 - 0, 2 - 3 ]
-                           => [ 3, -1 ]
-
-Difference array for "wzy" => [ z - w, y - z ]
-                           => [ 25 - 22, 24 - 25 ]
-                           => [ 3, -1 ]
-
-Difference array for "abc" => [ b - a, c - b ]
-                           => [ 1 - 0, 2 - 1 ]
-                           => [ 1, 1 ]
-
-The difference array for "abc" is the odd one.
+Input: $s = 'abbc'
+Output: 1 since removing one alphabet 'b' will give us 'abc' where each alphabet frequency is the same.
 
 Example 2:
 
-Input: @s = ("aaa", "bob", "ccc", "ddd")
-Output: "bob"
+Input: $s = 'xyzyyxz'
+Output: 1 since removing 'y' will give us 'xzyyxz'.
 
-Difference array for "aaa" => [ a - a, a - a ]
-                           => [ 0 - 0, 0 - 0 ]
-                           => [ 0, 0 ]
+Example 3:
 
-Difference array for "bob" => [ o - b, b - o ]
-                           => [ 14 - 1, 1 - 14 ]
-                           => [ 13, -13 ]
+Input: $s = 'xzxz'
+Output: 0 since removing any one alphabet would not give us string with same frequency alphabet.
 
-Difference array for "ccc" => [ c - c, c - c ]
-                           => [ 2 - 2, 2 - 2 ]
-                           => [ 0, 0 ]
+MY NOTES: sounds pretty easy.
 
-Difference array for "ddd" => [ d - d, d - d ]
-                           => [ 3 - 3, 3 - 3 ]
-                           => [ 0, 0 ]
-
-The difference array for "bob" is the odd one.
-
-MY NOTES: Hmm..  not always a single odd one out.  What are we supposed
-to do if there is no odd one out?
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
+into C (look in the C directory for the translation)
