@@ -3,6 +3,15 @@
 
 CREATE SCHEMA IF NOT EXISTS pwc195;
 
+/*
+testdb=> select pwc195.task2_plpgsql( array[1,2,2,3,4,4,4,5,6,6,6,6]::int[] );
+NOTICE:  relation "nums" already exists, skipping
+ task2_plpgsql
+---------------
+             6
+
+*/
+
 CREATE OR REPLACE FUNCTION
 pwc195.task2_plpgsql( list int[] )
 RETURNS int

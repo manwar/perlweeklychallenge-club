@@ -16,7 +16,8 @@ BEGIN
 	    SELECT count(*)
 	    INTO   freq
 	    FROM regexp_split_to_table( i::text, '' ) as n(d)
-	    GROUP BY d;
+	    GROUP BY d
+	    ORDER BY 1 DESC;
 
 	    IF freq = 1 THEN
 	       counter := counter + 1;
