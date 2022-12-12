@@ -1,0 +1,68 @@
+{
+ :paths ["src" "resources"]
+ :deps {c193/c193 {:local/root "."}}
+
+ :tasks
+ {
+  :requires ([clojure.java.io :as io]
+             [clojure.edn :as edn]
+             [babashka.fs :as fs])
+  :init (do
+          (defn get-first-form
+            [file]
+            (with-open [r (-> file fs/file io/reader)
+                        pr (java.io.PushbackReader. r)]
+              (edn/read pr)))
+
+          (defn get-task-ns
+            [task]
+            (let [glob-target (format "src/*/%s.clj" (name task))
+                  file (->> glob-target (fs/glob ".") first)]
+              (-> file get-first-form second str)))
+
+          (defn run-task-clj
+            [task args]
+            (apply clojure (str "-M:" task) args))
+
+          (defn run-task-bb
+            ([task args] (run-task-bb task args (get-task-ns task)))
+            ([task args task-ns]
+             (let [bb-cmd (format "bb -m %s " task-ns)]
+               (apply shell bb-cmd args))))
+
+          (defn bb-no-go
+            [task & _]
+            (binding [*out* *err*]
+              (let [task-num (-> task name last (Character/digit 10))]
+                (println
+                  (str "error: can't run Task " task-num
+                       " via Babashka because it depends"
+                       " on some incompatible libraries."))))
+            (System/exit 1)))
+
+  clean {:doc "Clean out temporary files"
+         :task (do (clojure "-T:build" "clean")
+                   (run! fs/delete-tree
+                         [".nrepl-port" ".cpcache" ".lsp" ".clj-kondo"]))}
+
+  generate-jar {:doc "Generate JAR file"
+                :task (clojure "-X:jar")}
+
+  test {:doc "Run tests"
+        :task (clojure "-T:build test")}
+
+  c**** {:doc "CHALLENGE TASKS"}
+
+  task-1 {:doc "Run Task 1 (via clojure)"
+          :task (run-task-clj :t1 *command-line-args*)}
+
+  task-1-bb {:doc "Run Task 1 (via Babashka)"
+             :task (run-task-bb :t1 *command-line-args*)}
+
+  task-2 {:doc "Run Task 2 (via clojure)"
+          :task (run-task-clj :t2 *command-line-args*)}
+
+  task-2-bb {:doc "Run Task 2 (via Babashka)"
+             :task (run-task-bb :t2 *command-line-args*)}
+  }
+}
