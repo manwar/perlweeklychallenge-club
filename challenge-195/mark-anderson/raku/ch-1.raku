@@ -7,12 +7,16 @@ is special-integers(9_999_999), 712890;
 
 sub special-integers($n)
 {
-    .elems given gather for (^10).combinations(1..$n.chars)
+    my $i;
+
+    for (^10).combinations(1..$n.chars)
     {
         for .permutations
         {
             next unless .head;
-           .take unless $_ > $n given .join
+            $i++ unless $_ > $n given .join
         }
     }
+
+    $i
 }
