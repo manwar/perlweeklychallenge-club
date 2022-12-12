@@ -117,25 +117,34 @@ sub free_eq ( $str ) {
         say "f_incidence: freq { $_ } => $f_incidence{$_} times" 
             for keys %f_incidence;}
 
+    my @counts  = sort {$a<=>$b} keys %f_incidence;
+    my @letters = keys %freq;
+    
     ## CASE 1: single frequency only
-    my @counts = sort {$a<=>$b} keys %f_incidence;
-    return 1 if  @counts    == 1 
-             and $counts[0] == 1 
-             and keys %freq > 1;
+    if (@counts == 1) {
+    
+        ## all the letters are different
+        return 1 if $counts[0] == 1 and @letters > 1;
+        
+        ## all the letters are the same (but not only one letter)
+        return 1 if $counts[0] > 1  and $counts[0] == length( $str );
+    }
    
     ## CASE 2: two frequencies
     if (@counts == 2) {
 
         ## if at least one of the two frequency classes has only one member
         ## it can be removed
-        for (keys %freq) { return 1 if $freq{$_} == 1 }
+        for (@letters) { return 1 if $freq{$_} == 1 }
 
         ## if one frequency incidence is one greater than the other and has
         ## exactly one more element in it
         return 1 if  $counts[0] + 1           == $counts[1] 
                  and $f_incidence{$counts[1]} == 1; 
     } 
+    
     return 0; 
+    
 }
 
 
@@ -159,6 +168,8 @@ is free_eq ( 'aabbccdddeee' ),  0,  'three doubles and two three counts - fail';
 is free_eq ( 'aabbccddd' ),     1,  'three doubles and one three count  - true';
 is free_eq ( 'abcd'    ),       1,  'unique chars';
 is free_eq ( 'a'    ),          0,  'only one char';
+is free_eq ( 'aaaaaaa'    ),    1,  'many of only one char';
+is free_eq ( 'aaaabbbb'    ),   0,  'pair of 4s';
 
 
 done_testing();
