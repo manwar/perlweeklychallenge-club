@@ -1,7 +1,7 @@
-[< Previous 193](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-193/james-smith) |
-[Next 195 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-195/james-smith)
+[< Previous 194](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-194/james-smith) |
+[Next 196 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-196/james-smith)
 
-# The Weekly Challenge 194 - *iffy* solutions
+# The Weekly Challenge 195
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,66 +13,46 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-193/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-195/james-smith
 
-# Task 1 - Digital Clock
+# Task 1 -  Special Integers
 
-***You are given time in the format `hh:mm` with one missing digit. Write a script to find the highest digit between `0`-`9` that makes it valid time.***
+***You are given a positive integer, `$n > 0`. Write a script to print the count of all special integers between `1` and `$n`. An integer is special when all of its digits are unique.***
 
 ## Solution
-Both solutions today use an ***IIFE*** (Immediately Invoked Function Expression) pronounced *iffy*. To remove the need for temporary variables. Each takes as input the result of an array method, here `split` and in the 2nd task `sort`.
+This is bread and butter perl. We are looking for the number of numbers without a repeated digit up to and including `n`. It is easy to find a repeated digit with `/(\d).*\1/`. 
 
-In this case we split the parameter into it's consitutant characters - the hours being in `0` & `1` and the minutes in `3` and `4`. Using a series of ternary operators we work out which position the "`?`" is in and work out what is the best digit for this place.
-
-If the "`?`" is in one of the minute slots this is easy as the value is either `5` or `9`.
-
-If it is in the hour slot we have to make sure the hour is less than 24. So if "`?`" is the first digit, we know that that can be a `2` only if the second digit is less than `4` and if it is in the second digit then the digit can only be `0` - `3` if the 1st digit is `2`.
+Counting them we just use grep and return the scalar value.
 
 ```perl
-sub digit_2359 {
-  sub {
-    $_[0] eq '?' ? ( $_[1]<4 ? 2 : 1 )
-  : $_[1] eq '?' ? ( $_[0]<2 ? 9 : 3 )
-  : $_[3] eq '?' ? 5
-  :                9
-  }->( split //, $_[0] );
+sub special {
+  0+grep{!/(\d).*\1/}1..pop
 }
 ```
 
-My original code allowed `24:00` as a valid value - this gave a slightly more complicated sub...
-
+This method uses `grep` which shouldn't be a problem in most cases unless `$n` gets large. Alternatively we can walk all values, to get the same result without blowing up the memory on the box!
 ```perl
-sub digit_2400 {
-  sub {
-    $_[0] eq '?' ? ( $_[1]<4 ? 2 : $_[1]==4 && $_[3]==0 && $_[4]==0 ? 2 : 1 )
-  : $_[1] eq '?' ? ( $_[0]<2 ? 9 :             $_[3]==0 && $_[4]==0 ? 4 : 3 )
-  : $_[3] eq '?' ? 5
-  :                9
-  }->( split //, $_[0] );
+sub special {
+  local $_ = pop, my $t = 0;
+  m{(\d).*\1}||$t++, $_-- while $_;
+  $t
 }
 ```
 
-# Task 2 - Frequency Equalizer
+# Task 2 - Most Frequent Even
 
-***You are given a string made of alphabetic characters only, `a`-`z`. Write a script to determine whether removing only one character can make the frequency of the remaining characters the same.***
+***You are given a list of numbers, `@list`. Write a script to find most frequent even numbers in the list. In case you get more than one even numbers then return the smallest even integer. For all other case, return `-1`.***
 
 ## Solution
 
-Again we use and IIFE. This time taking the value of the sorted values from `%f` (being the frequencies of each letter).
-For the method to be true. The sorted values must be:
+We have loop through the numbers past in and keep a hash of all the even values along with their counts. We then want to loop through all the elements finding the one with the largest count (and if equal smallest value).
 
- * `n`, `n`, `n`, ...., `n`, `n+1`
-
-In fact if we reverse the sort (switch `$a` and `$b` around in the comparison) we have:
-
- * `n+1`, `n`, `n`, ...., `n`, `n`
-
-So check to see if the first is one more than the second and the second is the same
-as the last.
+We do this in two loops - loop 1 to find the even numbers and count them - loop 2 to find the largest count (& smallest value)...
 
 ```perl
-sub check {
-  my %f; $f{$_} ++ for split //, $_[0];
-  sub { @_>2 && $_[0]==$_[1]+1 && $_[-1]==$_[1] }->(sort {$b<=>$a} values %f) || 0;
+sub mf_even {
+  my($m,%f)=(-1);
+  $_%2||$f{$_}++ for@_;
+  ($f{$_}>$f{$m}||$_<$m&&$f{$_}==$f{$m})&&($m=$_)for keys%f;
 }
 ```
