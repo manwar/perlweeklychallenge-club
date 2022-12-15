@@ -13,7 +13,7 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-193/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-194/james-smith
 
 # Task 1 - Digital Clock
 
