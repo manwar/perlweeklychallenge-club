@@ -22,9 +22,8 @@ Example 3:  Input: (6,4,4,6,1)  Output: 4
 #       If using args, they should be integers, and will be assumed
 #       to be a single array.
 
-# NOTE: Output is to stdout and will be each input number
-#       $n followed by the count of all "special" integers
-#       from 1 through $n.
+# NOTE: Output is to stdout and will be each input array followed by
+#       smallest most-frequent even number, or -1 if no evens.
 
 # PRELIMINARIES:
 use v5.36;
