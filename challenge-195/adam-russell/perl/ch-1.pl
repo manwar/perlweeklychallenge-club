@@ -1,4 +1,4 @@
-use v5.34;
+use v5.36;
 ##
 # You are given a positive integer, $n > 0.
 # Write a script to print the count of all special 

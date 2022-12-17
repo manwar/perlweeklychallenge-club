@@ -1,4 +1,4 @@
-use v5.34;
+use v5.36;
 ##
 # You are given a list of numbers, @list.
 # Write a script to find most frequent even 
@@ -20,9 +20,9 @@ sub most_frequent_even{
 MAIN:{
     my @list;
     @list = (1, 1, 2, 6, 2); 
-    say frequency(@list);    
+    say most_frequent_even(@list);    
     @list = (1, 3, 5, 7); 
-    say frequency(@list);    
+    say most_frequent_even(@list);    
     @list = (6, 4, 4, 6, 1); 
-    say frequency(@list);    
+    say most_frequent_even(@list);    
 }
