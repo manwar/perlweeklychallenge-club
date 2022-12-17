@@ -27,12 +27,9 @@ most_frequent_even(ListNumbers, MostFrequentEven):-
          nth(1, FrequenciesSorted, F1),
          nth(2, FrequenciesSorted, F2), 
          F1 == F2,
-         nth(N1, Frequencies, F1),  
-         nth(N2, Frequencies, F2),  
-         nth(N1, EvenNumbers, MostFrequentEven1),  
-         nth(N2, EvenNumbers, MostFrequentEven2),    
-         ((MostFrequentEven1 < MostFrequentEven2, MostFrequentEven = MostFrequentEven1);  
-          (MostFrequentEven1 > MostFrequentEven2, MostFrequentEven = MostFrequentEven2))
+         findall(MFE, (member(FX, FrequenciesSorted), FX == F1, nth(N, Frequencies, FX), nth(N, EvenNumbers, MFE)), MostFrequentEvens),   
+         sort(MostFrequentEvens, MostFrequentEvensSorted), 
+         nth(1, MostFrequentEvensSorted, MostFrequentEven)
      ) 
     ), !.
 
