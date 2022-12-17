@@ -6,7 +6,7 @@ use v5.34;
 # than one even numbers then return the smallest even integer. 
 # For all other case, return -1.
 ## 
-sub frequency{
+sub most_frequent_even{
     my @list = @_;
     @list = grep { $_ % 2 == 0 } @list; 
     return -1 if @list == 0;  
