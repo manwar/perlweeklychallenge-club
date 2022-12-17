@@ -23,7 +23,7 @@ Output: 4 since there are only two even numbers 4 and 6. They both appears the e
 
 sub most-freqy-even( @l where * !~~ () --> Int) {
     my %h = Bag.new( @l.grep( * %% 2));
-    %h = grep { .key == %h.keys.min}, %h.grep( { .value ~~ %h.values.max});
+    %h = grep { .key == %h.keys.min}, %h.=grep( { .value ~~ %h.values.max});
     return (Int) if %h ~~ {};
     %h.keys[0].Int;
 }
@@ -39,6 +39,7 @@ multi MAIN ( 'test' ) {
         { in => (6,6,6,6,6),        exp => 6,       },
         { in => (1,2,3,4,5),        exp => 2,       },
         { in => (2,2,3,3,6,6),      exp => 2,       },
+        { in => (2,4,4,6,6),        exp => 4,       },
     ;
     plan +@Test + @Die;
     for @Die  -> %t {
