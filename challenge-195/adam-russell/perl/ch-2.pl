@@ -14,7 +14,8 @@ sub most_frequent_even{
     map { $frequencies{$_}++ } @list;
     my @sorted = sort { $frequencies{$b} <=> $frequencies{$a} } @list; 
     return $sorted[0] if $frequencies{$sorted[0]} != $frequencies{$sorted[1]};   
-    return (sort { $a <=> $b } @sorted)[0];       
+    my @tied = grep { $frequencies{$_} == $frequencies{$sorted[0]} } @list;
+    return (sort { $a <=> $b } @tied)[0];       
 }
 
 MAIN:{
