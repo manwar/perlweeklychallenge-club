@@ -1,71 +1,50 @@
-Task 1: Digital Clock
+Task 1: Special Integers
 
-You are given time in the format hh:mm with one missing digit.
+You are given a positive integer, $n > 0.
 
-Write a script to find the highest digit between 0-9 that makes it valid time.
+Write a script to print the count of all special integers between 1 and $n:
+An integer is special when all of its digits are unique.
 
-Example 1
+Example 1:
 
-Input: $time = '?5:00'
-Output: 1
+Input: $n = 15
+Output: 14 as except 11 all other integers between 1 and 15 are spcial.
 
-Since 05:00 and 15:00 are valid time and no other digits can fit in the
-missing place.
+Example 2:
 
-Example 2
+Input: $n = 35
+Output: 32 as except 11, 22, 33 all others are special.
 
-Input: $time = '?3:00'
-Output: 2
-
-Example 3
-
-Input: $time = '1?:00'
-Output: 9
-
-Example 4
-
-Input: $time = '2?:00'
-Output: 3
-
-Example 5
-
-Input: $time = '12:?5'
-Output: 5
-
-Example 6
-
-Input: $time =  '12:5?'
-Output: 9
-
-MY NOTES: very easy
+MY NOTES: very easy; use a freq hash
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for the translation)
 
 
-Task 2: Frequency Equalizer
+Task 2: Most Frequent Even
 
-You are given a string made of alphabetic characters only, a-z.
+You are given a list of numbers, @list.
 
-Write a script to determine whether removing only one character can make
-the frequency of the remaining characters the same.
+Write a script to find most frequent even numbers in the list. In case you
+get more than one even numbers then return the smallest even integer. For
+all other case, return -1.
 
-Example 1:
+Example 1
 
-Input: $s = 'abbc'
-Output: 1 since removing one alphabet 'b' will give us 'abc' where each alphabet frequency is the same.
+Input: @list = (1,1,2,6,2)
+Output: 2 as there are only 2 even numbers 2 and 6 and of those 2 appears the most.
 
-Example 2:
+Example 2
 
-Input: $s = 'xyzyyxz'
-Output: 1 since removing 'y' will give us 'xzyyxz'.
+Input: @list = (1,3,5,7)
+Output: -1 since no even numbers found in the list
 
-Example 3:
+Example 3
 
-Input: $s = 'xzxz'
-Output: 0 since removing any one alphabet would not give us string with same frequency alphabet.
+Input: @list = (6,4,4,6,1)
+Output: 4 since there are only two even numbers 4 and 6. They both appears the equal number of times, so pick the smallest.
 
-MY NOTES: sounds pretty easy.
+MY NOTES: very easy; select even numbers; build a freq hash, sort by freqs..
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
 into C (look in the C directory for the translation)
