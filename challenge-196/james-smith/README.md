@@ -1,7 +1,7 @@
-[< Previous 194](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-194/james-smith) |
-[Next 196 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-196/james-smith)
+[< Previous 195](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-195/james-smith) |
+[Next 197 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-197/james-smith)
 
-# The Weekly Challenge 195
+# The Weekly Challenge 196
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,46 +13,49 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-195/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-196/james-smith
 
-# Task 1 -  Special Integers
+# Task 1 -  Pattern 132
 
-***You are given a positive integer, `$n > 0`. Write a script to print the count of all special integers between `1` and `$n`. An integer is special when all of its digits are unique.***
+***You are given a list of integers, `@list`. Write a script to find out subsequence that respect Pattern 132. Return empty array if none found. Pattern 132 in a sequence `(a[i], a[j], a[k])` such that `i < j < k` and `a[i] < a[k] < a[j]`.***
 
 ## Solution
-This is bread and butter perl. We are looking for the number of numbers without a repeated digit up to and including `n`. It is easy to find a repeated digit with `/(\d).*\1/`. 
-
-Counting them we just use grep and return the scalar value.
+There is no simple solution other than looking at all pairs. (With a caveat there is short cut by skipping the inner loop if `$a[$j] <= $a[$i]`.
+For the outer loop we can shift off the array to get `$x = $a[i]`. We can't do this for the inner loop, so we have to use the index `$i`...
+But we can use the value for the inner loop by using an array slice `@_[$i+1..$#_]`
 
 ```perl
-sub special {
-  0+grep{!/(\d).*\1/}1..pop
+sub pattern132 {
+  while(my$x=shift@_){
+    for my $i (0..$#_-1) {
+      next if $x > $_[$i];
+      ($x<$_)&&($_<$_[$i])&&return $x,$_[$i],$_ for @_[$i+1..$#_]
+    }
+  }
+  ()
 }
 ```
 
-This method uses `grep` which shouldn't be a problem in most cases unless `$n` gets large. Alternatively we can walk all values, to get the same result without blowing up the memory on the box!
-```perl
-sub special {
-  local $_ = pop, my $t = 0;
-  m{(\d).*\1}||$t++, $_-- while $_;
-  $t
-}
-```
+# Task 2 - Range list 
 
-# Task 2 - Most Frequent Even
-
-***You are given a list of numbers, `@list`. Write a script to find most frequent even numbers in the list. In case you get more than one even numbers then return the smallest even integer. For all other case, return `-1`.***
+***You are given a sorted unique integer array, `@array`. Write a script to find all possible Number Range i.e `[x, y]` represent range all integers from `x` and `y` (both inclusive). Each subsequence of two or more contiguous integers***
 
 ## Solution
 
-We have loop through the numbers past in and keep a hash of all the even values along with their counts. We then want to loop through all the elements finding the one with the largest count (and if equal smallest value).
+We loop through the array one number at a time. We initialise our first interval as "`[$s,$e=$s]`" the `$s` is the first number.
 
-We do this in two loops - loop 1 to find the even numbers and count them - loop 2 to find the largest count (& smallest value)...
+We then loop through each subsequence number in turn.
+
+  * If the new number is one more than the current end of the interval, we update the end and go to the next.
+  * If it isn't we start a new interval "`[$s,$e=$s]`" - if the previous start and end had been different we push this to the results
+
+Finally at the end of the loop if there is an interval left it is pushed to the list..
 
 ```perl
-sub mf_even {
-  my($m,%f)=(-1);
-  $_%2||$f{$_}++ for@_;
-  ($f{$_}>$f{$m}||$_<$m&&$f{$_}==$f{$m})&&($m=$_)for keys%f;
+sub range {
+  my$s=my$e=shift,my @r;
+  ($_[0]==$e+1)?($e=shift):($s==$e||push(@r,[$s,$e]),$e=$s=shift)while @_;
+  push@r,[$s,$e]unless$s==$e;
+  @r
 }
 ```
