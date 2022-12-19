@@ -25,10 +25,9 @@ sub range {
 }
 
 sub range_v2 {
-  my@r=[(shift)x 2];
-  $_==$r[-1][1]+1?$r[-1][1]=$_:push@r,[$_,$_]for@_;
-  grep{$_->[1]!=$_->[0]}@r
+  my @r = [ (shift) x 2 ];
+  $_ == $r[-1][1] + 1 ? $r[-1][1] = $_ : push @r, [$_,$_] for @_;
+  grep { $_->[1]-$_->[0] } @r
 }
-
 
 sub dmp { sprintf '( %s )', join ', ', map { sprintf '[%s]', join ',', @{$_} } @_ }
