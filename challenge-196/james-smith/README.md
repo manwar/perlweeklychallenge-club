@@ -59,3 +59,19 @@ sub range {
   @r
 }
 ```
+
+### version 2
+
+That version is a bit messi - far too many variables!
+
+This time we keep track of the intervals inside the result `@r`, we note that we don't need to discard the "empty" intervals while making the array - we can use grep to filter them out as we return the list. This makes the logic easier...
+
+We start with an "empty" interval `[ $_[0],$_[0] ]`, and then we loop through the array if there is a gap we create a new "empty" interval and push to the list - o/w we just extend the last interval in the list... As we only want the "non-empty" intervals we just `grep` this at the end.
+
+```perl
+sub range_v2 {
+  my @r = [ (shift) x 2 ];
+  $_ == $r[-1][1] + 1 ? $r[-1][1] = $_ : push @r, [$_,$_] for @_;
+  grep { $_->[1]-$_->[0] } @r
+}
+```
