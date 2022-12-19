@@ -13,7 +13,8 @@ my @TESTS = (
    [ [1,3,5],           '(  )' ],
 );
 
-is( dmp( range( @{$_->[0]} ) ), $_->[1] ) for @TESTS;
+is( dmp( range(    @{$_->[0]} ) ), $_->[1] ) for @TESTS;
+is( dmp( range_v2( @{$_->[0]} ) ), $_->[1] ) for @TESTS;
 done_testing();
 
 sub range {
@@ -22,5 +23,12 @@ sub range {
   push @r, [$s,$e] unless $s==$e;
   @r
 }
+
+sub range_v2 {
+  my@r=[(shift)x 2];
+  $_==$r[-1][1]+1?$r[-1][1]=$_:push@r,[$_,$_]for@_;
+  grep{$_->[1]!=$_->[0]}@r
+}
+
 
 sub dmp { sprintf '( %s )', join ', ', map { sprintf '[%s]', join ',', @{$_} } @_ }
