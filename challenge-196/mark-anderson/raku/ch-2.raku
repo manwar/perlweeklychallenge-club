@@ -18,11 +18,11 @@ sub range-list(+$list)
 
         else
         {
-            take $h, $t;
+            take $h, $t if $h < $t;
             $t++;
-            $h = $t;
+            $h = $t
         }
     }
 
-    $list[ $a.grep({ .head < .tail }) ]
+    $list[$a]
 }
