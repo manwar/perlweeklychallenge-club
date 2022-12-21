@@ -1,0 +1,132 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/pattern132 {
+    5 dict begin
+    /l exch def
+    /o 0 array def
+    0 1 l length 3 sub {
+        /a exch def
+        a 1 add 1 l length 2 sub {
+            /b exch def
+            l a get l b get lt {
+                b 1 add 1 l length 1 sub {
+                    /c exch def
+                    l b get l c get gt
+                    l a get l c get lt and {
+                        /o [ l a get l b get l c get ] def
+                        exit
+                    } if
+                } for
+            } if
+            o length 0 gt {
+                exit
+            } if
+        } for
+        o length 0 gt {
+            exit
+        } if
+    } for
+    o
+    end
+} bind def
+
+(pattern132) test.start
+[ 3 1 4 2 ] pattern132 [ 1 4 2 ] deepeq test
+[ 1 2 3 4 ] pattern132 [ ] deepeq test
+[ 1 3 2 4 6 5 ] pattern132 [ 1 3 2 ] deepeq test
+[ 1 3 4 2 ] pattern132 [ 1 3 2 ] deepeq test
+test.end
