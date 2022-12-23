@@ -7,7 +7,7 @@ say &range-list((0,1,2,4,5,6,8,9)); #([0,2],[4,6],[8,9])
 
 sub range-list( @array) {
     my @arry=@array.sort({$^a <=> $^b}).unique; #-- just in case ...
-    @arry=@arry.unshift(-Inf).push(-Inf);
+    @arry.unshift(-Inf).push(-Inf);
     &print-edges( @arry[(1 .. @arry-2).grep({(@arry[$_]-@arry[$_-1]==1) || (@arry[$_+1]-@arry[$_]==1)})] );    
 }
 
