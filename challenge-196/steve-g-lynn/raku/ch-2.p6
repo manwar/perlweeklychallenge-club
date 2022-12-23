@@ -13,11 +13,11 @@ sub range-list( @array) {
 
 sub print-edges( @ranges ) {
     my $return-string = "([@ranges[0],"; 
-    for (1 .. @ranges-1) -> $i {
+    for (1 .. @ranges-2) -> $i {
         ( (@ranges[$i] - @ranges[$i-1]) > 1 ) && 
-            ($return-string ~= (@ranges[$i-1] ~ "],[" ~ @ranges[$i] ~ ","));
-        ( $i == @ranges-1 ) && 
-            ($return-string ~= (@ranges[$i] ~ "])"))
+            ($return-string ~= (@ranges[$i-1] ~ "],[" ~ @ranges[$i] ~ ",")); 
     }
+    #-- end the string
+    $return-string ~= (@ranges[@ranges-1] ~ "])");
     $return-string;   
 }

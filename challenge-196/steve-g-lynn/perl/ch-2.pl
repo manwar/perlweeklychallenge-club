@@ -24,11 +24,11 @@ sub print_edges {
     my @ranges = @_;
     my $return_string = '(['. $ranges[0] . ','; 
 
-    for my $i (1 .. @ranges-1) {
+    for my $i (1 .. @ranges-2) {
         ( ($ranges[$i] - $ranges[$i-1]) > 1 ) && 
-            ($return_string .= ($ranges[$i-1] . "],[" . $ranges[$i] . ","));
-        ( $i == @ranges-1 ) && 
-            ($return_string .= ($ranges[$i] . "])"))
+            ($return_string .= ($ranges[$i-1] . "],[" . $ranges[$i] . ",")); 
     }
+    #-- end return string    
+    $return_string .= ($ranges[@ranges-1] . '])');
     $return_string;   
 }
