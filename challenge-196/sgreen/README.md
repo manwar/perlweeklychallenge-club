@@ -1,3 +1,3 @@
-# The Weekly Challenge 194
+# The Weekly Challenge 196
 
-Blog [Digital frequency](https://dev.to/simongreennet/digital-frequency-l56)
+Blog [Weekly Challenge 196](https://dev.to/simongreennet/weekly-challenge-196-41j1)
