@@ -57,9 +57,10 @@ for (@arrays)
 {
    my @array = @{$_};
    my @p132s = p132(@array);
+   my $p132s = scalar @p132s;
    $"=', ';
    say '';
-   say "Input array: (@{$_})";
-   say "${\scalar(@p132s)} subsequences exhibit pattern 132";
+   say "Input array: (@array)";
+   say "$p132s subsequences exhibit pattern 132";
    say "(@{$_})" for @p132s;
 }
