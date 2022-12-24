@@ -1,3 +1,3 @@
-# The Weekly Challenge 194
+# The Weekly Challenge 195
 
-Blog [Digital frequency](https://dev.to/simongreennet/digital-frequency-l56)
+Sorry, no blog this week.
