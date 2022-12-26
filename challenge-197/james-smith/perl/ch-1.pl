@@ -13,5 +13,6 @@ my @TESTS = (
 );
 
 is( "@{[ move_zero(@{$_->[0]}) ]}", $_->[1] ) for @TESTS;
+done_testing();
 
 sub move_zero{grep({$_}@_),grep{!$_}@_}
