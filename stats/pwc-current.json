@@ -1,9 +1,23 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Bob Lied",
             "name" : "Bob Lied",
+            "id" : "Bob Lied",
             "data" : [
                [
                   "Perl",
@@ -12,37 +26,36 @@
             ]
          },
          {
-            "id" : "Carlos Oliveira",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Carlos Oliveira",
             "name" : "Carlos Oliveira"
          },
          {
+            "id" : "David Ferrone",
+            "name" : "David Ferrone",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "David Ferrone",
-            "id" : "David Ferrone"
+            ]
          },
          {
-            "name" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Feng Chang"
+            "id" : "Feng Chang",
+            "name" : "Feng Chang"
          },
          {
-            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -53,11 +66,12 @@
                   6
                ]
             ],
+            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari"
          },
          {
-            "id" : "Mark Anderson",
             "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
@@ -80,7 +94,6 @@
             ]
          },
          {
-            "id" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
@@ -91,9 +104,12 @@
                   1
                ]
             ],
+            "id" : "Robert DiCicco",
             "name" : "Robert DiCicco"
          },
          {
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -103,12 +119,9 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West"
+            ]
          },
          {
-            "id" : "Stephen G. Lynn",
             "data" : [
                [
                   "Perl",
@@ -123,7 +136,8 @@
                   1
                ]
             ],
-            "name" : "Stephen G. Lynn"
+            "name" : "Stephen G. Lynn",
+            "id" : "Stephen G. Lynn"
          },
          {
             "data" : [
@@ -136,10 +150,11 @@
                   2
                ]
             ],
-            "name" : "Thomas Kohler",
-            "id" : "Thomas Kohler"
+            "id" : "Thomas Kohler",
+            "name" : "Thomas Kohler"
          },
          {
+            "name" : "W. Luis Mochan",
             "id" : "W. Luis Mochan",
             "data" : [
                [
@@ -150,26 +165,9 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "W. Luis Mochan"
+            ]
          }
       ]
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 12] Last updated at 2022-12-27 14:19:31 GMT"
    },
    "series" : [
       {
@@ -187,48 +185,48 @@
             },
             {
                "drilldown" : "David Ferrone",
-               "y" : 2,
-               "name" : "David Ferrone"
-            },
-            {
-               "name" : "Feng Chang",
-               "y" : 2,
-               "drilldown" : "Feng Chang"
-            },
-            {
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari",
-               "y" : 8
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson",
+               "name" : "David Ferrone",
                "y" : 2
             },
             {
-               "y" : 3,
-               "name" : "Robbie Hatley",
-               "drilldown" : "Robbie Hatley"
-            },
-            {
-               "drilldown" : "Robert DiCicco",
                "y" : 2,
-               "name" : "Robert DiCicco"
+               "name" : "Feng Chang",
+               "drilldown" : "Feng Chang"
             },
             {
-               "name" : "Roger Bell_West",
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
+               "y" : 8
+            },
+            {
+               "y" : 2,
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "drilldown" : "Robbie Hatley",
+               "name" : "Robbie Hatley",
+               "y" : 3
+            },
+            {
+               "name" : "Robert DiCicco",
+               "drilldown" : "Robert DiCicco",
+               "y" : 2
+            },
+            {
                "y" : 4,
-               "drilldown" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West",
+               "name" : "Roger Bell_West"
             },
             {
-               "drilldown" : "Stephen G. Lynn",
                "y" : 5,
+               "drilldown" : "Stephen G. Lynn",
                "name" : "Stephen G. Lynn"
             },
             {
-               "drilldown" : "Thomas Kohler",
+               "y" : 4,
                "name" : "Thomas Kohler",
-               "y" : 4
+               "drilldown" : "Thomas Kohler"
             },
             {
                "drilldown" : "W. Luis Mochan",
@@ -239,22 +237,24 @@
          "colorByPoint" : 1
       }
    ],
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
+   },
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "The Weekly Challenge - 197"
    },
-   "xAxis" : {
-      "type" : "category"
+   "subtitle" : {
+      "text" : "[Champions: 12] Last updated at 2022-12-27 15:47:01 GMT"
    },
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    }
 }
