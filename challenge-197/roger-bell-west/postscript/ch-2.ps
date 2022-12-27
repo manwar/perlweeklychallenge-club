@@ -1,0 +1,170 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/quicksort { % [ a c b ] -> [ a b c ]
+    1 dict begin
+    /arr exch def
+    arr length 0 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+
+% end included library code
+
+/is_wigglesorted {
+    2 dict begin
+    /l exch def
+    true
+    0 1 l length 2 sub {
+        /i exch def
+        i 2 mod 0 eq {
+            l i get l i 1 add get ge {
+                pop false exit
+            } if
+        } {
+            l i get l i 1 add get le {
+                pop false exit
+            } if
+        } ifelse
+    } for
+    end
+} bind def
+
+/wigglesort {
+    6 dict begin
+    /s exch quicksort def
+    /lg s length def
+    /p lg 2 idiv def
+    /a [ 0 1 p 1 sub { s exch get } for ] def
+    /b [ p 1 lg 1 sub { s exch get } for ] def
+    /i 0 def
+    [
+        lg 2 mod 1 eq {
+            b apop.left exch /b exch def
+            /i 1 def
+        } if
+        i 1 lg 1 sub {
+            2 mod 0 eq {
+                a apop.right exch /a exch def
+            } {
+                b apop.right exch /b exch def
+            } ifelse
+        } for
+    ]
+    end
+} bind def
+
+(wigglesort) test.start
+[ 1 5 1 1 6 4 ] is_wigglesorted not test
+[ 1 6 1 5 1 4 ] is_wigglesorted test
+[ 1 3 2 2 3 1 ] is_wigglesorted not test
+[ 2 3 1 3 1 2 ] is_wigglesorted test
+[ 1 3 2 2 3 1 ] is_wigglesorted not test
+[ 1 5 1 1 6 4 ] wigglesort is_wigglesorted test
+[ 1 3 2 2 3 1 ] wigglesort is_wigglesorted test
+[ 1 3 2 2 2 3 1 ] wigglesort is_wigglesorted test
+test.end
