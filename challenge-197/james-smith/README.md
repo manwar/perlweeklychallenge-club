@@ -1,7 +1,7 @@
-[< Previous 195](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-195/james-smith) |
-[Next 197 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-197/james-smith)
+[< Previous 196](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-196/james-smith) |
+[Next 198 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-198/james-smith)
 
-# The Weekly Challenge 196
+# The Weekly Challenge 197
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -15,63 +15,75 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-196/james-smith
 
-# Task 1 -  Pattern 132
+# Task 1 - Move Zero
 
-***You are given a list of integers, `@list`. Write a script to find out subsequence that respect Pattern 132. Return empty array if none found. Pattern 132 in a sequence `(a[i], a[j], a[k])` such that `i < j < k` and `a[i] < a[k] < a[j]`.***
+***You are given a list of integers, `@list`. Write a script to move all zero, if exists, to the end while maintaining the relative order of non-zero elements.***
 
 ## Solution
-There is no simple solution other than looking at all pairs. (With a caveat there is short cut by skipping the inner loop if `$a[$j] <= $a[$i]`.
-For the outer loop we can shift off the array to get `$x = $a[i]`. We can't do this for the inner loop, so we have to use the index `$i`...
-But we can use the value for the inner loop by using an array slice `@_[$i+1..$#_]`
+I looked at a number of solutions for this - but it turns out that perl grep seems to be the best...
 
 ```perl
-sub pattern132 {
-  while(my$x=shift@_){
-    for my $i (0..$#_-1) {
-      next if $x > $_[$i];
-      ($x<$_)&&($_<$_[$i])&&return $x,$_[$i],$_ for @_[$i+1..$#_]
-    }
-  }
-  ()
+sub move_zero{
+  grep({$_}@_),grep{!$_}@_
 }
 ```
+Using `$_` and `!$_` to pull the lists apart. Anything more complex in the grep slows it down more than you lose by doing the second `grep`.
 
-# Task 2 - Range list 
+# Task 2 - Wiggle sort
 
-***You are given a sorted unique integer array, `@array`. Write a script to find all possible Number Range i.e `[x, y]` represent range all integers from `x` and `y` (both inclusive). Each subsequence of two or more contiguous integers***
+***You are given a list of integers, `@list`. Write a script to perform Wiggle Sort on the given list. Wiggle sort would be such as:***
+
+```
+list[0] < list[1] > list[2] < list[3]…
+```
 
 ## Solution
 
-We loop through the array one number at a time. We initialise our first interval as "`[$s,$e=$s]`" the `$s` is the first number.
-
-We then loop through each subsequence number in turn.
-
-  * If the new number is one more than the current end of the interval, we update the end and go to the next.
-  * If it isn't we start a new interval "`[$s,$e=$s]`" - if the previous start and end had been different we push this to the results
-
-Finally at the end of the loop if there is an interval left it is pushed to the list..
+OK if we relax the condition with `<=`/`=>` rather than `<`/`>` we can always come up with a solution. The simplest way to do this is to split the list in two (using `splice` and then stitching them back together. (If it has an odd length we keep the first list as the longest!)
 
 ```perl
-sub range {
-  my$s=my$e=shift,my @r;
-  ($_[0]==$e+1)?($e=shift):($s==$e||push(@r,[$s,$e]),$e=$s=shift)while @_;
-  push@r,[$s,$e]unless$s==$e;
-  @r
+sub ws_lax {
+  return @_ if @_<2; ## Always works if 0/1 element.
+  my@q=splice @_,0,$#_/2+1;
+  map{$_,@_?shift:()}@q
 }
 ```
 
-### version 2
+If we wish to perform the strict version we have to test conditions for which there are no solution...
 
-That version is a bit messi - far too many variables!
+ * If we have more than half (if even length) or *half + 1* (if odd) of the lowest digit we have no solution.
+ * o/w if we have exactly half (if even length) or *half + 1* (if odd) of the lowest digit we have a solution.
+ * o/w if we have more than half (if even length) or *half - 1* (if odd) of the highest digit we have no solution
+ * o/w if we have exactly than half (if even length) or *half - 1* (if odd) of the highest digit we have no solution
+ * o/w if we have half or more (if even length) or *half - 1* or more (if odd) of any other digit we have no solution
+ * o/w we have a solution
 
-This time we keep track of the intervals inside the result `@r`, we note that we don't need to discard the "empty" intervals while making the array - we can use grep to filter them out as we return the list. This makes the logic easier...
-
-We start with an "empty" interval `[ $_[0],$_[0] ]`, and then we loop through the array if there is a gap we create a new "empty" interval and push to the list - o/w we just extend the last interval in the list... As we only want the "non-empty" intervals we just `grep` this at the end.
+This leads us to:
 
 ```perl
-sub range_v2 {
-  my @r = [ (shift) x 2 ];
-  $_ == $r[-1][1] + 1 ? $r[-1][1] = $_ : push @r, [$_,$_] for @_;
-  grep { $_->[1]-$_->[0] } @r
+sub _ws {
+## Does wiggle sort by splicing and interleaving sorted list...
+  my@q=splice @_,0,$#_/2+1;map{$_,@_?shift:()}@q
+}
+
+sub ws_strict {
+## Return "wiggle sorted list" or error message indicating if
+## the problem number is the first number, last number or one
+## of the other numbers...
+
+  return @_ if @_<2;
+  @_=sort{$a<=>$b} @_;
+  return $_[0]  == $_[$#_/2+1] ?                 'Bottom' # We can't have more than ceil(n/2) of the first number
+       : $_[0]  == $_[$#_/2  ] ?                 _ws(@_)  # But we can have ceil(n/2) of the first number
+       : $_[-1] == $_[$#_/2  ] ?                 'Top'    # We can't have more than floor(n/2) of the last number
+       : $_[-1] == $_[$#_/2+1] ?                 _ws(@_)  # But we can have floor(n/2) of it
+       : (grep{$_[$_]==$_[$_+$#_/2]}0..@_/2-1) ? 'Middle' # We can't have equal or more than floor(n/2) of any other number
+       :                                         _ws(@_)
+       ;
+}
+
+sub ws_lax {
+## Return "wiggle sorted list" - note we are using the lax <= => check here
+  @_<2?@_:_ws(sort{$a<=>$b}@_)
 }
 ```
