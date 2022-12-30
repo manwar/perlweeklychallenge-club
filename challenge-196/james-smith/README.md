@@ -75,3 +75,19 @@ sub range_v2 {
   grep { $_->[1]-$_->[0] } @r
 }
 ```
+
+### Version 3
+
+Finally one last method - where we use `for` rather than `shift`/`while` which is the fastest...
+
+We just for over `@_`; If `$_` is equal to the `$end+1` we extend the region, o/w we push the interval if it is not "empty" (`$s==$e`), and start a new interval.
+Finally at the end we add the last interval if non-empty.
+
+```perl
+sub range_for {
+  my $s = my $e = shift, my @r;
+  ($_==$e+1) ? $e++ : ( $s==$e || push(@r,[$s,$e]) , $e=$s=$_ ) for @_;
+  push @r, [$s,$e] unless $s==$e;
+  @r
+}
+```
