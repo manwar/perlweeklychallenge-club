@@ -44,7 +44,6 @@ done_testing();
 
 sub _ws {
 ## Does wiggle sort by splicing and interleaving sorted list...
-  my@q=splice @_,(@_+1)/2;map{$_,@q?shift@q:()}@_
   my@q=splice @_,0,$#_/2+1;map{$_,@_?shift:()}@q
 }
 sub ws_lax {
