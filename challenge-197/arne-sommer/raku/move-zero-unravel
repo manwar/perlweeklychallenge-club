@@ -1,0 +1,24 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@list where @list.elems > 0 && all(@list) ~~ /^<[0..9]>*$/);
+
+sub unravel(@list, $coderef)
+{
+  my @match;
+  my @nomatch;
+
+  for @list -> $elem
+  {
+    $coderef($elem)
+      ?? @match.push: $elem.Int
+      !! @nomatch.push: $elem.Int;
+  }
+
+  return @match, @nomatch;
+}
+
+my ($non-zero, $zero) = unravel(@list, { $_ != 0 } );
+
+my @wiggly = ($non-zero.List, $zero.List).flat;
+
+say "(", @wiggly.join(", "), ")";
