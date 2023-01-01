@@ -1,3 +1,3 @@
-# The Weekly Challenge 196
+# The Weekly Challenge 197
 
-Blog [Weekly Challenge 196](https://dev.to/simongreennet/weekly-challenge-196-41j1)
+Blog [Sorting Lists](https://dev.to/simongreennet/sorting-lists-35fh)
