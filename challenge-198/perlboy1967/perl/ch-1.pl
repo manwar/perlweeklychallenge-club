@@ -35,7 +35,7 @@ sub maxGap {
   my $maxGap = max slide { $b - $a } @l;
 
   # Find and return maxGap pairs
-  scalar grep { defined } slide { $b - $a == $maxGap ? [$a,$b] : undef } @l;
+  scalar grep { $_ } slide { $b - $a == $maxGap } @l;
 }
 
 
