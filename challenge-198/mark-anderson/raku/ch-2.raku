@@ -11,5 +11,7 @@ is prime-count(15), 6;
 is prime-count(23), 8;
 is prime-count(25), 9;
 
-multi prime-count($n where 1|2) { 0 }
-multi prime-count($n) { (2,3,5,7...$n-1).grep(&is-prime).elems }
+sub prime-count($n) 
+{ 
+    (0,1,2,3,5,7...$n-1).grep(&is-prime).elems 
+}
