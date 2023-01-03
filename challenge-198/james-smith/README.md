@@ -133,7 +133,7 @@ The previous method is small - but not particularly fast.. There are a few thing
  * the largest element of the prime array we need to check is the square root of the number we are testing!
    * square roots are expensive!
    * we keep a track of the smallest integer which is greater than or equal the square root of the number. Note we don't ever have to work out the square root. We can just increment the value `$q` by 1 each time `$i` is greater than it's square... the `last` in the tight `last`/`next` line....
- * a number isn't prime if it has a prime factor - this is the `$i%$_?...:nextO` which skips out of the inner `for` and jumps to the start of the next outer `for`.
+ * a number isn't prime if it has a prime factor - this is the `$i%$_?...:next O` which skips out of the inner `for` and jumps to the start of the next outer `for`.
  * we don't include `2` in the array as we only check odd-numbers, but add `1` at the end to include it in the count... this gains us about `2%` over keeping it in the array.
  
 This give us:
@@ -150,3 +150,29 @@ sub n_primes_fast {
   1+@p
 }
 ```
+
+There is a more compact version of the code:
+
+```perl
+sub n_primes_fastx {
+  return 0 if (my $n=shift) <3;
+  O: for( my($i,$q)=(3,2); $i<$n; $i+=2,($i>$q*$q)&&$q++ ) {
+    $i%$_?($_>$q&&last):next O for @_;
+    push @_, $i;
+  }
+  1+@_
+}
+
+which makes use of the the initalization and increment parts of the class **C-style** `for` to combine lines, and re-using `@_` as after the shift it will be empty...
+
+Times are comparable between `fast` and `fastx` - although I think `fast` is slightly faster than the more compact version.... (and is definitely easier to read)
+
+### Performance
+
+We can see the relative performance of each method {the largest test value we use is `$n=100,000`} so timings are based on that! (factor is approx 180:1) if we increase to `$n=1,000,000` the factor is approximately 630:1
+
+
+|               |    Rate  | compact |  fast |  
+| :------------ | -------: | ------: | ----: |
+| compact       |  0.110/s |      -- |  -99% |
+| fast          | 18.800/s | 16 979% |    -- |
