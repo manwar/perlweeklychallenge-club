@@ -162,7 +162,7 @@ sub n_primes_fastx {
   }
   1+@_
 }
-
+```
 which makes use of the the initalization and increment parts of the class **C-style** `for` to combine lines, and re-using `@_` as after the shift it will be empty...
 
 Times are comparable between `fast` and `fastx` - although I think `fast` is slightly faster than the more compact version.... (and is definitely easier to read)
