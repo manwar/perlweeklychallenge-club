@@ -9,7 +9,7 @@ sub max-gap (@list) {
     (@list.elems <= 2) && (return 0);
     my %gaps;
         
-    (0 .. @list-2).map( {%gaps{@list[$_+1]-@list[$_]}++} );
+    (0 .. @sorted_list-2).map( {%gaps{@sorted_list[$_+1]-@sorted_list[$_]}++} );
     
     
     %gaps{ ( (%gaps.keys).sort( {$^b <=> $^a} ))[0] };
