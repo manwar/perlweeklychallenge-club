@@ -50,7 +50,7 @@ for (@array){
       for ( my $d = 3 ; $d <= $l ; $d+=2 ){      # For each odd divisor from 3 through limit,
          if ( 0 == $x%$d){                       # if number is divisible by divisor,
             $f = 1;                              # number is not prime,
-            next;}}                              # so no need to try any more divisors.
+            last;}}                              # so no need to try any more divisors.
       if ( !$f ){                                # If number has no divisors,
          ++$c;                                   # increment prime count
          say "$x is prime"}}                     # and print prime.
