@@ -1,18 +1,46 @@
 {
-   "subtitle" : {
-      "text" : "Last updated at 2023-01-06 18:51:05 GMT"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
       },
       "type" : "category"
+   },
+   "series" : [
+      {
+         "data" : [
+            [
+               "Blog",
+               3174
+            ],
+            [
+               "Perl",
+               9739
+            ],
+            [
+               "Raku",
+               5840
+            ]
+         ],
+         "name" : "Contributions",
+         "dataLabels" : {
+            "enabled" : "true",
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "align" : "right",
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "color" : "#FFFFFF"
+         }
+      }
+   ],
+   "subtitle" : {
+      "text" : "Last updated at 2023-01-07 08:20:49 GMT"
    },
    "chart" : {
       "type" : "column"
@@ -20,44 +48,16 @@
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "series" : [
-      {
-         "data" : [
-            [
-               "Blog",
-               3172
-            ],
-            [
-               "Perl",
-               9735
-            ],
-            [
-               "Raku",
-               5838
-            ]
-         ],
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "format" : "{point.y:.0f}",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "rotation" : -90,
-            "align" : "right",
-            "enabled" : "true",
-            "y" : 10
-         },
-         "name" : "Contributions"
-      }
-   ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : null
       }
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
