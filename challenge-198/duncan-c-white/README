@@ -1,63 +1,58 @@
-Task 1: Pattern 132
+Task 1: Max Gap
 
 You are given a list of integers, @list.
 
-Write a script to find out subsequence that respect Pattern 132. Return
-empty array if none found.
-
-Pattern 132 in a sequence (a[i], a[j], a[k]) such that i < j < k
-and a[i] < a[k] < a[j].
+Write a script to find the total pairs in the sorted list where 2
+consecutive elements has the max gap. If the list contains less then 2
+elements then return 0.
 
 Example 1
 
-Input:  @list = (3, 1, 4, 2)
-Output: (1, 4, 2) respect the Pattern 132.
+Input:  @list = (2,5,8,1)
+Output: 2
+
+Since the sorted list (1,2,5,8) has 2 such pairs (2,5) and (5,8)
 
 Example 2
 
-Input: @list = (1, 2, 3, 4)
-Output: () since no subsequence can be found.
+Input: @list = (3)
+Output: 0
 
-Example 3
 
-Input: @list = (1, 3, 2, 4, 6, 5)
-Output: (1, 3, 2) if more than one subsequence found then return the first.
-
-Example 4
-
-Input: @list = (1, 3, 4, 2)
-Output: (1, 3, 2)
-
-MY NOTES: very easy; straightforward "non-clever" code.
+MY NOTES: very easy.  sort, then sequence through the sorted list,
+finding the max gap so far and all pairs with that gap.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for the translation)
 
 
-Task 2: Range List
+Task 2: Prime Count
 
-You are given a sorted unique integer array, @array.
+You are given an integer $n > 0.
 
-Write a script to find all possible Number Range i.e [x, y] represent
-range all integers from x and y (both inclusive).  Each subsequence
-must be of two or more contiguous integers.
-
+Write a script to print the count of primes less than $n.
 Example 1
 
-Input: @array = (1,3,4,5,7)
-Output: [3,5]
+Input: $n = 10
+Output: 4 as in there are 4 primes less than 10 are 2, 3, 5 ,7.
 
 Example 2
 
-Input: @array = (1,2,3,6,7,9)
-Output: [1,3], [6,7]
+Input: $n = 15
+Output: 6
 
 Example 3
 
-Input: @array = (0,1,2,4,5,6,8,9)
-Output: [0,2], [4,6], [8,9]
+Input: $n = 1
+Output: 0
 
-MY NOTES: simple enough state machine while we walk over the array in 1-pass.
+Example 4
+
+Input: $n = 25
+Output: 9
+
+MY NOTES: very easy, specially if you have a prime finding module lying
+around:-)
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
 into C (look in the C directory for the translation)
