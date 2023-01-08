@@ -1,6 +1,6 @@
-# c197
+# c198
 
-The Weekly Challenge — #197 — Tyler Wardhaugh
+The Weekly Challenge — #198 — Tyler Wardhaugh
 
 ## Usage
 
