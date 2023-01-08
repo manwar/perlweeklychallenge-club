@@ -29,9 +29,10 @@ use Test::More;
 sub maxGap {
   return 0 if (scalar @_ < 2);
 
-  my @l = slide { $b - $a } sort { $a <=> $b } @_;
+  my @deltas = slide { $b - $a } sort { $a <=> $b } @_;
+  my $max = max(@deltas);
 
-  return scalar grep { $_ == max(@l) } @l;
+  return scalar grep { $_ == $max } @deltas;
 }
 
 
