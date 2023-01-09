@@ -39,7 +39,6 @@ sub good_triplets ( $x, $y, $z, @array ) {
         }
     }
 
-    say join ' ', $x, $y, $z, '|', @array;
     return $out;
 }
 
