@@ -35,9 +35,10 @@ sub goodTriplets ($$$\@) {
   my ($x,$y,$z,$arIn) = @_;
 
   my $arOut = [];
-  for my $i (0 .. scalar(@_) - 1) {
-    for my $j ($i + 1 .. scalar(@_) - 1) {
-      for my $k ($j + 1 .. scalar(@_) - 1) {
+
+  for my $i (0 .. scalar(@$arIn) - 3) {
+    for my $j ($i + 1 .. scalar(@$arIn) - 2) {
+      for my $k ($j + 1 .. scalar(@$arIn) - 1) {
         push(@$arOut,[$$arIn[$i],$$arIn[$j],$$arIn[$k]]) 
           if (abs($$arIn[$i] - $$arIn[$j]) <= $x and
               abs($$arIn[$j] - $$arIn[$k]) <= $y and
@@ -54,5 +55,7 @@ cmp_deeply(goodTriplets(7,2,3,@{[3,0,1,1,9,7]}),
            [[3,0,1],[3,0,1],[3,1,1],[0,1,1]]);
 cmp_deeply(goodTriplets(0,0,1,@{[1,1,2,2,3]}),
            []);
+cmp_deeply(goodTriplets(3,2,1,@{[1,4,2,0,3]}),
+           [[1,4,2],[1,2,0],[4,2,3]]);
 
 done_testing;
