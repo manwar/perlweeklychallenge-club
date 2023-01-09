@@ -38,10 +38,10 @@ sub goodTriplets ($$$\@) {
   for my $i (0 .. scalar(@_) - 1) {
     for my $j ($i + 1 .. scalar(@_) - 1) {
       for my $k ($j + 1 .. scalar(@_) - 1) {
-        push(@$arOut,[$$arI[$i],$$arI[$j],$$arI[$k]]) 
-          if (abs($$arI[$i] - $$arI[$j]) <= $x and
-              abs($$arI[$j] - $$arI[$k]) <= $y and
-              abs($$arI[$i] - $$arI[$k]) <= $z);
+        push(@$arOut,[$$arIn[$i],$$arIn[$j],$$arIn[$k]]) 
+          if (abs($$arIn[$i] - $$arIn[$j]) <= $x and
+              abs($$arIn[$j] - $$arIn[$k]) <= $y and
+              abs($$arIn[$i] - $$arIn[$k]) <= $z);
       }
     }
   }
