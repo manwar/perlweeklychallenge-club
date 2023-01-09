@@ -22,11 +22,13 @@ my @TESTS = (
 
 is( max_gap_sort(    @{$_->[0]} ), $_->[1] ) for @TESTS;
 is( max_gap_nosort(  @{$_->[0]} ), $_->[1] ) for @TESTS;
+is( max_gap_nosort_faster(  @{$_->[0]} ), $_->[1] ) for @TESTS;
 done_testing();
 
-cmpthese( -10, {
+cmpthese( -2, {
   'sort'   => sub { max_gap_sort(   @{$_->[0]} ) for @TESTS }, # 1700/s
   'nosort' => sub { max_gap_nosort( @{$_->[0]}) for @TESTS },  # 3535/s
+  'nosort_faster' => sub { max_gap_nosort_faster( @{$_->[0]}) for @TESTS },  # 3535/s
 } );
 
 sub max_gap_sort {
@@ -45,3 +47,11 @@ sub max_gap_nosort {
   $_-$p>$b ? ($b,$c)=($_-$p,1) : $_-$p==$b && $c++, $p=$_ for @_;
   $c;
 }
+
+sub max_gap_nosort_faster {
+  return 0 unless $#_;
+  my($p,$t,$c) = ($_[0]+1,0,0);
+  $_-$p>$t ? ($t,$c)=($_-$p,1) : $_-$p==$t && $c++, $p=$_ for sort { $a<=>$b } @_;
+  $c;
+}
+

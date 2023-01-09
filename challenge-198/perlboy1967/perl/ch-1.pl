@@ -28,14 +28,11 @@ use Test::More;
 
 sub maxGap {
   return 0 if (scalar @_ < 2);
- 
-  my @l = sort { $a <=> $b } @_;
 
-  # Find maxGap size
-  my $maxGap = max slide { $b - $a } @l;
+  my @deltas = slide { $b - $a } sort { $a <=> $b } @_;
+  my $max = max(@deltas);
 
-  # Find and count maxGap pairs
-  scalar grep { $_ } slide { $b - $a == $maxGap } @l;
+  return scalar grep { $_ == $max } @deltas;
 }
 
 
