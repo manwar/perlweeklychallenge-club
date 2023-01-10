@@ -31,7 +31,8 @@ sub goodPairs (@) {
 
   for my $i (0 .. scalar(@_) - 2) {
     for my $j ($i + 1 .. scalar(@_) - 1) {
-      push(@$ar,[$i,$j]) if ($_[$i] == $_[$j] and $i < $j);
+      push(@$ar,[$i,$j])
+        if ($_[$i] == $_[$j] and $i < $j);
     }
   }
 
