@@ -8,6 +8,6 @@ sub good-triplets( @array,$x,$y,$z ) {
         .combinations(3)
         .grep({abs(@array[@_[0]]-@array[@_[1]]) <= $x})
         .grep({abs(@array[@_[1]]-@array[@_[2]]) <= $y})
-        .grep({abs(@array[@_[0]]=@array[@_[1]]) <= $z})
+        .grep({abs(@array[@_[0]]-@array[@_[1]]) <= $z})
         .elems
 }
