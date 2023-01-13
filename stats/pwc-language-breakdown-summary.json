@@ -1,27 +1,49 @@
 {
-   "subtitle" : {
-      "text" : "Last updated at 2023-01-10 19:13:28 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2022]"
    },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "chart" : {
-      "type" : "column"
-   },
+   "series" : [
+      {
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               3192
+            ],
+            [
+               "Perl",
+               9792
+            ],
+            [
+               "Raku",
+               5872
+            ]
+         ],
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "rotation" : -90,
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "align" : "right"
+         }
+      }
+   ],
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
-      },
-      "type" : "category"
+      }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2023-01-13 20:17:12 GMT"
    },
    "yAxis" : {
       "title" : {
@@ -29,35 +51,13 @@
       },
       "min" : 0
    },
-   "series" : [
-      {
-         "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "y" : 10,
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "align" : "right",
-            "format" : "{point.y:.0f}"
-         },
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               3190
-            ],
-            [
-               "Perl",
-               9779
-            ],
-            [
-               "Raku",
-               5869
-            ]
-         ]
-      }
-   ]
+   "legend" : {
+      "enabled" : "false"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "chart" : {
+      "type" : "column"
+   }
 }
