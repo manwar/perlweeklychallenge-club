@@ -1,0 +1,16 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@list where @list.elems > 0 && all(@list) ~~ /^<[0..9]>*$/, :v(:$verbose));
+
+my $bag = @list>>.Int.Bag;
+
+say ": { $bag.raku }" if $verbose;
+
+my $total = 0;
+
+for $bag.values -> $count
+{
+  $total += (" " xx $count).combinations(2).elems;
+}
+
+say $total;
