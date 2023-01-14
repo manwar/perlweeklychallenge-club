@@ -94,10 +94,10 @@ sub find_132 {
 	my $l = long @_;
 
     # Construct the comparison matrix:
-    my $comp = $l <=> $l->dummy(0);
+    my $comp = ($l <=> $l->dummy(0));
 
     # Construct a lower triangular matrix indicating index order:
-    my $t = sequence(long, $l->dim(0)) < sequence(long, $l->dim(0))->dummy(0);
+    my $t = ($l->sequence < $l->sequence->dummy(0));
 
     # Transition from the first to the second element:
     # The second must be larger than the first and have a larger index.

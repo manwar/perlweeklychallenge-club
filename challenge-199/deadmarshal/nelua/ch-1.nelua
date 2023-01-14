@@ -1,0 +1,21 @@
+#!/usr/bin/env nelua
+
+require'sequence'
+
+local function good_pairs(s:sequence(integer)):integer
+  local count = 0
+  for i=1,#s do
+    for j=i+1,#s do
+      if s[i] == s[j] then count = count + 1 end
+    end
+  end
+  return count
+end
+
+local s1:sequence(integer) = {1,2,3,1,1,3}
+local s2:sequence(integer) = {1,2,3}
+local s3:sequence(integer) = {1,1,1,1}
+print(good_pairs(s1))
+print(good_pairs(s2))
+print(good_pairs(s3))
+
