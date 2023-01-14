@@ -1,0 +1,70 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/goodpairs {
+    1 dict begin
+    /k 0 dict def
+    {
+        dup k exch known {
+            dup k exch get
+        } {
+            0
+        } ifelse
+        k 3 1 roll 1 add put
+    } forall
+    0
+    k values {
+        dup 1 sub mul add
+    } forall
+    2 idiv
+    end
+} bind def
+
+(goodpairs) test.start
+[1 2 3 1 1 3] goodpairs 4 eq test
+[1 2 3] goodpairs 0 eq test
+[1 1 1 1] goodpairs 6 eq test
+test.end

@@ -1,0 +1,68 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/goodtriplets {
+    7 dict begin
+    /z exch def
+    /y exch def
+    /x exch def
+    /a exch def
+    0
+    0 1 a length 3 sub {
+        /i exch def
+        i 1 add 1 a length 2 sub {
+            /j exch def
+            a i get a j get sub abs x le {
+                j 1 add 1 a length 1 sub {
+                    /k exch def
+                    a j get a k get sub abs y le
+                    a i get a k get sub abs z le and {
+                        1 add
+                    } if
+                } for
+            } if
+        } for
+    } for
+    end
+
+} bind def
+
+(goodtriplets) test.start
+[3 0 1 1 9 7] 7 2 3 goodtriplets 4 eq test
+[1 1 2 2 3] 0 0 1 goodtriplets 0 eq test
+test.end
