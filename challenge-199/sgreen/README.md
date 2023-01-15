@@ -1,3 +1,3 @@
-# The Weekly Challenge 198
+# The Weekly Challenge 199
 
-[Blog](https://dev.to/simongreennet/weekly-challenge-198-2jbl)
+Blog: [It's all good](https://dev.to/simongreennet/its-all-good-foe)
