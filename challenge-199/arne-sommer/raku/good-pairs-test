@@ -1,0 +1,9 @@
+#! /usr/bin/env raku
+
+for 1 .. 100 -> $i
+{
+  my $comb = (" " xx $i).combinations(2).elems;
+  my $sum  = (^$i).sum;
+
+  say "$i: $comb vs $sum { $comb == $sum ?? "OK" !! "NOT OK" }"; 
+}
