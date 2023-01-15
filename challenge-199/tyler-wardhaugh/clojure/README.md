@@ -1,6 +1,6 @@
-# c198
+# c199
 
-The Weekly Challenge — #198 — Tyler Wardhaugh
+The Weekly Challenge — #199 — Tyler Wardhaugh
 
 ## Usage
 
@@ -17,7 +17,7 @@ Run Task #1:
 
 Run Task #2:
 
-    $ clojure -M:t2 COLL
+    $ clojure -M:t2 X Y Z COLL
     # ... or ...
     $ bb run task-2 COLL
 
@@ -36,6 +36,6 @@ View available tasks Babashka can run:
 
 ## License
 
-Copyright © 2022 Tyler Wardhaugh
+Copyright © 2023 Tyler Wardhaugh
 
 Distributed under the Eclipse Public License version 1.0.
