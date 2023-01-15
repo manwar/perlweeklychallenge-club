@@ -1,5 +1,5 @@
-[< Previous 197](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-197/james-smith) |
-[Next 199 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-199/james-smith)
+[< Previous 198](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-198/james-smith) |
+[Next 200 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-200/james-smith)
 
 # The Weekly Challenge 198
 
@@ -13,166 +13,162 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-198/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-199/james-smith
 
-# Task 1 - Max Gap
+# Task 1 - Good Pairs
 
-***You are given a list of integers, `@list`. Write a script to find the total pairs in the sorted list where 2 consecutive elements has the max gap. If the list contains less then 2 elements then return 0.***
+***You are given a list of integers, `@list`. Write a script to find the total count of Good Pairs. A pair `(i, j)` is called good if `list[i] == list[j]` and `i < j`.***
 
 ## Solution
 
-I will present two solutions to this problem. They both start the same way - by first sorting the numbers.
+This problem can be reduced to a simpler problem - We note for any number - the contribution will be equal to the number of distinct pairs of the number - so if it has a frequence of `n` - then the number of good pairs containing that number are `n(n-1)`. We add these up and then divide by `2` as each pair is counted twice..
 
-### Method 1 - `max_gap_sort`
-
-This computes the difference between each pair, and then sorts these into order (reverse)
-and counts the number of entries who have the same **max** value as the first element of the sorted list...
-
+We use a hash as a simple way to count each number! We then throw away the keys and add the computed values up and then return the value!
 ```perl
-sub max_gap_sort {
-  return 0 unless $#_;
-  @_ = sort { $a <=> $b } @_;
-  my $p = shift;
-  @_ = sort { $b <=> $a } map { ($_-$p,$p=$_)[0] } @_;
-  $_[0]==$_[$_] || return $_ for 1..$#_;
-  1*@_
+sub good_pairs {
+  my($c,%f);
+  $f{$_}++ for @_;
+  $c+=$_*($_-1) for values %f;
+  $c/2;
 }
 ```
 
-### Method 2 - `max_gap_nosort`
+Note we could have used an external `freq` and `sum` method. To simplify this to:
 
-This computes the difference of each pair and if it is the highest value updates a counter...
-
-**Notes:** If the new value of the difference is greater than the current best value - we update the current best value and
-reset the count to 1. We do this in the for loop with a ternary `?:` and then using `&&` to replace another if or `?:` with
-an empty second value. Finally we update `$p`. We can separate variables etc within the for loop by replacing `;` for `,` in
-a lot of cases...
-
-```perl
-sub max_gap_nosort {
-  return 0 unless $#_;
-  @_ = sort { $a <=> $b } @_;
-  my($p,$b,$c)=(shift,0,0);
-  $_-$p>$b ? ($b,$c)=($_-$p,1) : $_-$p==$b && $c++, $p=$_ for @_;
-  $c
+```
+sub good_pairs_fn {
+  ( sum map{$_*($_-1)} values %{freq(@_)} ) /2;
 }
 ```
+# Task 2 - Good Triplets
 
-### Bonus Method 3 - `max_gap_nosort_faster`
+***You are given an array of integers, `@array` and three integers `$x`,`$y`,`$z`. Write a script to find out total Good Triplets in the given array. 
+A triplet `array[i]`, `array[j]`, `array[k]` is good if it satisfies the following conditions:***
 
-One issue with method 2 is that it has to store the sorted list back into @_ AND then loop through it - as we have to get the first value of `$p`...
-Now - what if we didn't need to! This would save that store....
+  * `0 <= i < j < k <= n`
+  * `abs(array[i] - array[j]) <= x`
+  * `abs(array[j] - array[k]) <= y`
+  * `abs(array[i] - array[k]) <= z`
 
-Well we can avoid that (in a way) but it is hacky... We set `$p` the be one more than first value in the input! This means that the first gap is always going to be negative so it will only occur once, which as we we aren't interested in the "size" of the gap only the number with the biggest gap we can will always get the right answer...
+## Solution
+
+If you look in the source code you will find a few different methods - but I will outline a few places where gains are made and then include the fastest solution.
+
+One naive approach could be:
 
 ```perl
-sub max_gap_nosort_faster {
-  return 0 unless $#_;
-  my($p,$t,$c) = ($_[0]+1,0,0);
-  $_-$p>$t ? ($t,$c)=($_-$p,1) : $_-$p==$t && $c++, $p=$_ for sort { $a<=>$b } @_;
+sub good_triples_naive {
+  my($c,$x,$y,$z) = (0,splice @_, 0, 3 );
+  for my $i ( 0..$#_-2 ) {
+    for my $j ( $i+1..$#_-1 ) {
+      for ( $j+1..$#_ ) {
+        $c++ if abs($_[$i]-$_[$j])<= $x
+             && abs($_[$j]-$_[$_])<= $y
+             && abs($_[$i]-$_[$_])<= $z;
+      }
+    }
+  }
   $c;
 }
 ```
 
-### Performance
+The things we note:
+ 1. We perform the check `abs($_[$i]-$_[$j])<= $x` everytime in the inner loop
+ 2. We use a lot of array references `$_[$i]``, `$_[$j]`...
+ 3. We use a built in function `abs`
 
-We can see the relative performance of each method {the timing is based on various lists including a list of 1,000,000 numbers}
+All these slow us down.
 
-|               |    Rate  | sort | slide | nosort | nosort_faster |
-| :------------ | -------: | ---: | ----: | -----: | ------------: |
-| sort          |  0.772/s |   -- |  -31% |   -52% |          -56% |
-| slide         |   1.11/s |  44% |    -- |   -30% |          -37% |
-| nosort        |   1.59/s | 106% |   43% |     -- |           -9% |
-| nosort_faster |   1.75/s | 127% |   58% |    10% |            -- |
+So **1** is easy to solve we move that condition into an if to avoid the inner loop. For tidyness we invert the condition and use `next`...
 
-The gain between `nosort` & `nosort_faster` is not "visible" in cases wheren the length of list is up to around `100,000` the overhead of the "hack" vs the overhead of storing the intermediate array....
+**2** we can copy `$_[$i]`, `$_[$j]`, `$_[$_]` into variables - there is an overhead in this - replacing `$_[$i]` & `$_[$j]` improves performance but the inner one slows things down (overhead of "copy" vs overhead of reference)
 
-Using List::MoreUtils `slide` has a roughly 30% hit on performance - this again is the effect of having to store relatively large intermediate arrays.
+**3** we can convert the `abs` condition into a range. `abs($_1-$_2) <= $x`
 
-# Task 2 - Prime Count
+can be written as `-$x <= $_1-$_2 && $_1-$_2 <= $x`
 
-***You are given an integer `$n > 0`. Write a script to print the count of primes less than `$n`.***
+can be written as `$_1-$x<=$_ && $_2<=$_1+$x`
 
-## Solution
+This just doesn't remove the call to `abs` but aslo a subtraction - as we can precompute `$_1-$x` & `$_1+$x`.
 
-Now this is going back sometime since we have a had a prime generator question. We could use `Math::Prime::Util` to get the number of primes with `prime_count` but that sort of defeats the issue here...
-
-We will look at a couple of ways of doing this - the first which is "cute" but not particularly efficient, and then another which is very efficient {obv no where near the performance of the `Math::Prime::Util` version.
-
-### Method 1 - "compact"
-
-First we return `0` if `$n` is less than 3 {there are no primes less than 2}. We then initialize the array with the entry 2, and for each number - we look to see it it's prime... Our prime check is in the line:
-```perl
-  //,(grep{($'%$_)||next}@_),push@_,$_
-```
-which is quite compact:
-  * `//,` - match nothing - `$'` the post-match string is set to the string i.e `$_` from the outer loop.
-  * `(grep{$'%$_||next}@_)` - loop through the array of primes, if `$'%$_` is false we check the right-hand side of the or `||` and evaluate it - which skips out of the map and goes to the next number in the outer `for` loop....
-  * `,push@_,$_` if we don't hit the `next` we get to this point - the number is prime so push it onto the list....
-
-The full code is:
+This gives us
 
 ```perl
-sub n_primes_compact {
-  return 0if(my$n=shift)<3;
-  @_=2;
-  //,(grep{$'%$_||next}@_),push@_,$_ for 3..$n-1;
-  1*@_
-}
-```
-If we switch `shift` for `pop` & `grep` for `map`.. This comes down to just 85 bytes (if we us a 1 letter function name)
-```perl
-sub p{return 0if(my$n=pop)<3;@_=2;//,(map{$'%$_||next}@_),push@_,$_ for 3..$n-1;1*@_}
-```
-
-### Method 2 - faster!
-
-The previous method is small - but not particularly fast.. There are a few things we can do to speed it up!
-
- * We only need to try odd numbers (even numbers will not be included)
- * the largest element of the prime array we need to check is the square root of the number we are testing!
-   * square roots are expensive!
-   * we keep a track of the smallest integer which is greater than or equal the square root of the number. Note we don't ever have to work out the square root. We can just increment the value `$q` by 1 each time `$i` is greater than it's square... the `last` in the tight `last`/`next` line....
- * a number isn't prime if it has a prime factor - this is the `$i%$_?...:next O` which skips out of the inner `for` and jumps to the start of the next outer `for`.
- * we don't include `2` in the array as we only check odd-numbers, but add `1` at the end to include it in the count... this gains us about `2%` over keeping it in the array.
- 
-This give us:
-
-```perl
-sub n_primes_fast {
-  return 0 if (my $n=shift) <3;
-  my($q,@p)=2;
-  O: for( my $i=3; $i<$n; $i+=2 ) {
-    $q++ if $i>$q*$q;
-    $i%$_?($_>$q&&last):next O for @p;
-    push @p, $i;
+sub good_triples_range_2 {
+  my($c,$x,$y,$z,$_1,$_2,$lx,$ux,$lz,$uz,$ly,$uy)=(0,splice@_,0,3);
+  for my $i ( 0..$#_-2 ) {
+    ($lx,$ux,$lz,$uz) = (($_1 = $_[$i])-$x, $_1+$x,$_1-$z,$_1+$z);
+    for my $j ( $i+1..$#_-1 ) {
+      $_2 = $_[$j];
+      next if $_2 < $lx || $_2 > $ux;
+      ($ly,$uy) = ($lz>$_2-$y?$lz:$_2-$y,$uz<$_2+$y?$uz:$_2+$y);
+      for ( $j+1..$#_ ) {
+        $c++ if $ly <= $_[$_] && $_[$_] <= $uy;
+      }
+    }
   }
-  1+@p
+  $c;
 }
 ```
 
-There is a more compact version of the code:
+Note in the inner loop we merge the ranges so reducing the comparisons even further.
+
+### Bonus - how can we get this faster
+
+How can we get this faster - This O(3) whatever happens can we reduce the time in anyway...
+
+Other than what we've done - the only way to improved performance is to reduce the number of times we loop. Well the inner loop we can't change - the outer loop we can't change - but what about the inner loop... Heuristically the efficiency of the filter is proportional to `$x`. So if we chose the smallest `$x` we get the best result..
+
+We can't change order but we can choose the *order* of the loops. This gives us the code from hell...
 
 ```perl
-sub n_primes_fastx {
-  return 0 if (my $n=shift) <3;
-  O: for( my($i,$q)=(3,2); $i<$n; $i+=2,($i>$q*$q)&&$q++ ) {
-    $i%$_?($_>$q&&last):next O for @_;
-    push @_, $i;
+sub good_triples_fastest {
+  my($c,$xy,$yz,$xz,$l,$u,$lx,$ux,$ly,$uy,$lz,$uz,$i,$j,$k,$x,$y,$z)=(0,splice@_,0,3);
+
+  if($xy<=$xz&&$xy<=$yz){
+    for $i ( 0 .. $#_-2 ) {
+      ( $ly, $uy, $lz, $uz ) = ( ($x=$_[$i])-$xy, $x+$xy, $x-$xz, $x+$xz );
+      for $j ( $i+1 .. $#_-1 ) {
+        next if ($y=$_[$j]) < $ly || $uy<$y;
+        ( $l, $u ) = ( $lz > $y-$yz ? $lz : $y-$yz, $uz < $y+$yz ? $uz : $y+$yz );
+        $l <= $_[$_] && $_[$_] <= $u && $c++ for $j+1 .. $#_
+      }
+    }
+  } elsif ( $yz<=$xz ) {
+    for $j ( 1 .. $#_-1 ) {
+      ( $lz, $uz, $lx, $ux ) = ( ($y=$_[$j])-$yz, $y+$yz, $y-$xy, $y+$xy );
+      for $k ( $j+1 .. $#_ ) {
+        next if ($z=$_[$k]) < $lz || $uz < $z;
+        ( $l, $u ) = ( $lx > $z-$xz ? $lx : $z-$xz, $ux < $z+$xz ? $ux : $z+$xz );
+        $l <= $_[$_] && $_[$_] <= $u && $c++ for 0 .. $j-1
+      }
+    }
+  } else {
+    for $i ( 0..$#_-2 ) {
+      ( $ly, $uy, $lz, $uz ) = ( ($x=$_[$i])-$xy, $x+$xy, $x-$xz, $x+$xz );
+      for $k ( $i+2..$#_ )  {
+        next if ($z=$_[$k]) <$lz || $uz < $z;
+        ( $l, $u ) = ( $ly > $z-$yz ? $ly : $z-$yz, $uy < $z+$yz ? $uy : $z+$yz );
+        $l <= $_[$_] && $_[$_] <= $u && $c++ for $i+1 .. $k-1;
+      }
+    }
   }
-  1+@_
+  $c;
 }
 ```
-which makes use of the the initalization and increment parts of the class **C-style** `for` to combine lines, and re-using `@_` as after the shift it will be empty...
 
-Times are comparable between `fast` and `fastx` - although I think `fast` is slightly faster than the more compact version.... (and is definitely easier to read)
+Looks nasty - but it is just three copies of the code above - the first called if `$x` is smallest, the second if `$y` is smallest and lastly when `$z` is the smallest.
 
 ### Performance
 
-We can see the relative performance of each method {the largest test value we use is `$n=100,000`} so timings are based on that! (factor is approx 180:1) if we increase to `$n=1,000,000` the factor is approximately 630:1
+When the list is short it doesn't really matter about performance - but with the tests above with the longer list we have:
 
-
-|               |    Rate  | compact |  fast |  
-| :------------ | -------: | ------: | ----: |
-| compact       |  0.110/s |      -- |  -99% |
-| fast          | 18.800/s | 16 979% |    -- |
+|          |   Rate | naive |  opt | copy_1 | range_1 | copy_2 | range_2 | fastest |
+| -------- | -----: | ----: | ---: | -----: | ------: | -----: | ------: | ------: |
+| naive    | 14.6/s |    -- | -43% |   -50% |    -52% |   -57% |    -64% |    -85% |
+| opt      | 25.6/s |   75% |   -- |   -12% |    -15% |   -24% |    -36% |    -73% |
+| copy_1   | 29.1/s |   99% |  13% |     -- |     -4% |   -14% |    -28% |    -70% |
+| range_1  | 30.2/s |  106% |  18% |     4% |      -- |   -10% |    -25% |    -69% |
+| copy_2   | 33.6/s |  130% |  31% |    16% |     11% |     -- |    -17% |    -65% |
+| range_2  | 40.3/s |  176% |  57% |    39% |     33% |    20% |      -- |    -58% |
+| fastest  | 96.3/s |  558% | 275% |   231% |    219% |   186% |    139% |      -- |
