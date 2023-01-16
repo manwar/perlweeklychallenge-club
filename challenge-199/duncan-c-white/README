@@ -1,58 +1,78 @@
-Task 1: Max Gap
+Task 1: Good Pairs
 
 You are given a list of integers, @list.
 
-Write a script to find the total pairs in the sorted list where 2
-consecutive elements has the max gap. If the list contains less then 2
-elements then return 0.
+Write a script to find the total count of Good Pairs: A pair (i, j) is
+called good if list[i] == list[j] and i < j.
+
 
 Example 1
 
-Input:  @list = (2,5,8,1)
-Output: 2
+Input: @list = (1,2,3,1,1,3)
+Output: 4
 
-Since the sorted list (1,2,5,8) has 2 such pairs (2,5) and (5,8)
+There are 4 good pairs found as below:
+(0,3)
+(0,4)
+(3,4)
+(2,5)
 
 Example 2
 
-Input: @list = (3)
+Input: @list = (1,2,3)
 Output: 0
 
+Example 3
 
-MY NOTES: very easy.  sort, then sequence through the sorted list,
-finding the max gap so far and all pairs with that gap.
+Input: @list = (1,1,1,1)
+Output: 6
+
+Good pairs are below:
+(0,1)
+(0,2)
+(0,3)
+(1,2)
+(1,3)
+(2,3)
+
+MY NOTES: very easy.  two nested for loops..
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for the translation)
 
 
-Task 2: Prime Count
+Task 2: Good Triplets
 
-You are given an integer $n > 0.
+You are given an array of integers, @array and three integers $x,$y,$z.
 
-Write a script to print the count of primes less than $n.
+Write a script to find out total Good Triplets in the given array.
+
+A triplet array[i], array[j], array[k] is good if it satisfies the following conditions:
+
+a) 0 <= i < j < k <= n (size of given array)
+b) abs(array[i] - array[j]) <= x
+c) abs(array[j] - array[k]) <= y
+d) abs(array[i] - array[k]) <= z
+
 Example 1
 
-Input: $n = 10
-Output: 4 as in there are 4 primes less than 10 are 2, 3, 5 ,7.
+Input: @array = (3,0,1,1,9,7) and $x = 7, $y = 2, $z = 3
+Output: 4
+
+Good Triplets are as below:
+(3,0,1) where (i=0, j=1, k=2)
+(3,0,1) where (i=0, j=1, k=3)
+(3,1,1) where (i=0, j=2, k=3)
+(0,1,1) where (i=1, j=2, k=3)
 
 Example 2
 
-Input: $n = 15
-Output: 6
-
-Example 3
-
-Input: $n = 1
+Input: @array = (1,1,2,2,3) and $x = 0, $y = 0, $z = 1
 Output: 0
 
-Example 4
 
-Input: $n = 25
-Output: 9
 
-MY NOTES: very easy, specially if you have a prime finding module lying
-around:-)
+MY NOTES: not quite so easy, start with 3 nested for loops;-)
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
 into C (look in the C directory for the translation)
