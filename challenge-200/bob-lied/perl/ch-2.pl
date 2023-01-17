@@ -40,6 +40,7 @@
 
 use v5.36;
 
+# Which segments are on for each digit?
              #    0    1   2     3    4     5     6     7     8      9
 my @truth = qw<abcdef bc abdeg abcdg bcfg acdfg acdefg abc abcdefg abcfg>;
 
@@ -51,16 +52,22 @@ my @truth = qw<abcdef bc abdeg abcdg bcfg acdfg acdefg abc abcdefg abcfg>;
 # e     c    e     c        ee   cc
 # e     c    e     c        ee   cc
 # ddddddd     ddddd          ddddd
- my $Digit = 'aaaaaaaf     bf     bggggggge     ce     cddddddd'; # Match example
-#my $Digit = ' aaaaa f     bf     b ggggg e     ce     c ddddd '; # Rounded corners
-# Bold version, double vertical segments
-#my $Digit = 'aaaaaaaff   bbff   bbgggggggee   ccee   ccddddddd';
+#my $Digit = 'aaaaaaaf     bf     bggggggge     ce     cddddddd'; # Match example
+ my $Digit = ' aaaaa f     bf     b ggggg e     ce     c ddddd '; # Rounded corners
+#my $Digit = 'aaaaaaaff   bbff   bbgggggggee   ccee   ccddddddd'; # Bold
 
 # Display characteristics
- my %Char = ( a => '-', b => '|', c => '|', d => '-', e => '|', f => '|', g => '-', );
-#my %Char = ( a => '_', b => '|', c => '|', d => '_', e => '|', f => '|', g => '_', );
-#my %Char = ( a => '=', b => '|', c => '|', d => '=', e => '|', f => '|', g => '=', );
-#my %Char = ( a => '#', b => '#', c => '#', d => '#', e => '#', f => '#', g => '#', );
+ my %Char;
+#$Char{$_} = '-' for qw(a d g); $Char{$_} = '|' for qw(b c e f);
+#$Char{$_} = '=' for qw(a d g); $Char{$_} = '|' for qw(b c e f);
+#$Char{$_} = '#' for qw(a b c d e f g);
+#$Char{$_} = 'o' for qw(a b c d e f g);
+
+# Use Unicode horizontal and vertical bars
+binmode(STDOUT, "encoding(UTF-8)"); # No "wide character" warning
+#$Char{$_} = "\x{2500}" for qw(a d g); $Char{$_} = "\x{2502}" for qw(b c e f);
+ $Char{$_} = "\x{2501}" for qw(a d g); $Char{$_} = "\x{2503}" for qw(b c e f);
+# $Char{$_} = "\x{2550}" for qw(a d g); $Char{$_} = "\x{2551}" for qw(b c e f);
 
 use Getopt::Long;
 my $Verbose = 0;
@@ -73,10 +80,16 @@ displayAsSegment($_) for @ARGV;
 
 sub displayAsSegment($str)
 {
+    # Make a 49-character segment string for each digit
     my @seg = map { asSegment($_) } split '', $str;
 
     for my $row ( 0 .. 6 )
     {
+        # Make a row by taking a 7-char substring of each segment
+        # Top row:    0 ..  6     0 ..  6     0 ..  6
+        #       2:    7    13     7 .. 13     7 .. 13
+        #   ...
+        #       7:   42 .. 48    42 .. 48    42 .. 48
         say join("  ", map { substr($seg[$_], $row*7, 7) } 0 .. $#seg);
     }
 }
