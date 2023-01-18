@@ -83,3 +83,19 @@ sub run_tests {
     done_testing;
     exit;
 }
+
+__DATA__
+
+Out of curiosity, rerun James Smith's benchmarks with this
+implementation added.  See
+https://github.com/manwar/perlweeklychallenge-club/blob/master/challenge-199/james-smith/perl/ch-2.pl
+
+          Rate   naive     opt range_1  copy_1  copy_2 range_2 fastest     pdl
+naive   21.5/s      --    -49%    -52%    -53%    -56%    -64%    -84%    -90%
+opt     41.9/s     95%      --     -7%     -8%    -13%    -29%    -70%    -81%
+range_1 45.1/s    110%      8%      --     -1%     -7%    -24%    -67%    -79%
+copy_1  45.8/s    113%      9%      1%      --     -5%    -22%    -67%    -79%
+copy_2  48.4/s    125%     15%      7%      6%      --    -18%    -65%    -78%
+range_2 59.0/s    174%     41%     31%     29%     22%      --    -57%    -73%
+fastest  138/s    543%    230%    207%    202%    186%    134%      --    -36%
+pdl      218/s    912%    419%    382%    375%    350%    269%     57%      --
