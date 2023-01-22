@@ -137,7 +137,7 @@ sub digit_to_segments{
     # decimal point, but this code doesn't 'light'
     # that segment- the calling code does, as
     # needed
-    my @digit_table = (
+    my @segment_table = (
         "abcdef",
         "bc",
         "abdeg",
@@ -160,19 +160,19 @@ sub digit_to_segments{
     # Substitute other characters depending on which
     # segments are supposed to be "lit"
     substr($text->[0], 5, 3, "---")
-        if($digit_table[$digit] =~ m/a/);
+        if($segment_table[$digit] =~ m/a/);
     substr($text->[1], 7, 1, "/")
-        if($digit_table[$digit] =~ m/b/);
+        if($segment_table[$digit] =~ m/b/);
     substr($text->[3], 5, 1, "/")
-        if($digit_table[$digit] =~ m/c/);
+        if($segment_table[$digit] =~ m/c/);
     substr($text->[4], 1, 3, "---")
-        if($digit_table[$digit] =~ m/d/);
+        if($segment_table[$digit] =~ m/d/);
     substr($text->[3], 1, 1, "/")
-        if($digit_table[$digit] =~ m/e/);
+        if($segment_table[$digit] =~ m/e/);
     substr($text->[1], 3, 1, "/")
-        if($digit_table[$digit] =~ m/f/);
+        if($segment_table[$digit] =~ m/f/);
     substr($text->[2], 3, 3, "---")
-        if($digit_table[$digit] =~ m/g/);
+        if($segment_table[$digit] =~ m/g/);
 
     return($text);
 
