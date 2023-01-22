@@ -57,10 +57,12 @@ exit(0);
 # * The array to examine (e.g. ( 1, 2, 3, 4, 8, 6, 4 ) )
 # Returns on success:
 # * A list of refs to arrays that represent the arithmetic slices found within
-#   the array (e.g. ( [ 1, 2, 3 ], [ 1, 2, 3, 4 ], [ 2, 3, 4 ], [ 8, 6, 4 ] )
-# NOTE: If no arithmetic slices are found, OR if the input array has fewer than
-# three members (by definition there cannot be an arithmetic slice in an array
-# of one or two numbers) then the returned list will be empty
+#   the array (e.g. ( [ 1, 2, 3 ], [ 1, 2, 3, 4 ], [ 2, 3, 4 ], [ 8, 6, 4 ] );
+#   if no arithmetic slices are found, OR if the input array has fewer than
+#   three members (by definition there cannot be an arithmetic slice in an
+#   array of one or two numbers) then the returned list will be empty
+# NOTE: Although it is not shown in the example above, zero (0) is considered a
+# valid difference for determining which slices are arithmetic
 ################################################################################
 sub find_arithmetic_slices{
 
