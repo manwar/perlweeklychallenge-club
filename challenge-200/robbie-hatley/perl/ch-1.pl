@@ -48,7 +48,7 @@ sub get_arith_slices($array_ref){
    foreach my $mask (@masks){                         # For each possible mask,
       my @slice = ();                                 # create a slice.
       for ( my $idx = 0 ; $idx <= $#array ; ++$idx ){ # For each index in @array,
-         my $yesno = ($mask/2**($idx))%2;             # examine corresponding binary digit in mask,
+         my $yesno = ($mask/2**$idx)%2;               # examine corresponding binary digit in mask,
          if ($yesno) {push @slice, $array[$idx]}}     # and do-or-don't include $array[$idx] in @slice,
       push @slices, \@slice;}                         # depending on whether digit is 0 or 1.
    foreach my $slice_ref (@slices){                   # But only return slices that are arithmetic.
