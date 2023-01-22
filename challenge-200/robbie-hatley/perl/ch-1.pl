@@ -44,14 +44,14 @@ sub get_arith_slices($array_ref){
    my @slices = ();
    my @arith_slices = ();
    my $size = scalar @array;
-   my @masks = (0..((2**$size)-1));
-   foreach my $mask (@masks){
-      my @slice = ();
-      for ( my $idx = 0 ; $idx <= $#array ; ++$idx ){
-         my $yesno = ($mask/2**($size-$idx-1))%2;
-         if ($yesno) {push @slice, $array[$idx]}}
-      push @slices, \@slice;}
-   foreach my $slice_ref (@slices){
+   my @masks = (0..((2**$size)-1));                   
+   foreach my $mask (@masks){                         # For each possible mask,
+      my @slice = ();                                 # create a slice.
+      for ( my $idx = 0 ; $idx <= $#array ; ++$idx ){ # For each index in @array,
+         my $yesno = ($mask/2**($idx))%2;             # examine corresponding binary digit in mask,
+         if ($yesno) {push @slice, $array[$idx]}}     # and do-or-don't include $array[$idx] in @slice,
+      push @slices, \@slice;}                         # depending on whether digit is 0 or 1.
+   foreach my $slice_ref (@slices){                   # But only return slices that are arithmetic.
       if (is_arith($slice_ref)) {push @arith_slices, $slice_ref}}
    return @arith_slices;}
 
