@@ -1,0 +1,113 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/reverse {
+    1 dict begin
+    dup length /l exch def
+    [ exch
+      aload pop
+      2 1 l {
+          -1 roll
+      } for
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/sevensegment {
+    11 dict begin
+    /codespace ( ) 0 get def
+    /codehash (#) 0 get def
+    /l exch def
+    /disp [ 16#3f 16#06 16#5b 16#4f 16#66 16#6d 16#7d 16#07 16#7f 16#67 ] def
+    /v [
+        l 0 eq {
+            0
+        } {
+            {
+                l 0 le {
+                    exit
+                } if
+                l 10 mod
+                /l l 10 idiv def
+            } loop
+        } ifelse
+    ] reverse def
+    /d [
+        7 {
+            [
+                v length 6 mul {
+                    codespace
+                } repeat
+            ] a2s
+        } repeat
+    ] def
+    0 1 v length 1 sub {
+        /i exch def
+        /x i 6 mul def
+        /da disp v i get get def
+        da 1 and 0 gt {
+            x 1 add 1 x 3 add {
+                /xa exch def
+                d 0 get xa codehash put
+            } for
+        } if
+        da 2 and 0 gt {
+            1 1 2 {
+                /y exch def
+                d y get x 4 add codehash put
+            } for
+        } if
+        da 4 and 0 gt {
+            4 1 5 {
+                /y exch def
+                d y get x 4 add codehash put
+            } for
+        } if
+        da 8 and 0 gt {
+            x 1 add 1 x 3 add {
+                /xa exch def
+                d 6 get xa codehash put
+            } for
+        } if
+        da 16 and 0 gt {
+            4 1 5 {
+                /y exch def
+                d y get x codehash put
+            } for
+        } if
+        da 32 and 0 gt {
+            1 1 2 {
+                /y exch def
+                d y get x codehash put
+            } for
+        } if
+        da 64 and 0 gt {
+            x 1 add 1 x 3 add {
+                /xa exch def
+                d 3 get xa codehash put
+            } for
+        } if
+    } for
+    d {
+        =
+    } forall
+    end
+} bind def
+
+1234567890 sevensegment
+200 sevensegment
