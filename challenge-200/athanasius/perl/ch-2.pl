@@ -83,7 +83,6 @@ const my @TRUTH_TABLE      =>
 const my $USAGE            =>
 "Usage:
   perl $0 <decimal>
-  perl $0
 
     <decimal>    A non-negative integer\n";
 
