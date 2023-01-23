@@ -9,4 +9,4 @@ say(<<~"FIN"), exit unless @ARGV >= 2;
     Usage: $0 N1 N2 [N3...]
     to find all good pairs from the set N1 N2...
     FIN
-say join " ", @ARGV, "->", 0+grep{$ARGV[$_->[0]]==$ARGV[$_->[1]]} combinations(\@ARGV, 2)
+say join " ", @ARGV, "->", 0+grep{$_->[0]==$_->[1]} combinations(\@ARGV, 2)
