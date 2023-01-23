@@ -1,5 +1,5 @@
 //
-// Task 1: Good Pairs
+// Task 1: Arithmetic Slices
 // 
 // C version.
 // 
@@ -40,6 +40,10 @@ void init_pairdynarray( pairdynarray *p )
 
 void add_pair( pairdynarray *p, int i, int j )
 {
+	if( debug )
+	{
+		printf( "debug: adding pair %d..%d\n", i, j );
+	}
 	p->p[p->npairs].i = i;
 	p->p[p->npairs].j = j;
 	p->npairs++;
@@ -59,17 +63,29 @@ void free_pairdynarray( pairdynarray *p )
 }
 
 
+bool isarith( int *list, int from, int to )
+{
+	int v = list[from];
+	for( int i=from+1; i<=to; i++ )
+	{
+		v++;
+		if( list[i] != v ) return false;
+	}
+	return true;
+}
+
+
 int main( int argc, char **argv )
 {
-	int argno = process_flag_n_m_args( "good-pairs", argc, argv,
+	int argno = process_flag_n_m_args( "arithmetic-slices", argc, argv,
 		1, 1000, "intlist" );
 
 	int nel;
 	int *list = parse_int_args( argc, argv, argno, &nel );
 
-	if( nel < 1 )
+	if( nel < 3 )
 	{
-		fprintf( stderr, "good-pairs: need a list of > 0 elements\n" );
+		fprintf( stderr, "arithmetic-slices: need a list of > 2 elements\n" );
 		exit(1);
 	}
 
@@ -83,28 +99,38 @@ int main( int argc, char **argv )
 	pairdynarray p;
 	init_pairdynarray( &p );
 
-	for( int i=0; i<nel; i++ )
+	for( int i=0; i<nel-2; i++ )
 	{
-		for( int j=i+1; j<nel; j++ )
+		for( int j=i+2; j<nel; j++ )
 		{
-			if( list[i] != list[j] ) continue;
-
-			add_pair( &p, i, j );
+			if( isarith( list, i, j ) )
+			{
+				add_pair( &p, i, j );
+			}
 		}
 	}
 
 	if( debug )
 	{
 		printf( "debug: npairs=%d, nalloc=%d\n", p.npairs, p.nalloc );
-	} else
-	{
-		printf( "%d\n", p.npairs );
 	}
 
-	printf( "Good pairs are below:\n" );
+	printf( "Results:\n" );
 	for( int n=0; n<p.npairs; n++ )
 	{
-		printf( "(%d,%d)\n", p.p[n].i, p.p[n].j );
+		int from = p.p[n].i;
+		int to = p.p[n].j;
+		if( debug )
+		{
+			printf( "debug: from=%d, to=%d\n", from, to );
+		}
+		printf( "(" );
+		for( int i=from; i<=to; i++ )
+		{
+			if( i>from ) putchar( ',' );
+			printf( "%d", list[i] );
+		}
+		printf( ")\n" );
 	}
 
 	free( list );

@@ -40,6 +40,9 @@ void init_tripledynarray( tripledynarray *t )
 
 void add_triple( tripledynarray *t, int i, int j, int k )
 {
+	t->p[t->ntriples].i = i;
+	t->p[t->ntriples].j = j;
+	t->p[t->ntriples].k = k;
 	t->ntriples++;
 	if( t->ntriples == t->nalloc )
 	{
@@ -47,9 +50,6 @@ void add_triple( tripledynarray *t, int i, int j, int k )
 		t->p = realloc( t->p, t->nalloc * sizeof(triple) );
 		assert( t->p != NULL );
 	}
-	t->p[t->ntriples].i = i;
-	t->p[t->ntriples].j = j;
-	t->p[t->ntriples].k = k;
 }
 
 
@@ -123,7 +123,7 @@ int main( int argc, char **argv )
 		printf( "Good triples are below:\n" );
 		for( int n=0; n<t.ntriples; n++ )
 		{
-			printf( "(%d,%d)\n", t.p[n].i, t.p[n].j );
+			printf( "(%d,%d,%d)\n", t.p[n].i, t.p[n].j, t.p[n].k );
 		}
 	}
 
