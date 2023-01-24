@@ -15,7 +15,6 @@ my %array_hash = map { $_ => 1 } @num_array;
 print("Array length is: $array_len \n");
 
 foreach ( 0..$array_len ){
-	#~ print ("Checking $_ \n");
 	if (! exists($array_hash{$_})){
 		print("Array is missing $_!\n");
 		last;
