@@ -42,6 +42,7 @@ Sequence # A000041 on the "oeis.org" web site:
 # PRELIMINARIES:
 
 use v5.36;
+use utf8;
 use bigint;
 
 # GLOBAL VARIABLES:
@@ -76,12 +77,12 @@ sub NumberOfPartitions ($n)
    # new entries in our table of "number of partitions of n" for
    # 11 through $n, because we only initialized 0-10.
 
-   my $m       = 0;
-   my $LwrLim  = 0;
-   my $UprLim  = 0;
-   my $k       = 0;
-   my $Term    = 0;
-   my $p       = 0;
+   my $m       = 0; # Index for @PTable.
+   my $k       = 0; # Index for summation in recurrence relation.
+   my $LwrLim  = 0; # Lower limit for k
+   my $UprLim  = 0; # Upper limit for k
+   my $p       = 0; # "number of partitions" for current m
+   my $idx     = 0; # Index for earlier elements of @PTable
 
    # We already have the number-of-partitions for 0-10,
    # so now lets build up the table, starting from 11 and
@@ -93,16 +94,21 @@ sub NumberOfPartitions ($n)
       # Zero $p here, because we're starting a new partition
       # (otherwise $p accumulates junk from earlier partitions):
       $p = 0;
+
+      # Use recurrence relation from
+      # "https://en.wikipedia.org/wiki/Partition_function_(number_theory)"
       for ( $k = $LwrLim ; $k <= $UprLim ; ++$k )
       {
-         if (0 == $k)             {next}
-         if (($m - Pent($k)) < 0) {next}
-         $Term = $PTable[$m-Pent($k)];
-         if   (0 == $k%2) {$p -= $Term}
-         else             {$p += $Term}
+         if (0 == $k) {next}                        # "k∊ℤ\0"
+         $idx = $m - Pent($k);                      # index for @PTable
+         if ($idx < 0) {next}                       # "p[k]=0 if k<0"
+         $p += ((-1)**($k+1)*$PTable[$m-Pent($k)]); # summation
       }
+
+      # Add "number of partitions" for current m to @PTable:
       $PTable[$m] = $p;
-   } # end for each $m
+   } # end for each $m from 11 through $n
+
    # The results are all stored in global @PTable so just return:
    return;
 }
@@ -125,8 +131,9 @@ if ($n > $MAX_N)                 {croak}
 
 # MAIN BODY OF SCRIPT:
 
-# Fill-in partition table:
-NumberOfPartitions($n);
+# Fill-in partition table if necessary:
+if ( 11 <= $n && $n <= $MAX_N )
+   {NumberOfPartitions($n);}
 
-# Print result:
+# Print nth element of partition table:
 say $PTable[$n];
