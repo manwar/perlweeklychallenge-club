@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@array where @array.elems && all(@array) ~~ /^<[0..9]>*$/, :v(:$verbose));
+
+my $n      = @array.elems;
+my @sorted = @array.sort;
+
+for ^$n -> $i
+{
+  say ": $i -> @sorted[$i]" if $verbose;
+  unless @sorted[$i] == $i
+  {
+    say $i;
+    exit;
+  }
+}
+
+say $n;
