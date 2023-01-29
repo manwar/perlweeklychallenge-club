@@ -25,6 +25,7 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"os"
 	"sort"
@@ -44,10 +45,13 @@ func main() {
 		}
 	}
 	m := make(map[string]struct{})
+
 	fmt.Printf("Input: n = %d\nOutput: %d\n\nThere are %[2]d ways of stacking %[1]d pennies in ascending piles\n\n", n, penny(m, n))
+	var b strings.Builder
 	for k := range m {
-		fmt.Println(k)
+		b.WriteString("\t" + k + "\n")
 	}
+	io.WriteString(os.Stdout, b.String())
 }
 
 func penny(m map[string]struct{}, n ...uint64) int {
