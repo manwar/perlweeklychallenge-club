@@ -1,14 +1,17 @@
 {
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             0,
@@ -56,7 +59,7 @@
             2,
             0,
             1,
-            169,
+            170,
             2,
             1,
             51,
@@ -290,7 +293,8 @@
             3,
             44,
             11
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -396,7 +400,7 @@
             2,
             5,
             0,
-            129,
+            130,
             2,
             0,
             7,
@@ -578,6 +582,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -859,14 +864,21 @@
             1,
             5,
             10
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 280] Last updated at 2023-01-29 23:11:13 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2023]"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "xAxis" : {
       "categories" : [
@@ -1151,17 +1163,5 @@
          "Yet Ebreo",
          "Yozen Hernandez"
       ]
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 280] Last updated at 2023-01-29 21:36:14 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2023]"
    }
 }
