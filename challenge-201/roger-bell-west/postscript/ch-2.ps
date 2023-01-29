@@ -1,0 +1,74 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/pennypiles {
+    dup 0 eq {
+        1 exch pop
+    } {
+        4 dict begin
+        /s 0 def
+        /j exch 1 sub def
+        /k 2 def
+        {
+            j 0 lt {
+                exit
+            } if
+            /t j pennypiles def
+            /s s t
+            k 2 idiv 2 mod 0 eq {
+                neg
+            } if
+            add def
+            /j j
+            k 2 mod 1 eq {
+                k
+            } {
+                k 2 idiv
+            } ifelse
+            sub def
+            /k k 1 add def
+        } loop
+        s
+        end
+    } ifelse
+} bind def
+
+(pennypiles) test.start
+5 pennypiles 7 eq test
+10 pennypiles 42 eq test
+test.end
