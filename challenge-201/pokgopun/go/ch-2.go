@@ -28,7 +28,6 @@ import (
 	"io"
 	"log"
 	"os"
-	"sort"
 	"strconv"
 	"strings"
 )
@@ -44,35 +43,30 @@ func main() {
 			log.Fatal(err)
 		}
 	}
-	m := make(map[string]struct{})
-
-	fmt.Printf("Input: n = %d\nOutput: %d\n\nThere are %[2]d ways of stacking %[1]d pennies in ascending piles\n\n", n, penny(m, n))
 	var b strings.Builder
-	for k := range m {
-		b.WriteString("\t" + k + "\n")
-	}
+	fmt.Printf("Input: n = %d\nOutput: %d\n\nThere are %[2]d ways of stacking %[1]d pennies in ascending piles\n\n", n, penny(&b, n))
 	io.WriteString(os.Stdout, b.String())
 }
 
-func penny(m map[string]struct{}, n ...uint64) int {
+func penny(b *strings.Builder, n ...uint64) int {
 	last := n[len(n)-1]
-	if last == 0 && len(n) > 1 {
-		sort.SliceStable(n, func(i, j int) bool {
-			return n[i] < n[j]
-		})
-		var b strings.Builder
-		for _, v := range n[1:] {
-			b.WriteString(strconv.FormatUint(v, 10) + " ")
-		}
-		m[b.String()] = struct{}{}
-	} else {
+	if last > 0 {
 		s := make([]uint64, len(n)+1)
 		copy(s, n)
-		for i := uint64(1); i <= last; i++ {
+		var first uint64 = 1
+		if len(n) > 1 {
+			first = n[len(n)-2]
+		}
+		for i := first; i <= last; i++ {
 			s[len(s)-2] = i
 			s[len(s)-1] = last - i
-			penny(m, s...)
+			penny(b, s...)
 		}
+	} else if len(n) > 1 {
+		for _, v := range n[:len(n)-1] {
+			b.WriteString(strconv.FormatUint(v, 10) + " ")
+		}
+		b.WriteRune('\n')
 	}
-	return len(m)
+	return strings.Count(b.String(), "\n")
 }
