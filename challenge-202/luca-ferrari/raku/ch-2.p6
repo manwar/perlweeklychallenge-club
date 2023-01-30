@@ -24,7 +24,7 @@ sub MAIN( *@list where { @list.grep( { $_ > 0 && $_ ~~ Int } ).elems == @list.el
 	}
 
 	my @valley-right;
-	$current = @list[ $index + @valley-left.elems ];
+
 	if ( $index + @valley-left.elems  < @list.elems ) {
 	    @valley-right.push: @list[ $index + @valley-left.elems ];
 	    for $index + @valley-left.elems ^..^ @list.elems {
