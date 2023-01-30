@@ -1,18 +1,6 @@
 {
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2023-01-29 23:35:37 GMT"
+   "legend" : {
+      "enabled" : "false"
    },
    "yAxis" : {
       "title" : {
@@ -20,44 +8,56 @@
       },
       "min" : 0
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      }
+   },
    "series" : [
       {
+         "dataLabels" : {
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "enabled" : "true",
+            "align" : "right",
+            "rotation" : -90,
+            "y" : 10
+         },
          "name" : "Contributions",
          "data" : [
             [
                "Blog",
-               3245
+               3247
             ],
             [
                "Perl",
-               9935
+               9939
             ],
             [
                "Raku",
                5946
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "y" : 10,
-            "align" : "right"
-         }
+         ]
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2023]"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2023-01-30 00:00:31 GMT"
    }
 }
