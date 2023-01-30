@@ -20,11 +20,11 @@ done_testing();
 sub valley {
   my( $L, $R, @d )=( 0, 0, slide { $b <=> $a } @_ );
   for my $l ( 0 .. $#d-1) {
-    for my $r ( $l+1 .. $#d ) {
-      my($x,$t) = ( $d[$l] || -1, $l );
-      $d[$t] && ( $d[$t]<$x ? last : ($x=$d[$t]) ) while $t++ < $r;
-      ($L,$R)=($l,$t) if $R-$L<$t-$l;
+    my($x,$t) = ( $d[$l] || -1, $l );
+    while($t++<$#d) {
+      $d[$t] && ( $d[$t]<$x ? last : ($x=$d[$t]) )
     }
+    ($L,$R)=($l,$t) if $R-$L<$t-$l;
   }
   @_[$L..$R];
 }
