@@ -2,15 +2,16 @@
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2023]"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             4,
@@ -22,9 +23,11 @@
             3,
             86,
             21
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -36,10 +39,10 @@
             3,
             21,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -51,24 +54,14 @@
             1,
             6,
             14
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2023-01-30 00:00:31 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
    },
    "xAxis" : {
       "categories" : [
@@ -83,5 +76,12 @@
          "Yet Ebreo",
          "Yozen Hernandez"
       ]
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2023-01-30 00:10:34 GMT"
    }
 }
