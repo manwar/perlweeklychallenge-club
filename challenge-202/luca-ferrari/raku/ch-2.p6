@@ -11,22 +11,26 @@ sub MAIN( *@list where { @list.grep( { $_ > 0 && $_ ~~ Int } ).elems == @list.el
 
     my %valleys;
 
-    for 0 ..^ @list.elems - 1 {
-	my $current = @list[ $_ ];
-	next if @list[ $_ + 1 ] > $current;  # increasing!
+    for 0 ..^ @list.elems - 1 -> $index {
+	my $current = @list[ $index ];
+	next if @list[ $index + 1 ] > $current;  # increasing!
 
 	my @valley-left;
-	for $_ ..^ @list.elems {
-	    @valley-left.push: @list[ $_ ] if ( @list[ $_ ] <= $current );
-	    last if @list[ $_ ] > $current;
+	@valley-left.push: $current;
+	for $index ^..^ @list.elems {
+	    my $previous = @valley-left[ * - 1 ];
+	    @valley-left.push: @list[ $_ ] if ( @list[ $_ ] <= $previous );
+	    last if @list[ $_ ] > $previous;
 	}
 
 	my @valley-right;
-	$current = @list[ $_ + @valley-left.elems ];
-	if ( $_ + @valley-left.elems  < @list.elems ) {
-	    for $_ + @valley-left.elems ..^ @list.elems {
-		@valley-right.push: @list[ $_ ] if ( @list[ $_ ] >= $current );
-		last if @list[ $_ ] < $current;
+	$current = @list[ $index + @valley-left.elems ];
+	if ( $index + @valley-left.elems  < @list.elems ) {
+	    @valley-right.push: @list[ $index + @valley-left.elems ];
+	    for $index + @valley-left.elems ^..^ @list.elems {
+		my $previous = @valley-right[ * - 1 ];
+		@valley-right.push: @list[ $_ ] if ( @list[ $_ ] >= $previous );
+		last if @list[ $_ ] < $previous;
 	    }
 	}
 
