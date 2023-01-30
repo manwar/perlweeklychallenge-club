@@ -1,0 +1,132 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/arithmeticslices {
+    6 dict begin
+    /l exch def
+    [
+        l length 3 ge {
+            0 1 l length 3 sub {
+                /a exch def
+                /valid false def
+                a 2 add 1 l length 1 sub {
+                    /b exch def
+                    /v l a b a sub 1 add getinterval def
+                    valid not {
+                        0 1 v length 3 sub {
+                            /i exch def
+                            v i 1 add get v i get sub
+                            v i 2 add get v i 1 add get sub
+                            eq {
+                                /valid true def
+                                exit
+                            } if
+                        } for
+                    } if
+                    valid {
+                        v
+                    } if
+                } for
+            } for
+        } if
+    ]
+    end
+} bind def
+
+(arithmeticslices) test.start
+[1 2 3 4] arithmeticslices [[1 2 3] [1 2 3 4] [2 3 4]] deepeq test
+[2] arithmeticslices [] deepeq test
+test.end
