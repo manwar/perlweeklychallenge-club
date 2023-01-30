@@ -56,7 +56,15 @@ func main() {
 
 func penny(m map[string]struct{}, n ...uint64) int {
 	last := n[len(n)-1]
-	if last == 0 && len(n) > 1 {
+	if last > 0 {
+		s := make([]uint64, len(n)+1)
+		copy(s, n)
+		for i := uint64(1); i <= last; i++ {
+			s[len(s)-2] = i
+			s[len(s)-1] = last - i
+			penny(m, s...)
+		}
+	} else if len(n) > 1 {
 		sort.SliceStable(n, func(i, j int) bool {
 			return n[i] < n[j]
 		})
@@ -65,14 +73,6 @@ func penny(m map[string]struct{}, n ...uint64) int {
 			b.WriteString(strconv.FormatUint(v, 10) + " ")
 		}
 		m[b.String()] = struct{}{}
-	} else {
-		s := make([]uint64, len(n)+1)
-		copy(s, n)
-		for i := uint64(1); i <= last; i++ {
-			s[len(s)-2] = i
-			s[len(s)-1] = last - i
-			penny(m, s...)
-		}
 	}
 	return len(m)
 }
