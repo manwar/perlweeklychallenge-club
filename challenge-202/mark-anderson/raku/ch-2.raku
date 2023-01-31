@@ -17,7 +17,7 @@ sub widest-valley(*@a)
         my $k = ([\>=] @a).first({ .not }, :k) // @a.elems;
         @decreasing.push: @a.splice(0, $k, @a[$k-1]);
         
-        $k = ([\<=] @a).first({ .not }, :k) || @a.elems;
+        $k = ([\<=] @a).first({ .not }, :k) // @a.elems;
         @increasing.push: @a.splice(0, $k, @a[$k-1]);
     }
 
