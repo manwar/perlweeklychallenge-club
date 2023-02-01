@@ -63,3 +63,42 @@ sub valley {
   @_[$L..$R];
 }
 ```
+
+## Scrub that!
+
+The previous solution is `O(n^2)`. But that is not optimal especially if we have a very large cross section. Can we write something which is `O(n)` or closer to `O(n)` - well yes we can - we can walk along the line to find the plateaux. A valley is defined to be the start of one plateau to the end of the next. Note the left and right hand points are defined to be plateaux for the purpose of the method.
+
+So we keep some information:
+
+ * current node is $_-1
+ * `$pd` - the gradient to the left of the current node;
+ * `$d`  - the gradient to the right of the current node;
+ * `$s`  - the start of the left plateau;
+ * `$s2` - the start of the right plateau;
+ * `$S`  - start of largest valley;
+ * `$E`  - end of largest valley;
+
+A plateau starts if `$pd > 0` && `$d <= 0`, and ends if `$d > 0` && `$pd >= 0`. At any point we need to track two plateaux - firstly the one on the left of the current valley, and the one on the right (this will become the one on the left of the next valley)...
+
+At the end of a plateau, we calculate the width of the valley as the distance from the current point to the start of the previous plateau. If it is greater than the previous best we update the start and end. We also set the start of the next "left hand side" plateau to the start of the right hand one.
+
+Finally there is one last plateau we haven't looked at - and that is the one at the right hand end - so we check to see if this last value is wider than any previous ones...
+
+```perl
+sub valley2 {
+  my( $pd, $s, $s2, $S, $E, $d ) = ( 0, 0, 0, 0, 0 );
+  for( 1 .. $#_-1 ) {
+    $d  = $_[ $_+1 ] - $_[ $_ ];
+    $s2 = $_                                                  if $pd > 0 && $d  <= 0; ## Start of plateau
+    ( $_-$s > $E-$S ) && ( ( $S, $E, $s ) = ( $s, $_, $s2 ) ) if $d  < 0 && $pd >= 0; ## End of plateau
+    $pd = $d
+  }
+  @_-$s2 > $E-$S+1 ? @_[ $s2 .. $#_ ] : @_[ $S .. $E ]        ## Check the last valley...
+}
+```
+
+### Performance....
+
+For the set examples the performance is around `1.8x` to `1.9x` that of the `O(n^2)` method. This is what you would expect for the magnitude of the test strings.
+
+Adding in a very large entry shows how much better the 2nd algorithm is. We create a list of 330 points - the performance is approximately 40 times faster.
