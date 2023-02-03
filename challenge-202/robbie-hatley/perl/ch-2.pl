@@ -62,7 +62,7 @@ for (@arrays){
    
    # For each elevation change, decide what to do, based valley-wall state
    # and on whether we've reached the last elevation yet:
-   for ( my $idx = 1 ; $idx <= $#array ; ++$idx ){
+   for ( $idx = 1 ; $idx <= $#array ; ++$idx ){
 
       # If we're on the Left Wall of our current valley, check to see if we
       # just transitioned to the Right Wall:
