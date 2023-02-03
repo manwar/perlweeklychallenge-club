@@ -40,7 +40,7 @@ sub valley {
 
 sub valley2 {
   my( $pd, $s, $s2, $S, $E, $d ) = ( 0, 0, 0, 0, 0 );
-  for( 1 .. $#_ ) {
+  for( 0 .. $#_ ) {
     $d  = $_[$_]-$_[$_-1];
     $s2 = $_-1                                                if $pd > 0 && $d  <= 0; ## Start of plateau
     ( $_-$s > $E-$S ) && ( ( $S, $E, $s ) = ( $s, $_, $s2 ) ) if $d  < 0 && $pd >= 0; ## End of plateau
