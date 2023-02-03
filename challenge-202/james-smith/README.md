@@ -86,14 +86,14 @@ Finally there is one last plateau we haven't looked at - and that is the one at 
 
 ```perl
 sub valley2 {
-  my( $pd, $s, $s2, $S, $E, $d ) = ( 0, 0, 0, 0, 0 );
+  my( $pd, $s, $s2, $S, $E, $d ) = (0) x 5;
   for( 0 .. $#_-1 ) {
     $d  = $_[ $_+1 ] - $_[ $_ ];
-    $s2 = $_                                                  if $pd > 0 && $d  <= 0; ## Start of plateau
-    ( $_-$s > $E-$S ) && ( ( $S, $E, $s ) = ( $s, $_, $s2 ) ) if $d  < 0 && $pd >= 0; ## End of plateau
-    $pd = $d
+    $s2 = $_                                                        if $pd > 0 && $d  <= 0; ## Start of plateau
+    ( $_-$s > $E-$S ) && ( ( $S, $E ) = ( $s, $_ ) ) , ( $s = $s2 ) if $d  < 0 && $pd >= 0; ## End of plateau
+    $pd = $d;
   }
-  @_-$s2 > $E-$S+1 ? @_[ $s2 .. $#_ ] : @_[ $S .. $E ]        ## Check the last valley...
+  @_-$s2 > $E-$S+1 ? @_[ $s2 .. $#_ ] : @_[ $S .. $E ];
 }
 ```
 
