@@ -1,3 +1,3 @@
-# The Weekly Challenge 201
+# The Weekly Challenge 202
 
-Blog: [Missing pennies](https://dev.to/simongreennet/missing-pennies-3791)
+Blog: [Weekly Challenge 202](https://dev.to/simongreennet/weekly-challenge-202-4dcm)
