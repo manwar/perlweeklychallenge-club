@@ -1,7 +1,7 @@
-[< Previous 200](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-200/james-smith) |
-[Next 202 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-202/james-smith)
+[< Previous 201](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-201/james-smith) |
+[Next 203 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-203/james-smith)
 
-# The Weekly Challenge 201
+# The Weekly Challenge 202
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,121 +13,92 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-201/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-202/james-smith
 
-# Task 1: Missing Numbers
+# Task 1: Consecutive Odds
 
-***You are given an array of unique numbers. Write a script to find out all missing numbers in the range 0..$n where $n is the array size.***
-
-## Solution
-
-First we note for the problem as defined there will only ever be one missing number.
-
-Second we note if we add the numbers up we have a total of `n(n+1)/2 - {missing number}`.
-
-This leads us to two quite compact solutions:
-
-```perl
-sub missing { my $t = @_*(@_+1)/2; $t-=$_ for @_; $t }
-sub missing_sum { @_*(@_+1)/2 - sum0 @_ }
-```
-
-Where we take `sum0` from `List::Util`.
-
-### Performance
-
-We compared the two methods - in each case the `sum0` solution was faster - we will come back to this in task 2!
-
-What was interesting was relativee performance *vs* size of list. For short lists, the gain was a modest 25-30%, for medium size lists about 1,000 - 10,000 the gain was around 350%, but for larger lists again 100,000+ this dropped back down to 150-160%. This is probably the overhead of passing arrays around.
-
-# Task 2: Penny Piles
-
-***You are given an integer, `$n > 0`. Write a script to determine the number of ways of putting `$n` pennies in a row of piles of ascending heights from left to right.***
+***You are given an array of integers. Write a script to print `1` if there are **THREE** consecutive odss in the given array otherwise print `0`.***
 
 ## Solution
 
-This is a simple recursive search at any point we have `n` coins which we have to layout with a maximum height of `m` - we start where `m` is equal `n`.
+We have to loop through a window of size 3 and check all three values are odd. We can do this with a single check. The 3 values will be ODD if and only if they all have the "0" bit set. So we can binary `&` them together and check the last bit by anding with `1`.
 
-For performance sake we will cache our results as there are lots of cache hits!.
-
-So if `n` is 0 then we have found a solution - so we count 1, otherwise we make each possible sized pile and pass back to the function....
-
-This gives us:
+So we loop through - check this is the case - and if not move to the next value.
 
 ```perl
-sub piles {
-  my($count,$n,$m)=(0,@_);
-  return 1 unless $n;                                ## We have found *A* solution
-  $m//=$n;                                           ## First time we don't pass in $m -
-                                                     ## so set it to $n
-  return $cache{"$n,$m"} if exists $cache{"$n,$m"};  ## If we have seen this combo return
-  $count += piles($n-$_,$_) for 1 .. ($m>$n?$n:$m);  ## Otherwise loop through possible coin
-                                                     ## counts and add a stack of that size
-                                                     ## this is limited by (a) the number of
-                                                     ## coins and (b) the height of the
-                                                     ## previous stack.
-  $cache{"$n,$m"} ||= $count;                        ## cache result and return
+sub odd3 {
+  return 0 unless @_>2;
+  my $p = shift, my $q = shift;
+  $p&$q&$_[0]&1 ? (return 1) : (($p,$q)=($q,shift)) while @_;
+  0;
 }
 ```
 
-Now we always like to simplify things - and in this case we return a cache value if
-exists AND then compute the value and cache it - and return the cache value.
+# Task 2:Widest Valley
 
-This is because we have to run a for loop to do the sum. If we can avoid that then we
-can simplify the code...
+***Given a profile as a list of altitudes, return the leftmost widest valley. A valley is defined as a subarray of the profile consisting of two parts: the first part is non-increasing and the second part is non-decreasing. Either part can be empty.***
 
-Method (1) We replace the summation by a second function which encapsulates that 
-value.
+## Solution
 
-Method (2) We use `sum0` from `List::Util`
-```perl
-sub piles_2 {
-  my($count,$n,$m)=(0,@_);
-  return 1 unless $n;
-  $m//=$n;
-  $cache{"$n,$m"}//= sum_piles_2( $n, $m );
-}
+So we need a decreasing sequence followed by an increasing sequence.
 
-sub sum_piles_2 {
-  my $count = 0;
-  $count += piles_2($_[0]-$_,$_) for 1 .. ($_[1]>$_[0]?$_[0]:$_[1]);
-  $count;
-}
+Firstly we convert the valley heights into a string of difference (or more precisely whether that difference is `+1`, `-1` or `0`. We can use `<=>` to do that. We use `List::MoreUtils`'s `slide` method to do this.
 
-sub piles_0 {
-  return 1 unless $_[0];
-  $_[1]//=$_[0];
-  $cache{"@_"}//= sum0 map { piles_0( $_[0]-$_,$_ ) } 1 .. ($_[0]>$_[1]?$_[1]:$_[0]);
-}
-```
+We look for a sequence which only contains `-1`s before `+1`s.
 
-Finally we try a further method without recursion but using a stack. Now this is much
-harder to write - and also impossible to write a sensible cacheing algorithm for. We
-will see that this is a bad idea in a moment:
+We loop through all possible starts and see what the longest valley is.
+
+Finally we return that interval.
 
 ```perl
-sub piles_q {
-  my($count,$n,@q,$v)=(0,$_[0],[1,$_[0]]);
-  while($v = shift @q) {
-    $count++ if $v->[1]>=$v->[0];
-    push @q, map { [$_,$v->[1]-$_] } $v->[0]..$v->[1]-1;
+sub valley {
+  my( $L, $R, @d )=( 0, 0, slide { $b <=> $a } @_ );
+  for my $l ( 0 .. $#d-1) {
+    my($x,$t) = ( $d[$l] || -1, $l );
+    while($t++<$#d) {
+      $d[$t] && ( $d[$t]<$x ? last : ($x=$d[$t]) )
+    }
+    ($L,$R)=($l,$t) if $R-$L<$t-$l;
   }
-  $count;
+  @_[$L..$R];
 }
 ```
 
-### Performance
+## Scrub that!
 
-We got some results we didn't expect! So for our test sets (`$n` ranging from 5 to 50) we got:
+The previous solution is `O(n^2)`. But that is not optimal especially if we have a very large cross section. Can we write something which is `O(n)` or closer to `O(n)` - well yes we can - we can walk along the line to find the plateaux. A valley is defined to be the start of one plateau to the end of the next. Note the left and right hand points are defined to be plateaux for the purpose of the method.
 
-| method     | runs per s  | Rel performance |
-| :--------- |  ---------: | --------------: |
-| piles_q    | 0.482/s     |         0.002 x |
-| piles_0    |   253/s     |         0.842 x |
-| piles      |   301/s     |         1.000 x |
-| piles_2    |   326/s     |         1.114 x |
+So we keep some information:
 
-We note that the queue method is difficult to write and optimal solution for... But the other three methods we get subtly different performances.
+ * current node is $_-1
+ * `$pd` - the gradient to the left of the current node;
+ * `$d`  - the gradient to the right of the current node;
+ * `$s`  - the start of the left plateau;
+ * `$s2` - the start of the right plateau;
+ * `$S`  - start of largest valley;
+ * `$E`  - end of largest valley;
 
-Although in task 1 using `sum0` was better than not this time it's worse. Why is this? not sure - but it may be that in task 1 we summing an actual array but in this
-case we are summing a list {the result of the `map`}. The two function method `piles_2` was slightly faster - I think because of merging the test for existance and allocation of the value to the cache using `//=`.
+A plateau starts if `$pd > 0` && `$d <= 0`, and ends if `$d > 0` && `$pd >= 0`. At any point we need to track two plateaux - firstly the one on the left of the current valley, and the one on the right (this will become the one on the left of the next valley)...
+
+At the end of a plateau, we calculate the width of the valley as the distance from the current point to the start of the previous plateau. If it is greater than the previous best we update the start and end. We also set the start of the next "left hand side" plateau to the start of the right hand one.
+
+Finally there is one last plateau we haven't looked at - and that is the one at the right hand end - so we check to see if this last value is wider than any previous ones...
+
+```perl
+sub valley2 {
+  my( $pd, $s, $s2, $S, $E, $d ) = (0) x 5;
+  for( 0 .. $#_-1 ) {
+    $d  = $_[ $_+1 ] - $_[ $_ ];
+    $s2 = $_                                                        if $pd > 0 && $d  <= 0; ## Start of plateau
+    ( $_-$s > $E-$S ) && ( ( $S, $E ) = ( $s, $_ ) ) , ( $s = $s2 ) if $d  < 0 && $pd >= 0; ## End of plateau
+    $pd = $d;
+  }
+  @_-$s2 > $E-$S+1 ? @_[ $s2 .. $#_ ] : @_[ $S .. $E ];
+}
+```
+
+### Performance....
+
+For the set examples the performance is around `1.8x` to `1.9x` that of the `O(n^2)` method. This is what you would expect for the magnitude of the test strings.
+
+Adding in a very large entry shows how much better the 2nd algorithm is. We create a list of 330 points - the performance is approximately 40 times faster.
