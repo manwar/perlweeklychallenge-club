@@ -56,7 +56,6 @@ for (@arrays){
    my $widbi   = 0;      # Beginning index of widest valley found so far.
    my $widest  = 0;      # Width of widest valley found so-far.
    my @valley  = ();     # Left-most widest valley found so far.
-   my $el      = 0;      # Current elevation number.
    my $idx     = 0;      # Elevation index.
    my $begin   = 0;      # Beginning index of current valley.
    
