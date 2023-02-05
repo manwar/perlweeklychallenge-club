@@ -1,16 +1,16 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2023-02-05 16:18:17 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2023]"
    },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-02-05 00:40:28 GMT"
-   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             1,
             3,
@@ -42,8 +42,7 @@
             7,
             8,
             1
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -81,6 +80,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -112,10 +112,20 @@
             4,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "xAxis" : {
       "categories" : [
          "Magnus Woldrich",
@@ -150,18 +160,8 @@
          "Nicolas Mendoza"
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2023]"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
