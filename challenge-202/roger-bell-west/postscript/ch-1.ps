@@ -1,0 +1,63 @@
+%!PS
+
+% begin included library code
+% see https://github.com/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/consecutiveodds {
+    2 dict begin
+    /i 0 def
+    /r false def
+    {
+        2 mod 1 eq {
+            /i i 1 add def
+            i 3 ge {
+                /r true def
+                exit
+            } if
+        } {
+            /i 0 def
+        } ifelse
+    } forall
+    r
+    end
+} bind def
+
+(consecutiveodds) test.start
+[1 5 3 6] consecutiveodds test
+[2 6 3 5] consecutiveodds not test
+[1 2 3 4] consecutiveodds not test
+[2 3 5 7] consecutiveodds test
+test.end
