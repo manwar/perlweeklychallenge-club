@@ -13,7 +13,7 @@ sub MAIN( $src, $dst ) {
 
     for $src.IO.dir( test => { ( $src.IO.absolute ~ "/$_" ).IO.d } ) -> $dir {
 	# skip . and .. directories
-	next if $dir ~~ / \. ** 1..2  $ /;
+	next if $dir ~~ / ^ \. ** 1..2  $ /;
 	$dst.IO.mkdir( $dir.basename );
     }
 }
