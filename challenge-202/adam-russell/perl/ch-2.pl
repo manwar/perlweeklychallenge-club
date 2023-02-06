@@ -188,7 +188,6 @@ sub widest_valley{
     my $rules = widest_valley_rules(@_);
     $rules->start;
     $rules->switch until $rules->at(q/done/);
-    my $graph_viz = $rules->graph();
 }
 
 MAIN:{
