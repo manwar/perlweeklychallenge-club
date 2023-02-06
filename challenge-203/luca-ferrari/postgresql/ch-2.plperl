@@ -18,6 +18,7 @@ AS $CODE$
    
    my $directory_scanner = sub {
       return if ! -d $_;
+      return if $_ =~ /^\,{1,2}$/;
       push @paths, "$dst/$_";
    };
 
