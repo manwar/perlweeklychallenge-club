@@ -23,14 +23,14 @@ my @examples = (
 
 for my $e (@examples) {
     my $list = join ',', $e->@*;
-    my $out  = special_quadrant($e);
+    my $out  = special_quadruplets($e);
     say <<"END";
     Input:  \@array = ($list)
     Output: $out
 END
 }
 
-sub special_quadrant ( $arrayref, $pos = 0, $resultref = [] ) {
+sub special_quadruplets ( $arrayref, $pos = 0, $resultref = [] ) {
     my $output;
 
     # case: resultref is the right size
@@ -50,13 +50,9 @@ sub special_quadrant ( $arrayref, $pos = 0, $resultref = [] ) {
     my $newref = [];
     $newref->@* = $resultref->@*;
     $output +=
-        special_quadrant( $arrayref, $pos + 1, $newref ); # don't include this
+        special_quadruplets( $arrayref, $pos + 1, $newref ); # don't include this
     push $newref->@*, $arrayref->[$pos];
     $output +=
-        special_quadrant( $arrayref, $pos + 1, $newref );    # include this
+        special_quadruplets( $arrayref, $pos + 1, $newref ); # include this
     return $output;
-}
-
-sub is_odd ( $n ) {
-    return $n % 2 ? 1 : 0;
 }
