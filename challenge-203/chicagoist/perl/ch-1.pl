@@ -28,6 +28,7 @@ sub specialQuadruplets
     return $count;
 }
 
+
 use Test::More tests => 3;
 ok specialQuadruplets(1, 2, 3, 6) == 1;
 ok specialQuadruplets((1, 1, 1, 3, 5)) == 4;
