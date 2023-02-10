@@ -28,8 +28,8 @@
 Task 2: Copy Directory
 Submitted by: Julien Fiegehenn
 
-You are given path to two folders, $source and $target. Write a script that recursively copy the directory from $source
-to $target except any files.
+Given paths to two folders, $source and $target, write a script that recursively copies the directory structure from $source
+to $target, without copying any files.
 
 Example:
 
