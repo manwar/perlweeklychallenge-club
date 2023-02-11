@@ -22,6 +22,7 @@ exit;
 sub copydir {
     my($src, $trg) = @_;
     my @d = dirs( $src );
+    $src=quotemeta$src;
     s/^$src/$trg/ for @d;
     my @e = grep -d, @d;
     croak "ERR: @e already exists! Did nothing!" if @e;
