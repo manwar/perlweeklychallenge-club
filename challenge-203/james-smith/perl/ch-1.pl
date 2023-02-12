@@ -19,15 +19,11 @@ done_testing();
 
 sub special {
   my $c = 0;
-  for my $i (0..$#_-3) {
-    for my $j ($i+1..$#_-2) {
-      next unless $_[$i]<=$_[$j];
+  for my $i     (    0 .. $#_-3 ) {
+    for my $j   ( $i+1 .. $#_-2 ) {
       my $t = $_[$i]+$_[$j];
-      for my $k ($j+1..$#_-1) {
-        next unless $_[$j]<=$_[$k];
-        for my $l ($k..$#_) {
-          $c++ if $t+$_[$k]==$_[$l];
-        }
+      for my $k ( $j+1 .. $#_-1 ) {
+        $t+$_[$k]==$_[$_] && $c++ for $k .. $#_;
       }
     }
   }
