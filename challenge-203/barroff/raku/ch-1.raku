@@ -12,7 +12,8 @@ sub special_quadrupel(List $list where $list.elems ≥ 4 --> Int) {
 
 sub MAIN {
     use Test;
-    plan 2;
+    plan 3;
     is special_quadrupel(( 1, 2, 3, 6 )), 1, 'quadruplets one';
     is special_quadrupel(( 1, 1, 1, 3, 5 )), 4, 'quadruplets two';
+    is special_quadrupel(( 3, 3, 6, 4, 5 )), 0, 'quadruplets three';
 }
