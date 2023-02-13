@@ -7,7 +7,6 @@ nok       reshape-matrix(3, 2, [[1,2]]);
 
 sub reshape-matrix($r, $c, @m)
 {
-    @m .= map(*.Slip);
-    return 0 if $r * $c !== @m;
-    @m.rotor($c).map(*.Array).Array
+    return 0 unless $r * $c == @m * @m.head;
+    @m.map(*.Slip).rotor($c).map(*.Array).Array
 }    
