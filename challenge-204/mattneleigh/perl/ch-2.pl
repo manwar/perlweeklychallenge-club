@@ -36,7 +36,7 @@ my @matrix_data = (
 
 print("\n");
 foreach my $matrix_instance (@matrix_data){
-    my $rearranged_matrix = reshape_matrix(
+    my $reshaped_matrix = reshape_matrix(
         $matrix_instance->{matrix},
         $matrix_instance->{r},
         $matrix_instance->{c}
@@ -47,8 +47,8 @@ foreach my $matrix_instance (@matrix_data){
         matrix_to_string($matrix_instance->{matrix}),
         $matrix_instance->{r},
         $matrix_instance->{c},
-        defined($rearranged_matrix) ?
-            matrix_to_string($rearranged_matrix)
+        defined($reshaped_matrix) ?
+            matrix_to_string($reshaped_matrix)
             :
             "0"
     );
