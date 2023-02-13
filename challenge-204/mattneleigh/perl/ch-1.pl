@@ -53,7 +53,7 @@ exit(0);
 sub array_is_monotonic{
 
     my $i = 0;
-    my $ascending = 0;
+    my $direction = 0;
 
     # Loop over the array, examining each pair
     # of values- pairs of equal values don't
@@ -62,21 +62,21 @@ sub array_is_monotonic{
     for my $i (1 .. $#ARG){
         if($ARG[$i - 1] < $ARG[$i]){
             # An ascending pair
-            if($ascending < 0){
-                # $ascending was less than zero-
+            if($direction < 0){
+                # $direction was less than zero-
                 # we'd seen descending values before
                 return(0);
             }
-            $ascending = 1;
+            $direction = 1;
         }
         if($ARG[$i - 1] > $ARG[$i]){
             # A descending pair
-            if($ascending > 0){
-                # $ascending was greater than zero-
+            if($direction > 0){
+                # $direction was greater than zero-
                 # we'd seen ascending values before
                 return(0);
             }
-            $ascending = -1;
+            $direction = -1;
         }
     }
 
