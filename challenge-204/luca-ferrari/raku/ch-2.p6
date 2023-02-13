@@ -27,6 +27,6 @@ sub MAIN( Int :$r, Int :$c, *@matrix ) {
 
 	}
     }
-v
+
     @N.join( "\n" ).say;
 }
