@@ -33,8 +33,8 @@ my @input = @ARGV;
 die "Input error\n"
     if scalar @input < 1
        or
-       scalar map { $_ =~ /^\d+$/ ? () : 1 }
-                @input != 0;
+       (scalar map { $_ =~ /^\d+$/ ? () : 1 }
+                 @input) != 0;
 
 my @valley;
 foreach my $min (0..$#input) {
