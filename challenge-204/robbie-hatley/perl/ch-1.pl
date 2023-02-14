@@ -24,7 +24,7 @@ use v5.36;
 $"=", ";
 
 # DEFAULT INPUTS:
-my @arrays = ( [1,2,2,3], [1,3,2], [6,5,5,4] );
+my @arrays = ( [1,2,2,3], [1,3,2], [6,5,5,4], [42,42,42,42,42] );
 
 # NON-DEFAULT INPUTS:
 if (@ARGV) {@arrays = ([@ARGV]);}
@@ -32,28 +32,26 @@ if (@ARGV) {@arrays = ([@ARGV]);}
 # SUBROUTINES:
 
 sub is_mono (@a){
-   my $mono;
-   $mono = 1;
+   my $inc = 0;
+   my $dec = 0;
    for ( my $i = 1 ; $i <= $#a ; ++$i ){
-      $mono &&= ($a[$i-1]<=$a[$i]);} # mono inc?
-   if ( $mono == 1 ) {return 1;}
-   $mono = 1;
-   for ( my $i = 1 ; $i <= $#a ; ++$i ){
-      $mono &&= ($a[$i-1]>=$a[$i]);} # mono dec?
-   if ( $mono == 1 ) {return 2;}
-   return 0;}
+      if ($a[$i-1] < $a[$i]) {$inc = 1;}   # Increasing.
+      if ($a[$i-1] > $a[$i]) {$dec = 1;}}  # Decreasing.
+   return ($inc, $dec)}
 
 # MAIN BODY OF SCRIPT:
 for (@arrays){
+   print "\n";
    my @array = @{$_};
-   say '';
    say "array: (@array)";
-   my $mono = is_mono(@array);
-   if ($mono == 0){
-      say "not monotonic"}
-   elsif ($mono == 1){
-      say "monotonically increasing"}
-   elsif ($mono == 2){
-      say "monotonically decreasing"}
+   my ($inc, $dec) = is_mono(@array);
+   my $mono = 0+!($inc && $dec);
+   print "$mono";
+   if ($inc && !$dec){
+      print " (monotonic and increasing)\n";}
+   elsif (!$inc && $dec){
+      print " (monotonic and decreasing)\n";}
+   elsif (!$inc && !$dec){
+      print " (monotonic and constant)\n"}
    else {
-      say "We never had to take any of it seriously, did we?"}}
+      print " (not monotonic)\n"}}
