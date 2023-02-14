@@ -1,10 +1,18 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+from typing import List
 import unittest
 
 
-def find_missing_numbers(arr):
+def find_missing_numbers(arr: List[int]) -> List[int]:
+    """
+    Find all missing numbers in the range 0..n where n is the array size.
+    Args:
+        arr: A list of unique integers.
+    Returns:
+        A list of missing integers in the range 0..n where n is the array size.
+    """
     n = len(arr)
     s = set(arr)
     missing_numbers = []
