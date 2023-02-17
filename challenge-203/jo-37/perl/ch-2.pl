@@ -45,7 +45,6 @@ copy_dirs(@ARGV);
 sub copy_dirs ($source, $target) {
     find {
         # Make sure the source path is not interpreted as a regex.
-        # # Make sure the source path is not interpreted as a regex.
         wanted => sub {-d && s/^\Q$source\E/$target/ && !-e && mkdir},
         no_chdir => 1}, $source;
 }
