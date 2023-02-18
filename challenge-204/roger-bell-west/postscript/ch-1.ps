@@ -1,0 +1,74 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/listmin {
+    { min } reduce
+} bind def
+
+
+% end included library code
+
+/monotonicarray {
+    1 dict begin
+    /l exch def
+    [
+        0 1 l length 2 sub {
+            dup 1 add l exch get exch l exch get sub
+        } for
+    ] dup listmin exch listmax mul 0 ge
+    end
+} bind def
+
+(monotonicarray) test.start
+[1 2 2 3] monotonicarray test
+[1 3 2] monotonicarray not test
+[6 5 5 4] monotonicarray test
+test.end
