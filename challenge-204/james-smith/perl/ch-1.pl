@@ -23,7 +23,7 @@ is( monotonic( @{$_->[0]} ), $_->[1] ) for @TESTS;
 done_testing();
 
 sub monotonic {
-  my ( $delta, $tmp ) = ( shift ) <=> ( my $next = shift );
-  ( $tmp = $next<=>$_[0] ) && ( $delta||=$tmp ) != $tmp ? ( return 0 ) : ( $next = shift ) while @_;
+  my($n,$d,$t)=$_[0];
+  ($t=$n<=>$_) && ($d||=$t) != $t ? (return 0) : ($n=$_) for @_;
   1;
 }
