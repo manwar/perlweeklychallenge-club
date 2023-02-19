@@ -1,19 +1,21 @@
-#lang racket/base
+#lang typed/racket/base
 
-(require racket/file racket/list)
+; Run with: racket ch-2.rkt
 
-(define (copy-directory-tree source target)
-  (let* ([source (string->path source)]
-         [target (string->path target)]
-         [source-component-length (length (explode-path source))]
-         [targets
-         (fold-files
-          (lambda (path type paths)
-            (if (eq? type 'dir)
-                (cons (apply build-path target (drop (explode-path path) source-component-length)) paths)
-                paths))
-          '()
-          source)])
-    (for-each make-directory* targets)))
+; Is using a standard library cheating?
 
-(copy-directory-tree "a/b/c" "x/y")
+(require math/array)
+
+(: reshape (All (a) ((Array a) Index Index -> (U (Array a) Zero))))
+(define (reshape arr r c)
+  (with-handlers
+    ([exn? (lambda (exn) 0)])
+    (array-reshape arr (vector r c))))
+
+(: doit : (Array Integer) Index Index -> Void)
+(define (doit arr r c)
+  (printf "~V => ~V~%" arr (reshape arr r c)))
+
+(doit (array #[#[1 2] #[3 4]]) 1 4)
+(doit (array #[#[1 2 3] #[4 5 6]]) 3 2)
+(doit (array #[#[1 2]]) 3 2)
