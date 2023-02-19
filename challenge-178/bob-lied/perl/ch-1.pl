@@ -29,6 +29,10 @@
 #  9     512i
 # 10   -1024
 # 11   -2048i
+#
+# The base 2i is related to the base -4.  Every even power of 2i is a
+# power of -4.  For real numbers, using -4 as a base gives a representation
+# where every other digit is 0.
 #==============================================================================
 
 use v5.36;
@@ -72,9 +76,30 @@ sub q2d($n)
     return ($im == 0 ) ? "$re" : "$re +${im}i";
 }
 
+# Only handles real integers
 sub d2q($n)
 {
-    return "$n";
+    my @digit;
+
+    return 0 if $n == 0;
+
+    # Using base -4 for conversion
+    while ( $n != 0 )
+    {
+        my $q = int($n / -4);
+        my $rem = $n - ($q * -4);
+        $n = $q;
+
+        if ( $rem < 0 )
+        {
+            # Convert negative remainders to positive with
+            # clock arithmetic, effectively subtract and carry
+            ($n, $rem) = ($n + 1, $rem + 4)
+        }
+        unshift @digit, $rem;
+    }
+    # To convert to base 2i, put a zero between each digit
+    return join("0", @digit);
 }
 
 sub runTest
@@ -98,6 +123,11 @@ sub runTest
     is( q2d("10103"), 15,  "quat to dec 15");
     is( q2d("10000"), 16,  "quat to dec 16");
 
+    is( d2q(-4),   "100", "dec to quat -4");
+    is( d2q(-3),   "101", "dec to quat -3");
+    is( d2q(-2),   "102", "dec to quat -2");
+    is( d2q(-1),   "103", "dec to quat -1");
+    is( d2q( 0),     "0", "dec to quat 0");
     is( d2q( 1),     "1", "dec to quat 1");
     is( d2q( 2),     "2", "dec to quat 2");
     is( d2q( 3),     "3", "dec to quat 3");
