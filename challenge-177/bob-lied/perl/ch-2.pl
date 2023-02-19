@@ -1,7 +1,7 @@
 #!/usr/bin/env perl
 # vim:set ts=4 sw=4 sts=4 et ai wm=0 nu:
 #=============================================================================
-# ch-2.pl Perl Weekly Challenge Task 2 Palindromic Prime Cyclops
+# ch-2.pl Perl Weekly Challenge Week 177 Task 2 Palindromic Prime Cyclops
 #=============================================================================
 # Copyright (c) 2023, Bob Lied
 #=============================================================================
@@ -19,6 +19,7 @@
 # side is just that string reversed.
 #
 # Note that a single zero in the center eliminates primes like 1300031
+#  
 #=============================================================================
 
 use v5.36;
