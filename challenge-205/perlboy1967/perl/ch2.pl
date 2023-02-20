@@ -27,7 +27,7 @@ use Algorithm::Combinatorics qw(combinations);
 use Test::More;
 
 sub maXor ($@) {
-  my (@l) = uniq(@_); return max(map { $$_[0] ^ $$_[1] } combinations(\@l,2));
+  my @l = uniq(@_); return max(map { $$_[0] ^ $$_[1] } combinations(\@l,2));
 }
 
 is(7,maXor(1,2,3,4,5,6,7));
