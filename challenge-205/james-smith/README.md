@@ -55,6 +55,23 @@ sub third_unique {
 }
 ```
 
+### A third solution
+
+Having the extra `defined` queries in the code had seems a little inefficient. We can get round these by using the special variable `'-inf'`.
+
+Perl does not have a true concept of "infinity". But does have the string `'-inf'` - if you do `$i > '-inf'` it will always be true for all `$i`. Unlike `$i > undef` which is treated as `$i > 0`.
+
+```perl
+sub third_unique_inf {
+  my ($i,$j,$k) = (shift,'-inf','-inf');
+    $_ > $i  ? ( ($i,$j,$k) = ($_,$i,$j) )
+  : $_ == $i ? (                         )
+  : $_ > $j  ? ( ($j,$k)    = ($_,$j)    )
+  : $_ == $j ? (                         )
+  : $_ > $k && (  $k        =  $_        ) for @_;
+  $k eq '-inf' ? $i : $k
+}
+```
 # Task 2: Maximum XOR
 
 ***You are given an array of integers. Write a script to find the highest value obtained by XORing any two distinct members of the array.***
