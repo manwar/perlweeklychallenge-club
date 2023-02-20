@@ -20,21 +20,14 @@ use v5.16;
 
 use common::sense;
 
+use List::Util qw(max);
 use List::MoreUtils qw(uniq);
 use Algorithm::Combinatorics qw(combinations);
 
 use Test::More;
 
 sub maXor ($@) {
-  my (@l) = uniq(@_);
-  my $max;
-
-  for (combinations(\@l,2)) {
-    my $xor = $$_[0] ^ $$_[1];
-    $max = $xor if (!defined $max or $max < $xor);
-  }
-
-  return $max;
+  my (@l) = uniq(@_); return max(map { $$_[0] ^ $$_[1] } combinations(\@l,2));
 }
 
 is(7,maXor(1,2,3,4,5,6,7));
