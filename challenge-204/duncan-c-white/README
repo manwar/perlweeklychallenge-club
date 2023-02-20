@@ -1,84 +1,72 @@
-Task 1: Special Quadruplets
+Task 1: Monotonic Array
 
 You are given an array of integers.
 
-Write a script to find out the total special quadruplets for the given array.
-Special Quadruplets are such that satisfies the following 2 rules.
-1) nums[a] + nums[b] + nums[c] == nums[d]
-2) a < b < c < d
+Write a script to find out if the given array is Monotonic. Print 1 if
+it is otherwise 0.
+
+An array is Monotonic if it is either monotone increasing or decreasing.
+
+Monotone increasing: for i <= j , nums[i] <= nums[j]
+Monotone decreasing: for i <= j , nums[i] >= nums[j]
 
 Example 1
 
-  Input: @nums = (1,2,3,6)
+  Input: @nums = (1,2,2,3)
   Output: 1
-
-  Since the only special quadruplets found is $nums[0] + $nums[1] + $nums[2] == $nums[3].
 
 Example 2
 
-  Input: @nums = (1,1,1,3,5)
-  Output: 4
-
-  $nums[0] + $nums[1] + $nums[2] == $nums[3]
-  $nums[0] + $nums[1] + $nums[3] == $nums[4]
-  $nums[0] + $nums[2] + $nums[3] == $nums[4]
-  $nums[1] + $nums[2] + $nums[3] == $nums[4]
+  Input: @nums = (1,3,2)
+  Output: 0
 
 Example 3
 
-  Input: @nums = (3,3,6,4,5)
-  Output: 0
+  Input: @nums = (6,5,5,4)
+  Output: 1
 
-MY NOTES: seems pretty easy. condition (2) implies 4 for loops, a, b, c and d
+MY NOTES: seems very easy. use reverse() in order not to detect
+monotonically increasing and decreasing..
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for the translation)
 
 
-Task 2: Copy Directory
-Submitted by: Julien Fiegehenn
+Task 2: Reshape Matrix
 
-You are given path to two folders, $source and $target.
+You are given a matrix (m x n) and two integers (r) and (c).
 
-Write a script that recursively copy the directory from $source to
-$target except any files.
+Write a script to reshape the given matrix in form (r x c) with the
+original value in the given matrix. If you can't reshape print 0.
 
-Example
+Example 1
 
-  Input: $source = '/a/b/c' and $target = '/x/y'
+Input: $matrix = [ [ 1, 2 ], [ 3, 4 ] ]
+       $r = 1
+       $c = 4
 
-  Source directory structure:
+Output: [ 1 2 3 4 ]
 
-|___ a
-|    |___ b
-|         |___ c
-|              |___ 1
-|              |    |___ 1.txt
-|              |___ 2
-|              |    |___ 2.txt
-|              |___ 3
-|              |    |___ 3.txt
-|              |___ 4
-|              |___ 5
-|              |    |___ 5.txt
+Example 2
 
-Target directory structure:
+Input: $matrix = [ [ 1, 2, 3 ] , [ 4, 5, 6 ] ]
+       $r = 3
+       $c = 2
 
-|___ x
-|    |___ y
+Output: [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]
 
-Expected Result:
+Example 3
 
-|___ x
-|    |___ y
-|         |___ 1
-|         |___ 2
-|         |___ 3
-|         |___ 4
-|         |___ 5
+Input: $matrix = [ [ 1, 2 ] ]
+       $r = 3
+       $c = 2
 
+Output: 0
 
-MY NOTES: also quite easy, especially using File::Find.
+MY NOTES: also quite easy, can be done if R1*C1==R2*C
+(of course we have to discover R1 and C1, the dimensions o
+the original matrix).  Also have to read the matrix in..
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
-into C (look in the C directory for the translation)
+into C (look in the C directory for the translation).  Needed to
+pass original sizes into C routine..
