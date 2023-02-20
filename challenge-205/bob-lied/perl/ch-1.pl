@@ -43,21 +43,17 @@ sub thirdHighest(@array)
 
         # Bubble the element down to its sorted position
         # but we only care about the top 3 positions
-        ELEM: for ( my $i = 0 ; $i < $#top3 && $i < 3 ; $i++ )
+        for ( my $i = 0 ; $i < $#top3 ; $i++ )
         {
-            for ( my $j = $i + 1 ; $j < 3 ; $j++ )
+            if ( $top3[$i] == $top3[$i+1] )
             {
-                if ( $top3[$i] == $top3[$j] )
-                {
-                    # Duplicate value, discard
-                    splice(@top3, $i, 1);
-                    next ELEM;
-                }
-                elsif ( $top3[$i] < $top3[$j] )
-                {
-                    # Swap
-                    @top3[$i, $j] = @top3[$j, $i];
-                }
+                # Duplicate value, discard
+                splice(@top3, $i, 1);
+            }
+            elsif ( $top3[$i] < $top3[$i+1] )
+            {
+                # Swap
+                @top3[$i, $i+1] = @top3[$i+1, $i];
             }
         }
     }
