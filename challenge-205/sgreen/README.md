@@ -1,3 +1,3 @@
-# The Weekly Challenge 204
+# The Weekly Challenge 205
 
-Blog: [Weekly Challenge 204](https://dev.to/simongreennet/weekly-challenge-204-256e)
+Blog: [Weekly Challenge 205](https://dev.to/simongreennet/weekly-challenge-205-3f3)
