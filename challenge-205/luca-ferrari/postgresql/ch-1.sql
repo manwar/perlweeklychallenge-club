@@ -21,7 +21,8 @@ BEGIN
 	INSERT INTO t_sort
 	SELECT t
 	FROM unnest( l ) t
-	ORDER BY t DESC;
+	GROUP BY t
+	HAVING count(*) = 1;
 
 	SELECT count(*)
 	INTO has_third_max
