@@ -1,7 +1,7 @@
-[< Previous 203](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-203/james-smith) |
-[Next 205 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-205/james-smith)
+[< Previous 204](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-204/james-smith) |
+[Next 206 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-206/james-smith)
 
-# The Weekly Challenge 204
+# The Weekly Challenge 205
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,84 +13,81 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-204/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-205/james-smith
 
-# Task 1: Monotonic Array
+# Task 1: Third Highest
 
-***You are given an array of integers. Write a script to find out if the given array is Monotonic. Print 1 if it is otherwise 0. An array is Monotonic if it is either monotone increasing or decreasing.***
+***You are given an array of integers. Write a script to find out the Third Highest if found otherwise return the maximum.***
+
+***Note the examples suggest we are looking for third highest unique value - so we will solve both solutions***
 
 ## Solution
 
-We loop through the array - firstly trying to find if the string is increasing or decreasing.
+A quick (code wise) solution would be to sort the list `@_` and take the 3rd value or first if the list has length less than 3. But for large lists this would be inefficient. There is a debate here about what the cut off value is and so a simple sort will be quicker for small arrays.
 
-To do so we collect ths sign of the difference between successive numbers UNTIL we find a non-zero value..
+This was pass 1 - which sorts irrespective of uniqueness. But fails test 3.
 
-We then see if all subsequence differences have the same sign (or 0)....
+We start by sorting the first three values, then we proceed to check the next values against the three current values, and insert the new value into the correct place in the list (or do nothing);
 
 ```perl
-sub monotonic {
-  my($p,$d,$t)=$_[0];
-  ($t=$p<=>$_)&&($d||=$t)!=$t?(return 0):($p=$_)for@_;
-  1
+sub third {
+  my ($i,$j,$k) = sort { $b <=> $a } splice @_,0,3;
+  return $i unless defined $k;
+    $_ > $i ? (($i,$j,$k)=($_,$i,$j))
+  : $_ > $j ? (($j,$k)=($_,$j))
+  : ( $_ > $k ) && ($k=$_) for @_;
+  $k;
 }
 ```
 
+Now if we are looking for uniqueness - then the code becomes slighly more complex. If we have the value matching another value we do nothing. Here we can't splice off the first 3 values, instead we have to check for this equality each time. So the code becomes.
+Note we could have re-ordered the checks to avoid the two *skips* when checking for equality - but then the code becomes less readable.
+
 ```perl
-sub monotonic {
-  my($p,$d,$t)=($_[0],0);
-     ($t=$p<=>$_)        ## Get next signum of the pairwise difference (and store in $t) 
-  && ($d||=$t) != $t     ## If this new difference is non-zero
-                         ##   we update the direction [IF it is previously non-zero]
-                         ##   and compare it against the value we have just computed
-   ? (return 0)          ## If the difference is different we return 0
-   : ($p=$_)             ## Otherwise we update the previous value...
-   for @_;               ## and repeat for all values.
-  1;                     ## We have no differences!
+sub third_unique {
+  my ($i,$j,$k) = shift;
+    $_ > $i                     ? (($i,$j,$k)=($_,$i,$j))
+  : $_ == $i                    ? ()
+  : !defined $j || $_ > $j      ? (($j,$k)=($_,$j))
+  : defined $j && $_ == $j      ? ()
+  : ( !defined $k || $_ > $k ) && ($k=$_) for @_;
+  $k//$i;
 }
 ```
 
-# Task 2: Reshape Matrix
+### A third solution
 
-***You are given a matrix (m x n) and two integers (r) and (c). Write a script to reshape the given matrix in form (r x c) with the original value in the given matrix. If you can’t reshape print 0.***
+Having the extra `defined` queries in the code had seems a little inefficient. We can get round these by using the special variable `'-inf'`.
 
-Our first pass - is simple - we first do a dimension check to see if the matrix is the right size. Then we stitch all the rows together into a single list, and chomp off line-by-line.
+Perl does not have a true concept of "infinity". But does have the string `'-inf'` - if you do `$i > '-inf'` it will always be true for all `$i`. Unlike `$i > undef` which is treated as `$i > 0`.
 
 ```perl
-sub reshape {
-  my($m,$r,$c) = @_;
-  return 0 unless @{$m}*@{$m->[0]} == $r * $c;
-  my @t = map { @{$_} } @{$m};
-  [ map { [ splice @t, 0, $c ] } 1..$r ];
+sub third_unique_inf {
+  my ($i,$j,$k) = (shift,'-inf','-inf');
+    $_ > $i  ? ( ($i,$j,$k) = ($_,$i,$j) )
+  : $_ == $i ? (                         )
+  : $_ > $j  ? ( ($j,$k)    = ($_,$j)    )
+  : $_ == $j ? (                         )
+  : $_ > $k && (  $k        =  $_        ) for @_;
+  $k eq '-inf' ? $i : $k
 }
 ```
+# Task 2: Maximum XOR
 
-Our second pass is a bit more complicated as we try and avoid the stitch everything together in a long line...
+***You are given an array of integers. Write a script to find the highest value obtained by XORing any two distinct members of the array.***
 
- * Here we start again with the size check then we construct each row of the target array, chunk by chunk,
- * We find the part of the of the first row of the source which will fit in the target row.
-    * If we reach the end of the target row - we push this to our target matrix
-    * If it does not we repeat again adding bits of the 2nd, 3rd,... rows of the source to the target.
- * We repeat for all rows - noting that we may NOT start at the beginning of a source row - but at `$x` are cursor position.
+## Solution
 
-This method is more efficient memory wise - a consideration if you are reshaping a large matrix.
+There is nothing other than brute force to find the solution as we have to check every combination. Just how we do this - using indexes or `shift` and `for{each}`. We go for the latter and the code becomes simple.
 
 ```perl
-sub reshape2 {
-  my($m,$r,$c) = @_;
-  my $R=@{$m}; my $C = @{$m->[0]};
-  return 0 unless (my $R=@{$m}) * (my $C=@{$m->[0]}) == $r * $c;
-  my($x,$y,$res)=(0,0);
-  for my $i (1..$r) {
-    my $row = [];
-    my $to_push = $c;
-    while( $to_push ) {
-      my $t = $to_push+$x<$C?$to_push+$x:$C;
-      push @{$row},@{$m->[$y]}[$x..$t-1];
-      $to_push -= $t-$x;
-      $t==$C ? ($y++,$x=0) : ($x=$t);
-    }
-    push @{$res},$row;
+sub max_xor {
+  my $m = 0;
+  while( @_ ){
+    my $x=shift;
+    ( $x^$_ ) > $m && ( $m = $x^$_ ) for @_
   }
-  $res
+  $m
 }
 ```
+To avoid a set of brackets we use the simple logic of `$a && $b` is the same as `$b if $a`.
