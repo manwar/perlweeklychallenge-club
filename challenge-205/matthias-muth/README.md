@@ -10,7 +10,7 @@ I imagine simply getting the result from the ordered list of input values -- jus
 
 But what if there are values that exist several times in the array? Actually we need to do a Unix style ``sort | uniq`` instead of just ``sort``.
 
-### The perlfaq4
+### `Uniq` anyone? 
 
 I recommend brian d foy's very nice contribution _How can I remove duplicate elements from a list or array?_ in the [Perl FAQ](https://perldoc.perl.org/perlfaq4#How-can-I-remove-duplicate-elements-from-a-list-or-array?).
 These are his suggestions:
@@ -24,7 +24,7 @@ my @unique = keys %hash;
 ```
 
 The problem with this is that elements are returned in random order, completely unsorted. This means we would _first_ need to do the `unique` step, and _then_ the `sort`.
-But now I want to know how to better do the `uniq` step!
+But now I want to know how to do a better `uniq`!
 
 * Try the `uniq` function in ``List::MoreUtils``. 
 
