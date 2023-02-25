@@ -11,8 +11,9 @@ I imagine simply getting the result from the ordered list of input values -- jus
 
 But what if there are values that exist several times in the array? Actually we need to do a Unix style ``sort | uniq`` instead of just ``sort``.
 
-I recommend brian d foy's very nice contribution _How can I remove duplicate elements from a list or array?_ in the [Perl FAQ](https://perldoc.perl.org/perlfaq4#How-can-I-remove-duplicate-elements-from-a-list-or-array?).
+I recommend brian d foy's very nice article _How can I remove duplicate elements from a list or array?_ in the [Perl FAQ](https://perldoc.perl.org/perlfaq4#How-can-I-remove-duplicate-elements-from-a-list-or-array?).
 These are his suggestions:
+
 * Use a hash. Like for example:
 ```perl
 my %hash   = map { $_, 1 } @array;
@@ -125,7 +126,7 @@ The problem is that it is not easy to do nested `map` calls in perl.
 There is only one `$_` variable, and it is the one of the inner `map`. 
 That is why we still need the `$i` as a loop variable, to use it within the `map` code block. 
 
-But sometimes we are lucky, in that we can 'encapsulate' the map call and get rid of the need for the inner `$_`.
+But sometimes we are lucky, in that we can 'encapsulate' the `map` call and get rid of the need for the inner `$_`.
 Here, we can turn it into a one-line function:
 
 ```perl
@@ -135,7 +136,7 @@ sub max_xor3 {
 }
 ```
 
-No for loop anymore!
+No `for` loop anymore!
 More efficient, I guess, and less boring! ;-) 
 
 
