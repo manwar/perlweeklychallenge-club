@@ -2,7 +2,7 @@
 
 use v5.16;
 use Test2::V0 '!float';
-use Math::Prime::Util qw(todigits fromdigits logint vecmax);
+use Math::Prime::Util qw(todigits fromdigits);
 use PDL;
 use PDL::NiceSlice;
 use Benchmark 'cmpthese';
@@ -98,12 +98,8 @@ sub max_xor_pure {
 # 
 
 sub max_xor_intersect {
-    # Find the most significant bit for the whole list.
-    my $hbit = 1 + logint vecmax(@_), 2;
-    say "hbit: $hbit" if $verbose;
-
-    # Convert numbers to their binary digits from step 1.
-    my $bits = byte map [todigits($_, 2, $hbit)], @_;
+    # Convert numbers to their binary digits.
+    my $bits = byte(map [reverse(todigits($_, 2))], @_)->(-1:0);
     say "bits: $bits" if $verbose;
 
     my $pairlist;
