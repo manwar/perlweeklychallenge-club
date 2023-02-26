@@ -46,16 +46,15 @@ from `List::Util`
 (which *is* a core module!),
 I stumbled over the `uniq` function in the [`List::Util` documentation](https://perldoc.perl.org/List::Util#uniq)!
 
-`Uniq` has been in `List::Util` since its version 1.44 (see [here](https://metacpan.org/dist/Scalar-List-Utils/changes)), which is part of perl version 5.25.1 (according to `$ corelist List::Util 1.44`), which was released on 2016-05-20 (using `$ corelist -r 5.25.1`).
+`Uniq` has been in `List::Util` since its version 1.44, and an improved version in 1.45 (see [here](https://metacpan.org/dist/Scalar-List-Utils/changes)), which is part of perl version 5.25.1 (according to `$ corelist List::Util 1.45`), which was released on 2016-05-20 (using `$ corelist -r 5.25.1`).
 
 So for more current versions of perl the solution can look like  this:
 
 ```perl
-use v5.25.1;
 use strict;
 use warnings;
 
-use List::Util qw( uniq );
+use List::Util 1.45 qw( uniq );
 
 sub third_highest {
     my @a = uniq reverse sort @_;

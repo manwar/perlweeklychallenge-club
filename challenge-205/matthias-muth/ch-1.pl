@@ -1,10 +1,9 @@
 #!/usr/bin/env perl
 
-use v5.25.1;
 use strict;
 use warnings;
 
-use List::Util qw( uniq );
+use List::Util 1.45 qw( uniq );
 
 sub third_highest {
     my @a = uniq reverse sort @_;
