@@ -1,0 +1,72 @@
+Task 1: Monotonic Array
+
+You are given an array of integers.
+
+Write a script to find out if the given array is Monotonic. Print 1 if
+it is otherwise 0.
+
+An array is Monotonic if it is either monotone increasing or decreasing.
+
+Monotone increasing: for i <= j , nums[i] <= nums[j]
+Monotone decreasing: for i <= j , nums[i] >= nums[j]
+
+Example 1
+
+  Input: @nums = (1,2,2,3)
+  Output: 1
+
+Example 2
+
+  Input: @nums = (1,3,2)
+  Output: 0
+
+Example 3
+
+  Input: @nums = (6,5,5,4)
+  Output: 1
+
+MY NOTES: seems very easy. use reverse() in order not to detect
+monotonically increasing and decreasing..
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
+into C (look in the C directory for the translation)
+
+
+Task 2: Reshape Matrix
+
+You are given a matrix (m x n) and two integers (r) and (c).
+
+Write a script to reshape the given matrix in form (r x c) with the
+original value in the given matrix. If you can't reshape print 0.
+
+Example 1
+
+Input: $matrix = [ [ 1, 2 ], [ 3, 4 ] ]
+       $r = 1
+       $c = 4
+
+Output: [ 1 2 3 4 ]
+
+Example 2
+
+Input: $matrix = [ [ 1, 2, 3 ] , [ 4, 5, 6 ] ]
+       $r = 3
+       $c = 2
+
+Output: [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]
+
+Example 3
+
+Input: $matrix = [ [ 1, 2 ] ]
+       $r = 3
+       $c = 2
+
+Output: 0
+
+MY NOTES: also quite easy, can be done if R1*C1==R2*C
+(of course we have to discover R1 and C1, the dimensions o
+the original matrix).  Also have to read the matrix in..
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
+into C (look in the C directory for the translation).  Needed to
+pass original sizes into C routine..
