@@ -13,5 +13,5 @@ sub array-pairings(@a where * %% 2)
     {
         sum .map({ .min })
     }, 
-    (@c[^(@c.elems div 2)] Z @c[@c.elems div 2..@c.end].reverse)
+    (.[^(.elems div 2)] Z .[.elems div 2 .. .end].reverse) given @c
 }
