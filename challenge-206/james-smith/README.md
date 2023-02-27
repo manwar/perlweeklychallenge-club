@@ -1,7 +1,7 @@
-[< Previous 204](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-204/james-smith) |
-[Next 206 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-206/james-smith)
+[< Previous 205](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-205/james-smith) |
+[Next 207 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-207/james-smith)
 
-# The Weekly Challenge 205
+# The Weekly Challenge 206
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,81 +13,69 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-205/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-2065/james-smith
 
-# Task 1: Third Highest
+# Task 1: Shortest Time
 
-***You are given an array of integers. Write a script to find out the Third Highest if found otherwise return the maximum.***
-
-***Note the examples suggest we are looking for third highest unique value - so we will solve both solutions***
+***You are given a list of time points, at least 2, in the 24-hour clock format `HH:MM`. Write a script to find out the shortest time in minutes between any two time points.***
 
 ## Solution
 
-A quick (code wise) solution would be to sort the list `@_` and take the 3rd value or first if the list has length less than 3. But for large lists this would be inefficient. There is a debate here about what the cut off value is and so a simple sort will be quicker for small arrays.
-
-This was pass 1 - which sorts irrespective of uniqueness. But fails test 3.
-
-We start by sorting the first three values, then we proceed to check the next values against the three current values, and insert the new value into the correct place in the list (or do nothing);
+We will do a pairwise comparison of each pair. The shortest time for any pair is either going from the absolute differences in times directly - OR going through midnight. These are `abs( t1 - t2 )` or `abs( t1 + t2 - 1440 )`. The code becomes:
 
 ```perl
-sub third {
-  my ($i,$j,$k) = sort { $b <=> $a } splice @_,0,3;
-  return $i unless defined $k;
-    $_ > $i ? (($i,$j,$k)=($_,$i,$j))
-  : $_ > $j ? (($j,$k)=($_,$j))
-  : ( $_ > $k ) && ($k=$_) for @_;
-  $k;
-}
-```
-
-Now if we are looking for uniqueness - then the code becomes slighly more complex. If we have the value matching another value we do nothing. Here we can't splice off the first 3 values, instead we have to check for this equality each time. So the code becomes.
-Note we could have re-ordered the checks to avoid the two *skips* when checking for equality - but then the code becomes less readable.
-
-```perl
-sub third_unique {
-  my ($i,$j,$k) = shift;
-    $_ > $i                     ? (($i,$j,$k)=($_,$i,$j))
-  : $_ == $i                    ? ()
-  : !defined $j || $_ > $j      ? (($j,$k)=($_,$j))
-  : defined $j && $_ == $j      ? ()
-  : ( !defined $k || $_ > $k ) && ($k=$_) for @_;
-  $k//$i;
-}
-```
-
-### A third solution
-
-Having the extra `defined` queries in the code had seems a little inefficient. We can get round these by using the special variable `'-inf'`.
-
-Perl does not have a true concept of "infinity". But does have the string `'-inf'` - if you do `$i > '-inf'` it will always be true for all `$i`. Unlike `$i > undef` which is treated as `$i > 0`.
-
-```perl
-sub third_unique_inf {
-  my ($i,$j,$k) = (shift,'-inf','-inf');
-    $_ > $i  ? ( ($i,$j,$k) = ($_,$i,$j) )
-  : $_ == $i ? (                         )
-  : $_ > $j  ? ( ($j,$k)    = ($_,$j)    )
-  : $_ == $j ? (                         )
-  : $_ > $k && (  $k        =  $_        ) for @_;
-  $k eq '-inf' ? $i : $k
-}
-```
-# Task 2: Maximum XOR
-
-***You are given an array of integers. Write a script to find the highest value obtained by XORing any two distinct members of the array.***
-
-## Solution
-
-There is nothing other than brute force to find the solution as we have to check every combination. Just how we do this - using indexes or `shift` and `for{each}`. We go for the latter and the code becomes simple.
-
-```perl
-sub max_xor {
-  my $m = 0;
-  while( @_ ){
-    my $x=shift;
-    ( $x^$_ ) > $m && ( $m = $x^$_ ) for @_
+sub shortest_time {
+  my $min = 1_440, @_ = map { @Q = split /:/; $Q[0]*60 + $Q[1] } @_;
+  while( defined (my $t = shift) ) {
+    abs( $t-$_       ) < $min && ( $min = abs $t-$_       ),
+    abs( $t+$_-1_440 ) < $min && ( $min = abs $t+$_-1_440 ) for @_;
   }
-  $m
+  $min
 }
 ```
-To avoid a set of brackets we use the simple logic of `$a && $b` is the same as `$b if $a`.
+
+Now how efficient is this - though - is there a better way to use built-in perk functions?
+
+If we sort the times in order, we only have to compare the `n` gaps, from the last to the first through midnight and each of the subsequent neighbours.
+
+This gives us two alternative code blocks:
+
+```perl
+sub shortest_time {
+  @_ = map { my @Q = split /:/; $Q[0]*60 + $Q[1] } sort @_;
+  my $min = 1440 + (my $t = shift) - $_[-1];
+  ($_-$t<$min) && ($min=$_-$t), $t=$_ for @_;
+  $min
+}
+```
+
+or:
+
+```perl
+sub shortest_time {
+  @_ = sort { $a<=>$b } map { my @Q = split /:/; $Q[0]*60 + $Q[1] } @_;
+  my $min = 1440 + (my $t = shift) - $_[-1];
+  ($_-$t<$min) && ($min=$_-$t), $t=$_ for @_;
+  $min
+}
+```
+
+Which of these is fastest? The `sort` method is much more efficient than the pairwise approach (It's `O(n.log n)` where the pairwise solution is `O(n^2)`. Of the two the second numeric `sort` after the `map` if slightly faster than the `map` after the string `sort`.
+
+# Task 2: Array Pairings
+
+***You are given an array of integers having even number of elements. Write a script to find the maximum sum of the minimum of each pairs.***
+
+## Solution
+
+There is a trick here - the optimal solution is achieved by sorting the array into order and then chunking into to pairs... Then take the minimum of each...
+
+```perl
+sub max_sum_pair_min {
+  my $t = 0, @_ = sort {$a<=>$b} @_;
+  $t += shift, shift while @_;
+  $t
+}
+```
+
+When we `shift`, `shift` the first value is added to the total, the second value is discarded.
