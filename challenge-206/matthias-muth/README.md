@@ -1,10 +1,14 @@
-# Uniq anyone?
-**Challenge 205 solutions in Perl by Matthias Muth**
+# All the permutations...
+**Challenge 206 solutions in Perl by Matthias Muth**
 
-## Task 1: Third Highest
+## Task 1: Shortest Time
 
-> You are given an array of integers.<br/>
-Write a script to find out the _Third Highest_ if found otherwise return the maximum.
+> You are given a list of time points, at least 2, in the 24-hour clock format `HH:MM`.<br/>
+> Write a script to find out the shortest time in minutes between any two time points.
+
+The examples given are important for understanding that the shortest time between two time points might also span over midnight.
+
+##### CONTINUE HERE
 
 Thinking about a solution I start at the end:<br/>
 I imagine simply getting the result from the ordered list of input values -- just take the third value, and it there isn't any, take the first. So sort and return -- easy!
