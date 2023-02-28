@@ -15,8 +15,8 @@ DECLARE
    res int;
 BEGIN
 	WITH data AS (
-	SELECT v, row_number() OVER ( ORDER BY v ) r
-	FROM unnest( l ) v
+    	    SELECT v, row_number() OVER ( ORDER BY v ) r
+	    FROM unnest( l ) v
 	)
 	SELECT sum( v )
 	INTO res

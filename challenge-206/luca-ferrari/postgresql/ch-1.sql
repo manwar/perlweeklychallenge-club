@@ -33,5 +33,5 @@ BEGIN
 
 	RETURN m;
 END
-$CODE$ --foo
+$CODE$
 LANGUAGE plpgsql;
