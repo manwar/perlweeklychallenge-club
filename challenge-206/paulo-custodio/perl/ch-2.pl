@@ -42,7 +42,6 @@ my $max = 0;
 for my $pair (@pairs) {
 	my $sum = sum(map { min(@$_) } @$pair);
 	$max = max($max, $sum);
-	use Data::Dump 'dump';
 }
 say $max;
 
