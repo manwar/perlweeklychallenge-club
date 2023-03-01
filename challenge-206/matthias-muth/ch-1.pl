@@ -7,13 +7,24 @@ no warnings 'experimental::signatures';
 
 use List::Util qw( min );
 
-sub time_diffs( @t ) {
-    map { my $d = abs( $t[0] - $t[$_] ); min( $d, (24*60) - $d ); } 1..$#t;
+sub time_diffs( $fixed, @others ) {
+    # Return all differences between one fixed timestamp and a list of others. 
+    # Use the time difference spanning over midnight if it is shorter
+    # (by simply using the minimum of both).
+    return
+	map { my $d = abs( $fixed - $others[$_] ); min( $d, (24*60) - $d ); }
+	    0..$#others;
 }
 
 sub shortest_time( @hhmm_times ) {
+    # Turn HH:MM times into number of minutes.
     my @t = map { /^(\d+):(\d{2})$/; $1 * 60 + $2 } @hhmm_times;
-    return min( map time_diffs( @t[$_..$#t] ), 0..$#t );
+    # Return the minimum of the time differences of every element with all
+    # its successors. We can skip the last element, as it has no successor to
+    # build a difference with. 
+    # We simplify the parameter list by just giving the whole
+    # slice instead of giving the first element and its successors separately.
+    return min( map time_diffs( @t[ $_ .. $#t ] ), 0 .. ( $#t - 1 ) );
 }
 
 
@@ -26,7 +37,8 @@ my @tests = (
     [ [ "10:10", "09:30", "09:00", "09:55" ], 15 ],
 );
 
-is shortest_time( @{$_->[0]} ), $_->[1],
+is shortest_time( @{$_->[0]} ),
+    $_->[1],
     "shortest_time( @{$_->[0]} ) == " . ( $_->[1] // "undef" )
     for @tests;
 
