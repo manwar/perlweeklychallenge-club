@@ -71,4 +71,3 @@ sub compute_pairs {
         push @$pairs, [@$set];
     }
 }
-
