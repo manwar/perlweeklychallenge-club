@@ -61,7 +61,7 @@
     REPEAT
     2DROP
     25 60 * ,                       \ add placeholder for end element
-    HERE items - 1 CELLS / TO num_items
+    HERE items - CELL / TO num_items
 ;
 
 
