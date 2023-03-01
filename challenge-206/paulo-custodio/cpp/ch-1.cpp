@@ -32,38 +32,38 @@ Output: 15
 #include <vector>
 
 int minutes(const std::string& str) {
-	int hours = 0, minutes = 0;
-	char sep;
-	std::istringstream iss{ str };
-	if ((iss >> hours >> sep >> minutes) && sep == ':')
-		return hours * 60 + minutes;
-	else
-		return 0;
+    int hours = 0, minutes = 0;
+    char sep;
+    std::istringstream iss{ str };
+    if ((iss >> hours >> sep >> minutes) && sep == ':')
+        return hours * 60 + minutes;
+    else
+        return 0;
 }
 
 int main(int argc, char* argv[]) {
-	argv++; argc--;
-	if (argc < 2) {
-		std::cerr << "Usage: ch-1 time..." << std::endl;
-		return EXIT_FAILURE;
-	}
+    argv++; argc--;
+    if (argc < 2) {
+        std::cerr << "Usage: ch-1 time..." << std::endl;
+        return EXIT_FAILURE;
+    }
 
-	std::vector<int> items;
-	for (int i = 0; i < argc; i++)
-		items.push_back(minutes(argv[i]));
-	std::sort(items.begin(), items.end());
-	items.push_back(items.front() + 24 * 60);
+    std::vector<int> items;
+    for (int i = 0; i < argc; i++)
+        items.push_back(minutes(argv[i]));
+    std::sort(items.begin(), items.end());
+    items.push_back(items.front() + 24 * 60);
 
-	int min = items.back() - items.front();
-	for (size_t i = 0; i < items.size() - 1; i++) {
-		for (size_t j = i + 1; j < items.size(); j++) {
-			int n = items[j] - items[i];
-			if (n < min)
-				min = n;
-		}
-	}
+    int min = items.back() - items.front();
+    for (size_t i = 0; i < items.size() - 1; i++) {
+        for (size_t j = i + 1; j < items.size(); j++) {
+            int n = items[j] - items[i];
+            if (n < min)
+                min = n;
+        }
+    }
 
-	std::cout << min << std::endl;
+    std::cout << min << std::endl;
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }

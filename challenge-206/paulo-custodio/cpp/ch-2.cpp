@@ -36,50 +36,50 @@ So the maximum sum is 2.
 #include <iostream>
 #include <vector>
 
-void compute_pairs_max(int& max, 
-	const std::vector<int>& set, const std::vector<int>& pending
+void compute_pairs_max(int& max,
+    const std::vector<int>& set, const std::vector<int>& pending
 ) {
-	if (pending.size() == 0) {		// compute sum, set max
-		int sum = 0;
-		for (size_t i = 0; i < set.size(); i += 2) {
-			int n = std::min(set[i], set[i + 1]);
-			sum += n;
-		}
-		max = std::max(max, sum);
-	}
-	else {							// recurse for each pair
-		for (size_t i = 0; i < pending.size() - 1; i++) {
-			for (size_t j = i+1; j < pending.size(); j++) {
-				std::vector<int> new_set = set;
-				std::vector<int> new_pending = pending;
+    if (pending.size() == 0) {      // compute sum, set max
+        int sum = 0;
+        for (size_t i = 0; i < set.size(); i += 2) {
+            int n = std::min(set[i], set[i + 1]);
+            sum += n;
+        }
+        max = std::max(max, sum);
+    }
+    else {                          // recurse for each pair
+        for (size_t i = 0; i < pending.size() - 1; i++) {
+            for (size_t j = i+1; j < pending.size(); j++) {
+                std::vector<int> new_set = set;
+                std::vector<int> new_pending = pending;
 
-				new_set.push_back(pending[i]);
-				new_set.push_back(pending[j]);
+                new_set.push_back(pending[i]);
+                new_set.push_back(pending[j]);
 
-				new_pending.erase(new_pending.begin() + j);
-				new_pending.erase(new_pending.begin() + i);
+                new_pending.erase(new_pending.begin() + j);
+                new_pending.erase(new_pending.begin() + i);
 
-				compute_pairs_max(max, new_set, new_pending);
-			}
-		}
-	}
+                compute_pairs_max(max, new_set, new_pending);
+            }
+        }
+    }
 }
 
 int main(int argc, char* argv[]) {
-	argv++; argc--;
-	if (argc % 2 != 0) {
-		std::cerr << "usage: ch-2 pairs..." << std::endl;
-		return EXIT_FAILURE;
-	}
+    argv++; argc--;
+    if (argc % 2 != 0) {
+        std::cerr << "usage: ch-2 pairs..." << std::endl;
+        return EXIT_FAILURE;
+    }
 
-	std::vector<int> set;
-	std::vector<int> pending;
-	for (int i = 0; i < argc; i++)
-		pending.push_back(atoi(argv[i]));
+    std::vector<int> set;
+    std::vector<int> pending;
+    for (int i = 0; i < argc; i++)
+        pending.push_back(atoi(argv[i]));
 
-	int max = 0;
-	compute_pairs_max(max, set, pending);
-	std::cout << max << std::endl;
+    int max = 0;
+    compute_pairs_max(max, set, pending);
+    std::cout << max << std::endl;
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }

@@ -29,42 +29,42 @@ Output: 15
 #include <stdlib.h>
 
 int minutes(const char* str) {
-	int hours = 0, minutes = 0;
-	if (sscanf(str, "%d:%d", &hours, &minutes) == 2)
-		return hours*60+minutes;
-	else
-		return 0;
+    int hours = 0, minutes = 0;
+    if (sscanf(str, "%d:%d", &hours, &minutes) == 2)
+        return hours*60+minutes;
+    else
+        return 0;
 }
 
 int compare(const void* a, const void* b) {
-	return *(int*)a - *(int*)b;
+    return *(int*)a - *(int*)b;
 }
 
 int main(int argc, char* argv[]) {
-	argv++; argc--;
-	if (argc < 2) {
-		fputs("Usage: ch-1 time...\n", stderr);
-		return EXIT_FAILURE;
-	}
-	
-	int num_items = argc+1;
-	int* items = malloc(num_items * sizeof(int));
-	for (int i = 0; i < num_items-1; i++) 
-		items[i] = minutes(argv[i]);
-	qsort(items, num_items-1, sizeof(int), compare);
-	items[num_items-1] = items[0] + 24*60;
-	
-	int min = items[num_items-1] - items[0];
-	for (int i = 0; i < num_items-1; i++) {
-		for (int j = i+1; j < num_items; j++) {
-			int n = items[j] - items[i];
-			if (n < min)
-				min = n;
-		}
-	}
-	
-	printf("%d\n", min);
-	free(items);
+    argv++; argc--;
+    if (argc < 2) {
+        fputs("Usage: ch-1 time...\n", stderr);
+        return EXIT_FAILURE;
+    }
 
-	return EXIT_SUCCESS;
+    int num_items = argc+1;
+    int* items = malloc(num_items * sizeof(int));
+    for (int i = 0; i < num_items-1; i++)
+        items[i] = minutes(argv[i]);
+    qsort(items, num_items-1, sizeof(int), compare);
+    items[num_items-1] = items[0] + 24*60;
+
+    int min = items[num_items-1] - items[0];
+    for (int i = 0; i < num_items-1; i++) {
+        for (int j = i+1; j < num_items; j++) {
+            int n = items[j] - items[i];
+            if (n < min)
+                min = n;
+        }
+    }
+
+    printf("%d\n", min);
+    free(items);
+
+    return EXIT_SUCCESS;
 }

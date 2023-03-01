@@ -41,94 +41,94 @@ So the maximum sum is 2.
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
 typedef struct {
-	size_t count;
-	int* items;
+    size_t count;
+    int* items;
 } IList;
 
 IList* ilist_new(size_t count) {
-	IList* list = calloc(1, sizeof(IList));
-	assert(list);
-	if (count) {
-		list->count = count;
-		list->items = calloc(count, sizeof(int));
-		assert(list->items);
-	}
-	return list;
+    IList* list = calloc(1, sizeof(IList));
+    assert(list);
+    if (count) {
+        list->count = count;
+        list->items = calloc(count, sizeof(int));
+        assert(list->items);
+    }
+    return list;
 }
 
 void ilist_free(IList* list) {
-	free(list->items);
-	free(list);
+    free(list->items);
+    free(list);
 }
 
 void ilist_push(IList* list, int elem) {
-	list->count++;
-	list->items = realloc(list->items, list->count * sizeof(int));
-	assert(list->items);
-	list->items[list->count - 1] = elem;
+    list->count++;
+    list->items = realloc(list->items, list->count * sizeof(int));
+    assert(list->items);
+    list->items[list->count - 1] = elem;
 }
 
 void ilist_remove(IList* list, size_t index) {
-	assert(index < list->count);
-	memmove(&list->items[index], &list->items[index+1], (list->count - (index+1))*sizeof(int));
-	list->count--;
+    assert(index < list->count);
+    memmove(&list->items[index], &list->items[index+1], (list->count - (index+1))*sizeof(int));
+    list->count--;
 }
 
 IList* ilist_clone(IList* list) {
-	IList* copy = ilist_new(list->count);
-	assert(copy);
-	memcpy(copy->items, list->items, list->count * sizeof(int));
-	return copy;
+    IList* copy = ilist_new(list->count);
+    assert(copy);
+    memcpy(copy->items, list->items, list->count * sizeof(int));
+    return copy;
 }
 
 void compute_pairs_max(int* max, IList* set, IList* pending) {
-	if (pending->count == 0) {		// compute sum, set max
-		int sum = 0;
-		for (int i = 0; i < set->count; i += 2) {
-			int n = MIN(set->items[i], set->items[i + 1]);
-			sum += n;
-		}
-		*max = MAX(*max, sum);
-	}
-	else {							// recurse for each pair
-		for (int i = 0; i < pending->count - 1; i++) {
-			for (int j = i+1; j < pending->count; j++) {
-				IList* new_set = ilist_clone(set);
-				IList* new_pending = ilist_clone(pending);
+    if (pending->count == 0) {      // compute sum, set max
+        int sum = 0;
+        for (int i = 0; i < set->count; i += 2) {
+            int n = MIN(set->items[i], set->items[i + 1]);
+            sum += n;
+        }
+        *max = MAX(*max, sum);
+    }
+    else {                          // recurse for each pair
+        for (int i = 0; i < pending->count - 1; i++) {
+            for (int j = i+1; j < pending->count; j++) {
+                IList* new_set = ilist_clone(set);
+                IList* new_pending = ilist_clone(pending);
 
-				ilist_push(new_set, pending->items[i]);
-				ilist_push(new_set, pending->items[j]);
+                ilist_push(new_set, pending->items[i]);
+                ilist_push(new_set, pending->items[j]);
 
-				ilist_remove(new_pending, j);
-				ilist_remove(new_pending, i);
+                ilist_remove(new_pending, j);
+                ilist_remove(new_pending, i);
 
-				compute_pairs_max(max, new_set, new_pending);
+                compute_pairs_max(max, new_set, new_pending);
 
-				ilist_free(new_set);
-				ilist_free(new_pending);
-			}
-		}
-	}
+                ilist_free(new_set);
+                ilist_free(new_pending);
+            }
+        }
+    }
 }
 
 int main(int argc, char* argv[]) {
-	argv++; argc--;
-	if (argc % 2 != 0) {
-		fputs("usage: ch-2 pairs...\n", stderr);
-		return EXIT_FAILURE;
-	}
+    argv++; argc--;
+    if (argc % 2 != 0) {
+        fputs("usage: ch-2 pairs...\n", stderr);
+        return EXIT_FAILURE;
+    }
 
-	IList* set = ilist_new(0);
-	IList* pending = ilist_new(argc);
-	for (int i = 0; i < argc; i++)
-		pending->items[i] = atoi(argv[i]);
+    IList* set = ilist_new(0);
+    IList* pending = ilist_new(argc);
+    for (int i = 0; i < argc; i++)
+        pending->items[i] = atoi(argv[i]);
 
-	int max = 0;
-	compute_pairs_max(&max, set, pending);
-	printf("%d\n", max);
+    int max = 0;
+    compute_pairs_max(&max, set, pending);
+    printf("%d\n", max);
 
-	ilist_free(set);
-	ilist_free(pending);
+    ilist_free(set);
+    ilist_free(pending);
 
-	return EXIT_SUCCESS;
+    return EXIT_SUCCESS;
 }
