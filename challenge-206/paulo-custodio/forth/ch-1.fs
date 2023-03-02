@@ -91,12 +91,10 @@
 : compute-minimum-interval ( -- minutes )
     24 60 *                         ( min )
     num_items 1- 0 DO
-        num_items I 1+ DO
-            I items[] @
-            J items[] @
-            -
-            MIN
-        LOOP
+        I 1+ items[] @
+        I items[] @
+        -
+        MIN
     LOOP
 ;
 

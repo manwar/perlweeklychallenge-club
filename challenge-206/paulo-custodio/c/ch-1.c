@@ -56,11 +56,9 @@ int main(int argc, char* argv[]) {
 
     int min = items[num_items-1] - items[0];
     for (int i = 0; i < num_items-1; i++) {
-        for (int j = i+1; j < num_items; j++) {
-            int n = items[j] - items[i];
-            if (n < min)
-                min = n;
-        }
+        int n = items[i+1] - items[i];
+        if (n < min)
+            min = n;
     }
 
     printf("%d\n", min);

@@ -32,10 +32,8 @@ my @in = sort { $a <=> $b } map { minutes($_) } @ARGV;
 push @in, $in[0] + minutes("24:00");
 my $min = $in[-1] - $in[0];
 for my $i (0..$#in-1) {
-    for my $j ($i+1..$#in) {
-        my $n = $in[$j] - $in[$i];
-        $min = $n if $n < $min;
-    }
+    my $n = $in[$i+1] - $in[$i];
+    $min = $n if $n < $min;
 }
 say $min;
 

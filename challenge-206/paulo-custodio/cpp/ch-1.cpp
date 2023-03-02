@@ -56,11 +56,9 @@ int main(int argc, char* argv[]) {
 
     int min = items.back() - items.front();
     for (size_t i = 0; i < items.size() - 1; i++) {
-        for (size_t j = i + 1; j < items.size(); j++) {
-            int n = items[j] - items[i];
-            if (n < min)
-                min = n;
-        }
+        int n = items[i+1] - items[i];
+        if (n < min)
+            min = n;
     }
 
     std::cout << min << std::endl;
