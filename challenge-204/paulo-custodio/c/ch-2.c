@@ -45,8 +45,8 @@ Input: [ 1 2 ]
 Output: 0
 */
 
-#define MAX_DATA	1024
-#define BLANKS		" \t\r\n\v\f"
+#define MAX_DATA    1024
+#define BLANKS      " \t\r\n\v\f"
 
 #include <assert.h>
 #include <stdio.h>
@@ -56,45 +56,45 @@ Output: 0
 int data[MAX_DATA], size = 0, rows = 0, cols = 0;
 
 void parse_data() {
-	char line[MAX_DATA], *p;
-	while (fgets(line, sizeof(line), stdin)) {
-		if (strchr(line, '[') != NULL) {
-			while ((p = strchr(line, '[')) != NULL) *p = ' ';
-			while ((p = strchr(line, ']')) != NULL) *p = ' ';
-			char* p = strtok(line, BLANKS);
-			while (p) {
-				assert(size < MAX_DATA);
-				data[size++] = atoi(p);
-				p = strtok(NULL, BLANKS);
-			}
-		}
-		else {
-			char* p = strtok(line, BLANKS);
-			assert(p);
-			rows = atoi(p);
-			p = strtok(NULL, BLANKS);
-			assert(p);
-			cols = atoi(p);
-			break;
-		}
-	}
+    char line[MAX_DATA], *p;
+    while (fgets(line, sizeof(line), stdin)) {
+        if (strchr(line, '[') != NULL) {
+            while ((p = strchr(line, '[')) != NULL) *p = ' ';
+            while ((p = strchr(line, ']')) != NULL) *p = ' ';
+            char* p = strtok(line, BLANKS);
+            while (p) {
+                assert(size < MAX_DATA);
+                data[size++] = atoi(p);
+                p = strtok(NULL, BLANKS);
+            }
+        }
+        else {
+            char* p = strtok(line, BLANKS);
+            assert(p);
+            rows = atoi(p);
+            p = strtok(NULL, BLANKS);
+            assert(p);
+            cols = atoi(p);
+            break;
+        }
+    }
 }
 
 void output_data() {
-	if (size != rows*cols) 
-		printf("0\n");
-	else {
-		for (int i = 0; i < rows; i++) {
-			printf("[ ");
-			for (int j = 0; j < cols; j++) {
-				printf("%d ", data[i*cols+j]);
-			}
-			printf("]\n");
-		}
-	}
+    if (size != rows*cols)
+        printf("0\n");
+    else {
+        for (int i = 0; i < rows; i++) {
+            printf("[ ");
+            for (int j = 0; j < cols; j++) {
+                printf("%d ", data[i*cols+j]);
+            }
+            printf("]\n");
+        }
+    }
 }
 
 int main() {
-	parse_data();
-	output_data();
+    parse_data();
+    output_data();
 }

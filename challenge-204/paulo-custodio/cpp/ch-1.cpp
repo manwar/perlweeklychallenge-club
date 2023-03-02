@@ -34,25 +34,25 @@ Output: 1
 #include <vector>
 
 int is_monotonic(const std::vector<int>& data) {
-	if (data.size() < 2)
-		return 1;
-	else {
-		int climb = 0, descend = 0;
-		for (size_t i = 0; i < data.size() - 1; i++) {
-			int delta = data[i+1]-data[i];
-			if (delta > 0) climb++;
-			else if (delta < 0) descend++;
-			if (climb && descend) return 0;
-		}
-		return 1;
-	}
+    if (data.size() < 2)
+        return 1;
+    else {
+        int climb = 0, descend = 0;
+        for (size_t i = 0; i < data.size() - 1; i++) {
+            int delta = data[i+1]-data[i];
+            if (delta > 0) climb++;
+            else if (delta < 0) descend++;
+            if (climb && descend) return 0;
+        }
+        return 1;
+    }
 }
 
 int main(int argc, char* argv[]) {
-	argv++; argc--;
-	std::vector<int> data;
-	
-	for (int i = 0; i < argc; i++)
-		data.push_back(atoi(argv[i]));
-	std::cout << is_monotonic(data) << std::endl;
+    argv++; argc--;
+    std::vector<int> data;
+
+    for (int i = 0; i < argc; i++)
+        data.push_back(atoi(argv[i]));
+    std::cout << is_monotonic(data) << std::endl;
 }

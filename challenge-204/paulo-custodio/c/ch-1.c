@@ -30,33 +30,33 @@ Input: @nums = (6,5,5,4)
 Output: 1
 */
 
-#define MAX_DATA	1024
+#define MAX_DATA    1024
 
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 
 int is_monotonic(int size, int data[]) {
-	if (size < 2)
-		return 1;
-	else {
-		int climb = 0, descend = 0;
-		for (int i = 0; i < size - 1; i++) {
-			int delta = data[i+1]-data[i];
-			if (delta > 0) climb++;
-			else if (delta < 0) descend++;
-			if (climb && descend) return 0;
-		}
-		return 1;
-	}
+    if (size < 2)
+        return 1;
+    else {
+        int climb = 0, descend = 0;
+        for (int i = 0; i < size - 1; i++) {
+            int delta = data[i+1]-data[i];
+            if (delta > 0) climb++;
+            else if (delta < 0) descend++;
+            if (climb && descend) return 0;
+        }
+        return 1;
+    }
 }
 
 int main(int argc, char* argv[]) {
-	argv++; argc--;
-	assert(argc <= MAX_DATA);
-	int data[MAX_DATA];
-	
-	for (int i = 0; i < argc; i++)
-		data[i] = atoi(argv[i]);
-	printf("%d\n", is_monotonic(argc, data));
+    argv++; argc--;
+    assert(argc <= MAX_DATA);
+    int data[MAX_DATA];
+
+    for (int i = 0; i < argc; i++)
+        data[i] = atoi(argv[i]);
+    printf("%d\n", is_monotonic(argc, data));
 }

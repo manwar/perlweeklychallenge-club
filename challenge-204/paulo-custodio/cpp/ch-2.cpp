@@ -54,41 +54,41 @@ std::vector<int> data;
 size_t rows = 0, cols = 0;
 
 void parse_data() {
-	std::string line;
-	while (std::getline(std::cin, line)) {
-		if (line.find('[') != std::string::npos) {
-			size_t pos;
-			while ((pos = line.find('[')) != std::string::npos) line[pos] = ' ';
-			while ((pos = line.find(']')) != std::string::npos) line[pos] = ' ';
-			std::istringstream iss{ line };
-			int n;
-			while (iss >> n) {
-				data.push_back(n);
-			}
-		}
-		else {
-			std::istringstream iss{ line };
-			iss >> rows >> cols;
-			break;
-		}
-	}
+    std::string line;
+    while (std::getline(std::cin, line)) {
+        if (line.find('[') != std::string::npos) {
+            size_t pos;
+            while ((pos = line.find('[')) != std::string::npos) line[pos] = ' ';
+            while ((pos = line.find(']')) != std::string::npos) line[pos] = ' ';
+            std::istringstream iss{ line };
+            int n;
+            while (iss >> n) {
+                data.push_back(n);
+            }
+        }
+        else {
+            std::istringstream iss{ line };
+            iss >> rows >> cols;
+            break;
+        }
+    }
 }
 
 void output_data() {
-	if (data.size() != rows*cols) 
-		std::cout << "0" << std::endl;
-	else {
-		for (int i = 0; i < rows; i++) {
-			std::cout << "[ ";
-			for (int j = 0; j < cols; j++) {
-				std::cout << data[i*cols+j] << " ";
-			}
-			std::cout << "]" << std::endl;
-		}
-	}
+    if (data.size() != rows*cols)
+        std::cout << "0" << std::endl;
+    else {
+        for (int i = 0; i < rows; i++) {
+            std::cout << "[ ";
+            for (int j = 0; j < cols; j++) {
+                std::cout << data[i*cols+j] << " ";
+            }
+            std::cout << "]" << std::endl;
+        }
+    }
 }
 
 int main() {
-	parse_data();
-	output_data();
+    parse_data();
+    output_data();
 }
