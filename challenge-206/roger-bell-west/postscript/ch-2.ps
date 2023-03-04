@@ -1,0 +1,199 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/combinations {
+    4 dict begin
+    /k exch def
+    /arr exch def
+    /c [
+        0 1 k 1 sub { } for
+        arr length
+        0
+    ] def
+    [
+        {
+            [
+                k 1 sub -1 0 {
+                    c exch get arr exch get
+                } for
+            ]
+            /j 0 def
+            {
+                c j get 1 add c j 1 add get ne {
+                    exit
+                } if
+                c j j put
+                /j j 1 add def
+            } loop
+            j k ge {
+                exit
+            } if
+            c j c j get 1 add put
+        } loop
+    ]
+    end
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/permute { % [array] {proc} permute runs proc on each permutation of array
+    7 dict begin
+    /permute.subproc exch def
+    /permute.a exch def
+    /permute.n permute.a length def
+    /permute.c [ permute.n { 0 } repeat ] def
+    permute.a permute.subproc
+    /permute.i 0 def
+    {
+        permute.i permute.n ge {
+            exit
+        } if
+        permute.c permute.i get permute.i lt {
+            permute.i 2 mod 0 eq {
+                0 permute.i permute.swap
+            } {
+                permute.c permute.i get permute.i permute.swap
+            } ifelse
+            permute.a permute.subproc
+            permute.c permute.i get 1 add permute.c exch permute.i exch put
+            /permute.i 0 def
+        } {
+            permute.c permute.i 0 put
+            /permute.i permute.i 1 add def
+        } ifelse
+    } loop
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/permute.swap {
+    /permute.bi exch def
+    /permute.ai exch def
+    permute.a permute.ai get
+    permute.a permute.bi get
+    permute.a exch permute.ai exch put
+    permute.a exch permute.bi exch put
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+
+% end included library code
+
+/arraypairing {
+    9 dict begin
+    /n exch def
+    /nl n length def
+    nl 2 mod 1 eq {
+        0
+    } {
+        /hl nl 2 idiv def
+        [
+            [ 0 1 nl 1 sub {} for ]
+            hl
+            combinations {
+                /px exch def
+                /pa [
+                    px {
+                        n exch get
+                    } forall
+                ] def
+                /ps px toset def
+                /pb [ 0 1 nl 1 sub {} for ]
+                { ps exch known not } filter
+                { n exch get } map def
+                pa {
+                    /pp exch def
+                    /s 0 def
+                    0 1 hl 1 sub {
+                        /i exch def
+                        /s pp i get pb i get min s add def
+                    } for
+                    s
+                } permute
+            } forall
+        ] listmax
+    } ifelse
+    end
+} bind def
+
+(arraypairing) test.start
+[1 2 3 4] arraypairing 4 eq test
+[0 2 1 3] arraypairing 2 eq test
+test.end
