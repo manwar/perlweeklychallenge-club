@@ -39,7 +39,7 @@ multi sub MAIN('test') {
         'works for ("10:10", "09:30", "09:00", "09:55")';
 }
 
-#| Take user provided list like 1 2 2 3
+#| Take user provided list like 12:23 14:31
 multi sub MAIN(*@elements where @elements.elems ≥ 2 && all(@elements) ~~ $time-format) {
     my Str @str-elements = @elements;
     say shortest-time(@str-elements);
