@@ -14,7 +14,7 @@ sub arraypairing(@n) {
     }
     my $hl = $nl div 2;
     my @out;
-    for [0 .. $nl-1].combinations(2) -> @px {
+    for [0 .. $nl-1].combinations($hl) -> @px {
         my @pa = map {@n[$_]},@px;
         my $ps = @px.Set;
         my @pb = map {@n[$_]}, grep {$ps{$_}:!exists}, (0 .. $nl-1);
