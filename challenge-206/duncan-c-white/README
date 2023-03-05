@@ -1,72 +1,66 @@
-Task 1: Monotonic Array
+Task 1: Shortest Time
 
-You are given an array of integers.
-
-Write a script to find out if the given array is Monotonic. Print 1 if
-it is otherwise 0.
-
-An array is Monotonic if it is either monotone increasing or decreasing.
-
-Monotone increasing: for i <= j , nums[i] <= nums[j]
-Monotone decreasing: for i <= j , nums[i] >= nums[j]
+You are given a list of time points, at least 2, in the 24-hour clock
+format HH:MM.  Write a script to find out the shortest time in minutes
+between any two time points.
 
 Example 1
 
-  Input: @nums = (1,2,2,3)
-  Output: 1
+  Input: @time = ("00:00", "23:55", "20:00")
+  Output: 5
+
+  Since the difference between "00:00" and "23:55" is the shortest (5 minutes).
 
 Example 2
 
-  Input: @nums = (1,3,2)
-  Output: 0
+  Input: @array = ("01:01", "00:50", "00:57")
+  Output: 4
 
 Example 3
 
-  Input: @nums = (6,5,5,4)
-  Output: 1
+  Input: @array = ("10:10", "09:30", "09:00", "09:55")
+  Output: 15
 
-MY NOTES: seems very easy. use reverse() in order not to detect
-monotonically increasing and decreasing..
+MY NOTES: reasonably easy, although of course wraparound has to taken
+into account.  Might convert each hh:mm time into a number of minutes,
+then sort the array.. then check every adjacant pair (including the
+wraparound pair, i.e the last and the first)..
 
-GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
-into C (look in the C directory for the translation)
+No C solutions today.  Might do them later..
 
 
-Task 2: Reshape Matrix
+Task 2: Array Pairings
 
-You are given a matrix (m x n) and two integers (r) and (c).
-
-Write a script to reshape the given matrix in form (r x c) with the
-original value in the given matrix. If you can't reshape print 0.
+You are given an array of integers having even number of elements..
+Write a script to find the maximum sum of the minimum of each pairs.
 
 Example 1
 
-Input: $matrix = [ [ 1, 2 ], [ 3, 4 ] ]
-       $r = 1
-       $c = 4
+  Input: @array = (1,2,3,4)
+  Output: 4
 
-Output: [ 1 2 3 4 ]
+  Possible Pairings are as below:
+  a) (1,2) and (3,4). So min(1,2) + min(3,4) => 1 + 3 => 4
+  b) (1,3) and (2,4). So min(1,3) + min(2,4) => 1 + 2 => 3
+  c) (1,4) and (2,3). So min(1,4) + min(2,3) => 2 + 1 => 3
+
+  So the maxium sum is 4.
 
 Example 2
 
-Input: $matrix = [ [ 1, 2, 3 ] , [ 4, 5, 6 ] ]
-       $r = 3
-       $c = 2
+  Input: @array = (0,2,1,3)
+  Output: 2
 
-Output: [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]
+  Possible Pairings are as below:
+  a) (0,2) and (1,3). So min(0,2) + min(1,3) => 0 + 1 => 1
+  b) (0,1) and (2,3). So min(0,1) + min(2,3) => 0 + 2 => 2
+  c) (0,3) and (2,1). So min(0,3) + min(2,1) => 0 + 1 => 1
+  
+  So the maximum sum is 2.
 
-Example 3
+MY NOTES: hmm. I wish one of the examples had 6 elements.  It seems
+to me that this sounds like a recursive solution..  Pick each possible
+pair involving the first element and each of the others (in turn),
+remove them, calculate and total up the minimum, then recurse.
 
-Input: $matrix = [ [ 1, 2 ] ]
-       $r = 3
-       $c = 2
-
-Output: 0
-
-MY NOTES: also quite easy, can be done if R1*C1==R2*C
-(of course we have to discover R1 and C1, the dimensions o
-the original matrix).  Also have to read the matrix in..
-
-GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
-into C (look in the C directory for the translation).  Needed to
-pass original sizes into C routine..
+No C solutions today.  Might do them later..
