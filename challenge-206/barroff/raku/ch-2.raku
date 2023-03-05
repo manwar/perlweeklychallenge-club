@@ -18,7 +18,10 @@ multi sub MAIN('test') {
 }
 
 #| Take user provided list like 1 2 2 3
-multi sub MAIN(*@elements where @elements.elems ≥ 2 && @elements.elems % 2 == 0 && all(@elements) ~~ /^<[+-]>?<[0..9]>+$/) {
+multi sub MAIN(*@elements where
+        @elements.elems ≥ 2 &&
+        all(@elements) % 2 == 0 &&
+        all(@elements) ~~ /^<[+-]>?<[0..9]>+$/) {
     my Int @int-elements = @elements;
     say array-pairings(@int-elements);
 }

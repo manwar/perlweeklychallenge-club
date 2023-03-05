@@ -9,7 +9,8 @@ constant $time-format = /
 /;
 
 sub convert-to-minutes(Str $time --> Int) {
-    $time ~~ $time-format or die "Time string not in the right format.\nExpected 'HH:MM' but got $time";
+    $time ~~ $time-format or
+        die "Time string not in the right format.\nExpected 'HH:MM' but got $time";
     $<hours> × 60 + $<minutes>;
 }
 
@@ -30,9 +31,12 @@ multi sub MAIN('test') {
     use Test;
     plan 3;
 
-    is shortest-time(Array[Str].new(["00:00", "23:55", "20:00"])), 5, 'works for ("00:00", "23:55", "20:00")';
-    is shortest-time(Array[Str].new(["01:01", "00:50", "00:57"])), 4, 'works for ("01:01", "00:50", "00:57")';
-    is shortest-time(Array[Str].new(["10:10", "09:30", "09:00", "09:55"])), 15, 'works for ("10:10", "09:30", "09:00", "09:55")';
+    is shortest-time(Array[Str].new(["00:00", "23:55", "20:00"])), 5,
+        'works for ("00:00", "23:55", "20:00")';
+    is shortest-time(Array[Str].new(["01:01", "00:50", "00:57"])), 4,
+        'works for ("01:01", "00:50", "00:57")';
+    is shortest-time(Array[Str].new(["10:10", "09:30", "09:00", "09:55"])), 15,
+        'works for ("10:10", "09:30", "09:00", "09:55")';
 }
 
 #| Take user provided list like 1 2 2 3
