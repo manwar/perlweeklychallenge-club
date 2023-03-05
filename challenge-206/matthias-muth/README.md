@@ -63,9 +63,10 @@ So let's start by generating the permutations.
 Again, there are good recommendations in the [Perl FAQ](https://perldoc.perl.org/perlfaq4#How-do-I-permute-N-elements-of-a-list%3F):
 - Use the `List::Permutor` module on CPAN.
 - If the list is actually an array (which it is in our case), try the `Algorithm::Permute` module (also on CPAN).
+
 In any case, it is recommended to use an iterator to get the next permutation instead of generating all permutations beforehand, as the number of permutations (*n!*) rises very quickly with larger number of elements.
 
-I our case, I did a thorough analysis of the possible set of input data ;-).<br/>
+In our case, I did a thorough analysis of the possible set of input data ;-).<br/>
 And as we only will need to solve the problem for two lists of only four elements each, I decided to go with a simple schoolbook recursive generation of the permutations.<br/>
 The result of the function will be a list of arrayrefs, each one representing one permutation. And for symmetry reasoens, and to avoid shuffling values around, I chose to use an arrayref as input parameter, too. 
 
