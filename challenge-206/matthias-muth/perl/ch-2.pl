@@ -6,8 +6,6 @@ use warnings;
 use feature 'signatures';
 no warnings 'experimental::signatures';
 
-use List::Util qw( min max sum );
-
 sub permute( $a_ref ) {
     return undef  unless defined $a_ref && ref $a_ref eq 'ARRAY';
     return ()     if @$a_ref == 0;
@@ -23,11 +21,14 @@ sub permute( $a_ref ) {
     return @permutations;
 }
 
+use List::Util qw( min max sum );
+
 sub sum_of_min_of_pairs( @a ) {
     return undef
 	unless @a % 2 == 0;
-    return
-	sum( map $_ % 2 == 0 ? min( $a[$_], $a[ $_ + 1 ] ) : 0, 0 .. $#a - 1 );
+    return sum(
+	map $_ % 2 == 0 ? min( $a[$_], $a[ $_ + 1 ] ) : 0, 0..( $#a - 1 )
+    );
 }
 
 sub max_of_sums( @a ) {

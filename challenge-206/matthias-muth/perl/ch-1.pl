@@ -8,7 +8,7 @@ no warnings 'experimental::signatures';
 use List::Util qw( min );
 
 sub time_diffs( $fixed, @others ) {
-    # Return all differences between one fixed timestamp and a list of others. 
+    # Return all differences between one timestamp and a list of others. 
     # Use the time difference spanning over midnight if it is shorter
     # (by simply using the minimum of both).
     return
