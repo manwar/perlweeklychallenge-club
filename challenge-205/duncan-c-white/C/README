@@ -1,0 +1,14 @@
+Thought I'd also have a go at translating ch-1.pl and ch-2.pl into C..
+
+Both C versions produce near-identical (non-debugging and even debugging)
+output to the Perl originals.
+
+The C translation of ch-2.pl was quite tricky to write, mainly on storage
+allocation (as usual), although I found a neat (slightly cheaty?)
+way of doing it.  specifically: I create a 1d-array of all the elements,
+and then I print it out as if it were an RxC matrix..
+
+These C versions use most of my regular support modules:
+- a command-line argument processing module args.[ch],
+- a csvlist-of-int parsing module parseints.[ch], and
+- an int-array printing module printarray.[ch].
