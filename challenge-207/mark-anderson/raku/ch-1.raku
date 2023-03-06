@@ -7,5 +7,5 @@ is-deeply keyboard-word(< BBC CNN OAN >),            < BBC CNN    >;
 
 sub keyboard-word(@a)
 {
-    @a.grep({ .lc.comb.cache (<) any < qwertyuiop asdfghjkl zxcvbnm >>>.comb })
+    @a.grep({ .lc.comb.cache (<=) any < qwertyuiop asdfghjkl zxcvbnm >>>.comb })
 }
