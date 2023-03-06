@@ -1,71 +1,70 @@
-Task 1: Monotonic Array
+Task 1: Third Highest
 
 You are given an array of integers.
 
-Write a script to find out if the given array is Monotonic. Print 1 if
-it is otherwise 0.
-
-An array is Monotonic if it is either monotone increasing or decreasing.
-
-Monotone increasing: for i <= j , nums[i] <= nums[j]
-Monotone decreasing: for i <= j , nums[i] >= nums[j]
+Write a script to find out the Third Highest if found otherwise return
+the maximum.
 
 Example 1
 
-  Input: @nums = (1,2,2,3)
-  Output: 1
+  Input: @array = (5,3,4)
+  Output: 3
+
+  First highest is 5.
+  Second highest is 4.
+  Third highest is 3.
 
 Example 2
 
-  Input: @nums = (1,3,2)
-  Output: 0
+  Input: @array = (5,6)
+  Output: 6
+
+  First highest is 6.
+  Second highest is 5.
+  Third highest is missing, so maximum is returned.
 
 Example 3
 
-  Input: @nums = (6,5,5,4)
-  Output: 1
+  Input: @array = (5,4,4,3)
+  Output: 3
 
-MY NOTES: seems very easy. use reverse() in order not to detect
-monotonically increasing and decreasing..
+  First highest is 5. Second highest is 4. Third highest is 3.
+
+MY NOTES: seems very easy.  sort, take 3rd biggest distinct element
+(or biggest element if less than 3)
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl
 into C (look in the C directory for the translation)
 
 
-Task 2: Reshape Matrix
+Task 2: Maximum XOR
 
-You are given a matrix (m x n) and two integers (r) and (c).
-
-Write a script to reshape the given matrix in form (r x c) with the
-original value in the given matrix. If you can't reshape print 0.
+You are given an array of integers.
+Write a script to find the highest value obtained by XORing any two
+distinct members of the array.
 
 Example 1
 
-Input: $matrix = [ [ 1, 2 ], [ 3, 4 ] ]
-       $r = 1
-       $c = 4
+  Input: @array = (1,2,3,4,5,6,7)
+  Output: 7
 
-Output: [ 1 2 3 4 ]
+  The maximum result of 1 xor 6 = 7.
 
 Example 2
 
-Input: $matrix = [ [ 1, 2, 3 ] , [ 4, 5, 6 ] ]
-       $r = 3
-       $c = 2
+  Input: @array = (2,4,1,3)
+  Output: 7
 
-Output: [ [ 1, 2 ], [ 3, 4 ], [ 5, 6 ] ]
+  The maximum result of 4 xor 3 = 7.
 
 Example 3
 
-Input: $matrix = [ [ 1, 2 ] ]
-       $r = 3
-       $c = 2
+  Input: @array = (10,5,7,12,8)
+  Output: 15
 
-Output: 0
+  The maximum result of 10 xor 5 = 15.
 
-MY NOTES: also quite easy, can be done if R1*C1==R2*C
-(of course we have to discover R1 and C1, the dimensions o
-the original matrix).  Also have to read the matrix in..
+MY NOTES: also quite easy, try all combinations, pick max of all xors.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl
 into C (look in the C directory for the translation).  Needed to
