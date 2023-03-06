@@ -1,9 +1,9 @@
 #!/usr/bin/env raku
 use Test;
 
-is keyboard-word(< Hello Alaska Dad Peace >), < Alaska Dad    >;
-is keyboard-word(< OMG Bye >),                <               >; 
-is keyboard-word(< BBC CNN OAN >),            < BBC CNN       >;
+is-deeply keyboard-word(< Hello Alaska Dad Peace >), < Alaska Dad    >;
+is-deeply keyboard-word(< OMG Bye >),                <               >; 
+is-deeply keyboard-word(< BBC CNN OAN >),            < BBC CNN       >;
 
 sub keyboard-word(@a)
 {
