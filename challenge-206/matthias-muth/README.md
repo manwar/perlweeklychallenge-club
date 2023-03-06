@@ -1,142 +1,125 @@
-# Uniq anyone?
-**Challenge 205 solutions in Perl by Matthias Muth**
+# All the permutations...
+**Challenge 206 solutions in Perl by Matthias Muth**
 
-## Task 1: Third Highest
+## Task 1: Shortest Time
 
-> You are given an array of integers.<br/>
-Write a script to find out the _Third Highest_ if found otherwise return the maximum.
+> You are given a list of time points, at least 2, in the 24-hour clock format `HH:MM`.<br/>
+> Write a script to find out the shortest time in minutes between any two time points.
 
-Thinking about a solution I start at the end:<br/>
-I imagine simply getting the result from the ordered list of input values -- just take the third value, and it there isn't any, take the first. So sort and return -- easy!
+The examples given are important for understanding that the shortest time between two time points might also span midnight.
+That means that if the difference between two points of time is _n_ minutes, the 'shortest' difference may be either _n_ or (1440 - _n_)
+(24 hours being 24 \* 60 = 1440 minutes).
 
-But what if there are values that exist several times in the array? Actually we need to do a Unix style ``sort | uniq`` instead of just ``sort``.
-
-I recommend brian d foy's very nice article _How can I remove duplicate elements from a list or array?_ in the [Perl FAQ](https://perldoc.perl.org/perlfaq4#How-can-I-remove-duplicate-elements-from-a-list-or-array?).
-These are his suggestions:
-
-* Use a hash. Like for example:
-```perl
-my %hash   = map { $_, 1 } @array;
-# or a hash slice: @hash{ @array } = ();
-# or a foreach: $hash{$_} = 1 foreach ( @array );
-
-my @unique = keys %hash;
-```
-
-The problem with this is that elements are returned in random order, completely unsorted. This means we would _first_ need to do the `unique` step, and _then_ the `sort`.
-But now I want to know how to do a better `uniq`!
-
-* Try the `uniq` function in ``List::MoreUtils``. 
-
-It's a pity that that module is not part of the core perl distribution, and I don't want to ask people to install CPAN modules just for getting the third highest of 3 or 4 numbers. :-)
-
-* Use a hash for remembering those elements that we have seen already. In the short version:
+I reduced the problem of finding the shortest time difference between *any two* timepoints to finding the shortest time difference of *one* timepoint with the rest of a list. which results in this function:
 
 ```perl
-my %seen = ();
-my @unique = grep { ! $seen{ $_ }++ } @array;
-```
-This keeps the order of elements intact, it only removes those that we already have.<br/>
-This looks good!
+use List::Utils qw( min );
 
-### But `uniq` is in `List::Util` now!
-
-As I was gathering ideas for other solutions using the `reduce` or `reductions` functions
-from `List::Util`
-(which *is* a core module!),
-I stumbled over the `uniq` function in the [`List::Util` documentation](https://perldoc.perl.org/List::Util#uniq)!
-
-`Uniq` has been in `List::Util` since its version 1.44, and an improved version in 1.45 (see [here](https://metacpan.org/dist/Scalar-List-Utils/changes)), which is part of perl version 5.25.1 (according to `$ corelist List::Util 1.45`), which was released on 2016-05-20 (using `$ corelist -r 5.25.1`).
-
-So for more current versions of perl the solution can look like  this:
-
-```perl
-use strict;
-use warnings;
-
-use List::Util 1.45 qw( uniq );
-
-sub third_highest {
-    my @a = uniq reverse sort @_;
-    return @a >= 3 ? $a[2] : $a[0];
+sub time_diffs( $fixed, @others ) {
+    # Return all differences between one timestamp and a list of others.
+    # Use the time difference spanning over midnight if it is shorter
+    # (by simply using the minimum of both).
+    return
+        map { my $d = abs( $fixed - $others[$_] ); min( $d, (24*60) - $d ); }
+            0..$#others;
 }
 ```
 
-For older perl versions, we still can use this:
+Using this function, the rest is straightforward:<br/>
+* Translate HH::MM times into minutes,
+* Find the minimum of each time in the list with the rest of the list, using the above function.
 
 ```perl
-use strict;
-use warnings;
+sub shortest_time( @hhmm_times ) {
+    # Turn HH:MM times into number of minutes.
+    my @t = map { /^(\d+):(\d{2})$/; $1 * 60 + $2 } @hhmm_times;
 
-sub uniq {
-    my %seen;
-    return grep { ! $seen{$_}++ } @_;
-}
-
-sub third_highest {
-    my @a = uniq reverse sort @_;
-    return @a >= 3 ? $a[2] : $a[0];
+    # Return the minimum of the time differences of every element with all
+    # its successors. We can skip the last element, as it has no successor to
+    # build a difference with.
+    # We simplify the parameter list by just giving the whole
+    # slice instead of giving the first element and its successors separately.
+    return min( map time_diffs( @t[ $_ .. $#t ] ), 0 .. ( $#t - 1 ) );
 }
 ```
 
-Great to have learned something from this challenge!
+Passing the parameters for `time_diffs`, I just pass a slice of the array. The first elemenet of the slice will be assigned to `$fixed` in the function, the rest of the parameters will be used for `@others`. I chose this as a compromise between self-explanation in the function and simplicity in the call.
 
-## Task 2: Maximum XOR
+Note that for the last element in the list we don't need to call the function, since there won't be any time difference if we have just one value.
 
->You are given an array of integers.<br/>
->Write a script to find the highest value obtained by XORing any two distinct members of the array.
+## Task 2: Array Pairings
 
-'*XORing any two distinct members of the array*' we can do by XORing the first element with all others following it, then the second one with the ones following that one, and and so on until we have done it for all elements.
-For every element, we do not need to XOR it with the elements preceding it, because those values we already have (using the fact that XOR is a commutative operation, so `( $a[$i] ^ $a[$j] )` is the same as `( $a[$j] ^ $a[$i] )` ).
-And actually we don't need to take care of the last element in the list, because it has no successors to XOR with.
+>You are given an array of integers having even number of elements..<br/>
+>Write a script to find the maximum sum of the minimum of each pairs.
 
-So a straightforward solution looks like this:
+Ahm, what??<br/>
+Ok, I see. the examples clear it up.<br/>
+Actually we need to walk through all permutations of the given list.
+Then for each permutation we need to use the 'minimum of each pair', sum them up, and then find the maximum of all those sums.
+Ok, understood now.
+
+So let's start by generating the permutations.
+
+Again, there are good recommendations in the [Perl FAQ](https://perldoc.perl.org/perlfaq4#How-do-I-permute-N-elements-of-a-list%3F):
+- Use the `List::Permutor` module on CPAN.
+- If the list is actually an array (which it is in our case), try the `Algorithm::Permute` module (also on CPAN).
+
+In any case, it is recommended to use an iterator to get the next permutation instead of generating all permutations beforehand, as the number of permutations (*n!*) rises very quickly with larger number of elements.
+
+In our case, I did a thorough analysis of the possible set of input data ;-).<br/>
+And as we only will need to solve the problem for two lists of only four elements each, I decided to go with a simple schoolbook recursive generation of the permutations.<br/>
+The result of the function will be a list of arrayrefs, each one representing one permutation. And for symmetry reasoens, and to avoid shuffling values around, I chose to use an arrayref as input parameter, too. 
 
 ```perl
-sub max_xor {
-    my @all_xors;
-    for my $i ( 0 .. ( $#_ - 1 ) ) {
-        for my $j ( $i..$#_ ) {
-            push @all_xors, $_[$i] ^ $_[$j];
-        }
-    };
-    return max( @all_xors );
+sub permute( $a_ref ) {
+    return undef  unless defined $a_ref && ref $a_ref eq 'ARRAY';
+    return ()     if @$a_ref == 0;
+    return $a_ref if @$a_ref == 1;
+
+    my @permutations;
+    for my $i ( 0..$#$a_ref ) {
+        my @others = @$a_ref;
+        my $extracted = splice( @others, $i, 1, () );
+        push @permutations, [ $extracted, @$_ ]
+            for permute( [ @others ] );
+    }
+    return @permutations;
 }
 ```
 
-Ok. Very boring.
+I have put each of the next two steps into a function of its own.<br/>
+The first one splits the array into pairs and returns the sum on the smaller of the two values in each pair.<br/>
+I am a fan of `map` calls, more efficient and most of the times easier to write than `for` loops.
+My way of splitting up into pairs in a `map` uses the classical `0..$#a` loop values,
+but skipping every other iteration using a `$_ % 2 == 0` criterion with a 0 to add to the sum.
 
-But we can replace the inner loop by a `map` call, to push all XOR results of one element in one operation. Like so:
+The alternative is to increase the 'loop value' by two for each iteration, but I don't find a nice way to write that.
+(Running through half of the array while doubling the loop variable doesn't look obvious enough for me.)
+
+Actually, the iteration for the last value is not needed, so in fact we use `0..($#a-1)`.
 
 ```perl
-sub max_xor_2 {
-    my @all_xors;
-    for my $i ( 0..$#_ ) {
-        push @all_xors, map $_[$i] ^ $_[$_], $i..$#_;
-    };
-    return max( @all_xors );
+use List::Util qw( min max sum );
+
+sub sum_of_min_of_pairs( @a ) {
+    return undef
+        unless @a % 2 == 0;
+    return sum(
+        map $_ % 2 == 0 ? min( $a[$_], $a[ $_ + 1 ] ) : 0, 0..( $#a - 1 )
+    );
 }
 ```
 
-I haven't measured the run time for this, but I guess that the `map` call is quite a bit more efficient than writing out the `for` loop explicitly.
-But how can we also get rid of the outer `for` loop?
-
-The problem is that it is not easy to do nested `map` calls in perl.
-There is only one `$_` variable, and it is the one of the inner `map`. 
-That is why we still need the `$i` as a loop variable, to use it within the `map` code block. 
-
-But sometimes we are lucky, in that we can 'encapsulate' the `map` call and get rid of the need for the inner `$_`.
-Here, we can turn it into a one-line function:
+The second function combines the generation of permutations and the `sum_of_min_of_pairs` computation for each of the permutations,
+and returns the challenge result for the input array:
 
 ```perl
-sub xor_slice { return map $_[0] ^ $_, @_[1..$#_] }
-sub max_xor3 {
-    return max( map xor_slice( @_[$_..$#_] ), 0 .. ( $#_ - 1 ) );
+sub max_of_sums( @a ) {
+    return undef
+        unless @a % 2 == 0;
+    return
+        max( map sum_of_min_of_pairs( @$_ ), permute( [ @a ] ) );
 }
 ```
-
-No `for` loop anymore!
-More efficient, I guess, and less boring! ;-) 
-
 
 **Thank you for the challenge!**
