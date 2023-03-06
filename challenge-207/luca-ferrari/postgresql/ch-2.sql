@@ -17,9 +17,9 @@ BEGIN
 	   SELECT c, row_number() OVER ( ORDER BY c desc ) r
 	   FROM   unnest( citations ) c
 	)
-	SELECT MIN( c )
+	SELECT MIN( r )
 	FROM   d
-	WHERE  c >= r
+	WHERE  r >= c
 	;
 END
 $CODE$

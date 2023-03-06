@@ -15,7 +15,7 @@ AS $CODE$
    my @cits = reverse sort $citations->@*;
    my @data;
    while ( my ( $key, $value ) = each( @cits ) ) {
-   	 push @data, $value if ( $key >= $value );
+   	 push @data, $key if ( $key >= $value );
    }
 
    return ( sort( @data ) )[ 0 ];
