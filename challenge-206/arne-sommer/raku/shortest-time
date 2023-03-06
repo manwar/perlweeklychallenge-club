@@ -1,0 +1,48 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@time where @time.elems >= 2 && all(@time) ~~ /^<[012]><[0..9]>\:<[0..5]><[0..9]>$/, :v($verbose));
+
+my @sorted = @time.sort;
+
+say ": Sorted: { @sorted.join(", ") }" if $verbose;
+
+if (@sorted.elems > @sorted.unique.elems)
+{
+  say "0";
+  exit;
+}
+
+@sorted.push: @sorted.head if @sorted.elems > 2;
+
+say ": Sorted roundtrip: { @sorted.join(", ") }" if $verbose;
+
+my $shortest = Inf;
+my $first    = @sorted.shift;
+my $second;
+
+while (@sorted)
+{
+  my $second = @sorted.shift;
+  my $diff   = time-diff($first, $second);
+
+  $shortest = min($shortest, $diff);
+  say ": first:$first second: $second -> diff:$diff" if $verbose;
+
+  $first = $second;
+}
+
+say $shortest;
+
+sub time-diff ($first, $second)
+{
+  my ($first-h,  $first-m)  = $first.split(":");
+  my ($second-h, $second-m) = $second.split(":");
+
+  my $first-min  = $first-h  * 60 + $first-m;
+  my $second-min = $second-h * 60 + $second-m;
+
+  my $diff = ($second-min - $first-min);
+
+  return 24 * 60 + $diff if $diff < 0;
+  return $diff;
+}
