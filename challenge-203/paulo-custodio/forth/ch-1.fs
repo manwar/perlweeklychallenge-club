@@ -1,3 +1,5 @@
+#! /usr/bin/env gforth
+
 \ Challenge 203
 \
 \ Task 1: Special Quadruplets
