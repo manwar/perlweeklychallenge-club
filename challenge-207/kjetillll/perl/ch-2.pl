@@ -11,6 +11,7 @@ my @test = (
     [10,8,5,5,5],    #5
     [25,1,1,1],      #1
     [25],            #1
+    [ ],             #0
 );
 
 for ( @ARGV ? ([@ARGV]) : @test ) {
@@ -27,3 +28,4 @@ Input: 25 8 5 3 3             H-Index: 3
 Input: 10 8 5 5 5             H-Index: 5
 Input: 25 1 1 1               H-Index: 1
 Input: 25                     H-Index: 1
+Input:                        H-Index: 0  
