@@ -39,7 +39,7 @@ if __name__ == "__main__":
         len(list(filter(lambda x: re.search(r'\d\d:\d\d', x), input))) != len(input)
         or
         len(list(filter(lambda x: x > '24:00', input))) != 0 ):
-        sys.exit("Input error\n")
+        sys.exit("Input error")
 
     minutes = [get_minutes(x) for x in input]
     comb = combinations(range(len(input)), 2)
