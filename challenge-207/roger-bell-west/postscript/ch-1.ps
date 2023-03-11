@@ -1,0 +1,141 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+
+% end included library code
+
+/keyboardword {
+    2 dict begin
+    /letters 26 dict def
+    (qwerytyiop) {
+        letters exch 1 put
+    } forall
+    (asdfghjkl) {
+        letters exch 2 put
+    } forall
+    (zxcvbnm) {
+        letters exch 3 put
+    } forall
+    [ exch
+      {
+          /row 3 dict def
+          dup
+          {
+              dup dup 65 ge exch 90 le and {
+                  32 add
+              } if
+              dup letters exch known {
+                  letters exch get row exch true put
+              } {
+                  pop
+              } ifelse
+          } forall
+          row keys length 1 ne {
+              pop
+          } if
+      } forall
+    ]
+} bind def
+
+(keyboardword) test.start
+[(Hello) (Alaska) (Dad) (Peace)] keyboardword [(Alaska) (Dad)] deepeq test
+[(OMG) (Bye)] keyboardword [] deepeq test
+test.end

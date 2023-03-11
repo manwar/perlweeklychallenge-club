@@ -1,0 +1,14 @@
+Thought I'd also have a go at translating ch-1.pl and ch-2.pl into C..
+
+Both C versions produce near-identical (non-debugging and even debugging)
+output to the Perl originals.
+
+The C translation of ch-2.pl could have been quite tricky to write, mainly on
+storage allocation (as usual), we would have needed a dynamic array of
+solutions; but I bodged it with a static array and an assertion check
+assert( n < MAXSOLS )..
+
+These C versions use most of my regular support modules:
+- a command-line argument processing module args.[ch],
+- a csvlist-of-int parsing module parseints.[ch], and
+- an int-array printing module printarray.[ch].
