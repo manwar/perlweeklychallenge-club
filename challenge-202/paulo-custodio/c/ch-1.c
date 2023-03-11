@@ -34,6 +34,14 @@ Output: 1
 #include <stdlib.h>
 #include <stdbool.h>
 
+void* check_mem(void* p) {
+    if (!p) {
+        fputs("Out of memory", stderr);
+        exit(EXIT_FAILURE);
+    }
+    return p;
+}
+
 bool is_odd(int n) {
     return n%2==1;
 }
@@ -53,7 +61,7 @@ int main(int argc, char* argv[]) {
     }
 
     int nums_size = argc;
-    int* nums = malloc(nums_size * sizeof(int));
+    int* nums = check_mem(malloc(nums_size * sizeof(int)));
     for (int i = 0; i < nums_size; i++)
         nums[i] = atoi(argv[i]);
 

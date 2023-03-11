@@ -21,7 +21,7 @@
 import sys
 import re
 
-url = sys.argv[1]
+url = sys.stdin.read().rstrip()
 
 word = r"(?i:[a-z_][a-z_0-9+.-]*)"
 pathre = r"(?:"+word+r"|/)+"
