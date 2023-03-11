@@ -25,7 +25,6 @@
 #     5
 
 use Modern::Perl;
-no warnings 'recursion';
 
 sub make_piles1 {
     my($count, $prev, $n) = @_;

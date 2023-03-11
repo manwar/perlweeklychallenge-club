@@ -45,12 +45,20 @@ typedef struct {
     int* items;
 } IList;
 
+void* check_mem(void* p) {
+    if (!p) {
+        fputs("Out of memory", stderr);
+        exit(EXIT_FAILURE);
+    }
+    return p;
+}
+
 IList* ilist_new(size_t count) {
-    IList* list = calloc(1, sizeof(IList));
+    IList* list = check_mem(calloc(1, sizeof(IList)));
     assert(list);
     if (count) {
         list->count = count;
-        list->items = calloc(count, sizeof(int));
+        list->items = check_mem(calloc(count, sizeof(int)));
         assert(list->items);
     }
     return list;
@@ -63,7 +71,7 @@ void ilist_free(IList* list) {
 
 void ilist_push(IList* list, int elem) {
     list->count++;
-    list->items = realloc(list->items, list->count * sizeof(int));
+    list->items = check_mem(realloc(list->items, list->count * sizeof(int)));
     assert(list->items);
     list->items[list->count - 1] = elem;
 }

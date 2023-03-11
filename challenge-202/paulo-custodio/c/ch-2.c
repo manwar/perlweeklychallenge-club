@@ -39,6 +39,14 @@ Output: 3, 3, 2, 1, 2, 3, 3
 #include <stdlib.h>
 #include <string.h>
 
+void* check_mem(void* p) {
+    if (!p) {
+        fputs("Out of memory", stderr);
+        exit(EXIT_FAILURE);
+    }
+    return p;
+}
+
 int largest_valey(int heights[], int heights_size) {
     int l1 = 0, r1 = -1;        // initial interval
 
@@ -72,7 +80,7 @@ int main(int argc, char* argv[]) {
     }
 
     int heights_size = argc;
-    int* heights = malloc(heights_size * sizeof(int));
+    int* heights = check_mem(malloc(heights_size * sizeof(int)));
     for (int i = 0; i < heights_size; i++)
         heights[i] = atoi(argv[i]);
 

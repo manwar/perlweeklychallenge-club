@@ -32,6 +32,14 @@ Output: 3
 #include <stdio.h>
 #include <stdlib.h>
 
+void* check_mem(void* p) {
+    if (!p) {
+        fputs("Out of memory", stderr);
+        exit(EXIT_FAILURE);
+    }
+    return p;
+}
+
 typedef struct Point {
     int x, y;
 } Point;
@@ -85,7 +93,7 @@ int main(int argc, char* argv[]) {
 
     // allocate memory for the point array and read it from argv[]
     points_size = (argc-1)/2;
-    points = calloc(points_size, sizeof(Point));
+    points = check_mem(calloc(points_size, sizeof(Point)));
     assert(points);
     for (size_t i = 0; i < points_size; i++) {
         points[i].x = atoi(argv[1+2*i]);

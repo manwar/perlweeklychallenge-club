@@ -32,6 +32,14 @@ First highest is 5. Second highest is 4. Third highest is 3.
 #include <stdio.h>
 #include <stdlib.h>
 
+void* check_mem(void* p) {
+    if (!p) {
+        fputs("Out of memory", stderr);
+        exit(EXIT_FAILURE);
+    }
+    return p;
+}
+
 int compare_desc(const void* a, const void* b) {
     return *(int*)b - *(int*)a;
 }
@@ -42,7 +50,7 @@ int main(int argc, char* argv[]) {
 
     if (argc > 0) {
         int num_items = argc;
-        int* items = malloc(num_items * sizeof(int));
+        int* items = check_mem(malloc(num_items * sizeof(int)));
 
         // parse input numbers
         for (int i = 0; i < num_items; i++)
