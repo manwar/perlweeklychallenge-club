@@ -10,6 +10,9 @@
 # 2022-01-30 2022-02-27 2022-03-27 2022-04-24
 # 2022-05-29 2022-06-26 2022-07-31 2022-08-28
 # 2022-09-25 2022-10-30 2022-11-27 2022-12-25
+####
+# This is a task for reading the documentation of the DateTime module to
+# find the functions we need.
 #=============================================================================
 
 use v5.36;
@@ -22,6 +25,7 @@ my $DoTest  = 0;
 GetOptions("test" => \$DoTest);
 exit(!runTest()) if $DoTest;
 
+# Takes one argument, a year.
 say join("\n", lastSunday($ARGV[0])->@*);
 
 sub lastSunday($year)
@@ -29,6 +33,8 @@ sub lastSunday($year)
     my @sundayList;
     for my $month ( 1 .. 12 )
     {
+        # Start at the last day of the month and back up until we
+        # find a Sunday.
         my $d = DateTime->last_day_of_month( year => $year, month => $month);
         while ( $d->day_of_week != 7 )
         {
