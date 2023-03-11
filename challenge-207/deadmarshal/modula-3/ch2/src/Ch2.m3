@@ -1,0 +1,20 @@
+MODULE Ch2 EXPORTS Main;
+
+IMPORT IO;
+
+VAR
+  A1:ARRAY[0..4] OF INTEGER := ARRAY OF INTEGER{10,8,5,4,3};
+  A2:ARRAY[0..4] OF INTEGER := ARRAY OF INTEGER{25,8,5,3,3};
+  
+PROCEDURE HIndex(VAR A:ARRAY OF INTEGER):INTEGER =
+  BEGIN
+    FOR I := FIRST(A) TO LAST(A) DO
+      IF I >= A[I] THEN RETURN I END
+    END;
+  END HIndex;
+  
+BEGIN
+  IO.PutInt(HIndex(A1)); IO.Put("\n");
+  IO.PutInt(HIndex(A2)); IO.Put("\n");
+END Ch2.
+
