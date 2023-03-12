@@ -10,13 +10,13 @@ my @TESTS = (
  [ [qw(OMG Bye)               ],  '' ],
 );
 
-sub keyboard_words { grep {   m{^([qwertyuiop]+|[asdfghjkl]+|[zxcvbnm]+)$}i } @_ }
-sub keyboard_word  { $_[0] =~ m{^([qwertyuiop]+|[asdfghjkl]+|[zxcvbnm]+)$}i      }
+is( "@{[ keyboard_words(          @{$_->[0]} ) ]}", $_->[1] ) for @TESTS;
 
 done_testing();
 
-is( "@{[ keyboard_words(          @{$_->[0]} ) ]}", $_->[1] ) for @TESTS;
+sub keyboard_words { grep {   m{^([qwertyuiop]+|[asdfghjkl]+|[zxcvbnm]+)$}i } @_ }
+sub keyboard_word  { $_[0] =~ m{^([qwertyuiop]+|[asdfghjkl]+|[zxcvbnm]+)$}i      }
 
 ## This one looks for all keyboard words in a file...
-
+keyboard_word($_)&&print while<>;
 m{^([qwertyuiop]+|[asdfghjkl]+|[zxcvbnm]+)$}i && print while <>;
