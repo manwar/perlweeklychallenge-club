@@ -32,13 +32,21 @@ The maximum result of 10 xor 5 = 15.
 #include <stdio.h>
 #include <stdlib.h>
 
+void* check_mem(void* p) {
+    if (!p) {
+        fputs("Out of memory", stderr);
+        exit(EXIT_FAILURE);
+    }
+    return p;
+}
+
 int main(int argc, char* argv[]) {
     argv++; argc--;
     int result = -1;
 
     if (argc > 0) {
         int num_items = argc;
-        int* items = malloc(num_items * sizeof(int));
+        int* items = check_mem(malloc(num_items * sizeof(int)));
 
         // parse input numbers
         for (int i = 0; i < num_items; i++)

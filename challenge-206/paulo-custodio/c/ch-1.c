@@ -28,6 +28,14 @@ Output: 15
 #include <stdio.h>
 #include <stdlib.h>
 
+void* check_mem(void* p) {
+    if (!p) {
+        fputs("Out of memory", stderr);
+        exit(EXIT_FAILURE);
+    }
+    return p;
+}
+
 int minutes(const char* str) {
     int hours = 0, minutes = 0;
     if (sscanf(str, "%d:%d", &hours, &minutes) == 2)
@@ -48,7 +56,7 @@ int main(int argc, char* argv[]) {
     }
 
     int num_items = argc+1;
-    int* items = malloc(num_items * sizeof(int));
+    int* items = check_mem(malloc(num_items * sizeof(int)));
     for (int i = 0; i < num_items-1; i++)
         items[i] = minutes(argv[i]);
     qsort(items, num_items-1, sizeof(int), compare);

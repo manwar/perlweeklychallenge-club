@@ -20,7 +20,7 @@
 
 use Modern::Perl;
 
-my $url = shift;
+my $url = <>;
 my $word = qr{ [a-z_] [a-z_0-9+.-]* }ix;
 my $path = qr{ (?: $word | / )+ }ix;
 $url =~ m{^             (?<scheme>      $word   ) [:]

@@ -47,9 +47,17 @@ typedef struct Tree {
 char** lines;
 size_t num_lines;
 
+void* check_mem(void* p) {
+    if (!p) {
+        fputs("Out of memory", stderr);
+        exit(EXIT_FAILURE);
+    }
+    return p;
+}
+
 // create and delete a tree
 Tree* tree_new() {
-    Tree* node = calloc(1, sizeof(Tree));
+    Tree* node = check_mem(calloc(1, sizeof(Tree)));
     assert(node);
     return node;
 }
@@ -64,7 +72,7 @@ void tree_delete(Tree* node) {
 void lines_read() {
     char line[MAXLINE];
     while (fgets(line, sizeof(line), stdin)) {
-        lines = realloc(lines, (num_lines + 1) * sizeof(char*));
+        lines = check_mem(realloc(lines, (num_lines + 1) * sizeof(char*)));
         assert(lines);
         lines[num_lines] = strdup(line);
         assert(lines[num_lines]);

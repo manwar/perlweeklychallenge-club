@@ -40,6 +40,14 @@ Output: 0
 #include <stdio.h>
 #include <stdlib.h>
 
+void* check_mem(void* p) {
+    if (!p) {
+        fputs("Out of memory", stderr);
+        exit(EXIT_FAILURE);
+    }
+    return p;
+}
+
 int num_quadruplets(int nums[], int nums_size) {
     int count = 0;
     for (int a = 0; a < nums_size - 3; a++)
@@ -53,7 +61,7 @@ int num_quadruplets(int nums[], int nums_size) {
 
 int main(int argc, char* argv[]) {
     argv++; argc--;
-    int* nums = malloc(argc*sizeof(int));
+    int* nums = check_mem(malloc(argc*sizeof(int)));
     for (int i = 0; i < argc; i++)
         nums[i] = atoi(argv[i]);
     printf("%d\n", num_quadruplets(nums, argc));
