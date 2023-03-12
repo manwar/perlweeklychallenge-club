@@ -9,7 +9,7 @@ sub keyboard-word(@arr)
   @arr = @arr>>.lc;
   for @arr -> $word {
     for $s1,$s2,$s3 -> $set {
-      if (all $word.comb ⊆ $set) {
+      if ($word.comb ⊆ $set) {
 	@ret.push($word);
       }
     }
