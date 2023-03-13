@@ -1,66 +1,67 @@
-Task 1: Shortest Time
+Task 1: Keyboard Word
 
-You are given a list of time points, at least 2, in the 24-hour clock
-format HH:MM.  Write a script to find out the shortest time in minutes
-between any two time points.
+You are given an array of words.  Write a script to print all the words
+in the given array that can be typed using alphabet on only one row of
+the keyboard.
 
-Example 1
+Let us assume the keys are arranged as below:
 
-  Input: @time = ("00:00", "23:55", "20:00")
-  Output: 5
-
-  Since the difference between "00:00" and "23:55" is the shortest (5 minutes).
-
-Example 2
-
-  Input: @array = ("01:01", "00:50", "00:57")
-  Output: 4
-
-Example 3
-
-  Input: @array = ("10:10", "09:30", "09:00", "09:55")
-  Output: 15
-
-MY NOTES: reasonably easy, although of course wraparound has to taken
-into account.  Might convert each hh:mm time into a number of minutes,
-then sort the array.. then check every adjacant pair (including the
-wraparound pair, i.e the last and the first)..
-
-No C solutions today.  Might do them later..
-
-
-Task 2: Array Pairings
-
-You are given an array of integers having even number of elements..
-Write a script to find the maximum sum of the minimum of each pairs.
+Row 1: qwertyuiop
+Row 2: asdfghjkl
+Row 3: zxcvbnm
 
 Example 1
 
-  Input: @array = (1,2,3,4)
-  Output: 4
-
-  Possible Pairings are as below:
-  a) (1,2) and (3,4). So min(1,2) + min(3,4) => 1 + 3 => 4
-  b) (1,3) and (2,4). So min(1,3) + min(2,4) => 1 + 2 => 3
-  c) (1,4) and (2,3). So min(1,4) + min(2,3) => 2 + 1 => 3
-
-  So the maxium sum is 4.
+  Input: @words = ("Hello","Alaska","Dad","Peace")
+  Output: ("Alaska","Dad")
 
 Example 2
 
-  Input: @array = (0,2,1,3)
-  Output: 2
+  Input: @array = ("OMG","Bye")
+  Output: ()
 
-  Possible Pairings are as below:
-  a) (0,2) and (1,3). So min(0,2) + min(1,3) => 0 + 1 => 1
-  b) (0,1) and (2,3). So min(0,1) + min(2,3) => 0 + 2 => 2
-  c) (0,3) and (2,1). So min(0,3) + min(2,1) => 0 + 1 => 1
-  
-  So the maximum sum is 2.
+MY NOTES: very easy.  Lower case each word, then match it against /^[qwertyuiop]+$/ for the first row, similarly regexes for the second and third rows.
 
-MY NOTES: hmm. I wish one of the examples had 6 elements.  It seems
-to me that this sounds like a recursive solution..  Pick each possible
-pair involving the first element and each of the others (in turn),
-remove them, calculate and total up the minimum, then recurse.
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl into C
+(look in the C directory for that).  replaced regexes with a custom: match a
+sequence of <these chars:string>.
 
-No C solutions today.  Might do them later..
+
+Task 2: H-Index
+
+You are given an array of integers containing citations a researcher
+has received for each paper.  Write a script to compute the researcher's
+H-Index. For more information please checkout:
+
+https://en.wikipedia.org/wiki/H-index
+
+The H-Index is the largest number h such that h articles have at least
+h citations each. For example, if an author has five publications, with
+9, 7, 6, 2, and 1 citations (ordered from greatest to least), then the
+author's H-index is 3, because the author has three publications with 3
+or more citations. However, the author does not have four publications
+with 4 or more citations.
+
+
+Example 1
+
+  Input: @citations = (10,8,5,4,3)
+  Output: 4
+
+Because the 4th publication has 4 citations and the 5th has only 3.
+
+Example 2
+
+  Input: @citations = (25,8,5,3,3)
+  Output: 3
+
+The H-Index is 3 because the fourth paper has only 3 citations.
+
+MY NOTES: also pretty easy.  The Wikipedia entry sheds more light:
+
+"First we order the citations from the largest to the lowest value.
+ Then, we look for the last position in which citation[h] >= h."
+ (This assumes array indexes start at 1, I think).
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl into C
+(look in the C directory for that)

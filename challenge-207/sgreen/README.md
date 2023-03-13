@@ -1,3 +1,3 @@
-# The Weekly Challenge 206
+# The Weekly Challenge 207
 
-Blog: [Weekly Challenge 206](https://dev.to/simongreennet/weekly-challenge-206-2god)
+Blog: [The H Word](https://dev.to/simongreennet/the-h-word-3neh)
