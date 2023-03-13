@@ -1,13 +1,13 @@
 #!/usr/bin/env raku
 use Test;
 
-is-deeply(min-index-sum(<Perl Raku Love>, <Raku Perl Hate>), ("Perl", "Raku"), "Example 1");
+is-deeply min-index-sum(<Perl Raku Love>, <Raku Perl Hate>), ("Perl", "Raku"), "Example 1";
 
-is-deeply(min-index-sum(<A B C>, <D E F>), (), "Example 2");
+is-deeply min-index-sum(<A B C>, <D E F>), (), "Example 2";
 
-is-deeply(min-index-sum(<A B C>, <C A B>), ("A",), "Example 3");
+is-deeply min-index-sum(<A B C>, <C A B>), ("A",), "Example 3";
 
-is-deeply(min-index-sum(<V E T Y W J Z A H S D P F N C G X K B R L U O M Q>,
+is-deeply min-index-sum(<V E T Y W J Z A H S D P F N C G X K B R L U O M Q>,
                         <G Q B P W I L N U K T V H C R A J D S O Y F E Z M>,
                         <B J X E P Q T W V H M G D C U N F I Z S O K R A L>,
                         <Z G O E B V A W I J N M Q S T R X P K L F H U Y D>,
@@ -16,9 +16,9 @@ is-deeply(min-index-sum(<V E T Y W J Z A H S D P F N C G X K B R L U O M Q>,
                         <T A D V K P U S H W Z Q F I N M J C E Y L X R B O>,
                         <K X C F D Y J G A P E H Z M T B L S V U R O I N W>,
                         <Z D G R O P K Y H X B S T I V Q A N L F M U C E W>,
-                        <H C Q S J B D Y T W N E M P I V O R F G A L K U Z>), ("V",), "10 X 25");
+                        <H C Q S J B D Y T W N E M P I V O R F G A L K U Z>), ("V",), "10 X 25";
 
-is-deeply(min-index-sum(<X W F Z S O B R E C A Q L D M V U H Y K G P T J I>,
+is-deeply min-index-sum(<X W F Z S O B R E C A Q L D M V U H Y K G P T J I>,
                         <M R L W X F J I S B D G P Q Z V C O A E N T H Y K>,
                         <Y N D U I J A Q F Z W P O H R S L X T V C E B M K>,
                         <Y T J D V H K R G I E P S O N B C X Z U W M L F Q>,
@@ -42,7 +42,7 @@ is-deeply(min-index-sum(<X W F Z S O B R E C A Q L D M V U H Y K G P T J I>,
                         <N X H M G J S V L U W Q I T Z A B E F O K R P Y D>,
                         <L O S X A U P R Q M Z J D V F E B N W K T Y I C H>,
                         <Z X S D H T O F L C Q G M P V B K E Y U A R I W J>,
-                        <S J C N P X T G B V D F A W M K L O H I Z U Y R E>), ("D", "E", "W"), "25 X 25");
+                        <S J C N P X T G B V D F A W M K L O H I Z U Y R E>), ("D", "E", "W"), "25 X 25";
 
 sub min-index-sum(+$a)
 {
