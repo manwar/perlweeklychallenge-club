@@ -78,5 +78,3 @@ sub draw_number {
 }
 
 draw_number(shift || 0);
-
-
