@@ -67,4 +67,3 @@ CREATE nums 256 CELLS ALLOT
 
 
 collect_args print_slices BYE
-
