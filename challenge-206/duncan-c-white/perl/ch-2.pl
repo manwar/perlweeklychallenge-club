@@ -81,6 +81,8 @@ fun find_all( $sum, $solarrayref, @list )
 		my $second = $list[$spos];
 		my $min = min($first,$second);
 		my @newl = ( @list[0..$spos-1], @list[$spos+1..$#list] );
+		say "debug: removed $first and $second (min $min), leaving ",
+			join(',',@newl) if $debug;
 		find_all( $sum+$min, $solarrayref, @newl );
 	}
 }
