@@ -35,7 +35,6 @@ is-deeply min-index-sum(<V E T Y W J Z A H S D P F N C G X K B R L U O M Q>,
                         <Z D G R O P K Y H X B S T I V Q A N L F M U C E W>,
                         <H C Q S J B D Y T W N E M P I V O R F G A L K U Z>), ("P",), "10 X 25";
 
-
 is-deeply min-index-sum(<X W F Z S O B R E C A Q L D M V U H Y K G P T J I>,
                         <M R L W X F J I S B D G P Q Z V C O A E N T H Y K>,
                         <Y N D U I J A Q F Z W P O H R S L X T V C E B M K>,
