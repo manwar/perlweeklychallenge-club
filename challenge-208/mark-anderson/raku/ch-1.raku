@@ -7,6 +7,23 @@ is-deeply min-index-sum(<A B C>, <D E F>), (), "Example 2";
 
 is-deeply min-index-sum(<A B C>, <C A B>), ("A",), "Example 3";
 
+is-deeply min-index-sum(<A F E B D>,
+                        <D C B F E>,
+                        <B A F E D>,
+                        <B D E A F>,
+                        <F D B E A>,
+                        <F D E B A>,
+                        <A C E D B>), ("B", "D"), "7 X 5";
+
+is-deeply min-index-sum(<F E I C K H B D J L>, 
+                        <H I B C K G J>, 
+                        <A D J G E K B C F H>, 
+                        <H G B D J K>, 
+                        <B F A J K E I C G H>, 
+                        <E I H K J A G>, 
+                        <L C F G H A D K J E>, 
+                        <E H J F I K L G>), ("H",), "Uneven";
+
 is-deeply min-index-sum(<V E T Y W J Z A H S D P F N C G X K B R L U O M Q>,
                         <G Q B P W I L N U K T V H C R A J D S O Y F E Z M>,
                         <B J X E P Q T W V H M G D C U N F I Z S O K R A L>,
@@ -16,7 +33,8 @@ is-deeply min-index-sum(<V E T Y W J Z A H S D P F N C G X K B R L U O M Q>,
                         <T A D V K P U S H W Z Q F I N M J C E Y L X R B O>,
                         <K X C F D Y J G A P E H Z M T B L S V U R O I N W>,
                         <Z D G R O P K Y H X B S T I V Q A N L F M U C E W>,
-                        <H C Q S J B D Y T W N E M P I V O R F G A L K U Z>), ("V",), "10 X 25";
+                        <H C Q S J B D Y T W N E M P I V O R F G A L K U Z>), ("P",), "10 X 25";
+
 
 is-deeply min-index-sum(<X W F Z S O B R E C A Q L D M V U H Y K G P T J I>,
                         <M R L W X F J I S B D G P Q Z V C O A E N T H Y K>,
@@ -42,11 +60,11 @@ is-deeply min-index-sum(<X W F Z S O B R E C A Q L D M V U H Y K G P T J I>,
                         <N X H M G J S V L U W Q I T Z A B E F O K R P Y D>,
                         <L O S X A U P R Q M Z J D V F E B N W K T Y I C H>,
                         <Z X S D H T O F L C Q G M P V B K E Y U A R I W J>,
-                        <S J C N P X T G B V D F A W M K L O H I Z U Y R E>), ("D", "E", "W"), "25 X 25";
+                        <S J C N P X T G B V D F A W M K L O H I Z U Y R E>), ("P",), "25 X 25";
 
 sub min-index-sum(+$a)
 {
     my $m := $a>>.antipairs>>.Map;
-    my $k := ([(&)] $m).keys;
+    my $k := ([(&)] $m>>.keys).keys;
     ($k Z=> [Z+] $m>>{$k}).Map.minpairs.Map.keys.sort
 }
