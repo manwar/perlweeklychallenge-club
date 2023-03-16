@@ -64,9 +64,9 @@ sub asHash($list)
     my %h;
     # If there are duplicate values in the list, we want to
     # retain only the first, lesser, index.
-    for my $i ( 0 .. $#{$list} )
+    while ( my ($i, $val) = each @$list )
     {
-        $h{$list->[$i]} = $i unless exists $h{$list->[$i]};
+        $h{$val} = $i unless exists $h{$val};
     }
     return \%h;
 }
