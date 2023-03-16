@@ -47,7 +47,7 @@ sub common_strings {
     my($list1, $list2) = @_;
     my @list1 = @$list1;
     my @list2 = @$list2;
-    my $min_index = @list1 + @list2;
+    my $min_index = @list1 + @list2 + 1;
     my @common;
 
     for my $i (0 .. $#list1) {
