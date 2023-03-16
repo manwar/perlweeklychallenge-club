@@ -1,7 +1,7 @@
-[< Previous 206](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-206/james-smith) |
-[Next 208 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-208/james-smith)
+[< Previous 207](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-207/james-smith) |
+[Next 209 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-209/james-smith)
 
-# The Weekly Challenge 207
+# The Weekly Challenge 208
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,7 +13,7 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-207/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-208/james-smith
 
 # Task 1: Keyboard Word
 
@@ -78,20 +78,27 @@ Note: the definition of a word is a bit vague at times....
 
 Note: there are 5 9-letter words which are not from the top row - these are all of Jewish origin.
 
-# Task 2: H-index
+# Task 2: Duplicate and Missing
 
-***You are given an array of integers containing citations a researcher has received for each paper. Write a script to compute the researcher’s H-Index. For more information please checkout the wikipedia page.***
+***You are given an array of integers in sequence with one missing and one duplicate. Write a script to find the duplicate and missing integer in the given array. Return `-1` if none found. For the sake of this task, let us assume the array contains no more than one duplicate and missing.***
 
-***The H-Index is the largest number h such that h articles have at least h citations each. For example, if an author has five publications, with 9, 7, 6, 2, and 1 citations (ordered from greatest to least), then the author’s h-index is 3, because the author has three publications with 3 or more citations. However, the author does not have four publications with 4 or more citations.***
+## Observation
+
+It is not 100% clear in the desciption - but we have assumed that it means a list of integers from `n` ... `m` with a step of `1`.
 
 ## Solution
 
-This is actually relatively straight forward (we will assume that the reference counts are in order).
+We loop through looking for a duplicate `$p[n+1]==$p[$n]` or gap `$p[n+1]!=$p[$n]+1`.
+
+We have two special cases - if there are no duplicates return -1 
 
 ```perl
-sub h_index   { ( $_[$_]>$_) && return $_+1 for reverse 0..$#_ }
-sub h_index_2 { pop @_ while $_[-1] < @_; 0 + @_               }
-sub h_index_3 { ( $_[$_]>$_) || return $_ for 0..$#_; 0+@_     }
+sub dup_missing {
+  my($p,$d,$m) = shift;
+  ($_==$p ? ($d=$_) : $_ == $p+2 && ($m=$_-1)), $p=$_ for @_;
+  defined $d ? ( defined $m ? [ $d, $m ] : [ $d,$p+1  ] ): [-1]
+}
+
 ```
 
 We can either start at the beginning of the list and count backwards *OR* from the start.
