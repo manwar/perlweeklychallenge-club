@@ -15,71 +15,17 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-208/james-smith
 
-# Task 1: Keyboard Word
+# Task 1: Minimum Index Sum
 
-***You are given an array of words. Write a script to print all the words in the given array that can be types using alphabet on only one row of the keyboard. (Assuming as English this is a QWERTY keyboard)***
+***You are given two arrays of strings. Write a script to find out all common strings in the given two arrays with minimum index sum. If no common strings found returns an empty list.***
 
 ## Solution
 
-The obvious solution here is to use a regular expression, where each row of the keyboard is separated by a `|` to make them separate clauses.
-
-```perl
-sub keyboard_words { grep { m{^([qwertyuiop]+|[asdfghjkl]+|[zxcvbnm]+)$}i } @_ }
-```
-
-We can loop through a file with the following code to find the longest keyboard words in the dictionary
-
-```perl
-m{^([qwertyuiop]+|[asdfghjkl]+|[zxcvbnm]+)$}i && print while <>
-```
-
-**or** as a bash one-liner:
-
-```bash
-perl -ne 'm{^([qwertyuiop]+|[asdfghjkl]+|[zxcvbnm]+)$}i&&print' /usr/share/dict/british-english-huge
-```
-
-This gives us the following for longest words:
-
-Length 11:
-
- * rupturewort
-
-Length 10:
- * peppertree
- * pepperwort
- * perpetuity
- * perruquier
- * pirouetter
- * prerequire
- * proprietor
- * repertoire
- * typewriter
-
-Note these are all on the top row of the keyboard - So no **typewriter** isn't the longest word in the English language you can make from the top row of the keyboard.
-
-Using this extreme dictionary - we have:
-
-| Length | Count |
-+--------+-------+
-|     11 |     1 |
-|     10 |     9 |
-|      9 |    27 |
-|      8 |    70 |
-|      7 |   128 |
-|      6 |   224 |
-|      5 |   278 |
-|      4 |   322 |
-|      3 |   285 |
-|      2 |   218 |
-|      1 |    52 |
-
-Note: the definition of a word is a bit vague at times....
-
-Note: there are 5 9-letter words which are not from the top row - these are all of Jewish origin.
+I'm going to profer two solutions. The second is "nicer" from a design point BUT the extra overhead is probably too much.
 
 # Task 2: Duplicate and Missing
 
+Try all combinations and 
 ***You are given an array of integers in sequence with one missing and one duplicate. Write a script to find the duplicate and missing integer in the given array. Return `-1` if none found. For the sake of this task, let us assume the array contains no more than one duplicate and missing.***
 
 ## Observation
@@ -100,11 +46,11 @@ sub dup_missing {
 }
 
 ```
+We note that if the two neighbouring values are the same we have found the duplicate, and if the difference is `2` we've found the missing value.
 
-We can either start at the beginning of the list and count backwards *OR* from the start.
+At the end of the loop we have 3 cases:
 
-`h_index_3` starts from the beginning of the list. We assume if we are not past the threshold then the `h-index` is the previous index - as in the real world our list is 1-based and in the perl world 0-based - then this is just `$_`. We short cut the loop and return the value. If we don't short cut the loop then the index must be the length of the list.
+ 1) We have not found the duplicate (`$d` is undefined) - so we return `[-1]`;
+ 2) We have found the duplicate and we've found the missing value as well so we return `[$d,$m]`;
+ 3) We have found the duplicate BUT we haven't found the missing value - there is no solution here - the missing value is at one end or other of the list. As at this point we know what the last value of the list is (but not the first - we threw that away) we just return last value + 1.
 
-`h_index` is slightly longer! But we start from the end of the list (we `reverse` the indicies). Again we use the same criteria but switch the *logic* to `&&` which is the equivalent of `if`. And loop until we match the criteria. In this case we return `$_+1` as it is the current one we are interested in. **Note** in this case we will always short cut the loop so need no additional `return` state - definitely a one-liner!
-
-`h_index_2` is effectively the same as 1, but removes the nasty use of `&&`/`||` to replace and `if`/`unless` - by putting the logic in the `while` statement and `pop`ping off values..
