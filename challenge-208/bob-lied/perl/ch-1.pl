@@ -61,14 +61,18 @@ say "(", join(",", map { qq("$_") } minIndexSum(\@list1, \@list2)->@*), ")";
 #   [ a, b ]  becomes  { a => 0, b => 1 }
 sub asHash($list)
 {
-    my %h = map { $list->[$_] => $_ } 0 .. $#{$list};
+    my %h;
+    # If there are duplicate values in the list, we want to
+    # retain only the first, lesser, index.
+    for my $i ( 0 .. $#{$list} )
+    {
+        $h{$list->[$i]} = $i unless exists $h{$list->[$i]};
+    }
     return \%h;
 }
 
 sub minIndexSum($list1, $list2)
 {
-    my @result;
-
     my ($h1, $h2) = ( asHash($list1), asHash($list2) );
 
     my %indexSum = map { $_ => ( $h1->{$_} + $h2->{$_} ) }
@@ -76,9 +80,7 @@ sub minIndexSum($list1, $list2)
 
     my $min = min(values %indexSum);
 
-    @result = grep { $indexSum{$_} == $min } keys %indexSum;
-
-    return \@result;
+    return [ sort grep { $indexSum{$_} == $min } keys %indexSum ];
 }
 
 sub runTest
@@ -95,6 +97,8 @@ sub runTest
     is( minIndexSum( [ ], [ qw(A B C) ] ), [], "list 1 empty");
     is( minIndexSum( [ qw(A B C) ], [ ] ), [], "list 2 empty");
     is( minIndexSum( [ ], [ ] ), [], "both lists empty");
+
+    is( minIndexSum( [ qw(A B C) ], [ qw(C B B) ] ), [ "B","C" ], "Non-unique list");
 
     done_testing;
 }
