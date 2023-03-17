@@ -24,13 +24,14 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-208/ja
 We proceed to do a pass of each array. 
 ```perl
 sub min_index_sum {
-  my( $b, %x, $t, $s, @best ) = ( 1e99,
-    map { $_[0][$_] => $_ } reverse ( 0 .. $#{$_[0]} ) ); #1
-  exists $x{$t = $_[1][$_]} &&                            #3
-    ( $b > ($s=$x{$t}+$_) ?  ($b,@best) = ( $s,$t )       #4
-    : $b == $s            && push @best, $t )             #5
-    for 0 .. $#{$_[1]};                                   #2
-  return \@best;                                          #6
+  my( $b, %x, $t, $s, @best ) = ( 1e99,                #0
+    map { $_[0][$_] => $_ } reverse ( 0 .. $#{$_[0]} ) #1
+  );
+  exists $x{$t = $_[1][$_]} &&                         #3
+    ( $b > ($s=$x{$t}+$_) ?  ($b,@best) = ( $s,$t )    #4
+    : $b == $s            && push @best, $t )          #5
+    for 0 .. $#{$_[1]};                                #2
+  \@best                                               #6
 }
 ```
 
@@ -39,6 +40,8 @@ First we start with the first array and find the lowest index for each word in i
 We then loop through the second list of strings (`#2`) looking for words which are in the first list (`#3`). If it has a lower index sum that the best so far we record this and reset the list of words (`#4`). If it has the same we just push it onto the list. (`#5`)
 
 At the end we just return the current list of words (which could be empty if there are no duplicates). (`#6`)
+
+Note we set the initial best index sum (`#0`) as `10^99` as the index sum will be no where near this and so we can treat this as effectively infinity...
 
 # Task 2: Duplicate and Missing
 
