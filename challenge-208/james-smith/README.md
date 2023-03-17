@@ -24,12 +24,13 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-208/ja
 We proceed to do a pass of each array. 
 ```perl
 sub min_index_sum {
-  my( $b, %x, $t, $s, @best ) = ( 1e99, map { $_[0][$_] => $_ } reverse ( 0 .. $#{$_[0]} ) ); #1
-  exists $x{$t = $_[1][$_]} && #3
-    ( $b > ($s=$x{$t}+$_) ?  ($b,@best) = ( $s,$t ) #4
-    : $b == $s            && push @best, $t )       #5
-    for 0 .. $#{$_[1]}; #2
-  return \@best;                                    #6
+  my( $b, %x, $t, $s, @best ) = ( 1e99,
+    map { $_[0][$_] => $_ } reverse ( 0 .. $#{$_[0]} ) ); #1
+  exists $x{$t = $_[1][$_]} &&                            #3
+    ( $b > ($s=$x{$t}+$_) ?  ($b,@best) = ( $s,$t )       #4
+    : $b == $s            && push @best, $t )             #5
+    for 0 .. $#{$_[1]};                                   #2
+  return \@best;                                          #6
 }
 ```
 
