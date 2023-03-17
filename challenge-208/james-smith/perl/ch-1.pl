@@ -17,32 +17,16 @@ my @TESTS = (
 );
 
 is( min_index_sum(       @{$_->[0]} ), $_->[1] ) for @TESTS;
-is( min_index_sum_sweep( @{$_->[0]} ), $_->[1] ) for @TESTS;
 done_testing();
 
 sub min_index_sum {
-  my($b,%x,$t,$s,@best) =(1e99, map { $_[0][$_] => $_ } 0 .. $#{$_[0]});
-  exists $x{$t = $_[1][$_]} && (
-    $b > ($s=$x{$t}+$_) ? ($b,@best) = ( ($s,$t) )
-                   : ($b == $s )
-  ) && push @best, $t for 0 .. $#{$_[1]};
-  return \@best;
+  my( $b, %x, $t, $s, @best ) = ( 1e99,                #0
+    map { $_[0][$_] => $_ } reverse ( 0 .. $#{$_[0]} ) #1
+  );
+  exists $x{$t = $_[1][$_]} &&                         #3
+    ( $b > ($s=$x{$t}+$_) ?  ($b,@best) = ( $s,$t )    #4
+    : $b == $s            && push @best, $t )          #5
+    for 0 .. $#{$_[1]};                                #2
+  \@best                                               #6
 }
 
-sub min_index_sum_sweep {
-  my($l1,$l2,@best)=@_;
-  ($l1,$l2)=($l2,$l1) if $#$l1 > $#$l2;
-  for my $l ( 0 .. $#$l1) {
-    ( $l1->[$_] eq $l2->[$l-$_] ) && (push @best, $l1->[$_]) for 0..$l;
-    return \@best if @best;
-  }
-  for my $l ( $#$l1+1 .. $#$l2 ) {
-    ( $l1->[$_] eq $l2->[$l-$_] ) && (push @best, $l1->[$_]) for 0..$#$l1;
-    return \@best if @best;
-  }
-  for my $l ( $#$l2+1 .. $#$l2+$#$l1 ) {
-    ( $l1->[$_] eq $l2->[$l-$_] ) && (push @best, $l1->[$_]) for ($l-$#$l2)..$#$l1;
-    return \@best if @best;
-  }
-  return [];
-}
