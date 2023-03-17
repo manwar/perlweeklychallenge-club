@@ -21,7 +21,23 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-208/ja
 
 ## Solution
 
-I'm going to profer two solutions. The second is "nicer" from a design point BUT the extra overhead is probably too much.
+We proceed to do a pass of each array. 
+```perl
+sub min_index_sum {
+  my( $b, %x, $t, $s, @best ) = ( 1e99, map { $_[0][$_] => $_ } reverse ( 0 .. $#{$_[0]} ) ); #1
+  exists $x{$t = $_[1][$_]} && #3
+    ( $b > ($s=$x{$t}+$_) ?  ($b,@best) = ( $s,$t ) #4
+    : $b == $s            && push @best, $t )       #5
+    for 0 .. $#{$_[1]}; #2
+  return \@best;                                    #6
+}
+```
+
+First we start with the first array and find the lowest index for each word in it - and store them in the hash `%x`. Note we work backwards through the list to ensure that it is the lowest index if the word is duplicated. This is the `map` in line 1.
+
+We then loop through the second list of strings (`#2`) looking for words which are in the first list (`#3`). If it has a lower index sum that the best so far we record this and reset the list of words (`#4`). If it has the same we just push it onto the list. (`#5`)
+
+At the end we just return the current list of words (which could be empty if there are no duplicates). (`#6`)
 
 # Task 2: Duplicate and Missing
 
