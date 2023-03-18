@@ -111,10 +111,10 @@ sub common_minimum_index_sum{
 ################################################################################
 # Build a quoted, comma-separated string out of the contents of a list
 # Takes one argument:
-# * The list (e.g. ( 1, 2, 3, 4 )
+# * The list (e.g. ( 1, 2, 3, 4 ) )
 # Returns:
 # * A quoted, comma-separated string containing the contents of the list (e.g.
-#   ""1", "2", "3", "4"")
+#   ""1", "2", "3", "4"" )
 ################################################################################
 sub list_to_quoted_string{
 
