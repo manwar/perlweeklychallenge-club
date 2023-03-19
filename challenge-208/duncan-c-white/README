@@ -1,67 +1,86 @@
-Task 1: Keyboard Word
+Task 1: Minimum Index Sum
 
-You are given an array of words.  Write a script to print all the words
-in the given array that can be typed using alphabet on only one row of
-the keyboard.
-
-Let us assume the keys are arranged as below:
-
-Row 1: qwertyuiop
-Row 2: asdfghjkl
-Row 3: zxcvbnm
+You are given two arrays of strings.  Write a script to find out all
+common strings in the given two arrays with minimum index sum. If no
+common strings are found returns an empty list.
 
 Example 1
 
-  Input: @words = ("Hello","Alaska","Dad","Peace")
-  Output: ("Alaska","Dad")
+Input: @list1 = ("Perl", "Raku", "Love")
+       @list2 = ("Raku", "Perl", "Hate")
+
+Output: ("Perl", "Raku")
+
+There are two common strings "Perl" and "Raku".
+Index sum of "Perl": 0 + 1 = 1
+Index sum of "Raku": 1 + 0 = 1
 
 Example 2
 
-  Input: @array = ("OMG","Bye")
-  Output: ()
+Input: @list1 = ("A", "B", "C")
+       @list2 = ("D", "E", "F")
 
-MY NOTES: very easy.  Lower case each word, then match it against /^[qwertyuiop]+$/ for the first row, similarly regexes for the second and third rows.
+Output: ()
+
+No common string found, so no result.
+
+Example 3
+
+Input: @list1 = ("A", "B", "C")
+       @list2 = ("C", "A", "B")
+
+Output: ("A")
+
+There are three common strings "A", "B" and "C".
+Index sum of "A": 0 + 1 = 1
+Index sum of "B": 1 + 2 = 3
+Index sum of "C": 2 + 0 = 2
+
+MY NOTES: very easy.  Identify whether any common strings exist: set
+intersection.  Then calculate index sum of all common strings and choose
+the minimum ones.  Trickiest thing to work out is how to input two lists
+of strings - let's choose an arbitrary separator ':'..
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl into C
-(look in the C directory for that).  replaced regexes with a custom: match a
-sequence of <these chars:string>.
+(look in the C directory for that).
 
 
-Task 2: H-Index
+Task 2: Duplicate and Missing
 
-You are given an array of integers containing citations a researcher
-has received for each paper.  Write a script to compute the researcher's
-H-Index. For more information please checkout:
+You are given an array of integers in sequence with one missing and one
+duplicate.  Write a script to find the duplicate and missing integer in
+the given array. Return -1 if none found.  For the sake of this task,
+let us assume the array contains no more than one duplicate and missing.
 
-https://en.wikipedia.org/wiki/H-index
+Example 1:
 
-The H-Index is the largest number h such that h articles have at least
-h citations each. For example, if an author has five publications, with
-9, 7, 6, 2, and 1 citations (ordered from greatest to least), then the
-author's H-index is 3, because the author has three publications with 3
-or more citations. However, the author does not have four publications
-with 4 or more citations.
+  Input: @nums = (1,2,2,4)
+  Output: (2,3)
 
+  Duplicate is 2 and Missing is 3.
 
-Example 1
+Example 2:
 
-  Input: @citations = (10,8,5,4,3)
-  Output: 4
+  Input: @nums =  1,2,3,4
+  Output: -1
 
-Because the 4th publication has 4 citations and the 5th has only 3.
+  No duplicate and missing found.
 
-Example 2
+Example 3:
 
-  Input: @citations = (25,8,5,3,3)
-  Output: 3
+  Input: @nums = (1,2,3,3)
+  Output: (3,4)
 
-The H-Index is 3 because the fourth paper has only 3 citations.
+  Duplicate is 3 and Missing is 4.
 
-MY NOTES: also pretty easy.  The Wikipedia entry sheds more light:
+MY NOTES: also pretty easy - especially if the list of integers should (if it
+were not for the one missing and one duplicated) form the sequence 1..N.
+if so: the duplicate is the element where el[i] != i.
+The missing is the sole member of set {1..N} - all el[i]
 
-"First we order the citations from the largest to the lowest value.
- Then, we look for the last position in which citation[h] >= h."
- (This assumes array indexes start at 1, I think).
+Let's generalise it slightly to B, B+1, .. B+N-1.  Then: find the element
+where el[i] != el[0]+i, that is the duplicate, and the missing is the sole
+member of {B..N+N-1} - all el[i]
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl into C
 (look in the C directory for that)
