@@ -1,15 +1,17 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2023-03-19 12:54:34 GMT"
    },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2023]"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             14,
             7,
@@ -41,8 +43,7 @@
             6,
             4,
             8
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -115,17 +116,19 @@
          ]
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2023]"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-03-19 11:15:43 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
+      "min" : 0,
       "title" : {
          "text" : ""
-      },
-      "min" : 0
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -160,8 +163,5 @@
          "Philippe Bruhat",
          "Phillip Harris"
       ]
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
