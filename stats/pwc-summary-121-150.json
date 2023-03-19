@@ -1,4 +1,16 @@
 {
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2023-03-19 11:15:43 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "xAxis" : {
       "categories" : [
          "Joe Tym",
@@ -33,11 +45,17 @@
          "Luca Ferrari"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2023]"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "series" : [
       {
@@ -111,7 +129,6 @@
          "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -143,25 +160,8 @@
             0,
             3,
             486
-         ]
+         ],
+         "name" : "Blog"
       }
-   ],
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-03-19 08:03:45 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   }
+   ]
 }
