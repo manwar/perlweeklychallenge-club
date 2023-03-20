@@ -1,0 +1,15 @@
+- setup:
+  cleanup:
+  args:     A a1@a.com a2@a.com , B b1@b.com , A a3@a.com a1@a.com
+  input:
+  output:   |
+            |A a1@a.com a2@a.com a3@a.com
+            |B b1@b.com
+- setup:
+  cleanup:
+  args:     A a1@a.com a2@a.com , B b1@b.com , A a3@a.com , B b2@b.com b1@b.com
+  input:
+  output:   |
+            |A a1@a.com a2@a.com
+            |B b1@b.com b2@b.com
+            |A a3@a.com
