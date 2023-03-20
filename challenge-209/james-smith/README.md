@@ -30,6 +30,23 @@ sub special_bit_chars {
   scalar @_
 }
 ```
+## Solution 2
+
+As well as tracking from the front we can track from the back.
+
+First we need to note:
+
+ * Last character must be a `0`
+ * If there is string ending in a `0` then we can ignore anything up to this, as `0` is always at the right hand character in a string;
+ * Additionally if the last two characters are 0 then we know that the answer is true.
+ * So breaking this down we need to work out whether the value is true or false if the list ends: `.....,1,0`. If the string consists of series of `n` pairs of `1`s then this converts to "...CCA" and so the last character is `A` so we return 0; If it is an odd number of 1s we have the string "...CCB" so the return value is false.
+
+```perl
+sub special_bit_chars_reverse {
+  my$f,pop?return-1:pop||return 1;
+  $f=!$f,pop||last while@_;
+  ~~$f
+}
 
 # Task 2: Merge Account
 
