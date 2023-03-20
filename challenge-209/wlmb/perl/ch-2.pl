@@ -14,9 +14,7 @@ while(<>){
     $names[$INPUT_LINE_NUMBER] = $name;
     for(@addresses){
 	$merge_to{$INPUT_LINE_NUMBER} =
-	    defined $merge_to{$line_of{$_}}
-	        ?$merge_to{$line_of{$_}}          # previously merged
-	        :$line_of{$_}                     # or first time merge
+	        $merge_to{$line_of{$_}}           # previously merged or undef
             if defined $line_of{$_};              # address has been seen before
         $line_of{$_}//=$INPUT_LINE_NUMBER;        # map to current line if not seen before
     }
