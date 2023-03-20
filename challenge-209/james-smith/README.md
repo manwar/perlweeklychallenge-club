@@ -1,7 +1,7 @@
 [< Previous 208](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-209/james-smith) |
 [Next 210 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-210/james-smith)
 
-# ED 209: The Weekly Challenge
+# ED-209: The Weekly Challenge
 
 You can find more information about this weeks, and previous weeks challenges at:
 
