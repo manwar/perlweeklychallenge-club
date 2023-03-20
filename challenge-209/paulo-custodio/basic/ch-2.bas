@@ -68,14 +68,24 @@ sub split(byval text as string, delim as string = " ", ret() as string)
 	loop
 end sub
 
-function common_email(byref a as integer, byref b as integer) as boolean
+function common_email(byref aa as integer, byref bb as integer) as boolean
 	dim emails_a() as string, emails_b() as string
-	dim i as integer, j as integer, k as integer
-	for i=0 to ubound(names)
-		split(emails(i),,emails_a())
-		print names(i);" ";
-		for j=0 to ubound(emails_a): print emails_a(j);" ";: next
-		print
+	dim a as integer, i as integer, b as integer, j as integer
+	for a=0 to ubound(names)
+		split(emails(a),,emails_a())
+		for i=0 to ubound(emails_a)
+			for b=0 to ubound(names)
+				if a<>b then
+					split(emails(b),,emails_b())
+					for j=0 to ubound(emails_b)
+						if mails_a(i)=mails_b(j) then
+							aa=a: bb=b: common_email=true
+							exit function
+						end if
+					next
+				end if
+			next
+		next
 	next
 	common_email=false
 end function
