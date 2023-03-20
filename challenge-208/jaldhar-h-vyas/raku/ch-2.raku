@@ -17,7 +17,7 @@ sub MAIN(
     my $duplicate = %count.keys.grep({ %count{$_} > 1; }).first;
 
     if $duplicate {
-        if $duplicate == @nums[*-1] {
+        if !defined $missing && $duplicate == @nums[*-1] {
             $missing = @nums[*-1] + 1;
         }
 

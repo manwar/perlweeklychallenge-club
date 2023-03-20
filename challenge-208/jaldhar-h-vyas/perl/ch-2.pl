@@ -17,7 +17,7 @@ for my $i (0 .. scalar @nums - 1) {
 my $duplicate //= (grep { $count{$_} > 1; } keys %count)[0];
 
 if ($duplicate) {
-    if ($duplicate == $nums[-1]) {
+    if (!defined $missing && $duplicate == $nums[-1]) {
         $missing = $nums[-1] + 1;
     }
 
