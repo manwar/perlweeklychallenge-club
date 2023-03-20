@@ -17,3 +17,9 @@ sub special_bit_chars {
   ($_[0]&&shift),shift until @_<2;
   scalar @_
 }
+
+sub special_bit_chars_reverse {
+  my$f,pop?return-1:pop||return 1;
+  $f=!$f,pop||last while@_;
+  ~~$f
+}
