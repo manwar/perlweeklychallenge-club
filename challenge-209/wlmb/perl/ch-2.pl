@@ -12,13 +12,13 @@ while(<>){
     chomp;
     my ($name, @addresses)=split / /;
     $names[$INPUT_LINE_NUMBER] = $name;
+    $merge_to{$INPUT_LINE_NUMBER}=$INPUT_LINE_NUMBER; # merge to itself
     for(@addresses){
-	$merge_to{$INPUT_LINE_NUMBER} =
-	        $merge_to{$line_of{$_}}           # previously merged or undef
-            if defined $line_of{$_};              # address has been seen before
-        $line_of{$_}//=$INPUT_LINE_NUMBER;        # map to current line if not seen before
+	my $l=$line_of{$_};
+	$line_of{$_}=$INPUT_LINE_NUMBER;
+        # merge overlapping accounts with current one
+	$merge_to{$l}=$merge_to{$merge_to{$l}}=$INPUT_LINE_NUMBER if defined $l;
     }
-    $merge_to{$.}//=$INPUT_LINE_NUMBER;           # merge to itself if not already merged
 }
 my @addresses = keys %line_of;                    # distinct addresses
 my %merged;                                       # merged accounts
