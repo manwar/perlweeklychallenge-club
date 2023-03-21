@@ -44,8 +44,8 @@ First we need to note:
 ```perl
 sub special_bit_chars_reverse {
   my$f,pop?return-1:pop||return 1;
-  $f=!$f,pop||last while@_;
-  ~~$f
+  $f++,pop||last while@_;
+  $f&1
 }
 
 # Task 2: Merge Account
