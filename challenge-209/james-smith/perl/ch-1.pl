@@ -9,17 +9,17 @@ use Benchmark qw(cmpthese timethis);
 my @TESTS = (
   [ [1,0,0]   =>  1 ],
   [ [1,1,1,0] =>  0 ],
-  [ [1,1,1]   => -1 ],
+  [ [1,1,1]   =>  0 ],
 );
 
 sub special_bit_chars {
-  return -1 if $_[-1];
+  return 0 if $_[-1];
   ($_[0]&&shift),shift until @_<2;
   scalar @_
 }
 
 sub special_bit_chars_reverse {
-  my$f,pop?return-1:pop||return 1;
-  $f=!$f,pop||last while@_;
-  ~~$f
+  my$f,pop?return 0:pop||return 1;
+  $f++,pop||last while@_;
+  1&$f
 }
