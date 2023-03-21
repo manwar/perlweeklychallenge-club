@@ -47,7 +47,7 @@ sub special_bit_chars_reverse {
   $f++,pop||last while@_;
   $f&1
 }
-
+```
 # Task 2: Merge Account
 
 Try all combinations and 
