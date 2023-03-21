@@ -25,8 +25,8 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-209/ja
 Firstly we quickly check the last entry is a `0` if it isn't we return `-1` "error". We then look through each bit in turn - if it is `0` we go to the next bit; if it is a `1` we skip one bit and go to the next. We loop through to the end of the array. We loop till the array has `0` or `1` elements left - if we have one element left then the last character is an "a" if we have none it is not. So we can just return scalar @a`.
 ```perl
 sub special_bit_chars {
-  return -1 if $_[-1];
-  ($_[0]&&shift),shift until @_<2;
+  return 0 if $_[-1];
+  ($_[0]&&shift), shift until @_<2;
   scalar @_
 }
 ```
@@ -43,9 +43,9 @@ First we need to note:
 
 ```perl
 sub special_bit_chars_reverse {
-  my$f,pop?return-1:pop||return 1;
+  my$f,pop?return 0:pop||return 1;
   $f++,pop||last while@_;
-  $f&1
+  1&$f
 }
 ```
 # Task 2: Merge Account
