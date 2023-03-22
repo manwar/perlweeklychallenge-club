@@ -51,15 +51,13 @@ sub merge-accounts(@accounts)
 
     .Array given gather for @a.sort(*.key)  
     {
-        my $key   = .key;
         my @value = .value>>.Array;
 
-        while @value
+        while @value.shift -> @v
         {
-             my @v := @value.shift;
              my $k = @value.first({ $_ (&) @v }, :k);
              $k.defined ?? (@value[$k] = [(@value[$k] (|) @v).keys]) 
-                        !! take [($key, @v.sort.Slip)];
+                        !! take [(.key, @v.sort.Slip)];
         }
     }  
 }
