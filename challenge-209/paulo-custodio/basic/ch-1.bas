@@ -29,23 +29,23 @@
 ' (10) i.e. the last character is not 1-bit character.
 
 function decode(in as string) as string
-	dim result as string
-	do while in<>""
-		if left(in,1)="0" then
-			result=result+"a"
-			in=mid(in,2)
-		elseif left(in,2)="10" then
-			result=result+"b"
-			in=mid(in,3)
-		elseif left(in,2)="11" then
-			result=result+"c"
-			in=mid(in,3)
-		else 
-			print "Error: cannot parse: "; in
-			end
-		end if
-	loop
-	decode=result
+    dim result as string
+    do while in<>""
+        if left(in,1)="0" then
+            result=result+"a"
+            in=mid(in,2)
+        elseif left(in,2)="10" then
+            result=result+"b"
+            in=mid(in,3)
+        elseif left(in,2)="11" then
+            result=result+"c"
+            in=mid(in,3)
+        else
+            print "Error: cannot parse: "; in
+            end
+        end if
+    loop
+    decode=result
 end function
 
 dim in as string, result as string
