@@ -1,0 +1,56 @@
+---
+ch-1:
+  - function: specialbitcharacters
+    arguments:
+      - 1
+      - 0
+      - 0
+    result:
+      true
+  - function: specialbitcharacters
+    arguments:
+      - 1
+      - 1
+      - 1
+      - 0
+    result:
+      false
+ch-2:
+  - function: mergeaccount
+    arguments:
+      - - A
+        - a1@a.com
+        - a2@a.com
+      - - B
+        - b1@b.com
+      - - A
+        - a3@a.com
+        - a1@a.com
+    result:
+      - - A
+        - a1@a.com
+        - a2@a.com
+        - a3@a.com
+      - - B
+        - b1@b.com
+  - function: mergeaccount
+    arguments:
+      - - A
+        - a1@a.com
+        - a2@a.com
+      - - B
+        - b1@b.com
+      - - A
+        - a3@a.com
+      - - B
+        - b2@b.com
+        - b1@b.com
+    result:
+      - - A
+        - a1@a.com
+        - a2@a.com
+      - - A
+        - a3@a.com
+      - - B
+        - b1@b.com
+        - b2@b.com
