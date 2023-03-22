@@ -16,6 +16,5 @@ nok special-bit-chars(0,0,0,0,1,0);
 
 sub special-bit-chars(+$a)
 {
-    my $r = / 0+ | [10]+ | [11]+ /;
-    $a.join ~~ /^ $r* 0 $/
+    $a.join ~~ /^ [ 0 | 10 | 11 ]* 0 $/
 }
