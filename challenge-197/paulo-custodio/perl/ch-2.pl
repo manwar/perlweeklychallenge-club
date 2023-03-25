@@ -31,14 +31,8 @@ sub copy_data {
 sub wiggle_sort {
     my(@nums) = @_;
     my @copy = sort {$a<=>$b} @nums;
-    if (scalar(@nums)%2==0) {
-        copy_data(\@nums, scalar(@nums)-2, \@copy, 0);
-        copy_data(\@nums, scalar(@nums)-1, \@copy, int(scalar(@nums)/2));
-    }
-    else {
-        copy_data(\@nums, scalar(@nums)-2, \@copy, 0);
-        copy_data(\@nums, scalar(@nums)-1, \@copy, int(scalar(@nums)/2));
-    }
+    copy_data(\@nums, scalar(@nums)-2, \@copy, 0);
+    copy_data(\@nums, scalar(@nums)-1, \@copy, int(scalar(@nums)/2));
     return @nums;
 }
 

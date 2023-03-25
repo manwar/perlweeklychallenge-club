@@ -188,7 +188,7 @@ void accs_merge(Accounts* accs) {
 int main(int argc, char* argv[]) {
     argv++; argc--;
     if (argc == 0) {
-        fputs("usage: name emails... name emails...\n", stderr);
+        fputs("usage: ch-2 name emails... name emails...\n", stderr);
         return EXIT_FAILURE;
     }
 

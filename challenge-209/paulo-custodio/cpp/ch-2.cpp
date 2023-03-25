@@ -75,7 +75,7 @@ void merge_accounts(std::vector<Account>& accs) {
 int main(int argc, char* argv[]) {
     argv++; argc--;
     if (argc == 0) {
-        std::cerr << "usage: name emails... name emails..." << std::endl;
+        std::cerr << "usage: ch-2 name emails... name emails..." << std::endl;
         return EXIT_FAILURE;
     }
 
