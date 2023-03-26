@@ -1,3 +1,3 @@
-# The Weekly Challenge 208
+# The Weekly Challenge 209
 
-Blog: [Weekly Challenge 208](https://dev.to/simongreennet/weekly-challenge-208-3i23)
+Blog: [Special Accounts](https://dev.to/simongreennet/special-accounts-5969)
