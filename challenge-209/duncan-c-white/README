@@ -1,86 +1,71 @@
-Task 1: Minimum Index Sum
+Task 1: Special Bit Characters
 
-You are given two arrays of strings.  Write a script to find out all
-common strings in the given two arrays with minimum index sum. If no
-common strings are found returns an empty list.
+You are given an array of binary bits that ends with 0.
+
+Valid sequences in the bit string are:
+
+[0] -decodes-to-> "a"
+[1, 0] -> "b"
+[1, 1] -> "c"
+
+Write a script to print 1 if the last character is an 'a' otherwise
+print 0.
 
 Example 1
 
-Input: @list1 = ("Perl", "Raku", "Love")
-       @list2 = ("Raku", "Perl", "Hate")
+  Input: @bits = (1, 0, 0)
+  Output: 1
 
-Output: ("Perl", "Raku")
-
-There are two common strings "Perl" and "Raku".
-Index sum of "Perl": 0 + 1 = 1
-Index sum of "Raku": 1 + 0 = 1
+  The given array bits can be decoded as 2-bits character (10) followed
+  by 1-bit character (0).
 
 Example 2
 
-Input: @list1 = ("A", "B", "C")
-       @list2 = ("D", "E", "F")
+  Input: @bits = (1, 1, 1, 0)
+  Output: 0
 
-Output: ()
+  Possible decode can be 2-bits character (11) followed by 2-bits
+  character (10) i.e. the last character is not 1-bit character.
 
-No common string found, so no result.
-
-Example 3
-
-Input: @list1 = ("A", "B", "C")
-       @list2 = ("C", "A", "B")
-
-Output: ("A")
-
-There are three common strings "A", "B" and "C".
-Index sum of "A": 0 + 1 = 1
-Index sum of "B": 1 + 2 = 3
-Index sum of "C": 2 + 0 = 2
-
-MY NOTES: very easy.  Identify whether any common strings exist: set
-intersection.  Then calculate index sum of all common strings and choose
-the minimum ones.  Trickiest thing to work out is how to input two lists
-of strings - let's choose an arbitrary separator ':'..
+MY NOTES: very easy.  decode string then check last letter of decoded version.
+I wonder if there's a way of decoding-and-checking together, though.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl into C
 (look in the C directory for that).
 
 
-Task 2: Duplicate and Missing
+Task 2: Merge Account
 
-You are given an array of integers in sequence with one missing and one
-duplicate.  Write a script to find the duplicate and missing integer in
-the given array. Return -1 if none found.  For the sake of this task,
-let us assume the array contains no more than one duplicate and missing.
+You are given an array of accounts i.e. name with list of email addresses.
+
+Write a script to merge the accounts where possible. The accounts can
+only be merged if they have at least one email address in common.
 
 Example 1:
 
-  Input: @nums = (1,2,2,4)
-  Output: (2,3)
+  Input: @accounts = [ ["A", "a1@a.com", "a2@a.com"],
+                       ["B", "b1@b.com"],
+                       ["A", "a3@a.com", "a1@a.com"] ]
+                     ]
 
-  Duplicate is 2 and Missing is 3.
+  Output: [ ["A", "a1@a.com", "a2@a.com", "a3@a.com"],
+            ["B", "b1@b.com"] ]
 
 Example 2:
 
-  Input: @nums =  1,2,3,4
-  Output: -1
+  Input: @accounts = [ ["A", "a1@a.com", "a2@a.com"],
+                       ["B", "b1@b.com"],
+                       ["A", "a3@a.com"],
+                       ["B", "b2@b.com", "b1@b.com"] ]
 
-  No duplicate and missing found.
+  Output: [ ["A", "a1@a.com", "a2@a.com"],
+            ["A", "a3@a.com"],
+            ["B", "b1@b.com", "b2@b.com"] ]
 
-Example 3:
+MY NOTES: fiddly and rather inelegant, especially only being allowed to
+merge two entries if the intersection of the email lists is non empty.
+Will also need to choose an input format, how about a list of words of the
+form A:a1@a.com,a2@a.com, B:b1@b.com, A:a3@a.com and B:b2@b.com,b1@b.com
 
-  Input: @nums = (1,2,3,3)
-  Output: (3,4)
-
-  Duplicate is 3 and Missing is 4.
-
-MY NOTES: also pretty easy - especially if the list of integers should (if it
-were not for the one missing and one duplicated) form the sequence 1..N.
-if so: the duplicate is the element where el[i] != i.
-The missing is the sole member of set {1..N} - all el[i]
-
-Let's generalise it slightly to B, B+1, .. B+N-1.  Then: find the element
-where el[i] != el[0]+i, that is the duplicate, and the missing is the sole
-member of {B..N+N-1} - all el[i]
-
-GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl into C
-(look in the C directory for that)
+(TODO) GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl into C
+(TODO) (look in the C directory for that)
