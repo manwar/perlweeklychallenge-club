@@ -1,0 +1,57 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/specialbitcharacters {
+    1 dict begin
+    /s 0 def
+    {
+        s 1 eq {
+            pop
+            /s 2 def
+        } {
+            /s exch def
+        } ifelse
+    } forall
+    s 0 eq
+    end
+} bind def
+
+(specialbitcharacters) test.start
+[1 0 0] specialbitcharacters test
+[1 1 1 0] specialbitcharacters not test
+test.end

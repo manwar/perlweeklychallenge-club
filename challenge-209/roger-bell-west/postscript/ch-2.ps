@@ -1,0 +1,308 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/quicksort { % [ a c b ] -> [ a b c ]
+    1 dict begin
+    /arr exch def
+    arr length 0 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/mergeaccount {
+    5 dict begin
+    /a exch def
+    /id 0 def
+    /r 0 dict def
+    /aname [
+        a {
+            /acc exch def
+            acc 0 get
+            1 1 acc length 1 sub {
+                /i exch def
+                r acc i get known {
+                    r acc i get get
+                } {
+                    [ ]
+                } ifelse
+                id
+                apush.right
+                r exch acc i get exch put
+            } for
+            /id id 1 add def
+        } forall
+    ] def
+    /m 0 dict def
+    r values {
+        /idlist exch def
+        idlist length 1 gt {
+            /root idlist 0 get def
+            {
+                m root known {
+                    /root m root get def
+                } {
+                    exit
+                } ifelse
+            } loop
+            1 1 idlist length 1 sub {
+                /i exch def
+                m idlist i get root put
+            } for
+        } if
+    } forall
+    /staging 0 dict def
+    /prefix 0 dict def
+    0 1 a length 1 sub {
+        /id exch def
+        /ii id def
+        {
+            m ii known {
+                /ii m ii get def
+            } {
+                exit
+            } ifelse
+        } loop
+        /acc a id get def
+        prefix ii known not {
+            prefix ii acc 0 get put
+        } if
+        1 1 acc length 1 sub {
+            acc exch get /addr exch def
+            staging ii known not {
+                staging ii 0 dict put
+            } if
+            staging ii get addr true put
+        } for
+    } for
+    /out [
+        staging keys {
+            /k exch def
+            [ prefix k get staging k get keys { dup length string cvs } map quicksort aload pop ]
+        } forall
+    ] def
+    [
+        out { 0 get } map toset keys { dup length string cvs } map quicksort {
+            /k exch def
+            /tmp out { 0 get k deepeq } filter def
+            tmp { 1 get } map toset keys { dup length string cvs } map quicksort {
+                /j exch def
+                tmp { 1 get j deepeq } filter aload pop
+            } forall
+        } forall
+    ]
+    end
+} bind def
+
+(mergeaccount) test.start
+[[(A) (a1@a.com) (a2@a.com)] [(B) (b1@b.com)] [(A) (a3@a.com) (a1@a.com)]] mergeaccount [[(A) (a1@a.com) (a2@a.com) (a3@a.com)] [(B) (b1@b.com)]] deepeq test
+[[(A) (a1@a.com) (a2@a.com)] [(B) (b1@b.com)] [(A) (a3@a.com)] [(B) (b2@b.com) (b1@b.com)]] mergeaccount [[(A) (a1@a.com) (a2@a.com)] [(A) (a3@a.com)] [(B) (b1@b.com) (b2@b.com)]] deepeq test
+test.end
