@@ -44,5 +44,3 @@ sub max_gap {
 @ARGV or die "usage: ch-1.pl nums\n";
 my @n=@ARGV;
 say max_gap(@n);
-
-
