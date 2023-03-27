@@ -13,17 +13,17 @@ my @TESTS = (
 
 sub collision {
   my @st;
-    $_[0]>0 || !@st || $st[-1] < 0 ? ( push @st, shift )
+    $_[0]>0 || !@st || $st[-1] < 0 ? push @st,  shift
                    ## +ve no, empty stack or last stack is -ve
                    ## we keep this at the moment so push to stack
-  : $st[-1] == -$_[0]              ? ( pop @st, shift  )
+  : $st[-1] == -$_[0]              ? pop @st && shift
                    ## -ve no and equal in absolute value
                    ## remove +ve value from stack and drop
                    ## current value
-  : $st[-1] >= -$_[0]              ? ( shift           )
+  : $st[-1] >= -$_[0]              ?            shift
                    ## -ve no and smaller in abs value
                    ## drop current value
-  :                                  ( pop @st         )
+  :                                  pop @st
                    ## -ve no and greater in abs value
                    ## remove previous number from stack
     while @_;
