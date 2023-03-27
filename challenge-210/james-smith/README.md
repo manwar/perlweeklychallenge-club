@@ -61,17 +61,19 @@ We can use a stack to achieve this. We start with an empty stack and follow thes
 
  2) **IF** the absolute value for the top of the stack and the next value **THEN** we remove the value from the stack and throw away the current value;
 
- 3) **IF** the absolute value for the top of the stack is greater than the absolute value of the next value **THEN** we remove the value from we throw the current value away;
+ 3) **IF** the absolute value for the top of the stack is less than the absolute value of the next value **THEN** we remove the value from the top of the stack;
 
- 4) **Otherwise (IF)** the absolute value for the top of the stack is less than the absolute value of the next value **THEN** we remove the value from the top of the stack.
+ 4) **Otherwise (IF)** the absolute value for the top of the stack is greater than the absolute value of the next value **THEN** we just throw the current value away.
 
 ```perl
 sub collision {
   my @s;
-    $_[0]>0 || !@s || $s[-1] < 0 ? push @s,   shift
-  : $s[-1] == -$_[0]             ? pop  @s && shift
-  : $s[-1] >= -$_[0]             ?            shift
-  :                                pop  @s
+    !@s              ||
+     $_[0] >       0 ||
+     0     >  $s[-1] ? push @s,   shift
+  : -$_[0] == $s[-1] ? pop  @s && shift
+  : -$_[0] >= $s[-1] ? pop  @s
+  :                               shift
     while @_;
   @s
 }
