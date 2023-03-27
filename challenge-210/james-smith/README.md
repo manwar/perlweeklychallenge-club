@@ -38,7 +38,7 @@ sub kill_and_win {
   ( ( $x = ( $c{$_-1} ? $c{$_-1}*($_-1) : 0 )  ## Compute value
          + ( $c{$_  } ? $c{$_  }* $_    : 0 )  ## for current
          + ( $c{$_+1} ? $c{$_+1}*($_+1) : 0 )  ## integer
-    ) > $m ) && ($ = $x) for keys %c;          ## if max reset max
+    ) > $m ) && ($m = $x) for keys %c;         ## if max reset max
   $m                                           ## return value
 }
 ```
