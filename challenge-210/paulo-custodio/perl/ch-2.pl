@@ -42,8 +42,7 @@ use Modern::Perl;
 sub find_collision {
     my(@n)=@_;
     for my $i (0..$#n-1) {
-        if ($n[$i]>0 && $n[$i+1]<0 ||
-            $n[$i]<0 && $n[$i+1]>0) {
+        if ($n[$i]>0 && $n[$i+1]<0) {
             return $i;
         }
     }
