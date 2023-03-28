@@ -12,12 +12,14 @@ is kill-and-win(6,4,5,4,1,3,2,9,2,4,7,1,1,9,8,2,2,2,4,4), 33; # choosing 3 or 8
 
 sub kill-and-win(*@ints)
 {
-    (sort .keys Z=> (.keys Z* .values) given @ints.Bag)
-    .Array
-    .push(@ints.max.succ => 0)
-    .unshift(@ints.min.pred => 0)
-    .rotor(3 => -2)
-    .map(&total).max
+    @ints.Bag
+         .Array
+         .push(@ints.max.succ => 0)
+         .unshift(@ints.min.pred => 0)
+         .sort
+         .rotor(3 => -2)
+         .map(&total)
+         .max
 } 
 
 sub total(@a)
@@ -28,5 +30,5 @@ sub total(@a)
                                             (1)
                 given @a.Map.keys.sort(+*);
 
-    [+] @a[@slice].Map.values
+    [+] .keys Z* .values given @a[@slice].Map
 }
