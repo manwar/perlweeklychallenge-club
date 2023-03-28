@@ -1,6 +1,8 @@
 #!/usr/bin/env raku
 use Test;
 
+# I'm treating 0 as a positive number
+
 is-deeply number-collisions(2,3,-1), (2,3);
 is-deeply number-collisions(3,2,-4), (-4,);
 is-deeply number-collisions(-2,-1,-3,1,2,3), (-2,-1,-3,1,2,3);

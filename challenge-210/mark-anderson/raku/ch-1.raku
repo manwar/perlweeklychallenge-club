@@ -1,6 +1,8 @@
 #!/usr/bin/env raku
 use Test;
 
+say kill-and-win((1..100).roll(1_000_000));                   # takes about 5 seconds
+
 is kill-and-win(2,3,1),                                    6; # choosing 2
 is kill-and-win(1,1,2,2,2,3),                             11; # choosing 2
 is kill-and-win(1,1,3,3,5,5),                             10; # choosing 5
