@@ -13,10 +13,10 @@ is kill-and-win(6,4,5,4,1,3,2,9,2,4,7,1,1,9,8,2,2,2,4,4), 33; # choosing 3 or 8
 sub kill-and-win(*@ints)
 {
     @ints.Bag
+         .sort
          .Array
          .push(@ints.max.succ => 0)
          .unshift(@ints.min.pred => 0)
-         .sort
          .rotor(3 => -2)
          .map(&total)
          .max
