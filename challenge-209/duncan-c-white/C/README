@@ -3,9 +3,17 @@ Thought I'd also have a go at translating ch-1.pl and ch-2.pl into C..
 Both C versions produce identical (non-debugging and debugging)
 output to the Perl originals.
 
-These C versions use most of my regular support modules:
+ch-2.c is considerably more complex than ch-2.pl, ch-2.pl built ideal data
+structures in a typical Perlish fashion and used them idiomatically to focus
+on the problem.  Instead, ch-2.c only builds one main data structure - a sorted
+list of strings (i.e. a set) - and then ch-2.c declares slists and arrays of
+slists.  As ever, it's the memory management in C that's the killer.  However,
+ch-2.c works correctly (as far as I can tell) and doesn't leak any memory (after
+quite a lot of work to make that happen:-)).
+
+These C versions use some of my regular support modules:
 - a command-line argument processing module args.[ch],
-- a csvlist-of-int parsing module parseints.[ch], and
-- an int-array printing module printarray.[ch].
-- plus a (new for PWC) csv splitting module csvsplit.[ch] to split
-  a single argument into a wordlist
+- plus a CSV splitting module csvsplit.[ch] to split
+  a single argument up
+- plus (new for challenge 209) the module slist.[ch] that stores the sorted
+  list of strings that can be used like a simple set

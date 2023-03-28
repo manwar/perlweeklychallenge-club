@@ -1,8 +1,9 @@
-/*
- * csvsplit.c: simple CSV splitting (csvForeach), useful utility function
- *
- * (C) Duncan C. White, May 2017
- */
+//
+// csvsplit.c: simple CSV splitting (csvForeach), useful utility functions
+//	       Now one function that strdup()s it's strings, another that
+//	       modifies them in place.
+//
+// (C) Duncan C. White, May 2017-March 2023
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,19 +14,15 @@
 #include "csvsplit.h"
 
 
-/*
- * csvForeach( csvstring, &foreach_callback, (void *)extravalue );
- *	Split csvstring into each comma-separated field, calling the
- *	foreach calback for each comma-separated field, passing the
- *	value and extravalue as parameters to it.  It doesn't deal
- *	with commas in quoted strings, however.
- */
+// csvForeach( csvstring, &foreach_callback, (void *)extravalue );
+//	Split csvstring (modifying it in place) into each comma-separated field,
+//	calling the foreach calback for each comma-separated field, passing the
+//	value and extravalue as parameters to it.  It doesn't deal
+//	with commas in quoted strings, however.
+//
 void csvForeach( char *csvstring, csvforeachcb cb, void *extra )
 {
-	// we need to modify the string, so make a mutable copy..
-	char *copy = strdup( csvstring );
-
-	char *start = copy;
+	char *start = csvstring;
 	for(;;)
 	{
 		char *comma=strchr( start, ',' );
@@ -42,6 +39,23 @@ void csvForeach( char *csvstring, csvforeachcb cb, void *extra )
 		// move start to one beyond where comma was..
 		start = comma+1;
 	}
+}
+
+
+// csvForeachstrdup( csvstring, &foreach_callback, (void *)extravalue );
+//	Split csvstring into each comma-separated field, duplicating it
+//	in order to modify the copy, calling the foreach calback for each
+//	comma-separated field it finds, passing the value and extravalue as
+//	parameters to it.  It doesn't deal with commas in quoted strings, however.
+//
+void csvForeachstrdup( char *csvstring, csvforeachcb cb, void *extra )
+{
+	// make a modifiable copy..
+	char *copy = strdup( csvstring );
+	assert( copy != NULL );
+
+	csvForeach( copy, cb, extra );
+
 	// don't forget to..
 	free( copy );
 }
