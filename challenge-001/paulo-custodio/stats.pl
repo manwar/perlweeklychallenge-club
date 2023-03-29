@@ -96,6 +96,3 @@ sub list_compreension {
     }
     return join(",", @out);
 }
-
-
-
