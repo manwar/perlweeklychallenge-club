@@ -1,7 +1,9 @@
 #!/usr/bin/env raku
 use Test;
 
-say kill-and-win((1..100).roll(1_000_000));                   # takes about 5 seconds
+say kill-and-win((1..100).hyper.roll(1_000_000));             # takes about 4.5 seconds
+
+say kill-and-win((1..100).hyper.roll(1_000_000).Bag);         # takes about 1 second
 
 is kill-and-win(2,3,1),                                    6; # choosing 2
 is kill-and-win(1,1,2,2,2,3),                             11; # choosing 2
@@ -12,7 +14,7 @@ is kill-and-win(8,6,3,3,8,1,9,3,1,4,5,2,5,4,5,4,7,3,3,5), 47; # choosing 4
 is kill-and-win(2,6,1,1,6,5,6,3,4,9,8,3,3,2,3,2,3,3,7,9), 33; # choosing 7 or 8 
 is kill-and-win(6,4,5,4,1,3,2,9,2,4,7,1,1,9,8,2,2,2,4,4), 33; # choosing 3 or 8
 
-sub kill-and-win(*@ints)
+multi kill-and-win(*@ints)
 {
     @ints.Bag
          .sort
@@ -23,6 +25,17 @@ sub kill-and-win(*@ints)
          .map(&total)
          .max
 } 
+
+multi kill-and-win(Bag $b)
+{
+    $b.sort
+      .Array
+      .push($b.max.key.succ => 0)
+      .unshift($b.min.key.pred => 0)
+      .rotor(3 => -2)
+      .map(&total)
+      .max
+}
 
 sub total(@a)
 {
