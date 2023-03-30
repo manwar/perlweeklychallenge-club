@@ -17,16 +17,16 @@ is kill-and-win(6,4,5,4,1,3,2,9,2,4,7,1,1,9,8,2,2,2,4,4), 33; # choosing 3 or 8
 multi kill-and-win(*@ints)
 {
     my $b = @ints.BagHash andthen .add((@ints.min-2, @ints.max+2));
-    get-total($b)
+    total($b)
 } 
 
 multi kill-and-win(BagHash $b)
 {
     $b.add(($b.min.key-2, $b.max.key+2));
-    get-total($b)
+    total($b)
 }
 
-sub get-total($b)
+multi total($b)
 {
     $b.sort(*.key)
       .rotor(3 => -2)
@@ -34,7 +34,7 @@ sub get-total($b)
       .max
 }
     
-sub total(@a)
+multi total(@a)
 {
     my @slice = .[0] == .[1]-1 == .[2]-2 ?? (0,1,2) !! 
                 .[0] == .[1]-1           ?? (0,1)   !!   
