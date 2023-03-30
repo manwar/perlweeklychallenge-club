@@ -1,9 +1,9 @@
 #!/usr/bin/env raku
 use Test;
 
-say kill-and-win((1..100).hyper.roll(1_000_000));             # takes about 4.5 seconds
+say kill-and-win((1..100).hyper.roll(1_000_000));             # takes about 4 seconds
 
-say kill-and-win((1..100).hyper.roll(1_000_000).Bag);         # takes about 1 second
+say kill-and-win((1..100).hyper.roll(1_000_000).BagHash);     # takes about 0.8 seconds
 
 is kill-and-win(2,3,1),                                    6; # choosing 2
 is kill-and-win(1,1,2,2,2,3),                             11; # choosing 2
@@ -16,27 +16,24 @@ is kill-and-win(6,4,5,4,1,3,2,9,2,4,7,1,1,9,8,2,2,2,4,4), 33; # choosing 3 or 8
 
 multi kill-and-win(*@ints)
 {
-    @ints.Bag
-         .sort
-         .Array
-         .push(@ints.max.succ => 0)
-         .unshift(@ints.min.pred => 0)
-         .rotor(3 => -2)
-         .map(&total)
-         .max
+    my $b = @ints.BagHash andthen .add((@ints.min-2, @ints.max+2));
+    get-total($b)
 } 
 
-multi kill-and-win(Bag $b)
+multi kill-and-win(BagHash $b)
 {
-    $b.sort
-      .Array
-      .push($b.max.key.succ => 0)
-      .unshift($b.min.key.pred => 0)
+    $b.add(($b.min.key-2, $b.max.key+2));
+    get-total($b)
+}
+
+sub get-total($b)
+{
+    $b.sort(*.key)
       .rotor(3 => -2)
       .map(&total)
       .max
 }
-
+    
 sub total(@a)
 {
     my @slice = .[0] == .[1]-1 == .[2]-2 ?? (0,1,2) !! 
