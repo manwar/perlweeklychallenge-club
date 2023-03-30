@@ -26,7 +26,7 @@ multi kill-and-win(BagHash $b)
     total($b)
 }
 
-multi total($b)
+multi total(BagHash $b)
 {
     $b.sort(*.key)
       .rotor(3 => -2)
