@@ -9,10 +9,6 @@
 
 sub MAIN( *@list is copy where { @list.grep( * ~~ Int ).elems == @list.elems } ) {
 
-    my @sorted-list = @list.sort;
-
-    #  2 3 -1
-    # -1 2  3
     my $move = True;
 
     while ( $move ) {
