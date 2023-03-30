@@ -64,11 +64,10 @@ sub next_circular_prime {
     return $n;
 }
 
-@ARGV or die "usage: ch-1.pl n\n";
+@ARGV==1 or die "usage: ch-1.pl n\n";
 my $n=shift;
 my @cprimes;
 my $cp=1;
-my %seen;
 while (@cprimes<$n) {
     $cp=next_circular_prime($cp);
     push @cprimes,$cp if $cp>=100;
