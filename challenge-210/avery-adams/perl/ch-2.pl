@@ -12,7 +12,7 @@ for (my $index = 0; $index < $#list; $index++) {
         $index--;
     } elsif ($collision == 0) {
         splice @list, $index, 2;
-        $index--;
+        $index -= 2;
     } elsif (0 > $collision > $list[$index + 1]) {
         splice @list, $index, 1;
         for (my $index2 = $index - 1; $index2 >= 0 and $list[$index2] > 0; $index2--) {
