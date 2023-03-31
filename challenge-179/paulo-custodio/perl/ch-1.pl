@@ -16,23 +16,6 @@
 # 99 => ninety-ninth
 
 use Modern::Perl;
-use Number::Spell;
+use Lingua::EN::Numbers 'num2en_ordinal';
 
-sub ordinal_number_spelling {
-    my($n) = @_;
-    my $str = spell_number($n);
-    $str =~ s/twelve$/twelfth/ or
-    $str =~ s/one$/first/ or
-    $str =~ s/two$/second/ or
-    $str =~ s/three$/third/ or
-    $str =~ s/four$/forth/ or
-    $str =~ s/five$/fifth/ or
-    $str =~ s/eight$/eighth/ or
-    $str =~ s/nine$/ninth/ or
-    $str =~ s/y$/ieth/ or
-    $str =~ s/$/th/;
-    $str =~ s/ /-/g;
-    return $str;
-}
-
-say ordinal_number_spelling(shift);
+say num2en_ordinal(shift);
