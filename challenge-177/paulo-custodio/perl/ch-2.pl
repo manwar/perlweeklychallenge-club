@@ -62,5 +62,3 @@ sub palindromic_cyclops_prime {
 @ARGV==1 or die "usage: ch-2.pl N\n";
 my $N = shift;
 say join ", ", palindromic_cyclops_prime($N);
-
-
