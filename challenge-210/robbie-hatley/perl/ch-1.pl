@@ -67,16 +67,16 @@ for (@arrays){
 
    # Announce original integer list:
    say '';
-   say "Integer list: (@{$_})";
+   say "Integer list: (@$_)";
 
    # Remove all positive integers from list, but take note if we remove 
    # any 1s:
    my @removed = ();
    my $one = 0;
-   for ( my $i = 0 ; $i < scalar(@{$_}) ; ++$i ){
+   for ( my $i = 0 ; $i <= $#$_ ; ++$i ){
       if ( $_->[$i] > 0 ){
          if ( $_->[$i] == 1 ){$one = 1;}
-         push @removed, splice @{$_}, $i, 1;
+         push @removed, splice @$_, $i, 1;
          --$i;
       }
    }
@@ -85,9 +85,9 @@ for (@arrays){
    # "manually removing any number x automatically removes all x-1 
    # and x+1" rule:
    if ( $one ){
-      for ( my $i = 0 ; $i < scalar(@{$_}) ; ++$i ){
+      for ( my $i = 0 ; $i <= $#$_ ; ++$i ){
          if ( $_->[$i] == 0 ){
-            push @removed, splice @{$_}, $i, 1;
+            push @removed, splice @$_, $i, 1;
             --$i;
          }
       }
@@ -95,7 +95,7 @@ for (@arrays){
 
    # Announce numbers removed and remnants of original array:
    say "Removed:      (@removed)";
-   say "Remaining:    (@{$_})";
+   say "Remaining:    (@$_)";
 
    # Calculate and announce final score:
    say "Max points:   ", sum0(@removed);

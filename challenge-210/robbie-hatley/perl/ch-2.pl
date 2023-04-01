@@ -89,33 +89,33 @@ say 'Let the integer collisions commence.';
 for (@arrays){
    # Announce original integer list:
    say '';
-   say "Integer list: (@{$_})";
+   say "Integer list: (@$_)";
 
    # Riffle through the list, generally going from left to right, but
    # backtracking as necessary to chase "sinking" negatives and process
    # their collisions:
-   for ( my $i = 1 ; $i <= $#{$_} ; ++$i ){
+   for ( my $i = 1 ; $i <= $#$_ ; ++$i ){
       next if $i < 1; # This may happen if we destroy both prev and curr
       # Are previous and current about to collide?
       if ( $_->[$i-1] >= 0 && $_->[$i] < 0 ){
          # If previous has greater absolute value, destroy current only:
          if    ( $_->[$i-1]  > -$_->[$i] ){
-            splice @{$_}, $i, 1;
+            splice @$_, $i, 1;
             --$i; # Backtrack 1 because removed current item.
          }
          # If previous and current have equal absolute value, destroy both:
          elsif ( $_->[$i-1] == -$_->[$i] ){
-            splice @{$_}, $i-1, 2;
+            splice @$_, $i-1, 2;
             --$i; --$i; # Backtrack 2 because removed previous and current items.
          }
          # If current has greater absolute value, destroy previous only:
          elsif ( $_->[$i-1]  < -$_->[$i] ){
-            splice @{$_}, $i-1, 1;
+            splice @$_, $i-1, 1;
             --$i; --$i; # Backtrack 2 because removed previous item.
          }
       }
    }
 
    # Announce remnants of original array:
-   say "Remaining:    (@{$_})";
+   say "Remaining:    (@$_)";
 }
