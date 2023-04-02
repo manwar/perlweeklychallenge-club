@@ -1,15 +1,42 @@
 - setup:
   cleanup:
-  args:     /  /a/b/c/d  /a/b/cd  /a/b/cc  /a/b/c/d/e
-  input:
+  args:
+  input:    |
+            |/
+            |/a/b/c/d
+            |/a/b/cd
+            |/a/b/cc
+            |/a/b/c/d/e
   output:   /a/b
 - setup:
   cleanup:
-  args:     ":  :a:b:c:d  :a:b:cd  :a:b:cc  :a:b:c:d:e"
-  input:
+  args:
+  input:    |
+            |:
+            |:a:b:c:d
+            |:a:b:cd
+            |:a:b:cc
+            |:a:b:c:d:e
   output:   ":a:b"
 - setup:
   cleanup:
-  args:     /  /b/c/d  /a/b/c/d  /a/b/cd  /a/b/cc  /a/b/c/d/e
-  input:
-  output:
+  args:
+  input:    |
+            |/
+            |/b/c/d
+            |/a/b/c/d
+            |/a/b/cd
+            |/a/b/cc
+            |/a/b/c/d/e
+  output:   |
+            |
+- setup:
+  cleanup:
+  args:
+  input:    |
+            |/
+            |/a/b
+            |/a/b/cd
+            |/a/b/cc
+            |/a/b/c/d/e
+  output:   /a/b

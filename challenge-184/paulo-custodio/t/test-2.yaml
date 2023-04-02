@@ -1,0 +1,12 @@
+- setup:
+  cleanup:
+  args:     |
+            |'a 1 2 b 0' '3 c 4 d'
+  input:
+  output:   [[1,2,0], [3,4]] and [['a','b'], ['c','d']]
+- setup:
+  cleanup:
+  args:     |
+            |'1 2' 'p q r' 's 3' '4 5 t'
+  input:
+  output:   [[1,2], [3], [4,5]] and [['p','q','r'], ['s'], ['t']]

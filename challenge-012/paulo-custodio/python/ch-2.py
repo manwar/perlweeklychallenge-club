@@ -48,6 +48,6 @@ def common_prefix(sep, paths):
 
     return sep.join(prefix)
 
-sep = sys.argv[1]
-paths = sys.argv[2:]
+sep = sys.stdin.readline().rstrip()
+paths = [s.rstrip() for s in sys.stdin.readlines()]
 print(common_prefix(sep, paths))

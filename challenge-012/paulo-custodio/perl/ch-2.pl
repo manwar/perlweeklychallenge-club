@@ -53,5 +53,6 @@ sub common_prefix {
 }
 
 
-my($sep, @paths) = @ARGV;
+chomp(my $sep = <>);
+chomp(my @paths = <>);
 say common_prefix($sep, @paths);
