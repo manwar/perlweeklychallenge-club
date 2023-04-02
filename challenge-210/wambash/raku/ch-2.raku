@@ -3,7 +3,6 @@
 subset Pos of Int where * > 0;
 subset Neg of Int where * < 0;
 
-#multi number-colision-iter ((Neg $t,*@ll),(Neg $h,*@rl))                {      @ll, ($t,$h,|@rl) }
 multi number-colision-iter (  [Pos $t,*@ll], [Neg $h,*@rl] )  {
     with $t <=> -$h {
         when More { ($t,|@ll),     @rl  }
