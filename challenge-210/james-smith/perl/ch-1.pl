@@ -20,4 +20,14 @@ sub kill_and_win {
   $max                                         ## return value
 }
 
-is( kill_and_win( @{$_->[0]} ), $_->[1] ) for @TESTS;
+sub kill_and_win_total {
+  my($m,%t,$x)=0;
+  $t{$_} += $_ for @_;                 ## Get freq in hash
+  ( ( $x = ( $t{$_-1} // 0 )           ## Compute value
+         + ( $t{$_  } // 0 )           ## for current
+         + ( $t{$_+1} // 0 )           ## integer
+    ) > $m ) && ($m = $x) for keys %t; ## if max reset max
+  $m                                   ## return value
+}
+
+is( kill_and_win_total( @{$_->[0]} ), $_->[1] ) for @TESTS;
