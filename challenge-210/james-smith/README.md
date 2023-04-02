@@ -43,6 +43,21 @@ sub kill_and_win {
 }
 ```
 
+### A neater solution.... 
+
+```perl
+sub kill_and_win {
+  my($m,%t,$x)=0;
+  $t{$_} += $_ for @_;                 ## Get freq in hash
+  ( ( $x = ( $t{$_-1} // 0 )           ## Compute value
+         + ( $t{$_  } // 0 )           ## for current
+         + ( $t{$_+1} // 0 )           ## integer
+    ) > $m ) && ($m = $x) for keys %t; ## if max reset max
+  $m                                   ## return value
+}
+```
+
+About the same efficiency as above - we can simplify the sum part of the operation by computing the sum of each number before the 2nd loop. So instead of incrementing by 1 to get the count we just add the value each time..
 
 # Task 2: Number Collision
 
