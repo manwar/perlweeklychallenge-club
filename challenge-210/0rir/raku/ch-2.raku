@@ -66,23 +66,23 @@ plan @Test ÷ 2;
 
 sub pos( $n) {        0 ≤ $n         }
 
-sub is-partitioned-neg-pos( @a) {
-    my &pred = -> $_ { .[0] < 0 };
-    @a.&{$_ Z .skip}.map({ (( $_ < 0) & !( $_ < 0 )) }).sum <= 1
-}
-sub is-partition-w-first( @a) {
-    @a.first({$_ < 0},:k,:end) < @a.first({$_ ≥ 0},:k);
-}
+#sub is-partitioned-neg-pos( @a) {
+#    my &pred = -> $_ { .[0] < 0 };
+#    @a.&{$_ Z .skip}.map({ (( $_ < 0) & !( $_ < 0 )) }).sum <= 1
+#}
+#sub is-partition-w-first( @a) {
+#    @a.first({$_ < 0},:k,:end) < @a.first({$_ ≥ 0},:k);
+#}
+
 sub int-whack-an-int( Int @ar --> Array) {
     die "Type objects are illegal: @ar.raku()" if @ar.any === Int;
     return @ = @ar  if @ar     ~~ []
                     or @ar.end == 0
                     or @ar.max  < 0
                     or @ar.min  ≥ 0
-                #or @ar.first({$_ < 0},:k,:end) < @ar.first({$_ ≥ 0},:k);
-                #or is-partition-w-first( @ar);
-                    or is-partitioned-neg-pos( @ar);
-                ;
+                    or @ar.first({$_ < 0},:k,:end) < @ar.first({$_ ≥ 0},:k)
+    ;
+
     # state variables
     my @a = @ar;
     my $l;
