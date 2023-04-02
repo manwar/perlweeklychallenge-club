@@ -9,11 +9,10 @@ clean:
 	/bin/rm -f $(BUILD) *.o core a.out
 
 args.o:	args.c
-ch-1:	ch-1.o args.o csvsplit.o
-ch-1.o:	ch-1.c args.h csvsplit.h
-ch-2:	ch-2.o args.o parseints.o printarray.o
-ch-2.o:	ch-2.c args.h parseints.h printarray.h
+ch-1:	ch-1.o args.o
+ch-1.o:	ch-1.c args.h
+ch-2:	ch-2.o args.o csvsplit.o slist.o
+ch-2.o:	ch-2.c args.h csvsplit.h slist.h
 csvsplit.o:	csvsplit.c csvsplit.h
-parseints.o:	parseints.c args.h parseints.h printarray.h
-printarray.o:	printarray.c
+slist.o:	slist.c csvsplit.h slist.h
 
