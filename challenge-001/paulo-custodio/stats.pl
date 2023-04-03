@@ -62,3 +62,37 @@ for my $chall (1 .. $#sols) {
     }
     say "";
 }
+
+say "";
+
+for my $lang (sort keys %LANG) {
+    my @list;
+    my $count=0;
+    for my $chall (1 .. $#sols) {
+        push @list, $chall if ($sols[$chall]{$lang}//0)==2;
+        $count+=$sols[$chall]{$lang}//0;
+    }
+    say sprintf("%-12s(%4d) ", $lang, $count), list_compreension(@list);
+}
+
+sub list_compreension {
+    my(@in) = @_;
+    my @out;
+    while (@in) {
+        if (@in==1) {
+            push @out, shift @in;
+        }
+        else {
+            my $i=0;
+            while ($i<@in && $in[$i]==$in[0]+$i) { $i++; }
+            if ($i==1) {
+                push @out, shift @in;
+            }
+            else {
+                push @out, $in[0]."-".$in[$i-1];
+                splice(@in,0,$i);
+            }
+        }
+    }
+    return join(",", @out);
+}

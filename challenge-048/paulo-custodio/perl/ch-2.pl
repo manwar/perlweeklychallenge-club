@@ -12,7 +12,7 @@ use Modern::Perl;
 use DateTime;
 
 my $dt = DateTime->new(year=>2000, month=>1, day=>1);
-while ($dt->year < 2100) {
+while ($dt->year <= 2999) {
     my $txt = $dt->strftime("%m%d%Y");
     say $txt if reverse($txt) eq $txt;  # is palindrome
     $dt->add(days=>1);
