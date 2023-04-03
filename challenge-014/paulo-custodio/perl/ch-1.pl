@@ -30,9 +30,11 @@ sub van_eck_iter {
     };
 }
 
+@ARGV==1 or die "usage: ch-1.pl N\n";
+my $N = shift;
 my $iter = van_eck_iter();
 my $sep = "";
-for (0..96) {
+for (1..$N) {
     print $sep, $iter->();
     $sep = ", ";
 }

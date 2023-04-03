@@ -74,8 +74,11 @@ my $codes = join("|", @codes);          # regex to match any codes
 my $regex = qr/^($codes)+$/i;           # regex to match word composed of codes
 
 # find all words that match, save longest ones
+@ARGV==1 or die "usage: ch-2.pl dictionary.txt\n";
+my $words = shift;
+
 my @longest;
-open(my $fh, "<", "words.txt") or die "open words.txt: $!\n";
+open(my $fh, "<", $words) or die "open $words: $!\n";
 while (<$fh>) {
     chomp;
     next unless /$regex/;               # filter words that match state codes

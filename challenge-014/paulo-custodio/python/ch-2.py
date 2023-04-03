@@ -114,6 +114,6 @@ def word_to_states(word):
         states.append(us_states[cc])
     return " + ".join(states)
 
-words = longest_words(words_like_states(read_words(read_file("words.txt"))))
+words = longest_words(words_like_states(read_words(read_file(sys.argv[1]))))
 for word in words:
     print(word+" = "+word_to_states(word))
