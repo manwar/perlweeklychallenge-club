@@ -1,7 +1,7 @@
-[< Previous 208](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-209/james-smith) |
-[Next 210 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-210/james-smith)
+[< Previous 209](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-209/james-smith) |
+[Next 211 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-211/james-smith)
 
-# ED-209: The Weekly Challenge
+# The Weekly Challenge 210
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,77 +13,84 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-209/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-210/james-smith
 
-# Task 1: Special Bit Characters
+# Task 1: Kill and Win
 
-***You are given an array of binary bits that ends with `0`. Valid sequences in the bit string are:
-`[0]` decodes to `"a"`, `[1, 0]` to `"b"`, `[1, 1]` to `"c"`. Write a script to print `1` if the last character is an `"a"` otherwise print `0`.***
-
-## Solution
-
-Firstly we quickly check the last entry is a `0` if it isn't we return `-1` "error". We then look through each bit in turn - if it is `0` we go to the next bit; if it is a `1` we skip one bit and go to the next. We loop through to the end of the array. We loop till the array has `0` or `1` elements left - if we have one element left then the last character is an "a" if we have none it is not. So we can just return scalar @a`.
-```perl
-sub special_bit_chars {
-  return 0 if $_[-1];
-  ($_[0]&&shift), shift until @_<2;
-  scalar @_
-}
-```
-## Solution 2
-
-As well as tracking from the front we can track from the back.
-
-First we need to note:
-
- * Last character must be a `0`
- * If there is string ending in a `0` then we can ignore anything up to this, as `0` is always at the right hand character in a string;
- * Additionally if the last two characters are 0 then we know that the answer is true.
- * So breaking this down we need to work out whether the value is true or false if the list ends: `.....,1,0`. If the string consists of series of `n` pairs of `1`s then this converts to "...CCA" and so the last character is `A` so we return 0; If it is an odd number of 1s we have the string "...CCB" so the return value is false.
-
-```perl
-sub special_bit_chars_reverse {
-  my$f,pop?return 0:pop||return 1;
-  $f++,pop||last while@_;
-  1&$f
-}
-```
-# Task 2: Merge Account
-
-Try all combinations and 
-***You are given an array of accounts i.e. name with list of email addresses. Write a script to merge the accounts where possible. The accounts can only be merged if they have at least one email address in common.***
-
-## Observation
-
-It is not 100% clear in the desciption - whether or not to assume the name must be the same - I am going to assume it isn't and that we chose one name from the list.
+***You are given a list of integers. Write a script to get the maximum points. You are allowed to take out (kill) any integer and remove from the list. However if you do that then all integers exactly one-less or one-more would also be removed. Find out the total of integers removed.***
 
 ## Solution
 
-The first pass at a solution, keeps a track of which emails that we have seen and links together an account with the current one if we have already seen the email address. This works most of the time - but it can go wrong - when there are three accounts with overlapping emails BUT they have no common email address.  This is the `for my $acc` loop below. To resolve this we can allow ourselves to do multiple passes reducing the list each time.
+Although it's not fully clear on the rules - we make the assumption that it means once we chose one number all those above and below are killed.
 
-Now 
+Firstly we compute counts of each of the numbers, we then for each value compute:
+
+```
+  count{n-1}*(n-1) + count{n}*n + count{n+1}*(n+1)
+```
+
+We just loop through all the keys of the count and compute the maximum value:
 
 ```perl
-sub merge_accounts {
-  my($in,$out,%seen,$t) = ([],shift);
-  while(@{$out}!=@{$in}) {
-    ($in,$out,%seen) = ($out,[]);
-    O: for my $acc (@{$in}) {
-      my( $name, @e )=@{ $acc };
-      for(@e) {
-        if( exists $seen{$_} ) {
-          my( $m, @f ) = @{ $out->[ $t = $seen{$_} ] };
-          my %T        = map { $_=>1 } @e, @f;
-          $seen{$_}    = $t for keys %T;
-          $out->[ $t ] = [ $m, keys %T ];
-          next O;
-        }
-      }
-      $seen{$_} = @{$out} for @e;
-      push @{$out},$acc;
-    }
-  }
-  $out
+sub kill_and_win {
+  my($m,%c,$x)=0;
+  $c{$_}++ for @_;                             ## Get freq in hash
+  ( ( $x = ( $c{$_-1} ? $c{$_-1}*($_-1) : 0 )  ## Compute value
+         + ( $c{$_  } ? $c{$_  }* $_    : 0 )  ## for current
+         + ( $c{$_+1} ? $c{$_+1}*($_+1) : 0 )  ## integer
+    ) > $m ) && ($m = $x) for keys %c;         ## if max reset max
+  $m                                           ## return value
+}
+```
+
+### A neater solution.... 
+
+```perl
+sub kill_and_win {
+  my($m,%t,$x)=0;
+  $t{$_} += $_ for @_;                 ## Get freq in hash
+  ( ( $x = ( $t{$_-1} // 0 )           ## Compute value
+         + ( $t{$_  } // 0 )           ## for current
+         + ( $t{$_+1} // 0 )           ## integer
+    ) > $m ) && ($m = $x) for keys %t; ## if max reset max
+  $m                                   ## return value
+}
+```
+
+About the same efficiency as above - we can simplify the sum part of the operation by computing the sum of each number before the 2nd loop. So instead of incrementing by 1 to get the count we just add the value each time..
+
+# Task 2: Number Collision
+
+***You are given an array of integers which can move in right direction if it is positive and left direction when negative. If two numbers collide then the smaller one will explode. And if both are same then they both explode. We take the absolute value in consideration when comparing. All numbers move at the same speed, therefore any 2 numbers moving in the same direction will never collide. Write a script to find out who survives the collision.***
+
+## Solution
+
+We can use a stack to achieve this. We start with an empty stack and follow these simple rules.
+
+ 1) **IF**
+     1) the list is empty
+     2) the next value is +ve
+     3) the last number on the stack is -ve
+ 
+    **THEN** we push the next value onto the stack;
+
+ 2) **IF** the absolute value for the top of the stack and the next value **THEN** we remove the value from the stack and throw away the current value;
+
+ 3) **IF** the absolute value for the top of the stack is less than the absolute value of the next value **THEN** we remove the value from the top of the stack;
+
+ 4) **Otherwise (IF)** the absolute value for the top of the stack is greater than the absolute value of the next value **THEN** we just throw the current value away.
+
+```perl
+sub collision {
+  my @s;
+    !@s              ||
+     $_[0] >       0 ||
+     0     >  $s[-1] ? push @s,   shift
+  : -$_[0] == $s[-1] ? pop  @s && shift
+  : -$_[0] >= $s[-1] ? pop  @s
+  :                               shift
+    while @_;
+  @s
 }
 ```
 
