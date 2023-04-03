@@ -21,11 +21,5 @@ ok  toeplitz([1,2],
 
 sub toeplitz(+@m)
 {
-    until @m.elems == 1
-    {
-        return False unless @m[0;^@m[0].end] eqv @m[1;1..@m[1].end];
-        shift @m
-    }
-
-    return True
+    @m[^@m.end;^@m[0].end] eqv @m[1..@m.end;1..@m[1].end]
 }
