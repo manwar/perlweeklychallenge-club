@@ -8,14 +8,14 @@ nok split-same-avg(5,5,5,2,2,1);
 
 sub split-same-avg(*@nums)
 {
-    for (0..@nums.end).combinations(1..(@nums.elems div 2)) -> @a
+    for (^@nums).combinations(1..(@nums.elems div 2)) -> @a is copy
     {
-        my @b = ((0..@nums.end) (-) @a).keys;
+        my @b = ((^@nums) (-) @a).keys;
 
-        my @c = @nums[@a];
-        my @d = @nums[@b];
+        @a = @nums[@a];
+        @b = @nums[@b];
 
-        return True if (@c.sum / @c.elems) == (@d.sum / @d.elems)
+        return True if (@a.sum / @a.elems) == (@b.sum / @b.elems)
     }
 
     return False
