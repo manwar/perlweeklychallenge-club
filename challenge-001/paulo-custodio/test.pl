@@ -52,7 +52,7 @@ for my $lang (grep {-d} sort keys %LANG) {
     next unless $TESTS{$lang};
 
     for $prog (path($lang)->children(qr/\.$LANG{$lang}$/)) {
-        $prog->basename =~ /^ch[-_](.*)\.$LANG{$lang}$/ or die $prog;
+        $prog->basename =~ /^ch[-_](.*)\.$LANG{$lang}$/ or next;
         my $task = $1;
 
         # compile if needed
