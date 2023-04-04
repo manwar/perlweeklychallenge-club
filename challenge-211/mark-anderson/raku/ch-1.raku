@@ -21,5 +21,5 @@ ok  toeplitz([1,2],
 
 sub toeplitz(+@m)
 {
-    @m[^@m.end;^@m[0].end] eqv @m[1..@m.end;1..@m[1].end]
+    @m[ ^@m.end; ^@m[0].end ] eqv @m[ 1..@m.end; 1..@m[1].end ]
 }
