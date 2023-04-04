@@ -1,71 +1,90 @@
-Task 1: Special Bit Characters
+Task 1: Task 1: Kill and Win
 
-You are given an array of binary bits that ends with 0.
-
-Valid sequences in the bit string are:
-
-[0] -decodes-to-> "a"
-[1, 0] -> "b"
-[1, 1] -> "c"
-
-Write a script to print 1 if the last character is an 'a' otherwise
-print 0.
+You are given a list of integers.  Write a script to get the maximum points.
+You are allowed to take out (kill) any integer and remove from the list.
+However if you do that then all integers exactly one-less or one-more would
+also be removed. Find out the total of integers removed.
 
 Example 1
 
-  Input: @bits = (1, 0, 0)
-  Output: 1
+  Input: @int = (2, 3, 1)
+  Output: 6
 
-  The given array bits can be decoded as 2-bits character (10) followed
-  by 1-bit character (0).
+  First we delete 2 and that would also delete 1 and 3. So the maximum
+  points we get is 6.
 
 Example 2
 
-  Input: @bits = (1, 1, 1, 0)
-  Output: 0
+  Input: @int = (1, 1, 2, 2, 2, 3)
+  Output: 11
 
-  Possible decode can be 2-bits character (11) followed by 2-bits
-  character (10) i.e. the last character is not 1-bit character.
+  First we delete 2 and that would also delete both the 1's and the
+  3. Now we have (2, 2).
+  Then we delete another 2 and followed by the third deletion of 2. So
+  the maximum points we get is 11.
 
-MY NOTES: very easy.  decode string then check last letter of decoded version.
-I wonder if there's a way of decoding-and-checking together, though.
+MY NOTES: very easy recursive "all paths" solution with accumulating points
+so far, tracking the best (max) complete path found as we go.
+
+PS: Thinking about this AFTER writing the code, all paths necessarily lead
+to the same total sum, as whenever we delete some elements we add them to
+the sum, so once we've deleted all elements the total sum is necessarily
+the sum of the original elements.  So the "find all paths and pick the max
+sum" logic is completely unnecessary.  Finding any single path and it's score
+would do.  Hence, I don't understand the emphasis in the question above on the
+"write a script to get the maximum points" wording, and why the examples above
+show a particular path if any path would do..  It's possible that the question
+meant "pick a path that leads to a solution in the shortest number of kaw
+rounds" - that's compatible with example 1.  But dammit if that's what was
+meant, the question should have been clearer.  So I'm leaving my code
+alone as it answers the question well enough.
 
 GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl into C
 (look in the C directory for that).
 
 
-Task 2: Merge Account
+Task 2: Number Collision
 
-You are given an array of accounts i.e. name with list of email addresses.
+You are given an array of integers which can move in right direction if
+it is positive and left direction when negative. If two numbers collide
+then the smaller one will explode. And if both are same then they both
+explode. We take the absolute value in consideration when comparing.
 
-Write a script to merge the accounts where possible. The accounts can
-only be merged if they have at least one email address in common.
+All numbers move at the same speed, therefore any 2 numbers moving in
+the same direction will never collide.
+
+Write a script to find out who survives the collision.
 
 Example 1:
 
-  Input: @accounts = [ ["A", "a1@a.com", "a2@a.com"],
-                       ["B", "b1@b.com"],
-                       ["A", "a3@a.com", "a1@a.com"] ]
-                     ]
+  Input: @list = (2, 3, -1)
+  Output: (2, 3)
 
-  Output: [ ["A", "a1@a.com", "a2@a.com", "a3@a.com"],
-            ["B", "b1@b.com"] ]
+  The numbers 3 and -1 collide and -1 explodes in the end. So we are
+  left with (2, 3).
 
 Example 2:
 
-  Input: @accounts = [ ["A", "a1@a.com", "a2@a.com"],
-                       ["B", "b1@b.com"],
-                       ["A", "a3@a.com"],
-                       ["B", "b2@b.com", "b1@b.com"] ]
+  Input: @list = (3, 2, -4)
+  Output: (-4)
 
-  Output: [ ["A", "a1@a.com", "a2@a.com"],
-            ["A", "a3@a.com"],
-            ["B", "b1@b.com", "b2@b.com"] ]
+  The numbers 2 and -4 collide and 2 explodes in the end. That gives us
+  (3, -4).  Now the numbers 3 and -4 collide and 3 explodes.  Finally we
+  are left with -4.
 
-MY NOTES: fiddly and rather inelegant, especially only being allowed to
-merge two entries if the intersection of the email lists is non empty.
-Will also need to choose an input format, how about a list of words of the
-form A:a1@a.com,a2@a.com, B:b1@b.com, A:a3@a.com and B:b2@b.com,b1@b.com
+Example 3:
 
-(TODO) GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl into C
-(TODO) (look in the C directory for that)
+  Input: @list = (1, -1)
+  Output: ()
+
+  The numbers 1 and -1 both collide and explode. Nothing left in the end.
+
+MY NOTES: very unclear explanation, but stripped of all the "numbers moving
+left and right" stuff this seems straightforward (I think): find pairs of
+adjacent numbers Pos,Neg where Pos>0 and Neg<0 and remove Pos or Neg depending
+on min(abs(Pos),abs(Neg)).  Then repeat.  I don't know whether one round should
+find all such immediate (Pos,Neg) pairs, as all the examples show only one
+explosion per round.  Or perhaps that doesn't matter, as it's just more rounds.
+
+GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl into C
+(look in the C directory for that)
