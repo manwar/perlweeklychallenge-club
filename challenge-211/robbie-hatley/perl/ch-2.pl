@@ -44,21 +44,24 @@ my $db = 0; # Debug?
 # Obtain an array of all partitions of a given set into two non-empty
 # parts with the size of the first part not-greater-than the size of the
 # second part (to avoid duplicate partitions):
-sub two_non_empty ($aref, $partref){
+sub two_non_empty ($aref){
    # How big is the original array?
    my $size  = scalar(@{$aref});
+   # Make an array to hold partitions:
+   my @partitions;
    # No need to allow the first part to be more than half the size
    # of the array, else we'd get duplicate partitions:
    my $limit = int($size/2);
    for ( my $n = 1 ; $n <= $limit ; ++$n ){
-      my $parts = Set::Partition->new(
+      my $size_n_partitions = Set::Partition->new(
          list      => $aref,
          partition => [$n, $size - $n],
       );
-      while (my $part = $parts->next) {
-         push @{$partref}, $part;
+      while (my $partition = $size_n_partitions->next) {
+         push @partitions, $partition;
       }
    }
+   return \@partitions;
 }
 
 # What is the average of the real numbers in a referred-to array?
@@ -88,8 +91,7 @@ if (@ARGV) {@arrays = eval($ARGV[0])}
 ARRAY: for (@arrays){
    say '';
    say "array = (@$_)";
-   my $partitions = [];
-   two_non_empty($_, $partitions);
+   my $partitions = two_non_empty($_);
    my $equal_average_flag = 0;
    # If debugging, print lots of extra diagnostics:
    if ($db) {
