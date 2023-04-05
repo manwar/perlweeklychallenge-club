@@ -45,7 +45,6 @@ use warnings;
 # Say whether-or-not a referred-to rectangular 2-d matrix is Toeplitz,
 # without altering the original matrix:
 sub is_toeplitz($mref){
-   # Make a deep copy of @$aref (simple copy is NOT deep copy!!!):
    my $height = scalar(@$mref);
    my $width  = scalar(@{$mref->[0]});
    say "Height = $height";
