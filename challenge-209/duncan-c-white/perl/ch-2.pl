@@ -33,8 +33,8 @@
 # Will also need to choose an input format, how about a list of words of the
 # form A,a1@a.com,a2@a.com, B,b1@b.com, A,a3@a.com and B,b2@b.com,b1@b.com
 # 
-# (TODO) GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl into C
-# (TODO) (look in the C directory for that)
+# GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl into C
+# (look in the C directory for that)
 # 
 
 use strict;
@@ -44,10 +44,11 @@ use Getopt::Long;
 use Data::Dumper;
 
 my $debug=0;
-die "Usage: merge-accounts [--debug] name,emails+\n"
+die "Usage: merge-accounts [--debug] list(name,emails)\n"
 	unless GetOptions( "debug"=>\$debug ) && @ARGV > 0;
 
 my @input = map {
+	die "Bad arg $_, no comma found\n" unless /,/;
 	my @x = split( /,/ );
 	\@x;
 } @ARGV;

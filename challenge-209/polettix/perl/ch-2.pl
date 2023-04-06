@@ -68,8 +68,8 @@ sub merge_accounts ($aref) {
       if (defined($last_wiped)) {
          my $marker = my $cursor = $last_wiped;
          while (++$cursor < $all_groups->$#*) {
-            next if defined($all_groups->[$cursor]);
-            $all_groups->[$marker++] = $all_groups->[$cursor];
+            $all_groups->[$marker++] = $all_groups->[$cursor]
+              if defined($all_groups->[$cursor]);
          }
          splice $all_groups->@*, $marker if $marker < $all_groups->@*;
       }
