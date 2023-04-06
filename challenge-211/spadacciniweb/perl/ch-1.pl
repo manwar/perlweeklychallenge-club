@@ -25,7 +25,7 @@ use strict;
 use warnings;
 use feature qw/say/;
 
-sub check_toeplitz {;
+sub check_toeplitz {
     my $matrix = shift;
     my $rows = @$matrix;
     my $cols = scalar @{$matrix->[0]};
