@@ -61,10 +61,10 @@ int main(int argc, char* argv[]) {
     }
 
     UT_string* out;
-	utstring_new(out);
-	
+    utstring_new(out);
+
     decode(out, argv[0]);
     printf("%d\n", utstring_body(out)[utstring_len(out)-1] == 'a' ? 1 : 0);
-	
-	utstring_free(out);
+
+    utstring_free(out);
 }

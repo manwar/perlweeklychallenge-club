@@ -43,16 +43,16 @@ UT_array* longest_substrs(int count, char* strs[]) {
                 if (in_all) {
                     if (len > longest_len) {
                         utarray_clear(subs);
-						char* elt = utstring_body(sub);
+                        char* elt = utstring_body(sub);
                         utarray_push_back(subs, &elt);
                         longest_len = len;
                     }
                     else if (len == longest_len) {
-						char* elt = utstring_body(sub);
+                        char* elt = utstring_body(sub);
                         utarray_push_back(subs, &elt);
                     }
                 }
-                
+
                 utstring_free(sub);
             }
         }

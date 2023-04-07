@@ -86,7 +86,7 @@ struct us_states lut_us_states[] = {
 struct us_states* lut_states = NULL;
 
 void build_lookup_table() {
-    for (struct us_states* p = lut_us_states; p->key != NULL; p++) 
+    for (struct us_states* p = lut_us_states; p->key != NULL; p++)
         HASH_ADD_KEYPTR(hh, lut_states, p->key, strlen(p->key), p);
 }
 
