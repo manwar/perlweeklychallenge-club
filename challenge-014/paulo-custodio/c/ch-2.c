@@ -22,6 +22,12 @@ California + Louisiana + Massachusetts + Rhode Island = Calamari
 
 #define LU_IDX(a,b) (((a)-'A')*26 + ((b)-'A'))
 
+// string array
+typedef struct {
+    size_t count;
+    char** strs;
+} StringArray;
+
 struct us_states {
     const char* key;
     const char* name;
@@ -91,6 +97,44 @@ void* check_mem(void* p) {
     return p;
 }
 
+StringArray* strs_new() {
+    StringArray* arr = check_mem(calloc(1, sizeof(StringArray)));
+    arr->strs = check_mem(calloc(1, sizeof(char*)));
+    return arr;
+}
+
+void strs_clear(StringArray* arr) {
+    for (size_t i = 0; i < arr->count; i++)
+        free(arr->strs[i]);
+    arr->count = 0;
+    arr->strs[0] = NULL;
+}
+
+void strs_free(StringArray* arr) {
+    strs_clear(arr);
+    free(arr->strs);
+    free(arr);
+}
+
+void strs_push(StringArray* arr, const char* str) {
+    arr->strs = check_mem(realloc(arr->strs, (arr->count + 2) * sizeof(char*)));
+    arr->strs[arr->count++] = check_mem(strdup(str));
+    arr->strs[arr->count] = NULL;
+}
+
+void strs_pop(StringArray* arr) {
+    free(arr->strs[--arr->count]);
+    arr->strs[arr->count] = NULL;
+}
+
+int compare(const void* a, const void* b) {
+    return strcmp(*(const char**)a, *(const char**)b);
+}
+
+void strs_sort(StringArray* arr) {
+    qsort(arr->strs, arr->count, sizeof(char*), compare);
+}
+
 void build_lookup_table() {
     for (struct us_states* p = lut_us_states; p->key != NULL; p++) {
         int idx = LU_IDX(toupper(p->key[0]), toupper(p->key[1]));
@@ -134,7 +178,7 @@ char* chomp(char* str) {
     return str;
 }
 
-char** search_words(const char* dictionary) {
+StringArray* search_words(const char* dictionary) {
     FILE* fp = fopen(dictionary, "r");
     if (fp == NULL) {
         perror(dictionary);
@@ -142,9 +186,7 @@ char** search_words(const char* dictionary) {
     }
 
     // array to return list
-    int N = 0;
-    char** words = check_mem(malloc((N + 1) * sizeof(char*)));
-    words[0] = NULL;
+    StringArray* words = strs_new();
     int curlen = 0;
 
     char word[BUFSIZ];
@@ -153,19 +195,12 @@ char** search_words(const char* dictionary) {
         char* text = state_words(word);
         if (text != NULL) {
             if (strlen(word) > curlen) {
-                for (int i = 0; i < N; i++)
-                    free(words[i]);
-                N = 1;
-                words = check_mem(realloc(words, (N + 1) * sizeof(char*)));
-                words[0] = check_mem(strdup(word));
-                words[1] = NULL;
+                strs_clear(words);
+                strs_push(words, word);
                 curlen = strlen(word);
             }
             else if (strlen(word) == curlen) {
-                N++;
-                words = check_mem(realloc(words, (N + 1) * sizeof(char*)));
-                words[N - 1] = check_mem(strdup(word));
-                words[N] = NULL;
+                strs_push(words, word);
             }
             free(text);
         }
@@ -184,12 +219,12 @@ int main(int argc, char* argv[]) {
 
     build_lookup_table();
 
-    char** words = search_words(argv[1]);
-    for (char** p = words; *p != NULL; p++) {
+    StringArray* words = search_words(argv[1]);
+    for (char** p = words->strs; *p != NULL; p++) {
         char* text = state_words(*p);
         printf("%s = %s\n", *p, text);
         free(text);
     }
 
-    free(words);
+    strs_free(words);
 }
