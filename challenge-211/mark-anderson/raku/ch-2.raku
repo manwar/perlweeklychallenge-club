@@ -13,9 +13,11 @@ nok split-same-avg(5,5,5,2,2,1);
 
 sub split-same-avg(*@nums)
 {
+    my $avg = @nums.sum / @nums.elems;
+
     for (^@nums).combinations(1..@nums.elems div 2) -> @a
     {
-        return True if @nums[@a].sum / @nums[@a].elems == @nums.sum / @nums.elems
+        return True if @nums[@a].sum / @nums[@a].elems == $avg
     }
 
     return False
