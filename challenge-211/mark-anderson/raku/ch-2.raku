@@ -1,7 +1,7 @@
 #!/usr/bin/env raku
 use Test;
 
-# This is a do-over after reading other's solutions.
+# This is a do-over after reading other solutions.
 # Jorg Sommrey and W. Luis Mochan explained that if one subset's average
 # equals the average of the whole list then the other subset will have
 # the same average. 
