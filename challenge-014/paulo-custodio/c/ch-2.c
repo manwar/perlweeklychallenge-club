@@ -14,46 +14,48 @@ Maine + Alabama = MEAL
 California + Louisiana + Massachusetts + Rhode Island = Calamari
 */
 
-#include <assert.h>
 #include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 #include <string.h>
-
-#define LU_IDX(a,b) (((a)-'A')*26 + ((b)-'A'))
+#include "utstring.h"
+#include "utarray.h"
+#include "uthash.h"
 
 struct us_states {
     const char* key;
     const char* name;
+    UT_hash_handle hh;
 };
 
 struct us_states lut_us_states[] = {
-    {"AL", "Alabama"},
-    {"AK", "Alaska"},
-    {"AZ", "Arizona"},
-    {"AR", "Arkansas"},
-    {"CA", "California"},
-    {"CO", "Colorado"},
-    {"CT", "Connecticut"},
-    {"DE", "Delaware"},
-    {"FL", "Florida"},
-    {"GA", "Georgia"},
-    {"HI", "Hawaii"},
-    {"ID", "Idaho"},
-    {"IL", "Illinois"},
-    {"IN", "Indiana"},
-    {"IA", "Iowa"},
-    {"KS", "Kansas"},
-    {"KY", "Kentucky"},
-    {"LA", "Louisiana"},
-    {"ME", "Maine"},
-    {"MD", "Maryland"},
-    {"MA", "Massachusetts"},
-    {"MI", "Michigan"},
-    {"MN", "Minnesota"},
-    {"MS", "Mississippi"},
-    {"MO", "Missouri"},
-    {"MT", "Montana"},
+    { "AL", "Alabama" },
+    { "AK", "Alaska" },
+    { "AZ", "Arizona" },
+    { "AR", "Arkansas" },
+    { "CA", "California" },
+    { "CO", "Colorado" },
+    { "CT", "Connecticut" },
+    { "DE", "Delaware" },
+    { "FL", "Florida" },
+    { "GA", "Georgia" },
+    { "HI", "Hawaii" },
+    { "ID", "Idaho" },
+    { "IL", "Illinois" },
+    { "IN", "Indiana" },
+    { "IA", "Iowa" },
+    { "KS", "Kansas" },
+    { "KY", "Kentucky" },
+    { "LA", "Louisiana" },
+    { "ME", "Maine" },
+    { "MD", "Maryland" },
+    { "MA", "Massachusetts" },
+    { "MI", "Michigan" },
+    { "MN", "Minnesota" },
+    { "MS", "Mississippi" },
+    { "MO", "Missouri" },
+    { "MT", "Montana" },
     { "NE", "Nebraska" },
     { "NV", "Nevada" },
     { "NH", "New Hampshire" },
@@ -81,50 +83,40 @@ struct us_states lut_us_states[] = {
     { NULL, NULL },
 };
 
-const char* lut_states[LU_IDX('Z', 'Z') + 1];
-
-void* check_mem(void* p) {
-    if (!p) {
-        fputs("Out of memory", stderr);
-        exit(EXIT_FAILURE);
-    }
-    return p;
-}
+struct us_states* lut_states = NULL;
 
 void build_lookup_table() {
-    for (struct us_states* p = lut_us_states; p->key != NULL; p++) {
-        int idx = LU_IDX(toupper(p->key[0]), toupper(p->key[1]));
-        assert(lut_states[idx] == NULL);
-        lut_states[idx] = p->name;
-    }
+    for (struct us_states* p = lut_us_states; p->key != NULL; p++)
+        HASH_ADD_KEYPTR(hh, lut_states, p->key, strlen(p->key), p);
 }
 
-const char* lookup_state(const char* str) {
-    if (!isalpha(str[0]) || !isalpha(str[1]))
-        return NULL;
-    else {
-        int idx = LU_IDX(toupper(str[0]), toupper(str[1]));
-        return lut_states[idx];
-    }
+const char* lookup_state(const char* str, size_t len) {
+    UT_string* str_upper;
+    utstring_new(str_upper);
+    for (const char* p = str; *p && utstring_len(str_upper) < len; p++)
+        utstring_printf(str_upper, "%c", toupper(*p));
+
+    struct us_states* elt;
+    HASH_FIND_STR(lut_states, utstring_body(str_upper), elt);
+
+    utstring_free(str_upper);
+    return elt ? elt->name : NULL;
 }
 
-char* state_words(const char* word) {
-    char text[BUFSIZ];
+bool state_words(UT_string* result, const char* word) {
+    utstring_clear(result);
 
     if (strlen(word) % 2 != 0)          // odd number of chars
-        return NULL;
+        return false;
 
-    text[0] = '\0';
-    const char* sep = "";
     for (int i = 0; i < strlen(word); i += 2) {
-        const char* state = lookup_state(word + i);
+        const char* state = lookup_state(word + i, 2);
         if (state == NULL)
-            return NULL;                // no state found
-        sprintf(text + strlen(text), "%s%s", sep, state);
-        sep = " + ";
+            return false;               // no state found
+        utstring_printf(result, "%s%s", i == 0 ? "" : " + ", state);
     }
 
-    return check_mem(strdup(text));
+    return true;
 }
 
 char* chomp(char* str) {
@@ -134,7 +126,7 @@ char* chomp(char* str) {
     return str;
 }
 
-char** search_words(const char* dictionary) {
+UT_array* search_words(const char* dictionary) {
     FILE* fp = fopen(dictionary, "r");
     if (fp == NULL) {
         perror(dictionary);
@@ -142,37 +134,33 @@ char** search_words(const char* dictionary) {
     }
 
     // array to return list
-    int N = 0;
-    char** words = check_mem(malloc((N + 1) * sizeof(char*)));
-    words[0] = NULL;
-    int curlen = 0;
+    UT_array* words;
+    utarray_new(words, &ut_str_icd);
+
+    UT_string* text;
+    utstring_new(text);
+
+    size_t curlen = 0;
 
     char word[BUFSIZ];
     while (fgets(word, sizeof(word), fp)) {
         chomp(word);
-        char* text = state_words(word);
-        if (text != NULL) {
+        if (state_words(text, word)) {
             if (strlen(word) > curlen) {
-                for (int i = 0; i < N; i++)
-                    free(words[i]);
-                N = 1;
-                words = check_mem(realloc(words, (N + 1) * sizeof(char*)));
-                words[0] = check_mem(strdup(word));
-                words[1] = NULL;
+                utarray_clear(words);
+                char* elt = word;
+                utarray_push_back(words, &elt);
                 curlen = strlen(word);
             }
             else if (strlen(word) == curlen) {
-                N++;
-                words = check_mem(realloc(words, (N + 1) * sizeof(char*)));
-                words[N - 1] = check_mem(strdup(word));
-                words[N] = NULL;
+                char* elt = word;
+                utarray_push_back(words, &elt);
             }
-            free(text);
         }
     }
 
     fclose(fp);
-
+    utstring_free(text);
     return words;
 }
 
@@ -183,13 +171,15 @@ int main(int argc, char* argv[]) {
     }
 
     build_lookup_table();
+    UT_string* text;
+    utstring_new(text);
 
-    char** words = search_words(argv[1]);
-    for (char** p = words; *p != NULL; p++) {
-        char* text = state_words(*p);
-        printf("%s = %s\n", *p, text);
-        free(text);
+    UT_array* words = search_words(argv[1]);
+    for (char** p = NULL; (p = (char**)utarray_next(words, p)) != NULL; ) {
+        if (state_words(text, *p))
+            printf("%s = %s\n", *p, utstring_body(text));
     }
 
-    free(words);
+    utarray_free(words);
+    utstring_free(text);
 }
