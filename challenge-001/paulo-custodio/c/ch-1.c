@@ -11,13 +11,7 @@ is found in the string.
 #include <string.h>
 #include <stdlib.h>
 #include <memory.h>
-
-void* check_mem(void* p) {
-    if (!p) {
-        fputs("out of memory", stderr);
-        exit(EXIT_FAILURE);
-    }
-}
+#include "utstring.h"
 
 int replace_e(char* text) {
     int count = 0;
@@ -31,16 +25,14 @@ int replace_e(char* text) {
 }
 
 int main(int argc, char* argv[]) {
-    char* text = check_mem(strdup(""));
-    for (int i = 1; i < argc; i++) {
-        text = check_mem(realloc(text, strlen(text)+strlen(argv[i])+2));
-        strcat(text, argv[i]);
-        strcat(text, " ");
-    }
-    if (*text)
-        text[strlen(text)-1] = '\0';        // remove last space
+    UT_string* text;
+    utstring_new(text);
 
-    int count = replace_e(text);
-    printf("%d %s\n", count, text);
-    free(text);
+    for (int i = 1; i < argc; i++)
+        utstring_printf(text, "%s%s", i==1 ? "" : " ", argv[i]);
+
+    int count = replace_e(utstring_body(text));
+    printf("%d %s\n", count, utstring_body(text));
+
+    utstring_free(text);
 }
