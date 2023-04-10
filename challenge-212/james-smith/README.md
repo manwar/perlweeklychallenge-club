@@ -1,7 +1,7 @@
-[< Previous 210](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-210/james-smith) |
-[Next 212 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-212/james-smith)
+[< Previous 211](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-211/james-smith) |
+[Next 213 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-213/james-smith)
 
-# The Weekly Challenge 211
+# The Weekly Challenge 212
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,59 +13,67 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-211/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-212/james-smith
 
-# Task 1: Toeplitz Matrix
+# Task 1: Jumping Letters
 
-***You are given a matrix `m` x `n`. Write a script to find out if the given matrix is Toeplitz Matrix. A matrix is Toeplitz if every diagonal from top-left to bottom-right has the same elements.***
+***You are given a word having alphabetic characters only, and a list of positive integers of the same length. 
+Write a script to print the new word generated after jumping forward each letter in the given word by the integer in the list. The given list would have exactly the number as the total alphabets in the given word.***
 
 ## Solution
 
-
 ```perl
-sub toeplitz {
-  return if @_ > @{$_[0]};                   ## unclear but no diagonals...
-  my @st = @{$_[0]}[ 0 .. @{$_[0]} - @_ ];
-  for my $r ( 1 .. $#_ ) {
-    $st[$_] == $_[$r][$r+$_] || return 0 for 0 .. $#st;
-  }
-  1
+sub jumping_letters {
+  join '',
+  map { chr }
+  map { (96&ord) | ( (31&ord) -1 + shift)%26 +1 }
+  split //,
+  shift
 }
 ```
 
-Firstly we check to see if we have more rows than columns (there are no full diagonals) so there is no result.
-
-Then we grab the first row of each of the diagonal - the number of possible diagonals is `columns - rows + 1`.
-We then loop through each other row - and find the chunk of the row on the diagonal - and compare it with the first row.
-
-If there is a difference we return `0`;
-
-If the are no differences we return `1`;
-
-# Task 2: Number Collision
+# Task 2: 
 
 ***You are given an array of integers. Write a script to find out if the given can be split into two separate arrays whose average are the same..***
 
 ## Solution
 
-First we compute the overall average of the sets of numbers (or at least the sum and the count). We then loop through all subsets of numbers to see if we can find a subset with the same average.
+```perl
+sub rearrange_groups {
+  my($s,%f) = -1+shift;
+  $f{$_}++ for @_;
+  for my $k ( sort {$a<=>$b} keys %f ) {
+    $f{$k}||next;
+    exists $f{$_} && $f{$_}>=$f{$k} ? $f{$_}-=$f{$k} : return -1 for $k+1..$k+$s;
+  }
+  [ map { ([$_..$_+$s]) x $f{$_} } sort { $a<=>$b } keys %f ]
+}
+```
+Now with some "craft" the main function can be rewritten as a series of maps to
+generate a single statement for everything after we produce the list of frequences.
 
-We can enumerate sub sets by using a binary mask to choose elements - For every solution there are two sets one whic includes the first number and one that doesn't - as we only need to calculate one set - then we can always assume that the first entry is NOT in the set we are summing.
+We replace the inner loop with a map to allow us to replace the outer loop with a map also.
+A trick here - we map `$_` -> `$'` by running the empty regex `//`. `$'` the after value
+is assigned to whole of the unmatch string of `$_`. We then extract this as it is what we
+need by by returning it in the 2nd value of the array and accessing with `[1]`.
 
-To compare the means we could use `TOTAL_all / COUNT_all == TOTAL_subset / COUNT_subset` but this involves division which isn't good - but we can rewrite this as:
-`TOTAL_all * COUNT_subset == TOTAL_subset * COUNT_all`.
-
-We enumerate the sets from `1` to `2^(n-1) - 1` the bits representing whether or not the number is in one set or the other.
+This leaves the hash `%f` containing the frequence of each list starting at a given point.
+Which we again use map to generate the list of lists.
 
 ```perl
-sub equal_split {
-  my( $t, $c ) = ( 0, scalar @_ );
-  $t += $_ for @_;
-  for my $x ( 1 .. ( 1 << $c-1 ) -1 ) {
-    my( $m, $n ) = ( 0, 0 );
-    ( $x & 1 ) && ( $m += $_[$_], $n++ ), $x >>= 1 for 1 .. $c-1;
-    return 1 unless $n*$t-$m*$c;
-  }
-  0
+sub rearrange_groups_one_liner {
+  my($s,%f) = -1+shift;
+  $f{$_}++ for @_;
+  [ map { ([$_..$_+$s]) x $f{$_} }
+    map { ( //,
+            $',
+            $f{$'} && map {
+              $f{$_}//0>=$f{$'}
+            ? $f{$_}-=$f{$'}
+            : return -1
+            } $'+1..$'+$s
+          )[1] }
+    sort {$a<=>$b}
+    keys %f ]
 }
 ```
