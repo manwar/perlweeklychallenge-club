@@ -131,6 +131,6 @@ if len(args)!=1:
 with open(args[0]) as f:
     prog = "".join(f.readlines())
 
-# initialize and run Tuting Machine
+# initialize and run Turing Machine
 tm = TuringMachine(prog)
 tm.run()

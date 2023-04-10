@@ -11,7 +11,7 @@
 
 use Modern::Perl;
 
-say "(", join(", ", map {$_=qq("$_")} longest_substr(@ARGV)), ")";
+say "(", join(", ", map {qq("$_")} longest_substr(@ARGV)), ")";
 
 
 sub longest_substr {

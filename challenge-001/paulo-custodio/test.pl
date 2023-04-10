@@ -52,7 +52,7 @@ for my $lang (grep {-d} sort keys %LANG) {
     next unless $TESTS{$lang};
 
     for $prog (path($lang)->children(qr/\.$LANG{$lang}$/)) {
-        $prog->basename =~ /^ch[-_](.*)\.$LANG{$lang}$/ or die $prog;
+        $prog->basename =~ /^ch[-_](.*)\.$LANG{$lang}$/ or next;
         my $task = $1;
 
         # compile if needed
@@ -145,7 +145,7 @@ sub build {
         }
         if (/^brainfuck$/) {
             #run("perl bfpp.pl <$prog_wo_ext.bfpp >$prog_wo_ext.bf");
-            return "bf $prog_wo_ext.bf";
+            return "python3 ../../challenge-001/paulo-custodio/brainfuck.py $prog_wo_ext.bf";
         }
         if (/^c$/) {
             run("gcc $prog -o $prog_wo_ext -lm -lmpfr -lgmp") if (!-f $exe || -M $exe > -M $prog);
