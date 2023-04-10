@@ -30,30 +30,27 @@ Possible decode can be 2-bits character (11) followed by 2-bits character
 (10) i.e. the last character is not 1-bit character.
 */
 
-#define MAX_STRING  256
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "utstring.h"
 
-void decode(char* out, const char* in) {
+void decode(UT_string* out, const char* in) {
     const char* p = in;
-    char* q = out;
     while (*p) {
         switch (*p) {
-        case '0': *q++ = 'a'; p++; break;
+        case '0': utstring_printf(out, "%c", 'a'); p++; break;
         case '1':
             p++;
             switch (*p) {
-            case '0': *q++ = 'b'; p++; break;
-            case '1': *q++ = 'c'; p++; break;
+            case '0': utstring_printf(out, "%c", 'b'); p++; break;
+            case '1': utstring_printf(out, "%c", 'c'); p++; break;
             default: fputs("invalid input", stderr); exit(EXIT_FAILURE);
             }
             break;
         default: fputs("invalid input", stderr); exit(EXIT_FAILURE);
         }
     }
-    *q++ = '\0';
 }
 
 int main(int argc, char* argv[]) {
@@ -63,7 +60,11 @@ int main(int argc, char* argv[]) {
         return EXIT_FAILURE;
     }
 
-    char out[MAX_STRING];
+    UT_string* out;
+    utstring_new(out);
+
     decode(out, argv[0]);
-    printf("%d\n", out[strlen(out)-1] == 'a' ? 1 : 0);
+    printf("%d\n", utstring_body(out)[utstring_len(out)-1] == 'a' ? 1 : 0);
+
+    utstring_free(out);
 }

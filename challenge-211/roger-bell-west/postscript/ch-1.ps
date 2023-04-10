@@ -1,0 +1,77 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/toeplitzmatrix {
+    9 dict begin
+    /a exch def
+    /ym a length 1 sub def
+    /xm a 0 get length 1 sub def
+    /toeplitz true def
+    1 xm sub 1 ym 1 sub {
+        /xb exch def
+        /init true def
+        /tv 0 def
+        xb 1 xb xm add {
+            /x exch def
+            x 0 ge x xm le and {
+                /y x xb sub def
+                y 0 ge y ym le and {
+                    init {
+                        /init false def
+                        /tv a y get x get def
+                    } {
+                        a y get x get tv ne {
+                            /toeplitz false def
+                            exit
+                        } if
+                    } ifelse
+                } if
+            } if
+        } for
+        toeplitz not {
+            exit
+        } if
+    } for
+    toeplitz
+    end
+} bind def
+
+(toeplitzmatrix) test.start
+[[4 3 2 1] [5 4 3 2] [6 5 4 3]] toeplitzmatrix test
+[[1 2 3] [3 2 1]] toeplitzmatrix not test
+test.end

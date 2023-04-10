@@ -35,6 +35,6 @@ for n in van_eck_iter():
     output += sep + str(n)
     sep = ", "
     count += 1
-    if count > 96:
+    if count >= 96:
         break
 print(output)
