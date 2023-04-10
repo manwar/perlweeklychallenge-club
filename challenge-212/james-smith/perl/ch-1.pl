@@ -13,10 +13,10 @@ my @TESTS = (
 
 sub jumping_letters {
                          # Stitch back into word
-  return join '',
+  join '',
                          # Like ord below chr acts on $_ if no parameters
                          # are passed...
-         map { chr }
+  map { chr }
                          # Do the maths.... now this is where things get
                          # a little cheeky.... ord acts on $_ which is the
                          # letter, shift returns the next value of @_ which
@@ -28,11 +28,11 @@ sub jumping_letters {
                          # position of the number in the alphabet - we subtract
                          # one to get the zero based position + shift it
                          # wrap and them move back to a one based position.
-         map { (96&ord) | ( (31&ord) -1 + shift)%26 +1 }
+  map { (96&ord) | ( (31&ord) -1 + shift)%26 +1 }
                          # Split into individual letters;
-         split //,
+  split //,
                          ## This is the word we are "changing"
-         shift;
+  shift
 }
 
 is( jumping_letters( @{$_->[0]} ), $_->[1] ) for @TESTS;
