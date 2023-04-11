@@ -8,8 +8,8 @@ is jumping-letters("Raku", (76,56,59,69)), "Perl";
 
 sub jumping-letters($word, *@jump)
 {
-    my $uc = flat '' xx 65, ('A'..'Z').Slip xx *;
-    my $lc = flat '' xx 97, ('a'..'z').Slip xx *;
+    my $uc = flat '' xx 65, ('A'..'Z') xx *;
+    my $lc = flat '' xx 97, ('a'..'z') xx *;
 
     sub jump($letter, $jump)
     {
