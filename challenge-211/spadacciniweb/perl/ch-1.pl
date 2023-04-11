@@ -26,28 +26,26 @@ use warnings;
 use feature qw/say/;
 
 sub check_toeplitz {
-    my $matrix = shift;
-    my $rows = @$matrix;
-    my $cols = scalar @{$matrix->[0]};
-    my $min = ($rows < $cols)
-        ? $rows
-        : $cols;
-    my $value = $matrix->[0]->[0];
-    foreach my $i (0..$min-1) {
-        return 'false'
-            unless $matrix->[$i]->[$i] == $value;
+    my @matrix = @_;
+    my $rows = scalar @matrix;
+    my $cols = scalar @{$matrix[0]};
+    foreach my $i (1..($rows-1)) {
+        foreach my $j (1..($cols-1)) {
+            return 'false'
+                unless $matrix[$i][$j] == $matrix[$i-1][$j-1];
+        }
     }
     return 'true';
 }
 
-my $matrix = [ [4, 3, 2, 1],
+my @matrix = ( [4, 3, 2, 1],
                [5, 4, 3, 2],
                [6, 5, 4, 3],
-             ];
-say check_toeplitz($matrix);
+             );
+say check_toeplitz(@matrix);
 
-$matrix = [ [1, 2, 3],
+@matrix = ( [1, 2, 3],
             [3, 2, 1],
-          ];
-say check_toeplitz($matrix);
+          );
+say check_toeplitz(@matrix);
 

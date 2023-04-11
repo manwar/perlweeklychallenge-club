@@ -20,10 +20,11 @@
 # Output: false
 
 def check_toeplitz(m)
-    rc = [m.length, m[0].length].min - 1
-    val = m[0][0]
-    (0..rc).each {|e|
-        return 'false' if m[e][e] != val
+    rows, cols = m.length, m[0].length
+    (1...rows).each { |i|
+        (1...cols).each { |j|
+            return 'false' if m[i][j] != m[i-1][j-1]
+        }
     }
     return 'true'
 end
