@@ -8,11 +8,13 @@ is jumping-letters("Raku", (76,56,59,69)), "Perl";
 
 sub jumping-letters($word, *@jump)
 {
-    sub jump($letter, $jump is copy)
+    my $uc = flat '' xx 65, ('A'..'Z') xx *;
+    my $lc = flat '' xx 97, ('a'..'z') xx *;
+
+    sub jump($letter, $jump)
     {
-        my $adjust = $letter.ord < 97 ?? 65 !! 97;
-        $jump = ($letter.ord - $adjust + $jump) mod 26;
-        ($adjust + $jump).chr
+        my $list := $letter.ord < 97 ?? $uc !! $lc;
+        $list[$letter.ord + $jump]
     }
     
     ($word.comb Z @jump).map({ jump(.[0], .[1]) }).join
