@@ -1,5 +1,4 @@
 #!/usr/bin/env raku
-use Array::Circular;
 use Test;
 
 is jumping-letters("Perl", (2,22,19,9)),   "Raku";
