@@ -30,7 +30,6 @@ AS $CODE$
 
    while ( $done < ( $list->@* / $size ) ) {
        my $current = [];
-       elog(INFO, "Done = $done" );
        while ( scalar( $current->@* ) != $size ) {
        	     my $value = $find_min_available->( $bag, $current );
 	     return undef if ! $value;
