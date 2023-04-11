@@ -23,11 +23,11 @@ import numpy
 
 def check_toeplitz(matrix):
     m = numpy.array(matrix)
-    dim = min(m.shape)
-    value = m[0][0]
-    for i in range(dim):
-        if m[i][i] != value:
-            return 'false'
+    rows, cols = m.shape
+    for i in range(1,rows):
+        for j in range(1,cols):
+            if m[i][j] != m[i-1][j-1]:
+                return 'false'
     return 'true'
 
 if __name__ == "__main__":
