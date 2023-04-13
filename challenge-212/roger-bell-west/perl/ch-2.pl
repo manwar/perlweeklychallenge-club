@@ -4,13 +4,14 @@ use strict;
 use warnings;
 use experimental 'signatures';
 
-use Test::More tests => 3;
-
-use List::Util qw(min);
+use Test::More tests => 4;
 
 is_deeply(rearrangegroups([1, 2, 3, 5, 1, 2, 7, 6, 3], 3), [[1, 2, 3], [1, 2, 3], [5, 6, 7]], 'example 1');
 is_deeply(rearrangegroups([1, 2, 3], 2), [], 'example 2');
-is_deeply(rearrangegroups([1, 5, 2, 6, 4, 7], 3), [], 'example 3');
+is_deeply(rearrangegroups([1, 2, 4, 3, 5, 3], 3), [[1, 2, 3], [3, 4, 5]], 'example 3');
+is_deeply(rearrangegroups([1, 5, 2, 6, 4, 7], 3), [], 'example 4');
+
+use List::Util qw(min);
 
 sub rearrangegroups($list, $size) {
   my %h;

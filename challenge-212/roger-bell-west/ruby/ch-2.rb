@@ -46,6 +46,10 @@ class TestRearrangegroups < Test::Unit::TestCase
   end
 
   def test_ex3
+    assert_equal([[1, 2, 3], [3, 4, 5]], rearrangegroups([1, 2, 4, 3, 5, 3], 3))
+  end
+
+  def test_ex4
     assert_equal([], rearrangegroups([1, 5, 2, 6, 4, 7], 3))
   end
 

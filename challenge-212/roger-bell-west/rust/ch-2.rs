@@ -18,10 +18,12 @@ fn test_ex2() {
 
 #[test]
 fn test_ex3() {
-    assert_eq!(
-        rearrangegroups(vec![1, 5, 2, 6, 4, 7], 3),
-        Vec::<Vec<i32>>::new()
-    );
+    assert_eq!(rearrangegroups(vec![1, 2, 4, 3, 5, 3], 3), vec![vec![1, 2, 3], vec![3, 4, 5]]);
+}
+
+#[test]
+fn test_ex4() {
+    assert_eq!(rearrangegroups(vec![1, 5, 2, 6, 4, 7], 3), Vec::<Vec<i32>>::new());
 }
 
 fn rearrangegroups(list: Vec<i32>, size: i32) -> Vec<Vec<i32>> {

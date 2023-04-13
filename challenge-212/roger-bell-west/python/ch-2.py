@@ -38,6 +38,9 @@ class TestRearrangegroups(unittest.TestCase):
     self.assertEqual(rearrangegroups([1, 2, 3], 2), [], 'example 2')
 
   def test_ex3(self):
-    self.assertEqual(rearrangegroups([1, 5, 2, 6, 4, 7], 3), [], 'example 3')
+    self.assertEqual(rearrangegroups([1, 2, 4, 3, 5, 3], 3), [[1, 2, 3], [3, 4, 5]], 'example 3')
+
+  def test_ex4(self):
+    self.assertEqual(rearrangegroups([1, 5, 2, 6, 4, 7], 3), [], 'example 4')
 
 unittest.main()

@@ -45,6 +45,12 @@ fun main() {
         print("Fail")
     }
     print(" ")
+    if (rearrangegroups(listOf(1, 2, 4, 3, 5, 3), 3) == listOf(listOf(1, 2, 3), listOf(3, 4, 5))) {
+        print("Pass")
+    } else {
+        print("Fail")
+    }
+    print(" ")
     if (rearrangegroups(listOf(1, 5, 2, 6, 4, 7), 3) == emptyList<List<Int>>()) {
         print("Pass")
     } else {

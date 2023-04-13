@@ -82,6 +82,12 @@ if (deepEqual(rearrangegroups([1, 2, 3], 2), [])) {
   process.stdout.write("FAIL");
 }
 process.stdout.write(" ");
+if (deepEqual(rearrangegroups([1, 2, 4, 3, 5, 3], 3), [[1, 2, 3], [3, 4, 5]])) {
+  process.stdout.write("Pass");
+} else {
+  process.stdout.write("FAIL");
+}
+process.stdout.write(" ");
 if (deepEqual(rearrangegroups([1, 5, 2, 6, 4, 7], 3), [])) {
   process.stdout.write("Pass");
 } else {
