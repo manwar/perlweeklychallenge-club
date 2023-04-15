@@ -22,6 +22,25 @@ Write a script to print the new word generated after jumping forward each letter
 
 ## Solution
 
+The solution below is compact - but by chaining `map`s we can break up the functionality.
+
+ * `shift` - grab the first parameter - the string.
+ * `split //` - split this into single characters
+ * `map { (96&ord) | ( (31&ord) -1 + shift)%26 +1 }` - loop through each letter
+   * (96&ord) - get the 2 & 3 bits of the representation - uppercase have only the first bit set, lowercase both.
+     * Note `ord` without any parameters acts on $_ or the loop variable - in this case the characters of the sting.
+   * `|` - we **or** this back with the result of the second calculation, this means the character will keep it's case
+   * `((31&ord) -1 + shift)%26+1` computes the letter shift
+     * `31&ord` gets the last 5 bits of the character - this gives the same for the upper/lower case version of a letter, and is the 1-based position of the letter in the alphabet.
+     * `-1` converts this to the 0-based position (easier to work with)
+     * `+ shift` adds the next element of the parameter list to this - applying the shift.
+     * `( .. )%26` wraps this to map back to the alphabet [hence need for 0-based position]
+     * `+1` converts back to the 1-based position.
+ * `chr` converts back to the character (again no parameter uses `$_`
+ * `join ''` joins the string back together
+
+We have no `return` here as perl by default returns the last value computed.... similarly no trailing `;` as one isn't needed for a `}`.
+
 ```perl
 sub jumping_letters {
   join '',
@@ -32,6 +51,11 @@ sub jumping_letters {
 }
 ```
 
+**Note:** An alternative version of the long `map` is available at the same length - which doesn't rely on shifting to `0-based` numbers but converts `0` to `26` by means of an `||26`.
+
+```perl
+  map { ( ( (31&ord) + shift )%26 || 26 ) | 96&ord }
+```
 # Task 2: 
 
 ***You are given an array of integers. Write a script to find out if the given can be split into two separate arrays whose average are the same..***
