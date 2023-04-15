@@ -58,31 +58,61 @@ sub jumping_letters {
 ```
 # Task 2: 
 
-***You are given an array of integers. Write a script to find out if the given can be split into two separate arrays whose average are the same..***
+***You are given a list of integers and group size greater than zero. Write a script to split the list into equal groups of the given size where integers are in sequential order. If it can’t be done then print `-1`.***
 
 ## Solution
+
+We make the following observations:
+ * the order of the numbers is irrelevant - so it can help us by sorting the numbers;
+ * not only that but just keeping the count of each number is sufficient.
+
+We therefore compute the counts and loop through these in numeric order:
+ * We check to see if the count for the next "n-1" numbers are greater than the count for the current one.
+   * If they are we reduce the count and continue.
+   * If not we return `-1` as there is no solution.
+
+Again we make the observations:
+ * We can reduce the number of the subsequent numbers within the loop that checks as we can be "destructive" in the approach - we return `-1` in the only case this would be bad.
+ * We don't store `$n` but `$n` as we never use `$n` without using `$s`
+ * We only have to keep track of the first element of each list which starts a sequence - and it's count. Well this is a by-product of the approach. It is what is left in the frequency table...
+
+Notes:
+ * Really only one here - that we have to be careful in the last map `[...] x $x` returns `('Array(0x..)','Array(0x..)',...)`, so we have to wrap it in `()` to convert it into an array of scalars to get it to return `([...],[...],...)`.
+### Solution 1 - multi-liner...
 
 ```perl
 sub rearrange_groups {
   my($s,%f) = -1+shift;
-  $f{$_}++ for @_;
-  for my $k ( sort {$a<=>$b} keys %f ) {
-    $f{$k}||next;
-    exists $f{$_} && $f{$_}>=$f{$k} ? $f{$_}-=$f{$k} : return -1 for $k+1..$k+$s;
+  $f{$_}++ for @_;                         ## Get counts
+  for my $k ( sort {$a<=>$b} keys %f ) {   ## Loop through numbers
+    $f{$k}||next;                          ## Next unless defined and non-zero
+      exists $f{$_} && $f{$_}>=$f{$k}      ## Loop through the next $s numbers
+    ? $f{$_}-=$f{$k}                       ## If defined & greater than $f{$k}
+    : return -1                            ## we update o/w return -1
+      for $k+1..$k+$s;
   }
-  [ map { ([$_..$_+$s]) x $f{$_} } sort { $a<=>$b } keys %f ]
+  [ map  { ([$_..$_+$s]) x $f{$_} }        ## Now just output
+    sort { $a<=>$b }                       ## note ([...]) as o/w [...] is
+    keys %f ]                              ## handled as a string.
 }
 ```
+
 Now with some "craft" the main function can be rewritten as a series of maps to
 generate a single statement for everything after we produce the list of frequences.
 
-We replace the inner loop with a map to allow us to replace the outer loop with a map also.
+We replace the inner loop with a `map` to allow us to replace the outer loop with a `map` also.
+
 A trick here - we map `$_` -> `$'` by running the empty regex `//`. `$'` the after value
-is assigned to whole of the unmatch string of `$_`. We then extract this as it is what we
+is assigned to whole of the unmatch string of `$_`. Interestingly `//` appears again - but this
+time not an empty regex but as the "*or if defined*" operator.
+
+We then extract this as it is what we
 need by by returning it in the 2nd value of the array and accessing with `[1]`.
 
 This leaves the hash `%f` containing the frequence of each list starting at a given point.
-Which we again use map to generate the list of lists.
+
+Which we again use map to generate the list of lists - which in turn avoids us resorting the
+list...
 
 ```perl
 sub rearrange_groups_one_liner {
@@ -92,9 +122,7 @@ sub rearrange_groups_one_liner {
     map { ( //,
             $',
             $f{$'} && map {
-              $f{$_}//0>=$f{$'}
-            ? $f{$_}-=$f{$'}
-            : return -1
+              $f{$_}//0>=$f{$'} ? $f{$_}-=$f{$'} : return -1
             } $'+1..$'+$s
           )[1] }
     sort {$a<=>$b}
