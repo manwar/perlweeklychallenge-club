@@ -1,0 +1,59 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/jumpingletters {
+    5 dict begin
+    /jump exch def
+    /word exch def
+    /s word length string def
+    0 1 word length 1 sub {
+        /i exch def
+        /d word i get jump i get 26 mod add def
+        word i get 90 le d 90 gt and d 122 gt or {
+            /d d 26 sub def
+        } if
+        s i d put
+    } for
+    s
+    end
+} bind def
+
+(jumpingletters) test.start
+(Perl) [2 22 19 9] jumpingletters (Raku) eq test
+(Raku) [24 4 7 17] jumpingletters (Perl) eq test
+test.end
