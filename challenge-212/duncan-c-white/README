@@ -1,71 +1,69 @@
-Task 1: Special Bit Characters
+Task 1: Jumping Letters
 
-You are given an array of binary bits that ends with 0.
+You are given a word having alphabetic characters only, and a list of
+positive integers of the same length
 
-Valid sequences in the bit string are:
-
-[0] -decodes-to-> "a"
-[1, 0] -> "b"
-[1, 1] -> "c"
-
-Write a script to print 1 if the last character is an 'a' otherwise
-print 0.
+Write a script to print the new word generated after jumping forward
+each letter in the given word by the integer in the list. The given list
+would have exactly the number as the total alphabets in the given word.
 
 Example 1
 
-  Input: @bits = (1, 0, 0)
-  Output: 1
+  Input: $word = 'Perl' and @jump = (2,22,19,9)
+  Output: Raku
 
-  The given array bits can be decoded as 2-bits character (10) followed
-  by 1-bit character (0).
+  'P' jumps 2 place forward and becomes 'R'.
+  'e' jumps 22 place forward and becomes 'a'. (jump is cyclic i.e. after 'z' you go back to 'a')
+  'r' jumps 19 place forward and becomes 'k'.
+  'l' jumps 9 place forward and becomes 'u'.
 
 Example 2
 
-  Input: @bits = (1, 1, 1, 0)
-  Output: 0
+  Input: $word = 'Raku' and @jump = (24,4,7,17)
+  Output: 'Perl'
 
-  Possible decode can be 2-bits character (11) followed by 2-bits
-  character (10) i.e. the last character is not 1-bit character.
+MY NOTES: sounds very easy.  Essentially ROT(n) for a different value of n for
+each letter.
 
-MY NOTES: very easy.  decode string then check last letter of decoded version.
-I wonder if there's a way of decoding-and-checking together, though.
-
-GUEST LANGUAGE: As a bonus, I also had a go at translating ch-1.pl into C
-(look in the C directory for that).
+GUEST LANGUAGE: As a bonus, I will have a go at translating ch-1.pl into C
+but I'll do that tomorrow.
 
 
-Task 2: Merge Account
+Task 2: Rearrange Groups
 
-You are given an array of accounts i.e. name with list of email addresses.
+You are given a list of integers and group size greater than zero.
 
-Write a script to merge the accounts where possible. The accounts can
-only be merged if they have at least one email address in common.
+Write a script to split the list into equal groups of the given size where
+integers are in sequential order. If it can't be done then print -1.
 
 Example 1:
 
-  Input: @accounts = [ ["A", "a1@a.com", "a2@a.com"],
-                       ["B", "b1@b.com"],
-                       ["A", "a3@a.com", "a1@a.com"] ]
-                     ]
-
-  Output: [ ["A", "a1@a.com", "a2@a.com", "a3@a.com"],
-            ["B", "b1@b.com"] ]
+  Input: @list = (1,2,3,5,1,2,7,6,3) and $size = 3
+  Output: (1,2,3), (1,2,3), (5,6,7)
 
 Example 2:
 
-  Input: @accounts = [ ["A", "a1@a.com", "a2@a.com"],
-                       ["B", "b1@b.com"],
-                       ["A", "a3@a.com"],
-                       ["B", "b2@b.com", "b1@b.com"] ]
+  Input: @list = (1,2,3) and $size = 2
+  Output: -1
 
-  Output: [ ["A", "a1@a.com", "a2@a.com"],
-            ["A", "a3@a.com"],
-            ["B", "b1@b.com", "b2@b.com"] ]
+Example 3:
 
-MY NOTES: fiddly and rather inelegant, especially only being allowed to
-merge two entries if the intersection of the email lists is non empty.
-Will also need to choose an input format, how about a list of words of the
-form A:a1@a.com,a2@a.com, B:b1@b.com, A:a3@a.com and B:b2@b.com,b1@b.com
+  Input: @list = (1,2,4,3,5,3) and $size = 3
+  Output: (1,2,3), (3,4,5)
 
-(TODO) GUEST LANGUAGE: As a bonus, I also had a go at translating ch-2.pl into C
-(TODO) (look in the C directory for that)
+Example 4:
+
+Input: @list = (1,5,2,6,4,7) and $size = 3
+Output: -1
+
+MY NOTES: sounds reasonably easy as a brute force search.  But hang on, do we
+need backtracking or not?  i.e. if you find a run-of-$size-consecutive-numbers
+is that run necessarily a part of the solution, allowing you to extract any
+run you find whether needing to backtrack?  no, not if that run is PART of a
+longer run of consecutive numbers.  What if we only find run-of-$size-
+consecutive-numbers isolated at the start, ie. where first(run)-1 is not
+present in the input?  Then we should be able to: repeatedly pick any one run,
+add it to solution, remove it from input, repeat until input is empty.
+
+GUEST LANGUAGE: As a bonus, I will have a go at translating ch-2.pl into C
+but I'll do that tomorrow.
