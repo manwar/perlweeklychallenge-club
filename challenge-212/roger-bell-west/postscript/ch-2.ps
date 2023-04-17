@@ -1,0 +1,170 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/listmin {
+    { min } reduce
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/rearrangegroups {
+    9 dict begin
+    /size exch def
+    /list exch def
+    /h 0 dict def
+    list {
+        /k exch def
+        h k known {
+            h k h k get 1 add put
+        } {
+            h k 1 put
+        } ifelse
+    } forall
+    /fail false def
+    [
+        {
+            /m h keys listmin def
+            /res [ m 1 m size add 1 sub { } for ] def
+            res {
+                /n exch def
+                h n known {
+                    /p h n get 1 sub def
+                    p 0 eq {
+                        h n undef
+                    } {
+                        h n p put
+                    } ifelse
+                } {
+                ] pop [
+                    /fail true def
+                    exit
+                } ifelse
+            } forall
+            fail {
+                exit
+            } if
+            res aload length array astore
+            h length 0 eq {
+                exit
+            } if
+        } loop
+    ]
+    end
+} bind def
+
+(rearrangegroups) test.start
+[1 2 3 5 1 2 7 6 3] 3 rearrangegroups [[1 2 3] [1 2 3] [5 6 7]] deepeq test
+[1 2 3] 2 rearrangegroups [] deepeq test
+[1 5 2 6 4 7] 3 rearrangegroups [] deepeq test
+test.end

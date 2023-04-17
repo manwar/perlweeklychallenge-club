@@ -30,14 +30,11 @@ import (
 func check_toeplitz(m [][]int) bool {
     rows := len(m)
     cols := len(m[0])
-    var dimens int = rows
-    if (cols < rows) {
-        dimens = cols
-    }
-    val := m[0][0]
-    for i := 0; i < dimens; i++ {
-        if m[i][i] != val {
-            return false
+    for i := 1; i < rows; i++ {
+        for j := 1; j < cols; j++ {
+            if m[i][j] != m[i-1][j-1] {
+                return false
+            }
         }
     }
     return true
