@@ -1,0 +1,3 @@
+# The Weekly Challenge 212
+
+Blog: [Jumping Groups](https://dev.to/simongreennet/jumping-groups-2ld2)

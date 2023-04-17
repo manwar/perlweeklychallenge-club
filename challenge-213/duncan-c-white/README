@@ -1,0 +1,69 @@
+Task 1: Jumping Letters
+
+You are given a word having alphabetic characters only, and a list of
+positive integers of the same length
+
+Write a script to print the new word generated after jumping forward
+each letter in the given word by the integer in the list. The given list
+would have exactly the number as the total alphabets in the given word.
+
+Example 1
+
+  Input: $word = 'Perl' and @jump = (2,22,19,9)
+  Output: Raku
+
+  'P' jumps 2 place forward and becomes 'R'.
+  'e' jumps 22 place forward and becomes 'a'. (jump is cyclic i.e. after 'z' you go back to 'a')
+  'r' jumps 19 place forward and becomes 'k'.
+  'l' jumps 9 place forward and becomes 'u'.
+
+Example 2
+
+  Input: $word = 'Raku' and @jump = (24,4,7,17)
+  Output: 'Perl'
+
+MY NOTES: sounds very easy.  Essentially ROT(n) for a different value of n for
+each letter.
+
+GUEST LANGUAGE: As a bonus, I will have a go at translating ch-1.pl into C
+but I'll do that tomorrow.
+
+
+Task 2: Rearrange Groups
+
+You are given a list of integers and group size greater than zero.
+
+Write a script to split the list into equal groups of the given size where
+integers are in sequential order. If it can't be done then print -1.
+
+Example 1:
+
+  Input: @list = (1,2,3,5,1,2,7,6,3) and $size = 3
+  Output: (1,2,3), (1,2,3), (5,6,7)
+
+Example 2:
+
+  Input: @list = (1,2,3) and $size = 2
+  Output: -1
+
+Example 3:
+
+  Input: @list = (1,2,4,3,5,3) and $size = 3
+  Output: (1,2,3), (3,4,5)
+
+Example 4:
+
+Input: @list = (1,5,2,6,4,7) and $size = 3
+Output: -1
+
+MY NOTES: sounds reasonably easy as a brute force search.  But hang on, do we
+need backtracking or not?  i.e. if you find a run-of-$size-consecutive-numbers
+is that run necessarily a part of the solution, allowing you to extract any
+run you find whether needing to backtrack?  no, not if that run is PART of a
+longer run of consecutive numbers.  What if we only find run-of-$size-
+consecutive-numbers isolated at the start, ie. where first(run)-1 is not
+present in the input?  Then we should be able to: repeatedly pick any one run,
+add it to solution, remove it from input, repeat until input is empty.
+
+GUEST LANGUAGE: As a bonus, I will have a go at translating ch-2.pl into C
+but I'll do that tomorrow.
