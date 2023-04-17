@@ -30,21 +30,15 @@ use Test::Deep qw(cmp_deeply);
 
 sub shortestRoute ($$\@) {
   my ($o,$d,$ar) = @_;
-  my (%v,%g);
+  my %g;
 
   for (@$ar) {
     slide { 
-      push(@{$v{$a}},$b);
-      push(@{$v{$b}},$a); 
+      ($g{$a}{$b},$g{$b}{$a}) = (1,1);
     } @$_;
   }
 
-  for my $n (keys %v) {
-    map { $g{$n}{$_} = 1 } @{$v{$n}};
-  }
-
-  my $o = Paths::Graph->new(-origin => $o, -destiny => $d, -graph => \%g);
-  my @p = $o->shortest_path();
+  my @p = Paths::Graph->new(-origin => $o, -destiny => $d, -graph => \%g)->shortest_path;
 
   return (scalar @p == 1 and defined $p[0][1] ? $p[0] : undef);
 }
