@@ -1,6 +1,6 @@
 #!/usr/bin/perl
 #
-# Task 2: Rearrange Groups
+# Task 2: Rearrange Groups (into sequences)
 # 
 # You are given a list of integers and group size greater than zero.
 # 
@@ -118,28 +118,53 @@ fun find_isolated_seq( $size, @list )
 
 
 
+#
+# my $done = find_all_sequences( \@list, $size, \@output );
+#	Attempt to extract all sequences (each of length $size and
+#	comprising X, X+1, X+2..X+size-1) from @list, modifying it,
+#	and building @output - a list of size-tuples.  Return true
+#	if it can be successfully done (leaving @list empty and the
+#	sequences in @output), false if it can't be done.
+#
+sub find_all_sequences ($$$)
+{
+	my( $listref, $size, $outputref ) = @_;
+
+	if( @$listref % $size != 0 )
+	{
+		return 0;
+	}
+
+	my $nseqs = @$listref / $size;
+
+	foreach my $seqno (1..$nseqs)
+	{
+		my @seq = find_isolated_seq( $size, @$listref );
+		say "debug: list=", join(',',@$listref), ", found seq=",
+		    join(',',@seq)
+			if $debug;
+		if( @seq == 0 )
+		{
+			say( "debug: failed to find a sequence, leftover list".
+			     " is: ", join(',',@$listref) ) if $debug;
+			return 0;
+		}
+		push @$outputref, \@seq;
+		@$listref = remove_one_of_seq( \@seq, @$listref );
+		say( "debug: output: ", join(', ',
+		     map { '('. join(',',@$_). ')' } @$outputref
+		     ), ", list=",join(',',@$listref) )
+			if $debug;
+	}
+	return 1;
+}
+
+
 my @output;	# array of size-tuples
 
-my $changed;
-do
-{
-	my @seq = find_isolated_seq( $size, @list );
-	say "debug: list=", join(',',@list), ", found seq=", join(',',@seq)
-		if $debug;
-	$changed = @seq ? 1 : 0;
-	if( $changed )
-	{
-		push @output, \@seq;
-		@list = remove_one_of_seq( \@seq, @list );
-	}
-	say( "debug: output: ", join(', ', map { '('. join(',',@$_). ')' } @output), ", list=",join(',',@list) )
-		if $debug;
+my $done = find_all_sequences( \@list, $size, \@output );
 
-} while( $changed && @list );
-
-say( "debug: leftover list is: ", join(',',@list) ) if $debug;
-
-if( @list == 0 )
+if( $done )
 {
 	say join(', ', map { '('. join(',',@$_). ')' } @output);
 } else
