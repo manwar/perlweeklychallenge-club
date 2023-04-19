@@ -16,8 +16,8 @@
                   1
                ]
             ],
-            "name" : "Laurent Rosenfeld",
-            "id" : "Laurent Rosenfeld"
+            "id" : "Laurent Rosenfeld",
+            "name" : "Laurent Rosenfeld"
          },
          {
             "data" : [
@@ -26,11 +26,10 @@
                   1
                ]
             ],
-            "name" : "Leo Manfredi",
-            "id" : "Leo Manfredi"
+            "id" : "Leo Manfredi",
+            "name" : "Leo Manfredi"
          },
          {
-            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -41,30 +40,50 @@
                   6
                ]
             ],
-            "name" : "Luca Ferrari"
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
          },
          {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ]
+            ],
+            "id" : "Mariano Spadaccini",
+            "name" : "Mariano Spadaccini"
+         },
+         {
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
          },
          {
             "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
+         },
+         {
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "Niels van Dijke"
+            "id" : "Paulo Custodio",
+            "name" : "Paulo Custodio"
          },
          {
-            "name" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
@@ -75,10 +94,26 @@
                   1
                ]
             ],
+            "name" : "Robert DiCicco",
             "id" : "Robert DiCicco"
          },
          {
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ]
+         },
+         {
             "id" : "W. Luis Mochan",
+            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -88,49 +123,53 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "W. Luis Mochan"
+            ]
          }
       ]
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
    },
    "xAxis" : {
       "type" : "category"
    },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
    "series" : [
       {
          "name" : "The Weekly Challenge - 213",
-         "colorByPoint" : 1,
          "data" : [
             {
-               "y" : 3,
                "drilldown" : "Laurent Rosenfeld",
-               "name" : "Laurent Rosenfeld"
+               "name" : "Laurent Rosenfeld",
+               "y" : 3
             },
             {
-               "y" : 1,
                "drilldown" : "Leo Manfredi",
+               "y" : 1,
                "name" : "Leo Manfredi"
             },
             {
-               "drilldown" : "Luca Ferrari",
+               "y" : 8,
                "name" : "Luca Ferrari",
-               "y" : 8
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "name" : "Mariano Spadaccini",
+               "y" : 1,
+               "drilldown" : "Mariano Spadaccini"
             },
             {
                "drilldown" : "Mark Anderson",
@@ -138,36 +177,46 @@
                "y" : 2
             },
             {
-               "name" : "Niels van Dijke",
                "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke",
                "y" : 2
+            },
+            {
+               "name" : "Paulo Custodio",
+               "y" : 2,
+               "drilldown" : "Paulo Custodio"
             },
             {
                "name" : "Robert DiCicco",
-               "drilldown" : "Robert DiCicco",
-               "y" : 2
+               "y" : 2,
+               "drilldown" : "Robert DiCicco"
             },
             {
-               "y" : 3,
+               "name" : "Roger Bell_West",
+               "y" : 4,
+               "drilldown" : "Roger Bell_West"
+            },
+            {
                "name" : "W. Luis Mochan",
+               "y" : 3,
                "drilldown" : "W. Luis Mochan"
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
    ],
+   "legend" : {
+      "enabled" : 0
+   },
    "title" : {
       "text" : "The Weekly Challenge - 213"
    },
    "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2023-04-18 19:17:37 GMT"
+      "text" : "[Champions: 10] Last updated at 2023-04-19 16:35:04 GMT"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
       }
    }
 }
