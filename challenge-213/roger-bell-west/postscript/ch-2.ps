@@ -1,0 +1,176 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+
+% end included library code
+
+/shortestroute {
+    14 dict begin
+    /destination exch def
+    /origin exch def
+    /r 0 dict def
+    {
+        /rt exch def
+        0 1 rt length 2 sub {
+            /i exch def
+            /ri rt i get def
+            /j i 1 add def
+            /rj rt j get def
+            r ri known not {
+                r ri 1 dict put
+            } if
+            r ri get rj true put
+            r rj known not {
+                r rj 1 dict put
+            } if
+            r rj get ri true put
+        } for
+    } forall
+    /out 0 array def
+    /stack [ [ origin ] ] def
+    {
+        stack length 0 eq {
+            exit
+        } if
+        /stack stack apop.left /s exch def def
+        /l s s length 1 sub get def
+        l destination eq {
+            /out s def
+            exit
+        } {
+            /s1 s toset def
+            r l get keys {
+                /pd exch def
+                s1 pd known not {
+                    /q s aload length array astore def
+                    /q q pd apush.right def
+                    /stack stack q apush.right def
+                } if
+            } forall
+        } ifelse
+    } loop
+    out
+    end
+} bind def
+
+(shortestroute) test.start
+[[1 2 6] [5 6 7]] 1 7 shortestroute [1 2 6 7] deepeq test
+[[1 2 3] [4 5 6]] 2 5 shortestroute [] deepeq test
+[[1 2 3] [4 5 6] [3 8 9] [7 8]] 1 7 shortestroute [1 2 3 8 7] deepeq test
+test.end
