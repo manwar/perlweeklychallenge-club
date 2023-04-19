@@ -1,6 +1,15 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             0,
             0,
@@ -32,10 +41,10 @@
             171,
             0,
             40
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             14,
             4,
@@ -67,8 +76,7 @@
             107,
             1,
             40
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -109,8 +117,9 @@
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2023]"
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
    "yAxis" : {
       "min" : 0,
@@ -119,7 +128,7 @@
       }
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-04-19 17:30:04 GMT"
+      "text" : "[Champions: 30] Last updated at 2023-04-19 18:27:43 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -154,14 +163,5 @@
          "Moray Jones",
          "Myoungjin Jeon"
       ]
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
