@@ -1,0 +1,14 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@list where @list.elems >= 1 && @list.all ~~ Int && @list.all > 0, :v(:$verbose));
+
+my @sorted = @list>>.Int.sort;
+my @even   = @sorted.grep: * %% 2;
+my @odd    = @sorted.grep: * %  2;
+
+say ":Even: @even[]" if $verbose;
+say ":Odd: @odd[]" if $verbose;
+
+my @result = @even; @result.append: @odd;
+
+say "(" ~ @result.join(",") ~ ")";
