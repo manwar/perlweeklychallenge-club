@@ -14,17 +14,21 @@ my @TESTS = (
 );
 
 sub shortest_route {
-  my( $s, @q, %n, %d ) = ( shift, [my $e = shift] );
-  for my $r (@_) { ## Compute neighbour map.
-    $n{ $r->[$_-1] }{ $r->[$_]   } =
-    $n{ $r->[$_]   }{ $r->[$_-1] } = 1 for 1..$#$r;
-  }
-  while( my $p = shift @q ) {
-    $d{$p->[0]}=1;
-    $_==$s ? return ($_,@{$p}) : push @q, [$_,@{$p}]
-      for grep{ !$d{$_} } keys %{$n{$p->[0]}};
-  }
-  ()
+  my( $s, @q, %n, %d ) = ( shift, [my $e = shift] );    ## Get start end, and initialize queue
+  return $s if $s eq $e;                                ## special case - as the soln only
+                                                        ## returns list of length 1 or more
+  for my $r (@_) {                                      ## Compute neighbour map.
+    $n{ $r->[$_-1] }{ $r->[$_]   } =                    ## We need to walk both ways along the
+    $n{ $r->[$_]   }{ $r->[$_-1] } = 1 for 1..$#$r;     ## route - so we start from the 2nd
+  }                                                     ## so we don't fall off the LH end
+  while( my $p = shift @q ) {                           ## For each queue
+    $d{$p->[0]}=1;                                      ## mark element as seen..
+    $_ eq $s ? return ($_,@{$p}) : $push @q, [$_,@{$p}] ## For each new node. If it is the
+      for grep{ !$d{$_} } keys %{$n{$p->[0]}};          ## start we return the list, o/w push
+  }                                                     ## it to the find all neighbours of
+                                                        ## the current point we haven't
+                                                        ## already seen 
+  ()                                                    ## Empty list - as no route
 }
 
 is( "@{[shortest_route( @{$_->[0]} )]}", $_->[1] ) for @TESTS;
