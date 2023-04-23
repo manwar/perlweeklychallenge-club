@@ -1,23 +1,15 @@
 #!/usr/bin/env raku
 use Test;
 
-is-deeply shortest-path(((1,2,6), (5,6,7)), 1,7),                 (1,2,6,7);
-is-deeply shortest-path(((1,2,3), (4,5,6)), 2,5),                 -1;
-is-deeply shortest-path(((1,2,3), (4,5,6), (3,8,9), (7,8)), 1,7), (1,2,3,8,7);
+is-deeply shortest-route(((1,2,6), (5,6,7)),                              1,7),  (1,2,6,7);
+is-deeply shortest-route(((1,2,3), (4,5,6)),                              2,5),  -1;
+is-deeply shortest-route(((1,2,3), (4,5,6),  (3,8,9),   (7,8)),           1,7),  (1,2,3,8,7);
 
-# The graph from https://www.youtube.com/watch?v=T_m27bhVQQQ&t=360s
-is-deeply shortest-path((<A C F>, <A G J>, <A B D>, 
-                         <B A C>, <B D H>, 
-                         <C A G>, <C F J>, <C G J>,
-                         <D B A>, <D G J>, <D H J>,
-                         <F C G>, <F J H>, 
-                         <G A B>, <G C A>, <G D H>, <G J F>,
-                         <H D G>, <H J G>,
-                         <J F C>, <J G A>, <J H D>), 'A','H'), any(<A G J H>,
-                                                                   <A B D H>,
-                                                                   <A G D H>);
+# Tests from James Smith's solution
+is-deeply shortest-route(((1..7),  (2,8),    (8,6)),                      1,7),  (1,2,8,6,7);
+is-deeply shortest-route(((1..15), (2,16),   (16,18,8), (9,17), (17,14)), 1,15), (1,2,16,18,8,9,17,14,15);
 
-sub shortest-path($routes, $source, $destination is copy)
+sub shortest-route($routes, $source, $destination is copy)
 {
     my %graph = graph($routes);
     my $from = $source;
@@ -36,7 +28,7 @@ sub shortest-path($routes, $source, $destination is copy)
     {
         take $destination;
         $destination = %path{$destination};
-        LAST { take $source }
+        LAST {take $source}
     }
 }
 
@@ -44,18 +36,15 @@ sub graph($routes)
 {
     my %graph;
 
-    for |$routes -> $r
+    for |$routes -> $r 
     {
-        %graph{$r[0]}.push: $r[1];
-
-        for 1..$r.end.pred
+        $r.rotor(2 => -1).map(
         {
-            %graph{$r[$_]}.push: $r[.pred];
-            %graph{$r[$_]}.push: $r[.succ]
-        }
-
-        %graph{$r[$r.end]}.push: $r[$r.end.pred]
+            %graph{.[0]}.push: .[1]; 
+            %graph{.[1]}.push: .[0]
+        })
     }
-
-    %graph>>.values>>.unique>>.Slip
+    
+    %graph.values.map({ $_ = |.unique });
+    %graph
 }
