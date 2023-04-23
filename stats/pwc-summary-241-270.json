@@ -2,12 +2,10 @@
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-04-23 08:51:24 GMT"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -42,6 +40,13 @@
          "Tyler Bird",
          "Tyler Limkemann"
       ]
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2023-04-23 09:13:50 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2023]"
@@ -87,7 +92,7 @@
             0,
             0,
             0,
-            1,
+            2,
             0,
             0,
             244,
@@ -154,14 +159,9 @@
       }
    ],
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+      },
+      "min" : 0
    }
 }
