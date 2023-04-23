@@ -1,69 +1,71 @@
-Task 1: Jumping Letters
+Task 1: Fun Sort
 
-You are given a word having alphabetic characters only, and a list of
-positive integers of the same length
-
-Write a script to print the new word generated after jumping forward
-each letter in the given word by the integer in the list. The given list
-would have exactly the number as the total alphabets in the given word.
+You are given a list of positive integers.  Write a script to sort the
+all even integers first then all odds in ascending order.
 
 Example 1
 
-  Input: $word = 'Perl' and @jump = (2,22,19,9)
-  Output: Raku
-
-  'P' jumps 2 place forward and becomes 'R'.
-  'e' jumps 22 place forward and becomes 'a'. (jump is cyclic i.e. after 'z' you go back to 'a')
-  'r' jumps 19 place forward and becomes 'k'.
-  'l' jumps 9 place forward and becomes 'u'.
+  Input: @list = (1,2,3,4,5,6)
+  Output: (2,4,6,1,3,5)
 
 Example 2
 
-  Input: $word = 'Raku' and @jump = (24,4,7,17)
-  Output: 'Perl'
+  Input: @list = (1,2)
+  Output: (2,1)
 
-MY NOTES: sounds very easy.  Essentially ROT(n) for a different value of n for
-each letter.
+Example 3
 
-GUEST LANGUAGE: As a bonus, I will have a go at translating ch-1.pl into C
-but I'll do that tomorrow.
+  Input: @list = (1)
+  Output: (1)
+
+MY NOTES: sounds very easy.  Select evens; sort them; select odds; sort them,
+then append sorted lists together.
+
+GUEST LANGUAGE: As a bonus, I've had a go at translating ch-2.pl into C,
+look in the C/ directory for that.
 
 
-Task 2: Rearrange Groups
+Task 2: Shortest Route
 
-You are given a list of integers and group size greater than zero.
-
-Write a script to split the list into equal groups of the given size where
-integers are in sequential order. If it can't be done then print -1.
+You are given a list of bidirectional routes defining a network of nodes,
+as well as source and destination node numbers.  Write a script to find
+the route from source to destination that passes through fewest nodes.
 
 Example 1:
 
-  Input: @list = (1,2,3,5,1,2,7,6,3) and $size = 3
-  Output: (1,2,3), (1,2,3), (5,6,7)
+  Input: @routes = ([1,2,6], [5,6,7])
+         $source = 1
+         $destination = 7
+
+  Output: (1,2,6,7)
+
+  Source (1) is part of route [1,2,6] so the journey looks like 1 -> 2 -> 6
+  then jump to route [5,6,7] and takes the route 6 -> 7.
+  So the final route is (1,2,6,7)
 
 Example 2:
 
-  Input: @list = (1,2,3) and $size = 2
+  Input: @routes = ([1,2,3], [4,5,6])
+         $source = 2
+         $destination = 5
+
   Output: -1
 
 Example 3:
 
-  Input: @list = (1,2,4,3,5,3) and $size = 3
-  Output: (1,2,3), (3,4,5)
+  Input: @routes = ([1,2,3], [4,5,6], [3,8,9], [7,8])
+         $source = 1
+         $destination = 7
+  Output: (1,2,3,8,7)
 
-Example 4:
+  Source (1) is part of route [1,2,3] so the journey looks like 1 -> 2 -> 3
+  then jump to route [3,8,9] and takes the route 3 -> 8
+  then jump to route [7,8] and takes the route 8 -> 7
+  So the final route is (1,2,3,8,7)
 
-Input: @list = (1,5,2,6,4,7) and $size = 3
-Output: -1
+MY NOTES: hmmm.. weird "list of routes" data format.  Easier if we can
+convert the data into "normal" node -> list possible next nodes form.
+Shortest route means: find all routes and min() them?
 
-MY NOTES: sounds reasonably easy as a brute force search.  But hang on, do we
-need backtracking or not?  i.e. if you find a run-of-$size-consecutive-numbers
-is that run necessarily a part of the solution, allowing you to extract any
-run you find whether needing to backtrack?  no, not if that run is PART of a
-longer run of consecutive numbers.  What if we only find run-of-$size-
-consecutive-numbers isolated at the start, ie. where first(run)-1 is not
-present in the input?  Then we should be able to: repeatedly pick any one run,
-add it to solution, remove it from input, repeat until input is empty.
-
-GUEST LANGUAGE: As a bonus, I will have a go at translating ch-2.pl into C
-but I'll do that tomorrow.
+GUEST LANGUAGE: I will translate ch-2.pl into C tomorrow. Run out of time
+to do it today.
