@@ -33,26 +33,18 @@
 use Modern::Perl;
 
 sub rearrange_groups {
-    my($count, @nums) = @_;
-    return -1 unless scalar(@nums) % $count == 0;
-    my $group_size = scalar(@nums) / $count;
-    @nums = sort {$a<=>$b} @nums;
+    my($size, @nums) = @_;
+    return -1 unless scalar(@nums) % $size == 0;
+    my %nums; $nums{$_}++ for @nums;
     my @output;
-    for my $i (0..$count-1) {
+    while (%nums) {
+        my $min = (sort {$a<=>$b} keys %nums)[0];
         my @group;
-        my %seen;
-        my $j = 0;
-        while (scalar(@group) < $group_size) {
-            if (!$seen{$nums[$j]}++) {
-                push @group, $nums[$j];
-                splice(@nums, $j, 1);
-            }
-            else {
-                $j++;
-                if ($j >= @nums) {
-                    return -1;
-                }
-            }
+        for my $j ($min .. $min+$size-1) {
+            return -1 unless $nums{$j};
+            push @group, $j;
+            $nums{$j}--;
+            delete $nums{$j} if $nums{$j}==0;
         }
         push @output, \@group;
     }
@@ -75,5 +67,5 @@ sub print_groups {
 }
 
 my @nums = @ARGV;
-my $count = pop(@nums);
-print_groups(rearrange_groups($count, @nums));
+my $size = pop(@nums);
+print_groups(rearrange_groups($size, @nums));
