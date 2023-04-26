@@ -17,16 +17,16 @@ sub collect-points(*@a)
 
         if $p
         { 
-            @a[ $c{$p.key} ]:eject
+            take $p.value.elems ** 2
         }
 
         else 
         {
             $p = $c.classify({ .key }, :as{ .value.elems }).minpairs.head;
-            @a[ $c{$p.key}.head ]:eject
+            take $p.value.Slip
         }
-
-        take $p.value.elems ** 2
+            
+        @a[ $c{$p.key} ]:eject
     }
 }
 
