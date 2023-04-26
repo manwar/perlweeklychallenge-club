@@ -11,9 +11,8 @@ sub rank-score($list)
 {
     my $b = $list.Bag;
     my @a = [\+] flat 1, $b.sort(-*.key)>>.value;
-    my %h = <1 2 3> Z=> <G S B>;
+    @a .= map({ <Nil G S B>[$_] || $_ });
 
-    @a .= map({ %h{$_} ?? %h{$_} !! $_ });
-    %h = $b.keys.sort(-*) Z=> @a;
+    my %h = $b.keys.sort(-*) Z=> @a;
     $list.map({ %h{$_} })
 }
