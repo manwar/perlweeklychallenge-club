@@ -44,7 +44,7 @@ and sort that array in-situ (don't make multiple copies) as many times and ways 
 INPUT / OUTPUT NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a single-quoted
 array of arrays in proper Perl syntax, with each inner array being a sequence of non-negative integers, like so:
-./ch-1.pl '([0,40,97,50,40],[3,1,38,47,38]),[17,42,47,42,42,50]'
+./ch-1.pl '([0,40,97,50,40],[3,1,38,47,38],[17,42,47,42,42,50])'
 
 Output is to STDOUT and will be each list of scores in original order, followed by a positionally-corresponding list of
 ranks.
