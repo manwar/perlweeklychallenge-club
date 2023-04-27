@@ -22,8 +22,8 @@ sub collect-points(*@a)
 
         else 
         {
-            $p = $c.classify({ .key }, :as{ .value.elems }).minpairs.head;
-            take $p.value.Slip
+            $p = $c.Bag.minpairs.head;
+            take $p.value
         }
             
         @a[ $c{$p.key} ]:eject
