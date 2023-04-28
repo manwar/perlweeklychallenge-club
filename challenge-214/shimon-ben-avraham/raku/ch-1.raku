@@ -8,7 +8,7 @@ use v6.d;
 #  DESCRIPTION: A solution to the Perl Weekly Challenge 214, Challenge 1
 #
 #       AUTHOR: Shimon Bollinger  (deoac.shimon@gmail.com)
-#     REVISION: Last modified: Fri 28 Apr 2023 04:28:06 PM EDT
+#     REVISION: Last modified: Fri 28 Apr 2023 05:24:36 PM EDT
 #===============================================================================
 
 =begin comment
@@ -56,13 +56,13 @@ my @medals = (Nil, Medals::G, Medals::S, Medals::B);
 subset ℕ of UInt where * > 0;
 
 #| Handle bad input
-multi sub rank-score (@scores where not (.all ~~ ℕ) ) {
+multi sub rank-score (@scores where not (.all ~~ ℕ) --> Failure) {
     note "All scores must be integers greater than zero!";
-    return Nil;
+    return Failure;
 } # end of multi sub rank-score (@scores where !(.all ~~ UInt) || .any ≤ 0)
 
 #| Handle good input!
-multi sub rank-score (@scores) {
+multi sub rank-score (@scores --> List) {
     my Int $index = 0;
     # Create a Hash where the keys are the position in the @scores array,
     # and the values are the values of the @scores array.
@@ -110,11 +110,26 @@ multi sub rank-score (@scores) {
 
 use Test;
 
-is rank-score((0, 1,   2)), Nil, "Zero not allowed OK";
-is rank-score((1, 2.5, 3)), Nil, "Non-integers not allowed OK";
-is rank-score((1, 2,  -3)), Nil, "Negative numbers not allowed OK";
+my @test-cases = [ 
+    # Bad input
+    { test => &is, input => (0, 1,   2), output => Failure, 
+        explanation => "Zero not allowed OK"; }
+    { test => &is, input => (1, 2.5, 3), output => Failure, 
+        explanation => "Non-integers not allowed OK"; }
+    { test => &is, input => (1, 2,  -3), output => Failure, 
+        explanation => "Negative numbers not allowed OK"; }
 
-is-deeply rank-score((1,2,4,3,5)),     (5,4,S,B,G),     'Example 1 OK';
-is-deeply rank-score((8,5,6,7,4)),     (G,4,B,S,5),     'Example 2 OK';
-is-deeply rank-score((3,5,4,2)),       (B,G,S,4),       'Example 3 OK';
-is-deeply rank-score((2,5,2,1,7,5,1)), (4,S,4,6,G,S,6), 'Example 4 OK';
+    # Challenge Examples
+    { test => &is-deeply, input => (1,2,4,3,5    ), output => (5,4,S,B,G    ), 
+        explanation => 'Example 1 OK';  }
+    { test => &is-deeply, input => (8,5,6,7,4    ), output => (G,4,B,S,5    ), 
+        explanation => 'Example 2 OK';  }
+    { test => &is-deeply, input => (3,5,4,2      ), output => (B,G,S,4      ), 
+        explanation => 'Example 3 OK';  }
+    { test => &is-deeply, input => (2,5,2,1,7,5,1), output => (4,S,4,6,G,S,6), 
+        explanation => 'Example 4 OK';  }
+]; # end of my @test-cases 
+
+for @test-cases -> %test {
+    %test<test>(rank-score(%test<input>), %test<output>, %test<explanation>);
+}
