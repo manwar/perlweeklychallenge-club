@@ -42,8 +42,8 @@
 # convert the data into "normal" node -> list possible next nodes form.
 # Shortest route means: find all routes and min() them?
 # 
-# GUEST LANGUAGE: I will translate ch-2.pl into C tomorrow. Run out of
-# time to do it today.
+# GUEST LANGUAGE: As a bonus, I've had a go at translating ch-2.pl into C,
+# look in the C/ directory for that.
 # 
 
 use strict;

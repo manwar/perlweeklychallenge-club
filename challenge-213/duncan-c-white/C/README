@@ -1,9 +1,15 @@
-Thought I'd also have a go at translating ch-1.pl into C..
+Thought I'd also have a go at translating ch-1.pl and ch-2.pl (soon) into C..
 
-I'll translate ch-2.pl into C shortly.
+Both C versions produce very similar (non-debugging and debugging)
+output to the Perl originals.
 
-ch-1 produc ver similar (non-debugging and debugging)
-output to the Perl original.
+However, ch-2.c is a complete rethink, as usual I solved ch-2.pl in a Perlish
+idiomatic way using (for example) a hashset for distinct values and an
+array of arrays for the output.  Storage management in C is much harder, so
+I decided to store the output sequences in the (reordered) list[nel] array,
+i.e. an inplace solution because we already had the right amount of
+storage allocated, storing size elements per sequence.  This led me to
+construct the desired output on the fly at the end.
 
 These C versions use some of my regular support modules:
 - my command-line argument processing module args.[ch],
