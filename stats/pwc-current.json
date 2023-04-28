@@ -1,83 +1,109 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2023-04-28 17:04:25 GMT"
+   },
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "legend" : {
       "enabled" : 0
    },
+   "title" : {
+      "text" : "The Weekly Challenge - 214"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
       }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
    },
    "series" : [
       {
          "name" : "The Weekly Challenge - 214",
          "data" : [
             {
+               "y" : 3,
+               "drilldown" : "Avery Adams",
+               "name" : "Avery Adams"
+            },
+            {
                "drilldown" : "David Ferrone",
-               "y" : 1,
-               "name" : "David Ferrone"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Lubos Kolouch",
-               "name" : "Lubos Kolouch"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
-            },
-            {
-               "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke",
+               "name" : "David Ferrone",
                "y" : 1
             },
             {
-               "name" : "Robbie Hatley",
+               "name" : "Jorg Sommrey",
+               "drilldown" : "Jorg Sommrey",
+               "y" : 2
+            },
+            {
+               "name" : "Lubos Kolouch",
+               "drilldown" : "Lubos Kolouch",
+               "y" : 2
+            },
+            {
+               "y" : 2,
+               "name" : "Mark Anderson",
+               "drilldown" : "Mark Anderson"
+            },
+            {
                "y" : 1,
-               "drilldown" : "Robbie Hatley"
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke"
+            },
+            {
+               "name" : "Peter Campbell Smith",
+               "drilldown" : "Peter Campbell Smith",
+               "y" : 3
+            },
+            {
+               "name" : "Robbie Hatley",
+               "drilldown" : "Robbie Hatley",
+               "y" : 1
             },
             {
                "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
+               "drilldown" : "Roger Bell_West",
+               "y" : 4
             },
             {
-               "name" : "W. Luis Mochan",
+               "drilldown" : "Thomas Kohler",
+               "name" : "Thomas Kohler",
+               "y" : 4
+            },
+            {
+               "y" : 3,
                "drilldown" : "W. Luis Mochan",
-               "y" : 3
+               "name" : "W. Luis Mochan"
             }
          ],
          "colorByPoint" : 1
       }
    ],
-   "xAxis" : {
-      "type" : "category"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 214"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 7] Last updated at 2023-04-27 15:52:24 GMT"
-   },
    "drilldown" : {
       "series" : [
+         {
+            "name" : "Avery Adams",
+            "id" : "Avery Adams",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ]
+         },
          {
             "data" : [
                [
@@ -89,8 +115,8 @@
             "id" : "David Ferrone"
          },
          {
-            "name" : "Lubos Kolouch",
-            "id" : "Lubos Kolouch",
+            "name" : "Jorg Sommrey",
+            "id" : "Jorg Sommrey",
             "data" : [
                [
                   "Perl",
@@ -101,12 +127,22 @@
          {
             "data" : [
                [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Lubos Kolouch",
+            "name" : "Lubos Kolouch"
+         },
+         {
+            "data" : [
+               [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
          },
          {
             "data" : [
@@ -115,8 +151,22 @@
                   1
                ]
             ],
-            "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke"
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
+         },
+         {
+            "name" : "Peter Campbell Smith",
+            "id" : "Peter Campbell Smith",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
          },
          {
             "data" : [
@@ -129,6 +179,8 @@
             "name" : "Robbie Hatley"
          },
          {
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -138,13 +190,23 @@
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West"
+            ]
          },
          {
-            "name" : "W. Luis Mochan",
-            "id" : "W. Luis Mochan",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "id" : "Thomas Kohler",
+            "name" : "Thomas Kohler"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -154,8 +216,18 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan"
          }
       ]
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    }
 }
