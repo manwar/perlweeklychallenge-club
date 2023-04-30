@@ -1,7 +1,7 @@
-[< Previous 212](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-212/james-smith) |
-[Next 214 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-214/james-smith)
+[< Previous 213](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-213/james-smith) |
+[Next 215 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-215/james-smith)
 
-# The Weekly Challenge 213 - Another one rides the bus!
+# The Weekly Challenge 214 - Another one rides the bus!
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -15,55 +15,148 @@ You can find the solutions here on github at:
 
 https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-214/james-smith
 
-# Task 1:  Fun Sort
+# TASK #1: Rank Score
 
-***You are given a list of positive integers. Write a script to sort the all even integers first then all odds in ascending order.***
+***You are given a list of scores (>=1). Write a script to rank each score in descending order. First three will get medals i.e. G (Gold), S (Silver) and B (Bronze). Rest will just get the ranking number.***
 
 ## Solution
 
 ```perl
-sub fun_sort {
-  sort { $a%2 <=> $b%2 || $a <=> $b } @_
+sub rank {
+  map { ['','G','S','B']->[$_] || $_ }
+  map { //; 1 + grep { $_ > $' } @_ }
+  @_
 }
 ```
 
-This was a simple challenge this week - firstly to sort odd from even we look at the last bit of the string - if even it is `0`, if odd `1`. So to get the even numbers before the odds we just sort on `$a%2 <=> $b%2` - we complete the sort by then sorting numerically.
+Simple solution we get the rank for each value by counting the number of elements greater than it and then coverting 1,2,3 to GSB
 
-This is faster than splitting the numbers into two lists and sorting separately and recombining... and much shorter.
+## Complex solution
 
-# Task 2: Shortest Route
+```perl
+sub rank2 {
+  my $pos=0;
+  @_ = sort { $b->[0] <=> $a->[0] }
+       map  { [$_,$pos++,1]       }
+            @_;
+  $_[$_][2] = $_[$_][0] == $_[$_-1][0]
+            ? $_[$_-1][2]
+            : $_ + 1                   for 1..$#_;
+  map  {  ['','G','S','B']->[$_->[2]] || $_->[2] }
+  sort { $a->[1] <=> $b->[1]                     }
+       @_
+}
+```
 
-***You are given a list of bidirectional routes defining a network of nodes, as well as source and destination node numbers. Write a script to find the route from source to destination that passes through fewest nodes.***
+We effectively use a modified schwartzian transform. But instead of computing one index and sorting by it we then use  2nd index and sort by it.
+
+ * Add to each element and attribute which is additional position & a second which is going to be used for rank {we initialise as 1};
+ * Sort based on value so highest is first;
+ * Set the rank column - based on order;
+   * The first rank is 1 - subsequent ranks are the position in the list if different from the previous number OR the rank of the previous number.
+ * Sort again but this time on original position
+   * to put numbers back where they were;
+ * Finally extract the rank from the triple and map 1,2,3 to G,S,B
+
+# TASK #2: Collect Points
+
+***You are given a list of numbers. You will perform a series of removal operations. For each operation, you remove from the list N (one or more) equal and consecutive numbers, and add to your score N × N. Determine the maximum possible score.***
 
 ## Solution
 
-We use a graph walking algorithm. We start by generating a graph of all the nodes in the tree storing their neighbours.
-
-We then need to try out all paths.
-
-Note in this solution we walk backwards (this is due to the golf trick in line which creates the initial queue element as
-a wrapper round the end node - can't do this with the start node as `my(@q,$e)` would put all values in `@q`.
-
-So we start with a list of length 0 ($e), we then look to all neighbough's and compute the lists of length for the neighbours 1. At any point if we reach the start node then we return the list.
-
-The nice thing with this solution is that the code is `O(n^2)`
+A brute force approach is the easiet here - we look for sequences of digits - remove from the list and add the "collect" call on the list with the sequence removed.. And we collect the best score. But this is not particularly fast especially as the list grows.
 
 ```perl
-sub shortest_route {
-  my( $s, @q, %n, %d ) = ( shift, [my $e = shift] );    ## Get start end, and initialize queue
-  return $s if $s eq $e;                                ## special case - as the soln only
-                                                        ## returns list of length 1 or more
-  for my $r (@_) {                                      ## Compute neighbour map.
-    $n{ $r->[$_-1] }{ $r->[$_]   } =                    ## We need to walk both ways along the
-    $n{ $r->[$_]   }{ $r->[$_-1] } = 1 for 1..$#$r;     ## route - so we start from the 2nd
-  }                                                     ## so we don't fall off the LH end
-  while( my $p = shift @q ) {                           ## For each queue
-    $d{$p->[0]}=1;                                      ## mark element as seen..
-    $_ eq $s ? return ($_,@{$p}) : $push @q, [$_,@{$p}] ## For each new node. If it is the
-      for grep{ !$d{$_} } keys %{$n{$p->[0]}};          ## start we return the list, o/w push
-  }                                                     ## it to the find all neighbours of
-                                                        ## the current point we haven't
-                                                        ## already seen 
-  ()                                                    ## Empty list - as no route
+sub collect {   ## We will use recursion here. we take out each number in
+                ## turn and pass it back to the function
+  return 0 unless @_;                         ## The score for an empty list is 0
+  my $m = 0;                                  ## Create a variable for the max value
+  for ( my $e = my $o = 0; $o<@_; ) {         ## Loop from start to finish - 
+                                              ## there is no inc as the $o = $e at
+                                              ## the does the same think
+    my $e = $o;                               ## Reset the end of the list to the start
+    $e++ while $_[$o]==$_[$e];                ## Increment until we get to a different value
+    sub { $m=$_[0] if $m<$_[0] }->(           ## Use and IIFE to collect max value
+      ($e-$o)**2 +                            ## Add square of elements to value 
+      collect( @_[ 0..$o-1, $e..$#_ ]         ## for the reduced list
+    ), $o = $e; 
+  }
+  $m;
+}
+```
+
+## Cacheing
+
+By simply caching the result we can get a significant improvement in the examples we see around a 20-25x improvement, better improvements happen with larger examples, until at some point the cache will start eating into swap.. And things will tail off dramatically!
+
+```perl
+sub collect {   ## We will use recursion here. we take out each number in
+                ## turn and pass it back to the function
+  return 0 unless @_;                         ## The score for an empty list is 0
+  my $k = "@_";                               ##+++  Generate key for cache
+  return $cache->{$k} if exists $cache->{$k}; ##+++  Return cache value if exists
+  my $m = 0;                                  ## Create a variable for the max value
+  for ( my $e = my $o = 0; $o<@_; ) {         ## Loop from start to finish - 
+                                              ## there is no inc as the $o = $e at
+                                              ## the does the same think
+    my $e = $o;                               ## Reset the end of the list to the start
+    $e++ while $_[$o]==$_[$e];                ## Increment until we get to a different value
+    sub { $m=$_[0] if $m<$_[0] }->(           ## Use and IIFE to collect max value
+      ($e-$o)**2 +                            ## Add square of elements to value 
+      collect( @_[ 0..$o-1, $e..$#_ ]         ## for the reduced list
+    ), $o = $e; 
+  }
+  $cache->{$k} = $m                           ##+++  Cache value & return
+}
+```
+
+## Improving the algorithm
+
+Here we work out a minimum best score - removing all numbers except for the most frequent and that leaves us with the best score of `f * f + ( n - f)`.
+We also at each stage work out the possible maximum score - this is `score + sum(f*f)` over the remaining frequences. If this is lower than the
+current max score we do not progress any futher...
+
+```perl
+sub _collect_fast {
+  my $s = shift;
+  return $s unless @_;  ## Empty list return score
+  
+  ## same digits.
+  for ( my $e = my $o = 0; $o<@_; ) { ## We loop through
+    my $e = $o;                ## the list for each                                    
+    $e++ while $_[$o]==$_[$e]; ## sequence of same no.
+
+    ## Compute the score so far $s + length of seq^2
+    ## Compute max poss. score this + sum of squared
+    ## counts of other number frequencies
+
+    my $ms = my $ts = $s + ($e-$o)**2;
+    my %f = ($_[$o] => $o-$e);
+    $f{$_}++ for @_;
+    $ms += $_ ** 2 for values %f;
+
+    ## If the max possible score is > $m we compute
+    ## actual score and update max if > $m
+
+    if($ms>$m) {
+      $ts = _collect_fast( $ts, @_[ 0..$o-1, $e..$#_ ] );
+      ## And if it is greater than $m we update $m
+      $m = $ts if $ts > $m;
+    }
+    $o = $e;
+  }
+}
+
+sub collect_fast {
+  return 0 unless @_;
+  my %f;
+  $m=0;
+  $f{$_}++ for @_;                  ## compute freq
+  $_>$m && ( $m=$_ ) for values %f; ## find largest
+  $m = $m*$m + @_-$m;  ## Compute minimum-maximum
+                       ## square of max freq -
+                       ## count of remaining
+  _collect_fast(0,@_); ## Now do the real work
+  $m                   ## Return max (global variable)
 }
 ```
