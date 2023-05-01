@@ -9,5 +9,5 @@ nok number-placement(<1 1 0 0 1 0 0 0 1>, 2);
 
 sub number-placement($list, $count)
 {
-    $list.join ~~ m:g/ 00 <before 0> / >= $count
+    $list.join ~~ m:g/ 00 <?before 0> / >= $count
 }
