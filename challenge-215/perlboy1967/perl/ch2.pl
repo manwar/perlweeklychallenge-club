@@ -24,8 +24,8 @@ use Test::More;
 
 sub numberPlacement ($@) {
   my ($n,$s) = (shift @_,join '',@_);
-
-  $n-- while ($n and $s =~ s#000#010#);
+  
+  while ($n and $s =~ m#000#g) { $n--; pos($s)-- }
 
   $n == 0 ? 1 : 0;
 }
