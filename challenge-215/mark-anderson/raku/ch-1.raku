@@ -1,5 +1,4 @@
 #!/usr/bin/env raku
-use Adverb::Eject;
 use Test;
 
 is odd-one-out(<abc xyz tsu>), 1;
