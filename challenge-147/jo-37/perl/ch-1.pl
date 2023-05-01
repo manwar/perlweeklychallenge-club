@@ -2,9 +2,7 @@
 
 use v5.24;
 use Test2::V0;
-use warnings FATAL => 'all';
 use Math::Prime::Util qw(fromdigits todigits is_prime);
-use Data::Dump qw(dd pp);
 use experimental 'signatures';
 
 our ($tests, $examples, $base);
