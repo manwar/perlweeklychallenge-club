@@ -1,0 +1,256 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort { % [ a c b ] -> [ a b c ]
+    1 dict begin
+    /arr exch def
+    arr length 0 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/reverse {
+    1 dict begin
+    dup length /l exch def
+    [ exch
+      aload pop
+      2 1 l {
+          -1 roll
+      } for
+    ]
+    end
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/safestring {
+    dup length string cvs
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/alloccvs {
+    2 dict begin
+    /n exch def
+    /a 1 def
+    n
+    dup 0 lt {
+        /a a 1 add def
+        neg
+    } if
+    {
+        dup 10 lt {
+            exit
+        } if
+        /a a 1 add def
+        10 idiv
+    } loop
+    pop
+    n a string cvs
+    end
+} bind def
+
+
+% end included library code
+
+/rankscore {
+    8 dict begin
+    /a exch def
+    /av 0 dict def
+    a {
+        /s exch def
+        av s known {
+            av s av s get 1 add put
+        } {
+            av s 1 put
+        } ifelse
+    } forall
+    /rank 1 def
+    /tab 0 dict def
+    av keys quicksort reverse {
+        /k exch def
+        /siz av k get def
+        rank 3 le {
+            /r [ (G) (S) (B) ] rank 1 sub get def
+        } {
+            /r rank alloccvs def
+        } ifelse
+        siz 1 gt {
+            /s r length 1 add string def
+            r s copy
+            s r length (=) putinterval
+            /r s def
+        } if
+        tab k r safestring put
+        /rank rank siz add def
+    } forall
+    [
+        a {
+            tab exch get
+        } forall
+    ]
+    end
+} bind def
+
+(rankscore) test.start
+[1 2 4 3 5] rankscore [(5) (4) (S) (B) (G)] deepeq test
+[8 5 6 7 4] rankscore [(G) (4) (B) (S) (5)] deepeq test
+[3 5 4 2] rankscore [(B) (G) (S) (4)] deepeq test
+[2 5 2 1 7 5 1] rankscore [(4=) (S=) (4=) (6=) (G) (S=) (6=)] deepeq test
+test.end

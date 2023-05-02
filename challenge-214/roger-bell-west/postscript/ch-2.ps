@@ -1,0 +1,178 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/deepcopy {
+    2 dict begin
+    /a exch def
+    a type /dicttype eq {
+        <<
+            a keys {
+                /k exch get
+                k
+                a k get deepcopy
+            } forall
+        >>
+    } {
+        a type /arraytype eq {
+            [
+                a {
+                    deepcopy
+                } forall
+            ]
+        } {
+            a type /stringtype eq {
+                a dup length string cvs
+            } {
+                a
+            } ifelse
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/apop.right { % [a b c] -> [a b] c
+    [ exch aload length 1 add 1 roll ] exch
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/remove {
+    2 dict begin
+    /i exch def
+    aload length /l exch def
+    l i sub -1 roll pop
+    l 1 sub array astore
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/collectpoints {
+    0 dict begin
+    /a exch def
+    /s 0 def
+    /m [
+        {
+            s a length ge {
+                exit
+            } if
+            /k a s get def
+            /e s def
+            {
+                e a length ge {
+                    exit
+                } if
+                a e get k ne {
+                    exit
+                } if
+                /e e 1 add def
+            } loop
+            [ k e s sub ]
+            /s e def
+        } loop
+    ] def
+    /rv 0 def
+    /stack [ [ m 0 ] ] def
+    {
+        stack length 0 eq {
+            exit
+        } if
+        stack apop.right /s exch def /stack exch def
+        s 0 get length 0 eq {
+            /rv rv s 1 get max def
+        } {
+            0 1 s 0 get length 1 sub {
+                /i exch def
+                /ss s deepcopy def
+                ss 1 ss 1 get ss 0 get i get 1 get dup mul add put
+                ss 0 ss 0 get i remove put
+                {
+                    /ex true def
+                    i 1 add ss 0 get length lt {
+                        ss 0 get i get 0 get ss 0 get i 1 add get 0 get eq {
+                            ss 0 get i get 1
+                            ss 0 get i get 1 get
+                            ss 0 get i 1 add get 1 get
+                            add
+                            put
+                            ss 0
+                            ss 0 get i 1 add remove
+                            put
+                            /ex false def
+                        } if
+                    } if
+                    ex {
+                        i 0 gt i ss 0 get length lt and {
+                            ss 0 get i get 0 get ss 0 get i 1 sub get 0 get eq {
+                                ss 0 get i get 1
+                                ss 0 get i get 1 get ss 0 get i 1 sub get 1 get add
+                                put
+                                ss 0
+                                ss 0 get i 1 sub remove
+                                put
+                                /ex false def
+                            } if
+                        } if
+                    } if
+                    ex {
+                        exit
+                    } if
+                } loop
+                /stack stack ss apush.right def
+            } for
+        } ifelse
+    } loop
+    rv
+    end
+} bind def
+
+(collectpoints) test.start
+[2 4 3 3 3 4 5 4 2] collectpoints 23 eq test
+[1 2 2 2 2 1] collectpoints 20 eq test
+[1] collectpoints 1 eq test
+[2 2 2 1 1 2 2 2] collectpoints 40 eq test
+test.end
