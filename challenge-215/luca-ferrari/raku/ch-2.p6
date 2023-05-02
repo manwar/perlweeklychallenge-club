@@ -18,6 +18,7 @@ sub MAIN( :$count is copy where { $count >= 0 } ,
 		@digits[ $_ ] = 1;
 		$count--;
 		$done = True;
+		last;
 	    }
 	}
 
