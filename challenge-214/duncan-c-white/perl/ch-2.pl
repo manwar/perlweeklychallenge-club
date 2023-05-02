@@ -56,9 +56,8 @@
 # sequences and pass up the "length 6" sequence that becomes available later..
 # So, yes, it's a brute force "find all" type problem..
 # 
-# GUEST LANGUAGE: As a bonus, I will soon have a go at translating ch-2.pl
-# into C, but I run out of time today.. when it's done, look in the C/
-# directory for that.
+# GUEST LANGUAGE: As a bonus, I had a go at translating ch-2.pl into C, a
+# few days late: look in the C/ directory for that.
 # 
 
 use strict;
@@ -107,8 +106,8 @@ my $bestmoves;
 # find_all( $currsc, $currmoves, @list );
 #	Find all possible sequences of moves removing item-sequences
 #	from @list, given that the current score to this point is $currsc,
-#	and the current move string to this point is $currmoves,
-#	and track the best (highest scoring) move sequence in $bestsc.
+#	and the current move string to this point is $currmoves, and
+#	track the best (highest scoring) move sequence in $bestsc & $bestmoves
 #
 fun find_all( $currsc, $currmoves, @list )
 {
