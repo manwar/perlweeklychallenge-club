@@ -41,6 +41,7 @@ CREATE TABLE found (
     document_id INTEGER,
     word_id     INTEGER
 );
+CREATE UNIQUE INDEX found_index ON found(document_id, word_id);
 END
         close($p) or die "sqlite3 failed";
     }
@@ -64,7 +65,7 @@ sub add_doc {
     my($doc) = @_;
 
     # get title
-    my $title = path($doc)->basename;
+    (my $title = path($doc)->basename) =~ s/\.\w+$//;
 
     # connect to index database
     my $dbh = DBI->connect("dbi:SQLite:dbname=".DBFILE,"","",

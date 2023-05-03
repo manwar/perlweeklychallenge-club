@@ -1,52 +1,52 @@
-- setup:
+- setup:    unlink('index.db3');1
   cleanup:
   args:     add 'The Cask of Amontillado.txt'
   input:
   output:   |
-            Indexed The Cask of Amontillado.txt
+            Indexed The Cask of Amontillado
 - setup:
   cleanup:
   args:     add 'The Fall of the House of Usher.txt'
   input:
   output:   |
-            Indexed The Fall of the House of Usher.txt
+            Indexed The Fall of the House of Usher
 - setup:
   cleanup:
   args:     add 'The Masque of the Red Death.txt'
   input:
   output:   |
-            Indexed The Masque of the Red Death.txt
+            Indexed The Masque of the Red Death
 - setup:
   cleanup:
   args:     add 'The Raven.txt'
   input:
   output:   |
-            Indexed The Raven.txt
+            Indexed The Raven
 - setup:
   cleanup:
   args:     search death
   input:
   output:   |
-            death  The Fall of the House of Usher.txt
-            death  The Masque of the Red Death.txt
-            death  The Raven.txt
+            death  The Fall of the House of Usher
+            death  The Masque of the Red Death
+            death  The Raven
 - setup:
   cleanup:
   args:     search mystery
   input:
   output:   |
-            mystery  The Fall of the House of Usher.txt
-            mystery  The Raven.txt
+            mystery  The Fall of the House of Usher
+            mystery  The Raven
 - setup:
   cleanup:
   args:     search revenge
   input:
   output:   |
-            revenge  The Cask of Amontillado.txt
+            revenge  The Cask of Amontillado
 - setup:
-  cleanup:  unlink('index.db3')
+  cleanup:  unlink('index.db3');1
   args:     search imagination
   input:
   output:   |
-            imagination  The Fall of the House of Usher.txt
-            imagination  The Raven.txt
+            imagination  The Fall of the House of Usher
+            imagination  The Raven

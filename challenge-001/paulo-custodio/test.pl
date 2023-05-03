@@ -148,11 +148,11 @@ sub build {
             return "python3 ../../challenge-001/paulo-custodio/brainfuck.py $prog_wo_ext.bf";
         }
         if (/^c$/) {
-            run("gcc $prog -o $prog_wo_ext -lm -lmpfr -lgmp") if (!-f $exe || -M $exe > -M $prog);
+            run("gcc $prog -o $prog_wo_ext -lm -lmpfr -lgmp -lsqlite3") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
         if (/^cpp$/) {
-            run("g++ $prog -o $prog_wo_ext -lmpfr -lgmpxx -lgmp") if (!-f $exe || -M $exe > -M $prog);
+            run("g++ $prog -o $prog_wo_ext -lmpfr -lgmpxx -lgmp -lsqlite3") if (!-f $exe || -M $exe > -M $prog);
             return $exe;
         }
         if (/^d$/) {
