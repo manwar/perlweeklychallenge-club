@@ -1,0 +1,65 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/numberplacement {
+    5 dict begin
+    /ct exch def
+    /a exch [ exch 1 exch
+              aload pop
+              1 ] def
+    /s 0 def
+    /tt 0 def
+    1 1 a length 1 sub {
+        /i exch def
+        a i 1 sub get 1 eq a i get 0 eq and {
+            /s i def
+        } {
+            a i 1 sub get 0 eq a i get 1 eq and {
+                /tt tt i s sub 2 idiv add def
+            } if
+        } ifelse
+    } for
+    ct tt le
+    end
+} bind def
+
+(numberplacement) test.start
+[1 0 0 0 1] 1 numberplacement test
+[1 0 0 0 1] 2 numberplacement not test
+[1 0 0 0 0 0 0 0 1] 3 numberplacement test
+test.end
