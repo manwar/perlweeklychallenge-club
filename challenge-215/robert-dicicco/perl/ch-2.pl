@@ -5,6 +5,7 @@ AUTHOR: Robert DiCicco
 DATE  : 2023-05-02
 Challenge 215 Number Placement ( Perl )
 -----------------------------------------
+* corrected version
 =cut
 use strict;
 use warnings;
@@ -16,7 +17,7 @@ sub CheckZeroes {
     my $cnt = shift;
     my $zcnt = $cnt * 2;
     while($zcnt < scalar @$arr - 1) {
-        if ((@$arr[$zcnt] == 0) && (@$arr[$zcnt-1] != 1)) {
+         if ((@$arr[$zcnt] == 0) && (@$arr[$zcnt-1] == 0)) {
              @$arr[$zcnt] = 1;
         }
         $zcnt++;
@@ -48,7 +49,7 @@ my $zeroes = HowManyZeroes(\@numbers);
 if ($zeroes < $count * 2) {
     say "Output: 0";
 } else {
-    CheckZeroes(\@numbers,$count-1);
+    CheckZeroes(\@numbers,$count-3);
 }
 
 =begin pod
@@ -65,7 +66,7 @@ Enter count 2
 Output: 0
 
 perl .\NumberPlacement.pl
-Enter an array as a string of numbers 101000001
+Enter an array as a string of numbers 100000001
 Enter count 3
 Output: 1 = 101010101
 -----------------------------------------
