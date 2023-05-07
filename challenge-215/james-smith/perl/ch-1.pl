@@ -8,29 +8,27 @@ use Test::More;
 my @TESTS = (
  [ ['abc', 'xyz', 'tsu'], 1 ],
  [ ['rat', 'cab', 'dad'], 3 ],
- [ ['baa', 'ill', 'zzy', 'abc' ], 0 ],
+ [ ['baa', 'ill', 'zzy', 'abc' ], 2 ],
  [ ['x', 'y', 'z'],       0 ]
 );
 
-my @TESTS2 = (
- [ [ 1, [1,0,0,0,1] ], 1 ],
- [ [ 2, [1,0,0,0,1] ], 0 ],
- [ [ 3, [1,0,0,0,0,0,0,0,1] ], 1 ],
- [ [ 3, [1,0,0,0,0,0,0,0] ], 1],
-);
-
 sub non_alpha {
-  my $c = 0;
-  return 0 if length $_[0] <3;
+  return 0 if length $_[0] <2;
+  my($c,$f)=0;
   for(@_) {
-    my($f,$s,@rest)=split//;say $_;
-    $f = $f cmp $s;
-      ($s ne $_) && ($f ||= $s cmp $_) != ($s cmp $_)
-    ? ($c++,last)
-    : ($s=$_)           for @rest;
+    $f='';
+    $f gt $_ ? ($c++,last) : ($f=$_) for split //;
   }
   $c
 }
+
+sub non_alpha_compact {
+  return 0 if length $_[0] <2;
+  my($c,$f)=0;
+  $f='', map { $f gt $_ ? ($c++,next) : ($f=$_) } split // for @_;
+  $c
+}
+
 
 is( non_alpha( @{$_->[0]} ), $_->[1] ) for @TESTS;
 done_testing();
