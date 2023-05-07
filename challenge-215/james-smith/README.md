@@ -23,28 +23,33 @@ https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-215/ja
 
 To solve this problem we loop though each string to make sure the letters in alphabetical order.
 
-We note that if the words are less than 3 characters long then they will be default in alphabetical order so we return 0.
+We note that if the words are 1 character long then they will be default in alphabetical order so we return 0.
 
-Looping through the letters - we start by getting the signum of the difference between the first two letters (and store in `$f`). We then loop through the remaining letters comparing letter by letter.
+Looping through the letters - we just see if one is greater than or equal to the previous one - if it isn't we update the counter and move on to the next word.
 
- * If the letters are the same we do nothing;
- * If the first two letter are different then we update the update the value of `$f` with the difference between the letter
- * If we find that `$f` has a different signum then wer add 1 to the count and jump to the end of the loop
+Note we use a ternary to replace this `if`/`else` for compactness.
 
 ```perl
 sub non_alpha {
-  my $c = 0;
-  return 0 if length $_[0] <3;
+  return 0 if length $_[0] <2;
+  my($c,$f)=0;
   for(@_) {
-    my($f,$s,@rest)=split//;
-    $f = $f cmp $s;
-    ($s ne $_) && ($f ||= $s cmp $_) != ($s cmp $_) ? ($c++,last)
-                                                    : ($s=$_)
-      for @rest;
+    $f='';
+    $f gt $_ ? ($c++,last) : ($f=$_) for split //;
   }
   $c
 }
+```
 
+We can compact this by converting the inner `for` into a `map` - note the `last` was on the inner loop - and is the same as a `next` on the outer loop... So here we have to now use `next` not `laat`
+
+```perl
+sub non_alpha_compact {
+  return 0 if length $_[0] <2;
+  my($c,$f)=0;
+  $f='', map { $f gt $_ ? ($c++,next) : ($f=$_) } split // for @_;
+  $c
+}
 ```
 
 # TASK #2: Number Placement
@@ -74,3 +79,18 @@ sub insert_zero_simultaneous {
   $c>0?0:1
 }
 ```
+
+We can get some performance improvements by short cutting the loop, by checking the value of $c at each stage rather than just at the end. This is most important if the number of inserts is relatively low in comparison to the size of the list.
+
+```perl
+sub insert_zero_shortcut {
+   my($s,$c) = (0,shift);
+   $_ ? ( $c-= $s>2 &&  int(($s-1)/2), $s=0, $c>0 || return 1 ) : $s++ for @_,1;
+   0;
+}
+
+sub insert_zero_simultaneous_shortcut {
+  my($s,$c) = (0,shift);
+  $_ ? ( $c-= $s>2 && $s-2, $s=0, $c>0 || return 1 ) : $s++ for @_,1;
+  0;
+}
