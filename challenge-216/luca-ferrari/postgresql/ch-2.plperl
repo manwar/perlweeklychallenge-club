@@ -18,7 +18,6 @@ AS $CODE$
        $searching_for->{ $_ }++;
    }
 
-   elog(INFO, "Valori? " . grep( { $_ >= 1 } values( $searching_for->%* ) ) );
    my $run = 0;
    while ( grep( { $_ >= 1 } values( $searching_for->%* ) ) ) {
    	 $run++;
