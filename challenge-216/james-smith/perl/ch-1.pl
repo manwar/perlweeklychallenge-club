@@ -24,5 +24,6 @@ sub reg_number {
   } @_
 }
 
-is( "@{[ reg_number(           @{$_->[0]} ) ]}", $_->[1] ) for @TESTS1;
+is( "@{[ reg_number( @{$_->[0]} ) ]}", $_->[1] ) for @TESTS;
+
 done_testing();
