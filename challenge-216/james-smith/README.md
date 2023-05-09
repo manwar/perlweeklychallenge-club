@@ -1,7 +1,7 @@
 [< Previous 215](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-215/james-smith) |
 [Next 217 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-217/james-smith)
 
-# The Weekly Challenge 216
+# The Weekly Challenge 6^3
 
 You can find more information about this weeks, and previous weeks challenges at:
 
