@@ -48,8 +48,29 @@ Firstly we get a list of the lower-cased letters in the number plate. Then for e
 
 Interestingly this task uses the trick - copy hash and delete elements - within it's core.
 
-We note:
- * We are looking for fewest stickers - well this suggests a solution based on a queue as we want to do a depth based search.
+We note we:
+ * are looking for fewest stickers so:
+    * this suggests a depth first solution;
+    * once we have found a solution it is by definition the best one;
+    * queue solutions work well in these cases;
+ * use a count based solution
+    * we count every letter in the target word;
+ * check that all of these are available on the sticker:
+    * if not we return a "0" value
+ * initialise the queue with an element:
+    * where we have not used any stickers;
+    * the last sticker we have "chosen" is the first one;
+    * the counts are the inital counts we calculated above
+ * for every element of the queue:
+    * we loop through the stickers;
+    * for each sticker we loop through the letters;
+    * and if we need that letter we make a note we have removed a letter and reduce the count of that letter by one (if the count goes to zero we remove it);
+    * if the counts array is empty we return the size
+    * if we have removed a letter we push the new values back on to the queue;
+    * **Note** when looping through the stickers we start with the last one we used and loop to the end. This avoids duplicates and greatly reduces the search space.
+    * we loop till the queue is empty - actually we don't because we will exit the loop with the count array check above before we exhaust the queue.
+
+Here is the code that the describes....
 
 ```perl
 sub word_stickers {
@@ -68,6 +89,8 @@ sub word_stickers {
   }
 }
 ```
+
+And to know what bit does what - here it is with comments:
 
 ```perl
 sub word_stickers {
