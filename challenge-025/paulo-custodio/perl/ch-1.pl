@@ -25,23 +25,23 @@ sub find_longest_sequence1 {
     my($longest_path, $current_path, @pending) = @_;
 #say "(@$current_path) (@pending)";
 
-	my $found_name = 0;
-	for my $i (0 .. $#pending) {
-		if (@$current_path == 0 ||
+    my $found_name = 0;
+    for my $i (0 .. $#pending) {
+        if (@$current_path == 0 ||
             substr($current_path->[-1], -1, 1) eq substr($pending[$i], 0, 1)) {
-			$found_name = 1;
-			
-			find_longest_sequence1($longest_path,
-			   [ @$current_path, $pending[$i] ],
-			   ( @pending[0..$i-1], @pending[$i+1..$#pending] ) );
-		}
-	}
-	
-	if (!$found_name) {
+            $found_name = 1;
+
+            find_longest_sequence1($longest_path,
+               [ @$current_path, $pending[$i] ],
+               ( @pending[0..$i-1], @pending[$i+1..$#pending] ) );
+        }
+    }
+
+    if (!$found_name) {
         if (@$current_path > @$longest_path) {
             @$longest_path = @$current_path;
         }
-	}
+    }
 }
 
 sub find_longest_sequence {

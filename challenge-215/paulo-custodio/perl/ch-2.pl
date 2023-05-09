@@ -49,5 +49,3 @@ sub can_place {
 my @nums = split /,/, shift;
 my $count = shift;
 say can_place(\@nums, $count);
-
-
