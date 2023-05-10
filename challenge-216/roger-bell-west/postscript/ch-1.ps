@@ -1,0 +1,178 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/deepcopy {
+    2 dict begin
+    /a exch def
+    a type /dicttype eq {
+        <<
+            a keys {
+                /k exch def
+                k
+                a k get deepcopy
+            } forall
+        >>
+    } {
+        a type /arraytype eq {
+            [
+                a {
+                    deepcopy
+                } forall
+            ]
+        } {
+            a type /stringtype eq {
+                a dup length string cvs
+            } {
+                a
+            } ifelse
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+
+% end included library code
+
+/word2set {
+    2 dict begin
+    /s 0 dict def
+    {
+        /c exch def
+        c 65 ge c 90 le and {
+            /c c 32 add def
+        } if
+        c 97 ge c 122 le and {
+            s c true put
+        } if
+    } forall
+    s
+    end
+} bind def
+
+/registrationnumber {
+    6 dict begin
+    /reg exch def
+    /words exch def
+    /s reg word2set def
+    [
+        words {
+            /w exch def
+            /ss s deepcopy def
+            w word2set keys {
+                /char exch def
+                ss char known {
+                    ss char undef
+                    ss length 0 eq {
+                        w
+                        exit
+                    } if
+                } if
+            } forall
+        } forall
+    ]
+    end
+} bind def
+
+(registrationnumber) test.start
+[(abc) (abcd) (bcd)] (AB1 2CD) registrationnumber [(abcd)] deepeq test
+[(job) (james) (bjorg)] (007 JB) registrationnumber [(job) (bjorg)] deepeq test
+[(crack) (road) (rac)] (C7 RA2) registrationnumber [(crack) (rac)] deepeq test
+test.end
