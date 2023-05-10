@@ -1,7 +1,7 @@
-[< Previous 214](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-214/james-smith) |
-[Next 216 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-216/james-smith)
+[< Previous 215](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-215/james-smith) |
+[Next 217 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-217/james-smith)
 
-# The Weekly Challenge 215
+# The Weekly Challenge 6^3
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,84 +13,108 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-215/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-216/james-smith
 
-# TASK #1: Odd one Out
+# TASK #1: Registration Number
 
-***You are given a list of words (alphabetic characters only) of same size. Write a script to remove all words not sorted alphabetically and print the number of words in the list that are not alphabetically sorted.***
+***You are given a list of words and a random registration number. Write a script to find all the words in the given list that has every letter in the given registration number.***
 
 ## Solution
 
-To solve this problem we loop though each string to make sure the letters in alphabetical order.
+```perl
+sub reg_number {
+  my (%l,%x) = map { /[a-z]/ ? ($_=>1) : () }
+               split //,
+               lc
+               shift;
+  grep {
+    %x=%l;
+    delete $x{$_} for split//;
+    !%x
+  } @_
+}
+```
 
-We note that if the words are 1 character long then they will be default in alphabetical order so we return 0.
+Firstly we get a list of the lower-cased letters in the number plate. Then for each word in turn we:
+ * copy this hash into a temporary hash;
+ * remove any letters from hash which rea in the word;
+ * Check to see if the hash is now empty - if it is we include the word.
 
-Looping through the letters - we just see if one is greater than or equal to the previous one - if it isn't we update the counter and move on to the next word.
+# TASK #2: Word Stickers
 
-Note we use a ternary to replace this `if`/`else` for compactness.
+***You are given a list of word stickers and a target word. Write a script to find out how many word stickers is needed to make up the given target word.***
+
+## Solution
+
+Interestingly this task uses the trick - copy hash and delete elements - within it's core.
+
+We note we:
+ * are looking for fewest stickers so:
+    * this suggests a depth first solution;
+    * once we have found a solution it is by definition the best one;
+    * queue solutions work well in these cases;
+ * use a count based solution
+    * we count every letter in the target word;
+ * check that all of these are available on the sticker:
+    * if not we return a "0" value
+ * initialise the queue with an element:
+    * where we have not used any stickers;
+    * the last sticker we have "chosen" is the first one;
+    * the counts are the inital counts we calculated above
+ * for every element of the queue:
+    * we loop through the stickers;
+    * for each sticker we loop through the letters;
+    * and if we need that letter we make a note we have removed a letter and reduce the count of that letter by one (if the count goes to zero we remove it);
+    * if the counts array is empty we return the size
+    * if we have removed a letter we push the new values back on to the queue;
+    * **Note** when looping through the stickers we start with the last one we used and loop to the end. This avoids duplicates and greatly reduces the search space.
+    * we loop till the queue is empty - actually we don't because we will exit the loop with the count array check above before we exhaust the queue.
+
+Here is the code that the describes....
 
 ```perl
-sub non_alpha {
-  return 0 if length $_[0] <2;
-  my($c,$f)=0;
-  for(@_) {
-    $f='';
-    $f gt $_ ? ($c++,last) : ($f=$_) for split //;
+sub word_stickers {
+  my( %f, %s, $n, $l, $x );
+  $f{$_}++ for split //, shift;
+  my @q = [ 1, 0, my %t = %f ];
+  map { delete $t{$_} } split // for @_;
+  return 0 if keys %t;
+  while( ( $n, $l, %f ) = @{ shift @q } ) {
+    push @q, map {
+      $x = 0, %t = %f;
+      exists $t{$_} && ( $x=1, --$t{$_} || delete $t{$_} )
+        for split//, $_[$_];
+      !%t ? return $n : $x ? [ $n+1, $_, %t ] : ()
+    } $l..$#_;
   }
-  $c
 }
 ```
 
-We can compact this by converting the inner `for` into a `map` - note the `last` was on the inner loop - and is the same as a `next` on the outer loop... So here we have to now use `next` not `laat`
+And to know what bit does what - here it is with comments:
 
 ```perl
-sub non_alpha_compact {
-  return 0 if length $_[0] <2;
-  my($c,$f)=0;
-  $f='', map { $f gt $_ ? ($c++,next) : ($f=$_) } split // for @_;
-  $c
+sub word_stickers {
+  my( %f, %s, $n, $l, $x );
+  $f{$_}++ for split //, shift; # count for letters
+  my %t = %f; # Check all letters on stickers
+  # Initialise queue - no stickers, initial freq.
+  my @q = [ 1, 0, my %t = %f ]; # Check can solve?
+  map { delete $t{$_} } split // for @_;
+  return 0 if keys %t; # if not return 0
+  my @q = [ 1, 0, %f ]; # [ $no+1, $last, %freqs ]
+  while( ($n,$l,%f) = @{ shift @q } ) {
+    push @q, map {
+      # Make copy of frequencies, set flag ($x)
+      # true once we use a letter on sticker,
+      # remove letters we have used up
+      $x = 0, %t = %f;
+      exists $t{$_} && ( $x=1, --$t{$_} || delete $t{$_} )
+        for split//, $_[$_];
+      # If none left return $n OR push entry onto
+      # queue, increasing count and setting new last
+      !%t ? return $n : $x ? [ $n+1, $_, %t ] : ()
+      # Loop from last used to remove duplicates
+    } $l..$#_;
+  }
 }
 ```
-
-# TASK #2: Number Placement
-
-***You are given a list of numbers having just 0 and 1. You are also given placement count (>=1). Write a script to find out if it is possible to replace 0 with 1 in the given list. The only condition is that you can only replace when there is no 1 on either side. Print 1 if it is possible otherwise 0.***
-
-*Question - there are two intepretations o the question - whether the placements are done simultaneously or one after the other*
-
-*In the former case any run of 3+ zeros can have `n-2` updates, but if it is the former it `(n-1)/2`
-
-## Solution
-
-Both solutions are the same except for the calculation at the heart to compute the count.
-
-We loop through the numbers if we see a 1 we check to see how many previous 0's we've had and compute the number of insertions. If it is 0 we increment the count of 0's in a row. Note to make sure we include any last sequence of 0's we add a 1 on to the end of the list we are search.
-
-```perl
-sub insert_zero {
-   my($s,$c) = (0,shift);
-   $_ ? ( $c-= $s>2 &&  int(($s-1)/2), $s=0 ) : $s++ for @_,1;
-   $c>0?0:1;
-}
-
-sub insert_zero_simultaneous {
-  my($s,$c) = (0,shift);
-  $_ ? ( $c-= $s>2 && $s-2, $s=0 ) : $s++ for @_,1;
-  $c>0?0:1
-}
-```
-
-We can get some performance improvements by short cutting the loop, by checking the value of $c at each stage rather than just at the end. This is most important if the number of inserts is relatively low in comparison to the size of the list.
-
-```perl
-sub insert_zero_shortcut {
-   my($s,$c) = (0,shift);
-   $_ ? ( $c-= $s>2 &&  int(($s-1)/2), $s=0, $c>0 || return 1 ) : $s++ for @_,1;
-   0;
-}
-
-sub insert_zero_simultaneous_shortcut {
-  my($s,$c) = (0,shift);
-  $_ ? ( $c-= $s>2 && $s-2, $s=0, $c>0 || return 1 ) : $s++ for @_,1;
-  0;
-}
