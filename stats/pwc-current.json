@@ -1,6 +1,13 @@
 {
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "series" : [
       {
@@ -13,19 +20,24 @@
                "y" : 2
             },
             {
-               "name" : "James Smith",
+               "drilldown" : "James Smith",
                "y" : 3,
-               "drilldown" : "James Smith"
+               "name" : "James Smith"
             },
             {
+               "drilldown" : "Laurent Rosenfeld",
+               "name" : "Laurent Rosenfeld",
+               "y" : 3
+            },
+            {
+               "drilldown" : "Leo Manfredi",
                "y" : 1,
-               "name" : "Leo Manfredi",
-               "drilldown" : "Leo Manfredi"
+               "name" : "Leo Manfredi"
             },
             {
+               "drilldown" : "Lubos Kolouch",
                "name" : "Lubos Kolouch",
-               "y" : 2,
-               "drilldown" : "Lubos Kolouch"
+               "y" : 2
             },
             {
                "name" : "Luca Ferrari",
@@ -33,61 +45,45 @@
                "drilldown" : "Luca Ferrari"
             },
             {
-               "drilldown" : "Mark Anderson",
                "name" : "Mark Anderson",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
-               "y" : 1
-            },
-            {
-               "drilldown" : "Robert DiCicco",
                "y" : 2,
-               "name" : "Robert DiCicco"
+               "drilldown" : "Mark Anderson"
             },
             {
+               "name" : "Niels van Dijke",
+               "y" : 1,
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "name" : "Robert DiCicco",
+               "y" : 2,
+               "drilldown" : "Robert DiCicco"
+            },
+            {
+               "drilldown" : "W. Luis Mochan",
                "y" : 3,
-               "name" : "W. Luis Mochan",
-               "drilldown" : "W. Luis Mochan"
+               "name" : "W. Luis Mochan"
             }
          ]
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge - 216"
-   },
    "legend" : {
       "enabled" : 0
    },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 9] Last updated at 2023-05-10 10:48:09 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge - 216"
    },
    "drilldown" : {
       "series" : [
          {
             "name" : "Feng Chang",
-            "id" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Feng Chang"
          },
          {
             "name" : "James Smith",
@@ -96,6 +92,24 @@
                [
                   "Perl",
                   2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
+         },
+         {
+            "name" : "Laurent Rosenfeld",
+            "id" : "Laurent Rosenfeld",
+            "data" : [
+               [
+                  "Perl",
+                  1
+               ],
+               [
+                  "Raku",
+                  1
                ],
                [
                   "Blog",
@@ -124,8 +138,6 @@
             "name" : "Lubos Kolouch"
          },
          {
-            "name" : "Luca Ferrari",
-            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -135,29 +147,33 @@
                   "Blog",
                   6
                ]
-            ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
          },
          {
             "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Mark Anderson"
+            ]
          },
          {
-            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   1
                ]
             ],
-            "name" : "Niels van Dijke"
+            "id" : "Niels van Dijke"
          },
          {
+            "name" : "Robert DiCicco",
+            "id" : "Robert DiCicco",
             "data" : [
                [
                   "Perl",
@@ -167,13 +183,9 @@
                   "Raku",
                   1
                ]
-            ],
-            "id" : "Robert DiCicco",
-            "name" : "Robert DiCicco"
+            ]
          },
          {
-            "name" : "W. Luis Mochan",
-            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -183,16 +195,27 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "W. Luis Mochan",
+            "name" : "W. Luis Mochan"
          }
       ]
+   },
+   "subtitle" : {
+      "text" : "[Champions: 10] Last updated at 2023-05-11 08:28:44 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "plotOptions" : {
       "series" : {
          "borderWidth" : 0,
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          }
       }
    }
