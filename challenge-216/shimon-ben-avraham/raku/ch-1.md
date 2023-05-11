@@ -1,5 +1,8 @@
+
 TITLE
 =====
+
+
 
 Task 1: Registration Number
 ===========================
@@ -129,6 +132,5 @@ Finally, make sure we test every word in the `@words` array...
 ...and print the results!
 
 ```raku
-    say @result.List;
+    say @result.map({"'$_'"}).join(', ').map({ ($_) } );
 } # end of multi MAIN (Str $reg, *@words)
-
