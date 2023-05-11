@@ -1,3 +1,9 @@
+```raku
+# Perl Weekly Challenge #216, Challenge 1
+# © 2023 Shimon Bollinger. All rights reserved.
+# Last modified: Thu 11 May 2023 07:47:20 PM EDT
+# Version 0.0.1
+```
 
 TITLE
 =====
