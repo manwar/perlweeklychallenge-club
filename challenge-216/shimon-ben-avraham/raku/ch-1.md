@@ -1,6 +1,21 @@
+<<<<<<< HEAD
 TITLE
 =====
 
+=======
+```raku
+# Perl Weekly Challenge #216, Challenge 1
+# © 2023 Shimon Bollinger. All rights reserved.
+# Last modified: Thu 11 May 2023 07:47:20 PM EDT
+# Version 0.0.1
+```
+
+TITLE
+=====
+
+
+
+>>>>>>> 0c0e20987dc5677805c95f8e2471492515be32c3
 Task 1: Registration Number
 ===========================
 
@@ -129,6 +144,11 @@ Finally, make sure we test every word in the `@words` array...
 ...and print the results!
 
 ```raku
+<<<<<<< HEAD
     say @result.List;
 } # end of multi MAIN (Str $reg, *@words)
 
+=======
+    say @result.map({"'$_'"}).join(', ').map({ ($_) } );
+} # end of multi MAIN (Str $reg, *@words)
+>>>>>>> 0c0e20987dc5677805c95f8e2471492515be32c3
