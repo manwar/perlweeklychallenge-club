@@ -1,0 +1,165 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/deepcopy {
+    2 dict begin
+    /a exch def
+    a type /dicttype eq {
+        <<
+            a keys {
+                /k exch def
+                k
+                a k get deepcopy
+            } forall
+        >>
+    } {
+        a type /arraytype eq {
+            [
+                a {
+                    deepcopy
+                } forall
+            ]
+        } {
+            a type /stringtype eq {
+                a dup length string cvs
+            } {
+                a
+            } ifelse
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+
+% end included library code
+
+/word2map {
+    2 dict begin
+    /m 0 dict def
+    {
+        /c exch def
+        c 65 ge c 90 le and {
+            /c c 32 add def
+        } if
+        c 97 ge c 122 le and {
+            m c known {
+                m c m c get 1 add put
+            } {
+                m c 1 put
+            } ifelse
+        } if
+    } forall
+    m
+    end
+} bind def
+
+/wordstickers {
+    12 dict begin
+    word2map /w exch def
+    /t w deepcopy def
+    /stick exch
+    [ exch
+      {
+          /f exch word2map def
+          f keys {
+              /c exch def
+              t c known {
+                  t c undef
+              } if
+          } forall
+          f
+      } forall
+    ] def
+    t length 0 gt {
+        0
+    } {
+        /stack [ [ w 0 ] ] def
+        {
+            stack apop.left /st exch def /stack exch def
+            st 0 get length 0 eq {
+                st 1 get
+                exit
+            } {
+                /n st 1 get 1 add def
+                stick {
+                    /sti exch def
+                    /sp st 0 get deepcopy def
+                    /v false def
+                    sti keys {
+                        /l exch def
+                        sp l known {
+                            /v true def
+                    /p sp l get sti l get sub def
+                            p 0 gt {
+                                sp l p put
+                            } {
+                                sp l undef
+                            } ifelse
+                        } if
+                    } forall
+                    v {
+                        /stack stack [ sp n ] apush.right def
+                    } if
+                } forall
+            } ifelse
+        } loop
+    } ifelse
+    end
+} bind def
+
+(wordstickers) test.start
+[(perl) (raku) (python)] (peon) wordstickers 2 eq test
+[(love) (hate) (angry)] (goat) wordstickers 3 eq test
+[(come) (nation) (delta)] (accomodation) wordstickers 4 eq test
+[(come) (country) (delta)] (accomodation) wordstickers 0 eq test
+test.end
