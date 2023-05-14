@@ -1,76 +1,82 @@
-Task 1: Odd one Out
+Task 1: Registration Number
 
-You are given a list of words (alphabetic characters only) of same size.
-Write a script to remove all words not sorted alphabetically and print
-the number of words in the list that are not alphabetically sorted.
+You are given a list of words and a random registration number.
+Write a script to find all the words in the given list that has every
+letter in the given registration number.
 
 Example 1
 
-  Input: @words = ('abc', 'xyz', 'tsu')
-  Output: 1
+  Input: @words = ('abc', 'abcd', 'bcd'), $reg = 'AB1 2CD'
+  Output: ('abcd')
 
-  The words 'abc' and 'xyz' are sorted and can't be removed.
-  The word 'tsu' is not sorted and hence can be removed.
+  The only word that matches every alphabets in the given registration number is 'abcd'.
 
 Example 2
 
-  Input: @words = ('rat', 'cab', 'dad')
-  Output: 3
-
-  None of the words in the given list are sorted.
-  Therefore all three needs to be removed.
+  Input: @words = ('job', 'james', 'bjorg'), $reg = '007 JB'
+  Output: ('job', 'bjorg')
 
 Example 3
 
-  Input: @words = ('x', 'y', 'z')
-  Output: 0
+  Input: @words = ('crack', 'road', 'rac'), $reg = 'C7 RA2'
+  Output: ('crack', 'rac')
 
-MY NOTES: strangely worded, all the stuff about removing words you don't want
-and then counting what's left (but not displaying what's left) can be
-simplified to: count what you want (the non-sorted words), and that's easy.
-But on second thought, let's remove the words anyway, even if we only print
-them out in debug mode.
+MY NOTES: I think the meaning is: form a set of all letters from the
+registration.  Select all words that contain every member of the set.
+That's easy.
 
 GUEST LANGUAGE: As a bonus, I've had a go at translating ch-1.pl into C,
 look in the C/ directory for that.
 
 
-Task 2: Number Placement
+Task 2: Word Stickers
 
-You are given a list of numbers having just 0 and 1. You are also given
-placement count (>=1).
-
-Write a script to find out if it is possible to replace 0 with 1 in the
-given list. The only condition is that you can only replace when there
-is no 1 on either side. Print 1 if it is possible otherwise 0.
+You are given a list of word stickers and a target word.
+Write a script to find out how many word stickers is needed to make up
+the given target word.
 
 Example 1:
 
-  Input: @numbers = (1,0,0,0,1), $count = 1
-  Output: 1
+  Input: @stickers = ('perl','raku','python'), $word = 'peon'
+  Output: 2
 
-  You are asked to replace only one 0 as given count is 1.
-  We can easily replace middle 0 in the list i.e. (1,0,1,0,1).
+  We just need 2 stickers i.e. 'perl' and 'python'.
+  'pe' from 'perl' and
+  'on' from 'python' to get the target word.
 
 Example 2:
 
-  Input: @numbers = (1,0,0,0,1), $count = 2
-  Output: 0
+  Input: @stickers = ('love','hate','angry'), $word = 'goat'
+  Output: 3
 
-  You are asked to replace two 0's as given count is 2.
-  It is impossible to replace two 0's.
+  We need 3 stickers i.e. 'angry', 'love' and 'hate'.
+  'g' from 'angry'
+  'o' from 'love' and
+  'at' from 'hate' to get the target word.
 
 Example 3:
 
-  Input: @numbers = (1,0,0,0,0,0,0,0,1), $count = 3
-  Output: 1
+  Input: @stickers = ('come','nation','delta'), $word = 'accommodation'
+  Output: 4
 
-MY NOTES: ok, so it means "can you replace COUNT consecutive
-zeros with ones, where neither the preceding or following number is 1".
-i.e. where there is either NO preceding or following number (the COUNT
-consecutive zeros start or end of the sequence), or a 0 precedes and
-follows our COUNT consecutive zeros.
-So I guess we just run a start-point along the sequence and check.
+  We just need 2 stickers of 'come' and one each of 'nation' & 'delta'.
+  'a' from 'delta'
+  'ccommo' from 2 stickers 'come'
+  'd' from the same sticker 'delta' and
+  'ation' from 'nation' to get the target word.
 
-GUEST LANGUAGE: As a bonus, I had a go at translating ch-2.pl into C,
-look in the C/ directory for that.
+Example 4:
+
+  Input: @stickers = ('come','country','delta'), $word = 'accommodation'
+  Output: 0
+
+as there's no "i" in the inputs.
+
+
+MY NOTES: ok, so the only tricky part is that each sticker may be used any
+number of times (if any of it's letters remain in the word).  It will be
+worth checking that every letter in the word is present in one or more stickers
+before starting the main search process.
+
+GUEST LANGUAGE: I will have a go at translating ch-2.pl into C tomorrow;
+look in the C/ directory when that's done.
