@@ -1,6 +1,6 @@
-# c209
+# c216
 
-The Weekly Challenge — #209 — Tyler Wardhaugh
+The Weekly Challenge — #216 — Tyler Wardhaugh
 
 ## Usage
 
@@ -8,21 +8,21 @@ Clojure ([installation instructions](https://clojure.org/guides/getting_started#
 
 Run Task #1:
 
-    $ clojure -M:t1 COLL
+    $ clojure -M:t1 REG COLL
     # ... or ...
-    $ bb run task-1 COLL
+    $ bb run task-1 REG COLL
 
     # Alternatively, to run it via Babashka:
-    $ bb run task-1-bb COLL
+    $ bb run task-1-bb REG COLL
 
 Run Task #2:
 
-    $ clojure -M:t2 COLL
+    $ clojure -M:t2 WORD COLL
     # ... or ...
-    $ bb run task-2 COLL
+    $ bb run task-2 WORD COLL
 
     # Alternatively, to run it via Babashka:
-    $ bb run task-2-bb COLL
+    $ bb run task-2-bb WORD COLL
 
 Run the project's tests (which are samples from the task descriptions):
 
