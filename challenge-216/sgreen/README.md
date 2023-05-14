@@ -1,3 +1,3 @@
-# The Weekly Challenge 215
+# The Weekly Challenge 216
 
-Blog: [Weekly Challenge 215](https://dev.to/simongreennet/weekly-challenge-215-k0b)
+Blog: [Letter frequency](https://dev.to/simongreennet/letter-frequency-338m)
