@@ -23,7 +23,7 @@ use common::sense;
 use Test::More;
 
 sub maxNumber (@) {
-  join('',sort{"$b$a"<=>"$a$b"}@_);
+  join('',sort{$b.$a<=>$a.$b}@_);
 }
 
 is(maxNumber(1,23),231);
