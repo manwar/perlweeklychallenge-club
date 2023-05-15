@@ -1,0 +1,82 @@
+Task 1: Registration Number
+
+You are given a list of words and a random registration number.
+Write a script to find all the words in the given list that has every
+letter in the given registration number.
+
+Example 1
+
+  Input: @words = ('abc', 'abcd', 'bcd'), $reg = 'AB1 2CD'
+  Output: ('abcd')
+
+  The only word that matches every alphabets in the given registration number is 'abcd'.
+
+Example 2
+
+  Input: @words = ('job', 'james', 'bjorg'), $reg = '007 JB'
+  Output: ('job', 'bjorg')
+
+Example 3
+
+  Input: @words = ('crack', 'road', 'rac'), $reg = 'C7 RA2'
+  Output: ('crack', 'rac')
+
+MY NOTES: I think the meaning is: form a set of all letters from the
+registration.  Select all words that contain every member of the set.
+That's easy.
+
+GUEST LANGUAGE: As a bonus, I've had a go at translating ch-1.pl into C,
+look in the C/ directory for that.
+
+
+Task 2: Word Stickers
+
+You are given a list of word stickers and a target word.
+Write a script to find out how many word stickers is needed to make up
+the given target word.
+
+Example 1:
+
+  Input: @stickers = ('perl','raku','python'), $word = 'peon'
+  Output: 2
+
+  We just need 2 stickers i.e. 'perl' and 'python'.
+  'pe' from 'perl' and
+  'on' from 'python' to get the target word.
+
+Example 2:
+
+  Input: @stickers = ('love','hate','angry'), $word = 'goat'
+  Output: 3
+
+  We need 3 stickers i.e. 'angry', 'love' and 'hate'.
+  'g' from 'angry'
+  'o' from 'love' and
+  'at' from 'hate' to get the target word.
+
+Example 3:
+
+  Input: @stickers = ('come','nation','delta'), $word = 'accommodation'
+  Output: 4
+
+  We just need 2 stickers of 'come' and one each of 'nation' & 'delta'.
+  'a' from 'delta'
+  'ccommo' from 2 stickers 'come'
+  'd' from the same sticker 'delta' and
+  'ation' from 'nation' to get the target word.
+
+Example 4:
+
+  Input: @stickers = ('come','country','delta'), $word = 'accommodation'
+  Output: 0
+
+as there's no "i" in the inputs.
+
+
+MY NOTES: ok, so the only tricky part is that each sticker may be used any
+number of times (if any of it's letters remain in the word).  It will be
+worth checking that every letter in the word is present in one or more stickers
+before starting the main search process.
+
+GUEST LANGUAGE: I will have a go at translating ch-2.pl into C tomorrow;
+look in the C/ directory when that's done.

@@ -47,6 +47,9 @@ def create_database():
                 word_id     INTEGER
             );
             ''')
+        cur.execute('''
+            CREATE UNIQUE INDEX found_index ON found(document_id, word_id);
+            ''')
 
         con.commit()
         con.close()
@@ -94,7 +97,7 @@ def add_found(con, document_id, word_id):
 def add_doc(file):
     con = sqlite3.connect(DBFILE)
 
-    title = os.path.basename(file)
+    title = re.sub(r"\.\w+$", "", os.path.basename(file))
     document_id = get_document_id(con, title)
 
     # read document

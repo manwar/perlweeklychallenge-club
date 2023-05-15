@@ -1,7 +1,7 @@
-[< Previous 213](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-213/james-smith) |
-[Next 215 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-215/james-smith)
+[< Previous 214](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-214/james-smith) |
+[Next 216 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-216/james-smith)
 
-# The Weekly Challenge 214 - Another one rides the bus!
+# The Weekly Challenge 215
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,150 +13,84 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-214/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-215/james-smith
 
-# TASK #1: Rank Score
+# TASK #1: Odd one Out
 
-***You are given a list of scores (>=1). Write a script to rank each score in descending order. First three will get medals i.e. G (Gold), S (Silver) and B (Bronze). Rest will just get the ranking number.***
-
-## Solution
-
-```perl
-sub rank {
-  map { ['','G','S','B']->[$_] || $_ }
-  map { //; 1 + grep { $_ > $' } @_ }
-  @_
-}
-```
-
-Simple solution we get the rank for each value by counting the number of elements greater than it and then coverting 1,2,3 to GSB
-
-## Complex solution
-
-```perl
-sub rank2 {
-  my $pos=0;
-  @_ = sort { $b->[0] <=> $a->[0] }
-       map  { [$_,$pos++,1]       }
-            @_;
-  $_[$_][2] = $_[$_][0] == $_[$_-1][0]
-            ? $_[$_-1][2]
-            : $_ + 1                   for 1..$#_;
-  map  {  ['','G','S','B']->[$_->[2]] || $_->[2] }
-  sort { $a->[1] <=> $b->[1]                     }
-       @_
-}
-```
-
-We effectively use a modified schwartzian transform. But instead of computing one index and sorting by it we then use  2nd index and sort by it.
-
- * Add to each element and attribute which is additional position & a second which is going to be used for rank {we initialise as 1};
- * Sort based on value so highest is first;
- * Set the rank column - based on order;
-   * The first rank is 1 - subsequent ranks are the position in the list if different from the previous number OR the rank of the previous number.
- * Sort again but this time on original position
-   * to put numbers back where they were;
- * Finally extract the rank from the triple and map 1,2,3 to G,S,B
-
-# TASK #2: Collect Points
-
-***You are given a list of numbers. You will perform a series of removal operations. For each operation, you remove from the list N (one or more) equal and consecutive numbers, and add to your score N × N. Determine the maximum possible score.***
+***You are given a list of words (alphabetic characters only) of same size. Write a script to remove all words not sorted alphabetically and print the number of words in the list that are not alphabetically sorted.***
 
 ## Solution
 
-A brute force approach is the easiet here - we look for sequences of digits - remove from the list and add the "collect" call on the list with the sequence removed.. And we collect the best score. But this is not particularly fast especially as the list grows.
+To solve this problem we loop though each string to make sure the letters in alphabetical order.
+
+We note that if the words are 1 character long then they will be default in alphabetical order so we return 0.
+
+Looping through the letters - we just see if one is greater than or equal to the previous one - if it isn't we update the counter and move on to the next word.
+
+Note we use a ternary to replace this `if`/`else` for compactness.
 
 ```perl
-sub collect {   ## We will use recursion here. we take out each number in
-                ## turn and pass it back to the function
-  return 0 unless @_;                         ## The score for an empty list is 0
-  my $m = 0;                                  ## Create a variable for the max value
-  for ( my $e = my $o = 0; $o<@_; ) {         ## Loop from start to finish - 
-                                              ## there is no inc as the $o = $e at
-                                              ## the does the same think
-    my $e = $o;                               ## Reset the end of the list to the start
-    $e++ while $_[$o]==$_[$e];                ## Increment until we get to a different value
-    sub { $m=$_[0] if $m<$_[0] }->(           ## Use and IIFE to collect max value
-      ($e-$o)**2 +                            ## Add square of elements to value 
-      collect( @_[ 0..$o-1, $e..$#_ ]         ## for the reduced list
-    ), $o = $e; 
+sub non_alpha {
+  return 0 if length $_[0] <2;
+  my($c,$f)=0;
+  for(@_) {
+    $f='';
+    $f gt $_ ? ($c++,last) : ($f=$_) for split //;
   }
-  $m;
+  $c
 }
 ```
 
-## Cacheing
-
-By simply caching the result we can get a significant improvement in the examples we see around a 20-25x improvement, better improvements happen with larger examples, until at some point the cache will start eating into swap.. And things will tail off dramatically!
+We can compact this by converting the inner `for` into a `map` - note the `last` was on the inner loop - and is the same as a `next` on the outer loop... So here we have to now use `next` not `laat`
 
 ```perl
-sub collect {   ## We will use recursion here. we take out each number in
-                ## turn and pass it back to the function
-  return 0 unless @_;                         ## The score for an empty list is 0
-  my $k = "@_";                               ##+++  Generate key for cache
-  return $cache->{$k} if exists $cache->{$k}; ##+++  Return cache value if exists
-  my $m = 0;                                  ## Create a variable for the max value
-  for ( my $e = my $o = 0; $o<@_; ) {         ## Loop from start to finish - 
-                                              ## there is no inc as the $o = $e at
-                                              ## the does the same think
-    my $e = $o;                               ## Reset the end of the list to the start
-    $e++ while $_[$o]==$_[$e];                ## Increment until we get to a different value
-    sub { $m=$_[0] if $m<$_[0] }->(           ## Use and IIFE to collect max value
-      ($e-$o)**2 +                            ## Add square of elements to value 
-      collect( @_[ 0..$o-1, $e..$#_ ]         ## for the reduced list
-    ), $o = $e; 
-  }
-  $cache->{$k} = $m                           ##+++  Cache value & return
+sub non_alpha_compact {
+  return 0 if length $_[0] <2;
+  my($c,$f)=0;
+  $f='', map { $f gt $_ ? ($c++,next) : ($f=$_) } split // for @_;
+  $c
 }
 ```
 
-## Improving the algorithm
+# TASK #2: Number Placement
 
-Here we work out a minimum best score - removing all numbers except for the most frequent and that leaves us with the best score of `f * f + ( n - f)`.
-We also at each stage work out the possible maximum score - this is `score + sum(f*f)` over the remaining frequences. If this is lower than the
-current max score we do not progress any futher...
+***You are given a list of numbers having just 0 and 1. You are also given placement count (>=1). Write a script to find out if it is possible to replace 0 with 1 in the given list. The only condition is that you can only replace when there is no 1 on either side. Print 1 if it is possible otherwise 0.***
+
+*Question - there are two intepretations o the question - whether the placements are done simultaneously or one after the other*
+
+*In the former case any run of 3+ zeros can have `n-2` updates, but if it is the former it `(n-1)/2`
+
+## Solution
+
+Both solutions are the same except for the calculation at the heart to compute the count.
+
+We loop through the numbers if we see a 1 we check to see how many previous 0's we've had and compute the number of insertions. If it is 0 we increment the count of 0's in a row. Note to make sure we include any last sequence of 0's we add a 1 on to the end of the list we are search.
 
 ```perl
-sub _collect_fast {
-  my $s = shift;
-  return $s unless @_;  ## Empty list return score
-  
-  ## same digits.
-  for ( my $e = my $o = 0; $o<@_; ) { ## We loop through
-    my $e = $o;                ## the list for each                                    
-    $e++ while $_[$o]==$_[$e]; ## sequence of same no.
-
-    ## Compute the score so far $s + length of seq^2
-    ## Compute max poss. score this + sum of squared
-    ## counts of other number frequencies
-
-    my $ms = my $ts = $s + ($e-$o)**2;
-    my %f = ($_[$o] => $o-$e);
-    $f{$_}++ for @_;
-    $ms += $_ ** 2 for values %f;
-
-    ## If the max possible score is > $m we compute
-    ## actual score and update max if > $m
-
-    if($ms>$m) {
-      $ts = _collect_fast( $ts, @_[ 0..$o-1, $e..$#_ ] );
-      ## And if it is greater than $m we update $m
-      $m = $ts if $ts > $m;
-    }
-    $o = $e;
-  }
+sub insert_zero {
+   my($s,$c) = (0,shift);
+   $_ ? ( $c-= $s>2 &&  int(($s-1)/2), $s=0 ) : $s++ for @_,1;
+   $c>0?0:1;
 }
 
-sub collect_fast {
-  return 0 unless @_;
-  my %f;
-  $m=0;
-  $f{$_}++ for @_;                  ## compute freq
-  $_>$m && ( $m=$_ ) for values %f; ## find largest
-  $m = $m*$m + @_-$m;  ## Compute minimum-maximum
-                       ## square of max freq -
-                       ## count of remaining
-  _collect_fast(0,@_); ## Now do the real work
-  $m                   ## Return max (global variable)
+sub insert_zero_simultaneous {
+  my($s,$c) = (0,shift);
+  $_ ? ( $c-= $s>2 && $s-2, $s=0 ) : $s++ for @_,1;
+  $c>0?0:1
 }
 ```
+
+We can get some performance improvements by short cutting the loop, by checking the value of $c at each stage rather than just at the end. This is most important if the number of inserts is relatively low in comparison to the size of the list.
+
+```perl
+sub insert_zero_shortcut {
+   my($s,$c) = (0,shift);
+   $_ ? ( $c-= $s>2 &&  int(($s-1)/2), $s=0, $c>0 || return 1 ) : $s++ for @_,1;
+   0;
+}
+
+sub insert_zero_simultaneous_shortcut {
+  my($s,$c) = (0,shift);
+  $_ ? ( $c-= $s>2 && $s-2, $s=0, $c>0 || return 1 ) : $s++ for @_,1;
+  0;
+}

@@ -1,0 +1,9 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@words where @words.elems > 0 && all(@words) ~~ /^<[a..z]>+$/, :v(:$verbose));
+
+my @odd = @words.grep({ ! [<=] $_.ords });
+
+say ":Odd word(s): { @odd.map({ "'$_'" }).join(",") }" if $verbose;
+
+say @odd.elems;
