@@ -1,13 +1,5 @@
-<<<<<<< HEAD
-TITLE
-=====
-
-=======
 ```raku
-# Perl Weekly Challenge #216, Challenge 1
-# © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Thu 11 May 2023 07:47:20 PM EDT
-# Version 0.0.1
+
 ```
 
 TITLE
@@ -15,9 +7,8 @@ TITLE
 
 
 
->>>>>>> 0c0e20987dc5677805c95f8e2471492515be32c3
-Task 1: Registration Number
-===========================
+Task 2: Max Number
+------------------
 
 SUBTITLE
 ========
@@ -27,26 +18,43 @@ SUBTITLE
 Submitted by: Mohammad S Anwar
 ------------------------------
 
-You are given a list of words and a random registration number.
+CHALLENGE
+=========
 
-Write a script to find all the words in the given list that has every letter in the given registration number.
 
-### Example 1
 
-    Input: @words = ('abc', 'abcd', 'bcd'), $reg = 'AB1 2CD'
-    Output: ('abcd')
+You are given a list of positive integers. Write a script to concatenate the integers to form the highest possible value.
+-------------------------------------------------------------------------------------------------------------------------
 
-The only word that matches every alphabets in the given registration number is 'abcd'.
+### Example 1:
 
-### Example 2
+    Input: @list = (1, 23)
 
-    Input: @words = ('job', 'james', 'bjorg'), $reg = '007 JB'
-    Output: ('job', 'bjorg')
+    Output: 231
 
-### Example 3
+### Example 2:
 
-    Input: @words = ('crack', 'road', 'rac'), $reg = 'C7 RA2'
-    Output: ('crack', 'rac')
+    Input: @list = (10, 3, 2)
+
+    Output: 3210
+
+### Example 3:
+
+    Input: @list = (31, 2, 4, 10)
+
+    Output: 431210
+
+### Example 4:
+
+    Input: @list = (5, 11, 4, 1, 2)
+
+    Output: 542111
+
+### Example 5:
+
+    Input: @list = (1, 10)
+
+    Output: 110
 
 SOLUTION
 ========
@@ -54,101 +62,27 @@ SOLUTION
 
 
 ```raku
-multi MAIN (Str $reg, *@words) {
-    my Str @result;
+  1| use v6.*;
+  2| 
+  3| sub max-number (@list where .all ~~ UInt) {
+  4|    my UInt $retval = 0; 
+  5| 
+  6|    return $retval
+  7| } 
+  8| 
+  9| multi MAIN (:$test! ) {
+ 10|     use Test;
+ 11| 
+ 12|     my @tests = [
+ 13|         %{ input => (1, 23),          output => 231,    text => 'Example 1' },
+ 14|         %{ input => (10, 3, 2),       output => 3210,   text => 'Example 2' },
+ 15|         %{ input => (31, 2, 4, 10),   output => 431210, text => 'Example 3' },
+ 16|         %{ input => (5, 11, 4, 1, 2), output => 542111, text => 'Example 4' },
+ 17|         %{ input => (1, 10),          output => 110,    text => 'Example 5' },
+ 18|     ];
+ 19| 
+ 20|     for @tests {
+ 21|         is max-number( .<input> ), .<output>, .<text>;
+ 22|     } # end of for @tests
+ 23| } # end of multi MAIN (:$test! )
 ```
-
-We're going to use the `comb` method to determine if any of the input words fulfill the requirements. 
-
-First, remove all the non-alphabetics from the registration number.
-
-```raku
-    my Junction $reg-letters = $reg.subst(/<-alpha>/, :g)
-```
-
-We don't care about the case of the letters.
-
-```raku
-        .lc
-```
-
-Now create an array of the letters remaing in the registration number.
-
-```raku
-        .comb
-```
-
-Create an `any` junction from the letters.
-
-```raku
-        .any;
-```
-
-In example 3, above, `$reg-letters` will be 
-
-```raku
-any("a", "r", "c")
-```
-
-Now, collect the words that match the registration in the `@result` array.
-
-```raku
-    @result.push($_) if
-```
-
-We don't care about the case of the words being tested.
-
-```raku
-        .lc
-```
-
-Here's the heart of the algorithm. `comb` the word with the previously made `Junction`. This will create a `Junction` of *n* `Seq`uences, where *n* is the number of letters in the registration number. 
-
-```raku
-        .comb($reg-letters)
-```
-
-When we `comb` the words in the third example, we will get these `Junction`s:
-
-```raku
-# for "crack"
-any(("c", "c").Seq, ("r",).Seq, ("a",).Seq)
-
-# for "road"
-any(().Seq, ("r",).Seq, ("a",).Seq)
-
-# for "rac"
-any(("c",).Seq, ("r",).Seq, ("a",).Seq)
-```
-
-The word "road" does not meet the challenge's requirements, because it lacks the letter 'c'. This is reflected in the empty `Seq`uence: 
-
-```raku
-().Seq
-```
-
-The other two examples pass the requirements, and so do not include an empty `Seq`uence in their `any Junction`s. =end pod
-
-so to find the good words, match the `Junction` against an empty list; those that **don't** match are the good ones.
-
-```raku
-    !~~ ()
-```
-
-Finally, make sure we test every word in the `@words` array...
-
-```raku
-        for @words;
-```
-
-...and print the results!
-
-```raku
-<<<<<<< HEAD
-    say @result.List;
-} # end of multi MAIN (Str $reg, *@words)
-
-=======
-    say @result.map({"'$_'"}).join(', ').map({ ($_) } );
-} # end of multi MAIN (Str $reg, *@words)
->>>>>>> 0c0e20987dc5677805c95f8e2471492515be32c3
