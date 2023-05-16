@@ -38,6 +38,9 @@
 
 use v5.36;
 
+use lib "lib";
+use SubstringIterator;
+
 use Getopt::Long;
 my $Verbose = 0;
 my $DoTest  = 0;
@@ -83,27 +86,46 @@ sub wordSticker($target, @stickerWord)
     # Worst case is one letter at a time.
     my $minScore = length($target);
 
-    sticker($target, \%sticker, 0, [], "");
+    stickerize($target, \%sticker, 0);
 
 
     return -1;
 }
 
-sub sticker($target, $stickers, $scoreSoFar, $path, $indent)
+sub stickerize($target, $stickers, $scoreSoFar)
 {
-    my $len = length($target);
-    if    ( $len == 0 ) { return $scoreSoFar }
-    elsif ( $len == 1 ) { return $scoreSoFar + 1 }
-
-    # Maybe we get lucky and the entire target word is one sticker.
+    state %cache;
     if ( exists $stickers->{$target} )
     {
-        return $scoreSoFar + 1;
+        return $scoreSoFar + $cache{$target};
+    }
+
+    # Base cases for recursion.  If the string is of length one, we
+    # know that there is a sticker for it because we already verified
+    # that all letters in the target occur somewhere among the stickers.
+    my $len = length($target);
+    if    ( $len == 0 ) { return $scoreSoFar }
+    elsif ( $len == 1 ) { return $soreSoFar  + ($cache{$target} = 1) }
+
+    if ( exists $cache{$target} )
+    {
+        return $scoreSoFar + $cache{$target}
     }
 
     # Take each possible substring from the target.  If the substring
     # can be made from a sticker, remove it and recurse on the smaller
     # target.
+    my $ssi = SubstringIterator->new($target);
+    
+    my $score = $len;
+    my ($pre, $ss, $post) = $ssi->next();
+    while ( defined $ss )
+    {
+        say "SSI: pre=[$pre] ss=[$ss] post=[$post]" if $Verbose;
+        $score = map { stickerize($_, $stickers) } $pre, $ss, $post;
+        ($pre, $ss, $post) = $ssi->next();
+    }
+
 
 }
 

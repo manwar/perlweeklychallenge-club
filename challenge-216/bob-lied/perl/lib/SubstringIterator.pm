@@ -6,7 +6,7 @@
 #=============================================================================
 # Description:
 # Iterate over all possible substrings of a string.  Each iteration returns
-# a pair: the substring, and the original string with the substring removed.
+# a triplet: the substring, and the prefix and suffix around it.
 #
 # We start with the longest possible substring (the string itself) and return
 # new substrings in descending size.
@@ -43,16 +43,17 @@ sub next($self)
 {
     my ($target, $length, $pos, $size) = $self->@{ qw(_target _length _pos _size) };
 
-    return (undef, undef) if $length == 0;
+    return (undef, undef, undef) if $length == 0;
 
     my $sub = substr( $target, $pos, $length );
     my $before = substr( $target, 0, $pos);
     my $after  = substr( $target, $pos + $length, $size - $length);
-    my @retval = ( $sub, "$before$after" );
+    my @retval = ( $before, $sub, $after );
 
-    if ( $self->{_pos}++ == $size )
+    if ( ($self->{_pos}++ + $length) == $size )
     {
         $self->{_length}--;
+        $self->{_pos} = 0;
     }
 
     return @retval;
