@@ -21,7 +21,9 @@ sub word-stickers ($word, @stickers) {
       my $alternatives = %provided{$letter}
          or return 0; # no viable source
       if ($alternatives.elems == 1) { # one viable source only
-         my ($word, $amount) = $alternatives.kv;
+         my ($word, $units) = $alternatives.kv;
+         my $amount = (%needed{$letter} div $units)
+            + ((%needed{$letter} % $units) ?? 1 !! 0);
          %minimum{$word} = $amount
             if %minimum{$word}:!exists || (%minimum{$word} < $amount);
       }
@@ -56,16 +58,18 @@ sub complete-minimum (%minimum is copy, %needed is copy, %provided) {
       my $frame = @queue.shift;
       my $needed = $frame<needed>;
       my $minimum = $frame<minimum>;
-      for $needed.keys -> $letter {
-         for %provided{$letter}.keys -> $source {
-            my %nmin  = %$minimum;
-            %nmin{$source}++;
-            my %nneed = %$needed;
-            %nneed{$letter} -= %provided{$letter}{$source};
+
+      my %words = $needed.keys.map({ %provided{$_}.keys }).flat.map({ $_ => 1 });
+      for %words.keys -> $source {
+         my %nmin  = %$minimum;
+         %nmin{$source}++;
+         my %nneed = %$needed;
+         for %nneed.keys -> $letter {
+            %nneed{$letter} -= %provided{$letter}{$source} // 0;
             %nneed{$letter}:delete if %nneed{$letter} <= 0;
-            return %nmin if %nneed.keys.elems == 0;
-            @queue.push: {needed => %nneed, minimum => %nmin};
          }
+         return %nmin if %nneed.keys.elems == 0;
+         @queue.push: {needed => %nneed, minimum => %nmin};
       }
    }
    return ();
