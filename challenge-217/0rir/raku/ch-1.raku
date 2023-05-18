@@ -1,7 +1,6 @@
 #!/usr/bin/env raku
 # :vim ft=raku sw=4 expandtab  # 🦋 ∅∪∩∋∈∉ ≡ ≢ «␤ » ∴
 use v6.d;
-use lib $?FILE.IO.parent(2).add("lib");
 use Test;
 
 =begin comment
