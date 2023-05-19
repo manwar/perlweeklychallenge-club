@@ -80,5 +80,3 @@ sub count_stickers {
 }
 
 say count_stickers(@ARGV);
-
-
