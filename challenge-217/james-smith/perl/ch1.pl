@@ -118,51 +118,51 @@ sub sorted_matrix_xx {
   $z;
 }
 
-is( sorted_matrix(    @{$_->[0]} ) , $_->[1] ) for @TESTS1;
-is( sorted_matrix_x(  @{$_->[0]} ) , $_->[1] ) for @TESTS1;
-is( sorted_matrix_xx( @{$_->[0]} ) , $_->[1] ) for @TESTS1;
+is( sorted_matrix(    @{$_->[0]} ) , $_->[1] ) for @TESTS;
+is( sorted_matrix_x(  @{$_->[0]} ) , $_->[1] ) for @TESTS;
+is( sorted_matrix_xx( @{$_->[0]} ) , $_->[1] ) for @TESTS;
 
 done_testing();
 
 warn "ALL";
 cmpthese( -2, {
-  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS1 },
-  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS1 },
-  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS1 },
+  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS },
+  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS },
+  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS },
 });
 warn "30";
 cmpthese( -2, {
-  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS1[6] },
-  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS1[6] },
-  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS1[6] },
+  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS[6] },
+  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS[6] },
+  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS[6] },
 });
 warn "20";
 cmpthese( -2, {
-  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS1[7] },
-  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS1[7] },
-  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS1[7] },
+  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS[7] },
+  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS[7] },
+  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS[7] },
 });
 warn "10";
 cmpthese( -2, {
-  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS1[5] },
-  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS1[5] },
-  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS1[5] },
+  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS[5] },
+  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS[5] },
+  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS[5] },
 });
 warn "7";
 cmpthese( -2, {
-  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS1[4] },
-  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS1[4] },
-  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS1[4] },
+  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS[4] },
+  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS[4] },
+  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS[4] },
 });
 warn "5";
 cmpthese( -2, {
-  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS1[3] },
-  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS1[3] },
-  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS1[3] },
+  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS[3] },
+  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS[3] },
+  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS[3] },
 });
 warn "2/3";
 cmpthese( -2, {
-  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS1[0..2] },
-  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS1[0..2] },
-  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS1[0..2] },
+  'sort' => sub { sorted_matrix(    @{$_->[0]} ) for @TESTS[0..2] },
+  'cmp'  => sub { sorted_matrix_x(  @{$_->[0]} ) for @TESTS[0..2] },
+  'nest' => sub { sorted_matrix_xx( @{$_->[0]} ) for @TESTS[0..2] },
 });
