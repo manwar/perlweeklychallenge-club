@@ -1,7 +1,7 @@
-[< Previous 215](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-215/james-smith) |
-[Next 217 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-217/james-smith)
+[< Previous 216](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-216/james-smith) |
+[Next 218 >](https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-218/james-smith)
 
-# The Weekly Challenge 6^3
+# The Weekly Challenge 217
 
 You can find more information about this weeks, and previous weeks challenges at:
 
@@ -13,108 +13,99 @@ submit solutions in whichever language you feel comfortable with.
 
 You can find the solutions here on github at:
 
-https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-216/james-smith
+https://github.com/drbaggy/perlweeklychallenge-club/tree/master/challenge-217/james-smith
 
-# TASK #1: Registration Number
+# TASK #1: Sorted Matrix
 
-***You are given a list of words and a random registration number. Write a script to find all the words in the given list that has every letter in the given registration number.***
+***You are given a n x n matrix where n >= 2. Write a script to find `3rd smallest` element in the sorted matrix.***
 
-## Solution
+## Solutions
+
+### Naive solution
+
+Our naive solution is to unravel the matrix into a single list `map{@$_}@_`, sort it and find the 3rd entry (index `2`). We then have a nice one liner....
 
 ```perl
-sub reg_number {
-  my (%l,%x) = map { /[a-z]/ ? ($_=>1) : () }
-               split //,
-               lc
-               shift;
-  grep {
-    %x=%l;
-    delete $x{$_} for split//;
-    !%x
-  } @_
+sub sorted_matrix {
+  [ sort { $a <=> $b } map {@{$_}} @_ ]->[2]
 }
 ```
 
+This is good because it uses a built in method `sort` which will be faster than writing it in perl code - and it is `O(n.log n)` which is good. But it is still `O(n.log n)`. As we are looking for the 3rd smallest entry we can scan the matrix and just keep track of the smallest ones - this would be `O(n)`, but obviously more computationally expensive for each loop. But how much...
+
+### Second solution:
+
+We again flatten the matrix, but this time we take the first three entries and sort into order.
+Then we loop through all the other values, and replace any values in this list by the new value
+if required.
+
+If we compare the performance against the naive solution we find that the naive solution is better then this method for the small matrices in the the example. BUT if we increase the size of the matrix to 10x10 then we find they are comparable in performance. If we then go up to 20x20 we can see the advantage of this solution.
+
+```perl
+sub sorted_matrix_x {
+  @_=map{ @{$_} } @_;
+
+  my( $x, $y ,$z ) = splice @_,0,3; ## Grab 3 values;
+
+  ( $x, $y     ) = ( $y, $x ) if $y<$x;
+  $z < $x ? ($x,$y,$z) = ($z,$x,$y) : $z < $y && ( ($y,$z)=($z,$y) );
+
+  $_<$z && (
+      $_<$x ?  ( $x, $y, $z ) = ( $_, $x, $y )
+    : $_<$y ?  (     $y, $z ) = (     $_, $y )
+    :          (         $z   =           $_ )
+  ) for @_;
+  $z
+}
+```
+
+### Third solution:
+
+But can we go faster - what can slow us down. One thing we still do is flatten the matrix - that is a relatively expensive operation, but it does need slightly more code around it - mainly related to the calculation of the first 3 values.
+
+But we can work around it - we shift of values from the first row of the array, and if that list is empty - we move on to the next row... and the next...
+Finally we loop through each row of the array (including the remains of this row) and perform the same insertion step as above...
+
+Although more complex - is it faster? yes - the break even point against the first technique is around `5x5`. The extra work means this method performance increases linearly even to the 2nd method...
+
+```perl
+sub sorted_matrix_xx {
+  my @row = @{pop()};
+
+  my $x = pop @row; @row = @{pop()} unless @row;
+  my $y = pop @row; @row = @{pop()} unless @row;
+  my $z = pop @row;
+
+  ( $x, $y     ) = ( $y, $x ) if $y<$x;
+  $z < $x ? ($x,$y,$z) = ($z,$x,$y) : $z < $y && ( ($y,$z)=($z,$y) );
+  for(\@row,@_) {
+    $_<$z && (
+        $_<$x ?  ( $x, $y, $z ) = ( $_, $x, $y )
+      : $_<$y ?  (     $y, $z ) = (     $_, $y )
+      :          (         $z   =           $_ )
+    ) for @{$_};
+  }
+  $z;
+}
+```
 Firstly we get a list of the lower-cased letters in the number plate. Then for each word in turn we:
  * copy this hash into a temporary hash;
  * remove any letters from hash which rea in the word;
  * Check to see if the hash is now empty - if it is we include the word.
 
-# TASK #2: Word Stickers
+### Performance
 
-***You are given a list of word stickers and a target word. Write a script to find out how many word stickers is needed to make up the given target word.***
+For small arrays (<3) then the `sort` and pick is the fastest method, at which point method 3 passes it, and around 7-10 method 2 also passes it, showing the overhead of the "copy" of the matrix. The difference between methods 2 and 3. By the time we get to a 20x20 matrix, method 2 is twice the speed of the sort and method 3 is 6 times the speed of the sort.
+
+# TASK #2: Max Number
+
+***You are given a list of positive integers. Write a script to concatenate the integers to form the highest possible value.***
 
 ## Solution
 
-Interestingly this task uses the trick - copy hash and delete elements - within it's core.
-
-We note we:
- * are looking for fewest stickers so:
-    * this suggests a depth first solution;
-    * once we have found a solution it is by definition the best one;
-    * queue solutions work well in these cases;
- * use a count based solution
-    * we count every letter in the target word;
- * check that all of these are available on the sticker:
-    * if not we return a "0" value
- * initialise the queue with an element:
-    * where we have not used any stickers;
-    * the last sticker we have "chosen" is the first one;
-    * the counts are the inital counts we calculated above
- * for every element of the queue:
-    * we loop through the stickers;
-    * for each sticker we loop through the letters;
-    * and if we need that letter we make a note we have removed a letter and reduce the count of that letter by one (if the count goes to zero we remove it);
-    * if the counts array is empty we return the size
-    * if we have removed a letter we push the new values back on to the queue;
-    * **Note** when looping through the stickers we start with the last one we used and loop to the end. This avoids duplicates and greatly reduces the search space.
-    * we loop till the queue is empty - actually we don't because we will exit the loop with the count array check above before we exhaust the queue.
-
-Here is the code that the describes....
+A naive solution would be to just (string) sort the elements ans stitch them together - but that isn't the case as if you stitch `1` & `10` together in alphabetical order you get `10`` not `110`. So instead we compare `$a.$b` with `$b.$a` which resolves this.
 
 ```perl
-sub word_stickers {
-  my( %f, %s, $n, $l, $x );
-  $f{$_}++ for split //, shift;
-  my @q = [ 1, 0, my %t = %f ];
-  map { delete $t{$_} } split // for @_;
-  return 0 if keys %t;
-  while( ( $n, $l, %f ) = @{ shift @q } ) {
-    push @q, map {
-      $x = 0, %t = %f;
-      exists $t{$_} && ( $x=1, --$t{$_} || delete $t{$_} )
-        for split//, $_[$_];
-      !%t ? return $n : $x ? [ $n+1, $_, %t ] : ()
-    } $l..$#_;
-  }
-}
+sub max_number      { join '', sort { $b.$a cmp $a.$b } @_ }
 ```
-
-And to know what bit does what - here it is with comments:
-
-```perl
-sub word_stickers {
-  my( %f, %s, $n, $l, $x );
-  $f{$_}++ for split //, shift; # count for letters
-  my %t = %f; # Check all letters on stickers
-  # Initialise queue - no stickers, initial freq.
-  my @q = [ 1, 0, my %t = %f ]; # Check can solve?
-  map { delete $t{$_} } split // for @_;
-  return 0 if keys %t; # if not return 0
-  my @q = [ 1, 0, %f ]; # [ $no+1, $last, %freqs ]
-  while( ($n,$l,%f) = @{ shift @q } ) {
-    push @q, map {
-      # Make copy of frequencies, set flag ($x)
-      # true once we use a letter on sticker,
-      # remove letters we have used up
-      $x = 0, %t = %f;
-      exists $t{$_} && ( $x=1, --$t{$_} || delete $t{$_} )
-        for split//, $_[$_];
-      # If none left return $n OR push entry onto
-      # queue, increasing count and setting new last
-      !%t ? return $n : $x ? [ $n+1, $_, %t ] : ()
-      # Loop from last used to remove duplicates
-    } $l..$#_;
-  }
-}
-```
+You can get the right answer with a numeric comparison - but the string comparison is between 10% & 20% faster.
