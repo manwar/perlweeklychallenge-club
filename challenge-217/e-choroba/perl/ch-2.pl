@@ -12,17 +12,25 @@ sub max_number(@list) {
 }
 
 sub compare($x, $y) {
-    return $x <=> $y if length($x) == length($y);
+    my ($lx, $ly) = map length, $x, $y;
+    return $x cmp $y if $lx == $ly;
 
-    my $first = substr $x, 0, 1;
-    my $diff  = substr $x, length($y), 1;
-    my $cmp = $diff <=> $first;
-    return $cmp if $cmp || 1 == length $y;
+    my ($posx, $posy) = ($ly, 0);
+    my ($xx, $yy) = ($x, $x);
+    my $over = 0;
+    my $count = 0;
+    while ($over < 2
+           && substr($xx, $posx, 1) eq substr($yy, $posy, 1)
+    ) {
+        ++$count;
+        ++$over, $yy = $x, $posy = 0 if ++$posy >= length $yy;
+        ++$over, $xx = $y, $posx = 0 if ++$posx >= length $xx;
+    }
 
-    return compare(substr($x, 1), substr($y, 1))
+    return substr($xx, $posx, 1) cmp substr($yy, $posy, 1)
 }
 
-use Test::More tests => 5 + 3 * 6 + 3;
+use Test::More tests => 5 + 3 * 6 + 3 + 1;
 
 is max_number(1, 23), 231, 'Example 1';
 is max_number(10, 3, 2), 3210, 'Example 2';
@@ -54,3 +62,5 @@ is max_number(44567, 445675), 44567544567, 'recursion > rev';
 is max_number(23, 23, 231), 2323231, 'repeated <';
 is max_number(23, 23, 232), 2323232, 'repeated =';
 is max_number(23, 23, 233), 2332323, 'repeated >';
+
+is max_number(4, 447, 3, 331, 4340, 43), '44744343403331', 'bug';
