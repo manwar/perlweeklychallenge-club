@@ -10,8 +10,6 @@
 #include <assert.h>
 
 #include "args.h"
-#include "parseints.h"
-#include "printarray.h"
 
 
 //

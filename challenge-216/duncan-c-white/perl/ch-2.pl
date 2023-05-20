@@ -144,7 +144,7 @@ fun findall( $word, $stickersused, @allsticker )
 {
 	if( $word eq '' )
 	{
-		say "found solution, stickersused = ", join(',',@$stickersused) if $debug;
+		say "debug: found solution, stickersused = ", join(',',@$stickersused) if $debug;
 		my $nwords = @$stickersused;
 		if( $nwords < $minstickers )
 		{
@@ -160,18 +160,19 @@ fun findall( $word, $stickersused, @allsticker )
 	{
 		my $common = lettersincommon( $word, $sticker );
 		next if $common eq '';
-		say "lettersincommon( $word, sticker $sticker ) = $common" if $debug;
+		#say "debug: lettersincommon( $word, sticker $sticker ) ".
+		#    "= $common" if $debug;
 
 		# there are two possibilities: use this sticker or don't;
 		# try both..
 
 		# try using the sticker
-		say "USE sticker $sticker, against $word, letters in common $common" if $debug;
+		say "debug: USING sticker $sticker, against $word, letters in common $common" if $debug;
 		my @newsu = @$stickersused;
 		push @newsu, $sticker;
 		my $newword = $word;
 		$newword =~ s/$_// for split(//,$common);
-		say " - new word is <$newword>" if $debug;
+		say "debug: new word is <$newword>" if $debug;
 		findall( $newword, \@newsu, @allsticker );
 
 		# or try without the sticker
