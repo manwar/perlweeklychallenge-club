@@ -12,24 +12,25 @@ use strict;
 use warnings;
 use feature 'say';
 
-use Data::Dump qw( pp );
-use List::Util qw( reduce );
-
-sub max_number {
+sub max_number_permute {
     my ( @list ) = @_;
-    # say "max_number( ", pp( @list ), " )";
+
     return $list[0]
         if @list == 1;
 
-    my ( $best, $max ) = ( undef, 0 );
+    my $max = 0;
     for ( 0..$#list ) {
- my @sub_list = @list;
- splice @sub_list, $_, 1, ();
+	my @sub_list = @list;
+	splice @sub_list, $_, 1, ();
         my $try = $list[$_] . max_number( @sub_list );
- ( $best, $max ) = ( $_, $try )
-     if $try > $max;
+	$max = $try
+	     if $try > $max;
     }
     return $max;
+}
+
+sub max_number {
+    return join "", sort { ( $b . $a ) <=> ( $a . $b ) } @_;
 }
 
 
@@ -51,3 +52,15 @@ Output: 553521
 Test 3:
 Input: @list = ( 53 52 5 6 )
 Output: 655352
+
+Test 4:
+Input: @list = ( 5453 54 )
+Output: 545453
+
+Test 5:
+Input: @list = ( 5454 54 )
+Output: 545454
+
+Test 3:
+Input: @list = ( 5455 54 )
+Output: 545554
