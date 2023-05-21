@@ -13,9 +13,7 @@ use warnings;
 use feature 'say';
 
 sub sorted_matrix {
-    my ( $matrix ) = @_;
-    my @all_values = sort { $a <=> $b } map @$_, @$matrix;
-    return $all_values[2];
+    return ( sort { $a <=> $b } map @$_, @{$_[0]} )[2];
 }
 
 use lib '.';
