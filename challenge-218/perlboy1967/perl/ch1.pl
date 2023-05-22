@@ -27,12 +27,15 @@ use Test::More;
 sub maxProduct (@) {
   my (@n,@p);
 
+  # Find negative and positive factors
   for (@_) {
     $_ < 0 ? push(@n,$_) : 
     $_ > 0 ? push(@p,$_) :
     0;
   }
 
+  # If we have an odd number of negative factors, 
+  # ditch the one closest to zero
   @n = sort {$a <=> $b} @n;
   pop @n if (@n % 2);
 

@@ -40,7 +40,8 @@ sub matrixScore (\@) {
 
   for my $c (1 .. $nC) {
     my $ones = grep { $ar->[$_][$c] == 1 } (0 .. $nR);
-    # Flip bits in column C if number of '1's ir smaller than rows
+
+    # Flip bits in column C if number of '1's is smaller than # of rows
     map { $ar->[$_][$c] = ++$$ar[$_][$c] % 2 } (0 .. $nR) 
       if ($ones < $nR);
   }
