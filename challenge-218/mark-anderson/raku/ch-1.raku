@@ -22,7 +22,7 @@ is max-product(-1,0,0,-1),        0;
 
 sub max-product(+$a)
 {
-    given $a.sort.Array 
+    given $a.sort.List 
     {
         max ([*] .tail(3)), ([*] flat .head(2), .tail)
     }
