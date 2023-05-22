@@ -1,0 +1,6 @@
+#!/usr/bin/pdl
+
+sub sorted_matrix {my ($pdl)=@_; $pdl=$pdl->flat->qsort; $pdl(2);}
+p &sorted_matrix( pdl '[3,1,2; 5,2,4; 0,1,3]' ); #-- [1]
+p &sorted_matrix( pdl '[2,1; 4,5]' ); #-- [4]
+p &sorted_matrix( pdl '[1,0,3; 0,0,0; 1,2,1]' ); #--[0]

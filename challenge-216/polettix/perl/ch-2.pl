@@ -4,7 +4,7 @@ use warnings;
 use experimental 'signatures';
 use List::Util 'sum';
 
-say word_stickers(qw< ppeoknpp perlp raku python >);
+say word_stickers(@ARGV);
 
 sub word_stickers ($word, @stickers) {
    my %needed = letters_histogram($word);
@@ -25,7 +25,10 @@ sub word_stickers ($word, @stickers) {
       my $alternatives = $provided{$letter}
          or return 0; # no viable source
       if (scalar(keys($alternatives->%*)) == 1) { # one viable source only
-         my ($word, $amount) = $alternatives->%*;
+         my ($word, $units) = $alternatives->%*;
+         my $amount = int($needed{$letter} / $units)
+            + ($needed{$letter} % $units ? 1 : 0);
+         my $amount = $units;
          $minimum{$word} = $amount
             if (! exists($minimum{$word})) || ($minimum{$word} < $amount);
       }
@@ -53,16 +56,19 @@ sub complete_minimum ($minimum, $needed, $provided) {
       my $frame = shift(@queue);
       my $needed = $frame->{needed};
       my $minimum = $frame->{minimum};
-      for my $letter (keys($needed->%*)) {
-         for my $source (keys($provided->{$letter}->%*)) {
-            my %nmin  = $minimum->%*;
-            $nmin{$source}++;
-            my %nneed = $needed->%*;
-            $nneed{$letter} -= $provided->{$letter}{$source};
+
+      my %words = map { $_ => 1 }
+         map { keys($provided->{$_}->%*) } keys($needed->%*);
+      for my $source (keys %words) {
+         my %nmin  = $minimum->%*;
+         $nmin{$source}++;
+         my %nneed = $needed->%*;
+         for my $letter (keys(%nneed)) {
+            $nneed{$letter} -= $provided->{$letter}{$source} // 0;
             delete($nneed{$letter}) if $nneed{$letter} <= 0;
-            return %nmin if scalar(keys(%nneed)) == 0;
-            push @queue, {needed => \%nneed, minimum => \%nmin};
          }
+         return %nmin if scalar(keys(%nneed)) == 0;
+         push @queue, {needed => \%nneed, minimum => \%nmin};
       }
    }
 }
