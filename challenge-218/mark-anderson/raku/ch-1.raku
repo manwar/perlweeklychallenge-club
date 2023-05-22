@@ -20,24 +20,10 @@ is max-product(0,0,0,0),          0;
 is max-product(1,2,0,-1),         0;
 is max-product(-1,0,0,-1),        0;
 
-multi max-product(+$a where .elems == 3)
+sub max-product(+$a)
 {
-    [*] |$a
-}
-
-multi max-product(+$a)
-{
-    my %c = $a.classify({ .sign });    
-
-    return [*] $a.sort.tail(3) if $a == any %c.values; 
-
-    my @neg = %c{-1}.sort.head(2);
-    my @pos = %c{1}.sort.tail(3);
-
-    max gather 
+    given $a.sort.Array 
     {
-        take 0;
-        take [*] @pos if @pos == 3;
-        take [*] |@neg, @pos.max if @neg == 2
+        max ([*] .tail(3)), ([*] flat .head(2), .tail)
     }
 }
