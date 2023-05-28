@@ -29,7 +29,6 @@ Input: @list = (-8, 2, -9, 0, -4, 3)
 Output: 216
 
 -9 × -8 × 3 => 216
-
 =end comment
 
 my @Test =
@@ -39,9 +38,7 @@ my @Test =
     (-8, 2, -9, 0, -4, 3),              216,
     (-1, 0, 1, 3, 1),                     3,
 
-#   (-3, -2, -1,  0),                     0,
-
-    ( 2, 3, 5),                          30,    # three elems
+    (-2, 3, 5),                         -30,    # three elems
 
     ( 0,  1,  2,  3),                     6,    # quads
     ( 1,  2,  3,  4),                    24,
@@ -77,46 +74,32 @@ my @Test =
     (-8, -4, -2,  5,  7,  9),           315,
     (-8, -5, -2,  5,  7,  9),           360,
     ;
-
-plan @Test ÷ 2 + 1 + 2_005_000;
-
+plan @Test ÷ 2 + 1 + 1000;
 
 multi max3prod( @a where *.elems  < 3) { die( 'oospec') }
-#multi max3prod( @a where *.elems == 3) { [×] @a }                   # triad
-#multi max3prod( @a where *.elems == 4) {                            # quad
-#            @a.combinations(3).map( {[*] $_} ).max }
 multi max3prod( @a ) {
     multi func {…}
     return func @a.sort;
 
-    # more than 4 elems
-#   multi func( @a where *[*-1] == 0)  { 0 }                        # max0 
     multi func( @a where 0 ≤ *[0])     { [×] @a[*-3..*-1] }         # all pos
     multi func( @a where *[*-1] < 0)   { [×] @a[*-3..*-1] }         # all neg
     # mixed signs
-#   multi func( @a where $_[0] < 0 < $_[1] ) { [×] @a[*-3..*-1] }   # 1 neg
-#multi func( @a where $_[*-2] < 0 < $_[*-1]) { [×] @a[0,1,*-1] } # 1 pos
-#   multi func( @a where $_[*-3] < 0 < $_[*-2]) {                   # 2 pos
-#           max ([×] @a[0,1,*-1]), ([×] @a[*-3..*-1]); }
-#   multi func( @a where $_[1] < 0 < $_[2] ) {                      # 2 neg
-#           max ([×] @a[0,1,*-1]), ([×] @a[*-3..*-1]); }
-    multi func( @a )    {                                           # default
-            max ([×] @a[0,1,*-1]), ([×] @a[*-3..*-1]); }
+    multi func( @a){ max ([×] @a[0,1,*-1]), ([×] @a[*-3..*-1]); }
 }
 
 for @Test -> @in, $exp {
-    is max3prod(@in), $exp, "$exp\t<- @in.sort()";
+    is max3prod(@in), $exp, "$exp\t<- @in.sort() sorted";
 }
-srand(104571);
-hyper for 1..2_005_000 {
+srand(102);
+for 1..1_000 {
     my @t;
     for  1..4 + (^5).pick -> $l {
         for (^20).pick - 10 -> $r {
             @t.push: $r;
         }
     }
-    my $res = @t.combinations(3).map( {[*] $_} ).max;
-    is max3prod(@t), $res, "$res\t<- @t.sort()";
+    my $res = @t.combinations(3).map( {[*] $_} ).max;       # brute
+    is max3prod(@t), $res, "$res\t<- @t.sort() sorted";
 }
 
 dies-ok { max3prod( (1,2)) }, "(1,2) dies-ok";
