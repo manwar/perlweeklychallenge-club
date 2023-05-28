@@ -2,8 +2,8 @@
 
 use v6.d;
 
-sub maximum-product(Int:D @numbers where @numbers.elems ≥ 3 --> Int) {
-    return max(map({ [*] $_ }, @numbers.combinations(3)));
+sub maximum-product(Int:D @numbers where @numbers.elems ≥ 3, Int:D $k = 3 --> Int) {
+    return max(map({ [*] $_ }, @numbers.combinations($k)));
 }
 
 #| Run test cases
