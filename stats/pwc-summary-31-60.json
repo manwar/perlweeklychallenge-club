@@ -1,6 +1,12 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             3,
             2,
@@ -32,8 +38,7 @@
             21,
             5,
             68
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -71,6 +76,7 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -102,14 +108,11 @@
             0,
             0,
             2
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2023]"
    },
    "yAxis" : {
       "min" : 0,
@@ -118,11 +121,11 @@
       }
    },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2023]"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2023-05-27 00:09:13 GMT"
    },
    "chart" : {
       "type" : "column"
@@ -160,8 +163,5 @@
          "Darren Bottin",
          "Dave Cross"
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-05-26 07:54:47 GMT"
    }
 }
