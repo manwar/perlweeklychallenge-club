@@ -9,7 +9,6 @@
 
 sub MAIN() {
 
-#    my @costs = 2, 7, 25;
     my @days  = 1, 5, 6, 7, 9, 15;
 
     # sort the days
