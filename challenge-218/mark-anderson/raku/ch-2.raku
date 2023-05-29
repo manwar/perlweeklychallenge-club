@@ -123,5 +123,5 @@ sub matrix-score(+@matrix)
         $_ = .map(+not *).Array if (%b<0> // 0) > (%b<1> // 0)
     }
 
-    [+] ([Z] @matrix).map({ .join.parse-base(2) })
+    [+] ([Z] @matrix)>>.join>>.parse-base(2)
 }
