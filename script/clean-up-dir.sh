@@ -3,6 +3,7 @@ find . -name "*.plperl" -delete
 find . -name "*.ipynb" -delete
 find . -name "*.Mod" -delete
 find . -name "*.gp" -delete
+find . -name "*.v" -delete
 find . -name "*.fsx" -delete
 find . -name "*.tex" -delete
 find . -name "*.oct" -delete
