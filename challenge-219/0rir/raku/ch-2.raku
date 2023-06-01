@@ -50,18 +50,16 @@ So the total cost is 7 + 7 + 2 + 2 + 2 => 20.
 # durations for travel passes, determine the lowest cost for all scheduled
 # travel.
 #
-# TODO for usefulness:
-#   1) use real Date dates 
-#   2) eliminate three-duration constraint,                 # Args for 2,3 or 3,2
-#   3) consolidate @price & @span into a Pass type,
-#   4) fancies like passes for a set period or set periods,
-#
+# TODO toward usefulness:
+#   1) Use real Date dates.
+#   2) Consolidate @price & @span into a Pass type.
+#   3) Fancies like passes for a set period or set periods.
 
 sub thrifty-pass( @travel-date, @price, @span -->Real) {
-                      # The three sisters.
+                      # Three sisters.
     my @date = @travel-date;    # value is date 
     my @cost;                   # value is date's expenditure
-    my @ticket;                 # value is date's type of ticket
+    my @ticket;                 # value is date's type of ticket, i.e its duration
 
     @date.push: ∞;              # A sink-hole in which to bury long look-a-heads.
     enum span < Day Week Mo >;
@@ -69,30 +67,19 @@ sub thrifty-pass( @travel-date, @price, @span -->Real) {
 
     @cost[@date.end] = 0;   # starting cost (in sink-hole)
 
+
     for  (@date.end-1)…0 -> $i {
-        @cur-cost[Day]  = @price[Day]  + @cost[$i+1];
 
-        my $idx-wk-later    = @date.first( * ≥ @date[$i] + @span[Week], :k);
-        @cur-cost[Week] = @price[Week] + @cost[$idx-wk-later];
+        for ^@span -> $dur-idx {
+            @cur-cost[$dur-idx] = @price[$dur-idx] + @cost[
+                        @date.first( * ≥ @date[$i] + @span[$dur-idx], :k)
+                        ];
+       }
 
-        my $idx-mo-later    = @date.first( * ≥ @date[$i] + @span[Mo], :k);
-        @cur-cost[Mo]   = @price[Mo]   + @cost[$idx-mo-later];
-
-        given  @cur-cost.min {
-            when @cur-cost[Day] {
-                @ticket[$i] = @span[Day];
-                @cost[$i] = @cur-cost[Day];
-            }
-            when @cur-cost[Week] {
-                @ticket[$i] = @span[Week];
-                @cost[$i] = @cur-cost[Week];
-            }
-            when @cur-cost[Mo] {
-                @ticket[$i] = @span[Mo];
-                @cost[$i] = @cur-cost[Mo];
-            }
-            default { die "bad programmer" }
-        }
+        my $best = @cur-cost.min;
+        my $min-k = @cur-cost.first( * == $best, :k);
+        @ticket[$i] = @span[$min-k];
+        @cost[$i] = @cur-cost[$min-k];
     }
     return  @cost[0];
 }
