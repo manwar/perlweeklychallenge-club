@@ -36,13 +36,16 @@ sub travel_expenditure {
     #-- and 0 at the index for non-travel days   
     my $days=zeros(31);
     $days(pdl($ra_days)-1).=1;
+
     
     #-- worth paying for a whole month?
     #-- check if # of days is greater than 30-day price / 7-day price * 7
+    my $candidates=pdl [Inf, Inf]; #-- candidate solutions
+    
     if ($days->sum > ($ra_costs->[2] / $ra_costs->[1] * 7)) {
         if ($days(0) & $days(30)) {
         #if both 1st and last day of 31-day month, then ..
-            return $ra_costs->[2]+$ra_costs->[0];
+            $candidates(0) .= $ra_costs->[2]+$ra_costs->[0];
             #cost is 30 days price + 1 day price
         }
         else {
@@ -60,9 +63,15 @@ sub travel_expenditure {
     
     my $ctr=0;
     
-    while ($ctr <= (30 - $weekly_cutoff)) {
+    MYLOOP: while ($ctr <= (30 - $weekly_cutoff)) {
     #-- slow interpreted loop is good enough
     #-- because the days vector won't scale beyond 31 days
+
+    #-- start counting 7 days from a travel day only
+        if ($days($ctr)==0){
+            $ctr++;
+            next MYLOOP;
+        } 
         my $days_forward = (pdl (6, 30-$ctr) )->min;
         if ($days($ctr:($ctr+$days_forward))->sum >= $weekly_cutoff) {
             $weekly_card++;
@@ -73,10 +82,12 @@ sub travel_expenditure {
             $ctr += 1;
         }
     }
-    return $weekly_card*$costs(1)
+    $candidates(1) .= $weekly_card*$costs(1)
         +( ($days->sum)-$days_paid_weekly ) * $costs(0);
+    return $candidates->flat->min;
 }
 
+print &travel_expenditure([3.5,7,25],[1..21,25..31]); #-- 28 
 print &travel_expenditure([2,7,25],[2..26,31]); #-- 25
 print &travel_expenditure([2,7,25],[1,5,6,7,9,15]); #-- 11
 print &travel_expenditure([2,7,25],[1..3,5,7,10..12, 14, 20, 30, 31]); #-- 20
