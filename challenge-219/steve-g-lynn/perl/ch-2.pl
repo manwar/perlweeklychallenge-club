@@ -67,7 +67,7 @@ sub travel_expenditure {
         if ($days($ctr:($ctr+$days_forward))->sum >= $weekly_cutoff) {
             $weekly_card++;
             $days_paid_weekly += $days($ctr:($ctr+$days_forward))->sum;
-            $ctr += $days_forward;
+            $ctr += $days_forward+1;
         }
         else {
             $ctr += 1;
