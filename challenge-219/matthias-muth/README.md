@@ -1,168 +1,138 @@
-# Highscore!
-**Challenge 218 solutions in Perl by Matthias Muth**
+# This is Perl! We got this, no problem!
+**Challenge 219 solutions in Perl by Matthias Muth**
 
-## Task 1: Maximum Product
+This week's challenges confirm to me why I love Perl:<br/>
+Using what the language offers, the idea how to implement it transforms directly into code.<br/>
+Evrything works well together, and there is no unnecessary clutter.
 
-> You are given a list of 3 or more integers.<br/>
-> Write a script to find the 3 integers whose product is the maximum and return it.<br/>
+## Task 1: Sorted Squares
 
-If we have exactly three numbers, there's not a lot of choice.<br/>
-We return the product of the three numbers that we have got:
-```perl
-    use List::Util qw( product );
+> You are given a list of numbers.<br/>
+> Write a script to square each number in the list and return the sorted list, increasing order.<br/>
 
-    return product( @list )
-        if @list == 3;
-```
+This one ends up in a typical Perl one-liner.<br/>
+The subroutine's input list of numbers (`@_`) is used to square all its entries using a `map` call
+(I used the 'code block' variant here), and the resulting list is sorted,
+also using a 'code block' that compares two values numerically to determine their order in the sorted output.<br/>
+Perl's `<=>` operator comes in handy to tell whether the fist operand
+goes left (`-1`) or right (`+1`) or the two operands are equal (`0`).
 
-We need to consider that we might have negative numbers in the list,
-and there might be situations where we cannot avoid ending up with a negative product.
-But, of course, *any* positive product is better that *any* negative one!<br/>
-So we first try to find the largest possible *positive* product using three numbers from the list.<br/>
-
-The largest positive productmy be wither of these:
-* the product of the three largest positive numbers,
-* the product of the two negatives with the highest absolute value, and the largest positive number<br/>
-(the two negatives turning the result into positive).
-
-We cannot say in advance which of these will be better,
-because this depends on the absolute values of the positive and negative 'best' numbers,
-So, after splitting up our list into positives and negatives,
-sorted by highest to lowest absolute values,
-we compute them both (if possible), 
-and then return the better one, if at lest one of them could be produced:
+More explanation than code! :-)
 
 ```perl
-    my @pos = sort { abs( $b ) <=> abs( $a ) } grep $_ > 0, @list;
-    my @neg = sort { abs( $b ) <=> abs( $a ) } grep $_ < 0, @list;
-
-    my @positive_results = (
-        @pos >= 3              ? product( @pos[0..2] )          : (),
-        @pos >= 1 && @neg >= 2 ? product( @neg[0..1], $pos[0] ) : (),
-    );
-
-    # If we have at least one of them, we are done.
-    return max( @positive_results )
-        if @positive_results;
-```
-
-If it was not possible to return a positive result,
-we should at least try to limit our outcome to zero.<br/>
-We can return a zero result if we have at least one zero in the list,
-because no matter which other numbers we multiply it with, it still remains a zero:
-
-```perl
-    return 0
-        if grep $_ == 0, @list;
-```
-
-If this didn't work either, we are set to return a negative result.
-
-At this point we are sure that we have at least three negative numbers,
-because we know that
-* we have at least 4 numbers in total<br/>
-  (because there are >= 3 by definition, and we checked for having exactly three already),
-* we have at most 2 positives<br/>
-  (because we ruled out having 3 positives),
-* we don't have any zeroes<br/>,
-  (we just checked).
-
-So we have at least 2 negatives.<br/>
-From that we can follow that
-* we don't even have 1 positive
-  (because we would have combined it with the two negatives for a positive result).
-
-So actually we have *only* negative numbers, and at least 4 of them.
-
-We choose the ones with the lowest absolute value, giving us the highest
-(least negative) result possible.<br/>
-To get those, we just reverse the list that we already have,
-which is equivalent to sorting then into ascending order, 
-and then take the first three entries.
-```perl
-    return product( ( reverse @neg )[0..2] );
-```
-And we are done.
-
-## Task 2: Matrix Score
-
-> You are given a m x n binary matrix i.e. having only 1 and 0.<br/>
-> You are allowed to make as many moves as you want to get the highest score.<br/>
-> A move can be either toggling each value in a row or column.<br/>
-> To get the score, convert the each row binary to dec and return the sum.<br/>
-
-So we want to get a final sum that is as high as possible.<br/>
-Then let's have a look at what makes up that sum:
-
-In the binary matrix like in Example 1,
-```
-  [ 0 0 1 1 ]
-  [ 1 0 1 0 ]
-  [ 1 1 0 0 ]
-```
-we will convert the rows from binary to decimal.<br/>
-This means that every bit will be multiplied by a 2<sup>n</sup> value:
-```
-  [ 8 4 2 1 ]
-```
-
-To get as high as possible a sum, all the bits with a value of `8` should be set to `1`.
-No matter what the other bits in the same row are,
-a value of `8` is more than all the other bits can achieve together (a maximum of 7).
-
-So in the first step, we flip all rows that have a `0` in the first position:
-```perl
-    for my $row ( grep $_->[0] == 0, @$matrix ) {
-        $row->[$_] ^= 1
-            for 0..$#$row;
-    }
-```
-
-In the second step, we go through all columns but the first one,
-and flip all those that have less `1`s that `0`s.<br/>
-This maximizes the sum of values that we get from each column.
-```perl
-    my $n_columns = scalar @{$matrix->[0]};
-    for my $c ( 1 .. $n_columns - 1 ) {
-        # Sum up that column's value from every row.
-        my $column_sum = sum( map $_->[$c], @$matrix );
-        if ( $column_sum < $n_columns / 2 ) {
-            # Flip that column in every row.
-            $_->[$c] ^= 1
-                for @$matrix;
-        }
-    }
-```
-
-This should give us a good matrix.
-
-Now we need to return the sum of all rows converted from binary to decimal.<br/>
-It requires a little thinking how to do this nicely, without doing all the for-loops
-and all the multiplication with the 2<sup>n</sup> values, but everything is already there in perl!
-
-My solution for the conversion of one row is this one:<br/>
-Looking for a `pack` format that makes the conversion easy,
-I choose the 'b32' format to get 4 bytes of data from a maximum of 32 column values.<br/>
-This format uses the least significant bit first, and assumes `0` bits when it runs out of values.
-This is good, because we don't need do anything to fill up our data to any word boundaries.<br/>
-We just need to `reverse` our bit array to have the least significant value first,
-and to turn it into a string `0` or `1` characters for each bit value, before passing it to `pack`.
-
-The resulting `pack` output byte-string matches this description:
-> An unsigned long (32-bit) in "VAX" (little-endian) order.
-
-which means that we can `unpack` it into a numerical value using `unpack`'s `V` format.<br/>
-So my function to turn a list of binary values into a decimal value is this:
-```perl
-sub binary_list_to_integer {
-    return unpack( "V", pack( "b32", join( "", reverse @_ ) ) );
+sub sorted_squares {
+    return sort { $a <=> $b } map { $_ ** 2 }, @_;
 }
 ```
 
-And using that function we return the 'matrix score' end result like this:
+## Task 2: Travel Expenditure
+
+> You are given two list, @costs and @days.<br/>
+> The list @costs contains the cost of three different types of travel cards you can buy.<br/>
+> For example @costs = (5, 30, 90)<br/>
+> Index 0 element represent the cost of  1 day  travel card.<br/>
+> Index 1 element represent the cost of  7 days travel card.<br/>
+> Index 2 element represent the cost of 30 days travel card.<br/>
+> <br/>
+> The list @days contains the day number you want to travel in the year.<br/>
+> For example: @days = (1, 3, 4, 5, 6)<br/>
+> The above example means you want to travel on day 1, day 3, day 4, day 5 and day 6 of the year.<br/>
+> <br/>
+> Write a script to find the minimum travel cost.<br/>
+
+Let's take the first day that we want to travel.<br/>
+On that day, we have three options to take a travel card.
+Depending on which option we take, we
+* spend some money for buying that card,
+* can possibly use that card for some more days on which we want to travel.
+
+After the travel pass period is over, we need to decide again which of the options will be cheaper then
+for the rest of the list.
+
+So we are looking at a problem here that should be easy to solve by recursion:
+* Apply one of the three options, 
+* use the same problem solving routine to determine the 'best' solution for the rest of the input list that is not yet covered.
+
+Do this for all of the options that we have, and then take the best one.
+
+Our recursive subroutine has two parameters:<br/>
+a list of costs (which will always have three elements in this challenge),
+and a list of days to find the best combination of travel passes for:
 ```perl
-    return sum( map binary_list_to_integer( @$_ ), @$matrix );
+sub travel_expenditure {
+    my ( $costs, $days ) = @_;
+    ...
+}
+```
+and it will return the minimum cost for travelling on the days given as parameters.
+
+Any function that is being called recursively has to have an end criteria.<br/>
+In our case, we return from the subroutine directly if there are no days in the list.
+Of course, we then don't need to buy any travel pass at all, and the cost is zero.
+```perl
+    return 0
+        if @$days == 0;
 ```
 
-**Thank you for the challenge!**
-  
+For finding the minimum cost for the options we have for the first day,
+I could have written out the three cases explicitly, because the challenge description defines
+exactly three travel passes.<br/>
+This would be easy to read and understand. I hear:  
+'Aha! Three very similar lines of code, that clearly corresponds to the three travel passes!'.
+
+Nevertheless I decided to use `map` instead of writing out the three cases explicitly.
+
+This is mainly because I don't like repetitions.<br/>
+But then also because by abstracting into a loop, the solution 'scales' better:<br/>
+I want to be ready for a 365 day travel pass in the next challenge! :-) 
+
+So we create an array with the durations of the (three ;-)) travel passes,
+to use them in whatever loop or `map` we will use:
+```perl
+my @durations = ( 1, 7, 30 );
+```
+
+Then we can 'map' the travel pass numbers (0,1,2) to the respective costs,
+determined by the cost for the travel pass itself and the cost for the remaining days that are not covered,
+determined by the recursive call. 
+
+For the list of remaining days, we `grep` those days that are later than the current travel pass's duration,
+put them into an anonymous array, and use that as the parameter.
+
+Here is the only glitch:<br/>
+The `$_` loop variable in the `map` is the number of the travel pass that we currently try.
+Within the `grep`, however, `$_` goes through the list of days.
+So if we want to use the current travel pass's duration within the `grep`condition,
+we can't use `$durations[$_]` there.
+We have to store the duration in a `my $duration` variable before,
+and use that one within the grep condition.
+
+As the overall
+result, we return the minimum of the list of costs returned from the `map` call,
+using the `min` function from `List::Util` that we include outside of the function.
+
+So here is the full implementation: 
+
+```perl
+use List::Util qw( min );
+
+my @durations = ( 1, 7, 30 );
+
+sub travel_expenditure {
+    my ( $costs, $days ) = @_;
+    return 0
+        if @$days == 0;
+    return min(
+        map {
+            my $duration = $durations[$_];
+            $costs->[$_]
+                + travel_expenditure( $costs,
+                    [ grep $_ >= $days->[0] + $duration, @$days ] );
+        } 0..$#{$costs}
+    );
+}
+```
+
+This was fun!
+
+#### **Thank you for the challenge!**
