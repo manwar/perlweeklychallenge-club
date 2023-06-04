@@ -11,7 +11,7 @@
           xf (map (fn [[period cost]]
                     (let [[d & ds] days
                           candidates (drop-while #(< % (+ d period)) ds)]
-                      (+ cost (f f costs candidates)))))]
+                      (+ cost (or (f f costs candidates) 0)))))]
       (->> source (sequence xf) (apply min)))))
 
 (let [f (memoize travel-expenditure')]
