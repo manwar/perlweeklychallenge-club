@@ -1,3 +1,3 @@
-# The Weekly Challenge 218
+# The Weekly Challenge 219
 
-Blog: [The one about maximums](https://dev.to/simongreennet/the-one-about-maximums-40cm)
+Blog: [The cheapest way to the square](https://dev.to/simongreennet/the-cheapest-way-to-the-square-1mhb)
