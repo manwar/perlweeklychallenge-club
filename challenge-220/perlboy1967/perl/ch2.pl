@@ -27,8 +27,6 @@ use Test::Deep qw(cmp_deeply);
 
 use List::MoreUtils qw(uniq slide all);
 use Algorithm::Combinatorics qw(permutations);
-use Data::Compare;
-
 
 sub _areSquareful ($$) {
   my $s = $_[0] + $_[1];
@@ -45,7 +43,8 @@ sub squareful (\@) {
     push(@r,$arC) if all {$_} slide {_areSquareful($a,$b)} @$arC;
     last if (scalar @r && $u);
   }
-  sort { Compare($a,$b) } @r;
+
+  return @r;
 }
 
 cmp_deeply([squareful(@{[1,17,8]})],[[1,8,17],[17,8,1]]);
