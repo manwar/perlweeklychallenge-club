@@ -29,7 +29,7 @@ use List::MoreUtils qw(uniq);
 sub commonChars (@) {
   my %c;
   map { $c{$_}++ } uniq split //,lc for (@_);
-  sort grep { $c{$_} >= scalar @_ } keys %c;
+  sort grep { $c{$_} == scalar @_ } keys %c;
 }
 
 cmp_deeply([commonChars(qw(Perl Rust Raku))],[qw(r)]);
