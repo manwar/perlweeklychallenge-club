@@ -21,7 +21,7 @@ sub squareful(+@a)
 
     gather for @a.permutations.unique(with => &[eqv])
     {
-        .take if .rotor(2 => -1)>>.sum (<) $squares
+        .take if .rotor(2 => -1)>>.sum (<=) $squares
     }
 }
 =end alternate
