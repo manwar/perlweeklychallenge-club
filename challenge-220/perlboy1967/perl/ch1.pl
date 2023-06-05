@@ -28,7 +28,7 @@ use List::MoreUtils qw(uniq);
 
 sub commonChars (@) {
   my %c;
-  map { $c{lc $_}++ } uniq split // for (@_);
+  map { $c{$_}++ } uniq split //,lc for (@_);
   sort grep { $c{$_} >= scalar @_ } keys %c;
 }
 
