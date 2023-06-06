@@ -9,9 +9,9 @@ multi sub is_perfect_square( @ints ) {
 }
 
 sub squareful (@ints where @ints.elems==3) {
-    @ints.permutations.grep( {$_.&is_perfect_square} )
+    @ints.permutations.grep( {$_.&is_perfect_square} ).unique( :with(&[eqv]) );
 }
 
 say &squareful((1,17,8)); #(1,8,17),(17,8,1)
-say &squareful((2,2,2)); #((2 2 2) (2 2 2) (2 2 2) (2 2 2) (2 2 2) (2 2 2)) .permutations treats each element of @ints as unique, so all 6 permutations are returned.
+say &squareful((2,2,2)); #((2 2 2) 
  
