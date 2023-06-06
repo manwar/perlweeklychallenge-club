@@ -6,10 +6,8 @@ is-deeply squareful(2, 2, 2),  ((2, 2, 2),);
 
 sub squareful(+@a)
 {
-    gather for @a.permutations.unique(with => &[eqv])
-    {
-        .take if all(.rotor(2 => -1)).sum.sqrt.narrow ~~ UInt 
-    }
+    @a.permutations.unique(with => &[eqv])
+                   .grep({ all(.rotor(2 => -1)).sum.sqrt.narrow ~~ UInt });
 }
 
 =begin alternate
