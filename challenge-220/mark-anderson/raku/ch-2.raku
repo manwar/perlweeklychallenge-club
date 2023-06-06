@@ -17,9 +17,7 @@ sub squareful(+@a)
 
     my $squares := (0..$s Z* 0..$s).List;
 
-    gather for @a.permutations.unique(with => &[eqv])
-    {
-        .take if .rotor(2 => -1)>>.sum (<=) $squares
-    }
+    @a.permutations.unique(with => &[eqv])
+                   .grep({ .rotor(2 => -1)>>.sum (<=) $squares });
 }
 =end alternate
