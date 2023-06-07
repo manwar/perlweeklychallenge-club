@@ -9,7 +9,7 @@ multi sub is_perfect_square( @ints ) {
 }
 
 sub squareful (@ints where @ints.elems==3) {
-    @ints.permutations.grep( {$_.&is_perfect_square} ).unique( :with(&[eqv]) );
+    @ints.permutations.unique( :with(&[eqv]) ).grep( {$_.&is_perfect_square} );
 }
 
 say &squareful((1,17,8)); #(1,8,17),(17,8,1)
