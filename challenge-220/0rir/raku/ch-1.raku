@@ -18,6 +18,7 @@ Output: ("e", "l", "v")
 my @Test =
     < r >,          ("Perl", "Rust", "Raku"),
     < e l v >,      ("love", "live", "leave"),
+    < e l v >,      ("loove", "live", "leave"),
     (),             ("happiness", "rich", "common"),
     < e s >,        ("happiness", "riches", "commonness"),
     < g o >,        <god dog dogooder dogged gold goose gooseneck
