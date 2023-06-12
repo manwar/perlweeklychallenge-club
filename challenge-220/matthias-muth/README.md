@@ -1,138 +1,326 @@
-# This is Perl! We got this, no problem!
-**Challenge 219 solutions in Perl by Matthias Muth**
+# Challenge 220 tasks: Perl by Nature - Squareful by Recursion
+**Challenge 220 solutions in Perl by Matthias Muth**
 
-This week's challenges confirm to me why I love Perl:<br/>
-Using what the language offers, the idea how to implement it transforms directly into code.<br/>
-Evrything works well together, and there is no unnecessary clutter.
+## Task 1: Common Characters
 
-## Task 1: Sorted Squares
+> You are given a list of words.<br/>
+> Write a script to return the list of common characters (sorted alphabeticall) found in every word of the given list.<br/>
 
-> You are given a list of numbers.<br/>
-> Write a script to square each number in the list and return the sorted list, increasing order.<br/>
+Let's do this step by step.
 
-This one ends up in a typical Perl one-liner.<br/>
-The subroutine's input list of numbers (`@_`) is used to square all its entries using a `map` call
-(I used the 'code block' variant here), and the resulting list is sorted,
-also using a 'code block' that compares two values numerically to determine their order in the sorted output.<br/>
-Perl's `<=>` operator comes in handy to tell whether the fist operand
-goes left (`-1`) or right (`+1`) or the two operands are equal (`0`).
-
-More explanation than code! :-)
-
+In the examples, we have a mix of upper and lower case letters in the input words,
+but only lower case letters in the output. So first thing, we convert all input words to lowercase:
 ```perl
-sub sorted_squares {
-    return sort { $a <=> $b } map { $_ ** 2 }, @_;
+sub common_characters {
+    my @words = map lc( $_ ), @_;
+```
+
+Next, we define a `@results` array that in the end will contain the letters that are contained in all of the input words.
+We could start with all letters `"a".."z"`,
+and then, going through all words in a loop, filter out all those that are not contained in the respective word.<br/>
+But none of the example words has more than five characters,
+which means that we will already filter out at least 80 % of the alphabet
+when we check against the first word in the list.<br/>
+Let's avoid that unnecessary effort, and use the letters from the first input word as our candidates from the beginning.
+```perl
+    my @letters = split "", $words[0];
+```
+I'm using `split` here to turn the word into an array of letters.<br/>
+Actually I really do love the 'Perl'ish way of using `/./g/` to split `$_` into an array of single characters.
+It's shorter to write, and once you know it you know exactly what it is meant to do when you read it. <br/>
+But I've run a little benchmark (learning about the `Benchmark` module,
+which has been in core literally forever without me knowing that this useful litte tool is available!),
+and it seems that actually `split` is faster than `/./g`.<br/>
+So `split` it is!
+
+The next step is to filter out those letters that are *not* contained in all words from the list.<br/>
+The easiest way to check this is to loop over the words from the list,
+reducing our list of characters to only those that are also contained in the respective word.<br/>
+Actually we loop over the words starting with the second one, because the first one was used to create the initial
+list of letters already:
+```perl
+    for my $word ( @words[1..$#words] ) {
+        @results = grep $word =~ /$_/, @results;
+    }
+```
+
+And the final step is to return the resulting list, ordered alphabetically (as is the default with `sort`):
+```perl
+    return sort @results;
+}
+```
+Which makes our little subroutine complete:
+```perl
+sub common_characters {
+    my @words = map lc( $_ ), @_;
+    my @letters = split "", $words[0];
+    for my $word ( @words[1..$#words] ) {
+        @results = grep $word =~ /$_/, @results;
+    }
+    return sort @results;
 }
 ```
 
-## Task 2: Travel Expenditure
 
-> You are given two list, @costs and @days.<br/>
-> The list @costs contains the cost of three different types of travel cards you can buy.<br/>
-> For example @costs = (5, 30, 90)<br/>
-> Index 0 element represent the cost of  1 day  travel card.<br/>
-> Index 1 element represent the cost of  7 days travel card.<br/>
-> Index 2 element represent the cost of 30 days travel card.<br/>
+## Task 2: Squareful
+
+> You are given an array of integers, @ints.<br/>
+> An array is squareful if the sum of every pair of adjacent elements is a perfect square.<br/>
+> Write a script to find all the permutations of the given array that are squareful.<br/>
+> Example 1:<br/>
 > <br/>
-> The list @days contains the day number you want to travel in the year.<br/>
-> For example: @days = (1, 3, 4, 5, 6)<br/>
-> The above example means you want to travel on day 1, day 3, day 4, day 5 and day 6 of the year.<br/>
+> Input: @ints = (1, 17, 8)<br/>
+> Output: (1, 8, 17), (17, 8, 1)<br/>
 > <br/>
-> Write a script to find the minimum travel cost.<br/>
+> (1, 8, 17) since 1 + 8 => 9, a perfect square and also 8 + 17 => 25 is perfect square too.<br/>
+> (17, 8, 1) since 17 + 8 => 25, a perfect square and also 8 + 1 => 9 is perfect square too.<br/>
+> <br/>
+> Example 2:<br/>
+> <br/>
+> Input: @ints = (2, 2, 2)<br/>
+> Output: (2, 2, 2)<br/>
+> <br/>
+> There is only one permutation possible.<br/>,
 
-Let's take the first day that we want to travel.<br/>
-On that day, we have three options to take a travel card.
-Depending on which option we take, we
-* spend some money for buying that card,
-* can possibly use that card for some more days on which we want to travel.
+There are several tricky things about this one.
 
-After the travel pass period is over, we need to decide again which of the options will be cheaper then
-for the rest of the list.
+First thing, how do we go through the permutations?<br/>
+A recursive solution looks very appropriate and applicable to me.<br/>
+Which means that within our recursive function we will go through the possible values for the first element in the list,
+and then let a recursive call do the job for the rest of the list.
 
-So we are looking at a problem here that should be easy to solve by recursion:
-* Apply one of the three options, 
-* use the same problem solving routine to determine the 'best' solution for the rest of the input list that is not yet covered.
+'Tricky' number one:<br/>
+Choosing the first value.<br/>
+The second example gives an important clue:<br/>
+If there are several *same* numbers in the list, we must avoid doing any permutations for them!<br/>
+If we numbered the '2's like (2<sub>1</sub>, 2<sub>2</sub>, 2<sub>3</sub>), these would be the permutations:
+* (2<sub>1</sub>, 2<sub>2</sub>, 2<sub>3</sub>)
+* (2<sub>1</sub>, 2<sub>3</sub>, 2<sub>2</sub>)
+* (2<sub>2</sub>, 2<sub>1</sub>, 2<sub>3</sub>)
+* (2<sub>2</sub>, 2<sub>3</sub>, 2<sub>1</sub>)
+* (2<sub>3</sub>, 2<sub>1</sub>, 2<sub>2</sub>)
+* (2<sub>3</sub>, 2<sub>2</sub>, 2<sub>1</sub>)
 
-Do this for all of the options that we have, and then take the best one.
+But they are all the same (2, 2, 2)!<br/>
+So even if a number exists more than once in the list, we must only use it once as the 'first element'
+before we do the recursion for the rest of the list.
 
-Our recursive subroutine has two parameters:<br/>
-a list of costs (which will always have three elements in this challenge),
-and a list of days to find the best combination of travel passes for:
+Which means that we must derive a list that contains 'unique' numbers, meaning that each inout number appears only once in that list.
+Nothing easier than that in Perl!<br/>
+Another look at brian d foy's very nice contribution
+_How can I remove duplicate elements from a list or array?_
+in the [Perl FAQ](https://perldoc.perl.org/perlfaq4#How-can-I-remove-duplicate-elements-from-a-list-or-array?) helps.
+These are his suggestions:
+* Use a hash. Like for example:
 ```perl
-sub travel_expenditure {
-    my ( $costs, $days ) = @_;
-    ...
+my %hash   = map { $_, 1 } @array;
+# or a hash slice: @hash{ @array } = ();
+# or a foreach: $hash{$_} = 1 foreach ( @array );
+
+my @unique = keys %hash;
+```
+
+Ok, let's do it ver similar to that, and there we have a little building block for our recursive function:
+```perl
+sub squareful {
+    my @ints = @_;
+
+    my %unique;
+    $unique{$_}++
+        for @ints;
+```
+
+'Tricky' number two:<br/>
+Now that we know which unique numbers to use as the first element of a permutation,
+we need to create the list of *remaining* numbers for the recursive call.<br/>
+But for me, it would feel like a pain in the neck to have to loop through our list again and again for each number
+just to find the number's position in the list, in order to remove it from the list at that position.<br/>
+We can do better than that!<br/>
+Let's just build an index into our list that has each number's position.
+Then it will be easy to derive the list without the current 'first element', by `splice`ing out the element at its position.
+
+One more detail for this:<br/>
+It actually will be the *first* position of the number
+in case there are several elements of the same number (like in our '2' example above).
+
+We get the first positions of the numbers in the list like this, for example:
+```perl
+    my %first_positions;
+    $first_positions{$ints[$_]} //= $_
+        for 0..$#ints;
+```
+
+Now let's build our recursive function.
+
+The return value will be the list of all 'squareful' permutations of the input list.<br>
+In Perl, we represent this by a list of array references.
+That's what we deliver as the final solution, and it will also be what the recursive calls will deliver.
+
+The ending criteria for the recursive calls will be an input list that consists of one element only.
+The list of permutations of one element is short. It contains one list which contains the element itself.
+So we have another little building block, and the header of our recursive function actually looks like this:
+```perl
+sub squareful {
+    my @ints = @_;
+
+    return [ @ints ]
+        if @ints == 1;
+```
+
+Then we have the loop that goes through all unique numbers in the list as the first element,
+and recursively calls the same function itself to get all 'squareful' permutations of the remaining list of numbers.
+
+For each of those resulting squareful permutations we check
+whether it is still suqareful when we combine our first element with the first element of that permutation.
+The sum of those two has to be a perfect square. For checking that, we build a little helper function:
+```perl
+sub is_perfect_square {
+    my $sqrt = sqrt( $_[0] );
+    return int( $sqrt ) == $sqrt;
 }
 ```
-and it will return the minimum cost for travelling on the days given as parameters.
 
-Any function that is being called recursively has to have an end criteria.<br/>
-In our case, we return from the subroutine directly if there are no days in the list.
-Of course, we then don't need to buy any travel pass at all, and the cost is zero.
+Building it all together, the loop looks like this then:
 ```perl
-    return 0
-        if @$days == 0;
-```
-
-For finding the minimum cost for the options we have for the first day,
-I could have written out the three cases explicitly, because the challenge description defines
-exactly three travel passes.<br/>
-This would be easy to read and understand. I hear:  
-'Aha! Three very similar lines of code, that clearly corresponds to the three travel passes!'.
-
-Nevertheless I decided to use `map` instead of writing out the three cases explicitly.
-
-This is mainly because I don't like repetitions.<br/>
-But then also because by abstracting into a loop, the solution 'scales' better:<br/>
-I want to be ready for a 365 day travel pass in the next challenge! :-) 
-
-So we create an array with the durations of the (three ;-)) travel passes,
-to use them in whatever loop or `map` we will use:
-```perl
-my @durations = ( 1, 7, 30 );
-```
-
-Then we can 'map' the travel pass numbers (0,1,2) to the respective costs,
-determined by the cost for the travel pass itself and the cost for the remaining days that are not covered,
-determined by the recursive call. 
-
-For the list of remaining days, we `grep` those days that are later than the current travel pass's duration,
-put them into an anonymous array, and use that as the parameter.
-
-Here is the only glitch:<br/>
-The `$_` loop variable in the `map` is the number of the travel pass that we currently try.
-Within the `grep`, however, `$_` goes through the list of days.
-So if we want to use the current travel pass's duration within the `grep`condition,
-we can't use `$durations[$_]` there.
-We have to store the duration in a `my $duration` variable before,
-and use that one within the grep condition.
-
-As the overall
-result, we return the minimum of the list of costs returned from the `map` call,
-using the `min` function from `List::Util` that we include outside of the function.
-
-So here is the full implementation: 
-
-```perl
-use List::Util qw( min );
-
-my @durations = ( 1, 7, 30 );
-
-sub travel_expenditure {
-    my ( $costs, $days ) = @_;
-    return 0
-        if @$days == 0;
-    return min(
-        map {
-            my $duration = $durations[$_];
-            $costs->[$_]
-                + travel_expenditure( $costs,
-                    [ grep $_ >= $days->[0] + $duration, @$days ] );
-        } 0..$#{$costs}
-    );
+    my @results;
+    for my $int ( sort keys %unique ) {
+        
+        my @remaining_ints = @ints;
+        splice @remaining_ints, $first_positions{$int}, 1, ();
+        
+        my @squareful_subsets = squareful( @remaining_ints );
+        
+        push @results,
+            map [ $int, @{$squareful_subsets[$_]} ],
+                grep {
+                    is_perfect_square( $int + $squareful_subsets[$_][0] );
+		} 0..$#squareful_subsets;
+    }
+    return @results;
 }
 ```
 
-This was fun!
+Everything together now:
+
+```perl
+sub is_perfect_square {
+    my $sqrt = sqrt( $_[0] );
+    return int( $sqrt ) == $sqrt;
+}
+
+sub squareful {
+    my @ints = @_;
+
+    return [ @ints ]
+        if @ints == 1;
+
+    my %unique;
+    $unique{$_}++
+        for @ints;
+
+    my %first_positions;
+    $first_positions{$ints[$_]} //= $_
+        for 0..$#ints;
+
+    my @results;
+    for my $int ( sort keys %unique ) {
+
+        my @remaining_ints = @ints;
+        splice @remaining_ints, $first_positions{$int}, 1, ();
+
+        my @squareful_subsets = squareful( @remaining_ints );
+
+        push @results,
+            map [ $int, @{$squareful_subsets[$_]} ],
+                grep {
+                    is_perfect_square( $int + $squareful_subsets[$_][0] );
+		} 0..$#squareful_subsets;
+    }
+    return @results;
+}
+```
+
+The code in GitHub contains a version that produces readable output for everything it does.
+For the first example, the output looks like this:
+
+```
+squareful( 1 17 8 )
+    frequencies: { 1 => 1, 8 => 1, 17 => 1 }
+    first_positions: { 1 => 0, 8 => 2, 17 => 1 }
+    trying to start with 1
+    remaining_ints: ( 17 8 )
+    squareful( 17 8 )
+        frequencies: { 8 => 1, 17 => 1 }
+        first_positions: { 8 => 1, 17 => 0 }
+        trying to start with 17
+        remaining_ints: ( 8 )
+        squareful( 8 )
+            returning ( [ 8 ] )
+        squareful_subsets: [8]
+        17 + 8 = 25 is a perfect square
+        @results now: [17, 8]
+        trying to start with 8
+        remaining_ints: ( 17 )
+        squareful( 17 )
+            returning ( [ 17 ] )
+        squareful_subsets: [17]
+        8 + 17 = 25 is a perfect square
+        @results now: ([17, 8], [8, 17])
+        returning ([17, 8], [8, 17])
+    squareful_subsets: ([17, 8], [8, 17])
+    1 + 17 = 18 is no perfect square
+    1 + 8 = 9 is a perfect square
+    @results now: [1, 8, 17]
+    trying to start with 17
+    remaining_ints: ( 1 8 )
+    squareful( 1 8 )
+        frequencies: { 1 => 1, 8 => 1 }
+        first_positions: { 1 => 0, 8 => 1 }
+        trying to start with 1
+        remaining_ints: ( 8 )
+        squareful( 8 )
+            returning ( [ 8 ] )
+        squareful_subsets: [8]
+        1 + 8 = 9 is a perfect square
+        @results now: [1, 8]
+        trying to start with 8
+        remaining_ints: ( 1 )
+        squareful( 1 )
+            returning ( [ 1 ] )
+        squareful_subsets: [1]
+        8 + 1 = 9 is a perfect square
+        @results now: ([1, 8], [8, 1])
+        returning ([1, 8], [8, 1])
+    squareful_subsets: ([1, 8], [8, 1])
+    17 + 1 = 18 is no perfect square
+    17 + 8 = 25 is a perfect square
+    @results now: ([1, 8, 17], [17, 8, 1])
+    trying to start with 8
+    remaining_ints: ( 1 17 )
+    squareful( 1 17 )
+        frequencies: { 1 => 1, 17 => 1 }
+        first_positions: { 1 => 0, 17 => 1 }
+        trying to start with 1
+        remaining_ints: ( 17 )
+        squareful( 17 )
+            returning ( [ 17 ] )
+        squareful_subsets: [17]
+        1 + 17 = 18 is no perfect square
+        @results now: ()
+        trying to start with 17
+        remaining_ints: ( 1 )
+        squareful( 1 )
+            returning ( [ 1 ] )
+        squareful_subsets: [1]
+        17 + 1 = 18 is no perfect square
+        @results now: ()
+        returning ()
+    squareful_subsets: ()
+    @results now: ([1, 8, 17], [17, 8, 1])
+    returning ([1, 8, 17], [17, 8, 1])
+ok 1 - Example 1: squareful( (1, 17, 8) ) == ([1, 8, 17], [17, 8, 1])
+```
+
+That was just a little bit tricky, but the more fun!
 
 #### **Thank you for the challenge!**
