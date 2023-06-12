@@ -120,76 +120,99 @@ my %hash   = map { $_, 1 } @array;
 my @unique = keys %hash;
 ```
 
-Ok, let's do it ver similar to that, and there we have a little building block for our recursive function:
+Ok, let's do it very similar to that,
+just that we keep the unique numbers sorted numerically to have nice and
+reproducible debugging output:<br/>
 ```perl
 sub squareful {
     my @ints = @_;
 
-    my %unique;
-    $unique{$_}++
-        for @ints;
+    my %unique_ints = map { $_ => 1 } @ints;
+    my @unique_ints = sort { $a <=> $b } keys %unique_ints;
 ```
 
 'Tricky' number two:<br/>
-Now that we know which unique numbers to use as the first element of a permutation,
+Now that we know which unique numbers to use
+as the first element of a permutation,
 we need to create the list of *remaining* numbers for the recursive call.<br/>
-But for me, it would feel like a pain in the neck to have to loop through our list again and again for each number
-just to find the number's position in the list, in order to remove it from the list at that position.<br/>
+For me, it would feel like a pain in the neck to have to loop through our list
+again and again for each number just to find the number's position in the list, in order to remove it from the list at that position.<br/>
 We can do better than that!<br/>
 Let's just build an index into our list that has each number's position.
-Then it will be easy to derive the list without the current 'first element', by `splice`ing out the element at its position.
+Then it will be easy to `splice` out any element
+at the position where it occurs,
+because we can just look up where that is.<br/>
+Actually we will use the *first* position of the number
+in case there are several elements of the same number
+(like in our '2' example above).
 
-One more detail for this:<br/>
-It actually will be the *first* position of the number
-in case there are several elements of the same number (like in our '2' example above).
-
-We get the first positions of the numbers in the list like this, for example:
+So we walk through the numbers only once,
+registering each number's position
+when we encouter that number for the first time,
+using the 'defined or assignment' operator `//=`
+that (as often) comes in very handy:
 ```perl
     my %first_positions;
-    $first_positions{$ints[$_]} //= $_
+    $first_positions{ $ints[$_] } //= $_
         for 0..$#ints;
 ```
 
 Now let's build our recursive function.
 
-The return value will be the list of all 'squareful' permutations of the input list.<br>
+The return value will be the list of all 'squareful' permutations
+of the input list (not *all* permutations!)<br>
 In Perl, we represent this by a list of array references.
-That's what we deliver as the final solution, and it will also be what the recursive calls will deliver.
+That is what we will deliver as the final solution,
+and we can also use it for what the recursive calls will return.
 
-The ending criteria for the recursive calls will be an input list that consists of one element only.
-The list of permutations of one element is short. It contains one list which contains the element itself.
-So we have another little building block, and the header of our recursive function actually looks like this:
+The stop condition for the recursive calls is an input list
+that consists of one element only.
+The list of permutations of one element is short, it contains one list which contains the element itself,
+and we deliberately define that a list of only one number is 'squareful'.
+This makes it easy to walk back from the recursion,
+because walking back up the recursion tree
+we will combine the one element with the chosen 'first elements' and check
+the perfect square criteria there.
+
+So the header of our recursive function actually looks like this:
 ```perl
 sub squareful {
     my @ints = @_;
 
     return [ @ints ]
         if @ints == 1;
+    ...
 ```
 
-Then we have the loop that goes through all unique numbers in the list as the first element,
-and recursively calls the same function itself to get all 'squareful' permutations of the remaining list of numbers.
+Then we have the loop that goes through all unique numbers in the list
+as the first element,
+and recursively calls the same function itself
+to get all 'squareful' permutations of the remaining list of numbers.
 
 For each of those resulting squareful permutations we check
-whether it is still suqareful when we combine our first element with the first element of that permutation.
-The sum of those two has to be a perfect square. For checking that, we build a little helper function:
+whether it remains squareful when we combine our first element
+with the first element of that permutation.
+The sum of those two has to be a perfect square,
+and for checking that, we use a little helper function.
+It simply checks whether the square root of the argument does not have any
+decimals:
 ```perl
 sub is_perfect_square {
     my $sqrt = sqrt( $_[0] );
     return int( $sqrt ) == $sqrt;
 }
 ```
-
-Building it all together, the loop looks like this then:
+If they do, we include the combination in the result list to be returned.<br/>
+The loop and the rest of the function look like this then:
 ```perl
     my @results;
-    for my $int ( sort keys %unique ) {
-        
+    for my $int ( @unique_ints ) {
+
         my @remaining_ints = @ints;
         splice @remaining_ints, $first_positions{$int}, 1, ();
-        
+
         my @squareful_subsets = squareful( @remaining_ints );
-        
+
         push @results,
             map [ $int, @{$squareful_subsets[$_]} ],
                 grep {
@@ -200,7 +223,7 @@ Building it all together, the loop looks like this then:
 }
 ```
 
-Everything together now:
+Putting everything together now:
 
 ```perl
 sub is_perfect_square {
@@ -214,9 +237,8 @@ sub squareful {
     return [ @ints ]
         if @ints == 1;
 
-    my %unique;
-    $unique{$_}++
-        for @ints;
+    my %unique_ints = map { $_ => 1 } @ints;
+    my @unique_ints = sort { $a <=> $b } keys %unique_ints;
 
     my %first_positions;
     $first_positions{$ints[$_]} //= $_
@@ -240,41 +262,63 @@ sub squareful {
 }
 ```
 
-The code in GitHub contains a version that produces readable output for everything it does.
+The code in GitHub contains a version that produces readable output
+for everything it does.
 For the first example, the output looks like this:
-
 ```
 squareful( 1 17 8 )
-    frequencies: { 1 => 1, 8 => 1, 17 => 1 }
+    unique ints: (1, 8, 17)
     first_positions: { 1 => 0, 8 => 2, 17 => 1 }
     trying to start with 1
     remaining_ints: ( 17 8 )
     squareful( 17 8 )
-        frequencies: { 8 => 1, 17 => 1 }
+        unique ints: (8, 17)
         first_positions: { 8 => 1, 17 => 0 }
-        trying to start with 17
-        remaining_ints: ( 8 )
-        squareful( 8 )
-            returning ( [ 8 ] )
-        squareful_subsets: [8]
-        17 + 8 = 25 is a perfect square
-        @results now: [17, 8]
         trying to start with 8
         remaining_ints: ( 17 )
         squareful( 17 )
             returning ( [ 17 ] )
         squareful_subsets: [17]
         8 + 17 = 25 is a perfect square
-        @results now: ([17, 8], [8, 17])
-        returning ([17, 8], [8, 17])
-    squareful_subsets: ([17, 8], [8, 17])
-    1 + 17 = 18 is no perfect square
+        @results now: [8, 17]
+        trying to start with 17
+        remaining_ints: ( 8 )
+        squareful( 8 )
+            returning ( [ 8 ] )
+        squareful_subsets: [8]
+        17 + 8 = 25 is a perfect square
+        @results now: ([8, 17], [17, 8])
+        returning ([8, 17], [17, 8])
+    squareful_subsets: ([8, 17], [17, 8])
     1 + 8 = 9 is a perfect square
+    1 + 17 = 18 is no perfect square
+    @results now: [1, 8, 17]
+    trying to start with 8
+    remaining_ints: ( 1 17 )
+    squareful( 1 17 )
+        unique ints: (1, 17)
+        first_positions: { 1 => 0, 17 => 1 }
+        trying to start with 1
+        remaining_ints: ( 17 )
+        squareful( 17 )
+            returning ( [ 17 ] )
+        squareful_subsets: [17]
+        1 + 17 = 18 is no perfect square
+        @results now: ()
+        trying to start with 17
+        remaining_ints: ( 1 )
+        squareful( 1 )
+            returning ( [ 1 ] )
+        squareful_subsets: [1]
+        17 + 1 = 18 is no perfect square
+        @results now: ()
+        returning ()
+    squareful_subsets: ()
     @results now: [1, 8, 17]
     trying to start with 17
     remaining_ints: ( 1 8 )
     squareful( 1 8 )
-        frequencies: { 1 => 1, 8 => 1 }
+        unique ints: (1, 8)
         first_positions: { 1 => 0, 8 => 1 }
         trying to start with 1
         remaining_ints: ( 8 )
@@ -294,28 +338,6 @@ squareful( 1 17 8 )
     squareful_subsets: ([1, 8], [8, 1])
     17 + 1 = 18 is no perfect square
     17 + 8 = 25 is a perfect square
-    @results now: ([1, 8, 17], [17, 8, 1])
-    trying to start with 8
-    remaining_ints: ( 1 17 )
-    squareful( 1 17 )
-        frequencies: { 1 => 1, 17 => 1 }
-        first_positions: { 1 => 0, 17 => 1 }
-        trying to start with 1
-        remaining_ints: ( 17 )
-        squareful( 17 )
-            returning ( [ 17 ] )
-        squareful_subsets: [17]
-        1 + 17 = 18 is no perfect square
-        @results now: ()
-        trying to start with 17
-        remaining_ints: ( 1 )
-        squareful( 1 )
-            returning ( [ 1 ] )
-        squareful_subsets: [1]
-        17 + 1 = 18 is no perfect square
-        @results now: ()
-        returning ()
-    squareful_subsets: ()
     @results now: ([1, 8, 17], [17, 8, 1])
     returning ([1, 8, 17], [17, 8, 1])
 ok 1 - Example 1: squareful( (1, 17, 8) ) == ([1, 8, 17], [17, 8, 1])
