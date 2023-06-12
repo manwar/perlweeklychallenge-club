@@ -12,8 +12,6 @@ sub arithmetic-subsequence(@a)
     {
         my @b = @a;
         @b[$_]:eject;
-        my @s;
-        try { @s = (@b.head(3)...*).head(@b); CATCH { default { next } } } 
-        return @s if @b ~~ @s;
+        return @b if @b ~~ (@b.head(2)...*).head(@b)
     }
 }
