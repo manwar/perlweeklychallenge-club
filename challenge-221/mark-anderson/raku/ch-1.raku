@@ -10,7 +10,7 @@ sub good-strings($words, $chars)
 {
    my $c = $chars.comb.Bag;
 
-   sum map { .chars }, $words.flat.grep(
+   sum map { .chars }, $words.grep(
                        { 
                            my $w = .comb.Bag;
                            so all $w.map({ $c{.key} >= .value })
