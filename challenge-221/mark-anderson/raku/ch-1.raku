@@ -9,10 +9,5 @@ is good-strings(<hello world challenge>, 'weldonehopper'),   5;
 sub good-strings($words, $chars)
 {
    my $c = $chars.comb.Bag;
-
-   sum map { .chars }, $words.grep(
-                       { 
-                           my $w = .comb.Bag;
-                           all $w.map({ $c{.key} >= .value })
-                       })
+   sum map { .chars }, $words.grep({ all .comb.Bag.map({ $c{.key} >= .value }) })
 }
