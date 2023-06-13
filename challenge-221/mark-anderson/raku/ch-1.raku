@@ -13,6 +13,6 @@ sub good-strings($words, $chars)
    sum map { .chars }, $words.grep(
                        { 
                            my $w = .comb.Bag;
-                           so all $w.map({ $c{.key} >= .value })
+                           all $w.map({ $c{.key} >= .value })
                        })
 }
