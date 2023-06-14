@@ -16,14 +16,27 @@ is arithmetic-subsequence(
 
 sub arithmetic-subsequence(@a)
 {
-    max do for @a.pairs.combinations(2)
-    {
-       my @b = @a[.head.key, |(.tail.key..@a.end)];
-       my @s = (.head.value, .tail.value...*).head(@b);
+    my $channel = Channel.new;
+    $channel.send($_) for @a.pairs.combinations(2);
 
-       .elems given do while @b
-       {
-           shift @s if @b.shift == @s.head
-       }
+    my @promises = do for ^$*KERNEL.cpu-cores { start process() }
+    await @promises;
+    
+    $channel.close;
+
+    return @promises>>.result.max;
+
+    sub process
+    {
+        max gather while $channel.poll -> $_
+        {
+            my @b = @a[.head.key, |(.tail.key..@a.end)];
+            my @s = (.head.value, .tail.value...*).head(@b);
+
+            take .elems given do while @b
+            {
+                shift @s if @b.shift == @s.head
+            }
+        }
     }
 }
