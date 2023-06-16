@@ -88,8 +88,7 @@ sub longest_arithmetic_subsequence ($aref) {
    # Else the length of the longest arithmetic subsequence will be at-most $size and at-least 2:
    for ( my $n = $size ; $n >= 2 ; --$n ) {
       my $combs = Math::Combinatorics->new(count => $n, data => [0..$#$aref]);
-      my @comb;
-      while (@comb = $combs->next_combination) {
+      while (my @comb = $combs->next_combination) {
          my @indexes = sort {$a<=>$b} @comb;
          my @slice = @$aref[@indexes];
          #say "slice = (@slice)";
@@ -124,7 +123,8 @@ for my $aref (@arrays) {
    my $length = scalar(@longest);
    say "sequence = (@$aref)";
    say "longest arithmetic subsequence: (@longest)";
-   say "length = $length";}
+   say "length = $length";
+}
 
 # Determine and print execution time:
 my $µs = 1000000 * (time - $t0);

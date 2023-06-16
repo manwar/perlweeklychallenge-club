@@ -89,8 +89,10 @@ sub is_good ($word, $chars) { # NOTE: "$word" & "$chars" receive COPIES of argum
          if ( substr($word, $i, 1) eq substr($chars, $j, 1) ) { # If current word character is found in $chars,
             substr($chars, $j, 1, '');                          # remove character from $chars,
             next WORD}}                                         # and move on to next word character.
-      return 0} # We couldn't find current word character in $chars, hence this word is not "good".
-   return 1} # Every character of $word was found in $chars.
+      return 0; # We couldn't find current word character in $chars, hence this word is not "good".
+   }
+   return 1; # Every character of $word was found in $chars.
+}
 
 # ------------------------------------------------------------------------------------------------------------
 # MAIN BODY OF PROGRAM:
