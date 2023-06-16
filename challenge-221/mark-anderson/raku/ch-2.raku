@@ -1,6 +1,9 @@
 #!/usr/bin/env raku
 use Test;
 
+# This is not a good solution. See the algorithm that 
+# Lubos Kouloch and others use which is far better. 
+
 is arithmetic-subsequence([9,4,7,2,10]),       3; 
 is arithmetic-subsequence([3,6,9,12]),         4; 
 is arithmetic-subsequence([20,1,15,3,10,5,8]), 4; 
