@@ -51,6 +51,10 @@ say max_arith_seq(@ARGV);
 # the current found maximum walk length can be ignored.
 # As a funny side note, the maximum length is computed without actually
 # constructing such a sequence.
+#
+# References:
+# https://en.wikipedia.org/wiki/Path_(graph_theory)
+# https://en.wikipedia.org/wiki/Adjacency_matrix
 
 sub max_arith_seq {
 	my $s = long @_;
