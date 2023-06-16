@@ -1,6 +1,35 @@
 #include <stdio.h>
 #include <math.h>
-#include <string.h>
+
+void dec_to_bin(int* binary_format, int length, int n) {
+  int num[32] = {};
+  int i = 0;
+  while (n > 0) {
+    num[i] = n % 2;
+    n = n / 2;
+    i++;
+  }
+  
+  int diff = length - i;
+  int k = 0;
+  if (0 < diff) {
+    if (diff < length) {
+      binary_format[i] = 0;
+      i++;
+    }
+    while (diff > 1) {
+      diff--;
+      k++;
+      binary_format[i] = 0;
+      i++;
+    }
+  }
+
+  for (int j = i - 1; j >= 0; j--) {
+    binary_format[j] = num[j - k];
+  }
+}
+
 /* Return length of array if it is an arithmetic sequence,
    otherwise return 0 */
 int is_arit (int length, int seq[]) {
@@ -22,31 +51,21 @@ int is_arit (int length, int seq[]) {
   }
 }
 
-int main () {
-  int ints[] = {9,4,7,2,10};
-  /* int ints[] = {3,6,9,12}; */
-  /* int ints[] = {20, 1, 15, 3, 10, 5, 8};   */
-  int length = sizeof(ints) / sizeof(ints[0]);
-  char bits[length];  
+int longest_arit_subseq(int length, int *ints) {
   /* elements are included in the subseq based on a flag in bits*/
   int max=0;
   int winning_subseq[length];
-  /* # of possible digits in the arrays (ints) length (covers up to 999) */
-  int num_digits = 3;
-  char len[num_digits];
-  sprintf(len, "%d", length);
-  char a[num_digits + 5];
-  strncpy(a,"%0",2);
-  strncat(a,len,num_digits);
-  strncat(a,"b",2);
-  char form[num_digits + 5];
-  sprintf(form, "%s", a);
   for (int seed=0; seed < pow(2, length); seed++) {
-    sprintf(bits, form, seed);
+    int bits[length];
+    for (int i=0; i < length; i++) {
+      bits[i] = 0;
+    }
+    dec_to_bin(bits, length, seed);
+    
     /* Create subsequence */
     int length_of_subseq = 0;
     for (int i=0; i < length; i++) {
-      if (bits[i] == '1') {
+      if (bits[i] == 1) {
 	length_of_subseq++;
       }
     }
@@ -55,7 +74,7 @@ int main () {
     int subseq[length_of_subseq];
     int j=0;
     for (int i=0; i < length; i++) {
-      if (bits[i] == '1') {
+      if (bits[i] == 1) {
 	subseq[j] = ints[i];
 	j++;
       }
@@ -65,7 +84,7 @@ int main () {
     int s = is_arit(length_of_subseq, subseq);
     if (s > max) {
       max = s;
-      for (int k = 0; k < max; k++) {
+      for (int k = 0; k < length_of_subseq; k++) {
 	winning_subseq[k] = subseq[k];
       }
     }
@@ -84,3 +103,15 @@ int main () {
   return 0;
 }
 
+int main () {
+  int ints1[] = {9,4,7,2,10};
+  int ints2[] = {3,6,9,12};
+  int ints3[] = {20, 1, 15, 3, 10, 5, 8};
+  int length1 = sizeof(ints1) / sizeof(ints1[0]);
+  int length2 = sizeof(ints2) / sizeof(ints2[0]);
+  int length3 = sizeof(ints3) / sizeof(ints3[0]);
+  longest_arit_subseq(length1, ints1);
+  longest_arit_subseq(length2, ints2);
+  longest_arit_subseq(length3, ints3);
+  return 0;
+}
