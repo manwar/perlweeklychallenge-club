@@ -4,10 +4,10 @@ use Test;
 is good-strings(<cat bt hat tree>,       'atach'),           6;
 is good-strings(<hello world challenge>, 'welldonehopper'), 10;
 is good-strings(<attach chat atacha>,    'atach'),           4;
-is good-strings(<hello world challenge>, 'weldonehopper'),   5;
+
+# with help from https://blogs.perl.org/users/laurent_r/2023/06/perl-weekly-challenge-221-good-strings.html
 
 sub good-strings($words, $chars)
 {
-   my $c = $chars.comb.Bag;
-   sum map { .chars }, $words.grep({ all .comb.Bag.map({ $c{.key} >= .value }) })
+   .join.chars given grep { .comb.Bag (<=) $chars.comb.Bag }, |$words
 }
