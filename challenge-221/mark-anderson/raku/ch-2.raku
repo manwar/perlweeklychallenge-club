@@ -8,7 +8,7 @@ is arithmetic-subsequence([9,4,7,2,10]),       3;
 is arithmetic-subsequence([3,6,9,12]),         4; 
 is arithmetic-subsequence([20,1,15,3,10,5,8]), 4; 
 
-# from http://ccgi.campbellsmiths.force9.co.uk/challenge/221/2
+# From http://ccgi.campbellsmiths.force9.co.uk/challenge/221/2
 is arithmetic-subsequence(
    [26,9,14,10,42,44,42,24,6,14,48,19,33,4,6,4,48,31,46,1,10,
     37,23,28,20,36,43,22,26,43,36,7,40,19,37,8,49,4,49,39,42,
