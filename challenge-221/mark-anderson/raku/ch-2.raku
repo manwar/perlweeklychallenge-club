@@ -18,24 +18,11 @@ is arithmetic-subsequence(
 
 sub arithmetic-subsequence(@a)
 {
-    my $a = @a.join(" <.ws> ").subst(/(\-?\d+)/, {"[$0]?"}, :g)
-                              .subst(/\-/, {"\\-"}, :g);
-
-    my $channel = Channel.new;
-    $channel.send($_) for @a.combinations(2); #.unique(with => &[eqv]);
-
-    my @promises = do for ^$*KERNEL.cpu-cores { start process() }
-    await @promises;
-
-    $channel.close;
-    return max @promises>>.result;
-
-    sub process
+    my $a = @a.join('<.ws>').subst(/(\-?\d+)/, {"[$0]?"}, :g)
+                            .subst(/\-/,       {'\-'},    :g);
+   
+    max do for @a.keys.combinations(2)
     {
-        max gather while $channel.poll -> $_
-        {
-            my $s = ~(.head,.tail...*).head(@a);
-            take ($s ~~ m:r/<$a>/).comb(/\-?\d+/).elems
-        }
+        +((@a[$_]...*).head(@a - .tail.pred) ~~ m:r/<$a>/).comb(/\-?\d+/)
     }
 }
