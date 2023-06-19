@@ -7,10 +7,8 @@ use Math::Combinatorics;
 
 sub squareful(@ints) {
     my %results;
-    for my $i (0 .. $#ints) {
-        my @r = wrap([$ints[$i]], @ints[grep $_ != $i, 0 .. $#ints]);
-        @results{map "@$_", @r} = ();
-    }
+    my @r = wrap([$ints[0]], @ints[1 .. $#ints]);
+    @results{map "@$_", @r} = ();
     return [map [split], keys %results]
 }
 
@@ -69,12 +67,12 @@ use Benchmark qw{ cmpthese };
 my @l = (1, 3, 9, 0, 16, 9, 27, 22, 14, 11);
 is squareful(@l), bag { item $_ for @{ squareful_bruteforce(@l) } }, 'same';
 
-cmpthese(5, {
+cmpthese(-60, {
     bruteforce => sub { squareful_bruteforce(@l) },
     optimised  => sub { squareful(@l) },
 });
 
 __END__
-           s/iter bruteforce  optimised
-bruteforce   19.0         --       -99%
-optimised   0.244      7667%         --
+             s/iter bruteforce  optimised
+bruteforce     19.2         --      -100%
+optimised  3.30e-02     58110%         --

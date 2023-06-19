@@ -37,24 +37,26 @@ sub squareful {
         return [ @ints ];
     }
 
-    my %frequencies;
-    $frequencies{$_}++
-        for @ints;
-    vsay $indent, "frequencies: ", pp \%frequencies;
+    my %unique_ints = map { $_ => 1 } @ints;
+    my @unique_ints = sort { $a <=> $b } keys %unique_ints;
+    vsay $indent, "unique ints: ", pp @unique_ints;
 
     my %first_positions;
-    $first_positions{$ints[$_]} //= $_
+    $first_positions{ $ints[$_] } //= $_
         for 0..$#ints;
     vsay $indent, "first_positions: ", pp \%first_positions;
 
     my @results;
-    for my $int ( sort keys %frequencies ) {
+    for my $int ( @unique_ints ) {
         vsay $indent, "trying to start with $int";
+
         my @remaining_ints = @ints;
         splice @remaining_ints, $first_positions{$int}, 1, ();
         vsay $indent, "remaining_ints: ( @remaining_ints )";
+
         my @squareful_subsets = squareful( @remaining_ints );
         vsay $indent, "squareful_subsets: ", pp( @squareful_subsets );
+
         push @results,
             map [ $int, @{$squareful_subsets[$_]} ],
                 grep {
@@ -73,5 +75,5 @@ sub squareful {
     return @results;
 }
 
-# @ARGV = qw( -v );
+@ARGV = qw( -v );
 run_tests;
