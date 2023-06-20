@@ -14,12 +14,9 @@ sub last-member(+@a)
     while @a > 1
     {
         my $diff = [-] @a.splice(0, 2);
-
-        if $diff
-        {
-            my $i = @a.first({ $_ >= $diff }, :k:end).succ // 0;
-            @a.splice($i, 0, $diff)
-        }
+        next unless $diff;
+        my $i = @a.first({ $_ >= $diff }, :k:end).succ // 0;
+        @a.splice($i, 0, $diff)
     }
 
     @a[0] // 0
