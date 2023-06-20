@@ -9,11 +9,8 @@ sub last-member(+@a)
 {
     @a .= sort(-*);
 
-    loop
+    while @a > 1
     {
-        return @a if @a == 1;
-        return 0  if @a == 2;
-
         my $diff = [-] @a.splice(0, 2);
 
         if $diff
@@ -22,4 +19,6 @@ sub last-member(+@a)
             @a.splice($i, 0, $diff)
         }
     }
+
+    return @a[0] // 0
 }
