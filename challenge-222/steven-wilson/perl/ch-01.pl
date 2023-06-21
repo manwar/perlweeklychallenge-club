@@ -7,7 +7,7 @@ sub matching_members {
     my $unsorted_ref = shift;
     my @unsorted     = @{$unsorted_ref};
     my @sorted       = sort { $a <=> $b } @unsorted;
-    my $total += grep { $unsorted[$_] == $sorted[$_] }
+    my $total = grep { $unsorted[$_] == $sorted[$_] }
         ( 0 .. ( scalar(@unsorted) - 1 ) );
     return $total;
 }
