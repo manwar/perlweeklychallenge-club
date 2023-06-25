@@ -1,3 +1,3 @@
-# The Weekly Challenge 219
+# The Weekly Challenge 222
 
-Blog: [Common squares](https://dev.to/simongreennet/common-squares-31do)
+Blog: [All the ducks. Two twenty two](https://dev.to/simongreennet/all-the-ducks-two-twenty-two-ed6)
