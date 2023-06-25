@@ -1,173 +1,187 @@
-# Too lazy for programming it? Let *regex* do the work!
-**Challenge 221 solutions in Perl by Matthias Muth**
+# Lazy, Lazy, Lazy Again ...
+**Challenge 222 solutions in Perl by Matthias Muth**
 
-## Task 1: Good Strings
+## Task 1: Matching Members
 
-> You are given a list of @words and a string $chars.<br/>
-> <br/>
-> A string is good if it can be formed by characters from $chars, each character can be used only once.<br/>
-> <br/>
-> Write a script to return the sum of lengths of all good strings in words.<br/>
+> You are given a list of positive integers, @ints.<br/>
+> Write a script to find the total matching members after sorting the list increasing order.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @words = ("cat", "bt", "hat", "tree")<br/>
->        $chars = "atach"<br/>
-> Output: 6<br/>
-> The good strings that can be formed are "cat" and "hat" so the answer is 3 + 3 = 6.<br/>
+> Input: @ints = (1, 1, 4, 2, 1, 3)<br/>
+> Output: 3<br/>
+> Original list: (1, 1, 4, 2, 1, 2)<br/>
+> Sorted list  : (1, 1, 1, 2, 3, 4)<br/>
+> Compare the two lists, we found 3 matching members (1, 1, 2).<br/>
 > <br/>
 > Example 2<br/>
-> Input: @words = ("hello", "world", "challenge")<br/>
->        $chars = "welldonehopper"<br/>
-> Output: 10<br/>
-> The strings that can be formed are "hello" and "world" so the answer is 5 + 5 = 10.<br/>
+> Input: @ints = (5, 1, 2, 3, 4)<br/>
+> Output: 0<br/>
+> Original list: (5, 1, 2, 3, 4)<br/>
+> Sorted list  : (1, 2, 3, 4, 5)<br/>
+> Compare the two lists, we found 0 matching members.<br/>
+> <br/>
+> Example 3<br/>
+> Input: @ints = (1, 2, 3, 4, 5)<br/>
+> Output: 5<br/>
+> Original list: (1, 2, 3, 4, 5)<br/>
+> Sorted list  : (1, 2, 3, 4, 5)<br/>
+> Compare the two lists, we found 5 matching members.<br/>
 
-We could go through the letters of each word,
-and surgically operate out each single one from the list of characters that we
-have left for this word.
-Once we don't find a letter, we know that we don't have a 'good string'.<br/>
-This involves a lot of searching,
-and doesn't look like a very efficient solution to me.<br/>
-And much too much work!!
+The examples help to understand that 'matching' here means that a number
+in the original list
+appears at the same position in the list after sorting the list in increasing order.
+So the task actually is to compare the numbers in the original list
+and in the sorted list at all positions.
 
-But we can use another approach.<br/>
-We are talking about words and lists of characters
-and one being contained in the other,
-which makes '*regular expressions*' start blinking in my head...<br/>
+I've written before that I am lazy sometimes.<br/>
+So instead of typing all that is needed for a `for` loop to go through the listto 
+(and making a lot of typing errors ;-) ), I prefer let `map` do the work.<br/>
+Not only less typing, but also faster than an explicit for loop, I'm sure! :-)
 
-Now it's not as simple as comparing each word letter
-against the list of characters,
-because we can use each character only once.
-We kind of need to keep track of this.
+What the `map` code block does is to compare the two numbers at the given position.
+The comparison returns a Perl boolean value, which is 1 for true
+and which evaluates to 0 in a numerical context (and to en empty string when used as a string).<br/>
+So what we can do is to just sum up the `1`s that are returned by the comparison.
+Easy to let List::Util's `sum` do that work (lazy again!).
 
-But if we sorted the letters of the word first, and also the list characters,
-and compare then, in one pattern?<br/>
-Let's have a look at the word 'cat' and the letters 'atach'
-from the first example:
-
-    'cat'   sorted:  a-c-t
-    'atach' sorted:  a-a-c-h-t
-
-We, as humans, see the characters that match,
-and some other characters in between
-that don't match (but also don't need to match!).<br/>
-How can we turn this into a regular expression?
-
-Actually we need to turn things around!<br/>
-Instead of matching the word against the characters, we match the characters
-against the word letters as a pattern.
-And as there may be characters in the character list
-that *don't* appear in the word,
-we allow for some skipping over them.  
-Something like this:
-
-    "aacht" =~ /^ .* a .* c .* t .* $/x
-
-If the sorted sequence of characters matches the regular expression
-that we derived from the word this way, that word is 'good'.
-
-So what we need to do is to construct the character string
-from the sorted list of characters (once),
-and the pattern for each word (in a loop over the words).<br/>
-And if we have a match, we add the length of the word to the result:
+So my short solution looks like this:
 
 ```perl
-sub good_strings {
-    my ( $words, $chars ) = @_;
-
-    my $ordered_chars = join "", sort split '', $chars;
-    my $result = 0;
-    for my $word ( @$words ) {
-        my $pattern = '^.*' . join( '.*', sort split '', $word ) . '.*$';
-        $result += length( $word )
-            if $ordered_chars =~ /${pattern}/;
-    }
-    return $result;
+sub matching_members {
+    my @ints = @_;
+    my @sorted_ints = sort { $a <=> $b } @ints;
+    return sum map { $ints[$_] == $sorted_ints[$_] } 0..$#ints;
 }
 ```
-With some added output, the function produces this:
-```
-ordered chars: aacht
-pattern for 'cat': qr/^.*a.*c.*t.*$/
-pattern for 'bt': qr/^.*b.*t.*$/
-pattern for 'hat': qr/^.*a.*h.*t.*$/
-pattern for 'tree': qr/^.*e.*e.*r.*t.*$/
-ok 1 - Example 1: good_strings( (["cat", "bt", "hat", "tree"], "atach") ) == 6
+'Lazy', short, but efficient!
 
-ordered chars: deeehllnoopprw
-pattern for 'hello': qr/^.*e.*h.*l.*l.*o.*$/
-pattern for 'world': qr/^.*d.*l.*o.*r.*w.*$/
-pattern for 'challenge': qr/^.*a.*c.*e.*e.*g.*h.*l.*l.*n.*$/
-ok 2 - Example 2: good_strings( (["hello", "world", "challenge"], "welldonehopper") ) == 10
-```
+## Task 2: Last Member
 
-Sometimes I really like being lazy! :-D<br/>
-And I am always amazed about what *regexes* can do!
-
-## Task 2: Arithmetic Subsequence
-
-> You are given an array of integers, @ints.<br/>
-> Write a script to find the length of the longest Arithmetic Subsequence in the given array.<br/>
+> You are given an array of positive integers, @ints.<br/>
+> Write a script to find the last member if found otherwise return 0. Each turn pick 2 biggest members (x, y) then decide based on the following conditions, continue this until you are left with 1 member or none.<br/>
+> a) if x == y then remove both members<br/>
+> b) if x != y then remove both members and add new member (y-x)<br/>
 > <br/>
-> A subsequence is an array that can be derived from another array by deleting some or none elements without changing the order of the remaining elements.<br/>
-> A subsquence is arithmetic if ints[i + 1] - ints[i] are all the same value (for 0 <= i < ints.length - 1).<br/>
+> Example 1:<br/>
+> <br/>
+> Input: @ints = (2, 7, 4, 1, 8, 1)<br/>
+> Output: 1<br/>
+> <br/>
+> Step 1: pick 7 and 8, we remove both and add new member 1 => (2, 4, 1, 1, 1).<br/>
+> Step 2: pick 2 and 4, we remove both and add new member 2 => (2, 1, 1, 1).<br/>
+> Step 3: pick 2 and 1, we remove both and add new member 1 => (1, 1, 1).<br/>
+> Step 4: pick 1 and 1, we remove both => (1).<br/>
+> <br/>
+> Example 2:<br/>
+> <br/>
+> Input: @ints = (1)<br/>
+> Output: 1<br/>
+> <br/>
+> Example 3:<br/>
+> <br/>
+> Input: @ints = (1, 1)<br/>
+> Output: 0<br/>
+> <br/>
+> Step 1: pick 1 and 1, we remove both and we left with none.<br/>
 
-'Oh, another permutation task!' is what I thought first.<br/>
-Actually yes, but also actually no.
+This challenge is about reducing an array based on a condition,
+until there is only one element left,
+or even the last element was eliminated by the condition.
+No tree searching or permutation calculations are needed,
+so nothing that would warrant a recursive approach
+(even though that would be possible),
+we also don't need any backtracking whatsoever, so:<br/>
+A simple loop will do.<br/>
 
-Yes, in that we need to do some permutations.<br/>
-But no, in that we only need to go through the permutations
-of the first two numbers in a subsequence.<br/>
-And this we can easily do in a nested loop.
-
-No recursion needed. No breadth-first or depth-first traversal needed.
-Just a nested loop.
-
-In the outer loop we choose the first element of the subsequence
-that we are going to check,
-and in the next inner loop we choose its second element,
-from the rest of the list.<br/>
-And in the body, using a third loop we look for more elements
-in the rest of the list
-that continue the arithmetic subsequence started by the first two.
-
-If we find an element that has the same difference to the previous one,
-it belongs to that Arithmetic Subsequence, as the definition states.<br/>
-For any subsequence we try,
-we count its length while walking through the elements,
-and remember the length of the longest subsequence found.
-
-Actually, for solving the task, we don't need to extract any subsequences
-(as the description might suggest).
-It's enough to find the elements of the subsequences,
-and to know their lengths to find the maximum.
-
+We loop away array elements until we have left only one, or zero.
 ```perl
-sub arithmetic_subsequence {
+    while ( @ints >= 2 ) {
+        ...;
+    }
+```
+
+Then we are done, we return the only left element,
+or a zero if there isn't a first element anymore.
+'Lazy' again, we use the defined-ness of the existing first element
+-- or rather the non-defined-ness of the non-existing element --,
+together with Perl's wonderful 'defined-if' operator to shorten this:
+```perl
+   return exists $ints[0] ? $ints[0] : 0;
+```
+or this:
+```perl
+   return scalar @ints == 1 ? $ints[0] : 0;
+```
+into this:
+```perl
+   return $ints[0] // 0;
+```
+Looks very readable to me, and not a big chance for typing errors.
+
+So what is happening *within* the loop?<br/>
+The condition is to compare the largest two elements,
+and based on the difference remove
+both elements or replace them by the difference.
+
+This time, we are ready to throw some more CPU in.
+We could search the array for the largest and second largest number
+(and remember their positions!),
+and remove them both by building a new list from the existing one,
+skipping the positions of the two numbers.
+
+Oh. Alone the description is long anough to make me worry about typing errors again.
+
+Instead, we use `sort` and `splice`.<br/>
+Wait a second to see how short this is going to be!
+
+First, we sort the array to have the highest numbers first:
+```perl
+    @ints = sort { $b <=> $a } @ints;
+```
+This is where the CPU might get some extra load.
+With a O( n * log n ) complexity of good sorting algorithms
+we might be slower than the O( n ) search that we could do.
+But this will only be significant if we have *very* large numbers of elements to sort.<br/>
+Thank you for the examples with no more than five elements!
+
+So, `sort` it is! Largest numbers first.
+```perl
+	@ints = sort { $b <=> $a } @ints;
+```
+
+Then we get the difference between the largest numbers.<br/>
+It will be non-negative because the first element is the largest.
+```perl
+	my $diff = $ints[0] - $ints[1];
+```
+
+And then, instead of building the reduced array element by element,
+we use `splice` to do what we need.
+And we add the difference, if it is non-zero, or nothing (an empty list), if it *is* zero,
+in the same call.
+```perl
+	splice @ints, 0, 2, $diff || ();
+```
+That's all we need to do.
+
+All together the solution looks like this:
+```perl
+sub last_member {
     my @ints = @_;
 
-    my $max = 0;
-    # Choose a starting number.
-    for my $i ( 0..$#ints ) {
-        # Choose a second number from the rest of the list.
-        for my $j ( $i + 1 .. $#ints ) {
-            # The two numbers already form an arithmetic subsequence
-            # of length 2.
-            my $count = 2;
-            # Go through the rest of the list looking for more numbers with
-            # the same difference between them.
-            my $diff = $ints[$j] - $ints[$i];
-            my $next_expected = $ints[$j] + $diff;
-            for my $k ( $j + 1 .. $#ints ) {
-                if ( $ints[$k] == $next_expected ) {
-                    $count++;
-                    $next_expected += $diff;
-                }
-            }
-            $max = $count
-                if $count > $max;
-        }
+    while ( @ints >= 2 ) {
+        # Sort the array, largest first.
+        @ints = sort { $b <=> $a } @ints;
+
+        # Get the difference between the first two elements
+        # (it will be non-negative because the first element is the largest).
+        my $diff = $ints[0] - $ints[1];
+
+        # Replace the first two entries by their difference,
+        # or by nothing if the difference is zero.
+        splice @ints, 0, 2, $diff || ();
     }
-    return $max;
+    return $ints[0] // 0;
 }
 ```
 
