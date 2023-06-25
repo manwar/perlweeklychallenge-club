@@ -1,0 +1,73 @@
+The Weekly Challenge - 222
+Monday, Jun 19, 2023
+
+
+Task 1: Matching Members
+Submitted by: Mohammad S Anwar
+
+You are given a list of positive integers, @ints.
+Write a script to find the total matching members after sorting the list increasing order.
+
+Example 1
+
+Input: @ints = (1, 1, 4, 2, 1, 3)
+Output: 3
+
+Original list: (1, 1, 4, 2, 1, 2)
+Sorted list  : (1, 1, 1, 2, 3, 4)
+
+Compare the two lists, we found 3 matching members (1, 1, 2).
+
+Example 2
+
+Input: @ints = (5, 1, 2, 3, 4)
+Output: 0
+
+Original list: (5, 1, 2, 3, 4)
+Sorted list  : (1, 2, 3, 4, 5)
+
+Compare the two lists, we found 0 matching members.
+
+Example 3
+
+Input: @ints = (1, 2, 3, 4, 5)
+Output: 5
+
+Original list: (1, 2, 3, 4, 5)
+Sorted list  : (1, 2, 3, 4, 5)
+
+Compare the two lists, we found 5 matching members.
+
+
+Task 2: Last Member
+Submitted by: Mohammad S Anwar
+
+You are given an array of positive integers, @ints.
+Write a script to find the last member if found otherwise return 0. Each turn pick 2 biggest members (x, y) then decide based on the following conditions, continue this until you are left with 1 member or none.
+a) if x == y then remove both members
+b) if x != y then remove both members and add new member (y-x)
+
+Example 1:
+
+Input: @ints = (2, 7, 4, 1, 8, 1)
+Output: 1
+
+Step 1: pick 7 and 8, we remove both and add new member 1 => (2, 4, 1, 1, 1).
+Step 2: pick 2 and 4, we remove both and add new member 2 => (2, 1, 1, 1).
+Step 3: pick 2 and 1, we remove both and add new member 1 => (1, 1, 1).
+Step 4: pick 1 and 1, we remove both => (1).
+
+Example 2:
+
+Input: @ints = (1)
+Output: 1
+
+Example 3:
+
+Input: @ints = (1, 1)
+Output: 0
+
+Step 1: pick 1 and 1, we remove both and we left with none.
+
+
+Last date to submit the solution 23:59 (UK Time) Sunday 25th June 2023.
