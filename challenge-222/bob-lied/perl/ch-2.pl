@@ -26,8 +26,7 @@
 
 use v5.36;
 
-use FindBin qw($Bin);
-use lib "$FindBin::Bin";
+use List::MoreUtils qw(first_index);
 
 use Getopt::Long;
 my $Verbose = 0;
@@ -45,7 +44,11 @@ sub lastMember($list)
         my @biggest = (pop @sorted, pop @sorted);
         if ( $biggest[0] != $biggest[1] )
         {
-            push @sorted, $biggest[1] = $biggest[0];
+            # Insert to keep the list sorted instead of
+            # sorting on every iteration.
+            my $diff  = $biggest[0] - $biggest[1];
+            my $place = first_index { $_ >= $diff } @sorted;
+            splice(@sorted, $place, 0, $diff);
         }
     }
     return scalar(@sorted);
