@@ -10,10 +10,8 @@ multi box-coins(@a where .elems < 3, $total is copy = 0)
     return $total unless @a;
 
     my $k = @a.antipairs.min.value;
-    my $pred = @a[$k.pred] // 1;
-    my $succ = @a[$k.succ] // 1;
 
-    $total += [*] $pred, @a[$k], $succ;    
+    $total += [*] @a;    
     @a[$k]:eject;
     box-coins(@a, $total)
 }
