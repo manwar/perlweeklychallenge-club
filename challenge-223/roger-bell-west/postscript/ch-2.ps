@@ -1,0 +1,95 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+
+% end included library code
+
+/boxcoins {
+    8 dict begin
+    /mx 0 def
+    /stack exch [ exch [ exch 0 ] ] def
+    {
+        stack length 0 eq {
+            exit
+        } if
+        stack apop.left /x exch def /stack exch def
+        /t x 0 get def
+        /tot x 1 get def
+        tot mx gt {
+            /mx tot def
+        } if
+        0 1 t length 1 sub {
+            /i exch def
+            /p t i get def
+            i 0 gt {
+                /p p t i 1 sub get mul def
+            } if
+            i t length 1 sub lt {
+                /p p t i 1 add get mul def
+            } if
+            /stot tot p add def
+            stack
+            [
+                [
+                    0 1 t length 1 sub {
+                        /ix exch def
+                        i ix ne {
+                            t ix get
+                        } if
+                    } for
+                ]
+                stot
+            ]
+            apush.right /stack exch def
+        } for
+    } loop
+    mx
+    end
+} bind def
+
+(boxcoins) test.start
+[3 1 5 8] boxcoins 167 eq test
+[1 5] boxcoins 10 eq test
+test.end
