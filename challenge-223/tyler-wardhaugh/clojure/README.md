@@ -1,6 +1,6 @@
-# c222
+# c223
 
-The Weekly Challenge — #222 — Tyler Wardhaugh
+The Weekly Challenge — #223 — Tyler Wardhaugh
 
 ## Usage
 
@@ -8,12 +8,9 @@ Clojure ([installation instructions](https://clojure.org/guides/getting_started#
 
 Run Task #1:
 
-    $ clojure -M:t1 COLL
+    $ clojure -M:t1 N
     # ... or ...
-    $ bb run task-1 COLL
-
-    # Alternatively, to run it via Babashka:
-    $ bb run task-1-bb COLL
+    $ bb run task-1 N
 
 Run Task #2:
 
