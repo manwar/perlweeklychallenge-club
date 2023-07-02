@@ -1,3 +1,3 @@
-# The Weekly Challenge 222
+# The Weekly Challenge 223
 
-Blog: [All the ducks. Two twenty two](https://dev.to/simongreennet/all-the-ducks-two-twenty-two-ed6)
+Blog: [Counting the coins](https://dev.to/simongreennet/counting-the-coins-3i2f)
