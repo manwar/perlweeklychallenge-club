@@ -1,187 +1,151 @@
-# Lazy, Lazy, Lazy Again ...
-**Challenge 222 solutions in Perl by Matthias Muth**
+# Sieves and Coins
+**Challenge 223 solutions in Perl by Matthias Muth**
 
-## Task 1: Matching Members
+## Task 1: Count Primes
 
-> You are given a list of positive integers, @ints.<br/>
-> Write a script to find the total matching members after sorting the list increasing order.<br/>
-> <br/>
-> Example 1<br/>
-> Input: @ints = (1, 1, 4, 2, 1, 3)<br/>
-> Output: 3<br/>
-> Original list: (1, 1, 4, 2, 1, 2)<br/>
-> Sorted list  : (1, 1, 1, 2, 3, 4)<br/>
-> Compare the two lists, we found 3 matching members (1, 1, 2).<br/>
-> <br/>
-> Example 2<br/>
-> Input: @ints = (5, 1, 2, 3, 4)<br/>
-> Output: 0<br/>
-> Original list: (5, 1, 2, 3, 4)<br/>
-> Sorted list  : (1, 2, 3, 4, 5)<br/>
-> Compare the two lists, we found 0 matching members.<br/>
-> <br/>
-> Example 3<br/>
-> Input: @ints = (1, 2, 3, 4, 5)<br/>
-> Output: 5<br/>
-> Original list: (1, 2, 3, 4, 5)<br/>
-> Sorted list  : (1, 2, 3, 4, 5)<br/>
-> Compare the two lists, we found 5 matching members.<br/>
+> You are given a positive integer, $n.<br/>
+> Write a script to find the total count of primes less than or equal to the given integer.<br/>
 
-The examples help to understand that 'matching' here means that a number
-in the original list
-appears at the same position in the list after sorting the list in increasing order.
-So the task actually is to compare the numbers in the original list
-and in the sorted list at all positions.
+This looks very straightforward: get an array of prime numbers and return its length.<br/>
+The only question is how to get the prime numbers between 2 and *n*.
 
-I've written before that I am lazy sometimes.<br/>
-So instead of typing all that is needed for a `for` loop to go through the listto 
-(and making a lot of typing errors ;-) ), I prefer let `map` do the work.<br/>
-Not only less typing, but also faster than an explicit for loop, I'm sure! :-)
+If the number *n* is not too high, the '[Sieve of Eratosthenes](https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes)'
+is a fairly simple and easy to implement algorithm to find prime numbers up to a limit *n*.<br/>
+Its advantage is that it does not need any divisions,
+and it has a runtime complexity of *O*( *n* log log *n* ),
+which probably makes it faster than using a prime factorization for each candidate number.
 
-What the `map` code block does is to compare the two numbers at the given position.
-The comparison returns a Perl boolean value, which is 1 for true
-and which evaluates to 0 in a numerical context (and to en empty string when used as a string).<br/>
-So what we can do is to just sum up the `1`s that are returned by the comparison.
-Easy to let List::Util's `sum` do that work (lazy again!).
+Only if `n` gets larger it can run into memory issues.
+But we are talking about *very* large numbers here,
+since we are only limited by the RAM available for running our program,
+and the RAM usage rises linearly with *n*
+(one integer for each added number checked,
+which might even be reduced to one *bit* per number).<br/>
+So let's not worry too much about it,
+also knowing that the challenge examples are up to *n* = 20 only.
 
-So my short solution looks like this:
+The big advantage for us is that it computes and returns
+the whole set of prime numbers up to *n*.
+All that is left to do is to count them!
+
+So here we go:
 
 ```perl
-sub matching_members {
-    my @ints = @_;
-    my @sorted_ints = sort { $a <=> $b } @ints;
-    return sum map { $ints[$_] == $sorted_ints[$_] } 0..$#ints;
+use strict;
+use warnings;
+use feature 'say';
+use feature 'signatures';
+no warnings 'experimental::signatures';
+
+use lib '.';
+use TestExtractor;
+
+use List::Util qw( first );
+
+sub eratosthenes( $n ) {
+    my @non_primes;
+    my $sqrt = sqrt( $n );
+    my $i = 2;
+    while ( $i <= $sqrt ) {
+        say "trying $i:";
+        for ( my $j = 2 * $i; $j <= $n; $j += $i ) {
+            say "    mark $j as non-prime";
+            $non_primes[$j] = 1;
+        }
+        $i = first { ! $non_primes[$_] } $i + 1 .. $n;
+        say "    next \$i to try: $i";
+    }
+    say "    $i is larger than sqrt( $n ) ($sqrt)";
+    say "returning ( ", join( " ", grep { ! $non_primes[$_] } 2..$n ), " )";
+    return grep { ! $non_primes[$_] } 2..$n;
+}
+
+eratosthenes( 20 );
+```
+
+which prints
+```
+$ ch-1.pl
+trying 2:
+    mark 4 as non-prime
+    mark 6 as non-prime
+    mark 8 as non-prime
+    mark 10 as non-prime
+    mark 12 as non-prime
+    mark 14 as non-prime
+    mark 16 as non-prime
+    mark 18 as non-prime
+    mark 20 as non-prime
+    next $i to try: 3
+trying 3:
+    mark 6 as non-prime
+    mark 9 as non-prime
+    mark 12 as non-prime
+    mark 15 as non-prime
+    mark 18 as non-prime
+    next $i to try: 5
+    5 is larger than sqrt( 20 ) (4.47213595499958)
+returning ( 2 3 5 7 11 13 17 19 )
+```
+
+Then the actual solution to the task is this little function:
+```perl
+sub count_primes( $n ) {
+    return scalar eratosthenes( $n );
 }
 ```
-'Lazy', short, but efficient!
 
-## Task 2: Last Member
+## Task 2: Box Coins
 
-> You are given an array of positive integers, @ints.<br/>
-> Write a script to find the last member if found otherwise return 0. Each turn pick 2 biggest members (x, y) then decide based on the following conditions, continue this until you are left with 1 member or none.<br/>
-> a) if x == y then remove both members<br/>
-> b) if x != y then remove both members and add new member (y-x)<br/>
+> You are given an array representing box coins, @box.<br/>
+> Write a script to collect the maximum coins until you took out all boxes.
+> If we pick box[i] then we collect the coins $box[i-1] * $box[i] * $box[i+1].
+> If $box[i+1] or $box[i-1] is out of bound then treat it as 1 coin.<br/>
 > <br/>
 > Example 1:<br/>
-> <br/>
-> Input: @ints = (2, 7, 4, 1, 8, 1)<br/>
-> Output: 1<br/>
-> <br/>
-> Step 1: pick 7 and 8, we remove both and add new member 1 => (2, 4, 1, 1, 1).<br/>
-> Step 2: pick 2 and 4, we remove both and add new member 2 => (2, 1, 1, 1).<br/>
-> Step 3: pick 2 and 1, we remove both and add new member 1 => (1, 1, 1).<br/>
-> Step 4: pick 1 and 1, we remove both => (1).<br/>
+> Input: @box = (3, 1, 5, 8)<br/>
+> Output: 167<br/>
+> Step 1: pick box [i=1] and collected coins 3 * 1 * 5 => 15.  Boxes available (3, 5, 8).<br/>
+> Step 2: pick box [i=1] and collected coins 3 * 5 * 8 => 120. Boxes available (3, 8).<br/>
+> Step 3: pick box [i=0] and collected coins 1 * 3 * 8 => 24.  Boxes available (8).<br/>
+> Step 4: pick box [i=0] and collected coins 1 * 8 * 1 => 8.   No more box available.<br/>
 > <br/>
 > Example 2:<br/>
-> <br/>
-> Input: @ints = (1)<br/>
-> Output: 1<br/>
-> <br/>
-> Example 3:<br/>
-> <br/>
-> Input: @ints = (1, 1)<br/>
-> Output: 0<br/>
-> <br/>
-> Step 1: pick 1 and 1, we remove both and we left with none.<br/>
+> Input: @box = (1, 5)<br/>
+> Output: 10<br/>
+> Step 1: pick box [i=0] and collected coins 1 * 1 * 5 => 5. Boxes available (5).<br/>
+> Step 2: pick box [i=0] and collected coins 1 * 5 * 1 => 5. No more box available.<br/>
 
-This challenge is about reducing an array based on a condition,
-until there is only one element left,
-or even the last element was eliminated by the condition.
-No tree searching or permutation calculations are needed,
-so nothing that would warrant a recursive approach
-(even though that would be possible),
-we also don't need any backtracking whatsoever, so:<br/>
-A simple loop will do.<br/>
+We need to find out with which box to start.
+It is the one that delivers the highest sum from taking this coin
+*and* from finding the highest number possible from taking the rest of the coins in the right order.
 
-We loop away array elements until we have left only one, or zero.
+A typical scenario for a recursive solution!
+
+The stop condition is met when there is ony one coin.
+Then it's obvious which one to take.
+
+If there is more than one coin, we use a `map` call
+to compute the maximum achievable value for all coins,
+just as described:
+multiply the coin with its neighbors (if they exist),
+and do the recursive call for all coins but the current one.<br/>
+
+And of course we return the maximum of this list.
+
 ```perl
-    while ( @ints >= 2 ) {
-        ...;
-    }
-```
+sub box_coins {
+    my ( @box ) = @_;
 
-Then we are done, we return the only left element,
-or a zero if there isn't a first element anymore.
-'Lazy' again, we use the defined-ness of the existing first element
--- or rather the non-defined-ness of the non-existing element --,
-together with Perl's wonderful 'defined-if' operator to shorten this:
-```perl
-   return exists $ints[0] ? $ints[0] : 0;
-```
-or this:
-```perl
-   return scalar @ints == 1 ? $ints[0] : 0;
-```
-into this:
-```perl
-   return $ints[0] // 0;
-```
-Looks very readable to me, and not a big chance for typing errors.
+    return $box[0]
+        if @box == 1;
 
-So what is happening *within* the loop?<br/>
-The condition is to compare the largest two elements,
-and based on the difference remove
-both elements or replace them by the difference.
-
-This time, we are ready to throw some more CPU in.
-We could search the array for the largest and second largest number
-(and remember their positions!),
-and remove them both by building a new list from the existing one,
-skipping the positions of the two numbers.
-
-Oh. Alone the description is long anough to make me worry about typing errors again.
-
-Instead, we use `sort` and `splice`.<br/>
-Wait a second to see how short this is going to be!
-
-First, we sort the array to have the highest numbers first:
-```perl
-    @ints = sort { $b <=> $a } @ints;
-```
-This is where the CPU might get some extra load.
-With a O( n * log n ) complexity of good sorting algorithms
-we might be slower than the O( n ) search that we could do.
-But this will only be significant if we have *very* large numbers of elements to sort.<br/>
-Thank you for the examples with no more than five elements!
-
-So, `sort` it is! Largest numbers first.
-```perl
-	@ints = sort { $b <=> $a } @ints;
-```
-
-Then we get the difference between the largest numbers.<br/>
-It will be non-negative because the first element is the largest.
-```perl
-	my $diff = $ints[0] - $ints[1];
-```
-
-And then, instead of building the reduced array element by element,
-we use `splice` to do what we need.
-And we add the difference, if it is non-zero, or nothing (an empty list), if it *is* zero,
-in the same call.
-```perl
-	splice @ints, 0, 2, $diff || ();
-```
-That's all we need to do.
-
-All together the solution looks like this:
-```perl
-sub last_member {
-    my @ints = @_;
-
-    while ( @ints >= 2 ) {
-        # Sort the array, largest first.
-        @ints = sort { $b <=> $a } @ints;
-
-        # Get the difference between the first two elements
-        # (it will be non-negative because the first element is the largest).
-        my $diff = $ints[0] - $ints[1];
-
-        # Replace the first two entries by their difference,
-        # or by nothing if the difference is zero.
-        splice @ints, 0, 2, $diff || ();
-    }
-    return $ints[0] // 0;
+    return max( map {
+        ( $box[$_]
+            * ( $_ > 0     ? $box[ $_ - 1 ] : 1 )
+            * ( $_ < $#box ? $box[ $_ + 1 ] : 1 ) )
+        + box_coins( @box[ 0 .. $_ - 1, $_ + 1 .. $#box ] );
+    } 0..$#box );
 }
 ```
 
