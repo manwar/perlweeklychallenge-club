@@ -1,8 +1,9 @@
 #!/usr/bin/env raku
+use Test;
 
-say special-notes('abc', 'xyz');
-say special-notes('scriptinglanguage', 'perl');
-say special-notes('aabbcc', 'abc');
+nok special-notes('abc', 'xyz');
+ok  special-notes('scriptinglanguage', 'perl');
+ok  special-notes('aabbcc', 'abc');
 
 sub special-notes($s, $t)
 {
