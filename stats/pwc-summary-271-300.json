@@ -1,4 +1,10 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 20] Last updated at 2023-07-03 00:29:57 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2023]"
+   },
    "xAxis" : {
       "categories" : [
          "Tore Andersson",
@@ -23,15 +29,13 @@
          "Yozen Hernandez"
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2023]"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             5,
@@ -53,9 +57,11 @@
             3,
             86,
             21
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -77,8 +83,7 @@
             3,
             21,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -112,16 +117,11 @@
          "text" : ""
       }
    },
+   "chart" : {
+      "type" : "column"
+   },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 20] Last updated at 2023-07-02 22:32:06 GMT"
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
