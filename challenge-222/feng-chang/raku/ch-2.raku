@@ -5,12 +5,15 @@ unit sub MAIN(*@N where @N.all > 0);
 @N = +«@N;
 
 while +@N > 1 {
-    my (\a) = @N.splice((^+@N).pick, 1);
-    my (\b) = @N.splice((^+@N).pick, 1);
-    my \d = abs(b - a);
-    @N.splice((^(+@N+1)).pick, 0, d) if d;
+    my \ndx-a = @N.first(@N.max, :k);
+    my (\a) = @N.splice(ndx-a, 1);      # No. 1
 
-    put "pick {a} and {b} => ({@N.join(', ')})";
+    my \ndx-b = @N.first(@N.max, :k);
+    my (\b) = @N.splice(ndx-b, 1);      # No. 2
+
+    my \d = a - b;
+    @N.splice(ndx-a - (ndx-a > ndx-b), 0, d) if d;
+    #put "pick {a} and {b} => ({@N.join(', ')})";
 }
 
 put +@N ?? @N[0] !! 0;
