@@ -9,7 +9,7 @@ ok  additive-number("1321517324981130211"), "13,2,15,17,32,49,81,130,211";
 
 sub additive-number($n)
 {
-    my $limit = $n.substr(($n.chars div 2), *);
+    my $limit = + $n.substr(($n.chars / 2).ceiling, *);
 
     for (1..($n.chars div 2).succ).combinations(2) -> ($h, $t)
     {
