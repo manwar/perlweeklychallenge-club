@@ -18,7 +18,8 @@ ok  additive-number("1321517324981130211"), "13,2,15,17,32,49,81,130,211";
 
 sub additive-number($n)
 {
-    return True if $n ~~ any 
+    $n ~~ any 
+
     / ^ (\d+)(\d+)(\d+) $ <?{ $0 + $1 == $2 }> /,
 
     / ^ (\d+)(\d+)(\d+)(\d+) $ <?{ all $0 + $1 == $2,
@@ -63,5 +64,4 @@ sub additive-number($n)
                                                                      $6 + $7 == $8, 
                                                                      $7 + $8 == $9 }> /;
 
-    return False
 }
