@@ -1,0 +1,109 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/exdigits {
+    3 dict begin
+    /e exch def
+    /s exch def
+    /digits exch def
+    0
+    s 1 e {
+        exch 10 mul exch
+        digits exch get add
+    } for
+    end
+} bind def
+
+/additivenumber {
+    1 dict begin
+    [ exch
+      s2a {
+          48 sub
+      } forall
+    ] /digits exch def
+    mark
+    0 1 digits length 3 sub {
+        /i exch def
+        i 1 add 1 digits length 2 sub {
+            /j exch def
+            [ 0 i j ]
+        } for
+    } for
+    /valid false def
+    {
+        counttomark 0 eq {
+            cleartomark
+            exit
+        } if
+        aload pop 
+        /end_b exch def
+        /end_a exch def
+        /start_a exch def
+        /start_b end_a 1 add def
+        /val_ab digits start_a end_a exdigits
+        digits start_b end_b exdigits add def
+        /start_c end_b 1 add def
+        start_c 1 digits length 1 sub {
+            /end_c exch def
+            val_ab digits start_c end_c exdigits eq {
+                end_c digits length 1 sub eq {
+                    /valid true def
+                    exit
+                } {
+                    [ start_b end_b end_c ]
+                } ifelse
+            } if
+        } for
+        valid {
+            cleartomark
+            exit
+        } if
+    } loop
+    valid
+    end
+} bind def
+
+(additivenumber) test.start
+(112358) additivenumber test
+(12345) additivenumber not test
+(199100199) additivenumber test
+test.end
