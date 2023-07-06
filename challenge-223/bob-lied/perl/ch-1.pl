@@ -26,6 +26,42 @@ my $DoTest  = 0;
 GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 exit(!runTest()) if $DoTest;
 
+package Sieve;
+
+sub new($class, $n)
+{
+    my $self = {
+        _max => 10,
+        _sieve => [ false, false, true, true, false, true, false, true, false, false, false ],
+    };
+    bless $self, $class;
+}
+
+sub upto($self, $n)
+{
+    return if $n <= $self->{_max};
+    push @{$self->{_sieve}}, (true) x ( $n - $self->{_max} );
+    for (my $p = $n; $p*$p <= $n; $p++ )
+    {
+        if ( $self->{_sieve}->[$p] )
+        {
+            for (my $i = $p*$p ; $i <= $n ; $i += $p )
+            {
+                $self->{_sieve}->[$i] = false;
+            }
+        }
+    }
+}
+
+sub count($self, $n)
+{
+}
+
+1;
+
+package main;
+
+
 sub sieve($n)
 {
     my @prime = (false, false, true, (true,false) x (($n-1)/2) );
