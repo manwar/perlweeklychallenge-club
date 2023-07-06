@@ -49,6 +49,15 @@ say collect_max(@ARGV);
 #
 # I'm curious about the comparison between this procedure's results with
 # exact solutions.
+#
+# Update 2023/07/03:
+# As expected, this procedure does not provide the correct results.  Fed
+# some random data to the solutions from andreas-voegele, polettix and
+# sgreen that seem to be correct and compared the results with mine.
+# There is at lease one error in this approach: Whenever there are some
+# consecutive minima in the list, not this minimum needs to be chosen
+# but the larger neighbor. E.g. from (6 5 4 4) we need to choose 5
+# instead of 4.
 
 sub collect_max {
     my $l = long @_;
