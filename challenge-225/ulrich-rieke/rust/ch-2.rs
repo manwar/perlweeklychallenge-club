@@ -2,7 +2,13 @@ use std::io ;
 
 fn find_left_array( numbers : &Vec<i32> ) -> Vec<i32> {
   let len : usize = numbers.len( ) ;
-  let limit : usize = len / 2 ;
+  let limit : usize ;
+  if len % 2 == 1 {
+      limit = len / 2 + 1 ;
+  }
+  else {
+      limit = len / 2 ;
+  }
   let mut left_array : Vec<i32> = Vec::new( ) ;
   left_array.push( 0 ) ;
   let mut left_sum : i32 = 0 ;
@@ -15,13 +21,7 @@ fn find_left_array( numbers : &Vec<i32> ) -> Vec<i32> {
 
 fn find_right_array( numbers : &Vec<i32> ) -> Vec<i32> {
   let len : usize = numbers.len( ) ;
-  let left_limit : usize ;
-  if len % 2 == 1 {
-      left_limit = len / 2 ;
-  }
-  else {
-      left_limit = len / 2 - 1 ;
-  }
+  let left_limit : usize = len / 2 - 1 ;
   let mut right_array : Vec<i32> = Vec::new( ) ;
   let mut right_sum : i32 = 0 ;
   for i in left_limit..len {
@@ -32,7 +32,6 @@ fn find_right_array( numbers : &Vec<i32> ) -> Vec<i32> {
       right_sum -= numbers[ i ] ;
       right_array.push( right_sum ) ;
   }
-  right_array.push( 0 ) ;
   right_array
 }
 
@@ -55,4 +54,3 @@ fn main() {
       println!("{:?}" , result ) ;
     }
 }
-

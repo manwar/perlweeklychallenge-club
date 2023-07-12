@@ -17,7 +17,11 @@ std::vector<std::string> split( const std::string & startline ,
 
 std::vector<int> find_left_array( const std::vector<int> & numbers ) {
   int len = numbers.size( ) ;
-  int limit = len / 2 ;
+  int limit = 0 ;
+  if ( len % 2 == 1 )
+      limit = len / 2 + 1 ;
+  else
+      limit = len / 2 ;
   std::vector<int> left_array ;
   left_array.push_back( 0 ) ;
   int left_sum = 0 ;
@@ -30,11 +34,7 @@ std::vector<int> find_left_array( const std::vector<int> & numbers ) {
 
 std::vector<int> find_right_array( const std::vector<int> & numbers ) {
   int len = numbers.size( ) ;
-  int left_limit = 0 ;
-  if ( len % 2 == 1 )
-      left_limit = len / 2 ;
-  else
-      left_limit = len / 2 - 1 ;
+  int left_limit = len / 2 - 1 ;
   std::vector<int> right_array ;
   int right_sum = 0 ;
   for ( int i = left_limit ; i < len ; i++ )
@@ -44,7 +44,6 @@ std::vector<int> find_right_array( const std::vector<int> & numbers ) {
       right_sum -= numbers[ i ] ;
       right_array.push_back( right_sum ) ;
   }
-  right_array.push_back( 0 ) ;
   return right_array ;
 }
 

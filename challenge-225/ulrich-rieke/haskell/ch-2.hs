@@ -4,8 +4,10 @@ module Challenge225_2
 find_left_array :: [Int] -> [Int]
 find_left_array list = [0] ++ map (\i -> sum $ take i list ) [1..limit + 1]
 where
+  l    :: Int
+  l    = length list
   limit :: Int
-  limit = div ( length list ) 2
+  limit = if odd l then div l 2 + 1 else div l 2
 
 find_right_array :: [Int] -> [Int]
 find_right_array list = map (\i -> sum $ drop i rightPart ) [0..length
@@ -14,7 +16,7 @@ where
   l          :: Int
   l          = length list
   left_limit :: Int
-  left_limit = if odd l then div l 2 else div l 2 - 1
+  left_limit = div l 2 - 1
   rightPart  :: [Int]
   rightPart = drop left_limit list
 
@@ -31,3 +33,4 @@ main = do
   putStrLn "Enter some digits, separated by blanks!" ;
   numberstrings <- getLine
   print $ solution $ map read $ words numberstrings
+

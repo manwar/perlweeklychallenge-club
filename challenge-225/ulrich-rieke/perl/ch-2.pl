@@ -3,11 +3,20 @@ use strict ;
 use warnings ;
 use feature 'say' ;
 
+#to make the examples fit I assume that in order to form the left subarray
+#you go to the element given by the length of the array, integer divided
+#by 2 , + 1
 sub find_left_array {
   my $array = shift ;
   my @left_array ;
   my $len = scalar( @$array ) ;
-  my $limit = int( $len / 2 ) ;
+  my $limit ;
+  if ( $len % 2 == 1 ) {
+      $limit = int( $len / 2 ) + 1 ;
+  }
+  else {
+      $limit = int( $len / 2 ) ;
+  }
   push @left_array , 0 ;
   my $left_sum = 0 ;
   for my $i ( 0..$limit ) {
@@ -17,17 +26,15 @@ sub find_left_array {
   return @left_array ;
 }
 
+#to make the examples fit , I assume that the right subarray is formed by
+#the sum of all elements inclusively from the length of the array, integer
+#divided by 2 , - 1 , and subsequent subtractions of all further right
+#array elements from the sum
 sub find_right_array {
   my $array = shift ;
   my @right_array ;
   my $len = scalar( @$array ) ;
-  my $left_limit ;
-  if ( $len % 2 == 1 ) {
-      $left_limit = int( $len / 2 ) ;
-  }
-  else {
-      $left_limit = int( $len / 2 ) - 1 ;
-  }
+  my $left_limit = int( $len / 2 ) - 1 ;
   my $right_sum = 0 ;
   for my $i( $left_limit..$len - 1 ) {
       $right_sum += $array->[ $i ] ;
@@ -37,7 +44,6 @@ sub find_right_array {
       $right_sum -= $array->[ $i ] ;
       push @right_array , $right_sum ;
   }
-  push @right_array , 0 ;
   return @right_array ;
 }
 

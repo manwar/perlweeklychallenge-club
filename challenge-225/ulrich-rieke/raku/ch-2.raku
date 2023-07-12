@@ -1,9 +1,18 @@
 use v6 ;
-
+#to make the examples fit , I assume that in finding the left subarray
+#you go to index given by the length of the array , integer-divided by 2 ,
+#- 1 if the length of the entire array is an odd number, otherwise to index
+#length divided by 2
 sub find_left_array( @array ) {
   my @left_array ;
   my $len = @array.elems ;
-  my $limit = $len div 2 ;
+  my $limit ;
+  if ( $len % 2 == 1 ) {
+      $limit = $len div 2 + 1 ;
+  }
+  else {
+      $limit = $len div 2 ;
+  }
   @left_array.push( 0 ) ;
   my $left_sum = 0 ;
   for (0..$limit) -> $i {
@@ -13,16 +22,12 @@ sub find_left_array( @array ) {
   return @left_array ;
 }
 
+#to make the examples fit , I assume that the right subarray is gathered
+#from elements start at index ( length integer-divided by 2 , - 1 )
 sub find_right_array( @array ) {
   my @right_array ;
   my $len = @array.elems ;
-  my $left_limit ;
-  if ( $len % 2 == 1 ) {
-      $left_limit = $len div 2 ;
-  }
-  else {
-      $left_limit = ( $len div 2 ) - 1 ;
-  }
+  my $left_limit = $len div 2 - 1 ;
   my $right_sum = 0 ;
   for ($left_limit..$len - 1) -> $i {
       $right_sum += @array[ $i ] ;
@@ -32,7 +37,6 @@ sub find_right_array( @array ) {
       $right_sum -= @array[ $i ] ;
       @right_array.push( $right_sum ) ;
   }
-  @right_array.push( 0 ) ;
   return @right_array ;
 }
 
