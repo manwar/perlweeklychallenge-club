@@ -1,6 +1,6 @@
-# c224
+# c225
 
-The Weekly Challenge — #224 — Tyler Wardhaugh
+The Weekly Challenge — #225 — Tyler Wardhaugh
 
 ## Usage
 
@@ -8,21 +8,21 @@ Clojure ([installation instructions](https://clojure.org/guides/getting_started#
 
 Run Task #1:
 
-    $ clojure -M:t1 SOURCE TARGET
+    $ clojure -M:t1 COLL
     # ... or ...
-    $ bb run task-1 SOURCE TARGET
+    $ bb run task-1 COLL
 
     # Alternatively, to run it via Babashka:
-    $ bb run task-1-bb SOURCE TARGET
+    $ bb run task-1-bb COLL
 
 Run Task #2:
 
-    $ clojure -M:t2 N
+    $ clojure -M:t2 COLL
     # ... or ...
-    $ bb run task-2 N
+    $ bb run task-2 COLL
 
     # Alternatively, to run it via Babashka:
-    $ bb run task-2-bb N
+    $ bb run task-2-bb COLL
 
 Run the project's tests (which are samples from the task descriptions):
 
