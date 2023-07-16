@@ -11,8 +11,8 @@ sub left-right-sum-diff($n)
 {
     my $list = (0, |$n, 0);
 
-    my $left  =  [\+] $list[^(*-2)];
-    my $right = ([\+] $list[$list.end...2]).reverse;
+    my $left  =  [\+]  $list[^(*-2)];
+    my $right = ([\R+] $list[2..*]).reverse;
 
     $left >>|-|<< $right 
 }
