@@ -1,3 +1,3 @@
-# The Weekly Challenge 223
+# The Weekly Challenge 225
 
-Blog: [Counting the coins](https://dev.to/simongreennet/counting-the-coins-3i2f)
+Blog: [Weekly Challenge 225](https://dev.to/simongreennet/weekly-challenge-225-2785)
