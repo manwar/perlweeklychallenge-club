@@ -1,248 +1,121 @@
-# Addictive additive
-**Challenge 224 solutions in Perl by Matthias Muth**
+# Reduce to the max
+**Challenge 225 solutions in Perl by Matthias Muth**
 
-## Task 1: Special Notes
+The tasks of this challenge are good ones,
+in the sense that the solutions can be short, nice, well-arranged, clear -- perly!
 
-> You are given two strings, $source and $target.<br/>
-> Write a script to find out if using the characters (only once) from source, a target string can be created.<br/>
+However the second task took me some time to understand what really is happening
+in the task description and in the examples.
+
+But let's start with the first one:
+
+## Task 1: Max Words
+
+> You are given a list of sentences, @list.<br/>
+> A sentence is a list of words that are separated by a single space with no leading or trailing spaces.<br/>
+> Write a script to find out the maximum number of words that appear in a single sentence.<br/>
 > <br/>
 > Example 1<br/>
-> Input: $source = "abc"<br/>
->        $target = "xyz"<br/>
-> Output: false<br/>
+> Input: @list = (qw/Perl and Raku belong to the same family./,<br/>
+>                 qw/I love Perl./,<br/>
+>                 qw/The Perl and Raku Conference./)<br/>
+> Output: 8<br/>
 > <br/>
 > Example 2<br/>
-> Input: $source = "scriptinglanguage"<br/>
->        $target = "perl"<br/>
-> Output: true<br/>
-> <br/>
-> Example 3<br/>
-> Input: $source = "aabbcc"<br/>
->        $target = "abc"<br/>
-> Output: true<br/>
+> Input: @list = (qw/The Weekly Challenge./,<br/>
+>                 qw/Python is the most popular guest language./,<br/>
+>                 qw/Team PWC has over 300 members./)<br/>
+> Output: 7<br/>
 
-Again, I let the magical Perl regex engine do the work for me.<br/>
-The idea is the same as in my solution to Challenge 221 Task 1 'Good Strings'
-([read here](https://github.com/MatthiasMuth/perlweeklychallenge-club/muthm-221/challenge-221/matthias-muth/README.md)).<br/>
+Perl in its own realm.<br/>
+So short that it probably needs some explanations...
 
-What seems to be a bit counterintuitive at first,
-is that we match the `$source` (all the possible letters) against the `$target` word,
-not vice versa!
+We get a list of strings, each one containing one sentence.
 
-We need to sort the `$source` characters first.<br/>
-Then we to turn the `$target` characters into a regular expression.
-This regular expression will match those characters from `$source`
-that are contained in the `$target` word.
-All other characters from `$source` that are not needed
-will be matched by `.*` patterns and ignored.
+So let's split up each sentence into 'words' using `split " ", $_`,
+getting our `$_` from using `map` walking us through the list of sentences.
 
-To illustrate this, here is how Example 2 is solved using a pattern match:
-```
-special_notes( 'scriptinglanguage', 'perl' )
-    ordered source: 'aacegggiilnnprstu'
-    target pattern: qr/^.*e.*l.*p.*r.*$/
-    pattern match:  'aacegggiilnnprstu' =~ /^.*e.*l.*p.*r.*$/
-```
+The number of words in each sentence is `scalar` of the list of words that we just got.
 
-What is left for us is to prepare the sorted source and the pattern.<br/>
-Not a big deal:
-```perl
-    my $ordered_chars = join "", sort split '', $source;
-    my $pattern = '^.*' . join( '.*', sort split '', $target ) . '.*$';
-```
+And `max(...)` (from `List::Util`) gets us the largest one.
 
-So all in all it's actually only three lines of code,
-to which I added some debugging output
-(`vsay` is a subroutine that does the same as `say`
-if the global variable `$verbose` is set;
-it can be set using the `-v` option in my environment).<br/>
-Here is the whole thing:
+Voilà!
 
 ```perl
-sub special_notes {
-    my ( $source, $target ) = @_;
-    vsay "special_notes( '$source', '$target' )";
+use List::Util qw( max );
 
-    my $ordered_source = join "", sort split '', $source;
-    vsay "    ordered source: '$ordered_source'";
-
-    my $pattern = '^.*' . join( '.*', sort split '', $target ) . '.*$';
-    vsay "    target pattern: qr/$pattern/";
-
-    vsay "    pattern match:  '$ordered_source' =~ /$pattern/";
-    return $ordered_source =~ /${pattern}/ // 0;
+sub max_words {
+    my ( @list ) = @_;
+    return max( map { scalar split " ", $_ } @list );
 }
 ```
 
-## Task 2: Additive Number
+## Task 2: Left Right Sum Diff
 
-> You are given a string containing digits 0-9 only.<br/>
-> Write a script to find out if the given string is additive number. An additive number is a string whose digits can form an additive sequence.<br/>
-> A valid additive sequence should contain at least 3 numbers. Except the first 2 numbers, each subsequent number in the sequence must be the sum of the preceding two.<br/>
+> You are given an array of integers, @ints.<br/>
+> Write a script to return left right sum diff array as shown below:<br/>
+> @ints = (a, b, c, d, e)<br/>
+> @left  = (0, a, (a+b), (a+b+c))<br/>
+> @right = ((c+d+e), (d+e), e, 0)<br/>
+> @left_right_sum_diff = ( | 0 - (c+d+e) |,<br/>
+>                          | a - (d+e)   |,<br/>
+>                          | (a+b) - e   |,<br/>
+>                          | (a+b+c) - 0 | )<br/>
 > <br/>
 > Example 1:<br/>
-> Input: $string = "112358"<br/>
-> Output: true<br/>
-> The additive sequence can be created using the given string digits: 1,1,2,3,5,8<br/>
-> 1 + 1 => 2<br/>
-> 1 + 2 => 3<br/>
-> 2 + 3 => 5<br/>
-> 3 + 5 => 8<br/>
+> Input: @ints = (10, 4, 8, 3)<br/>
+> Output: (15, 1, 11, 22)<br/>
+> @left  = (0, 10, 14, 22)<br/>
+> @right = (15, 11, 3, 0)<br/>
+> @left_right_sum_diff = ( |0-15|, |10-11|, |14-3|, |22-0|)<br/>
+>                      = (15, 1, 11, 22)<br/>
 > <br/>
 > Example 2:<br/>
-> Input: $string = "12345"<br/>
-> Output: false<br/>
-> No additive sequence can be created using the given string digits.<br/>
+> Input: @ints = (1)<br/>
+> Output: (0)<br/>
+> @left  = (0)<br/>
+> @right = (0)<br/>
+> @left_right_sum_diff = ( |0-0| ) = (0)<br/>
 > <br/>
 > Example 3:<br/>
-> Input: $string = "199100199"<br/>
-> Output: true<br/>
-> The additive sequence can be created using the given string digits: 1,99,100,199<br/>
->  1 +  99 => 100<br/>
-> 99 + 100 => 199<br/>
+> Input: @ints = (1, 2, 3, 4, 5)<br/>
+> Output: (14, 11, 6, 1, 19)<br/>
+> @left  = (0, 1, 3, 6, 10)<br/>
+> @right = (14, 12, 9, 5, 0)<br/>
+> @left_right_sum_diff = ( |0-14|, |1-12|, |3-9|, |6-5|, |10-0|)<br/>
+>                      = (14, 11, 6, 1, 10)<br/>
 
-In this task, we need to choose the first two numbers of the sequence.<br/>
-Depending on that choice, we will find a continuation of the sequence
-in the remaining string, or we won't.
+Maybe I don't fully understand the definition,
+but for me, there seems to be a little inconsistency between the definition and the examples.
+In the definiton we have 5 elements as input, but only 4 elements in the left and right sums,
+whereas all the examples are explained using arrays of left and right sums
+that have the same number of elements as the input array.<br/>
+I decided in favor of the examples. :-)
 
-So how do we choose the first two numbers?<br/>
-We start with the first number having one digit, then two digits, and so on.<br/>
-With each first number chosen, we then choose the second number,
-again first using one digit, then two digits and so on. 
+For this task, I completely avoided writing any for loops,
+and based my solution on list-processing functions:
+* `reductions` from `List::Util` does the summing up of the 'left' sum,
+starting with a 0 and going through all input elements except the last one (to get the correct number of elements),
+* `reductions` from `List::Util` also does the summing up of the 'right' sum,
+starting with a 0 and going through the input elements *in reverse order*,
+leaving out the first element, and then doing another `reverse` to have the 0 at the end of the list,
+* `pairwise` from the `List::MoreUtils` module from CPAN then builds the list of differences
+between corresponding elements of the 'left' and 'right' arrays.
+ 
+So actually the task can be solved using three lines of actual code:
 
-The maximum number of digits to use for the first and then the second number
-is what took me longest to think about.<br/>
-For the first number, it is relatively clear that
-* we need to leave at least on digit for the second number,
-* the sum will have at least the same number of digits that the first number has.
-
-So if *len* is the length of the whole string, we can split it up between
-the length of the first number *len1*, the minimum length of the second number *1*,
-and the minimum length of the sum, which is also *len1*:<br/>
-&nbsp;&nbsp; *len1* + 1 + *len1* <= *len* <br/>
-which makes<br/>
-&nbsp;&nbsp; *len1* <= ( *len* - 1 ) / 2.
-    
-For the length of the second number, *len2*, things are less obvious.<br/>
-We can assume that the sum always has *at least* as many digits as the longer one
-of the first and second number.<br>
-&nbsp;&nbsp; *len1* + *len2* + max( *len1*, *len2* ) <= *len* <br/>
-which is the same as<br/>
-&nbsp;&nbsp; <*len1* + *len2* + *len1* <= *len* **and** *len1* + *len2* + *len2* <= *len* <br/>
-which transforms to<br/>
-&nbsp;&nbsp; *len2* <= *len* - 2 * *len1* **and** *len2* <= ( *len* - *len1* ) / 2<br/>
-which means for *len2*:<br/>
-&nbsp;&nbsp; *len2* <= min( *len* - 2 * *len1*, ( *len* - *len1* ) / 2 ).
-
-We choose the lengths of the first and second number using two nested loops.<br/>
-Inside the loop body we extract these numbers,
-and we check whether the rest of the string starts with the sum of the two.<br/>
-We use a regular expression for this,
-at the same time removing that sum from the rest string if it matched.<br/>
-We do the checking and removing sums in a loop until we don't find a match
-or the string is completely used.
-
-We can return from the subroutine onece we find a complete match.
-But for demonstration, when `$verbose` is set, we continue going through
-the rest ofcombinations, creating some nice output to see that
-everything works nicely.
-
-This is the whole subroutine:
 ```perl
-sub additive_number {
-    my ( $string ) = @_;
-    vsay "additive_number( '$string' )";
+use feature 'signatures';
+no warnings 'experimental::signatures';
 
-    my $len = length $string;
-    my $is_additive_number = 0;
-    for my $len1 ( 1 .. int( ( $len - 1 ) / 2 ) ) {
-        vsay "    len1: $len1, trying len2 1 .. min( ",
-            $len - 2 * $len1, ", ",
-            int( ( $len - $len1 ) / 2 ), " )";
-        for my $len2 (
-            1 .. min( $len - 2 * $len1, int( ( $len - $len1 ) / 2 ) ) )
-        {
-            my $n1 = substr $string, 0, $len1;
-            my $n2 = substr $string, $len1, $len2;
-            my $rest = substr $string, $len1 + $len2;
-            vsay "        trying $n1 and $n2, leaving '$rest'";
-            while ( $rest ne "" ) {
-                my $sum = $n1 + $n2;
-                $rest =~ s/^$sum// or do {
-                    vsay "            no match for sum $sum";
-                    last;
-                };
-                vsay "            sum $sum found";
-                ( $n1, $n2 ) = ( $n2, $sum );
-            }
-            if ( $rest eq "" ) {
-                return 1
-                    unless $verbose;
-                vsay "            SUCCESS!";
-                $is_additive_number = 1;
-            }
-        }
-    }
-    return $is_additive_number;
+use List::Util qw( reductions );
+use List::MoreUtils qw( pairwise );
+
+sub left_right_sum_diff( @ints ) {
+    my @left  = reductions { $a + $b } 0, @ints[ 0 .. $#ints - 1 ];
+    my @right = reverse reductions { $a + $b } 0, reverse @ints[ 1 .. $#ints ];
+    return pairwise { abs( $a - $b ) } @left, @right
 }
-```
-
-With *$verbose* set, it produces this output for the examples:
-```
-additive_number( '112358' )
-    len1: 1, trying len2 1 .. min( 4, 2 )
-        trying 1 and 1, leaving '2358'
-            sum 2 found
-            sum 3 found
-            sum 5 found
-            sum 8 found
-            SUCCESS!
-        trying 1 and 12, leaving '358'
-            no match for sum 13
-    len1: 2, trying len2 1 .. min( 2, 2 )
-        trying 11 and 2, leaving '358'
-            no match for sum 13
-        trying 11 and 23, leaving '58'
-            no match for sum 34
-additive_number( '12345' )
-    len1: 1, trying len2 1 .. min( 3, 2 )
-        trying 1 and 2, leaving '345'
-            sum 3 found
-            no match for sum 5
-        trying 1 and 23, leaving '45'
-            no match for sum 24
-    len1: 2, trying len2 1 .. min( 1, 1 )
-        trying 12 and 3, leaving '45'
-            no match for sum 15
-additive_number( '199100199' )
-    len1: 1, trying len2 1 .. min( 7, 4 )
-        trying 1 and 9, leaving '9100199'
-            no match for sum 10
-        trying 1 and 99, leaving '100199'
-            sum 100 found
-            sum 199 found
-            SUCCESS!
-        trying 1 and 991, leaving '00199'
-            no match for sum 992
-        trying 1 and 9910, leaving '0199'
-            no match for sum 9911
-    len1: 2, trying len2 1 .. min( 5, 3 )
-        trying 19 and 9, leaving '100199'
-            no match for sum 28
-        trying 19 and 91, leaving '00199'
-            no match for sum 110
-        trying 19 and 910, leaving '0199'
-            no match for sum 929
-    len1: 3, trying len2 1 .. min( 3, 3 )
-        trying 199 and 1, leaving '00199'
-            no match for sum 200
-        trying 199 and 10, leaving '0199'
-            no match for sum 209
-        trying 199 and 100, leaving '199'
-            no match for sum 299
-    len1: 4, trying len2 1 .. min( 1, 2 )
-        trying 1991 and 0, leaving '0199'
-            no match for sum 1991
 ```
 
 #### **Thank you for the challenge!**
