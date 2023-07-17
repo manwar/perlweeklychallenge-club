@@ -1,0 +1,21 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@ints where all(@ints) ~~ UInt,
+               :v(:$verbose));
+
+my $operations = 0;
+
+@ints = @ints.grep( * > 0 );
+
+while @ints.elems > 0
+{
+  my $smallest  = @ints.min;
+  my @new       = @ints.map({ $_ - $smallest });
+
+  say ":Ints @ints[] - smallest: $smallest -> @new[]" if $verbose;
+  $operations++;
+
+  @ints = @new.grep( * > 0 );
+}
+
+say $operations;
