@@ -29,7 +29,7 @@ use List::Util qw(uniq);
 use Test::More;
 
 sub zeroArray (@) {
-  scalar grep {$_ > 0} uniq sort {$a <=> $b} @_; 
+  scalar grep {$_ > 0} uniq @_; 
 }
 
 is(zeroArray(1,5,0,3,5),3);
