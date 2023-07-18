@@ -104,9 +104,15 @@ for my $aref (@arrays) {
       say "Moving on to next array.";
       next;
    }
-   my @nums = uniq sort {$a<=>$b} @$aref;
-   shift @nums if 0 == $nums[0];
-   say "Number of operations required = ", scalar(@nums);
+   my $n = 0;
+   my %h;
+   $h{0} = 'yes';
+   for (@$aref) {
+      next if defined $h{$_};
+      ++$n;
+      $h{$_} = 'yes';
+   }
+   say "Number of operations required = $n";
 }
 
 # Determine and print execution time:
