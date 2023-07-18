@@ -6,5 +6,7 @@ is shuffle-string('rulepark',  [4,7,3,1,0,5,2,6]),   'perlraku';
 
 sub shuffle-string($s, @a)
 {
-    (@a Z=> $s.comb).sort>>.value.join
+    my @r;
+    @r[@a] = $s.comb;
+    @r.join
 }
