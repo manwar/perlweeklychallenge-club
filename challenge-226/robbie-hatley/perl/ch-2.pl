@@ -44,8 +44,8 @@ operation 4: pick 1 => (0, 0, 0, 0, 0)
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
 There is no need to actually do any "operations". All we need to note is that the number of operations
-required will be equal to the number of unique positive integers present. So I'll use List::Util,
-do a "uniq sort", and shift the first number if it's 0.
+required will be equal to the number of unique positive integers present, so I'll just count those,
+using a hash to keep track of ones we've seen before.
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
@@ -66,7 +66,6 @@ use warnings;
 use utf8;
 use Sys::Binmode;
 use Time::HiRes 'time';
-use List::Util 'uniq';
 $"=', ';
 
 # ------------------------------------------------------------------------------------------------------------
