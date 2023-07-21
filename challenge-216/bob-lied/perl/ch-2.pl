@@ -33,13 +33,14 @@
 #    Input: @stickers = ('come','country','delta'), $word = 'accommodation'
 #    Output: 0
 #  as there's no "i" in the inputs.
-# 
+##########
+# The examples suggest that we should look for substrings, but really
+# the stickers just create a big sack of letters that we can use.
+# This is going to be a search over the possible combinations of stickers
+# that satisfy each letter in turn (recursive depth-first search).
 #=============================================================================
 
 use v5.36;
-
-use lib "lib";
-use SubstringIterator;
 
 use Getopt::Long;
 my $Verbose = 0;
@@ -48,95 +49,123 @@ my $DoTest  = 0;
 GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 exit(!runTest()) if $DoTest;
 
-sub allSubstrings($str)
+if ( @ARGV < 2 )
 {
-    my @substr;
-
-    my $size = length($str);
-    for my $len ( 1 .. $size )
-    {
-        for ( my $pos = 0; $pos + $len <= $size ; $pos++ )
-        {
-            push @substr, substr($str, $pos, $len);
-        }
-    }
-
-    return \@substr;
+    say STDERR "Usage: $0 target sticker...";
+    exit 1;
 }
+say wordSticker(shift, @ARGV);
+
+my $MinCount;
 
 sub wordSticker($target, @stickerWord)
 {
     # Normalize everything to lowercase.
     $target = lc($target);
-    @stickerWord = map { lc } @stickerWord;
 
-    # Do all letters in $word occur somewhere in @sticker?
-    # Conversely, does word consist entirely of letters from @sticker
-    my $available = join("", @stickerWord);
+    # Set of starting words, can be re-used as needed.
+    my @stickerPool = map { lc } @stickerWord;
+
+    # Worst case is a new sticker for every letter.
+    $MinCount = length($target);
+
+    # Do all letters in $target occur somewhere in the stickers?
+    # Conversely, does target consist entirely of letters from @stickerPool
+    my $available = join("", @stickerPool);
     return 0 unless $target =~ m/^[$available]+$/;
 
-    # Gather up a set of all possible substrings from the sticker words
-    my %sticker;
-    for my $w ( @stickerWord)
+    # Extract the first character and remove it from the target.
+    my $char = substr($target, 0, 1, "");
+
+    # Find a sticker from the pool that has $char
+    for my $s ( 0 .. $#stickerPool )
     {
-        my $s = allSubstrings($w);
-        $sticker{$_} = $w for @$s;
+        next unless index($stickerPool[$s], $char) >= 0;
+
+        # Start the list of stickers with a copy of this one.
+        my $inUse = [ $stickerPool[$s] ];
+        # Remove the letter from the new sticker.
+        $inUse->[0] =~ s/$char//;
+
+        # Start the recursion with one sticker in the list and
+        # the first letter already removed from target.
+        _stickerize(\@stickerPool, $target, $inUse, 1);
     }
-
-    # Worst case is one letter at a time.
-    my $minScore = length($target);
-
-    stickerize($target, \%sticker, 0);
-
-
-    return -1;
+    return $MinCount;
 }
 
-sub stickerize($target, $stickers, $scoreSoFar)
+# Recursive function for depth-first search.
+# $stickerPool -- our original list of sticker words, never changes.
+# $target -- our target word, gets one letter smaller every recursion.
+# $inUse -- an array of stickers used, with target letters elided
+# $countSoFar -- number of stickers in use
+sub _stickerize($stickerPool, $target, $inUse, $countSoFar) 
 {
-    state %cache;
-    if ( exists $stickers->{$target} )
+    if ( length($target) == 0 )
     {
-        return $scoreSoFar + $cache{$target};
+        $MinCount = $countSoFar if $countSoFar < $MinCount;
+        return;
     }
 
-    # Base cases for recursion.  If the string is of length one, we
-    # know that there is a sticker for it because we already verified
-    # that all letters in the target occur somewhere among the stickers.
-    my $len = length($target);
-    if    ( $len == 0 ) { return $scoreSoFar }
-    elsif ( $len == 1 ) { return $soreSoFar  + ($cache{$target} = 1) }
+    # Extract the first character and remove it from the target.
+    my $char = substr($target, 0, 1, "");
 
-    if ( exists $cache{$target} )
+    # Can we satisfy this letter with a sticker already in use?
+    if ( grep /$char/, @$inUse )
     {
-        return $scoreSoFar + $cache{$target}
+        # If we're finished, check if this is a new best score.
+        # No need to actually find the sticker or recurse.
+        if ( length($target) == 0 )
+        {
+            $MinCount = $countSoFar if $countSoFar < $MinCount;
+            return;
+        }
+
+        # Find stickers that have the letter and try each one
+        for my $s ( 0 .. $inUse->$#* )
+        {
+            next unless index($inUse->[$s], $char) >= 0;
+
+            # Make a copy of the used list.
+            my $sticker = [ @$inUse ];
+
+            # Eliminate the current letter from the sticker we found.
+            $sticker->[$s] =~ s/$char//;
+
+            # Recurse.  Our sticker count did not go up, but we modified
+            # the inUse list, and target is now shorter by one letter.
+            _stickerize($stickerPool, $target, $sticker, $countSoFar);
+        }
+        return;
     }
 
-    # Take each possible substring from the target.  If the substring
-    # can be made from a sticker, remove it and recurse on the smaller
-    # target.
-    my $ssi = SubstringIterator->new($target);
-    
-    my $score = $len;
-    my ($pre, $ss, $post) = $ssi->next();
-    while ( defined $ss )
+    # We need another sticker for this letter, so get one from the pool.
+    for my $s ( 0 .. $#{$stickerPool} )
     {
-        say "SSI: pre=[$pre] ss=[$ss] post=[$post]" if $Verbose;
-        $score = map { stickerize($_, $stickers) } $pre, $ss, $post;
-        ($pre, $ss, $post) = $ssi->next();
+        next unless index($stickerPool->[$s], $char) >= 0;
+
+        # If we're done, we don't actually have to recurse, but we
+        # do need to check if our score improved.
+        if ( length($target) == 0 )
+        {
+            my $newScore = $countSoFar + 1; # We needed another sticker.
+            $MinCount = $newScore if $newScore < $MinCount;
+            return;
+        }
+
+        # Add a new sticker, but with the letter used up.
+        my $sticker = [ @$inUse, $stickerPool->[$s] ];
+        $sticker->[-1] =~ s/$char//;
+
+        # Recurse.  target is shorter by one letter, and our count went up.
+        _stickerize($stickerPool, $target, $sticker, $countSoFar+1);
     }
-
-
+    return;
 }
 
 sub runTest
 {
     use Test2::V0;
-
-    is( allSubstrings("a"),    [ qw(a) ], "Substr 1");
-    is( allSubstrings("ab"),   [ qw(a b ab) ], "Substr 2");
-    is( allSubstrings("abc"),  [ qw(a b c ab bc abc) ], "Substr 3");
-    is( allSubstrings("abcd"), [ qw(a b c d ab bc cd abc bcd abcd) ], "Substr 4");
 
     is(wordSticker("peon"         , qw(perl raku python)  ), 2, "Example 1");
     is(wordSticker("goat"         , qw(love hate angry )  ), 3, "Example 2");
