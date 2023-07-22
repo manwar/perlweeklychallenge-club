@@ -22,15 +22,10 @@
 
 use v5.36;
 
+use experimental qw(builtin); use builtin qw(true false);
 
-package Disarium;
-use Moo;
-
+use Feature::Compat::Class;
 use List::Util qw/sum/;
-
-has 'max' => ( is => 'ro',  required => 1 );
-has 'd'   => ( is => 'rw',  default => 0 );
-has '_count' => ( is => 'rw',  default => 0);
 
 sub _isDisarium($n)
 {
@@ -38,17 +33,20 @@ sub _isDisarium($n)
     return $n == sum( map { $digit[$_] ** ($_+1) } 0 .. $#digit );
 }
 
-sub next($self)
+class Disarium
 {
-    return undef if $self->_count >= $self->max;
+    field $max :param //= 1;
+    field $d   :param //= 0;
+    field $_count = 0;
 
-    $self->{d}++ while ! _isDisarium($self->{d});
-    $self->{_count}++;
-    $self->{d}++;
-    return $self->d - 1;
+    method next
+    {
+        return undef if $_count >= $max;
+        while ( ! ::_isDisarium($d) ) { $d++ } ;
+        $_count++;
+        return ++$d - 1;
+    }
 }
-
-1;
 
 
 use Getopt::Long;
@@ -64,9 +62,11 @@ while ( defined (my $d = $dIter->next() ) ) { say $d }
 sub runTest
 {
     use Test2::V0;
+use experimental qw(builtin); use builtin qw(true false);
 
-    is(0, 1, "FAIL");
+    is( _isDisarium($_), 1, "D $_") for 0 .. 9, 89, 135, 175, 518, 598, 1306, 1676, 2427, 2646798;
+
+    is( _isDisarium($_), false, "!D $_") for 10, 146, 12345, 864203;
 
     done_testing;
 }
-
