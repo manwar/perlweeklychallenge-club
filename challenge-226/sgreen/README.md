@@ -1,3 +1,3 @@
-# The Weekly Challenge 225
+# The Weekly Challenge 226
 
-Blog: [Weekly Challenge 225](https://dev.to/simongreennet/weekly-challenge-225-2785)
+Blog: [Moving and Removing](https://dev.to/simongreennet/moving-and-removing-2c5j)
