@@ -21,15 +21,14 @@ sub min_zero_ops {
     for (0 .. (scalar @i -1 )) {
         if ( $i[$_] != 0  ) {
             push @non_zero, $_;
+        }
     }
-    }
-    $smallest = min( @i[ @non_zero ] );
     while ( @non_zero != 0 ) {
+        $smallest = min( @i[ @non_zero ]);
         for (@non_zero) {
             $i[$_] -= $smallest;
         }
         @non_zero = grep { $i[$_] > 0 } @non_zero;
-        $smallest = min( @i[ @non_zero ]);
         $operations++;
     }
     return $operations;
