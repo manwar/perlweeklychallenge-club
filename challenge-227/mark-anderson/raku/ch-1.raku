@@ -59,8 +59,8 @@ sub friday-the-thirteenths($year where * ~~ 1753..9999)
     }
 }
 
-But it looks like the sequence repeats every 400 years 
-so this can be written without creating a Date object.
+But the sequence repeats every 400 years so this 
+can be written without creating a Date object.
 
 =end com
 
