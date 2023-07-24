@@ -1,7 +1,8 @@
 # Solution to the Task 1 of the Weekly Challenge 227
 # https://theweeklychallenge.org/blog/perl-weekly-challenge-227/#TASK1
 
-# Explanations: TBD
+# Explanations: 
+# https://andrewshitov.com/2023/07/24/calculator-with-roman-numbers-in-raku/
 
 # Test run:
 # $ raku ch-2.raku
