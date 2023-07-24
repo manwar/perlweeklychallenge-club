@@ -14,7 +14,6 @@ for 1753..9999 -> $year
     my $dow = $d.day-of-week;
     my @d = map { $d.later(:month($_)) }, ^12;
     say .fmt("%-15s") given $dow, +$d.is-leap-year, +@d.grep(*.day-of-week == 7)
-     
 }
 
 I used the program above (piped through sort -u) to create the chart below.
