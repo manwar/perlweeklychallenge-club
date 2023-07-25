@@ -1,0 +1,293 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{ exch dup length
+  2 index length add string
+  dup dup 4 2 roll copy length
+  4 -1 roll putinterval
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/roman2int {
+    3 dict begin
+    /roman exch def
+    roman length 0 eq {
+        0
+    } {
+        [
+            [ (M) 1000 ]
+            [ (CM) 900 ]
+            [ (D) 500 ]
+            [ (CD) 400 ]
+            [ (C) 100 ]
+            [ (XC) 90 ]
+            [ (L) 50 ]
+            [ (XL) 40 ]
+            [ (X) 10 ]
+            [ (IX) 9 ]
+            [ (V) 5 ]
+            [ (IV) 4 ]
+            [ (I) 1 ]
+        ] {
+            aload pop /value exch def /symbol exch def
+            roman symbol anchorsearch {
+                pop roman2int value add
+                exit
+            } {
+                pop
+            } ifelse
+        } forall
+    } ifelse
+    end
+} bind def
+
+/int2roman {
+    4 dict begin
+    /number exch def
+    /mn 0 array def
+    [
+        [ (M) 1000 ]
+        [ (CM) 900 ]
+        [ (D) 500 ]
+        [ (CD) 400 ]
+        [ (C) 100 ]
+        [ (XC) 90 ]
+        [ (L) 50 ]
+        [ (XL) 40 ]
+        [ (X) 10 ]
+        [ (IX) 9 ]
+        [ (V) 5 ]
+        [ (IV) 4 ]
+        [ (I) 1 ]
+    ] {
+        aload pop /value exch def /symbol exch def
+        {
+            value number gt {
+                exit
+            } if
+            /mn mn symbol apush.right def
+            /number number value sub def
+        } loop
+    } forall
+    mn () strjoin
+    end
+} bind def
+
+/romanmaths {
+    4 dict begin
+    ( ) strsplit aload pop
+    /b exch roman2int def
+    /op exch def
+    /a exch roman2int def
+    /c -1 def
+    1 {
+        op (+) deepeq {
+            /c a b add def
+            exit
+        } if
+        op (-) deepeq {
+            /c a b sub def
+            exit
+        } if
+        op (*) deepeq {
+            /c a b mul def
+            exit
+        } if
+        op (/) deepeq {
+            a b mod 0 eq {
+                /c a b idiv def
+            } if
+            exit
+        } if
+        op (**) deepeq {
+            /c a b exp def
+            exit
+        } if
+    } repeat
+    1 {
+        c 3999 gt c 0 lt or {
+            (non potest)
+            exit
+        } if
+        c 0 eq {
+            (nulla)
+            exit
+        } if
+        c int2roman
+    } repeat
+    end
+} bind def
+
+(roman2int) test.start
+(I) roman2int 1 eq test
+(II) roman2int 2 eq test
+(IV) roman2int 4 eq test
+(IX) roman2int 9 eq test
+(XXX) roman2int 30 eq test
+(MDCLXVI) roman2int 1666 eq test
+test.end
+
+(int2roman) test.start
+1 int2roman (I) eq test
+2 int2roman (II) eq test
+4 int2roman (IV) eq test
+9 int2roman (IX) eq test
+30 int2roman (XXX) eq test
+1666 int2roman (MDCLXVI) eq test
+test.end
+
+(romanmaths) test.start
+(IV + V) romanmaths (IX) eq test
+(M - I) romanmaths (CMXCIX) eq test
+(X / II) romanmaths (V) eq test
+(XI * VI) romanmaths (LXVI) eq test
+(VII ** III) romanmaths (CCCXLIII) eq test
+(V - V) romanmaths (nulla) eq test
+(V / II) romanmaths (non potest) eq test
+(MMM + M) romanmaths (non potest) eq test
+(V - X) romanmaths (non potest) eq test
+test.end
