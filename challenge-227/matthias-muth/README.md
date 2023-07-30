@@ -1,120 +1,121 @@
-# Reduce to the max
-**Challenge 225 solutions in Perl by Matthias Muth**
+# Friday XIII
+**Challenge 227 solutions in Perl by Matthias Muth**
 
-The tasks of this challenge are good ones,
-in the sense that the solutions can be short, nice, well-arranged, clear -- perly!
+## Task 1: Friday 13th
 
-However the second task took me some time to understand what really is happening
-in the task description and in the examples.
-
-But let's start with the first one:
-
-## Task 1: Max Words
-
-> You are given a list of sentences, @list.<br/>
-> A sentence is a list of words that are separated by a single space with no leading or trailing spaces.<br/>
-> Write a script to find out the maximum number of words that appear in a single sentence.<br/>
+> You are given a year number in the range 1753 to 9999.<br/>
+> Write a script to find out how many dates in the year are Friday 13th, assume that the current Gregorian calendar applies.<br/>
 > <br/>
-> Example 1<br/>
-> Input: @list = (qw/Perl and Raku belong to the same family./,<br/>
->                 qw/I love Perl./,<br/>
->                 qw/The Perl and Raku Conference./)<br/>
-> Output: 8<br/>
-> <br/>
-> Example 2<br/>
-> Input: @list = (qw/The Weekly Challenge./,<br/>
->                 qw/Python is the most popular guest language./,<br/>
->                 qw/Team PWC has over 300 members./)<br/>
-> Output: 7<br/>
+> Example<br/>
+> Input: $year = 2023<br/>
+> Output: 2<br/>
+> Since there are only 2 Friday 13th in the given year 2023 i.e. 13th Jan and 13th Oct.<br/>
 
-Perl in its own realm.<br/>
-So short that it probably needs some explanations...
+Looking for an easy way to get the weekday for a given date,
+the `Time::Piece` core module is an obvious choice.
 
-We get a list of strings, each one containing one sentence.
+`Time::Piece`'s typical usage is for dealing with 'current' times,
+which are returned by the `localtime` and `gmtime` subroutines when called without parameter.
+If we want to supply a different date with them,
+we need to compute Unix epoch time value to do so.
+We will look into that later.
 
-So let's split up each sentence into 'words' using `split " ", $_`,
-getting our `$_` from using `map` walking us through the list of sentences.
+But there is also the `Time::Piece->strptime(STRING, FORMAT)` subroutine that works as a constructor
+for `Time::Piece` objects.
+We hand in a date string like `"2023-07-13"`, and a format of `'%Y-%m-%d'`,
+and there we have our time object.
 
-The number of words in each sentence is `scalar` of the list of words that we just got.
-
-And `max(...)` (from `List::Util`) gets us the largest one.
-
-Voilà!
+So everything in one statement (but not on one line, to make it more readable!):
+- month numbers from 1 to 12,
+- use a `grep` code block to create the `Time::Piece` objects on the fly,
+and select those who return a day_of_week of 5 (Friday),
+-  use `scalar` to put `grep` into a scalar context
+so it returns the number of elements found instead of the list.
 
 ```perl
-use List::Util qw( max );
-
-sub max_words {
-    my ( @list ) = @_;
-    return max( map { scalar split " ", $_ } @list );
+use v5.36;
+use Time::Piece;
+sub friday_13th( $year ) {
+    return scalar grep {
+        Time::Piece->strptime( "$year-$_-13", "%Y-%m-%d" )->day_of_week == 5
+    } 1..12;
 }
 ```
 
-## Task 2: Left Right Sum Diff
+Now maybe `strptime` is not the fastest solution, 
+and we could use `timegm` from `Time::Local` to create our dates
+without the need of parsing a string with a format.
+But using `strptime` like above looks much clearer to me than
+converting month numbers from 1..12 to 0..11 and years to be offsets from 1900,
+which would be necessary if we used `timegm`:
+```perl
+use v5.36;
+use Time::Local;
+use Time::Piece;
+sub friday_13th( $year ) {
+    return scalar grep {
+        gmtime( timegm( 0, 0, 0, 13, $_ - 1, $year - 1900 ) )->day_of_week == 5
+     } 1..12;
+}
+```
+It's also that we would be jumping between domains
+(`localtime`/`gmtime` needing that 6-element list, returning an epoch time value,
+then we create a Time::Piece object from that),
+which does not really make it obvious what is going on.<br/>
+I prefer the first version! :-)
 
-> You are given an array of integers, @ints.<br/>
-> Write a script to return left right sum diff array as shown below:<br/>
-> @ints = (a, b, c, d, e)<br/>
-> @left  = (0, a, (a+b), (a+b+c))<br/>
-> @right = ((c+d+e), (d+e), e, 0)<br/>
-> @left_right_sum_diff = ( | 0 - (c+d+e) |,<br/>
->                          | a - (d+e)   |,<br/>
->                          | (a+b) - e   |,<br/>
->                          | (a+b+c) - 0 | )<br/>
-> <br/>
-> Example 1:<br/>
-> Input: @ints = (10, 4, 8, 3)<br/>
-> Output: (15, 1, 11, 22)<br/>
-> @left  = (0, 10, 14, 22)<br/>
-> @right = (15, 11, 3, 0)<br/>
-> @left_right_sum_diff = ( |0-15|, |10-11|, |14-3|, |22-0|)<br/>
->                      = (15, 1, 11, 22)<br/>
-> <br/>
-> Example 2:<br/>
-> Input: @ints = (1)<br/>
-> Output: (0)<br/>
-> @left  = (0)<br/>
-> @right = (0)<br/>
-> @left_right_sum_diff = ( |0-0| ) = (0)<br/>
-> <br/>
-> Example 3:<br/>
-> Input: @ints = (1, 2, 3, 4, 5)<br/>
-> Output: (14, 11, 6, 1, 19)<br/>
-> @left  = (0, 1, 3, 6, 10)<br/>
-> @right = (14, 12, 9, 5, 0)<br/>
-> @left_right_sum_diff = ( |0-14|, |1-12|, |3-9|, |6-5|, |10-0|)<br/>
->                      = (14, 11, 6, 1, 10)<br/>
+## Task 2: Roman Maths
 
-Maybe I don't fully understand the definition,
-but for me, there seems to be a little inconsistency between the definition and the examples.
-In the definiton we have 5 elements as input, but only 4 elements in the left and right sums,
-whereas all the examples are explained using arrays of left and right sums
-that have the same number of elements as the input array.<br/>
-I decided in favor of the examples. :-)
+> Write a script to handle a 2-term arithmetic operation expressed in Roman numeral.<br/>
+> <br/>
+> Example<br/>
+> IV + V     => IX<br/>
+> M - I      => CMXCIX<br/>
+> X / II     => V<br/>
+> XI * VI    => LXVI<br/>
+> VII ** III => CCCXLIII<br/>
+> V - V      => nulla (they knew about zero but didn't have a symbol)<br/>
+> V / II     => non potest (they didn't do fractions)<br/>
+> MMM + M    => non potest (they only went up to 3999)<br/>
+> V - X      => non potest (they didn't do negative numbers)<br/>
 
-For this task, I completely avoided writing any for loops,
-and based my solution on list-processing functions:
-* `reductions` from `List::Util` does the summing up of the 'left' sum,
-starting with a 0 and going through all input elements except the last one (to get the correct number of elements),
-* `reductions` from `List::Util` also does the summing up of the 'right' sum,
-starting with a 0 and going through the input elements *in reverse order*,
-leaving out the first element, and then doing another `reverse` to have the 0 at the end of the list,
-* `pairwise` from the `List::MoreUtils` module from CPAN then builds the list of differences
-between corresponding elements of the 'left' and 'right' arrays.
- 
-So actually the task can be solved using three lines of actual code:
+I'm sure it's an interesting exercise to convert Roman numerals to arabic (common) numbers
+and vice versa, but here, I am not going to reinvent the wheel.<br/>
+The `Roman` module from CPAN is my friend in this case.
+
+The more interesting aspect is how to implement the arithmetic operations
+in a more elegant way than a nested if-then-else statement.
+
+I chose a hash lookup to return an anonymous subroutine that implements
+the respective operation.
+
+The rest looks quite self-explanatory to me.<br/>
+Or is it only in my eyes???
 
 ```perl
-use feature 'signatures';
-no warnings 'experimental::signatures';
+use v5.36;
+use Roman;
 
-use List::Util qw( reductions );
-use List::MoreUtils qw( pairwise );
+my %ops = (
+    '+'  => sub { $_[0] + $_[1] },
+    '-'  => sub { $_[0] - $_[1] },
+    '*'  => sub { $_[0] * $_[1] },
+    '/'  => sub { $_[0] / $_[1] },
+    '**' => sub { $_[0] ** $_[1] },
+);
 
-sub left_right_sum_diff( @ints ) {
-    my @left  = reductions { $a + $b } 0, @ints[ 0 .. $#ints - 1 ];
-    my @right = reverse reductions { $a + $b } 0, reverse @ints[ 1 .. $#ints ];
-    return pairwise { abs( $a - $b ) } @left, @right
+sub roman_maths( @input ) {
+    my $result = $ops{$input[1]}->( arabic( $input[0] ), arabic( $input[2] ) );
+    return
+        $result == 0
+            ? "nulla (they knew about zero but didn't have a symbol)" :
+        $result != int( $result )
+            ? "non potest (they didn't do fractions)" :
+        $result > 3999
+            ? "non potest (they only went up to 3999)" :
+        $result < 0
+            ? "non potest (they didn't do negative numbers)" :
+        Roman( $result );
 }
 ```
 
