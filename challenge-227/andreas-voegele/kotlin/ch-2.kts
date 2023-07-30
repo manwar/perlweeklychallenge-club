@@ -108,11 +108,35 @@ class Roman private constructor(val number: Double) {
     override fun toString() = encodeRoman(number)
 }
 
+fun romanMaths(expression: String): Roman {
+    val functionFor = mapOf(
+        "+" to Roman::plus,
+        "-" to Roman::minus,
+        "*" to Roman::times,
+        "/" to Roman::div,
+        "%" to Roman::rem,
+        "**" to Roman::pow,
+    )
+    val match = Regex(
+        """
+        ([IVXLCDM]+)     # Numeral
+        \s*
+        ([-+*/%]|[*][*]) # Operator
+        \s*
+        ([IVXLCDM]+)     # Numeral
+        """,
+        RegexOption.COMMENTS,
+    ).matchEntire(expression)
+        ?: throw IllegalArgumentException("Invalid expression $expression")
+    val (x, op, y) = match.destructured
+    return functionFor[op]!!.invoke(Roman(x), Roman(y))
+}
+
 println(Roman("IV") + Roman("V"))
 println(Roman("M") - Roman("I"))
 println(Roman("X") / Roman("II"))
 println(Roman("XI") * Roman("VI"))
-println(Roman("VII").pow(Roman("III")))
+println(romanMaths("VII ** III"))
 println(Roman("V") - Roman("V"))
 println(Roman("V") / Roman("II"))
 println(Roman("MMM") + Roman("M"))

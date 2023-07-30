@@ -110,15 +110,32 @@ use overload
 
 package main;
 
+use Carp qw(croak);
+
 sub roman ($string) {
     return Roman->new($string);
+}
+
+sub roman_maths ($expression) {
+    my ($x, $op, $y) = $expression =~ m{
+        \A
+        ([IVXLCDM]+)     # Numeral
+        \s*
+        ([-+*/%]|[*][*]) # Operator
+        \s*
+        ([IVXLCDM]+)     # Numeral
+        \z
+    }xms
+        or croak "Invalid expression $expression";
+    ## no critic (ProhibitStringyEval)
+    return eval qq{roman('$x') $op roman('$y')};
 }
 
 say roman('IV') + roman('V');
 say roman('M') - roman('I');
 say roman('X') / roman('II');
 say roman('XI') * roman('VI');
-say roman('VII')**roman('III');
+say roman_maths('VII ** III');
 say roman('V') - roman('V');
 say roman('V') / roman('II');
 say roman('MMM') + roman('M');
