@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<title>The Weekly Challenge - Week 227 Task 1: Friday 13th</title>
+<body>
+
+  <script>
+    "use strict";
+
+    const weekday = [ "Sunday", "Monday", "Tuesday", "Wednesday",
+      "Thursday", "Friday" ,"Saturday" ];
+
+    const friday_13ths = new Map();
+    friday_13ths.set( "Sunday", [ 2, 2 ] );
+    friday_13ths.set( "Monday", [ 2, 2 ] );
+    friday_13ths.set( "Tuesday", [ 2, 1 ] );
+    friday_13ths.set( "Wednesday", [ 1, 2 ] );
+    friday_13ths.set( "Thursday", [ 3, 2 ] );
+    friday_13ths.set( "Friday", [ 1, 1 ] );
+    friday_13ths.set( "Saturday", [ 1, 1 ] );
+
+    function unlucky_days( year ) {
+      let first_day_of_year = new Date( year, 0, 1 );
+      let name_of_day = weekday[first_day_of_year.getDay()]
+      let is_leap_year = (new Date( year, 1, 29 ).getDate() === 29) ? 1: 0;
+      return friday_13ths.get(name_of_day)[is_leap_year];
+    }
+    
+    function update(){
+      let year = document.getElementById("year").value;
+      let number_of_days = unlucky_days( year );
+      let result_text = `${ year } has ${ number_of_days } Friday 13th(s).`;
+      document.getElementById("result").innerHTML = result_text;
+      document.getElementById("year").value = "";
+    }
+  </script>
+
+  <p>Enter a year between 1753 and 9999:</p>
+  <form onsubmit="update(); return false">
+    <input type="number" id="year" min="1753" max="9999" value="2023" required />
+    <input type="submit">
+  </form>
+  <p id=result><p>
+</body>
+
+</html>
