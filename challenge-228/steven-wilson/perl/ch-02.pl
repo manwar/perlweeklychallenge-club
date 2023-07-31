@@ -12,16 +12,15 @@ done_testing();
 sub empty_array {
     my @elements = @_;
     my $ops      = 0;
-    while ( @elements ) {
+    while (@elements) {
         if ( min(@elements) == $elements[0] ) {
             shift @elements;
-            $ops++;
         }
         else {
             my $element = shift @elements;
             push @elements, $element;
-            $ops++;
         }
+        $ops++;
     }
     return $ops;
 }
