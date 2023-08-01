@@ -15,7 +15,7 @@ fun nextNumbers(acc: MutableList<Int>, distance: Int, ints: Ints): Ints {
     var a = acc.last()
     for (b in ints) {
         if (Math.abs(a - b) == distance) {
-            acc.add(b);
+            acc.add(b)
             a = b
         }
     }
