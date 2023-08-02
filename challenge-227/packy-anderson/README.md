@@ -2,19 +2,19 @@
 
 ## Perl
 
-* [Task 1](perl/task-1.pl)
+* [Task 1](perl/ch-1.pl)
 
 Sample output
 ```
-$ perl/task-1.pl 2023
+$ perl/ch-1.pl 2023
 Input: $year = 2023
 Output: 2
 ```
-* [Task 2](perl/task-2.pl)
+* [Task 2](perl/ch-2.pl)
 
 Sample output
 ```
-$ perl/task-2.pl < task-2-input.txt
+$ perl/ch-2.pl < task-2-input.txt
 IV + V => IX
 M - I => CMXCIX
 X / II => V
@@ -34,20 +34,20 @@ $ echo "X + Y" | perl/task-2.pl
 
 ## Raku
 
-* [Task 1](raku/task-1.raku)
+* [Task 1](raku/ch-1.raku)
 
 Sample output
 ```
-$ raku/task-1.raku 2023
+$ raku/ch-1.raku 2023
 Input: $year = 2023
 Output: 2
 ```
 
-* [Task 2](raku/task-2.raku)
+* [Task 2](raku/ch-2.raku)
 
 Sample output
 ```
-$ raku/task-2.raku < task-2-input.txt
+$ raku/ch-2.raku < task-2-input.txt
 IV + V => IX
 M - I => CMXCIX
 X / II => V
