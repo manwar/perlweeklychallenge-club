@@ -97,4 +97,4 @@ Operation 3: remove element 3: ()
 
 ## Blog Post
 
-[Perl Weekly Challenge 228]()
+[Perl Weekly Challenge: Unique Sums and Empty Arrays](http://packy.dardan.com/2023/08/02/perl-weekly-challenge-unique-sums-and-empty-arrays/)
