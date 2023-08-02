@@ -9,36 +9,39 @@ This is a 110-character-wide Unicode UTF-8 Perl-source-code text file with hard 
 
 --------------------------------------------------------------------------------------------------------------
 TITLE BLOCK:
-Solutions in Perl for The Weekly Challenge 228-1.
-Written by Robbie Hatley on Tue Aug 01, 2023.
+Solutions in Perl for The Weekly Challenge 228-2.
+Written by Robbie Hatley on Wed Aug 02, 2023.
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM DESCRIPTION:
-Task 1: Unique Sum
+Task 2: Empty Array
 Submitted by: Mohammad S Anwar
 
-You are given an array of integers.
-Write a script to find out the sum of unique elements in the given array.
+You are given an array of integers in which all elements are unique. Write a script to perform the following
+operations until the array is empty, and return the total count of operations: If the first element is the
+smallest then remove it otherwise move it to the end.
 
-Example 1:  Input: @int = (2, 1, 3, 2)  Output: 4
-In the given array we have 2 unique elements (1, 3).
+Example 1:  Input: @int = (3, 4, 2)  Output: 5
+Operation 1: move 3 to the end: (4, 2, 3)
+Operation 2: move 4 to the end: (2, 3, 4)
+Operation 3: remove element 2: (3, 4)
+Operation 4: remove element 3: (4)
+Operation 5: remove element 4: ()
 
-Example 2:  Input: @int = (1, 1, 1, 1)  Output: 0
-In the given array no unique element found.
-
-Example 3:  Input: @int = (2, 1, 3, 4)  Output: 10
-In the given array every element is unique.
+Example 2:  Input: @int = (1, 2, 3)  Output: 3
+Operation 1: remove element 1: (2, 3)
+Operation 2: remove element 2: (3)
+Operation 3: remove element 3: ()
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
-To solve this problem, I'll make a hash of the number of instances of each element in an array, then map a sum
-of just those hash keys with values of exactly 1.
+I use List::Util::min, shift, and push, and increment a counter:
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
-double-quoted array of arrays of integers, in proper Perl syntax, like so:
-./ch-1.pl "([1,-4,2,-2,-4,-5,7,-3],[17,3,76,3,7,3],[8,73,11,8,73,11])"
+double-quoted array of arrays of uniq integers, in proper Perl syntax, like so:
+./ch-2.pl "([9,2,'dog',7],[3,7,3,7],[1,6,2,7,3,8,4,9],[8,7,6,5,4,3,2,1])"
 
 Output is to STDOUT and will be each input array followed by the corresponding output.
 
@@ -54,18 +57,22 @@ use utf8;
 
 use Sys::Binmode;
 use Time::HiRes 'time';
+use List::Util 'min';
 
 $"=', ';
 
 # ------------------------------------------------------------------------------------------------------------
 # SUBROUTINES:
 
-sub sum_unique ($aref) {
-   my %ab;                                    # Hash to hold element abundances.
-   for (@$aref) {++$ab{$_}}                   # Autovivify & increment from undef to 1.
-   my $sum = 0;                               # Variable to hold sum.
-   map {$sum += $_ if 1 == $ab{$_}} keys %ab; # Sum 1-of-a-kind elements.
-   return $sum;                               # Return sum.
+sub num_moves ($aref) {
+   my @array = @$aref;                         # Grab copy of original array.
+   my $moves = 0;                              # Count moves.
+   while (@array) {                            # For each element,
+      $array[0] == min @array and shift @array # if first is min, discard first;
+      or push @array, shift @array;            # otherwise, move first to last.
+      ++$moves;                                # Increment moves.
+   }
+   return $moves;                              # Return total moves.
 }
 
 # ------------------------------------------------------------------------------------------------------------
@@ -77,9 +84,8 @@ my $t0 = time;
 # Default inputs:
 my @arrays =
 (
-   [2, 1, 3, 2],
-   [1, 1, 1, 1],
-   [2, 1, 3, 4],
+   [3, 4, 2],
+   [1, 2, 3],
 );
 
 # Non-default inputs:
@@ -88,7 +94,7 @@ my @arrays =
 # Main loop:
 for my $aref (@arrays) {
    say "\nArray = (@$aref)";
-   say "Sum of unique elements = ", sum_unique($aref);
+   say "Number of moves = ", num_moves $aref;
 }
 
 # Determine and print execution time:
