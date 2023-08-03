@@ -1,0 +1,65 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/uniquesum {
+    2 dict begin
+    /c 0 dict def
+    {
+        /v exch def
+        c v known {
+            c v c v get 1 add put
+        } {
+            c v 1 put
+        } ifelse
+    } forall
+    0
+    c {
+        1 eq {
+            add
+        } {
+            pop
+        } ifelse
+    } forall
+    end
+} bind def
+
+(uniquesum) test.start
+[2 1 3 2] uniquesum 4 eq test
+[1 1 1 1] uniquesum 0 eq test
+[2 1 3 4] uniquesum 10 eq test
+test.end
