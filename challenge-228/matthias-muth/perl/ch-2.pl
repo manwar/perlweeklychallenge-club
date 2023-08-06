@@ -173,18 +173,11 @@ sub empty_array_5( @int ) {
 }
 
 sub empty_array( @int ) {
-    # $verbose = 1;
-    my @results = empty_array_1( @int );
-    is [ empty_array_2( @int ) ], \@results, "empty_array_2 results are the same";
-    is [ empty_array_3a( @int ) ], \@results, "empty_array_3a results are the same";
-    is [ empty_array_3b( @int ) ], \@results, "empty_array_3b results are the same";
-    is [ empty_array_4( @int ) ], \@results, "empty_array_4 results are the same";
-    is [ empty_array_5( @int ) ], \@results, "empty_array_5 results are the same";
-    return @results;
+    return empty_array_5( @int );
 }
 
-# run_tests;
-# exit 0;
+run_tests;
+exit 0;
 
 use Benchmark qw( :all :hireswallclock );
 
