@@ -1,0 +1,9 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@int where @int.elems > 0 && all(@int) ~~ Int, :v(:$verbose));
+
+my @unique = (@int ∖ @int.repeated).keys;
+
+say ": Unique: @unique[]" if $verbose;
+
+say @unique.sum;
