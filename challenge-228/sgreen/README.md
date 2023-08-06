@@ -1,3 +1,3 @@
-# The Weekly Challenge 227
+# The Weekly Challenge 228
 
-Blog: [Weekly Challenge 227](https://dev.to/simongreennet/weekly-challenge-227-3loi)
+Blog: [Weekly Challenge 228](https://dev.to/simongreennet/weekly-challenge-228-1j9)
