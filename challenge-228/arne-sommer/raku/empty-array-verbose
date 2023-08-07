@@ -1,0 +1,25 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@int where @int.elems > 0 && all(@int) ~~ Int && @int.elems == @int.unique.elems, :v(:$verbose));
+
+my $operations = 0;
+
+while @int.elems
+{
+  my $first = @int.shift;
+  $operations++;
+
+  if $first > @int.min
+  {
+    @int.push: $first;
+  
+    say ": Operation $operations: move $first to end: ({ @int.join(", ") })" if $verbose; 
+  }
+
+  elsif $verbose
+  {
+    say ": Operation $operations: remove element $first: ({ @int.join(", ") })";
+  }
+}
+
+say $operations;

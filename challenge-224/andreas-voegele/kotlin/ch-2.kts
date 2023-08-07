@@ -16,8 +16,7 @@ fun combineDigits(numericString: String): List<List<Int>> =
         val rest = numericString.drop(n)
         if (rest.isEmpty()) {
             listOf(listOf(number))
-        }
-        else {
+        } else {
             combineDigits(rest).map { listOf(number) + it }
         }
     }
@@ -38,6 +37,6 @@ fun isAdditive(numbers: List<Int>): Boolean {
 fun isAdditiveNumber(numericString: String) =
     combineDigits(numericString).any { isAdditive(it) }
 
-println(isAdditiveNumber("112358"));
-println(isAdditiveNumber("12345"));
-println(isAdditiveNumber("199100199"));
+println(isAdditiveNumber("112358"))
+println(isAdditiveNumber("12345"))
+println(isAdditiveNumber("199100199"))

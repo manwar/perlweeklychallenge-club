@@ -11,6 +11,6 @@ fun isPrime(n: Long) =
 fun primeNumbers(n: Long): List<Long> =
     (2..n).filter { isPrime(it) }
 
-println(primeNumbers(10L).size);
-println(primeNumbers(1L).size);
-println(primeNumbers(20L).size);
+println(primeNumbers(10L).size)
+println(primeNumbers(1L).size)
+println(primeNumbers(20L).size)
