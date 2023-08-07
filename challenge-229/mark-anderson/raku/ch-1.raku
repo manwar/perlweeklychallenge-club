@@ -6,7 +6,5 @@ is lexicographic-order(<yxz cba mon>), 2;
 
 sub lexicographic-order(*@a)
 {
-    @a.map({ so any ([lt] .comb), ([gt] .comb) })
-      .grep({ not .so })
-      .elems
+    + @a.map({ $++ if not so any ([lt] .comb), ([gt] .comb) })
 }
