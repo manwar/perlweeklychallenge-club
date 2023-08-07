@@ -34,7 +34,10 @@ sub twoOutOfThree($arrayOfarray)
     # Count number of arrays, should be 0,1,2
     for my $v ( 0 .. $arrayOfarray->$#* )
     {
+        # Set a bit corresponding to the vector we're looking at.
         my $bit = 1 << $v;
+
+        # Loop over elements in one of the arrays.
         for my $elem ( $arrayOfarray->[$v]->@* )
         {
             $appearsIn{$elem} |= $bit;
