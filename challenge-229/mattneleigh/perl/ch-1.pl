@@ -54,17 +54,9 @@ sub delete_unordered_strings{
         # sorted- in both directions- sequences of
         # characters in the string
         if(
-            (
-                $strings->[$i]
-                eq
-                $sorted
-            )
+            ($strings->[$i] eq $sorted)
             ||
-            (
-                $strings->[$i]
-                eq
-                reverse($sorted)
-            )
+            ($strings->[$i] eq reverse($sorted))
         ){
             # String matches at least one arrangement
             # of characters; move on to the next
