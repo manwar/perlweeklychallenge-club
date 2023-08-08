@@ -110,7 +110,7 @@ sub at_least_two ($aaref) {
    for my $aref (@$aaref) {
       for my $element (@$aref) {
          # If this is the first we've seen of this element, record how many arrays it's in,
-         # and if it's in 2-or-more arrays, push it to @two_of_three :
+         # and if it's in 2-or-more arrays, push it to @at_least_two :
          if ( ! defined $h{$element} ) {
             $h{$element} = is_in_how_many_arrays($aaref, $element);
             if ($h{$element} >= 2) {push @at_least_two, $element}
