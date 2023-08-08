@@ -31,8 +31,7 @@ sub two_out_of_three {
     my @arrays = @_;
     my %counts;
     for (@arrays) {
-        my @uniq = uniq @{$_};
-        map { $counts{$_}++ } @uniq;
+        map { $counts{$_}++ } uniq @{$_};
     }
     my @two_out_of_three
         = sort { $a <=> $b } grep { $counts{$_} > 1 } keys %counts;
