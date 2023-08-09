@@ -1,7 +1,7 @@
 #!/usr/bin/perl
-
 use strict;
 use warnings;
+use Test::More;
 
 sub count_deletions {
     my @str   = @_;
@@ -14,8 +14,8 @@ sub count_deletions {
     return $count;
 }
 
-my @str1 = ( "abc", "bce", "cae" );
-print count_deletions(@str1), "\n";    # Output: 1
+# Test cases
+is( count_deletions( "abc", "bce", "cae" ), 1, 'Example 1' );
+is( count_deletions( "yxz", "cba", "mon" ), 2, 'Example 2' );
 
-my @str2 = ( "yxz", "cba", "mon" );
-print count_deletions(@str2), "\n";    # Output: 2
+done_testing();
