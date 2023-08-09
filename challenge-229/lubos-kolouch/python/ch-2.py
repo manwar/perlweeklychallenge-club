@@ -1,11 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import unittest
+from typing import List
 
 
-def two_out_of_three(array1, array2, array3):
+def two_out_of_three(array1: List[int], array2: List[int], array3: List[int]) -> List[int]:
     count = {}
+
+    # Count the occurrences of elements in each array using unique values for each array
     for num in array1:
         count[num] = count.get(num, 0) + 1
     for num in array2:
@@ -13,6 +13,7 @@ def two_out_of_three(array1, array2, array3):
     for num in array3:
         count[num] = count.get(num, 0) + 4
 
+    # Select elements that appear in at least two arrays
     return sorted(key for key, value in count.items() if value in {1+2, 2+4, 1+4, 1+2+4})
 
 

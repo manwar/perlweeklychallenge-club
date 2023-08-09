@@ -1,16 +1,20 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
-def count_deletions(strings):
-    count = 0
-    for s in strings:
-        if s != ''.join(sorted(s)) and s != ''.join(sorted(s, reverse=True)):
-            count += 1
-    return count
+import unittest
+from typing import List
 
 
-str1 = ["abc", "bce", "cae"]
-print(count_deletions(str1))  # Output: 1
+def count_deletions(strings: List[str]) -> int:
+    return sum(1 for s in strings if s != ''.join(sorted(s)) and s != ''.join(sorted(s, reverse=True)))
 
-str2 = ["yxz", "cba", "mon"]
-print(count_deletions(str2))  # Output: 2
+
+class TestCountDeletions(unittest.TestCase):
+    def test_case_1(self):
+        self.assertEqual(count_deletions(["abc", "bce", "cae"]), 1)
+
+    def test_case_2(self):
+        self.assertEqual(count_deletions(["yxz", "cba", "mon"]), 2)
+
+
+if __name__ == '__main__':
+    unittest.main()
