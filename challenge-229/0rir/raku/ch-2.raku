@@ -33,7 +33,7 @@ my @Test =
 plan 16;
 
 # Select elems which are in all @pop.elems. With the :$but var select
-# elem values which exist in that many fewer @pop.elems.
+# elem values which exist in at least that many fewer @pop.elems.
 sub common( @pop, UInt :$but is copy -->List) {
     $but //= 0;
     my %b = (flat @pop.map( *.unique)).Bag;
