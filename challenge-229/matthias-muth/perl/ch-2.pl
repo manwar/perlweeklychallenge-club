@@ -20,7 +20,7 @@ sub two_out_of_three ( $array1, $array2, $array3 ) {
     $frequencies{$_}++
 	for map uniq( @$_ ), $array1, $array2, $array3;
     vsay "frequencies: ", pp \%frequencies;
-    return grep { $frequencies{$_} >= 2 } sort { $a <=> $b } keys %frequencies;
+    return sort { $a <=> $b } grep { $frequencies{$_} >= 2 } keys %frequencies;
 }
 
 run_tests;
