@@ -77,4 +77,4 @@ Output: (1, 4, 2)
 
 ## Blog Post
 
-[Perl Weekly Challenge: Two out of Three Ain't Lexicographically Bad](http://packy.dardan.com/2023/08/07/perl-weekly-challenge-two-out-of-three-aint-lexicographically-bad/)
+[Perl Weekly Challenge: Two out of Three Ain't Lexicographically Bad](http://packy.dardan.com/2023/08/08/perl-weekly-challenge-two-out-of-three-aint-lexicographically-bad/)
