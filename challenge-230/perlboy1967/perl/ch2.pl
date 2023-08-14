@@ -23,10 +23,9 @@ use common::sense;
 use Test::More;
 
 sub countWords ($@) {
-  my $prefix = shift;
-  my $l = length($prefix);
+  my ($l,$p) = (length $_[0], shift);
 
-  return scalar grep { substr($_,0,$l) eq $prefix } @_;
+  return scalar grep { substr($_,0,$l) eq $p } @_;
 }
 
 is(countWords('at', 'pay','attention','practice','attend'),2);
