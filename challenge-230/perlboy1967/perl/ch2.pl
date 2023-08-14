@@ -29,7 +29,7 @@ sub countWords ($@) {
   return scalar grep { substr($_,0,$l) eq $prefix } @_;
 }
 
-is(countWords('at',"pay", "attention", "practice", "attend"),2);
-is(countWords('ja',"janet", "julia", "java", "javascript"),3);
+is(countWords('at', 'pay','attention','practice','attend'),2);
+is(countWords('ja', 'janet','julia','java','javascript'),3);
 
 done_testing;
