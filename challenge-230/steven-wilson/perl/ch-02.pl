@@ -13,6 +13,6 @@ done_testing();
 
 sub count_words_with_prefix {
     my ( $prefix, @words ) = @_;
-    my @count = grep { ( index $_, $prefix ) == 0 } @words;
-    return scalar @count;
+    my $count = grep { ( index $_, $prefix ) == 0 } @words;
+    return $count;
 }
