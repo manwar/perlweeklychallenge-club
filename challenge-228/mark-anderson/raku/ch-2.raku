@@ -10,7 +10,7 @@ sub empty-array(*@a)
 {
     sum do while @a
     {
-        my $v = @a.antipairs.min.value;
+        my $v = @a.minpairs.head.key;
         @a .= rotate($v);
         @a.shift;
         $v.succ
