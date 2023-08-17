@@ -29,7 +29,7 @@ Output: (1, 2, 4, 5, 1, 6, 0)
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
 In Perl, any integer scalar can be treated like a string, so this task can be done by using "split" to chop
-the integers into arrays of digits, then using "push" to push them onto a new array:
+the integers into arrays of digits, then dump them into a new array:
 my @new = map {split //, $_} @old;
 
 --------------------------------------------------------------------------------------------------------------
