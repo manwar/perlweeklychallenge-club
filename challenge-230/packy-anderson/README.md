@@ -74,3 +74,4 @@ Three words "janet", "java", and "javascript" start with the given prefix "ja".
 
 ## Blog Post
 
+[Perl Weekly Challenge: Not the Stated Problem](http://packy.dardan.com/2023/08/18/perl-weekly-challenge-not-the-stated-problem/)
