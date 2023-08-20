@@ -1,29 +1,13 @@
-#!/usr/bin/perl
-
 use strict;
 use warnings;
-use Test::More;
-use Data::Dumper;
+use Test::More tests => 2;
 
-sub separate_digits {
-    my (@ints) = @_;
+my @ints1   = ( 1, 34, 5, 6 );
+my @digits1 = ( 1, 3,  4, 5, 6 );
+is_deeply( [ split //, join( '', @ints1 ) ],
+    \@digits1, 'Test 1: Separating digits from array' );
 
-    my @digits;
-    for my $num (@ints) {
-        my @digit_array = split //, $num;
-        push @digits, @digit_array;
-    }
-
-    return \@digits;
-}
-
-my @ints     = ( 1, 34, 5, 6 );
-my @expected = ( 1, 3,  4, 5, 6 );
-
-is_deeply( separate_digits(@ints), \@expected, 'Example 1' );
-
-@ints     = ( 1, 24, 51, 60 );
-@expected = ( 1, 2,  4,  5, 1, 6, 0 );
-is_deeply( separate_digits(@ints), \@expected, 'Example 2' );
-
-done_testing();
+my @ints2   = ( 1, 24, 51, 60 );
+my @digits2 = ( 1, 2,  4,  5, 1, 6, 0 );
+is_deeply( [ map { split // } @ints2 ],
+    \@digits2, 'Test 2: Separating digits from array' );
