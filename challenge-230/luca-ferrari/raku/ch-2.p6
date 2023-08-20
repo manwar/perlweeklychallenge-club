@@ -11,6 +11,6 @@ sub MAIN( Str $prefix where { $prefix.chars >= 2 },
 	  *@words where { @words.elems == @words.grep( * ~~ Str ).elems } ) {
     my $count = 0;
     $count++ if ( $_ ~~ / ^ $prefix / ) for @words;
-    $count.say;v
+    $count.say;
 
 }
