@@ -1,7 +1,7 @@
 use v5.38;
 ##
-# You are given an array of positive integers.
-# Write a script to separate the given array into single digits.
+# You are given an array of words made up of alphabetic characters and a prefix.
+# Write a script to return the count of words that starts with the given prefix.
 ##
 sub count_words{
     return counter(0, @_); 
