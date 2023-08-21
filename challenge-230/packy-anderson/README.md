@@ -6,35 +6,34 @@
 
 Sample output
 ```
-$ perl/ch1-1.pl
+$ perl/ch-1.pl
 Example 1:
-Input: @str = ("abc", "bce", "cae")
-Output: 1
-
-In the given array "cae" is the only element which is not lexicographically sorted.
+Input: @ints = (1, 34, 5, 6)
+Output: (1, 3, 4, 5, 6)
 
 Example 2:
-Input: @str = ("yxz", "cba", "mon")
-Output: 2
-
-In the given array "yxz" and "mon" are not lexicographically sorted.
+Input: @ints = (1, 24, 51, 60)
+Output: (1, 2, 4, 5, 1, 6, 0)
 ```
+
 * [Task 2](perl/ch-2.pl)
 
 Sample output
 ```
 $ perl/ch-2.pl
 Example 1:
-Input: @array1 = (1, 1, 2, 4)
-       @array2 = (2, 4)
-       @array3 = (4)
-Output: (2, 4)
+Input: @words  = ("pay", "attention", "practice", "attend")
+       $prefix = "at"
+Output: 2
+
+Two words "attention" and "attend" start with the given prefix "at".
 
 Example 2:
-Input: @array1 = (4, 1)
-       @array2 = (2, 4)
-       @array3 = (1, 2)
-Output: (1, 2, 4)
+Input: @words  = ("janet", "julia", "java", "javascript")
+       $prefix = "ja"
+Output: 3
+
+Three words "janet", "java", and "javascript" start with the given prefix "ja".
 ```
 
 ## Raku
@@ -45,16 +44,12 @@ Sample output
 ```
 $ raku/ch-1.raku
 Example 1:
-Input: @str = ("abc", "bce", "cae")
-Output: 1
-
-In the given array "cae" is the only element which is not lexicographically sorted.
+Input: @ints = (1, 34, 5, 6)
+Output: (1, 3, 4, 5, 6)
 
 Example 2:
-Input: @str = ("yxz", "cba", "mon")
-Output: 2
-
-In the given array "yxz" and "mon" are not lexicographically sorted.
+Input: @ints = (1, 24, 51, 60)
+Output: (1, 2, 4, 5, 1, 6, 0)
 ```
 
 * [Task 2](raku/ch-2.raku)
@@ -63,18 +58,20 @@ Sample output
 ```
 $ raku/ch-2.raku
 Example 1:
-Input: @array1 = (1, 1, 2, 4)
-       @array2 = (2, 4)
-       @array3 = (4)
-Output: (2, 4)
+Input: @words  = ("pay", "attention", "practice", "attend")
+       $prefix = "at"
+Output: 2
+
+Two words "attention" and "attend" start with the given prefix "at".
 
 Example 2:
-Input: @array1 = (4, 1)
-       @array2 = (2, 4)
-       @array3 = (1, 2)
-Output: (1, 4, 2)
+Input: @words  = ("janet", "julia", "java", "javascript")
+       $prefix = "ja"
+Output: 3
+
+Three words "janet", "java", and "javascript" start with the given prefix "ja".
 ```
 
 ## Blog Post
 
-[Perl Weekly Challenge: Two out of Three Ain't Lexicographically Bad](http://packy.dardan.com/2023/08/07/perl-weekly-challenge-two-out-of-three-aint-lexicographically-bad/)
+[Perl Weekly Challenge: Not the Stated Problem](http://packy.dardan.com/2023/08/18/perl-weekly-challenge-not-the-stated-problem/)
