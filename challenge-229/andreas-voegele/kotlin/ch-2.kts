@@ -7,7 +7,10 @@
 
 typealias BitSet = Int
 
-operator fun BitSet?.plus(other: BitSet) = this?.plus(other) ?: other
+infix fun BitSet?.or(other: BitSet) = this?.or(other) ?: other
+
+// We use += as there is no |= operator in Kotlin.
+operator fun BitSet?.plus(other: BitSet) = this or other
 
 fun twoOutOfThree(vararg arrays: IntArray): List<Int> {
     val bitSetFor = mutableMapOf<Int, BitSet>()
