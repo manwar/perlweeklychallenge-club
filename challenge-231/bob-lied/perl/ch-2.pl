@@ -28,16 +28,13 @@ exit(!runTest()) if $DoTest;
 
 sub seniorCitizen(@passenger)
 {
-    return scalar grep { $_ >= 60 } map { substr($_, 11, 2) } @passenger;
+    # return scalar grep { $_ >= 60 } map { substr($_, 11, 2) } @passenger;
+    return scalar grep { substr($_, 11, 2) >= 60 } @passenger;
 }
 
 sub sc_pack(@passenger)
 {
-    return scalar grep {
-        #my ($phone, $sex, $age, $seat) = unpack("A10 A1 A2 A2", $_);
-        #$age >= 60;
-        (unpack("A10 A1 A2 A2", $_))[2] >= 60
-    } @passenger
+    return scalar grep { (unpack("A10 A1 A2 A2", $_))[2] >= 60 } @passenger;
 }
 
 sub runTest
