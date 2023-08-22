@@ -29,6 +29,16 @@ my $DoTest  = 0;
 GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 exit(!runTest()) if $DoTest;
 
+my $inMinMax = minMax(@ARGV);
+if ( @$inMinMax == 0 )
+{
+    say "-1";
+}
+else
+{
+    say "(", join(", ", $inMinMax->@*), ")";
+}
+
 sub minMax(@list)
 {
     my ($min, $max) = ($list[0], $list[0]);
