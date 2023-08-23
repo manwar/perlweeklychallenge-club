@@ -8,12 +8,18 @@ Sample output
 ```
 $ perl/ch-1.pl
 Example 1:
-Input: @ints = (1, 34, 5, 6)
-Output: (1, 3, 4, 5, 6)
+Input: @ints = (3, 2, 1, 4)
+Output: (3, 2)
+The minimum is 1 and maximum is 4 in the given array. So (3, 2) are neither min nor max.
 
 Example 2:
-Input: @ints = (1, 24, 51, 60)
-Output: (1, 2, 4, 5, 1, 6, 0)
+Input: @ints = (3, 1)
+Output: -1
+
+Example 3:
+Input: @ints = (2, 1, 3)
+Output: (2)
+The minimum is 1 and maximum is 3 in the given array. So (2) is neither min nor max.
 ```
 
 * [Task 2](perl/ch-2.pl)
@@ -22,18 +28,25 @@ Sample output
 ```
 $ perl/ch-2.pl
 Example 1:
-Input: @words  = ("pay", "attention", "practice", "attend")
-       $prefix = "at"
+Input: @list = ("7868190130M7522", "5303914400F9211", "9273338290F4010")
 Output: 2
 
-Two words "attention" and "attend" start with the given prefix "at".
+The ages of the passengers in the given list are 75, 92, and 40.
+So we have 2 senior citizens.
 
 Example 2:
-Input: @words  = ("janet", "julia", "java", "javascript")
-       $prefix = "ja"
-Output: 3
+Input: @list = ("1313579440F2036", "2921522980M5644")
+Output: 0
 
-Three words "janet", "java", and "javascript" start with the given prefix "ja".
+The ages of the passengers in the given list are 20 and 56.
+So we have no senior citizens.
+
+Example 3:
+Input: @list = ("5188675309F6002")
+Output: 1
+
+The age of the passenger in the given list is 60.
+So we have 1 senior citizen.
 ```
 
 ## Raku
@@ -44,12 +57,18 @@ Sample output
 ```
 $ raku/ch-1.raku
 Example 1:
-Input: @ints = (1, 34, 5, 6)
-Output: (1, 3, 4, 5, 6)
+Input: @ints = (3, 2, 1, 4)
+Output: (3, 2)
+The minimum is 1 and maximum is 4 in the given array. So (3, 2) are neither min nor max.
 
 Example 2:
-Input: @ints = (1, 24, 51, 60)
-Output: (1, 2, 4, 5, 1, 6, 0)
+Input: @ints = (3, 1)
+Output: -1
+
+Example 3:
+Input: @ints = (2, 1, 3)
+Output: (2)
+The minimum is 1 and maximum is 3 in the given array. So (2) is neither min nor max.
 ```
 
 * [Task 2](raku/ch-2.raku)
@@ -58,20 +77,27 @@ Sample output
 ```
 $ raku/ch-2.raku
 Example 1:
-Input: @words  = ("pay", "attention", "practice", "attend")
-       $prefix = "at"
+Input: @list = ("7868190130M7522", "5303914400F9211", "9273338290F4010")
 Output: 2
 
-Two words "attention" and "attend" start with the given prefix "at".
+The ages of the passengers in the given list are 75, 92, and 40.
+So we have 2 senior citizens.
 
 Example 2:
-Input: @words  = ("janet", "julia", "java", "javascript")
-       $prefix = "ja"
-Output: 3
+Input: @list = ("1313579440F2036", "2921522980M5644")
+Output: 0
 
-Three words "janet", "java", and "javascript" start with the given prefix "ja".
+The ages of the passengers in the given list are 20 and 56.
+So we have no senior citizens.
+
+Example 3:
+Input: @list = ("5188675309F6002")
+Output: 1
+
+The age of the passenger in the given list is 60.
+So we have 1 senior citizen.
 ```
 
 ## Blog Post
 
-[Perl Weekly Challenge: Not the Stated Problem](http://packy.dardan.com/2023/08/18/perl-weekly-challenge-not-the-stated-problem/)
+[Perl Weekly Challenge: Min/Maxing your Senior Citizens](https://packy.dardan.com/2023/08/23/perl-weekly-challenge-min-maxing-your-senior-citizens/)
