@@ -34,9 +34,8 @@ Ouput: 0
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
-My approach to solving this was, for each "detail", increment a counter each time an age 60+ is seen,
-being careful to strip any leading 0 from the age (else octal!!!):
-"my $senior_count = 0; map {++$senior_count if (0 + ((substr $_, 11, 2) =~ s/^0//r)) >= 60} @$aref;
+My approach to solving this was, for each "detail", increment a counter each time an age 60+ is seen:
+"my $senior_count = 0; map {++$senior_count if (0 + substr $_, 11, 2) >= 60} @$aref;
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
@@ -64,7 +63,7 @@ use Time::HiRes 'time';
 
 sub count_seniors ($aref) {
    my $senior_count = 0;
-   map {++$senior_count if (0 + ((substr $_, 11, 2) =~ s/^0//r)) >= 60} @$aref;
+   map {++$senior_count if (0 + substr $_, 11, 2) >= 60} @$aref;
    return $senior_count;
 }
 
