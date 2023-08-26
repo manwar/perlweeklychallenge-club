@@ -1,0 +1,51 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/seniorcitizens {
+    0 exch
+    {
+        11 get 16#36 ge {
+            1 add
+        } if
+    } forall
+} bind def
+
+(seniorcitizens) test.start
+[(7868190130M7522) (5303914400F9211) (9273338290F4010)] seniorcitizens 2 eq test
+[(1313579440F2036) (2921522980M5644)] seniorcitizens 0 eq test
+test.end
