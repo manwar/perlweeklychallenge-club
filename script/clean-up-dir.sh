@@ -1,3 +1,5 @@
+find . -name "*.html" -delete
+find . -name "*.ps1" -delete
 find . -name "*.nelua" -delete
 find . -name "*.plperl" -delete
 find . -name "*.ipynb" -delete

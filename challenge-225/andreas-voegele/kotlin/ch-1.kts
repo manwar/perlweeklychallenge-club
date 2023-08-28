@@ -14,14 +14,14 @@ println(
     maxWords(
         "Perl and Raku belong to the same family.",
         "I love Perl.",
-        "The Perl and Raku Conference."
-    )
+        "The Perl and Raku Conference.",
+    ),
 )
 
 println(
     maxWords(
         "The Weekly Challenge.",
         "Kotlin is the most interesting guest language.",
-        "Team PWC has over 300 members."
-    )
+        "Team PWC has over 300 members.",
+    ),
 )
