@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Mocha Tests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/mocha/mocha.css" />
+    <script src="https://unpkg.com/mocha/mocha.js"></script>
+    <script class="mocha-init">
+      mocha.setup('bdd');
+    </script>
+    <script src="https://unpkg.com/chai/chai.js"></script>
+    <script>
+    // make assert global
+    let assert = chai.assert;
+    let expect = chai.expect;
+    </script>
+  </head>
+  <body>
+    <script src="../ch-01.js"></script>
+    <script src="../ch-02.js"></script>
+    <script src="tests.js"></script>
+    <div id="mocha"></div>
+    <script class="mocha-exec">
+      mocha.run();
+    </script>
+  </body>
+</html>
