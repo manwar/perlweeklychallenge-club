@@ -1,0 +1,58 @@
+on:
+  workflow_dispatch:
+    branches:
+      - github-actions-for-raku
+    inputs:
+      week:
+        description: 'weekly challenge to benchmark'
+        default: 0
+        required: true
+        type: int
+      user:
+        description: 'git user name'
+        default: "rcmlz"
+        required: true
+        type: string
+      token:
+        description: 'git token'
+        default: "github_pat_11AEW6C4I04NuzmsY"
+        required: true
+        type: string
+
+jobs:
+#  test:
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Test + coverage
+#        with:
+#          coverage: true
+#        uses: JJ/raku-test-action@v2
+  raku-benchmark:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Status
+      run: echo "Processing week ${{ inputs.week }}"
+    - name: Update apt
+      run: sudo apt-get update
+    - name: Install Raku
+      run: sudo apt-get install rakudo prove6
+    - name: search
+      run: sudo apt-cache search zef
+    - name: Checkout
+      uses: actions/checkout@v3
+    - name: Run Benchmark
+      run: raku --optimize=3 test/benchmark-scalabiity.raku DEMO
+#    - name: Branch
+#      uses: git branch benchmark-week-${{ inputs.week }}
+#    - name: Checkout
+#      uses: git checkout benchmark-week-${{ inputs.week }}
+#    - name: Run Benchmark
+#      run: sudo raku test/run-benchmark.raku ${{ inputs.week }}
+#    - name: Add result
+#      run: git add stats/ch-${{ inputs.week }}.raku.csv
+#    - name: Git config
+#      run: git config user.name "${{ inputs.user }}" --replace-all
+#    - name: Git config
+#      run: git config user.password "${{ inputs.token }}" --replace-all
+#    - name: Push result
+#      run: git push --set-upstream origin benchmark-week-${{ inputs.week }}
