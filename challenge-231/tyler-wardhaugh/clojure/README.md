@@ -1,6 +1,6 @@
-# c230
+# c231
 
-The Weekly Challenge — #230 — Tyler Wardhaugh
+The Weekly Challenge — #231 — Tyler Wardhaugh
 
 ## Usage
 
@@ -17,12 +17,12 @@ Run Task #1:
 
 Run Task #2:
 
-    $ clojure -M:t2 PREFIX WORDS
+    $ clojure -M:t2 COLL
     # ... or ...
-    $ bb run task-2 PREFIX WORDS
+    $ bb run task-2 COLL
 
     # Alternatively, to run it via Babashka:
-    $ bb run task-2-bb PREFIX WORDS
+    $ bb run task-2-bb COLL
 
 Run the project's tests (which are samples from the task descriptions):
 
