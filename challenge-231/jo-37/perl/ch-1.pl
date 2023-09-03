@@ -17,9 +17,6 @@ usage: $0 [-examples] [-tests] [--] [N...]
 -tests
     run some tests
 
--verbose
-    enable trace output
-
 N...
     list of numbers
 
@@ -45,6 +42,9 @@ main: {
 # With this procedure, there is only little extra effort needed to
 # extend the task to non-unique values.  Thus dropping the uniqueness
 # requirement.
+#
+# PS: See ch-1a.pl for a one-pass solution utilizing the numbers'
+# uniqueness
 
 sub not_extreme {
     # Lexical sub that records extreme values along with their indices.
