@@ -53,13 +53,14 @@ Output is to STDOUT and will be each input array followed by the corresponding o
 # ------------------------------------------------------------------------------------------------------------
 # PRELIMINARIES:
 
-use v5.38;
+use v5.36;
 use strict;
 use warnings;
 use utf8;
+use warnings FATAL => 'utf8';
+
 use Sys::Binmode;
 use Time::HiRes 'time';
-$"=', ';
 
 # ------------------------------------------------------------------------------------------------------------
 # SUBROUTINES:
