@@ -1,0 +1,32 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@list where @list.elems > 0, :v(:$verbose));
+
+grammar PassengerDetails
+{
+  token TOP   { ^ <phone> <sex> <age> <seat> $ }
+  token phone { <[0..9]> ** 10 }
+  token sex   { <[MF]> }
+  token age   { <[0..9]> ** 2 }
+  token seat  { <[0..9]> ** 2 }
+}
+
+my $senior = 0;
+
+for @list -> $passenger
+{
+  my $p = PassengerDetails.parse($passenger) || die "Illegal argument $passenger";
+
+  my $age = $p<age>;
+  if $age >= 60
+  {
+    say ": Passenger $passenger (age $age - senior)" if $verbose;
+    $senior++;
+  }
+  elsif $verbose
+  {
+    say ": Passenger $passenger (age $age)";
+  }
+}
+
+say $senior;

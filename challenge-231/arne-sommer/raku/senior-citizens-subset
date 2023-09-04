@@ -1,0 +1,23 @@
+#! /usr/bin/env raku
+
+subset PassengerDetails where * ~~ /^ <[0..9]> ** 10 <[MF]> <[0..9]> ** 2 <[0..9]> ** 2 $/;
+
+unit sub MAIN (*@list where @list.elems > 0 && all(@list) ~~ PassengerDetails, :v(:$verbose));
+
+my $senior = 0;
+
+for @list -> $passenger
+{
+  my $age = $passenger.substr(11,2);
+  if $age >= 60
+  {
+    say ": Passenger $passenger (age $age - senior)" if $verbose;
+    $senior++;
+  }
+  elsif $verbose
+  {
+    say ": Passenger $passenger (age $age)";
+  }
+}
+
+say $senior;
