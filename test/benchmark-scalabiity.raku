@@ -79,7 +79,7 @@ sub benchmark-scalability(&solution, &data, $run-time){
   my &simulation = &solution ∘ &data;
   for ^Inf -> $i {
       my $n = &data($i).elems; # this also ensures data input is generated and cached so influences less the metrics
-      say "$n";
+      say $n;
       my ($start, $latency, $throughput) = now;
       
       my $timer = Promise.in( $run-time );
