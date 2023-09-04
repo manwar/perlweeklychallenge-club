@@ -1,0 +1,12 @@
+#!/usr/bin/env raku
+
+use Test;
+use task-one;
+
+my @testcases = (
+  {input => ("aba", "aabb", "abcd", "bac", "aabc"),   output=> 2},
+  {input => ("aabb", "ab", "ba"), output=> 3},
+);
+
+plan @testcases.elems;
+is solution($_<input>), $_<output> for @testcases;
