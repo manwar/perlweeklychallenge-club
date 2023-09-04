@@ -104,10 +104,10 @@ sub create-output($out-folder, $challenge-identifier, $task-string, @results){
             LAST say flat ($user, flat @row);
         }
     }
-    my $out-dir = $out-folder.IO.add($challenge-identifier ~ "_" ~ $task-string ~ ".csv");
+    my $out-file = $out-folder.IO.add($challenge-identifier ~ "_raku_" ~ $task-string ~ ".csv");
     my $out-data = @csv.map( *.join(",")).join("\n");
-    say "writing to $out-dir";
-    spurt $out-dir, $out-data;
+    say "writing to $out-file";
+    spurt $out-file, $out-data;
 }
 
 #| Make sure we do not waste valuable computation time by running wrong solutions
