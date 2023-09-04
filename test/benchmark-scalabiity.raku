@@ -116,12 +116,5 @@ sub test-before-benchmark($module-file) {
     my $test-file = "test".IO.add($challenge).add($language).add($module-file.extension('rakutest').basename);
     my $cmd = "raku --optimize=3 -I " ~ $module-file.dirname ~ " " ~ $test-file;
     say "Testing: $module-file";
-    try {
-        shell $cmd;
-    }
-    if $! {
-        say "Test failed for " ~ $module-file;
-        return False;
-    }
-    return True;
+    shell($cmd).so
 }
