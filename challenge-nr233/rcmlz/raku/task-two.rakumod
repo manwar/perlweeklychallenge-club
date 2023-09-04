@@ -10,12 +10,16 @@ You are given an array of integers.
 ]
 our sub solution(@input) is export {
     @input.Bag
-          .antipairs
-          .sort( { bag-sort($^a, $^b) } )
-          .map( { (.value x .key).comb(.value.Str.comb.elems) } )
-          .flat;
+          .sort( { order($^a, $^b) } )
+          .map(  { listify($_) } )
+          .flat
 }
-sub bag-sort($a, $b){
-    my $c = $a.key cmp $b.key;
-    $c eq Same ?? $b.value cmp $a.value !! $c;
+
+sub order($a, $b --> Order){
+    my Order $c = $a.value cmp $b.value;
+    $c eq Same ?? $b.key cmp $a.key !! $c
+}
+
+sub listify(Pair $pair --> Seq){
+    ($pair.key x $pair.value).comb( $pair.key.Str.comb.elems )
 }
