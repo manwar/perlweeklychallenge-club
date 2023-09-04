@@ -61,12 +61,10 @@ sub MAIN ( Str $challenge-identifier, Tasks $tasks = all, Numeric $max-run-time 
                         await $run;
                         if $run.status eq PromiseStatus::Kept {
                             @results.push: $user, $run.result
-                        }else{
-                            say $run.status ~ " " ~ $run.cause;
                         }
                     }
                     if $! {
-                        say "Benchmark failed for " ~ $module-file;
+                        say "Benchmark failed for " ~ $module-file ~ " " ~ $!;
                     }
             }
         }
