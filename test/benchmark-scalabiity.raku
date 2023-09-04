@@ -61,6 +61,8 @@ sub MAIN ( Str $challenge-identifier, Tasks $tasks = all, Numeric $max-run-time 
                         await $run;
                         if $run.status eq PromiseStatus::Kept {
                             @results.push: $user, $run.result
+                        }else{
+                            say $run.status ~ " " ~ $run.cause;
                         }
                     }
                     if $! {
@@ -104,10 +106,10 @@ sub create-output($out-folder, $challenge-identifier, $task-string, @results){
             LAST say flat ($user, flat @row);
         }
     }
-    my $out-file = $out-folder.IO.add($challenge-identifier ~ "_raku_" ~ $task-string ~ ".csv");
+    my $out-dir = $out-folder.IO.add($challenge-identifier ~ "_" ~ $task-string ~ ".csv");
     my $out-data = @csv.map( *.join(",")).join("\n");
-    say "writing to $out-file";
-    spurt $out-file, $out-data;
+    say "writing to $out-dir";
+    spurt $out-dir, $out-data;
 }
 
 #| Make sure we do not waste valuable computation time by running wrong solutions
