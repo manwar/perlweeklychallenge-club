@@ -18,7 +18,7 @@ sub MAIN (Str $base-folder, UInt $max-challenge, Bool $dry-run=True) {
                           say "removing empty " ~ $user-folder;
                           $user-folder.add("README").unlink if $user-folder.add("README") ~~ :e and not $dry-run;
                           $user-folder.add("README.md").unlink if $user-folder.add("README.md") ~~ :e and not $dry-run;
-                          $user-folder.rmdir and not $dry-run;
+                          $user-folder.rmdir if not $dry-run;
                       }
                   }
             }
