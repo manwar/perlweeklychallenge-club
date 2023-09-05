@@ -8,18 +8,23 @@ Sample output
 ```
 $ perl/ch-1.pl
 Example 1:
-Input: @ints = (3, 2, 1, 4)
-Output: (3, 2)
-The minimum is 1 and maximum is 4 in the given array. So (3, 2) are neither min nor max.
+Input: @words = ("aba", "aabb", "abcd", "bac", "aabc")
+Output: 2
+
+Pair 1: similar words ("bac", "aabc")
+Pair 2: similar words ("aba", "aabb")
 
 Example 2:
-Input: @ints = (3, 1)
-Output: -1
+Input: @words = ("aabb", "ab", "ba")
+Output: 3
+
+Pair 1: similar words ("aabb", "ab")
+Pair 2: similar words ("aabb", "ba")
+Pair 3: similar words ("ab", "ba")
 
 Example 3:
-Input: @ints = (2, 1, 3)
-Output: (2)
-The minimum is 1 and maximum is 3 in the given array. So (2) is neither min nor max.
+Input: @words = ("nba", "cba", "dba")
+Output: 0
 ```
 
 * [Task 2](perl/ch-2.pl)
@@ -28,25 +33,29 @@ Sample output
 ```
 $ perl/ch-2.pl
 Example 1:
-Input: @list = ("7868190130M7522", "5303914400F9211", "9273338290F4010")
-Output: 2
+Input: @ints = (1, 1, 2, 2, 2, 3)
+Output: (3, 1, 1, 2, 2, 2)
 
-The ages of the passengers in the given list are 75, 92, and 40.
-So we have 2 senior citizens.
+'3' has a frequency of 1
+'1' has a frequency of 2
+'2' has a frequency of 3
+
 
 Example 2:
-Input: @list = ("1313579440F2036", "2921522980M5644")
-Output: 0
+Input: @ints = (2, 3, 1, 3, 2)
+Output: (1, 3, 3, 2, 2)
 
-The ages of the passengers in the given list are 20 and 56.
-So we have no senior citizens.
+'1' has a frequency of 1
+'2' and '3' both have a frequency of 2, so they are sorted in decreasing order
+
 
 Example 3:
-Input: @list = ("5188675309F6002")
-Output: 1
+Input: @ints = (-1, 1, -6, 4, 5, -6, 1, 4, 1)
+Output: (5, -1, 4, 4, -6, -6, 1, 1, 1)
 
-The age of the passenger in the given list is 60.
-So we have 1 senior citizen.
+'-1' and '5' both have a frequency of 1, so they are sorted in decreasing order
+'-6' and '4' both have a frequency of 2, so they are sorted in decreasing order
+'1' has a frequency of 3
 ```
 
 ## Raku
@@ -57,18 +66,23 @@ Sample output
 ```
 $ raku/ch-1.raku
 Example 1:
-Input: @ints = (3, 2, 1, 4)
-Output: (3, 2)
-The minimum is 1 and maximum is 4 in the given array. So (3, 2) are neither min nor max.
+Input: @words = ("aba", "aabb", "abcd", "bac", "aabc")
+Output: 2
+
+Pair 1: similar words ("bac", "aabc")
+Pair 2: similar words ("aba", "aabb")
 
 Example 2:
-Input: @ints = (3, 1)
-Output: -1
+Input: @words = ("aabb", "ab", "ba")
+Output: 3
+
+Pair 1: similar words ("aabb", "ab")
+Pair 2: similar words ("aabb", "ba")
+Pair 3: similar words ("ab", "ba")
 
 Example 3:
-Input: @ints = (2, 1, 3)
-Output: (2)
-The minimum is 1 and maximum is 3 in the given array. So (2) is neither min nor max.
+Input: @words = ("nba", "cba", "dba")
+Output: 0
 ```
 
 * [Task 2](raku/ch-2.raku)
@@ -77,27 +91,31 @@ Sample output
 ```
 $ raku/ch-2.raku
 Example 1:
-Input: @list = ("7868190130M7522", "5303914400F9211", "9273338290F4010")
-Output: 2
+Input: @ints = (1, 1, 2, 2, 2, 3)
+Output: (3, 1 1, 2 2 2)
 
-The ages of the passengers in the given list are 75, 92, and 40.
-So we have 2 senior citizens.
+'3' has a frequency of 1
+'1' has a frequency of 2
+'2' has a frequency of 3
+
 
 Example 2:
-Input: @list = ("1313579440F2036", "2921522980M5644")
-Output: 0
+Input: @ints = (2, 3, 1, 3, 2)
+Output: (1, 3 3, 2 2)
 
-The ages of the passengers in the given list are 20 and 56.
-So we have no senior citizens.
+'1' has a frequency of 1
+'2' and '3' both have a frequency of 2, so they are sorted in decreasing order
+
 
 Example 3:
-Input: @list = ("5188675309F6002")
-Output: 1
+Input: @ints = (-1, 1, -6, 4, 5, -6, 1, 4, 1)
+Output: (5, -1, 4 4, -6 -6, 1 1 1)
 
-The age of the passenger in the given list is 60.
-So we have 1 senior citizen.
+'-1' and '5' both have a frequency of 1, so they are sorted in decreasing order
+'-6' and '4' both have a frequency of 2, so they are sorted in decreasing order
+'1' has a frequency of 3
 ```
 
 ## Blog Post
 
-[Perl Weekly Challenge: Min/Maxing your Senior Citizens](https://packy.dardan.com/2023/08/23/perl-weekly-challenge-min-maxing-your-senior-citizens/)
+[Perl Weekly Challenge: What's the Frequency, Kenneth?](https://packy.dardan.com/2023/09/05/perl-weekly-challenge-whats-the-frequency-kenneth/)
