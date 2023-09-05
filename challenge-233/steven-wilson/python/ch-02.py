@@ -4,8 +4,7 @@ from collections import Counter
 
 
 def frequencySort(elements):
-    """Return count of similar words. Two words are similar if they
-    consist of the same characters.
+    """Return list sorted by frequency then decending order
     >>> frequencySort([1, 1, 2, 2, 2, 3])
     [3, 1, 1, 2, 2, 2]
     >>> frequencySort([2, 3, 1, 3, 2])
@@ -21,3 +20,4 @@ if __name__ == "__main__":
     import doctest
 
     doctest.testmod()
+
