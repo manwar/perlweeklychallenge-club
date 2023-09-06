@@ -72,8 +72,10 @@ sub frequency_sort ($aref) {
       ++$int_table{$_};
    }
    my %frequency_table;
-   for ( @$aref ) {
-      push(@{$frequency_table{$int_table{$_}}}, $_);
+   for my $int ( keys %int_table ) {
+      for ( 1..$int_table{$int} ) {
+         push @{$frequency_table{$int_table{$int}}}, $int;
+      }
    }
    my @sorted;
    for my $f ( sort {$a<=>$b} keys %frequency_table ) {
