@@ -32,7 +32,7 @@ Example 3
 Input: @ints = (-1,1,-6,4,5,-6,1,4,1)
 Ouput: (5,-1,4,4,-6,-6,1,1,1)
 """
-def mTup(tup):
+def mSort(tup):
     dct = {} ### key = number, value = frequency
     for i in tup:
         if dct.get(i):
@@ -61,4 +61,4 @@ for src, dst in {
     (2,3,1,3,2): (1,3,3,2,2),
     (-1,1,-6,4,5,-6,1,4,1): (5,-1,4,4,-6,-6,1,1,1),
 }.items():
-    print(mTup(src)==dst)
+    print(mSort(src)==dst)

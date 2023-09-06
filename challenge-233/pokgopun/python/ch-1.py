@@ -35,14 +35,20 @@ Output: 0
 def countSimilar (words):
     dct = {} ### key => word pattern, value => count
     for word in words:
-        ### Convert word to set which will sort/dedup, and then to string to use as dict key
-        k = str(set(word))
+        ### Convert word to bytes and then set which will sort/dedup, and then to bytes to be used as dict key
+        k = bytes(
+                sorted(
+                    set(
+                        bytes(word,'ascii')
+                        )
+                    )
+                )
         if dct.get(k):
             dct[k] += 1
         else:
             dct[k] = 1
     #print(dct)
-    ### pattern with count > 2 contains nC2 pair. Filter and calculate and return sum of pair
+    ### pattern with count > 1 contains nC2 pair. Filter and calculate and return sum of pair
     return sum(
             list(
                 map(
