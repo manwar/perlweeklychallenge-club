@@ -116,6 +116,10 @@ Output: (5, -1, 4 4, -6 -6, 1 1 1)
 '1' has a frequency of 3
 ```
 
+## Guest Language: Python
+* [Task 1](python/ch-1.py)
+* [Task 2](python/ch-1.py)
+
 ## Blog Post
 
 [Perl Weekly Challenge: What's the Frequency, Kenneth?](https://packy.dardan.com/2023/09/05/perl-weekly-challenge-whats-the-frequency-kenneth/)
