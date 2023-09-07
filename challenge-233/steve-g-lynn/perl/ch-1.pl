@@ -1,7 +1,5 @@
 #!/usr/bin/env -S perl -wl
 
-#-- restricts to perl 4 syntax
-
 print &similar_words("aba", "aabb", "abcd", "bac", "aabc"); #2
 print &similar_words("aabb", "ab", "ba"); #3
 print &similar_words("nba", "cba", "dba"); #0
