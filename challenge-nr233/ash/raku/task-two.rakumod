@@ -13,5 +13,5 @@ our sub solution(@arr) is export {
         %freq{$^a} <=> %freq{$^b} ||
         $^b <=> $^a
     };
-    return @sorted;
+    return @sorted.List;
 }

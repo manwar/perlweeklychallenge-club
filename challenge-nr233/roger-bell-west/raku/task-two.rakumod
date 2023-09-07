@@ -21,5 +21,5 @@ our sub solution(@al) is export {
             @out.append($v+0 xx $k);
         }
     }
-    return @out;
+    return @out.List;
 }

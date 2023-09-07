@@ -9,10 +9,27 @@ my @testcases = (
 );
 
 plan @testcases.elems;
-is solution($_<input>), $_<output> for @testcases;
+is-deeply solution($_<input>), $_<output> for @testcases;
 
 #my @testcases = (
 #{input => ((4, 1),       (2, 4), (1, 2)), output => (1, 2, 4).Set, description=>"all elements"},
 #);
 
 #cmp-ok task2($_<input>), &[eqv], $_<output>, $_<description> for @testcases;
+
+#subset DOMAIN of List(Str); # inputs accepted
+#subset CODOMAIN of UInt; # output expected
+
+#my @testcases = (
+#  {input => ("aba", "aabb", "abcd", "bac", "aabc"), output=> 2},
+#  {input => ("aabb", "ab", "ba"), output=> 3},
+#  {input => ("AAbb", "ab", "ba"), output=> 1},
+#  {input => ("\c[PENGUIN, BELL]", "\c[BELL, PENGUIN]", "\c[PENGUIN, PENGUIN]", 
+#             "ÄäÖöÜü", "ÄäÖÖööÜÜüü", "ÄäÖÖöößÜÜüü", 
+#             "\c[GRINNING FACE, SMILING FACE WITH HALO]", "\c[GRINNING FACE, SMILING FACE WITH HALO, SMILING FACE WITH HALO]",
+#             "àè", "àèàè", "àèä",
+#             "\c[EGYPTIAN HIEROGLYPH A001, EGYPTIAN HIEROGLYPH B009]", "\c[EGYPTIAN HIEROGLYPH A001, EGYPTIAN HIEROGLYPH B009, EGYPTIAN HIEROGLYPH B009]", "\c[EGYPTIAN HIEROGLYPH A001, EGYPTIAN HIEROGLYPH B009, EGYPTIAN HIEROGLYPH B008]"
+#             ), 
+#             output=> 5},  
+#);
+#https://www.unicode.org/charts/PDF/U13000.pdf

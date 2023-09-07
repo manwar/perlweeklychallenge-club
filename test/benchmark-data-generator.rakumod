@@ -11,7 +11,7 @@ sub data-provider-for($challenge, Str $task-string) is export {
     return &data-task-template if ('DEMO', 'task-one') ~~ ($challenge, $task-string);
     return &data-task-template if ('DEMO', 'task-two') ~~ ($challenge, $task-string);
 
-    die "Data provider for $challenge not implemented.";
+    die "Data provider for $challenge $task-string not implemented.";
 }
 
 sub random-strings($entry, $min-length=1, $max-length=100) {
@@ -19,7 +19,11 @@ sub random-strings($entry, $min-length=1, $max-length=100) {
     
     my $n = @problem-size-factor-two[$entry];
     
-    my $alphabet = ('a'..'z') ∪ ('A'..'Z') ∪ (0..9) ∪ ("\c[PENGUIN]", "\c[BELL]");
+    my $alphabet = ('a'..'z') ∪ ('A'..'Z') ∪ (0..9) ∪ 
+                   ('à', 'è.', 'ä', 'ö', 'ü', 'Ä', 'Ö', 'Ü', 'ß', "\c[LATIN CAPITAL LETTER SHARP S]") ∪ 
+                   ("\c[PENGUIN]", "\c[BELL]", "\c[SMILING FACE WITH HALO]", "\c[GRINNING FACE]") ∪ 
+                   ("\c[EGYPTIAN HIEROGLYPH A001]" .. "\c[EGYPTIAN HIEROGLYPH B009]");         
+    
     my $word-lenght = $min-length .. $max-length;
     
     unless @data[$n].elems {

@@ -13,6 +13,7 @@ our sub solution(@input) is export {
           .sort( { order($^a, $^b) } )
           .map(  { listify($_) } )
           .flat
+          
 }
 
 sub order($a, $b --> Order){
@@ -21,5 +22,5 @@ sub order($a, $b --> Order){
 }
 
 sub listify(Pair $pair --> Seq){
-    ($pair.key x $pair.value).comb( $pair.key.Str.comb.elems )
+    ($pair.key x $pair.value).comb( $pair.key.Str.comb.elems ).map(*.Int)
 }

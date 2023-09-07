@@ -30,5 +30,5 @@ our sub solution(@ints) is export {
       @output.append($int xx $freq);
     }
   }
-  return @output;
+  return @output.map(*.Int).List;
 }
