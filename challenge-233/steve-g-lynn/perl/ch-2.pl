@@ -16,7 +16,7 @@ sub frequency_sort {
 sub my_freq {
     #-- count frequencies
     local (%my_freq);
-    map {$my_freq{$_}++} @_;
+    for (@_) {$my_freq{$_}++}
     %my_freq;
 }
 

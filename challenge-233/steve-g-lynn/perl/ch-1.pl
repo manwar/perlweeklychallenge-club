@@ -16,14 +16,14 @@ sub similar_words {
     
     #-- trunk of subroutine
     local %similar_words;
-    map {
+    for (@_) {
         $similar_words{ &chars($_) }++; 
-    } @_;
+    } 
     
     local $similar_words=0; #-- return value
-    map {
+    for (keys %similar_words) {
         $similar_words += &nC2( $similar_words{$_} );
-    } keys %similar_words;
+    } 
     
     $similar_words;
 }
@@ -31,7 +31,7 @@ sub similar_words {
 sub my_uniq {
     #-- homemade uniq (drop duplicates from an array)
     local (%my_uniq);
-    map {$my_uniq{$_}=1} @_;
+    for (@_) {$my_uniq{$_}=1}
     keys %my_uniq; 
 }
 
