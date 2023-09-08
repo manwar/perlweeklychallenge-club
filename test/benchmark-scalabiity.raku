@@ -23,29 +23,33 @@ enum Tasks <task-one task-two all>;
 subset Name of Str;
 
 sub MAIN ( Str $challenge-identifier,
-           Tasks :$task = all, 
-           Name :$user = '\w+', 
-           Numeric :$max-run-time = 5, 
+           Tasks :task($task-string) = all, 
+           Name :$user, 
+           Numeric :$max-run-time = 1, 
            Str :$out-folder = 'data/', 
            Bool :$test-before-benchmark = True ) {
     
-    my $base-folder = "challenge-"  ~ $challenge-identifier;    
-    die "Directory $base-folder not found!" unless $base-folder.IO.d;
+    my $base-folder = "challenge-$challenge-identifier".IO;
+    $base-folder = $base-folder.add($user) if $user;
+    
+    {note "Directory $base-folder not found!"; exit } unless $base-folder.d;
 
-    my @tasks = $task eq all ?? ('task-one', 'task-two') !! ($task.Str);
+    my @tasks = $task-string eq all ?? ('task-one', 'task-two') !! ($task-string.Str);
     for @tasks -> $task-string {
-        say "Running $base-folder $task-string with $max-run-time secs maximum execution time, saving results to folder $out-folder.";
-
+        
         my @results = [];
         # stolen from https://docs.raku.org/routine/dir at bottom of page
-        my @stack = $base-folder.IO;
+        my @stack = $base-folder;
         my $files = gather while @stack {
             with @stack.pop {
-                when :d { @stack.append: .dir }
-                .take when .extension.lc eq 'rakumod' and .basename.match(/$task-string/) and .dirname.match(/\/$user\//)
+                when :d { @stack.append: .dir unless .match(/\.precomp/) }
+                .take when .extension.lc eq 'rakumod' and .basename.match(/$task-string/);
             }
         }
-
+        {note "No solutions found in folder: $base-folder for $task-string and $user"; exit} unless $files.elems;
+        
+        say "Processing " ~ $files.elems ~ " rakumod files from $base-folder $task-string with $max-run-time secs maximum execution time, saving results to folder $out-folder.";
+        
         for ^$files.elems {
             my $module-file = $files[$_];
             
@@ -70,11 +74,15 @@ sub MAIN ( Str $challenge-identifier,
                         }
                     }
                     if $! {
-                        say "Benchmark failed for " ~ $module-file ~ " " ~ $!;
+                        note "Benchmark failed for " ~ $module-file ~ " " ~ $!;
                     }
             }
         }
-        &create-output($out-folder, $challenge-identifier, $task-string, @results);
+        if @results.elems {
+            &create-output($out-folder, $challenge-identifier, $task-string, @results) 
+        }else{
+            note "No output generated for $challenge-identifier, $task-string, $user";
+        }
     }
 }
 

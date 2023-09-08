@@ -22,5 +22,5 @@ our sub solution(@a) is export {
             $pairs += $cv * ($cv - 1) / 2;
         }
     }
-    return $pairs;
+    return $pairs.Int;
 }

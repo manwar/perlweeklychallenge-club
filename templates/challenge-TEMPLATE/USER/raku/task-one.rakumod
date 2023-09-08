@@ -6,6 +6,7 @@ unit module challenge-{{TEMPLATE}}::{{USER}}::raku::task-one:ver<0.0.1>:auth<{{U
 #|[
 Individual task description and interesting solution hints ...
 ]
+#our sub solution( List:D[Alpha:D] $words --> List:D[APair:D] ) is export {
 our sub solution(@input) is export {
 	@input.map( *.comb ).flat;
 }
