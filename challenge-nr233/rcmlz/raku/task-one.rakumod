@@ -1,6 +1,7 @@
 unit module challenge-nr233::rcmlz::raku::task-one:ver<0.0.1>:auth<rcmlz@github.com)>;
 
 # run in terminal: raku --optimize=3 -I challenge-nr233/rcmlz/raku/ test/challenge-nr233/raku/task-one.rakutest
+#                  raku --optimize=3 test/benchmark-scalabiity.raku --task=task-one --user=rcmlz --max-run-time=1 --test-before-benchmark=True --out-folder=/tmp nr233; cat /tmp/nr233_task-one.csv
 
 #|[
 You are given an array of words made up of alphabets only.

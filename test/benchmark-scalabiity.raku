@@ -20,13 +20,19 @@ use lib $*PROGRAM.dirname;
 use benchmark-data-generator;
 
 enum Tasks <task-one task-two all>;
+subset Name of Str;
 
-sub MAIN ( Str $challenge-identifier, Tasks $tasks = all, Numeric $max-run-time = 5, Str $out-folder = 'data/', Bool $test-before-benchmark = True ) {
+sub MAIN ( Str $challenge-identifier,
+           Tasks :$task = all, 
+           Name :$user = '\w+', 
+           Numeric :$max-run-time = 5, 
+           Str :$out-folder = 'data/', 
+           Bool :$test-before-benchmark = True ) {
     
     my $base-folder = "challenge-"  ~ $challenge-identifier;    
     die "Directory $base-folder not found!" unless $base-folder.IO.d;
 
-    my @tasks = $tasks eq all ?? ('task-one', 'task-two') !! ($tasks.Str);
+    my @tasks = $task eq all ?? ('task-one', 'task-two') !! ($task.Str);
     for @tasks -> $task-string {
         say "Running $base-folder $task-string with $max-run-time secs maximum execution time, saving results to folder $out-folder.";
 
@@ -36,7 +42,7 @@ sub MAIN ( Str $challenge-identifier, Tasks $tasks = all, Numeric $max-run-time 
         my $files = gather while @stack {
             with @stack.pop {
                 when :d { @stack.append: .dir }
-                .take when .extension.lc eq 'rakumod' and .match(/$task-string/)
+                .take when .extension.lc eq 'rakumod' and .basename.match(/$task-string/) and .dirname.match(/\/$user\//)
             }
         }
 
@@ -105,7 +111,7 @@ sub create-output($out-folder, $challenge-identifier, $task-string, @results){
         }
     }
     my $out-dir = $out-folder.IO.add($challenge-identifier ~ "_" ~ $task-string ~ ".csv");
-    my $out-data = @csv.map( *.join(",")).join("\n");
+    my $out-data = @csv.map( *.join(",")).join("\n") ~ "\n";
     say "writing to $out-dir";
     spurt $out-dir, $out-data;
 }

@@ -1,35 +1,27 @@
 #!/usr/bin/env raku
+#BEGIN %*ENV<RAKU_TEST_DIE_ON_FAIL> = 1;
+#BEGIN %*ENV<AUTHOR_TESTING> = 1;
 
 use Test;
 use task-two;
 
-my @testcases = (
-  {input => (1, 34, 5, 6),   output=> (1, 3, 4, 5, 6)},
-  {input => (1, 24, 51, 60), output=> (1, 2, 4, 5, 1, 6, 0)},
-);
+my @testcases =
+  (1,1,2,2,2,3) => (3,1,1,2,2,2),
+  (2,3,1,2,3) => (1,3,3,2,2),
+  (222,33,1,222,33) => (1,222,222,33,33)
+;
 
 plan @testcases.elems;
-is-deeply solution($_<input>), $_<output> for @testcases;
+is-deeply solution(.key), .value for @testcases;
+# cmp-ok solution(.key), &[eqv], .value for @testcases;
 
-#my @testcases = (
-#{input => ((4, 1),       (2, 4), (1, 2)), output => (1, 2, 4).Set, description=>"all elements"},
-#);
-
-#cmp-ok task2($_<input>), &[eqv], $_<output>, $_<description> for @testcases;
-
-#subset DOMAIN of List(Str); # inputs accepted
-#subset CODOMAIN of UInt; # output expected
-
-#my @testcases = (
-#  {input => ("aba", "aabb", "abcd", "bac", "aabc"), output=> 2},
-#  {input => ("aabb", "ab", "ba"), output=> 3},
-#  {input => ("AAbb", "ab", "ba"), output=> 1},
-#  {input => ("\c[PENGUIN, BELL]", "\c[BELL, PENGUIN]", "\c[PENGUIN, PENGUIN]", 
-#             "ÄäÖöÜü", "ÄäÖÖööÜÜüü", "ÄäÖÖöößÜÜüü", 
-#             "\c[GRINNING FACE, SMILING FACE WITH HALO]", "\c[GRINNING FACE, SMILING FACE WITH HALO, SMILING FACE WITH HALO]",
-#             "àè", "àèàè", "àèä",
-#             "\c[EGYPTIAN HIEROGLYPH A001, EGYPTIAN HIEROGLYPH B009]", "\c[EGYPTIAN HIEROGLYPH A001, EGYPTIAN HIEROGLYPH B009, EGYPTIAN HIEROGLYPH B009]", "\c[EGYPTIAN HIEROGLYPH A001, EGYPTIAN HIEROGLYPH B009, EGYPTIAN HIEROGLYPH B008]"
-#             ), 
-#             output=> 5},  
-#);
-#https://www.unicode.org/charts/PDF/U13000.pdf
+if ?%*ENV<AUTHOR_TESTING> {
+  for @testcases.keys -> $i {
+    my ($input, $output) = @testcases[$i].kv;
+    say $i + 1 ~ '. testcase';
+    isa-ok $input, List, 'domain data structure';
+    ok all($input) ~~ Int, 'domain value';
+    isa-ok $output, List, 'co-domain data structure';
+    ok all($output) ~~ Int, 'co-domain value';    
+  }
+}
