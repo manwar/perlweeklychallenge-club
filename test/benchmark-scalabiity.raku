@@ -19,16 +19,21 @@ use lib '.';
 use lib $*PROGRAM.dirname;
 use benchmark-data-generator;
 
+my $verbose = False;
+my $output-header = "user,runtime,n,latency,throughput";
+
 enum Tasks <task-one task-two all>;
 subset Name of Str;
 
 sub MAIN ( Str $challenge-identifier,
            Tasks :task($task-string) = all, 
            Name :$user, 
-           Numeric :$max-run-time = 1, 
+           Str :$max-run-times = '1,3,7', 
            Str :$out-folder = 'data/', 
-           Bool :$test-before-benchmark = True ) {
+           Bool :$test-before-benchmark = True,
+           Bool :$v = False ) {
     
+    $verbose = $v;
     my $base-folder = "challenge-$challenge-identifier".IO;
     $base-folder = $base-folder.add($user) if $user;
     
@@ -48,34 +53,35 @@ sub MAIN ( Str $challenge-identifier,
         }
         {note "No solutions found in folder: $base-folder for $task-string and $user"; exit} unless $files.elems;
         
-        say "Processing " ~ $files.elems ~ " rakumod files from $base-folder $task-string with $max-run-time secs maximum execution time, saving results to folder $out-folder.";
-        
+        say "Processing " ~ $files.elems ~ " rakumod files from $base-folder $task-string, saving results to folder $out-folder." if $verbose;
+
         for ^$files.elems {
             my $module-file = $files[$_];
-            
-            my ($folder, $user, $language, $module) = $module-file.extension('').Str.split('/');
-            
             my $test-ok = $test-before-benchmark ?? &test-before-benchmark($module-file) !! True;
-            
+                
             if $test-ok {
-                    try {
-                        # see https://docs.raku.org/language/packages#Programmatic_use_of_modules to read how the following code works
-                        my $m = "{$folder}::{$user}::{$language}::{$module}";
-                        say "Benchmarking: $m";
-                        require ::($m);
-                        my &solution-under-test = &::($m)::solution;
-                        my $run = start { benchmark-scalability(&solution-under-test, 
-                                                                &data-provider-for($challenge-identifier, $task-string), 
-                                                                $max-run-time) 
-                                        };
-                        await $run;
-                        if $run.status eq PromiseStatus::Kept {
-                            @results.push: $user, $run.result
+                my UInt @max-run-times = $max-run-times.split(',').map(*.UInt).Set.keys;
+                for @max-run-times.sort -> $max-run-time {
+                    my ($folder, $user, $language, $module) = $module-file.extension('').Str.split('/');                
+                        try {
+                            # see https://docs.raku.org/language/packages#Programmatic_use_of_modules to read how the following code works
+                            my $m = "{$folder}::{$user}::{$language}::{$module}";
+                            say "Benchmarking $m for $max-run-time secs";
+                            require ::($m);
+                            my &solution-under-test = &::($m)::solution;
+                            my $run = start { benchmark-scalability(&solution-under-test, 
+                                                                    &data-provider-for($challenge-identifier, $task-string), 
+                                                                    $max-run-time) 
+                                            };
+                            await $run;
+                            if $run.status eq PromiseStatus::Kept {
+                                @results.push: $user, $run.result
+                            }
                         }
-                    }
-                    if $! {
-                        note "Benchmark failed for " ~ $module-file ~ " " ~ $!;
-                    }
+                        if $! {
+                            note "Benchmark failed for " ~ $module-file ~ " " ~ $!;
+                        }
+                }
             }
         }
         if @results.elems {
@@ -93,7 +99,7 @@ sub benchmark-scalability(&solution, &data, $run-time){
   my &simulation = &solution ∘ &data;
   for ^Inf -> $i {
       my $n = &data($i).elems; # this also ensures data input is generated and cached so influences less the metrics
-      say $n;
+      print "$n " if $verbose;
       my ($start, $latency, $throughput) = now;
       
       my $timer = Promise.in( $run-time );
@@ -102,7 +108,7 @@ sub benchmark-scalability(&solution, &data, $run-time){
       my $too-slow = await Promise.anyof($timer, $solution).then( { $timer.status eq PromiseStatus::Kept } );
       last if $too-slow;
 
-      @results.push: ($n, $latency, $throughput);
+      @results.push: ($run-time, $n, $latency, $throughput);
   }
   return @results;
 }
@@ -110,17 +116,17 @@ sub benchmark-scalability(&solution, &data, $run-time){
 #| Transform into the required output format
 sub create-output($out-folder, $challenge-identifier, $task-string, @results){
     my @csv =[];
-    say "Best results per user:";
-    say "(user n latency throughput)";
+    say "Best results per user:" if $verbose;
+    say '(' ~ $output-header ~ ')' if $verbose;
     for @results -> $user, @data {
         for @data -> @row {
             @csv.push: flat ($user, flat @row);
-            LAST say flat ($user, flat @row);
+            LAST say flat ($user, flat @row) if $verbose;
         }
     }
     my $out-dir = $out-folder.IO.add($challenge-identifier ~ "_" ~ $task-string ~ ".csv");
-    my $out-data = @csv.map( *.join(",")).join("\n") ~ "\n";
-    say "writing to $out-dir";
+    my $out-data = $output-header ~ "\n" ~ @csv.map( *.join(",")).join("\n") ~ "\n";
+    say "writing to $out-dir" if $verbose;
     spurt $out-dir, $out-data;
 }
 
@@ -129,6 +135,6 @@ sub test-before-benchmark($module-file) {
     my ($challenge, $user, $language) = $module-file.extension('').Str.split('/');
     my $test-file = "test".IO.add($challenge).add($language).add($module-file.extension('rakutest').basename);
     my $cmd = "raku --optimize=3 -I " ~ $module-file.dirname ~ " " ~ $test-file;
-    say "Testing: $module-file";
+    say "Testing $module-file";
     shell($cmd).so
 }

@@ -13,15 +13,13 @@ my Set $some-unicode-characters =
 
 
 sub data-provider-for(Str $challenge, Str $task-string) is export {
-    my &d;
     given $challenge => $task-string {
-        when 'nr233' => 'task-one' { &d = &unicode-words.assuming(*, 10, 1, 25) }
-        when 'nr233' => 'task-two' { &d = &integers.assuming(*, -100, 100) }
-        when 'DEMO' => 'task-one'  { &d = &data-task-template}
-        when 'DEMO' => 'task-two'  { &d = &data-task-template}
+        when 'nr233' => 'task-one' { return &unicode-words.assuming(*, 10, 1, 25) }
+        when 'nr233' => 'task-two' { return &integers.assuming(*, -100, 100) }
+        when 'DEMO' => 'task-one'  { return &data-task-template}
+        when 'DEMO' => 'task-two'  { return &data-task-template}
         default {die "Data provider for $challenge $task-string not implemented."}
     }
-    return &d;
 }
 
 sub unicode-words(UInt $entry, UInt $alphabet-size, UInt $min-length, UInt $max-length where {$min-length <= $max-length}) {
