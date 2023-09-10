@@ -200,7 +200,7 @@ no warnings 'experimental::signatures';
 ## Note 2: TestExtractor.pm
 My [code](perl) also includes [`TestExtractor.pm`](perl/TestExtractor.pm),
 which extracts the example test data from a text version of the challenge tasks
-(extracted from the [website](https://theweeklychallenge.org/) by another script every monday ;-),
+(extracted from the [website](https://theweeklychallenge.org/) by another script every Monday ;-),
 and runs the tests.
 
 ## 
