@@ -50,14 +50,14 @@ jobs:
       run: tokei challenge-nr${{ inputs.week }} > /tmp/challenge-nr${{ inputs.week }}.tokei.txt
     - name: Archive benchmark results
       uses: actions/upload-artifact@v3
-        with:
-          name: scalability-benchmark-data
-          path: /tmp/nr${{ inputs.week }}_*.csv
+      with:
+        name: scalability-benchmark-data
+        path: /tmp/nr${{ inputs.week }}_*.csv
     - name: Archive Tokei report
       uses: actions/upload-artifact@v3
-        with:
-          name: tokei-stats-report
-          path: /tmp/challenge-nr${{ inputs.week }}.tokei.txt
+      with:
+        name: tokei-stats-report
+        path: /tmp/challenge-nr${{ inputs.week }}.tokei.txt
 #    - name: search
 #      run: sudo apt-cache search zef
 #    - name: Branch
