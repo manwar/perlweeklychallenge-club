@@ -28,7 +28,7 @@ sub MAIN ( Str $challenge-identifier,
            Str :$max-run-times = '1,3,7', 
            Str :$out-folder = 'data/', 
            Bool :$test-before-benchmark = True,
-           Bool :$v = False ) {
+           Bool :$v = False) {
     
     $verbose = $v;
     my $base-folder = "challenge-$challenge-identifier".IO;

@@ -2,22 +2,23 @@ on:
   workflow_dispatch:
     branches:
       - github-actions-for-raku
+      - raku-benchmark-scaleability
     inputs:
       week:
         description: 'weekly challenge to benchmark'
-        default: 0
-        required: true
-        type: int
-      user:
-        description: 'git user name'
-        default: "rcmlz"
+        default: 100
         required: true
         type: string
-      token:
-        description: 'git token'
-        default: "github_pat_11AEW6C4I04NuzmsY"
-        required: true
-        type: string
+#      user:
+#        description: 'git user name'
+#        default: "rcmlz"
+#        required: true
+#        type: string
+#      token:
+#        description: 'git token'
+#        default: "github_pat_some-long-string"
+#        required: true
+#        type: string
 
 jobs:
 #  test:
@@ -35,13 +36,30 @@ jobs:
     - name: Update apt
       run: sudo apt-get update
     - name: Install Raku
-      run: sudo apt-get install rakudo prove6
-    - name: search
-      run: sudo apt-cache search zef
+      run: sudo apt-get install rakudo
+      run: raku --version
+    - name: Install Tokei
+      run: sudo wget -qO tokei.tar.gz https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz
+      run: sudo tar xf tokei.tar.gz -C /usr/local/bin
+      run: tokei --version
     - name: Checkout
       uses: actions/checkout@v3
     - name: Run Benchmark
-      run: raku --optimize=3 test/benchmark-scalabiity.raku DEMO
+      run: raku --optimize=3 -I challenge-nr${{ inputs.week }} -- test/benchmark-scalabiity.raku --out-folder=/tmp --max-run-times=1,10,100 challenge-nr${{ inputs.week }}
+    - name: Run Tokei for other statistics
+      run: tokei challenge-nr${{ inputs.week }} > /tmp/challenge-nr${{ inputs.week }}.tokei.txt
+    - name: Archive benchmark results
+      uses: actions/upload-artifact@v3
+        with:
+          name: scalability-benchmark-data
+          path: /tmp/nr${{ inputs.week }}_*.csv
+    - name: Archive Tokei report
+      uses: actions/upload-artifact@v3
+        with:
+          name: tokei-stats-report
+          path: /tmp/challenge-nr${{ inputs.week }}.tokei.txt
+#    - name: search
+#      run: sudo apt-cache search zef
 #    - name: Branch
 #      uses: git branch benchmark-week-${{ inputs.week }}
 #    - name: Checkout
