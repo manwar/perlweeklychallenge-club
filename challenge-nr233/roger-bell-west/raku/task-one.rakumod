@@ -1,4 +1,4 @@
-unit module challenge-nr233::roger-bell-west::raku::task-one:ver<0.0.1>:auth<roger-bell-west@github.com)>;
+unit module roger-bell-west::raku::task-one:ver<0.0.1>:auth<roger-bell-west@github.com)>;
 
 # run in terminal: raku --optimize=3 -I challenge-nr233/roger-bell-west/raku/ test/challenge-nr233/raku/task-one.rakutest
 

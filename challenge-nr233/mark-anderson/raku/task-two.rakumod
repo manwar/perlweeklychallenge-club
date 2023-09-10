@@ -1,4 +1,4 @@
-unit module challenge-nr233::mark-anderson::raku::task-two:ver<0.0.1>:auth<mark-anderson@github.com)>;
+unit module mark-anderson::raku::task-two:ver<0.0.1>:auth<mark-anderson@github.com)>;
 
 # run in terminal: raku --optimize=3 -I challenge-nr233/mark-anderson/raku/ test/challenge-nr233/raku/task-two.rakutest
 

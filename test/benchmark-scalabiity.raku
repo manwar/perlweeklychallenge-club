@@ -1,19 +1,16 @@
 #!/usr/bin/env raku
-
-# assumig challenges are in folders challenge-DEMO/USER/raku/ AND
+#
+# Always start this script in root folder of perlweeklychallenge-club s.t. we find all solutions at challenge-nrXXX subfolders!
+#
+# assumig challenges are in folders e.g. challenge-DEMO/USER/raku/ AND
 # there exist corresponding task-one.rakutest and task-two.rakutest in test/challenge-DEMO/
 #
-# run like: raku --optimize=3 test/benchmark-scalabiity.raku DEMO
-#
-# (tests and executes task-one and task-two from challenge-DEMO for all users that provided a solution via .rakumod)
+# run like: raku -I challenge-nr233 -- test/benchmark-scalabiity.raku --task=task-two --test-before-benchmark=True --out-folder=/tmp --max-run-times=1,2,5 nr233
 #
 # we can NOT use e.g. challenge-135 as folder names and NOT e.g. ch-1.rakumod as module names 
 # as "challenge-135::USER::raku::ch-1" is not a valid module name for the declaration of the .rakumod solution files. 
 # The problem is the "-Number" in the names, hence this workaround works as first line in .rakumod solution files:
 # unit module challenge-nr135::USER1::raku::task-one:ver<0.0.1>:auth<USER1@github.com)>;
-
-# we always start this script in root folder of project - hence we find all solutions at . subfolders!
-use lib '.';
 
 # import module from test/ folder
 use lib $*PROGRAM.dirname;
@@ -65,7 +62,7 @@ sub MAIN ( Str $challenge-identifier,
                     my ($folder, $user, $language, $module) = $module-file.extension('').Str.split('/');                
                         try {
                             # see https://docs.raku.org/language/packages#Programmatic_use_of_modules to read how the following code works
-                            my $m = "{$folder}::{$user}::{$language}::{$module}";
+                            my $m = "{$user}::{$language}::{$module}";
                             say "Benchmarking $m for $max-run-time secs";
                             require ::($m);
                             my &solution-under-test = &::($m)::solution;

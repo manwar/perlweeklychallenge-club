@@ -1,4 +1,4 @@
-unit module challenge-nr233::packy-anderson::raku::task-two:ver<0.0.1>:auth<packy-anderson@github.com)>;
+unit module packy-anderson::raku::task-two:ver<0.0.1>:auth<packy-anderson@github.com)>;
 
 # run in terminal: raku --optimize=3 -I challenge-nr233/packy-anderson/raku/ test/challenge-nr233/raku/task-two.rakutest
 

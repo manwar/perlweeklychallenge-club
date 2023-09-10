@@ -1,4 +1,4 @@
-unit module challenge-nr233::athanasius::raku::task-one:ver<0.0.1>:auth<athanasius@github.com)>;
+unit module athanasius::raku::task-one:ver<0.0.1>:auth<athanasius@github.com)>;
 
 # run in terminal: raku --optimize=3 -I challenge-nr233/athanasius/raku/ test/challenge-nr233/raku/task-one.rakutest
 
