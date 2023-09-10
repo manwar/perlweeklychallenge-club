@@ -39,26 +39,26 @@ jobs:
     - name: Install Raku
       run: sudo apt-get install rakudo
       run: raku --version
-    - name: Install Tokei
-      run: sudo wget -qO tokei.tar.gz https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz
-      run: sudo tar xf tokei.tar.gz -C /usr/local/bin
-      run: tokei --version
     - name: Checkout
       uses: actions/checkout@v3
     - name: Run Benchmark
       run: raku --optimize=3 -I challenge-nr${{ inputs.week }} -- test/benchmark-scalabiity.raku --out-folder=/tmp --max-run-times=1,10,100 challenge-nr${{ inputs.week }}
-    - name: Run Tokei for other statistics
-      run: tokei challenge-nr${{ inputs.week }} > /tmp/challenge-nr${{ inputs.week }}.tokei.txt
-    - name: Archive benchmark results
-      uses: actions/upload-artifact@v3
-      with:
-        name: scalability-benchmark-data
-        path: /tmp/nr${{ inputs.week }}_*.csv
-    - name: Archive Tokei report
-      uses: actions/upload-artifact@v3
-      with:
-        name: tokei-stats-report
-        path: /tmp/challenge-nr${{ inputs.week }}.tokei.txt
+#    - name: Archive benchmark results
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: scalability-benchmark-data
+#        path: /tmp/nr${{ inputs.week }}_*.csv
+#    - name: Install Tokei
+#      run: sudo wget -qO tokei.tar.gz https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz
+#      run: sudo tar xf tokei.tar.gz -C /usr/local/bin
+#      run: tokei --version
+#    - name: Run Tokei for other statistics
+#      run: tokei challenge-nr${{ inputs.week }} > /tmp/challenge-nr${{ inputs.week }}.tokei.txt
+#    - name: Archive Tokei report
+#      uses: actions/upload-artifact@v3
+#      with:
+#        name: tokei-stats-report
+#        path: /tmp/challenge-nr${{ inputs.week }}.tokei.txt
 #    - name: search
 #      run: sudo apt-cache search zef
 #    - name: Branch
