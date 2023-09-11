@@ -6,9 +6,8 @@ unit module wambash::raku::task-two:ver<0.0.1>:auth<wambash@github.com)>;
 #|[
 Individual task description and interesting solution hints ...
 ]
-our sub solution(+ints) is export {
-    return 0; # this implementation freezes benchmark
-    ints
+our sub solution(@ints) is export {
+    @ints
     andthen .Bag
     andthen .sort: { .value, -.key }\
     andthen .map:  { slip .key xx .value }

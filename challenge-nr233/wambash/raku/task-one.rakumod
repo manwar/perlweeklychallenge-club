@@ -6,9 +6,8 @@ unit module wambash::raku::task-one:ver<0.0.1>:auth<wambash@github.com)>;
 #|[
 Individual task description and interesting solution hints ...
 ]
-our sub solution (+words) is export {
-    return 0; # this implementation freezes benchmark
-    words
+our sub solution (@words) is export {
+    @words
     andthen .classify: *.comb.Set
     andthen .map: *.value.elems
     andthen .map: &over-two
