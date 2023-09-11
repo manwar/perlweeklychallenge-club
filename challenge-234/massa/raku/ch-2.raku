@@ -45,7 +45,7 @@ triplets of 1, 7, 10 = 3x2x1 = 6 combinations
 use v6.*;
 
 sub unequal-triplets(@_) {
-    (^+@_).combinations(3).grep({@_[$_].Bag.elems == 3}).elems
+    @_.combinations(3).grep(*.Set.elems == 3).elems
 }
 
 multi MAIN (Bool :$test!) {
