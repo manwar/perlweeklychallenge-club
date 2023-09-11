@@ -6,7 +6,7 @@ my Set $some-unicode-characters =
                    ('a'..'z') ∪ ('A'..'Z') ∪ (0..9) ∪ 
                    ('∪', '∅', '∩', '⊖') ∪
                    ("\c[VULGAR FRACTION ONE HALF]", "\c[VULGAR FRACTION ONE SEVENTH]", "\c[VULGAR FRACTION ONE FIFTH]") ∪
-                   ("\c[Roman Numeral Four]", "\c[Roman Numeral Three]", "\c[Roman Numeral Two]", "\c[Roman Numeral One]") ∪ 
+                   ("\c[LATIN SMALL LETTER J WITH CARON, COMBINING DOT BELOW]", "\c[Roman Numeral Four]", "\c[Roman Numeral Three]", "\c[Roman Numeral Two]", "\c[Roman Numeral One]") ∪ 
                    ('à', 'è', 'ä', 'ö', 'ü', 'Ä', 'Ö', 'Ü', 'ß', "\c[LATIN CAPITAL LETTER SHARP S]") ∪ 
                    ("\c[PENGUIN]", "\c[BELL]", "\c[SMILING FACE WITH HALO]", "\c[GRINNING FACE]") ∪ 
                    ("\c[EGYPTIAN HIEROGLYPH A001]" .. "\c[EGYPTIAN HIEROGLYPH A004]");         
