@@ -16,8 +16,8 @@
 use lib $*PROGRAM.dirname;
 use benchmark-data-generator;
 
-my $verbose = False;
-my $output-header = "user,runtime,n,latency,throughput";
+my Bool $verbose = False;
+my Str $output-header = "user,runtime,n,latency,throughput";
 
 enum Tasks <task-one task-two all>;
 subset Name of Str;
@@ -28,9 +28,12 @@ sub MAIN ( Str $challenge-identifier,
            Str :$max-run-times = '1,3,7', 
            Str :$out-folder = 'data/', 
            Bool :$test-before-benchmark = True,
-           Bool :$v = False) {
+           Bool :$benchmark-only-once = True,
+           Bool :$verbose = False) {
     
     $verbose = $v;
+    say "\n" ~ (archname => $*KERNEL.archname, cpu-cores => $*KERNEL.cpu-cores, memory-total => $*KERNEL.total-memory/1024/1024, memory-free => $*KERNEL.free-memory div (1024 * 1024)).sort.join("\n") ~ "\n" if $verbose;
+
     my $base-folder = "challenge-$challenge-identifier".IO;
     $base-folder = $base-folder.add($user) if $user;
     
@@ -58,26 +61,29 @@ sub MAIN ( Str $challenge-identifier,
                 
             if $test-ok {
                 my UInt @max-run-times = $max-run-times.split(',').map(*.UInt).Set.keys;
+                my $start-problem-size = 0;
                 for @max-run-times.sort -> $max-run-time {
                     my ($folder, $user, $language, $module) = $module-file.extension('').Str.split('/');                
-                        try {
-                            # see https://docs.raku.org/language/packages#Programmatic_use_of_modules to read how the following code works
-                            my $m = "{$user}::{$language}::{$module}";
-                            say "Benchmarking $m for $max-run-time secs";
-                            require ::($m);
-                            my &solution-under-test = &::($m)::solution;
-                            my $run = start { benchmark-scalability(&solution-under-test, 
-                                                                    &data-provider-for($challenge-identifier, $task-string), 
-                                                                    $max-run-time) 
-                                            };
-                            await $run;
-                            if $run.status eq PromiseStatus::Kept {
-                                @results.push: $user, $run.result
-                            }
+                    try {
+                        # see https://docs.raku.org/language/packages#Programmatic_use_of_modules to read how the following code works
+                        my $m = "{$user}::{$language}::{$module}";
+                        say "Benchmarking $m for $max-run-time secs";
+                        require ::($m);
+                        my &solution-under-test = &::($m)::solution;
+                        my $run = start { benchmark-scalability(&solution-under-test, 
+                                                                &data-provider-for($challenge-identifier, $task-string), 
+                                                                $max-run-time,
+                                                                $start-problem-size) 
+                                        };
+                        await $run;
+                        if $run.status eq PromiseStatus::Kept {
+                            @results.push: $user, $run.result()<data>;
+                            $start-problem-size = max($start-problem-size, $run.result()<size>) if $benchmark-only-once;
                         }
-                        if $! {
-                            note "Benchmark failed for " ~ $module-file ~ " " ~ $!;
-                        }
+                    }
+                    if $! {
+                        note "Benchmark failed for " ~ $module-file ~ " " ~ $!;
+                    }
                 }
             }
         }
@@ -90,24 +96,36 @@ sub MAIN ( Str $challenge-identifier,
 }
 
 #| Increase problem size until a solution does not finish in time anymore.
-sub benchmark-scalability(&solution, &data, $run-time){
+sub benchmark-scalability(&solution, &data, $run-time, $start-size=0){
   my @results; 
 
   my &simulation = &solution ∘ &data;
-  for ^Inf -> $i {
+  my $problem-entry = 0;
+
+  for $start-size..^Inf -> $i {
+      print "$i\tdata " if $verbose;
       my $n = &data($i).elems; # this also ensures data input is generated and cached so influences less the metrics
-      print "$n " if $verbose;
+      print "generated \c[HEAVY CHECK MARK] solving size " if $verbose;
       my ($start, $latency, $throughput) = now;
       
       my $timer = Promise.in( $run-time );
       my $solution = start { &simulation($i) }.then( { $latency = now - $start; .result.Str } ).then( { $throughput = now - $start });
       
+      print "$n ";
       my $too-slow = await Promise.anyof($timer, $solution).then( { $timer.status eq PromiseStatus::Kept } );
+      
+      say "\t\c[CROSS MARK]" if $verbose and $too-slow;
       last if $too-slow;
 
+      say "\t\c[white heavy check mark]" if $verbose;
+      
+      LAST {$problem-entry++; print("\n")};
+
+      $problem-entry = $i;
+      
       @results.push: ($run-time, $n, $latency, $throughput);
   }
-  return @results;
+  return {size => $problem-entry, data => @results};
 }
 
 #| Transform into the required output format

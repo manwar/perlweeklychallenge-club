@@ -10,5 +10,5 @@ You are given an array of words made up of characters only.
 - including duplicates.
 ]
 our sub solution(@input) is export {
-	@input.map( *.comb.Bag ).reduce(&infix:<∩>).kxxv;
+	([∩] @input.hyper.map( *.comb.Bag )).kxxv;
 }

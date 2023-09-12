@@ -11,14 +11,14 @@ my Set $some-unicode-characters =
                    ("\c[PENGUIN]", "\c[BELL]", "\c[SMILING FACE WITH HALO]", "\c[GRINNING FACE]") ∪ 
                    ("\c[EGYPTIAN HIEROGLYPH A001]" .. "\c[EGYPTIAN HIEROGLYPH A004]");         
 
-
 sub data-provider-for(Str $challenge, Str $task-string) is export {
+
     given $challenge => $task-string {
-        when 'nr234' => 'task-one' { return &unicode-words.assuming(*, 30, 5, 25) }
-        when 'nr234' => 'task-two' { return &integers.assuming(*, 1, 3) }
+        when 'nr234' => 'task-one' { return &unicode-words.assuming(*, 30, 5, 25, @problem-size-factor-two, log2(2**5).UInt)}
+        when 'nr234' => 'task-two' { return &integers.assuming(*, 1, 3, @problem-size-factor-two, log2(2**5).UInt)}
         
-        when 'nr233' => 'task-one' { return &unicode-words.assuming(*, 10, 1, 25) }
-        when 'nr233' => 'task-two' { return &integers.assuming(*, -100, 100) }
+        when 'nr233' => 'task-one' { return &unicode-words.assuming(*, 10, 1, 25, @problem-size-factor-two, log2(2**5).UInt) }
+        when 'nr233' => 'task-two' { return &integers.assuming(*, -100, 100, @problem-size-factor-two, log2(2**5).UInt) }
         
         when 'DEMO' => 'task-one'  { return &data-task-template}
         when 'DEMO' => 'task-two'  { return &data-task-template}
@@ -26,25 +26,24 @@ sub data-provider-for(Str $challenge, Str $task-string) is export {
     }
 }
 
-sub unicode-words(UInt $entry, UInt $alphabet-size, UInt $min-length, UInt $max-length where {$min-length <= $max-length}) {
+sub unicode-words(UInt $entry, UInt $alphabet-size, UInt $min-length, UInt $max-length where {$min-length <= $max-length}, @sizes, UInt $size-offset) {
     
-    state @data is default([]);
-    
-    my $n = @problem-size-factor-two[$entry];
+    my $n = @sizes[$entry + $size-offset];
+
+    state @data;
+
     my $word-lenght = $min-length .. $max-length;
+    state @alphabet = $some-unicode-characters.roll($alphabet-size);
     
-    unless @data[$n].elems {
-        my Str @this-data;
-        my @alphabet = $some-unicode-characters.roll($alphabet-size);
-        @this-data.push: @alphabet.roll($word-lenght.roll).join('') for ^$n;
-        @data[$n] = @this-data;
+    unless @data[$n] {
+        @data[$n] = race for ^$n { @alphabet.roll($word-lenght.roll).join('').List };
     }
     return @data[$n];
 }
 
-sub integers(UInt $entry, Int $min, Int $max where {$min <= $max}) {
+sub integers(UInt $entry, Int $min, Int $max where {$min <= $max}, @sizes, UInt $size-offset = 0) {
     state @data is default([]);
-    my $n = @problem-size-factor-two[$entry];
+    my $n = @sizes[$entry + $size-offset];
     @data[$n] = ($min..$max).roll($n) unless @data[$n].elems;
     return @data[$n];
 }
@@ -52,6 +51,6 @@ sub integers(UInt $entry, Int $min, Int $max where {$min <= $max}) {
 sub data-task-template(UInt $entry) {
     state @data is default([]);
     my $n = @problem-size-factor-ten[$entry];
-    @data[$n] = ^($n) unless @data[$n].elems;
+    @data[$n] = 0..^$n unless @data[$n].elems;
     return @data[$n];
 }
