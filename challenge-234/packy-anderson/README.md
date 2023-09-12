@@ -148,4 +148,4 @@ Output: 28
 
 ## Blog Post
 
-[Perl Weekly Challenge: Common, but Unequal, Triplet Characters](https://packy.dardan.com/2023/09/11/perl-weekly-challenge-common-but-unequal-triplet-characters/)
+[Perl Weekly Challenge: Common, but Unequal, Triplet Characters](https://packy.dardan.com/2023/09/12/perl-weekly-challenge-common-but-unequal-triplet-characters/)
