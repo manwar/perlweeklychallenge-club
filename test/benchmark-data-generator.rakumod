@@ -14,8 +14,12 @@ my Set $some-unicode-characters =
 
 sub data-provider-for(Str $challenge, Str $task-string) is export {
     given $challenge => $task-string {
+        when 'nr234' => 'task-one' { return &unicode-words.assuming(*, 30, 5, 25) }
+        when 'nr234' => 'task-two' { return &integers.assuming(*, 1, 3) }
+        
         when 'nr233' => 'task-one' { return &unicode-words.assuming(*, 10, 1, 25) }
         when 'nr233' => 'task-two' { return &integers.assuming(*, -100, 100) }
+        
         when 'DEMO' => 'task-one'  { return &data-task-template}
         when 'DEMO' => 'task-two'  { return &data-task-template}
         default {die "Data provider for $challenge $task-string not implemented."}
