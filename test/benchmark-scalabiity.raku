@@ -29,7 +29,7 @@ sub MAIN ( Str $challenge-identifier,
            Str :$out-folder = 'data/', 
            Bool :$test-before-benchmark = True,
            Bool :$benchmark-only-once = True,
-           Bool :$verbose = False) {
+           Bool :$v = False) {
     
     $verbose = $v;
     say "\n" ~ (archname => $*KERNEL.archname, cpu-cores => $*KERNEL.cpu-cores, memory-total => $*KERNEL.total-memory/1024/1024, memory-free => $*KERNEL.free-memory div (1024 * 1024)).sort.join("\n") ~ "\n" if $verbose;
