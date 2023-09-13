@@ -1,15 +1,13 @@
 name: manual raku benchmark run
 on:
+  push:
   workflow_dispatch:
-    branches:
-      - master
-      - raku-benchmark-scaleability
-    inputs:
-      week:
-        description: 'weekly challenge nr to run benchmark on'
-        default: 000
-        required: true
-        type: string
+  inputs:
+    week:
+      description: 'weekly challenge nr to run benchmark on'
+      default: 000
+      required: true
+      type: string
 #      user:
 #        description: 'git user name'
 #        default: "rcmlz"
