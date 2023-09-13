@@ -12,6 +12,11 @@ on:
         default: 'DEMO'
         required: true
         type: string
+      maxproblem:
+        description: 'how many iterations do we allow ... (before server runs out of memory)'
+        default: 5
+        required: true
+        type: integer
 
 jobs:
   raku-benchmark:
@@ -28,7 +33,7 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v3
     - name: Run Benchmark # will crash when run without sudo - that should be fixed somehow! https://github.com/rakudo/star/issues/192
-      run: sudo raku --optimize=3 -I challenge-${{ inputs.week }} -- test/benchmark-scalabiity.raku --out-folder=/tmp --v=True --max-run-times=1,2,3 ${{ inputs.week }}
+      run: sudo raku --optimize=3 -I challenge-${{ inputs.week }} -- test/benchmark-scalabiity.raku --out-folder=/tmp --v=True --max-problem=${{ inputs.maxproblem }} --max-run-times=1,2,3 ${{ inputs.week }}
     - name: Archive benchmark results
       uses: actions/upload-artifact@v3
       with:

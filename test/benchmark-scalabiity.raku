@@ -29,6 +29,7 @@ sub MAIN ( Str $challenge-identifier,
            Str :$out-folder = 'data/', 
            Bool :$test-before-benchmark = True,
            Bool :$benchmark-only-once = True,
+           UInt :$max-problem = 5, 
            Bool :$v = False) {
     
     $verbose = $v;
@@ -61,7 +62,7 @@ sub MAIN ( Str $challenge-identifier,
                 
             if $test-ok {
                 my UInt @max-run-times = $max-run-times.split(',').map(*.UInt).Set.keys;
-                my $start-problem-size = 0;
+                my $start-problem = 0;
                 for @max-run-times.sort -> $max-run-time {
                     my ($folder, $user, $language, $module) = $module-file.extension('').Str.split('/');                
                     try {
@@ -73,12 +74,13 @@ sub MAIN ( Str $challenge-identifier,
                         my $run = start { benchmark-scalability(&solution-under-test, 
                                                                 &data-provider-for($challenge-identifier, $task-string), 
                                                                 $max-run-time,
-                                                                $start-problem-size) 
+                                                                $max-problem,
+                                                                $start-problem) 
                                         };
                         await $run;
                         if $run.status eq PromiseStatus::Kept {
                             @results.push: $user, $run.result()<data>;
-                            $start-problem-size = max($start-problem-size, $run.result()<size>) if $benchmark-only-once;
+                            $start-problem = max($start-problem, $run.result()<size>) if $benchmark-only-once;
                         }
                     }
                     if $! {
@@ -96,13 +98,15 @@ sub MAIN ( Str $challenge-identifier,
 }
 
 #| Increase problem size until a solution does not finish in time anymore.
-sub benchmark-scalability(&solution, &data, $run-time, $start-size=0){
+sub benchmark-scalability(&solution, &data, $run-time, $max-problem, $start-problem){
   my @results; 
 
   my &simulation = &solution ∘ &data;
   my $problem-entry = 0;
 
-  for $start-size..^Inf -> $i {
+  for $start-problem..^Inf -> $i {
+      last if $max-problem <= $i;
+
       print "$i\tdata " if $verbose;
       my $n = &data($i).elems; # this also ensures data input is generated and cached so influences less the metrics
       print "generated \c[HEAVY CHECK MARK] solving size " if $verbose;
