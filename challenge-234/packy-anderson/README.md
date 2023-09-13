@@ -144,7 +144,11 @@ Output: 28
 
 ## Guest Language: Python
 * [Task 1](python/ch-1.py)
-* [Task 2](python/ch-1.py)
+* [Task 2](python/ch-2.py)
+
+## Guest Language: Java
+* [Task 1](java/Ch1.java)
+* [Task 2](java/Ch2.java)
 
 ## Blog Post
 
