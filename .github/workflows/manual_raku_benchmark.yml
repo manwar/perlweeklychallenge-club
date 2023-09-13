@@ -1,32 +1,19 @@
+# gh workflow run 'manual raku benchmark run' --ref branch-name -f week=DEMO
+# gh workflow run 'manual raku benchmark run' --ref branch-name -f week=nr234
+
 name: manual raku benchmark run
+
 on:
-  push:
+  #push: # if workflow is not appearing on branch, run with push: instead of workflow_dispatch: once
   workflow_dispatch:
-  inputs:
-    week:
-      description: 'weekly challenge nr to run benchmark on'
-      default: 000
-      required: true
-      type: string
-#      user:
-#        description: 'git user name'
-#        default: "rcmlz"
-#        required: true
-#        type: string
-#      token:
-#        description: 'git token'
-#        default: "github_pat_some-long-string"
-#        required: true
-#        type: string
+    inputs:
+      week:
+        description: 'weekly challenge nr to run benchmark on - like nr234'
+        default: 'DEMO'
+        required: true
+        type: string
 
 jobs:
-#  test:
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Test + coverage
-#        with:
-#          coverage: true
-#        uses: JJ/raku-test-action@v2
   raku-benchmark:
     runs-on: ubuntu-latest
     steps:
@@ -34,42 +21,29 @@ jobs:
       run: echo "Processing week ${{ inputs.week }}"
     - name: Update apt
       run: sudo apt-get update
-    - name: Install Raku
+    - name: Install Rakudo
       run: sudo apt-get install rakudo
+    - name: Check Raku version
       run: raku --version
-    - name: Checkout
+    - name: Checkout Repo
       uses: actions/checkout@v3
-    - name: Run Benchmark
-      run: raku --optimize=3 -I challenge-nr${{ inputs.week }} -- test/benchmark-scalabiity.raku --out-folder=/tmp --max-run-times=1,10,100 challenge-nr${{ inputs.week }}
-#    - name: Archive benchmark results
-#      uses: actions/upload-artifact@v3
-#      with:
-#        name: scalability-benchmark-data
-#        path: /tmp/nr${{ inputs.week }}_*.csv
-#    - name: Install Tokei
-#      run: sudo wget -qO tokei.tar.gz https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz
-#      run: sudo tar xf tokei.tar.gz -C /usr/local/bin
-#      run: tokei --version
-#    - name: Run Tokei for other statistics
-#      run: tokei challenge-nr${{ inputs.week }} > /tmp/challenge-nr${{ inputs.week }}.tokei.txt
-#    - name: Archive Tokei report
-#      uses: actions/upload-artifact@v3
-#      with:
-#        name: tokei-stats-report
-#        path: /tmp/challenge-nr${{ inputs.week }}.tokei.txt
-#    - name: search
-#      run: sudo apt-cache search zef
-#    - name: Branch
-#      uses: git branch benchmark-week-${{ inputs.week }}
-#    - name: Checkout
-#      uses: git checkout benchmark-week-${{ inputs.week }}
-#    - name: Run Benchmark
-#      run: sudo raku test/run-benchmark.raku ${{ inputs.week }}
-#    - name: Add result
-#      run: git add stats/ch-${{ inputs.week }}.raku.csv
-#    - name: Git config
-#      run: git config user.name "${{ inputs.user }}" --replace-all
-#    - name: Git config
-#      run: git config user.password "${{ inputs.token }}" --replace-all
-#    - name: Push result
-#      run: git push --set-upstream origin benchmark-week-${{ inputs.week }}
+    - name: Run Benchmark # will crash when run without sudo - that should be fixed somehow! https://github.com/rakudo/star/issues/192
+      run: sudo raku --optimize=3 -I challenge-${{ inputs.week }} -- test/benchmark-scalabiity.raku --out-folder=/tmp --v=True --max-run-times=1,2,3 ${{ inputs.week }}
+    - name: Archive benchmark results
+      uses: actions/upload-artifact@v3
+      with:
+        name: scalability-benchmark-data
+        path: /tmp/${{ inputs.week }}_*.csv
+    - name: Get Tokei
+      run: sudo wget -qO tokei.tar.gz https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz
+    - name: Install Tokei
+      run: sudo tar xf tokei.tar.gz -C /usr/local/bin
+    - name: Tokei version
+      run: tokei --version
+    - name: Run Tokei
+      run: tokei -f challenge-${{ inputs.week }} > /tmp/challenge-${{ inputs.week }}.tokei.txt
+    - name: Archive Tokei report
+      uses: actions/upload-artifact@v3
+      with:
+        name: tokei-stats-report
+        path: /tmp/challenge-${{ inputs.week }}.tokei.txt
