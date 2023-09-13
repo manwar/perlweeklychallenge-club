@@ -54,7 +54,7 @@ sub MAIN ( Str $challenge-identifier,
         }
         {note "No solutions found in folder: $base-folder for $task-string and $user"; exit} unless $files.elems;
         
-        say "Processing " ~ $files.elems ~ " rakumod files from $base-folder $task-string, saving results to folder $out-folder." if $verbose;
+        say "Processing " ~ $files.elems ~ " rakumod files from $base-folder $task-string\nfor $max-run-times seconds applying max $max-problem problems.\nSaving results to folder $out-folder.\n" if $verbose;
 
         for ^$files.elems {
             my $module-file = $files[$_];
@@ -145,7 +145,7 @@ sub create-output($out-folder, $challenge-identifier, $task-string, @results){
     }
     my $out-dir = $out-folder.IO.add($challenge-identifier ~ "_" ~ $task-string ~ ".csv");
     my $out-data = $output-header ~ "\n" ~ @csv.map( *.join(",")).join("\n") ~ "\n";
-    say "writing to $out-dir" if $verbose;
+    say "writing to $out-dir\n" if $verbose;
     spurt $out-dir, $out-data;
 }
 
