@@ -42,10 +42,12 @@ sub MAIN (UInt $challenge-nr where * > 0, $user-to-create = 'all-from-last-chall
     my $readme = slurp "templates/challenge-TEMPLATE/USER/README.md";
     my $challenge-one = slurp "templates/challenge-TEMPLATE/USER/raku/task-one.rakumod";
     my $challenge-two = slurp "templates/challenge-TEMPLATE/USER/raku/task-two.rakumod";
+    my $meta = slurp "templates/challenge-TEMPLATE/USER/raku/PACKAGES.json";
 
-    $challenge-one = $challenge-one.subst('{{TEMPLATE}}', $challenge-id, :g);
-    $challenge-two = $challenge-two.subst('{{TEMPLATE}}', $challenge-id, :g);
+    $challenge-one = $challenge-one.subst('{{CHALLENGE}}', $challenge-id, :g);
+    $challenge-two = $challenge-two.subst('{{CHALLENGE}}', $challenge-id, :g);
     $readme = $readme.subst('{{CHALLENGE}}', $challenge-nr, :g);
+    $meta = $meta.subst('{{CHALLENGE}}', $challenge-nr, :g);
 
     # create user templates for this challenge
     for $users.Set.keys -> $user {
@@ -65,5 +67,10 @@ sub MAIN (UInt $challenge-nr where * > 0, $user-to-create = 'all-from-last-chall
         my $c2 = $out-dir.add('task-two.rakumod');
         say "creating: " ~ $c2 unless $c2.e;
         spurt $c2, $challenge-two.subst('{{USER}}', $user, :g) unless $dry-run or $c2.e;
+
+        my $m1 = $out-dir.add('PACKAGES.json');
+        say "creating: " ~ $m1 unless $m1.e;
+        spurt $m1, $meta.subst('{{USER}}', $user, :g) unless $dry-run or $m1.e;
+
     }
 }

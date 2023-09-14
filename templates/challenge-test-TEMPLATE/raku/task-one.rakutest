@@ -20,6 +20,7 @@ my @testcases =
 plan @testcases.elems;
 cmp-ok solution(.key), &[eqv], .value for @testcases;
 #is-deeply solution(.key), .value for @testcases;
+#is solution(.key), .value for @testcases; # attention: "is" converts to string before comparing
 
 if ?%*ENV<AUTHOR_TESTING> {
   for @testcases.keys -> $i {

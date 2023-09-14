@@ -17,38 +17,45 @@ on:
         default: 5
         required: true
         type: integer
-
 jobs:
-  raku-benchmark:
+  scalability-benchmark-and-tokei:
+    #strategy:
+    #  matrix:
+    #    os:
+    #      - ubuntu-latest
+    #    raku-version:
+    #      - 'latest'
+    #runs-on: ${{ matrix.os }}
     runs-on: ubuntu-latest
     steps:
-    - name: Status
-      run: echo "Processing week ${{ inputs.week }}"
-    - name: Update apt
-      run: sudo apt-get update
-    - name: Install Rakudo
-      run: sudo apt-get install rakudo
-    - name: Check Raku version
-      run: raku --version
-    - name: Checkout Repo
-      uses: actions/checkout@v3
-    - name: Run Benchmark # will crash when run without sudo - that should be fixed somehow! https://github.com/rakudo/star/issues/192
-      run: sudo raku --optimize=3 -I challenge-${{ inputs.week }} -- test/benchmark-scalabiity.raku --out-folder=/tmp --v=True --max-problem=${{ inputs.maxproblem }} --max-run-times=1,2,3 ${{ inputs.week }}
-    - name: Archive benchmark results
-      uses: actions/upload-artifact@v3
-      with:
-        name: scalability-benchmark-data
-        path: /tmp/${{ inputs.week }}_*.csv
-    - name: Get Tokei
-      run: sudo wget -qO tokei.tar.gz https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz
-    - name: Install Tokei
-      run: sudo tar xf tokei.tar.gz -C /usr/local/bin
-    - name: Tokei version
-      run: tokei --version
-    - name: Run Tokei
-      run: tokei -f challenge-${{ inputs.week }} > /tmp/challenge-${{ inputs.week }}.tokei.txt
-    - name: Archive Tokei report
-      uses: actions/upload-artifact@v3
-      with:
-        name: tokei-stats-report
-        path: /tmp/challenge-${{ inputs.week }}.tokei.txt
+      - uses: actions/checkout@v3
+      - name: Install Raku
+        run: |
+          sudo echo $SHELL
+          sudo apt-get update
+          sudo apt-get install rakudo
+          sudo raku --version
+      - name: Install zef and some modules always needed
+        run: |
+          sudo git clone https://github.com/ugexe/zef.git; cd zef; sudo raku -I. bin/zef install . ; cd .. ; sudo rm -rf zef/
+          sudo /usr/lib/perl6/site/bin/zef install Test JSON::Tiny
+      - name: Install user required modules and run benchmark
+        run: |
+          sudo raku test/install-required-packages.raku challenge-${{ inputs.week }} False
+          sudo raku --optimize=3 -I challenge-${{ inputs.week }} -- test/benchmark-scalabiity.raku --out-folder=/tmp --v=True --max-problem=${{ inputs.maxproblem }} --max-run-times=1,2,3 ${{ inputs.week }}
+      - name: Archive benchmark results
+        uses: actions/upload-artifact@v3
+        with:
+          name: scalability-benchmark-data
+          path: /tmp/${{ inputs.week }}_*.csv
+      - name: Install and run Tokei
+        run: |
+          sudo wget -qO tokei.tar.gz https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz
+          sudo tar xf tokei.tar.gz -C /usr/local/bin
+          tokei --version
+          tokei -f challenge-${{ inputs.week }} > /tmp/challenge-${{ inputs.week }}.tokei.txt
+      - name: Archive Tokei report
+        uses: actions/upload-artifact@v3
+        with:
+          name: tokei-stats-report
+          path: /tmp/challenge-${{ inputs.week }}.tokei.txt
