@@ -53,6 +53,7 @@ jobs:
           sudo wget -qO tokei.tar.gz https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz
           sudo tar xf tokei.tar.gz -C /usr/local/bin
           tokei --version
+          tokei -f challenge-${{ inputs.week }}
           tokei -f --output json challenge-${{ inputs.week }} > /tmp/challenge-${{ inputs.week }}.tokei.txt
       - name: Archive Tokei report
         uses: actions/upload-artifact@v3
