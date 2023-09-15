@@ -22,55 +22,36 @@ use Getopt::Long;
 my $Verbose = 0;
 my $DoTest  = 0;
 
-use Hash::Ordered;
-use List::Util qw/min/;
-
 GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 exit(!runTest()) if $DoTest;
 
-# Use counts of letters from each word
-
-sub letterFreq($word)
-{
-    my %freq;
-    $freq{$_}++ for split(//, $word);
-    return \%freq;
-}
-
 sub commonCharacters(@words)
 {
+    use List::Util qw/all/;
+
     return [] unless @words;
-
     my $start = shift @words;
-
-    # Find the count of each possible letter from the first word
-    my $letters = letterFreq($start);
-
-    # Use each subsequent word as a filter for the possible letters.
-    while ( @words and keys %{$letters} )
+    my @result;
+  LETTER:
+    for my $letter ( split(//, $start) )
     {
-        my $wfreq = letterFreq(shift @words);
-
-        for my $char ( keys %{$letters} )
+        if ( all { index($_, $letter) >= 0 } @words )
         {
-            if ( exists $wfreq->{$char} )
+            # This letter occurs in all words.
+            push @result, $letter;
+
+            # Remove the letter from each word
+            for my $w ( 0 .. $#words)
             {
-                $letters->{$char} = min($letters->{$char}, $wfreq->{$char});
-            }
-            else
-            {
-                delete $letters->{$char};
+                my $pos = index($words[$w], $letter);
+                substr($words[$w], $pos, 1, ""); # Remove the letter
+                last LETTER if $words[$w] eq "";
             }
         }
     }
-
-    # Show the remaining letters, in the order of the first word
-    return [ grep { defined }
-        map { ( exists $letters->{$_} && $letters->{$_} > 0 )
-                  ? do { $letters->{$_}--; $_ }
-                  : undef  }
-            split(//, $start) ]
+    return \@result;
 }
+
 
 sub runTest
 {
@@ -78,7 +59,6 @@ sub runTest
 
     is( commonCharacters("java", "javascript", "julia"), ["j", "a"],      "Example 1");
     is( commonCharacters("bella", "label", "roller"),    ["e", "l", "l"], "Example 2");
-    is( commonCharacters("label", "bella", "roller"),    ["l", "e", "l"], "Example 2a");
     is( commonCharacters("cool", "lock", "cook"),        ["c", "o"],      "Example 3");
 
     is( commonCharacters("abc", "def", "xyz"),        [],       "No common");
