@@ -107,13 +107,13 @@ sub find_omnipresent_and_repeated_letters{
 
     return(
         # Loop over remaining letters that were seen
-        # in each word...
+        # in every word...
         map(
             {
                 my $ref = $_;
 
                 # ...and repeat each letter the minimum number
-                # of times it was seen in any word
+                # of times it was seen in any particular word
                 map($ref->[0], (1 .. $ref->[1]));
             }
             @letters
