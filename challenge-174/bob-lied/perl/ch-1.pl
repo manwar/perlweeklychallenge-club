@@ -20,11 +20,11 @@
 # making an object-oriented iterator class.
 #=============================================================================
 
-use v5.36;
+use v5.38;
 
+use feature 'class'; no warnings 'experimental::class';
 use experimental qw(builtin); use builtin qw(true false);
 
-use Feature::Compat::Class;
 use List::Util qw/sum/;
 
 sub _isDisarium($n)
@@ -35,8 +35,8 @@ sub _isDisarium($n)
 
 class Disarium
 {
-    field $max :param //= 1;
-    field $d   :param //= 0;
+    field $max = 1;
+    field $d   = 0;
     field $_count = 0;
 
     method next
