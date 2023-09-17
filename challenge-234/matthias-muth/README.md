@@ -1,207 +1,246 @@
-# Tune in to the right frequency!
-**Challenge 233 solutions in Perl by Matthias Muth**
+# More Frequent Frequencies
 
-## Task 1: Similar Words
+**Challenge 234 solutions in Perl by Matthias Muth**
 
-> You are given an array of words made up of alphabets only.<br/>
-> Write a script to find the number of pairs of similar words. Two words are similar if they consist of the same characters.<br/>
+## Task 1: Common Characters
+
+> You are given an array of words made up of alphabetic characters only.<br/>
+> Write a script to return all alphabetic characters that show up in all words including duplicates.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @words = ("aba", "aabb", "abcd", "bac", "aabc")<br/>
-> Output: 2<br/>
-> Pair 1: similar words ("aba", "aabb")<br/>
-> Pair 2: similar words ("bac", "aabc")<br/>
+> Input: @words = ("java", "javascript", "julia")<br/>
+> Output: ("j", "a")<br/>
 > <br/>
 > Example 2<br/>
-> Input: @words = ("aabb", "ab", "ba")<br/>
-> Output: 3<br/>
-> Pair 1: similar words ("aabb", "ab")<br/>
-> Pair 2: similar words ("aabb", "ba")<br/>
-> Pair 3: similar words ("ab", "ba")<br/>
+> Input: @words = ("bella", "label", "roller")<br/>
+> Output: ("e", "l", "l")<br/>
 > <br/>
 > Example 3<br/>
-> Input: @words = ("nba", "cba", "dba")<br/>
-> Output: 0<br/>
+> Input: @words = ("cool", "lock", "cook")<br/>
+> Output: ("c", "o")<br/>
 
-### Alphabet words
-To decide whether two words are 'similar' in the sense of this challenge task,
-we first compute each word's 'alphabet word'.<br/>
-An alphabet word consists of one of each of the letters contained in the word,
-ordered alphabetically and concatenated into a string.<br/>
-Examples:
-```
-    "aba"       => "ab"
-    "aabb"      => "ab"
-    "bac"       => "abc"
-    "challenge" => "aceghln"
-```
-Then, two words are 'similar' if their alphabet words are equal.<br/>
+In earlier challenges, I used regular expressions for checking whether a given word can be built from the letters of a given alphabet ([221 Task 1 'Good Strings'](https://github.com/MatthiasMuth/perlweeklychallenge-club/tree/muthm-221/challenge-221/matthias-muth#readme), [224 Task 1 'Special Notes'](https://github.com/MatthiasMuth/perlweeklychallenge-club/tree/muthm-224/challenge-224/matthias-muth#readme), [229 Task 1 'Lexicographic Order'](https://github.com/MatthiasMuth/perlweeklychallenge-club/tree/muthm-229/challenge-229/matthias-muth#readme)).<br/>
+For example, to decide whether the word 'cat'
+could be built from an alphabet containing the letters of the word 'atach',
+I sorted the letters of both,
+and built a regular expression based on the word:
 
-For computing the alphabet words of an input word,
-we split the word up into single characters,
-let `uniq` remove the doubles,
-the `sort` them in string comparison oder (which is the default),
-and `join` them into a single string.
-
-We then keep a counter (or *frequency*!) of how often the same alphabet word
-was produced,
-which gives us the number of similar words for each alphabet
-which we will need in the next step.
-
-### Counting the pairs
-We are asked to get the number of *pairs* of 'similar' words.
-
-Now we could go and produce all combinations of two out of any $n$ words
-that we found being similar.<br/>
-But we won't!<br/>
-We are not asked for all the pairs, but just for *how many* there are.<br/>
-So let's compute the number of pairs without actually producing them.
-
-For getting the number of possible pairs, if $n$ is the number of words
-that have the same alphabet, we have $n$ ways to choose the first element
-of the pair, and $(n-1)$ to choose the second one.
-As we don't want to count the same pair again when it's just reversed,
-we divide by two.
-
-Actually this corresponds to the more scientific form of computing
-the 'n choose k' combinations, which is
-
-```math
-    \binom{n}{k} = \frac{n!}{k!(n-k)!}
-```
-For $k = 2$ we get
-```math
-    \binom{n}{2} = \frac{n!}{2(n-2)!}
-              = \frac{ n (n-1) (n-2) \dots 1 )}{2 ( (n-2) \dots 1 )}
-              = \frac{n (n-1)}{2}
-```
-
-So the whole thing of computing and returning the number of pairs fits into one line,
-which even includes summing up the pairs of all different alphabets.
-
-The complete solution looks like this:
 ```perl
-use List::Util qw( sum uniq );
+    'cat'   sorted:  a-c-t
+    'catch' sorted:  a-a-c-h-t
+    "aacht" =~ /^ .* a .* c .* t .* $/x
+```
 
-sub similar_words( @words ) {
+My first thought was that I could use the same trick for this task.
+But here, we don't just need to decide whether a word matches, but we need to filter out all letters that are *not* contained in the word, like through a sieve. I was not sure whether this would not be too complicated for a nice solution for this task, so I first implemented a more 'traditional' approach, to have something working. I would maybe come back later to work on a solution based on regular expressions. See below! ;-)
 
-    my %alphabet_counts;
-    for my $word ( @words ) {
-        my $alphabet = join "", sort( uniq( split "", $word ) );
-        ++$alphabet_counts{$alphabet};
+#### Using frequency counts and `grep`
+
+For this first solution, I first produce a count of available characters in each word.<br/>
+For example, `"java"` translates to
+`{ a => 2, j => 1, v => 1 }`.
+
+```perl
+    my @available_chars;
+    for my $i ( 0..$#words ) {
+        ++$available_chars[$i]{$_}
+            for split //, $words[$i];
+    }
+```
+
+Next, we check which characters are contained in *all* words.<br/>
+No character can be in *all* words if it is not contained in the *first* word,
+so I use the first word for an initial list of characters.<br/>
+I pass this list through `grep`,
+with a code block that let's those characters pass through
+that are available in all words
+(skipping the first, that would be redundant).
+Using `all` from `List::Util` for this.
+
+The test decreases each availability count at the same time,
+so that each character can only be used as often as it exists in each word.
+To make it simple, I don't care about decreasing into negative numbers
+-- it only matters that the character is not available.
+
+The letters that make it through the `grep` can then directly be returned as the result.<br/>
+So this is the complete solution:
+
+```perl
+use List::Util qw( all );
+
+sub common_characters_1( @words ) {
+    my @available_chars;
+    for my $i ( 0..$#words ) {
+        ++$available_chars[$i]{$_}
+            for split //, $words[$i];
     }
 
-    return sum( map $_ * ( $_ - 1 ) / 2, values %alphabet_counts );
+    return
+        grep {
+            my $char = $_;
+            all { ( $available_chars[$_]{$char}-- // 0 ) > 0 } 1..$#words
+        } split //, $words[0];
 }
 ```
 
-## Task 2: Frequency Sort
+#### Using regular expressions to filter out characters
 
-> You are given an array of integers.<br/>
-> Write a script to sort the given array in increasing order based on the frequency of the values.
-> If multiple values have the same frequency then sort them in decreasing order.<br/>
+Now that I had a working solution, I also tried to find a solution that is based on regular expressions.
+
+What we need is a regex that, when a word is matched against it, *returns* those letters that are allowed, and silently ignores all letters that are not allowed. How do we do that?
+
+Let's start with *how* the allowed letters are returned, and let's use Example 1 ("java", "javascript", "julia") as an example. After sorting the letters in each word, we have these words:
+
+```perl
+java        => aajv
+javascript  => aacijprstv
+julia       => aijlu
+```
+
+As in the solution above, we use the first word as the initial set of valid letters.<br/>
+We want to return the matching letters in capture groups.<br/>
+
+
+So for matching "javascript" against "java", after sorting the letters we have to match the following, allowing for other characters between the ones that we are looking for:
+
+```perl
+"aacijprstv" =~ /^ (a) (a) .*? (j) .*? (v)/x
+```
+
+The first `.*?` will catch "ci", the second one "prst".<br/>
+But we also need to allow for letters *not* being present, so
+
+```perl
+"aacijprstv" =~ /^ (a?) (a?) .*? (j?) .*? (v?)/x
+```
+
+But this doesn't work.<br/>The first `.*?` pattern now catches everything up to the end,
+because everything following it is now optional.<br/>
+So we need to limit the `.*?` to in no case match the expected next character,
+be it there or not.<br/>
+We can do that by replacing for example `.*? (j?)` by `[a-i]* (j?)`.<br/>
+This will work, but there is no really elegant way of producing `[a-i]`
+when we only know the letter `j` that we want to match
+(sure, there's `chr( ord( $_ ) - 1 )` to prodce the 'i', but is this elegant?).
+
+There's another trick that we can apply:
+We write `[a-j]` (we know the `j`!),
+but we make sure that a `j` will never be matched at this point,
+using a 'negative lookahead'.
+Like this: `(?: (?!j)[a-j] )*`.<br/>
+So what we are actually saying is
+'if the next character is not a "j", give us that character if it is from "a" to "j"'.<br/>
+Ok, maybe I have to rethink my definition of 'elegance'.
+
+Anyway, my example now looks like this:
+```perl
+"aacijprstv" =~ /^ (a?) (a?) (?:(?!j)[a-j])* (j?) (?:(?!v)[a-v])* (v?)/x
+```
+The captures like '(a?)' will return an empty string
+if there is no 'a' at that point.
+We need to filter those empty captures away.
+
+Now we still need to generate this regex,
+but now as we know what we need, this is quite straightforward.<br/>
+Here  is the whole solution:
+```perl
+sub common_characters( @words ) {
+    my @sorted_words = map join( "", sort split //, $_ ), @words;
+    my @result_chars = split //, $sorted_words[0];
+    for ( @sorted_words[1..$#sorted_words] ) {
+        my $re = join " ", map "(?:(?!$_)[a-$_])* ($_?)", @result_chars;
+        @result_chars = grep $_ ne "", /^$re/x;
+    }
+    return @result_chars;
+}
+```
+
+Maybe a bit extravagant, but it was quite interesting to develop it!
+
+There is one problem left with this solution:<br/>
+The order of letters returned does not always correspond with the results given in the examples.
+If we want to get the result characters in the order they appear in the first word
+(as the examples suggest)
+we first need to
+do a frequency count of the result characters,
+and then go through the first word, filtering letters for availability,
+decreasing the availability on the fly,  just like in the other solution above:
+```perl
+    my %freq;
+    ++$freq{$_}
+        for @result_chars;
+    return grep { $freq{$_}-- // 0 > 0 } split //, $words[0];
+```
+With this, all output will be exactly as in the examples.
+
+## Task 2: Unequal Triplets
+
+> You are given an array of positive integers.<br/>
+> Write a script to find the number of triplets (i, j, k) that satisfies num[i] != num[j], num[j] != num[k] and num[k] != num[i].<br/>
 > <br/>
 > Example 1<br/>
-> Input: @ints = (1,1,2,2,2,3)<br/>
-> Ouput: (3,1,1,2,2,2)<br/>
-> '3' has a frequency of 1<br/>
-> '1' has a frequency of 2<br/>
-> '2' has a frequency of 3<br/>
+> Input: @ints = (4, 4, 2, 4, 3)<br/>
+> Ouput: 3<br/>
+> (0, 2, 4) because 4 != 2 != 3<br/>
+> (1, 2, 4) because 4 != 2 != 3<br/>
+> (2, 3, 4) because 2 != 4 != 3<br/>
 > <br/>
 > Example 2<br/>
-> Input: @ints = (2,3,1,3,2)<br/>
-> Ouput: (1,3,3,2,2)<br/>
-> '2' and '3' both have a frequency of 2, so they are sorted in decreasing order.<br/>
+> Input: @ints = (1, 1, 1, 1, 1)<br/>
+> Ouput: 0<br/>
 > <br/>
 > Example 3<br/>
-> Input: @ints = (-1,1,-6,4,5,-6,1,4,1)<br/>
-> Ouput: (5,-1,4,4,-6,-6,1,1,1)<br/>
+> Input: @ints = (4, 7, 1, 10, 7, 4, 1, 1)<br/>
+> Output: 28<br/>
+> triplets of 1, 4, 7  = 3x2×2 = 12 combinations<br/>
+> triplets of 1, 4, 10 = 3×2×1 = 6  combinations<br/>
+> triplets of 4, 7, 10 = 2×2×1 = 4  combinations<br/>
+> triplets of 1, 7, 10 = 3x2x1 = 6 combinations<br/>
 
-What sounds very complicated actually is not really difficult at all.
+A brute force solution for counting the would be to loop over $i$, $j$ and $k$,
+counting each triplet that fulfills the criteria.
+This takes $i (i-1) (i-2)$ iterations.
 
-### Frequencies
-For each number in the list we compute the frequency with which it occurs in the list.<br/>
-We could use a typical Perl idiom for this:
+Actually this is no problem for the examples (max. $8\cdot7\cdot6 = 336$ iterations).
+
+But we can implement a more efficient solution easily by not looping over all numbers, but only over the groups of unique numbers, as Example 3 suggests.
+For that example, with its four unique numbers (1, 4, 7, 10),
+this means only '4 choose 3', or $\binom{4}{3} = \frac{4!}{3!(4-3)!} = 4$ combinations,
+as they are explained in in the example.
+
+So after counting the frequency of the numbers
+we have a similar loop nested loop,
+but we do not add one for each triplet,
+but the product of the frequencies of the number groups.
+
+So here we go:   
+
 ```perl
+use List::Util qw( product );
+
+sub unequal_triplets( @ints ) {
+    # Count the numbers.
     my %frequencies;
     ++$frequencies{$_}
         for @ints;
-```
 
-Whenever I have a for loop, I look for an alternative
-that hides the loop in a function call.
-In this case, `frequency` from `List::MoreUtils` does exactly what we need:
-```perl
-    use List::MoreUtils qw( frequency );
-    my %frequencies = frequency @ints;
-```
-Looks nice!<br/>
-But alas, I've made a little benchmark to check the performance of these two solutions,
-and sadly it turns out that the `for` loop
-is consistently around twice as fast than calling the `frequency` function
-no matter the size of the input list.<br/>
-I suppose that it is the need of copying 
-the whole list of values as the parameter list for the function call
-that slows it down. 
+    # Check whether there are any triplets at all.
+    return 0
+        unless %frequencies >= 3;
 
-So let's stay with DIY in this case.
-
-### Sort, clever!
-Now we have all the data to do the sorting, in one go!<br/>
-Great that `sort` lets us specify the ordering criteria in a code block.<br/>
-And also great that the three way comparison operators (`<=>` or `cmp`)
-chain so nicely:
-when the first comparison results in 'equal' operands it returns a zero,
-which is considered a 'false' value,
-and a simple `||` then let's the second comparison decide:
-```perl
-    sort { $frequencies{$a} <=> $frequencies{$b} || $b <=> $a } @ints;
-```
-
-Which makes the complete solution for this task quite short:
-```perl
-sub frequency_sort_core( @ints ) {
-    my %frequencies;
-    ++$frequencies{$_}
-        for @ints;
-    return sort { $frequencies{$a} <=> $frequencies{$b} || $b <=> $a } @ints;
+    # Go through combinations of unique numbers.
+    my $n_combinations = 0;
+    my @uniq_ints = sort { $a <=> $b } keys %frequencies;
+    for my $i1 ( 0..$#uniq_ints ) {
+        for my $i2 ( ( $i1 + 1 ) .. $#uniq_ints ) {
+            for my $i3 ( ( $i2 + 1 ) .. $#uniq_ints ) {
+                $n_combinations +=
+                    product( @frequencies{ @uniq_ints[ $i1, $i2, $i3 ] } );
+            }
+        }
+    }
+    return $n_combinations;
 }
 ```
 
-##
-
-## Note 1: Perl version
-I am using Perl v5.38 now,
-because I am playing around with the new `class` feature in other little projects,
-which works great even in the 'minimum viable' form that was added as *experimental*
-in that version (5.38).
-
-The solutions described here do not use the `class` feature, but they use function signatures,
-which I don't want to miss anymore.<br/>
-The simplest way of enabling them is to use this simple line of boilerplate code:
-```perl
-use v5.36;
-```
-This gets you function prototypes, `say` and many other useful 'modern' things,
-without needing to list them all separately, and it enables 'strict' and 'warnings'.<br/>
-Love it!
-
-What I actually have in the code is this,
-to make it easier for anyone to play around with it even if they don't have Perl v5.36:
-```perl
-use v5.20;
-use strict;
-use warnings;
-use feature 'say';
-use feature 'signatures';
-no warnings 'experimental::signatures';
-```
-
-## Note 2: TestExtractor.pm
-My [code](perl) also includes [`TestExtractor.pm`](perl/TestExtractor.pm),
-which extracts the example test data from a text version of the challenge tasks
-(extracted from the [website](https://theweeklychallenge.org/) by another script every Monday ;-),
-and runs the tests.
-
-## 
 #### **Thank you for the challenge!**
