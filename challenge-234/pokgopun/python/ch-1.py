@@ -29,45 +29,32 @@ Output: ("c", "o")
 Task 2: Unequal Triplets
 """
 
-def commonChars(tup):
-    ### create a ref list of character's count from the first word
-    #ccLst = [ [tup[0][x],1] for x in range(len(tup[0])) ]
-    ### change the type of list member from list to tuple
-    ccLst = [ (tup[0][x],1) for x in range(len(tup[0])) ]
+def commonChars(words):
+    ### store 1st word in a list of tuples to compare with the rest
+    ### we cannot simply use map here because we need to accout for individual duplicated char, see Example 2
+    ### each tuple contains a char and initial count 1
 
-    ### the remaining words will have its characters checked against the ref list
-    for word in tup[1:]:
+    word0Chars = [ (words[0][x],1) for x in range(len(words[0])) ]
 
-        ### create a list of characters from the remaining word
-        cLst = [word[x] for x in range(len(word))]
+    for word in words[1:]:    ### the remaining words to check against word0Chars
 
-        for i in range(len(ccLst)):
+        for i in range(len(word0Chars)):
 
-            ### get a character from the ref list
-            c = ccLst[i][0]
+            c = word0Chars[i][0]   ### a char of word0 to check against word
+            j = word.find(c)   ### find the char in word
 
-            ###  check if the remaining word contain the character
-            if c in word:
+            if j != -1:   ### if the char is found in word, increase its count in word0Chars, and then remove it from word
 
-                ### increase character's count in the ref list
-                #ccLst[i][1] += 1
-                ### as the ref list has its member type changed from list to tuple, need to recreate the tuple member
-                ccLst[i] = (ccLst[i][0], ccLst[i][1]+1)
+                word0Chars[i] = (c, word0Chars[i][1]+1) 
+                word = word[:j] + word[j+1:]
 
-                ### remove the characer that has been counted
-                cLst.remove(c)
-                ### updating the remaining word
-                word = "".join(cLst)
-
-    ### count of common characters, this will use to filter ccList
-    count = len(tup)
-    ### filter ccList and then map to create the tuple of common characters
+    count = len(words)   ### count of common chars, this will use to filter word0Chars and map it create common chars
     return tuple(
             map(
                 lambda x: x[0],
                 filter(
                     lambda x: x[1]==count,
-                    ccLst
+                    word0Chars
                     )
                 )
             )
@@ -78,5 +65,3 @@ for inpt,otpt in {
         ("cool", "lock", "cook"): ("c", "o"),
         }.items():
     print(commonChars(inpt)==otpt)
-
-
