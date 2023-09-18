@@ -39,12 +39,13 @@ sub removeOne(@ints)
     return $rmvCount < 2;
 }
 
-# Map each pair to true/false for being sorteed ascending.  Count the falses.
+# Map each pair to true/false for being sorted ascending.  Count the falses.
 # Will be inefficient if the list is long and the out-of-order elements are
 # near the front.
 sub ro_A(@ints)
 {
-    my $rmvCount = grep { $_ == false } map { $ints[$_] < $ints[$_+1] } 0 .. ( $#ints-1 );
+    my $rmvCount = grep { $_ == false }
+                map { $ints[$_] < $ints[$_+1] } 0 .. ( $#ints-1 );
     return $rmvCount < 2;
 }
 
