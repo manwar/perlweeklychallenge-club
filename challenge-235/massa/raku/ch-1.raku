@@ -44,7 +44,7 @@ Output: true
 use v6.*;
 
 sub remove-one(@_) {
-  (^+@_).map({[≤] @_[|(^$_), |($_+1 ..^ +@_)]}).any.so
+  (^+@_).map({[<] @_[|(^$_), |($_+1 ..^ +@_)]}).any.so
 }
 
 multi MAIN (Bool :$test!) {
