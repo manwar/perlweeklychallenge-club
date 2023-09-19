@@ -1,36 +1,36 @@
 #!/usr/bin/env raku
  
 use v6;
- 
+
+sub isStrictlyIncreasing(*@ints where ($_.all ~~ Int)) {
+  # get the first integer from the list
+  my $last_int = shift @ints;
+  for @ints -> $this_int {
+    return 0 if $this_int <= $last_int;
+    $last_int = $this_int;
+  }
+  return 1;
+}
+
 sub isStrictlyIncreasingExceptOne(*@ints where ($_.all ~~ Int)) {
   # the list cannot be strictly increasing unless
   # there are at least two items in it
   return 0 if @ints <= 1;
 
-  my $count = 0; # track how many exceptions
+  # if it's strictly increasing without removing
+  # an item, it fails the test
+  return 0 if isStrictlyIncreasing(@ints);
 
-  # get the first integer from the list
-  my $last_int = shift @ints;
-
-  for @ints -> $this_int {
-    if ($this_int <= $last_int) {
-      if (++$count > 1) {
-        # if we have encountered more than one
-        # case where the current int is less than
-        # or equal to the last int, we can bail
-        # out early, because the check fails
-        return 0;
-      }
+  # loop over the list by index
+  loop (my $i = 1; $i < @ints.elems; $i++) {
+    if (@ints[$i] <= @ints[$i - 1]) {
+      # remove the bigger item from the list
+      @ints.splice($i-1, 1);
+      # after removing the element, is 
+      # the list strictly increasing?
+      return isStrictlyIncreasing(@ints);
     }
-
-    # move the current int to the last int
-    $last_int = $this_int;
   }
-
-  # if the count of cases where the list
-  # wasn't increasing is equal to one,
-  # then we return true, otherwise false
-  return $count == 1;
 }
 
 sub solution(*@ints where ($_.all ~~ Int)) {
@@ -47,3 +47,6 @@ solution(5, 1, 3, 2);
  
 say "\nExample 3:";
 solution(2, 2, 3);
+
+say "\nExample 4 from James Curtis-Smith:";
+solution(1,2,3,4,1,2,3);

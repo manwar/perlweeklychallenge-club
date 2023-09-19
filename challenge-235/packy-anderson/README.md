@@ -18,6 +18,10 @@ Output: false
 Example 3:
 Input: @ints = (2, 2, 3)
 Output: true
+
+Example 4 from James Curtis-Smith:
+Input: @ints = (1, 2, 3, 4, 1, 2, 3)
+Output: false
 ```
 
 * [Task 2](perl/ch-2.pl)
@@ -56,6 +60,10 @@ Output: false
 Example 3:
 Input: @ints = (2, 2, 3)
 Output: true
+
+Example 4 from James Curtis-Smith:
+Input: @ints = (1, 2, 3, 4, 1, 2, 3)
+Output: false
 ```
 
 * [Task 2](raku/ch-2.raku)
