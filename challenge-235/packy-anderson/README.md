@@ -18,7 +18,6 @@ Output: false
 Example 3:
 Input: @ints = (2, 2, 3)
 Output: true
-master|∆1⊄8
 ```
 
 * [Task 2](perl/ch-2.pl)
