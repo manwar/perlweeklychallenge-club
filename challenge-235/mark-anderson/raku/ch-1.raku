@@ -4,16 +4,22 @@ use Test;
 ok  remove-one(0,2,9,4,6);
 nok remove-one(5,1,3,2);
 ok  remove-one(2,2,3);
+nok remove-one(2,2,2,3);
+ok  remove-one(2,3,1,4,6,7);
+nok remove-one(2,3,1,1,6,7);
+ok  remove-one(2,3,7,4,6,7);
 nok remove-one(0,2,4,8,3,6);
 ok  remove-one(1,2,3,4,5);
-nok remove-one(1,2,3,4,4,4,4,4,5,6,7,5,5,5,7);
-ok  remove-one(1,2,3,4,4,4,4,4,5,6,9,7,7,8,8);
 
 sub remove-one(*@a)  
 {
-    my $k = @a.unshift(-∞).rotor(2 => -1).first({ .[0] > .[1] }, :k);
+    my $k = @a.unshift(-Inf).rotor(2 => -1).first({ .[0] >= .[1] }, :k);
 
     return True unless $k;
     
-    [<=] @a[flat $k-1,$k+1..@a.end]
+    given @a
+    {
+        my $i = .[$k-1] < .[$k] < .[$k+2] ?? $k !! $k+1;
+        return [<] flat .[$k-1], .[$i], .[$k+2..*]
+    } 
 }
