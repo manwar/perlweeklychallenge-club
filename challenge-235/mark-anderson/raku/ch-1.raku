@@ -20,6 +20,6 @@ sub remove-one(*@a)
     given @a
     {
         my $i = .[$k-1] < .[$k] < .[$k+2] ?? $k !! $k+1;
-        return [<] flat .[$k-1], .[$i], .[$k+2..*]
+        [<] flat .[$k-1], .[$i], .[$k+2..*]
     } 
 }
