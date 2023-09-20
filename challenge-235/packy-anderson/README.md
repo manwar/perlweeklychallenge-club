@@ -8,16 +8,20 @@ Sample output
 ```
 $ perl/ch-1.pl
 Example 1:
-Input: @words = ("java", "javascript", "julia")
-Output: ("j", "a")
+Input: @ints = (0, 2, 9, 4, 6)
+Output: true
 
 Example 2:
-Input: @words = ("bella", "label", "roller")
-Output: ("e", "l", "l")
+Input: @ints = (5, 1, 3, 2)
+Output: false
 
 Example 3:
-Input: @words = ("cool", "lock", "cook")
-Output: ("c", "o")
+Input: @ints = (2, 2, 3)
+Output: true
+
+Example 4 from James Curtis-Smith:
+Input: @ints = (1, 2, 3, 4, 1, 2, 3)
+Output: false
 ```
 
 * [Task 2](perl/ch-2.pl)
@@ -26,49 +30,16 @@ Sample output
 ```
 $ perl/ch-2.pl
 Example 1:
-Input: @ints = (4, 4, 2, 4, 3)
-Output: 3
-
-(0, 2, 4) because 4 != 2 != 3
-(1, 2, 4) because 4 != 2 != 3
-(2, 3, 4) because 2 != 4 != 3
+Input: @ints = (1, 0, 2, 3, 0, 4, 5, 0)
+Output: (1, 0, 0, 2, 3, 0, 0, 4)
 
 Example 2:
-Input: @ints = (1, 1, 1, 1, 1)
-Output: 0
+Input: @ints = (1, 2, 3)
+Output: (1, 2, 3)
 
 Example 3:
-Input: @ints = (4, 7, 1, 10, 7, 4, 1, 1)
-Output: 28
-
-(0, 1, 2) because 4 != 7 != 1
-(0, 1, 3) because 4 != 7 != 10
-(0, 1, 6) because 4 != 7 != 1
-(0, 1, 7) because 4 != 7 != 1
-(0, 2, 3) because 4 != 1 != 10
-(0, 2, 4) because 4 != 1 != 7
-(0, 3, 4) because 4 != 10 != 7
-(0, 3, 6) because 4 != 10 != 1
-(0, 3, 7) because 4 != 10 != 1
-(0, 4, 6) because 4 != 7 != 1
-(0, 4, 7) because 4 != 7 != 1
-(1, 2, 3) because 7 != 1 != 10
-(1, 2, 5) because 7 != 1 != 4
-(1, 3, 5) because 7 != 10 != 4
-(1, 3, 6) because 7 != 10 != 1
-(1, 3, 7) because 7 != 10 != 1
-(1, 5, 6) because 7 != 4 != 1
-(1, 5, 7) because 7 != 4 != 1
-(2, 3, 4) because 1 != 10 != 7
-(2, 3, 5) because 1 != 10 != 4
-(2, 4, 5) because 1 != 7 != 4
-(3, 4, 5) because 10 != 7 != 4
-(3, 4, 6) because 10 != 7 != 1
-(3, 4, 7) because 10 != 7 != 1
-(3, 5, 6) because 10 != 4 != 1
-(3, 5, 7) because 10 != 4 != 1
-(4, 5, 6) because 7 != 4 != 1
-(4, 5, 7) because 7 != 4 != 1
+Input: @ints = (0, 3, 0, 4, 5)
+Output: (0, 0, 3, 0, 0)
 ```
 
 ## Raku
@@ -79,16 +50,20 @@ Sample output
 ```
 $ raku/ch-1.raku
 Example 1:
-Input: @words = ("java", "javascript", "julia")
-Output: ("j", "a")
+Input: @ints = (0, 2, 9, 4, 6)
+Output: true
 
 Example 2:
-Input: @words = ("bella", "label", "roller")
-Output: ("e", "l", "l")
+Input: @ints = (5, 1, 3, 2)
+Output: false
 
 Example 3:
-Input: @words = ("cool", "lock", "cook")
-Output: ("c", "o")
+Input: @ints = (2, 2, 3)
+Output: true
+
+Example 4 from James Curtis-Smith:
+Input: @ints = (1, 2, 3, 4, 1, 2, 3)
+Output: false
 ```
 
 * [Task 2](raku/ch-2.raku)
@@ -97,49 +72,16 @@ Sample output
 ```
 $ raku/ch-2.raku
 Example 1:
-Input: @ints = (4, 4, 2, 4, 3)
-Output: 3
-
-(0, 2, 4) because 4 != 2 != 3
-(1, 2, 4) because 4 != 2 != 3
-(2, 3, 4) because 2 != 4 != 3
+Input: @ints = (1, 0, 2, 3, 0, 4, 5, 0)
+Output: (1, 0, 0, 2, 3, 0, 0, 4)
 
 Example 2:
-Input: @ints = (1, 1, 1, 1, 1)
-Output: 0
+Input: @ints = (1, 2, 3)
+Output: (1, 2, 3)
 
 Example 3:
-Input: @ints = (4, 7, 1, 10, 7, 4, 1, 1)
-Output: 28
-
-(0, 1, 2) because 4 != 7 != 1
-(0, 1, 3) because 4 != 7 != 10
-(0, 1, 6) because 4 != 7 != 1
-(0, 1, 7) because 4 != 7 != 1
-(0, 2, 3) because 4 != 1 != 10
-(0, 2, 4) because 4 != 1 != 7
-(0, 3, 4) because 4 != 10 != 7
-(0, 3, 6) because 4 != 10 != 1
-(0, 3, 7) because 4 != 10 != 1
-(0, 4, 6) because 4 != 7 != 1
-(0, 4, 7) because 4 != 7 != 1
-(1, 2, 3) because 7 != 1 != 10
-(1, 2, 5) because 7 != 1 != 4
-(1, 3, 5) because 7 != 10 != 4
-(1, 3, 6) because 7 != 10 != 1
-(1, 3, 7) because 7 != 10 != 1
-(1, 5, 6) because 7 != 4 != 1
-(1, 5, 7) because 7 != 4 != 1
-(2, 3, 4) because 1 != 10 != 7
-(2, 3, 5) because 1 != 10 != 4
-(2, 4, 5) because 1 != 7 != 4
-(3, 4, 5) because 10 != 7 != 4
-(3, 4, 6) because 10 != 7 != 1
-(3, 4, 7) because 10 != 7 != 1
-(3, 5, 6) because 10 != 4 != 1
-(3, 5, 7) because 10 != 4 != 1
-(4, 5, 6) because 7 != 4 != 1
-(4, 5, 7) because 7 != 4 != 1
+Input: @ints = (0, 3, 0, 4, 5)
+Output: (0, 0, 3, 0, 0)
 ```
 
 ## Guest Language: Python
@@ -152,4 +94,4 @@ Output: 28
 
 ## Blog Post
 
-[Perl Weekly Challenge: Common, but Unequal, Triplet Characters](https://packy.dardan.com/2023/09/12/perl-weekly-challenge-common-but-unequal-triplet-characters/)
+[Perl Weekly Challenge: Remove and Duplicate, Challenge Edition](https://packy.dardan.com/2023/09/18/perl-weekly-challenge-remove-and-duplicate-challenge-edition/)
