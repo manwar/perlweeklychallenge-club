@@ -13,9 +13,9 @@ ok  remove-one(1,2,3,4,5);
 
 sub remove-one(*@a)  
 {
-    my $k = @a.unshift(-Inf).rotor(2 => -1).first({ .[0] >= .[1] }, :k);
+    my $k = @a.unshift(-∞).rotor(2 => -1).first({ .[0] >= .[1] }, :k);
 
-    return True unless $k;
+    return True without $k;
     
     given @a
     {
