@@ -46,6 +46,20 @@ sub dz_A(@ints)
     return \@output;
 }
 
+sub dz_B(@ints)
+{
+    for (my $i = 0 ; $i <= $#ints; $i++ )
+    {
+        if ( $ints[$i] == 0 )
+        {
+            # Insert a zero and advance i past it
+            splice(@ints, $i++, 0, 0);
+            pop @ints; # Maintain the length;
+        }
+    }
+    return \@ints;
+}
+
 sub runTest
 {
     use Test2::V0;
@@ -61,6 +75,12 @@ sub runTest
     is( dz_A(0,3,0,4,5      ), [0,0,3,0,0      ], "Example 3");
     is( dz_A(0), [0], "One Zero");
     is( dz_A(2, 1, 0), [2, 1, 0], "Ends on a zero");
+
+    is( dz_B(1,0,2,3,0,4,5,0), [1,0,0,2,3,0,0,4], "Example 1");
+    is( dz_B(1,2,3          ), [1,2,3          ], "Example 2");
+    is( dz_B(0,3,0,4,5      ), [0,0,3,0,0      ], "Example 3");
+    is( dz_B(0), [0], "One Zero");
+    is( dz_B(2, 1, 0), [2, 1, 0], "Ends on a zero");
 
     done_testing;
 }

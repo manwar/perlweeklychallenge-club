@@ -27,9 +27,73 @@ my $DoTest  = 0;
 GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 exit(!runTest()) if $DoTest;
 
+sub removeOne(@ints)
+{
+    use List::Util qw/min/;
+
+    return true if @ints < 3;
+
+    my $rmvCount = 0;
+
+    # Walk forward until we hit a descending step.
+    for ( my $i = 0 ; $i < $#ints && $rmvCount < 2 ; $i++ )
+    {
+        next if $ints[$i+1] >= $ints[$i];
+
+        # How far backward would we have to go to get back in order?
+        my $back = 0;
+        for ( my $j = $i ; $j >= 0 && $ints[$j] > $ints[$i+1] && $back < 3; $j-- )
+        {
+            $back++;
+        }
+        
+        # How far ahead would we have to go to get back in order?
+        my $ahead = 0;
+        for ( my $j = $i+1; $j <= $#ints && $ints[$j] <= $ints[$i] && $ahead < 3; $j++ )
+        {
+            $ahead++;
+        }
+        $rmvCount += min($back, $ahead);
+
+    }
+    return $rmvCount < 2;
+}
+
+sub runTest
+{
+    use Test2::V0;
+    no warnings "experimental::builtin";
+
+    is( removeOne(0,2,9,4,6), true,  "Example 1");
+    is( removeOne(5,1,3,2  ), false, "Example 2");
+    is( removeOne(2,2,3    ), true,  "Example 3");
+    is( removeOne(10,1,2,3 ), true,  "First element goes");
+    is( removeOne(10,11,1  ), true,  "Last element goes");
+    is( removeOne(10,20,30,24,25,40), true, "One high peak");
+    is( removeOne(10,20,30,18,25,40), false, "One high, one low");
+    is( removeOne(1,2,5,3,4,6,3,4),   false, "Multiple disorders");
+    is( removeOne(99, 1000, 1..999, 2000), false, "Long failure");
+
+    # is( ro_A(0,2.9,4,6), true,  "Example 1");
+    # is( ro_A(5,1,3,2  ), false, "Example 2");
+    # is( ro_A(2,2,3    ), true,  "Example 3");
+
+    # is( ro_B(0,2.9,4,6), true,  "Example 1");
+    # is( ro_B(5,1,3,2  ), false, "Example 2");
+    # is( ro_B(2,2,3    ), true,  "Example 3");
+
+    # is( ro_C(0,2.9,4,6), true,  "Example 1");
+    # is( ro_C(5,1,3,2  ), false, "Example 2");
+    # is( ro_C(2,2,3    ), true,  "Example 3");
+
+    done_testing;
+}
+
+# Things that don't work.
+
 # Move down the list in pairs and count the number of times that
 # we find a decreasing pair.  Stop when we hit the second one.
-sub removeOne(@ints)
+sub ro_D(@ints)
 {
     my $rmvCount = 0;
     for ( my $i = 0; $i < $#ints && $rmvCount < 2 ; $i++ )
@@ -76,26 +140,3 @@ sub ro_C(@ints)
     return $rmvOne;
 }
 
-sub runTest
-{
-    use Test2::V0;
-    no warnings "experimental::builtin";
-
-    is( removeOne(0,2.9,4,6), true,  "Example 1");
-    is( removeOne(5,1,3,2  ), false, "Example 2");
-    is( removeOne(2,2,3    ), true,  "Example 3");
-
-    is( ro_A(0,2.9,4,6), true,  "Example 1");
-    is( ro_A(5,1,3,2  ), false, "Example 2");
-    is( ro_A(2,2,3    ), true,  "Example 3");
-
-    is( ro_B(0,2.9,4,6), true,  "Example 1");
-    is( ro_B(5,1,3,2  ), false, "Example 2");
-    is( ro_B(2,2,3    ), true,  "Example 3");
-
-    is( ro_C(0,2.9,4,6), true,  "Example 1");
-    is( ro_C(5,1,3,2  ), false, "Example 2");
-    is( ro_C(2,2,3    ), true,  "Example 3");
-
-    done_testing;
-}
