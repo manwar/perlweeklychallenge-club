@@ -14,8 +14,8 @@ my Set $some-unicode-characters =
 sub data-provider-for(Str $challenge, Str $task-string) is export {
 
     given $challenge => $task-string {
-        when 'nr235' => 'task-one' { return &integers.assuming(*, -100, 100, @problem-size-factor-two, log2(2**5).UInt)}
-        when 'nr235' => 'task-one' { return &integers.assuming(*, -100, 100, @problem-size-factor-two, log2(2**5).UInt)}
+        when 'nr235' => 'task-one' { return &strictly-increasing-integers-sequence.assuming(*, -1000000, 1000000, @problem-size-factor-two, log2(2**5).UInt)}
+        when 'nr235' => 'task-one' { return &integers.assuming(*, -10, 10, @problem-size-factor-two, log2(2**5).UInt)}
 
         when 'nr234' => 'task-one' { return &unicode-words.assuming(*, 30, 5, 25, @problem-size-factor-two, log2(2**5).UInt)}
         when 'nr234' => 'task-two' { return &integers.assuming(*, 1, 3, @problem-size-factor-two, log2(2**5).UInt)}
@@ -41,6 +41,13 @@ sub unicode-words(UInt $entry, UInt $alphabet-size, UInt $min-length, UInt $max-
     unless @data[$n] {
         @data[$n] = race for ^$n { @alphabet.roll($word-lenght.roll).join('').List };
     }
+    return @data[$n];
+}
+
+sub strictly-increasing-integers-sequence(UInt $entry, Int $min, Int $max where {$min <= $max}, @sizes, UInt $size-offset = 0, $dropout-rate=0.2) {
+    state @data is default([]);
+    my $n = @sizes[$entry + $size-offset];
+    @data[$n] = ($min..$max).pick($n).sort unless @data[$n].elems;
     return @data[$n];
 }
 
