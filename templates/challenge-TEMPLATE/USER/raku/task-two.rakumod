@@ -1,4 +1,4 @@
-unit module {{USER}}::raku::task-two:ver<0.0.1>:auth<{{USER}}@github.com)>;
+unit module {{USER}}::raku::task-two:ver<0.0.1>:auth<github:{{USER}}>:api<1>;
 
 # run in terminal: raku --optimize=3 -I challenge-{{CHALLENGE}}/{{USER}}/raku/ -- test/challenge-{{CHALLENGE}}/raku/task-two.rakutest
 # or               raku --optimize=3 -I challenge-{{CHALLENGE}} -- test/benchmark-scalabiity.raku --task=task-two --user={{USER}} --max-run-times=1,3,7 --max-problem=10 --v=True --test-before-benchmark=True --out-folder=/tmp {{CHALLENGE}}; cat /tmp/{{CHALLENGE}}_task-two.csv
