@@ -1,246 +1,129 @@
-# More Frequent Frequencies
+# Ones Removed and Zeros Duplicated
 
-**Challenge 234 solutions in Perl by Matthias Muth**
+**Challenge 235 solutions in Perl by Matthias Muth**
 
-## Task 1: Common Characters
+## Task 1: Remove One
 
-> You are given an array of words made up of alphabetic characters only.<br/>
-> Write a script to return all alphabetic characters that show up in all words including duplicates.<br/>
+> You are given an array of integers.<br/>
+> Write a script to find out if removing ONLY one integer makes it strictly increasing order.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @words = ("java", "javascript", "julia")<br/>
-> Output: ("j", "a")<br/>
+> Input: @ints = (0, 2, 9, 4, 6)<br/>
+> Output: true<br/>
+> Removing ONLY 9 in the given array makes it strictly increasing order.<br/>
 > <br/>
 > Example 2<br/>
-> Input: @words = ("bella", "label", "roller")<br/>
-> Output: ("e", "l", "l")<br/>
+> Input: @ints = (5, 1, 3, 2)<br/>
+> Output: false<br/>
 > <br/>
 > Example 3<br/>
-> Input: @words = ("cool", "lock", "cook")<br/>
-> Output: ("c", "o")<br/>
+> Input: @ints = (2, 2, 3)<br/>
+> Output: true<br/>
 
-In earlier challenges, I used regular expressions for checking whether a given word can be built from the letters of a given alphabet ([221 Task 1 'Good Strings'](https://github.com/MatthiasMuth/perlweeklychallenge-club/tree/muthm-221/challenge-221/matthias-muth#readme), [224 Task 1 'Special Notes'](https://github.com/MatthiasMuth/perlweeklychallenge-club/tree/muthm-224/challenge-224/matthias-muth#readme), [229 Task 1 'Lexicographic Order'](https://github.com/MatthiasMuth/perlweeklychallenge-club/tree/muthm-229/challenge-229/matthias-muth#readme)).<br/>
-For example, to decide whether the word 'cat'
-could be built from an alphabet containing the letters of the word 'atach',
-I sorted the letters of both,
-and built a regular expression based on the word:
+For this task, I see two approaches:
+
+#### 1. Single Pass
+
+In this approach, we walk through the array only once.<br/>For each entry we check whether the following entry is greater.<br/>If not, we remove that violating following entry, and then we make sure with the rest of the list that this is the only violation.
+
+For example:
+  ```perl
+  1-2-3-0-4-5-6
+  ```
+We check `1 < 2` and `2 < 3`, which both are fine. Then we check `3 < 0`, which violates the rule.
+  We found a decrease, so we conclude that the `0` needs to be removed.
+  We check again for the new pair (`3 < 4`), and then the rest of the list (`4 < 5`, `5 < 6`) and find them all ok.<br/>So the `0` is the only entry that needs to be removed.
+
+And we are right in this case. But things are more complicated!
+
+Consider the next example:
+    ```perl
+  1-2-3-99-4-5-6
+    ```
+
+We check `1 < 2`, `2 < 3`, `3 < 99` and they are all ok, strictly increasing. Then we find a failure checking `99 < 4`, and we conclude that the `4` needs to be removed.
+
+But this is wrong!
+
+In this case, it's actually the *first* of the two numbers that we just compared that has to be removed to recreate a strictly increasing order, not the second.
+
+So we actually need to decide which of the two numbers we need to remove (we are sure that one of them has to go, if not, the violation will remain).
+
+Once we remove one of the two numbers, the other one has to be in correct order with both entries to its left and its right. In the examples, we choose between
+
+​    `2-3-4` and `2-0-4`
+
+and between
+
+​    `3-99-5` and `3-4-5`
+
+respectively.
+
+And actually it may be that removing neither of the two leads to a strictly increasing sequence. We then can return 'false' immediately.
+
+In all of this, we need to verify that all the neighbors we check really exist, which bloats up the code a little.
+
+**I did not implement this.**<br/>
+It already took long enough to describe this algorithm, and the other solution I am going to propose is so nice and looks so 'perlish' to me that I really didn't consider the effort.
+
+### 2. Just Try Them All
+
+The second approach is <u>much</u>(!!!) easier!
+
+We use a separate function that checks whether a given list is strictly monotonic.
+
+We go through the array entry by entry, remove that entry from the array, and check with the function whether the resulting array is strictly monotonic. We return 'true' if we find the first entry where this is the case. 
+
+To make it 'short'; here's my implementation:
 
 ```perl
-    'cat'   sorted:  a-c-t
-    'catch' sorted:  a-a-c-h-t
-    "aacht" =~ /^ .* a .* c .* t .* $/x
-```
+use List::Util qw( any all );
 
-My first thought was that I could use the same trick for this task.
-But here, we don't just need to decide whether a word matches, but we need to filter out all letters that are *not* contained in the word, like through a sieve. I was not sure whether this would not be too complicated for a nice solution for this task, so I first implemented a more 'traditional' approach, to have something working. I would maybe come back later to work on a solution based on regular expressions. See below! ;-)
+sub is_monotonic( @a ) {
+    return all { $a[$_] > $a[ $_ - 1 ] } 1..$#a;
+}
 
-#### Using frequency counts and `grep`
-
-For this first solution, I first produce a count of available characters in each word.<br/>
-For example, `"java"` translates to
-`{ a => 2, j => 1, v => 1 }`.
-
-```perl
-    my @available_chars;
-    for my $i ( 0..$#words ) {
-        ++$available_chars[$i]{$_}
-            for split //, $words[$i];
-    }
-```
-
-Next, we check which characters are contained in *all* words.<br/>
-No character can be in *all* words if it is not contained in the *first* word,
-so I use the first word for an initial list of characters.<br/>
-I pass this list through `grep`,
-with a code block that let's those characters pass through
-that are available in all words
-(skipping the first, that would be redundant).
-Using `all` from `List::Util` for this.
-
-The test decreases each availability count at the same time,
-so that each character can only be used as often as it exists in each word.
-To make it simple, I don't care about decreasing into negative numbers
--- it only matters that the character is not available.
-
-The letters that make it through the `grep` can then directly be returned as the result.<br/>
-So this is the complete solution:
-
-```perl
-use List::Util qw( all );
-
-sub common_characters_1( @words ) {
-    my @available_chars;
-    for my $i ( 0..$#words ) {
-        ++$available_chars[$i]{$_}
-            for split //, $words[$i];
-    }
-
+sub remove_one( @ints ) {
     return
-        grep {
-            my $char = $_;
-            all { ( $available_chars[$_]{$char}-- // 0 ) > 0 } 1..$#words
-        } split //, $words[0];
+        any {
+            my @try = @ints;
+            splice @try, $_, 1, ();
+            is_monotonic @try;
+        } 0..$#ints;
 }
 ```
 
-#### Using regular expressions to filter out characters
+## Task 2: Duplicate Zeros
 
-Now that I had a working solution, I also tried to find a solution that is based on regular expressions.
-
-What we need is a regex that, when a word is matched against it, *returns* those letters that are allowed, and silently ignores all letters that are not allowed. How do we do that?
-
-Let's start with *how* the allowed letters are returned, and let's use Example 1 ("java", "javascript", "julia") as an example. After sorting the letters in each word, we have these words:
-
-```perl
-java        => aajv
-javascript  => aacijprstv
-julia       => aijlu
-```
-
-As in the solution above, we use the first word as the initial set of valid letters.<br/>
-We want to return the matching letters in capture groups.<br/>
-
-
-So for matching "javascript" against "java", after sorting the letters we have to match the following, allowing for other characters between the ones that we are looking for:
-
-```perl
-"aacijprstv" =~ /^ (a) (a) .*? (j) .*? (v)/x
-```
-
-The first `.*?` will catch "ci", the second one "prst".<br/>
-But we also need to allow for letters *not* being present, so
-
-```perl
-"aacijprstv" =~ /^ (a?) (a?) .*? (j?) .*? (v?)/x
-```
-
-But this doesn't work.<br/>The first `.*?` pattern now catches everything up to the end,
-because everything following it is now optional.<br/>
-So we need to limit the `.*?` to in no case match the expected next character,
-be it there or not.<br/>
-We can do that by replacing for example `.*? (j?)` by `[a-i]* (j?)`.<br/>
-This will work, but there is no really elegant way of producing `[a-i]`
-when we only know the letter `j` that we want to match
-(sure, there's `chr( ord( $_ ) - 1 )` to prodce the 'i', but is this elegant?).
-
-There's another trick that we can apply:
-We write `[a-j]` (we know the `j`!),
-but we make sure that a `j` will never be matched at this point,
-using a 'negative lookahead'.
-Like this: `(?: (?!j)[a-j] )*`.<br/>
-So what we are actually saying is
-'if the next character is not a "j", give us that character if it is from "a" to "j"'.<br/>
-Ok, maybe I have to rethink my definition of 'elegance'.
-
-Anyway, my example now looks like this:
-```perl
-"aacijprstv" =~ /^ (a?) (a?) (?:(?!j)[a-j])* (j?) (?:(?!v)[a-v])* (v?)/x
-```
-The captures like '(a?)' will return an empty string
-if there is no 'a' at that point.
-We need to filter those empty captures away.
-
-Now we still need to generate this regex,
-but now as we know what we need, this is quite straightforward.<br/>
-Here  is the whole solution:
-```perl
-sub common_characters( @words ) {
-    my @sorted_words = map join( "", sort split //, $_ ), @words;
-    my @result_chars = split //, $sorted_words[0];
-    for ( @sorted_words[1..$#sorted_words] ) {
-        my $re = join " ", map "(?:(?!$_)[a-$_])* ($_?)", @result_chars;
-        @result_chars = grep $_ ne "", /^$re/x;
-    }
-    return @result_chars;
-}
-```
-
-Maybe a bit extravagant, but it was quite interesting to develop it!
-
-There is one problem left with this solution:<br/>
-The order of letters returned does not always correspond with the results given in the examples.
-If we want to get the result characters in the order they appear in the first word
-(as the examples suggest)
-we first need to
-do a frequency count of the result characters,
-and then go through the first word, filtering letters for availability,
-decreasing the availability on the fly,  just like in the other solution above:
-```perl
-    my %freq;
-    ++$freq{$_}
-        for @result_chars;
-    return grep { $freq{$_}-- // 0 > 0 } split //, $words[0];
-```
-With this, all output will be exactly as in the examples.
-
-## Task 2: Unequal Triplets
-
-> You are given an array of positive integers.<br/>
-> Write a script to find the number of triplets (i, j, k) that satisfies num[i] != num[j], num[j] != num[k] and num[k] != num[i].<br/>
-> <br/>
-> Example 1<br/>
-> Input: @ints = (4, 4, 2, 4, 3)<br/>
-> Ouput: 3<br/>
-> (0, 2, 4) because 4 != 2 != 3<br/>
-> (1, 2, 4) because 4 != 2 != 3<br/>
-> (2, 3, 4) because 2 != 4 != 3<br/>
+> You are given an array of integers.<br/>
+> Write a script to duplicate each occurrence of ZERO in the given array and shift the remaining to the right but make sure the size of array remain the same.<br/>
+> <br/>Example 1<br/>
+> Input: @ints = (1, 0, 2, 3, 0, 4, 5, 0)<br/>
+> Ouput: (1, 0, 0, 2, 3, 0, 0, 4)<br/>
 > <br/>
 > Example 2<br/>
-> Input: @ints = (1, 1, 1, 1, 1)<br/>
-> Ouput: 0<br/>
+> Input: @ints = (1, 2, 3)<br/>
+> Ouput: (1, 2, 3)<br/>
 > <br/>
 > Example 3<br/>
-> Input: @ints = (4, 7, 1, 10, 7, 4, 1, 1)<br/>
-> Output: 28<br/>
-> triplets of 1, 4, 7  = 3x2×2 = 12 combinations<br/>
-> triplets of 1, 4, 10 = 3×2×1 = 6  combinations<br/>
-> triplets of 4, 7, 10 = 2×2×1 = 4  combinations<br/>
-> triplets of 1, 7, 10 = 3x2x1 = 6 combinations<br/>
+> Input: @ints = (0, 3, 0, 4, 5)<br/>
+> Ouput: (0, 0, 3, 0, 0)<br/>
 
-A brute force solution for counting the would be to loop over $i$, $j$ and $k$,
-counting each triplet that fulfills the criteria.
-This takes $i (i-1) (i-2)$ iterations.
+I use the `splice` function to insert the additional zeros after where `grep` finds any zeros in the array.
 
-Actually this is no problem for the examples (max. $8\cdot7\cdot6 = 336$ iterations).
+One trick is to start from the end of the array, so that the indexes of where to put in the additional zeros do not change when we add entries 'behind'.
 
-But we can implement a more efficient solution easily by not looping over all numbers, but only over the groups of unique numbers, as Example 3 suggests.
-For that example, with its four unique numbers (1, 4, 7, 10),
-this means only '4 choose 3', or $\binom{4}{3} = \frac{4!}{3!(4-3)!} = 4$ combinations,
-as they are explained in in the example.
-
-So after counting the frequency of the numbers
-we have a similar loop nested loop,
-but we do not add one for each triplet,
-but the product of the frequencies of the number groups.
-
-So here we go:   
+Another trick is to just replace the rest of the array after a zero by a copy of the zero that is already there and all the following rest of the array, except its last element (to keep the total number of elements the same).<br/>
+This makes it possible to use just one splice call for each zero to insert:
 
 ```perl
-use List::Util qw( product );
-
-sub unequal_triplets( @ints ) {
-    # Count the numbers.
-    my %frequencies;
-    ++$frequencies{$_}
-        for @ints;
-
-    # Check whether there are any triplets at all.
-    return 0
-        unless %frequencies >= 3;
-
-    # Go through combinations of unique numbers.
-    my $n_combinations = 0;
-    my @uniq_ints = sort { $a <=> $b } keys %frequencies;
-    for my $i1 ( 0..$#uniq_ints ) {
-        for my $i2 ( ( $i1 + 1 ) .. $#uniq_ints ) {
-            for my $i3 ( ( $i2 + 1 ) .. $#uniq_ints ) {
-                $n_combinations +=
-                    product( @frequencies{ @uniq_ints[ $i1, $i2, $i3 ] } );
-            }
-        }
-    }
-    return $n_combinations;
+sub duplicate_zeros( @ints ) {
+    splice @ints, $_ + 1, $#ints - $_, ( @ints[ $_ .. $#ints - 1 ] )
+        for reverse grep $ints[$_] == 0, 0 .. $#ints - 1;
+    return @ints;
 }
 ```
+
+I am quite happy with these three lines of code!
 
 #### **Thank you for the challenge!**
