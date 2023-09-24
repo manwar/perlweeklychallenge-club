@@ -6,20 +6,17 @@
 
 > You are given an array of integers.<br/>
 > Write a script to find out if removing ONLY one integer makes it strictly increasing order.<br/>
-> <br/>Example 1<br/>
-> 
+> <br/>
+> Example 1<br/>
 > Input: @ints = (0, 2, 9, 4, 6)<br/>
 > Output: true<br/>
-> 
 > Removing ONLY 9 in the given array makes it strictly increasing order.<br/>
 > <br/>
 > Example 2<br/>
-> 
 > Input: @ints = (5, 1, 3, 2)<br/>
 > Output: false<br/>
 > <br/>
 > Example 3<br/>
-> 
 > Input: @ints = (2, 2, 3)<br/>
 > Output: true<br/>
 
