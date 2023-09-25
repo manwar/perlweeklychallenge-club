@@ -1,0 +1,97 @@
+#! /usr/bin/env raku
+
+# Perl Weekly Challenge #  Task 1
+# © 2023 Shimon Bollinger. All rights reserved.
+# Last modified: Mon 25 Sep 2023 04:22:44 PM EDT
+# Version 0.0.1
+
+# begin-no-weave
+# always use the latest version of Raku
+use v6.*;
+# end-no-weave
+
+=begin pod
+=TITLE Challenge #  Task ,
+
+=head1 Submitted by:
+
+=head1 The Challenge
+
+=head2 Example 1
+
+=begin code :lang<bash>
+Input:
+Output:
+
+=end code
+
+=head1 The Solution
+
+=end pod
+
+#| The actual program starts here.
+multi MAIN ( ) {
+    ;
+} # end of multi MAIN ( )
+
+
+=begin pod
+=head1 AUTHOR
+
+Shimon Bollinger  (deoac.shimon@gmail.com)
+
+Source can be located at: https://github.com/deoac/... . Comments and
+Pull Requests are welcome.
+
+=head1 LICENCE AND COPYRIGHT
+
+© 2023 Shimon Bollinger. All rights reserved.
+
+This module is free software; you can redistribute it and/or
+modify it under the same terms as Perl itself.
+See L<perlartistic|http://perldoc.perl.org/perlartistic.html>.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+=end pod
+
+#| Run with the option '--test' to test the program
+multi MAIN (:$test!) {
+    use Test;
+
+    my @tests = [
+        %{ got => '', op => 'eq', expected => '', desc => 'Example 1' },
+    ];
+
+    for @tests {
+#        cmp-ok .<got>, .<op>, .<expected>, .<desc>;
+    } # end of for @tests
+} # end of multi MAIN (:$test!)
+
+my %*SUB-MAIN-OPTS =
+  :named-anywhere,             # allow named variables at any location
+  :bundling,                   # allow bundling of named arguments
+#  :coerce-allomorphs-to(Str),  # coerce allomorphic arguments to given type
+  :allow-no,                   # allow --no-foo as alternative to --/foo
+  :numeric-suffix-as-value,    # allow -j2 as alternative to --j=2
+;
+
+#| Run with '--pod' to see all of the POD6 objects
+multi MAIN(Bool :$pod!) {
+    for $=pod -> $pod-item {
+        for $pod-item.contents -> $pod-block {
+            $pod-block.raku.say;
+        }
+    }
+} # end of multi MAIN (:$pod)
+
+#| Run with '--doc' to generate a document from the POD6
+#| It will be rendered in Text format
+#| unless specified with the --format option.  e.g.
+#|       --format=HTML
+multi MAIN(Bool :$doc!, Str :$format = 'Text') {
+    run $*EXECUTABLE, "--doc=$format", $*PROGRAM;
+} # end of multi MAIN(Bool :$man!)
+
