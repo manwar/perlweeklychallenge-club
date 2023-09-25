@@ -1,0 +1,33 @@
+#!/usr/bin/env raku
+#BEGIN %*ENV<RAKU_TEST_DIE_ON_FAIL> = 1;
+#BEGIN %*ENV<AUTHOR_TESTING> = 1;
+
+use Test;
+use task-one;
+
+my @testcases =
+  (5).List           => True,
+  (10).List          => False,
+  (20).List          => False,
+  (5, 10)            => True,
+  (5, 20)            => False,
+  (5, 5, 20)         => False,
+  (5, 5, 5, 20)      => True,
+  (5, 5, 5, 10, 20)  => True,
+  (5, 5, 10, 10, 20) => False
+;
+
+plan @testcases.elems;
+cmp-ok solution(.key), &[eqv], .value for @testcases;
+
+
+if ?%*ENV<AUTHOR_TESTING> {
+  for @testcases.keys -> $i {
+    my ($input, $output) = @testcases[$i].kv;
+    say $i + 1 ~ '. testcase';
+    isa-ok $input, List, 'domain data structure';
+    ok all($input) ~~ UInt, 'domain value';
+    isa-ok $output, Bool, 'co-domain data structure';
+    ok all($output) ~~ Bool, 'co-domain value';    
+  }
+}
