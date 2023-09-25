@@ -1,0 +1,138 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/combinations {
+    4 dict begin
+    /k exch def
+    /arr exch def
+    /c [
+        0 1 k 1 sub { } for
+        arr length
+        0
+    ] def
+    [
+        {
+            [
+                k 1 sub -1 0 {
+                    c exch get arr exch get
+                } for
+            ]
+            /j 0 def
+            {
+                c j get 1 add c j 1 add get ne {
+                    exit
+                } if
+                c j j put
+                /j j 1 add def
+            } loop
+            j k ge {
+                exit
+            } if
+            c j c j get 1 add put
+        } loop
+    ]
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/unequaltriplets {
+    0 dict begin
+    /utc 0 dict def
+    {
+        /n exch def
+        utc n 2 copy 0 dget 1 add put
+    } forall
+    /kl utc keys def
+    kl length 3 lt {
+        0
+    } {
+        0
+        kl 3 combinations {
+            /c exch def
+            [ 0 1 2 { } for ] { c exch get utc exch get } map
+            { mul } reduce add
+        } forall
+    } ifelse
+    end
+} bind def
+
+(unequaltriplets) test.start
+[4 4 2 4 3] unequaltriplets 3 eq test
+[1 1 1 1 1] unequaltriplets 0 eq test
+[4 7 1 10 7 4 1 1] unequaltriplets 28 eq test
+test.end

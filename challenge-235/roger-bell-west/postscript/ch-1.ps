@@ -1,0 +1,63 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/removeone {
+    0 dict begin
+    /a exch def
+    /ec 0 def
+    /lx 0 def
+    true
+    0 1 a length 2 sub {
+        a exch 2 getinterval /s exch def
+        s 1 get s 0 get le {
+            /ec ec 1 add def
+            ec 1 gt s 0 get s 1 get sub lx ge or {
+                pop false
+                exit
+            } if
+        } if
+        /lx s 1 get s 0 get sub def
+    } for
+    end
+} bind def
+
+(removeone) test.start
+[0 2 9 4 6] removeone test
+[5 1 3 2] removeone not test
+[2 2 2] removeone not test
+test.end
