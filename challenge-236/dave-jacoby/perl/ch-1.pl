@@ -48,9 +48,9 @@ T: for my $t (@transactions) {
 sub has_change ( $change, $till, $values = [] ) {
     my @till = sort { $b <=> $a } $till->@*;    # sort big to small, big bills first
     my $sum  = sum0 $values->@*;
+    return $values->@* if $sum == $change;  # exactly right
     return             if $sum > $change;   # too much change
     return             if !scalar @till;    # not enough in till
-    return $values->@* if $sum == $change;  # exactly right
     for my $i ( 0 .. -1 + scalar @till ) {  # 
         my @copy = $values->@*;
         my $v    = shift @till;

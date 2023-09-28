@@ -34,7 +34,6 @@ sub find_loops ($ints) {
         my $loop = traverse_loop( $ints, \@loop );
         if ( $loop == -1 ) { }
         if ( scalar $loop->@* ) {
-            # say qq{has_loop: }. join ', ', $loop->@*;
             map { $no_go{$_} = 1 } $loop->@*;
             $output++;
         }
