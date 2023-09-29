@@ -2,7 +2,7 @@
 
 # Perl Weekly Challenge #236 Task 2
 # © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Thu 28 Sep 2023 08:29:39 PM EDT
+# Last modified: Thu 28 Sep 2023 10:27:08 PM EDT
 # Version 0.0.1
 
 # begin-no-weave
@@ -11,11 +11,11 @@ use v6.*;
 # end-no-weave
 
 =begin pod
-=TITLE Challenge # 236 Task 2, Array Loops
+=TITLE The Perl Weekly Challenge
 
-=head1 Submitted By: Mark Anderson
+=SUBTITLE Submitted By: Mark Anderson
 
-=head1 The Challenge
+=head2 Challenge #236 Task 2, Array Loops
 
 You are given an array of unique integers.
 
@@ -24,7 +24,7 @@ Write a script to determine how many loops are in the given array.
 =defn
 To determine a loop: Start at an index and take the number at array[index] and then proceed to that index and continue this until you end up at the starting index.
 
-=head2 Example 1
+=head3 Example 1
 
 =begin code :lang<bash>
 Input: @ints = (4,6,3,8,15,0,13,18,7,16,14,19,17,5,11,1,12,2,9,10)
@@ -41,7 +41,7 @@ Loops are as below:
 
 =end code
 
-=head2 Example 2
+=head3 Example 2
 
 =begin code :lang<bash>
 Input: @ints = (0,1,13,7,6,8,10,11,2,14,16,4,12,9,17,5,3,18,15,19)
@@ -56,7 +56,7 @@ Loops are as below:
 [19]
 =end code
 
-=head2 Example 3
+=head3 Example 3
 
 =begin code :lang<bash>
 Input: @ints = (9,8,3,11,5,7,13,19,12,4,14,10,18,2,16,1,0,15,6,17)
@@ -67,29 +67,58 @@ Loop is as below:
 =end code
 
 
-=head1 The Solution
+=head2 The Solution
+=end pod
+
+=begin pod
 =end pod
 
 subset UniqueIntArray of Array where .elems == 0 ||
                                      .unique.elems == .elems and .all ~~ IntStr;
+=begin pod
 
-#| The actual program starts here.
-multi MAIN (*@input where .all ~~ Int &&
+=end pod
+
+
+multi MAIN (#| A list of unique integers
+            *@input where .all ~~ Int &&
                           .unique.elems == .elems,
+
+            #| Show debug prints when True
             Bool :v($verbose) = False # no-weave-this-line
         ) {
+=begin pod
+
+=end pod
+
     my Int @ints        = @input>>.Int;
     my Int $num-elems   = @ints.elems;
     my Int $start-index = 0;
     my Int $cur-index   = $start-index;
 
+=begin pod
+
+=end pod
+
     my UniqueIntArray $cur-loop;
     my UniqueIntArray @all-loops;
 
+=begin pod
+
+=end pod
+
     LOOP:
     while $start-index.defined {
+=begin pod
+
+=end pod
+
         my $cur-value  = @ints[$cur-index];
         my $next-index = $cur-value;
+
+=begin pod
+
+=end pod
 
         $cur-loop.push: $cur-value;
         @ints[$cur-index] = Nil;
@@ -105,7 +134,14 @@ multi MAIN (*@input where .all ~~ Int &&
         } # end of if $verbose
         #end-no-weave
 
+=begin pod
+
+=end pod
+
         given $next-index {
+=begin pod
+
+=end pod
 
             when * ≥ $num-elems {
                 #begin-no-weave
@@ -114,6 +150,9 @@ multi MAIN (*@input where .all ~~ Int &&
                 #end-no-weave
                 @all-loops.push: for $cur-loop;
             }
+=begin pod
+
+=end pod
 
             when $start-index {
                 # begin-no-weave
@@ -122,6 +161,10 @@ multi MAIN (*@input where .all ~~ Int &&
                 # end-no-weave
                 @all-loops.push: $cur-loop;
             }
+
+=begin pod
+
+=end pod
 
             default {
                 #begin-no-weave
@@ -132,6 +175,9 @@ multi MAIN (*@input where .all ~~ Int &&
                 next LOOP;
             }
         } # end of given $next-index
+=begin pod
+
+=end pod
 
         $cur-loop = [];
         $start-index = $cur-index = @ints.first(*.defined, :k);
@@ -146,8 +192,13 @@ multi MAIN (*@input where .all ~~ Int &&
     say "\n\n\e[35mAll loops:\n" ~ @all-loops.join("\n") ~ "\e[0m\n"
         if $verbose;
     #end-no-weave
+=begin pod
+
+=end pod
+
 
     say @all-loops.elems;
+    return @all-loops.elems;
 } # end of multi MAIN ( )
 
 
@@ -157,8 +208,10 @@ multi MAIN (*@input where .all ~~ Int &&
 
 Shimon Bollinger  (deoac.shimon@gmail.com)
 
-Source can be located at: https://github.com/deoac/... . Comments and
-Pull Requests are welcome.
+=comment Source can be located at:
+Z<Challenge 236|https://github.com/perlweeklychallenge-club/challenge-236/shimon-ben-avraham/raku/>
+
+Comments and Pull Requests are welcome.
 
 =head1 LICENCE AND COPYRIGHT
 
@@ -174,33 +227,42 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 =end pod
 
-#| Run with the option '--test' to test the program
+# begin-no-weave
+# multi MAINs to catch invalid input
+multi MAIN (*@input where .all !~~ Int) {
+    note "Input must be a list of *integers*";
+    exit 1;
+} # end of multi MAIN (*@input where .all !~~ Int)
+
+multi MAIN (*@input where .unique.elems != .elems) {
+    note "Input must be a list of *unique* integers";
+    exit 1;
+} # end of multi MAIN (*@input where .unique.elems != .elems)
+
+multi MAIN () {
+    note "Input cannot be empty";
+    exit 1;
+} # end of multi MAIN ()
+
+#| Run with the option '--test' to run the program with the three examples.
 multi MAIN (Bool :$test!) {
     use Test;
 
+    #TODO Handle edge cases.
+    #TODO Test 1 integer array
     my @tests = [
-        %{ got => '', op => 'eq', expected => '', desc => 'Example 1' },
+        %{ got => MAIN(4,6,3,8,15,0,13,18,7,16,14,19,17,5,11,1,12,2,9,10),
+           op => '==', expected => 3, desc => 'Example 1' },
+        %{ got => MAIN(0,1,13,7,6,8,10,11,2,14,16,4,12,9,17,5,3,18,15,19),
+           op => '==', expected => 6, desc => 'Example 2' },
+        %{ got => MAIN(9,8,3,11,5,7,13,19,12,4,14,10,18,2,16,1,0,15,6,17),
+           op => '==', expected => 1, desc => 'Example 3' },
     ];
 
+    plan +@tests;
     for @tests {
-#        cmp-ok .<got>, .<op>, .<expected>, .<desc>;
+        cmp-ok .<got>, .<op>, .<expected>, .<desc>;
     } # end of for @tests
 } # end of multi MAIN (:$test!)
-
-my %*SUB-MAIN-OPTS =
-  :named-anywhere,             # allow named variables at any location
-  :bundling,                   # allow bundling of named arguments
-#  :coerce-allomorphs-to(Str),  # coerce allomorphic arguments to given type
-  :allow-no,                   # allow --no-foo as alternative to --/foo
-  :numeric-suffix-as-value,    # allow -j2 as alternative to --j=2
-;
-
-#| Run with '--doc' to generate a document from the POD6
-#| It will be rendered in Text format
-#| unless specified with the --format option.  e.g.
-#|       --format=HTML
-multi MAIN(Bool :$doc!, Str :$format = 'Text') {
-    run $*EXECUTABLE, "--doc=$format", $*PROGRAM;
-} # end of multi MAIN(Bool :$man!)
-
+# end-no-weave
 

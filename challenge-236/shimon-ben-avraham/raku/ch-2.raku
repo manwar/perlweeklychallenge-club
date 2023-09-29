@@ -2,20 +2,24 @@
 
 # Perl Weekly Challenge #236 Task 2
 # © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Thu 28 Sep 2023 08:29:39 PM EDT
+# Last modified: Thu 28 Sep 2023 10:26:18 PM EDT
 # Version 0.0.1
 
 # always use the latest version of Raku
 use v6.*;
 
+
 subset UniqueIntArray of Array where .elems == 0 ||
                                      .unique.elems == .elems and .all ~~ IntStr;
 
-#| The actual program starts here.
-multi MAIN (*@input where .all ~~ Int &&
+multi MAIN (#| A list of unique integers
+            *@input where .all ~~ Int &&
                           .unique.elems == .elems,
-            Bool :v($verbose) = False 
+
+            #| Show debug prints when True
+            Bool :v($verbose) = False
         ) {
+
     my Int @ints        = @input>>.Int;
     my Int $num-elems   = @ints.elems;
     my Int $start-index = 0;
@@ -26,6 +30,7 @@ multi MAIN (*@input where .all ~~ Int &&
 
     LOOP:
     while $start-index.defined {
+
         my $cur-value  = @ints[$cur-index];
         my $next-index = $cur-value;
 
@@ -74,33 +79,42 @@ multi MAIN (*@input where .all ~~ Int &&
         if $verbose;
 
     say @all-loops.elems;
+    return @all-loops.elems;
 } # end of multi MAIN ( )
 
-#| Run with the option '--test' to test the program
+# Catch invalid input
+multi MAIN (*@input where .all !~~ Int) {
+    note "Input must be a list of *integers*";
+    exit 1;
+} # end of multi MAIN (*@input where .all !~~ Int)
+
+multi MAIN (*@input where .unique.elems != .elems) {
+    note "Input must be a list of *unique* integers";
+    exit 1;
+} # end of multi MAIN (*@input where .unique.elems != .elems)
+
+multi MAIN () {
+    note "Input cannot be empty";
+    exit 1;
+} # end of multi MAIN ()
+
+#| Run with the option '--test' to, well, run the tests!
 multi MAIN (Bool :$test!) {
     use Test;
 
+    #TODO Handle edge cases.
+    #TODO Test 1 integer array
     my @tests = [
-        %{ got => '', op => 'eq', expected => '', desc => 'Example 1' },
+        %{ got => MAIN(4,6,3,8,15,0,13,18,7,16,14,19,17,5,11,1,12,2,9,10),
+           op => '==', expected => 3, desc => 'Example 1' },
+        %{ got => MAIN(0,1,13,7,6,8,10,11,2,14,16,4,12,9,17,5,3,18,15,19),
+           op => '==', expected => 6, desc => 'Example 2' },
+        %{ got => MAIN(9,8,3,11,5,7,13,19,12,4,14,10,18,2,16,1,0,15,6,17),
+           op => '==', expected => 1, desc => 'Example 3' },
     ];
 
+    plan +@tests;
     for @tests {
-#        cmp-ok .<got>, .<op>, .<expected>, .<desc>;
+        cmp-ok .<got>, .<op>, .<expected>, .<desc>;
     } # end of for @tests
 } # end of multi MAIN (:$test!)
-
-my %*SUB-MAIN-OPTS =
-  :named-anywhere,             # allow named variables at any location
-  :bundling,                   # allow bundling of named arguments
-#  :coerce-allomorphs-to(Str),  # coerce allomorphic arguments to given type
-  :allow-no,                   # allow --no-foo as alternative to --/foo
-  :numeric-suffix-as-value,    # allow -j2 as alternative to --j=2
-;
-
-#| Run with '--doc' to generate a document from the POD6
-#| It will be rendered in Text format
-#| unless specified with the --format option.  e.g.
-#|       --format=HTML
-multi MAIN(Bool :$doc!, Str :$format = 'Text') {
-    run $*EXECUTABLE, "--doc=$format", $*PROGRAM;
-} # end of multi MAIN(Bool :$man!)
