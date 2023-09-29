@@ -2,22 +2,19 @@
 
 # Perl Weekly Challenge #236 Task 2
 # © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Thu 28 Sep 2023 10:26:18 PM EDT
+# Last modified: Fri 29 Sep 2023 07:49:11 PM EDT
 # Version 0.0.1
 
 # always use the latest version of Raku
 use v6.*;
 
 
-subset UniqueIntArray of Array where .elems == 0 ||
-                                     .unique.elems == .elems and .all ~~ IntStr;
-
 multi MAIN (#| A list of unique integers
             *@input where .all ~~ Int &&
                           .unique.elems == .elems,
 
             #| Show debug prints when True
-            Bool :v($verbose) = False
+            Bool :v($verbose) = False 
         ) {
 
     my Int @ints        = @input>>.Int;
@@ -25,8 +22,8 @@ multi MAIN (#| A list of unique integers
     my Int $start-index = 0;
     my Int $cur-index   = $start-index;
 
-    my UniqueIntArray $cur-loop;
-    my UniqueIntArray @all-loops;
+    my $cur-loop  = [];
+    my @all-loops = [];
 
     LOOP:
     while $start-index.defined {
@@ -51,7 +48,7 @@ multi MAIN (#| A list of unique integers
             when * ≥ $num-elems {
                 say "\e[31mFound singular loop[s]:\e[0m ",
                     $cur-loop.map({"[$_]"}).join(' ') if $verbose;
-                @all-loops.push: for $cur-loop;
+                @all-loops.push: $_ for |$cur-loop;
             }
 
             when $start-index {
@@ -82,23 +79,30 @@ multi MAIN (#| A list of unique integers
     return @all-loops.elems;
 } # end of multi MAIN ( )
 
-# Catch invalid input
-multi MAIN (*@input where .all !~~ Int) {
+# multi MAINs to catch invalid input
+# The weird matching syntax is because !~~ does not play well with Junctions.
+multi MAIN (*@input where !(*.all ~~ Int)) is hidden-from-USAGE {
     note "Input must be a list of *integers*";
     exit 1;
 } # end of multi MAIN (*@input where .all !~~ Int)
 
-multi MAIN (*@input where .unique.elems != .elems) {
+multi MAIN (*@input where .unique.elems != .elems) is hidden-from-USAGE {
     note "Input must be a list of *unique* integers";
     exit 1;
 } # end of multi MAIN (*@input where .unique.elems != .elems)
 
-multi MAIN () {
+multi MAIN () is hidden-from-USAGE {
     note "Input cannot be empty";
     exit 1;
 } # end of multi MAIN ()
 
-#| Run with the option '--test' to, well, run the tests!
+#| Handle the case of a single integer array
+multi MAIN (Int $i!, Bool :v(:$verbose) = False) is hidden-from-USAGE {
+    note "\e[31mFound a singular loop:\e[0m [$i]" if $verbose;
+    say 1;
+} # end of multi MAIN (Int $i!
+
+#| Use the option '--test' to run the program with the three examples.
 multi MAIN (Bool :$test!) {
     use Test;
 

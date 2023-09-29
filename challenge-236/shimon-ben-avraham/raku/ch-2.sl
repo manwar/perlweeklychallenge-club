@@ -2,7 +2,7 @@
 
 # Perl Weekly Challenge #236 Task 2
 # © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Fri 29 Sep 2023 07:35:45 PM EDT
+# Last modified: Fri 29 Sep 2023 07:49:11 PM EDT
 # Version 0.0.1
 
 # begin-no-weave
@@ -99,12 +99,8 @@ integers.
 
 =end pod
 
-subset UniqueIntArray of Array where .elems == 0 or
-                                     .unique.elems == .elems and
-                                     .all ~~ IntStr;
-
-    my UniqueIntArray $cur-loop  = [];
-    my UniqueIntArray @all-loops = [];
+    my $cur-loop  = [];
+    my @all-loops = [];
 
 =begin pod
 We will create a pointer to the first index of the array and attempt to find
@@ -153,7 +149,7 @@ a loop that starts with that element. If we find a loop, we will push it to an a
                 say "\e[31mFound singular loop[s]:\e[0m ",
                     $cur-loop.map({"[$_]"}).join(' ') if $verbose;
                 #end-no-weave
-                @all-loops.push: for $cur-loop;
+                @all-loops.push: $_ for |$cur-loop;
             }
 =begin pod
 
@@ -234,7 +230,6 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
 # begin-no-weave
 # multi MAINs to catch invalid input
-
 # The weird matching syntax is because !~~ does not play well with Junctions.
 multi MAIN (*@input where !(*.all ~~ Int)) is hidden-from-USAGE {
     note "Input must be a list of *integers*";
