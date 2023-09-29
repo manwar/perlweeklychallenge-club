@@ -2,7 +2,7 @@
 
 # Perl Weekly Challenge #236 Task 2
 # © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Mon 25 Sep 2023 04:22:22 PM EDT
+# Last modified: Thu 28 Sep 2023 08:29:39 PM EDT
 # Version 0.0.1
 
 # begin-no-weave
@@ -70,10 +70,84 @@ Loop is as below:
 =head1 The Solution
 =end pod
 
+subset UniqueIntArray of Array where .elems == 0 ||
+                                     .unique.elems == .elems and .all ~~ IntStr;
 
 #| The actual program starts here.
-multi MAIN ( ) {
-    ;
+multi MAIN (*@input where .all ~~ Int &&
+                          .unique.elems == .elems,
+            Bool :v($verbose) = False # no-weave-this-line
+        ) {
+    my Int @ints        = @input>>.Int;
+    my Int $num-elems   = @ints.elems;
+    my Int $start-index = 0;
+    my Int $cur-index   = $start-index;
+
+    my UniqueIntArray $cur-loop;
+    my UniqueIntArray @all-loops;
+
+    LOOP:
+    while $start-index.defined {
+        my $cur-value  = @ints[$cur-index];
+        my $next-index = $cur-value;
+
+        $cur-loop.push: $cur-value;
+        @ints[$cur-index] = Nil;
+
+        #begin-no-weave
+        if $verbose {
+            dd @ints;
+            dd $start-index;
+            dd $cur-index;
+            dd $next-index;
+            dd $cur-value;
+            dd $cur-loop;
+        } # end of if $verbose
+        #end-no-weave
+
+        given $next-index {
+
+            when * ≥ $num-elems {
+                #begin-no-weave
+                say "\e[31mFound singular loop[s]:\e[0m ",
+                    $cur-loop.map({"[$_]"}).join(' ') if $verbose;
+                #end-no-weave
+                @all-loops.push: for $cur-loop;
+            }
+
+            when $start-index {
+                # begin-no-weave
+                say "\e[32mFound a loop:\e[0m ",
+                    $cur-loop.join(" ") if $verbose;
+                # end-no-weave
+                @all-loops.push: $cur-loop;
+            }
+
+            default {
+                #begin-no-weave
+                say "\e[33mContinuing loop:\e[0m ",
+                    $cur-loop.join(" ") if $verbose;
+                #end-no-weave
+                $cur-index = $cur-value;
+                next LOOP;
+            }
+        } # end of given $next-index
+
+        $cur-loop = [];
+        $start-index = $cur-index = @ints.first(*.defined, :k);
+
+        # begin-no-weave
+        say "\e[34m\nStarting new loop at index $start-index\e[0m"
+            if $start-index.defined && $verbose;
+        # end-no-weave
+    } # end of while $start-index.defined
+
+    #begin-no-weave
+    say "\n\n\e[35mAll loops:\n" ~ @all-loops.join("\n") ~ "\e[0m\n"
+        if $verbose;
+    #end-no-weave
+
+    say @all-loops.elems;
 } # end of multi MAIN ( )
 
 
@@ -101,7 +175,7 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 =end pod
 
 #| Run with the option '--test' to test the program
-multi MAIN (:$test!) {
+multi MAIN (Bool :$test!) {
     use Test;
 
     my @tests = [
@@ -120,15 +194,6 @@ my %*SUB-MAIN-OPTS =
   :allow-no,                   # allow --no-foo as alternative to --/foo
   :numeric-suffix-as-value,    # allow -j2 as alternative to --j=2
 ;
-
-#| Run with '--pod' to see all of the POD6 objects
-multi MAIN(Bool :$pod!) {
-    for $=pod -> $pod-item {
-        for $pod-item.contents -> $pod-block {
-            $pod-block.raku.say;
-        }
-    }
-} # end of multi MAIN (:$pod)
 
 #| Run with '--doc' to generate a document from the POD6
 #| It will be rendered in Text format

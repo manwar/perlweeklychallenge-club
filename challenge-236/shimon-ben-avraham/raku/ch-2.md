@@ -2,28 +2,19 @@
 >
 ## Table of Contents
 [Submitted By: Mark Anderson](#submitted-by-mark-anderson)  
-[The Challenge You are given an array of unique integers.](#the-challenge-you-are-given-an-array-of-unique-integers)  
+[The Challenge](#the-challenge)  
 [Example 1](#example-1)  
 [Example 2](#example-2)  
 [Example 3](#example-3)  
 [The Solution](#the-solution)  
-[TITLE](#title)  
-[VERSION](#version)  
-[SYNOPSIS](#synopsis)  
-[REQUIRED ARGUMENTS](#required-arguments)  
-[OPTIONS](#options)  
-[DESCRIPTION](#description)  
-[DIAGNOSTICS](#diagnostics)  
-[CONFIGURATION AND ENVIRONMENT](#configuration-and-environment)  
-[DEPENDENCIES](#dependencies)  
-[INCOMPATIBILITIES](#incompatibilities)  
-[BUGS AND LIMITATIONS](#bugs-and-limitations)  
 [AUTHOR](#author)  
 [LICENCE AND COPYRIGHT](#licence-and-copyright)  
 
 ----
 # Submitted By: Mark Anderson
-# The Challenge You are given an array of unique integers.
+# The Challenge
+You are given an array of unique integers.
+
 Write a script to determine how many loops are in the given array.
 
 > **To determine a loop: Start at an index and take the number at array[index] and then proceed to that index and continue this until you end up at the starting index.**  
@@ -74,61 +65,58 @@ Loop is as below:
 
 
 ```
-    3| multi MAIN ( ) {
-    4|     ;
-    5| } 
+    1| subset UniqueIntArray of Array where .elems == 0 ||
+    2|                                      .unique.elems == .elems and .all ~~ IntStr;
+    3| 
+    4| multi MAIN (*@input where .all ~~ Int &&
+    5|                           .unique.elems == .elems,
+    6|         ) {
+    7|     my Int @ints        = @input>>.Int;
+    8|     my Int $num-elems   = @ints.elems;
+    9|     my Int $start-index = 0;
+   10|     my Int $cur-index   = $start-index;
+   11| 
+   12|     my UniqueIntArray $cur-loop;
+   13|     my UniqueIntArray @all-loops;
+   14| 
+   15|     LOOP:
+   16|     while $start-index.defined {
+   17|         my $cur-value  = @ints[$cur-index];
+   18|         my $next-index = $cur-value;
+   19| 
+   20|         $cur-loop.push: $cur-value;
+   21|         @ints[$cur-index] = Nil;
+   22| 
+   23| 
+   24|         given $next-index {
+   25| 
+   26|             when * ≥ $num-elems {
+   27|                 @all-loops.push: for $cur-loop;
+   28|             }
+   29| 
+   30|             when $start-index {
+   31|                 @all-loops.push: $cur-loop;
+   32|             }
+   33| 
+   34|             default {
+   35|                 $cur-index = $cur-value;
+   36|                 next LOOP;
+   37|             }
+   38|         } 
+   39| 
+   40|         $cur-loop = [];
+   41|         $start-index = $cur-index = @ints.first(*.defined, :k);
+   42| 
+   43|     } 
+   44| 
+   45| 
+   46|     say @all-loops.elems;
+   47| } 
 
 ```
 
 
 
-
-# TITLE
-<application name> - <One line description of application's purpose>
-
-# VERSION
-This documentation refers to <application name> version 0.0.1
-
-# SYNOPSIS
-```
-# Brief working invocation example(s) here showing the most common usage(s)
-
-# This section will be as far as many users ever read
-# so make it as educational and exemplary as possible.
-```
-# REQUIRED ARGUMENTS
-A complete list of every argument that must appear on the command line. when the application is invoked, explaining what each of them does, any restrictions on where each one may appear (i.e. flags that must appear before or after filenames), and how the various arguments and options may interact (e.g. mutual exclusions, required combinations, etc.)
-
-If all of the application's arguments are optional this section may be omitted entirely.
-
-# OPTIONS
-A complete list of every available option with which the application can be invoked, explaining what each does, and listing any restrictions, or interactions.
-
-If the application has no options this section may be omitted entirely.
-
-# DESCRIPTION
-A full description of the application and its features. May include numerous subsections (i.e. =head2, =head3, etc.)
-
-# DIAGNOSTICS
-A list of every error and warning message that the application can generate (even the ones that will "never happen"), with a full explanation of each problem, one or more likely causes, and any suggested remedies. If the application generates exit status codes (e.g. under Unix) then list the exit status associated with each error.
-
-# CONFIGURATION AND ENVIRONMENT
-A full explanation of any configuration system(s) used by the application, including the names and locations of any configuration files, and the meaning of any environment variables or properties that can be set. These descriptions must also include details of any configuration language used
-
-# DEPENDENCIES
-A list of all the other modules that this module relies upon, including any restrictions on versions, and an indication whether these required modules are part of the standard Perl distribution, part of the module's distribution, or must be installed separately.
-
-# INCOMPATIBILITIES
-A list of any modules that this module cannot be used in conjunction with. This may be due to name conflicts in the interface, or competition for system or program resources, or due to internal limitations of Perl (for example, many modules that use source code filters are mutually incompatible).
-
-# BUGS AND LIMITATIONS
-A list of known problems with the module, together with some indication whether they are likely to be fixed in an upcoming release.
-
-Also a list of restrictions on the features the module does provide: data types that cannot be handled, performance issues and the circumstances in which they may arise, practical limitations on the size of data sets, special cases that are not (yet) handled, etc.
-
-The initial template usually just has:
-
-There are no known bugs in this module.
 
 # AUTHOR
 Shimon Bollinger (deoac.shimon@gmail.com)
@@ -147,35 +135,27 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 
 ```
-    6| multi MAIN (:$test!) {
-    7|     use Test;
-    8| 
-    9|     my @tests = [
-   10|         %{ got => '', op => 'eq', expected => '', desc => 'Example 1' },
-   11|     ];
-   12| 
-   13|     for @tests {
-   14|     } 
-   15| } 
-   16| 
-   17| my %*SUB-MAIN-OPTS =
-   18|   :named-anywhere,             
-   19|   :bundling,                   
-   20|   :allow-no,                   
-   21|   :numeric-suffix-as-value,    
-   22| ;
-   23| 
-   24| multi MAIN(Bool :$pod!) {
-   25|     for $=pod -> $pod-item {
-   26|         for $pod-item.contents -> $pod-block {
-   27|             $pod-block.raku.say;
-   28|         }
-   29|     }
-   30| } 
-   31| 
-   32| multi MAIN(Bool :$doc!, Str :$format = 'Text') {
-   33|     run $*EXECUTABLE, "--doc=$format", $*PROGRAM;
-   34| } 
+   48| multi MAIN (Bool :$test!) {
+   49|     use Test;
+   50| 
+   51|     my @tests = [
+   52|         %{ got => '', op => 'eq', expected => '', desc => 'Example 1' },
+   53|     ];
+   54| 
+   55|     for @tests {
+   56|     } 
+   57| } 
+   58| 
+   59| my %*SUB-MAIN-OPTS =
+   60|   :named-anywhere,             
+   61|   :bundling,                   
+   62|   :allow-no,                   
+   63|   :numeric-suffix-as-value,    
+   64| ;
+   65| 
+   66| multi MAIN(Bool :$doc!, Str :$format = 'Text') {
+   67|     run $*EXECUTABLE, "--doc=$format", $*PROGRAM;
+   68| } 
 
 ```
 
@@ -185,4 +165,4 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 
 ----
-Rendered from  at 2023-09-25T20:20:54Z
+Rendered from  at 2023-09-29T00:30:04Z
