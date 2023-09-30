@@ -8,6 +8,10 @@
 [Example 2](#example-2)  
 [Example 3](#example-3)  
 [The Solution](#the-solution)  
+[The Basic Algorithm](#the-basic-algorithm)  
+[Initialize variables](#initialize-variables)  
+[The Main Loop](#the-main-loop)  
+[Print and return the number of loops found.](#print-and-return-the-number-of-loops-found)  
 [AUTHOR](#author)  
 [LICENCE AND COPYRIGHT](#licence-and-copyright)  
 
@@ -64,122 +68,157 @@ Loop is as below:
 
 
 
+### The Basic Algorithm
+We will create a pointer to the first index of the array and attempt to find a loop that starts with that element.
 
+It's important to remember that each element can be a part of only _one_ loop, even if it is a loop by itself.
 
+Every time we find an element, we will push it to a loop array and set the element to `Nil` so that we don't use it again.
 
+If we find a loop, we will push it to an array of loops. If we don't find a loop, we will move the start pointer to the next defined element and try again.
 
-```
-    1| subset UniqueIntArray of Array where .elems == 0 ||
-    2|                                      .unique.elems == .elems and .all ~~ IntStr;
+Note that a 'loop' is defined as a list of integers, not a list of indices.
 
-```
-
-
-
-
-
-
-
-
-```
-    3| multi MAIN (#| A list of unique integers
-    4|             *@input where .all ~~ Int &&
-    5|                           .unique.elems == .elems,
-    6| 
-    7|         ) {
-
-```
-
-
-
+First we will only accept input that is a list of unique integers.
 
 
 
 
 
 ```
-    8|     my Int @ints        = @input>>.Int;
-    9|     my Int $num-elems   = @ints.elems;
-   10|     my Int $start-index = 0;
-   11|     my Int $cur-index   = $start-index;
+    1| multi MAIN (#| A list of unique integers
+    2|             *@input where .all ~~ Int &&
+    3|                           .unique.elems == .elems,
+    4|         ) {
 
 ```
 
 
 
 
+### Initialize variables
 
 
 
 
 ```
-   12|     my UniqueIntArray $cur-loop;
-   13|     my UniqueIntArray @all-loops;
-
-```
-
-
-
-
-
-
-
-
-```
-   14|     LOOP:
-   15|     while $start-index.defined {
+    5|     my Int @ints          = @input>>.Int;
+    6|     my Int $num-elems     = @ints.elems;
+    7|     my Int $start-pointer = 0;
+    8|     my Int $cur-index     = $start-pointer;
 
 ```
 
 
 
 
+The current loop we are working on is stored in `@cur-loop`. The list of all found loops is stored in `@all-loops`.
 
-
-
-
-```
-   16|         my $cur-value  = @ints[$cur-index];
-   17|         my $next-index = $cur-value;
-
-```
-
-
-
+Note that a loop can consist of a single element.
 
 
 
 
 
 ```
-   18|         $cur-loop.push: $cur-value;
-   19|         @ints[$cur-index] = Nil;
-   20| 
+    9|     my @cur-loop  = [];
+   10|     my @all-loops = [];
 
 ```
 
 
 
 
-
-
-
-
-```
-   21|         given $next-index {
-
-```
-
-
-
+### The Main Loop
+As long as there is a defined element in the array, `$start-pointer`, we will try to find a loop that starts with that element.
 
 
 
 
 
 ```
-   22|             when * ≥ $num-elems {
-   23|                 @all-loops.push: for $cur-loop;
+   11|     INDEX:
+   12|     while $start-pointer.defined {
+
+```
+
+
+
+
+We get the value of the current element and use it as the index of the next element in the loop.
+
+
+
+
+
+```
+   13|         my $cur-value  = @ints[$cur-index];
+   14|         my $next-index = $cur-value;
+
+```
+
+
+
+
+Each value we are looking at gets pushed to the current loop array and set to `Nil` so that we don't use it again.
+
+
+
+
+
+```
+   15|         @cur-loop.push: $cur-value;
+   16|         @ints[$cur-index] = Nil;
+   17| 
+
+```
+
+
+
+
+At this point there are three possibilities:
+
+
+
+
+
+```
+   18|         given $next-index {
+
+```
+
+
+
+
+*  We have reached an index that is greater than the number of elements in the original array.
+
+This means we have found a loop that is not closed. Each element we've found so far is a loop by itself. So we push each element to the list of all loops.
+
+
+
+
+
+```
+   19|             when * ≥ $num-elems {
+   20|                 @all-loops.push: $_ for @cur-loop;
+   21|             }
+
+```
+
+
+
+
+*  We have found a closed loop
+
+When the next index is the same as the start pointer, we have found a closed loop. We push the current loop to the list of all loops.
+
+
+
+
+
+```
+   22|             when $start-pointer {
+   23|                 @all-loops.push: @cur-loop;
    24|             }
 
 ```
@@ -187,60 +226,53 @@ Loop is as below:
 
 
 
+*  We have found a value that is not in the current loop.
 
-
-
-
-```
-   25|             when $start-index {
-   26|                 @all-loops.push: $cur-loop;
-   27|             }
-
-```
-
-
-
+So we continue looking for the next element in the loop by updating the current index.
 
 
 
 
 
 ```
-   28|             default {
-   29|                 $cur-index = $cur-value;
-   30|                 next LOOP;
-   31|             }
-   32|         } 
+   25|             default {
+   26|                 $cur-index = $cur-value;
+   27|                 next INDEX;
+   28|             }
+   29|         } 
 
 ```
 
 
 
 
-
-
-
-
-```
-   33|         $cur-loop = [];
-   34|         $start-index = $cur-index = @ints.first(*.defined, :k);
-   35| 
-   36|     } 
-   37| 
-
-```
-
-
-
+At this point we have found a loop or a singular loop. We need to find the next start pointer by looking for the next defined element in the array.
 
 
 
 
 
 ```
-   38|     say @all-loops.elems;
-   39|     return @all-loops.elems;
-   40| } 
+   30|         @cur-loop = [];
+   31|         $start-pointer = $cur-index = @ints.first(*.defined, :k);
+   32| 
+   33|     } 
+   34| 
+
+```
+
+
+
+
+### Print and return the number of loops found.
+
+
+
+
+```
+   35|     say @all-loops.elems;
+   36|     return @all-loops.elems;
+   37| } 
 
 ```
 
@@ -266,4 +298,5 @@ This program is distributed in the hope that it will be useful, but WITHOUT ANY 
 
 
 ----
-Rendered from  at 2023-09-29T02:25:06Z
+Rendered from  at 2023-09-30T00:53:05Z
+    

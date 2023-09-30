@@ -2,7 +2,7 @@
 
 # Perl Weekly Challenge #236 Task 2
 # © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Fri 29 Sep 2023 08:15:33 PM EDT
+# Last modified: Fri 29 Sep 2023 08:53:49 PM EDT
 # Version 0.0.1
 
 # begin-no-weave
@@ -74,43 +74,69 @@ Loop is as below:
 
 =begin pod
 
+=head3 The Basic Algorithm
+
+We will create a pointer to the first index of the array and attempt to find
+a loop that starts with that element.
+
+It's important to remember that each element can be a part of only I<one> loop,
+even if it is a loop by itself.
+
+Every time we find an element, we will push it to a loop array and set the
+element to C<Nil> so that we don't use  it again.
+
+If we find a loop, we will push it to an array of loops. If we don't find a
+loop, we will move the start pointer to the next defined element and try again.
+
+Note that a 'loop' is defined as a list of integers, not a list of indices.
+
+First we will only accept input that is a list of unique integers.
+
 =end pod
 
 
 multi MAIN (#| A list of unique integers
             *@input where .all ~~ Int &&
                           .unique.elems == .elems,
-
             #| Show debug prints when True
             Bool :v($verbose) = False # no-weave-this-line
         ) {
+
 =begin pod
+=head3 Initialize variables
+=end pod
+
+    my Int @ints          = @input>>.Int;
+    my Int $num-elems     = @ints.elems;
+    my Int $start-pointer = 0;
+    my Int $cur-index     = $start-pointer;
+
+=begin pod
+
+The current loop we are working on is stored in C<@cur-loop>. The list of all
+found loops is stored in C<@all-loops>.
+
+Note that a loop can consist of a single element.
 
 =end pod
 
-    my Int @ints        = @input>>.Int;
-    my Int $num-elems   = @ints.elems;
-    my Int $start-index = 0;
-    my Int $cur-index   = $start-index;
-
-=begin pod
-For type safety, we will create a subset to represent an array of unique
-integers.
-
-=end pod
-
-    my $cur-loop  = [];
+    my @cur-loop  = [];
     my @all-loops = [];
 
 =begin pod
-We will create a pointer to the first index of the array and attempt to find
-a loop that starts with that element. If we find a loop, we will push it to an array of loops. If we
+=head3 The Main Loop
+
+As long as there is a defined element in the array, C<$start-pointer>,
+we will try to find a loop that starts with that element.
 
 =end pod
 
-    LOOP:
-    while $start-index.defined {
+    INDEX:
+    while $start-pointer.defined {
 =begin pod
+
+We get the value of the current element and use it as the index of the
+next element in the loop.
 
 =end pod
 
@@ -119,81 +145,106 @@ a loop that starts with that element. If we find a loop, we will push it to an a
 
 =begin pod
 
+Each value we are looking at gets pushed to the current loop array and
+set to C<Nil> so that we don't use it again.
+
 =end pod
 
-        $cur-loop.push: $cur-value;
+        @cur-loop.push: $cur-value;
         @ints[$cur-index] = Nil;
 
         #begin-no-weave
         if $verbose {
             dd @ints;
-            dd $start-index;
+            dd $start-pointer;
             dd $cur-index;
             dd $next-index;
             dd $cur-value;
-            dd $cur-loop;
+            dd @cur-loop;
         } # end of if $verbose
         #end-no-weave
 
 =begin pod
+At this point there are three possibilities:
 
 =end pod
 
         given $next-index {
 =begin pod
 
+=item We have reached an index that is greater than the number of elements in
+the original array.
+
+This means we have found a loop that is not closed. Each element we've
+found so far is a loop by itself. So we push each element to the list of
+all loops.
+
 =end pod
 
             when * ≥ $num-elems {
                 #begin-no-weave
                 say "\e[31mFound singular loop[s]:\e[0m ",
-                    $cur-loop.map({"[$_]"}).join(' ') if $verbose;
+                    @cur-loop.map({"[$_]"}).join(' ') if $verbose;
                 #end-no-weave
-                @all-loops.push: $_ for |$cur-loop;
+                @all-loops.push: $_ for @cur-loop;
             }
 =begin pod
+
+=item We have found a closed loop
+
+When the next index is the same as the start pointer, we have found
+a closed loop. We push the current loop to the list of all loops.
 
 =end pod
 
-            when $start-index {
+            when $start-pointer {
                 # begin-no-weave
                 say "\e[32mFound a loop:\e[0m ",
-                    $cur-loop.join(" ") if $verbose;
+                    @cur-loop.join(" ") if $verbose;
                 # end-no-weave
-                @all-loops.push: $cur-loop;
+                @all-loops.push: @cur-loop;
             }
 
 =begin pod
+=item We have found a value that is not in the current loop.
+
+So we continue looking for the next element in the loop by updating the current
+index.
 
 =end pod
 
             default {
                 #begin-no-weave
                 say "\e[33mContinuing loop:\e[0m ",
-                    $cur-loop.join(" ") if $verbose;
+                    @cur-loop.join(" ") if $verbose;
                 #end-no-weave
                 $cur-index = $cur-value;
-                next LOOP;
+                next INDEX;
             }
         } # end of given $next-index
 =begin pod
 
+At this point we have found a loop or singular loop[s]. We need to find the
+next start pointer by looking for the next defined element in the array.
+
 =end pod
 
-        $cur-loop = [];
-        $start-index = $cur-index = @ints.first(*.defined, :k);
+        @cur-loop = [];
+        $start-pointer = $cur-index = @ints.first(*.defined, :k);
 
         # begin-no-weave
-        say "\e[34m\nStarting new loop at index $start-index\e[0m"
-            if $start-index.defined && $verbose;
+        say "\e[34m\nStarting new loop at index $start-pointer\e[0m"
+            if $start-pointer.defined && $verbose;
         # end-no-weave
-    } # end of while $start-index.defined
+    } # end of while $start-pointer.defined
 
     #begin-no-weave
     say "\n\n\e[35mAll loops:\n" ~ @all-loops.join("\n") ~ "\e[0m\n"
         if $verbose;
     #end-no-weave
 =begin pod
+
+=head3 Print and return the number of loops found.
 
 =end pod
 
