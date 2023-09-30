@@ -2,7 +2,7 @@
 
 # Perl Weekly Challenge #236 Task 2
 # © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Fri 29 Sep 2023 09:34:53 PM EDT
+# Last modified: Fri 29 Sep 2023 10:26:35 PM EDT
 # Version 0.0.1
 
 # begin-no-weave
@@ -79,16 +79,16 @@ Loop is as below:
 We will create a pointer to the first index of the array and attempt to find
 a loop that starts with that element.
 
-It's important to remember that each element can be a part of only I<one> loop,
+It's important to remember that each element can be a part of only U<one> loop,
 even if it is a loop by itself.
 
-Every time we find an element, we will push it to a loop array and set the
-element to C<Nil> so that we don't use  it again.
+Every time we find an element, we will push it to a current-loop array and set
+the element to C<Nil> so that we don't use  it again.
 
-If we find a loop, we will push it to an array of loops. If we don't find a
-loop, we will move the start pointer to the next defined element and try again.
-
-Note that a 'loop' is defined as a list of integers, not a list of indices.
+If we find a loopN<A 'loop' is defined as a list of array element values, not
+a list of the array's indices.>, we will push it to an array of loops. Note
+that a loop can consist of a single element.  After we find a loop, we will
+move the start pointer to the next defined element and try again.
 
 First we will only accept input that is a list of unique integers.
 
@@ -115,8 +115,6 @@ multi MAIN (#| A list of unique integers
 
 The current loop we are working on is stored in C<@cur-loop>. The list of all
 found loops is stored in C<@all-loops>.
-
-Note that a loop can consist of a single element.
 
 =end pod
 
@@ -152,7 +150,6 @@ set to C<Nil> so that we don't use it again.
 
         @cur-loop.push: $cur-value;
         @ints[$cur-index] = Nil;
-
         #begin-no-weave
         if $verbose {
             dd @ints;
@@ -183,7 +180,7 @@ all loops.
 
             when * ≥ $num-elems {
                 #begin-no-weave
-                say "\e[31mFound singular loop[s]:\e[0m ",
+                say "\e[31mFound single-item loop[s]:\e[0m ",
                     @cur-loop.map({"[$_]"}).join(' ') if $verbose;
                 #end-no-weave
                 @all-loops.push: $_ for @cur-loop;
@@ -225,7 +222,7 @@ index.
         } # end of given $next-index
 =begin pod
 
-At this point we have found a loop or singular loop[s]. We need to find the
+At this point we have found a loop or single-item loop[s]. We need to find the
 next start pointer by looking for the next defined element in the array.
 
 =end pod
@@ -259,12 +256,12 @@ next start pointer by looking for the next defined element in the array.
 
 =head2 Sample run with debug prints
 
-(The option C<--verbose> and the debug print statemnts are not shown in the
+(The option C<--verbose> and the debug print statements are not shown in the
 above code.)
 
 =begin code :lang<sh>
 
-./ch-2.raku --verbose 1 0 8 5 4 3 9
+$ ./ch-2.raku --verbose 1 0 8 5 4 3 9
 
 Array[Int] @ints = Array[Int].new(Int, 0, 8, 5, 4, 3, 9)
 Int $start-pointer = 0
@@ -288,7 +285,7 @@ Int $cur-index = 2
 Int $next-index = 8
 Int $cur-value = 8
 Array @cur-loop = [8]
-Found singular loop[s]: [8]
+Found single-item loop[s]: [8]
 
 Starting new loop at index 3
 Array[Int] @ints = Array[Int].new(Int, Int, Int, Int, 4, 3, 9)
@@ -322,7 +319,7 @@ Int $cur-index = 6
 Int $next-index = 9
 Int $cur-value = 9
 Array @cur-loop = [9]
-Found singular loop[s]: [9]
+Found single-item loop[s]: [9]
 
 
 All loops:
@@ -344,7 +341,7 @@ Number of loops: 5
 
 Shimon Bollinger  (deoac.shimon@gmail.com)
 
-=comment Source can be located at:
+=comment The complete source can be located at:
 Z<Challenge 236|https://github.com/deoac/perlweeklychallenge-club/tree/master/challenge-236/shimon-ben-avraham raku>
 
 Comments and Pull Requests are welcome.
@@ -385,7 +382,7 @@ multi MAIN (Bool :v(:$verbose) = False) is hidden-from-USAGE {
 
 #| Handle the case of a single integer array
 multi MAIN (Int $i!, Bool :v(:$verbose) = False) is hidden-from-USAGE {
-    note "\e[31mFound a singular loop:\e[0m [$i]" if $verbose;
+    note "\e[31mFound a single-item loop:\e[0m [$i]" if $verbose;
     say 1;
 } # end of multi MAIN (Int $i!
 

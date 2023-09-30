@@ -2,7 +2,7 @@
 
 # Perl Weekly Challenge #236 Task 2
 # © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Fri 29 Sep 2023 09:34:53 PM EDT
+# Last modified: Fri 29 Sep 2023 10:31:25 PM EDT
 # Version 0.0.1
 
 # always use the latest version of Raku
@@ -13,7 +13,7 @@ multi MAIN (#| A list of unique integers
             *@input where .all ~~ Int &&
                           .unique.elems == .elems,
             #| Show debug prints when True
-            Bool :v($verbose) = False 
+            Bool :v($verbose) = False
         ) {
 
     my Int @ints          = @input>>.Int;
@@ -32,7 +32,6 @@ multi MAIN (#| A list of unique integers
 
         @cur-loop.push: $cur-value;
         @ints[$cur-index] = Nil;
-
         if $verbose {
             dd @ints;
             dd $start-pointer;
@@ -45,7 +44,7 @@ multi MAIN (#| A list of unique integers
         given $next-index {
 
             when * ≥ $num-elems {
-                say "\e[31mFound singular loop[s]:\e[0m ",
+                say "\e[31mFound single-item loop[s]:\e[0m ",
                     @cur-loop.map({"[$_]"}).join(' ') if $verbose;
                 @all-loops.push: $_ for @cur-loop;
             } # end of when * ≥ $num-elems
@@ -75,7 +74,7 @@ multi MAIN (#| A list of unique integers
     say "\n\n\e[35mAll loops:\n" ~ @all-loops.join("\n") ~ "\e[0m\n"
         if $verbose;
 
-    print "Number of loops: " if $verbose; 
+    print "Number of loops: " if $verbose;
     say @all-loops.elems;
 
     return @all-loops.elems;
@@ -103,7 +102,7 @@ multi MAIN (Bool :v(:$verbose) = False) is hidden-from-USAGE {
 
 #| Handle the case of a single integer array
 multi MAIN (Int $i!, Bool :v(:$verbose) = False) is hidden-from-USAGE {
-    note "\e[31mFound a singular loop:\e[0m [$i]" if $verbose;
+    note "\e[31mFound a single-item loop:\e[0m [$i]" if $verbose;
     say 1;
 } # end of multi MAIN (Int $i!
 
