@@ -4,14 +4,15 @@
 
 ## Table of Contents
 [Challenge #236 Task 2, Array Loops](#challenge-236-task-2-array-loops)  
-[Example 1](#example-1)  
-[Example 2](#example-2)  
-[Example 3](#example-3)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Example 1](#example-1)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Example 2](#example-2)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Example 3](#example-3)  
 [The Solution](#the-solution)  
-[The Basic Algorithm](#the-basic-algorithm)  
-[Initialize variables](#initialize-variables)  
-[The Main Loop](#the-main-loop)  
-[Print and return the number of loops found.](#print-and-return-the-number-of-loops-found)  
+&nbsp;&nbsp;&nbsp;&nbsp;[The Basic Algorithm](#the-basic-algorithm)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Initialize variables](#initialize-variables)  
+&nbsp;&nbsp;&nbsp;&nbsp;[The Main Loop](#the-main-loop)  
+&nbsp;&nbsp;&nbsp;&nbsp;[Print and return the number of loops found.](#print-and-return-the-number-of-loops-found)  
+[Sample run with debug prints](#sample-run-with-debug-prints)  
 [AUTHOR](#author)  
 [LICENCE AND COPYRIGHT](#licence-and-copyright)  
 
@@ -192,7 +193,7 @@ At this point there are three possibilities:
 
 *  We have reached an index that is greater than the number of elements in the original array.
 
-This means we have found a loop that is not closed. Each element we've found so far is a loop by itself. So we push each element to the list of all loops.
+Thus, we have found a loop that is not closed. Each element we've found so far is a loop by itself. So we push each element to the list of all loops.
 
 
 
@@ -201,7 +202,7 @@ This means we have found a loop that is not closed. Each element we've found so 
 ```
    19|             when * ≥ $num-elems {
    20|                 @all-loops.push: $_ for @cur-loop;
-   21|             }
+   21|             } 
 
 ```
 
@@ -218,8 +219,8 @@ When the next index is the same as the start pointer, we have found a closed loo
 
 ```
    22|             when $start-pointer {
-   23|                 @all-loops.push: @cur-loop;
-   24|             }
+   23|                 @all-loops.push: @cur-loop.clone;
+   24|             } 
 
 ```
 
@@ -238,26 +239,27 @@ So we continue looking for the next element in the loop by updating the current 
    25|             default {
    26|                 $cur-index = $cur-value;
    27|                 next INDEX;
-   28|             }
-   29|         } 
+   28|             } 
+   29| 
+   30|         } 
 
 ```
 
 
 
 
-At this point we have found a loop or a singular loop. We need to find the next start pointer by looking for the next defined element in the array.
+At this point we have found a loop or singular loop[s]. We need to find the next start pointer by looking for the next defined element in the array.
 
 
 
 
 
 ```
-   30|         @cur-loop = [];
-   31|         $start-pointer = $cur-index = @ints.first(*.defined, :k);
-   32| 
-   33|     } 
-   34| 
+   31|         @cur-loop = [];
+   32|         $start-pointer = $cur-index = @ints.first(*.defined, :k);
+   33| 
+   34|     } 
+   35| 
 
 ```
 
@@ -270,9 +272,89 @@ At this point we have found a loop or a singular loop. We need to find the next 
 
 
 ```
-   35|     say @all-loops.elems;
-   36|     return @all-loops.elems;
-   37| } 
+   36|     say @all-loops.elems;
+   37| 
+   38|     return @all-loops.elems;
+   39| } 
+
+```
+
+
+
+
+## Sample run with debug prints
+(The option `--verbose` and the debug print statemnts are not shown in the above code.)
+
+```
+./ch-2.raku --verbose 1 0 8 5 4 3 9
+
+Array[Int] @ints = Array[Int].new(Int, 0, 8, 5, 4, 3, 9)
+Int $start-pointer = 0
+Int $cur-index = 0
+Int $next-index = 1
+Int $cur-value = 1
+Array @cur-loop = [1]
+Continuing loop: 1
+Array[Int] @ints = Array[Int].new(Int, Int, 8, 5, 4, 3, 9)
+Int $start-pointer = 0
+Int $cur-index = 1
+Int $next-index = 0
+Int $cur-value = 0
+Array @cur-loop = [1, 0]
+Found a loop: 1 0
+
+Starting new loop at index 2
+Array[Int] @ints = Array[Int].new(Int, Int, Int, 5, 4, 3, 9)
+Int $start-pointer = 2
+Int $cur-index = 2
+Int $next-index = 8
+Int $cur-value = 8
+Array @cur-loop = [8]
+Found singular loop[s]: [8]
+
+Starting new loop at index 3
+Array[Int] @ints = Array[Int].new(Int, Int, Int, Int, 4, 3, 9)
+Int $start-pointer = 3
+Int $cur-index = 3
+Int $next-index = 5
+Int $cur-value = 5
+Array @cur-loop = [5]
+Continuing loop: 5
+Array[Int] @ints = Array[Int].new(Int, Int, Int, Int, 4, Int, 9)
+Int $start-pointer = 3
+Int $cur-index = 5
+Int $next-index = 3
+Int $cur-value = 3
+Array @cur-loop = [5, 3]
+Found a loop: 5 3
+
+Starting new loop at index 4
+Array[Int] @ints = Array[Int].new(Int, Int, Int, Int, Int, Int, 9)
+Int $start-pointer = 4
+Int $cur-index = 4
+Int $next-index = 4
+Int $cur-value = 4
+Array @cur-loop = [4]
+Found a loop: 4
+
+Starting new loop at index 6
+Array[Int] @ints = Array[Int].new(Int, Int, Int, Int, Int, Int, Int)
+Int $start-pointer = 6
+Int $cur-index = 6
+Int $next-index = 9
+Int $cur-value = 9
+Array @cur-loop = [9]
+Found singular loop[s]: [9]
+
+
+All loops:
+1 0
+8
+5 3
+4
+9
+
+Number of loops: 5
 
 ```
 
@@ -290,13 +372,3 @@ Comments and Pull Requests are welcome.
 This module is free software; you can redistribute it and/or modify it under the same terms as Perl itself. See [perlartistic](http://perldoc.perl.org/perlartistic.html).
 
 This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-
-
-
-
-
-
-----
-Rendered from  at 2023-09-30T00:53:05Z
-    

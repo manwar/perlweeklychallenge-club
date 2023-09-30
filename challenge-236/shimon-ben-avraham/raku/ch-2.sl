@@ -2,7 +2,7 @@
 
 # Perl Weekly Challenge #236 Task 2
 # © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Fri 29 Sep 2023 08:53:49 PM EDT
+# Last modified: Fri 29 Sep 2023 09:34:53 PM EDT
 # Version 0.0.1
 
 # begin-no-weave
@@ -175,7 +175,7 @@ At this point there are three possibilities:
 =item We have reached an index that is greater than the number of elements in
 the original array.
 
-This means we have found a loop that is not closed. Each element we've
+Thus, we have found a loop that is not closed. Each element we've
 found so far is a loop by itself. So we push each element to the list of
 all loops.
 
@@ -187,7 +187,7 @@ all loops.
                     @cur-loop.map({"[$_]"}).join(' ') if $verbose;
                 #end-no-weave
                 @all-loops.push: $_ for @cur-loop;
-            }
+            } # end of when * ≥ $num-elems
 =begin pod
 
 =item We have found a closed loop
@@ -202,8 +202,8 @@ a closed loop. We push the current loop to the list of all loops.
                 say "\e[32mFound a loop:\e[0m ",
                     @cur-loop.join(" ") if $verbose;
                 # end-no-weave
-                @all-loops.push: @cur-loop;
-            }
+                @all-loops.push: @cur-loop.clone;
+            } # end of when $start-pointer
 
 =begin pod
 =item We have found a value that is not in the current loop.
@@ -220,7 +220,8 @@ index.
                 #end-no-weave
                 $cur-index = $cur-value;
                 next INDEX;
-            }
+            } # end of default
+
         } # end of given $next-index
 =begin pod
 
@@ -248,10 +249,93 @@ next start pointer by looking for the next defined element in the array.
 
 =end pod
 
-
+    print "Number of loops: " if $verbose; # no-weave-this-line
     say @all-loops.elems;
+
     return @all-loops.elems;
 } # end of multi MAIN ( )
+
+=begin pod
+
+=head2 Sample run with debug prints
+
+(The option C<--verbose> and the debug print statemnts are not shown in the
+above code.)
+
+=begin code :lang<sh>
+
+./ch-2.raku --verbose 1 0 8 5 4 3 9
+
+Array[Int] @ints = Array[Int].new(Int, 0, 8, 5, 4, 3, 9)
+Int $start-pointer = 0
+Int $cur-index = 0
+Int $next-index = 1
+Int $cur-value = 1
+Array @cur-loop = [1]
+Continuing loop: 1
+Array[Int] @ints = Array[Int].new(Int, Int, 8, 5, 4, 3, 9)
+Int $start-pointer = 0
+Int $cur-index = 1
+Int $next-index = 0
+Int $cur-value = 0
+Array @cur-loop = [1, 0]
+Found a loop: 1 0
+
+Starting new loop at index 2
+Array[Int] @ints = Array[Int].new(Int, Int, Int, 5, 4, 3, 9)
+Int $start-pointer = 2
+Int $cur-index = 2
+Int $next-index = 8
+Int $cur-value = 8
+Array @cur-loop = [8]
+Found singular loop[s]: [8]
+
+Starting new loop at index 3
+Array[Int] @ints = Array[Int].new(Int, Int, Int, Int, 4, 3, 9)
+Int $start-pointer = 3
+Int $cur-index = 3
+Int $next-index = 5
+Int $cur-value = 5
+Array @cur-loop = [5]
+Continuing loop: 5
+Array[Int] @ints = Array[Int].new(Int, Int, Int, Int, 4, Int, 9)
+Int $start-pointer = 3
+Int $cur-index = 5
+Int $next-index = 3
+Int $cur-value = 3
+Array @cur-loop = [5, 3]
+Found a loop: 5 3
+
+Starting new loop at index 4
+Array[Int] @ints = Array[Int].new(Int, Int, Int, Int, Int, Int, 9)
+Int $start-pointer = 4
+Int $cur-index = 4
+Int $next-index = 4
+Int $cur-value = 4
+Array @cur-loop = [4]
+Found a loop: 4
+
+Starting new loop at index 6
+Array[Int] @ints = Array[Int].new(Int, Int, Int, Int, Int, Int, Int)
+Int $start-pointer = 6
+Int $cur-index = 6
+Int $next-index = 9
+Int $cur-value = 9
+Array @cur-loop = [9]
+Found singular loop[s]: [9]
+
+
+All loops:
+1 0
+8
+5 3
+4
+9
+
+Number of loops: 5
+=end code
+
+=end pod
 
 
 =begin pod

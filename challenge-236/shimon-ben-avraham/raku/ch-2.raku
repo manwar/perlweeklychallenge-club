@@ -2,7 +2,7 @@
 
 # Perl Weekly Challenge #236 Task 2
 # © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Fri 29 Sep 2023 08:48:19 PM EDT
+# Last modified: Fri 29 Sep 2023 09:34:53 PM EDT
 # Version 0.0.1
 
 # always use the latest version of Raku
@@ -48,20 +48,21 @@ multi MAIN (#| A list of unique integers
                 say "\e[31mFound singular loop[s]:\e[0m ",
                     @cur-loop.map({"[$_]"}).join(' ') if $verbose;
                 @all-loops.push: $_ for @cur-loop;
-            }
+            } # end of when * ≥ $num-elems
 
             when $start-pointer {
                 say "\e[32mFound a loop:\e[0m ",
                     @cur-loop.join(" ") if $verbose;
-                @all-loops.push: @cur-loop;
-            }
+                @all-loops.push: @cur-loop.clone;
+            } # end of when $start-pointer
 
             default {
                 say "\e[33mContinuing loop:\e[0m ",
                     @cur-loop.join(" ") if $verbose;
                 $cur-index = $cur-value;
                 next INDEX;
-            }
+            } # end of default
+
         } # end of given $next-index
 
         @cur-loop = [];
@@ -74,9 +75,12 @@ multi MAIN (#| A list of unique integers
     say "\n\n\e[35mAll loops:\n" ~ @all-loops.join("\n") ~ "\e[0m\n"
         if $verbose;
 
+    print "Number of loops: " if $verbose; 
     say @all-loops.elems;
+
     return @all-loops.elems;
 } # end of multi MAIN ( )
+
 
 # multi MAINs to catch invalid input
 # The weird matching syntax is because !~~ does not play well with Junctions.
