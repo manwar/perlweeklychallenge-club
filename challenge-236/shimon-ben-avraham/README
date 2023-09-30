@@ -359,6 +359,8 @@ Number of loops: 5
 # AUTHOR
 Shimon Bollinger (deoac.shimon@gmail.com)
 
+The full source code is at https://github.com/deoac/perlweeklychallenge-club/blob/master/challenge-236/shimon-ben-avraham/raku/ch-2.raku
+
 Comments and Pull Requests are welcome.
 
 # LICENCE AND COPYRIGHT
