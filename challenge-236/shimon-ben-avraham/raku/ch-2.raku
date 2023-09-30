@@ -2,7 +2,7 @@
 
 # Perl Weekly Challenge #236 Task 2
 # © 2023 Shimon Bollinger. All rights reserved.
-# Last modified: Fri 29 Sep 2023 07:49:11 PM EDT
+# Last modified: Fri 29 Sep 2023 08:15:33 PM EDT
 # Version 0.0.1
 
 # always use the latest version of Raku
@@ -81,17 +81,19 @@ multi MAIN (#| A list of unique integers
 
 # multi MAINs to catch invalid input
 # The weird matching syntax is because !~~ does not play well with Junctions.
-multi MAIN (*@input where !(*.all ~~ Int)) is hidden-from-USAGE {
+multi MAIN (Bool :$v = False,
+            *@input where !(.all ~~ IntStr)) is hidden-from-USAGE {
     note "Input must be a list of *integers*";
     exit 1;
 } # end of multi MAIN (*@input where .all !~~ Int)
 
-multi MAIN (*@input where .unique.elems != .elems) is hidden-from-USAGE {
+multi MAIN (*@input where .unique.elems != .elems,
+            Bool :v(:$verbose) = False) is hidden-from-USAGE {
     note "Input must be a list of *unique* integers";
     exit 1;
 } # end of multi MAIN (*@input where .unique.elems != .elems)
 
-multi MAIN () is hidden-from-USAGE {
+multi MAIN (Bool :v(:$verbose) = False) is hidden-from-USAGE {
     note "Input cannot be empty";
     exit 1;
 } # end of multi MAIN ()
