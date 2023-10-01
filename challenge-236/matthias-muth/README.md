@@ -1,129 +1,150 @@
-# Ones Removed and Zeros Duplicated
+# Bills in Loops, and Loops in Arrays
 
-**Challenge 235 solutions in Perl by Matthias Muth**
+**Challenge 236 solutions in Perl by Matthias Muth**
 
-## Task 1: Remove One
+## Task 1: Exact Change
 
-> You are given an array of integers.<br/>
-> Write a script to find out if removing ONLY one integer makes it strictly increasing order.<br/>
+> You are asked to sell juice each costs \$5. You are given an array of bills. You can only sell ONE juice to each customer but make sure you return exact change back. You only have \$5, \$10 and \$20 notes. You do not have any change in hand at first.<br/>
+> Write a script to find out if it is possible to sell to each customers with correct change.<br/>
+> <br/> 
+> Example 1<br/>
+> Input: @bills = (5, 5, 5, 10, 20)<br/>
+> Output: true<br/>
+> From the first 3 customers, we collect three \$5 bills in order.<br/>
+> From the fourth customer, we collect a \$10 bill and give back a \$5.<br/>
+> From the fifth customer, we give a \$10 bill and a \$5 bill.<br/>
+> Since all customers got correct change, we output true.<br/>
+> <br/>
+> Example 2<br/>
+> Input: @bills = (5, 5, 10, 10, 20)<br/>
+> Output: false<br/>
+> From the first two customers in order, we collect two \$5 bills.<br/>
+> For the next two customers in order, we collect a \$10 bill and give back a \$5 bill.<br/>
+> For the last customer, we can not give the change of \$15 back because we only have two \$10 bills.
+> Since not every customer received the correct change, the answer is false.<br/>
+> <br/>
+> Example 3<br/>
+> Input: @bills = (5, 5, 5, 20)<br/>
+> Output: true<br/>
+
+My solution is based on these ideas:
+
+* We serve the customers with the smallest bills first, in order to get good change for the next ones. 
+* We keep track of our cash separately for each value, to make it easier to pay back starting with larger bills, then lower ones.
+* Whenever a customer can't be paid back his or her change it's a 'sudden death', we can return 'false' immediately. If we make it through the list, we return 'true'.
+
+And that's basically all.
+
+For sorting the customers, and for checking our cash in the right order, I define a function to sort numerically (as the default for `sort` is string comparison, which makes `"5"` larger than `"10"`):
+
+```perl
+sub sort_num( @values ) {
+    return sort { $a <=> $b } @values;
+}
+```
+
+Then this is my solution:
+
+```perl
+sub exact_change( @bills ) {
+
+    # Keep a count of the bills we have, separately for each value.
+    my %cash = ();
+
+    # Serve all the customers,
+    # making sure we accept the lowest bills first, for getting change.
+    for ( sort_num @bills ) {
+
+        # Accept  the customer's bill.
+        ++$cash{$_};
+
+        # We need to give this change:
+        my $change_to_return = $_ - 5;
+
+        # Starting with the highest value available,
+        # return bills that are lower than or equal to
+        # the change we need to return.
+        for ( reverse sort_num keys %cash ) {
+            while ( $_ <= $change_to_return && $cash{$_} ) {
+                --$cash{$_};
+                $change_to_return -= $_;
+            }
+        }
+
+        # No success if we couldn't return the correct change.
+        return 0
+            if $change_to_return > 0;
+    }
+    # Success.
+    return 1;
+}
+```
+
+## Task 2: Array Loops
+
+> You are given an array of unique integers.<br/>
+> Write a script to determine how many loops are in the given array.<br/>
+> To determine a loop: Start at an index and take the number at array[index] and then proceed to that index and continue this until you end up at the starting index.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @ints = (0, 2, 9, 4, 6)<br/>
-> Output: true<br/>
-> Removing ONLY 9 in the given array makes it strictly increasing order.<br/>
+> Input: @ints = (4,6,3,8,15,0,13,18,7,16,14,19,17,5,11,1,12,2,9,10)<br/>
+> Output: 3<br/>
+> To determine the 1st loop, start at index 0, the number at that index is 4, proceed to index 4, the number at that index is 15, proceed to index 15 and so on until you're back at index 0.<br/>
+> Loops are as below:<br/>
+> [4 15 1 6 13 5 0]<br/>
+> [3 8 7 18 9 16 12 17 2]<br/>
+> [14 11 19 10]<br/>
 > <br/>
 > Example 2<br/>
-> Input: @ints = (5, 1, 3, 2)<br/>
-> Output: false<br/>
+> Input: @ints = (0,1,13,7,6,8,10,11,2,14,16,4,12,9,17,5,3,18,15,19)<br/>
+> Output: 6<br/>
+> Loops are as below:<br/>
+> [0]<br/>
+> [1]<br/>
+> [13 9 14 17 18 15 5 8 2]<br/>
+> [7 11 4 6 10 16 3]<br/>
+> [12]<br/>
+> [19]<br/>
 > <br/>
 > Example 3<br/>
-> Input: @ints = (2, 2, 3)<br/>
-> Output: true<br/>
+> Input: @ints = (9,8,3,11,5,7,13,19,12,4,14,10,18,2,16,1,0,15,6,17)<br/>
+> Output: 1<br/>
+> Loop is as below:<br/>
+> [9 4 5 7 19 17 15 1 8 12 18 6 13 2 3 11 10 14 16 0]<br/>
 
-For this task, I see two approaches:
+To detect a loop, we follow the 'path' of numbers, using each number as the next index, until we find the index that we started with.
 
-#### 1. Single Pass
+We use a `@visited` array to mark each number on the path, to avoid running into another loop that we already detected.
 
-In this approach, we walk through the array only once.<br/>For each entry we check whether the following entry is greater.<br/>If not, we remove that violating following entry, and then we make sure with the rest of the list that this is the only violation.
+For each index that we visit, we check whether the number at that index points does not point outside the array (using `exists`, which is shorter than checking against the array bounds).<br/>
+None of the examples has any of these, but it's always better to be on the safe side in case we use other test input.
 
-For example:
-  ```perl
-  1-2-3-0-4-5-6
-  ```
-We check `1 < 2` and `2 < 3`, which both are fine. Then we check `3 < 0`, which violates the rule.
-  We found a decrease, so we conclude that the `0` needs to be removed.
-  We check again for the new pair (`3 < 4`), and then the rest of the list (`4 < 5`, `5 < 6`) and find them all ok.<br/>So the `0` is the only entry that needs to be removed.
+So we loop through the array, trying every number as a possible first number of a loop if it was not yet visited before, either as a part of another loop or as a part of a non-loop sequence that we already tried.
 
-And we are right in this case. But things are more complicated!
-
-Consider the next example:
-    ```perl
-  1-2-3-99-4-5-6
-    ```
-
-We check `1 < 2`, `2 < 3`, `3 < 99` and they are all ok, strictly increasing. Then we find a failure checking `99 < 4`, and we conclude that the `4` needs to be removed.
-
-But this is wrong!
-
-In this case, it's actually the *first* of the two numbers that we just compared that has to be removed to recreate a strictly increasing order, not the second.
-
-So we actually need to decide which of the two numbers we need to remove (we are sure that one of them has to go, if not, the violation will remain).
-
-Once we remove one of the two numbers, the other one has to be in correct order with both entries to its left and its right. In the examples, we choose between
-
-​    `2-3-4` and `2-0-4`
-
-and between
-
-​    `3-99-5` and `3-4-5`
-
-respectively.
-
-And actually it may be that removing neither of the two leads to a strictly increasing sequence. We then can return 'false' immediately.
-
-In all of this, we need to verify that all the neighbors we check really exist, which bloats up the code a little.
-
-**I did not implement this.**<br/>
-It already took long enough to describe this algorithm, and the other solution I am going to propose is so nice and looks so 'perlish' to me that I really didn't consider the effort.
-
-### 2. Just Try Them All
-
-The second approach is <u>much</u>(!!!) easier!
-
-We use a separate function that checks whether a given list is strictly monotonic.
-
-We go through the array entry by entry, remove that entry from the array, and check with the function whether the resulting array is strictly monotonic. We return 'true' if we find the first entry where this is the case. 
-
-To make it 'short'; here's my implementation:
+In this simple version we only count the loops, we don't store them for display.<br/>So that should be all:
 
 ```perl
-use List::Util qw( any all );
+sub array_loops( @ints ) {
+    my $n_loops = 0;
+    my @visited = ();
 
-sub is_monotonic( @a ) {
-    return all { $a[$_] > $a[ $_ - 1 ] } 1..$#a;
-}
+    for my $start_index ( 0..$#ints ) {
+        next if $visited[$start_index];
 
-sub remove_one( @ints ) {
-    return
-        any {
-            my @try = @ints;
-            splice @try, $_, 1, ();
-            is_monotonic @try;
-        } 0..$#ints;
-}
-```
+        my $i = $ints[$start_index];
+        while ( exists( $ints[$i] )
+            && ! $visited[$ints[$i]]
+            && $i != $start_index )
+        {
+            $visited[$i] = 1;
+            $i = $ints[$i];
+        }
 
-## Task 2: Duplicate Zeros
-
-> You are given an array of integers.<br/>
-> Write a script to duplicate each occurrence of ZERO in the given array and shift the remaining to the right but make sure the size of array remain the same.<br/>
-> <br/>Example 1<br/>
-> Input: @ints = (1, 0, 2, 3, 0, 4, 5, 0)<br/>
-> Ouput: (1, 0, 0, 2, 3, 0, 0, 4)<br/>
-> <br/>
-> Example 2<br/>
-> Input: @ints = (1, 2, 3)<br/>
-> Ouput: (1, 2, 3)<br/>
-> <br/>
-> Example 3<br/>
-> Input: @ints = (0, 3, 0, 4, 5)<br/>
-> Ouput: (0, 0, 3, 0, 0)<br/>
-
-I use the `splice` function to insert the additional zeros after where `grep` finds any zeros in the array.
-
-One trick is to start from the end of the array, so that the indexes of where to put in the additional zeros do not change when we add entries 'behind'.
-
-Another trick is to just replace the rest of the array after a zero by a copy of the zero that is already there and all the following rest of the array, except its last element (to keep the total number of elements the same).<br/>
-This makes it possible to use just one splice call for each zero to insert:
-
-```perl
-sub duplicate_zeros( @ints ) {
-    splice @ints, $_ + 1, $#ints - $_, ( @ints[ $_ .. $#ints - 1 ] )
-        for reverse grep $ints[$_] == 0, 0 .. $#ints - 1;
-    return @ints;
+        ++$n_loops
+            if $i == $start_index;
+    }
+    return $n_loops;
 }
 ```
-
-I am quite happy with these three lines of code!
 
 #### **Thank you for the challenge!**
