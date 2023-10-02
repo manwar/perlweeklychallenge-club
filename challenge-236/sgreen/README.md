@@ -1,3 +1,3 @@
-# The Weekly Challenge 235
+# The Weekly Challenge 236
 
-Blog: [Adding and removing integers](https://dev.to/simongreennet/adding-and-removing-integers-3i4g)
+Blog: [Juicy loops](https://dev.to/simongreennet/juicy-loops-2di2)
