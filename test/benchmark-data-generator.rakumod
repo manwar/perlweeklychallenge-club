@@ -14,6 +14,9 @@ my Set $some-unicode-characters =
 sub data-provider-for(Str $challenge, Str $task-string) is export {
 
     given $challenge => $task-string {
+        when 'nr237' => 'task-one' { return pass } #&integers-from-subset.assuming(*, (5,10,20).Set, @problem-size-factor-two, log2(2**2).UInt)}
+        when 'nr237' => 'task-two' { return &integers.assuming(*, -100, 100, @problem-size-factor-two, log2(2**5).UInt)}
+
         when 'nr236' => 'task-one' { return &integers-from-subset.assuming(*, (5,10,20).Set, @problem-size-factor-two, log2(2**2).UInt)}
         when 'nr236' => 'task-two' { return &integers-max-leq-problem-size.assuming(*, 0, @problem-size-factor-two, log2(2**2).UInt)}
 
