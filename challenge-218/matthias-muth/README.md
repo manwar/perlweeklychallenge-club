@@ -1,165 +1,168 @@
-# Permutations not needed!
-**Challenge 217 solutions in Perl by Matthias Muth**
+# Highscore!
+**Challenge 218 solutions in Perl by Matthias Muth**
 
-## Task 1: Sorted Matrix
+## Task 1: Maximum Product
 
->You are given a `n x n` matrix where n >= 2. <br/>
-Write a script to find `3rd smallest` element in the sorted matrix.
+> You are given a list of 3 or more integers.<br/>
+> Write a script to find the 3 integers whose product is the maximum and return it.<br/>
 
-In Perl, a matrix is stored as an array of references to anonymous arrays containing the row data.<br/>
-So all we need to do is to flatten the matrix into one single array,
-then sort that array, and select its third elementas the result.
-We just need to make sure that we sort numerically, not by string comparison as is the default.
-
-All of this can be done in one line:
+If we have exactly three numbers, there's not a lot of choice.<br/>
+We return the product of the three numbers that we have got:
 ```perl
-sub sorted_matrix {
-    return ( sort { $a <=> $b } map @$_, @{$_[0]} )[2];
-}
+    use List::Util qw( product );
+
+    return product( @list )
+        if @list == 3;
 ```
 
-## Task 2: Max Number
+We need to consider that we might have negative numbers in the list,
+and there might be situations where we cannot avoid ending up with a negative product.
+But, of course, *any* positive product is better that *any* negative one!<br/>
+So we first try to find the largest possible *positive* product using three numbers from the list.<br/>
 
->You are given a list of positive integers. <br/>
-Write a script to concatenate the integers to form the highest possible value.
+The largest positive productmy be wither of these:
+* the product of the three largest positive numbers,
+* the product of the two negatives with the highest absolute value, and the largest positive number<br/>
+(the two negatives turning the result into positive).
 
-This challenge task caused a lot of thinking and trying before I ended up with
-my final, very concise solution.
+We cannot say in advance which of these will be better,
+because this depends on the absolute values of the positive and negative 'best' numbers,
+So, after splitting up our list into positives and negatives,
+sorted by highest to lowest absolute values,
+we compute them both (if possible), 
+and then return the better one, if at lest one of them could be produced:
 
-### Recursive permutations
-I implemented a solution that goes through all permutations of the input list
-to find the best order recursively.
-
-A call to the subroutine uses each element of the list in turn as the first
-part of the concatenation. In each iteration, a recursive call with the rest of the list,
-with the current element removed (using `splice`) is used to determine the
-best solution for that remaining list.
-We store the maximum result of the combinations to return it as the result of the call.
 ```perl
-sub max_number_permute {
-    my ( @list ) = @_;
+    my @pos = sort { abs( $b ) <=> abs( $a ) } grep $_ > 0, @list;
+    my @neg = sort { abs( $b ) <=> abs( $a ) } grep $_ < 0, @list;
 
-    return $list[0]
-        if @list == 1;
+    my @positive_results = (
+        @pos >= 3              ? product( @pos[0..2] )          : (),
+        @pos >= 1 && @neg >= 2 ? product( @neg[0..1], $pos[0] ) : (),
+    );
 
-    my $max = 0;
-    for ( 0..$#list ) {
-        my @sub_list = @list;
-        splice @sub_list, $_, 1, ();
-        my $try = $list[$_] . max_number( @sub_list );
-        $max = $try
-             if $try > $max;
+    # If we have at least one of them, we are done.
+    return max( @positive_results )
+        if @positive_results;
+```
+
+If it was not possible to return a positive result,
+we should at least try to limit our outcome to zero.<br/>
+We can return a zero result if we have at least one zero in the list,
+because no matter which other numbers we multiply it with, it still remains a zero:
+
+```perl
+    return 0
+        if grep $_ == 0, @list;
+```
+
+If this didn't work either, we are set to return a negative result.
+
+At this point we are sure that we have at least three negative numbers,
+because we know that
+* we have at least 4 numbers in total<br/>
+  (because there are >= 3 by definition, and we checked for having exactly three already),
+* we have at most 2 positives<br/>
+  (because we ruled out having 3 positives),
+* we don't have any zeroes<br/>,
+  (we just checked).
+
+So we have at least 2 negatives.<br/>
+From that we can follow that
+* we don't even have 1 positive
+  (because we would have combined it with the two negatives for a positive result).
+
+So actually we have *only* negative numbers, and at least 4 of them.
+
+We choose the ones with the lowest absolute value, giving us the highest
+(least negative) result possible.<br/>
+To get those, we just reverse the list that we already have,
+which is equivalent to sorting then into ascending order, 
+and then take the first three entries.
+```perl
+    return product( ( reverse @neg )[0..2] );
+```
+And we are done.
+
+## Task 2: Matrix Score
+
+> You are given a m x n binary matrix i.e. having only 1 and 0.<br/>
+> You are allowed to make as many moves as you want to get the highest score.<br/>
+> A move can be either toggling each value in a row or column.<br/>
+> To get the score, convert the each row binary to dec and return the sum.<br/>
+
+So we want to get a final sum that is as high as possible.<br/>
+Then let's have a look at what makes up that sum:
+
+In the binary matrix like in Example 1,
+```
+  [ 0 0 1 1 ]
+  [ 1 0 1 0 ]
+  [ 1 1 0 0 ]
+```
+we will convert the rows from binary to decimal.<br/>
+This means that every bit will be multiplied by a 2<sup>n</sup> value:
+```
+  [ 8 4 2 1 ]
+```
+
+To get as high as possible a sum, all the bits with a value of `8` should be set to `1`.
+No matter what the other bits in the same row are,
+a value of `8` is more than all the other bits can achieve together (a maximum of 7).
+
+So in the first step, we flip all rows that have a `0` in the first position:
+```perl
+    for my $row ( grep $_->[0] == 0, @$matrix ) {
+        $row->[$_] ^= 1
+            for 0..$#$row;
     }
-    return $max;
+```
+
+In the second step, we go through all columns but the first one,
+and flip all those that have less `1`s that `0`s.<br/>
+This maximizes the sum of values that we get from each column.
+```perl
+    my $n_columns = scalar @{$matrix->[0]};
+    for my $c ( 1 .. $n_columns - 1 ) {
+        # Sum up that column's value from every row.
+        my $column_sum = sum( map $_->[$c], @$matrix );
+        if ( $column_sum < $n_columns / 2 ) {
+            # Flip that column in every row.
+            $_->[$c] ^= 1
+                for @$matrix;
+        }
+    }
+```
+
+This should give us a good matrix.
+
+Now we need to return the sum of all rows converted from binary to decimal.<br/>
+It requires a little thinking how to do this nicely, without doing all the for-loops
+and all the multiplication with the 2<sup>n</sup> values, but everything is already there in perl!
+
+My solution for the conversion of one row is this one:<br/>
+Looking for a `pack` format that makes the conversion easy,
+I choose the 'b32' format to get 4 bytes of data from a maximum of 32 column values.<br/>
+This format uses the least significant bit first, and assumes `0` bits when it runs out of values.
+This is good, because we don't need do anything to fill up our data to any word boundaries.<br/>
+We just need to `reverse` our bit array to have the least significant value first,
+and to turn it into a string `0` or `1` characters for each bit value, before passing it to `pack`.
+
+The resulting `pack` output byte-string matches this description:
+> An unsigned long (32-bit) in "VAX" (little-endian) order.
+
+which means that we can `unpack` it into a numerical value using `unpack`'s `V` format.<br/>
+So my function to turn a list of binary values into a decimal value is this:
+```perl
+sub binary_list_to_integer {
+    return unpack( "V", pack( "b32", join( "", reverse @_ ) ) );
 }
 ```
 
-### In search of a non-recursive solution
-I wondered whether it was really necessary to go through all permutations,
-recursively or by other techniques.
-
-If we are to find a solution that is not based on permutating the input list,
-we need to sort the numbers so that their concatenation gives us the expected result
-(knowing that 'sorting' is very similar to producing permutaions, but ok).
-
-If we want to use a `sort`, we need to find a criteria for the comparison of
-two numbers, to decide which of the two numbers goes first. <br/>
-So I did a lot of thinking about how to recognize which one of the two
-numbers is 'better'.
-
-### Which number is 'better'?
-We cannot just numerically compare the two numbers
-for deciding which one will give us a higher result if it goes first,
-This is because if we consider as an example the list `( 54, 6, 5 )`,
-and we use this 'higher numerical value first' strategy,
-we will get `54-6-5` as a result.
-But actually the highest possible combination is `6-5-54`!
-
-So actually, we should not compare the numbers as a whole, but
-digit by digit.
-
-Good that this is done more easily than is sounds,
-because
-we *can* use a numerical comparison if the numbers have the same length!
-So if we do a numerical comparison of just the first \<n> digits of the numbers,
-(with \<n> being the smaller length of the two numbers), we don't make a mistake.
-
-If the \<n> digits differ,
-we know which number gets us the highest possible next <n> digits in our result.
-We will surely use that one first.
-
-But what if the first \<n> digits are the same? <br/>
-We then need to think about
-what difference the trailing digits of the longer number can make.
-
-What we know is that for the next digit \<n+1> in our result,
-there will no other number in our list
-that gives a higher value
-than any of the two numbers we are currently checking.
-Especially not the one that we just didn't use as the first one.
-This is because all 'better' numbers from the list will already have made it
-into the result before (like the `6` in the example above).
-
-But what we also know is that if any number remaining in the rest of the list is 'worse'
-than our shorter number, our shorter number will be the one that will be selected.
-
-So alltogether this means that of all remaining numbers in the list,
-the ones that are 'better' than our shorter number will have been taken already,
-and the ones that are 'worse' than our shorter number will not make it
-in subsequent comparisons against our shorter number.
-Our shorter number is the only one that can ever compete
-with the trailing digits of the longer one!
-
-So we need to compare
-the trailing digits against the shorter number.
-Again, the comparison needs to be digit by digit.
-Now it's getting complicated, because again, we might have different lengths.
-...
-
-### Much simpler: check the output instead of the input
-
-At one point it came to me that there is a much simpler solution. <br/>
-Instead of regarding the *input* numbers separately
-for finding the 'better' one that should go first,
-we can check the *output*
-of combining the two numbers in one or the order order!
-And clearly, the 'better' one of the two possible concatenations gives us which
-number is the 'better' first one.
-
-In a `sort` code block, where the two numbers to sort are `$a` and `$b`,
-this means that this comparison will do the job:
+And using that function we return the 'matrix score' end result like this:
 ```perl
-{ "$b$a" <=> "$a$b" }
+    return sum( map binary_list_to_integer( @$_ ), @$matrix );
 ```
-So possibly the shortest solution to this challenge task actually is this one-liner:
-```perl
-sub max_number {
-    return join "", sort { "$b$a" <=> "$a$b" } @_;
-}
-```
-
-
-## TestExtractor.pm
-Apart from the two solutions that I have implemented this week
-I have written a script that extracts the new task descriptions
-from the
-[Weekly Challenge web site](https://theweeklychallenge.org/blog/perl-weekly-challenge-217/)
-and writes them into `challenge-<NN>/<USER>/perl/challenge-<NN>.txt`. <br/>
-(I will publish that in one of the coming weeks.)
-
-It also writes template files `perl/ch-1.pl` and `perl/ch-2-pl`, with
-the challenge number and name, task number and name,
-the subroutine name derived from the task name,
-and even the input variable names and types, derived from the test data, already filled in.
-
-I have a cron job that runs this every beginning of the week, so whenever there is a new
-challenge, I can start coding right away!
-
-The 'TestExtractor.pm' module extracts the test cases from that
-task description file, and runs the tests for me,
-without any editing of test data or test runs anymore.
-
-I am sure that the effort of automating all of this will pay off very soon,
-with every new challenge!
 
 **Thank you for the challenge!**
+  

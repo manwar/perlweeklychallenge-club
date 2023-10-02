@@ -1,3 +1,3 @@
-# The Weekly Challenge 216
+# The Weekly Challenge 218
 
-Blog: [Letter frequency](https://dev.to/simongreennet/letter-frequency-338m)
+Blog: [The one about maximums](https://dev.to/simongreennet/the-one-about-maximums-40cm)

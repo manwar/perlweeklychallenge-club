@@ -1,0 +1,25 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($string where $string.chars > 2 && $string ~~ /^<[0..9]>*$/);
+
+say is-additive($string) ?? 'true' !! 'false';
+
+sub is-additive ($string where $string.chars > 2 && $string ~~ /^<[0..9]>*$/)
+{
+  my @digits = $string.comb;
+
+  my $first  = @digits.shift;
+  my $second = @digits.shift;
+
+  while (@digits.elems)
+  {
+    my $third = @digits.shift;
+
+    return False unless $first + $second == $third;
+
+    $first = $second;
+    $second = $third;
+  }
+
+  return True;
+}

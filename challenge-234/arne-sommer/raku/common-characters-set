@@ -1,0 +1,10 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@words where @words.elems > 0 && all(@words) ~~ /^<[a..z]>+$/, :v(:$verbose));
+
+my @sets   = @words>>.comb>>.Set;
+my @common = ( [(&)] @sets ).keys;
+
+say ":Sets: { @sets.raku }" if $verbose;
+
+say "({ @common.map( '"' ~ * ~ '"').join(", ") })";

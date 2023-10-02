@@ -1,0 +1,28 @@
+https://cs.stackexchange.com/questions/59797/minimizing-cost-of-bus-travel￼
+gnasher729, Jun 21, 2016 at 20:23
+retrieved May 30, 2023 07:44:03 EDT
+::::
+int n = 6;
+int dates [n+1] = { 1, 3, 5, 8, 9, 10, infinity };
+int ticket [n];
+int cost [n+1];
+
+cost [n] = 0;
+
+for i = n-1 downto 0
+    cost for 1 day = 2 + cost [i+1]
+    let k7 = smallest k where dates [k] ≥ dates [i] + 7
+    cost for 7 day = 7 + cost [k7]
+    let k30 = smallest k where dates [k] ≥ dates [i] + 30
+    cost for 30 days = 25 + cost [k30]
+
+    if cost for 1 day is smallest
+        ticket [i] = 1
+        cost [i] = cost for 1 day
+    else if cost for 7 day is smallest
+        ticket [i] = 7
+        cost [i] = cost for 7 days
+    else
+        ticket [i] = 30
+        cost [i] = cost for 30 days
+    endif

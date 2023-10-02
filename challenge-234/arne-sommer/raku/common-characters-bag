@@ -1,0 +1,10 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@words where @words.elems > 0 && all(@words) ~~ /^<[a..z]>+$/, :v(:$verbose));
+
+my @bags   = @words>>.comb>>.Bag;
+my @common = ( [(&)] @bags ).kxxv;
+
+say ":Bags: { @bags.raku }" if $verbose;
+
+say "({ @common.map( '"' ~ * ~ '"').join(", ") })";

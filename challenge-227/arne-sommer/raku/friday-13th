@@ -1,0 +1,17 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $year where 1753 <= $year <= 9999 = Date.today.year, :v(:$verbose));
+
+my $fridays = 0;
+
+for 1 .. 12 -> $month
+{
+  my $date      = Date.new(year => $year, month => $month, day => 13);
+  my $is-friday = $date.day-of-week == 5;
+
+  $fridays++ if $is-friday;
+
+  say ": $date { $is-friday ?? " Friday" !! ""}" if $verbose;
+}
+
+say $fridays;

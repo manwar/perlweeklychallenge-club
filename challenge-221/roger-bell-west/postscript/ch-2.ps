@@ -1,0 +1,101 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/isas {
+    3 dict begin
+    /a exch def
+    /t a 1 get a 0 get sub def
+    true
+    2 1 a length 1 sub {
+        /i exch def
+        a i get a i 1 sub get sub t ne {
+            pop
+            false
+            exit
+        } if
+    } for
+    end
+} bind def
+
+/arithmeticsubsequence {
+    4 dict begin
+    /stack exch [ exch ] def
+    0
+    {
+        stack length 0 eq {
+            exit
+        } if
+        stack apop.left /t exch def /stack exch def
+        t isas {
+            pop
+            t length
+            exit
+        } {
+            0 1 t length 1 sub {
+                /i exch def
+                stack
+                [
+                    0 1 t length 1 sub {
+                        /ix exch def
+                        i ix ne {
+                            t ix get
+                        } if
+                    } for
+                ]
+                apush.right /stack exch def
+            } for
+        } ifelse
+    } loop
+    end
+} bind def
+
+(arithmeticsubsequence) test.start
+[9 4 7 2 10] arithmeticsubsequence 3 eq test
+[3 6 9 12] arithmeticsubsequence 4 eq test
+[20 1 15 3 10 5 8] arithmeticsubsequence 4 eq test
+test.end

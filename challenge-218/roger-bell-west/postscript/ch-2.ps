@@ -1,0 +1,84 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/matrixscore {
+    4 dict begin
+    /mx exch def
+    0 1 mx length 1 sub {
+        /i exch def
+        mx i get 0 get 0 eq {
+            0 1 mx i get length 1 sub {
+                /j exch def
+                mx i get dup j get 1 exch sub j exch put
+            } for
+        } if
+    } for
+    /t mx length 2 idiv def
+    1 1 mx 0 get length 1 sub {
+        /i exch def
+        0
+        0 1 mx length 1 sub {
+            mx exch get i get 0 eq {
+                1 add
+            } if
+        } for
+        t gt {
+            0 1 mx length 1 sub {
+                /j exch def
+                mx j get dup i get 1 exch sub i exch put
+            } for
+        } if
+    } for
+    0
+    mx {
+        0 exch
+        {
+            exch 2 mul exch
+            1 eq {
+                1 add
+            } if
+        } forall
+        add
+    } forall
+    end
+} bind def
+
+(matrixscore) test.start
+[[0 0 1 1] [1 0 1 0] [1 1 1 0]] matrixscore 39 eq test
+[[0]] matrixscore 1 eq test
+test.end

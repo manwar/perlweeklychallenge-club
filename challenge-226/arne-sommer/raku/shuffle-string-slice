@@ -1,0 +1,8 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($string where $string.chars > 0,
+               *@indices where @indices.elems == $string.chars);
+
+my @string = $string.comb;
+
+say @string[@indices].join;

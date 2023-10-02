@@ -13,7 +13,7 @@ That means that if the difference between two points of time is _n_ minutes, the
 I reduced the problem of finding the shortest time difference between *any two* timepoints to finding the shortest time difference of *one* timepoint with the rest of a list. which results in this function:
 
 ```perl
-use List::Utils qw( min );
+use List::Util qw( min );
 
 sub time_diffs( $fixed, @others ) {
     # Return all differences between one timestamp and a list of others.

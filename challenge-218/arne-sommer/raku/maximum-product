@@ -1,0 +1,27 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@list where @list.elems >= 3 && all(@list) ~~ Int,
+               :v(:$verbose));
+
+my $highest = - Inf;
+my @highest;
+
+for @list.combinations(3) -> @candidate
+{
+  my $product = [*] @candidate;
+
+  print ":Candidate { @candidate.join(",") } with product: $product" if $verbose;
+
+  if $product > $highest
+  {
+    $highest = $product;
+    @highest = @candidate;
+    print " - highest" if $verbose;
+  }
+
+  say "";
+}
+
+say ":Highest triple { @highest.join(",") }" if $verbose;
+
+say $highest;

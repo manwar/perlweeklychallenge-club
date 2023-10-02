@@ -1,0 +1,64 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/zeroarray {
+    1 dict begin
+    /s 0 dict def
+    {
+        s exch true put
+    } forall
+    s 0 known {
+        s 0 undef
+    } if
+    s keys length
+    end
+} bind def
+
+(zeroarray) test.start
+[1 5 0 3 5] zeroarray 3 eq test
+[0] zeroarray 0 eq test
+[2 1 4 0 3] zeroarray 4 eq test
+test.end

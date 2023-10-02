@@ -1,0 +1,91 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/word2map {
+    2 dict begin
+    /m 0 dict def
+    {
+        /c exch def
+        c 65 ge c 90 le and {
+            /c c 32 add def
+        } if
+        c 97 ge c 122 le and {
+            m c known {
+                m c m c get 1 add put
+            } {
+                m c 1 put
+            } ifelse
+        } if
+    } forall
+    m
+    end
+} bind def
+
+/specialnotes {
+    4 dict begin
+    word2map /f exch def
+    word2map /cm exch def
+    /valid true def
+    f keys {
+        /c exch def
+        cm c known not {
+            /valid false def
+            exit
+        } if
+        f c get cm c get gt {
+            /valid false def
+            exit
+        } if
+    } forall
+    valid
+    end
+} bind def
+
+(specialnotes) test.start
+(abc) (xyz) specialnotes not test
+(scriptinglanguage) (perl) specialnotes test
+(aabbcc) (abc) specialnotes test
+test.end
