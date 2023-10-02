@@ -14,7 +14,7 @@ my Set $some-unicode-characters =
 sub data-provider-for(Str $challenge, Str $task-string) is export {
 
     given $challenge => $task-string {
-        when 'nr237' => 'task-one' { return pass } #&integers-from-subset.assuming(*, (5,10,20).Set, @problem-size-factor-two, log2(2**2).UInt)}
+        when 'nr237' => 'task-one' { return &random-dates-and-count.assuming(*, Date.new('1000-01-01'), Date.new('3001-01-01'), @problem-size-factor-two, log2(2**5).UInt) }
         when 'nr237' => 'task-two' { return &integers.assuming(*, -100, 100, @problem-size-factor-two, log2(2**5).UInt)}
 
         when 'nr236' => 'task-one' { return &integers-from-subset.assuming(*, (5,10,20).Set, @problem-size-factor-two, log2(2**2).UInt)}
@@ -47,6 +47,22 @@ sub unicode-words(UInt $entry, UInt $alphabet-size, UInt $min-length, UInt $max-
     unless @data[$n] {
         @data[$n] = race for ^$n { @alphabet.roll($word-lenght.roll).join('').List };
     }
+    return @data[$n];
+}
+
+
+sub random-dates-and-count(UInt $entry, Date $min, Date $max, @sizes, UInt $size-offset = 0) {
+    state @data is default([]);
+    my $n = @sizes[$entry + $size-offset];
+                                                                                   # {"year" => 2024, "month" => 4, "weekday-of-month" => 3, "day-of-week" => 2} => 16, # The 3rd Tue of Apr 2024 is the 16th
+    @data[$n] = &random-dates($entry, $min, $max, @sizes, $size-offset).map( -> $day {"year" => $day.year, "month" => $day.month, "weekday-of-month" => (1..6).roll, "day-of-week" => $day.day-of-week } ) unless @data[$n].elems;
+    return @data[$n];
+}
+
+sub random-dates(UInt $entry, Date $min, Date $max, @sizes, UInt $size-offset = 0) {
+    state @data is default([]);
+    my $n = @sizes[$entry + $size-offset];
+    @data[$n] = ($min..$max).roll($n) unless @data[$n].elems;
     return @data[$n];
 }
 
