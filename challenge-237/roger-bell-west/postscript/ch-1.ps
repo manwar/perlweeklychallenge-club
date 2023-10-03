@@ -1,0 +1,116 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/jd2dow {
+    1 add 7 mod 
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/ymd2jd {
+    4 dict begin
+    aload pop
+    /d exch def
+    /m exch def
+    /y exch def
+    /mn m 14 sub 12 idiv def
+    y 4800 add mn add 1461 mul 4 idiv
+    mn 12 mul neg 2 sub m add 367 mul 12 idiv add
+    y 4900 add mn add 100 idiv 3 mul 4 idiv sub
+    d add
+    32075 sub
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/jd2ymd {
+    15 dict begin
+    /y 4716 def
+    /v 3 def
+    /j 1401 def
+    /u 5 def
+    /m 2 def
+    /s 153 def
+    /n 12 def
+    /w 2 def
+    /r 4 def
+    /B 274277 def
+    /p 1461 def
+    /C -38 def
+    dup
+    4 mul B add 146097 idiv 3 mul 4 idiv C add j add add /f exch def
+    r f mul v add /e exch def
+    e p mod r idiv u mul w add /h exch def
+    /day h s mod u idiv 1 add def
+    /month h s idiv m add n mod 1 add def
+    /year e p idiv y sub n m add month sub n idiv add def
+    [ year month day ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/seizetheday {
+    0 dict begin
+    /dayofweek exch def
+    /weekcount exch def
+    /month exch def
+    /year exch def
+    /dt [ year month 1 ] ymd2jd def
+    /wd dt jd2dow def
+    wd 0 eq {
+        /wd 7 def
+    } if
+    wd dayofweek ne {
+        /dt dayofweek 7 add wd sub 7 mod dt add def
+    } if
+    weekcount 1 gt {
+        /dt dt weekcount 1 sub 7 mul add def
+    } if
+    dt jd2ymd aload pop
+    exch
+    month ne {
+        pop 0
+    } if
+    exch
+    year ne {
+        pop 0
+    } if
+    end
+} bind def
+
+(seizetheday) test.start
+2024 4 3 2 seizetheday 16 eq test
+2025 10 2 4 seizetheday 9 eq test
+2026 8 5 3 seizetheday 0 eq test
+test.end
