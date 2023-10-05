@@ -1,0 +1,68 @@
+<#
+------------------------------------------
+AUTHOR: Robert DiCicco
+DATE  : 2023-10-04
+Challenge 237 Task 01 Seize the Day ( Powershell )
+-----------------------------------------
+#>
+
+param (
+    [int32]$year = 2023,
+    [int32]$month = 10,
+    [uint]$weekday_of_month = 3,
+    [uint]$day_of_week = 2
+    )
+
+write-host "Input: Year = $year, Month = $month, Weekday of month = $weekday_of_month, day of week = $day_of_week"
+$cnt = 1
+$fnd = 0
+
+$days_in_month = [datetime]::DaysInMonth($year,$month)
+$d = 1
+while ( $d -le $days_in_month ) {
+    $dow = (Get-Date -Year $year -Month $month -Day $d).DayOfWeek
+    switch ($dow) {
+        Sunday { $val = 0 }
+        Monday { $val = 1 }
+        Tuesday { $val = 2 }
+        Wednesday { $val = 3 }
+        Thursday { $val = 4 }
+        Friday { $val = 5 }
+        Saturday { $val = 6 }
+    }
+
+
+    if ($val -eq $day_of_week ) {
+        if ($cnt -eq $weekday_of_month ) {
+            write-host "Output: $d"
+            $fnd += 1
+            break
+        }
+        $cnt += 1
+    }
+    $d += 1
+}
+if ($fnd -eq 0 ) {
+    write-host "Output: 0"
+}
+
+<#
+------------------------------------------
+SAMPLE OUTPUT
+.\SeizeDay.ps1 -year 2024 -month 4 -weekday_of_month 3 -day_of_week 2
+
+Input: Year = 2024, Month = 4, Weekday of month = 3, day of week = 2
+Output: 16
+
+.\SeizeDay.ps1 -year 2025 -month 10 -weekday_of_month 2 -day_of_week 4
+
+Input: Year = 2025, Month = 10, Weekday of month = 2, day of week = 4
+Output: 9
+
+.\SeizeDay.ps1 -year 2026 -month 8 -weekday_of_month 5 -day_of_week 3
+
+Input: Year = 2026, Month = 8, Weekday of month = 5, day of week = 3
+Output: 0
+-----------------------------------------
+#>
+
