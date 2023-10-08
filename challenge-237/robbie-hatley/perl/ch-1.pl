@@ -98,8 +98,8 @@ sub is_leap_year ($year) {
 
 sub days_per_month ($year, $month) {
    state @dpm = (31, 0, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
-   if ( 1 == $month ) { return (is_leap_year($year) ? 29 : 28);}
-   else {return $dpm[$month];}
+   if ( is_leap_year($year) ) {$dpm[1]=29} else {$dpm[1]=28}
+   return $dpm[$month];
 } # end sub days_per_month
 
 sub suffix ($x) {
