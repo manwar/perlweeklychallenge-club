@@ -3,26 +3,20 @@ unit class WDOM is Date is export;
 multi method new(:$weekday-of-month!, :$day-of-week!, :$month!, :$year! where $weekday-of-month eq 'L'|'Last')
 {
     my $dt = Date.new(:$year, :$month).last-date-in-month;
-    my $d = $dt.day-of-week - $day-of-week;
-    $dt - ($d >= 0 ?? $d !! 7 + $d)
+
+    my $day = [$dt.day-6..$dt.day].rotate($day-of-week - $dt.day-of-week).tail;
+
+    Date.new(:$year, :$month, :$day) 
 }
 
-multi method new(:$weekday-of-month!, :$day-of-week!, :$month!, :$year! where $weekday-of-month ~~ 1..4) 
+multi method new(:$weekday-of-month!, :$day-of-week!, :$month!, :$year!) 
 {
-    my $dt = Date.new(:$year, :$month); 
-    my $wdom = $day-of-week >= $dt.day-of-week ?? $weekday-of-month - 1  
-                                               !! $weekday-of-month; 
-    $dt += 7 * $wdom + $day-of-week - $dt.day-of-week 
-}
+    my $dt = Date.new(:$year, :$month);
 
-multi method new(:$weekday-of-month!, :$day-of-week!, :$month!, :$year! where $weekday-of-month == 5)
-{
-    my $dt = Date.new(:$year, :$month).last-date-in-month;
-    my $d = $dt.day-of-week - $day-of-week;
-    $dt -= $d >= 0 ?? $d !! 7 + $d;
+    my $day = [1..7].rotate($day-of-week - $dt.day-of-week).head;
 
-    return $dt if $dt.day == 29|30|31;
+    $day = ($weekday-of-month - 1) * 7 + $day; 
 
-    # Todo: Handle the exception here. Just return the 4th day-of-week?
-    die "There isn't a 5th $day-of-week in $month $year" 
+    # Todo: Handle the exception here? 
+    Date.new(:$year, :$month, :$day) 
 }
