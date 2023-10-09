@@ -37,19 +37,9 @@ def persistenceSort(int_list):
         step_word = 'step' if step_count[num] == 1 else 'steps'
         steps += f" ({step_count[num]} {step_word})"
 
-    def compare(a, b):
-        if step_count[a] != step_count[b]:
-            # sort by step count
-            return -1 if step_count[a] < step_count[b] else 1
-        elif a != b:
-            # then sort numerically
-            return -1 if a < b else 1
-        else:
-            # both items have same step count and value
-            return 0
-
     # now, sort by steps/numeric value
-    sorted_list = sorted(int_list, key=cmp_to_key(compare))
+    sorted_list = sorted(int_list,
+                         key=lambda x: (step_count[x], x))
 
     return sorted_list, steps
 
