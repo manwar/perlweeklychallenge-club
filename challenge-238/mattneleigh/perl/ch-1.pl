@@ -43,9 +43,9 @@ sub running_sum{
     my $sum = 0;
 
     return(
+        # Add each number to the sum, with each
+        # sum going into the list to be returned
         map(
-            # Add each number to the sum, with each
-            # sum going into the list to be returned
             $sum += $_,
             @ARG
         )
