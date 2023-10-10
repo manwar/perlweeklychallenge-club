@@ -1,0 +1,23 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@nums where all(@nums) ~~ Int && @nums.elems > 0, :v(:$verbose));
+
+my $max = 0;
+
+for @nums.permutations -> @permutation
+{
+
+  my $sum = [+] (@nums Z @permutation).map({ + ($_[0] < $_[1] ) });
+
+  if $sum > $max
+  {
+    say ":Permutation: @permutation[] -> $sum [max]" if $verbose;
+    $max = $sum;
+  }
+  elsif $verbose
+  {
+    say ":Permutation: @permutation[] -> $sum";
+  }
+}
+
+say $max;
