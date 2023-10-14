@@ -40,16 +40,11 @@ sub persistance_sort {
 	my @array = @{ shift() };
 
 	foreach my $value( @array ) {
-
 		my @array_of_numbers = split(//, $value);
 		$steps{$value} = multiply_numbers_recursively($value, 0);
-
 	}
-	my @final_results = ();
-
-	foreach my $result (sort compare keys %steps) {
-		push(@final_results, $result);
-	}
+	
+	my @final_results = sort compare keys %steps;
 
 	return @final_results;
 
