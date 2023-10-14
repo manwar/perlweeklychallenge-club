@@ -21,7 +21,7 @@ foreach my $array_ref( @tests ) {
 	print "BEFORE: ";
 	pretty_print_array( $array_ref);
 
-	my @results = persistance_sort( $array_ref );
+	my @results = persistence_sort( $array_ref );
 
 	print "AFTER: ";
 	pretty_print_array(\@results);
@@ -35,7 +35,7 @@ foreach my $array_ref( @tests ) {
 
 
 ## Basically, main(): 
-sub persistance_sort {
+sub persistence_sort {
 
 	my @array = @{ shift() };
 
