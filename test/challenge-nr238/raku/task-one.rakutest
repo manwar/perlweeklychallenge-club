@@ -3,22 +3,17 @@
 #BEGIN %*ENV<AUTHOR_TESTING> = 1;
 
 use Test;
-use task-two;
+use task-one;
 
 my @testcases =
-  () => 0,
-  (1,) => 0,
-  (1, 1) => 0,
-  (-1, 1) => 2,
-  (1, 1, 2, 2) => 2,
-  (1, 2, 3, 4) => 4,
-  (2, 1, 3, 4) => 4,
-  (1, 3, 5, 2, 1, 3, 1) => 8,
-  (1,2,3,1,2,3) => 4,
+  (1, 2, 3, 4, 5) => (1, 3, 6, 10, 15),
+  (1, 1, 1, 1, 1) => (1, 2, 3, 4, 5),
+  (0, -1, 1, 2) => (0, -1, 0, 2)
 ;
 
+
 plan @testcases.elems;
-cmp-ok solution(.key), &[eqv], .value for @testcases;
+is-deeply solution(.key), .value for @testcases;
 
 if ?%*ENV<AUTHOR_TESTING> {
   for @testcases.keys -> $i {
@@ -26,7 +21,7 @@ if ?%*ENV<AUTHOR_TESTING> {
     say $i + 1 ~ '. testcase';
     isa-ok $input, List, 'domain data structure';
     ok all($input) ~~ Int, 'domain value';
-    isa-ok $output, UInt, 'co-domain data structure';
-    ok all($output) ~~ UInt, 'co-domain value';    
+    isa-ok $output, List, 'co-domain data structure';
+    ok all($output) ~~ Int, 'co-domain value';    
   }
 }

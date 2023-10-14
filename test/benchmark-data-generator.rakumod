@@ -14,6 +14,9 @@ my Set $some-unicode-characters =
 sub data-provider-for(Str $challenge, Str $task-string) is export {
 
     given $challenge => $task-string {
+        when 'nr238' => 'task-one' { return &integers.assuming(*, -1000, 1000, @problem-size-factor-two, log2(2**5).UInt)}
+        when 'nr238' => 'task-two' { return &integers.assuming(*, 0, 1000, @problem-size-factor-two, log2(2**5).UInt)}
+
         when 'nr237' => 'task-one' { return &random-dates-and-count.assuming(*, Date.new('1000-01-01'), Date.new('3001-01-01'), @problem-size-factor-two, log2(2**5).UInt) }
         when 'nr237' => 'task-two' { return &integers.assuming(*, -100, 100, @problem-size-factor-two, log2(2**5).UInt)}
 
