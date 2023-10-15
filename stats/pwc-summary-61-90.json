@@ -1,7 +1,8 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -40,6 +41,7 @@
          ]
       },
       {
+         "name" : "Raku",
          "data" : [
             23,
             0,
@@ -71,8 +73,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -110,11 +111,24 @@
          "name" : "Blog"
       }
    ],
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2023]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2023-10-15 20:00:48 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -149,19 +163,5 @@
          "Guillermo Ramos",
          "Gurunandan Bhat"
       ]
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-10-15 08:57:41 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2023]"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
