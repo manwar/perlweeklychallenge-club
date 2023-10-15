@@ -1,3 +1,3 @@
-# The Weekly Challenge 237
+# The Weekly Challenge 238
 
-Blog: [Seize the greatness](https://dev.to/simongreennet/seize-the-greatness-38n0)
+Blog: [Counting and sorting](https://dev.to/simongreennet/counting-and-sorting-4136)
