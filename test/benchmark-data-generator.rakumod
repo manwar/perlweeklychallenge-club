@@ -14,6 +14,9 @@ my Set $some-unicode-characters =
 sub data-provider-for(Str $challenge, Str $task-string) is export {
 
     given $challenge => $task-string {
+        when 'nr239' => 'task-one' { return &unicode-words-duo-list.assuming(*, 5, 1, 10, @problem-size-factor-two, log2(2**5).UInt) }
+        when 'nr239' => 'task-two' { return &unicode-word-and-words-list.assuming(*, 5, 1, 10, @problem-size-factor-two, log2(2**5).UInt) }
+
         when 'nr238' => 'task-one' { return &integers.assuming(*, -1000, 1000, @problem-size-factor-two, log2(2**5).UInt)}
         when 'nr238' => 'task-two' { return &integers.assuming(*, 0, 1000, @problem-size-factor-two, log2(2**5).UInt)}
 
@@ -36,6 +39,38 @@ sub data-provider-for(Str $challenge, Str $task-string) is export {
         when 'DEMO' => 'task-two'  { return &data-task-template}
         default {die "Data provider for $challenge $task-string not implemented."}
     }
+}
+
+sub unicode-word-and-words-list(UInt $entry, UInt $alphabet-size, UInt $min-length, UInt $max-length where {$min-length <= $max-length}, @sizes, UInt $size-offset) {
+    
+    my $n = @sizes[$entry + $size-offset];
+
+    state @data;
+
+    my $word-lenght = $min-length .. $max-length;
+    state @alphabet = $some-unicode-characters.roll($alphabet-size);
+    
+    unless @data[$n] {
+        @data[$n] =                @alphabet.roll($word-lenght.roll).join(''), 
+                    race for ^$n { @alphabet.roll($word-lenght.roll).join('').List };
+    }
+    return @data[$n];
+}
+
+sub unicode-words-duo-list(UInt $entry, UInt $alphabet-size, UInt $min-length, UInt $max-length where {$min-length <= $max-length}, @sizes, UInt $size-offset) {
+    
+    my $n = @sizes[$entry + $size-offset];
+
+    state @data;
+
+    my $word-lenght = $min-length .. $max-length;
+    state @alphabet = $some-unicode-characters.roll($alphabet-size);
+    
+    unless @data[$n] {
+        @data[$n] = race for ^$n { @alphabet.roll($word-lenght.roll).join('').List },
+                    race for ^$n { @alphabet.roll($word-lenght.roll).join('').List };
+    }
+    return @data[$n];
 }
 
 sub unicode-words(UInt $entry, UInt $alphabet-size, UInt $min-length, UInt $max-length where {$min-length <= $max-length}, @sizes, UInt $size-offset) {

@@ -108,7 +108,8 @@ sub benchmark-scalability(&solution, &data, $run-time, $max-problem, $start-prob
       last if $max-problem <= $i;
 
       print "$i\tdata " if $verbose;
-      my $n = &data($i).elems; # this also ensures data input is generated and cached so influences less the metrics
+      my $n = &data($i).flat.elems; # this also ensures data input is generated and cached so influences less the metrics
+      
       print "generated \c[HEAVY CHECK MARK] solving size " if $verbose;
       my ($start, $latency, $throughput) = now;
       
