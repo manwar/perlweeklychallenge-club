@@ -3,8 +3,13 @@
 
 name: manual raku benchmark run
 
+# ensure only one job runs for this repo
+concurrency:
+  group: ${{ github.ref }}
+  cancel-in-progress: true
+
 on:
-  #push: # if workflow is not appearing on branch, run with push: instead of workflow_dispatch: once
+  #push: #  if workflow is not appearing on branch, run with push: instead of workflow_dispatch: once
   workflow_dispatch:
     inputs:
       week:
@@ -23,40 +28,53 @@ jobs:
     #  matrix:
     #    os:
     #      - ubuntu-latest
+    #      - windows-latest
+    #      - macos-latest
     #    raku-version:
     #      - 'latest'
     #runs-on: ${{ matrix.os }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Install Raku
-        run: |
-          sudo echo $SHELL
-          sudo apt-get update
-          sudo apt-get install rakudo
-          sudo raku --version
-      - name: Install zef and some modules always needed
-        run: |
-          sudo git clone https://github.com/ugexe/zef.git; cd zef; sudo raku -I. bin/zef install . ; cd .. ; sudo rm -rf zef/
-          sudo /usr/lib/perl6/site/bin/zef install Test JSON::Tiny
-      - name: Install user required modules and run benchmark
-        run: |
-          sudo raku test/install-required-packages.raku challenge-${{ inputs.week }} False
-          sudo raku --optimize=3 -I challenge-${{ inputs.week }} -- test/benchmark-scalabiity.raku --out-folder=/tmp --v=True --max-problem=${{ inputs.maxproblem }} --max-run-times=1,2,3 ${{ inputs.week }}
+      - uses: Raku/setup-raku@v1
+      - name: Install required modules
+        run: zef --verbose install Test JSON::Tiny
+      
+      - uses: actions/checkout@main
+      
+      - name: Install user required modules
+        run: raku test/install-required-packages.raku challenge-${{ inputs.week }} False
+      
+      - name: Run benchmark
+        run: raku --optimize=3 -I challenge-${{ inputs.week }} -- test/benchmark-scalabiity.raku --out-folder=/tmp --v=True --max-problem=${{ inputs.maxproblem }} --max-run-times=1,2,3 ${{ inputs.week }}
+      
       - name: Archive benchmark results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         with:
           name: scalability-benchmark-data
           path: /tmp/${{ inputs.week }}_*.csv
-      - name: Install and run Tokei
+      
+      - name: Setup cache for Tokei
+        id: cache-tokei
+        uses: actions/cache@v3
+        with:
+          path: ~/.local/bin
+          key: ${{ runner.os }}-tokei
+      
+      - name: Install Tokei
+        if: steps.cache-tokei.outputs.cache-hit != 'true'
         run: |
-          sudo wget -qO tokei.tar.gz https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz
-          sudo tar xf tokei.tar.gz -C /usr/local/bin
+          mkdir -p ~/.local/bin
+          wget -qO tokei.tar.gz https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz
+          tar xf tokei.tar.gz -C ~/.local/bin
           tokei --version
+      
+      - name: Run Tokei
+        run: |
           tokei -f --columns=130 challenge-${{ inputs.week }}
           tokei -f --output json challenge-${{ inputs.week }} > /tmp/challenge-${{ inputs.week }}.tokei.txt
+      
       - name: Archive Tokei report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         with:
           name: tokei-stats-report
           path: /tmp/challenge-${{ inputs.week }}.tokei.txt
