@@ -1,0 +1,47 @@
+# gh workflow run 'tokei_report' --ref branch-name -f week=DEMO
+# gh workflow run 'tokei_report' --ref raku-benchmark-scaleability -f week=nr233
+
+name: tokei_report
+
+on:
+  #push: #  if workflow is not appearing on branch, run with push: instead of workflow_dispatch: once
+  #schedule:
+  #  - cron: '42 5 * * 1' # Monday morning
+  workflow_dispatch:
+    inputs:
+      week:
+        description: 'weekly challenge nr to be reported - like nr234'
+        default: 'DEMO'
+        required: true
+        type: string
+
+jobs:
+  tokei-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Setup cache for Tokei
+        id: cache-tokei
+        uses: actions/cache@v3
+        with:
+          path: ~/.local/bin
+          key: ${{ runner.os }}-tokei
+      
+      - name: Install Tokei
+        if: steps.cache-tokei.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p ~/.local/bin
+          wget -qO tokei.tar.gz https://github.com/XAMPPRocky/tokei/releases/latest/download/tokei-x86_64-unknown-linux-gnu.tar.gz
+          tar xf tokei.tar.gz -C ~/.local/bin
+          tokei --version
+      
+      - name: Run Tokei
+        run: |
+          tokei -f --sort code --columns=130 challenge-${{ inputs.week }}
+          tokei -f --sort code --output json challenge-${{ inputs.week }} > /tmp/challenge-${{ inputs.week }}.tokei.txt
+      
+      - name: Archive Tokei report
+        uses: actions/upload-artifact@main
+        with:
+          name: tokei-stats-report
+          path: /tmp/challenge-${{ inputs.week }}.tokei.txt
