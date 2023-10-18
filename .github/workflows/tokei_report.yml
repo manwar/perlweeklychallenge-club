@@ -5,21 +5,36 @@ name: tokei_report
 
 on:
   #push: #  if workflow is not appearing on branch, run with push: instead of workflow_dispatch: once
-  #schedule:
-  #  - cron: '42 5 * * 1' # Monday morning
+  schedule:
+#    - cron: '42 5 * * 1' # Monday morning
+    - cron: '42 5 * * *' # every morning
   workflow_dispatch:
     inputs:
       week:
         description: 'weekly challenge nr to be reported - like nr234'
-        default: 'DEMO'
-        required: true
+        required: false
         type: string
 
 jobs:
   tokei-report:
     runs-on: ubuntu-latest
     steps:
+      # install https://rakudo.org/star
+      # see https://github.com/rakudo/star/blob/master/etc/modules.txt 
+      # for modules installed by rakudo-star
+      - uses: Raku/setup-raku@v1
+#        with:
+#          raku-version: ${{ matrix.raku-version }}
+
       - uses: actions/checkout@main
+
+      - name: Set week value
+        id: week
+        run: |
+          USER_INPUT=${{ github.event.inputs.week }}
+          LATEST_CHALLENGE=`raku -e "put '.'.IO.dir.grep(/challenge\-nr\d+/).sort.tail.substr(*-5)"`
+          echo "value=${USER_INPUT:-$LATEST_CHALLENGE}" >> "$GITHUB_OUTPUT"
+
       - name: Setup cache for Tokei
         id: cache-tokei
         uses: actions/cache@v3
@@ -37,11 +52,11 @@ jobs:
       
       - name: Run Tokei
         run: |
-          tokei -f --sort code --columns=130 challenge-${{ inputs.week }}
-          tokei -f --sort code --output json challenge-${{ inputs.week }} > /tmp/challenge-${{ inputs.week }}.tokei.txt
+          tokei -f --sort code --columns=130 challenge-${{ steps.week.outputs.value }}
+          tokei -f --sort code --output json challenge-${{ steps.week.outputs.value }} > /tmp/challenge-${{ steps.week.outputs.value }}.tokei.txt
       
       - name: Archive Tokei report
         uses: actions/upload-artifact@main
         with:
           name: tokei-stats-report
-          path: /tmp/challenge-${{ inputs.week }}.tokei.txt
+          path: /tmp/challenge-${{ steps.week.outputs.value }}.tokei.txt

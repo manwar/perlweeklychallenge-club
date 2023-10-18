@@ -10,18 +10,18 @@ concurrency:
 
 on:
   #push: #  if workflow is not appearing on branch, run with push: instead of workflow_dispatch: once
-  #schedule:
-  #  - cron: '39 5 * * 1' # Monday morning
+  schedule:
+#    - cron: '39 5 * * 1' # Monday morning
+    - cron: '39 5 * * *' # every morning
   workflow_dispatch:
     inputs:
       week:
-        description: 'weekly challenge nr to run benchmark on - like nr234'
-        default: 'DEMO'
-        required: true
+        description: 'weekly challenge nr to run benchmark on - like nr234 or DEMO'
+        required: false
         type: string
       maxproblem:
         description: 'how many iterations do we allow ... (before server runs out of memory)'
-        default: 5
+        default: 10
         required: true
         type: integer
       maxruntimes:
@@ -56,15 +56,22 @@ jobs:
         run: zef --verbose install JSON::Tiny Text::Table::Simple
       
       - uses: actions/checkout@main
+
+      - name: Set week value
+        id: week
+        run: |
+          USER_INPUT=${{ github.event.inputs.week }}
+          LATEST_CHALLENGE=`raku -e "put '.'.IO.dir.grep(/challenge\-nr\d+/).sort.tail.substr(*-5)"`
+          echo "value=${USER_INPUT:-$LATEST_CHALLENGE}" >> "$GITHUB_OUTPUT"
       
       - name: Install user required modules
-        run: raku test/install-required-packages.raku challenge-${{ inputs.week }} False
+        run: raku test/install-required-packages.raku challenge-${{ steps.week.outputs.value }} False
       
       - name: Run benchmark
-        run: raku --optimize=3 -I challenge-${{ inputs.week }} -- test/benchmark-scalability.raku --out-folder=/tmp --v=True --max-problem=${{ inputs.maxproblem }} --max-run-times=${{ inputs.maxruntimes }} ${{ inputs.week }}
+        run: raku --optimize=3 -I challenge-${{ steps.week.outputs.value }} -- test/benchmark-scalability.raku --out-folder=/tmp --v=True --max-problem=${{ inputs.maxproblem }} --max-run-times=${{ inputs.maxruntimes }} ${{ steps.week.outputs.value }}
       
       - name: Archive benchmark results
         uses: actions/upload-artifact@main
         with:
           name: scalability-benchmark-data
-          path: /tmp/${{ inputs.week }}_*.csv
+          path: /tmp/${{ steps.week.outputs.value }}_*.csv
