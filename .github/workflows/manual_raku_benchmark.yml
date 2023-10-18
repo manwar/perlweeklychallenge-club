@@ -53,7 +53,7 @@ jobs:
         run: raku test/install-required-packages.raku challenge-${{ inputs.week }} False
       
       - name: Run benchmark
-        run: raku --optimize=3 -I challenge-${{ inputs.week }} -- test/benchmark-scalabiity.raku --out-folder=/tmp --v=True --max-problem=${{ inputs.maxproblem }} --max-run-times=1,2,3 ${{ inputs.week }}
+        run: raku --optimize=3 -I challenge-${{ inputs.week }} -- test/benchmark-scalability.raku --out-folder=/tmp --v=True --max-problem=${{ inputs.maxproblem }} --max-run-times=1,2,3 ${{ inputs.week }}
       
       - name: Archive benchmark results
         uses: actions/upload-artifact@main
