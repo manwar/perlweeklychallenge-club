@@ -19,7 +19,6 @@ use benchmark-data-generator;
 use Text::Table::Simple;
 
 my Bool $verbose = False;
-my @output-header of Str = <user runtime n latency total>;
 
 enum Tasks <task-one task-two all>;
 subset Name of Str;
@@ -137,30 +136,30 @@ sub benchmark-scalability(&solution, &data, $run-time, $max-problem, $start-prob
 
 #| Transform into the required output format
 sub create-output($out-folder, $challenge-identifier, $task-string, @results){
-    my @csv =[];
+    my @output-header of Str = <user runtime n latency total>;
     my %best is default([0, 0, 0, 0, 0]) ;
 
     my $position-of-size = 2;
     my $position-of-total = 4;
 
+    
+    my @csv =[];
     for @results -> $user, @data {
         for @data -> @row {
             my @r = flat ($user, flat @row);
             @csv.push: @r;
-            LAST %best{$user} = @r if @data[$position-of-size] > %best{$user}[$position-of-size] ; 
+            %best{$user} = @r if @r[$position-of-size] > %best{$user}[$position-of-size] ; 
         }
     }
 
-    if $verbose {
-        my @row =[];
-        my @table = lol2table(@output-header, %best.values.sort: { my Order $o = $^b[$position-of-size]  cmp $^a[$position-of-size]; 
+    my @row =[];
+    my @table = lol2table(@output-header, %best.values.sort: { my Order $o = $^b[$position-of-size]  cmp $^a[$position-of-size]; 
                                                                    $o ~~ Same ?? $^a[$position-of-total] cmp $^b[$position-of-total] !! $o } );
-        .say for @table;
-    }
+    .say for @table;
 
     my $out-dir = $out-folder.IO.add($challenge-identifier ~ "_" ~ $task-string ~ ".csv");
     my $out-data = @output-header.join(",") ~ "\n" ~ @csv.map( *.join(",")).join("\n") ~ "\n";
-    say "writing to $out-dir\n" if $verbose;
+    say "writing to $out-dir\n";
     spurt $out-dir, $out-data;
 }
 
