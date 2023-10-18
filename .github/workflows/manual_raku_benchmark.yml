@@ -84,8 +84,8 @@ jobs:
       
       - name: Run Tokei
         run: |
-          tokei -f --sort lines --columns=130 challenge-${{ inputs.week }}
-          tokei -f --sort lines --output json challenge-${{ inputs.week }} > /tmp/challenge-${{ inputs.week }}.tokei.txt
+          tokei -f --sort code --columns=130 challenge-${{ inputs.week }}
+          tokei -f --sort code --output json challenge-${{ inputs.week }} > /tmp/challenge-${{ inputs.week }}.tokei.txt
       
       - name: Archive Tokei report
         uses: actions/upload-artifact@main
