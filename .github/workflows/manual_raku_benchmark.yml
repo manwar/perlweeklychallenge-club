@@ -24,6 +24,7 @@ on:
         type: integer
 jobs:
   scalability-benchmark-and-tokei:
+    
     #strategy:
     #  matrix:
     #    os:
@@ -34,10 +35,17 @@ jobs:
     #      - 'latest'
     #runs-on: ${{ matrix.os }}
     runs-on: ubuntu-latest
+    
     steps:
+      # install https://rakudo.org/star
+      # see https://github.com/rakudo/star/blob/master/etc/modules.txt 
+      # for modules installed by rakudo-star
       - uses: Raku/setup-raku@v1
-      - name: Install required modules
-        run: zef --verbose install Test JSON::Tiny
+#        with:
+#          raku-version: ${{ matrix.raku-version }}
+
+      - name: Install additional modules
+        run: zef --verbose install JSON::Tiny
       
       - uses: actions/checkout@main
       
