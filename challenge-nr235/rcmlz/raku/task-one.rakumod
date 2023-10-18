@@ -1,7 +1,7 @@
 unit module rcmlz::raku::task-one:ver<0.0.1>:auth<rcmlz@github.com)>;
 
 # run in terminal: raku --optimize=3 -I challenge-nr235/rcmlz/raku/ -- test/challenge-nr235/raku/task-one.rakutest
-# or               raku --optimize=3 -I challenge-nr235 -- test/benchmark-scalabiity.raku --task=task-one --user=rcmlz --max-run-times=1,3,7 --test-before-benchmark=True --out-folder=/tmp nr235; cat /tmp/nr235_task-one.csv
+# or               raku --optimize=3 -I challenge-nr235 -- test/benchmark-scalability.raku --task=task-one --user=rcmlz --max-run-times=1,3,7 --test-before-benchmark=True --out-folder=/tmp nr235; cat /tmp/nr235_task-one.csv
 
 my $REPLACEMENTS = 1;
 

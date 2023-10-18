@@ -27,7 +27,7 @@ sub data-provider-for(Str $challenge, Str $task-string) is export {
         when 'nr236' => 'task-two' { return &integers-max-leq-problem-size.assuming(*, 0, @problem-size-factor-two, log2(2**2).UInt)}
 
         when 'nr235' => 'task-one' { return &strictly-increasing-integers-sequence.assuming(*, -1000000, 1000000, @problem-size-factor-two, log2(2**5).UInt)}
-        when 'nr235' => 'task-one' { return &integers.assuming(*, -10, 10, @problem-size-factor-two, log2(2**5).UInt)}
+        when 'nr235' => 'task-two' { return &integers.assuming(*, -10, 10, @problem-size-factor-two, log2(2**5).UInt)}
 
         when 'nr234' => 'task-one' { return &unicode-words.assuming(*, 30, 5, 25, @problem-size-factor-two, log2(2**5).UInt)}
         when 'nr234' => 'task-two' { return &integers.assuming(*, 1, 3, @problem-size-factor-two, log2(2**5).UInt)}
@@ -51,8 +51,8 @@ sub unicode-word-and-words-list(UInt $entry, UInt $alphabet-size, UInt $min-leng
     state @alphabet = $some-unicode-characters.roll($alphabet-size);
     
     unless @data[$n] {
-        @data[$n] =                @alphabet.roll($word-lenght.roll).join(''), 
-                    race for ^$n { @alphabet.roll($word-lenght.roll).join('').List };
+        @data[$n] = (@alphabet.roll($word-lenght.roll).join(''), 
+                     @alphabet.roll($word-lenght.roll).join('') xx $n);
     }
     return @data[$n];
 }
@@ -67,8 +67,8 @@ sub unicode-words-duo-list(UInt $entry, UInt $alphabet-size, UInt $min-length, U
     state @alphabet = $some-unicode-characters.roll($alphabet-size);
     
     unless @data[$n] {
-        @data[$n] = race for ^$n { @alphabet.roll($word-lenght.roll).join('').List },
-                    race for ^$n { @alphabet.roll($word-lenght.roll).join('').List };
+        @data[$n] =  (@alphabet.roll($word-lenght.roll).join('') xx $n,
+                      @alphabet.roll($word-lenght.roll).join('') xx $n).List;
     }
     return @data[$n];
 }
@@ -83,7 +83,7 @@ sub unicode-words(UInt $entry, UInt $alphabet-size, UInt $min-length, UInt $max-
     state @alphabet = $some-unicode-characters.roll($alphabet-size);
     
     unless @data[$n] {
-        @data[$n] = race for ^$n { @alphabet.roll($word-lenght.roll).join('').List };
+        @data[$n] = (@alphabet.roll($word-lenght.roll).join('') xx $n).List;
     }
     return @data[$n];
 }
@@ -100,41 +100,41 @@ sub random-dates-and-count(UInt $entry, Date $min, Date $max, @sizes, UInt $size
 sub random-dates(UInt $entry, Date $min, Date $max, @sizes, UInt $size-offset = 0) {
     state @data is default([]);
     my $n = @sizes[$entry + $size-offset];
-    @data[$n] = ($min..$max).roll($n) unless @data[$n].elems;
+    @data[$n] = ($min..$max).roll($n).List unless @data[$n].elems;
     return @data[$n];
 }
 
 sub strictly-increasing-integers-sequence(UInt $entry, Int $min, Int $max where {$min <= $max}, @sizes, UInt $size-offset = 0, $dropout-rate=0.2) {
     state @data is default([]);
     my $n = @sizes[$entry + $size-offset];
-    @data[$n] = ($min..$max).pick($n).sort unless @data[$n].elems;
+    @data[$n] = ($min..$max).pick($n).sort.List unless @data[$n].elems;
     return @data[$n];
 }
 
 sub integers-from-subset(UInt $entry, Set $numbers-to-use, @sizes, UInt $size-offset = 0) {
     state @data is default([]);
     my $n = @sizes[$entry + $size-offset];
-    @data[$n] = $numbers-to-use.roll($n) unless @data[$n].elems;
+    @data[$n] = $numbers-to-use.roll($n).List unless @data[$n].elems;
     return @data[$n];
 }
 
 sub integers-max-leq-problem-size(UInt $entry, Int $min, @sizes, UInt $size-offset = 0) {
     state @data is default([]);
     my $n = @sizes[$entry + $size-offset];
-    @data[$n] = ($min..$n).roll($n) unless @data[$n].elems;
+    @data[$n] = ($min..$n).roll($n).List unless @data[$n].elems;
     return @data[$n];
 }
 
 sub integers(UInt $entry, Int $min, Int $max where {$min <= $max}, @sizes, UInt $size-offset = 0) {
     state @data is default([]);
     my $n = @sizes[$entry + $size-offset];
-    @data[$n] = ($min..$max).roll($n) unless @data[$n].elems;
+    @data[$n] = ($min..$max).roll($n).List unless @data[$n].elems;
     return @data[$n];
 }
 
 sub data-task-template(UInt $entry) {
     state @data is default([]);
     my $n = @problem-size-factor-ten[$entry];
-    @data[$n] = 0..^$n unless @data[$n].elems;
+    @data[$n] = (0..^$n).List unless @data[$n].elems;
     return @data[$n];
 }
