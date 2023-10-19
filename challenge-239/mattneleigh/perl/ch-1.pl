@@ -75,9 +75,7 @@ sub string_arrays_concatenate_uniformly{
         my $word = "";
 
         # Concatenate each string in this array
-        foreach my $string (@{$ARG[0][$i]}){
-            $word .= $string;
-        }
+        $word = join("", @{$ARG[0][$i]});
 
         if($i){
             # Not the first word concatenated...
