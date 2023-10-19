@@ -82,10 +82,10 @@ sub consistent ($aref) {
    say "Allowed characters = \"$allowed\"";
    my @consistent = ();
    # Push strings consisting only of "allowed" characters to @consistent:
-   for (@array) {if ($_ =~ m/^[$allowed]+$/) {push @consistent, $_;}}
+   /^[$allowed]+$/ and push @consistent, $_ for @array;
    my $n = scalar(@consistent);
-   say "$n of the strings in the array are consistent with the allowed characters:";
-   say 'Consistent = (' . join(', ', map {"\"$_\""} @consistent) . ')';
+   say "$n of the strings in the array are consistent with the allowed characters.";
+   say 'Consistent = (' . join(', ', map {"\"$_\""} @consistent) . ')' if $n;
 }
 
 # ------------------------------------------------------------------------------------------------------------
