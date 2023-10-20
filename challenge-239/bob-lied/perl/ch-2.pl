@@ -24,18 +24,21 @@
 
 use v5.38;
 
-use FindBin qw($Bin);
-use lib "$FindBin::Bin";
-
 use Getopt::Long;
 my $Verbose = 0;
 my $DoTest  = 0;
 
-GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
+my $Allowed = "";
+
+GetOptions("allowed:s" => \$Allowed, "test" => \$DoTest, "verbose" => \$Verbose);
 exit(!runTest()) if $DoTest;
+
+say consistentStrings($Allowed, @ARGV);
 
 sub consistentStrings($allowed, @str)
 {
+    use re 'eval';
+    return 0 if $allowed eq "";
     my $rx = qr/^[$allowed]+$/;
 
     return scalar grep /$rx/, @str;
@@ -48,6 +51,8 @@ sub runTest
     is( consistentStrings("ab",  qw(ad bd aaab baa badab")   ), 2, "Example 1");
     is( consistentStrings("abc", qw(a b c ab ac bc abc)      ), 7, "Example 2");
     is( consistentStrings("cad", qw(cc acd b ba bac bad ac d)), 4, "Example 3");
+
+    is( consistentStrings("", qw(a b c)), 0, "Nothing allowed");
 
     done_testing;
 }
