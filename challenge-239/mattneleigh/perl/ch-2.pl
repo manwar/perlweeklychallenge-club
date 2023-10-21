@@ -56,7 +56,7 @@ exit(0);
 ################################################################################
 sub count_consistent_strings{
     # Make a hash from the allowed characters in
-    # the first string for, easy lookup
+    # the first string, for easy lookup
     my %allowed = map(
         { $_ => 1 }
         unique_sorted_letters(shift())
