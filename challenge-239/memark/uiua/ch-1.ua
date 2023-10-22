@@ -1,5 +1,7 @@
 # https://theweeklychallenge.org/blog/perl-weekly-challenge-239/#TASK1
 
+# Uiua 0.0.20
+
 SameString ← ≅∩(▽≠@\0.♭⬚@\0∵⊔)
 
 ~~~

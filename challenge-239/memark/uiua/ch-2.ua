@@ -1,5 +1,7 @@
 # https://theweeklychallenge.org/blog/perl-weekly-challenge-239/#TASK2
 
+# Uiua 0.0.20
+
 ConsistentString ← =0/+-1∊
 ConsistentStrings ← /+⊞(ConsistentString ∩⊔)
 
