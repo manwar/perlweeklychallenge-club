@@ -8,6 +8,6 @@ You are given two arrays of strings.
 
 - Write a script to find out if the word created by concatenating the array elements is the same.
 ]
-our sub solution(@input where @input.elems == 2) is export {
+our sub solution(@input) is export {
 	[eqv] @input.map: *.join;
 }
