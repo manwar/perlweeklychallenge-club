@@ -60,7 +60,7 @@ jobs:
       - name: Set week value
         id: week
         run: |
-          USER_INPUT=${{ github.event.inputs.week }}
+          USER_INPUT=${{ github.event.inputs.week || "" }}
           LATEST_CHALLENGE=`raku -e "put '.'.IO.dir.grep(/challenge\-nr\d+/).sort.tail.substr(*-5)"`
           echo "value=${USER_INPUT:-$LATEST_CHALLENGE}" >> "$GITHUB_OUTPUT"
       

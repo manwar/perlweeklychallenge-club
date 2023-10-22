@@ -19,20 +19,13 @@ jobs:
   tokei-report:
     runs-on: ubuntu-latest
     steps:
-      # install https://rakudo.org/star
-      # see https://github.com/rakudo/star/blob/master/etc/modules.txt 
-      # for modules installed by rakudo-star
-      - uses: Raku/setup-raku@v1
-#        with:
-#          raku-version: ${{ matrix.raku-version }}
-
       - uses: actions/checkout@main
 
       - name: Set week value
         id: week
         run: |
-          USER_INPUT=${{ github.event.inputs.week }}
-          LATEST_CHALLENGE=`raku -e "put '.'.IO.dir.grep(/challenge\-nr\d+/).sort.tail.substr(*-5)"`
+          USER_INPUT=${{ github.event.inputs.week || "" }}
+          LATEST_CHALLENGE=`perl -e "use v5.10; my @d = sort glob('challenge-*'); @d[-1]=~s/challenge-//; say @d[-1]"`
           echo "value=${USER_INPUT:-$LATEST_CHALLENGE}" >> "$GITHUB_OUTPUT"
 
       - name: Setup cache for Tokei
