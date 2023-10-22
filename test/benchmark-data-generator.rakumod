@@ -51,8 +51,8 @@ sub unicode-word-and-words-list(UInt $entry, UInt $alphabet-size, UInt $min-leng
     state @alphabet = $some-unicode-characters.roll($alphabet-size);
     
     unless @data[$n] {
-        @data[$n] = (@alphabet.roll($word-lenght.roll).join(''), 
-                     @alphabet.roll($word-lenght.roll).join('') xx $n);
+        @data[$n] =  @alphabet.roll($word-lenght.roll).join(''), 
+                    (@alphabet.roll($word-lenght.roll).join('') xx $n).List;
     }
     return @data[$n];
 }
@@ -67,8 +67,8 @@ sub unicode-words-duo-list(UInt $entry, UInt $alphabet-size, UInt $min-length, U
     state @alphabet = $some-unicode-characters.roll($alphabet-size);
     
     unless @data[$n] {
-        @data[$n] =  (@alphabet.roll($word-lenght.roll).join('') xx $n,
-                      @alphabet.roll($word-lenght.roll).join('') xx $n).List;
+        @data[$n] =  (@alphabet.roll($word-lenght.roll).join('') xx $n).List,
+                     (@alphabet.roll($word-lenght.roll).join('') xx $n).List;
     }
     return @data[$n];
 }
