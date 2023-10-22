@@ -1,3 +1,3 @@
-# The Weekly Challenge 238
+# The Weekly Challenge 239
 
-Blog: [Counting and sorting](https://dev.to/simongreennet/counting-and-sorting-4136)
+Blog: [The one about regular expressions](https://dev.to/simongreennet/the-one-about-regular-expressions-4na)
