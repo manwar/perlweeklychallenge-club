@@ -1,6 +1,7 @@
 {
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -8,7 +9,7 @@
             0,
             169,
             3,
-            323,
+            322,
             2,
             0,
             3,
@@ -32,11 +33,9 @@
             3,
             45,
             26
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -68,10 +67,10 @@
             0,
             0,
             58
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -103,15 +102,14 @@
             5,
             43,
             2
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -147,21 +145,23 @@
          "BarrOff"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-10-23 04:24:40 GMT"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2023]"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "yAxis" : {
       "min" : 0,
       "title" : {
          "text" : ""
       }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2023-10-23 18:29:10 GMT"
    }
 }
