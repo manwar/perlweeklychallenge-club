@@ -1,0 +1,57 @@
+//# https://theweeklychallenge.org/blog/perl-weekly-challenge-240/
+/*#
+
+Task 2: Build Array
+
+Submitted by: [53]Mohammad S Anwar
+     __________________________________________________________________
+
+   You are given an array of integers.
+
+   Write a script to create an array such that new[i] = old[old[i]] where
+   0 <= i < new.length.
+
+Example 1
+
+Input: @int = (0, 2, 1, 5, 3, 4)
+Output: (0, 1, 2, 4, 5, 3)
+
+Example 2
+
+Input: @int = (5, 0, 1, 2, 3, 4)
+Output: (4, 5, 0, 1, 2, 3)
+     __________________________________________________________________
+
+   Last date to submit the solution 23:59 (UK Time) Sunday 29th October
+   2023.
+     __________________________________________________________________
+
+SO WHAT DO YOU THINK ?
+#*/
+//# solution by pokgopun@gmail.com
+
+package main
+
+import (
+	"fmt"
+	"slices"
+)
+
+func main() {
+	for _, data := range []struct {
+		input, output []int
+	}{
+		{[]int{0, 2, 1, 5, 3, 4}, []int{0, 1, 2, 4, 5, 3}},
+		{[]int{5, 0, 1, 2, 3, 4}, []int{4, 5, 0, 1, 2, 3}},
+	} {
+		fmt.Println(slices.Equal(iSort(data.input), data.output))
+	}
+}
+
+func iSort(s []int) []int {
+	r := make([]int, len(s))
+	for i, v := range s {
+		r[i] = s[v]
+	}
+	return r
+}
