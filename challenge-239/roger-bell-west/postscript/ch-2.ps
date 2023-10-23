@@ -1,0 +1,89 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/all { % [a b] proc -> bool
+    1 dict begin
+    /p exch def
+    true exch
+    {
+        p not {
+            pop false
+            exit
+        } if
+    } forall
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/consistentstrings {
+    0 dict begin
+    s2a toset
+    /vs exch def
+    0 exch
+    {
+        s2a toset keys { vs exch known} all {
+            1 add
+        } if
+    } forall
+    end
+} bind def
+
+(consistentstrings) test.start
+[(ad) (bd) (aaab) (baa) (badab)] (ab) consistentstrings 2 eq test
+[(a) (b) (c) (ab) (ac) (bc) (abc)] (ab) consistentstrings 3 eq test
+[(cc) (acd) (b) (ba) (bac) (bad) (ac) (d)] (cad) consistentstrings 4 eq test
+test.end
