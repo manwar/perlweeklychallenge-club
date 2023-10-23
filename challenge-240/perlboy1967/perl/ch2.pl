@@ -24,7 +24,7 @@ use feature 'signatures';
 use Test2::V0;
 
 sub buildArray (@int) {
-  [map { $int[$int[$_]] } (0 .. scalar(@_) - 1)];
+  [map { $int[$int[$_]] } (0 .. scalar(@int) - 1)];
 }
 
 is(buildArray(0,2,1,5,3,4),[0,1,2,4,5,3]);
