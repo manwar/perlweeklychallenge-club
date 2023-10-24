@@ -3,9 +3,6 @@
 
 name: raku_benchmark
 
-env:
-  TMP: /tmp/
-
 # ensure only one job runs for this repo
 concurrency:
   group: ${{ github.ref }}
@@ -70,15 +67,16 @@ jobs:
           echo "maxproblem=$MAXPR" >> "$GITHUB_OUTPUT"
           echo "maxruntimes=$MAXRT" >> "$GITHUB_OUTPUT"
           echo "week=${WEEK:-$LATEST_CHALLENGE}" >> "$GITHUB_OUTPUT"
+          echo "outfolder=/tmp" >> "$GITHUB_OUTPUT"
 
       - name: Install user required modules
         run: raku test/install-required-packages.raku challenge-${{ steps.parameter.outputs.week }} False
       
       - name: Run benchmark
-        run: raku --optimize=3 -I challenge-${{ steps.parameter.outputs.week }} -- test/benchmark-scalability.raku --out-folder=${{ github.env.TMP }} --v=True --max-problem={{ steps.parameter.outputs.maxproblem }} --max-run-times={{ steps.parameter.outputs.maxruntimes }} ${{ steps.parameter.outputs.week }}
+        run: raku --optimize=3 -I challenge-${{ steps.parameter.outputs.week }} -- test/benchmark-scalability.raku --out-folder=${{ steps.parameter.outputs.outfolder }}  --v=True --max-problem=${{ steps.parameter.outputs.maxproblem }} --max-run-times=${{ steps.parameter.outputs.maxruntimes }} ${{ steps.parameter.outputs.week }}
       
       - name: Archive benchmark results
         uses: actions/upload-artifact@main
         with:
           name: scalability-benchmark-data
-          path: ${{ github.env.TMP }}${{ steps.parameter.outputs.week }}_*.csv
+          path: ${{ steps.parameter.outputs.outfolder }}/${{ steps.parameter.outputs.week }}_*.csv
