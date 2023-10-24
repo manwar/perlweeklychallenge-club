@@ -3,6 +3,9 @@
 
 name: raku_benchmark
 
+env:
+  TMP: /tmp/
+
 # ensure only one job runs for this repo
 concurrency:
   group: ${{ github.ref }}
@@ -57,21 +60,26 @@ jobs:
       
       - uses: actions/checkout@main
 
-      - name: Set week value
-        id: week
+      - name: Set default values for parameters
+        id: parameter
         run: |
-          USER_INPUT=${{ github.event.inputs.week || '' }}
+          USER_WEEK=${{ github.event.inputs.week || '' }}
           LATEST_CHALLENGE=`raku -e "put '.'.IO.dir.grep(/challenge\-nr\d+/).sort.tail.substr(*-5)"`
-          echo "value=${USER_INPUT:-$LATEST_CHALLENGE}" >> "$GITHUB_OUTPUT"
+          echo "week=${USER_WEEK:-$LATEST_CHALLENGE}" >> "$GITHUB_OUTPUT"
+          USER_MAXPROBLEM=${{ github.event.inputs.maxproblem || '10' }}
+          echo "maxproblem=${USER_MAXPROBLEM}" >> "$GITHUB_OUTPUT"
+          USER_MAXRUNTIMES=${{ github.event.inputs.maxruntimes || '1,3' }}
+          echo "maxruntimes=${USER_MAXRUNTIMES}" >> "$GITHUB_OUTPUT"
+          
       
       - name: Install user required modules
-        run: raku test/install-required-packages.raku challenge-${{ steps.week.outputs.value }} False
+        run: raku test/install-required-packages.raku challenge-${{ steps.parameter.outputs.week }} False
       
       - name: Run benchmark
-        run: raku --optimize=3 -I challenge-${{ steps.week.outputs.value }} -- test/benchmark-scalability.raku --out-folder=/tmp --v=True --max-problem=${{ inputs.maxproblem }} --max-run-times=${{ inputs.maxruntimes }} ${{ steps.week.outputs.value }}
+        run: raku --optimize=3 -I challenge-${{ steps.parameter.outputs.week }} -- test/benchmark-scalability.raku --out-folder=${{ github.env.TMP }} --v=True --max-problem={{ steps.parameter.outputs.maxproblem }} --max-run-times={{ steps.parameter.outputs.maxruntimes }} ${{ steps.parameter.outputs.week }}
       
       - name: Archive benchmark results
         uses: actions/upload-artifact@main
         with:
           name: scalability-benchmark-data
-          path: /tmp/${{ steps.week.outputs.value }}_*.csv
+          path: ${{ github.env.TMP }}${{ steps.parameter.outputs.week }}_*.csv

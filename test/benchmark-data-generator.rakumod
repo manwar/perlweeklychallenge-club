@@ -14,6 +14,9 @@ my Set $some-unicode-characters =
 sub data-provider-for(Str $challenge, Str $task-string) is export {
 
     given $challenge => $task-string {
+        when 'nr240' => 'task-one' { return &unicode-word-and-words-list.assuming(*, 5, 1, 10, @problem-size-factor-two, log2(2**5).UInt) }
+        when 'nr240' => 'task-two' { return &integers-array-ids-shuffle.assuming(*, @problem-size-factor-two, log2(2**5).UInt)}
+
         when 'nr239' => 'task-one' { return &unicode-words-duo-list.assuming(*, 5, 1, 10, @problem-size-factor-two, log2(2**5).UInt) }
         when 'nr239' => 'task-two' { return &unicode-word-and-words-list.assuming(*, 5, 1, 10, @problem-size-factor-two, log2(2**5).UInt) }
 
@@ -122,6 +125,13 @@ sub integers-max-leq-problem-size(UInt $entry, Int $min, @sizes, UInt $size-offs
     state @data is default([]);
     my $n = @sizes[$entry + $size-offset];
     @data[$n] = ($min..$n).roll($n).List unless @data[$n].elems;
+    return @data[$n];
+}
+
+sub integers-array-ids-shuffle(UInt $entry, @sizes, UInt $size-offset = 0) {
+    state @data is default([]);
+    my $n = @sizes[$entry + $size-offset];
+    @data[$n] = (^$n).pick(*).List unless @data[$n].elems;
     return @data[$n];
 }
 
