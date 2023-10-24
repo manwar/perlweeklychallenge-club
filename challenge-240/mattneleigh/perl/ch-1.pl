@@ -47,11 +47,12 @@ exit(0);
 # Determine whether a set of words can form a particular acronym; case is
 # ignored when performing this check
 # Takes two arguments:
-# * The intended acronym
+# * The intended acronym (e.g. "perl")
 # * A list of words whose ability to form the supplied acronym is to be
-#   verified
+#   verified (e.g. ( "Pathologically", "Eclectic", "Rubbish", "Lister" ) )
 # Returns:
-# * A true value if the supplied words will form the specified acronym
+# * A true value if the supplied words will form the specified acronym (as they
+#   will in the example above)
 # * A false value if the supplied words will NOT form the specified acronym
 ################################################################################
 sub is_acronym{
@@ -60,11 +61,11 @@ sub is_acronym{
         # Lower-case the first string
         lc(shift())
         eq
-        # Concatenate of all the first letters
+        # 2: Concatenate of all the first letters
         # from subsequent strings
         join(
             "",
-            # Make a list of lower-cased first letters
+            # 1: Make a list of lower-cased first letters
             # from subsequent strings
             map(
                 lc(substr($_, 0, 1)),

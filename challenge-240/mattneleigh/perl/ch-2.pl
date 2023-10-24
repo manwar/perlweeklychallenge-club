@@ -33,9 +33,9 @@ exit(0);
 # Rearrange an array of integers into a new array such that:
 #   $new[$i] = $old[$old[$i]] for all $i within the bounds of the two arrays
 # Takes one argument:
-# * The array of integers to rearrange
+# * The array of integers to rearrange (e.g. ( 0, 2, 1, 5, 3, 4 ) )
 # Returns:
-# * The rearranged array
+# * The rearranged array (e.g. ( 0, 1, 2, 4, 5, 3 ) )
 ################################################################################
 sub rearrange_integers{
 
