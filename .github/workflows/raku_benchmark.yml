@@ -63,15 +63,14 @@ jobs:
       - name: Set default values for parameters
         id: parameter
         run: |
-          USER_WEEK=${{ github.event.inputs.week || '' }}
           LATEST_CHALLENGE=`raku -e "put '.'.IO.dir.grep(/challenge\-nr\d+/).sort.tail.substr(*-5)"`
-          echo "week=${USER_WEEK:-$LATEST_CHALLENGE}" >> "$GITHUB_OUTPUT"
-          USER_MAXPROBLEM=${{ github.event.inputs.maxproblem || '10' }}
-          echo "maxproblem=${USER_MAXPROBLEM}" >> "$GITHUB_OUTPUT"
-          USER_MAXRUNTIMES=${{ github.event.inputs.maxruntimes || '1,3' }}
-          echo "maxruntimes=${USER_MAXRUNTIMES}" >> "$GITHUB_OUTPUT"
-          
-      
+          WEEK=${{ github.event.inputs.week || '' }}
+          MAXPR=${{ github.event.inputs.maxproblem || '20' }}
+          MAXRT=${{ github.event.inputs.maxruntimes || '1,3' }}
+          echo "maxproblem=$MAXPR" >> "$GITHUB_OUTPUT"
+          echo "maxruntimes=$MAXRT" >> "$GITHUB_OUTPUT"
+          echo "week=${WEEK:-$LATEST_CHALLENGE}" >> "$GITHUB_OUTPUT"
+
       - name: Install user required modules
         run: raku test/install-required-packages.raku challenge-${{ steps.parameter.outputs.week }} False
       
