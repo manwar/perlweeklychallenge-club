@@ -19,5 +19,5 @@ ok  acronym(<Oracle Awk C>,       'oac');
 
 sub acronym(@a, $ck)  
 {
-    so $ck ~~ m:i/ <{ "@a.match(/ <|w> <:Lu> /, :g)" }> /
+    so $ck ~~ m:i/^ <{ "@a.match(/ <|w> <:Lu> /, :g)" }> $/
 }
