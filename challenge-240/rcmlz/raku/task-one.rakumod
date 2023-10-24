@@ -8,6 +8,6 @@ You are given an array of strings and a check string.
 
 - Write a script to find out if the check string is the acronym of the words in the given array.
 ]
-our sub solution([$acr, *@str]) is export {
-	$acr.lc eq @str.map( *.substr(0,1) ).join.lc;
+our sub solution((Str $acr, List:D[Str:D] $str) --> Bool) is export {
+	$acr.lc eq $str.map( *.substr(0,1) ).join.lc;
 }
