@@ -10,12 +10,11 @@ ok  acronym(<Oracle Awk C>,       'oac');
 # Whitespace is insignificant in raku regexes but it gives a warning
 # that whitespace is insignificant?
 
-# It only does this when there is 1 whitespace character. If there 
-# are 2 or more it doesn't. 
+# It only does this when there is 1 whitespace character. 
 
 # For example, from docs.raku.org/language/regexes
 # say so "I used Photoshop®"   ~~ m:i/   photo shop /;  # OUTPUT: «True␤» 
-# gives a warning but if there are 2 spaces between photo and shop then
+# gives a warning but if there are 2 spaces between 'photo' and 'shop' 
 # there is no warning.
 
 sub acronym(@a, $ck)  
