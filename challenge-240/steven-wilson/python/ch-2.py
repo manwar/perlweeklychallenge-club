@@ -10,8 +10,8 @@ def build_array(elements):
     [4, 5, 0, 1, 2, 3]
     '''
     new = []
-    for i, value in enumerate(elements):
-        new.append(elements[elements[i]])
+    for element in elements:
+        new.append(elements[element])
     return new
 
 
