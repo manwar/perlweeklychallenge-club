@@ -12,8 +12,9 @@ ok  acronym(<Oracle Awk C>,       'oac');
 
 # It only does this when there is 1 whitespace character. 
 
-# For example, from docs.raku.org/language/regexes
+# For example, 
 # say so "I used Photoshop®"   ~~ m:i/   photo shop /;  # OUTPUT: «True␤» 
+# from docs.raku.org/language/regexes#Sigspace
 # gives a warning but if there are 2 spaces between 'photo' and 'shop' 
 # there is no warning.
 
