@@ -81,4 +81,4 @@ Output: (4, 5, 0, 1, 2, 3)
 
 ## Blog Post
 
-[Perl Weekly Challenge: Building Acronym Arrays](https://packy.dardan.com/perl-weekly-challenge-building-acronym-arrays/)
+[Perl Weekly Challenge: Building Acronym Arrays](https://packy.dardan.com/2023/10/25/perl-weekly-challenge-building-acronym-arrays/)
