@@ -1,0 +1,7 @@
+:- use_module(library(lists)).
+:- use_module(library(lambda)).
+
+ch2(A,B):-maplist(\X^Y^nth0(X,A,Y),A,B).
+
+?- ch2([0, 2, 1, 5, 3, 4],[0, 1, 2, 4, 5, 3]).
+?- ch2([5, 0, 1, 2, 3, 4],[4, 5, 0, 1, 2, 3]).
