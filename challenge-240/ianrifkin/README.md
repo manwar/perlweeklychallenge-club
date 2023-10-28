@@ -65,7 +65,7 @@ Input: @int = (5, 0, 1, 2, 3, 4)
 Output: (4, 5, 0, 1, 2, 3)
 ```
 
-Doing new[i] = old[old[i]] seemed simple enough but I do have trouble mentally processing where 0 <= i < new.length. If `i` is a postion of the input array it is always going to be equal to or greater than 0 because of how arrays are numbered. Since each new[i] is mapped to a value calculated from the old array they should naturally end up the same length, so `i` should never be longer than new.length because `i` shouldn't be less than old.length either.
+Doing `new[i] = old[old[i]]` seemed simple enough but I do have trouble mentally processing `where 0 <= i < new.length`. If `i` is a postion of the input array it is always going to be equal to or greater than 0 because of how arrays are numbered. Since each new[i] is mapped to a value calculated from the old array they should naturally end up the same length, so `i` should never be longer than new.length because `i` shouldn't be less than old.length either.
 
 With that out of the way, I did a simple for loop using the iterator variable `$i` -- within the loop I am literally just doing the exact mapping from the question: `new[i] = old[old[i]]`
 
