@@ -1,85 +1,79 @@
-# Short Solutions for Short Strings
+# Short Acronyms, and a Short Solution
 
-**Challenge 239 solutions in Perl by Matthias Muth**
+**Challenge 240 solutions in Perl by Matthias Muth**
 
-## Task 1: Same String
+## Task 1: Acronym
 
-> You are given two arrays of strings.<br/>
-> Write a script to find out if the word created by concatenating the array elements is the same.<br/>
-> <br/>
+> You are given two arrays of strings and a check string.<br/>
+> Write a script to find out if the check string is the acronym of the words in the given array.<br/>
 > Example 1<br/>
-> Input: @arr1 = ("ab", "c")<br/>
->        @arr2 = ("a", "bc")<br/>
+> Input: @str = ("Perl", "Python", "Pascal")<br/>
+>        \$chk = "ppp"<br/>
 > Output: true<br/>
-> Using @arr1, word1 => "ab" . "c" => "abc"<br/>
-> Using @arr2, word2 => "a" . "bc" => "abc"<br/>
 > <br/>
 > Example 2<br/>
-> Input: @arr1 = ("ab", "c")<br/>
->        @arr2 = ("ac", "b")<br/>
+> Input: @str = ("Perl", "Raku")<br/>
+>        \$chk = "rp"<br/>
 > Output: false<br/>
-> Using @arr1, word1 => "ab" . "c" => "abc"<br/>
-> Using @arr2, word2 => "ac" . "b" => "acb"<br/>
 > <br/>
 > Example 3<br/>
-> Input: @arr1 = ("ab", "cd", "e")<br/>
->        @arr2 = ("abcde")<br/>
+> Input: @str = ("Oracle", "Awk", "C")<br/>
+>        \$chk = "oac"<br/>
 > Output: true<br/>
-> Using @arr1, word1 => "ab" . "cd" . "e" => "abcde"<br/>
-> Using @arr2, word2 => "abcde"<br/>
 
-Now this is a really easy one.
-All we have to do is to concatenate all elements of each array, and do a string comparison of the two resulting words:
+The first parameter to a perl `sub` can only be an `@array` variable *if it is the only parameter*. As we have two parameters in this task, the `@str` parameter from the description has to be passed in as an array reference, for which I chose `$str_aref` as a name. ( And no, I am not a fan of the so-called Hungarian Notation that codes the variable type into a variable's names. If I was, I probably wouldn't be a fan of Perl. Or vice versa. Or whatever.) 
+
+The task itself is quite straightforward to implement in Perl.
+
+We walk through the `@str` array (using the said `$str_aref` variable), and extract each first character into a list.
+In the same flow, we concatenate that list of letters into a word (the acronym), and lower-case it. Then we can compare it to the other parameter, `$chk`, and return the comparison result. 
+
+For extracting the first letter of each word, in a real application I would probably use
+```perl
+    substr( $_, 0, 1 )
+```
+, to avoid the overhead for building and starting a regular expression, but for here, I prefer this more concise and well understood simple rexexp:
+```perl
+   /^(.)/
+```
+
+So there we have our short solution to shorten words to acronyms:
 
 ```perl
-sub same_string( $arr1, $arr2 ) {
-    return join( "", $arr1->@* ) eq join( "", $arr2->@* );
+sub acronym( $str_aref, $chk ) {
+    return $chk eq lc join "", map /^(.)/, $str_aref->@*;
 }
 ```
-Happy to use the '[Postfix Dereference Syntax](https://perldoc.perl.org/perlref#Postfix-Dereference-Syntax)'
-```perl
-    $array->@*
-```
-to get all elements of the array. In my opinion is easier to write and easier to read than the 'cast'-like `@{$array}` or its short form @$array, which can only be used in simple cases.
-Same as I use
 
-```perl
-    $array->[1]
-    $array->[2][3]
-```
-to access elements with references to arrays or multi-dimensional arrays, respectively.<br/>But I digress. I should rather keep it 'short'. :-)  
+## Task 2: Build Array
 
-## Task 2: Consistent Strings
-
-> You are given an array of strings and allowed string having distinct characters.<br/>
-> A string is consistent if all characters in the string appear in the string allowed.<br/>
-> Write a script to return the number of consistent strings in the given array.<br/>
-> <br/>
+> You are given an array of integers.<br/>
+> Write a script to create an array such that $$new[i] = old[old[i]]$$ where $$0 <= i < new.length$$.<br/>
 > Example 1<br/>
-> Input: @str = ("ad", "bd", "aaab", "baa", "badab")<br/>
->        \$allowed = "ab"<br/>
-> Output: 2<br/>
-> Strings "aaab" and "baa" are consistent since they only contain characters 'a' and 'b'.<br/>
+> Input: @int = (0, 2, 1, 5, 3, 4)<br/>
+> Output: (0, 1, 2, 4, 5, 3)<br/>
 > <br/>
 > Example 2<br/>
-> Input: @str = ("a", "b", "c", "ab", "ac", "bc", "abc")<br/>
->        \$allowed = "abc"<br/>
-> Output: 7<br/>
-> <br/>
-> Example 3<br/>
-> Input: @str = ("cc", "acd", "b", "ba", "bac", "bad", "ac", "d")<br/>
->        \$allowed = "cad"<br/>
-> Output: 4<br/
-> Strings "cc", "acd", "ac", and "d" are consistent.<br/>
+> Input: @int = (5, 0, 1, 2, 3, 4)<br/>
+> Output: (4, 5, 0, 1, 2, 3)<br/>
 
-This one, too, is a very short one if we use the right tool  for the right job.<br/>
-In this case, a regular expressions accepting only allowed characters can filter out the 'consistent' strings.<br/>
-We can use `grep` to iterate over the strings, and in scalar context it returns -- wait a second! -- the number of matches!<br/>
+Using the name of the parameter `@int` instead of the specification's $$old$$, we can translate the specification $$new[i] = old[old[i]]$$ directly to
 ```perl
-sub consistent_strings( $str, $allowed ) {
-    return scalar grep /^[$allowed]*$/, $str->@*;
+my @new = map $int[ $int[$_] ]
+    for 0..$#old;
+```
+As we use all elements of the `int` array, one by one, in the inner bracket, we might as well insert the whole array in one step instead, using Perl's *array slice* syntax. We then even don't need the `map`  call any more, because an array slice already gives us a list:<br/>
+```perl
+my @new = @int[ @int ];
+```
+And actually we don't even need the `@new` variable, because we immediately return the list of values as the result.
+
+Which makes this probably the shortest solution to a *PWC* task that I have ever written:
+
+```perl
+sub build_array( @int ) {
+    return @int[ @int ];
 }
 ```
-Done! :-)
 
 #### **Thank you for the challenge!**
