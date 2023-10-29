@@ -1,4 +1,4 @@
-# Short Acronyms, and a Short Solution
+# Short Acronyms, and Short Solutions
 
 **Challenge 240 solutions in Perl by Matthias Muth**
 
