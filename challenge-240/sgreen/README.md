@@ -1,3 +1,3 @@
-# The Weekly Challenge 239
+# The Weekly Challenge 240
 
-Blog: [The one about regular expressions](https://dev.to/simongreennet/the-one-about-regular-expressions-4na)
+Blog: [Weekly Challenge 240](https://dev.to/simongreennet/weekly-challenge-240-2mio)
