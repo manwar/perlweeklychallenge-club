@@ -1,0 +1,25 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($allowed, *@str where @str.elems > 0, :v(:$verbose));
+
+my @allow-canonical = $allowed.comb;
+
+my $consistent = 0;
+
+for @str -> $str
+{
+  my @str-canonical = $str.comb.unique;
+
+  if @str-canonical (<=) @allow-canonical
+  {
+    $consistent++;
+    say ": + $str - consistent" if $verbose;
+  }
+  elsif $verbose
+  {
+    say ": - $str" if $verbose;
+
+  }
+}
+
+say $consistent;

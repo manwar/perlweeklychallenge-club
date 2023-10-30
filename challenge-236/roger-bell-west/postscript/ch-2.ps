@@ -1,0 +1,87 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/arrayloops {
+    0 dict begin
+    /a exch def
+    /loop_id 0 def
+    /loops 0 dict def
+    a {
+        /origin exch def
+        loops origin known not {
+            /li 0 def
+            /thisloop 0 dict def
+            /x origin def
+            {
+                x 0 lt x a length ge or {
+                    exit
+                } if
+                thisloop x true put
+                /x a x get def
+                loops x known {
+                    /li loops x get def
+                    exit
+                } if
+                thisloop x known {
+                    /loop_id loop_id 1 add def
+                    /li loop_id def
+                    exit
+                } if
+            } loop
+            thisloop keys {
+                loops exch li put
+            } forall
+        } if
+    } forall
+    loop_id
+    end
+} bind def
+
+(arrayloops) test.start
+[4 6 3 8 15 0 13 18 7 16 14 19 17 5 11 1 12 2 9 10] arrayloops 3 eq test
+[0 1 13 7 6 8 10 11 2 14 16 4 12 9 17 5 3 18 15 19] arrayloops 6 eq test
+[9 8 3 11 5 7 13 19 12 4 14 10 18 2 16 1 0 15 6 17] arrayloops 1 eq test
+test.end

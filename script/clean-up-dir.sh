@@ -1,10 +1,15 @@
+find . -name "*.factor" -delete
+find . -name "*.P" -delete
 find . -name "*.html" -delete
-find . -name "*.ps1" -delete
+find . -name "*.psl" -delete
 find . -name "*.nelua" -delete
 find . -name "*.plperl" -delete
 find . -name "*.ipynb" -delete
 find . -name "*.Mod" -delete
+find . -name "*.ua" -delete
 find . -name "*.gp" -delete
+find . -name "*.exs" -delete
+find . -name "*.dws" -delete
 find . -name "*.v" -delete
 find . -name "*.fsx" -delete
 find . -name "*.tex" -delete

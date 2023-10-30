@@ -1,0 +1,22 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($arr1, $arr2, :v(:$verbose));
+
+for $arr1.words.permutations -> @first
+{
+  for $arr2.words.permutations -> @second
+  {
+    if @first.join eq @second.join
+    {
+       say ": { @first.map({ "\"$_\"" }).join(" ") } ===  { @second.map({ "\"$_\"" }).join(" ") }" if $verbose;
+       say 'true';
+       exit;
+    }
+    elsif $verbose
+    {
+       say ": { @first.map({ "\"$_\"" }).join(" ") } =!=  { @second.map({ "\"$_\"" }).join(" ") }";
+    }
+  }
+}
+
+say 'false';

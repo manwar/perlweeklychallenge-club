@@ -1,0 +1,104 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/values { % dict -> array of dict values
+    [ exch
+      {
+          exch pop
+      } forall
+    ]
+} bind def
+
+
+% end included library code
+
+/similarwords {
+    0 dict begin
+    /a exch def
+    /ct 0 dict def
+    /ac (a) s2a 0 get def
+    a {
+        0 exch
+        s2a toset keys {
+            ac sub 1 exch bitshift add
+        } forall
+        ct exch 2 copy 0 dget 1 add put
+    } forall
+    0
+    ct values {
+        dup 1 gt {
+            dup 1 sub mul 2 idiv add
+        } {
+            pop
+        } ifelse
+    } forall
+    end
+} bind def
+
+(similarwords) test.start
+[(aba) (aabb) (abcd) (bac) (aabc)] similarwords 2 eq test
+[(aabb) (ab) (ba)] similarwords 3 eq test
+[(nba) (cba) (dba)] similarwords 0 eq test
+test.end

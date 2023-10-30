@@ -1,0 +1,58 @@
+---
+ch-1:
+  - function: samestring
+    multiarg: true
+    arguments:
+      - - ab
+        - c
+      - - a
+        - bc
+    result: true
+  - multiarg: true
+    arguments:
+      - - ab
+        - c
+      - - ac
+        - b
+    result: false
+  - multiarg: true
+    arguments:
+      - - ab
+        - cd
+        - e
+      - - abcde
+    result: true
+ch-2:
+  - function: consistentstrings
+    multiarg: true
+    arguments:
+      - - ad
+        - bd
+        - aaab
+        - baa
+        - badab
+      - ab
+    result: 2
+  - multiarg: true
+    arguments:
+      - - a
+        - b
+        - c
+        - ab
+        - ac
+        - bc
+        - abc
+      - ab
+    result: 3
+  - multiarg: true
+    arguments:
+      - - cc
+        - acd
+        - b
+        - ba
+        - bac
+        - bad
+        - ac
+        - d
+      - cad
+    result: 4

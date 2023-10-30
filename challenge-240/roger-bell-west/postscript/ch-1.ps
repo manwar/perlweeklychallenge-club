@@ -1,0 +1,137 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/tolower {
+    s2a
+    [ exch
+      {
+          dup dup 65 ge exch 90 le and {
+              32 add
+          } if
+      } forall
+    ] a2s
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/acronym {
+    exch
+    [ exch
+      {
+          0 get
+      } forall
+    ] a2s tolower deepeq
+} bind def
+
+(acronym) test.start
+[(Perl) (Python) (Pascal)] (ppp) acronym test
+[(Perl) (Raku)] (rp) acronym not test
+[(Oracle) (Awk) (C)] (oac) acronym test
+test.end

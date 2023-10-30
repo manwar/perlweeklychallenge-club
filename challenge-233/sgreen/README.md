@@ -1,3 +1,3 @@
-# The Weekly Challenge 231
+# The Weekly Challenge 233
 
-Blog: [Weekly Challenge 231](https://dev.to/simongreennet/weekly-challenge-231-2o0f)
+Blog: [Similar frequency](https://dev.to/simongreennet/similar-frequency-3i6b)

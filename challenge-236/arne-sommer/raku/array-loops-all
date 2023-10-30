@@ -1,0 +1,25 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@ints where all(@ints) ~~ UInt && @ints.elems == @ints.unique.elems, :v(:$verbose));
+
+say ":Index:Value: ", (^@ints).map({ $_ ~ ":" ~ @ints[$_] }).join(", ") if $verbose;
+
+my $loop-count = 0;
+
+for ^@ints.elems -> $start
+{
+  my $pos  = $start;
+  my @loop = "[$start]";
+
+  loop
+  {
+    $pos = @ints[$pos];
+    @loop.push: $pos;
+    last if $pos == $start;
+  }
+
+  $loop-count++;
+  say ":Loop { @loop.join(" ") }" if $verbose;
+}
+
+say $loop-count;
