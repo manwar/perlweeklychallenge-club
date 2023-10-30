@@ -45,6 +45,6 @@ sub primeOrder (@) {
 }
 
 is([primeOrder(11,8,27,4)],[11,4,8,27]);
-is([primeOrder(5,3,4,3,2)],[2,3,3,5,4]);
+is([primeOrder(15,3,4,2,12)],[2,3,4,15,12]);
 
 done_testing;
