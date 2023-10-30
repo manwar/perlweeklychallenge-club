@@ -14,6 +14,9 @@ my Set $some-unicode-characters =
 sub data-provider-for(Str $challenge, Str $task-string) is export {
 
     given $challenge => $task-string {
+        when 'nr241' => 'task-one' { return &integer-and-integers-unique-sorted.assuming(*, 3, 10**10, @problem-size-factor-two, log2(2**5).UInt)}
+        when 'nr241' => 'task-two' { return &integers.assuming(*, 0, 10**10, @problem-size-factor-two, log2(2**5).UInt)}
+
         when 'nr240' => 'task-one' { return &unicode-word-and-words-list.assuming(*, 5, 1, 10, @problem-size-factor-two, log2(2**5).UInt) }
         when 'nr240' => 'task-two' { return &integers-array-ids-shuffle.assuming(*, @problem-size-factor-two, log2(2**5).UInt)}
 
@@ -42,6 +45,20 @@ sub data-provider-for(Str $challenge, Str $task-string) is export {
         when 'DEMO' => 'task-two'  { return &data-task-template}
         default {die "Data provider for $challenge $task-string not implemented."}
     }
+}
+
+sub integer-and-integers-unique-sorted(UInt $entry, Int $min, Int $max where {$min <= $max}, @sizes, UInt $size-offset = 0, $dropout-rate=0.2) {
+
+    my $n = @sizes[$entry + $size-offset];
+
+    state @data;
+
+    unless @data[$n] {
+        @data[$n] =  ($min..$max).pick, 
+                     &integers-unique-sorted($entry, $min, $max, @sizes, $size-offset).List;
+    }
+
+    return @data[$n];
 }
 
 sub unicode-word-and-words-list(UInt $entry, UInt $alphabet-size, UInt $min-length, UInt $max-length where {$min-length <= $max-length}, @sizes, UInt $size-offset) {
@@ -132,6 +149,20 @@ sub integers-array-ids-shuffle(UInt $entry, @sizes, UInt $size-offset = 0) {
     state @data is default([]);
     my $n = @sizes[$entry + $size-offset];
     @data[$n] = (^$n).pick(*).List unless @data[$n].elems;
+    return @data[$n];
+}
+
+sub integers-unique-sorted(UInt $entry, Int $min, Int $max where {$min <= $max}, @sizes, UInt $size-offset = 0) {
+    state @data is default([]);
+    my $n = @sizes[$entry + $size-offset];
+    @data[$n] = integers-unique($entry, $min, $max , @sizes, $size-offset).sort.List unless @data[$n].elems;
+    return @data[$n];
+}
+
+sub integers-unique(UInt $entry, Int $min, Int $max where {$min <= $max}, @sizes, UInt $size-offset = 0) {
+    state @data is default([]);
+    my $n = @sizes[$entry + $size-offset];
+    @data[$n] = ($min..$max).pick($n).List unless @data[$n].elems;
     return @data[$n];
 }
 
