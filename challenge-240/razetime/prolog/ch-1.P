@@ -1,0 +1,9 @@
+:- use_module(library(lambda)).
+:- use_module(library(lists)).
+:- use_module(library(charsio)).
+
+fl(X,Y):-nth0(0,X,Z),char_type(Z,to_lower(Y)).
+fl([],false).
+
+ch1(S,C,true):-maplist(fl,S,C).
+ch1(_,_,false).
