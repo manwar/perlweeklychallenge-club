@@ -26,7 +26,7 @@ sub find_triplets {
     for (my $i = 0; $i < $nums_length - 2; $i++) {    
 	for (my $j = $i + 1; $j < $nums_length - 1; $j++) {
 	    for (my $k = $j + 1; $k < $nums_length; $k++) {
-		if (@{$nums}[$j] - @{$nums}[$i] eq $diff && @{$nums}[$k] - @{$nums}[$j] eq $diff) {
+		if (@{$nums}[$j] - @{$nums}[$i] == $diff && @{$nums}[$k] - @{$nums}[$j] == $diff) {
 		    $total_finds++;
 		}
 	    }
