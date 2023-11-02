@@ -1,6 +1,8 @@
-# A.A.B.A. (Acronym And Build Array)
+# Math is hard
 
 Challenge 241: https://theweeklychallenge.org/blog/perl-weekly-challenge-241/
+
+Some of The Weekly Challenges are more intimidating for me based on how math-heavy the task feels. The first task seemed overwhelming but was pretty quick to create a solution, yet the second task took me much longer.
 
 ## Task 1: Arithmetic Triplets
 
