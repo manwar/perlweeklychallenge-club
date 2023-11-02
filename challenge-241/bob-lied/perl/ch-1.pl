@@ -46,10 +46,10 @@ sub triplet($diff, @nums)
     {
         for ( my $j = $i+1; $j <= $#nums-1; $j++ )
         {
+            next unless $nums[$j] - $nums[$i] == $diff;
             for ( my $k = $j+1; $k <= $#nums ; $k++ )
             {
-                if (   $nums[$k] - $nums[$j] == $diff
-                    && $nums[$j] - $nums[$i] == $diff )
+                if ( $nums[$k] - $nums[$j] == $diff )
                 {
                     $count++;
                     push @show, [ $i, $j, $k ] if $Verbose;
@@ -61,7 +61,6 @@ sub triplet($diff, @nums)
     {
         for my $triplet ( @show )
         {
-            local $" = ", ";
             say "\@nums[$triplet->@*] = ( @nums[$triplet->@*] )";
         }
     }
