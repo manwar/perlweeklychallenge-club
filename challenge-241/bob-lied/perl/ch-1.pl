@@ -46,10 +46,17 @@ sub triplet($diff, @nums)
     {
         for ( my $j = $i+1; $j <= $#nums-1; $j++ )
         {
-            next unless $nums[$j] - $nums[$i] == $diff;
+            my $dj = $nums[$j] - $nums[$i];
+
+            # Input is sorted, so stop once the difference is too big.
+            last if $dj > $diff;
+            next unless $dj == $diff;
+
             for ( my $k = $j+1; $k <= $#nums ; $k++ )
             {
-                if ( $nums[$k] - $nums[$j] == $diff )
+                my $dk = $nums[$k] - $nums[$j];
+                last if $dk > $diff;
+                if ( $dk == $diff )
                 {
                     $count++;
                     push @show, [ $i, $j, $k ] if $Verbose;
