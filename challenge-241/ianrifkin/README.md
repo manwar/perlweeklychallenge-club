@@ -1,4 +1,4 @@
-# Math is hard
+# Math is hard?
 
 Challenge 241: https://theweeklychallenge.org/blog/perl-weekly-challenge-241/
 
@@ -90,53 +90,51 @@ Prime factors of  8 => 2, 2, 2
 Prime factors of 27 => 3, 3, 3
 ```
 
-This one sounded simple enough but I needed to write WAY more code to accomplish. Though to be fair, part of the length is a lot more code comments and documentation -- critial because this quickly got confusing for me!
+This one sounded simple enough but I needed to write WAY more code to accomplish. Though to be fair, part of the length is a lot more code comments and documentation -- critial because this quickly got confusing for me! After I completed it and it was working, I wasn't happy with how long the code got and how I was handling the looping so I refactored it a bit. The main different is the first attempt I really started by trying to find the prime factors and then counting them up. This was useful because it allowed me to check as I went along to make sure I was counting the right things appropriately. But once I got a good sense of it I realized it could be done quicker -- though mostly it's to reduce what felt like messy extra loops in code.
 
-I split up the work into 2 subroutines. The second one is simpler so let's talk about that first. I created a `prime_finder()` to accept a number and output a prime factor.
+I split up the work into 2 subroutines.
 
-In the sub I have a `for` loop where the iterator goes from 2 to the square root of the number, which I calculated with the `sqrt()` function. I have it find the prime by taking the number and dividing by the iterator and seeing if it equals 0.
 
-When it finds the prime instead of returning that value I'm returning the number divided by that prime iterator value so that I can use it later to calcuate the remaining values.
+The main sub, `prime_order()`, accepts an array of integers. It loops through the array to create a hash where the key is the input number from the array and the value is number of prime factors for that number. It generates the count of prime factors by calling a sub `prime_finder()`.
 
-For example, given the input 8 it will find the value 2 then return 4 (because 8/2=4). This will allow the other subroutine to calculate the complete list of prime factors: 2,2,2 for input 8.
+```prime_finder```
 
-The only other things that `prime_finder` does is if `$num % $i` does not equal to 0 in any of the loops then that means that the input number was actually prime so it will return the input number.
-
+After the loop is complete `prime_order()` will create and print a sorted array based on the hash results.
 ```
-sub prime_finder {
-    my ($num) = @_;
-    my $num_was_prime;
-    for (my $i = 2; $i <= sqrt($num); $i++) {
-        if ($num % $i == 0) {
-            return $num / $i;
-            $num_was_prime = 0;
-            last;
-        }
-        else {
-            $num_was_prime = 1;
-        }
-
+    foreach my $ordered_num (sort { $results{$a} <=> $results{$b} or $a <=> $b } keys %results) {
+	push(@sorted_output, $ordered_num);
     }
-    return $num if $num_was_prime;
-}
+
+    # Finally, print the sorted output
+    say "(" . join(", ", @sorted_output) . ")";
 ```
 
-The subroutine that calls the above and does the sorting and output printing took a notable amount of time to think through and test and troubleshoot, especially since I wanted it to work for any input (and any amount of input).
+The sub `prime_finder()` is what actually cacluates the number of prime factors for a given input number.
 
-The sub accepts the input array of numbers and loops through each one. It creates a hash `%results` to store the count of prime factors for each number.
 
-The loop starts by setting `$results{$num} = 1;` because every number will have at least have the prime factor of itself.
+I start by having a while loop set to repeat endlessly with a manual condition flag. This will be important based on my approach.
 
-Next I use the `prime_finder()` sub on the input number to get the value I decribed.
+Within the while loop I have a for loop that will find the biggest prime factor for a given number. The loop starts at the square root of the number `$i = int(sqrt($num))` and checks if a prime is found by seeing if dividing the number by the iterator has a remainder: `if ($num % $i == 0)`
 
-If the `prime_finder()` value is undefined or equal to the input number, we're done and can proceed to the next number in the loop.
+Some examples:
 
-If `prime_finder()` returned a new number, then I increment `$results{$num}` to account for the smallest factor than loop to find the remaining factors, if applicable.
+input is 11 --> int of square root is 3 --> first prime factor found is 1 (meaning 11 is a prime number). In this case it increments the counter by 1 then exits the parent while loop.
 
-The loop goes from the initial value returned by `prime_finder()` to the value of the input number devided by that `prime_finder()` value, which should be the smallest factor (hence why I already incremented for the smallest factor above).
+input is 27 --> int of square root is 5 --> first prime factor found is 3. The counter gets incremented to 1. To determine how many other prime factors it would take, I set the `$num` variable to `27 / 3` which is 9 and I exit the `for` loop, restarting it with the new `$num`. In this next iteration the prime found is 3. I increment the counter. Then it goes one more time where it determines that 3 is a prime number and does the final increment. 
 
-In the loop, I calculate the next prime with `prime_finder()` then either increment the counter or exit the loop if no new prime is found. If a prime was found, in addition to incrementing the counter I then loop back through using the new `prime_finder()` value.
-
-With all the (potentially mind-boggling) looping complete I sort the `%results` hash first by its values (the counter) then do a secondary sort on the key (the input number), which I save in an array. I am assuming that `tie-breaking by ascending value` mean the value of the input number. At the end I just print the `@sorted_output` array.
+```
+    while ($calculating) {
+	for (my $i = int(sqrt($num)); $i >= 1; $i--) {
+	    #looping backwards to find biggest prime factor first
+	    if ($num % $i == 0) { #if prime factor found
+		$counter++; #increment that we found a prime factor
+		$calculating = 0 if ($i == 1); #if the prime factor is 1 stop the parent while loop
+		$num = $num / $i; #otherwise reset num lower to search for the next prime factor
+		last; #and restart for loop with new number
+	    }
+	    
+	}
+    }
+```
 
 The full code with comments is available at https://github.com/ianrifkin/perlweeklychallenge-club/blob/ianrifkin-challenge-241/challenge-241/ianrifkin/perl/ch-2.pl

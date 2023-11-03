@@ -29,7 +29,6 @@ else {
 # run the program
 prime_order(\@int_input);
 
-
 sub prime_order {
     my ($int_input) = @_;
 
@@ -40,36 +39,12 @@ sub prime_order {
 	$num =~ s/^\s+//; #remove whitespace is provided at cmd line just for prettiness
 	
 	die("Invalid input") if $num <= 2; #This shouldn't happen based on task instructions
-	
-	#Every number will have at least one prime (self)
-	$results{$num} = 1;
 
-	# Find the first prime factor (or self if it is prime)
-	my $find_prime = prime_finder($num);
-
-	next unless $find_prime; # go to next num if no prime found (e.g. input is 3)
-
-	next if ($find_prime == $num); # go to next $num in loop if input number was prime
-
-	# since input num was not prime, increment for smallest factor
-	# then we will loop below to find the other factors
-	$results{$num}++;
-
-	# Calc all remaining prime factors
-	my $smallest = $num / $find_prime; #the smallest prime so loop knows when to stop	
-	while ($find_prime > $smallest) {
-	    my $new_find_prime = prime_finder($find_prime); #calc next prime
-	    last unless $new_find_prime; #exit loop if no prime found
-	    last if $find_prime == $new_find_prime; #exit loop if prime found is same
-	    $results{$num}++; #incr. if prime found
-	    $find_prime = $new_find_prime; #start next loop or exit loop
-	}
-
-	next; #expclitly showing that we're going to next $num (just for clarity)
+	# Get number of prime factors
+	$results{$num} = prime_finder($num);
     }
     
-    # Now we need to prepare the ouptut
-    # Create a sorted array from the results hash
+    # Prepare the ouptut in a nice sorted array
     my @sorted_output;
     # This should should by the count first ($results{$a} <=> $results{$b}) then the input numbers ($b cmp $a)
     foreach my $ordered_num (sort { $results{$a} <=> $results{$b} or $a <=> $b } keys %results) {
@@ -80,22 +55,24 @@ sub prime_order {
     say "(" . join(", ", @sorted_output) . ")";
 }
 
-# This subroutine outputs a prime number from the provided input $num
 sub prime_finder {
+    # This sub finds the number of prime factors for a given number
     my ($num) = @_;
-    my $num_was_prime;
-    for (my $i = 2; $i <= sqrt($num); $i++) { 
-	if ($num % $i == 0) {
-	    return $num / $i;
-	    $num_was_prime = 0;		
-	    last; 
+    my $counter = 0; #the number of prime factors
+    my $calculating = 1;
+    while ($calculating) {
+	for (my $i = int(sqrt($num)); $i >= 1; $i--) {
+	    #looping backwards to find biggest prime factor first
+	    if ($num % $i == 0) { #if prime factor found
+		$counter++; #increment that we found a prime factor
+		$calculating = 0 if ($i == 1); #if the prime factor is 1 stop the parent while loop
+		$num = $num / $i; #otherwise reset num lower to search for the next prime factor
+		last; #and restart for loop with new number
+	    }
+	    
 	}
-	else {
-	    $num_was_prime = 1;
-	}
-	
     }
-    return $num if $num_was_prime;    
+    return $counter;
 }
 
 
