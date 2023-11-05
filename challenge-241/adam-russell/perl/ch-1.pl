@@ -1,6 +1,12 @@
-use v5.36;
-use Data::Dump q/pp/;
-
+use v5.38;
+##
+# You are given an array (3 or more members) of integers in increasing order and a 
+# positive integer. Write a script to find out the number of unique Arithmetic Triplets 
+# satisfying the following rules:
+# a) i < j < k
+# b) nums[j] - nums[i] == diff
+# c) nums[k] - nums[j] == diff
+##
 sub arithmetic_triplets{
     my $counter = 0;
     my $difference = shift;
