@@ -1,4 +1,7 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
    "xAxis" : {
       "categories" : [
          "Michael Hamlin",
@@ -33,8 +36,14 @@
          "Pete Sergeant"
       ]
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-11-05 00:53:51 GMT"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -73,6 +82,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -104,8 +114,7 @@
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -143,25 +152,16 @@
          ]
       }
    ],
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2023]"
-   },
    "yAxis" : {
       "title" : {
          "text" : ""
       },
       "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2023-11-05 18:30:46 GMT"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2023]"
    }
 }
