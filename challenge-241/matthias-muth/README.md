@@ -1,4 +1,4 @@
-# Rewriting Rules Can Make Things Simple
+# Rewriting the Rules Can Make Things Simple
 **Challenge 241 solutions in Perl by Matthias Muth**
 
 ## Task 1: Arithmetic Triplets
