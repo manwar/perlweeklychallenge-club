@@ -1,3 +1,3 @@
-# The Weekly Challenge 240
+# The Weekly Challenge 241
 
-Blog: [Weekly Challenge 240](https://dev.to/simongreennet/weekly-challenge-240-2mio)
+Blog: [Triplets and Sorting](https://dev.to/simongreennet/similar-frequency-3i6b)
