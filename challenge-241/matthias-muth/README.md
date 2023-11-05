@@ -1,79 +1,130 @@
-# Short Acronyms, and Short Solutions
+# Challenge 241 tasks: Arithmetic Triplets - Prime Order
+**Challenge 241 solutions in Perl by Matthias Muth**
 
-**Challenge 240 solutions in Perl by Matthias Muth**
+## Task 1: Arithmetic Triplets
 
-## Task 1: Acronym
-
-> You are given two arrays of strings and a check string.<br/>
-> Write a script to find out if the check string is the acronym of the words in the given array.<br/>
+> You are given an array (3 or more members) of integers in increasing order and a positive integer.<br/>
+> Write a script to find out the number of unique Arithmetic Triplets satisfying the following rules:<br/>
+> a) i < j < k<br/>
+> b) nums[j] - nums[i] == diff<br/>
+> c) nums[k] - nums[j] == diff<br/>
+> <br/>
 > Example 1<br/>
-> Input: @str = ("Perl", "Python", "Pascal")<br/>
->        \$chk = "ppp"<br/>
-> Output: true<br/>
+> Input: @nums = (0, 1, 4, 6, 7, 10)<br/>
+>     \$diff = 3<br/>
+> Output: 2<br/>
+> Index (1, 2, 4) is an arithmetic triplet because both  7 - 4 == 3 and 4 - 1 == 3.<br/>
+> Index (2, 4, 5) is an arithmetic triplet because both 10 - 7 == 3 and 7 - 4 == 3.<br/>
 > <br/>
 > Example 2<br/>
-> Input: @str = ("Perl", "Raku")<br/>
->        \$chk = "rp"<br/>
-> Output: false<br/>
+> Input: @nums = (4, 5, 6, 7, 8, 9)<br/>
+>     \$diff = 2<br/>
+> Output: 2<br/>
+> (0, 2, 4) is an arithmetic triplet because both 8 - 6 == 2 and 6 - 4 == 2.<br/>
+> (1, 3, 5) is an arithmetic triplet because both 9 - 7 == 2 and 7 - 5 == 2.<br/>
+
+The way the task description is written might lead us to a solution where we create all  possible triplets, and then check for each of them whether the three numbers fulfill  the 'diff' criteria. So actually we would need to solve a permutation task, with all its typical caveats, like the number of permutations running away too easily, and the high order of complexity in general. 
+
+But we can restate the task in a different way and find a much simpler way to solve it:<br/>
+Instead of 
+
+> Write a script to find out the number of unique Arithmetic Triplets satisfying the following rules:<br/>
+> a) i < j < k<br/>
+> b) nums[j] - nums[i] == diff<br/>
+> c) nums[k] - nums[j] == diff<br/>
+
+we formulate:
+> Write a script to find out how many numbers nums[i] exist in the array where<br/>
+> a) nums[i] + diff also exists in the array,<br/>
+> b) nums[i] + 2 * diff also exists in the array.
+
+That sounds much better!
+
+What we need to do is to create a hash lookup for checking the existence of the values in the array.
+Here we go:
+
+```perl
+    my %nums = map { ( $_ => 1 ) } @nums;
+```
+Using this lookup, it's easy to filter out those numbers of the array
+for which the '+ diff' and '+ 2 * diff' values also exist.
+We use `grep` for that.
+And it's also easy to get the number of hits instead of the hits themselves by just using `grep` in a scalar context:
+
+```perl
+    return scalar grep
+        exists $nums{ $_ + $diff } && exists $nums{ $_ + 2 * $diff },
+        @nums;
+```
+As we have more than one parameter to call the function with (the `@nums` array and the `$diff` scalar value),
+we pass in the `@nums` array as an array reference. We create a real array immediately after entering our subroutine (only for easier reading!).<br/>
+This makes my  final solution look like this:
+
+```perl
+sub arithmetic_triplets( $nums_aref, $diff ) {
+    # Copy the array ref into a local array (only for easier reading).
+    my @nums = $nums_aref->@*;
+    # Create a lookup for all numbers.
+    my %nums = map { ( $_ => 1 ) } @nums;
+    # Return the number of numbers fulfilling the criteria.
+    return scalar grep
+        exists $nums{ $_ + $diff } && exists $nums{ $_ + 2 * $diff },
+        @nums;
+}
+```
+Good to avoid the permutations like that!
+
+## Task 2: Prime Order
+
+> You are given an array of unique positive integers greater than 2.<br/>
+> Write a script to sort them in ascending order of the count of their prime factors, tie-breaking by ascending value.<br/>
 > <br/>
-> Example 3<br/>
-> Input: @str = ("Oracle", "Awk", "C")<br/>
->        \$chk = "oac"<br/>
-> Output: true<br/>
+> Example 1<br/>
+> Input: @int = (11, 8, 27, 4)<br/>
+> Output: (11, 4, 8, 27))<br/>
+> Prime factors of 11 => 11<br/>
+> Prime factors of  4 => 2, 2<br/>
+> Prime factors of  8 => 2, 2, 2<br/>
+> Prime factors of 27 => 3, 3, 3<br/>
 
-The first parameter to a perl `sub` can only be an `@array` variable *if it is the only parameter*. As we have two parameters in this task, the `@str` parameter from the description has to be passed in as an array reference, for which I chose `$str_aref` as a name. ( And no, I am not a fan of the so-called Hungarian Notation that codes the variable type into a variable's names. If I was, I probably wouldn't be a fan of Perl. Or vice versa. Or whatever.) 
+In a first step, we create an array that contains the number of prime factors for each number in `@int` at the same index.
+This will make it easier for sorting the numbers later on.
 
-The task itself is quite straightforward to implement in Perl.
-
-We walk through the `@str` array (using the said `$str_aref` variable), and extract each first character into a list.
-In the same flow, we concatenate that list of letters into a word (the acronym), and lower-case it. Then we can compare it to the other parameter, `$chk`, and return the comparison result. 
-
-For extracting the first letter of each word, in a real application I would probably use
-```perl
-    substr( $_, 0, 1 )
-```
-, to avoid the overhead for building and starting a regular expression, but for here, I prefer this more concise and well understood simple rexexp:
-```perl
-   /^(.)/
-```
-
-So there we have our short solution to shorten words to acronyms:
+I separated out the computation of the number of prime factors for a given number `$n`  into an own function.
+It walks through the possible factors for `$n` (not overly optimized; actually it tries every number, wheras trying only prime numbers would be enough). If the number is divisible by that factor without rest, it divides that factor away, increases the number of factors, and tries the same factor again before moving on.<br/>
+Like this:     
 
 ```perl
-sub acronym( $str_aref, $chk ) {
-    return $chk eq lc join "", map /^(.)/, $str_aref->@*;
+sub n_prime_factors( $n ) {
+    my $n_prime_factors = 0;
+    for ( my $i = 2; $i <= $n; ++$i ) {
+        if ( $n % $i == 0 ) {
+            $n /= $i;
+            ++$n_prime_factors;
+            redo;
+        }
+    }
+    return $n_prime_factors;
 }
 ```
 
-## Task 2: Build Array
+The complete solution first generates the number of prime factors for all numbers in the `@int` array,
+using the function just described. 
 
-> You are given an array of integers.<br/>
-> Write a script to create an array such that $$new[i] = old[old[i]]$$ where $$0 <= i < new.length$$.<br/>
-> Example 1<br/>
-> Input: @int = (0, 2, 1, 5, 3, 4)<br/>
-> Output: (0, 1, 2, 4, 5, 3)<br/>
-> <br/>
-> Example 2<br/>
-> Input: @int = (5, 0, 1, 2, 3, 4)<br/>
-> Output: (4, 5, 0, 1, 2, 3)<br/>
-
-Using the name of the parameter `@int` instead of the specification's $$old$$, we can translate the specification $$new[i] = old[old[i]]$$ directly to
-```perl
-my @new = map $int[ $int[$_] ]
-    for 0..$#old;
-```
-As we use all elements of the `int` array, one by one, in the inner bracket, we might as well insert the whole array in one step instead, using Perl's *array slice* syntax. We then even don't need the `map`  call any more, because an array slice already gives us a list:<br/>
-```perl
-my @new = @int[ @int ];
-```
-And actually we don't even need the `@new` variable, because we immediately return the list of values as the result.
-
-Which makes this probably the shortest solution to a *PWC* task that I have ever written:
+It then returns the `@int` numbers in the order determined by `sort` with a code block. Instead of using a temporary array and sorting it, the sorted numbers are returned directly from the original array, using Perl's array slice syntax. This works well with the `sort` code block that uses the same array indexes to access the number of prime factors as well as the numbers themselves in case of a tie. 
 
 ```perl
-sub build_array( @int ) {
-    return @int[ @int ];
+sub prime_order( @int ) {
+    my @n_prime_factors = map n_prime_factors( $_ ), @int;
+    return @int[
+        sort {
+            $n_prime_factors[$a] <=> $n_prime_factors[$b]
+                || $int[$a] <=> $int[$b]
+        } 0..$#int
+    ];
 }
 ```
+
+I think Perl helps a lot to keep these solutions short and fun, but still readable.  
 
 #### **Thank you for the challenge!**
