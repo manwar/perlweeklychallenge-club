@@ -18,6 +18,9 @@ sub flip-matrix(+@m)
 sub flip-matrix-slow(+@m)
 {
     map { reverse $_ >>+^>> 1 }, @m
+    
+    # no difference in time
+    # map { .[.end...0] >>+^>> 1 }, @m
 }
 
 sub benchmark
