@@ -28,7 +28,8 @@ sub missingMembers {
 
   # Collect all numbers across input
   # and store against their input index
-  for my $i (0 .. $n) {
+  for my $i (0 .. $n - 1) {
+    $r->[$i] = [];
     for (uniq($_[$i]->@*)) {
       push(@{$n{$_}},$i);
     }
@@ -38,15 +39,16 @@ sub missingMembers {
   # and create output
   for my $i (sort { $a <=> $b } keys %n) {
     if ($n{$i}->@* < $n) {
-      map { push($r->[$_]->@*,$i) } $n{$i}->@* ;
+      map { push($r->[$_]->@*,$i) } $n{$i}->@*;
     }
   }
   return $r;
 }
 
 is(missingMembers([1,2,3],[2,4,6]),
-	          [[1,3],[4,6]]);
+                  [[1,3],[4,6]]);
 is(missingMembers([0,1,2,3],[1,2,3,4],[2,3,4,5]),
-	          [[0,1],[1,4],[4,5]]);
+                  [[0,1],[1,4],[4,5]]);
+is(missingMembers([1],[1]),[[],[]]);
 
 done_testing;
