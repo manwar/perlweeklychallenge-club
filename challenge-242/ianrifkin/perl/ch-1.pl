@@ -3,6 +3,7 @@ use warnings;
 use strict;
 use Getopt::Long;
 use Pod::Usage;
+use Data::Dumper;
 
 # You are given two arrays of integers.
 # Write a script to find out the missing members in each other arrays.
@@ -26,38 +27,40 @@ say find_members(\@arr1, \@arr2);
 say find_members(\@arr1, \@arr2);
 
 sub find_members {
-    my (@arrays) = @_;
+    my ($arr1, $arr2) = @_;
 
-    my $output = 'Everything matches'; #default output string
-    my $other_arr = 1; #b/c I need to diff both directions
-    for (my $i = 0; $i < @arrays; $i++) {
-	my $arr = $arrays[$i];
-	my $arr_other = $arrays[$other_arr];
+    my @result_hashes = (
+	{map { $_ => check_if_exists($_, $arr2) } @{$arr1}},
+	{map { $_ => check_if_exists($_, $arr1) } @{$arr2}}
+	);
 
-	# Checking what numbers are only in $arr
-	my %arr_hash = map {$_=>1} @{$arr_other};
-	my @diffs = grep { !$arr_hash{$_} } @{$arr};
-	# Making sure each item in array is unique
-	my @unique;
-	my %seen;
-	foreach my $value (@diffs) {
-	    if (! $seen{$value}) {
-		push @unique, $value;
-		$seen{$value} = 1;
-	    }
+    # Parse hashed results into an @output array
+    # output array will have two values (one for each input)
+    my @output = ();    
+    foreach (@result_hashes) {
+	my %h = %{$_};
+	my @tmp_out = ();
+	# Select the hash key if the value is false
+	# --meaning that the number did not exist in the other array
+	foreach my $key ( keys %h ) { 
+	    push(@tmp_out, $key) unless $h{$key};
 	}
-	# Creating output text if applicable
-	if ($output eq 'Everything matches') {
-	    $output = '[' . join(',', @unique) . ']' if @diffs;
-	}
-	else {
-	    $output .= ', [' . join(',', @unique) . ']' if @diffs;	    
-	}
-	# now switch to comparing the other direction
-	$other_arr = 0;
+	# The step of putting \@tmp_out into @output
+	# -- is so we have separation from results of
+	# -- the two inputs
+	push(@output, \@tmp_out) if @tmp_out;
     }
-    # Return output to be printed with paranthesis to match task instructions
-    return '(' . $output . ')';
+
+    # Return the @output array in the desired format
+    $Data::Dumper::Terse = 1; #don't print VAR names
+    $Data::Dumper::Indent = 0; #keep output on one line
+    return '(' . join(',', Dumper(@output)) . ')';
+}
+
+sub check_if_exists {
+    my ($k, $arr) = @_;
+    return 1 if grep /$k/, @{$arr};
+    return 0;
 }
 
 __END__
