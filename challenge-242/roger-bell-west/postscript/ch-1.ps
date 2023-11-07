@@ -1,0 +1,171 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/unique {
+    toset keys
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/unique {
+    0 dict begin
+    /ss 0 dict def
+    [ exch
+      {
+          /i exch def
+          ss i known not {
+              i
+              ss i true put
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/halfmissing {
+    0 dict begin
+    /bh exch def
+    {
+        bh exch known not
+    } filter
+    unique
+    end
+} bind def
+
+/missingmembers {
+    0 dict begin
+    /b exch def
+    /a exch def
+    [
+        a b toset halfmissing
+        b a toset halfmissing
+    ]
+    end
+} bind def
+
+(missingmembers) test.start
+[1 2 3] [2 4 6] missingmembers [[1 3] [4 6]] deepeq test
+[1 2 3 3] [1 1 2 2] missingmembers [[3] []] deepeq test
+test.end
