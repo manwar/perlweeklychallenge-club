@@ -58,7 +58,7 @@ multi MAIN (Bool :$test!) {
            output => ((3,), ()) },
     ;
 
-    .<input>.&SOLUTION».cache.&is-deeply: .<output>».cache, .<text> for @tests
+    .<input>.&SOLUTION.deepmap({$_}).&is-deeply: .<output>, .<text> for @tests
 } # end of multi MAIN (Bool :$test!)
 
 
