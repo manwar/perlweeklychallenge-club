@@ -66,7 +66,7 @@ multi MAIN (Bool :$test!) {
            output => ((1, 1, 0, 0), (0, 1, 1, 0), (0, 0, 0, 1), (1, 0, 1, 0)) },
     ;
 
-    .<input>.&SOLUTION.gist.&is: .<output>.gist, .<text> for @tests
+    .<input>.&SOLUTION».cache.&is-deeply: .<output>».cache, .<text> for @tests
 } # end of multi MAIN (Bool :$test!)
 
 
