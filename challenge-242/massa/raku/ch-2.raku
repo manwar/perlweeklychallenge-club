@@ -53,23 +53,20 @@ Write a script to flip the given matrix as below.
 use v6.*;
 
 sub SOLUTION(@_) {
-    @_».reverse».map({ $_ ?? 0 !! 1 })».Array
+    @_».reverse».map: 1 - *
 }
 
 multi MAIN (Bool :$test!) {
     use Test;
 
-    my @tests = [
-        %{ input =>  ([1, 1, 0], [1, 0, 1], [0, 0, 0]),
-           output => ([1, 0, 0], [0, 1, 0], [1, 1, 1]) },
-        %{ input =>  ([1, 1, 0, 0], [1, 0, 0, 1], [0, 1, 1, 1], [1, 0, 1, 0]),
-           output => ([1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 1], [1, 0, 1, 0]) },
-    ];
+    my @tests =
+        %{ input =>  ((1, 1, 0), (1, 0, 1), (0, 0, 0)),
+           output => ((1, 0, 0), (0, 1, 0), (1, 1, 1)) },
+        %{ input =>  ((1, 1, 0, 0), (1, 0, 0, 1), (0, 1, 1, 1), (1, 0, 1, 0)),
+           output => ((1, 1, 0, 0), (0, 1, 1, 0), (0, 0, 0, 1), (1, 0, 1, 0)) },
+    ;
 
-    for @tests {
-        SOLUTION( .<input> ).&is-deeply: .<output>, .<text>;
-
-    } # end of for @tests
-} # end of multi MAIN (:$test!)
+    .<input>.&SOLUTION.gist.&is: .<output>.gist, .<text> for @tests
+} # end of multi MAIN (Bool :$test!)
 
 

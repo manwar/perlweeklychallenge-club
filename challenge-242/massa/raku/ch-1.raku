@@ -44,21 +44,21 @@ Write a script to find out the missing members in each other arrays.
 # always use the latest version of Raku
 use v6.*;
 
-sub SOLUTION(@a, @b) {
-  keys(@a ∖ @b).sort.Array, keys(@b ∖ @a).sort.Array
+sub SOLUTION(@ (@a, @b)) {
+    (@a ∖ @b, @b ∖ @a)».keys».sort
 }
 
 multi MAIN (Bool :$test!) {
     use Test;
 
-    my @tests = [
-        %{ input => ([1, 2, 3], [2, 4, 6]),       output => ([1, 3], [4, 6]) },
-        %{ input => ([1, 2, 3, 3], [1, 1, 2, 2]), output => ([3], []) },
-    ];
+    my @tests =
+        %{ input =>  ((1, 2, 3), (2, 4, 6)),
+           output => ((1, 3), (4, 6)) },
+        %{ input =>  ((1, 2, 3, 3), (1, 1, 2, 2)),
+           output => ((3,), ()) },
+    ;
 
-    for @tests {
-        SOLUTION( |.<input> ).&is-deeply: .<output>, .<text>;
-    } # end of for @tests
+    .<input>.&SOLUTION.gist.&is: .<output>.gist, .<text> for @tests
 } # end of multi MAIN (Bool :$test!)
 
 
