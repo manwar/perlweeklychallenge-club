@@ -64,7 +64,14 @@ Output: ([3])
 
 Sample output
 ```
+$ perl/ch-2.pl
+Example 1:
+Input: @matrix = ([1, 1, 0], [1, 0, 1], [0, 0, 0])
+Output: ([1, 0, 0], [0, 1, 0], [1, 1, 1])
 
+Example 2:
+Input: @matrix = ([1, 1, 0, 0], [1, 0, 0, 1], [0, 1, 1, 1], [1, 0, 1, 0])
+Output: ([1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 1], [1, 0, 1, 0])
 ```
 
 ## Guest Language: Python
