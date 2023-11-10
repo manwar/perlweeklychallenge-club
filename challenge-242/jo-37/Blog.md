@@ -1,5 +1,5 @@
-#Missing Reversed Inversions
-##Task 1: Missing Members
+# Missing Reversed Inversions
+## Task 1: Missing Members
 > You are given two arrays of integers.
 > Write a script to find out the missing members in each other arrays.
 
@@ -31,7 +31,7 @@ setdiff_sorted($m1, $m2);
 ```
 gives M1 \ M2.
 Same result, but better readable.
-##Task 2: Flip Matrix
+## Task 2: Flip Matrix
 > You are given `n x n` binary matrix. 
 > Write a script to flip the given matrix as below.
  
@@ -42,5 +42,3 @@ Performing the "flip matrix" operation on a 2-d ndarray `$m` thus is as easy as:
 ```
 !$m->(-1:0)
 ```
-
-
