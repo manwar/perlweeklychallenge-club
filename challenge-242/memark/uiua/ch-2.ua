@@ -1,6 +1,6 @@
 # https://theweeklychallenge.org/blog/perl-weekly-challenge-242/#TASK2
 
-# Uiua 0.1.0
+# Uiua 0.2.0
 
 FlipMatrix ← ¬≡⇌
 ---
