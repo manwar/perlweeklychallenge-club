@@ -7,9 +7,7 @@ missing_members <- function(self, l1, l2){
 }
 
 missing_members.ch_1 <- function(self, l1, l2){
-    r <- list()
-    r[[1]] <- unique(l1[!(l1 %in% l2)])
-    r[[2]] <- unique(l2[!(l2 %in% l1)])
+    r <- rbind(unique(l1[!(l1 %in% l2)]), unique(l2[!(l2 %in% l1)]))
     return(r)
 }
 

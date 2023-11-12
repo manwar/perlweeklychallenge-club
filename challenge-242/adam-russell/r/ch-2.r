@@ -1,4 +1,4 @@
-ch_2 <- function () {
+ch_2 <- function() {
     structure(list(), class = "ch_2")
 }
 

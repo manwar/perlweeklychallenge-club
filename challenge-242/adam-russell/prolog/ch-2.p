@@ -5,4 +5,3 @@ flip_matrix([Row|Matrix], [RowFlipped|MatrixFlipped]):-
     reverse(Row, RowReversed),
     maplist(flip, RowReversed, RowFlipped),
     flip_matrix(Matrix, MatrixFlipped).
-    
