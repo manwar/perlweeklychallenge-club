@@ -36,7 +36,21 @@ Using @arr2, word2 => "abcde" => "abcde"
 
 Sample output
 ```
+$ perl/ch-2.pl
+Example 1:
+Input: @str = ("ad", "bd", "aaab", "baa", "badab")
+       $allowed = "ab"
+Output: 2
 
+Example 2:
+Input: @str = ("a", "b", "c", "ab", "ac", "bc", "abc")
+       $allowed = "abc"
+Output: 7
+
+Example 3:
+Input: @str = ("cc", "acd", "b", "ba", "bac", "bad", "ac", "d")
+       $allowed = "cad"
+Output: 4
 ```
 
 ## Raku
@@ -75,7 +89,21 @@ Using @arr2, word2 => "abcde" => "abcde"
 
 Sample output
 ```
+$ raku/ch-2.raku
+Example 1:
+Input: @str = ("ad", "bd", "aaab", "baa", "badab")
+       $allowed = "ab"
+Output: 2
 
+Example 2:
+Input: @str = ("a", "b", "c", "ab", "ac", "bc", "abc")
+       $allowed = "abc"
+Output: 7
+
+Example 3:
+Input: @str = ("cc", "acd", "b", "ba", "bac", "bad", "ac", "d")
+       $allowed = "cad"
+Output: 4
 ```
 
 ## Guest Language: Python

@@ -1,0 +1,13 @@
+:- use_module(library(lists)).
+:- use_module(library(clpz)).
+
+soln(t(I,J,K),D,A):-
+  nth0(I,A,M),nth0(J,A,N),nth0(K,A,O),
+  I#<J,J#<K,
+  D#=N-M,D#=O-N.
+
+ch1(N,D,A):-findall(X,soln(X,D,A),S),length(S,N).
+
+?- ch1(A,3,[0,1,4,6,7,10])
+?- ch1(A,2,[4,5,6,7,8,9]).
+
