@@ -6,7 +6,7 @@ use strict; use warnings;
 sub sum_of_floors {
     eval
     join '+',
-    map { /_/; "int($`/$')" }
+    map { /_/; int($`/$') }
     glob "{@_}_{@_}" =~ s/ /,/gr
 }
 
