@@ -19,4 +19,16 @@ for my $e (@examples) {
     Output:          $output
     END
 }
-sub floor_sum (@input) {    my $output = 0;    for my $i ( 0 .. -1 + scalar @input ) {        my $ii = $input[$i];        for my $j ( 0 .. -1 + scalar @input ) {            my $jj    = $input[$j];            my $floor = int( $ii / $jj );            $output += $floor;        }    }    return $output;}
+
+sub floor_sum (@input) {
+    my $output = 0;
+    for my $i ( 0 .. -1 + scalar @input ) {
+        my $ii = $input[$i];
+        for my $j ( 0 .. -1 + scalar @input ) {
+            my $jj    = $input[$j];
+            my $floor = int( $ii / $jj );
+            $output += $floor;
+        }
+    }
+    return $output;
+}
