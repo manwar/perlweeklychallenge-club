@@ -11,13 +11,13 @@ sub reverse-pairs(*@a)
 {
     my $bag = @a.BagHash;
 
-    sum gather for @a -> $n
+    sum gather for @a -> $a
     { 
-        $bag{$n}--;
+        $bag{$a}--;
 
         for $bag.keys -> $k
         {
-            take $bag{$k} if $n > $k + $k 
+            take $bag{$k} if $a > $k + $k 
         }
     }
 }
