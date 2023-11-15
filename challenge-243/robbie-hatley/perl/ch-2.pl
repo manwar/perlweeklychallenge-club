@@ -43,7 +43,6 @@ Output: 49
 PROBLEM NOTES:
 I'll use two three-part loops to sum all floors of pair quotients.
 
-
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
