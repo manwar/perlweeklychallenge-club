@@ -78,7 +78,9 @@ sub reverse_pairs ($aref) {
    my @rp = ();
    for (    my $i =    0   ; $i <= $#$aref - 1 ; ++$i ) {
       for ( my $j = $i + 1 ; $j <= $#$aref - 0 ; ++$j ) {
-         push @rp, [$$aref[$i], $$aref[$j]] if $$aref[$i] > 2 * $$aref[$j];
+         if ( $$aref[$i] > 2 * $$aref[$j] ) {
+            push @rp, [$$aref[$i], $$aref[$j]];
+         }
       }
    }
    return @rp
