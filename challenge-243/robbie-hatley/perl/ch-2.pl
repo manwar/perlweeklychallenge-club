@@ -11,6 +11,7 @@ This is a 110-character-wide Unicode UTF-8 Perl-source-code text file with hard 
 TITLE BLOCK:
 Solutions in Perl for The Weekly Challenge 243-2.
 Written by Robbie Hatley on Tue Nov 14, 2023.
+Refactored on Thu Nov 16, 2023.
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM DESCRIPTION:
@@ -73,17 +74,23 @@ BEGIN {$t0 = time}
 # ------------------------------------------------------------------------------------------------------------
 # SUBROUTINES:
 
+# Is a given scalar a ref to an array
+# of positive integers?
 sub are_pos_ints ($aref) {
-   return 0 if 'ARRAY' ne ref $aref;
-   for ( @$aref ) {return 0 unless $_ =~ m/^[1-9]\d*$/;}
+   return 0 unless 'ARRAY' eq ref $aref;
+   for (@$aref) {
+      return 0 unless $_ =~ m/^[1-9]\d*$/;
+   }
    return 1;
 }
 
-sub quotient_floor_sum ($aref) {
+# Return sum of floors of quotients of pairs
+# of elements of an array of positive integers:
+sub sfqp ($aref) {
    my $sum = 0;
-   for    my $i ( 0 .. $#$aref ) {
-      for my $j ( 0 .. $#$aref ) {
-         $sum += int($$aref[$i]/$$aref[$j]);
+   for my $x (@$aref) {
+      for my $y (@$aref) {
+         $sum += int($x/$y);
       }
    }
    return $sum;
@@ -112,8 +119,7 @@ for my $aref (@arrays) {
       say 'Error: Not array of positive ints; skipping to next array.';
       next;
    }
-   my $sum = quotient_floor_sum($aref);
-   say 'Sum of floors of pair quotients = ', $sum;
+   say 'Sum of floors of quotients of pairs = ', sfqp($aref);
 }
 exit;
 

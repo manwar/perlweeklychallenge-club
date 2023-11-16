@@ -11,6 +11,7 @@ This is a 110-character-wide Unicode UTF-8 Perl-source-code text file with hard 
 TITLE BLOCK:
 Solutions in Perl for The Weekly Challenge 243-1.
 Written by Robbie Hatley on Tue Nov 14, 2023.
+Refactored on Thu Nov 16, 2023.
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM DESCRIPTION:
@@ -68,12 +69,18 @@ BEGIN {$t0 = time}
 # ------------------------------------------------------------------------------------------------------------
 # SUBROUTINES:
 
+# Is a given scalar a ref to an array
+# of positive integers?
 sub are_pos_ints ($aref) {
-   return 0 if 'ARRAY' ne ref $aref;
-   for ( @$aref ) {return 0 unless $_ =~ m/^[1-9]\d*$/;}
+   return 0 unless 'ARRAY' eq ref $aref;
+   for (@$aref) {
+      return 0 unless $_ =~ m/^[1-9]\d*$/;
+   }
    return 1;
 }
 
+# Return list of all index pairs [i,j] such that
+# i<j and array[i] > 2*array[j]:
 sub reverse_pair_indices ($aref) {
    my @rpi = ();
    for    my $i (    0   .. $#$aref - 1 ) {
