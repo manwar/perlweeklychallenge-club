@@ -43,11 +43,12 @@ Output: 49
 PROBLEM NOTES:
 I'll use two three-part loops to sum all floors of pair quotients.
 
+
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
 single-quoted array of arrays of positive integers, in proper Perl syntax, like so:
-./ch-1.pl '([10,7,4,6,2],[7,6,5,7,6,5])'
+./ch-2.pl '([10,7,4,6,2],[7,6,5,7,6,5])'
 
 Output is to STDOUT and will be each input array followed by the corresponding output.
 
@@ -80,8 +81,8 @@ sub are_pos_ints ($aref) {
 
 sub quotient_floor_sum ($aref) {
    my $sum = 0;
-   for (    my $i = 0 ; $i <= $#$aref ; ++$i ) {
-      for ( my $j = 0 ; $j <= $#$aref ; ++$j ) {
+   for    my $i ( 0 .. $#$aref ) {
+      for my $j ( 0 .. $#$aref ) {
          $sum += int($$aref[$i]/$$aref[$j]);
       }
    }
