@@ -1,0 +1,22 @@
+MODULE Ch2 EXPORTS Main;
+
+IMPORT IO;
+
+VAR
+  A1:ARRAY[0..2] OF INTEGER := ARRAY OF INTEGER{2,5,9};
+  A2:ARRAY[0..6] OF INTEGER := ARRAY OF INTEGER{7,7,7,7,7,7,7};
+
+PROCEDURE FloorSum(VAR Arr:ARRAY OF INTEGER):INTEGER = 
+    VAR Sum:INTEGER := 0;
+  BEGIN
+    FOR I := FIRST(Arr) TO LAST(Arr) DO
+      FOR J := FIRST(Arr) TO LAST(Arr) DO INC(Sum,Arr[I] DIV Arr[J]) END
+    END;
+    RETURN Sum
+  END FloorSum;
+
+BEGIN
+  IO.PutInt(FloorSum(A1)); IO.Put("\n");
+  IO.PutInt(FloorSum(A2)); IO.Put("\n");
+END Ch2.
+
