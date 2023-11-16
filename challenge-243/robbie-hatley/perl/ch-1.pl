@@ -74,16 +74,16 @@ sub are_pos_ints ($aref) {
    return 1;
 }
 
-sub reverse_pairs ($aref) {
-   my @rp = ();
-   for (    my $i =    0   ; $i <= $#$aref - 1 ; ++$i ) {
-      for ( my $j = $i + 1 ; $j <= $#$aref - 0 ; ++$j ) {
+sub reverse_pair_indices ($aref) {
+   my @rpi = ();
+   for    my $i (    0   .. $#$aref - 1 ) {
+      for my $j ( $i + 1 .. $#$aref - 0 ) {
          if ( $$aref[$i] > 2 * $$aref[$j] ) {
-            push @rp, [$$aref[$i], $$aref[$j]];
+            push @rpi, [$i, $j];
          }
       }
    }
-   return @rp
+   return @rpi
 }
 
 # ------------------------------------------------------------------------------------------------------------
@@ -109,9 +109,12 @@ for my $aref (@arrays) {
       say 'Error: Not array of positive ints; skipping to next array.';
       next;
    }
-   my @reverse_pairs = reverse_pairs($aref);
-   say 'Found ', scalar(@reverse_pairs), ' reverse pairs:';
-   say '(', join(', ', map {'['.join(', ', @$_).']'} @reverse_pairs), ')';
+   my @rpi = reverse_pair_indices($aref);
+   my $n = scalar @rpi;
+   say "Found $n reverse pairs", $n ? ':' : '.';
+   for my $pair (@rpi) {
+      say 'Array[', $$pair[0], ', ', $$pair[1], '] = (', $$aref[$$pair[0]], ', ', $$aref[$$pair[1]], ')';
+   }
 }
 exit;
 
