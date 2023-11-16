@@ -72,8 +72,10 @@ BEGIN {$t0 = time}
 # Is a given scalar a ref to an array
 # of positive integers?
 sub are_pos_ints ($aref) {
-   return 0 if 'ARRAY' ne ref $aref;
-   for ( @$aref ) {return 0 unless $_ =~ m/^[1-9]\d*$/;}
+   return 0 unless 'ARRAY' eq ref $aref;
+   for (@$aref) {
+      return 0 unless $_ =~ m/^[1-9]\d*$/;
+   }
    return 1;
 }
 
