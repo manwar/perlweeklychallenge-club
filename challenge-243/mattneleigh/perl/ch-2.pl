@@ -32,7 +32,7 @@ exit(0);
 ################################################################################
 # Calculate the sum of the floor (integer value, rounded down) of the quotients
 # of every possible pair of numbers described by two sets of indices within a
-# list- including those where the indices are the same
+# list of positive integers- including those where the indices are the same
 # Takes one argument:
 # * A list of integers to examine
 # Returns:
