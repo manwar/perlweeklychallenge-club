@@ -42,11 +42,12 @@ sub triplet($diff, @nums)
 {
     my $count = 0;
     my @show;
-    for ( my $i = 0 ; $i <= $#nums-2; $i++ )
+    # for ( my $i = 0 ; $i <= $#nums-2; $i++ )
+    while ( defined(my $i = shift @nums ) )
     {
-        for ( my $j = $i+1; $j <= $#nums-1; $j++ )
+        for ( my $j = 0; $j <= $#nums-1; $j++ )
         {
-            my $dj = $nums[$j] - $nums[$i];
+            my $dj = $nums[$j] - $i;
 
             # Input is sorted, so stop once the difference is too big.
             last if $dj > $diff;
