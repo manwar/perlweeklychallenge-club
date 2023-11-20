@@ -1,20 +1,41 @@
-:-dynamic(path/2). 
+additive_number(Sequence) --> Sequence, 
+    { prefix(A, Sequence),
+      append(A, BC, Sequence),
+      prefix(B, BC),
+      append(B, D, BC),
+      prefix(C, D),
+      append(C, T, D),
+      \+ A = [],
+      \+ B = [],
+      \+ C = []},    
+    digit_sequence(A), digit_sequence(B), digit_sequence(C), 
+    { is_additive_sequence(A, B, C), 
+      append(B, C, R0), 
+      append(R0, T, R1), 
+      T \= []}, 
+    additive_number(R1).
+additive_number(Sequence) --> Sequence, 
+    { prefix(A, Sequence),
+      append(A, BC, Sequence),
+      prefix(B, BC),
+      append(B, D, BC),
+      prefix(C, D),
+      append(C, T, D),
+      \+ A = [],
+      \+ B = [],
+      \+ C = []},    
+    digit_sequence(A), digit_sequence(B), digit_sequence(C), 
+    { is_additive_sequence(A, B, C), 
+      T = []}.
+    
+digit_sequence([]) --> [].    
+digit_sequence([D]) --> digit(D).
+digit_sequence([D|T]) --> digit(D), digit_sequence(T).
 
-substrings(S, Substrings):-
-    partial_substrings(S, Substrings). 
-partial_substrings([], []). 
-partial_substrings(S, Substrings):-
-    length(S, L), 
-    findall(Prefix,(
-        between(1, L, K),
-        length(Prefix, K),
-        prefix(Prefix, S)
-    ), PartialSubstrings),
-    [_|TS] = S,  
-    partial_substrings(TS, NextSubstrings),
-    Substrings = [PartialSubstrings|NextSubstrings].   
+digit(D) --> [D], { D #>= 48, D #=< 57 }.
 
-additive_number(Number):-
-    substrings(Number, Substrings),
-    nl.  
- 
+is_additive_sequence(A, B, C) :-
+    number_codes(NA, A),
+    number_codes(NB, B),
+    number_codes(NC, C),
+    NC #= NA + NB.
