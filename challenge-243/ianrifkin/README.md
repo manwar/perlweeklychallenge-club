@@ -1,131 +1,113 @@
-# I'm a Map
+# loop-de-loop
 
-Challenge 242: https://theweeklychallenge.org/blog/perl-weekly-challenge-242/
+Challenge 243: https://theweeklychallenge.org/blog/perl-weekly-challenge-243/
 
-This week's challenge is pretty fun because it's one of those types of problems that seems really easy but you can end up spending a bunch of time trying to figure out how to solve it in a way that makes some sense.
+I decided to take what I think is a simple approcah to solving this week's problems (and I basically did the same approach in both tasks).
 
-## Task 1: Missing Members
+## Task 1: Reverse Pairs
 ```
-You are given two arrays of integers.
+You are given an array of integers.
 
-Write a script to find out the missing members in each other arrays.
+Write a script to return the number of reverse pairs in the given array.
+
+A reverse pair is a pair (i, j) where: a) 0 <= i < j < nums.length and b) nums[i] > 2 * nums[j].
 
 Example 1
-Input: @arr1 = (1, 2, 3)
-       @arr2 = (2, 4, 6)
-Output: ([1, 3], [4, 6])
+Input: @nums = (1, 3, 2, 3, 1)
+Output: 2
 
-(1, 2, 3) has 2 members (1, 3) missing in the array (2, 4, 6).
-(2, 4, 6) has 2 members (4, 6) missing in the array (1, 2, 3).
+(1, 4) => nums[1] = 3, nums[4] = 1, 3 > 2 * 1
+(3, 4) => nums[3] = 3, nums[4] = 1, 3 > 2 * 1
 Example 2
-Input: @arr1 = (1, 2, 3, 3)
-       @arr2 = (1, 1, 2, 2)
-Output: ([3])
+Input: @nums = (2, 4, 3, 5, 1)
+Output: 3
 
-(1, 2, 3, 3) has 2 members (3, 3) missing in the array (1, 1, 2, 2). Since they are same, keep just one.
-(1, 1, 2, 2) has 0 member missing in the array (1, 2, 3, 3).
+(1, 4) => nums[1] = 4, nums[4] = 1, 4 > 2 * 1
+(2, 4) => nums[2] = 3, nums[4] = 1, 3 > 2 * 1
+(3, 4) => nums[3] = 5, nums[4] = 1, 5 > 2 * 1
 ```
 
-My command-line knowledge makes me think of just having two files and `diff`'ing them. If I needed to solve this for a real purpose I would probably look to using List::Compare to get it done. But for the challenges I like to think about how else I could go about solving for it.
+I added some extra code to my solutions in support of features like supporting command-line input, but let's focus on the code that actually solves the task.
 
-When I first started writing code I tried to:
-1) create an hash for each array
-2) create an array using the hash to grep values in the other array
-3) process the output array to de-duplicate
-4) parse the de-duped output array for pretty printing
-
-It worked but it felt messy. Taking a step back to refactor I realized that I could create an array of hashes for the output, very succicintly:
+I pass the `@nums` array to a subroutine `reverse_pairs` which has a nested `for` loop in it. We want to count how many times `$nums[$i]` is `>` `$nums[$j] * 2` where `$j` is any item after `$i` in the array. Since there is no point to look at an `$i` with no `$j` the parent loop should contain every array element except the last one:
 
 ```
-my @result_hashes = (
-    {map { $_ => check_if_exists($_, $arr2) } @{$arr1}},
-    {map { $_ => check_if_exists($_, $arr1) } @{$arr2}}
-    );
+for (my $i = 0; $i < @nums-1; $i++)
 ```
 
-This sets each hash's key to the the value from the array. Then `check_if_exists` just `grep`s the other array for the value and returns true or false:
+Within the above loop I created a nested loop to compare `$nums[$i]` to every value after it in the array. We know that `$j` is after `$i` so the loop can start at the element after `$i` and continues to the end of the array:
 ```
-sub check_if_exists {
-    my ($k, $arr) = @_;
-    return 1 if grep /$k/, @{$arr};
-    return 0;
-}
+for (my $j = $i+1; $j < @nums; $j++)
 ```
 
+Within that loop I increment a counter whenever `$nums[$i] > $nums[$j] * 2`
 
-That's it! Since the `@result_hashes` array contains hashes it is de-duped by naturely. The only remaining step is printing. Interestingly I expended more lines of code to get the printing in the desired format.
+The full sub is as follows:
 
-Parse hashed results into an @output array where the output array will end up having two values (one for each input).
-
-I loop through the array of hashed results putting the key from the hash in an array if the hash key's value is false (meaning the number was not found in the other array):
 ```
-foreach (@result_hashes) {
-	my %h = %{$_};
-	my @tmp_out = ();
-
-	foreach my $key ( keys %h ) { 
-	    push(@tmp_out, $key) unless $h{$key};
+sub reverse_pairs {
+    my @nums = @_;
+    my $pairs_found = 0;
+    for (my $i = 0; $i < @nums-1; $i++) {
+	for (my $j = $i+1; $j < @nums; $j++) {
+	    $pairs_found++ if ($nums[$i] > $nums[$j] * 2);
 	}
-```
-Then I put that output into the @output array. Note that that point of having the @tmp_out step is solely to have separation between the two inputs. e.g. I want the output from example 1 to be `(['3','1'],['4','6'])` and not `('3','1','4','6')`:
-```
-push(@output, \@tmp_out) if @tmp_out;
-```
-
-For the final step (and not to make this any longer) I used `Data::Dumper` to return the `@output` array in the desired format:
-```
-$Data::Dumper::Terse = 1; #don't print VAR names
-$Data::Dumper::Indent = 0; #keep output on one line
-return '(' . join(',', Dumper(@output)) . ')';
-```
-
-## Task 2: Flip Matrix
-
-```
-You are given n x n binary matrix.
-
-Write a script to flip the given matrix as below.
-
-1 1 0
-0 1 1
-0 0 1
-
-a) Reverse each row
-
-0 1 1
-1 1 0
-1 0 0
-
-b) Invert each member
-
-1 0 0
-0 0 1
-0 1 1
-
-Example 1
-Input: @matrix = ([1, 1, 0], [1, 0, 1], [0, 0, 0])
-Output: ([1, 0, 0], [0, 1, 0], [1, 1, 1])
-Example 2
-Input: @matrix = ([1, 1, 0, 0], [1, 0, 0, 1], [0, 1, 1, 1], [1, 0, 1, 0])
-Output: ([1, 1, 0, 0], [0, 1, 1, 0], [0, 0, 0, 1], [1, 0, 1, 0])
-```
-
-This was a fun task becasuse it's really simple to just look at the examples to know the output (especially with short array lenghts). Reversing numbers and flipping 0's and 1's is easy to do in your head. But how to do it in code? It ends up that it doesn't have to be very tricky either.
-
-I solved this task by passing the matrix array to a sub `matrix_flip` which just uses Perl's native `reverse` to put the array in backwards order then a simple conditional `map` that sets 1's to 0 and 0's to 1. Other than that is just some parentheses and commas for output readability.
-
-```
-sub matrix_flip {
-    my @matrix_rows = @_;
-    my @new_matrix = ();
-    
-    foreach my $row (@matrix_rows) {
-	#the actual flipping - use reverse to swap order and the map to flip values
-	my @new_row = '[' . join (", ", reverse map {$_ == 0 ? 1 : 0} @{$row}) . ']';
-	push (@new_matrix, @new_row);
     }
-    return '(' . join (", ", @new_matrix) . ')';
+    return $pairs_found;
 }
 ```
 
-The full code with comments is available at https://github.com/manwar/perlweeklychallenge-club/tree/master/challenge-242/ianrifkin
+
+## Task 2: Floor Sum
+```
+You are given an array of positive integers (>=1).
+
+Write a script to return the sum of floor(nums[i] / nums[j]) where 0 <= i,j < nums.length. The floor() function returns the integer part of the division.
+
+
+Example 1
+Input: @nums = (2, 5, 9)
+Output: 10
+
+floor(2 / 5) = 0
+floor(2 / 9) = 0
+floor(5 / 9) = 0
+floor(2 / 2) = 1
+floor(5 / 5) = 1
+floor(9 / 9) = 1
+floor(5 / 2) = 2
+floor(9 / 2) = 4
+floor(9 / 5) = 1
+Example 2
+Input: @nums = (7, 7, 7, 7, 7, 7, 7)
+Output: 49
+```
+
+My solution to this task is very similar to my approach to solving task 1. Again I start with a loop of every array item, but this time the parent loop does include the last element in the array:
+```
+for (my $i = 0; $i < @nums; $i++)
+```
+
+Likewise, the nested loop within it needs to include every element (including where `$i == $j`) so it's basically the same loop as its parent:
+```
+for (my $j = 0; $j < @nums; $j++)
+```
+
+Within that loop I take the floor of `$nums[$i] / $nums[$j]` and add it to the sum of the previous values. To calculate the floor I was going to use the actual `floor()` from `POSIX` but just used `int()` -- I think it's good enough for this task but note that `int()` can sometimes produce counterintuitive results (see https://perldoc.perl.org/functions/int).
+
+The full sub is as follows:
+
+```
+sub sum_floors {
+    my @nums = @_;
+    my $sum_floors = 0;
+    for (my $i = 0; $i < @nums; $i++) {
+	for (my $j = 0; $j < @nums; $j++) {
+	    $sum_floors += int($nums[$i] / $nums[$j]);
+	}
+    }
+    return $sum_floors;
+}
+```
+
+The full code with comments is available at https://github.com/manwar/perlweeklychallenge-club/tree/master/challenge-243/ianrifkin
