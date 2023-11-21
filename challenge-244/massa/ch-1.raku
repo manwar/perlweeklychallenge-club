@@ -49,7 +49,7 @@ each index.
 use v6.*;
 
 sub SOLUTION(@a) {
-    @a.map: -> $each { @a.grep(* < $each).elems }
+    (@a X> @a)».Int.batch(+@a).map(*.sum)
 }
 
 multi MAIN (Bool :$test!) {
