@@ -6,32 +6,21 @@ is group-hero(2,1,4), 141;
 
 benchmark();
 
-sub postfix:<!>($num where * >= 0) { [*] 1..$num }
-sub C($n, $r) { $n! / ($r! * ($n - $r)!) }
+# say group-hero((1..20).roll(10000));
+# takes about 1 minute and 40 seconds on my computer.
 
 sub group-hero(*@a)
 {
-    my $b = @a.Bag;
-    
     my %h;
+    my $b = @a.Bag;
 
-    for $b.keys -> $k
-    {
-        %h{$k} = sum map { C($b{$k}, $_) }, 1..$b{$k}
-    }        
-
-    sum gather for $b.keys.combinations.skip
-    {
-        take ([*] %h{$_}) * .max² * .min
-    }
+    $b.keys.map(-> $k { %h{$k} = 2 ** $b{$k} - 1 });        
+    sum $b.keys.combinations.skip.map({ ([*] %h{$_}) * .max² * .min })
 }
 
 sub group-hero-slow(*@a)
 {
-    sum gather for @a.combinations.skip 
-    {
-        take .max² * .min
-    }
+    sum @a.combinations.skip.map({ .max² * .min })
 }
 
 sub benchmark
@@ -42,7 +31,7 @@ sub benchmark
     { say group-hero-slow(@a) },
     { say group-hero(@a)      }
 
-    #Old:  44.378420463s
-    #New:  0.036338161s
-    #NEW version is 1221.26x faster
+    # Old:  45.791410967s
+    # New:  0.020774281s
+    # NEW version is 2204.24x faster
 }    
