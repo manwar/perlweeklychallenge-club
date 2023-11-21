@@ -1,15 +1,9 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2023]"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -48,7 +42,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             8,
@@ -80,10 +73,10 @@
             2,
             0,
             1
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             6,
             0,
@@ -115,20 +108,17 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-11-21 10:56:08 GMT"
+      "text" : "[Champions: 30] Last updated at 2023-11-21 14:24:43 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -163,5 +153,15 @@
          "Jen Guerra",
          "Jeremy Carman"
       ]
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
