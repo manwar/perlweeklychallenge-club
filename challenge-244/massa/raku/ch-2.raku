@@ -45,7 +45,7 @@ by the smallest.
 use v6.*;
 
 sub SOLUTION(@_) {
-    @_.combinations.grep(*.elems)».minmax.map({ .max² * .min }).sum
+    [+] @_.combinations.grep(+ *).map: { .max² * .min }
 }
 
 multi MAIN (Bool :$test!) {
