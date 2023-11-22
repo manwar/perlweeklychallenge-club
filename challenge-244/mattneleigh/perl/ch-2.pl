@@ -62,6 +62,7 @@ sub calculate_combination_power_sum{
 }
 
 
+
 ################################################################################
 # Given a list of N integers, provides a list of all possible combinations of
 # M integers, for all M where 0 <= M <= N
