@@ -48,6 +48,7 @@ sub buildFreq{	#given a string returns letter freq. hash
 
 
 # ------------- version 2 -----------------------
+# -----------------------------------------------
 sub checkWord {
     my ($word,$letters) = @_;
     $word = join '\w*', sort split //, lc $word;
