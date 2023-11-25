@@ -9,7 +9,7 @@ This is a 110-character-wide Unicode UTF-8 Perl-source-code text file with hard 
 
 --------------------------------------------------------------------------------------------------------------
 TITLE BLOCK:
-Solutions in Perl for The Weekly Challenge 244-1.
+Solution in Perl for The Weekly Challenge 244-1.
 Written by Robbie Hatley on Tue Nov 21, 2023.
 
 --------------------------------------------------------------------------------------------------------------
