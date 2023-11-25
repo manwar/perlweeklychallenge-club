@@ -9,7 +9,25 @@ You are given an array of integers representing the strength.
 - power is defined as the square of the largest number in a sequence, multiplied by the smallest.
 ]
 our sub solution(@input) is export {
+    
+    my @sorted = @input.sort({$^b cmp $^a});
+    my $n = @sorted.elems;
+
+    # how many sets exists in power-set with max/min
+    my @multiplicators = 1,2,4,8 ... $n;
+
+    my @sets;
+
+    for ^($n - 1) -> $i {
+        @sets.push: @sorted[$i]² * ([+] @sorted[$i+1 .. *-1] »*» @multiplicators)
+    }
+
+    # single element sets +  multi elements sets
+    ([+] @sorted.map: *³) + [+] @sets
+}
+
+our sub solution-simple-but-slow(@input) is export {
     [+] @input.combinations
-              .grep( *.elems )
-              .map( { .min * .max**2 } )
+              .race(batch => 2**15, degree => Kernel.cpu-cores)
+              .map( { .elems ?? .min * .max**2 !! 0 } )
 }
