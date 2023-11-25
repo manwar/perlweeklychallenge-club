@@ -40,8 +40,8 @@ Output: (0, 0, 0)
 PROBLEM NOTES:
 Well, the obvious (mundane, prosaic) way is: for each element, riffle through the array and count smaller
 elements. But let's not do that. Instead, let's make a copy of the array sorted in increasing order. Then for
-each element of the original array, "number of smaller elements" can be found by counting elements of the
-sorted array until a "not smaller" element is found.
+each element of the sorted array which is greater than the element to its left, store its index as "count" in
+a hash (as suggested to me by Jason Mills in the "Perl Programmers" Facebook group).
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
@@ -81,18 +81,18 @@ sub is_array_of_ints($aref) {
    return 1;
 }
 
-# Given an array of one-or-more integers, return the array
-# of numbers of elements of the original array which are
-# smaller than each element of the original array:
 sub count_smaller ($aref) {
-   my @sorted  = sort {$a<=>$b} @$aref;
-   my @smaller = ();
-   foreach my $x (@$aref) {
-      my $count = 0;
-      foreach my $y (@sorted) {
-         $y < $x and ++$count or last;
+   my @sorted = sort {$a<=>$b} @$aref;
+   my %hash;
+   $hash{$sorted[0]} = 0;
+   for (1..$#sorted) {
+      if ($sorted[$_]>$sorted[$_-1]) {
+         $hash{$sorted[$_]} = $_;
       }
-      push @smaller, $count;
+   }
+   my @smaller = ();
+   for (@$aref) {
+      push @smaller, $hash{$_};
    }
    return @smaller;
 }
@@ -120,6 +120,7 @@ my @arrays = @ARGV ? eval($ARGV[0]) :
 for my $aref (@arrays) {
    say '';
    say 'Original Array = (', join(', ', @$aref), ')';
+   say 'Size Of  Array = ', scalar(@$aref);
    !is_array_of_ints($aref)
    and say 'Error: Not an array of ints. Moving on to next array.'
    and next;
