@@ -18,8 +18,6 @@
 #=============================================================================
 
 use v5.38;
-use Math::Prime::Util qw/forpart/;
-use List::Util qw/uniqint/;
 
 use Getopt::Long;
 my $Verbose = 0;
@@ -28,14 +26,30 @@ my $DoTest  = 0;
 GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 exit(!runTest()) if $DoTest;
 
+my $M = shift;
+my $N = shift;
+
+die "Usage: $0 m n" unless $M && $N;
+die "n must be <= m/2" unless $N <= $M/2;
+my $answer = primePartition($M, $N);
+if ( $Verbose )
+{
+    say join(" or ", map { join(", ", $_->@*) } $answer->@*);
+}
+else
+{
+    say "$_->@*" for $answer->@*;
+}
+
 sub noDup(@list)
 {
+    use List::Util qw/uniqint/;
     return scalar(uniqint(@list)) == scalar(@list);
 }
 
 sub primePartition($m, $n)
 {
-    use Data::Dumper;
+    use Math::Prime::Util qw/forpart/;
     my @part;
     forpart { push @part, [ @_ ] if noDup(@_) } $m, { n => $n, prime => 1} ;
 
