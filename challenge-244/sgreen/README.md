@@ -1,3 +1,3 @@
-# The Weekly Challenge 243
+# The Weekly Challenge 244
 
-Blog: [Weekly Challenge 243](https://dev.to/simongreennet/weekly-challenge-243-3ld)
+Blog: [Weekly Challenge 244](https://dev.to/simongreennet/weekly-challenge-244-jim)
