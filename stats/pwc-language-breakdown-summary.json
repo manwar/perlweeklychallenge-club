@@ -1,22 +1,28 @@
 {
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category",
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      }
    },
    "series" : [
       {
-         "name" : "Contributions",
          "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "align" : "right",
-            "enabled" : "true",
-            "y" : 10,
-            "color" : "#FFFFFF",
             "rotation" : -90,
-            "format" : "{point.y:.0f}"
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "enabled" : "true",
+            "align" : "right",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "color" : "#FFFFFF"
          },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -28,36 +34,30 @@
             ],
             [
                "Raku",
-               7269
+               7271
             ]
          ]
       }
    ],
-   "legend" : {
-      "enabled" : "false"
+   "subtitle" : {
+      "text" : "Last updated at 2023-11-26 00:34:24 GMT"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2023]"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2023-11-25 22:56:43 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      },
-      "type" : "category"
    }
 }
