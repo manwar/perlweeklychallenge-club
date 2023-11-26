@@ -1,0 +1,17 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($arr1, $arr2);
+
+for $arr1.words.permutations>>.join.unique -> $first
+{
+  for $arr2.words.permutations>>.join.unique -> $second
+  {
+    if $first eq $second
+    {
+       say 'true';
+       exit;
+    }
+  }
+}
+
+say 'false';

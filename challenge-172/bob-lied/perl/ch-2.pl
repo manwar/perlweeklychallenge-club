@@ -7,8 +7,6 @@
 #=============================================================================
 # You are given an array of integers.
 # Write a script to compute the five-number summary of the given set
-# of integers.  You can find the definition and example in the wikipedia page. 
-# https://en.wikipedia.org/wiki/Five-number_summary
 # The five-number summary is a set of descriptive statistics that provides
 # information about a dataset. It consists of the five most important
 # sample percentiles:
@@ -17,6 +15,8 @@
 #   the median (the middle value)
 #   the upper quartile or third quartile
 #   the sample maximum (largest observation)
+# Example 1: Input: @int = (0, 0, 1, 2, 63, 61, 27, 13)
+#           Output: 0.00    0.75    7.50   20.88   35.50   63.00
 #=============================================================================
 
 use v5.38;

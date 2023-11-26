@@ -1,150 +1,233 @@
-# Bills in Loops, and Loops in Arrays
+# Maximal Great Day!
 
-**Challenge 236 solutions in Perl by Matthias Muth**
+**Challenge 237 solutions in Perl by Matthias Muth**
 
-## Task 1: Exact Change
+## Task 1: Seize The Day
 
-> You are asked to sell juice each costs \$5. You are given an array of bills. You can only sell ONE juice to each customer but make sure you return exact change back. You only have \$5, \$10 and \$20 notes. You do not have any change in hand at first.<br/>
-> Write a script to find out if it is possible to sell to each customers with correct change.<br/>
-> <br/> 
+> Given a year, a month, a weekday of month, and a day of week (1 (Mon) .. 7 (Sun)), print the day.<br/>
+> <br/>
 > Example 1<br/>
-> Input: @bills = (5, 5, 5, 10, 20)<br/>
-> Output: true<br/>
-> From the first 3 customers, we collect three \$5 bills in order.<br/>
-> From the fourth customer, we collect a \$10 bill and give back a \$5.<br/>
-> From the fifth customer, we give a \$10 bill and a \$5 bill.<br/>
-> Since all customers got correct change, we output true.<br/>
+> Input: Year = 2024, Month = 4, Weekday of month = 3, day of week = 2<br/>
+> Output: 16<br/>
+> The 3rd Tue of Apr 2024 is the 16th<br/>
 > <br/>
 > Example 2<br/>
-> Input: @bills = (5, 5, 10, 10, 20)<br/>
-> Output: false<br/>
-> From the first two customers in order, we collect two \$5 bills.<br/>
-> For the next two customers in order, we collect a \$10 bill and give back a \$5 bill.<br/>
-> For the last customer, we can not give the change of \$15 back because we only have two \$10 bills.
-> Since not every customer received the correct change, the answer is false.<br/>
+> Input: Year = 2025, Month = 10, Weekday of month = 2, day of week = 4<br/>
+> Output: 9<br/>
+> The 2nd Thu of Oct 2025 is the 9th<br/>
 > <br/>
 > Example 3<br/>
-> Input: @bills = (5, 5, 5, 20)<br/>
-> Output: true<br/>
+> Input: Year = 2026, Month = 8, Weekday of month = 5, day of week = 3<br/>
+> Output: 0<br/>
+> There isn't a 5th Wed in Aug 2026<br/>
 
-My solution is based on these ideas:
+My idea for solving this task is to
 
-* We serve the customers with the smallest bills first, in order to get good change for the next ones. 
-* We keep track of our cash separately for each value, to make it easier to pay back starting with larger bills, then lower ones.
-* Whenever a customer can't be paid back his or her change it's a 'sudden death', we can return 'false' immediately. If we make it through the list, we return 'true'.
+- get the first day of the given month,
+- check its day of week, and comparing it with the day of week we want,
+to determine how many days we need to move forward to the first such day of week,
+- then add as many weeks as needed to reach the $n$ th 'Weekday of month'.
+- Before returning the day of month of the day we found,
+make sure we haven't passed into the following month when we moved forward.
 
-And that's basically all.
+For dealing with dates, I find `Time::Piece` objects much more intuitive
+than the 9-element integer list that the core functions `localtime` and `gmtime` return.
+Maybe at the time when `struct tm` was invented for early versions of Unix it was appropriate,
+but with its specification that is sometimes zero based
+(for months, 0 is January -- not really intuitive),
+sometimes one-based (days count from 1 to 31),
+and even 1900-based (years have an offset of 1900)
+it feels a bit outdated today.
 
-For sorting the customers, and for checking our cash in the right order, I define a function to sort numerically (as the default for `sort` is string comparison, which makes `"5"` larger than `"10"`):
+The only problem with `Time::Piece` is that when you want to set up an object
+with a given date and/or time, there is no constructor like
+```perl
+        Time::Piece->new( year => 2023, month => 10, day => 8 );
+```
+So we are stuck between 
+
+* using the `timegm` function from the `Time::Local` core module,<br/>
+which takes 6 parameters for time and date, with said strange offsets,
+and returns a time value in seconds,
+which we then can use to pass it into the `Time::Piece` `gmtime` constructor:
+  ```perl
+  use Time::Piece;
+  use Time::Local;
+  my $first_of_month =
+          gmtime( timegm_posix( 0,0,0, 1, $month - 1, $year - 1900 ) );
+  ```
+
+* using the `strptime` function to parse a date string (I prefer ISO format, like `"2023-10-01"`):
+  ```perl
+  my $first_of_month = Time::Piece->strptime( "$year-$month-01", "%F" );
+  ```
+  I don't like the overhead of first constructing a string,
+  and then immediately parsing it again, but it is much easier to read.
+  We also don't need to load the `Time::Local` module,
+  and we only have exactly one call per example in the task description.<br/>
+  So let's go for this one.<br/>
+  (And good that `strptime` is forgiving about not always having leading zeros, especially for the month.)
+
+Once we have a `Time::Piece` object for the first of month, it is not difficult to do the rest.<br/>
+I left the comments in the code, so I guess there's no need to repeat everything here.
 
 ```perl
-sub sort_num( @values ) {
-    return sort { $a <=> $b } @values;
+use Time::Piece;
+use Time::Seconds;
+
+sub seize_the_day( $year, $month, $weekday_of_month, $day_of_week ) {
+
+    # Set up a Time::Piece object for the first day of the month
+    # (good that strptime '%F' does not insist in leading zeros).
+    my $first_of_month = Time::Piece->strptime( "$year-$month-01", "%F" );
+
+    # The Time::Piece day_of_week method is based on 0=Sunday.
+    # We map our $day_of_week (1=Monday...7=Sunday) to that range by a '% 7'.
+    # We get to the first $day_of_week of the month by subtracting the
+    # weekday of the first of month, then adding our weekday number.
+    # If the difference is negative, another '% 7' will move it one week
+    # forward if necessary.
+    my $t = $first_of_month
+        + ( ( $day_of_week % 7 )
+            - $first_of_month->day_of_week ) % 7
+            * ONE_DAY;
+
+    # Add the number of weeks needed.
+    $t += 7 * ONE_DAY * ( $weekday_of_month - 1 );
+
+    # Make sure we still are in this month.
+    my $next_month = $first_of_month->add_months( 1 );
+    return $t->mon == $month ? $t->day_of_month : 0;
 }
 ```
 
-Then this is my solution:
+## Task 2: Maximise Greatness
 
-```perl
-sub exact_change( @bills ) {
-
-    # Keep a count of the bills we have, separately for each value.
-    my %cash = ();
-
-    # Serve all the customers,
-    # making sure we accept the lowest bills first, for getting change.
-    for ( sort_num @bills ) {
-
-        # Accept  the customer's bill.
-        ++$cash{$_};
-
-        # We need to give this change:
-        my $change_to_return = $_ - 5;
-
-        # Starting with the highest value available,
-        # return bills that are lower than or equal to
-        # the change we need to return.
-        for ( reverse sort_num keys %cash ) {
-            while ( $_ <= $change_to_return && $cash{$_} ) {
-                --$cash{$_};
-                $change_to_return -= $_;
-            }
-        }
-
-        # No success if we couldn't return the correct change.
-        return 0
-            if $change_to_return > 0;
-    }
-    # Success.
-    return 1;
-}
-```
-
-## Task 2: Array Loops
-
-> You are given an array of unique integers.<br/>
-> Write a script to determine how many loops are in the given array.<br/>
-> To determine a loop: Start at an index and take the number at array[index] and then proceed to that index and continue this until you end up at the starting index.<br/>
+> You are given an array of integers.<br/>
+> Write a script to permute the give array such that you get the maximum possible greatness.<br/>
+> To determine greatness, nums[i] < perm[i] where 0 <= i < nums.length<br/>
 > <br/>
 > Example 1<br/>
-> Input: @ints = (4,6,3,8,15,0,13,18,7,16,14,19,17,5,11,1,12,2,9,10)<br/>
+> Input: @nums = (1, 3, 5, 2, 1, 3, 1)<br/>
+> Output: 4<br/>
+> One possible permutation: (2, 5, 1, 3, 3, 1, 1) which returns 4 greatness as below:<br/>
+> nums[0] < perm[0]<br/>
+> nums[1] < perm[1]<br/>
+> nums[3] < perm[3]<br/>
+> nums[4] < perm[4]<br/>
+> <br/>
+> Example 2<br/>
+> Input: @ints = (1, 2, 3, 4)<br/>
 > Output: 3<br/>
-> To determine the 1st loop, start at index 0, the number at that index is 4, proceed to index 4, the number at that index is 15, proceed to index 15 and so on until you're back at index 0.<br/>
-> Loops are as below:<br/>
-> [4 15 1 6 13 5 0]<br/>
-> [3 8 7 18 9 16 12 17 2]<br/>
-> [14 11 19 10]<br/>
-> <br/>
-> Example 2<br/>
-> Input: @ints = (0,1,13,7,6,8,10,11,2,14,16,4,12,9,17,5,3,18,15,19)<br/>
-> Output: 6<br/>
-> Loops are as below:<br/>
-> [0]<br/>
-> [1]<br/>
-> [13 9 14 17 18 15 5 8 2]<br/>
-> [7 11 4 6 10 16 3]<br/>
-> [12]<br/>
-> [19]<br/>
-> <br/>
-> Example 3<br/>
-> Input: @ints = (9,8,3,11,5,7,13,19,12,4,14,10,18,2,16,1,0,15,6,17)<br/>
-> Output: 1<br/>
-> Loop is as below:<br/>
-> [9 4 5 7 19 17 15 1 8 12 18 6 13 2 3 11 10 14 16 0]<br/>
+> One possible permutation: (2, 3, 4, 1) which returns 3 greatness as below:<br/>
+> nums[0] < perm[0]<br/>
+> nums[1] < perm[1]<br/>
+> nums[2] < perm[2]<br/>
 
-To detect a loop, we follow the 'path' of numbers, using each number as the next index, until we find the index that we started with.
+For sure we could generate all possible permutations of the numbers,
+get the score for each, and find the maximum.<br/>
+The problem is that the number of permutations rises very fast, as it is $n!$
+($n$ being the number of numbers in the array).
+Still, for the size of the example input data this probably would not matter too much. 
 
-We use a `@visited` array to mark each number on the path, to avoid running into another loop that we already detected.
+But there is another approach that is much easier to implement than that.<br/>
+And it works -- after sorting the array -- using only one pass through the array.
 
-For each index that we visit, we check whether the number at that index points does not point outside the array (using `exists`, which is shorter than checking against the array bounds).<br/>
-None of the examples has any of these, but it's always better to be on the safe side in case we use other test input.
+Let's start by sorting the numbers, highest to lowest,
+and by creating a copy of that,
+which is going to be the 'permuted' array
+(even if we will develop only exactly one permutation).
 
-So we loop through the array, trying every number as a possible first number of a loop if it was not yet visited before, either as a part of another loop or as a part of a non-loop sequence that we already tried.
+For visualizing what happens, we line up the two arrays next to each other:
+```perl
+@nums       5   3   3   2   1   1   1
+@permuted   5   3   3   2   1   1   1
+```
+Now let's walk through the positions of the arrays, one by one.
 
-In this simple version we only count the loops, we don't store them for display.<br/>So that should be all:
+For the first position (at the left), we have the same numbers, so this is a draw, not a win.
+
+We don't have any higher number that we could use to win against the original number in that position, so let's do something different:<br/>
+We assign our *lowest* number to match that original number.<br/>As we are sure to lose that fight, we kind of 'sacrifice' the lowest number in order to keep better chances for winning other numbers later on. 
+
+In the permuted array this means that we move the all entries one to the right, starting with the current position, and we move the last entry to the current position to fill in the gap that we just opened.<br/>It is kind of a 'rotate right' of the array elements, starting at the current position.  
+```perl
+@nums      *5*  3   3   2   1   1   1
+@permuted  -5-  3   3   2   1   1   1
+             \   \   \   \   \   \  /             |
+            .-\---\---\---\---\---\-
+            V  \   \   \   \   \   \
+@permuted   1   5   3   3   2   1   1
+```
+For the next rounds, we do the same:
+
+-  If the next available 'permuted' number (which is always the highest available) wins against the next original number, we leave it like that.
+-  If we can't win that position, we do a 'rotate right' from that position. 
 
 ```perl
-sub array_loops( @ints ) {
-    my $n_loops = 0;
-    my @visited = ();
+@nums       5  -3-  3   2   1   1   1
+@permuted   1  *5*  3   3   2   1   1
 
-    for my $start_index ( 0..$#ints ) {
-        next if $visited[$start_index];
+@nums       5   3  *3*  2   1   1   1
+@permuted   1   5  -3-  3   2   1   1
+                     \   \   \   \  /             |
+                    .-\---\---\---\-
+                    V  \   \   \   \
+@permuted   1   5   1   3   3   2   1
 
-        my $i = $ints[$start_index];
-        while ( exists( $ints[$i] )
-            && ! $visited[$ints[$i]]
-            && $i != $start_index )
-        {
-            $visited[$i] = 1;
-            $i = $ints[$i];
+@nums       5   3   3  -2-  1   1   1
+@permuted   1   5   1  *3*  3   2   1
+
+@nums       5   3   3   2  -1-  1   1
+@permuted   1   5   1   3  *3*  2   1
+
+@nums       5   3   3   2   1  -1-  1
+@permuted   1   5   1   3   3  *2*  1
+
+@nums       5   3   3   2   1   1  *1*
+@permuted   1   5   1   3   3   2  -1-
+
+Final result:
+@permuted  -1- *5* -1- *3* *3* *2* -1-
+```
+
+The code for this solution is quite straightforward:
+
+```perl
+sub maximise_greatness( @nums ) {
+    # Sort the numbers, highest first.
+    @nums = sort { $b <=> $a } @nums;
+
+    # Our 'permuted' array starts out the same, highest values first.
+    my @permuted = @nums;
+
+    # Now we compare the corresponding numbers one by one.
+    # If the current 'attacker' value is greater than the number, that's great!
+    # (pun intended!) and we can leave the attacker in that position.
+    # If instead the 'attacker' is less or equal than the number, we have no
+    # chance of finding a better one (remember the available values are
+    # sorted highest first).
+    # We therefore move the *lowest* attacker value into that position,
+    # 'waisting it' on the number that we could not win.
+    # This keeps our best chances of winning other numbers.
+    # We also move all the rest of the permuted to the right by one position.
+    # The current attacker will then have another chance with the next number.
+
+    my $greatness = 0;
+    for ( 0..$#nums ) {
+        if ( $permuted[$_] > $nums[$_] ) {
+            ++$greatness;
         }
-
-        ++$n_loops
-            if $i == $start_index;
+        else {
+            # Move the last element to the current position,
+            # shifting the rest to the right.
+            splice @permuted, $_, 0, pop @permuted;
+        }
     }
-    return $n_loops;
+    return $greatness;
 }
 ```
+
+A solution that scales well like this makes a maximal great day!
 
 #### **Thank you for the challenge!**

@@ -1,3 +1,3 @@
-# The Weekly Challenge 235
+# The Weekly Challenge 237
 
-Blog: [Adding and removing integers](https://dev.to/simongreennet/adding-and-removing-integers-3i4g)
+Blog: [Seize the greatness](https://dev.to/simongreennet/seize-the-greatness-38n0)

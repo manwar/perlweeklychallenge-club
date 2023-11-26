@@ -16,8 +16,15 @@
 # A prime partition is a set of primes that sums to the target number.
 # There is a function in Math::Prime::Util that does this.
 #=============================================================================
+# https://en.wikipedia.org/wiki/Partition_(number_theory)
+# Example 1: Input: $m = 18, $n = 2
+#           Output: 5, 13 or 7, 11
+# Example 2: Input: $m = 19, $n = 3
+#           Output: 3, 5, 11
+#=============================================================================
 
 use v5.38;
+use builtin qw/true false/; no warnings "experimental::builtin";
 
 use Getopt::Long;
 my $Verbose = 0;

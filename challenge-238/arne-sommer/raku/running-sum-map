@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@int where all(@int) ~~ Int && @int.elems > 0);
+
+my @running-sum = (^@int.elems).map({ [+] @int[0..$_] } );
+
+say '(' ~ @running-sum.join(", ") ~ ')';

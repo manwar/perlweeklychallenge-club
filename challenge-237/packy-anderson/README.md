@@ -8,16 +8,22 @@ Sample output
 ```
 $ perl/ch-1.pl
 Example 1:
-Input: @bills = (5, 5, 5, 10, 20)
-Output: true
+Input: Year = 2024, Month = 4, Weekday of month = 3, day of week = 2
+Output: 16
+
+The 3rd Tue of Apr 2024 is the 16th
 
 Example 2:
-Input: @bills = (5, 5, 10, 10, 20)
-Output: false
+Input: Year = 2025, Month = 10, Weekday of month = 2, day of week = 4
+Output: 9
+
+The 2nd Thu of Oct 2025 is the 9th
 
 Example 3:
-Input: @bills = (5, 5, 5, 20)
-Output: true
+Input: Year = 2026, Month = 8, Weekday of month = 5, day of week = 3
+Output: 0
+
+There isn't a 5th Wed in Aug 2026
 ```
 
 * [Task 2](perl/ch-2.pl)
@@ -26,32 +32,25 @@ Sample output
 ```
 $ perl/ch-2.pl
 Example 1:
-Input: @ints = (4,6,3,8,15,0,13,18,7,16,14,19,17,5,11,1,12,2,9,10)
-Output: 3
+Input: @ints = (1, 3, 5, 2, 1, 3, 1)
+Output: 4
 
-Loops are as below:
-[4 15 1 6 13 5 0]
-[3 8 7 18 9 16 12 17 2]
-[14 11 19 10]
+One possible permutation: (2, 5, 1, 3, 3, 1, 1)
+which returns 4 greatness as below:
+nums[0] < perm[0]
+nums[1] < perm[1]
+nums[3] < perm[3]
+nums[4] < perm[4]
 
 Example 2:
-Input: @ints = (0,1,13,7,6,8,10,11,2,14,16,4,12,9,17,5,3,18,15,19)
-Output: 6
+Input: @ints = (1, 2, 3, 4)
+Output: 3
 
-Loops are as below:
-[0]
-[1]
-[13 9 14 17 18 15 5 8 2]
-[7 11 4 6 10 16 3]
-[12]
-[19]
-
-Example 3:
-Input: @ints = (9,8,3,11,5,7,13,19,12,4,14,10,18,2,16,1,0,15,6,17)
-Output: 1
-
-Loop is as below:
-[9 4 5 7 19 17 15 1 8 12 18 6 13 2 3 11 10 14 16 0]
+One possible permutation: (2, 3, 4, 1)
+which returns 3 greatness as below:
+nums[0] < perm[0]
+nums[1] < perm[1]
+nums[2] < perm[2]
 ```
 
 ## Raku
@@ -62,16 +61,22 @@ Sample output
 ```
 $ raku/ch-1.raku
 Example 1:
-Input: @bills = (5, 5, 5, 10, 20)
-Output: true
+Input: Year = 2024, Month = 4, Weekday of month = 3, day of week = 2
+Output: 16
+
+The 3rd Tuesday of 4 2024 is the 16th
 
 Example 2:
-Input: @bills = (5, 5, 10, 10, 20)
-Output: false
+Input: Year = 2025, Month = 10, Weekday of month = 2, day of week = 4
+Output: 9
+
+The 2nd Thursday of 10 2025 is the 9th
 
 Example 3:
-Input: @bills = (5, 5, 5, 20)
-Output: true
+Input: Year = 2026, Month = 8, Weekday of month = 5, day of week = 3
+Output: 0
+
+There isn't a 5th Wednesday in 8 2026
 ```
 
 * [Task 2](raku/ch-2.raku)
@@ -80,32 +85,25 @@ Sample output
 ```
 $ raku/ch-2.raku
 Example 1:
-Input: @ints = (4,6,3,8,15,0,13,18,7,16,14,19,17,5,11,1,12,2,9,10)
-Output: 3
+Input: @ints = (1, 3, 5, 2, 1, 3, 1)
+Output: 4
 
-Loops are as below:
-[4 15 1 6 13 5 0]
-[3 8 7 18 9 16 12 17 2]
-[14 11 19 10]
+One possible permutation: (2, 5, 1, 3, 3, 1, 1)
+which returns 4 greatness as below:
+nums[0] < perm[0]
+nums[1] < perm[1]
+nums[3] < perm[3]
+nums[4] < perm[4]
 
 Example 2:
-Input: @ints = (0,1,13,7,6,8,10,11,2,14,16,4,12,9,17,5,3,18,15,19)
-Output: 6
+Input: @ints = (1, 2, 3, 4)
+Output: 3
 
-Loops are as below:
-[0]
-[1]
-[13 9 14 17 18 15 5 8 2]
-[7 11 4 6 10 16 3]
-[12]
-[19]
-
-Example 3:
-Input: @ints = (9,8,3,11,5,7,13,19,12,4,14,10,18,2,16,1,0,15,6,17)
-Output: 1
-
-Loop is as below:
-[9 4 5 7 19 17 15 1 8 12 18 6 13 2 3 11 10 14 16 0]
+One possible permutation: (2, 3, 4, 1)
+which returns 3 greatness as below:
+nums[0] < perm[0]
+nums[1] < perm[1]
+nums[2] < perm[2]
 ```
 
 ## Guest Language: Python
@@ -118,4 +116,4 @@ Loop is as below:
 
 ## Blog Post
 
-[Perl Weekly Challenge: Exact Change and Array Loops](https://packy.dardan.com/2023/09/25/perl-weekly-challenge-exact-change-and-array-loops/)
+[Perl Weekly Challenge: Minute by minute, that’s how you win it!](https://packy.dardan.com/2023/10/04/perl-weekly-challenge-minute-by-minute-thats-how-you-win-it/)

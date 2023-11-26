@@ -1,0 +1,19 @@
+:- use_module(library(clpz)).
+:- use_module(library(reif)).
+:- use_module(library(pairs)).
+:- use_module(library(lists)).
+
+r_div(A,B,true):-A mod B#=0.
+r_div(A,B,false):-A mod B#>0.
+
+np_(C,Cp,N,P):-
+  if_(=(N,1),
+    P=C,
+  	if_(
+    	r_div(N,Cp),
+    	(Q#=N/Cp,D#=C+1,np_(D,Cp,Q,P)),
+    	(Np#=Cp+1,np_(C,Np,N,P))
+  	)
+  ).
+np(N,P):-np_(0,2,N,P).
+ch2(A,S):-maplist(np,A,B),pairs_keys_values(P,B,A),keysort(P,Q),pairs_values(Q,S).
