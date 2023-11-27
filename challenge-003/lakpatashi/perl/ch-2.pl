@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+use v5.10;
 use strict;
 use warnings;
 
@@ -33,3 +34,15 @@ sub PascalNext{
 	return join " ",@newArr;
 }
 #print "\n var:: $n\n";
+
+sub printPascal_v2 {
+    my ($numLine) = @_;
+    return if $numLine <3;
+    say ' 'x$numLine, 1;
+    my @pattern = (1,1);
+    say ' 'x($numLine-1),"@pattern";
+    for my $i (2..$numLine){
+        @pattern = ( 1, map( $pattern[$_-1]+$pattern[$_], 1..$#pattern ), 1 ) ;
+        say ' 'x($numLine-$i),"@pattern";
+    }
+}

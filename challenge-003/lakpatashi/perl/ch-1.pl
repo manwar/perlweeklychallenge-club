@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+use v5.10;
 use strict;
 use warnings;
 
@@ -17,3 +18,12 @@ print join ' ',sort {$a<=>$b} @arr;
 print "\n";
 
 
+
+sub v2 {
+	my ($a,$b,$c) = (5,3,2);
+	for my $num (0..7){
+		#say $num;
+		my ($i,$j,$k) = split //, sprintf("%03b", $num);
+		say ( $a**$i * $b**$j * $c**$k );
+	}
+}

@@ -1,0 +1,5 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@int where @int.elems > 0 && all(@int) ~~ Int);
+
+say "(" ~ @int.map({ my $map = $_; @int.grep({ $_ < $map }).elems }).join(", ") ~ ")";

@@ -1,0 +1,18 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (*@int where @int.elems > 0 && all(@int) ~~ Int,
+               :v(:$verbose));
+
+my $index = 0;
+my @output;
+
+for @int -> $int
+{
+  my $count = @int.grep( * < $int).elems;
+
+  say ": For index = { $index++ }, count of elements less $int is $count." if $verbose;
+
+  @output.push: $count;
+}
+
+say "(" ~ @output.join(", ") ~ ")";
