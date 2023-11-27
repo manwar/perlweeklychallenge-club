@@ -26,16 +26,16 @@ additive_number(Sequence) --> Sequence,
       \+ C = []},    
     digit_sequence(A), digit_sequence(B), digit_sequence(C), 
     { is_additive_sequence(A, B, C), 
-      T = []}.
+      T = [], !}.
     
 digit_sequence([]) --> [].    
 digit_sequence([D]) --> digit(D).
 digit_sequence([D|T]) --> digit(D), digit_sequence(T).
 
-digit(D) --> [D], { D #>= 48, D #=< 57 }.
+digit(D) --> [D], { between(0, 9, X), number_codes(X, [D]) }.
 
 is_additive_sequence(A, B, C) :-
     number_codes(NA, A),
     number_codes(NB, B),
     number_codes(NC, C),
-    NC #= NA + NB.
+    NC is NA + NB.
