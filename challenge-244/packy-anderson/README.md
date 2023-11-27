@@ -8,19 +8,16 @@ Sample output
 ```
 $ raku/ch-1.raku
 Example 1:
-Input: @nums = (1, 3, 2, 3, 1)
-Output: 2
-
-(1, 4) => nums[1] = 3, nums[4] = 1, 3 > 2 * 1
-(3, 4) => nums[3] = 3, nums[4] = 1, 3 > 2 * 1
+Input: @int = (8, 1, 2, 2, 3)
+Output: (4, 0, 1, 1, 3)
 
 Example 2:
-Input: @nums = (2, 4, 3, 5, 1)
-Output: 3
+Input: @int = (6, 5, 4, 8)
+Output: (2, 1, 0, 3)
 
-(1, 4) => nums[1] = 4, nums[4] = 1, 4 > 2 * 1
-(2, 4) => nums[2] = 3, nums[4] = 1, 3 > 2 * 1
-(3, 4) => nums[3] = 5, nums[4] = 1, 5 > 2 * 1
+Example 3:
+Input: @int = (2, 2, 2)
+Output: (0, 0, 0)
 ```
 
 * [Task 2](raku/ch-2.raku)
@@ -29,12 +26,8 @@ Sample output
 ```
 $ raku/ch-2.raku
 Example 1:
-Input: @nums = (2, 5, 9)
-Output: 10
-
-Example 2:
-Input: @nums = (7, 7, 7, 7, 7, 7, 7)
-Output: 49
+Input: @int = (2, 1, 4)
+Output: 141
 ```
 
 ## Perl
@@ -45,19 +38,16 @@ Sample output
 ```
 $ perl/ch-1.pl
 Example 1:
-Input: @nums = (1, 3, 2, 3, 1)
-Output: 2
-
-(1, 4) => nums[1] = 3, nums[4] = 1, 3 > 2 * 1
-(3, 4) => nums[3] = 3, nums[4] = 1, 3 > 2 * 1
+Input: @arr = (8, 1, 2, 2, 3)
+Output: (4, 0, 1, 1, 3)
 
 Example 2:
-Input: @nums = (2, 4, 3, 5, 1)
-Output: 3
+Input: @arr = (6, 5, 4, 8)
+Output: (2, 1, 0, 3)
 
-(1, 4) => nums[1] = 4, nums[4] = 1, 4 > 2 * 1
-(2, 4) => nums[2] = 3, nums[4] = 1, 3 > 2 * 1
-(3, 4) => nums[3] = 5, nums[4] = 1, 5 > 2 * 1
+Example 3:
+Input: @arr = (2, 2, 2)
+Output: (0, 0, 0)
 ```
 
 * [Task 2](perl/ch-2.pl)
@@ -66,12 +56,8 @@ Sample output
 ```
 $ perl/ch-2.pl
 Example 1:
-Input: @nums = (2, 5, 9)
-Output: 10
-
-Example 2:
-Input: @nums = (7, 7, 7, 7, 7, 7, 7)
-Output: 49
+Input: @int = (2, 1, 4)
+Output: 141
 ```
 
 ## Guest Language: Python
@@ -80,4 +66,4 @@ Output: 49
 
 ## Blog Post
 
-[Perl Weekly Challenge: Three of a Reverse Sum Pair](https://packy.dardan.com/b/E5)
+[Perl Weekly Challenge: Count... just a little bit smaller...](https://packy.dardan.com/b/EK)
