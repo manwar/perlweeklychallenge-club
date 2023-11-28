@@ -40,26 +40,25 @@ SO WHAT DO YOU THINK ?
 
 from itertools import permutations, chain
 
-### this function looks a bit messy as it tries to operate on iterators alone to saving memory resources, avoiding storing any of them to intermediate list/tuple 
-def lot(tup: tuple):
+def permutes(tup: tuple):
+    for n in range(1,len(tup)+1):   ### need permutations(tup,n) loop instead of permutations(tup) alone to avoid a bug in itertools/permutations
+        yield permutations(tup, n)
+
+def intsOfThree(tup: tuple):
+    for ints in chain.from_iterable(permutes(tup)):
+        if sum(ints) % 3 == 0:   ### If a + b = c , then a ( mod N ) + b ( mod N ) ≡ c ( mod N )
+            yield ints
+
+def intOfThree(tup: tuple):
+    for iStrs in  ((str(i) for i in ints) for ints in intsOfThree(tup)):   ### int-to-string conversion for ints so we can further concat and convert them to an int
+        yield int("".join(iStrs))   ### concat and convert int strings to an int
+
+def largestOfThree(tup: tuple):
     return max(   ### max() can avoid an error from null permute iterator as it operates on chain.from_iterables that include default (-1,)
             chain.from_iterable(
                 (
-                    ( i for i in
-                        (
-                            int("".join(j)) for j in   ### concat and convert int strings to an int
-                            (
-                                ( str(z) for z in y) for y in   ### int-to-string conversion for ints so we can further concat and convert them to an int
-                                (
-                                    x for x in
-                                    chain.from_iterable(   ### need permutations(tup,n) loop instead of permutations(tup) alone to avoid a bug in itertools/permutations
-                                        permutations(tup, n) for n in range(1,len(tup)+1)
-                                        ) if sum(x) % 3 == 0   ### If a + b = c , then a ( mod N ) + b ( mod N ) ≡ c ( mod N )
-                                    )
-                                )
-                            )
-                        ),
-                    (-1,),   ### add (-1,) to chain.from_iterable to avoid max() error from null iterator from permutations (i.e. when nothing qualifies sum % 3 == 0
+                    intOfThree(tup),
+                    (-1,)   ### add (-1,) to chain.from_iterable to avoid max() error from null iterator from permutations (i.e. when nothing qualifies sum % 3 == 0
                     )
                 )
             )
@@ -75,4 +74,4 @@ for inpt, otpt in {
         (8, 76, 0): 8760,
         (8, 94, 0): 9480,
         }.items():
-    print(otpt==lot(inpt))
+    print(otpt==largestOfThree(inpt))
