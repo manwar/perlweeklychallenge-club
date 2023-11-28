@@ -67,6 +67,14 @@ func main() {
 
 type ints []int
 
+func (d ints) sum() int {
+	s := 0
+	for _, v := range d {
+		s += v
+	}
+	return s
+}
+
 func (d ints) concat() int {
 	r := d[0]
 	var n, t int
@@ -87,8 +95,8 @@ func (d ints) lot() int {
 	for i := l; i > 0; i-- {
 		res, closer := d.permute(i)
 		for v := range res {
-			r := v.concat()
-			if r%3 == 0 {
+			if v.sum()%3 == 0 { // If a + b = c , then a ( mod N ) + b ( mod N ) ≡ c ( mod N ), we can filter lots of them out before concat
+				r := v.concat()
 				if r > max {
 					max = r
 				}
