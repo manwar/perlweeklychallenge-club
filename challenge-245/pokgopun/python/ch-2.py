@@ -14,19 +14,19 @@ Submitted by: [46]Mohammad S Anwar
 
 Example 1
 
-Input: @digits = (8, 1, 9)
+Input: @ints = (8, 1, 9)
 Output: 981
 
 981 % 3 == 0
 
 Example 2
 
-Input: @digits = (8, 6, 7, 1, 0)
+Input: @ints = (8, 6, 7, 1, 0)
 Output: 8760
 
 Example 3
 
-Input: @digits = (1)
+Input: @ints = (1)
 Output: -1
      __________________________________________________________________
 
@@ -38,22 +38,37 @@ SO WHAT DO YOU THINK ?
 """
 ### solution by pokgopun@gmail.com
 
-from itertools import permutations
+from itertools import permutations, chain
 
 def lot(tup: tuple):
-    for n in range(len(tup),0,-1):
-        for x in permutations(
-                sorted(tup,reverse=True), n
-                ):
-            y = int(
-                    "".join( str(e) for e in x )
+    return max(
+            chain.from_iterable(
+                (
+                    ( i for i in
+                        (
+                            int("".join(x)) for x in
+                            (
+                                (str(e) for e in y) for y in
+                                chain.from_iterable(
+                                    permutations(tup, n) for n in range(1,len(tup)+1)
+                                    )
+                                )
+                            ) if i % 3 == 0
+                        ),
+                    (-1,),
                     )
-            if y % 3 == 0: return y
-    return -1
+                )
+            )
 
 for inpt, otpt in {
         (8, 1, 9): 981,
         (8, 6, 7, 1, 0): 8760,
         (1,): -1,
+        (0,0,0): 0,
+        (4, 8, 911): 9114,
+        (8, 85, 0): 8850,
+        (8, 89, 2): 8982,
+        (8, 76, 0): 8760,
+        (8, 94, 0): 9480,
         }.items():
     print(otpt==lot(inpt))

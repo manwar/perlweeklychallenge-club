@@ -14,19 +14,19 @@ Submitted by: [46]Mohammad S Anwar
 
 Example 1
 
-Input: @digits = (8, 1, 9)
+Input: @ints = (8, 1, 9)
 Output: 981
 
 981 % 3 == 0
 
 Example 2
 
-Input: @digits = (8, 6, 7, 1, 0)
+Input: @ints = (8, 6, 7, 1, 0)
 Output: 8760
 
 Example 3
 
-Input: @digits = (1)
+Input: @ints = (1)
 Output: -1
      __________________________________________________________________
 
@@ -48,20 +48,26 @@ import (
 
 func main() {
 	for _, data := range []struct {
-		input  digits
+		input  ints
 		output int
 	}{
-		{digits{8, 1, 9}, 981},
-		{digits{8, 6, 7, 1, 0}, 8760},
-		{digits{1}, -1},
+		{ints{8, 1, 9}, 981},
+		{ints{8, 6, 7, 1, 0}, 8760},
+		{ints{1}, -1},
+		{ints{0, 0, 0}, 0},
+		{ints{4, 8, 911}, 9114},
+		{ints{8, 85, 0}, 8850},
+		{ints{8, 89, 2}, 8982},
+		{ints{8, 76, 0}, 8760},
+		{ints{8, 94, 0}, 9480},
 	} {
 		fmt.Println(reflect.DeepEqual(data.output, data.input.lot()))
 	}
 }
 
-type digits []int
+type ints []int
 
-func (d digits) concat() int {
+func (d ints) concat() int {
 	r := d[0]
 	var n, t int
 	for _, v := range d[1:] {
@@ -75,26 +81,27 @@ func (d digits) concat() int {
 	return r
 }
 
-func (d digits) lot() int {
-	slices.Sort(d)
-	slices.Reverse(d)
+func (d ints) lot() int {
+	max := -1
 	l := len(d)
 	for i := l; i > 0; i-- {
 		res, closer := d.permute(i)
 		for v := range res {
 			r := v.concat()
 			if r%3 == 0 {
-				closer()
-				return r
+				if r > max {
+					max = r
+				}
 			}
 		}
+		closer()
 	}
-	return -1
+	return max
 }
 
 // transcribed from https://docs.python.org/3/library/itertools.html#itertools.permutations
-func (d digits) permute(r int) (res chan digits, closer func()) {
-	res = make(chan digits)
+func (d ints) permute(r int) (res chan ints, closer func()) {
+	res = make(chan ints)
 	done := make(chan struct{})
 	n := len(d)
 	idx := make([]int, n)
@@ -106,7 +113,7 @@ func (d digits) permute(r int) (res chan digits, closer func()) {
 		cyc[i] = n - i
 	}
 	go func() {
-		r0 := make(digits, r)
+		r0 := make(ints, r)
 		copy(r0, d[:r])
 		select {
 		case <-done:
@@ -124,7 +131,7 @@ func (d digits) permute(r int) (res chan digits, closer func()) {
 				} else {
 					j := cyc[i]
 					idx[i], idx[n-j] = idx[n-j], idx[i]
-					rn := make(digits, r)
+					rn := make(ints, r)
 					for i, v := range idx[:r] {
 						rn[i] = d[v]
 					}
