@@ -45,17 +45,15 @@ def lot(tup: tuple):
     return max(   ### max() can avoid an error from null permute iterator as it operates on chain.from_iterables that include default (-1,)
             chain.from_iterable(
                 (
-                    ( i for i in
+                    (
+                        int("".join(iStrs)) for iStrs in   ### concat and convert int strings to an int
                         (
-                            int("".join(j)) for j in   ### concat and convert int strings to an int
+                            ( str(i) for i in ints) for ints in   ### int-to-string conversion for ints so we can further concat and convert them to an int
                             (
-                                ( str(z) for z in y) for y in   ### int-to-string conversion for ints so we can further concat and convert them to an int
-                                (
-                                    x for x in
-                                    chain.from_iterable(   ### need permutations(tup,n) loop instead of permutations(tup) alone to avoid a bug in itertools/permutations
-                                        permutations(tup, n) for n in range(1,len(tup)+1)
-                                        ) if sum(x) % 3 == 0   ### If a + b = c , then a ( mod N ) + b ( mod N ) ≡ c ( mod N )
-                                    )
+                                ints for ints in
+                                chain.from_iterable(   ### need permutations(tup,n) loop instead of permutations(tup) alone to avoid a bug in itertools/permutations
+                                    permutations(tup, n) for n in range(1,len(tup)+1)
+                                    ) if sum(ints) % 3 == 0   ### If a + b = c , then a ( mod N ) + b ( mod N ) ≡ c ( mod N )
                                 )
                             )
                         ),
