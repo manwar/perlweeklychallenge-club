@@ -36,15 +36,11 @@ Output: -1
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
-This WOULD BE just a matter of combinatorics if not for the fact that no upper bound is given for our
-non-negative integers. That means that we'll be "concatenating" integers with possibly more-than-one digit,
-so we can't just assume that each integer is one digit then concatenate all permutations of all combinations.
-Instead, we need to make a "sub concatenate($aref)" which first splits each input into its digits, then
-pushes those clusters of digits onto an array, then joins that array. Also we'll need a "sub are_nni($aref)"
-to check that all inputs are non-negative integers, and a "sub largest_of_three($aref)" to find the largest
-multiple of 3 we can make or return -1 if we can't make any. THEN the rest is just permutations of
-combinations. More work for CPAN module "Math::Combinatorics". This time I'll use it's non-OOP functions,
-as OOP just isn't necessary for a problem like this, and indeed just gets in the way.
+This problem is really just a matter of combinatorics, so I'll use CPAN module "Math::Combinatorics".
+But this time I'll use it's non-OOP functions, as OOP just isn't necessary for a problem like this and just
+gets in the way. I'll call my main sub "sub largest_of_three($aref)", which will find the largest multiple of
+3 I can make by concatenting any permutation of any combination of integers from the input array, or return -1
+if I can't make any divisible-by-three integers.
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
@@ -84,12 +80,6 @@ sub are_nni ($aref) {
    return 1;
 }
 
-sub concatenate($aref) {
-   my @digits;
-   for (@$aref) {push @digits, split(//,$_)}
-   return join('',@digits);
-}
-
 sub largest_of_three($aref) {
    # For each possible non-empty subset size of @$aref, get all combinations
    # of that size, then get all permutations of each of those combinations,
@@ -102,7 +92,7 @@ sub largest_of_three($aref) {
       for my $cref ( @combs ) {
          my @perms = permute(@$cref);
          for my $pref ( @perms ) {
-            my $integer = concatenate($pref);
+            my $integer = join('',@$pref);
             0 == $integer % 3 && $integer > $max and $max = $integer;
          }
       }
