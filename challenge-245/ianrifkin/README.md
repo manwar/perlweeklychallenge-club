@@ -22,9 +22,10 @@ Output: ('c++', 'java', 'haskell')
 My first instinct to solve this was to align the two arrays (lang and popularity) into a hash. While this made sense I quickly realized I would still have the step of sorting based on the keys. This should still have worked but since the arrays have the same indices I didn't really need to combine them into a hash.
 
 I sorted the popularity array and outputted the indices in sort order (not the values):
-`my @pop_sort_idx = sort { $popularity[$a] <=> $popularity[$b] } 0 .. $#popularity;`
+```my @pop_sort_idx = sort { $popularity[$a] <=> $popularity[$b] } 0 .. $#popularity;```
 
-With that I return an array of the languages in sort order using the inputted langage array in the order of the sorted popularity: `@lang[@pop_sort_idx];`
+With that I return an array of the languages in sort order using the inputted langage array in the order of the sorted popularity:
+```@lang[@pop_sort_idx];```
 
 ## Task 2: Largest of Three
 
