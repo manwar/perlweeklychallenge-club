@@ -33,6 +33,18 @@ With that I return an array of the languages in sort order using the inputted la
 @lang[@pop_sort_idx];
 ```
 
+I also solved this task only slightly differently with Python. I first created a list combining the `popularity` and `lang` lists using `zip`:
+```
+sorted_langs_with_pop = sorted(zip(popularity,lang))
+```
+
+I then use that to create the desired output of just the languages in the sort order:
+```
+[lang for _,lang in sorted_langs_with_pop]
+```
+
+That could have been in one line but I thought it was clearer in the two distinct steps.
+
 ## Task 2: Largest of Three
 
 ```
@@ -84,6 +96,37 @@ foreach my $num_2_try (sort { $b <=> $a } @numbers_to_try) {
 ```
 
 The above loop will return the first number (the largest number) divisible by 3. If it doesn't find one then after this loop there is a `return -1` so that the default behavoir matches the requirements.
+
+
+Again with this task I wanted to see how to solve it using Python. It is a fairly similar approach but I of course don't have the Perl modules available; instead I used `itertools:permutations` which is native to Python.
+
+`itertools:permutations` can have a length to its output but I don't see a way for it to provide a dynamic length like we need. Instead I loop through the list length so that I can run the permutations for each length:
+```
+for i in range(len(nums)):
+    num_of_digits = i+1
+    perms = list(permutations(nums, num_of_digits))
+```
+
+That creates a list of tuples, but I need the tuples to be combined into actual numbers to try:
+```
+    for group_of_digits in perms:
+        combined_digits = int("".join(map(str, group_of_digits)))            
+        numbers_to_try.append(combined_digits)
+```
+
+Now I have an unsorted list of numbers to try, so next comes the sorting:
+```
+numbers_to_try.sort(reverse=True)
+```
+
+The final step, like in the Perl solution, is to return the first (largest) number divisible by 3, otherwise return -1:
+```
+for num2try in numbers_to_try:
+    if num2try % 3 == 0:
+       return num2try
+return -1
+```
+
 
 ---
 The full code with comments is available at https://github.com/manwar/perlweeklychallenge-club/tree/master/challenge-245/ianrifkin
