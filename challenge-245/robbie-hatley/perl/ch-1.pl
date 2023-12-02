@@ -67,16 +67,18 @@ BEGIN {$t0 = time}
 # ------------------------------------------------------------------------------------------------------------
 # SUBROUTINES:
 
-sub is_array_of_pos_ints($aref) {
+sub is_array_of_numbers($aref) {
    return 0 if 'ARRAY' ne ref $aref;
    for (@$aref) {
-      return 0 if !/^[1-9]\d*$/;
+      return 0 if !/^0$|^-?0\.[0-9]+$|^-?[1-9]\d*(?:\.[0-9]+)$/;
    }
    return 1;
 }
 
 sub sort_array1_by_array2($aref1, $aref2) {
-   return @$aref1[sort{$$aref2[$a]<=>$$aref2[$b]}0..$#$aref1];
+   is_array_of_numbers($aref2)
+   and return @$aref1[sort{$$aref2[$a]<=>$$aref2[$b]}0..$#$aref1]
+   or  return @$aref1[sort{$$aref2[$a]cmp$$aref2[$b]}0..$#$aref1]
 }
 
 # ------------------------------------------------------------------------------------------------------------
@@ -109,11 +111,6 @@ for my $aref (@arrays) {
    say 'Popularities = (' . join(', ',              @$aref2) . ')';
    if ( scalar(@$aref1) != scalar(@$aref2) ) {
       say 'Error: subarrays are of unequal lengths.';
-      say 'Moving on to next array.';
-      next;
-   }
-   if ( !is_array_of_pos_ints($aref2) ) {
-      say 'Error: second subarray is not array of positive integers.';
       say 'Moving on to next array.';
       next;
    }
