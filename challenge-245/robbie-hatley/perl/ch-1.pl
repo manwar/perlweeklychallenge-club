@@ -42,7 +42,7 @@ IO NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
 double-quoted array of arrays of two arrays, with the inner array pairs consisting of an array of
 single-quoted strings followed by an array of small positive integers (1-9), in proper Perl syntax, like so:
-./ch-1.pl "([['Go','Lisp','AutoIt3','Logo'],[2, 1, 4, 3]],[['Awk','Cobol','Perl','Sed'],['golf','quaint','broad','easy']])"
+./ch-1.pl "([['Go','Lisp','AutoIt3','Logo'],[2, 19, 111, 3]],[['Awk','Cobol','Perl','Sed'],['golf','quaint','broad','easy']])"
 
 Output is to STDOUT and will be each input array followed by the corresponding output.
 
