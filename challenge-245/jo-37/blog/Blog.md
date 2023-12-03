@@ -75,10 +75,14 @@ Suppose we have `p = sum(d[i]) mod 3`.
 If the remaining set of digits is not empty, the largest number is formed from the digits in descending order.
 Otherwise there is no solution.
 
+It turns out, that sorting the digits using a standard algorithm would
+be the most expensive operation in this approach.  Thus using a specific
+O(N) sort for a collection of decimal digits.
+
 This results in the following implementation:
 ```
 sub largest_of_three {
-	my (@digits, @ind, $mod) = sort @_;
+    my (@digits, @ind, $mod) = dsort(@_);
     for (0 .. $#digits) {
         # The digit modulo 3
         my $digit = $digits[$_] % 3;
@@ -97,6 +101,12 @@ sub largest_of_three {
     # Build the maximum number from the remaining digits in descending
     # order or fail.
     @digits ? 0 + join '', reverse grep defined, @digits : -1;
+}
+
+sub dsort {
+    my @digits;
+    $digits[$_]++ for @_;
+    map +($_) x ($digits[$_] // 0), 0 .. 9;
 }
 
 ```
