@@ -28,7 +28,7 @@ my @candidates; # if neccesary to remove numbers
 if($total==1){
     # remove the smallest number that leaves a residue one
     push @candidates, [$one[0]] if(@one);
-    # remove the two smallest numbers that leaves a residue one
+    # remove the two smallest numbers that leaves a residue two
     push @candidates, [@two[1,0]] if(@two>=2);
 }
 if($total==2){
