@@ -15,7 +15,7 @@ my $index=0;
 my $total;
 my @one;
 my @two;
-my @sorted= sort{$a<=>$b}@ARGV;
+my @sorted= sort{"$a$b"<=>"$b$a"}@ARGV; # increasing order
 for(@sorted){
     my $residue=$_%3;
     push @one, $index  if $residue==1;
@@ -24,21 +24,25 @@ for(@sorted){
     ++$index;
 }
 $total%=3;
-my @candidates;
+my @candidates; # if neccesary to remove numbers
 if($total==1){
-    push @candidates, [$one[0]] if(@one>=1);
+    # remove the smallest number that leaves a residue one
+    push @candidates, [$one[0]] if(@one);
+    # remove the two smallest numbers that leaves a residue two
     push @candidates, [@two[1,0]] if(@two>=2);
 }
 if($total==2){
+    # remove the two smallest numbers that leaves a residue one
     push @candidates, [@one[1,0]] if(@one>=2);
-    push @candidates, [$two[0]] if(@two>=1);
+    # or the smallest numbers that leaves a residue two
+    push @candidates, [$two[0]] if(@two);
 }
-if(@candidates){
+if(@candidates){ # find smallest candidates
     my @to_remove=map {join "", @sorted[@$_]} @candidates;
     my $index_to_remove=@candidates == 2 && $to_remove[1]<$to_remove[0]?1:0;
-    splice @sorted, $_, 1 for @{$candidates[$index_to_remove]};
+    splice @sorted, $_, 1 for @{$candidates[$index_to_remove]}; # remove one or two numbers
 }
 my $result=join "", reverse @sorted;
-$result=-1 if $result eq "";
-$result=0 if $result==0; # "0000->0";
+$result=-1 if $result eq ""; # removed all
+$result=0 if $result==0; # 0000...=0 is divisible;
 say "@ARGV -> $result";
