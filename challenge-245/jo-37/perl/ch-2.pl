@@ -30,7 +30,7 @@ say largest_of_three(@ARGV);
 ### Implementation
 
 sub largest_of_three {
-	my (@digits, @ind, $mod) = sort @_;
+	my (@digits, @ind, $mod) = dsort(@_);
     for (0 .. $#digits) {
         # The digit modulo 3
         my $digit = $digits[$_] % 3;
@@ -51,6 +51,12 @@ sub largest_of_three {
     @digits ? 0 + join '', reverse grep defined, @digits : -1;
 }
 
+sub dsort {
+    my @digits;
+    $digits[$_]++ for @_;
+    map +($_) x ($digits[$_] // 0), 0 .. 9;
+}
+
 
 ### Examples and tests
 
@@ -65,6 +71,8 @@ sub run_tests {
 
     SKIP: {
         skip "tests" unless $tests;
+
+        say "@{[dsort(qw(1 2 3 4 3 2 3 5 6 7 7 7 1 1 1))]}";
 
         is largest_of_three(6, 4, 3), 63, 'single 1 mod 3';
         is largest_of_three(6, 5, 3), 63, 'single 2 mod 3';
