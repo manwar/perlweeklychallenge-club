@@ -72,8 +72,6 @@ sub run_tests {
     SKIP: {
         skip "tests" unless $tests;
 
-        say "@{[dsort(qw(1 2 3 4 3 2 3 5 6 7 7 7 1 1 1))]}";
-
         is largest_of_three(6, 4, 3), 63, 'single 1 mod 3';
         is largest_of_three(6, 5, 3), 63, 'single 2 mod 3';
         is largest_of_three(6, 4, 4, 3), 63, 'double 1 mod 3';
