@@ -43,6 +43,8 @@ my @Test-cmp =
     (5      , 11 ),     More,
     (11     , 4  ),     Less,
     (1      , 10 ),     More,
+    (Int    , Int),     Order,
+
 ;
 
 my @Test =
