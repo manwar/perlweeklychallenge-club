@@ -1,27 +1,36 @@
 #!/usr/bin/env raku
-use Math::Matrix;
 use Test;
 
-# Disclaimer: This might be totally wrong but it seems right.
+ok  linear-recurrence-of-second-order([1,1,2,3,5]);
+nok linear-recurrence-of-second-order([4,2,4,5,7]);
+ok  linear-recurrence-of-second-order([4,1,2,-3,8]);
 
-ok  task2(1,1,2,3,5);
-nok task2(4,2,4,5,7);
-ok  task2(4,1,2,-3,8);
-
-sub task2(*@a)
+sub linear-recurrence-of-second-order(@a)
 {
-    my @equations = @a.rotor(3 => -2);
-    
-    my ($p1,$q1) = p-and-q(@equations[0], @equations[1]);
-    my ($p2,$q2) = p-and-q(@equations[1], @equations[2]);
+    my @eqn = @a.rotor(3 => -2).head(2);
+    my $p = p(@eqn).narrow;
+    my $q = q(@eqn.pop, $p).narrow;
 
-    return False unless ($p1,$q1,$p2,$q2)>>.narrow.all ~~ Int;
-    return ($p1,$q1) eqv ($p2,$q2)
+    return False unless all($p, $q) ~~ Int;
+
+    my @s = (@a[0], @a[1], -> $a, $b { $a*$p + $b*$q }...*).head(5).Array; 
+
+    @a eqv @s
 }
   
-sub p-and-q(@a, @b)
+sub p(@a)
 {
-    my $A = Math::Matrix.new([[@a.head(2), @b.head(2)]]);
-    my $B = Math::Matrix.new([[@a.tail], [@b.tail]]);
-    |$A.inverted.dot-product($B)
+    given @a 
+    {
+        .[2] / .[0] given .[0] >>*>> .[1;1] >>-<< .[1] >>*>> .[0;1]
+    }
+}
+
+sub q(@a is copy, $p)
+{
+    given @a
+    {
+        .[0] *= $p; 
+        (.[2] - .[0]) / .[1]
+    }
 }
