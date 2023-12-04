@@ -13,9 +13,7 @@ sub linear-recurrence-of-second-order(@a)
 
     return False unless all($p, $q) ~~ Int;
 
-    my @s = (@a[0], @a[1], -> $a, $b { $a*$p + $b*$q }...*).head(5).Array; 
-
-    @a eqv @s
+    @a eqv (@a[0], @a[1], -> $a, $b { $a*$p + $b*$q }...*).head(5).Array 
 }
   
 sub p(@a)
