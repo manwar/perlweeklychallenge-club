@@ -39,14 +39,29 @@ say permutation2rank(\@ARGV);
 # How many CPU cycles have been wasted re-computing factorials?
 my @Factorial = ( 1, 1, 2, 6, 24, 120, 720, 5040, 40320, 362880, 3628800 );
 
-sub permutation2rank($list)
+sub permutation2rank($p)
 {
-    my @sortedOrder = sort { $list->[$a] <=> $list->[$b] } 0 .. $list->$#*;
+    my $n = scalar(@$p);
+    my $fact = 1;
+    $fact *= $_ for 2 .. $n;
 
-    my %place = map { $list->[$sortedOrder[$_]] => $_ } 0 .. $list->$#*;
+    my @indexOf;
+    @indexOf[ $p->@* ] = 0 .. $p->$#*; 
+    say "p      =($p->@*)" if $Verbose;
+    say "indexOf=(@indexOf)" if $Verbose;
 
-    say "SORT: [@$list]->[@sortedOrder]" if $Verbose;
-    if ($Verbose) { say "PLACE: $_ => $place{$_}" for sort keys %place };
+    my @digits = ( 0 .. $p->$#* );
+
+    my $r = 0;
+    for my $i ( 0 .. $n-1 )
+    {
+        my $q = $indexOf[ $p->[$i] ];
+        $r += $fact * $q;
+        say "p=($p->@*) i=$i q=$q fact=$fact r=$r" if $Verbose;
+
+        $fact /= ($n- $i +1);
+    }
+    return $r;
 }
 
 sub rank2permutation($list, $rank)
