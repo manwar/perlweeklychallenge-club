@@ -1,0 +1,1 @@
+raku -e 'my @lang = ("perl", "c", "python"); my @popularity = (2, 1, 3); sub sort-by-popularity { (@lang [Z] @popularity).sort( *.tail ).map( *.head ) }; sort-by-popularity.gist.say; @lang = ("c++", "haskell", "java"); @popularity = (1, 3, 2); sort-by-popularity.gist.say'

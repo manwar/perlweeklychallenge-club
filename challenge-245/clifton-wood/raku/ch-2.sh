@@ -1,0 +1,1 @@
+raku -e 'sub TWC245_2 (@a) { @a.combinations.map( |*.permutations ).grep( +* ).map( |*.permutations ).map( *.join.Int ).sort( -* ).grep({ $_ % 3 == 0 }).head || -1 }; (8,9, 1).&TWC245_2.say; (8, 6, 7, 1, 0).&TWC245_2.say, @(1).&TWC245_2.say'

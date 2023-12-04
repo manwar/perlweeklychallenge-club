@@ -26,8 +26,12 @@
 CREATE arr1 256 CELLS ALLOT
 CREATE arr2 256 CELLS ALLOT
 
-: array_size ( arr-addr -- size-addr ) ;
-: array[] ( arr-addr i -- elem-addr ) 1+ CELLS + ;
+: array_size ( arr-addr -- size-addr )
+;
+
+: array[] ( arr-addr i -- elem-addr )
+    1+ CELLS +
+;
 
 : array_push_back ( arr-addr n -- )
     { arr n }
