@@ -95,7 +95,7 @@ sub check {
         my $x1 = $u0 + $b1/$d1*$j;
         my $y1 = $v0 - $a1/$d1*$j;
         say "($x1, $y1)";
-        return -1 if int($x1) != $x1 || int($y1) != $y1;
+        return 0 if int($x1) != $x1 || int($y1) != $y1;
         return ($a[4] == $a[2]*$x1+$a[3]*$y1) ? 1 : 0;
     } 
     else {
