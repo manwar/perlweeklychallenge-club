@@ -13,7 +13,7 @@ use feature qw/say/;
 
 # Choose six numbers without repeats
 my %seen;
-while ( scalar(%seen) < 6 )
+while ( scalar(keys %seen) < 6 )
 {
     $seen{ int(rand(49)) + 1 } = 1;
 }
