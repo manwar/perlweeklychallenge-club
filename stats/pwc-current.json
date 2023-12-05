@@ -1,65 +1,35 @@
 {
-   "series" : [
-      {
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 246",
-         "data" : [
-            {
-               "name" : "Bob Lied",
-               "y" : 3,
-               "drilldown" : "Bob Lied"
-            },
-            {
-               "y" : 2,
-               "name" : "Dave Jacoby",
-               "drilldown" : "Dave Jacoby"
-            },
-            {
-               "y" : 2,
-               "name" : "David Ferrone",
-               "drilldown" : "David Ferrone"
-            },
-            {
-               "name" : "E. Choroba",
-               "y" : 2,
-               "drilldown" : "E. Choroba"
-            },
-            {
-               "y" : 3,
-               "name" : "Laurent Rosenfeld",
-               "drilldown" : "Laurent Rosenfeld"
-            },
-            {
-               "name" : "Luca Ferrari",
-               "y" : 10,
-               "drilldown" : "Luca Ferrari"
-            },
-            {
-               "drilldown" : "Mark Anderson",
-               "y" : 2,
-               "name" : "Mark Anderson"
-            },
-            {
-               "drilldown" : "Niels van Dijke",
-               "name" : "Niels van Dijke",
-               "y" : 2
-            },
-            {
-               "name" : "Peter Meszaros",
-               "y" : 2,
-               "drilldown" : "Peter Meszaros"
-            },
-            {
-               "drilldown" : "W. Luis Mochan",
-               "y" : 3,
-               "name" : "W. Luis Mochan"
-            }
-         ]
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
       }
-   ],
+   },
+   "subtitle" : {
+      "text" : "[Champions: 12] Last updated at 2023-12-05 13:05:17 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 246"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
    "drilldown" : {
       "series" : [
          {
+            "name" : "Bob Lied",
+            "id" : "Bob Lied",
             "data" : [
                [
                   "Perl",
@@ -69,9 +39,7 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "Bob Lied",
-            "name" : "Bob Lied"
+            ]
          },
          {
             "data" : [
@@ -80,18 +48,28 @@
                   2
                ]
             ],
+            "id" : "Cheok-Yin Fung",
+            "name" : "Cheok-Yin Fung"
+         },
+         {
             "id" : "Dave Jacoby",
-            "name" : "Dave Jacoby"
-         },
-         {
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
+            ]
+         },
+         {
             "id" : "David Ferrone",
-            "name" : "David Ferrone"
+            "name" : "David Ferrone",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ]
          },
          {
             "name" : "E. Choroba",
@@ -104,8 +82,6 @@
             ]
          },
          {
-            "name" : "Laurent Rosenfeld",
-            "id" : "Laurent Rosenfeld",
             "data" : [
                [
                   "Perl",
@@ -119,7 +95,9 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Laurent Rosenfeld",
+            "name" : "Laurent Rosenfeld"
          },
          {
             "data" : [
@@ -136,38 +114,26 @@
             "name" : "Luca Ferrari"
          },
          {
-            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Mark Anderson"
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson"
          },
          {
-            "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "name" : "Peter Meszaros",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Peter Meszaros"
+            "name" : "Niels van Dijke",
+            "id" : "Niels van Dijke"
          },
          {
-            "name" : "W. Luis Mochan",
-            "id" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -177,42 +143,110 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Peter Campbell Smith",
+            "id" : "Peter Campbell Smith"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "Peter Meszaros",
+            "id" : "Peter Meszaros"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan"
          }
       ]
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 246"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 10] Last updated at 2023-12-05 12:33:53 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 246",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "Bob Lied",
+               "name" : "Bob Lied",
+               "y" : 3
+            },
+            {
+               "name" : "Cheok-Yin Fung",
+               "y" : 2,
+               "drilldown" : "Cheok-Yin Fung"
+            },
+            {
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby",
+               "y" : 2
+            },
+            {
+               "drilldown" : "David Ferrone",
+               "y" : 2,
+               "name" : "David Ferrone"
+            },
+            {
+               "y" : 2,
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "drilldown" : "Laurent Rosenfeld",
+               "name" : "Laurent Rosenfeld",
+               "y" : 3
+            },
+            {
+               "name" : "Luca Ferrari",
+               "y" : 10,
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "name" : "Mark Anderson",
+               "y" : 2,
+               "drilldown" : "Mark Anderson"
+            },
+            {
+               "y" : 2,
+               "name" : "Niels van Dijke",
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "drilldown" : "Peter Campbell Smith",
+               "name" : "Peter Campbell Smith",
+               "y" : 3
+            },
+            {
+               "name" : "Peter Meszaros",
+               "y" : 2,
+               "drilldown" : "Peter Meszaros"
+            },
+            {
+               "name" : "W. Luis Mochan",
+               "y" : 3,
+               "drilldown" : "W. Luis Mochan"
+            }
+         ]
+      }
+   ],
    "legend" : {
       "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
    }
 }
