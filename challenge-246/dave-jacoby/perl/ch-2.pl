@@ -4,8 +4,6 @@ use strict;
 use warnings;
 use experimental qw{ say postderef signatures state };
 
-use Algorithm::Combinatorics qw{ variations };
-
 my @examples = (
 
     [ 1, 1, 2, 3,  5 ],
