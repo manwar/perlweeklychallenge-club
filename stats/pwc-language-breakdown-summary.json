@@ -2,17 +2,17 @@
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
+   "legend" : {
+      "enabled" : "false"
+   },
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
       },
       "type" : "category"
-   },
-   "legend" : {
-      "enabled" : "false"
    },
    "yAxis" : {
       "title" : {
@@ -20,11 +20,22 @@
       },
       "min" : 0
    },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
+         "data" : [
+            [
+               "Blog",
+               4272
+            ],
+            [
+               "Perl",
+               12684
+            ],
+            [
+               "Raku",
+               7314
+            ]
+         ],
          "name" : "Contributions",
          "dataLabels" : {
             "style" : {
@@ -32,32 +43,21 @@
                "fontFamily" : "Verdana, sans-serif"
             },
             "rotation" : -90,
+            "format" : "{point.y:.0f}",
             "align" : "right",
             "y" : 10,
-            "format" : "{point.y:.0f}",
-            "enabled" : "true",
-            "color" : "#FFFFFF"
-         },
-         "data" : [
-            [
-               "Blog",
-               4271
-            ],
-            [
-               "Perl",
-               12682
-            ],
-            [
-               "Raku",
-               7314
-            ]
-         ]
+            "color" : "#FFFFFF",
+            "enabled" : "true"
+         }
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2023-12-04 20:51:25 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2023]"
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2023-12-05 12:33:53 GMT"
    }
 }
