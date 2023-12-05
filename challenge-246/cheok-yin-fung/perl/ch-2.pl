@@ -76,7 +76,7 @@ sub check {
     return 0 if $a[3] % $d1 != 0;
     $u0 = $u0 *($a[3]/$d1);
     $v0 = $v0 *($a[3]/$d1);
-    say "$a[3] = $a0*$u0+$b0*$v0";
+    say "$a[3] = $a1*$u0+$b1*$v0";
     # for my $j (-10..10) {
     #     my $x1 = $u0 + $b1/$d1*$j ;
     #     my $y1 = $v0 - $a1/$d1*$j;
@@ -112,7 +112,7 @@ sub check {
     }
 }
 
-use Test::More tests=>10;
+use Test::More tests=>11;
 ok check(1, 1, 2, 3, 5);
 ok !check(4, 2, 4, 5, 7);
 ok check(4, 1, 2, -3, 8);
@@ -126,3 +126,4 @@ ok check(1, 0, 0, 0, 0);
 ok check(0, 3, 0, 0, 0);
 
 ok !check(0, 0, 3, 0, 0);
+ok check(2, 4, 8, 16, 32);
