@@ -7,17 +7,13 @@
 Sample output
 ```
 $ raku/ch-1.raku
-Example 1:
-Input: @int = (8, 1, 2, 2, 3)
-Output: (4, 0, 1, 1, 3)
-
-Example 2:
-Input: @int = (6, 5, 4, 8)
-Output: (2, 1, 0, 3)
-
-Example 3:
-Input: @int = (2, 2, 2)
-Output: (0, 0, 0)
+Output:
+1
+6
+15
+28
+31
+45
 ```
 
 * [Task 2](raku/ch-2.raku)
@@ -26,8 +22,19 @@ Sample output
 ```
 $ raku/ch-2.raku
 Example 1:
-Input: @int = (2, 1, 4)
-Output: 141
+Input: @a = (1, 1, 2, 3, 5)
+Found integer values for P (1) and Q (1)
+Output: True
+
+Example 2:
+Input: @a = (4, 2, 4, 5, 7)
+Values for P (0.5) and Q (1) for first four elements are not integers
+Output: False
+
+Example 3:
+Input: @a = (4, 1, 2, -3, 8)
+Found integer values for P (1) and Q (-2)
+Output: True
 ```
 
 ## Perl
@@ -37,17 +44,13 @@ Output: 141
 Sample output
 ```
 $ perl/ch-1.pl
-Example 1:
-Input: @arr = (8, 1, 2, 2, 3)
-Output: (4, 0, 1, 1, 3)
-
-Example 2:
-Input: @arr = (6, 5, 4, 8)
-Output: (2, 1, 0, 3)
-
-Example 3:
-Input: @arr = (2, 2, 2)
-Output: (0, 0, 0)
+Output:
+3
+7
+26
+27
+29
+44
 ```
 
 * [Task 2](perl/ch-2.pl)
@@ -56,8 +59,19 @@ Sample output
 ```
 $ perl/ch-2.pl
 Example 1:
-Input: @int = (2, 1, 4)
-Output: 141
+Input: @a = (1, 1, 2, 3, 5)
+Found integer values for P (1) and Q (1)
+Output: true
+
+Example 2:
+Input: @a = (4, 2, 4, 5, 7)
+Values for P (0.5) and Q (1) for first four elements are not integers
+Output: false
+
+Example 3:
+Input: @a = (4, 1, 2, -3, 8)
+Found integer values for P (1) and Q (-2)
+Output: true
 ```
 
 ## Guest Language: Python
@@ -66,4 +80,4 @@ Output: 141
 
 ## Blog Post
 
-[Perl Weekly Challenge: Count... just a little bit smaller...](https://packy.dardan.com/b/EK)
+[Perl Weekly Challenge: 25 or 6 out of four... ty-nine](https://packy.dardan.com/b/F5)
