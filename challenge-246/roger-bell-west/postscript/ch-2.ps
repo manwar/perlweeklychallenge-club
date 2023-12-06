@@ -1,0 +1,60 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/linearrecurrencesecondorder {
+    0 dict begin
+    /seq exch def
+    /a seq 0 3 getinterval def
+    /b seq 1 3 getinterval def
+    /c seq 2 3 getinterval def
+    /q
+    b 2 get a 0 get mul b 0 get a 2 get mul sub
+    b 1 get a 0 get mul b 0 get a 1 get mul sub idiv
+    def
+    /p a 2 get a 1 get q mul sub a 0 get idiv def
+    p a 0 get mul q a 1 get mul add a 2 get eq
+    p b 0 get mul q b 1 get mul add b 2 get eq and
+    p c 0 get mul q c 1 get mul add c 2 get eq and
+    end
+} bind def
+
+(linearrecurrencesecondorder) test.start
+[1 1 2 3 5] linearrecurrencesecondorder test
+[4 2 4 5 7] linearrecurrencesecondorder not test
+[4 1 2 -3 8] linearrecurrencesecondorder test
+test.end
