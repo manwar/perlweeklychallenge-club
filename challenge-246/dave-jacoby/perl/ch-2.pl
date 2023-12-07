@@ -4,8 +4,6 @@ use strict;
 use warnings;
 use experimental qw{ say postderef signatures state };
 
-use Algorithm::Combinatorics qw{ variations };
-
 my @examples = (
 
     [ 1, 1, 2, 3,  5 ],
@@ -25,16 +23,12 @@ for my $e (@examples) {
 
 sub lrso (@input) {
 OUTER: for my $n ( 2 .. -1 + scalar @input ) {
-        for my $p ( 1 .. 100 ) {
-            for my $pp ( 1, -1 ) {
-                my $ppp = ( $p * $pp ) * $input[ $n - 2 ];
-                for my $q ( 1 .. 100 ) {
-                    for my $qq ( 1, -1 ) {
-                        my $qqq = ( $q * $qq ) * $input[ $n - 1 ];
-                        my $rrr = $ppp + $qqq;
-                        next OUTER if $rrr == $input[$n];
-                    }
-                }
+        for my $p ( -100 .. 100 ) {
+            my $pp = $p * $input[ $n - 2 ];
+            for my $q ( -100 .. 100 ) {
+                my $qq = $q * $input[ $n - 1 ];
+                my $rr = $pp + $qq;
+                next OUTER if $rr == $input[$n];
             }
         }
         return 'false';

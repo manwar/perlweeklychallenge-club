@@ -1,0 +1,134 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/quicksort.cmp {
+    2 copy
+    lt {
+        pop pop -1
+    } {
+        gt {
+            1
+        } {
+            0
+        } ifelse
+    } ifelse
+} bind def
+
+
+/quicksort.with_keylist { % [ a c b ] [ keylist ] -> [ a b c ]
+    4 dict begin
+    /kg exch def
+    /arr exch def
+    /kl <<
+            0 1 arr length 1 sub {
+                /i exch def
+                arr i get
+                kg i get
+            } for
+        >> def
+    arr {
+        exch kl exch get exch kl exch get quicksort.cmp
+    } quicksort.with_comparator
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/quicksort {
+    { quicksort.cmp } quicksort.with_comparator
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot cmp 0 ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot cmp 0 le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/quicksort.with_comparator { % [ a c b ] { comparator } -> [ a b c ]
+    2 dict begin
+    /cmp exch def
+    /arr exch def
+    arr length 0 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+
+
+% end included library code
+
+/shuffle {
+    (%Calendar%) currentdevparams /Second get srand
+    dup
+    [ exch
+      length {
+          rand
+      } repeat
+    ]
+    quicksort.with_keylist
+} bind def
+
+/sixoffortynine {
+    [ 1 1 49 { } for ]
+    shuffle
+    0 6 getinterval
+    quicksort
+} bind def
+
+sixoffortynine
+==
