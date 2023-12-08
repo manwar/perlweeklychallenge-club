@@ -1,6 +1,7 @@
 #!/usr/bin/env perl
 # Perl weekly challenge 246
 # Task 2:  Linear Recurrence of Second Order
+# Second alternative: using SVD
 #
 # See https://wlmb.github.io/2023/12/03/PWC246/#task-2-linear-recurrence-of-second-order
 use v5.36;
