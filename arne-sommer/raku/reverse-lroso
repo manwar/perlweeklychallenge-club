@@ -1,0 +1,7 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (Int $first, Int $second, Int :$p = 1, Int :$q = 1, UInt :$limit = 10);
+
+my $seq := ($first, $second, $p * * + $q * * ... Inf);
+
+say $seq[^$limit].join(", ");
