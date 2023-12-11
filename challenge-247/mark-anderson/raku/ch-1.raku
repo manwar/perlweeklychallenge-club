@@ -28,7 +28,7 @@ sub secret-santa(@names)
         while .elems
         {
             take .head.pop;
-            .head ?? $_ .= rotate !! .splice(0,1)
+            .head ?? $_ .= rotate !! .shift
         }
     }
 
