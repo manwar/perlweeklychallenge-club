@@ -19,6 +19,29 @@ is-deeply secret-santa(["Mr. Wall", "Mrs. Wall", "Mr. Anwar"]),
               "Mrs. Wall" => "Mr. Wall"
           }
 
+# Example from Peter Campbell Smith
+is-deeply secret-santa(["Rudolph Reindeer", "Dasher Reindeer", 
+                        "Dancer Reindeer",  "Prancer Reindeer", 
+                        "Vixen Reindeer",   "Comet Reindeer",
+	                    "Cupid Reindeer",   "Donner Reindeer", 
+                        "Blitzen Reindeer", "Santa Claus", 
+                        "Mrs Claus",        "Subordinate Claus"]),
+
+          {
+              "Donner Reindeer"   => "Mrs Claus",
+              "Blitzen Reindeer"  => "Subordinate Claus",
+              "Cupid Reindeer"    => "Santa Claus",
+              "Dancer Reindeer"   => "Dasher Reindeer",
+              "Comet Reindeer"    => "Vixen Reindeer",
+              "Dasher Reindeer"   => "Rudolph Reindeer",
+              "Vixen Reindeer"    => "Prancer Reindeer",
+              "Rudolph Reindeer"  => "Blitzen Reindeer",
+              "Prancer Reindeer"  => "Dancer Reindeer",
+              "Santa Claus"       => "Comet Reindeer",
+              "Subordinate Claus" => "Donner Reindeer",
+              "Mrs Claus"         => "Cupid Reindeer",
+          }
+
 sub secret-santa(@names)
 {
     my %surname = @names.classify({ .words[1] });
