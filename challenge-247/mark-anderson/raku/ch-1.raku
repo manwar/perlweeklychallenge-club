@@ -26,7 +26,6 @@ is-deeply secret-santa(["Rudolph Reindeer", "Dasher Reindeer",
                         "Cupid Reindeer",   "Donner Reindeer", 
                         "Blitzen Reindeer", "Santa Claus", 
                         "Mrs Claus",        "Subordinate Claus"]),
-
           {
               "Donner Reindeer"   => "Mrs Claus",
               "Blitzen Reindeer"  => "Subordinate Claus",
