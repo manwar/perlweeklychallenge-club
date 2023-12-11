@@ -23,7 +23,7 @@ is-deeply secret-santa(["Mr. Wall", "Mrs. Wall", "Mr. Anwar"]),
 is-deeply secret-santa(["Rudolph Reindeer", "Dasher Reindeer", 
                         "Dancer Reindeer",  "Prancer Reindeer", 
                         "Vixen Reindeer",   "Comet Reindeer",
-	                    "Cupid Reindeer",   "Donner Reindeer", 
+                        "Cupid Reindeer",   "Donner Reindeer", 
                         "Blitzen Reindeer", "Santa Claus", 
                         "Mrs Claus",        "Subordinate Claus"]),
 
