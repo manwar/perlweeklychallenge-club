@@ -25,7 +25,8 @@ local *linear_recurrence_2 = sub {
     (scalar(grep {$_==0} @_)==5) && (return 1);
     (($_[0]==0) && ($_[1]==0) && ($_[2] != 0)) && (return 0);
     (($_[1]==0) && ($_[2]==0) && ($_[3] != 0)) && (return 0);
-    (($_[2]==0) && ($_[3]==0) && ($_[4] != 0)) && (return 0); 
+    (($_[2]==0) && ($_[3]==0) && ($_[4] != 0)) && (return 0);
+    (($_[0] != 0) && ($_[1]==0) && ($_[2]==0)) && (return 1); #-- must be of the form (x,0,0,0,0)  
     
     #-- if hcf of 1st 2 elements does not divide into all others, reject
     if (($_[0] != 0) && ($_[1] != 0)){
@@ -78,6 +79,7 @@ local *linear_recurrence_2 = sub {
 print "Ex1 1,1,2,3,5: ", &linear_recurrence_2(1,1,2,3,5); #1
 print "Ex2 4,2,4,5,7: ", &linear_recurrence_2(4,2,4,5,7); #0
 print "Ex3 4,1,2,-3,8: ", &linear_recurrence_2(4,1,2,-3,8); #1
+print "(1,0,0,0,0): ",&linear_recurrence_2(1,0,0,0,0); #1 [p=q=0]
 print "--------------";
 print "";
 
