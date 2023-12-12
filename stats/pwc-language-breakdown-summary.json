@@ -1,21 +1,43 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2023]"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2023-12-12 23:49:21 GMT"
+   },
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
+      },
+      "type" : "category"
    },
    "series" : [
       {
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "enabled" : "true",
+            "y" : 10,
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "align" : "right"
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -23,41 +45,19 @@
             ],
             [
                "Perl",
-               12727
+               12729
             ],
             [
                "Raku",
                7342
             ]
-         ],
-         "dataLabels" : {
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "rotation" : -90,
-            "y" : 10,
-            "align" : "right",
-            "color" : "#FFFFFF"
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
    "legend" : {
       "enabled" : "false"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2023]"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2023-12-12 15:09:36 GMT"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    }
 }
