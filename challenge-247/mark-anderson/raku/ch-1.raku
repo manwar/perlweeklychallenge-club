@@ -43,7 +43,7 @@ is-deeply secret-santa(["Rudolph Reindeer", "Dasher Reindeer",
 
 sub secret-santa(@names)
 {
-    my %surname = @names.classify({ .words[1] });
+    my %surname = @names.classify({ .words[1..*].join(" ") });
 
     my @r = gather given %surname.values.sort.Array
     {
@@ -54,5 +54,5 @@ sub secret-santa(@names)
         }
     }
 
-    @r.push(@r.head).rotor(2 => -1).map({ .pairup.head }).Hash
+    @r.push(@r.head).rotor(2 => -1).flat.pairup.Hash
 }
