@@ -10,4 +10,12 @@
 #=============================================================================
 
 use feature qw/say/;
-say for sort { $a <=> $b} map { int(rand(49)) + 1 } 1..6;
+
+# Choose six numbers without repeats
+my %seen;
+while ( scalar(keys %seen) < 6 )
+{
+    $seen{ int(rand(49)) + 1 } = 1;
+}
+
+say for sort { $a <=> $b } keys %seen;
