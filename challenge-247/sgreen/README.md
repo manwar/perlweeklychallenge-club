@@ -1,3 +1,3 @@
-# The Weekly Challenge 244
+# The Weekly Challenge 247
 
-Blog: [Weekly Challenge 244](https://dev.to/simongreennet/weekly-challenge-244-jim)
+Blog: [The one about frequency](https://dev.to/simongreennet/the-one-about-frequency-la6)
