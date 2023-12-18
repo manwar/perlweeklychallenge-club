@@ -1,28 +1,47 @@
 {
-   "xAxis" : {
-      "type" : "category"
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
+   },
+   "legend" : {
+      "enabled" : 0
    },
    "drilldown" : {
       "series" : [
          {
-            "id" : "Bob Lied",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Bob Lied",
             "name" : "Bob Lied"
          },
          {
-            "name" : "David Ferrone",
+            "id" : "David Ferrone",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "David Ferrone"
+            "name" : "David Ferrone"
+         },
+         {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  8
+               ]
+            ],
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari"
          },
          {
             "name" : "Mark Anderson",
@@ -45,7 +64,8 @@
             "name" : "Niels van Dijke"
          },
          {
-            "name" : "W. Luis Mochan",
+            "name" : "Peter Campbell Smith",
+            "id" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -55,31 +75,67 @@
                   "Blog",
                   1
                ]
+            ]
+         },
+         {
+            "id" : "Peter Meszaros",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
             ],
-            "id" : "W. Luis Mochan"
+            "name" : "Peter Meszaros"
+         },
+         {
+            "id" : "Thomas Kohler",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "name" : "Thomas Kohler"
+         },
+         {
+            "name" : "W. Luis Mochan",
+            "id" : "W. Luis Mochan",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ]
          }
       ]
    },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
-   "legend" : {
-      "enabled" : 0
-   },
    "series" : [
       {
+         "name" : "The Weekly Challenge - 248",
+         "colorByPoint" : 1,
          "data" : [
             {
                "y" : 2,
-               "name" : "Bob Lied",
-               "drilldown" : "Bob Lied"
+               "drilldown" : "Bob Lied",
+               "name" : "Bob Lied"
             },
             {
-               "name" : "David Ferrone",
                "y" : 2,
-               "drilldown" : "David Ferrone"
+               "drilldown" : "David Ferrone",
+               "name" : "David Ferrone"
+            },
+            {
+               "drilldown" : "Luca Ferrari",
+               "name" : "Luca Ferrari",
+               "y" : 10
             },
             {
                "drilldown" : "Mark Anderson",
@@ -87,20 +143,48 @@
                "y" : 2
             },
             {
-               "name" : "Niels van Dijke",
                "y" : 2,
+               "name" : "Niels van Dijke",
                "drilldown" : "Niels van Dijke"
+            },
+            {
+               "drilldown" : "Peter Campbell Smith",
+               "name" : "Peter Campbell Smith",
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Peter Meszaros",
+               "name" : "Peter Meszaros"
+            },
+            {
+               "name" : "Thomas Kohler",
+               "drilldown" : "Thomas Kohler",
+               "y" : 4
             },
             {
                "drilldown" : "W. Luis Mochan",
                "name" : "W. Luis Mochan",
                "y" : 3
             }
-         ],
-         "name" : "The Weekly Challenge - 248",
-         "colorByPoint" : 1
+         ]
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2023-12-18 18:31:26 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
    "title" : {
       "text" : "The Weekly Challenge - 248"
    },
@@ -109,19 +193,7 @@
          "text" : "Total Solutions"
       }
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2023-12-18 13:19:44 GMT"
-   },
-   "chart" : {
-      "type" : "column"
+   "xAxis" : {
+      "type" : "category"
    }
 }
