@@ -24,13 +24,13 @@ sub shortest-distance($str, $char)
     my $middle = gather for @a -> $a, $b
     {
         take 0 xx $a.chars; 
-        take distance($b)
+        take distances($b)
     }
 
     flat ($head, $middle, $tail)>>.List
 }
         
-sub distance($s)
+sub distances($s)
 {
     return Empty unless $s;
     my $mid = ($s.chars / 2).ceiling; 
