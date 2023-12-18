@@ -58,6 +58,28 @@ sub shortest($str, $char)
     return \@dist;
 }
 
+sub sd2($str, $char)
+{
+    my @dist;
+    for my $i ( 0 .. length($str)-1 )
+    {
+        my $ahead  =  index($str, "$char", $i);
+        my $behind = rindex($str, "$char", $i);
+
+        if ( $ahead < 0 && $behind < 0 )
+        {
+            push @dist, undef;
+        }
+        else
+        {
+            $behind = $ahead  if $behind == -1;
+            $ahead  = $behind if $ahead  == -1;
+            push @dist, min abs($i - $behind), abs($ahead - $i);
+        }
+    }
+    return \@dist;
+}
+
 sub runTest
 {
     use Test2::V0;
@@ -67,6 +89,12 @@ sub runTest
 
     is( shortest("ab", 'x'), [undef, undef], "no x in str");
     is( shortest("", 'x'), [], "empty string");
+
+    is( sd2("loveleetcode", 'e'), [3,2,1,0,1,0,0,1,2,2,1,0], "Example 1");
+    is( sd2("aaab", 'b'), [3,2,1,0], "Example 2");
+
+    is( sd2("ab", 'x'), [undef, undef], "no x in str");
+    is( sd2("", 'x'), [], "empty string");
 
     done_testing;
 }
