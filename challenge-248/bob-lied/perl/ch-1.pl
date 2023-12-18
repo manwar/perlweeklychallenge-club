@@ -28,7 +28,7 @@
 
 use v5.38;
 
-use builtin qw/true false/; no warnings "experimental::builtin";
+use builtin qw/true false ceil floor/; no warnings "experimental::builtin";
 
 use List::Util qw/min/;
 
@@ -49,6 +49,8 @@ sub shortest($str, $char)
     # List of indexes where char appears
     my @cloc = grep { $s[$_] eq $char } 0 .. $#s;
 
+    # Potentially a lot of useless array operations, math
+    # and comparisons if char appears a lot.
     for my $i ( 0 .. $#s )  # For each letter in str
     {
         #               List of location differences
@@ -58,6 +60,11 @@ sub shortest($str, $char)
     return \@dist;
 }
 
+# Only two location differences really matter: the next one
+# ahead or the last one behind.  Alternate implementation
+# looks only for those two.  Potentially a lot of string
+# scanning if there are very few occurences of char in a
+# long string.
 sub sd2($str, $char)
 {
     my @dist;
@@ -80,6 +87,35 @@ sub sd2($str, $char)
     return \@dist;
 }
 
+# We don't really need to calculate the differences for each
+# letter.  The distance counts down until we see the first occurence,
+# then up until half way to the next occurrence, then down again.
+# Given the locations of the character, we can generate the sequences.
+sub sd3($str, $char)
+{
+    return [ (undef) x length($str) ] if index($str, $char) < 0;
+    my @s = split //, $str; # str as vector of characters
+
+    # List of indexes where char appears
+    my @cloc = grep { $s[$_] eq $char } 0 .. $#s;
+
+    my @dist;
+    my $loc = shift @cloc;
+    push @dist, reverse 0 .. $loc;
+    while ( defined(my $next = shift @cloc) )
+    {
+        my $diff = $next - $loc -1;
+        push @dist, 1 .. ceil($diff/2);
+        push @dist, reverse( 0 .. floor($diff/2));
+        $loc = $next;
+    }
+    if ( $loc < $#s )
+    {
+        push @dist, 1 .. ($#s - $loc);
+    }
+    return \@dist;
+}
+
 sub runTest
 {
     use Test2::V0;
@@ -90,11 +126,17 @@ sub runTest
     is( shortest("ab", 'x'), [undef, undef], "no x in str");
     is( shortest("", 'x'), [], "empty string");
 
-    is( sd2("loveleetcode", 'e'), [3,2,1,0,1,0,0,1,2,2,1,0], "Example 1");
-    is( sd2("aaab", 'b'), [3,2,1,0], "Example 2");
+    is( sd2("loveleetcode", 'e'), [3,2,1,0,1,0,0,1,2,2,1,0], "sd2 Example 1");
+    is( sd2("aaab", 'b'), [3,2,1,0], "sd2 Example 2");
 
-    is( sd2("ab", 'x'), [undef, undef], "no x in str");
-    is( sd2("", 'x'), [], "empty string");
+    is( sd2("ab", 'x'), [undef, undef], "sd2 no x in str");
+    is( sd2("", 'x'), [], "sd2 empty string");
+
+    is( sd3("loveleetcode", 'e'), [3,2,1,0,1,0,0,1,2,2,1,0], "sd3 Example 1");
+    is( sd3("aaab", 'b'), [3,2,1,0], "sd3 Example 2");
+
+    is( sd3("ab", 'x'), [undef, undef], "sd3 no x in str");
+    is( sd3("", 'x'), [], "sd3 empty string");
 
     done_testing;
 }
