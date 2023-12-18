@@ -105,8 +105,7 @@ sub sd3($str, $char)
     while ( defined(my $next = shift @cloc) )
     {
         my $diff = $next - $loc -1;
-        push @dist, 1 .. ceil($diff/2);
-        push @dist, reverse( 0 .. floor($diff/2));
+        push @dist, (1 .. ceil($diff/2)), reverse( 0 .. floor($diff/2));
         $loc = $next;
     }
     if ( $loc < $#s )
