@@ -1,3 +1,3 @@
-# The Weekly Challenge 244
+# The Weekly Challenge 245
 
-Blog: [Weekly Challenge 244](https://dev.to/simongreennet/weekly-challenge-244-jim)
+Blog: [Sorting by threes](https://dev.to/simongreennet/sorting-by-threes-ocf)

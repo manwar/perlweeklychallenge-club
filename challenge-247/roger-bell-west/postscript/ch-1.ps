@@ -1,0 +1,192 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+
+% end included library code
+
+/secretsanta {
+    0 dict begin
+    /name exch def
+    /family [
+        name {
+            ( ) strsplit 1 get
+        } forall
+    ] def
+    /receivers [ 0 1 name length 1 sub { } for ] toset def
+    /gifting 0 array def
+    0 1 name length 1 sub {
+        /giver exch def
+        /done false def
+        /r 0 def
+        receivers keys {
+            /recipient exch def
+            family giver get family recipient get deepeq not {
+                /r recipient def
+                /done true def
+                exit
+            } if
+        } forall
+        done not {
+            receivers keys {
+                /recipient exch def
+                recipient giver ne {
+                    /r recipient def
+                    exit
+                } if
+            } forall
+        } if
+        receivers r undef
+        /gifting gifting [ name giver get name r get ] apush.right def
+    } for
+    gifting {
+        /p exch def
+        p 0 get print
+        ( -> ) print
+        p 1 get =
+    } forall
+    () =
+    true
+    end
+} bind def
+
+(secretsanta) test.start
+[(Mr. Wall) (Mrs. Wall) (Mr. Anwar) (Mrs. Anwar) (Mr. Conway) (Mr. Cross)] secretsanta test
+[(Mr. Wall) (Mrs. Wall) (Mr. Anwar)] secretsanta test
+test.end
