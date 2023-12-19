@@ -1,0 +1,179 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/apop.left { % [a b c] -> [b c] a
+    dup 0 get exch
+    [ exch aload length -1 roll pop ] exch
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/apush.right { % [a b] c -> [a b c]
+    exch
+    [ exch aload length 2 add -1 roll ]
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/shortestdistance {
+    0 dict begin
+    /c exch s2a 0 get def
+    /a exch s2a def
+    /i 0 def
+    /q a enumerate.array { 1 get c eq } filter { 0 get [ exch 0 ] } map def
+    /invalid a length 1 add def
+    /out [ a length { invalid } repeat ] def
+    {
+        q length 0 eq {
+            exit
+        } if
+        q apop.left
+        aload pop /v exch def /i exch def
+        /q exch def
+        out i get invalid eq {
+            out i v put
+            i 0 gt {
+                /q q [ i 1 sub v 1 add ] apush.right def
+            } if
+            i a length 1 sub lt {
+                /q q [ i 1 add v 1 add ] apush.right def
+            } if
+        } if
+    } loop
+    out
+    end
+} bind def
+
+(shortestdistance) test.start
+(loveleetcode) (e) shortestdistance [3 2 1 0 1 0 0 1 2 2 1 0] deepeq test
+(aaab) (b) shortestdistance [3 2 1 0] deepeq test
+test.end
