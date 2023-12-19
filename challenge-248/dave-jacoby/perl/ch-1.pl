@@ -17,21 +17,6 @@ for my $example (@examples) {
     my @output = shortest_distance($example);
     my $output = join ',', @output;
 
-  # my $input  = join ",\n\t", map { qq{"$_"} }    # quote surname
-  #     map  { $_->[0] }                           # remove surname element
-  #     sort { $a->[1] cmp $b->[1] }               # sort on surname
-  #     map { [ $_, ( reverse split /\s/, $_ )[0] ]
-  #     }    # start schartzian transform on surname
-  #     sort { $a cmp $b } $example->@*; # sort alphabetically for consistency
-  # my $output = join "\n\t",
-  #     map  { qq{$_ -> $output{$_}} }    # combine santa and giftee
-  #     map  { $_->[0] }                  # remove surname element
-  #     sort { $a->[1] cmp $b->[1] }      # sort on surname
-  #     map {
-  #     [ $_, ( reverse split /\s/, $_ )[0] ]
-  #     }    # start schartzian transform on surname
-  #     sort { $a cmp $b } keys %output; # sort alphabetically for consistency
-
     say <<~"END";
     Input:  \$str = "$example->{str}", \$char = "$example->{char}"
     Output: ($output)
