@@ -107,7 +107,7 @@ sub submatrix_sums{
 # * A ref to the matrix (e.g.
 #       [
 #           [ 4,  2 ],
-#           [ 1, 12 ],
+#           [ 1, 12 ]
 #       ]
 #   )
 # Returns:
