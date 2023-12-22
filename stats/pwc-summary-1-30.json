@@ -1,13 +1,24 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2023]"
    },
    "chart" : {
       "type" : "column"
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -39,8 +50,7 @@
             6,
             45,
             32
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "data" : [
@@ -78,6 +88,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -109,10 +120,16 @@
             7,
             43,
             2
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2023-12-22 00:32:12 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "3ter",
@@ -146,22 +163,5 @@
          "Avery Adams",
          "BarrOff"
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-12-21 09:53:27 GMT"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2023]"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
