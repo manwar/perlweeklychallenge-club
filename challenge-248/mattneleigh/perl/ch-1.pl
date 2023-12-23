@@ -14,6 +14,10 @@ my @strings_and_characters = (
     [ "aaab",         "b" ],
 
     # Additional test cases
+    [ "computersarefun", "e" ],
+    [ "programmingrules", "p" ],
+    [ "greatforproblemsolving", "g" ],
+    [ "lovelexicalvariables", "x" ],
     [ "perliscool",   "x" ]
 );
 
@@ -52,18 +56,20 @@ exit(0);
 #   the string
 ################################################################################
 sub relative_distances_to_character{
-    # Required for @LAST_MATCH_START (@-)
-    use v5.6;
-    use List::Util qw(min);
 
+    my $current_loc = 0;
     my @matches;
-    my $current = 0;
+    my $char = substr($ARG[1], 0, 1);
 
     # Attempt to match the character in the
     # string, taking note of the location of
-    # each occurrence
-    while($ARG[0] =~ m/$ARG[1]/g){
-        push(@matches, $LAST_MATCH_START[0]);
+    # each occurrence; this is faster than
+    # regex for this simple case
+    foreach my $current_char (split('', $ARG[0])){
+        push(@matches, $current_loc)
+            if($char eq $current_char);
+
+        $current_loc++;
     }
 
     # Return an empty list if the character
@@ -71,19 +77,52 @@ sub relative_distances_to_character{
     return( () )
         unless(@matches);
 
+    my $dist_ahead;
+    my $dist_behind;
+
+    $current_loc = 0;
+
     return(
         # Make a list of relative distances to
         # the nearest character match for each
         # position within the string
         map(
             {
-                $current++
-                    if($_ > $matches[$current]);
+                if($_ <= $matches[0]){
+                    # We're at or before the first match
+                    # in the list; also covers cases of
+                    # just one match
+                    $matches[0] - $_;
+                } elsif($_ >= $matches[$#matches]){
+                    # We're at or beyond the last match in
+                    # the list; also covers cases of just
+                    # one match
+                    $_ - $matches[$#matches];
+                } else{
+                    # We're between matches...
 
-                min(
-                    abs($_ - $matches[$current - 1]),
-                    abs($_ - $matches[$current])
-                );
+                    # Increment the current match position
+                    # if we've passed the previous one
+                    $current_loc++
+                        if($_ > $matches[$current_loc]);
+
+                    # Get distances to the nearest matches
+                    # ahead and behind
+                    $dist_behind = $_ - $matches[$current_loc - 1];
+                    $dist_ahead = $matches[$current_loc] - $_;
+
+                    # See which distance is smaller; doing
+                    # it this way is somewhat faster for
+                    # this simple case than calling
+                    # List::Util::min() directly on the
+                    # values involved, on most systems- as
+                    # long as the variables are lexically
+                    # scoped outside of this block
+                    $dist_behind < $dist_ahead ?
+                        $dist_behind
+                        :
+                        $dist_ahead;
+                }
             }
             0 .. length($ARG[0]) - 1
         )
