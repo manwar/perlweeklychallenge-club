@@ -1,0 +1,44 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($str = "loveleetcode", $char where $char.chars == 1 && $str.contains($char) = "e", :v(:$verbose));
+
+my @input  = $str.comb;
+my $end    = @input.end;
+my @output; #  = "-" xx @input.elems;
+my @todo;
+
+for 0 .. $end -> $index
+{
+  if @input[$index] eq $char
+  {
+    @output[$index] = 0;
+    @todo.push: ($index, -1) if $index > 0;
+    @todo.push: ($index, +1) if $index < $end;
+    say ":Index: $index (match) -> zero" if $verbose;
+  }
+}
+
+while @todo
+{
+  say ":Todo: { @todo.raku }" if $verbose;
+  my ($pos, $offset) = @todo.shift;
+
+  my $index = $pos + $offset;
+
+  if ! @output[$index].defined
+  {
+    @output[$index] = $offset.abs;
+    my $new-offset  = $offset < 0 ?? $offset -1 !! $offset +1;
+    @todo.push: ($pos, $new-offset) if 0 <= $pos + $new-offset <= $end;
+    
+    say ":Index:$index (from:$pos,$offset) -> { $offset.abs }" if $verbose;
+  }
+  elsif $verbose
+  {
+    say ":Index:$index (from:$pos,$offset) - already set (to:@output[$index])" if $verbose;
+  }
+}
+
+say "({ @output.join(",") })";
+
+
