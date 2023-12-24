@@ -53,22 +53,18 @@ pp_def(
             
             if (0==(gap_size % 2)){
                 c_mid=gap_size/2;
-                for (i=a1; i < a1+c_mid; i++) {
-                    $b(n=>i)=i-a1;             
-                }
-                for (i=a1+c_mid; i <= a2; i++) {
-                    $b(n=>i)=a2-i;
-                } 
-            }   
+            }
             else {
                 c_mid=(gap_size+1)/2;
-                for (i=a1; i < a1+c_mid; i++) {
-                    $b(n=>i)=i-a1;             
-                }
-                for (i=a1+c_mid; i <= a2; i++) {
-                    $b(n=>i)=a2-i;
-                }         
             }
+            
+            for (i=a1; i < a1+c_mid; i++) {
+                $b(n=>i)=i-a1;             
+            }
+            for (i=a1+c_mid; i <= a2; i++) {
+                $b(n=>i)=a2-i;
+            } 
+            
         }       
         if (size_n > $a(m=>-1)+1){
             a1=$a(m=>size_m-1);
