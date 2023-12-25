@@ -49,22 +49,16 @@ pp_def(
         PDL_Indx i,c_mid, n_size=$SIZE(n);
         if (0==(n_size % 2)){
            c_mid=n_size/2;
-           for (i=0; i < c_mid; i++) {
-                $b(n=>i)=i;             
-           }
-           for (i=c_mid; i < n_size; i++) {
-                $b(n=>i)=n_size-i-1;
-           } 
         }
         else {
             c_mid=(n_size+1)/2;
-            for (i=0; i < c_mid; i++) {
-                $b(n=>i)=i;             
-           }
-           for (i=c_mid; i < n_size; i++) {
-                $b(n=>i)=n_size-i-1;
-           }         
         }
+       for (i=0; i < c_mid; i++) {
+            $b(n=>i)=i;             
+       }
+       for (i=c_mid; i < n_size; i++) {
+            $b(n=>i)=n_size-i-1;
+       } 
     },
 );
 
