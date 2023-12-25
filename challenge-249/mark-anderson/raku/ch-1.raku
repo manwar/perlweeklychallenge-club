@@ -8,5 +8,5 @@ sub equal-pairs(+@a where * %% 2)
 {
     my $b = @a.Bag;
     return () unless all($b.values) %% 2;
-    $b.kxxv.sort.rotor(2) 
+    $b.kxxv.sort.batch(2) 
 }
