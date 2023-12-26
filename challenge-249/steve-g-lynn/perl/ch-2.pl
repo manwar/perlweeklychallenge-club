@@ -6,20 +6,21 @@ local *DI_string_match = sub {
     #-- return 0 (error) if input is not D or I only
     ($str =~ /^[DI]+$/) || (return 0);
 
-    #-- create sorted array of indices from which to generate output
-    my @tmp=(0 .. length($str));
+    #-- create mutable temp vars containing highest and lowest indices
+    my ($lowest,$highest)=(0, length($str));
     
     #-- loop through $str indices, 
-    # if a position i is 'D' pop @tmp (highest item) and assign to retval[i]
-    # if a position i is 'I' shift @tmp (lowest item) and assign to retval[i]
+    # if str[i] is 'D', assign highest in output[i] and decrement it
+    # if a position i is 'I', assign lowest in output[i] and increment it
 
     my @retval = (); #-- return value
     map {
-        (substr($str,$_,1) eq 'D') && ($retval[$_] = pop @tmp);
-        (substr($str,$_,1) eq 'I') && ($retval[$_] = shift @tmp);
+        (substr($str,$_,1) eq 'D') && ($retval[$_] = $highest--);
+        (substr($str,$_,1) eq 'I') && ($retval[$_] = $lowest++);
     }
     0 .. length($str)-1;
-    $retval[length($str)] = shift @tmp; #-- last item left
+    ($lowest==$highest) || die "Something wrong ...$!";
+    $retval[length($str)] = $highest; #-- last item left
     @retval;
 };
 
