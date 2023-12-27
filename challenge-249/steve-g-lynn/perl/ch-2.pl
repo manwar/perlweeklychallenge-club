@@ -11,12 +11,13 @@ local *DI_string_match = sub {
     
     #-- loop through $str indices, 
     # if str[i] is 'D', assign highest in output[i] and decrement it
-    # if a position i is 'I', assign lowest in output[i] and increment it
+    # if str[i] is 'I', assign lowest in output[i] and increment it
 
     my @retval = (); #-- return value
     map {
-        (substr($str,$_,1) eq 'D') && ($retval[$_] = $highest--);
-        (substr($str,$_,1) eq 'I') && ($retval[$_] = $lowest++);
+        (substr($str,$_,1) eq 'D') ?
+        ($retval[$_] = $highest--) :
+        ($retval[$_] = $lowest++);
     }
     0 .. length($str)-1;
     ($lowest==$highest) || die "Something wrong ...$!";
