@@ -1,4 +1,7 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2023-12-29 15:02:29 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Rob Turner",
@@ -33,9 +36,13 @@
          "Steve Bresson"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             9,
             118,
@@ -67,7 +74,8 @@
             1,
             97,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -105,6 +113,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             47,
@@ -136,12 +145,15 @@
             0,
             48,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2023-12-28 21:28:11 GMT"
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "yAxis" : {
       "min" : 0,
@@ -149,19 +161,7 @@
          "text" : ""
       }
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2023]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
