@@ -41,7 +41,7 @@ These return values are returned from map as a [Seq](https://docs.raku.org/type/
 
 Finally, we use [max](https://docs.raku.org/type/Any#routine_max) to return the max element in that sequence.
 
-Note the [//](https://docs.raku.org/language/5to6-perlop#Logical_Defined-Or) operator instead of the [||](https://docs.raku.org/language/operators#infix_||) operator. The // operator tests if the result from parse-base is defined. || tests whether the value is True. If we used || then our map block would incorrectly return False for any string that evaluates to 0 such as "000".parse-base(10) because 0 evaluates to False in a [Boolean context](https://docs.raku.org/language/contexts#Boolean).
+Note the [//](https://docs.raku.org/language/5to6-perlop#Logical_Defined-Or) operator instead of the [||](https://docs.raku.org/language/operators#infix_||) operator. The // operator tests if the result from parse-base is defined. || tests whether the value is True. If we used || then our map block would incorrectly return the character count for any string that evaluates to 0 such as "000".parse-base(10) because 0 evaluates to False in a [Boolean context](https://docs.raku.org/language/contexts#Boolean).
 
 Putting it all together:
 
