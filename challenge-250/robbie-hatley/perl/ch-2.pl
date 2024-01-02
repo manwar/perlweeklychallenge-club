@@ -77,17 +77,17 @@ BEGIN {$t0 = time}
 # Is a given array ref a ref to a non-empty array containing only alphanumeric strings?
 sub is_array_of_alnums ($aref) {
    'ARRAY' ne ref($aref) || 0 == scalar(@$aref) and return 0;
-   for (@$aref) {!/^[[:alnum:]]+$/ and return 0}
+   for (@$aref) {!/^[a-zA-Z0-9]+$/ and return 0}
    return 1;
 }
 
 # What is the "alphanumeric string value" of a given scalar?
 sub alnum_string_value ($x) {
-   $x=~/^[[[:digit:]]+$/ and return 0+$x or return length($x);
+   $x=~/^[0-9]+$/ and return 0+$x or return length($x);
 }
 
 # What is the maximum "alphanumeric string value"
-#of the elements of an array of alphanumeric strings?
+# of the elements of an array of alphanumeric strings?
 sub max_alnum_string_value ($aref) {
    return max map {alnum_string_value $_} @$aref;
 }
