@@ -1,6 +1,6 @@
-# c233
+# c250
 
-The Weekly Challenge — #233 — Tyler Wardhaugh
+The Weekly Challenge — #250 — Tyler Wardhaugh
 
 ## Usage
 
@@ -36,6 +36,6 @@ View available tasks Babashka can run:
 
 ## License
 
-Copyright © 2023 Tyler Wardhaugh
+Copyright © 2024 Tyler Wardhaugh
 
 Distributed under the Eclipse Public License version 1.0.
