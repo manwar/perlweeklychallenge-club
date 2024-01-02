@@ -87,7 +87,7 @@ sub alnum_string_value ($x) {
 }
 
 # What is the maximum "alphanumeric string value"
-#of the elements of an array of alphanumeric strings?
+# of the elements of an array of alphanumeric strings?
 sub max_alnum_string_value ($aref) {
    return max map {alnum_string_value $_} @$aref;
 }
