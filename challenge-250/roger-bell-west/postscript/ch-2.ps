@@ -1,0 +1,71 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/alphanumericstringvalue {
+    [ exch
+        {
+            {
+                cvi
+            } stopped {
+                length
+            } if
+        } forall
+    ]
+    listmax
+} bind def
+
+(alphanumericstringvalue) test.start
+[(perl) (2) (000) (python) (raku)] alphanumericstringvalue 6 eq test
+[(001) (1) (000) (0001)] alphanumericstringvalue 1 eq test
+test.end
