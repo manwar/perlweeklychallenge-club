@@ -1,7 +1,4 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
-   },
    "xAxis" : {
       "categories" : [
          "Lance Wicks",
@@ -36,27 +33,32 @@
          "Maxim Kolodyazhny"
       ]
    },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-01-07 20:10:36 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
+   },
    "yAxis" : {
       "title" : {
          "text" : ""
       },
       "min" : 0
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-01-07 14:24:03 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             25,
             16,
@@ -88,10 +90,10 @@
             2,
             6,
             13
-         ]
+         ],
+         "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             4,
@@ -123,7 +125,8 @@
             0,
             0,
             1
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "name" : "Blog",
@@ -160,8 +163,5 @@
             0
          ]
       }
-   ],
-   "chart" : {
-      "type" : "column"
-   }
+   ]
 }
