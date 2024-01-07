@@ -1,18 +1,15 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
+   "subtitle" : {
+      "text" : "Last updated at 2024-01-07 23:37:44 GMT"
    },
    "chart" : {
       "type" : "column"
    },
-   "subtitle" : {
-      "text" : "Last updated at 2024-01-07 21:12:17 GMT"
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2024]"
    },
    "xAxis" : {
       "type" : "category",
@@ -23,8 +20,30 @@
          }
       }
    },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   },
    "series" : [
       {
+         "dataLabels" : {
+            "enabled" : "true",
+            "align" : "right",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "rotation" : -90
+         },
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -32,32 +51,13 @@
             ],
             [
                "Perl",
-               12898
+               12900
             ],
             [
                "Raku",
-               7433
+               7437
             ]
-         ],
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "rotation" : -90,
-            "y" : 10,
-            "align" : "right",
-            "format" : "{point.y:.0f}"
-         },
-         "name" : "Contributions"
+         ]
       }
-   ],
-   "legend" : {
-      "enabled" : "false"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2024]"
-   }
+   ]
 }
