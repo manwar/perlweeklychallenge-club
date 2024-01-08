@@ -51,5 +51,5 @@ is-deeply (43,), lucky-numbers([
 
 sub lucky-numbers(@m)
 {
-    keys (@m>>.min (&) ([Z] @m)>>.max)
+    keys @m>>.min (&) ([Z] @m)>>.max
 }
