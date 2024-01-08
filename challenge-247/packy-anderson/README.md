@@ -7,13 +7,29 @@
 Sample output
 ```
 $ raku/ch-1.raku
+Example 1:
+Input: @names = ('Mr. Wall',
+                 'Mrs. Wall',
+                 'Mr. Anwar',
+                 'Mrs. Anwar',
+                 'Mr. Conway',
+                 'Mr. Cross')
 Output:
-1
-6
-15
-28
-31
-45
+    Mr. Wall -> Mr. Cross
+    Mrs. Wall -> Mr. Conway
+    Mr. Anwar -> Mr. Wall
+    Mrs. Anwar -> Mrs. Wall
+    Mr. Conway -> Mrs. Anwar
+    Mr. Cross -> Mr. Anwar
+
+Example 2:
+Input: @names = ('Mr. Wall',
+                 'Mrs. Wall',
+                 'Mr. Anwar')
+Output:
+    Mr. Wall -> Mr. Anwar
+    Mrs. Wall -> Mr. Wall
+    Mr. Anwar -> Mrs. Wall
 ```
 
 * [Task 2](raku/ch-2.raku)
@@ -22,19 +38,22 @@ Sample output
 ```
 $ raku/ch-2.raku
 Example 1:
-Input: @a = (1, 1, 2, 3, 5)
-Found integer values for P (1) and Q (1)
-Output: True
+Input: $s = 'abcdbca'
+Output: 'bc'
+
+'bc' appears twice in $s
 
 Example 2:
-Input: @a = (4, 2, 4, 5, 7)
-Values for P (0.5) and Q (1) for first four elements are not integers
-Output: False
+Input: $s = 'cdeabeabfcdfabgcd'
+Output: 'ab'
+
+'ab' and 'cd' appear three times in $s and 'ab' is lexicographically smallest.
 
 Example 3:
-Input: @a = (4, 1, 2, -3, 8)
-Found integer values for P (1) and Q (-2)
-Output: True
+Input: $s = 'abcdeabcde'
+Output: 'ab'
+
+'ab', 'bc', 'cd', and 'de' appear twice in $s and 'ab' is lexicographically smallest.
 ```
 
 ## Perl
@@ -44,13 +63,29 @@ Output: True
 Sample output
 ```
 $ perl/ch-1.pl
+Example 1:
+Input: @names = ('Mr. Wall',
+                 'Mrs. Wall',
+                 'Mr. Anwar',
+                 'Mrs. Anwar',
+                 'Mr. Conway',
+                 'Mr. Cross')
 Output:
-3
-7
-26
-27
-29
-44
+    Mr. Wall -> Mrs. Anwar
+    Mrs. Wall -> Mr. Cross
+    Mr. Anwar -> Mr. Conway
+    Mrs. Anwar -> Mr. Wall
+    Mr. Conway -> Mr. Anwar
+    Mr. Cross -> Mrs. Wall
+
+Example 2:
+Input: @names = ('Mr. Wall',
+                 'Mrs. Wall',
+                 'Mr. Anwar')
+Output:
+    Mr. Wall -> Mr. Anwar
+    Mrs. Wall -> Mr. Wall
+    Mr. Anwar -> Mrs. Wall
 ```
 
 * [Task 2](perl/ch-2.pl)
@@ -59,19 +94,22 @@ Sample output
 ```
 $ perl/ch-2.pl
 Example 1:
-Input: @a = (1, 1, 2, 3, 5)
-Found integer values for P (1) and Q (1)
-Output: true
+Input: $s = 'abcdbca'
+Output: 'bc'
+
+'bc' appears twice in $s
 
 Example 2:
-Input: @a = (4, 2, 4, 5, 7)
-Values for P (0.5) and Q (1) for first four elements are not integers
-Output: false
+Input: $s = 'cdeabeabfcdfabgcd'
+Output: 'ab'
+
+'ab' and 'cd' appear three times in $s and 'ab' is lexicographically smallest.
 
 Example 3:
-Input: @a = (4, 1, 2, -3, 8)
-Found integer values for P (1) and Q (-2)
-Output: true
+Input: $s = 'abcdeabcde'
+Output: 'ab'
+
+'ab', 'bc', 'cd', and 'de' appear twice in $s and 'ab' is lexicographically smallest.
 ```
 
 ## Guest Language: Python
@@ -80,4 +118,4 @@ Output: true
 
 ## Blog Post
 
-[Perl Weekly Challenge: 25 or 6 out of four... ty-nine](https://packy.dardan.com/b/F5)
+[Perl Weekly Challenge: Writing Letter Pairs to Santa](https://packy.dardan.com/b/FK)
