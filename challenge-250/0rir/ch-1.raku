@@ -46,7 +46,6 @@ my @Test =
     -10,(), -1,
 ;
 plan @Test ÷ 3;
-@Test[1][0].WHAT.say;
 
 multi func( Int $int where $int < 0, $list ) { -1 }; 
 multi func( Int $int, $list -->Int:D) {
