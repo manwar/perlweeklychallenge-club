@@ -13,7 +13,9 @@ multi sub MAIN('test') {
 
 multi sub MAIN(
     Int $width, #= Matrix width
-    *@vals where @vals.unique.elems == @vals.elems && all(@vals) ~~ IntStr, #= Matrix values
+    *@vals where @vals.unique.elems == @vals.elems #= Matrix values
+                 && all(@vals) ~~ IntStr
+                 && @vals.elems %% $width, 
 ) {
     my @matrix = @vals.rotor($width);
     lucky(@matrix).say;
