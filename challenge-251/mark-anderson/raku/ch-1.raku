@@ -7,5 +7,5 @@ is concat-val([1,2,10]),        112;
 
 sub concat-val(@a)
 {
-    [+] map { @a.shift ~ (@a.pop || Empty) }, ^(@a / 2)
+    sum do while @a { @a.shift ~ (@a.pop || Empty) } 
 }
