@@ -1,78 +1,32 @@
 {
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2024-01-08 19:11:43 GMT"
+   "xAxis" : {
+      "type" : "category"
    },
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1
    },
-   "series" : [
-      {
-         "name" : "The Weekly Challenge - 251",
-         "data" : [
-            {
-               "drilldown" : "Dave Jacoby",
-               "name" : "Dave Jacoby",
-               "y" : 3
-            },
-            {
-               "y" : 2,
-               "name" : "David Ferrone",
-               "drilldown" : "David Ferrone"
-            },
-            {
-               "name" : "Laurent Rosenfeld",
-               "y" : 3,
-               "drilldown" : "Laurent Rosenfeld"
-            },
-            {
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari",
-               "y" : 10
-            },
-            {
-               "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
-            },
-            {
-               "y" : 2,
-               "name" : "Niels van Dijke",
-               "drilldown" : "Niels van Dijke"
-            },
-            {
-               "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith",
-               "y" : 3
-            },
-            {
-               "drilldown" : "Peter Meszaros",
-               "name" : "Peter Meszaros",
-               "y" : 2
-            },
-            {
-               "y" : 2,
-               "name" : "Simon Proctor",
-               "drilldown" : "Simon Proctor"
-            },
-            {
-               "drilldown" : "Thomas Kohler",
-               "y" : 4,
-               "name" : "Thomas Kohler"
-            },
-            {
-               "name" : "W. Luis Mochan",
-               "y" : 3,
-               "drilldown" : "W. Luis Mochan"
-            }
-         ],
-         "colorByPoint" : 1
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
       }
-   ],
+   },
+   "subtitle" : {
+      "text" : "[Champions: 13] Last updated at 2024-01-09 20:37:41 GMT"
+   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -82,23 +36,20 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby"
+            ]
          },
          {
+            "name" : "David Ferrone",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "David Ferrone",
             "id" : "David Ferrone"
          },
          {
             "id" : "Laurent Rosenfeld",
-            "name" : "Laurent Rosenfeld",
             "data" : [
                [
                   "Perl",
@@ -112,11 +63,10 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "name" : "Laurent Rosenfeld"
          },
          {
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -126,17 +76,19 @@
                   "Blog",
                   8
                ]
-            ]
+            ],
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari"
          },
          {
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson"
+            ]
          },
          {
             "data" : [
@@ -163,14 +115,28 @@
             ]
          },
          {
-            "id" : "Peter Meszaros",
-            "name" : "Peter Meszaros",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "name" : "Peter Meszaros",
+            "id" : "Peter Meszaros"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Robbie Hatley",
+            "id" : "Robbie Hatley"
          },
          {
             "id" : "Simon Proctor",
@@ -183,6 +149,7 @@
             ]
          },
          {
+            "name" : "Thomas Kohler",
             "data" : [
                [
                   "Perl",
@@ -193,12 +160,25 @@
                   2
                ]
             ],
-            "name" : "Thomas Kohler",
             "id" : "Thomas Kohler"
          },
          {
-            "name" : "W. Luis Mochan",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "name" : "Ulrich Rieke",
+            "id" : "Ulrich Rieke"
+         },
+         {
             "id" : "W. Luis Mochan",
+            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -212,9 +192,82 @@
          }
       ]
    },
-   "legend" : {
-      "enabled" : 0
+   "chart" : {
+      "type" : "column"
    },
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 251",
+         "data" : [
+            {
+               "name" : "Dave Jacoby",
+               "drilldown" : "Dave Jacoby",
+               "y" : 3
+            },
+            {
+               "y" : 2,
+               "drilldown" : "David Ferrone",
+               "name" : "David Ferrone"
+            },
+            {
+               "drilldown" : "Laurent Rosenfeld",
+               "name" : "Laurent Rosenfeld",
+               "y" : 3
+            },
+            {
+               "y" : 10,
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
+            },
+            {
+               "y" : 2,
+               "drilldown" : "Niels van Dijke",
+               "name" : "Niels van Dijke"
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Peter Campbell Smith",
+               "name" : "Peter Campbell Smith"
+            },
+            {
+               "name" : "Peter Meszaros",
+               "drilldown" : "Peter Meszaros",
+               "y" : 2
+            },
+            {
+               "y" : 3,
+               "drilldown" : "Robbie Hatley",
+               "name" : "Robbie Hatley"
+            },
+            {
+               "y" : 2,
+               "name" : "Simon Proctor",
+               "drilldown" : "Simon Proctor"
+            },
+            {
+               "y" : 4,
+               "drilldown" : "Thomas Kohler",
+               "name" : "Thomas Kohler"
+            },
+            {
+               "name" : "Ulrich Rieke",
+               "drilldown" : "Ulrich Rieke",
+               "y" : 4
+            },
+            {
+               "y" : 3,
+               "name" : "W. Luis Mochan",
+               "drilldown" : "W. Luis Mochan"
+            }
+         ],
+         "colorByPoint" : 1
+      }
+   ],
    "title" : {
       "text" : "The Weekly Challenge - 251"
    },
@@ -222,20 +275,5 @@
       "title" : {
          "text" : "Total Solutions"
       }
-   },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         }
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "xAxis" : {
-      "type" : "category"
    }
 }
