@@ -1,15 +1,22 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-01-09 20:37:41 GMT"
-   },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-01-09 22:05:13 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
    },
    "xAxis" : {
       "categories" : [
@@ -45,21 +52,8 @@
          "Stephanie Stein"
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             0,
@@ -91,7 +85,8 @@
             3,
             96,
             1
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "data" : [
@@ -129,6 +124,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             13,
             0,
@@ -160,8 +156,12 @@
             0,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
-   ]
+   ],
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   }
 }
