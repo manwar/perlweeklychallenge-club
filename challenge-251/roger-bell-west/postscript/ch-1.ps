@@ -1,0 +1,79 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/concat {
+    0 dict begin
+    /b0 exch def
+    /a0 exch def
+    b0 0 eq {
+        10 a0 mul
+    } {
+        /a a0 def
+        /b b0 def
+        {
+            b 0 le {
+                exit
+            } if
+            /a a 10 mul def
+            /b b 10 idiv def
+        } loop
+        a b0 add
+    } ifelse
+    end
+} bind def
+
+/concatenationvalue {
+    0 dict begin
+    /a exch def
+    0
+    0 1 a length 1 sub 2 idiv {
+        /i exch def
+        /j a length 1 sub i sub def
+        i j eq {
+            a i get add
+        } {
+            a i get a j get concat add
+        } ifelse
+    } for
+} bind def
+
+(concatenationvalue) test.start
+[6 12 25 1] concatenationvalue 1286 eq test
+[10 7 31 5 2 2] concatenationvalue 489 eq test
+[1 2 10] concatenationvalue 112 eq test
+test.end
