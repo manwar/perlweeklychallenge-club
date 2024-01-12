@@ -1,13 +1,11 @@
 {
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-01-12 19:00:46 GMT"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
    },
    "xAxis" : {
       "categories" : [
@@ -43,12 +41,14 @@
          "Jen Guerra"
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-01-12 22:46:34 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             5,
             50,
@@ -80,9 +80,11 @@
             2,
             0,
             8
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -114,8 +116,7 @@
             0,
             2,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -153,15 +154,14 @@
          ]
       }
    ],
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+      },
+      "min" : 0
    }
 }
