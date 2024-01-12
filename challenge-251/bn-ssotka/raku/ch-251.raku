@@ -23,6 +23,14 @@ sub concat (@ints) {
     return (@ints[0].Str ~ @ints[*-1].Str).Int + concat(@ints[1..*-2]);
 }
 
-sub MAIN (*@ints){
+multi MAIN (*@ints){
     say concat(@ints);
+}
+multi MAIN {
+    my @tests = ((6, 12, 25, 1),
+                 (10, 7, 31, 5, 2, 2),
+                 (1, 2, 10));
+    for @tests -> @t {
+        say concat(@t);
+    }
 }
