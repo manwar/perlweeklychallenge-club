@@ -1,3 +1,3 @@
-# The Weekly Challenge 250
+# The Weekly Challenge 251
 
-Blog: [Small and large](https://dev.to/simongreennet/small-and-large-2ap)
+Blog: [Lucky values](https://dev.to/simongreennet/lucky-values-4bh5)
