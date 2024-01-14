@@ -1,0 +1,149 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/luckynumbers {
+    0 dict begin
+    /a exch def
+    /maxs [
+        0 1 a 0 get length 1 sub {
+            /x exch def
+            /max [ 0 0 0 ] def
+            0 1 a length 1 sub {
+                /y exch def
+                a y get x get max 0 get gt {
+                    /max [ a y get x get y x ] def
+                } if
+            } for
+            max
+        } for
+    ] def
+    /mins [
+        0 1 a length 1 sub {
+            /y exch def
+            /min [ a y get 0 get y 0 ] def
+            0 1 a 0 get length 1 sub {
+                /x exch def
+                a y get x get min 0 get lt {
+                    /min [ a y get x get y x ] def
+                } if
+            } for
+            min
+        } for
+    ] def
+    -1
+    /ex false def
+    maxs {
+        /i exch def
+        mins {
+            /j exch def
+            i j deepeq {
+                pop i 0 get
+                /ex true def
+                exit
+            } if
+        } forall
+        ex {
+            exit
+        } if
+    } forall
+    end
+} bind def
+
+(luckynumbers) test.start
+[[3 7 9] [9 11 13] [15 16 17]] luckynumbers 15 eq test
+[[1 10 4 2] [9 3 8 7] [15 16 17 12]] luckynumbers 12 eq test
+[[7 8] [1 2]] luckynumbers 7 eq test
+test.end
