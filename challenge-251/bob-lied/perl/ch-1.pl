@@ -49,7 +49,7 @@ exit(!runTest()) if $DoTest;
 sub cval(@ints)
 {
     my $val = 0;
-    $val += (shift(@ints) + pop(@ints)) while @ints;
+    $val += ( shift(@ints) . (pop(@ints) // "") ) while @ints;
     return $val;
 }
 
