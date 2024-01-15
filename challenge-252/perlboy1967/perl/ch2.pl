@@ -25,8 +25,9 @@ use Test2::V0;
 sub uniqSumZero ($n) {
   my @n = (0);
   if ($n > 1) {
-    @n = sort { $a <=> $b } map { (-$_,$_) } 1 .. $n / 2;
-    splice(@n,$n>>1,1,0,$n[$n>>1]) if ($n % 2 != 0);
+    my $i = $n >> 1;
+    @n = sort { $a <=> $b } map { (-$_,$_) } 1 .. $i;
+    splice(@n,$i,1,0,$n[$i]) if ($n % 2 != 0);
   }
   [@n];
 }
