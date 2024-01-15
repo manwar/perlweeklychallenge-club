@@ -29,8 +29,7 @@ use List::Util qw(sum0);
 
 sub specialNumbers (@ints) {
   my $n = $#ints + 1;
-  sum0 map { my $i = $_ - 1; 
-             $n % $_ == 0 ? $ints[$i] ** 2 : 0 } 1 .. $n;
+  sum0 map { $n % $_ == 0 ? $ints[$_ - 1] ** 2 : 0 } 1 .. $n;
 }
 
 is(specialNumbers(1,2,3,4),21);
