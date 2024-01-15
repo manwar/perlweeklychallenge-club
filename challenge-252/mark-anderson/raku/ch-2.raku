@@ -13,5 +13,5 @@ multi uniq-sum-zero($n where 1)     { (0,) }
 multi uniq-sum-zero($n where * > 1)
 {
     my $i = $n div 2;
-    (-$i,-$i+1...-1,1,2,3...$i,0)[^$n]
+    (-$i...-1,1,2,3...$i,0)[^$n]
 }
