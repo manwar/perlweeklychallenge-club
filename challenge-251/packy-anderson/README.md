@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Two-Hundred Fifty Perl Weekly Challenges! Two-Hundred Fifty problems so clear...](https://packy.dardan.com/b/G4)
+[Luck Concatenate Numbers Tonight!](https://packy.dardan.com/b/GL)
