@@ -44,6 +44,26 @@ sub specialNumbers(@ints)
     return sum0 map { $_ * $_ } @ints[ grep { $len % $_ == 0 } 1 .. $len ];
 }
 
+sub factorsOf($n)
+{
+    use List::Util qw/uniqint/;
+    my @flist = (1, $n);
+    for my $f ( 2 .. int(sqrt($n)) )
+    {
+        push @flist, ($f, $n/$f) if $n % $f == 0;
+    }
+    return [ uniqint sort { $a <=> $b } @flist ]
+}
+
+sub sn2(@ints)
+{
+    use List::MoreUtils qw/before/;
+    my $len = @ints;
+    return 0 if $len == 0;
+    my @choose = map { $_ - 1 } before { $_ > $len } factorsOf($len)->@*;
+    return sum0 map { $_ * $_ } @ints[@choose];
+}
+
 sub runTest
 {
     use Test2::V0;
@@ -52,6 +72,14 @@ sub runTest
     is( specialNumbers(2,7,1,19,18,3), 63, "Example 2");
     is( specialNumbers(8            ), 64, "Singleton");
     is( specialNumbers()            ,   0, "Empty list");
+
+    is( sn2(1,2,3,4),       21, "sn2 Example 1");
+    is( sn2(2,7,1,19,18,3), 63, "sn2 Example 2");
+    is( sn2(8            ), 64, "sn2 Singleton");
+    is( sn2()            ,   0, "sn2 Empty list");
+
+    is( factorsOf( 6), [1,2,3,6], "factorsOf 6");
+    is( factorsOf(36), [1,2,3,4,6,9,12,18,36], "factorsOf 36");
 
     done_testing;
 }
