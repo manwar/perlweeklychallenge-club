@@ -8,6 +8,5 @@ is special-numbers([2,7,1,19,18,3]), 63;
 sub special-numbers(@ints)
 {
     @ints.unshift: Any;
-
     [+] @ints[divisors @ints.end] >>**>> 2
 }
