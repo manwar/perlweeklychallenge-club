@@ -9,7 +9,7 @@ is-deeply uniq-sum-zero(0), ();
 is-deeply uniq-sum-zero(8), (-4,-3,-2,-1,1,2,3,4);
 is-deeply uniq-sum-zero(9), (-4,-3,-2,-1,1,2,3,4,0);
 
-sub uniq-sum-zero($n)
+sub uniq-sum-zero($n where * >= 0)
 {
     my $i = $n div 2;
     (-$i...-1,1,2,3...$i,0)[^$n]
