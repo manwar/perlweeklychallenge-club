@@ -1,6 +1,6 @@
 #!/bin/env raku
 
-unit sub MAIN(Str:D $s where *.comb.all eq 'D'|'I');
+unit sub MAIN(Str:D $s where *.comb.all eq <D I>.any);
 
 my @a = 0..$s.chars;
 my @b = gather {
