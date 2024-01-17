@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Luck Concatenate Numbers Tonight!](https://packy.dardan.com/b/GL)
+[Sum Enchanted Evening](https://packy.dardan.com/b/GW)
