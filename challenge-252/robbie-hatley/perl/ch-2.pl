@@ -77,8 +77,8 @@ sub is_pos_int ($x) {
    return $x =~ m/^[1-9]\d*$/;
 }
 
+# Return array of unique ints adding to $n:
 sub usz ($n) {
-   return ('$n not pos int') if !is_pos_int($n);
    my @a = ();
    push @a, -int($n/2)..-1;
    1 == $n%2 and push @a, 0;
