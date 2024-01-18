@@ -77,7 +77,7 @@ sub is_pos_int ($x) {
    return $x =~ m/^[1-9]\d*$/;
 }
 
-# Return array of unique ints adding to $n:
+# Return array of $n unique ints adding to 0:
 sub usz ($n) {
    my @a = ();
    push @a, -int($n/2)..-1;
