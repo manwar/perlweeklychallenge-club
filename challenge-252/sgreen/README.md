@@ -1,3 +1,3 @@
-# The Weekly Challenge 251
+# The Weekly Challenge 252
 
-Blog: [Lucky values](https://dev.to/simongreennet/lucky-values-4bh5)
+Blog: [Special zeros](https://dev.to/simongreennet/special-zeros-17i5)
