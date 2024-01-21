@@ -3,8 +3,8 @@ use v5.38;
 # Given an integer, $n, write a script to find an array containing $n 
 # unique integers such that they add up to zero.
 ##
+srand(ord q/TWC/);
 sub rand_sum_zero{
-    srand(ord q/TWC/);
     my $n = shift; 
     my @r;
     my $x = int(rand($n * 5)) + 1;   
