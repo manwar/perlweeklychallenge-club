@@ -1,6 +1,37 @@
 {
+   "xAxis" : {
+      "type" : "category"
+   },
    "title" : {
       "text" : "The Weekly Challenge - 253"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 8] Last updated at 2024-01-22 21:06:53 GMT"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "tooltip" : {
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "series" : [
       {
@@ -8,23 +39,28 @@
          "data" : [
             {
                "y" : 2,
-               "drilldown" : "David Ferrone",
-               "name" : "David Ferrone"
+               "drilldown" : "Dave Jacoby",
+               "name" : "Dave Jacoby"
             },
             {
-               "name" : "Laurent Rosenfeld",
+               "y" : 2,
+               "name" : "David Ferrone",
+               "drilldown" : "David Ferrone"
+            },
+            {
                "y" : 3,
-               "drilldown" : "Laurent Rosenfeld"
+               "drilldown" : "Laurent Rosenfeld",
+               "name" : "Laurent Rosenfeld"
             },
             {
                "y" : 11,
-               "drilldown" : "Luca Ferrari",
-               "name" : "Luca Ferrari"
+               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari"
             },
             {
-               "name" : "Mark Anderson",
+               "y" : 2,
                "drilldown" : "Mark Anderson",
-               "y" : 2
+               "name" : "Mark Anderson"
             },
             {
                "y" : 2,
@@ -32,47 +68,42 @@
                "name" : "Niels van Dijke"
             },
             {
+               "y" : 4,
+               "name" : "Thomas Kohler",
+               "drilldown" : "Thomas Kohler"
+            },
+            {
+               "drilldown" : "W. Luis Mochan",
                "name" : "W. Luis Mochan",
-               "y" : 3,
-               "drilldown" : "W. Luis Mochan"
+               "y" : 3
             }
          ],
          "name" : "The Weekly Challenge - 253"
       }
    ],
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "followPointer" : 1,
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
    "drilldown" : {
       "series" : [
          {
-            "id" : "David Ferrone",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "name" : "David Ferrone"
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby"
          },
          {
-            "id" : "Laurent Rosenfeld",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "name" : "David Ferrone",
+            "id" : "David Ferrone"
+         },
+         {
             "data" : [
                [
                   "Perl",
@@ -87,10 +118,10 @@
                   1
                ]
             ],
+            "id" : "Laurent Rosenfeld",
             "name" : "Laurent Rosenfeld"
          },
          {
-            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -101,17 +132,18 @@
                   9
                ]
             ],
+            "id" : "Luca Ferrari",
             "name" : "Luca Ferrari"
          },
          {
+            "name" : "Mark Anderson",
+            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ],
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson"
+            ]
          },
          {
             "data" : [
@@ -120,8 +152,22 @@
                   2
                ]
             ],
-            "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke"
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  2
+               ]
+            ],
+            "name" : "Thomas Kohler",
+            "id" : "Thomas Kohler"
          },
          {
             "data" : [
@@ -138,17 +184,5 @@
             "id" : "W. Luis Mochan"
          }
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2024-01-22 18:36:30 GMT"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "chart" : {
-      "type" : "column"
    }
 }
