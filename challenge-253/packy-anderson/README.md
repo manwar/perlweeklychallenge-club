@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Sum Enchanted Evening](https://packy.dardan.com/b/GW)
+[The Weakest Split](https://packy.dardan.com/b/Gu)
