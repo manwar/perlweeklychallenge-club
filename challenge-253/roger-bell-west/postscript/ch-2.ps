@@ -1,0 +1,193 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/quicksort.cmp {
+    2 copy
+    lt {
+        pop pop -1
+    } {
+        gt {
+            1
+        } {
+            0
+        } ifelse
+    } ifelse
+} bind def
+
+/mergesort.merge {
+    4 dict begin
+    /right exch def
+    /left exch def
+    /li 0 def
+    /ri 0 def
+    [
+        {
+            li left length ge ri right length ge or {
+                exit
+            } if
+            left li get right ri get cmp 0 le {
+                left li get
+                /li li 1 add def
+            } {
+                right ri get
+                /ri ri 1 add def
+            } ifelse
+        } loop
+        li left length lt {
+            left li left length li sub getinterval aload pop
+        } if
+        ri right length lt {
+            right ri right length ri sub getinterval aload pop
+        } if
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/mergesort.with_comparator { % [ a c b ] { comparator } -> [ a b c ]
+    5 dict begin
+    /cmp where {
+        pop
+    } {
+        /cmp exch def
+    } ifelse
+    /m exch def
+    m length 1 le {
+        m
+    } {
+        /l2 m length 2 idiv def
+        /left m 0 l2 getinterval mergesort.with_comparator def
+        /right m l2 m length l2 sub getinterval mergesort.with_comparator def
+        left right mergesort.merge
+    } ifelse
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/weakestrows {
+    0 dict begin
+    /a exch def
+    /p [ 0 1 a length 1 sub {} for ] def
+    /b a { { add } reduce } map def
+    p { b exch get exch b exch get exch quicksort.cmp } mergesort.with_comparator
+    end
+} bind def
+
+(weakestrows) test.start
+[[1 1 0 0 0] [1 1 1 1 0] [1 0 0 0 0] [1 1 0 0 0] [1 1 1 1 1]] weakestrows [2 0 3 1 4] deepeq test
+[[1 0 0 0] [1 1 1 1] [1 0 0 0] [1 0 0 0]] weakestrows [0 2 3 1] deepeq test
+test.end
