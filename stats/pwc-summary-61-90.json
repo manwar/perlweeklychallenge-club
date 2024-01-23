@@ -1,10 +1,4 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-01-23 12:21:52 GMT"
-   },
    "xAxis" : {
       "categories" : [
          "Daniel Mantovani",
@@ -39,13 +33,20 @@
          "Guillermo Ramos"
       ]
    },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
+   },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
    },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             45,
             5,
@@ -77,11 +78,9 @@
             0,
             4,
             32
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             23,
@@ -113,10 +112,10 @@
             2,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             2,
             0,
@@ -148,20 +147,21 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "yAxis" : {
       "title" : {
          "text" : ""
       },
       "min" : 0
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "chart" : {
-      "type" : "column"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-01-23 13:24:15 GMT"
    }
 }
