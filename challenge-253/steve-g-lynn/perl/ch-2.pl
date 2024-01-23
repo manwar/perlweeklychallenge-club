@@ -11,7 +11,7 @@ sub mysum {
 
 sub weakest_row {
  #input valuation
- $weakest_row = length($_[0]);
+ local($weakest_row) = length($_[0]);
  foreach (@_) {
   ($_ =~ /^[01]+$/) || (die "Input error: $!\n");
   (length($_) == $weakest_row) || (die "Not a matrix: $!\n");
