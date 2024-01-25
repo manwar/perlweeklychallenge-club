@@ -29,7 +29,7 @@ foreach my $matrix (@matrices){
     printf(
         "Input: \$matrix = [\n%s\n                 ]\nOutput: (%s)\n\n",
         join(
-            "\n",
+            ",\n",
             map(
                 "                     " . $_,
                 matrix_to_strings($matrix)
