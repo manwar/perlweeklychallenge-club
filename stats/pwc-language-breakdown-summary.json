@@ -1,13 +1,46 @@
 {
-   "chart" : {
-      "type" : "column"
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2024]"
    },
+   "subtitle" : {
+      "text" : "Last updated at 2024-01-25 16:17:10 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontSize" : "13px",
+            "fontFamily" : "Verdana, sans-serif"
+         }
+      },
+      "type" : "category"
+   },
    "series" : [
       {
          "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}",
+            "align" : "right",
+            "y" : 10
+         },
          "data" : [
             [
                "Blog",
@@ -19,45 +52,12 @@
             ],
             [
                "Raku",
-               7527
+               7528
             ]
-         ],
-         "dataLabels" : {
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "align" : "right",
-            "y" : 10,
-            "format" : "{point.y:.0f}",
-            "enabled" : "true"
-         }
+         ]
       }
    ],
-   "subtitle" : {
-      "text" : "Last updated at 2024-01-24 21:33:42 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "xAxis" : {
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      },
-      "type" : "category"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
+   "chart" : {
+      "type" : "column"
    }
 }
