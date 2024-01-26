@@ -1,4 +1,22 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2023]"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2024-01-26 14:51:17 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "William Gilmore",
@@ -9,30 +27,8 @@
          "Yves Orton"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2023]"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             3,
@@ -40,9 +36,11 @@
             86,
             21,
             8
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -50,8 +48,7 @@
             21,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -65,7 +62,10 @@
          ]
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 6] Last updated at 2024-01-26 14:26:55 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
    }
 }
