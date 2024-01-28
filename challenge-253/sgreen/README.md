@@ -1,3 +1,3 @@
-# The Weekly Challenge 252
+# The Weekly Challenge 253
 
-Blog: [Special zeros](https://dev.to/simongreennet/special-zeros-17i5)
+Blog: [The weakest split](https://dev.to/simongreennet/the-weakest-split-5ad7)
