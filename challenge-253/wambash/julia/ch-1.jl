@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env julia
 
 split_strings(words; separator = " " ) = mapreduce( x -> split(x, separator, keepempty=false ), vcat,  words)
 
