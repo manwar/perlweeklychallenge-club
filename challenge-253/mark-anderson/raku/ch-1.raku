@@ -7,7 +7,7 @@ is-deeply split-strings(<one.two.three four.five six>, '.'),
 is-deeply split-strings(<$perl$$ $$raku$>, '$'),
                         <perl raku>;
 
-sub split-strings(@a, $separator)
+sub split-strings(@words, $separator)
 {
-    flat @a>>.split($separator, :skip-empty)
+    flat @words>>.split($separator, :skip-empty)
 }
