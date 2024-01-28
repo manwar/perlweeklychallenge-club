@@ -25,5 +25,5 @@ is-deeply weakest-rows([ <1 1 0 0 0>,
 
 sub weakest-rows($m)
 {
-    $m.antipairs.sort>>.value
+    $m.sort(:k) # requires 2023.08 or later
 }
