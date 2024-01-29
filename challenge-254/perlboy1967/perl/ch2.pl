@@ -23,8 +23,8 @@ use common::sense;
 use Test2::V0;
 
 sub reverseVowels ($str) {
-  my @v = reverse $str =~ m/(?i)[aeiou]/g;
-  ucfirst lc $str =~ s/(?i)[aeiou]/shift @v/egr;
+  my @v = $str =~ m/(?i)[aeiou]/g;
+  ucfirst lc $str =~ s/(?i)[aeiou]/pop @v/egr;
 }
 
 
