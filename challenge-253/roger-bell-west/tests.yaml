@@ -1,0 +1,81 @@
+---
+ch-1:
+  - function: splitstrings
+    multiarg: true
+    arguments:
+      - - one.two.three
+        - four.five
+        - six
+      - .
+    result:
+      - one
+      - two
+      - three
+      - four
+      - five
+      - six
+  - multiarg: true
+    arguments:
+      - - '$perl$$'
+        - '$$raku$'
+      - '$'
+    result:
+      - perl
+      - raku
+ch-2:
+  - function: weakestrows
+    arguments:
+      - - 1
+        - 1
+        - 0
+        - 0
+        - 0
+      - - 1
+        - 1
+        - 1
+        - 1
+        - 0
+      - - 1
+        - 0
+        - 0
+        - 0
+        - 0
+      - - 1
+        - 1
+        - 0
+        - 0
+        - 0
+      - - 1
+        - 1
+        - 1
+        - 1
+        - 1
+    result:
+      - 2
+      - 0
+      - 3
+      - 1
+      - 4
+  - function: weakestrows
+    arguments:
+      - - 1
+        - 0
+        - 0
+        - 0
+      - - 1
+        - 1
+        - 1
+        - 1
+      - - 1
+        - 0
+        - 0
+        - 0
+      - - 1
+        - 0
+        - 0
+        - 0
+    result:
+      - 0
+      - 2
+      - 3
+      - 1
