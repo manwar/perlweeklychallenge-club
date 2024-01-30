@@ -38,6 +38,7 @@ Output: false
 PROBLEM NOTES:
 First of all, I had to think hard whether "Three Power" means "x^3" or "3^x". But the latter would be
 "3 to the x power", whereas the former is "x to the 3 power", so I think "Three Power" means "x^3".
+
 This is also corroborated by Example #2, which states that 0 is a "Three Power" because "0 = 0^3",
 not "0 = 3^0" which is false (3^0 = 1). So this problem boils down to "Given an integer x, does there exist
 an integer r such that r^3 = x?"
