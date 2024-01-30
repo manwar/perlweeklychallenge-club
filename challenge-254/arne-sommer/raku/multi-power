@@ -1,0 +1,13 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($n is copy where $n ~~ UInt, UInt :p(:$power) where $power > 0 = 3, :v(:$verbose));
+
+while $n > $power
+{
+  print ": $n / $power -> " if $verbose;
+  $n /= $power;
+  say $n if $verbose;
+  last if $n != $n.Int;
+}
+
+say $n == 0|$power ?? 'true' !! 'false';
