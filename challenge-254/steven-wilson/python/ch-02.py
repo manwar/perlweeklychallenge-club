@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 
-VOWELS = ['a', 'e', 'i', 'o', 'u']
+VOWELS = set('aeiou')
 
 
 def reverse_vowels(string):
