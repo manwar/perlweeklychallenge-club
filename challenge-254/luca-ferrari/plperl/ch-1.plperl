@@ -1,0 +1,23 @@
+--
+-- Perl Weekly Challenge 254
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-254>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc254;
+
+CREATE OR REPLACE FUNCTION
+pwc254.task1_plperl( int )
+RETURNS bool
+AS $CODE$
+
+   my ( $num ) = @_;
+
+   for ( 2 .. ( $num / 2 ) ) {
+       return 1 if ( $_ ** 3 == $num );
+   }
+
+   return 0;
+   
+$CODE$
+LANGUAGE plperl;

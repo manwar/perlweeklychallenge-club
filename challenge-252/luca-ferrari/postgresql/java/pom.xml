@@ -1,19 +1,34 @@
 <project
  xmlns="http://maven.apache.org/POM/4.0.0"
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
- xsi:schemaLocation= "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" >
+ xsi:schemaLocation=
+ "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
   <modelVersion>4.0.0</modelVersion>
 
-  <groupId>PWC</groupId>
-  <artifactId>PWC254</artifactId>
-  <version>1</version>
+  <!-- Above is all boilerplate. Next: your project's "Maven coordinates" -->
 
-  <name>Perl Weekly Challenge 254</name>
-  <description>Implementation of the tasks in PL/Java for PWC 254</description>
+  <groupId>pwc</groupId>
+  <artifactId>pwc252</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <!-- Coordinates are nice, but so are names and descriptions for humans. -->
+
+  <name>Perl Weekly Challenge 252</name>
+  <description>Implementation of the tasks in PL/Java</description>
+
+  <!--
+    Many Maven plugins care what character set encoding your files are in.
+    For this example I've chosen the most restrictive (US-ASCII). Change if
+    your files use a different encoding, but be sure not to lie. You should
+    be sure the encoding named here IS the way your source files are coded.
+  -->
 
   <properties>
     <project.build.sourceEncoding>US-ASCII</project.build.sourceEncoding>
   </properties>
+
+  <!-- Here's where you say your project depends on a pljava-api version. -->
 
   <dependencies>
     <dependency>
@@ -22,6 +37,8 @@
       <version>1.6.6</version>
     </dependency>
   </dependencies>
+
+  <!-- The rest here is pretty much boilerplate. -->
 
   <build>
     <plugins>

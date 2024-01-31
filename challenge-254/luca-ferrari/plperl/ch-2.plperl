@@ -1,0 +1,27 @@
+--
+-- Perl Weekly Challenge 254
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-254>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc254;
+
+CREATE OR REPLACE FUNCTION
+pwc254.task2_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $word ) = @_;
+
+   my @vowels = reverse grep { $_ =~ / [aeiou] /ix } split( //, $word );
+   my $output = '';
+
+   for ( split //, $word ) {
+       $output .= $_ and next if ( $_ !~ / [aeiou] /ix || ! @vowels );
+       $output .= shift( @vowels ) and next;
+   }
+
+   return $output;
+   
+$CODE$
+LANGUAGE plperl;
