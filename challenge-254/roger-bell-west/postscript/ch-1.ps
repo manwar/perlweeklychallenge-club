@@ -1,0 +1,73 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/threepower {
+    0 dict begin
+    /n exch def
+    n 0 eq {
+        false
+    } {
+        /n n abs def
+        /lo 1 def
+        /hi n 2 idiv def
+        {
+            /t lo hi add 2 idiv def
+            /c t dup dup mul mul def
+            c n eq {
+                true
+                exit
+            } if
+            lo t eq {
+                false
+                exit
+            } if
+            c n lt {
+                /lo t def
+            } {
+                /hi t def
+            } ifelse
+        } loop
+    } ifelse
+    end
+} bind def
+
+(threepower) test.start
+27 threepower test
+0 threepower not test
+6 threepower not test
+test.end
