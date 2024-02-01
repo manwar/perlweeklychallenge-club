@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[The Weakest Split](https://packy.dardan.com/b/Gu)
+[Reverse Vowels by the Power of Three](https://packy.dardan.com/b/H8)
