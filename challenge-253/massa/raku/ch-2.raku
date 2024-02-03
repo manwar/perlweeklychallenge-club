@@ -1,0 +1,87 @@
+#! /usr/bin/env raku
+
+# Perl Weekly Challenge 
+# © 2023 Shimon Bollinger. All rights reserved.
+# Last modified: Mon 15 May 2023 09:17:32 PM EDT
+# Version 0.0.1
+
+=begin pod
+=TITLE
+=head2 Task 2: Weakest Rows
+
+=SUBTITLE
+=head2 Submitted by massa
+
+=CHALLENGE
+=head2
+
+You are given an m x n binary matrix i.e. only 0 and 1 where 1 always appear before 0.
+
+A row i is weaker than a row j if one of the following is true:
+
+    a) The number of 1s in row i is less than the number of 1s in row j.
+    b) Both rows have the same number of 1 and i < j.
+
+Write a script to return the order of rows from weakest to strongest.
+
+=head3 Example 1:
+
+    Input: $matrix = [
+                       [1, 1, 0, 0, 0],
+                       [1, 1, 1, 1, 0],
+                       [1, 0, 0, 0, 0],
+                       [1, 1, 0, 0, 0],
+                       [1, 1, 1, 1, 1]
+                     ]
+    Output: (2, 0, 3, 1, 4)
+
+    The number of 1s in each row is:
+    - Row 0: 2
+    - Row 1: 4
+    - Row 2: 1
+    - Row 3: 2
+    - Row 4: 5
+
+=head3 Example 2:
+
+    Input: $matrix = [
+                       [1, 0, 0, 0],
+                       [1, 1, 1, 1],
+                       [1, 0, 0, 0],
+                       [1, 0, 0, 0]
+                     ]
+    Output: (0, 2, 3, 1)
+
+    The number of 1s in each row is:
+    - Row 0: 1
+    - Row 1: 4
+    - Row 2: 1
+    - Row 3: 1
+
+=SOLUTION
+
+=end pod
+
+# always use the latest version of Raku
+use v6.*;
+
+sub SOLUTION(@matrix) {
+    @matrix».sum.pairs.sort( { $^a.value <=> $^b.value || $^a.key <=> $^b.key } )».key
+}
+
+multi MAIN (Bool :$test!) {
+    use Testo;
+
+    my @tests =
+        %{ input => [
+            [1, 1, 0, 0, 0], [1, 1, 1, 1, 0], [1, 0, 0, 0, 0], [1, 1, 0, 0, 0], [1, 1, 1, 1, 1]
+            ], output =>  (2, 0, 3, 1, 4) },
+        %{ input => [
+            [1, 0, 0, 0], [1, 1, 1, 1], [1, 0, 0, 0], [1, 0, 0, 0]
+            ], output => (0, 2, 3, 1) },
+    ;
+
+    .<input>.&SOLUTION.&is: .<output>, .<text> for @tests
+} # end of multi MAIN (Bool :$test!)
+
+
