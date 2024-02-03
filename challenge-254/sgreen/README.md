@@ -1,3 +1,3 @@
-# The Weekly Challenge 253
+# The Weekly Challenge 254
 
-Blog: [The weakest split](https://dev.to/simongreennet/the-weakest-split-5ad7)
+Blog: [Power to the vowels](https://dev.to/simongreennet/power-to-the-vowels-5cdp)
