@@ -1,37 +1,42 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2024]"
+   "subtitle" : {
+      "text" : "Last updated at 2024-02-04 18:01:18 GMT"
    },
    "legend" : {
       "enabled" : "false"
    },
    "xAxis" : {
+      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
-      },
-      "type" : "category"
+      }
    },
-   "subtitle" : {
-      "text" : "Last updated at 2024-02-04 12:40:50 GMT"
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2024]"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
    },
    "series" : [
       {
-         "name" : "Contributions",
+         "dataLabels" : {
+            "y" : 10,
+            "align" : "right",
+            "rotation" : -90,
+            "color" : "#FFFFFF",
+            "format" : "{point.y:.0f}",
+            "enabled" : "true",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            }
+         },
          "data" : [
             [
                "Blog",
@@ -39,25 +44,20 @@
             ],
             [
                "Perl",
-               13123
+               13125
             ],
             [
                "Raku",
-               7573
+               7575
             ]
          ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "color" : "#FFFFFF",
-            "rotation" : -90,
-            "y" : 10
-         }
+         "name" : "Contributions"
       }
-   ]
+   ],
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "chart" : {
+      "type" : "column"
+   }
 }
