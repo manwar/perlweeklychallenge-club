@@ -1,24 +1,36 @@
 #!python
 
 #
-# Perl Weekly Challenge 254
+# Perl Weekly Challenge 255
 # Task 1
 #
 # See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-254>
 #
 
 import sys
-import math
 
 # task implementation
 # the return value will be printed
 def task_1( args ):
-    num = int( args[ 0 ] )
-    for i in range( 2, int( math.sqrt( num ) ) ):
-        if ( i ** 3 ) == num:
-            return True
+    origin = args[ 0 ]
+    shuffled = args[ 1 ]
+    if len( shuffled ) != len( origin ) + 1:
+        return "Shuffled string must be one character longer than original string"
 
-    return False
+    classification = {}
+
+    for needle in shuffled:
+        if not needle in classification:
+            classification[ needle ] = 0
+
+        classification[ needle ] += 1
+
+    for needle in origin:
+        classification[ needle ] -= 1
+        if classification[ needle ] <= 0:
+            del classification[ needle ]
+
+    return list( classification.keys() )[ 0 ]
 
 
 # invoke the main without the command itself
