@@ -16,7 +16,7 @@ my @string_pairs = (
 
     # Additional test cases
     [ "Pizza",  "Pizzeria" ],
-    [ "No",     "Match"    ],
+    [ "No",     "Matches"  ],
     [ "Peer",   "Peerless" ]
 );
 
