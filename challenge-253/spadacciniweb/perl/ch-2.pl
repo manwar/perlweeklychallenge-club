@@ -75,11 +75,10 @@ sub order_rows {
         $sum_rows{$i} = sum(@{ $matrix->[$i] });
     }
 
-    printf "Output: (%s)\n", join ', ' , map { $_ }
-                                           sort { $sum_rows{$a} <=> $sum_rows{$b}
-                                                                ||
-                                                             $a <=> $b
-                                                } keys %sum_rows;
+    printf "Output: (%s)\n", join ', ' , sort { $sum_rows{$a} <=> $sum_rows{$b}
+                                                              ||
+                                                           $a <=> $b
+                                              } keys %sum_rows;
 
     return 0;
 }
