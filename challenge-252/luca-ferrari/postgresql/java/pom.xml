@@ -1,0 +1,84 @@
+<project
+ xmlns="http://maven.apache.org/POM/4.0.0"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation=
+ "http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+>
+  <modelVersion>4.0.0</modelVersion>
+
+  <!-- Above is all boilerplate. Next: your project's "Maven coordinates" -->
+
+  <groupId>pwc</groupId>
+  <artifactId>pwc252</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+
+  <!-- Coordinates are nice, but so are names and descriptions for humans. -->
+
+  <name>Perl Weekly Challenge 252</name>
+  <description>Implementation of the tasks in PL/Java</description>
+
+  <!--
+    Many Maven plugins care what character set encoding your files are in.
+    For this example I've chosen the most restrictive (US-ASCII). Change if
+    your files use a different encoding, but be sure not to lie. You should
+    be sure the encoding named here IS the way your source files are coded.
+  -->
+
+  <properties>
+    <project.build.sourceEncoding>US-ASCII</project.build.sourceEncoding>
+  </properties>
+
+  <!-- Here's where you say your project depends on a pljava-api version. -->
+
+  <dependencies>
+    <dependency>
+      <groupId>org.postgresql</groupId>
+      <artifactId>pljava-api</artifactId>
+      <version>1.6.6</version>
+    </dependency>
+  </dependencies>
+
+  <!-- The rest here is pretty much boilerplate. -->
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <configuration>
+          <release>9</release>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.6</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <!-- This identifies and version-stamps the jar.
+                 Not essential, but easy and useful. -->
+              <addDefaultImplementationEntries>
+                true
+              </addDefaultImplementationEntries>
+            </manifest>
+
+            <manifestSections>
+              <!-- This identifies a file in the jar named
+                 pljava.ddr as an SQLJDeploymentDescriptor. -->
+              <manifestSection>
+                <name>pljava.ddr</name>
+                <manifestEntries>
+                  <SQLJDeploymentDescriptor>
+                    true
+                  </SQLJDeploymentDescriptor>
+                </manifestEntries>
+              </manifestSection>
+            </manifestSections>
+          </archive>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>
