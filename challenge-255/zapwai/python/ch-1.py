@@ -10,15 +10,16 @@ def proc(s, t):
         freqt[c] = 0;
     for c in t:
         freqt[c] += 1;
-    for i in range(len(s)):
-        if freqs[s[i]] < freqt[s[i]]:
-            ans = s[i];
+    ans = None;
+    for k in freqt.keys():
+        if not k in freqs.keys():
+            ans = k;
             break;
-        else:
-            for k in freqt.keys():
-                if not k in freqs.keys():
-                    ans = k;
-                    break;
+    if ans is None:
+        for i in range(len(s)):
+    	    if freqs[s[i]] < freqt[s[i]]:
+                ans = s[i];
+                break;
     print("Output:",ans);
 proc("Perl", "Preel");
 proc("Weekly", "Weeakly");
