@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Reverse Vowels by the Power of Three](https://packy.dardan.com/b/HM)
+[ROdd Char Seems to be the Most Frequent Word](https://packy.dardan.com/b/HM)
