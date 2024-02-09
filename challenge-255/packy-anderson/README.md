@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Reverse Vowels by the Power of Three](https://packy.dardan.com/b/H8)
+[Reverse Vowels by the Power of Three](https://packy.dardan.com/b/HM)
