@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[ROdd Char Seems to be the Most Frequent Word](https://packy.dardan.com/b/HM)
+[Odd Char Seems to be the Most Frequent Word](https://packy.dardan.com/b/HM)
