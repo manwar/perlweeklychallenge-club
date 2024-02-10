@@ -7,7 +7,7 @@
 # Example 1
 # 
 # Input: $s = "Perl" $t = "Preel"
-# Output: "r"
+# Output: "e"
 # 
 # Example 2
 # 
@@ -35,12 +35,17 @@ sub odd_character
 {
     my ($s, $t) = @_;
 
-    ($s ^ $t) =~ /[^\000]/;
+    my %c;
+    $c{$_}-- for split //, $s ;
+    $c{$_}++ for split //, $t ;
 
-    return substr($t, $+[0]-1, 1);
+    for (keys %c) {
+        return $_ if $c{$_};
+    }
+    return '';
 }
 
-is(odd_character($cases->[0]->@*), 'r', 'Example 1');
+is(odd_character($cases->[0]->@*), 'e', 'Example 1');
 is(odd_character($cases->[1]->@*), 'a', 'Example 2');
 is(odd_character($cases->[2]->@*), 'y', 'Example 3');
 done_testing();
