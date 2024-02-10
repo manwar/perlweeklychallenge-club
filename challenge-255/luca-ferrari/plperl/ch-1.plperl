@@ -1,0 +1,29 @@
+--
+-- Perl Weekly Challenge 255
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-255>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc255;
+
+CREATE OR REPLACE FUNCTION
+pwc255.task1_plperl( text, text )
+RETURNS text
+AS $CODE$
+
+   my ( $origin, $shuffled ) = @_;
+   die "Shuffled string [$shuffled] should be one char lengther than original [$origin]"
+       if ( length( $shuffled ) != length( $origin ) + 1 );
+
+
+  my $classification = {};
+  $classification->{ $_ }++ for ( split //, $shuffled );
+  $classification->{ $_ }-- for ( split //, $origin );
+
+  for ( keys $classification->%* ) {
+      return $_ if ( $classification->{ $_ } > 0 );
+  }
+
+   return undef;
+$CODE$
+LANGUAGE plperl;
