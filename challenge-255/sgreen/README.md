@@ -1,3 +1,3 @@
-# The Weekly Challenge 254
+# The Weekly Challenge 255
 
-Blog: [Power to the vowels](https://dev.to/simongreennet/power-to-the-vowels-5cdp)
+Blog: [The most odd thing](https://dev.to/simongreennet/the-most-odd-thing-4cjo)
