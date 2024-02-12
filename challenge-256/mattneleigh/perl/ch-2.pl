@@ -53,11 +53,11 @@ sub merge_from_alternate_strings{
 
     # Over the length the strings have in common,
     # concatenate a pair of characters from each
-    for my $p (0 .. $minimum_common_length - 1){
+    for my $pos (0 .. $minimum_common_length - 1){
         $merged .=
-            substr($ARG[0], $p, 1)
+            substr($ARG[0], $pos, 1)
             .
-            substr($ARG[1], $p, 1);
+            substr($ARG[1], $pos, 1);
     }
 
     # At least one string has been used up; if one
