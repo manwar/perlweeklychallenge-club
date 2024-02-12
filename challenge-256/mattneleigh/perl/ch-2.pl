@@ -43,22 +43,30 @@ exit(0);
 ################################################################################
 sub merge_from_alternate_strings{
 
-    my @str1 = split("", $ARG[0]);
-    my @str2 = split("", $ARG[1]);
+    my $length1 = length($ARG[0]);
+    my $length2 = length($ARG[1]);
+    my $minimum_common_length = $length1 < $length2 ?
+        $length1
+        :
+        $length2;
     my $merged = "";
 
-    # Concatenate characters from @str1 and @str2
-    # while neither is empty
-    while(@str1 && @str2){
-        $merged .= shift(@str1) . shift(@str2);
+    # Over the length the strings have in common,
+    # concatenate a pair of characters from each
+    for my $p (0 .. $minimum_common_length - 1){
+        $merged .=
+            substr($ARG[0], $p, 1)
+            .
+            substr($ARG[1], $p, 1);
     }
 
-    # At least one array is now empty; if anything
-    # remains in either, concatenate what's left
-    if(@str1){
-        $merged .= join("", @str1);
-    } elsif(@str2){
-        $merged .= join("", @str2);
+    # At least one string has been used up; if one
+    # is longer than the minimum common length,
+    # concatenate the remaining characters from it
+    if($length1 > $minimum_common_length){
+        $merged .= substr($ARG[0], $minimum_common_length);
+    } elsif($length2 > $minimum_common_length){
+        $merged .= substr($ARG[1], $minimum_common_length);
     }
 
     return($merged);
