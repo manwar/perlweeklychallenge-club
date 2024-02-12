@@ -27,8 +27,7 @@ sub maximumPairs(@words) {
   my ($n,%w) = (0);
 
   for (@words) {
-    my $rev = reverse $_;
-    $n++ if exists $w{$rev};
+    $n++ if exists $w{reverse $_};
     $w{$_}++;
   }
 
