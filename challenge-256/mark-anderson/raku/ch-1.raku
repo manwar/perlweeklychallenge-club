@@ -11,7 +11,7 @@ sub max-pairs(*@words)
 {
     my $bh = BagHash.new;
 
-    + do gather for @words
+    + gather for @words
     { 
         .take if $bh{$_};
         $bh.add(.flip)
