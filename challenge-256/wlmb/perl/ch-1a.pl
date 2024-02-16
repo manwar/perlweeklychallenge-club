@@ -8,13 +8,12 @@ use List::Util qw(sum0);
 die <<~"FIN" unless @ARGV;
     Usage: $0 S1 [S2...]
     to pair Si with the reverse Sj and count the resulting pairs
-    assuming at most one pair per string.
     FIN
 my %count;
-my $reverse;
-for (@ARGV){
-    ++$count{$_};
+++$count{$_} for (@ARGV);
+my $result = (sum0 map {
     my $reverse=reverse $_;
-    --$count{$reverse} unless $reverse eq $_;
-}
-say "@ARGV -> ", (sum0 map {!$_} values %count)/2;
+    my $selfreverse=$_ eq $reverse;
+    $count{$_}*(($count{$reverse}//0)-$selfreverse)
+} keys %count)/2;
+say "@ARGV -> $result";
