@@ -39,6 +39,16 @@ I could roll my own on this, but why? This problem is already solved by the "mes
 CPAN module "List::Util", so I'll just use that. Doing otherwise would be like engineering and
 manufacturing my own electric car at a cost of 5G$ when I could have bought a Tesla for 50k$.
 
+One caveat with List::Util::mesh, though, is that it inserts undefs into its output if its two input strings
+have unequal length. This can be got-around by using the "a//b" operator, which means "a if defined else b":
+
+use v5.38;
+use List::Util 'mesh';
+sub merge_strings ($x, $y) {
+   return join '', map {$_ // ''} mesh [split //, $x], [split //, $y];
+}
+
+
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
@@ -50,15 +60,12 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 =cut
 
 # ------------------------------------------------------------------------------------------------------------
-# PRAGMAS AND MODULES USED:
+# PRAGMAS, MODULES, AND SUBROUTINES:
 use v5.38;
-
-# ------------------------------------------------------------------------------------------------------------
-# SUBROUTINES:
 use List::Util 'mesh';
-no warnings 'uninitialized';
-sub mesh_strings ($x, $y) {
-   return join('', mesh([split //, $x], [split //, $y]));
+# Merge two strings:
+sub merge_strings ($x, $y) {
+   return join '', map {$_ // ''} mesh [split //, $x], [split //, $y];
 }
 
 # ------------------------------------------------------------------------------------------------------------
@@ -83,5 +90,5 @@ my @pairs = @ARGV ? eval($ARGV[0]) :
 for my $pair_ref (@pairs) {
    say '';
    say 'Strings: ', join(', ', map {"\"$_\""} @$pair_ref);
-   say 'Merged:  ', join(', ', map {"\"$_\""} mesh_strings(@$pair_ref));
+   say 'Merged:  ', join(', ', map {"\"$_\""} merge_strings(@$pair_ref));
 }

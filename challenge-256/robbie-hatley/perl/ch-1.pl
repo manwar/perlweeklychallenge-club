@@ -35,59 +35,46 @@ Output: 2
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
-This problem is easily solved by nested 3-part loops on index variables i and j such that j > i:
-
-# Reverse a string:
-sub reverse_string ($x) {
-   return join '', reverse split //, $x
-}
-
+This problem is easily solved using a nested pair of 3-part loops which compare the fold-case of each word
+to the fold-case of the reverse of each word to its right; each time a match is found, increment a counter:
+use v5.38;
 # How many fwd/rev pairs are in @$words?
-sub pairs ($words) {
-   my $pairs = 0;
+sub count_pairs ($words) {
+   my $pair_count = 0;
    for    ( my $i =    0   ; $i <= $#$words - 1 ; ++$i ) {
       for ( my $j = $i + 1 ; $j <= $#$words - 0 ; ++$j ) {
-         if ( $$words[$i] eq reverse_string($$words[$j]) ) {
-            ++$pairs;
+         if ( fc $$words[$i] eq fc join '', reverse split //, $$words[$j] ) {
+            ++$pair_count;
          }
       }
    }
-   return $pairs;
+   return $pair_count;
 }
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
 single-quoted array of arrays of double-quoted words, in proper Perl syntax, like so:
-./ch-1.pl '(["fish","beef","pork"],["yak", "rat", "tar", "kay"])'
+./ch-1.pl '(["fish","beef","pork"],["Yak", "Rat", "Tar", "Kay"])'
 
 Output is to STDOUT and will be each input followed by the corresponding output.
 
 =cut
 
 # ------------------------------------------------------------------------------------------------------------
-# PRAGMAS AND MODULES:
+# PRAGMAS, MODULES, AND SUBROUTINES:
 use v5.38;
-
-# ------------------------------------------------------------------------------------------------------------
-# SUBROUTINES:
-
-# Reverse a string:
-sub reverse_string ($x) {
-   return join '', reverse split //, $x
-}
-
 # How many fwd/rev pairs are in @$words?
-sub pairs ($words) {
-   my $pairs = 0;
+sub count_pairs ($words) {
+   my $pair_count = 0;
    for    ( my $i =    0   ; $i <= $#$words - 1 ; ++$i ) {
-      for ( my $j = $i + 1 ; $j <= $#$words     ; ++$j ) {
-         if ( $$words[$i] eq reverse_string($$words[$j]) ) {
-            ++$pairs;
+      for ( my $j = $i + 1 ; $j <= $#$words - 0 ; ++$j ) {
+         if ( fc $$words[$i] eq fc join '', reverse split //, $$words[$j] ) {
+            ++$pair_count;
          }
       }
    }
-   return $pairs;
+   return $pair_count;
 }
 
 # ------------------------------------------------------------------------------------------------------------
@@ -112,5 +99,5 @@ my @arrays = @ARGV ? eval($ARGV[0]) :
 for my $aref (@arrays) {
    say '';
    say 'Words: (', join(', ', map {"\"$_\""} @$aref), ')';
-   say 'Number of fwd/rev pairs = ', pairs($aref);
+   say 'Number of fwd/rev pairs = ', count_pairs($aref);
 }
