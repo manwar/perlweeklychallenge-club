@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Odd Char Seems to be the Most Frequent Word](https://packy.dardan.com/b/HM)
+[Merge the Maximum String Pairs](https://packy.dardan.com/b/Hg)
