@@ -1,8 +1,9 @@
 #!/usr/bin/env raku
 
 sub maximum-pairs (+words) {
-    words.kv
-    andthen .map: -> $i, $w { [+] $w.flip «eq« words.skip: $i + 1  }\
+    words
+    andthen .combinations: 2
+    andthen .map: -> ( $fw, $sw ) { $fw eq $sw.flip }\
     andthen .sum
 }
 
