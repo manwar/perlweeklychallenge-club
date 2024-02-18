@@ -1,3 +1,3 @@
-# The Weekly Challenge 255
+# The Weekly Challenge 256
 
-Blog: [The most odd thing](https://dev.to/simongreennet/the-most-odd-thing-4cjo)
+Blog: [Matching and zipping](https://dev.to/simongreennet/matching-and-zipping-3bl7)
