@@ -33,7 +33,7 @@ sub maximum_pairs {
     (\my %words)->@{@_} = map scalar reverse, @_;
 
     delete @words{grep $_ eq $words{$_}, keys %words};
-    (grep defined, delete @words{values %words}) / 2; 
+    (grep defined, @words{values %words}) / 2; 
 }
 
 
