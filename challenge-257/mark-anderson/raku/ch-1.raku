@@ -8,5 +8,5 @@ is-deeply smaller-than-current(9,4,9,2), (2,1,2,0);
 
 sub smaller-than-current(*@a)
 {
-    @a.sort.unique.antipairs.Hash{@a}
+    @a.sort.unique.antipairs.Map{@a}
 }
