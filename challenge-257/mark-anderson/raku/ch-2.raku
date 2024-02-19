@@ -36,14 +36,15 @@ sub reduced-row-echelon(+@m)
     # the first non-zero number in a row is the pivot
     my @pivots = @m>>.first(*.so, :kv);
 
-    # find the first row that is all zeroes
-    my $k = @pivots.first(*.so.not, :k);
+    # the first row that is all zeroes
+    my $k = @pivots.first(*.not, :k);
 
     # all 0 rows are grouped at the bottom
-    if $k { 
-             return False unless @pivots[$k..*].all eqv Any; 
-             @pivots = @pivots[^$k]
-          }
+    if $k 
+    { 
+        return False unless @pivots[$k..*].all eqv Any; 
+        @pivots = @pivots[^$k]
+    }
 
     # all pivots == 1 
     return False unless so @pivots>>.[1].all == 1;
@@ -53,7 +54,7 @@ sub reduced-row-echelon(+@m)
 
     # pivot columns are all 0 (except for the 1)
     return all @pivots>>[0].map({
-                                        all @m[*;$_].sum == 1,
-                                        all(@m[*;$_].Bag.keys) ~~ 0..1 
-                                    })
+                                    all @m[*;$_].sum == 1,
+                                    all(@m[*;$_].Bag.keys) ~~ 0..1 
+                                })
 }
