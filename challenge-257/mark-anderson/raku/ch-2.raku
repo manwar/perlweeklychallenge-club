@@ -47,7 +47,7 @@ sub reduced-row-echelon(+@m)
     }
 
     # all pivots == 1 
-    return False unless so @pivots>>.[1].all == 1;
+    return False unless so @pivots>>[1].all == 1;
 
     # pivots go from top-left to bottom-right
     return False unless [<] @pivots>>[0];
