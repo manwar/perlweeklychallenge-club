@@ -53,8 +53,5 @@ sub reduced-row-echelon(+@m)
     return False unless [<] @pivots>>[0];
 
     # pivot columns are all 0 (except for the 1)
-    return all @pivots>>[0].map({
-                                    all @m[*;$_].sum == 1,
-                                    all(@m[*;$_].Bag.keys) ~~ 0..1 
-                                })
+    return all @pivots>>[0].map({ @m[*;$_].sum == 1 })
 }
