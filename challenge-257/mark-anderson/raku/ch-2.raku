@@ -37,10 +37,16 @@ nok reduced-row-echelon([1, 0, 0, 0],
                         [0, 0, 0, 1],
                         [0, 0, 0, 0]);
 
+ok  reduced-row-echelon([1, 0, 0, 0, 0],
+                        [0, 1, 0, 0, 0],
+                        [0, 0, 0, 0, 1],
+                        [0, 0, 0, 0, 0],
+                        [0, 0, 0, 0, 0]);
+
 sub reduced-row-echelon(+@m)
 {
     # the first non-zero number in a row is the pivot
-    my @pivots = @m>>.first(*.so, :kv);
+    my @pivots = @m>>.first(*.so, :p);
 
     # the first row that is all zeroes
     my $k = @pivots.first(*.not, :k);
@@ -52,15 +58,18 @@ sub reduced-row-echelon(+@m)
         @pivots = @pivots[^$k]
     }
 
+    my @keys   = @pivots>>.keys>>[0];
+       @pivots = @pivots>>.values>>[0];
+
     # all pivots == 1 
-    return False unless all(@pivots>>[1]) == 1;
+    return False unless all(@pivots) == 1;
 
     # pivots go from top-left to bottom-right
-    return False unless [<] @pivots>>[0];
+    return False unless [<] @keys;
 
     # pivot columns are all 0 (except for the 1)
-    return all (([Z] @m[^@pivots])[@pivots>>[0]]).map({
-                                                          all .sum == 1, 
-                                                          all(.Bag.keys) ~~ 0..1
-                                                      })
+    return all (([Z] @m[^@pivots])[@keys]).map({
+                                                   all .sum == 1, 
+                                                   all(.Bag.keys) ~~ 0..1
+                                               })
 }
