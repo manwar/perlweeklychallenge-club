@@ -1,20 +1,21 @@
 {
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2024-02-20 14:16:52 GMT"
+   "legend" : {
+      "enabled" : 0
    },
    "plotOptions" : {
       "series" : {
          "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
+            "format" : "{point.y}",
+            "enabled" : 1
          },
          "borderWidth" : 0
       }
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 257"
    },
    "drilldown" : {
       "series" : [
@@ -29,7 +30,6 @@
             "id" : "Bob Lied"
          },
          {
-            "id" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
@@ -40,17 +40,18 @@
                   1
                ]
             ],
+            "id" : "Dave Jacoby",
             "name" : "Dave Jacoby"
          },
          {
-            "name" : "David Ferrone",
+            "id" : "David Ferrone",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "David Ferrone"
+            "name" : "David Ferrone"
          },
          {
             "id" : "Luca Ferrari",
@@ -77,13 +78,13 @@
             "id" : "Mariano Spadaccini"
          },
          {
-            "id" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
+            "id" : "Mark Anderson",
             "name" : "Mark Anderson"
          },
          {
@@ -101,7 +102,6 @@
             "id" : "Roger Bell_West"
          },
          {
-            "id" : "Thomas Kohler",
             "name" : "Thomas Kohler",
             "data" : [
                [
@@ -112,43 +112,70 @@
                   "Blog",
                   2
                ]
+            ],
+            "id" : "Thomas Kohler"
+         },
+         {
+            "name" : "Ulrich Rieke",
+            "id" : "Ulrich Rieke",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  1
+               ]
             ]
          }
       ]
    },
-   "xAxis" : {
-      "type" : "category"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "subtitle" : {
+      "text" : "[Champions: 9] Last updated at 2024-02-20 15:51:01 GMT"
    },
    "chart" : {
       "type" : "column"
    },
    "series" : [
       {
+         "name" : "The Weekly Challenge - 257",
+         "colorByPoint" : 1,
          "data" : [
             {
+               "name" : "Bob Lied",
                "drilldown" : "Bob Lied",
-               "y" : 2,
-               "name" : "Bob Lied"
+               "y" : 2
             },
             {
+               "name" : "Dave Jacoby",
                "drilldown" : "Dave Jacoby",
-               "y" : 3,
-               "name" : "Dave Jacoby"
+               "y" : 3
             },
             {
-               "y" : 2,
                "drilldown" : "David Ferrone",
-               "name" : "David Ferrone"
+               "name" : "David Ferrone",
+               "y" : 2
             },
             {
                "name" : "Luca Ferrari",
-               "y" : 11,
-               "drilldown" : "Luca Ferrari"
+               "drilldown" : "Luca Ferrari",
+               "y" : 11
             },
             {
-               "drilldown" : "Mariano Spadaccini",
                "y" : 1,
-               "name" : "Mariano Spadaccini"
+               "name" : "Mariano Spadaccini",
+               "drilldown" : "Mariano Spadaccini"
             },
             {
                "name" : "Mark Anderson",
@@ -156,29 +183,21 @@
                "y" : 2
             },
             {
+               "drilldown" : "Roger Bell_West",
                "name" : "Roger Bell_West",
-               "y" : 4,
-               "drilldown" : "Roger Bell_West"
+               "y" : 4
             },
             {
-               "name" : "Thomas Kohler",
                "drilldown" : "Thomas Kohler",
+               "name" : "Thomas Kohler",
                "y" : 4
+            },
+            {
+               "drilldown" : "Ulrich Rieke",
+               "name" : "Ulrich Rieke",
+               "y" : 3
             }
-         ],
-         "name" : "The Weekly Challenge - 257",
-         "colorByPoint" : 1
+         ]
       }
-   ],
-   "title" : {
-      "text" : "The Weekly Challenge - 257"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   }
+   ]
 }
