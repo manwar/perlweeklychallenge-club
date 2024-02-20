@@ -46,7 +46,7 @@ ok  reduced-row-echelon([1, 0, 0, 0, 0],
 sub reduced-row-echelon(+@m)
 {
     # the first non-zero number in a row is the pivot
-    my @pivots = @m>>.first(*.so, :p);
+    my @pivots = @m>>.first(*.so, :kv);
 
     # the first row that is all zeroes
     my $k = @pivots.first(*.not, :k);
@@ -58,8 +58,8 @@ sub reduced-row-echelon(+@m)
         @pivots = @pivots[^$k]
     }
 
-    my @keys   = @pivots>>.keys>>[0];
-       @pivots = @pivots>>.values>>[0];
+    my @keys   = @pivots>>[0];
+       @pivots = @pivots>>[1];
 
     # all pivots == 1 
     return False unless all(@pivots) == 1;
