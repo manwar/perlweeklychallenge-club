@@ -17,8 +17,8 @@ def odd_character(original, shuffled):
     if not original or not shuffled:
         raise ValueError("Both strings must be non-empty.")
 
-    original_counter = Counter(x.casefold() for x in original)
-    shuffled_counter = Counter(x.casefold() for x in shuffled)
+    original_counter = Counter(original.casefold())
+    shuffled_counter = Counter(shuffled.casefold())
 
     difference_counter = shuffled_counter - original_counter
 

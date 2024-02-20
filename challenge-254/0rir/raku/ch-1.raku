@@ -16,7 +16,7 @@ Output: true
 
 constant \Part-power = 40;                              # partitioning power
 constant \Part = 3**Part-power;                         #       "      value
-constant \Test-to-power = 100;                          # rough range for tests
+constant \Test-to-power = 1000;                          # rough range for tests
 constant @test-powers = 3, * × 3 … 3**Test-to-power;    # passing test values
 
 constant @standard = gather { # create standard for look up in the partition
@@ -30,17 +30,12 @@ constant @standard = gather { # create standard for look up in the partition
 
 sub power3 ( Int $i is copy -->Bool) {
     if $i ≤ @standard[*-1]  {
-        if $i == @standard.any {
             return True if $i == @standard.any;
-        } else {
             return False;
-        }
-    } else {
+    }
         my $shrunk = $i div @standard[*-1];             # shrink by a partition
         return False if $i ÷ @standard[*-1] ≠ $shrunk;  # not integer
-        return power3 $shrunk;
-    }
-    die "reached but did not grasp";
+        power3 $shrunk;
 }
 
 my @Test = 
