@@ -1,6 +1,6 @@
 #!/bin/env raku
 
-# The Weekly Challenge 254
+# The Weekly Challenge 255
 use Test;
 
 sub pwc-test(Str:D $script, Bool :$deeply? = False, *@input) {
