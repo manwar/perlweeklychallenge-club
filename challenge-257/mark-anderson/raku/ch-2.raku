@@ -70,6 +70,6 @@ sub reduced-row-echelon(+@m)
     # pivot columns are all 0 (except for the 1)
     return all (([Z] @m[^@pivots])[@keys]).map({
                                                    all .sum == 1, 
-                                                   all(.Bag.keys) ~~ 0..1
+                                                   all(.Bag.keys) == 0|1
                                                })
 }
