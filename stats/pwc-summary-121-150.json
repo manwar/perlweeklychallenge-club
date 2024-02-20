@@ -1,10 +1,17 @@
 {
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-02-20 14:16:52 GMT"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
    },
    "xAxis" : {
       "categories" : [
@@ -40,13 +47,8 @@
          "Lakpa Tashi Bhutia"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-02-19 04:08:07 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -85,6 +87,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             1,
             0,
@@ -116,8 +119,7 @@
             2,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -155,13 +157,11 @@
          ]
       }
    ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
