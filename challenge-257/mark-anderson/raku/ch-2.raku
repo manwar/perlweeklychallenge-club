@@ -65,7 +65,7 @@ sub reduced-row-echelon(+@m)
     # rows with all zeroes are grouped at the bottom
     with $k 
     { 
-        return False unless all(@pivots[$k..*]) eqv Any; 
+        return False unless all(@pivots[$k..*]) ~~ Any; 
         @pivots = @pivots[^$k];
         return True unless @pivots
     }
@@ -76,10 +76,13 @@ sub reduced-row-echelon(+@m)
     # pivots go from top-left to bottom-right
     return False unless [<] @cols;
 
-    # remove extraneous rows and columns
-    @m = @m[^@pivots;@cols].batch(@cols.elems);
+    # remove zero rows and non-pivot columns
+    @m = @m[^@pivots;@cols].batch(@cols.elems)>>.Array;
+    # @m should be an identity matrix at this point if it is RREF
 
-    # @m should be an identity matrix at this point 
-    # so check rows for all zeroes and a 1
-    return all @m.map({ all(.sum == 1, all(.Bag.keys) == 0|1) })
+    # all pivots are ones
+    return False unless squish(@m.keys.map({ |@m[$_].splice($_,1) })) ~~ (1,); 
+
+    # everything else is zeroes
+    return squish(@m[*;*]) ~~ (0,) 
 }
