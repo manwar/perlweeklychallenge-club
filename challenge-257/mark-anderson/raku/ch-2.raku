@@ -37,6 +37,12 @@ nok reduced-row-echelon([1, 0, 0, 0],
                         [0, 0, 0, 1],
                         [0, 0, 0, 0]);
 
+nok reduced-row-echelon([1, 0, 0, 0],
+                        [0, 1, 0, 1],
+                        [0, 0, 1, 0],
+                        [0, 0, 0, 1],
+                        [0, 0, 0, 0]);
+
 ok  reduced-row-echelon([1, 0, 0, 0, 0],
                         [0, 1, 0, 0, 0],
                         [0, 0, 0, 0, 1],
@@ -73,9 +79,10 @@ sub reduced-row-echelon(+@m)
     # pivots go from top-left to bottom-right
     return False unless [<] @cols;
 
-    # transpose @m but skip rows and columns that are all zeroes
-    @m = [Z] @m[^@pivots;@cols].batch(@cols.elems);
-
-    # columns are all zeroes and a 1
-    return all @m.map({ all(.sum == 1, .sort ~~ (0,1)) given .Bag.keys.cache })
+    # remove extraneous rows and columns
+    @m = @m[^@pivots;@cols].batch(@cols.elems);
+    
+    # @m should be an identity matrix at this point 
+    # so check rows for all zeroes and a 1
+    return all @m.map({ all(.sum == 1, all(.Bag.keys) == 0|1) })
 }
