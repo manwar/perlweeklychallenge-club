@@ -1,7 +1,5 @@
 #!/usr/bin/env python3
 
-from collections import Counter
-
 
 def smaller_than_current(*integers):
     ''' Given an array of integers, find out how many integers are smaller than
@@ -14,13 +12,24 @@ def smaller_than_current(*integers):
     (0, 1)
     >>> smaller_than_current(9, 4, 9, 2)
     (2, 1, 2, 0)
+    >>> smaller_than_current(1, 0, 0, 0, 1, 2)
+    (3, 0, 0, 0, 3, 5)
+    >>> smaller_than_current()
+    ()
     '''
-    integer_counter = Counter(integers)
-    results = []
+    # Counting algorithm
+    if not integers:
+        return ()
+
+    max_i = max(integers)
+    count = [0] * (max_i + 1)
     for i in integers:
-        results.append(sum(count for key, count in integer_counter.items()
-                           if key < i))
-    return tuple(results)
+        count[i] += 1
+
+    for pos in range(1, max_i):
+        count[pos] += count[pos-1]
+
+    return tuple(count[i - 1] if i != 0 else 0 for i in integers)
 
 
 if __name__ == "__main__":
