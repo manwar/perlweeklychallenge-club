@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Merge the Maximum String Pairs](https://packy.dardan.com/b/Hg)
+[Reduced is Smaller!](https://packy.dardan.com/b/Ht)
