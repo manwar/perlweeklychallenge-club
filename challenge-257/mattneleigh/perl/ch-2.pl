@@ -129,12 +129,9 @@ sub matrix_in_rref{
                 );
 
             # See if anything else in this column isn't a
-            # zero... use alternate row coordinate $J
-            for my $J (0 .. $#$matrix){
-                # Skip the current row
-                next
-                    if($J == $j);
-
+            # zero... use alternate row coordinate $J, 
+            # skipping the current row $j
+            for my $J ((0 .. ($j - 1)), (($j + 1) .. $#$matrix)){
                 # If something else in this column isn't zero,
                 # we aren't in RREF
                 return(0)
