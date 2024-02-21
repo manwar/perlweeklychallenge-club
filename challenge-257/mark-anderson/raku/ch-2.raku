@@ -43,6 +43,11 @@ ok  reduced-row-echelon([1, 0, 0, 0, 0],
                         [0, 0, 0, 0, 0],
                         [0, 0, 0, 0, 0]);
 
+ok  reduced-row-echelon([0, 0, 0],
+                        [0, 0, 0],
+                        [0, 0, 0],
+                        [0, 0, 0]);
+
 sub reduced-row-echelon(+@m)
 {
     # the first non-zero number in a row is the pivot
@@ -51,25 +56,26 @@ sub reduced-row-echelon(+@m)
     # the first row that is all zeroes
     my $k = @pivots.first(*.not, :k);
 
-    # all 0 rows are grouped at the bottom
-    if $k 
+    # rows with all zeroes are grouped at the bottom
+    with $k 
     { 
         return False unless all(@pivots[$k..*]) eqv Any; 
-        @pivots = @pivots[^$k]
+        @pivots = @pivots[^$k];
+        return True unless @pivots
     }
 
-    my @keys   = @pivots>>[0];
+    my @cols   = @pivots>>[0];
        @pivots = @pivots>>[1];
 
     # all pivots == 1 
     return False unless all(@pivots) == 1;
 
     # pivots go from top-left to bottom-right
-    return False unless [<] @keys;
+    return False unless [<] @cols;
 
-    # pivot columns are all 0 (except for the 1)
-    return all (([Z] @m[^@pivots])[@keys]).map({
-                                                   all .sum == 1, 
-                                                   all(.Bag.keys) == 0|1
-                                               })
+    # transpose @m but skip rows and columns that are all zeroes
+    @m = [Z] @m[^@pivots;@cols].batch(@cols.elems);
+
+    # columns are all zeroes and a 1
+    return all @m.map({ all(.sum == 1, .sort ~~ (0,1)) given .Bag.keys.cache })
 }
