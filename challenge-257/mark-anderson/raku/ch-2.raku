@@ -73,15 +73,12 @@ sub reduced-row-echelon(+@m)
     my @cols   = @pivots>>[0];
        @pivots = @pivots>>[1];
 
-    # all pivots == 1 
-    return False unless all(@pivots) == 1;
-
     # pivots go from top-left to bottom-right
     return False unless [<] @cols;
 
     # remove extraneous rows and columns
     @m = @m[^@pivots;@cols].batch(@cols.elems);
-    
+
     # @m should be an identity matrix at this point 
     # so check rows for all zeroes and a 1
     return all @m.map({ all(.sum == 1, all(.Bag.keys) == 0|1) })
