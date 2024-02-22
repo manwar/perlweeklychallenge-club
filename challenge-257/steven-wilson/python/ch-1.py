@@ -21,15 +21,16 @@ def smaller_than_current(*integers):
     if not integers:
         return ()
 
+    min_i = min(integers)
     max_i = max(integers)
-    count = [0] * (max_i + 1)
+    count = [0] * (max_i - min_i + 1)
     for i in integers:
-        count[i] += 1
+        count[i - min_i] += 1
 
-    for pos in range(1, max_i):
+    for pos in range(1, max_i - min_i):
         count[pos] += count[pos-1]
 
-    return tuple(count[i - 1] if i != 0 else 0 for i in integers)
+    return tuple(count[i - min_i - 1] if i != min_i else 0 for i in integers)
 
 
 if __name__ == "__main__":
