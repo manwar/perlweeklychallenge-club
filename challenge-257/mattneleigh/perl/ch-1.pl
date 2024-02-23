@@ -46,7 +46,7 @@ sub determine_ordinal_rank{
 
     # Build a table with the unique input integers as
     # keys and their relative ordinal rank as values
-    my %order_table = map(
+    my %rank_table = map(
         { $_ => $rank++ }
         uniq(sort({ $a <=> $b } @ARG))
     );
@@ -55,7 +55,7 @@ sub determine_ordinal_rank{
         # Make a list of the ordinal ranks of each given
         # integer
         map(
-            $order_table{$_},
+            $rank_table{$_},
             @ARG
         )
     );
