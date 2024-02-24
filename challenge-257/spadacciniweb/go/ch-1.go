@@ -48,7 +48,7 @@ func smaller_than_current(arrInts []int) {
 }
 
 func main() {
-    arrInts := []int{2, 1, 0, 3}
+    arrInts := []int{5, 2, 1, 6}
     smaller_than_current(arrInts)
 
     arrInts = []int{1, 2, 0, 3}
