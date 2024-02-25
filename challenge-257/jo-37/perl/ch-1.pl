@@ -27,19 +27,19 @@ EOS
 
 ### Input and Output
 
-say sdc(@ARGV);
+say stc(@ARGV);
 
 
 ### Implementation
 
-sub sdc {
+sub stc {
     my $l = long @_;
     my $si = $l->qsorti;
     cat($si, sequence($l) - $l->($si)->dummy(0)->enumvec)
         ->xchg(0,1)->qsortvec->((1));
 }
 
-sub sdc_full {
+sub stc_full {
     my $l = long @_;
     ($l < $l->dummy(0))->sumover;
 }
@@ -51,10 +51,10 @@ sub run_tests {
     SKIP: {
         skip "examples" unless $examples;
 
-        is sdc(5, 2, 1, 6)->unpdl, [2, 1, 0, 3], 'example 1';
-        is sdc(1, 2, 0, 3)->unpdl, [1, 2, 0, 3], 'example 2';
-        is sdc(0, 1)->unpdl, [0, 1], 'example 3';
-        is sdc(9, 4, 9, 2)->unpdl, [2, 1, 2, 0], 'example 4';
+        is stc(5, 2, 1, 6)->unpdl, [2, 1, 0, 3], 'example 1';
+        is stc(1, 2, 0, 3)->unpdl, [1, 2, 0, 3], 'example 2';
+        is stc(0, 1)->unpdl, [0, 1], 'example 3';
+        is stc(9, 4, 9, 2)->unpdl, [2, 1, 2, 0], 'example 4';
 
     }
 
@@ -67,11 +67,11 @@ sub run_tests {
 
         my $n = 10000;
         my $l = ($n * random $n)->long;
-        ok all(sdc_full($l) == sdc($l)), 'cross-check';
+        ok all(stc_full($l) == stc($l)), 'cross-check';
 
         cmpthese(0, {
-                full => sub {sdc_full($l)},
-                rank => sub {sdc($l)}
+                full => sub {stc_full($l)},
+                rank => sub {stc($l)}
             });
 
     }
