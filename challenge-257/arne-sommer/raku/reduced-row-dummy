@@ -1,0 +1,30 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($string = "1 0 0 1 | 0 1 0 2 | 0 0 1 3", :v(:$verbose));
+
+my $matrix = $string.split("|")>>.words>>.Int>>.Array;
+
+die "The rows must have the same size" unless [==] $matrix>>.elems;
+
+say + (rule1($matrix) && rule2($matrix) && rule3($matrix) && rule4($matrix));
+
+sub rule1 ($matrix)
+{
+  return True;
+}
+
+sub rule2 ($matrix)
+{
+  return True;
+}
+
+sub rule3 ($matrix)
+{
+  return True;
+}
+
+sub rule4 ($matrix)
+{
+  return True;
+}
+
