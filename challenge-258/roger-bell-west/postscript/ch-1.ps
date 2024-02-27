@@ -1,0 +1,63 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/countevendigitsnumber {
+    0 dict begin
+    0 exch
+    {
+        /even false def
+        {
+            dup 10 lt {
+                pop
+                exit
+            } if
+            /even even not def
+            10 idiv
+        } loop
+        even {
+            1 add
+        } if
+    } forall
+    end
+} bind def
+
+(countevendigitsnumber) test.start
+[10 1 111 24 1000] countevendigitsnumber 3 eq test
+[111 1 11111] countevendigitsnumber 0 eq test
+[2 8 1024 256] countevendigitsnumber 1 eq test
+test.end
