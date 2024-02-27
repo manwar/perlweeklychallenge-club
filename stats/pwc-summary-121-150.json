@@ -1,6 +1,8 @@
 {
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -35,17 +37,6 @@
          "lacek96",
          "Lakpa Tashi Bhutia"
       ]
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
    },
    "series" : [
       {
@@ -119,6 +110,7 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -150,18 +142,26 @@
             2,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
    },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-02-26 04:43:27 GMT"
+      "text" : "[Champions: 30] Last updated at 2024-02-27 12:06:46 GMT"
    }
 }
