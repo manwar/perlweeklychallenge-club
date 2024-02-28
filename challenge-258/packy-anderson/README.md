@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Merge the Maximum String Pairs](https://packy.dardan.com/b/Hg)
+[Even Digits have a Sum!](https://packy.dardan.com/b/J8)
