@@ -28,11 +28,13 @@ use v5.38;
 use builtin qw/true false/; no warnings "experimental::builtin";
 
 use Getopt::Long;
-my $Verbose = 0;
+my $K = 0;
 my $DoTest  = 0;
 
-GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
+GetOptions("test" => \$DoTest, "k:i" => \$K);
 exit(!runTest()) if $DoTest;
+
+say sumOfVal($K, @ARGV);
 
 sub hasKones($k, $n)
 {

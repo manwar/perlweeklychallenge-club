@@ -26,7 +26,7 @@ my $DoTest  = 0;
 GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 exit(!runTest()) if $DoTest;
 
-say cedn(@ARGV);
+say cedn( map { s/[^0-9]//gr } @ARGV);
 
 sub cedn(@ints)
 {
