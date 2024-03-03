@@ -1,3 +1,3 @@
-# The Weekly Challenge 256
+# The Weekly Challenge 258
 
-Blog: [Matching and zipping](https://dev.to/simongreennet/matching-and-zipping-3bl7)
+Blog: [Weekly Challenge 258](https://dev.to/simongreennet/weekly-challenge-258-1mg)
