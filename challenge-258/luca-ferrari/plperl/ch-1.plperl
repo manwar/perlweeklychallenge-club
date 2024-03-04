@@ -1,0 +1,22 @@
+--
+-- Perl Weekly Challenge 258
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-258>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc258;
+
+CREATE OR REPLACE FUNCTION
+pwc258.task1_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $numbers ) = @_;
+
+   my @counting = map { split( //, $_ ) % 2 == 0 ? 1 : 0  } ( $numbers->@*  );
+   my $sum = 0;
+   $sum += $_  for ( @counting );
+   return $sum;
+   
+$CODE$
+LANGUAGE plperl;

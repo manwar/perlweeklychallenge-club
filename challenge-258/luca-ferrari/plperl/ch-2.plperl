@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 258
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-258>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc258;
+
+CREATE OR REPLACE FUNCTION
+pwc258.task2_plperl( int, int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $k, $numbers ) = @_;
+
+   my $count_binary_ones = sub {
+      my $num = shift;
+      my @digits = split //, sprintf( '%b', $num );
+      return scalar( grep { $_ == 1 } @digits );
+   };
+
+   my @indexes = grep { $count_binary_ones->( $_ ) == $k } ( 0 .. $numbers->@* - 1 );
+   my $sum = 0;
+   $sum += $numbers->@[ $_ ] for ( @indexes );
+   return $sum;
+   
+$CODE$
+LANGUAGE plperl;
