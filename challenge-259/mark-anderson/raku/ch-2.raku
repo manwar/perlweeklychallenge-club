@@ -6,13 +6,13 @@ say parse-line('{%  youtube title="Title with escaped backslash \\" %}');
 
 grammar Ch2
 {
-    rule  TOP      { '{%' <ID> <KeyVal>* '%}'                       }
-    token ID       { \w+                                            } 
-    token Key      { \w+                                            }
-    token Quoted   { '\"' <[\w\s]>+ '\"'                            } 
-    token Unquoted { <[\w\s]>+                                      } 
-    token Val      { '"' [<Quoted>||<Unquoted>|| '\\' ]+ '"' || \d+ }
-    rule  KeyVal   { <Key> '=' <Val>                                }      
+    rule  TOP      { '{%' <ID> <KeyVal>* '%}'                          }
+    token ID       { \w+                                               } 
+    token Key      { \w+                                               }
+    token Quoted   { '\"' <[\w\s]>+ '\"'                               } 
+    token Unquoted { <[\w\s]>+                                         } 
+    token Val      { '"' [<Quoted> || <Unquoted> || '\\' ]+ '"' || \d+ }
+    rule  KeyVal   { <Key> '=' <Val>                                   }      
 }
 
 sub parse-line($s)
