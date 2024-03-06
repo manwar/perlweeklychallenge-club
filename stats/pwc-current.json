@@ -1,37 +1,44 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "title" : {
       "text" : "The Weekly Challenge - 259"
    },
-   "xAxis" : {
-      "type" : "category"
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
    },
    "yAxis" : {
       "title" : {
          "text" : "Total Solutions"
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 11] Last updated at 2024-03-05 18:55:12 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1
-   },
    "drilldown" : {
       "series" : [
          {
+            "id" : "Dave Jacoby",
+            "name" : "Dave Jacoby",
             "data" : [
                [
                   "Perl",
                   2
+               ],
+               [
+                  "Blog",
+                  1
                ]
-            ],
-            "name" : "Dave Jacoby",
-            "id" : "Dave Jacoby"
+            ]
          },
          {
             "data" : [
@@ -44,14 +51,14 @@
             "name" : "David Ferrone"
          },
          {
-            "id" : "E. Choroba",
-            "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "E. Choroba",
+            "name" : "E. Choroba"
          },
          {
             "data" : [
@@ -64,6 +71,8 @@
             "name" : "Feng Chang"
          },
          {
+            "id" : "Luca Ferrari",
+            "name" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -73,13 +82,11 @@
                   "Blog",
                   9
                ]
-            ],
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari"
+            ]
          },
          {
-            "id" : "Mariano Spadaccini",
             "name" : "Mariano Spadaccini",
+            "id" : "Mariano Spadaccini",
             "data" : [
                [
                   "Perl",
@@ -88,16 +95,18 @@
             ]
          },
          {
-            "id" : "Mark Anderson",
-            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
          },
          {
+            "id" : "Peter Campbell Smith",
+            "name" : "Peter Campbell Smith",
             "data" : [
                [
                   "Perl",
@@ -107,9 +116,7 @@
                   "Blog",
                   1
                ]
-            ],
-            "name" : "Peter Campbell Smith",
-            "id" : "Peter Campbell Smith"
+            ]
          },
          {
             "id" : "Peter Meszaros",
@@ -122,8 +129,6 @@
             ]
          },
          {
-            "name" : "Roger Bell_West",
-            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -133,9 +138,13 @@
                   "Raku",
                   1
                ]
-            ]
+            ],
+            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West"
          },
          {
+            "id" : "W. Luis Mochan",
+            "name" : "W. Luis Mochan",
             "data" : [
                [
                   "Perl",
@@ -145,11 +154,12 @@
                   "Blog",
                   1
                ]
-            ],
-            "id" : "W. Luis Mochan",
-            "name" : "W. Luis Mochan"
+            ]
          }
       ]
+   },
+   "xAxis" : {
+      "type" : "category"
    },
    "series" : [
       {
@@ -159,11 +169,11 @@
             {
                "name" : "Dave Jacoby",
                "drilldown" : "Dave Jacoby",
-               "y" : 2
+               "y" : 3
             },
             {
-               "drilldown" : "David Ferrone",
                "name" : "David Ferrone",
+               "drilldown" : "David Ferrone",
                "y" : 2
             },
             {
@@ -172,9 +182,9 @@
                "y" : 2
             },
             {
-               "drilldown" : "Feng Chang",
+               "y" : 2,
                "name" : "Feng Chang",
-               "y" : 2
+               "drilldown" : "Feng Chang"
             },
             {
                "drilldown" : "Luca Ferrari",
@@ -188,18 +198,18 @@
             },
             {
                "y" : 2,
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson"
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson"
             },
             {
-               "y" : 3,
                "drilldown" : "Peter Campbell Smith",
-               "name" : "Peter Campbell Smith"
+               "name" : "Peter Campbell Smith",
+               "y" : 3
             },
             {
-               "y" : 2,
                "drilldown" : "Peter Meszaros",
-               "name" : "Peter Meszaros"
+               "name" : "Peter Meszaros",
+               "y" : 2
             },
             {
                "name" : "Roger Bell_West",
@@ -207,23 +217,17 @@
                "y" : 2
             },
             {
-               "y" : 3,
+               "name" : "W. Luis Mochan",
                "drilldown" : "W. Luis Mochan",
-               "name" : "W. Luis Mochan"
+               "y" : 3
             }
          ]
       }
    ],
-   "legend" : {
-      "enabled" : 0
+   "subtitle" : {
+      "text" : "[Champions: 11] Last updated at 2024-03-06 19:59:15 GMT"
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
+   "chart" : {
+      "type" : "column"
    }
 }
