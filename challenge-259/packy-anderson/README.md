@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Even Digits have a Sum!](https://packy.dardan.com/b/J8)
+[Ba-a-nking Day! Ba-a-nking Day! That's all I really wanted to say...](https://packy.dardan.com/b/JC)
