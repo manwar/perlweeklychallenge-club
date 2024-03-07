@@ -115,7 +115,6 @@ sub calculate_offset_business_day{
         # Advance the base date by one day and see
         # what day of the week this is
         $base += secs_per_day;
-        @date = gmtime($base);
 
         # See if this date is a bank holiday...
         if(@holidays && ($base == $holidays[0])){
@@ -128,6 +127,7 @@ sub calculate_offset_business_day{
 
         # Skip ahead without decrementing the offset
         # if this is a weekend date
+        @date = gmtime($base);
         next
             if(($date[6] == 0) || ($date[6] == 6));
 
