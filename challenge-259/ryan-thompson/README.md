@@ -1,17 +1,15 @@
 # Ryan Thompson
 
-## Week 258 Solutions
+## Week 259 Solutions
 
-### Task 1 › Count Even Digits Number
+### Task 1 › Banking Day Offset
 
  * [Perl](perl/ch-1.pl)
- * [Raku](raku/ch-1.raku)
 
-### Task 2 › Sum of Values
+### Task 2 › Line Parser
 
  * [Perl](perl/ch-2.pl)
- * [Raku](raku/ch-2.raku)
 
 ## Blog
 
- * [Counting Digits and Summing Values](https://ry.ca/2024/02/pwc-258-counting-digits-and-summing-values/)
+ * [Bank Holidays and Line Parser](https://ry.ca/2024/03/pwc-259-bank-holidays-and-line-parser/)
