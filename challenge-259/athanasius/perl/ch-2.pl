@@ -93,8 +93,6 @@ use Const::Fast;
 use Regexp::Common qw( number );
 use Test::More;
 
-use Data::Dump;
-
 const my $BS_CODE => chr 1;
 const my $QU_CODE => chr 2;
 const my $USAGE   => <<END;
