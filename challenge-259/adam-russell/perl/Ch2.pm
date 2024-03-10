@@ -42,76 +42,76 @@ sub new {
 	},
 	{#State 2
 		ACTIONS => {
-			'WORD' => 5
+			'WORD' => 4
 		},
 		GOTOS => {
-			'id' => 4
+			'id' => 5
 		}
 	},
 	{#State 3
 		DEFAULT => 0
 	},
 	{#State 4
-		ACTIONS => {
-			'WORD' => 7
-		},
-		GOTOS => {
-			'field' => 6,
-			'fields' => 8
-		}
-	},
-	{#State 5
 		DEFAULT => -2
 	},
-	{#State 6
-		DEFAULT => -8
+	{#State 5
+		ACTIONS => {
+			'WORD' => 6
+		},
+		GOTOS => {
+			'field' => 8,
+			'fields' => 7
+		}
 	},
-	{#State 7
+	{#State 6
 		ACTIONS => {
 			"=" => 9
 		}
 	},
-	{#State 8
+	{#State 7
 		ACTIONS => {
-			'WORD' => 7,
-			'END' => 11
+			'END' => 10,
+			'WORD' => 6
 		},
 		GOTOS => {
-			'field' => 10
+			'field' => 11
 		}
+	},
+	{#State 8
+		DEFAULT => -8
 	},
 	{#State 9
 		ACTIONS => {
-			'QUOTE' => 13,
-			'NUMBER' => 12
+			'NUMBER' => 12,
+			'QUOTE' => 13
 		}
 	},
 	{#State 10
-		DEFAULT => -9
+		DEFAULT => -1
 	},
 	{#State 11
-		DEFAULT => -1
+		DEFAULT => -9
 	},
 	{#State 12
 		DEFAULT => -6
 	},
 	{#State 13
 		ACTIONS => {
-			'WORD' => 15
+			'WORD' => 14
 		},
 		GOTOS => {
-			'words' => 14
+			'words' => 15
 		}
 	},
 	{#State 14
-		ACTIONS => {
-			'WORD' => 16,
-			'QUOTE' => 18,
-			'ESCAPED_QUOTE' => 17
-		}
+		DEFAULT => -3
 	},
 	{#State 15
-		DEFAULT => -3
+		ACTIONS => {
+			'ESCAPED_QUOTE' => 17,
+			'WORD' => 16,
+			'QUOTE' => 18
+		}
 	},
 	{#State 16
 		DEFAULT => -4
