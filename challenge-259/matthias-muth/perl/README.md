@@ -85,9 +85,9 @@ plus two weekend days for every full five banking days:
         + int( $offset / 5 ) * 2 * ONE_DAY;
 ```
 
-We still need to shift by one day for each banking day between the starting and ending date.
+We still need to shift by one day for each banking holiday between the starting and ending date.
 
-We can ignore banking days that are on weekends, because we have skipped over the weekends already.
+We can ignore banking holidays that are on weekends, because we have skipped over the weekends already.
 So we only consider banking holidays that are on Monday to Friday.
 
 We need to be careful not to end on the weekend when we move the ending date forward.
