@@ -24,7 +24,6 @@ my @ids;
 my $in_id;
 
 while (my $line = <$fh>) {
-  say 'L: ' . $line;
   $line =~ /$TOP/;
 
   # is there a line with {% ... %} ?
