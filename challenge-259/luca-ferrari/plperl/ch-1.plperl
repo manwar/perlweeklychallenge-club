@@ -1,0 +1,41 @@
+--
+-- Perl Weekly Challenge 259
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-259>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc259;
+
+CREATE OR REPLACE FUNCTION
+pwc259.task1_plperl( date, int, date[] )
+RETURNS date
+AS $CODE$
+
+use DateTime;
+
+   my ( $when, $offset, $holidays ) = @_;
+
+   $when =~ / ^ (?<year>\d{4}) [-] (?<month>\d{2}) [-] (?<day>\d{2}) $ /x;
+
+   my $day = DateTime->new( year => $+{ year}, month => $+{ month }, day => $+{ day }	 );
+
+   while ( $offset > 0 ) {
+   	 $day->add( days => 1 );
+	 $offset--;
+
+	 # skip weekends
+	 while ( $day->day_of_week == 6 || $day->day_of_week == 7 ) {
+	       $day->add( days => 1 );
+	 }
+
+	 if ( $holidays->@* ) {
+	    while( grep { $_ eq $day->ymd } $holidays->@* ) {
+	       $day->add( days => 1 );
+	    }
+	 }
+   }
+
+   return $day->ymd;
+   
+$CODE$
+LANGUAGE plperlu;
