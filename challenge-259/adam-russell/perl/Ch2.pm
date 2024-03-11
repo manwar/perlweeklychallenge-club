@@ -14,7 +14,7 @@ use strict;
 @ISA= qw ( Parse::Yapp::Driver );
 use Parse::Yapp::Driver;
 
-#line 7 "ch-2.yp"
+#line 9 "perl/ch-2.yp"
 
   my %record = (fields => {});  
 
@@ -29,39 +29,39 @@ sub new {
 [
 	{#State 0
 		ACTIONS => {
-			'START' => 2
+			'START' => 1
 		},
 		GOTOS => {
-			'file' => 1
+			'file' => 2
 		}
 	},
 	{#State 1
 		ACTIONS => {
-			'' => 3
+			'WORD' => 3
+		},
+		GOTOS => {
+			'id' => 4
 		}
 	},
 	{#State 2
 		ACTIONS => {
-			'WORD' => 4
-		},
-		GOTOS => {
-			'id' => 5
+			'' => 5
 		}
 	},
 	{#State 3
-		DEFAULT => 0
-	},
-	{#State 4
 		DEFAULT => -2
 	},
-	{#State 5
+	{#State 4
 		ACTIONS => {
 			'WORD' => 6
 		},
 		GOTOS => {
-			'field' => 8,
-			'fields' => 7
+			'fields' => 7,
+			'field' => 8
 		}
+	},
+	{#State 5
+		DEFAULT => 0
 	},
 	{#State 6
 		ACTIONS => {
@@ -70,11 +70,11 @@ sub new {
 	},
 	{#State 7
 		ACTIONS => {
-			'END' => 10,
-			'WORD' => 6
+			'WORD' => 6,
+			'END' => 11
 		},
 		GOTOS => {
-			'field' => 11
+			'field' => 10
 		}
 	},
 	{#State 8
@@ -82,36 +82,36 @@ sub new {
 	},
 	{#State 9
 		ACTIONS => {
-			'NUMBER' => 12,
-			'QUOTE' => 13
+			'QUOTE' => 13,
+			'NUMBER' => 12
 		}
 	},
 	{#State 10
-		DEFAULT => -1
+		DEFAULT => -9
 	},
 	{#State 11
-		DEFAULT => -9
+		DEFAULT => -1
 	},
 	{#State 12
 		DEFAULT => -6
 	},
 	{#State 13
 		ACTIONS => {
-			'WORD' => 14
+			'WORD' => 15
 		},
 		GOTOS => {
-			'words' => 15
+			'words' => 14
 		}
 	},
 	{#State 14
-		DEFAULT => -3
+		ACTIONS => {
+			'WORD' => 16,
+			'QUOTE' => 18,
+			'ESCAPED_QUOTE' => 17
+		}
 	},
 	{#State 15
-		ACTIONS => {
-			'ESCAPED_QUOTE' => 17,
-			'WORD' => 16,
-			'QUOTE' => 18
-		}
+		DEFAULT => -3
 	},
 	{#State 16
 		DEFAULT => -4
@@ -141,7 +141,7 @@ sub new {
 	[#Rule 1
 		 'file', 4,
 sub
-#line 12 "ch-2.yp"
+#line 15 "perl/ch-2.yp"
 {$record{name} = $_[2]; \%record;}
 	],
 	[#Rule 2
@@ -159,13 +159,13 @@ sub
 	[#Rule 6
 		 'field', 3,
 sub
-#line 23 "ch-2.yp"
+#line 26 "perl/ch-2.yp"
 {$record{fields}->{$_[1]} = $_[3]}
 	],
 	[#Rule 7
 		 'field', 5,
 sub
-#line 24 "ch-2.yp"
+#line 27 "perl/ch-2.yp"
 {$record{fields}->{$_[1]} = $_[4]}
 	],
 	[#Rule 8
@@ -179,44 +179,49 @@ sub
     bless($self,$class);
 }
 
-#line 31 "ch-2.yp"
+#line 34 "perl/ch-2.yp"
 
+  
 
 sub lexer{
-    my($parser) = @_;
-    $parser->YYData->{INPUT} or return('', undef);
-    $parser->YYData->{INPUT} =~ s/^[ \t]//g;
-    ##
-    # send tokens to parser
-    ##
-    for($parser->YYData->{INPUT}){
-        s/^([0-9]+)// and return ("NUMBER", $1);
-        s/^({%)// and return ("START", $1);
-        s/^(%})// and return ("END", $1);
-        s/^(\w+)// and return ("WORD", $1);
-        s/^(=)// and return ("=", $1);
-        s/^(")// and return ("QUOTE", $1);
-        s/^(\\")// and return ("ESCAPED_QUOTE", $1);
-        s/^(\\\\)// and return ("WORD", $1);
-    }  
+  my($parser) = @_;
+  $parser->YYData->{INPUT} or return('', undef);
+  $parser->YYData->{INPUT} =~ s/^[ \t]//g;
+  ##
+  # send tokens to parser
+  ##
+  for($parser->YYData->{INPUT}){
+      s/^([0-9]+)// and return ("NUMBER", $1);
+      s/^({%)// and return ("START", $1);
+      s/^(%})// and return ("END", $1);
+      s/^(\w+)// and return ("WORD", $1);
+      s/^(=)// and return ("=", $1);
+      s/^(")// and return ("QUOTE", $1);
+      s/^(\\")// and return ("ESCAPED_QUOTE", $1);
+      s/^(\\\\)// and return ("WORD", $1);
+  }  
 }
+
 
 sub error{
-    exists $_[0]->YYData->{ERRMSG}
-    and do{
-        print $_[0]->YYData->{ERRMSG};
-            return;
-    };
-    print "syntax error\n"; 
+  exists $_[0]->YYData->{ERRMSG}
+  and do{
+      print $_[0]->YYData->{ERRMSG};
+          return;
+  };
+  print "syntax error\n"; 
 }
 
+
 sub parse{
-    my($self, $input) = @_;
-    $input =~ tr/\t/ /s;
-    $input =~ tr/ //s;
-    $self->YYData->{INPUT} = $input;
-    my $result = $self->YYParse(yylex => \&lexer, yyerror => \&error);
-    return $result;  
+  my($self, $input) = @_;
+  $input =~ tr/\t/ /s;
+  $input =~ tr/ //s;
+  $self->YYData->{INPUT} = $input;
+  my $result = $self->YYParse(yylex => \&lexer, yyerror => \&error);
+  return $result;  
 }
+
+
 
 1;
