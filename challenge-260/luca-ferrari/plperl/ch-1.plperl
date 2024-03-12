@@ -1,0 +1,29 @@
+--
+-- Perl Weekly Challenge 260
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-260>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc260;
+
+CREATE OR REPLACE FUNCTION
+pwc260.task1_plperl( int[] )
+RETURNS boolean
+AS $CODE$
+
+   my ( $nums ) = @_;
+   my $bag = {};
+
+   for my $current ( $nums->@* ) {
+       next if $bag->{ current }; # no need to reinitialize
+       $bag->{ $current } = scalar grep { $current == $_ } $nums->@*;
+   }
+
+   for my $current ( values $bag->%* ) {
+       return 0 if ( scalar( grep { $current == $_ } values( $bag->%* ) ) > 1 );
+   }
+
+   return 1;
+
+$CODE$
+LANGUAGE plperl;
