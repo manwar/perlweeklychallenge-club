@@ -127,8 +127,8 @@ sub determine_dictionary_rank{
 #   recommended that this argument be shift()ed out of @_ (or @ARG) so the
 #   array contains only the permutation to be processed
 # * A list containing the current permutation of the supplied list
-#   NOTE: This list is passed as an array slice from an array used internally
-#   by permutations_iterative_lexicographical(); any changes made to these list
+#   NOTE: This list is passed as an array used internally by
+#   permutations_iterative_lexicographical(); any changes made to these list
 #   values will be reflected in subsequent permutations and should be avoided
 #   (see 'man perlsub' for more information on argument aliasing)
 # Return values expected from the callback subroutine:
@@ -187,10 +187,8 @@ sub permutations_iterative_lexicographical{
         $largest_k = undef;
 
         # Call the supplied subroutine on the data
-        # arg and a slice of the list of things to
-        # permute, with indices calculated from the
-        # current value of $i, thus determining the
-        # current permutation
+        # arg and the list of things representing
+        # the current permutation
         $rval = &{$callback}(
             $data_arg,
             @items
