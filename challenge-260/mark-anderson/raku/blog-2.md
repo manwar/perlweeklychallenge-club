@@ -133,7 +133,7 @@ my @repeated  = $bag.values.grep(* > 1);
 take ([+] $bag{@less-than}) / ([*] @repeated>>!);
 ```
 
-but grepping for values > 1 isn't necessary since 1! == 1 and then multiplying by that 1 
+but grepping for values > 1 isn't necessary since 1! == 1 and then multiplying by 1 
 doesn't change anything. 
 
 [The full program.](https://github.com/manwar/perlweeklychallenge-club/blob/master/challenge-260/mark-anderson/raku/ch-2.raku)
