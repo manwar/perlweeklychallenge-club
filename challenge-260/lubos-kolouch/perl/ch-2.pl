@@ -1,3 +1,4 @@
+package ch2;
 use strict;
 use warnings;
 use List::Util qw(reduce);
@@ -34,3 +35,5 @@ sub dictionary_rank {
 print dictionary_rank('CAT'),    "\\n";
 print dictionary_rank('GOOGLE'), "\\n";
 print dictionary_rank('SECRET'), "\\n";
+
+1;
