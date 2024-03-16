@@ -14,10 +14,10 @@ is rank('1100010001100001111100000010101010001101111111111100101011100001').Int,
 
 sub postfix:<!>($n) is cached { [*] 1..$n }
 
-sub rank($s)
+sub rank($word)
 {
-    my @a = $s.comb;
-    my @ranks = @a.sort.squish.antipairs.Map{@a}; 
+    my @w = $word.comb;
+    my @ranks = @w.sort.squish.antipairs.Map{@w}; 
     my $bag = @ranks.BagHash;
 
     my @n = gather for @ranks -> $r
