@@ -125,17 +125,6 @@ sub rank($word)
 }
 ```
 
-
-For step 3 I originally had this in the for loop:
-
-```
-my @repeated  = $bag.values.grep(* > 1);
-take ([+] $bag{@less-than}) / ([*] @repeated>>!);
-```
-
-but grepping for values > 1 isn't necessary since 1! == 1 and then multiplying by 1 
-doesn't change anything. 
-
 [The full program.](https://github.com/manwar/perlweeklychallenge-club/blob/master/challenge-260/mark-anderson/raku/ch-2.raku)
 
 Thank you for reading my solution to the [Weekly Challenge #260 Task #2.](https://theweeklychallenge.org/blog/perl-weekly-challenge-260/)
