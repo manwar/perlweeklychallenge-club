@@ -21,3 +21,6 @@ die 'Too precise' if $scale ≥ 1002;
 die 'Bad programmer' unless $scale + 2 == + π.round( 10**-$scale).chars;
 
 say π.round( 10**-$scale);
+=======
+say Pi().substr( 0, $*PROGRAM.s + 1);
+
