@@ -1,3 +1,3 @@
-# The Weekly Challenge 258
+# The Weekly Challenge 260
 
-Blog: [Weekly Challenge 258](https://dev.to/simongreennet/weekly-challenge-258-1mg)
+Blog: [Weekly Challenge 260](https://dev.to/simongreennet/counting-and-ranking-3jjb)
