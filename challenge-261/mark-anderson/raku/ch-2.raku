@@ -18,5 +18,6 @@ sub multiply-by-two(@a, $s)
         take $++
     }
 
-    $s + sum @r[@i]
+    return $s unless @i; 
+    return @r[@i.tail] * 2
 }
