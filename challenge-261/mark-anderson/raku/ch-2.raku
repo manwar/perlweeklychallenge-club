@@ -7,7 +7,6 @@ is multiply-by-two([5,6,7], 2),       2;
 
 sub multiply-by-two(@a, $s)
 {
-               
     my $seq := $s, $s*2, $s*4, $s*8...@a.max;
     $s + (@a (&) $seq).keys.sum
 }
