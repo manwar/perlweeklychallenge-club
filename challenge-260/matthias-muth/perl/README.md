@@ -1,236 +1,187 @@
-# I Have a Date With a Parser
+# Challenge 260 tasks: Unique Occurrences and Non-unique Permutations
+**Challenge 260 solutions in Perl by Matthias Muth**
 
-**Challenge 259 solutions in Perl by Matthias Muth**
+## Task 1: Unique Occurrences
 
-Aha!<br/>This week's challenges are quite a bit more 'challenging' than many other recent ones!<br/>
-Very nice!
-
-Let's see!
-
-## Task 1: Banking Day Offset
-
-> You are given a start date and offset counter. Optionally you also get bank holiday date list.<br/>
-> Given a number (of days) and a start date, return the number (of days) adjusted to take into account non-banking days. In other words: convert a banking day offset to a calendar day offset.<br/>
-> Non-banking days are:<br/>
-> a) Weekends<br/>
-> b) Bank holidays<br/>
+> You are given an array of integers, @ints.<br/>
+> Write a script to return 1 if the number of occurrences of each value in the given array is unique or 0 otherwise.<br/>
 > <br/>
 > Example 1<br/>
-> Input: \$start_date = '2018-06-28', \$offset = 3, \$bank_holidays = ['2018-07-03']<br/>
-> Output: '2018-07-04'<br/>
-> Thursday bumped to Wednesday (3 day offset, with Monday a bank holiday)<br/>
-><br/>
+> Input: @ints = (1,2,2,1,1,3)<br/>
+> Output: 1<br/>
+> The number 1 occurred 3 times.<br/>
+> The number 2 occurred 2 times.<br/>
+> The number 3 occurred 1 time.<br/>
+> All occurrences are unique, therefore the output is 1.<br/>
+> <br/>
 > Example 2<br/>
-> Input: \$start_date = '2018-06-28', \$offset = 3<br/>
-> Output: '2018-07-03'<br/>
+> Input: @ints = (1,2,3)<br/>
+> Output: 0<br/>
+> <br/>
+> Example 3<br/>
+> Input: @ints = (-2,0,1,-2,1,1,0,1,-2,9)<br/>
+> Output: 1<br/>
 
-I am going to use the `Time::Piece` module here, which is a core module,
-and which gives me easy access to weekday information for the dates we will be working with.
-I will also use `Time::Seconds`,
-for using constants like `ONE_DAY` (actually only for that one).
-
-So we start like this: 
-
+We are supposed to check whether 'the number[s] of occurrences of each value'
+are unique.
+That means that as a first step, we need to get these 'numbers of occurrences'
+for each value. In other words, we do a frequency count for the values in the
+array.
 ```perl
-#!/usr/bin/env perl
+    my %freq;
+    ++$freq{$_}
+        for @ints;
+```
+Now we need to be careful about the fact that it's not the values themselves
+that need to be unique, but the *number* of values.
+So we need to check that every *frequency value* appears exactly once.
+We can verify this by a call to `uniq` from the `List::Util` core module,
+comparing the number of distinct frequency values to their total number.
+If they are equal, every frequency value appears exactly once.
+
+This is the whole thing, returning a `1` or `0` depending on whether the
+condition is met or not:
+```perl
 use v5.36;
-use Time::Piece;
-use Time::Seconds;
-```
-The reason I use Perl 5.36 explicitly is to have all the nice things like
-`strict`, `warnings`, and `feature signatures`
-without needing to list all of them. In this challenge, I also find good use of 'chained comparisons', which have been available since Perl 5.32.
+use List::Util qw( uniq );
 
-I declare some own constants, so that I can refer to some selected `Time::Piece::wday` weekday numbers symbolically:
-
-```perl
-# Time::Piece::wday starts with 1 == Sunday.
-use constant { WDAY_SUNDAY => 1, WDAY_MONDAY => 2, WDAY_FRIDAY => 6,
-               WDAY_SATURDAY => 7 };
-```
-
-Now let's go pushing dates around.<br/>
-If the original starting date is on a Saturday or Sunday, we move it back to
-Friday. This avoids jumping too far when we skip over Saturdays and
-Sundays later.
-We don't need to adjust `$offset` when we do that, because for any of Friday,
-Saturday and Sunday, an offset of 1 (for example) will result in the same following Monday.
-
-```perl
-    $start_date -=
-        $start_date->wday == WDAY_SATURDAY ? 1 * ONE_DAY :
-        $start_date->wday == WDAY_SUNDAY   ? 2 * ONE_DAY : 0;
-```
-
-Now we calculate the Monday of the working week that our starting date is in.
-Doing this so that later,
-we can increment week-wise by seven calendar days
-for every five banking days in `$offset`
-to skip over weekends.<br/>
-To compensate for this shift backwards,
-here we do need to increase the 'offset' by the number of days we shifted.
-
-```perl
-    my $days_from_monday = $start_date->wday - WDAY_MONDAY;
-    my $start_monday = $start_date - $days_from_monday * ONE_DAY;
-    $offset += $days_from_monday;
-```
-Now we can do the end date calculation.<br/>
-We don't loop over each single day, but we skip over `$offset` days in one go,
-plus two weekend days for every full five banking days:
-
-```perl
-    my $end_date = $start_monday
-        + $offset * ONE_DAY
-        + int( $offset / 5 ) * 2 * ONE_DAY;
-```
-
-We still need to shift by one day for each banking holiday between the starting and ending date.
-
-We can ignore banking holidays that are on weekends, because we have skipped over the weekends already.
-So we only consider banking holidays that are on Monday to Friday.
-
-We need to be careful not to end on the weekend when we move the ending date forward.
-We therefore add three days instead of one when the current ending date is on a Friday, to end up on the following Monday.
-
-We go through the bank holidays one by one.
-Assuming that they are ordered, we are safe even when
-there are several of them in a row at the end of our time period,
-because we push the end date forward *before* considering the next bank holiday to be within our time span.
-
-```perl
-    for ( $bank_holidays->@* ) {
-        my $bank_holiday = Time::Piece->strptime( $_, "%Y-%m-%d" );
-        if ( $start_date <= $bank_holiday <= $end_date
-            && WDAY_MONDAY <= $bank_holiday->wday <= WDAY_FRIDAY )
-        {
-            $end_date += ( $end_date->wday == WDAY_FRIDAY ? 3 : 1 ) * ONE_DAY;
-        }
-    }
-```
-Now that this is done we are good to return the computed end date, in ISO (YYYY-MM-DD) text form.
-```perl
-    return $end_date->ymd;
+sub unique_occurrences( @ints ) {
+    my %freq;
+    ++$freq{$_}
+	for @ints;
+    return uniq( values %freq ) == scalar values %freq ? 1 : 0;
 }
 ```
 
-Nice challenge!
+## Task 2: Dictionary Rank
 
-## Task 2: Line Parser
+> You are given a word, \$word.<br/>
+> Write a script to compute the dictionary rank of the given word.<br/>
+> <br/>
+> Example 1<br/>
+> Input: \$word = 'CAT'<br/>
+> Output: 3<br/>
+> All possible combinations of the letters:<br/>
+> CAT, CTA, ATC, TCA, ACT, TAC<br/>
+> Arrange them in alphabetical order:<br/>
+> ACT, ATC, CAT, CTA, TAC, TCA<br/>
+> CAT is the 3rd in the list.<br/>
+> Therefore the dictionary rank of CAT is 3.<br/>
+> <br/>
+> Example 2<br/>
+> Input: \$word = 'GOOGLE'<br/>
+> Output: 88<br/>
+> <br/>
+> Example 3<br/>
+> Input: \$​word = 'SECRET'<br/>
+> Output: 255<br/>
 
-> You are given a line like below:
->
-> ```
-> {%  id   field1="value1"    field2="value2"  field3=42 %}
-> ```
->
-> Where
->
-> ```
-> a) "id" can be \w+.
-> b) There can be 0  or more field-value pairs.
-> c) The name of the fields are \w+.
-> b) The values are either number in which case we don't need double quotes or string in
->    which case we need double quotes around them.
-> ```
->
-> The line parser should return structure like below:
->
-> ```
-> {
->        name => id,
->        fields => {
->            field1 => value1,
->            field2 => value2,
->            field3 => value3,
->        }
-> }
-> ```
->
-> It should be able to parse the following edge cases too:
->
-> ```
-> {%  youtube title="Title \"quoted\" done" %}
-> ```
->
-> **and**
->
-> ```
-> {%  youtube title="Title with escaped backslash \\" %}
-> ```
->
-> **BONUS**: Extend it to be able to handle multiline tags:
->
-> ```
-> {% id  filed1="value1" ... %}
-> LINES
-> {% endid %}
-> ```
->
-> You should expect the following structure from your line parser:
->
-> ```
-> {
->        name => id,
->        fields => {
->            field1 => value1,
->            field2 => value2,
->            field3 => value3,
->        }
->        text => LINES
-> }
-> ```
+I have solved several [Advent of Code](https://adventofcode.com) puzzles 
+that involve permutations.
+They often come in two parts, where the first one can be solved by
+computing all permutations and then finding the solution by examining them.
+In the second part however, typically the number of permutations to be checked
+is raised so that you easily run out of space, or of computing time when you
+use that strategy. You have to think of other ways to reduce the complexity.
 
-Now this is a good challenge, too!
+In this challenge's examples, the maximum number of letters to permute 
+is six.
+The maximum number of permutations of $n!$ if there are $n$ letters and they
+all are different.
+Thus there are at most 720 permutations to compute in the examples
+(actually only $\frac{6!}{2!2!} = 180$ for 'GOOGLE', containing 2 letters
+that appear twice each, and $\frac{6!}{2!} = 360$ for 'SECRET', with its 'E'
+appearing twice).
 
-One reason why I love Perl is that regular expressions are an integral part of the language. Happy to use regular expressions here!
+So for this challenge, I decided to use a simple, recursive approach to
+generate all permutations in the right order,
+without fearing to run out of memory or to need to wait for hours
+for the results.
 
-Let's start by defining some regexes for the input tokens that we will encounter.<br/>I will make use of 'named captures' to refer to recognized parts of the input by name, not just by the capture group numbers.
-Hoping that this helps to make the code less cryptic.
+The numbering of permutations is complicated a bit by the fact that we have
+letters that appear more than once.
+We want to generate the permutations in alphabetical order
+without repeating any words.
+So even if a letter exists several times (like the 'G' or the 'O' in 'GOOGLE'),
+we must use it only once when we loop through the letters for a given position.
 
-I built the captures right into the token regexes, mainly because when we read 'quoted text', we only want the contents of the quoted strings, without the quotes. So the capturing parentheses have to be somewhere *inside* the regex.
+A quite easy way to achieve this is to use a frequency hash (`%freq`)
+as input for the recursive generator function.
+The keys of the hash are the letters, of course,
+and the values state how many times this character is available.
 
-I use the same capture name `<value>` for both numbers and the text from a 'quoted text' token, because in the end, for assigning the value to the resulting structure, it doesn't matter whether it's a number or a text. (Hail Perl's dynamic typing!)
+Doing so, `sort keys %freq` gives us the list of letters we can loop through,
+without repetition,
+to use in the first position of the resulting word.
 
-The 'quoted text' regex takes care for accepting escaped backslashes, escaped double quotes, or any other character that is not the (closing) double quote.
+For getting the possible permutations of the rest of the word,
+we do a recursive call with the rest of available letters.
+We need to adjust the frequency hash for that call,
+by diminishing the frequency entry of that first letter by one,
+and we remove the frequency entry completely if it has decreased to zero making it unavailable for the rest-permutations.
 
-The regex for the whole structure captures all field assignments into one capture, which will then be split up and processed separately.<br/>It optionally accepts multi-line text and an end tag.<br/>The multi-line text uses a negative lookahead to end when the start of a tag (`{%`)  is encountered.<br/>The end tag has to contain 'end' and the same id that was used in the opening tag, using a named back-reference (`\g{name}`) .
+We combine all the permutations that are returned from the call with our
+first letter, and add everything to a result list.
+Then, for the next loop iteration,
+we restore the frequency hash to its original state
+by simply re-increasing the frequency entry
+for the letter we just used as the first letter.
 
-```perlcounting the 
-my $id_re          = qr/ (?<id>    \w+ ) /x;
-my $number_re      = qr/ (?<value> \d+ ) /x;
-my $quoted_text_re = qr/ " (?<value> (?: \\\\ | \\" | [^"] )* ) " /x;
-my $value_re       = qr/ ${number_re} | ${quoted_text_re} /x;
-my $structure_re   = qr/
-        {% \s* (?<name> $id_re )
-            (?<fields> (?: \s* $id_re = $value_re )* )
-        \s* %}
-        (?: \s* (?<text> (?: (?! {% ) . )*? )
-            \s* {% \s* end\g{name} \s* %} )?
-    /xs;
-
-```
-
-Having these tokens, the `line_parser`function simply can use the 'structure' regex to scan the input, and if it successfully matches, create the structure from the captured parts and return it.
-
-Part of this is looping through the variable number of field assignments, and turning quoted backslashes and quoted double quotes in the values into their unquoted equivalents.
-
+So here is that subroutine:
 ```perl
-sub line_parser( $text ) {
-    $text =~ /$structure_re/
-        or return;
-    my %structure = ( name => $+{name} );
-    $structure{text} = $+{text}
-        if defined $+{text};
-    my $fields = $+{fields};
-    while ( $fields =~ /$id_re=$value_re/g ) {
-        my ( $id, $value ) = @+{ qw( id value ) };
-        # Revert quoted backslashes or double quotes.
-        $value =~ s/\\([\\"])/$1/g;
-        $structure{fields}{$id} = $value;
+sub combinations( %freq ) {
+    return keys %freq
+	if %freq == 1 && ( values %freq )[0] == 1;
+    my @combinations;
+    for my $letter ( sort keys %freq ) {
+	delete $freq{$letter}
+	    if --$freq{$letter} == 0;
+	push @combinations, map $letter . $_, combinations( %freq );
+	++$freq{$letter};
     }
-    return \%structure;
+    return @combinations;
 }
 ```
+
+The main function consists of three parts:
+
+* splitting up the input word onto a frequency hash,
+
+* calling the resursive function to get all combinations,
+
+* and walking through the combinations to find the matching number, returning it as the final result.
+
+```perl
+sub dictionary_rank( $word ) {
+    my %freq;
+    ++$freq{$_}
+	for split "", $word;
+    my @combinations = combinations( %freq );
+    for ( 0..$#combinations ) {
+	return 1 + $_
+	    if $combinations[$_] eq $word;
+    }
+}
+```
+
+To improve this solution, I would think of actually not producing
+and returning all the permutations.
+Instead, we could pass in the word that we want the index of, and
+and maybe some context information.
+For the recursive calls, we then could return whether we found the word,
+and if we did, its index, and if not, the number of permutations that were
+tested.
+This would still produce every single permutation, but not for storing them,
+and we could return immediately after finding the index of the word.
+
+The same thing could be achieved with an iterator that returns the next
+permutation. A bit different to implement than the recursive approach.
+
+And the there is [James Curtis-Smith's solution](https://www.facebook.com/groups/perlcommunity/permalink/1632932314181055/) to this challenge,
+which does not even produce any permutation, but computes the index
+based on the formula of how many permutations (or sub-permutations)
+exist.<br/>
+This is the solution that really scales well!<br/>
+And it's a very nice read, too! Admirable!
 
 #### **Thank you for the challenge!**
