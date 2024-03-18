@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Ba-a-nking Day! Ba-a-nking Day! That's all I really wanted to say...](https://packy.dardan.com/b/JC)
+[Unique Dictionary Occurrences are Rank](https://packy.dardan.com/b/J_)
