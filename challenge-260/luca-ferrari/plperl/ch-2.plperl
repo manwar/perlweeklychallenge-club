@@ -1,0 +1,32 @@
+--
+-- Perl Weekly Challenge 260
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-260>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc260;
+
+CREATE OR REPLACE FUNCTION
+pwc260.task2_plperl( text )
+RETURNS int
+AS $CODE$
+   use List::Permutor;
+   
+   my ( $word ) = @_;
+   my @words;
+
+   my $engine = List::Permutor->new( split //, $word );
+   while ( my @letters = $engine->next ) {
+   	 push @words, join( '', @letters );
+   }
+
+   @words = sort @words;
+
+
+   for my $index ( 0 .. @words - 1 ) {
+       return $index + 1 if ( $words[ $index ] eq $word );   
+   }
+   
+   return -1;
+$CODE$
+LANGUAGE plperlu;
