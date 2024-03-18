@@ -6,11 +6,11 @@ use Test;
 # With help from https://www.youtube.com/watch?v=-MpL0X3AHAs
 #
 
-is rank('cat'),                                                                                    3, 'cat';
-is rank('secret'),                                                                               255, 'secret';
-is rank('google'),                                                                                88, 'google';
-is rank('mississippi'),                                                                        13737, 'mississippi';
-is rank('1100010001100001111100000010101010001101111111111100101011100001').Int, 1340132963011393536, '64 bits';
+is rank('cat'),                                                                    3, 'cat';
+is rank('secret'),                                                               255, 'secret';
+is rank('google'),                                                                88, 'google';
+is rank('mississippi'),                                                        13737, 'mississippi';
+is rank('1100010001100001111100000010101010001101111111111100101'), 2640733527075696, '55 bits';
 
 sub postfix:<!>($n) is cached { [*] 1..$n }
 
