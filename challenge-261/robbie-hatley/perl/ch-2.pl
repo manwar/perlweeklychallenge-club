@@ -13,7 +13,7 @@ Task 261-2: Multiply by Two
 Submitted by: Mohammad Sajid Anwar
 Reworded for clarity by Robbie Hatley
 You are given an array of integers, @ints, and an integer, $start.
-Write a script to do the followings:
+Write a script to do the following:
 1. Look for $start in the array @ints; if found, multiply the
    value of $start by 2 in-situ.
 2. If not found, stop the process; otherwise, repeat.
@@ -43,20 +43,11 @@ Output: 2
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
 I'll use "any" from "List::Util" to determine whether $start is in @array, and "while" to repeatedly
-double $start for so long as $start is in @array:
+double $start for so long as $start is in @array.
 
-   use v5.38;
-   use utf8;
-   use List::Util 'any';
-
-   # Double $start while $start is in @array:
-   sub mult_by_two ($start, @array) {
-      return 0 if 0 == $start;
-      return ($start *= 2 while any {$_ == $start} @array);
-   }
-
-Warning: If $start is 0, and 0 is also in @array, sub "mult_by_two" will loop indefinitely, so precaution
-must be taken to ensure that $start is never 0.
+Warning: If $start is 0, and 0 is also in @array, any loop-based procedure for determining the final value of
+$start will loop indefinitely, because "$start *= 2" will always produce "0", which will always still be in
+the array. So precaution should be taken to ensure that $start is never 0.
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:

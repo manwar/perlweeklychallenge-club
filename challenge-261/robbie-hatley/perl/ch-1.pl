@@ -44,30 +44,7 @@ Output: 1296
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
 I'll use "sum0" from "List::Util" to sum number lists, "split" and "grep" to get the digits, and "abs" to get
-the absolute value of the difference between the element and digit sums:
-
-   use v5.38;
-   use utf8;
-   use List::Util 'sum0';
-
-   # Return the sum of the elements of any array of
-   # decimal representations of real numbers:
-   sub el_sum (@array) {
-      return sum0 @array;
-   }
-
-   # Return the sum of the digits of any array of
-   # decimal representations of real numbers:
-   sub di_sum (@array) {
-      return sum0 grep {$_ =~ /^[0-9]$/} map {split //, $_} @array;
-   }
-
-   # Return the absolute value of the difference between
-   # the element sum and the digit sum of any array of
-   # decimal representations of real numbers:
-   sub abs_diff_el_di (@array) {
-      return abs(el_sum(@array)-di_sum(@array));
-   }
+the absolute value of the difference between the element and digit sums.
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
