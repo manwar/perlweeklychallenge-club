@@ -1,0 +1,63 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/elementdigitsum {
+    0 dict begin
+    0 exch
+    {
+        /n exch 10 idiv def
+        /m 10 def
+        {
+            n 0 le {
+                exit
+            } if
+            /digit n 10 mod def
+            /n n 10 idiv def
+            digit m 1 sub mul add
+            /m m 10 mul def
+        } loop
+    } forall
+    end
+} bind def
+
+(elementdigitsum) test.start
+[1 2 3 45] elementdigitsum 36 eq test
+[1 12 3] elementdigitsum 9 eq test
+[1 2 3 4] elementdigitsum 0 eq test
+[236 416 336 350] elementdigitsum 1296 eq test
+test.end
