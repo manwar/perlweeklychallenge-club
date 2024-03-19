@@ -1,38 +1,13 @@
 {
    "subtitle" : {
-      "text" : "Last updated at 2024-03-18 17:12:25 GMT"
+      "text" : "Last updated at 2024-03-19 15:16:26 GMT"
    },
-   "series" : [
-      {
-         "name" : "Contributions",
-         "data" : [
-            [
-               "Blog",
-               4639
-            ],
-            [
-               "Perl",
-               13478
-            ],
-            [
-               "Raku",
-               7823
-            ]
-         ],
-         "dataLabels" : {
-            "align" : "right",
-            "y" : 10,
-            "enabled" : "true",
-            "format" : "{point.y:.0f}",
-            "color" : "#FFFFFF",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "rotation" : -90
-         }
-      }
-   ],
+   "chart" : {
+      "type" : "column"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
    "xAxis" : {
       "labels" : {
          "style" : {
@@ -42,20 +17,45 @@
       },
       "type" : "category"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
+   "series" : [
+      {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "color" : "#FFFFFF",
+            "rotation" : -90,
+            "enabled" : "true",
+            "align" : "right",
+            "y" : 10,
+            "format" : "{point.y:.0f}",
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            }
+         },
+         "data" : [
+            [
+               "Blog",
+               4643
+            ],
+            [
+               "Perl",
+               13486
+            ],
+            [
+               "Raku",
+               7825
+            ]
+         ]
       }
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
+   ],
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : null
+      },
+      "min" : 0
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2024]"
