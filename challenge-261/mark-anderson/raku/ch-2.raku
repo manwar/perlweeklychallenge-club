@@ -5,6 +5,19 @@ is multiply-by-two([5,3,6,1,12], 3), 24;
 is multiply-by-two([1,2,4,3], 1),     8;
 is multiply-by-two([5,6,7], 2),       2;
 
-multi multiply-by-two(@i, $s)               { samewith(@i.BagHash, $s)               }
-multi multiply-by-two($b, $s)               { return $s                              }
-multi multiply-by-two($b, $s where ?$b{$s}) { $b{(0..$s)}:delete; samewith($b, $s*2) }
+say multiply-by-two((1..100000).roll(100000), 5);
+
+sub multiply-by-two(@a, $s)
+{
+    my $seq := $s, $s*2, $s*4, $s*8...@a.max;
+    my @r = (@a (&) $seq.cache).keys.sort;
+    
+    my @i = gather for @r Z== $seq
+    {
+        last if .not; 
+        take $++
+    }
+
+    return $s unless @i; 
+    return @r[@i.tail] * 2
+}
