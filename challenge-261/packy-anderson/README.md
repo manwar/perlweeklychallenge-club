@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Unique Dictionary Occurrences are Rank](https://packy.dardan.com/2024/03/11/perl-weekly-challenge-260J_)
+[Two Elements, Multiplied by Digit Sum](https://packy.dardan.com/b/Jj)
