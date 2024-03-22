@@ -33,11 +33,13 @@ use v5.38;
 use builtin qw/true false/; no warnings "experimental::builtin";
 
 use Getopt::Long;
-my $Verbose = 0;
+my $Start = 0;
 my $DoTest  = 0;
 
-GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
+GetOptions("test" => \$DoTest, "start" => \$Start);
 exit(!runTest()) if $DoTest;
+
+say multiplyByTwo($Start, @ARGV);
 
 sub multiplyByTwo($start, @ints)
 {
