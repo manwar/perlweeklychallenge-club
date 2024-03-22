@@ -39,7 +39,8 @@ say elementDigitSum(@ARGV);
 sub elementDigitSum(@ints)
 {
     use List::Util qw/sum0/;
-    return abs(sum0(@ints) - sum0( split('', join('', @ints))));
+    local $" = '';  # No space when interpolating array into string
+    return abs(sum0(@ints) - sum0( split('', "@ints")));
 }
 
 sub runTest
