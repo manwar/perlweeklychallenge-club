@@ -57,7 +57,7 @@ import (
 )
 
 func sumDigit(n int) int {
-	if n < 11 {
+	if n < 10 {
 		return n
 	}
 	s := 0
