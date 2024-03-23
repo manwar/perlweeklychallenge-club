@@ -97,7 +97,7 @@ for my $aref (@arrays) {
    say '';
    my @array = @$aref;
    my $start = pop @array;
-   say 'Array  = (', join(', ', @$aref), ')';
+   say 'Array  = (', join(', ', @array), ')';
    say 'Start  = ', $start;
    if ( 0 == $start ) {
       say 'Error: $start may not be 0.';
