@@ -53,7 +53,7 @@ sub element_digit_sum( @ints ) {
 
 ## Task 2: Multiply by Two
 
-> You are given an array of integers, @ints and an integer \$start..<br/>
+> You are given an array of integers, @ints and an integer \$start.<br/>
 > Write a script to do the followings:<br/>
 > a) Look for \$start in the array @ints, if found multiply the number by 2<br/>
 > b) If not found stop the process otherwise repeat<br/>
@@ -61,10 +61,12 @@ sub element_digit_sum( @ints ) {
 > In the end return the final value.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @ints = (5,3,6,1,12) and \$start = 3<Output: 24<br/>
+> Input: @ints = (5,3,6,1,12) and \$start = 3<br/>
+> Output: 24<br/>
 > Step 1: 3 is in the array so 3 x 2 = 6<br/>
 > Step 2: 6 is in the array so 6 x 2 = 12<br/>
-> Step 3: 12 is in the array so 12 x 2 = 24<br/> 24 is not found in the array so return 24.<br/>
+> Step 3: 12 is in the array so 12 x 2 = 24<br/>
+> 24 is not found in the array so return 24.<br/>
 > <br/>
 > Example 2<br/>
 > Input: @ints = (1,2,4,3) and \$start = 1<br/>
