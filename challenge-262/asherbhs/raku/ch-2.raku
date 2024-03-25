@@ -2,7 +2,7 @@ sub count-equal-divisible(Int:D @ints, Int:D $k --> Int:D) {
 	my $n = 0;
 	for 0 ..^ @ints -> $i {
 		for $i + 1 ..^ @ints -> $j {
-			$n++ if @ints[$i] == @ints[$j] && ($i mod $k == 0 || $j mod $k == 0)
+			$n++ if @ints[$i] == @ints[$j] && ($i %% $k || $j %% $k)
 		}
 	}
 	return $n
