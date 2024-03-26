@@ -1,0 +1,25 @@
+--
+-- Perl Weekly Challenge 262
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-262>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc262;
+
+CREATE OR REPLACE FUNCTION
+pwc262.task1_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $nums ) = @_;
+
+  my ( $positives, $negatives ) =
+    ( scalar( grep { $_ >= 0 } $nums->@* ),
+      scalar( grep { $_ < 0 } $nums->@* ) );
+
+  return $positives >= $negatives
+  	   ? $positives
+	   :  $negatives;
+   
+$CODE$
+LANGUAGE plperl;
