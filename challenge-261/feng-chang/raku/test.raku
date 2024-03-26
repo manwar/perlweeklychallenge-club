@@ -23,3 +23,7 @@ pwc-test './ch-1.raku', <236 416 336 350>, 1296, 'Element Digit Sum: (236, 416, 
 pwc-test './ch-2.raku', <5 3 6 1 12>, 3, 24, 'Multiply by Two: @ints=(5,3,6,1,12), $start=3 => 24';
 pwc-test './ch-2.raku', <1 2 4 3>,    1,  8, 'Multiply by Two: @ints=(1,2,4,3),    $start=1 => 8';
 pwc-test './ch-2.raku', <5 6 7>,      2,  2, 'Multiply by Two: @ints=(5,6,7),      $start=2 => 2';
+
+pwc-test './ch-2a.raku', <5 3 6 1 12>, 3, 24, 'Multiply by Two: @ints=(5,3,6,1,12), $start=3 => 24';
+pwc-test './ch-2a.raku', <1 2 4 3>,    1,  8, 'Multiply by Two: @ints=(1,2,4,3),    $start=1 => 8';
+pwc-test './ch-2a.raku', <5 6 7>,      2,  2, 'Multiply by Two: @ints=(5,6,7),      $start=2 => 2';
