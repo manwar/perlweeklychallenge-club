@@ -1,0 +1,93 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/combinations {
+    4 dict begin
+    /k exch def
+    /arr exch def
+    /c [
+        0 1 k 1 sub { } for
+        arr length
+        0
+    ] def
+    [
+        {
+            [
+                k 1 sub -1 0 {
+                    c exch get arr exch get
+                } for
+            ]
+            /j 0 def
+            {
+                c j get 1 add c j 1 add get ne {
+                    exit
+                } if
+                c j j put
+                /j j 1 add def
+            } loop
+            j k ge {
+                exit
+            } if
+            c j c j get 1 add put
+        } loop
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/countequaldivisible {
+    0 dict begin
+    /k exch def
+    /a exch def
+    0
+    [ 0 1 a length 1 sub { } for ] 2 combinations {
+        aload pop
+        /j exch def
+        /i exch def
+        a i get a j get eq {
+            i j mul k mod 0 eq {
+                1 add
+            } if
+        } if
+    } forall
+    end
+} bind def
+
+(countequaldivisible) test.start
+[3 1 2 2 2 1 3] 2 countequaldivisible 4 eq test
+[1 2 3] 1 countequaldivisible 0 eq test
+test.end
