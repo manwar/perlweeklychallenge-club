@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Two Elements, Multiplied by Digit Sum](https://packy.dardan.com/b/Jj)
+[Counting to the Max!](https://packy.dardan.com/b/Jx)
