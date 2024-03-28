@@ -8,16 +8,22 @@
 
 function max_positive_negative() {
     local nums=("$@")
-    locali max=0
+    local positive=0
+    local negative=0
 
     for i in "${nums[@]}"; do
-        i=${i#-}
-        if [ $i -gt $max ]; then
-            max=$i
+        if [ $i -ge 0 ]; then
+           ((positive++)) 
+        else
+            ((negative++))
         fi
     done
 
-    echo $max
+    if [ $positive -gt $negative ]; then
+        echo $positive
+    else
+        echo $negative
+    fi
 }
 
 example1='-3 1 2 -1 3 -2 4'

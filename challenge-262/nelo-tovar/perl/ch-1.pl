@@ -10,7 +10,6 @@
 use strict;
 use warnings;
 use v5.28;
-use List::Util qw /max min/;
 use Data::Dump qw(dump);
 
 my @examples = (
@@ -21,8 +20,8 @@ my @examples = (
 
 sub max_positive_negative {
     my $nums = shift;
-    my $positive = max(grep {$_ >= 0} @$nums);
-    my $negative = abs(min(grep {$_ < 0 } @$nums));
+    my $positive = scalar grep {$_ >= 0} @$nums;
+    my $negative = scalar grep {$_ < 0 } @$nums;
 
     return $positive > $negative ? $positive : $negative;
 }
