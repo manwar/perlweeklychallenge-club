@@ -52,5 +52,6 @@ my @int = (1 xx 70, 2 xx 71, 3 xx 72, 4 xx 75, 5 xx 76).flat;
 say "\nInput: @int = @int[]\nOutput: ", func(@int).Int;
 
 
+
 exit;
 
