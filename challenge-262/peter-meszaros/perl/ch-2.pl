@@ -30,8 +30,8 @@ use Test2::V0 -no_srand => 1;
 use Data::Dumper;
 
 my $cases = [
-    [[3, 1, 2, 2, 2, 1, 3], 2],
-    [[1, 2, 3], 1],
+    [[[3, 1, 2, 2, 2, 1, 3], 2], 4, 'Example 1'],
+    [[[1, 2, 3], 1],             0, 'Example 2'],
 ];
 
 sub count_equal_divisable
@@ -54,8 +54,9 @@ sub count_equal_divisable
     return $r;
 }
 
-is(count_equal_divisable($cases->[0]), 4, 'Example 1');
-is(count_equal_divisable($cases->[1]), 0, 'Example 2');
+for (@$cases) {
+    is(count_equal_divisable($_->[0]), $_->[1], $_->[2]);
+}
 done_testing();
 
 exit 0;

@@ -37,9 +37,9 @@ use Test2::V0 -no_srand => 1;
 use Data::Dumper;
 
 my $cases = [
-    [-3, 1, 2, -1, 3, -2, 4],
-    [-1, -2, -3, 1],
-    [1,2],
+    [[-3, 1, 2, -1, 3, -2, 4], 4, 'Example 1'],
+    [[-1, -2, -3, 1],          3, 'Example 2'],
+    [[1,2],                    2, 'Example 3'],
 ];
 
 sub max_positive_negative
@@ -58,9 +58,9 @@ sub max_positive_negative
 	return $pos > $neg ? $pos : $neg;
 }
 
-is(max_positive_negative($cases->[0]), 4, 'Example 1');
-is(max_positive_negative($cases->[1]), 3, 'Example 2');
-is(max_positive_negative($cases->[2]), 2, 'Example 3');
+for (@$cases) {
+    is(max_positive_negative($_->[0]), $_->[1], $_->[2]);
+}
 done_testing();
 
 exit 0;
