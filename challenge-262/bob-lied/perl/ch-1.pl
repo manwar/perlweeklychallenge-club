@@ -33,7 +33,7 @@ class Bucket {
     ADJUST { ++$id }
 
     field $name :param = "Bucket$id";
-    field $condition :param = sub() { true };
+    field $condition :param = sub($n) { true };
     field $_count = 0;
 
     method contains($n) {
@@ -61,7 +61,6 @@ sub mpn(@ints)
     return $buckets->biggestNum();
 }
 
-say mpn(-3, 0, 1, 9, 11);
 
 use Getopt::Long;
 my $Verbose = 0;
@@ -70,6 +69,7 @@ my $DoTest  = 0;
 GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 exit(!runTest()) if $DoTest;
 
+say "OO solution: ", mpn(@ARGV);
 say maxPosNeg(@ARGV);
 
 
