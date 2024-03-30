@@ -52,7 +52,7 @@ sub runTest
     use Test2::V0;
 
     is( countEqDiv(2, (3,1,2,2,2,1,3) ), 4, "Example 1");
-    is( countEqDiv(2, (1,2,3)         ), 0, "Example 2");
+    is( countEqDiv(1, (1,2,3)         ), 0, "Example 2");
 
     done_testing;
 }
