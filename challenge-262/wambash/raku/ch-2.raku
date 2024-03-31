@@ -17,6 +17,6 @@ multi MAIN (Bool :test($)!) {
     done-testing;
 }
 
-multi MAIN (+ints,:$k) {
-    say count-equal-divisible +ints,:$k
+multi MAIN (+ints,Int :$k) {
+    say count-equal-divisible ints,:$k
 }
