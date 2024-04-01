@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 261
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-261>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc261;
+
+CREATE OR REPLACE FUNCTION
+pwc261.task1_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $nums ) = @_;
+   my ( $sum, $sum_digits ) = ( 0, 0 );
+
+   for my $current ( $nums->@* ) {
+       $sum += $current;
+       for my $digit ( split //, $current ) {
+       	   $sum_digits += $digit;
+       }
+   }
+
+   my $result = $sum - $sum_digits;
+   return $result < 0 ? $result * -1 : $result;
+   
+$CODE$
+LANGUAGE plperl;

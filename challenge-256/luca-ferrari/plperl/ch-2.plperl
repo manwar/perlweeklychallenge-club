@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 256
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-256>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc256;
+
+CREATE OR REPLACE FUNCTION
+pwc256.task2_plperl( text, text )
+RETURNS text
+AS $CODE$
+
+   my ( $left, $right ) = @_;
+   my $output = '';
+
+   my @left_chars = split //, $left;
+   my @right_chars = split //, $right;
+
+   while ( @left_chars || @right_chars ) {
+   	 $output .= shift( @left_chars ) if ( @left_chars );
+	 $output .= shift( @right_chars ) if ( @right_chars );
+	 $index++;
+   }
+
+   return $output;
+$CODE$
+LANGUAGE plperl;

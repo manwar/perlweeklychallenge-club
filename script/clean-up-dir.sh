@@ -1,4 +1,7 @@
+find . -name "*.roc" -delete
+find . -name "*.sml" -delete
 find . -name "*.factor" -delete
+find . -name "*.cob" -delete
 find . -name "*.P" -delete
 find . -name "*.html" -delete
 find . -name "*.psl" -delete
