@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Counting to the Max!](https://packy.dardan.com/b/Jx)
+[Merge the Target Index Items](https://packy.dardan.com/b/KC)
