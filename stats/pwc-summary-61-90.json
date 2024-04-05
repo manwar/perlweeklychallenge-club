@@ -1,11 +1,9 @@
 {
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-04-05 09:55:36 GMT"
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -41,13 +39,17 @@
          "Giuseppe Di Terlizzi"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-04-05 10:16:24 GMT"
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             45,
@@ -79,7 +81,8 @@
             3,
             0,
             4
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -152,16 +155,13 @@
          ]
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
