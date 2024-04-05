@@ -1,0 +1,23 @@
+--
+-- Perl Weekly Challenge 263
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-263>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc263;
+
+CREATE OR REPLACE FUNCTION
+pwc263.task1_plperl( int, int[] )
+RETURNS SETOF int
+AS $CODE$
+
+   my ( $k, $nums ) = @_;
+
+   return [
+   map { $_->[ 0 ] }
+   grep { $_->[ 1 ] == $k }
+   map { [ $index++, $_ ] }
+   sort $nums->@* ];
+   
+$CODE$
+LANGUAGE plperl;
