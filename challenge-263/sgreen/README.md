@@ -1,3 +1,3 @@
-# The Weekly Challenge 262
+# The Weekly Challenge 263
 
-Blog: [The maximum divisible](https://dev.to/simongreennet/the-maximum-divisible-4mm6)
+Blog: [Finding the target](https://dev.to/simongreennet/finding-the-target-26em)
