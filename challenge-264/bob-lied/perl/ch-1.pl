@@ -34,6 +34,17 @@ exit(!runTest()) if $DoTest;
 
 sub gle($str)
 {
+    use List::Util qw/first/;
+
+    # Put all lower case letters before upper, in reverse order
+    my @rts = sort { $b cmp $a } split(//, $str);
+
+    # Return the first lower case character that also has an upper
+    while ( defined(my $char = shift @rts) )
+    {
+        return uc($char) if $char eq lc($char) && first { $_ eq uc($char) } @rts;
+    }
+    return '';
 }
 
 sub runTest
