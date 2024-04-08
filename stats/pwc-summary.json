@@ -1,7 +1,11 @@
 {
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             1,
             0,
@@ -110,7 +114,7 @@
             0,
             6,
             5,
-            231,
+            233,
             1,
             1,
             151,
@@ -311,9 +315,11 @@
             44,
             11,
             4
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -422,7 +428,7 @@
             0,
             0,
             0,
-            231,
+            233,
             0,
             2,
             5,
@@ -623,11 +629,9 @@
             11,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -736,7 +740,7 @@
             0,
             0,
             0,
-            219,
+            221,
             0,
             0,
             124,
@@ -937,18 +941,15 @@
             5,
             10,
             1
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
    "subtitle" : {
-      "text" : "[Champions: 308] Last updated at 2024-04-07 23:55:38 GMT"
+      "text" : "[Champions: 308] Last updated at 2024-04-08 01:41:52 GMT"
    },
    "yAxis" : {
       "title" : {
@@ -956,10 +957,8 @@
       },
       "min" : 0
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -1273,7 +1272,8 @@
          "Yves Orton"
       ]
    },
-   "chart" : {
-      "type" : "column"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    }
 }
