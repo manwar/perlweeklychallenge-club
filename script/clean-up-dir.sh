@@ -1,3 +1,4 @@
+find . -name "*.hy" -delete
 find . -name "*.roc" -delete
 find . -name "*.sml" -delete
 find . -name "*.factor" -delete
