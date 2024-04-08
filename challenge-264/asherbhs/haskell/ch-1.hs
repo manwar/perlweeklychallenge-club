@@ -1,6 +1,7 @@
 import Data.List (partition, intersect)
 import Data.Char (isUpper, toUpper)
 
+greatestEnglishLetter :: String -> String
 greatestEnglishLetter str =
   let
     (upper, lower) = partition isUpper str
