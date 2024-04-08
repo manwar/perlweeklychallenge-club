@@ -9,7 +9,9 @@ targetArray source indices
   where
     trueIndices :: [Int] -> [Int]
     trueIndices [] = []
-    trueIndices (i : is) = i + length (filter (i >=) is) : trueIndices is
+    trueIndices (i : is)
+        = i + length (filter (i >=) is)
+        : trueIndices is
 
 main :: IO ()
 main = do

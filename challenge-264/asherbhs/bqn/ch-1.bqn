@@ -1,4 +1,4 @@
-GreatestEnglishLetter←{(0=⍒)⊸/(∊/⊣)´0‿32-˜≥⟜'a'⊸⊔𝕩}
+GreatestEnglishLetter←{(0=⍒)⊸/(∊/⊣)´0‿('a'-'A')-˜≥⟜'a'⊸⊔𝕩}
 
 •Show GreatestEnglishLetter "PeRlwEeKLy"
 •Show GreatestEnglishLetter "ChaLlenge"
