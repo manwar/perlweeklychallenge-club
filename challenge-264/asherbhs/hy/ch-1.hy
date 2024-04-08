@@ -1,3 +1,5 @@
+(import hyrule *)
+
 (defn greatest-english-letter [str] (do
   (setv
     upper #{}
@@ -13,6 +15,6 @@
   (if letters (max letters) "")
 ))
 
-(print (greatest-english-letter "PeRlwEeKLy"))
-(print (greatest-english-letter "ChaLlenge"))
-(print (greatest-english-letter "The"))
+(pprint (greatest-english-letter "PeRlwEeKLy"))
+(pprint (greatest-english-letter "ChaLlenge"))
+(pprint (greatest-english-letter "The"))
