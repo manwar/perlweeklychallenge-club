@@ -1,4 +1,7 @@
-GreatestEnglishLetter=.{{u:(#~0=\:)(e.#[)&:>/(>:&(u:^:_1]'a'){{<('a'-&(u:^:_1)'A')(-~^:x)y}}/..])u:^:_1]y}}
+GreatestEnglishLetter=.{{
+	U=:u:^:_1
+	u:(#~0=\:)(e.#[)&:>/(>:&(U'a'){{<('a'-&U'A')(-~^:x)y}}/..])U y
+}}
 
 echo GreatestEnglishLetter 'PeRlwEeKLy'
 echo GreatestEnglishLetter 'ChaLlenge'
