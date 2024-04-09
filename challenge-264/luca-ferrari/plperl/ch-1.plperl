@@ -1,0 +1,28 @@
+--
+-- Perl Weekly Challenge 264
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-264>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc264;
+
+CREATE OR REPLACE FUNCTION
+pwc264.task1_plperl( text )
+RETURNS char
+AS $CODE$
+
+   my ( $string ) = @_;
+   die "Must contain only letters" if ( ! $string =~ /^[a-zA-Z]+$/ );
+
+   my @letters;
+   for my $letter ( grep( { $_ =~ /[A-Z]/ } split( //, $string ) ) ) {
+       my $lc_letter = lc $letter;
+       next if $string !~ /$lc_letter/;
+       push @letters, $letter;
+   }
+
+   return '' if ! @letters;
+   return ( sort( @letters ) )[ -1 ];
+   
+$CODE$
+LANGUAGE plperl;
