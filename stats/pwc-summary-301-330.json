@@ -2,9 +2,11 @@
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
    },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             81,
             211,
@@ -14,9 +16,11 @@
             86,
             21,
             8
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -26,8 +30,7 @@
             21,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -43,11 +46,8 @@
          ]
       }
    ],
-   "chart" : {
-      "type" : "column"
-   },
    "subtitle" : {
-      "text" : "[Champions: 8] Last updated at 2024-04-10 11:27:52 GMT"
+      "text" : "[Champions: 8] Last updated at 2024-04-10 22:40:47 GMT"
    },
    "plotOptions" : {
       "column" : {
@@ -55,10 +55,14 @@
       }
    },
    "yAxis" : {
-      "min" : 0,
       "title" : {
          "text" : ""
-      }
+      },
+      "min" : 0
+   },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "xAxis" : {
       "categories" : [
@@ -71,9 +75,5 @@
          "Yozen Hernandez",
          "Yves Orton"
       ]
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    }
 }
