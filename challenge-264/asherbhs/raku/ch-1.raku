@@ -1,7 +1,10 @@
 sub greatest-english-letter(Str:D $str --> Str:D) {
 	max $str
 		.comb
-		.classify(* ∈ 'A' .. 'Z', as => *.uc)
+		.classify(
+			so * ~~ /<:Lu>/,
+			as => *.uc,
+		)
 		.values
 		.reduce(&[∩])
 		.keys
