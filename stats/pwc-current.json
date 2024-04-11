@@ -2,6 +2,20 @@
    "xAxis" : {
       "type" : "category"
    },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         }
+      }
+   },
    "drilldown" : {
       "series" : [
          {
@@ -19,14 +33,14 @@
             ]
          },
          {
+            "name" : "Bob Lied",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Bob Lied",
-            "name" : "Bob Lied"
+            "id" : "Bob Lied"
          },
          {
             "name" : "Dave Jacoby",
@@ -53,14 +67,14 @@
             "id" : "David Ferrone"
          },
          {
-            "name" : "E. Choroba",
-            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "E. Choroba",
+            "name" : "E. Choroba"
          },
          {
             "id" : "Feng Chang",
@@ -73,7 +87,6 @@
             "name" : "Feng Chang"
          },
          {
-            "name" : "Laurent Rosenfeld",
             "id" : "Laurent Rosenfeld",
             "data" : [
                [
@@ -88,19 +101,22 @@
                   "Blog",
                   2
                ]
-            ]
+            ],
+            "name" : "Laurent Rosenfeld"
          },
          {
-            "name" : "Lubos Kolouch",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "Lubos Kolouch"
+            "id" : "Lubos Kolouch",
+            "name" : "Lubos Kolouch"
          },
          {
+            "name" : "Luca Ferrari",
+            "id" : "Luca Ferrari",
             "data" : [
                [
                   "Raku",
@@ -110,9 +126,7 @@
                   "Blog",
                   9
                ]
-            ],
-            "id" : "Luca Ferrari",
-            "name" : "Luca Ferrari"
+            ]
          },
          {
             "name" : "Mark Anderson",
@@ -125,27 +139,44 @@
             "id" : "Mark Anderson"
          },
          {
-            "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke",
-            "data" : [
-               [
-                  "Perl",
-                  2
-               ]
-            ]
-         },
-         {
-            "id" : "Peter Meszaros",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
+            "id" : "Niels van Dijke",
+            "name" : "Niels van Dijke"
+         },
+         {
+            "id" : "Packy Anderson",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Raku",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "Packy Anderson"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Peter Meszaros",
             "name" : "Peter Meszaros"
          },
          {
-            "id" : "Reinier Maliepaard",
             "data" : [
                [
                   "Perl",
@@ -156,6 +187,7 @@
                   1
                ]
             ],
+            "id" : "Reinier Maliepaard",
             "name" : "Reinier Maliepaard"
          },
          {
@@ -173,7 +205,7 @@
             "name" : "Robbie Hatley"
          },
          {
-            "name" : "Roger Bell_West",
+            "id" : "Roger Bell_West",
             "data" : [
                [
                   "Perl",
@@ -184,7 +216,7 @@
                   2
                ]
             ],
-            "id" : "Roger Bell_West"
+            "name" : "Roger Bell_West"
          },
          {
             "data" : [
@@ -201,7 +233,7 @@
             "name" : "Thomas Kohler"
          },
          {
-            "name" : "Ulrich Rieke",
+            "id" : "Ulrich Rieke",
             "data" : [
                [
                   "Perl",
@@ -212,49 +244,34 @@
                   2
                ]
             ],
-            "id" : "Ulrich Rieke"
+            "name" : "Ulrich Rieke"
          }
       ]
    },
+   "title" : {
+      "text" : "The Weekly Challenge - 264"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
       "followPointer" : 1
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         },
-         "borderWidth" : 0
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "subtitle" : {
-      "text" : "[Champions: 17] Last updated at 2024-04-10 22:40:47 GMT"
    },
    "series" : [
       {
-         "colorByPoint" : 1,
          "name" : "The Weekly Challenge - 264",
          "data" : [
             {
-               "name" : "Ali Moradi",
                "y" : 3,
+               "name" : "Ali Moradi",
                "drilldown" : "Ali Moradi"
             },
             {
                "drilldown" : "Bob Lied",
-               "y" : 2,
-               "name" : "Bob Lied"
+               "name" : "Bob Lied",
+               "y" : 2
             },
             {
                "y" : 3,
@@ -262,13 +279,13 @@
                "drilldown" : "Dave Jacoby"
             },
             {
-               "name" : "David Ferrone",
                "y" : 2,
+               "name" : "David Ferrone",
                "drilldown" : "David Ferrone"
             },
             {
-               "name" : "E. Choroba",
                "y" : 2,
+               "name" : "E. Choroba",
                "drilldown" : "E. Choroba"
             },
             {
@@ -277,24 +294,24 @@
                "y" : 2
             },
             {
+               "drilldown" : "Laurent Rosenfeld",
                "name" : "Laurent Rosenfeld",
-               "y" : 6,
-               "drilldown" : "Laurent Rosenfeld"
+               "y" : 6
             },
             {
-               "name" : "Lubos Kolouch",
+               "drilldown" : "Lubos Kolouch",
                "y" : 2,
-               "drilldown" : "Lubos Kolouch"
+               "name" : "Lubos Kolouch"
             },
             {
-               "name" : "Luca Ferrari",
+               "drilldown" : "Luca Ferrari",
                "y" : 11,
-               "drilldown" : "Luca Ferrari"
+               "name" : "Luca Ferrari"
             },
             {
                "drilldown" : "Mark Anderson",
-               "y" : 2,
-               "name" : "Mark Anderson"
+               "name" : "Mark Anderson",
+               "y" : 2
             },
             {
                "drilldown" : "Niels van Dijke",
@@ -302,42 +319,48 @@
                "name" : "Niels van Dijke"
             },
             {
+               "y" : 5,
+               "name" : "Packy Anderson",
+               "drilldown" : "Packy Anderson"
+            },
+            {
                "drilldown" : "Peter Meszaros",
-               "name" : "Peter Meszaros",
-               "y" : 2
+               "y" : 2,
+               "name" : "Peter Meszaros"
             },
             {
-               "drilldown" : "Reinier Maliepaard",
+               "name" : "Reinier Maliepaard",
                "y" : 3,
-               "name" : "Reinier Maliepaard"
+               "drilldown" : "Reinier Maliepaard"
             },
             {
+               "y" : 3,
                "name" : "Robbie Hatley",
-               "y" : 3,
                "drilldown" : "Robbie Hatley"
             },
             {
                "drilldown" : "Roger Bell_West",
-               "name" : "Roger Bell_West",
-               "y" : 4
+               "y" : 4,
+               "name" : "Roger Bell_West"
             },
             {
-               "name" : "Thomas Kohler",
                "y" : 4,
+               "name" : "Thomas Kohler",
                "drilldown" : "Thomas Kohler"
             },
             {
+               "drilldown" : "Ulrich Rieke",
                "name" : "Ulrich Rieke",
-               "y" : 4,
-               "drilldown" : "Ulrich Rieke"
+               "y" : 4
             }
-         ]
+         ],
+         "colorByPoint" : 1
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "legend" : {
+      "enabled" : 0
    },
-   "title" : {
-      "text" : "The Weekly Challenge - 264"
+   "subtitle" : {
+      "text" : "[Champions: 18] Last updated at 2024-04-11 07:46:08 GMT"
    }
 }
