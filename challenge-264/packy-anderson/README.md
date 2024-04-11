@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Merge the Target Index Items](https://packy.dardan.com/b/KC)
+[I'm The Greatest Target!](https://packy.dardan.com/b/KL)
