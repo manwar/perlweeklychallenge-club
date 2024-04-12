@@ -1,12 +1,46 @@
 {
    "xAxis" : {
-      "type" : "category",
       "labels" : {
          "style" : {
             "fontFamily" : "Verdana, sans-serif",
             "fontSize" : "13px"
          }
+      },
+      "type" : "category"
+   },
+   "series" : [
+      {
+         "name" : "Contributions",
+         "data" : [
+            [
+               "Blog",
+               4736
+            ],
+            [
+               "Perl",
+               13676
+            ],
+            [
+               "Raku",
+               7933
+            ]
+         ],
+         "dataLabels" : {
+            "enabled" : "true",
+            "color" : "#FFFFFF",
+            "align" : "right",
+            "y" : 10,
+            "rotation" : -90,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}"
+         }
       }
+   ],
+   "subtitle" : {
+      "text" : "Last updated at 2024-04-12 23:44:57 GMT"
    },
    "yAxis" : {
       "title" : {
@@ -17,45 +51,11 @@
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
    },
-   "legend" : {
-      "enabled" : "false"
-   },
-   "series" : [
-      {
-         "data" : [
-            [
-               "Blog",
-               4734
-            ],
-            [
-               "Perl",
-               13672
-            ],
-            [
-               "Raku",
-               7929
-            ]
-         ],
-         "dataLabels" : {
-            "rotation" : -90,
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "align" : "right",
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "enabled" : "true"
-         },
-         "name" : "Contributions"
-      }
-   ],
-   "subtitle" : {
-      "text" : "Last updated at 2024-04-11 07:46:08 GMT"
-   },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2024]"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "chart" : {
       "type" : "column"
