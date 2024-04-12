@@ -39,7 +39,7 @@ Task 2: Target Array
 ### solution by pokgopun@gmail.com
 
 def gel(word: str):
-    word = word.upper() + chr(0)*2
+    word = "".join(set(word)).upper() + chr(0)*2
     c = max(e for e in set(word) if word.count(e) > 1)
     return "" if c==chr(0) else c
 
@@ -48,6 +48,7 @@ import unittest
 class TestGel(unittest.TestCase):
     def test(self):
         for inpt,otpt in {
+                'PeRLwEeKLy': "E",
                 'PeRlwEeKLy': "L",
                 'ChaLlenge': "L",
                 'The': ''

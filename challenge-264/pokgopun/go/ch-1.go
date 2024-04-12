@@ -43,14 +43,27 @@ package main
 import (
 	"io"
 	"os"
+	"slices"
 
 	"github.com/google/go-cmp/cmp"
 )
 
 func gel(s string) string {
+	bs := []byte(s)
+	slices.Sort(bs)
+	l := len(bs)
+	i := l - 1
+	for i > 0 {
+		if bs[i] == bs[i-1] {
+			copy(bs[i-1:], bs[i:])
+			l--
+		} else {
+			i--
+		}
+	}
 	seen := make(map[byte]bool)
 	var mx byte
-	for _, v := range []byte(s) {
+	for _, v := range bs[:l] {
 		if v > 96 {
 			v -= 32
 		}
@@ -71,6 +84,7 @@ func main() {
 	for _, data := range []struct {
 		input, output string
 	}{
+		{"PeRLwEeKLy", "E"},
 		{"PeRlwEeKLy", "L"},
 		{"ChaLlenge", "L"},
 		{"The", ""},
