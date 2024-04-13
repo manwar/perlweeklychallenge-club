@@ -49,7 +49,7 @@ plan @Test ÷ 3;
 
 sub inventory-merge( $a, $b) {
     my %p{Int};
-    for @$a.append( @$b) -> @e {  %p{ @e[0]} += @e[1]  }
+    for @$a.append( @$b) -> @e {  %p{ @e[0]} += @e[1]  } # writing over input here!!!
     return (%p<>:kv).rotor(2)».Array .sort ;
 }
 
