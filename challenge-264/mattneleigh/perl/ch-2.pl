@@ -8,7 +8,7 @@ use English;
 # Begin main execution
 ################################################################################
 
-my @things = (
+my @ordered_pair_sets = (
     [
         [ 0, 1, 2, 3, 4 ],
         [ 0, 1, 2, 2, 1 ]
@@ -24,16 +24,16 @@ my @things = (
 );
 
 print("\n");
-foreach my $thing (@things){
+foreach my $ordered_pair_set (@ordered_pair_sets){
     printf(
         "Input: \@source  = (%s)\n"
         .
         "       \@indices = (%s)\n"
         .
         "Output: (%s)\n\n",
-        join(", ", @{$thing->[0]}),
-        join(", ", @{$thing->[1]}),
-        join(", ", create_ordered_array($thing))
+        join(", ", @{$ordered_pair_set->[0]}),
+        join(", ", @{$ordered_pair_set->[1]}),
+        join(", ", create_ordered_array($ordered_pair_set))
     );
 }
 

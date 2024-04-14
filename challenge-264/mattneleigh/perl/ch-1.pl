@@ -8,18 +8,18 @@ use English;
 # Begin main execution
 ################################################################################
 
-my @things = (
+my @strings = (
     "PeRlwEeKLy",
     "ChaLlenge",
     "The"
 );
 
 print("\n");
-foreach my $thing (@things){
+foreach my $string (@strings){
     printf(
         "Input: \$str = '%s'\nOutput: %s\n\n",
-        $thing,
-        find_greatest_letter($thing)
+        $string,
+        find_greatest_letter($string)
     );
 }
 
