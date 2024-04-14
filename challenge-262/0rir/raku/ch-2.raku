@@ -37,7 +37,7 @@ my @Test =
 ;
 plan @Test ÷ 3;
 
-multi func( Int $k, @in where *.end == -1 ) { 0 }
+multi func( Int $k, [] ) { 0 }
 multi func( Int:D $k, @in) {
     # a) 0 <= i < j < size of @ints
     #b) ints[i] == ints[j]
