@@ -8,8 +8,5 @@ is completing-word("JB 007",  <jj bb bjb>),         "bjb";
 sub completing-word($str, @arr)
 {
     my $bag = $str.lc.comb(/<lower>/).Bag;
-
-    @arr.grep($bag (<=) *.comb.Bag)
-        .sort(*.chars)
-        .head
+    @arr.sort(*.chars).first($bag (<=) *.comb.Bag)
 }
