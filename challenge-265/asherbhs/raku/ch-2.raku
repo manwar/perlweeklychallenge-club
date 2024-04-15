@@ -2,7 +2,7 @@ sub completing-word(Str:D $str, Str:D @str --> Str:D) {
 	my $str-bag = $str.lc.comb.grep(/<[a..z]>/).Bag;
 	my @completing = @str.grep({
 		my $other-bag = .lc.comb.Bag;
-		$str-bag.Set eqv $other-bag.Set and not $str-bag «>» $other-bag
+		$str-bag.Set ⊆ $other-bag.Set and not $str-bag «>» $other-bag
 	});
 	@completing ?? @completing.min(*.chars) !! ''
 }
