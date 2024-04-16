@@ -57,9 +57,8 @@ func gel(s string) string {
 		if bs[i] == bs[i-1] {
 			copy(bs[i-1:], bs[i:])
 			l--
-		} else {
-			i--
 		}
+		i--
 	}
 	seen := make(map[byte]bool)
 	var mx byte
