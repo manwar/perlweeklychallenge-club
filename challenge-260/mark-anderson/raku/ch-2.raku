@@ -10,7 +10,7 @@ is rank('cat'),                                                                 
 is rank('secret'),                                                               255, 'secret';
 is rank('google'),                                                                88, 'google';
 is rank('mississippi'),                                                        13737, 'mississippi';
-is rank('1100010001100001111100000010101010001101111111111100101'), 2640733527075696, '55 bits';
+is rank('1100010001100001111100000010101010001101111111111100101011100001'), 1340132963011393299, '64 bits';
 
 sub postfix:<!>($n) is cached { [*] 1..$n }
 
@@ -23,7 +23,7 @@ sub rank($word)
     my @n = gather for @ranks -> $r
     {
         my @less-than = $bag.keys.grep(* < $r);
-        take ([+] $bag{@less-than}) / ([*] $bag.values>>!);
+        take ([+] $bag{@less-than}) / ([*] $bag.values>>!).FatRat;
         $bag{$r}--
     }
         

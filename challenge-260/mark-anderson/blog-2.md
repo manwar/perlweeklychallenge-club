@@ -117,7 +117,7 @@ sub rank($word)
     my @n = gather for @ranks -> $r
     {
         my @less-than = $bag.keys.grep(* < $r);
-        take ([+] $bag{@less-than}) / ([*] $bag.values>>!);
+        take ([+] $bag{@less-than}) / ([*] $bag.values>>!).FatRat;
         $bag{$r}--
     }
         
