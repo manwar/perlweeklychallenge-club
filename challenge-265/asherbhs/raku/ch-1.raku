@@ -1,5 +1,6 @@
 sub appearance(Int:D @ints --> Int) {
-	my @keys = @ints.Bag.grep(*.value ≥ 0.33 × @ints)».key;
+	my $len = 0.33 × @ints;
+	my @keys = @ints.Bag.grep(*.value ≥ $len)».key;
 	@keys ?? min @keys !! Int
 }
 
