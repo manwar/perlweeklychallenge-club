@@ -24,4 +24,4 @@ pwc-test './ch-2.raku', 'aBc 11c', <accbbb abc abbc>, 'accbbb',
 pwc-test './ch-2.raku', 'Da2 abc', <abcm baacd abaadc>, 'baacd',
     "Completing Word: \$str = 'Da2 abc', \@str = ('abcm', 'baacd', 'abaadc') => baacd";
 pwc-test './ch-2.raku', 'JB 007', <jj bb bjb>, 'bjb',
-    "Completing Word: \$str = 'JB 007',  \@str = ('jj', 'bb', 'bj')          => bjb";
+    "Completing Word: \$str = 'JB 007',  \@str = ('jj', 'bb', 'bjb')         => bjb";
