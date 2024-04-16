@@ -22,6 +22,10 @@ pwc-test './ch-1a.raku', <-- -3 1 2 -1 3 -2 4>, 4, 'Max Positive Negative: (-3,1
 pwc-test './ch-1a.raku', <-- -1 -2 -3 1>,       3, 'Max Positive Negative: (-1,-2,-3,1)       => 3';
 pwc-test './ch-1a.raku', <-- 1 2>,              2, 'Max Positive Negative: (1,2)              => 2';
 
+pwc-test './ch-1b.raku', <-- -3 1 2 -1 3 -2 4>, 4, 'Max Positive Negative: (-3,1,2,-1,3,-2,4) => 4';
+pwc-test './ch-1b.raku', <-- -1 -2 -3 1>,       3, 'Max Positive Negative: (-1,-2,-3,1)       => 3';
+pwc-test './ch-1b.raku', <-- 1 2>,              2, 'Max Positive Negative: (1,2)              => 2';
+
 # Task 2, Count Equal Divisible
 pwc-test './ch-2.raku', <3 1 2 2 2 1 3>, 2, 4, 'Count Equal Divisible: @ints=(3,1,2,2,2,1,3), $k=2 => 4';
 pwc-test './ch-2.raku', <1 2 3>,         1, 0, 'Count Equal Divisible: @ints=(1,2,3), $k=1         => 0';
