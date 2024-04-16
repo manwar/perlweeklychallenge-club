@@ -1,0 +1,29 @@
+--
+-- Perl Weekly Challenge 265
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-265>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc265;
+
+CREATE OR REPLACE FUNCTION
+pwc265.task1_plperl( int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $nums ) = @_;
+
+   my $pct = {};
+   $pct->{ $_ } += 1 / scalar( $nums->@* ) for ( $nums->@* );
+   my @good_ones;
+
+   for ( keys $pct->%* ) {
+       next if $pct->{ $_ } < 33 / 100;
+       push @good_ones, $_;
+   }
+
+   return undef if ( ! @good_ones );
+   return ( sort @good_ones )[ -1 ];
+   
+$CODE$
+LANGUAGE plperl;
