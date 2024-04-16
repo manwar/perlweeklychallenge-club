@@ -1,0 +1,230 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/quicksort.with_comparator { % [ a c b ] { comparator } -> [ a b c ]
+    2 dict begin
+    /cmp exch def
+    /arr exch def
+    arr length 0 gt {
+        0 arr length 1 sub quicksort.main
+    } if
+    arr
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/quicksort.swap {
+    2 dict begin
+    /bi exch def
+    /ai exch def
+    arr ai get
+    arr bi get
+    arr exch ai exch put
+    arr exch bi exch put
+    end
+} bind def
+
+/tolower {
+    s2a
+    [ exch
+      {
+          dup dup 65 ge exch 90 le and {
+              32 add
+          } if
+      } forall
+    ] a2s
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/quicksort.partition {
+    3 dict begin
+    /pivot arr hi lo add 2 idiv get def
+    /i lo 1 sub def
+    /j hi 1 add def
+    {
+        {
+            /i i 1 add def
+            arr i get pivot cmp 0 ge {
+                exit
+            } if
+        } loop
+        {
+            /j j 1 sub def
+            arr j get pivot cmp 0 le {
+                exit
+            } if
+        } loop
+        i j ge {
+            j
+            exit
+        } if
+        i j quicksort.swap
+    } loop
+    end
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/quicksort.with_keygen { % [ a c b ] { keygen } -> [ a b c ]
+    3 dict begin
+    /kg exch def
+    /arr exch def
+    /kl << arr {
+                dup kg
+            } forall >> def
+    arr {
+        exch kl exch get exch kl exch get quicksort.cmp
+    } quicksort.with_comparator
+} bind def
+
+/quicksort.cmp {
+    2 copy
+    lt {
+        pop pop -1
+    } {
+        gt {
+            1
+        } {
+            0
+        } ifelse
+    } ifelse
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+/quicksort.main { % lo hi -> (null)
+    3 dict begin
+    /hi exch def
+    /lo exch def
+    /xit false def
+    lo 0 lt {
+        /xit true def
+    } if
+    hi 0 lt {
+        /xit true def
+    } if
+    lo hi ge {
+        /xit true def
+    } if
+    xit not {
+        /p quicksort.partition def
+        lo p quicksort.main
+        p 1 add hi quicksort.main
+    } if
+    end
+} bind def
+
+
+% end included library code
+
+/str2hash {
+    0 dict begin
+    /m 0 dict def
+    tolower s2a
+    {
+        /c exch def
+        c 97 ge c 122 le and {
+            m c 0 dget 1 add m exch c exch put
+        } if
+    } forall
+    m
+    end
+} bind def
+
+/completingword {
+    0 dict begin
+    /cw exch def
+    str2hash /ah exch def
+    /out [
+        cw {
+            /t exch def
+            /valid true def
+            /th t str2hash def
+            ah keys {
+                /k exch def
+                th k known not {
+                    /valid false def
+                    exit
+                } if
+                th k get ah k get lt {
+                    /valid false def
+                    exit
+                } if
+            } forall
+            valid {
+                t
+            } if
+        } forall
+    ] def
+    out length 0 eq {
+        ()
+    } {
+        out { length } quicksort.with_keygen 0 get
+    } ifelse
+    end
+} bind def
+
+(completingword) test.start
+(aBc 11c) [(accbbb) (abc) (abbc)] completingword (accbbb) eq test
+(La1 abc) [(abcl) (baacl) (abaalc)] completingword (baacl) eq test
+(JB 007) [(jj) (bb) (bjb)] completingword (bjb) eq test
+test.end

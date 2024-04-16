@@ -1,0 +1,107 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/listmin {
+    { min } reduce
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/thirtythreepercentappearance {
+    0 dict begin
+    /a exch def
+    /c 0 dict def
+    a {
+        /n exch def
+        c n 0 dget 1 add c exch n exch put
+    } forall
+    /threshold a length 33 mul 100 idiv def
+    threshold 100 mul 33 idiv a length ne {
+        /threshold threshold 1 add def
+    } if
+    c keys { c exch get threshold ge } filter listmin
+    end
+} bind def
+
+(thirtythreepercentappearance) test.start
+[1 2 3 3 3 4 2] thirtythreepercentappearance 3 eq test
+[1 1] thirtythreepercentappearance 1 eq test
+[1 2 3] thirtythreepercentappearance 1 eq test
+test.end
