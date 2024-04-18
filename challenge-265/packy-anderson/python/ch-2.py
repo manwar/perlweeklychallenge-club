@@ -24,7 +24,7 @@ def completingWord(targetStr, candidateStrs):
     if (isCandidate and 
         (shortest is None or len(s) < len(shortest))):
       shortest = s
-  return shortest
+  return shortest if shortest is not None else ''
 
 def comma_join(arr):
     return '\', \''.join(arr)
