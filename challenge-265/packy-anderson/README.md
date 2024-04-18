@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[I'm The Greatest Target!](https://packy.dardan.com/b/KL)
+[Completing a Third of an Appearance](https://packy.dardan.com/b/KV)
