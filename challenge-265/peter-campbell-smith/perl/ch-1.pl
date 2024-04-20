@@ -33,7 +33,7 @@ sub over_33perct_appearance {
 	$times[$_] ++ for @ints;
 	
 	# find smallest with >33%
-	for ($i = 0; $i < @ints; $i ++) {
+	for ($i = 0; $i < @times; $i ++) {
 		next unless defined $times[$i];
 		if ($times[$i] > $one_third) {
 			say qq[Output: $i (] . int($times[$i] / @ints * 100) . '%)';
