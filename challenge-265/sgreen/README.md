@@ -1,3 +1,3 @@
-# The Weekly Challenge 264
+# The Weekly Challenge 265
 
-Blog: [The greatest array](https://dev.to/simongreennet/the-greatest-array-1c4e)
+Blog: [Completing Appearance](https://dev.to/simongreennet/completing-appearance-51p0)
