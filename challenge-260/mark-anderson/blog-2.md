@@ -62,8 +62,8 @@ Here's the gist of the algorithm:
 
 3. For each letter, take the number of repeating letters from that letter to the end of the string.
    Take the factorial of each result and multiply them together.
-   
-   ```  
+
+   ```
      G    O   O  G  L  E
    2!*2!  2!  1! 1! 1! 1!
    ```
@@ -71,9 +71,9 @@ Here's the gist of the algorithm:
    Starting with the first letter, there are 2 Gs and 2 Os so we end up with 2!*2!.
    The next letter is O. From that letter to the end of the string there is just the repeating O so we end up with 2!
    and so on.
-   
+
 4. Take the terms from step 2 and divide them by the terms from step 3.
- 
+
    ```
     G    O    O   G   L    E
    1/4  3/2  3/1 1/1 1/1  0/1
@@ -85,14 +85,14 @@ Here's the gist of the algorithm:
    G  O  O  G  L  E
    5! 4! 3! 2! 1! 0!
    ```
-   
+
 6. Multipy the terms from step 4 with the terms from step 5.
 
    ```
      G       O       O     G    L    E
    120/4  (3*24)/2  3*6   1*2  1*1  0*1
    ```
-   
+
 7. Sum the terms from step 6 and add 1 for a result of 88.
    ```
    G    O    O    G   L   E
@@ -111,16 +111,16 @@ sub postfix:<!>($n) is cached { [*] 1..$n }
 sub rank($word)
 {
     my @w = $word.comb;
-    my @ranks = @w.sort.squish.antipairs.Map{@w}; 
+    my @ranks = @w.sort.squish.antipairs.Map{@w};
     my $bag = @ranks.BagHash;
 
     my @n = gather for @ranks -> $r
     {
         my @less-than = $bag.keys.grep(* < $r);
-        take ([+] $bag{@less-than}) / ([*] $bag.values>>!);
+        take ([+] $bag{@less-than}) / ([*] $bag.values>>!).FatRat;
         $bag{$r}--
     }
-        
+
     1 + [+] @n Z* (@ranks.end...0)>>!
 }
 ```
