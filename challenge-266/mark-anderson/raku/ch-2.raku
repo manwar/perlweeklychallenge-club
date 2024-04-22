@@ -177,16 +177,16 @@ sub X-matrix(+@m)
     # handle the center diagonal and middle row
     if @diags.end %% 2
     {
-        return False unless all so      @m[.[0]].splice(.[1],1,0).head, 
-                                so none @m[.[0]] 
+        return False unless all      @m[.[0]].splice(.[1],1,0).head, 
+                                none @m[.[0]] 
         given @diags.splice(@m.elems div 2,1).head 
     }
 
     for @diags 
     {
-        return False unless all so      @m[.[0]].splice(.[0],1,0).head,
-                                so      @m[.[0]].splice(.[1],1,0).head, 
-                                so none @m[.[0]]
+        return False unless all      @m[.[0]].splice(.[0],1,0).head,
+                                     @m[.[0]].splice(.[1],1,0).head, 
+                                none @m[.[0]]
     }
 
     True
