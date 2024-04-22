@@ -180,9 +180,8 @@ sub X-matrix(+@m)
 
     @replace[@replace.elems div 4] = 1 if @m.end %% 2;
 
-    my @diags = ($diags Z @replace).map(-> ($d, $r)
+    my @diags = ($diags Z @replace).map(-> (($row, $col), $replace)
     {
-        my ($row, $col, $replace) = |$d, $r;
         @m[$row].splice($col,1,$replace).head
     });
 
