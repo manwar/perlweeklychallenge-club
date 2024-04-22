@@ -1,5 +1,4 @@
 #!/usr/bin/env raku
-use JSON::Fast;
 use Test;
 
 ok  X-matrix([ 

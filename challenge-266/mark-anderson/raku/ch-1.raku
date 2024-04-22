@@ -1,9 +1,9 @@
 #!/usr/bin/env raku
 use Test;
 
-is-deeply uncommon-words('Mango is sweet', 'Mango is sour'),       ('sweet', 'sour'), 'example 1';
-is-deeply uncommon-words('Mango Mango',    'Orange'),              ('Orange',),       'example 2';
-is-deeply uncommon-words('Mango is Mango', 'Orange is Orange'),    (),                'example 3';
+is-deeply uncommon-words('Mango is sweet', 'Mango is sour'),    ('sweet', 'sour'), 'example 1';
+is-deeply uncommon-words('Mango Mango',    'Orange'),           ('Orange',),       'example 2';
+is-deeply uncommon-words('Mango is Mango', 'Orange is Orange'), (),                'example 3';
 
 sub uncommon-words($s1, $s2)
 {
