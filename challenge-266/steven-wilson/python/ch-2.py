@@ -14,8 +14,7 @@ def is_x_matrix(matrix):
     True
     '''
     matrix_size = len(matrix)
-    diagonal_position = 0
-    for row in matrix:
+    for diagonal_position, row in enumerate(matrix):
         antidiagonal_position = matrix_size - diagonal_position - 1
         x = []
         if diagonal_position < antidiagonal_position:
@@ -28,7 +27,6 @@ def is_x_matrix(matrix):
             x.append(row.pop(antidiagonal_position))
         if not all(elem != 0 for elem in x) or not all(elem == 0 for elem in row):
             return False
-        diagonal_position += 1
 
     return True
 
