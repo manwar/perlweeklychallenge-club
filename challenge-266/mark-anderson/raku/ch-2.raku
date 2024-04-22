@@ -180,11 +180,11 @@ sub X-matrix(+@m)
 
     @replace[@replace.elems div 4] = 1 if @m.end %% 2;
 
-    my @diags = gather for $diags Z @replace -> ($d, $r)
+    my @diags = ($diags Z @replace).map(-> ($d, $r)
     {
         my ($row, $col, $replace) = |$d, $r;
-        take @m[$row].splice($col,1,$replace).head
-    }
+        @m[$row].splice($col,1,$replace).head
+    });
 
     all(all |@diags, none @m[*;*])
 } 
