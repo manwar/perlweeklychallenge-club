@@ -170,24 +170,22 @@ nok X-matrix([
              ]),
     '21 X 21 non-diagonal non-zero';
 
+# This doesn't short circuit but I think I like it 
+# better than my previous solution anyway.
 sub X-matrix(+@m)
 {
-    my @diags = (0...@m.end) Z (@m.end...0);
+    my $diags := |((^@m) Z (^@m)), |((0...@m.end) Z (@m.end...0));
 
-    # handle the center diagonal and middle row
-    if @diags.end %% 2
+    my @replace = 0 xx $diags;
+
+    @replace[@replace.elems div 4] = 1 if @m.end %% 2;
+
+    my @diags = gather for $diags Z @replace -> ($d, $r)
     {
-        return False unless all      @m[.[0]].splice(.[1],1,0).head, 
-                                none @m[.[0]] 
-        given @diags.splice(@m.elems div 2,1).head 
+        my ($row, $col, $replace) = |$d, $r;
+        take @m[$row;$col];
+        @m[$row;$col] = $replace
     }
 
-    for @diags 
-    {
-        return False unless all      @m[.[0]].splice(.[0],1,0).head,
-                                     @m[.[0]].splice(.[1],1,0).head, 
-                                none @m[.[0]]
-    }
-
-    True
+    all(all |@diags, none @m[*;*])
 } 
