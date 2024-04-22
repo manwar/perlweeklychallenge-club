@@ -183,8 +183,7 @@ sub X-matrix(+@m)
     my @diags = gather for $diags Z @replace -> ($d, $r)
     {
         my ($row, $col, $replace) = |$d, $r;
-        take @m[$row;$col];
-        @m[$row;$col] = $replace
+        take @m[$row].splice($col,1,$replace).head
     }
 
     all(all |@diags, none @m[*;*])
