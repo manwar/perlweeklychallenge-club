@@ -170,8 +170,6 @@ nok X-matrix([
              ]),
     '21 X 21 non-diagonal non-zero';
 
-# This doesn't short circuit but I think I like it 
-# better than my previous solution anyway.
 sub X-matrix(+@m)
 {
     my $diags := |((^@m) Z (^@m)), |((0...@m.end) Z (@m.end...0));
@@ -185,5 +183,5 @@ sub X-matrix(+@m)
         @m[$row].splice($col,1,$replace).head
     });
 
-    all(all |@diags, none @m[*;*])
+    so all(all |@diags, none @m[*;*])
 } 
