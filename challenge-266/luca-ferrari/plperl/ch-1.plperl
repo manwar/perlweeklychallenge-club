@@ -1,0 +1,39 @@
+--
+-- Perl Weekly Challenge 266
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-266>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc266;
+
+CREATE OR REPLACE FUNCTION
+pwc266.task1_plperl( text, text )
+RETURNS SETOF text
+AS $CODE$
+
+   my ( $left, $right ) = @_;
+
+   my $bag_left = {};
+   my $bag_right = {};
+
+   $bag_left->{ lc $_ }++ for ( split( /\W+/, $left ) );
+   $bag_right->{ lc $_ }++ for ( split( /\W+/, $right ) );
+
+   for my $word ( keys $bag_left->%* ) {
+       next if $bag_left->{ $word } != 1;
+       next if $right =~ /$word/i;
+
+       return_next( $word );
+   }
+
+   for my $word ( keys $bag_right->%* ) {
+       next if $bag_right->{ $word } != 1;
+       next if $left =~ /$word/i;
+
+       return_next( $word );
+   }
+
+return undef;
+
+$CODE$
+LANGUAGE plperl;
