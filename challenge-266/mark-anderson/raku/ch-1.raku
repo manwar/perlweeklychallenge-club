@@ -7,7 +7,7 @@ is-deeply uncommon-words('Mango is Mango', 'Orange is Orange'), (),             
 
 sub uncommon-words($s1, $s2)
 {
-    # A literal solution using the one and none junctions
+    # A literal translation using the one and none junctions
     sub uw($s1, $s2)
     {
         my @s1 = $s1.words;
