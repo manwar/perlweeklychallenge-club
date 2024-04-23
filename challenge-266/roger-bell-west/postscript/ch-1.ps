@@ -1,0 +1,187 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/deepeq {
+    2 dict begin
+    /a exch def
+    /b exch def
+    a type b type eq {
+        a type /dicttype eq {
+            a length b length eq {
+                <<
+                    a {
+                        pop
+                        true
+                    } forall
+                    b {
+                        pop
+                        true
+                    } forall
+                >>
+                true exch
+                {
+                    pop
+                    dup a exch known {
+                        dup b exch known {
+                            dup a exch get exch b exch get deepeq not {
+                                pop false
+                            } if
+                        } {
+                            false
+                        } ifelse
+                    } {
+                        false
+                    } ifelse
+                } forall
+            } {
+                false
+            } ifelse
+        } {
+            a type dup /arraytype eq exch /stringtype eq or {
+                a length b length eq {
+                    true
+                    0 1 a length 1 sub {
+                        dup a exch get exch b exch get deepeq not {
+                            pop false
+                            exit
+                        } if
+                    } for
+                } {
+                    false
+                } ifelse
+            } {
+                a b eq
+            } ifelse
+        } ifelse
+    } {
+        false
+    } ifelse
+    end
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/filter { % array proc(bool) -> array
+    1 dict begin
+    /p exch def
+    [ exch
+      {
+          dup p not
+          {
+              pop
+          } if
+      } forall
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/getlistset {
+    0 dict begin
+    ( ) strsplit /la exch def
+    /ca 0 dict def
+    la {
+        /k exch def
+        ca k 2 copy 0 dget 1 add put
+    } forall
+    /la la { ca exch get 1 eq } filter def
+    la ca
+    end
+} bind def
+
+/uncommonwords {
+    0 dict begin
+    getlistset
+    /sb exch def
+    /lb exch def
+    getlistset
+    /sa exch def
+    /la exch def
+    [
+        [ [ la sb ] [ lb sa ] ] {
+            aload pop
+            /t exch def
+            {
+                /w exch def
+                t w known not {
+                    w
+                } if
+            } forall
+        } forall
+    ]
+    end
+} bind def
+
+(uncommonwords) test.start
+(Mango is sweet) (Mango is sour) uncommonwords [(sweet) (sour)] deepeq test
+(Mango Mango) (Orange) uncommonwords [(Orange)] deepeq test
+(Mango is Mango) (Orange is Orange) uncommonwords [] deepeq test
+test.end
