@@ -3,23 +3,25 @@
 #include <ctype.h>
 #include <string.h>
 #include <stdbool.h>
+#define SETSIZE 100
+#define WORDSIZE 30
 
 typedef struct {
-  char* key;
+  char key;
   int value;
 } item;
 
-item* val(item* items, size_t size, char* key) {
+item* get(item* items, int size, char key) {
   for (size_t i = 0; i < size; i++)
-    if (strcmp(items[i].key, key) == 0)
+    if (items[i].key == key)
       return &items[i];
   return NULL;
 }
 
-void insert(item* items, size_t size, char* key, int val) {
+void insert(item* items, size_t size, char key, int val) {
   int cnt = 0;
-  for (size_t i = 0; i < size; i++) {
-    if (strcmp(items[i].key, key) == 0) {
+  for (int i = 0; i < size; i++) {
+    if (items[i].key == key) {
       items[i].value = val;
       break;
     }
@@ -32,18 +34,18 @@ void insert(item* items, size_t size, char* key, int val) {
 }
 
 item* freq(char* stringy, int *size) {
-  item* f = malloc(100 * sizeof(item));
-  size_t f_size = 0;
+  item* f = malloc(SETSIZE * sizeof(item));
+  int f_size = 0;
   for (int i = 0; i < strlen(stringy); i++) {
     char letter = stringy[i];
     if (isalpha(letter)) {
       char let = tolower(letter);
-      item* cell = val(f, f_size, &let);
+      item* cell = get(f, f_size, let);
       if (!cell) {
-	insert(f, f_size, &let, 1);
+	insert(f, f_size, let, 1);
 	f_size++;
       } else {
-	insert(f, f_size, &let, cell->value + 1);
+	insert(f, f_size, let, cell->value + 1);
       }
     }
   }
@@ -55,16 +57,20 @@ item* freq(char* stringy, int *size) {
 bool hash_contains(item* g, item* f, int g_size, int f_size) {
   int cnt = 0;
   for (int i = 0; i < f_size; i++) {
-    char* key = f[i].key;
-    item* gcell = val(g, g_size, key);
+    char key = f[i].key;
+    item* gcell = get(g, g_size, key);
     if (!gcell) {
+      free(f);
+      free(g);
       return false;
     } else {
-      item* fcell = val(f, f_size, key);
+      item* fcell = get(f, f_size, key);
       if (fcell->value <= gcell->value)
 	cnt++;
     }
   }
+  free(f);
+  free(g);
   return (cnt == f_size);
 }
 
@@ -77,7 +83,7 @@ void proc(char* stringy, char* strlist[], int slen) {
     int f_size = 0;
     int g_size = 0;
     if (hash_contains(freq(strlist[i], &g_size), freq(stringy, &f_size), g_size, f_size)) {
-      ans[len] = malloc(30 * sizeof(char));
+      ans[len] = malloc(WORDSIZE * sizeof(char));
       strcpy(ans[len], strlist[i]);
       len++;
     }
@@ -85,7 +91,8 @@ void proc(char* stringy, char* strlist[], int slen) {
   }
   printf("\n");
   int min = strlen(ans[0]);
-  char* answer = malloc(sizeof(char) * 30);
+  char* answer = malloc(sizeof(char) * WORDSIZE);
+  strcpy(answer, ans[0]);
   for (int i = 0; i < len; i++) {
     if (strlen(ans[i]) < min) {
       min = strlen(ans[i]);
