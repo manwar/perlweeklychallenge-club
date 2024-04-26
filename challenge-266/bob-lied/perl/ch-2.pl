@@ -110,5 +110,56 @@ use builtin qw/true false/; no warnings "experimental::builtin";
     $matrix = [ [0] ];
     is(xmatrix($matrix), false, "1x1 false");
 
+    $matrix = [ [1, 0, 0, 2],
+                [0, 3, 4, 0],
+                [0, 5, 6, 0],
+                [7, 0, 0, 8], ];
+    is(xmatrix($matrix), true, "4x4 true");
+
+    $matrix->[0][1] = 9;
+    is(xmatrix($matrix), false, "4x4 q1 false");
+
+    $matrix->[0][1] = 0;
+    $matrix->[1][3] = 9;
+    is(xmatrix($matrix), false, "4x4 q2 false");
+
+    $matrix->[1][3] = 0;
+    $matrix->[0][2] = 9;
+    is(xmatrix($matrix), false, "4x4 q3 false");
+
+    $matrix->[0][2] = 0;
+    $matrix->[2][3] = 9;
+    is(xmatrix($matrix), false, "4x4 q4 false");
+
+    $matrix = [ [1, 0, 0, 0, 2],
+                [0, 3, 0, 4, 0],
+                [0, 0, 5, 0, 0],
+                [0, 6, 0, 7, 0],
+                [8, 0, 0, 0, 9], ];
+    is(xmatrix($matrix), true, "5x5 true");
+
+    $matrix->[0][1] = 9;
+    is(xmatrix($matrix), false, "5x5 q1 false");
+
+    $matrix->[0][1] = 0;
+    $matrix->[1][4] = 9;
+    is(xmatrix($matrix), false, "5x5 q2 false");
+
+    $matrix->[1][4] = 0;
+    $matrix->[3][0] = 9;
+    is(xmatrix($matrix), false, "5x5 q3 false");
+
+    $matrix->[3][0] = 0;
+    $matrix->[4][1] = 9;
+    is(xmatrix($matrix), false, "5x5 q4 false");
+
+    $matrix->[4][1] = 0;
+    $matrix->[1][2] = 9;
+    is(xmatrix($matrix), false, "5x5 vertical false");
+
+    $matrix->[1][2] = 0;
+    $matrix->[2][1] = 9;
+    is(xmatrix($matrix), false, "5x5 horizontal false");
+
     done_testing;
 }
