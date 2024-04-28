@@ -11,10 +11,11 @@
 use v5.36;
 
 sub uncommon_words( $line1, $line2 ) {
+    my @all_words = "$line1 $line2" =~ /(\w+)/g;
     my %word_counts;
     ++$word_counts{$_}
-	for "$line1 $line2" =~ /(\w+)/ig;
-    my @results = grep $word_counts{$_} == 1, "$line1 $line2" =~ /(\w+)/ig;
+	for @all_words;
+    my @results = grep $word_counts{$_} == 1, @all_words;
     return @results ? @results : "";
 }
 
