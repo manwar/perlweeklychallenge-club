@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[Completing a Third of an Appearance](https://packy.dardan.com/b/KV)
+[A Matrix of Uncommon X Words](https://packy.dardan.com/b/KX)
