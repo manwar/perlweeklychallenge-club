@@ -34,7 +34,9 @@ use Getopt::Long;
 my $Verbose = 0;
 my $DoTest  = 0;
 
-use constant MAXLINE => 100;
+use constant { MAXLINE => 100,
+               ORD_A   =>  ord('a')
+           };
 
 GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 exit(!runTest()) if $DoTest;
@@ -55,7 +57,7 @@ sub lineCount($str, @widths)
     my $width = 0;
 
     # Work with character widths, actual characters don't matter
-    my @cw = map { $widths[ ord($_) - ord("a") ] } split(//, $str);
+    my @cw = map { $widths[ ord($_) - ORD_A ] } split(//, $str);
     while ( defined(my $w = shift @cw) )
     {
         if ( $width + $w <= MAXLINE )
