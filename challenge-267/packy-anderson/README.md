@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[A Matrix of Uncommon X Words](https://packy.dardan.com/b/KX)
+[It’s the Product Line Sign that Counts](https://packy.dardan.com/b/Ko)
