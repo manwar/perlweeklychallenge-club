@@ -17,7 +17,7 @@ sub productSign(@ints) {
 }
 
 sub solution(@ints) {
-  say 'Input: @arr = (' ~ @ints.join(', ') ~ ')';
+  say 'Input: @ints = (' ~ @ints.join(', ') ~ ')';
   my ($sign, $explain) = productSign(@ints);
   say "Output: $sign\n$explain";
 }
