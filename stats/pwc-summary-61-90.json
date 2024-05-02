@@ -1,10 +1,6 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             0,
             45,
@@ -36,7 +32,8 @@
             3,
             0,
             4
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -74,7 +71,6 @@
          ]
       },
       {
-         "name" : "Blog",
          "data" : [
             1,
             2,
@@ -106,15 +102,33 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-05-02 16:45:16 GMT"
+      "text" : "[Champions: 30] Last updated at 2024-05-02 17:07:21 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "xAxis" : {
       "categories" : [
@@ -149,19 +163,5 @@
          "Garrett Goebel",
          "Giuseppe Di Terlizzi"
       ]
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
    }
 }
