@@ -1,0 +1,38 @@
+--
+-- Perl Weekly Challenge 267
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-267>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc267;
+
+CREATE OR REPLACE FUNCTION
+pwc267.task2_plperl( text, int[] )
+RETURNS table( line int, width int )
+AS $CODE$
+
+   my ( $string, $widths ) = @_;
+
+   die if ( $widths->@* != 26 );
+
+   my $pixels = {};
+   my $index = 0;
+   $pixels->{ $_ } = $widths->@[ $index++ ] for ( 'a' .. 'z' );
+
+   my $sum = 0;
+   my $lines = 1;
+   
+   for my $letter ( split //, $string ) {
+       if ( $sum + $pixels->{ $letter } > 100 ) {
+       	  $sum = 0;
+	  $lines++;
+       }
+
+       $sum += $pixels->{ $letter };
+   }
+
+   return_next( { line => $lines, width => $sum } );
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;
