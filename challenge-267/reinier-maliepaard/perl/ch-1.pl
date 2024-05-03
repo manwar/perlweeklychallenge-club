@@ -3,14 +3,14 @@ use strict;
 use warnings;
 #-------------------------------------------
 sub product_sign {
-
+	
     foreach (@_) {
 
-        return 0 if grep(($_ == 0), @_);
-        return -1 if ( (my $n = grep {$_ < 0} @_) % 2 != 0);
+        return 0 if ( grep {$_ == 0} @_ );
+        return -1 if ( (my $n = grep {$_ < 0} @_) % 2 != 0 );
 
-    }
-    return 1;
+    }	
+    return 1;    
 }
 
 # TESTS
