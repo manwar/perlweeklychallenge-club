@@ -1,0 +1,25 @@
+MODULE Ch1 EXPORTS Main;
+
+IMPORT SIO,IntSorting;
+
+VAR
+  A1:ARRAY[0..2] OF INTEGER := ARRAY OF INTEGER{3,7,5};
+  A2:ARRAY[0..2] OF INTEGER := ARRAY OF INTEGER{9,5,7};
+  A3:ARRAY[0..2] OF INTEGER := ARRAY OF INTEGER{1,2,1};
+  A4:ARRAY[0..2] OF INTEGER := ARRAY OF INTEGER{5,4,4};
+  A5:ARRAY[0..0] OF INTEGER := ARRAY OF INTEGER{2};
+  A6:ARRAY[0..0] OF INTEGER := ARRAY OF INTEGER{5};
+  
+PROCEDURE MagicNumber(VAR A,B:ARRAY OF INTEGER):INTEGER =
+  BEGIN
+    IntSorting.QuickSort(A,FIRST(A),LAST(A));
+    IntSorting.QuickSort(B,FIRST(B),LAST(B));
+    RETURN ABS(A[0] - B[0])
+  END MagicNumber;
+  
+BEGIN
+  SIO.PutInt(MagicNumber(A1,A2)); SIO.Nl();
+  SIO.PutInt(MagicNumber(A3,A4)); SIO.Nl();
+  SIO.PutInt(MagicNumber(A5,A6)); SIO.Nl()
+END Ch1.
+
