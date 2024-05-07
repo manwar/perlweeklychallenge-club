@@ -1,9 +1,9 @@
 import groovy.json.JsonSlurper
 
-final REPLACEMENTS = ['(': '[', ')': ']']
+final REPLACEMENTS = ['()', '[]']
 def jsonSlurper = new JsonSlurper()
-def x = jsonSlurper.parseText(System.console().readLine('@x = ').replace(REPLACEMENTS))
-def y = jsonSlurper.parseText(System.console().readLine('@y = ').replace(REPLACEMENTS))
+def x = jsonSlurper.parseText(System.console().readLine('@x = ').tr(*REPLACEMENTS))
+def y = jsonSlurper.parseText(System.console().readLine('@y = ').tr(*REPLACEMENTS))
 
 x.sort()
 y.sort()

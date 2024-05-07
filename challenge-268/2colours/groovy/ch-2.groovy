@@ -1,7 +1,7 @@
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
 
-final REPLACEMENTS = ['()', '[]'];
+final REPLACEMENTS = ['()', '[]']
 def jsonSlurper = new JsonSlurper()
 def ints = jsonSlurper.parseText(System.console().readLine('@ints = ').tr(*REPLACEMENTS))
 
