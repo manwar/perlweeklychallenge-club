@@ -16,4 +16,4 @@
 
 ## Blog Post
 
-[It’s the Product Line Sign that Counts](https://packy.dardan.com/b/Ko)
+[Let's do the Numbers!](https://packy.dardan.com/b/L6)
