@@ -45,7 +45,7 @@ sub transposed_sort{
     my @rearranged;
 
     while(@ints){
-        # Grab a the first two remaining elements from the
+        # Grab the first two remaining elements from the
         # sorted argument list, and add them to the
         # rearranged list in reversed order
         push(@rearranged, (splice(@ints, 0, 2))[1, 0]);
