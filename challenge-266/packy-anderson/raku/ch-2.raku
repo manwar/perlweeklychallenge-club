@@ -11,7 +11,7 @@ sub isXMatrix(@matrix) {
   my $N = @matrix.elems;
   for @matrix.kv -> $y, @row {
     for @row.kv -> $x, $value {
-      # fail if diagonal values are zero or 
+      # fail if diagonal values are zero or
       # non-diagonal values are non-zero
       return False
         unless isDiagonal($x, $y, $N) == ($value != 0);

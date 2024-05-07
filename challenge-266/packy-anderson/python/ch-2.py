@@ -9,7 +9,7 @@ def isXMatrix(matrix):
   N = len(matrix)
   for y, row in enumerate(matrix):
     for x, value in enumerate(row):
-      # fail if diagonal values are zero or 
+      # fail if diagonal values are zero or
       # non-diagonal values are non-zero
       if isDiagonal(x, y, N) != (value != 0):
         return False

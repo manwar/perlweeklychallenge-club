@@ -13,7 +13,7 @@ sub isXMatrix(@matrix) {
     my @row = @{$matrix[$y]};
     foreach my $x ( 0 .. $#row ) {
       my $value = $row[$x];
-      # fail if diagonal values are zero or 
+      # fail if diagonal values are zero or
       # non-diagonal values are non-zero
       return 0
         unless isDiagonal($x, $y, $N) == ($value != 0);
