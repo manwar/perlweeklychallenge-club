@@ -8,7 +8,6 @@
 # 3
 # No such number
 
-
 my @tests =
     ([3, 7, 5], [9, 5, 7]),
     ([1, 2, 1], [5, 4, 4]),
@@ -21,7 +20,7 @@ for @tests -> (@a is copy, @b is copy) {
     @b .= sort;
 
     my $diff = @b[0] - @a[0];
-    if (@a >>+>> $diff eqv @b) {
+    if @a >>+>> $diff eqv @b {
         say $diff;
     }
     else {
