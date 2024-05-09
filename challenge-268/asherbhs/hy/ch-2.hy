@@ -3,10 +3,14 @@
   itertools *
 )
 
-(defn number-game [ints] (lfor
-  #(x y) (batched (sorted ints) 2)
-  z      #(y x)
-  z
+(require hyrule *)
+
+(defn number-game [ints] (as-> ints it
+  (sorted it)
+  (batched it 2)
+  (map reversed it)
+  (chain.from-iterable it)
+  (list it)
 ))
 
 (pprint (number-game [2 5 3 4]))
