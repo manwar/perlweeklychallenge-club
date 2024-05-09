@@ -28,8 +28,12 @@ defmodule PWC do
         IO.puts("Output: #{to_string(magic)}")
         IO.puts("\nThe magic number is #{to_string(magic)}.")
         IO.puts("@x = (" <> Enum.join(x, ", ") <> ")")
-        IO.puts("   +  " <> Enum.join(Enum.map(x, fn _ -> magic end), "  "))
-        IO.puts("@y = (" <> Enum.join(Enum.map(x, fn n -> n + magic end), ", ") <> ")")
+        IO.puts("   +  " <> Enum.join(
+          Enum.map(x, fn _ -> magic end), "  "
+        ))
+        IO.puts("@y = (" <> Enum.join(
+          Enum.map(x, fn n -> n + magic end), ", "
+        ) <> ")")
       {:err, _} ->
         IO.puts('Output: no magic number')
     end
