@@ -60,27 +60,22 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 # ------------------------------------------------------------------------------------------------------------
 # PRAGMAS, MODULES, AND SUBS:
 
-use v5.38;
+   use v5.38;
 
-# Is a given scalar a reference to an Array Of Integers?
-sub is_aoi ($aref) {
-   'ARRAY' ne ref $aref and return 0;
-   for my $x (@$aref) {
-      $x !~ m/^-[1-9]\d*$|^0$|^[1-9]\d*$/ and return 0;
+   # Is a given scalar a reference to an Array Of Integers?
+   sub is_aoi ($aref) {
+      'ARRAY' ne ref $aref and return 0;
+      for my $x (@$aref) {
+         $x !~ m/^-[1-9]\d*$|^0$|^[1-9]\d*$/ and return 0;
+      }
+      return 1;
    }
-   return 1;
-}
 
-# Reorder array of ints into a zigzagging ascending stairway:
-sub stairway (@array) {
-   my @zigzag = sort {$a<=>$b} @array;
-   for ( my $i = 0 ; $i <= $#zigzag - 1 ; $i += 2 ) {
-      my $temp = $zigzag[$i];
-      $zigzag[$i] = $zigzag[$i+1];
-      $zigzag[$i+1] = $temp;
+   # Reorder array of ints into a zigzagging ascending stairway:
+   sub stairway (@array) {
+      my @sorted = sort {$a<=>$b} @array;
+      map {@sorted[2*$_+1,2*$_]} 0..($#sorted-1)/2;
    }
-   return @zigzag;
-}
 
 # ------------------------------------------------------------------------------------------------------------
 # INPUTS:

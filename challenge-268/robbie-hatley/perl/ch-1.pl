@@ -65,31 +65,31 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 # ------------------------------------------------------------------------------------------------------------
 # PRAGMAS, MODULES, AND SUBS:
 
-use v5.38;
-use List::MoreUtils 'zip6';
-use List::Util 'all';
+   use v5.38;
+   use List::MoreUtils 'zip6';
+   use List::Util 'all';
 
-# Is a given scalar a reference to a Pair Of Same-Size Arrays Of Numbers?
-sub is_possaon ($matref) {
-   'ARRAY' ne ref $matref and return 0;
-   2 != scalar(@$matref) and return 0;
-   scalar(@{$$matref[0]}) != scalar(@{$$matref[1]}) and return 0;
-   for my $rowref (@$matref) {
-      for my $element (@$rowref) {
-         $element !~ m/^-[1-9]\d*$|^0$|^[1-9]\d*$/ and return 0;
+   # Is a given scalar a reference to a Pair Of Same-Size Arrays Of Numbers?
+   sub is_possaon ($matref) {
+      'ARRAY' ne ref $matref and return 0;
+      2 != scalar(@$matref) and return 0;
+      scalar(@{$$matref[0]}) != scalar(@{$$matref[1]}) and return 0;
+      for my $rowref (@$matref) {
+         for my $element (@$rowref) {
+            $element !~ m/^-[1-9]\d*$|^0$|^[1-9]\d*$/ and return 0;
+         }
       }
+      return 1;
    }
-   return 1;
-}
 
-# Determine "magic number" (if any) for given matrix:
-sub magic ($matref) {
-   my @row1 = sort {$a<=>$b} @{$$matref[0]};
-   my @row2 = sort {$a<=>$b} @{$$matref[1]};
-   my @diff = map {$$_[1]-$$_[0]} zip6 @row1, @row2;
-   all {$diff[0] == $_} @diff and return $diff[0]
-   or return 'none';
-}
+   # Determine "magic number" (if any) for given matrix:
+   sub magic ($matref) {
+      my @row1 = sort {$a<=>$b} @{$$matref[0]};
+      my @row2 = sort {$a<=>$b} @{$$matref[1]};
+      my @diff = map {$$_[1]-$$_[0]} zip6 @row1, @row2;
+      all {$diff[0] == $_} @diff and return $diff[0]
+      or return 'none';
+   }
 
 # ------------------------------------------------------------------------------------------------------------
 # INPUTS:
