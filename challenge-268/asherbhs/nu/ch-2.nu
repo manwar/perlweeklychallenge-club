@@ -1,4 +1,4 @@
-def number-game [ints: list<int>] {
+def number-game [ints: list<int>] -> list<int> {
 	$ints | sort | group 2 | each { reverse } | flatten
 }
 

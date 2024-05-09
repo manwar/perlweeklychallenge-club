@@ -1,4 +1,4 @@
-def magic-number [x: list<int>, y: list<int>] {
+def magic-number [x: list<int>, y: list<int>] -> int {
 	($y | math min) - ($x | math min)
 }
 
