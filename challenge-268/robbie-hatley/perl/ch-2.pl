@@ -37,15 +37,15 @@ PROBLEM NOTES:
 This is equivalent to first sorting each array in increasing numeric order ("sort {$a<=>$b} @array"), then
 swapping pairs. Something like this:
 
-sub stairway (@array) {
-   my @zigzag = sort {$a<=>$b} @array;
-   for ( my $i = 0 ; $i <= $#zigzag - 1 ; $i += 2 ) {
-      my $temp = $zigzag[$i];
-      $zigzag[$i] = $zigzag[$i+1];
-      $zigzag[$i+1] = $temp;
+   sub stairway (@array) {
+      my @zigzag = sort {$a<=>$b} @array;
+      for ( my $i = 0 ; $i <= $#zigzag - 1 ; $i += 2 ) {
+         my $temp = $zigzag[$i];
+         $zigzag[$i] = $zigzag[$i+1];
+         $zigzag[$i+1] = $temp;
+      }
+      return @zigzag;
    }
-   return @zigzag;
-}
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
