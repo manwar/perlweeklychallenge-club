@@ -44,6 +44,7 @@ PROBLEM NOTES:
 I'll sort both arrays then subtract the second from the first. If all elements of the difference are the same,
 that common value is our "magic number", otherwise return "none":
 
+   # Determine "magic number" (if any) for given matrix:
    sub magic ($matref) {
       my @row1 = sort {$a<=>$b} @{$$matref[0]};
       my @row2 = sort {$a<=>$b} @{$$matref[1]};
