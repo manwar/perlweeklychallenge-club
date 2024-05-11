@@ -47,8 +47,8 @@ that common value is our "magic number", otherwise return "none":
    sub magic ($matref) {
       my @row1 = sort {$a<=>$b} @{$$matref[0]};
       my @row2 = sort {$a<=>$b} @{$$matref[1]};
-      my @diff = map {$$_[1]-$$_[0]} zip6 @row1, @row2;
-      all {$diff[0] == $_} @diff and return $diff[0]
+      my @diff = pairwise {$b-$a} @row1, @row2;
+      all {$_ == $diff[0]} @diff and return $diff[0]
       or return 'none';
    }
 

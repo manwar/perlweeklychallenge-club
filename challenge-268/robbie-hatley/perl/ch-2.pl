@@ -34,17 +34,11 @@ Output: (2, 1, 3, 2)
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
-This is equivalent to first sorting each array in increasing numeric order ("sort {$a<=>$b} @array"), then
-swapping pairs. Something like this:
+This is equivalent to first sorting each array in increasing numeric order ("sort {$a<=>$b} @array"),
+then swapping pairs:
 
    sub stairway (@array) {
-      my @zigzag = sort {$a<=>$b} @array;
-      for ( my $i = 0 ; $i <= $#zigzag - 1 ; $i += 2 ) {
-         my $temp = $zigzag[$i];
-         $zigzag[$i] = $zigzag[$i+1];
-         $zigzag[$i+1] = $temp;
-      }
-      return @zigzag;
+      pairmap {$b,$a} sort {$a<=>$b} @array;
    }
 
 --------------------------------------------------------------------------------------------------------------
