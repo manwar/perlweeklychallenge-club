@@ -1,0 +1,26 @@
+--
+-- Perl Weekly Challenge 268
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-268>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc268;
+
+CREATE OR REPLACE FUNCTION
+pwc268.task2_plperl( int[] )
+RETURNS SETOF int
+AS $CODE$
+
+   my ( $nums ) = @_;
+
+   $nums = [ sort $nums->@* ];
+   my @sorted;
+   for my $index ( 0 .. $nums->@* - 1 ) {
+       next if $index % 2 != 0;
+       push @sorted, reverse sort( $nums->@[ $index ], $nums->@[ $index + 1 ] );
+   }
+
+   return [ @sorted ]	;
+   
+$CODE$
+LANGUAGE plperl;
