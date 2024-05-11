@@ -37,14 +37,10 @@ PROBLEM NOTES:
 This is equivalent to first sorting each array in increasing numeric order ("sort {$a<=>$b} @array"), then
 swapping pairs. Something like this:
 
+   # Reorder array of ints into a zigzagging ascending stairway:
    sub stairway (@array) {
-      my @zigzag = sort {$a<=>$b} @array;
-      for ( my $i = 0 ; $i <= $#zigzag - 1 ; $i += 2 ) {
-         my $temp = $zigzag[$i];
-         $zigzag[$i] = $zigzag[$i+1];
-         $zigzag[$i+1] = $temp;
-      }
-      return @zigzag;
+      my @sorted = sort {$a<=>$b} @array;
+      map {@sorted[2*$_+1,2*$_]} 0..($#sorted-1)/2;
    }
 
 --------------------------------------------------------------------------------------------------------------
