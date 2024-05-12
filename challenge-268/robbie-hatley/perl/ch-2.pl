@@ -34,13 +34,11 @@ Output: (2, 1, 3, 2)
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
-This is equivalent to first sorting each array in increasing numeric order ("sort {$a<=>$b} @array"), then
-swapping pairs. Something like this:
+This is equivalent to first sorting each array in increasing numeric order ("sort {$a<=>$b} @array"),
+then swapping pairs:
 
-   # Reorder array of ints into a zigzagging ascending stairway:
    sub stairway (@array) {
-      my @sorted = sort {$a<=>$b} @array;
-      map {@sorted[2*$_+1,2*$_]} 0..($#sorted-1)/2;
+      pairmap {$b,$a} sort {$a<=>$b} @array;
    }
 
 --------------------------------------------------------------------------------------------------------------
@@ -57,20 +55,21 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 # PRAGMAS, MODULES, AND SUBS:
 
    use v5.38;
+   use List::Util 'pairmap';
 
-   # Is a given scalar a reference to an Array Of Integers?
-   sub is_aoi ($aref) {
+   # Is a given scalar a reference to an Even-Sized Array Of Integers?
+   sub is_esaoi ($aref) {
       'ARRAY' ne ref $aref and return 0;
+      0 != scalar(@$aref)%2 and return 0;
       for my $x (@$aref) {
          $x !~ m/^-[1-9]\d*$|^0$|^[1-9]\d*$/ and return 0;
       }
       return 1;
    }
 
-   # Reorder array of ints into a zigzagging ascending stairway:
+   # Return stairway sort of an array:
    sub stairway (@array) {
-      my @sorted = sort {$a<=>$b} @array;
-      map {@sorted[2*$_+1,2*$_]} 0..($#sorted-1)/2;
+      pairmap {$b,$a} sort {$a<=>$b} @array;
    }
 
 # ------------------------------------------------------------------------------------------------------------
@@ -95,8 +94,8 @@ my @arrays = @ARGV ? eval($ARGV[0]) :
 for my $aref (@arrays) {
    say '';
    say 'Array = (', join(', ', @$aref), ')';
-   !is_aoi($aref)
-   and say 'Error: Not an array of integers.'
+   !is_esaoi($aref)
+   and say 'Error: Not an even-sized array of integers.'
    and say 'Moving on to next array.'
    and next;
    say 'Stairway = (', join(', ', stairway(@$aref)), ')';

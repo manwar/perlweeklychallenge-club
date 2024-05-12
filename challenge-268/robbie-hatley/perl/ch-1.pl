@@ -44,12 +44,11 @@ PROBLEM NOTES:
 I'll sort both arrays then subtract the second from the first. If all elements of the difference are the same,
 that common value is our "magic number", otherwise return "none":
 
-   # Determine "magic number" (if any) for given matrix:
    sub magic ($matref) {
       my @row1 = sort {$a<=>$b} @{$$matref[0]};
       my @row2 = sort {$a<=>$b} @{$$matref[1]};
-      my @diff = map {$$_[1]-$$_[0]} zip6 @row1, @row2;
-      all {$diff[0] == $_} @diff and return $diff[0]
+      my @diff = pairwise {$b-$a} @row1, @row2;
+      all {$_ == $diff[0]} @diff and return $diff[0]
       or return 'none';
    }
 
@@ -57,7 +56,7 @@ that common value is our "magic number", otherwise return "none":
 IO NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
 single-quoted array of arrays of pairs of same-size arrays of integers, in proper Perl syntax, like so:
-./ch-1.pl '([[1,2,3],[7,8,9]],[[3,8],[9,4,2]],[[3,8,17],[4,5,72]])'
+./ch-1.pl '([[3,8],[9,4,2]],[[3,8,17],[4,5,72]],[[1,2,3],[7,9,8]])'
 
 Output is to STDOUT and will be each input followed by the corresponding output.
 
@@ -67,11 +66,11 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 # PRAGMAS, MODULES, AND SUBS:
 
    use v5.38;
-   use List::MoreUtils 'zip6';
+   use List::SomeUtils 'pairwise';
    use List::Util 'all';
 
-   # Is a given scalar a reference to a Pair Of Same-Size Arrays Of Numbers?
-   sub is_possaon ($matref) {
+   # Is a given scalar a reference to a Pair Of Same-Size Arrays Of Integers?
+   sub is_possaoi ($matref) {
       'ARRAY' ne ref $matref and return 0;
       2 != scalar(@$matref) and return 0;
       scalar(@{$$matref[0]}) != scalar(@{$$matref[1]}) and return 0;
@@ -83,12 +82,12 @@ Output is to STDOUT and will be each input followed by the corresponding output.
       return 1;
    }
 
-   # Determine "magic number" (if any) for given matrix:
+   # Return the "magic number" (if any) of a matrix:
    sub magic ($matref) {
       my @row1 = sort {$a<=>$b} @{$$matref[0]};
       my @row2 = sort {$a<=>$b} @{$$matref[1]};
-      my @diff = map {$$_[1]-$$_[0]} zip6 @row1, @row2;
-      all {$diff[0] == $_} @diff and return $diff[0]
+      my @diff = pairwise {$b-$a} @row1, @row2;
+      all {$_ == $diff[0]} @diff and return $diff[0]
       or return 'none';
    }
 
@@ -124,7 +123,7 @@ for my $matref (@matrices) {
    say '';
    say 'Matrix = ';
    say('[',join(', ', @$_),']') for @$matref;
-   !is_possaon($matref)
+   !is_possaoi($matref)
    and say 'Matrix is not a pair of same-size arrays of integers.'
    and say 'Moving on to next matrix.'
    and next;
