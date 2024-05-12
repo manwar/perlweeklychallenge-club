@@ -1,137 +1,130 @@
-# Signs Count!
-**Challenge 267 solutions in Perl by Matthias Muth**
+# Perl Magic Games
 
-## Task 1: Product Sign
+**Challenge 268 solutions in Perl by Matthias Muth**
 
-> You are given an array of @ints.<br/>
-> Write a script to find the sign of product of all integers in the given array. The sign is 1 if the product is positive, -1 if the product is negative and 0 if product is zero.<br/>
+## Task 1: Magic Number
+
+> You are given two arrays of integers of same size, @x and @y.<br/>
+> Write a script to find the magic number that when added to each elements of one of the array gives the second array. Elements order is not important.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @ints = (-1, -2, -3, -4, 3, 2, 1)<br/>
-> Output: 1<br/>
-> The product -1 x -2 x -3 x -4 x 3 x 2 x 1 => 144 > 0<br/>
+> Input: @x = (3, 7, 5)<br/>
+>                @y = (9, 5, 7)<br/>
+> Output: 2<br/>
+> The magic number is 2.<br/>
+> @x = (3, 7, 5)<br/>
+>    	\+ 2  2  2<br/>
+> @y = (5, 9, 7)<br/>
 > <br/>
 > Example 2<br/>
-> Input: @ints = (1, 2, 0, -2, -1)<br/>
-> Output: 0<br/>
-> The product 1 x 2 x 0 x -2 x -1 => 0<br/>
+> Input: @x = (1, 2, 1)<br/>
+>                @y = (5, 4, 4)<br/>
+> Output: 3<br/>
+> The magic number is 3.<br/>
+> @x = (1, 2, 1)<br/>
+>              \+  3  3  3<br/>
+> @y = (5, 4, 4)<br/>
 > <br/>
 > Example 3<br/>
-> Input: @ints = (-1, -1, 1, -1, 2)<br/>
-> Output: -1<br/>
-> The product -1 x -1 x 1 x -1 x 2 => -2 < 0<br/>
+> Input: @x = (2)<br/>
+>             @y = (5)<br/>
+> Output: 3<br/>
 
-Probably one of the shortest Weekly Challenge solutions that I ever wrote!<br/>
-Some considerations first:
+If we only could be sure that once we have a 'magic number', it will be the correct one for all the numbers in the two arrays! In that case, we would be done if we simply computed the difference of the two lowest numbers in each array!<br/>Very easy:
+```perl
+use v5.36;
 
-- Multiplying all the numbers in the list might cause an integer overflow.<br/>
-  So let's better to multiply only the 'signs' of the numbers,
-  like `-1` for negative numbers, `0` for zero and `+1` for positive numbers.
+use List::Util qw( min );
 
-- There is the `sign` function from `Math::Utils`
-  that returns the sign of a number like that.
+sub magic_number_short( $x, $y ) {
+    return min( $y->@* ) - min( $x->@* );
+}
+```
 
-- But we can also use Perl's 'spaceship operator' `<=>` instead.<br/>
-  It returns `-1`, `0`, or `1` depending on whether the left argument is
-  numerically less  than, equal to, or greater than the right argument.<br/>
-  So by comparing against zero, like<br/>
-  
-    `$n <=> 0`
-  
-  we get the number's sign just the same.<br/>
-  This reduces the startup cost because we don't need to load that module,
-  and it avoids the function call overhead.
+This works for all examples given, so there it is: a quite short solution for this task.
 
-So we map the integers to their signs,
-and let the `product` function from `List::Util`
-do the work of multiplying them.
+But we all know that life can be hard, and input data can be not what we expect.<br/>So actually we should do some checking, and only return the magic number if it's the correct difference for *all* the numbers in the two arrays. 
+
+So the longer solution is to sort the two arrays, and to compare all differences between corresponding pairs of numbers.
+
+To compute those differences, I use the `zip` function (from `List::Util`) to join the two sorted arrays. This results in a list of references to two-element arrays, each containing one number from the first and one number from the second array. I then use `map` to turn the two numbers from each entry into their difference.
+
+Once we have all differences, we can check whether all of them are the same as the first one (using `all`, also from `List::Util`), and if so, return this as our 'magic' number. If they are not all the same, we return `undef`, kind of 'extending the specification' because we are not told what should happen in that case.
+
+We also should deal with the edge case of empty input arrays, and also make sure that the two input arrays have the same number of elements. So we prepend a small input check, for not running into any 'undefined value' warnings in those cases.
+
+I think the result still looks quite reasonable:
 
 ```perl
 use v5.36;
 
-use List::Util qw( product );
-
-sub product_sign( @ints ) {
-    return product map $_ <=> 0, @ints;
+sub magic_number( $x, $y ) {
+    @$x && ( @$x == @$y )
+        or return undef;
+    my @diffs = map $_->[1] - $_->[0],
+        zip [ sort { $a <=> $b } $x->@* ],
+            [ sort { $a <=> $b } $y->@* ];
+    return
+        ( all { $_ == $diffs[0] } @diffs[1..$#diffs] )
+        ? $diffs[0]
+        : undef;
 }
 ```
 
-There is one optimization that I could consider for large lists
-that also have a probability of containing zero values:<br/>
-If there is at least one zero in the list, the product will always be zero, too.
-So we can shortcut the result once we encounter the first zero.
+## Task 2: Number Game
 
-We even can return from right inside the map code block once we see a zero sign.
-And this can even be a bit 'elegant'
-if we chain the `return` with a logical `or`.
-The `return` will be executed only if the first expression (the sign)
-is 'logically false' (i.e., zero in our case),
-and if not, the first expression (the sign) is used.
-```perl
-sub product_sign( @ints ) {
-    return product map { $_ <=> 0 or return 0 } @ints;
-}
-```
-Still nice and short!
-
-## Task 2: Line Counts
-
-> You are given a string, \$str, and a 26-items array @widths containing the width of each character from a to z.<br/>
-> Write a script to find out the number of lines and the width of the last line needed to display the given string, assuming you can only fit 100 width units on a line.<br/>
+> You are given an array of integers, @ints, with even number of elements.<br/>
+> Write a script to create a new array made up of elements of the given array. Pick the two smallest integers and add it to new array in decreasing order i.e. high to low. Keep doing until the given array is empty.<br/>
 > <br/>
 > Example 1<br/>
-> Input: \$str = "abcdefghijklmnopqrstuvwxyz"<br/>
->        @widths = (10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10)<br/>
-> Output: (3, 60)<br/>
-> Line 1: abcdefghij (100 pixels)<br/>
-> Line 2: klmnopqrst (100 pixels)<br/>
-> Line 3: uvwxyz (60 pixels)<br/>
+> Input: @ints = (2, 5, 3, 4)<br/>
+> Output: (3, 2, 5, 4)<br/>
+> Round 1: we picked (2, 3) and push it to the new array (3, 2)<br/>
+> Round 2: we picked the remaining (4, 5) and push it to the new array (5, 4)<br/>
 > <br/>
 > Example 2<br/>
-> Input: \$str = "bbbcccdddaaa"<br/>
->        @widths = (4,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10)<br/>
-> Output: (2, 4)<br/>
-> Line 1: bbbcccdddaa (98 pixels)<br/>
-> Line 2: a (4 pixels)<br/>
+> Input: @ints = (9, 4, 1, 3, 6, 4, 6, 1)<br/>
+> Output: (1, 1, 4, 3, 6, 4, 9, 6)<br/>
+> <br/>
+> Example 3<br/>
+> Input: @ints = (1, 2, 2, 3)<br/>
+> Output: (2, 1, 3, 2)<br/>
 
-This part needs a bit more of an algorithm, so I will be a bit more verbose to make the solution readable.
+This is one of the tasks where a bit of thinking about what really happens helps to find a nice and easy solution:
 
-First thing is to initialize the variables that will be returned in the end.<br/>
-The number of lines reflects the lines *including* the one we will be working on
-(the 'current line'), so we start with `1`.
-But actually we need to return zero lines if the input `$str` is empty,
-so we consider that in the initialization.<br/>
-The current line width starts with zero, as we haven't added anything yet.
+The instructions basically suggest to use a loop, where inside the loop we find the two smallest numbers in the array,
+remove them from the input array
+and add them -- in reversed order -- into the output array.
 
-Then we loop over all letters in `$str`.
-For each letter, we get its width from the input array,
-using its distance from the letter `'a'` as the the index into that array.
+I don't like searching within a loop body.<br/>
+Even if we might not run into a purely quadratic big O complexity just by searching
+(because we shorten the array after each iteration),
+destroying the input array just for that reason is not really elegant,
+and even if it takes only split-micro-seconds,
+I don't like wasting computing power for something like that.
 
-If adding the letter's width would exceed the maximum width of 100,
-we increment the number of lines and reset the current line width.
-Then we add the letter's width.
+The good thing is that we can achieve the same result
+by simply sorting the array numerically (with a typical complexity of $`O(n\log n)`$),
+and then flipping each pair of adjacent numbers
+(in one simple additional pass).<br/>
+Ah, much better ;-)
 
-When we exit the loop, we can directly return the result.
+We even can do this 'on the fly',
+feeding the `sort` output into the `pairs` function (from `List::Util`),
+which splits the numbers into small two-element arrays,
+and then flipping the two numbers using `reverse` on each of those mini-arrays, using a `map` code block.
 
-Actually I guess my explanations did not add a lot that could not be
-easily understood from reading the code.
-Or at least I hope...
+Looks 'perlish' to me, and hey, another one-liner! Who would have guessed!   
 
 ```perl
 use v5.36;
 
-sub line_counts( $str, $widths ) {
-    my ( $n_lines, $current_line_width ) = ( $str ne "" || 0, 0 );
-    for ( split "", $str ) {
-        my $char_width = $widths->[ ord( $_ ) - ord( 'a' ) ];
-        if ( $current_line_width + $char_width > 100 ) {
-            ++$n_lines;
-            $current_line_width = 0;
-        }
-        $current_line_width += $char_width;
-    }
-    return ( $n_lines, $current_line_width );
+use List::Util qw( pairs );
+
+sub number_game( @ints ) {
+    return map { reverse $_->@* } pairs sort { $a <=> $b } @ints;
 }
 ```
 
 #### **Thank you for the challenge!**
+
