@@ -1,3 +1,3 @@
-# The Weekly Challenge 266
+# The Weekly Challenge 268
 
-Blog: [Uncommon matrix](https://dev.to/simongreennet/uncommon-matrix-4mfh)
+Blog: [The magical number game](https://dev.to/simongreennet/the-magical-number-game-4jgo)
