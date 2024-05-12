@@ -97,7 +97,7 @@ remove them from the input array
 and add them -- in reversed order -- into the output array.
 
 I don't like searching within a loop body.<br/>
-Even if we might not run into a purely quadratic big $`O`$ complexity just by searching
+Even if we might not run into a purely quadratic big O complexity just by searching
 (because we shorten the array after each iteration),
 destroying the input array just for that reason is not really elegant,
 and even if it takes only split-micro-seconds,
