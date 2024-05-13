@@ -1,3 +1,9 @@
+find . -name "*.i3" -delete
+find . -name "*.ig" -delete
+find . -name "*.mg" -delete
+find . -name "*.groovy" -delete
+find . -name "*.crystal" -delete
+find . -name "*.nu" -delete
 find . -name "*.hy" -delete
 find . -name "*.roc" -delete
 find . -name "*.sml" -delete
