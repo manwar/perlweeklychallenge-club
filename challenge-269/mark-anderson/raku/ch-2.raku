@@ -9,7 +9,7 @@ is-deeply distribute-elements(5,4,3,8),   [5,3,4,8];
 #
 #    while @ints
 #    {
-#        my $k = @ints.first(* < @arr2.tail, :k) // @ints.elems;
+#        my $k = @ints.first(* < @arr2.tail, :k) // @ints.end;
 #        @arr1.append: @ints.splice(0, $k+1);
 #        :(@arr1, @arr2) := (@arr2, @arr1)
 #    }
@@ -27,13 +27,13 @@ sub distribute-elements(*@ints)
     {
         if @arr1.tail > @arr2.tail
         {
-            my $k = @ints.first(* < @arr2.tail, :k) // @ints.elems;
+            my $k = @ints.first(* < @arr2.tail, :k) // @ints.end;
             @arr1.append: @ints.splice(0, $k+1)
         }
 
         else
         {
-            my $k = @ints.first(* < @arr1.tail, :k) // @ints.elems;
+            my $k = @ints.first(* < @arr1.tail, :k) // @ints.end;
             @arr2.append: @ints.splice(0, $k+1)
         }
     }   
