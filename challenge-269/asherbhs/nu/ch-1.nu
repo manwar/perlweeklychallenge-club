@@ -1,4 +1,4 @@
-def bitwise-or [ints: list<int>] {
+def bitwise-or [ints: list<int>] -> bool {
 	($ints | where { 0 == $in mod 2 } | length) >= 2
 }
 
