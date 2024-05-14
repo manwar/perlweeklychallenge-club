@@ -1,7 +1,4 @@
-(import
-  hyrule    [pprint]
-  itertools [count]
-)
+(import hyrule [pprint])
 
 (defn bitwise-or [ints]
   (>=
