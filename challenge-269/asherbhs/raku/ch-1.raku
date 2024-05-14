@@ -1,4 +1,4 @@
-sub bitwise-or(Int:D @ints --> Bool) {
+sub bitwise-or(Int:D @ints --> Bool:D) {
 	@ints.map(* %% 2).sum ≥ 2
 }
 
