@@ -60,9 +60,10 @@ my $DoTest  = 0;
 GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
 exit(!runTest()) if $DoTest;
 
+say "(", join(", ", distElem(@ARGV)->@*), ")";
+
 sub distElem(@ints)
 {
-    #return [] if $#ints < 1;
     my @arr = ( [ (shift @ints) // () ], [ (shift @ints) // () ] );
 
     push @{$arr[ ( $arr[0][-1] <= $arr[1][-1] ) ]}, $_ for @ints;
