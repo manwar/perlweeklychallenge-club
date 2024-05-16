@@ -20,4 +20,4 @@
 
 ## Blog Post
 
-[Let's do the Numbers!](https://packy.dardan.com/b/L6)
+[Bitwise Distribution](https://packy.dardan.com/b/LS)
