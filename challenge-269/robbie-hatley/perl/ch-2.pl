@@ -25,17 +25,17 @@ Write a script to distribute the elements as described below:
 4) Once @ints is empty, return the concatenated arrays
    (@arr1, @arr2).
 
-Example 1
-Input: @ints = (2, 1, 3, 4, 5)
-Expected output: (2, 3, 4, 5, 1)
+Example 1:
+Input:  (2, 1, 3, 4, 5)
+Output: (2, 3, 4, 5, 1)
 
-Example 2
-Input: @ints = (3, 2, 4)
-Expected output: (3, 4, 2)
+Example 2:
+Input:  (3, 2, 4)
+Output: (3, 4, 2)
 
-Example 3
-Input: @ints = (5, 4, 3 ,8)
-Expected output: (5, 3, 4, 8)
+Example 3:
+Input:  (5, 4, 3 ,8)
+Output: (5, 3, 4, 8)
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
@@ -74,11 +74,11 @@ Output is to STDOUT and will be each input followed by the corresponding output.
       my @arr1; push @arr1, shift @ints;
       my @arr2; push @arr2, shift @ints;
       while (@ints) {
-         my $x = shift @ints;
-         $arr1[-1] > $arr2[-1] and push @arr1, $x
-                               or  push @arr2, $x;
+         $arr1[-1] > $arr2[-1]
+         and push @arr1, shift @ints
+         or  push @arr2, shift @ints;
       }
-      (@arr1, @arr2);
+      return (@arr1, @arr2);
    }
 
 # ------------------------------------------------------------------------------------------------------------
