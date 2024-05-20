@@ -76,20 +76,19 @@ def distElem(ints: list, x: int, y: int):
     mx = ints[-1]
     c = 0
     while True:
-        ints = ints[:ints.index(mx)]
-        l = len(ints)
+        l = ints.index(mx)
         if l == 0:
             break
+        d = mx - ints[l-1]
         if l == 1 or 2*x < y:
-            while ints[-1] < mx:
-                for i in range(l):
-                    ints[i] += 1
-                    c += x
+            for i in range(l):
+                ints[i] += d
+                c += x * d
         else:
-            while ints[-1] < mx:
-                for i in range(-2,0):
-                    ints[i] += 1
-                c += y
+            p = l // 2
+            for i in range(2*p):
+                ints[l-1-i] += d
+            c += y * p * d
     return c
 
 import unittest
