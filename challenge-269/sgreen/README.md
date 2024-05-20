@@ -1,3 +1,3 @@
-# The Weekly Challenge 268
+# The Weekly Challenge 269
 
-Blog: [The magical number game](https://dev.to/simongreennet/the-magical-number-game-4jgo)
+Blog: [Elements or something](https://dev.to/simongreennet/elements-or-something-2bl0)
