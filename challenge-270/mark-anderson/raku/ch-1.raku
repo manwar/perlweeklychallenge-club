@@ -16,7 +16,7 @@ is special-positions([
 sub special-positions(@m)
 {
     my $b = bag @m>>.grep(1, :k);        
-    + $b.values.grep(1)
+    +  $b.values.grep(1)
 }
 
 # sub special-positions(@m)
