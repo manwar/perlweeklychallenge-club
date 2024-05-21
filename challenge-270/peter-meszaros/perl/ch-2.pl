@@ -69,11 +69,19 @@ use List::Util qw/max/;
 my $cases = [
     [[[4, 1],          3, 2], 9],
     [[[2, 3, 3, 3, 5], 2, 1], 6],
+    [[[3, 3, 4, 4],    1, 1], 1],
+    [[[3, 3, 4, 4],    1, 2], 2],
+    [[[3, 3, 4, 4],    1, 3], 2],
 ];
 
 # get max diff
-# for pair of maxes   -> level2 --> decrement, count step and undef maxes
-# if exist single max -> level1 --> decrement, count step and undef maxes
+# for pair of maxes   -> decrement 
+#                        if level2 cheaper than two level1 --> count level2 step
+#                        else                              --> count two level1 step
+#                        undef maxes
+# if exist single max -> decrement
+#                        count level1 step
+#                        undef maxes
 # repeat until max diff == 0
 sub distribute_elements
 {
@@ -95,7 +103,11 @@ sub distribute_elements
                 if (@max == 2) {
                     --$diff[$max[0]];
                     --$diff[$max[1]];
-                    ++$y_cnt;
+                    if ((2 * $x) < $y) { 
+                        $x_cnt += 2;
+                    } else {
+                        ++$y_cnt;
+                    }
                     undef @max;
                 }
             }
