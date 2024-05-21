@@ -88,25 +88,22 @@ func distElem(ints []int, x, y int) int {
 	mx := ints[l-1]
 	c := 0
 	for {
-		ints = ints[:slices.Index(ints, mx)]
-		l = len(ints)
+		l = slices.Index(ints, mx)
 		if l == 0 {
 			break
 		}
+		d := mx - ints[l-1]
 		if l == 1 || 2*x < y {
-			for ints[l-1] < mx {
-				for i := range l {
-					ints[i]++
-					c += x
-				}
+			for i := range l {
+				ints[i] += d
+				c += x * d
 			}
 		} else {
-			for ints[l-1] < mx {
-				for i := range 2 {
-					ints[l-1-i]++
-				}
-				c += y
+			p := l / 2
+			for i := range p * 2 {
+				ints[l-1-i] += d
 			}
+			c += y * p * d
 		}
 	}
 	return c
