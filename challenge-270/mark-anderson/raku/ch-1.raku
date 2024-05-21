@@ -15,15 +15,9 @@ is special-positions([
 
 sub special-positions(@m)
 {
-    my $b = bag @m>>.grep(1, :k);        
-    +  $b.values.grep(1)
-}
+   my @ones = (^@m X ^@m[0]).grep({ @m[.[0];.[1]] });
 
-# sub special-positions(@m)
-# {
-#    my @ones = (^@m X ^@m[0]).grep({ @m[.[0];.[1]] });
-#
-#    +  @ones.grep({ all .[0] == one(@ones>>.[0]), 
-#                        .[1] == one(@ones>>.[1])
-#                  })
-# }
+   +  @ones.grep({ all .[0] == one(@ones>>.[0]), 
+                       .[1] == one(@ones>>.[1])
+                 })
+}
