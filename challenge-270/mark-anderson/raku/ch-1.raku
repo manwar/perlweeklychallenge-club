@@ -15,6 +15,6 @@ is special-positions([
 
 sub special-positions(@m)
 {
-    @m .=      grep(*.grep(1).one);
-    + ([Z] @m).grep(*.grep(1).one)
+    @m .=      grep(*.one);
+    + ([Z] @m).grep(*.one)
 }
