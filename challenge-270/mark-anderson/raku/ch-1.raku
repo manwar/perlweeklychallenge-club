@@ -15,9 +15,8 @@ is special-positions([
 
 sub special-positions(@m)
 {
-    my @ones = (^@m X ^@m[0]).grep({ @m[.[0];.[1]] });
+    my @rows =      @m .map({ ($++,          .grep(1, :k)).join("|") });
+    my @cols = ([Z] @m).map({ (.grep(1, :k), $++         ).join("|") });
 
-    +  @ones.grep({ all .[0] == one(@ones>>.[0]), 
-                        .[1] == one(@ones>>.[1])
-                  })
+    + (@rows (&) @cols)
 }
