@@ -23,6 +23,8 @@ def distribute_elements(integers, x, y):
     6
     >>> distribute_elements([4, 4, 2, 6], x=3, y=1)
     4
+    >>> distribute_elements([1, 1, 1, 6], x=3, y=1)
+    10
     '''
     integers = sorted(integers)
     max_int = integers[-1]
