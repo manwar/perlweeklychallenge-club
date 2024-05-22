@@ -21,8 +21,11 @@ def distribute_elements(integers, x, y):
     9
     >>> distribute_elements([2, 3, 3, 3, 5], x=2, y=1)
     6
+    >>> distribute_elements([4, 4, 2, 6], x=3, y=1)
+    4
     '''
-    max_int = max(integers)
+    integers = sorted(integers)
+    max_int = integers[-1]
     level_1_preferred = (x * 2 < y)
     cost = 0
     positions = [i for i, v in enumerate(integers) if v < max_int]
