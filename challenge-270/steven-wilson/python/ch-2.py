@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 
+import heapq
+
 
 def distribute_elements(integers, x, y):
     ''' Given an array of integers and two integers, x and y, execute one of
@@ -26,27 +28,20 @@ def distribute_elements(integers, x, y):
     >>> distribute_elements([1, 1, 1, 6], x=3, y=1)
     10
     '''
-    integers = sorted(integers)
-    max_int = integers[-1]
+    heapq.heapify(integers)
+    max_int = heapq.nlargest(1, integers)[0]
     level_1_preferred = (x * 2 < y)
     cost = 0
-    positions = [i for i, v in enumerate(integers) if v < max_int]
-    while positions:
-        if len(positions) > 1 and not level_1_preferred:
-            i, j = positions[:2]
-            integers[i] += 1
-            integers[j] += 1
+    while integers[0] != max_int:
+        if heapq.nsmallest(2, integers)[1] < max_int and not level_1_preferred:
+            smallest = heapq.heappop(integers) + 1
+            next_smallest = heapq.heappop(integers) + 1
+            heapq.heappush(integers, smallest)
+            heapq.heappush(integers, next_smallest)
             cost += y
-            if integers[j] == max_int:
-                del positions[1]
-            if integers[i] == max_int:
-                del positions[0]
         else:
-            i = positions[0]
-            integers[i] += 1
+            heapq.heappush(integers, heapq.heappop(integers) + 1)
             cost += x
-            if integers[i] == max_int:
-                del positions[0]
     return cost
 
 
