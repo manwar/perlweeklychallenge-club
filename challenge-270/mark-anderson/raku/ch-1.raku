@@ -17,6 +17,6 @@ sub special-positions(@m)
 {
     my $cols = @m.map({ .grep(1, :k).List }).List;
     my $uniq-cols = ($cols.flat (-) $cols.flat.repeated).keys.List;
-    my $rows = $cols.grep(*.elems == 1);
-    ($rows (&) $uniq-cols).elems
+    my $rows = $cols.grep(1);
+    + ($rows (&) $uniq-cols)
 }
