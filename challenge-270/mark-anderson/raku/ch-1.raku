@@ -15,9 +15,8 @@ is special-positions([
 
 sub special-positions(@m)
 {
-    my @indices = @m.map({ $++, .grep(1, :k).List });
-    my @cols = flat @indices>>.[1];
-    @cols = (@cols (-) @cols.repeated).keys;
-    @indices .= grep(*.[1] == 1);
-   (@indices>>.[1] (&) @cols).elems
+    my $cols = @m.map({ .grep(1, :k).List }).List;
+    my $uniq-cols = ($cols.flat (-) $cols.flat.repeated).keys.List;
+    my $rows = $cols.grep(*.elems == 1);
+    ($rows (&) $uniq-cols).elems
 }
