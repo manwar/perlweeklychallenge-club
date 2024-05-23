@@ -3,11 +3,15 @@
 defmodule PWC do
 
   def sumRow(matrix, i) do
-    Enum.sum(Enum.at(matrix, i))
+    matrix
+    |> Enum.at(i)
+    |> Enum.sum
   end
 
   def sumCol(matrix, j) do
-    Enum.sum(Enum.map(matrix, fn x -> Enum.at(x, j) end))
+    matrix
+    |> Enum.map(fn x -> Enum.at(x, j) end)
+    |> Enum.sum
   end
 
   def specialPositions(matrix) do
