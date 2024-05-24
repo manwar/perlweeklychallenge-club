@@ -1,0 +1,56 @@
+--
+-- Perl Weekly Challenge 270
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-270>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc270;
+
+CREATE OR REPLACE FUNCTION
+pwc270.task2_plperl( int, int, int[] )
+RETURNS int
+AS $CODE$
+
+   my ( $single, $double, $nums ) = @_;
+   my $score = 0;
+
+   my $max = sub {
+      my ( $nums ) = @_;
+      my $value = undef;
+
+      for ( $nums->@* ) {
+      	  $value = $_ if ( ! $value || $value < $_ );
+      }
+
+      return $value;
+   };
+
+   my $current_max = $max->( $nums );
+   my @need_operation;
+
+
+   for ( 0 .. $nums->@* - 1 ) {
+       push @need_operation, $_ if ( $nums->@[ $_ ] < $current_max );
+   }
+
+   while ( @need_operation > 0 ) {
+      if ( @need_operation > 1 ) {
+         $nums->[ $need_operation[ 0 ] ]++;
+         $nums->[ $need_operation[ 1 ] ]++;
+         $score += $double;
+      }
+      elsif ( @need_operation == 1 ) {
+         $nums->[ $need_operation[ 0 ] ]++;
+         $score += $single;
+      }
+
+      @need_operation = ();
+      for ( 0 .. $nums->@* - 1 ) {
+          push @need_operation, $_ if ( $nums->@[ $_ ] < $current_max );
+      }
+   }
+
+   return $score;
+
+$CODE$
+LANGUAGE plperl;
