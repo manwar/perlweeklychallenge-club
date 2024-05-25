@@ -1,8 +1,6 @@
 #!/usr/bin/env raku
 # :vim ft=raku sw=4 expandtab  # 🦋 ∅∪∩∋∈∉⊆ ≡ ≢ «␤ » ∴
 use v6.d;
-INIT $*RAT-OVERFLOW = FatRat;
-use lib $?FILE.IO.cleanup.parent(2).add("lib");
 use Test;
 
 =begin comment
@@ -44,9 +42,8 @@ my @Test =
     [ [0,0,0,0,0], [0,0,0,0,0], [0,0,1,0,0], [0,0,0,0,0], [0,0,0,0,0], ],  1,
     [ [1,0,0,0,0], [0,1,0,0,0], [0,0,1,0,0], [0,0,0,1,0], [0,0,0,0,1], ],  5,
     [ [1,0,0,0,0], [0,1,0,0,2], [0,0,1,0,0], [0,0,0,1,0], [0,0,0,0,1], ],  3,
-    ;
+;
 plan @Test ÷ 2;
-
 
 multi task( @a where *.end  ==  0        -->Int) {
         ( 1 == @a[0].grep( 1)  and  @a[0].end  == @a[0].grep(0) // 0 )  ??   1 !! 0;
@@ -70,5 +67,3 @@ for @Test -> @in, $exp {
 }
 
 done-testing;
-
-

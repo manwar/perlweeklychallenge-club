@@ -1,8 +1,6 @@
 #!/usr/bin/env raku
 # :vim ft=raku sw=4 expandtab  # 🦋 ∅∪∩∋∈∉⊆ ≡ ≢ «␤ » ∴
 use v6.d;
-INIT $*RAT-OVERFLOW = FatRat;
-use lib $?FILE.IO.cleanup.parent(2).add("lib");
 use Test;
 
 =begin comment
@@ -57,7 +55,6 @@ Level 1: i=3, so $ints[3] += 1
 
 We performed operation Level 1, 1 time and Level 2, 4 times.
 So the total cost would be (1 x $x) + (4 x $y) => (1 x 2) + (4 x 1) => 6
-
 =end comment
 
 my @Test =
@@ -70,7 +67,6 @@ my @Test =
      0,      0,      0,  (2,3,3,3,5),
      0,      0,      1,  (2,3,3,3,5),
     -4,      0,     -1,  (2,3,3,3,5),
-
 
      1,      1,      0,  (2,3,3,3,5),
      9,      1,      2,  (2,3,3,3,5),
@@ -110,8 +106,6 @@ multi task( @int,  Nat $x,  Nat $y where * > $x × 2 ) { Xx( @int, $x    ) }
 
 multi task( @int,  Neg $x,      $y where * ≥ $x × 2 ) { Xx( @int, $x, $y) }
 multi task( @int,  Neg $x,      $y where * < $x × 2 ) { Yx( @int, $x, $y) }
-
-
 
 only task-B( @int, $x, $y --> Int) {
 
@@ -163,10 +157,9 @@ sub Yx( @int, $x, $y) {
    $cost
 }
 
-
 for @Test -> $exp, $x, $y, @int {
-    is task( @int, $x, $y), $exp, ($exp // "Int") ~ " <- " ~ $x ~ ' ∘ ' ~  $y~" ∘ @int.raku()";
-    is task-B( @int, $x, $y), $exp, ($exp // "Int") ~ " <- " ~ $x ~ ' ∘ ' ~  $y~" ∘ @int.raku()";
+    is task(   @int, $x, $y), $exp, ($exp // "Int") ~ " <- $x ∘ $y ∘ @int.raku()";
+    is task-B( @int, $x, $y), $exp, ($exp // "Int") ~ " <- $x ∘ $y ∘ @int.raku()";
 }
 
 done-testing;
