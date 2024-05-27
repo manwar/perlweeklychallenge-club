@@ -52,10 +52,6 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-type answer struct {
-	c, i int
-}
-
 type row []int
 
 func (rw row) countOne() int {
@@ -72,23 +68,25 @@ func (rw row) countOne() int {
 type matrix []row
 
 func (mtx matrix) maxOneRow() int {
-	mx := len(mtx[0])
-	c := mtx[0].countOne()
-	if c == mx {
-		return 1
+	idx := 0
+	mx := len(mtx[idx])
+	cnt := mtx[idx].countOne()
+	if cnt == mx {
+		return idx + 1
 	}
-	ans := answer{c: c}
+	cntMx, cntMxIdx := cnt, idx
 	l := len(mtx)
-	for i := 1; i < l; i++ {
-		c = mtx[i].countOne()
-		if c == mx {
-			return i + 1
+	for idx = 1; idx < l; idx++ {
+		cnt = mtx[idx].countOne()
+		if cnt == mx {
+			return idx + 1
 		}
-		if c > ans.c {
-			ans = answer{c, i}
+		if cnt > cntMx {
+			cntMx = cnt
+			cntMxIdx = idx
 		}
 	}
-	return ans.i + 1
+	return cntMxIdx + 1
 }
 
 func main() {
