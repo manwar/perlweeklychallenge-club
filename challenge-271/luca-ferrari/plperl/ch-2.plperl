@@ -1,0 +1,33 @@
+--
+-- Perl Weekly Challenge 271
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-271>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc271;
+
+CREATE OR REPLACE FUNCTION
+pwc271.task2_plperl( int[] )
+RETURNS SETOF int
+AS $CODE$
+
+   my ( $nums ) = @_;
+
+
+   my $binary = {};
+
+   for ( $nums->@* ) {
+       my $ones = scalar
+       	  	grep { $_ eq '1' }
+		split //, sprintf( "%b", $_ );
+       push $binary->{ $ones }->@* , $_;
+   }
+
+   for my $key ( sort keys $binary->%* ) {
+       return_next( $_ )  for  ( sort $binary->%{ $key }->@* );
+   }
+
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;
