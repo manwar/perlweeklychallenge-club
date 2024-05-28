@@ -20,4 +20,4 @@
 
 ## Blog Post
 
-[Bitwise Distribution](https://packy.dardan.com/b/LS)
+[Only Ones](https://packy.dardan.com/b/MC)

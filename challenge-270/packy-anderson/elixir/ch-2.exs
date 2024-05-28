@@ -3,7 +3,7 @@
 defmodule PWC do
   # get just the indices stored in the map of maps
   defp indicesInMap(mapping) do
-    List.flatten( for i <- Map.values(mapping), do: Map.keys(i) )
+    List.flatten( for i <- Map.values(mapping), do: MapSet.to_list(i) )
   end
 
   def fmtInts(ints) do
@@ -11,13 +11,15 @@ defmodule PWC do
   end
 
   def addToMap(mapping, intVal, i) do
-    submap = Map.put(Map.get(mapping, intVal, %{}), i, 1)
+    submap = MapSet.put(Map.get(mapping, intVal, MapSet.new()), i)
     Map.put(mapping, intVal, submap)
   end
 
   def removeFromMap(mapping, intVal, i) do
-    submap = Map.delete(Map.get(mapping, intVal, %{}), i)
-    if submap == %{} do
+    submap = mapping
+    |> Map.get(intVal, MapSet.new())
+    |> MapSet.delete(i)
+    if MapSet.size(submap) == 0 do
       Map.delete(mapping, intVal)
     else
       Map.put(mapping, intVal, submap)

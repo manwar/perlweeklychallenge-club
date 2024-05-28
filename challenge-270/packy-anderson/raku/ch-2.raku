@@ -92,3 +92,6 @@ solution([4,1], 3, 2);
 
 say "\nExample 2:";
 solution([2, 3, 3, 3, 5], 2, 1);
+
+say "\nExample Ergon:";
+solution([1,2,2], 3, 1);
