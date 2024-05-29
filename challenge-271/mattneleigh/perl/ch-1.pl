@@ -48,8 +48,8 @@ exit(0);
 
 ################################################################################
 # Determine which row (1-indexed) in a binary matrix (consisting solely of
-# zeros and ones) contains the greatest number of ones; if more than one row
-# have the maximum count, the first such instance is reported
+# zeros and ones) contains the greatest number of ones; if multiple rows have
+# the maximum count, the first such instance is reported
 # Takes one argument:
 # * A ref to a 2D array that forms a binary matrix (e.g.
 #       [
