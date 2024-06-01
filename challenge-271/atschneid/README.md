@@ -15,22 +15,22 @@ Now onto the code.
 ## Task 1: Maximum Ones
 
 > You are given a m x n binary matrix.<br/>
-<br/>
+> <br/>
 > Write a script to return the row number containing maximum ones, in case of more than one rows then return smallest row number.<br/>
-<br/>
+> <br/>
 > Example 1<br/>
 > Input: $matrix = [ [0, 1],<br/>
 >                    [1, 0],<br/>
 >                  ]<br/>
 > Output: 1<br/>
-<br/>
+> <br/>
 > Row 1 and Row 2 have the same number of ones, so return row 1.<br/>
 > Example 2<br/>
 > Input: $matrix = [ [0, 0, 0],<br/>
 >                    [1, 0, 1],<br/>
 >                  ]<br/>
 > Output: 2<br/>
-<br/>
+> <br/>
 > Row 2 has the maximum ones, so return row 2.<br/>
 > Example 3<br/>
 > Input: $matrix = [ [0, 0],<br/>
@@ -38,7 +38,7 @@ Now onto the code.
 >                    [0, 0],<br/>
 >                  ]<br/>
 > Output: 2<br/>
-<br/>
+> <br/>
 > Row 2 have the maximum ones, so return row 2.<br/>
 
 One thing that surprised me here, we want the 1 indexed row. For example, I would have expected the first solution to be 0, the zeroth row. But, I'll solve the problem I'm given.
@@ -65,13 +65,13 @@ And that's about it. I return that `$idx` value, then increment it (0 to 1 index
 ## Task 2: Sort by 1 bits
 
 > You are give an array of integers, @ints.A<br/>
-<br/>
+> <br/>
 > Write a script to sort the integers in ascending order by the number of 1 bits in their binary representation. In case more than one integers have the same number of 1 bits then sort them in ascending order.<br/>
-<br/>
+> <br/>
 > Example 1<br/>
 > Input: @ints = (0, 1, 2, 3, 4, 5, 6, 7, 8)<br/>
 > Output: (0, 1, 2, 4, 8, 3, 5, 6, 7)<br/>
-<br/>
+> <br/>
 > 0 = 0 one bits<br/>
 > 1 = 1 one bits<br/>
 > 2 = 1 one bits<br/>
@@ -84,7 +84,7 @@ And that's about it. I return that `$idx` value, then increment it (0 to 1 index
 > Example 2<br/>
 > Input: @ints = (1024, 512, 256, 128, 64)<br/>
 > Output: (64, 128, 256, 512, 1024)<br/>
-<br/>
+> <br/>
 > All integers in the given array have one 1-bits, so just sort them in ascending order.<br/>
 
 At first I thought I was going to end up reusing some pieces of my solution to Task 1 for this, but it turned out to be just different enough that I didn't think it was worth it.
