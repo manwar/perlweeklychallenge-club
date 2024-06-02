@@ -18,7 +18,7 @@ sub count_sort_1_bits {
     }
 
     # sort keys by their values in ascending order
-    my @sorted_keys_asc = sort { $hash{$a} <=> $hash{$b} } sort(keys %hash);
+    my @sorted_keys_asc = sort( { $hash{$a} <=> $hash{$b} or $a <=> $b } (sort keys %hash) );
 
     # join for the right output
     print("(", join(", ", @sorted_keys_asc), ")\n");
@@ -27,3 +27,10 @@ sub count_sort_1_bits {
 # TESTS
 my @numbers = (0, 1, 2, 3, 4, 5, 6, 7, 8);
 count_sort_1_bits(@numbers); # Output: (0, 1, 2, 4, 8, 3, 5, 6, 7)
+
+@numbers = (1024, 512, 256, 128, 64);
+count_sort_1_bits(@numbers); # Output: (64, 128, 256, 512, 1024)
+
+@numbers = (7, 23, 512, 256, 128, 64);
+count_sort_1_bits(@numbers); # Output: (64, 128, 256, 512, 7, 23)
+
