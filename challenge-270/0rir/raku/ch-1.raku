@@ -4,7 +4,7 @@ use v6.d;
 use Test;
 
 =begin comment
-Task 1: Special Positions       Submitted by: Mohammad Sajid Anwar
+270-1: Special Positions       Submitted by: Mohammad Sajid Anwar
 
 Given a m x n binary matrix, return the number of special positions.
 
