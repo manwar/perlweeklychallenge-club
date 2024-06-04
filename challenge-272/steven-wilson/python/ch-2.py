@@ -12,10 +12,11 @@ def string_score(string):
     30
     >>> string_score('raku')
     37
+    >>> string_score('')
+    0
+    >>> string_score("*")
+    0
     '''
-    if len(string) < 2:
-        raise ValueError("String argument should have at least 2 characters.")
-
     return sum(abs(ord(a) - ord(b)) for a, b in zip(string, string[1:]))
 
 
