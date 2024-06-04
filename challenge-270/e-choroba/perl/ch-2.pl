@@ -17,15 +17,11 @@ sub equalize_array($x, $y, $ints) {
         push @agenda, [$price + $x, \@e] unless $seen{"@e"}++;
 
         if (@$elements > 2 && 2 * $x > $y) {
-            for my $i (1, $#$elements) {
-                my @e = sort { $a <=> $b } $elements->[0] + 1,
-                                           $elements->[$i] + 1,
-                                           @$elements[grep $_ != 0
-                                                           && $_ != $i,
-                                                      0 .. $#$elements];
+            my @e = sort { $a <=> $b } $elements->[0] + 1,
+                                       $elements->[1] + 1,
+                                       @$elements[2 .. $#$elements];
 
-                push @agenda, [$price + $y, \@e] unless $seen{"@e"}++;
-            }
+            push @agenda, [$price + $y, \@e] unless $seen{"@e"}++;
         }
 
         @agenda = sort { $a->[0] <=> $b->[0] } @agenda;
