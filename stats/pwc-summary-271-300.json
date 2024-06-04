@@ -2,13 +2,6 @@
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
    },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-06-04 10:34:55 GMT"
-   },
    "xAxis" : {
       "categories" : [
          "Simon Reinhardt",
@@ -43,10 +36,9 @@
          "Vinod Kumar Pal"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "yAxis" : {
       "title" : {
@@ -54,9 +46,14 @@
       },
       "min" : 0
    },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-06-04 18:57:58 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             4,
             1,
@@ -82,13 +79,14 @@
             8,
             0,
             2,
-            387,
+            389,
             24,
             18,
             17,
             18,
             0
-         ]
+         ],
+         "name" : "Perl"
       },
       {
          "name" : "Raku",
@@ -117,7 +115,7 @@
             0,
             2,
             0,
-            394,
+            396,
             0,
             0,
             2,
@@ -126,6 +124,7 @@
          ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -157,11 +156,12 @@
             3,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "chart" : {
-      "type" : "column"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    }
 }
