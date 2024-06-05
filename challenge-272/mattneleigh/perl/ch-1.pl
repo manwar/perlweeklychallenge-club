@@ -18,7 +18,7 @@ foreach my $address (@addresses){
     printf(
         "Input: \$ip = \"%s\"\nOutput: \"%s\"\n\n",
         $address,
-        defranged_address_from_ip($address)
+        defanged_address_from_ip($address)
     );
 }
 
@@ -30,14 +30,14 @@ exit(0);
 
 
 ################################################################################
-# Produce a defranged version of an IPv4 address- that is to say, one in which
+# Produce a defanged version of an IPv4 address- that is to say, one in which
 # every '.' is replaced with '[.]'
 # Takes one argument:
 # * A string that contains an IPv4 address (e.g. "1.1.1.1")
-# Returnx:
-# * The defranged IP address (e.g. "1[.]1[.]1[.]1")
+# Returns:
+# * The defanged IP address (e.g. "1[.]1[.]1[.]1")
 ################################################################################
-sub defranged_address_from_ip{
+sub defanged_address_from_ip{
     my $addr = shift();
 
     # Just substitute every period for a bracketed
