@@ -11,13 +11,15 @@
 * [Task 2](perl/ch-2.pl)
 
 ## Guest Language: Python
+
 * [Task 1](python/ch-1.py)
 * [Task 2](python/ch-2.py)
 
 ## Guest Language: Elixir
+
 * [Task 1](elixir/ch-1.exs)
 * [Task 2](elixir/ch-2.exs)
 
 ## Blog Post
 
-[Only Ones](https://packy.dardan.com/b/MC)
+[Defanged Addresses & String Scores](https://packy.dardan.com/b/MS)
