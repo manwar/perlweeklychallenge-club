@@ -1,133 +1,242 @@
-# Semi-Functional Solutions
+# Defang 
 
-**Challenge 271 solutions in Perl by Andrew Schneider**
+**Challenge 272 solutions by Andrew Schneider**
 
-### Intro
-This is my first Perl Weekly Challenge. I'm mostly a Python programmer in my day job so I like the chance to develop some other skills. I have a soft spot in my heart for Perl, let's say I'm a Perl slacker. I was surprised how functional this turned out - like functional programming. Also semi-surprised my solution functions. Har har. I have big plans for keeping up with the PWC using a randomly rotating selection of languages each week. I'm working on a script to select the language(s) I'll use -- stay tuned for that.
+Let's get right to the problems
 
-### What did we learn?
-It took me a little while to get the hang of multi-dimensional lists in Perl. Working on it for a little while eventually knocked something loose in the recesses of my brain, and now I feel sufficiently competent handling dimensions up to and including 3. As I said, I'm surprised with how functional these solutions turned out. It *could* be that is just the mindspace I'm in lately (see my Haskell contribution which I wrote after this one), or the problems just seemed suited to this. Anyway, functionally turned out to be a way to do it.
+## Task 1: Defang IP Address
+Submitted by: Mohammad Sajid Anwar
 
-One gotcha I bumped into a few times is the difference between Perl versions. I started using 5.38, then 5.34, then back to 5.38, then 5.34 again, and finally 5.38. Along the way somewhere I picked up subroutine signatures[^1]. After much confusion and cursing I finally realized these weren't added until 5.36, right in the sweet spot between the versions I was trying. The lesson here I suppose is Read the Docs.
-
-Now onto the code.
-
-## Task 1: Maximum Ones
-
-> You are given a m x n binary matrix.<br/>
+> You are given a valid IPv4 address.<br/>
 > <br/>
-> Write a script to return the row number containing maximum ones, in case of more than one rows then return smallest row number.<br/>
+> Write a script to return the defanged version of the given IP address.<br/>
+> <br/>
+> A defanged IP address replaces every period “.” with “[.]".<br/>
 > <br/>
 > Example 1<br/>
-> Input: $matrix = [ [0, 1],<br/>
->                    [1, 0],<br/>
->                  ]<br/>
-> Output: 1<br/>
-> <br/>
-> Row 1 and Row 2 have the same number of ones, so return row 1.<br/>
+> Input: $ip = "1.1.1.1"<br/>
+> Output: "1[.]1[.]1[.]1"<br/>
 > Example 2<br/>
-> Input: $matrix = [ [0, 0, 0],<br/>
->                    [1, 0, 1],<br/>
->                  ]<br/>
-> Output: 2<br/>
-> <br/>
-> Row 2 has the maximum ones, so return row 2.<br/>
-> Example 3<br/>
-> Input: $matrix = [ [0, 0],<br/>
->                    [1, 1],<br/>
->                    [0, 0],<br/>
->                  ]<br/>
-> Output: 2<br/>
-> <br/>
-> Row 2 have the maximum ones, so return row 2.<br/>
+> Input: $ip = "255.101.1.0"<br/>
+> Output: "255[.]101[.]1[.]0"<br/>
 
-One thing that surprised me here, we want the 1 indexed row. For example, I would have expected the first solution to be 0, the zeroth row. But, I'll solve the problem I'm given.
+Really I think this problem wants a one-liner solution. Most of my chance to use Perl at work is writing one-liners like this guy
 
-My solution here is to sum each row of the matrix. I do this using the old map reduce design
-
-```perl
-	my @counts = map { reduce {$a + $b} 0, $_->@* } @matrix;
+```bash
+perl -lpe 's/\./[.]/g'
 ```
 
-Then find the first index of the max value over all the summed rows. I use a loop here for this (would recursion have been a more functional design?). I'm sure there is a better way to do this, but it works, and hey, this is my first PWC.
+which actually works just the same in sed
+
+```bash
+sed 's/\./[.]/g'
+```
+
+What we're doing here is a simple regex substitution on a period literal (gotta escape special characters) replacing with `[.]`
+
+But, it didn't just feel right to get away with this one so easily. Where's the boilerplate? What am I learning? So I coded up a fully respectable Perl version.
+
+The heart of the program is this little function
 
 ```perl
-    my $idx = 0;
-    for (0..scalar(@counts) - 1) {
-		if ($counts[$_] > $counts[$idx]) {
-			$idx = $_;
+sub defang {
+    shift;
+    s/\./[.]/g;
+    return $_;
+}
+```
+
+which is powered by much Perl magic. It expects a string variable, which gets `shift`ed into `$_`. Then substitution automagically happens on our `$_` variable by `s/\./[.]g;` (cf. `$_ =~ s/\./[.]/g;` for the same result with 90% less magic). Then pass back the substituted value in `$_`. I wondered if Perl would automagically return the special variable `$_` if the last line was simply `return;` and I learned it would not. So the final line is more sleight-of-hand than magic, but still. I often find it so much easier to use Perl's "do what I want" power on hidden magic variables that I contort my functions into horribly unnatural shapes just to get the magic to do what I need it to. Fortunately this particular function actually flows pretty naturally.
+
+Not satisfied to simply code this up in Perl I worked on a few other solutions.
+
+Originally I had coded up my C implementation using `strtok_r`, but I realized it wasn't quite doing what I wanted.
+
+```c
+void defang(char * input, char * output) {
+	//first design
+	
+	char * token, * next_token;
+
+	// blank the string contents in ouput
+	strcpy(output, "");
+	token = strtok_r(input, ".", &next_token);
+	while (token) {
+		strcat(output, token);
+		printf("  %s\n", next_token);
+		token = strtok_r(NULL, ".", &next_token);
+		if (token) {
+			// if its not the last
+			strcat(output, "[.]");
 		}
-    }
+	}
+}
 ```
 
-And that's about it. I return that `$idx` value, then increment it (0 to 1 indexing) outside the function for no particularly good reason.
+It handles the example cases just fine, but based on a strict reading of the specification, every '.' should be replaced by '[.]', this implementation fails on basically all edge cases: leading, multiple, and trailing '.'s all get dropped. I thought about how to handle these cases in general, and decided 'every' means *every* so in case like "..." we'd expect to get "[.][.][.]". In keeping consistency across all of my implementations I decided on this one
 
-## Task 2: Sort by 1 bits
+```c
+void defang(char * input, char * output) {
+	size_t out_index = 0;
+	for (; *input != '\0'; input++) {
+		if (*input == '.') {
+			output[out_index] = '[';
+			output[out_index+1] = '.';
+			output[out_index+2] = ']';
+			out_index += 3;
+		}
+		else {
+			output[out_index] = *input;
+			out_index++;
+		}
+	}
+	output[out_index] = '\0';
+}
+```
 
-> You are give an array of integers, @ints.A<br/>
+Here I'm crawling along the string one character at a time. If the char is '.' then add the chars '[', '.', ']' to the output string, otherwise just add the char itself. Interesting that my crude solution here is about as long as the one using `strtok`. If this problem had been *slightly* more complicated I might have had to use a library.
+
+Next up, Prolog. Getting anything done in Prolog is always a trip for me. It takes a little while to adjust, in particular, I always forget I have to pass the output variable to the function. With Prolog, at very high level, you're not really saying "compute this function and store the return value in X" as much as "give me an X that is a solution to this function." What's really cool is that often you can flip that to be "here is an X that is the solution to this function, give its input Y that yields X" or something like that. Besides all that, the syntax turns out to be very similar to a functional language like Haskell or Lisp. Anyway, I digress.
+
+I decided to write this in a way that could be run using GNU Prolog. I don't remember why I decided that, maybe I wanted a challenge. Because once I started running into issues and started Googling (DuckDuckGoing really) for answers I got a lot of results telling me how to do the thing I wanted very easily in SWI Prolog, which is a much more fully-featured, batteries included Prolog implementation. In particular, handling strings is not easy to do in Prolog in general, but SWI has adding a lot of functionality around this. If my understanding is correct, in Prolog a string is just a list of chars, except that it's not. For instance, you can't pattern match on it. But if you print a string you get a list of char codes, so it's kind of a lose-lose. The solution, or rather *a* solution, or better yet *my* solution is to convert strings to atoms. Prolog loves atoms and there are functions to convert a list of chars into an atom, and by the Prolog reflexive property, vice versa. Printing an atom gives it's name as you would expect, so that is what I use for output too. So in my roundabout Prolog solution, I start by converting a string to a list of chars
+
+```prolog
+str_to_chars(S, Cs) :- atom_codes(X, S), atom_chars(X, Cs).
+```
+
+If we initialize this function as `str_to_chars("hello", Cs).` it first looks for a solution to `atom_codes(X, "hello")` which is, it looks for an atom whose characters match the list of char codes (recall the string is represented as a list of char codes) of "hello" (explicitly `[104,101,108,108,111]`). This is exactly the atom `hello` which is bound to the variable `X`. Next it tries `atom_chars(X, Cs)` which is now `atom_chars(hello, Cs)` which attempts to find a list of chars (not char codes here) which make up the characters of `hello`, obviously giving `['h', 'e', 'l', 'l', 'o']` which gets bound to the variable `Cs`. Phew. There's got to be a better way to do this, but this works.
+
+Now that we have a list of chars, the rest is pretty easy. The easy part was the hard part. What we'll do is walk through the list of chars. If the list is empty, return an empty list. If the first char is '.' return the list `['[', '.', ']']` appended to the defanged list minus its head, and otherwise append the head to the defanged list minus its head. Like so
+
+```prolog
+defang_chars([], []).
+defang_chars(['.'|Xs], ['[', '.', ']'|Y]) :- defang_chars(Xs, Y), !.
+defang_chars([X|Xs], [X|Y]) :- defang_chars(Xs, Y).
+```
+
+You know I really abused terminology there. Prolog doesn't return anything! It just shows how hard it is to get my mind into logic programming mode. Really it's (constructive) matching. One thing to point out is the cut `!` operator in line 2. What I want here is that if we match a '.' then commit to it. Don't backtrack on to line 3, since that won't give us the correct output.
+
+I'll mention briefly my Racket solution. After struggling through my Prolog implementation, this one was a breeze. The logic is basically the same, convert strings to lists, then recursively operate on the head of the list.
+
+```racket
+(define (defang-list s)
+  (let loop ([s s])
+    (if (empty? s)
+        '()
+        (let ([first (car s)] [rest (cdr s)])
+          (case first
+            [(#\.) (append '(#\[ #\. #\]) (loop rest))]
+            [else (cons first (loop rest))])))))
+```
+
+One cool thing I dug up was `raco fmt` which is a code formatter for Racket. I used to think, "I'm a freewheelin' guy, don't fence me in, I'll format my code however I feel," but now I know that guy was a jerk! Find a style and stick with it, it will make your life easier. It doesn't matter so much what format you use as that you use a format. I read somewhere, and I agree.
+
+Funny side note, I had mentally converted 'defang' to 'defrang', and coded up all my solutions using 'defrang' in the function names somewhere, then had to do a substitution to get things back to normal. Maybe that's an idea for a future PWC - fix all the function names in some C code or something like that. Also, defrang ... I like that word. I'll have to rememebr to try to use that somewhere.
+
+
+## Task 2: String Score
+Submitted by: Mohammad Sajid Anwar
+
+> You are given a string, $str.<br/>
 > <br/>
-> Write a script to sort the integers in ascending order by the number of 1 bits in their binary representation. In case more than one integers have the same number of 1 bits then sort them in ascending order.<br/>
+> Write a script to return the score of the given string.<br/>
+> <br/>
+> The score of a string is defined as the sum of the absolute difference between the ASCII values of adjacent characters.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @ints = (0, 1, 2, 3, 4, 5, 6, 7, 8)<br/>
-> Output: (0, 1, 2, 4, 8, 3, 5, 6, 7)<br/>
+> Input: $str = "hello"<br/>
+> Output: 13<br/>
 > <br/>
-> 0 = 0 one bits<br/>
-> 1 = 1 one bits<br/>
-> 2 = 1 one bits<br/>
-> 4 = 1 one bits<br/>
-> 8 = 1 one bits<br/>
-> 3 = 2 one bits<br/>
-> 5 = 2 one bits<br/>
-> 6 = 2 one bits<br/>
-> 7 = 3 one bits<br/>
+> ASCII values of characters:<br/>
+> h = 104<br/>
+> e = 101<br/>
+> l = 108<br/>
+> l = 108<br/>
+> o = 111<br/>
+> <br/>
+> Score => |104 - 101| + |101 - 108| + |108 - 108| + |108 - 111|<br/>
+>       => 3 + 7 + 0 + 3<br/>
+>       => 13<br/>
 > Example 2<br/>
-> Input: @ints = (1024, 512, 256, 128, 64)<br/>
-> Output: (64, 128, 256, 512, 1024)<br/>
+> Input: "perl"<br/>
+> Output: 30<br/>
 > <br/>
-> All integers in the given array have one 1-bits, so just sort them in ascending order.<br/>
+> ASCII values of characters:<br/>
+> p = 112<br/>
+> e = 101<br/>
+> r = 114<br/>
+> l = 108<br/>
+> <br/>
+> Score => |112 - 101| + |101 - 114| + |114 - 108|<br/>
+>       => 11 + 13 + 6<br/>
+>       => 30<br/>
+> Example 3<br/>
+> Input: "raku"<br/>
+> Output: 37<br/>
+> <br/>
+> ASCII values of characters:<br/>
+> r = 114<br/>
+> a = 97<br/>
+> k = 107<br/>
+> u = 117<br/>
+> <br/>
+> Score => |114 - 97| + |97 - 107| + |107 - 117|<br/>
+>       => 17 + 10 + 10<br/>
+>       => 37<br/>
 
-At first I thought I was going to end up reusing some pieces of my solution to Task 1 for this, but it turned out to be just different enough that I didn't think it was worth it.
+What I like most about this challenge is it finally gives us a way to directly compare programming languages. Now if someone asks if Raku is better than Perl I can say 37 > 30 so yes!
 
-So first we need to convert our integers to some kind of binary representation. In Perl it makes a lot if sense to go to strings, since converting between strings that look like numbers and numbers that look like strings is covered in minute 2 of the 15 Minutes to Perl crash course.
-
-```perl
-    my @bins = map { sprintf "%b", $_ } @input;
-```
-
-Next we need to sum them up. (Is there a better way to do this? I seem to be repeating this pattern alot.)
-
-```perl
-    my @bin_sums = map { reduce { $a + $b } 0, split(//, $_) } @bins;
-```
-
-Next I make a list of tuples (pairs) of ( binary sum, integer value ), which I can sort further on. Eep! It's another loop. I'm really harming my functional credentials.
-
-```perl
-	my @tuple_list = ();
-		for (0..scalar(@bin_sums) - 1) {
-			push @tuple_list, ([ $bin_sums[$_], $input[$_]]);
-	}
-```
-
-Then I sort this super-list, first on the 0th index, then on the 1st
-
-```perl
-    my @sorted_list = sort { ${$a}[0] <=> ${$b}[0] || ${$a}[1] <=> ${$b}[1] } @tuple_list;
-```
-
-Then map back just to a simple list of integers
+Let's see some code
 
 ```perl
-	map { ${$_}[1] } @sorted_list;
+sub sum_char_abs_diff ($s) {
+    my @slist = map { ord } split '', $s;
+    my $sum = 0;
+    for my $idx ( 1..scalar(@slist) - 1 ) {
+	$sum += abs( $slist[$idx] - $slist[$idx-1] );
+    }
+    return $sum;
+}
 ```
 
-I think that wraps it up.
+Steps
 
-## Post script
+```c
+int sum_abs_char_diffs(const char * s) {
+  const size_t s_len = strlen(s);
 
-There wasn't a ton to figure out here, mostly it was an engineering challenge (how do I do *X*?). Plus some self inflicted versioning pain. Really with the amount of functional style stuff going in here, I wonder if I could one-line these. Hmm... Future work I suppose.
+  int abs_diff, sum = 0;
+  for (int i=1; i < s_len; i++) {
+    abs_diff = abs(s[i] - s[i-1]);
+    sum += abs_diff;
+  }
+  return sum;
+}
+```
 
-Thanks for the challenge!
+Plays to C's strengths, a char is basically an int! I wonder if I can do this in perl?
 
-[^1]: Really? Only just in 5.36?
+```prolog
+sum_char_diffs([], 0).
+sum_char_diffs([_], 0).
+sum_char_diffs([A, B|Xs], S) :-
+    A > B,
+    sum_char_diffs([B|Xs], S2), S is S2 + A - B.
+sum_char_diffs([A, B|Xs], S) :-
+    B >= A,
+    sum_char_diffs([B|Xs], S2), S is S2 + B - A.
+```
+
+The trickiest bit here is that I didn't know if there's an absolute value function so I just treat `A > B` and `B >= A` separately. The fact that Prolog thinks of strings as a list of char codes works well for me here, no conversion necessary!
+
+```racket
+(define (sum-abs-char-diffs s)
+  (let* ([char-list (string->list s)] [num-list (map char->integer char-list)])
+    (let loop ([num-list num-list] [diff-sum 0])
+      (if (> 2 (length num-list))
+          diff-sum
+          (loop (cdr num-list) (+ diff-sum (abs (- (car num-list) (cadr num-list)))))))))
+```
+
+
+#### **Thanks!**
