@@ -1,4 +1,4 @@
-# Defang and Abs-Sum-Diffs
+# Defang and Sum-Abs-Char-Diffs
 
 **Challenge 272 solutions by Andrew Schneider**
 
