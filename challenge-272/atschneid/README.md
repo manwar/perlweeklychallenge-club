@@ -30,7 +30,7 @@ Really I think this problem wants a one-liner solution. Most of my chance to use
 perl -lpe 's/\./[.]/g'
 ```
 
-which actually works just the same in sed
+which converts exactly into a legal sed expression
 
 ```bash
 sed 's/\./[.]/g'
