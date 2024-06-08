@@ -1,0 +1,100 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/listmax {
+    { max } reduce
+} bind def
+
+/reduce { % array proc -> value
+    2 dict begin
+    /p exch def
+    /a exch def
+    a 0 get
+    1 1 a length 1 sub {
+        a exch get
+        p
+    } for
+    end
+} bind def
+
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/maximumones {
+    0 dict begin
+    /ax exch { { add } reduce } map def
+    /am ax listmax def
+    -1
+    ax enumerate.array {
+        aload pop
+        /n exch def
+        /i exch def
+        n am eq {
+            pop i
+            exit
+        } if
+    } forall
+    1 add
+    end
+} bind def
+
+(maximumones) test.start
+[[0 1] [1 0]] maximumones 1 eq test
+[[0 0 0] [1 0 1]] maximumones 2 eq test
+[[0 0] [1 1] [0 0]] maximumones 2 eq test
+test.end

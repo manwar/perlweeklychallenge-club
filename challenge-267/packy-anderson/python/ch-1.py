@@ -19,7 +19,7 @@ def comma_join(arr):
     return ', '.join(map(lambda i: str(i), arr))
 
 def solution(ints):
-    print(f'Input: @arr = ({comma_join(ints)})')
+    print(f'Input: @ints = ({comma_join(ints)})')
     sign, explain = productSign(ints)
     print(f'Output: {sign}\n{explain}')
 

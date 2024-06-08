@@ -1,0 +1,36 @@
+--
+-- Perl Weekly Challenge 269
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-269>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc269;
+
+CREATE OR REPLACE FUNCTION
+pwc269.task2_plperl( int[] )
+RETURNS SETOF int
+AS $CODE$
+
+   my ( $nums ) = @_;
+
+   my ( @array1, @array2 );
+   my @nums = $nums->@*;
+
+   push @array1, shift @nums;
+   push @array2, shift @nums;
+   	 
+   while ( @nums ) {
+
+   	 if ( $array1[ $#array1 ] > $array2[ $#array2 ] ) {
+	    push @array1, shift @nums;
+	 }
+	 else {
+	   push @array2, shift @nums;
+	 }
+   }
+
+   return_next( $_ ) for ( @array1, @array2 );
+   return undef;
+   
+$CODE$
+LANGUAGE plperl;

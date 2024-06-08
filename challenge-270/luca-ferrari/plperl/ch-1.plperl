@@ -1,0 +1,41 @@
+--
+-- Perl Weekly Challenge 270
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-270>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc270;
+
+/**
+testdb=> select distinct( r, c ) from  pwc270.task1_plperl( array[ [ 1, 0, 0 ], [ 1, 0, 1 ], [0, 0 , 0 ] ] );
+  row  
+-------
+ (1,2)
+(1 row)
+
+*/
+CREATE OR REPLACE FUNCTION
+pwc270.task1_plperl( int[][] )
+RETURNS TABLE( r int, c int )
+AS $CODE$
+
+   my ( $matrix ) = @_;
+   my @pnes;
+
+   for my $row ( 0 .. $matrix->@* -1 ) {
+       for my $column ( 0 .. $matrix->@[ $row ]->@* -1 ) {
+       	   next if ( $matrix->@[ $row ]->@[ $column ] != 1 );
+	   push @ones, [ $row, $column, sprintf( '%02d-%02d', $row, $column ) ];
+       }
+   }
+
+   for my $position ( @ones ) {
+       if ( grep( { $position->[ 2 ] != $_->[ 2] && ( $position->[ 0 ] == $_->[ 0 ] || $position->[ 1 ] == $_->[ 1 ] ) } @ones ) == 0 ) {
+       	  return_next( { r => $position->@[ 0 ], c => $position->@[ 1 ] } );
+       }
+   }
+
+
+   return undef;
+$CODE$
+LANGUAGE plperl;

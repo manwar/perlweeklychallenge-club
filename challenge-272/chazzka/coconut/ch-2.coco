@@ -1,0 +1,6 @@
+def string_score(s, accum = 0):
+    match s:
+        case [_]:
+            return accum
+        case [head, sec] + tail:
+            return string_score([sec] + tail, accum + abs(ord(sec) - ord(head)))
