@@ -1,6 +1,8 @@
-# Defang and Sum-Abs-Char-Diffs
+# Defang and Sum-Abs-Char-Diffs 
 
 **Challenge 272 solutions by Andrew Schneider**
+
+Being a stream of consciousness write up of some details of my code for (PWC 272)[https://theweeklychallenge.org/blog/perl-weekly-challenge-272/]
 
 Let's get right to the problems
 
@@ -19,6 +21,8 @@ Submitted by: Mohammad Sajid Anwar
 > Example 2<br/>
 > Input: $ip = "255.101.1.0"<br/>
 > Output: "255[.]101[.]1[.]0"<br/>
+
+### Perl
 
 Really I think this problem wants a one-liner solution. Most of my chance to use Perl at work is writing one-liners like this guy
 
@@ -50,12 +54,12 @@ which is powered by much Perl magic. It expects a string variable, which gets `s
 
 Not satisfied to simply code this up in Perl I worked on a few other solutions.
 
+### C
+
 Originally I had coded up my C implementation using `strtok_r`, but I realized it wasn't quite doing what I wanted.
 
 ```c
-void defang(char * input, char * output) {
-	//first design
-	
+void defang_first_try(char * input, char * output) {
 	char * token, * next_token;
 
 	// blank the string contents in ouput
@@ -73,7 +77,7 @@ void defang(char * input, char * output) {
 }
 ```
 
-It handles the example cases just fine, but based on a strict reading of the specification, every '.' should be replaced by '[.]', this implementation fails on basically all edge cases: leading, multiple, and trailing '.'s all get dropped. Although I'm really overthinking this here, because, again, on a strict reading of the instructions, we are given a *valid IP address* so it shouldn't really come up. Still, I thought about how to handle these cases in general, and decided 'every' means *every* (and outweighs *valid*) so in case like "..." we'd expect to get "[.][.][.]". In keeping consistency across all of my implementations I decided on this one
+It handles the example cases just fine, but based on a strict reading of the specification, every '.' should be replaced by '[.]', this implementation fails on basically all edge cases: leading, multiple, and trailing '.'s all get dropped. Although I'm really overthinking this here, because, again, on a strict reading of the instructions, we are given a *valid IP address* so it shouldn't really come up. Still, I thought about how to handle these cases in general, and decided 'every' means *every* (and outweighs *valid*) so if we were to get an input like "..." I'd expect the output to be "[.][.][.]". In keeping consistency across all of my implementations I decided on this one
 
 ```c
 void defang(char * input, char * output) {
@@ -96,9 +100,11 @@ void defang(char * input, char * output) {
 
 Here I'm crawling along the string one character at a time. If the char is `'.'` then add the chars `'[', '.', ']'` to the output string, otherwise just add the char itself. Interesting that my crude solution here is about as long as the one using `strtok`. If this problem had been *slightly* more complicated I might have had to use a library.
 
+### Prolog
+
 Next up, Prolog. Getting anything done in Prolog is always a trip for me. It takes a little while to adjust, in particular, I always forget I have to pass the output variable to the function. With Prolog, at very high level, you're not really saying "compute this function and store the return value in X" as much as "give me an X that is a solution to this function." What's really cool is that often you can flip that to be "here is an X that is the solution to this function, give its input Y that yields X" or something like that. Besides all that, the syntax turns out to be very similar to a functional language like Haskell or Lisp. Anyway, I digress.
 
-I decided to write this in a way that could be run using GNU Prolog. I don't remember why I decided that, maybe I wanted a challenge. Because once I started running into issues and started Googling (DuckDuckGoing really) for answers I got a lot of results telling me how to do the thing I wanted very easily in SWI Prolog, which is a much more fully-featured, batteries included Prolog implementation. In particular, handling strings is not easy to do in Prolog in general, but SWI has adding a lot of functionality around this. If my understanding is correct, in Prolog a string is just a list of chars, except that it's not. For instance, you can't pattern match on it. But if you print a string you get a list of char codes, so it's kind of a lose-lose. The solution, or rather *a* solution, or better still *my* solution is to convert strings to atoms. Prolog loves atoms and there are functions to convert a list of chars into an atom, and by the Prolog reflexive property, vice versa. Printing an atom gives it's name as you would expect, so that is what I use for output too. So in my roundabout Prolog solution, I start by converting a string to a list of chars
+I decided to write this in a way that could be run using GNU Prolog. I don't remember why I decided that, maybe I wanted a challenge. Because once I started running into issues and started Googling ([DuckDuckGoing](https://duckduckgo.com) really) for answers I got a lot of results telling me how to do the thing I wanted very easily in SWI Prolog, which is a much more fully-featured, batteries included Prolog implementation. In particular, handling strings is not easy to do in Prolog in general, but SWI has adding a lot of functionality around this. If my understanding is correct, in Prolog a string is just a list of chars, except that it's not. For instance, you can't pattern match on it. But if you print a string you get a list of char codes, so it's kind of a lose-lose. The solution, or rather *a* solution, or better still *my* solution is to convert strings to atoms. Prolog loves atoms and there are functions to convert a list of chars into an atom, and by the Prolog reflexive property, vice versa. Printing an atom gives it's name as you would expect, so that is what I use for output too. So in my roundabout Prolog solution, I start by converting a string to a list of chars
 
 ```prolog
 str_to_chars(S, Cs) :- atom_codes(X, S), atom_chars(X, Cs).
@@ -116,6 +122,8 @@ defang_chars([X|Xs], [X|Y]) :- defang_chars(Xs, Y).
 
 You know I really abused terminology there. Prolog doesn't return anything! It just shows how hard it is to get my mind into logic programming mode. Really it's (constructive) matching. One thing to point out is the cut `!` operator in line 2. What I want here is that if we match a `'.'` then commit to it. Don't backtrack and end up on line 3, since that won't give us the correct output.
 
+### Racket
+
 I'll mention briefly my Racket solution. After struggling through my Prolog implementation, this one was a breeze. The logic is basically the same, convert strings to lists, then recursively operate on the head of the list.
 
 ```racket
@@ -130,6 +138,8 @@ I'll mention briefly my Racket solution. After struggling through my Prolog impl
 ```
 
 One cool thing I dug up was `raco fmt` which is a code formatter for Racket. I used to think, "I'm a freewheelin' guy, don't fence me in, I'll format my code however I feel," but now I know that guy was a jerk! Find a style and stick with it, it will make your life easier. It doesn't matter so much what format you use as that you use a format. I read that somewhere once, and I now agree.
+
+### ***
 
 Funny side note, I had mentally converted 'defang' to 'defrang', and coded up all my solutions using 'defrang' in the function names somewhere, then had to do a substitution to get things back to normal. Maybe that's an idea for a future PWC - fix all the function names in some C code or something like that. Also, defrang ... I like that word. I'll have to remember to try to use that somewhere.
 
@@ -190,6 +200,8 @@ This is a cool one. I could imagine some variation of this being used to encrypt
 
 Let's see some code
 
+### Perl
+
 ```perl
 sub sum_char_abs_diff ($s) {
     my @slist = map { ord } split '', $s;
@@ -205,24 +217,28 @@ Here is the Perl function that does basically all the work. It takes a string, s
 
 It looks like a pretty clean solution to me this time. I wonder if I could one-line it.
 
+### C
+
 The C code is very similar to the Perl solution
 
 ```c
 int sum_abs_char_diffs(const char * s) {
-  const size_t s_len = strlen(s);
+	const size_t s_len = strlen(s);
 
-  int abs_diff, sum = 0;
-  for (int i=1; i < s_len; i++) {
-    abs_diff = abs(s[i] - s[i-1]);
-    sum += abs_diff;
-  }
-  return sum;
+	int abs_diff, sum = 0;
+	for (int i=1; i < s_len; i++) {
+		abs_diff = abs(s[i] - s[i-1]);
+		sum += abs_diff;
+	}
+	return sum;
 }
 ```
 
 The main thing to point out here is that it plays to C's strengths, a char is basically an int! I though about trying some implicit casting in Perl, but it is to eager to do some `atoi` magic. Here we can simply do the arithmetic on the chars and the results come out right.
 
-Prolog next
+### Prolog
+
+Basically everything happens in this function
 
 ```prolog
 sum_char_diffs([], 0).
@@ -237,6 +253,8 @@ sum_char_diffs([A, B|Xs], S) :-
 
 Here we match explicitly on an empty string or a string of length 1 and bind the value 0, otherwise we bind the sum of the difference of the first two elements plus the value from the same function called recursively on the list minus its head. The trickiest bit here is that I didn't know if there's an absolute value function so I just treat `A > B` and `B >= A` separately. The fact that Prolog thinks of strings as a list of char codes works well for me here, no conversion necessary! Take that!
 
+### Racket
+
 Finally some Racket. Despite the looks of this one it was easy again to write.
 
 ```racket
@@ -250,6 +268,8 @@ Finally some Racket. Despite the looks of this one it was easy again to write.
 
 The logic here is basically the same as for Prolog, in a functional form (returns a value). I wasn't sure what to do about the stack of closing parens that built up at the end, but `raco fmt` just bunched them all together on the last line, so I'll accept that.
 
+### Conclusion
+
 Ok. This concludes my long, rambling description of my various solutions to this week's challenge. I'm looking forward to seeing what comes up next week, and maybe soon I'll sending in some of the challenge ideas I've been tinkering with.
 
-#### **Take care**
+#### **See you next week**
