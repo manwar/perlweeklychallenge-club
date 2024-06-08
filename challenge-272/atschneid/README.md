@@ -122,7 +122,7 @@ You know I really abused terminology there. Prolog doesn't return anything! It j
 
 ### Racket
 
-I'll mention briefly my Racket solution. After struggling through my Prolog implementation, this one was a breeze. Racket, and Scheme more broadly, includes a lot of batteries. The logic is basically the same, convert strings to lists, then recursively operate on the head of the list.
+I'll mention briefly my Racket solution. After struggling through my Prolog implementation, this one was a breeze. Racket, and Scheme more broadly, includes a lot of batteries, like a function to convert a string to a list of chars. The logic is basically the same as for Prolog. Given a list of chars, recursively operate on the head of the list.
 
 ```racket
 (define (defang-list s)
@@ -135,7 +135,7 @@ I'll mention briefly my Racket solution. After struggling through my Prolog impl
             [else (cons first (loop rest))])))))
 ```
 
-One cool thing I dug up was `raco fmt` which is a code formatter for Racket. I used to think, "I'm a freewheelin' guy, don't fence me in, I'll format my code however I feel," but now I know that guy was a jerk! Find a style and stick with it, it will make your life easier. It doesn't matter so much what format you use as that you use a format. I read that somewhere once, and I now agree.
+One cool thing I dug up was `raco fmt` which is a code formatter for Racket. I used to think, "I'm a freewheelin' guy, don't fence me in, I'll format my code however I feel," but now I know that guy was a jerk! Find a style and stick with it, it will make your life easier. It doesn't matter so much what format you use as that you use a format. I read that somewhere once, and now I agree.
 
 ### ***
 
@@ -268,6 +268,6 @@ The logic here is basically the same as for Prolog, in a functional form (return
 
 ### Conclusion
 
-Ok. This concludes my long, rambling notes on my various solutions to this week's challenge. I'm looking forward to seeing what comes up next week, and maybe soon I'll sending in some of the challenge ideas I've been tinkering with.
+Ok. This concludes my long, rambling notes on my various solutions to this week's challenge. I'm looking forward to seeing what comes up next week, and maybe soon I'll send in some of the challenge ideas I've been thinking up.
 
 See you next week.
