@@ -2,7 +2,7 @@
 
 **Challenge 272 solutions by Andrew Schneider**
 
-Being a stream of consciousness write up of some details of my code for (PWC 272)[https://theweeklychallenge.org/blog/perl-weekly-challenge-272/]
+Being a stream of consciousness write up of some details of my code for [PWC 272](https://theweeklychallenge.org/blog/perl-weekly-challenge-272/)
 
 Let's get right to the problems
 
@@ -84,14 +84,12 @@ void defang(char * input, char * output) {
 	size_t out_index = 0;
 	for (; *input != '\0'; input++) {
 		if (*input == '.') {
-			output[out_index] = '[';
-			output[out_index+1] = '.';
-			output[out_index+2] = ']';
-			out_index += 3;
+			output[out_index++] = '[';
+			output[out_index++] = '.';
+			output[out_index++] = ']';
 		}
 		else {
-			output[out_index] = *input;
-			out_index++;
+			output[out_index++] = *input;
 		}
 	}
 	output[out_index] = '\0';
@@ -112,7 +110,7 @@ str_to_chars(S, Cs) :- atom_codes(X, S), atom_chars(X, Cs).
 
 If we initialize this function as `str_to_chars("hello", Cs).` it first looks for a solution to `atom_codes(X, "hello")` which is, it looks for an atom whose characters match the list of char codes (recall the string is represented as a list of char codes) of "hello" (explicitly `[104,101,108,108,111]`). This is exactly the atom `hello` which is bound to the variable `X`. Next it tries `atom_chars(X, Cs)` which is now `atom_chars(hello, Cs)` which attempts to find a list of chars (not char codes here) which make up the characters of `hello`, obviously giving `['h', 'e', 'l', 'l', 'o']` which gets bound to the variable `Cs`. Phew. There's got to be a better way to do this, but this works.
 
-Now that we have a list of chars, the rest is pretty easy. The easy part was the hard part. What we'll do is walk through the list of chars. If the list is empty, return an empty list. If the first char is `'.'` return the list `['[', '.', ']']` appended to the defanged list minus its head, and otherwise append the head to the defanged list minus its head. Like so
+Now that we have a list of chars, the rest is pretty easy. The easy part was the hard part. What we'll do is recur through the list of chars. If the list is empty, return an empty list. If the first char is `'.'` return the list `['[', '.', ']']` appended to the defanged list minus its head, and otherwise append the head to the defanged list minus its head. Like so
 
 ```prolog
 defang_chars([], []).
@@ -124,7 +122,7 @@ You know I really abused terminology there. Prolog doesn't return anything! It j
 
 ### Racket
 
-I'll mention briefly my Racket solution. After struggling through my Prolog implementation, this one was a breeze. The logic is basically the same, convert strings to lists, then recursively operate on the head of the list.
+I'll mention briefly my Racket solution. After struggling through my Prolog implementation, this one was a breeze. Racket, and Scheme more broadly, includes a lot of batteries. The logic is basically the same, convert strings to lists, then recursively operate on the head of the list.
 
 ```racket
 (define (defang-list s)
@@ -270,6 +268,6 @@ The logic here is basically the same as for Prolog, in a functional form (return
 
 ### Conclusion
 
-Ok. This concludes my long, rambling description of my various solutions to this week's challenge. I'm looking forward to seeing what comes up next week, and maybe soon I'll sending in some of the challenge ideas I've been tinkering with.
+Ok. This concludes my long, rambling notes on my various solutions to this week's challenge. I'm looking forward to seeing what comes up next week, and maybe soon I'll sending in some of the challenge ideas I've been tinkering with.
 
-#### **See you next week**
+See you next week.
