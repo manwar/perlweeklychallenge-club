@@ -1,0 +1,26 @@
+--
+-- Perl Weekly Challenge 272
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-272>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc272;
+
+CREATE OR REPLACE FUNCTION
+pwc272.task2_plperl( text )
+RETURNS int
+AS $CODE$
+
+   my ( $string ) = @_;
+
+   my $score = 0;
+   my @chars = split //, $string;
+
+   for my $index ( 0 .. $#chars - 1 ) {
+      my $diff = ord( $chars[ $index ] ) - ord( $chars[ $index + 1 ] );
+      $score += $diff > 0 ? $diff : $diff * -1;
+   }
+
+   return $score;
+$CODE$
+LANGUAGE plperl;
