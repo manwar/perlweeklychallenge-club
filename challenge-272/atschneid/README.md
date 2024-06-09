@@ -52,8 +52,6 @@ sub defang {
 
 which is powered by much Perl magic. It expects a string variable, which gets `shift`ed into `$_`. Then substitution automagically happens on our `$_` variable by `s/\./[.]g;` (cf. `$_ =~ s/\./[.]/g;` for the same result with 90% less magic). Then pass back the substituted value in `$_`. I wondered if Perl would automagically return the special variable `$_` if the last line was simply `return;` and I learned it would not. So the final line is more sleight-of-hand than magic, but still. I often find it so much easier to use Perl's "do what I want" power on hidden magic variables that I contort my functions into horribly unnatural shapes just to get the magic to do what I need it to. Fortunately this particular function actually flows pretty naturally.
 
-Not satisfied to simply code this up in Perl I worked on a few other solutions.
-
 ### C
 
 Originally I had coded up my C implementation using `strtok_r`, but I realized it wasn't quite doing what I wanted.
@@ -102,7 +100,9 @@ Here I'm crawling along the string one character at a time. If the char is `'.'`
 
 Next up, Prolog. Getting anything done in Prolog is always a trip for me. It takes a little while to adjust, in particular, I always forget I have to pass the output variable to the function. With Prolog, at very high level, you're not really saying "compute this function and store the return value in X" as much as "give me an X that is a solution to this function." What's really cool is that often you can flip that to be "here is an X that is the solution to this function, give its input Y that yields X" or something like that. Besides all that, the syntax turns out to be very similar to a functional language like Haskell or Lisp. Anyway, I digress.
 
-I decided to write this in a way that could be run using GNU Prolog. I don't remember why I decided that, maybe I wanted a challenge. Because once I started running into issues and started Googling ([DuckDuckGoing](https://duckduckgo.com) really) for answers I got a lot of results telling me how to do the thing I wanted very easily in SWI Prolog, which is a much more fully-featured, batteries included Prolog implementation. In particular, handling strings is not easy to do in Prolog in general, but SWI has adding a lot of functionality around this. If my understanding is correct, in Prolog a string is just a list of chars, except that it's not. For instance, you can't pattern match on it. But if you print a string you get a list of char codes, so it's kind of a lose-lose. The solution, or rather *a* solution, or better still *my* solution is to convert strings to atoms. Prolog loves atoms and there are functions to convert a list of chars into an atom, and by the Prolog reflexive property, vice versa. Printing an atom gives it's name as you would expect, so that is what I use for output too. So in my roundabout Prolog solution, I start by converting a string to a list of chars
+I decided to write this in a way that could be run using GNU Prolog. I don't remember why I decided that, maybe I wanted a challenge. Because once I started running into issues and started Googling ([DuckDuckGoing](https://duckduckgo.com) really) for answers I got a lot of results telling me how to do the thing I wanted very easily in SWI Prolog, which is a much more fully-featured, batteries included Prolog implementation. Handling strings is not easy to do in Prolog in general, but SWI has added a lot of functionality around this. If my understanding is correct, in Prolog a string is just a list of chars, except that it's not. For instance, you can't pattern match on it. But if you print a string you get a list of char codes, so it's kind of a lose-lose. 
+
+The solution, or rather *a* solution, or better still *my* solution is to convert strings to atoms. Prolog loves atoms and there are functions to convert a list of chars into an atom, and by the Prolog reflexive property, vice versa. Printing an atom gives its name as you would expect, so that is what I use for output too. So in my roundabout Prolog solution, I start by converting a string to a list of chars
 
 ```prolog
 str_to_chars(S, Cs) :- atom_codes(X, S), atom_chars(X, Cs).
@@ -122,7 +122,7 @@ You know I really abused terminology there. Prolog doesn't return anything! It j
 
 ### Racket
 
-I'll mention briefly my Racket solution. After struggling through my Prolog implementation, this one was a breeze. Racket, and Scheme more broadly, includes a lot of batteries, like a function to convert a string to a list of chars. The logic is basically the same as for Prolog. Given a list of chars, recursively operate on the head of the list.
+I'll mention briefly my Racket solution. After struggling through my Prolog implementation, this one was a breeze. Racket, and Scheme more broadly, includes lots of batteries, like a function to convert a string to a list of chars! The heart of the logic is basically the same as for Prolog. Given a list of chars, figure out what to do with the head of the list, and append to the operation on the tail.
 
 ```racket
 (define (defang-list s)
@@ -139,7 +139,7 @@ One cool thing I dug up was `raco fmt` which is a code formatter for Racket. I u
 
 ### ***
 
-Funny side note, I had mentally converted 'defang' to 'defrang', and coded up all my solutions using 'defrang' in the function names somewhere, then had to do a substitution to get things back to normal. Maybe that's an idea for a future PWC - fix all the function names in some C code or something like that. Also, defrang ... I like that word. I'll have to remember to try to use that somewhere.
+Amusing side note, I had mentally converted 'defang' to 'defrang', and coded up all my solutions using 'defrang' in the function names somewhere, then had to do a substitution to get things back to normal. Maybe that's an idea for a future PWC - fix all the function names in some C code or something like that. Also, defrang ... I like that word. I'll have to remember to try to use that somewhere.
 
 
 ## Task 2: String Score
@@ -194,11 +194,13 @@ Submitted by: Mohammad Sajid Anwar
 
 What I like most about this challenge is it finally gives us a way to directly compare programming languages. Now if someone asks if Raku is better than Perl I can say 37 > 30 so yes!
 
-This is a cool one. I could imagine some variation of this being used to encrypt messages somehow. Maybe if we kept is as list.
+This is a cool one. I could imagine some variation of this being used to encrypt messages somehow.
 
 Let's see some code
 
 ### Perl
+
+Here is the Perl function that does basically all the work.
 
 ```perl
 sub sum_char_abs_diff ($s) {
@@ -211,7 +213,7 @@ sub sum_char_abs_diff ($s) {
 }
 ```
 
-Here is the Perl function that does basically all the work. It takes a string, splits it on `''` which gives a list of characters. Then we map each value in that list of chars to its ascii value using `ord`. Next we initialize our sum value to 0. Now the for loop runs from index 1 until the end of the char-int list. This has the nice effect of handling strings of size 0 and size 1, the loop will never run and the value of 0 will be returned, which seems like a logically acceptable result in these cases. Within the loop we add to the sum the absolute value of the difference of element at the index and the element before it. That's a lot of words but it should be pretty clear by looking at the code.
+It takes a string, splits it on `''` which gives a list of characters. Then we map each value in that list of chars to its ascii value using `ord`. Next we initialize our sum value to 0. The for loop runs from index 1 until the end of the char-int list. This has the nice effect of handling strings of size 0 and size 1, the loop will never run and the value of 0 will be returned, which is how I would define these edge cases. Within the loop we add to the sum the absolute value of the difference of the element at the index and the element before it. That's a lot of words but it should be pretty clear by looking at the code.
 
 It looks like a pretty clean solution to me this time. I wonder if I could one-line it.
 
@@ -232,7 +234,7 @@ int sum_abs_char_diffs(const char * s) {
 }
 ```
 
-The main thing to point out here is that it plays to C's strengths, a char is basically an int! I though about trying some implicit casting in Perl, but it is to eager to do some `atoi` magic. Here we can simply do the arithmetic on the chars and the results come out right.
+One thing to point out here is that it plays to C's strengths, a char is basically an int! I though about trying some implicit casting in Perl, but it is too eager to do some `atoi` magic, in C we can simply do the arithmetic on the chars and the results come out right.
 
 ### Prolog
 
@@ -249,11 +251,15 @@ sum_char_diffs([A, B|Xs], S) :-
     sum_char_diffs([B|Xs], S2), S is S2 + B - A.
 ```
 
-Here we match explicitly on an empty string or a string of length 1 and bind the value 0, otherwise we bind the sum of the difference of the first two elements plus the value from the same function called recursively on the list minus its head. The trickiest bit here is that I didn't know if there's an absolute value function so I just treat `A > B` and `B >= A` separately. The fact that Prolog thinks of strings as a list of char codes works well for me here, no conversion necessary! Take that!
+Here we match explicitly on an empty string or a string of length 1 and bind the value 0, otherwise we bind the sum of the difference of the first two elements plus the value from the same function called recursively on the list minus its head. Many words, but hopefully the code makes enough sense on its own.
+
+The trickiest bit here is that I'm not sure if there's an absolute value function so I just treat `A > B` and `B >= A` separately. 
+
+The fact that Prolog thinks of strings as a list of char codes works well for me here, no conversion necessary! Take that Prolog!
 
 ### Racket
 
-Finally some Racket. Despite the looks of this one it was easy again to write.
+Despite the looks of this one it was easy again to write.
 
 ```racket
 (define (sum-abs-char-diffs s)
@@ -264,10 +270,12 @@ Finally some Racket. Despite the looks of this one it was easy again to write.
           (loop (cdr num-list) (+ diff-sum (abs (- (car num-list) (cadr num-list)))))))))
 ```
 
-The logic here is basically the same as for Prolog, in a functional form (returns a value). I wasn't sure what to do about the stack of closing parens that built up at the end, but `raco fmt` just bunched them all together on the last line, so I'll accept that.
+The logic here is basically the same as for Prolog, in a functional form (returns a value). 
+
+As far as formatting, I wasn't sure what to do about the stack of closing parens that built up at the end, but `raco fmt` just bunched them all together on the last line, so I'll accept that.
 
 ### Conclusion
 
-Ok. This concludes my long, rambling notes on my various solutions to this week's challenge. I'm looking forward to seeing what comes up next week, and maybe soon I'll send in some of the challenge ideas I've been thinking up.
+Ok. This concludes my long, rambling notes on my various solutions to this week's challenges. I'm looking forward to seeing what comes up next week, and maybe soon I'll send in some of the challenge ideas I've been thinking up.
 
 See you next week.
