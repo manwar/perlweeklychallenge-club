@@ -7,5 +7,5 @@ is string-score("raku"),  37;
 
 sub string-score($str)
 {
-    [+] map { abs(.[0] - .[1]) }, $str.comb>>.ord.rotor(2 => -1) 
+    [+] map { abs(.[0].ord - .[1].ord) }, $str.comb.rotor(2 => -1) 
 }
