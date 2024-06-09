@@ -1,8 +1,6 @@
 #!/usr/bin/env raku
 # :vim ft=raku sw=4 expandtab  # 🦋 ∅∪∩∋∈∉⊆ ≡ ≢ «␤ » ∴
 use v6.d;
-INIT $*RAT-OVERFLOW = FatRat;
-use lib $?FILE.IO.cleanup.parent(2).add("lib");
 use Test;
 
 =begin comment
@@ -66,13 +64,9 @@ plan @Test ÷ 2;
 
 sub task( $a) {
     $a.comb».ord.rotor(2 => -1).map( { abs( .[0] - .[1])}).sum;
-
 }
 
 for @Test -> $in, $exp {
     is task($in), $exp, "$exp <- $in";
 }
-
 done-testing;
-
-
