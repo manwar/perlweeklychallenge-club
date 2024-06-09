@@ -1,108 +1,156 @@
-# You are my only ones...
-**Challenge 271 solutions in Perl by Matthias Muth**
+# A Half Liner and a Full One
 
-## Task 1: Maximum Ones
+**Challenge 272 solutions in Perl by Matthias Muth**
 
-> You are given a `m x n` binary matrix.<br/>
-> Write a script to return the row number containing maximum ones, in case of more than one rows then return smallest row number.<br/>
+## Task 1: Defang IP Address
 
-> **Example 1**
+> You are given a valid IPv4 address.<br/>
+> Write a script to return the defanged version of the given IP address.<br/>
+> A defanged IP address replaces every period “.” with “[.]".<br/>
+> <br/>
+> Example 1<br/>
+> Input: \$ip = "1.1.1.1"<br/>
+> Output: "1[.]1[.]1[.]1"<br/>
+> <br/>
+> Example 2<br/>
+> Input: \$ip = "255.101.1.0"<br/>
+> Output: "255[.]101[.]1[.]0"<br/>
 
->      Input: $matrix = [ [0, 1],
->                         [1, 0],
->                       ]
->     Output: 1
->     Row 1 and Row 2 have the same number of ones, so return row 1.
+This task offers a good opportunity to demonstrate the `r` flag of the `s/<PATTERN>/<REPLACEMENT>/<FLAGS>`
+regex substitution operator.
 
-> **Example 2**
+In fact it's the only thing we need to solve this task!
 
->     Input: $matrix = [ [0, 0, 0],
->                        [1, 0, 1],
->                      ]
->     Output: 2
->     Row 2 has the maximum ones, so return row 2.
+The `r` flag has been around since Perl version 5.14, so since 2011.<br/>
+It causes the `s///` operator to *not* change the string that is operating on, as it normally does,
+but ***r**eturn* the resulting string with the substitutions made.<br/>
+It makes things easier a lot of times.
 
-> **Example 3**
+In this case, all we need to do is to replace every single dot
+(we surely won't forget to use a backslash for escaping its special meaning!)
+by the string `[.]`
+(no escaping needed in the replacement pattern).<br/>
+We also use the `g` flag to do a **g**lobal replacement of all the dots we find.
 
->     Input: $matrix = [ [0, 0],
->                        [1, 1],
->                        [0, 0],
->                      ]
->     Output: 2
->     Row 2 have the maximum ones, so return row 2.
-
-
-The most straightforward solution is to
-
-- create an array containing the number of ones for each row of the matrix,
-- find the maximum number of ones in that array (making sure that we get a `0` for an empty array,
-- find the index of the first entry in the array that is equal to that maximum,<br/>and return it as a row number (adding 1 because the row numbers start with 1).
-
-This translates quite easily into Perl code.
-And there's not even much to say about any possible performance optimizations...
+I would call this a 'half liner':
 
 ```perl
 use v5.36;
 
-use List::Util qw( max first );
-
-sub maximum_ones( $matrix ) {
-    # Get the number of ones for each row.
-    my @n_ones = map scalar grep( $_ == 1, $_->@* ), $matrix->@*;
-    
-    # Find the highest number of ones.
-    my $max_n_ones = max( @n_ones );
-    
-    # Return the first row number (1-based, not 0-based!)
-    # that has that highest number of ones.
-    return 1 + first { $n_ones[$_] == $max_n_ones } 0..$#n_ones;
+sub defang_ip_address( $ip ) {
+    return $ip =~ s/\./[.]/gr;
 }
 ```
 
-## Task 2: Sort by 1 bits
+## Task 2: String Score
 
-> You are give an array of integers, @ints.<br/>
-> Write a script to sort the integers in ascending order by the number of 1 bits in their binary representation. In case more than one integers have the same number of 1 bits then sort them in ascending order.<br/>
+> You are given a string, \$str.<br/>
+> Write a script to return the score of the given string.<br/>
+> The score of a string is defined as the sum of the absolute difference between the ASCII values of adjacent characters.<br/>
+> <br/>
 
 > **Example 1**
 
->     Input: @ints = (0, 1, 2, 3, 4, 5, 6, 7, 8)
->     Output: (0, 1, 2, 4, 8, 3, 5, 6, 7)
->     0 = 0 one bits
->     1 = 1 one bits
->     2 = 1 one bits
->     4 = 1 one bits
->     8 = 1 one bits
->     3 = 2 one bits
->     5 = 2 one bits
->     6 = 2 one bits
->     7 = 3 one bits
+> Input: \$str = "hello"<br/>
+> Output: 13<br/>
+> ASCII values of characters:<br/>
+> h = 104<br/>
+> e = 101<br/>
+> l = 108<br/>
+> l = 108<br/>
+> o = 111<br/>
+> Score => |104 - 101| + |101 - 108| + |108 - 108| + |108 - 111|<br/>
+>    => 3 + 7 + 0 + 3<br/>
+>    => 13<br/>
+> <br/>
 
 > **Example 2**
 
->     Input: @ints = (1024, 512, 256, 128, 64)
->     Output: (64, 128, 256, 512, 1024)
->     All integers in the given array have one 1-bits, so just sort them in ascending order.
+> Input: \$str = "perl"<br/>
+> Output: 30<br/>
+> ASCII values of characters:<br/>
+> p = 112<br/>
+> e = 101<br/>
+> r = 114<br/>
+> l = 108<br/>
+> Score => |112 - 101| + |101 - 114| + |114 - 108|<br/>
+>    => 11 + 13 + 6<br/>
+>    => 30<br/>
 
-This task, too, is quite straightforward, once we have solved how to count the one-bits in a number.
+> **Example 3**
 
-So let's go for that first.<br/>
-My preferred solution to count bits is to let `unpack` do the work for me.<br/>The `'%b'` format for `unpack` returns the number of bits in the bit vector we pass in as data (see [here](https://perldoc.perl.org/functions/unpack)). So we turn our number into a bit vector using `pack( 'i', $number )` and let `unpack` do the counting.
+> Input: \$str = "raku"<br/>
+> Output: 37<br/>
+> ASCII values of characters:<br/>
+> r = 114<br/>
+> a = 97<br/>
+> k = 107<br/>
+> u = 117<br/>
+> Score => |114 - 97| + |97 - 107| + |107 - 117|<br/>
+>    => 17 + 10 + 10<br/>
+>    => 37<br/>
 
-Once we have a function for that, sorting the input array is simple, using a comparison code block for `sort`.<br/>It compares first the number of bits of the two numbers given in `$a`and `$b`,
-and if they are equal, it uses the numbers themselves. The well-known Perl idiom using the 'space-ship' operator, which returns `-1`, `0`, or `+1`, and a *logical or* that continues with the next comparison only when needed (the previous one returned a `0`) makes it easy.
+Let's split up this task into small parts of what we need to do:
 
-And that's all! 
+* We need to split up the string into a list of characters:
+
+  `my @characters = split "", $str;`
+
+* We need to get the ASCII value of characters.
+
+  That's easy, there is the `ord` function for this.
+
+* We need to compute 'the absolute difference between the ASCII values of two characters'.
+
+  This will look like `abs( ord( $a ) - ord( $b ) )` if we have the two characters in `$a` and `$b`.
+
+* We need to get the differences between all *adjacent* characters.
+
+  Now we could do this in a loop.<br/>
+  We would use indexes from 0 to the second but last, or from 1 to the last,
+  because we need to compare two elements in each iteration, with indexes `i` and `i + 1` (or `i` and `i - 1`).
+
+  That could look like this:
+
+  ```perl
+  my $sum = 0;
+  for ( 0 .. $#characters - 1 ) {
+      $sum += abs( ord( $characters[$_] ) - ord( $characters[ $_ + 1 ] ) );    
+  }
+  ```
+  
+  Instead of the loop, we could also use `map` to get the values, and sum everything up using `sum`  from `List::Util`:
+  ```perl
+  my $sum = sum(
+      map abs( ord( $characters[$_] ) - ord( $characters[ $_ + 1 ] ) ),
+          0 .. $#characters - 1
+  ); 
+  ```
+  
+  But there is an even simpler solution!
+  
+  We can use the `slide` function from `List::MoreUtils`,
+  which does exactly what we need:
+  loop over adjacent elements of a list.
+  
+  This reduces our code drastically:
+  
+  ```perl
+  my $sum = sum( slide { abs( ord( $a ) - ord( $b ) ) } @characters ); 
+  ```
+
+Now that we have all the parts, and we don't need a loop,
+we can even put everything together into one single statement,
+which results in this final version:
 
 ```perl
 use v5.36;
 
-sub n_bits( $n ) {
-    return unpack "%b*", pack "i", $n;
-}
+use List::Util qw( sum );
+use List::MoreUtils qw( slide );
 
-sub sort_by_1_bits( @ints ) {
-    return sort { n_bits( $a ) <=> n_bits( $b ) || $a <=> $b } @ints;
+sub string_score( $str ) {
+    return sum( slide { abs( ord( $a ) - ord( $b ) ) } split "", $str );
 }
 ```
 
