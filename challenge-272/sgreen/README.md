@@ -1,3 +1,3 @@
-# The Weekly Challenge 271
+# The Weekly Challenge 272
 
-Blog: [Maximizing the 1 bits](https://dev.to/simongreennet/maximizing-the-1-bits-m8a)
+Sorry, no blog this week.
