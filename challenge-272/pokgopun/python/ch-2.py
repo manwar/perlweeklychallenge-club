@@ -67,10 +67,11 @@ SO WHAT DO YOU THINK ?
 """
 ### solution by pokgopun@gmail.com
 
-def ss(string: str):
+def ss(s: str):
     return sum(
-            abs(ord(p[0])-ord(p[1])) for p in
-            (string[i:i+2] for i in range(len(string)-1))
+            abs(
+                ord(s[i]) - ord(s[i+1])
+                ) for i in range(len(s) - 1)
             )
 
 import unittest
