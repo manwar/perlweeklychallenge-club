@@ -4,8 +4,7 @@ use v6.d;
 use Test;
 
 =begin comment
-Task 2: Distribute Elements
-Submitted by: Mohammad Sajid Anwar
+270-2: Equalize Array          Submitted by: Mohammad Sajid Anwar
 You are give an array of integers, @ints and two integers, $x and $y.
 
 Write a script to execute one of the two options:
