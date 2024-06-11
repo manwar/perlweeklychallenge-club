@@ -32,8 +32,8 @@ Output: true
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
-A regular expression will solve this. What we're looking for is "b followed by non-a characters to end
-of string". The regular expression for that is "^[^b]*b[^a]*$":
+A regular expression will solve this. What we're looking for is "initial b followed by non-a characters
+to end of string". The regular expression for that is "^[^b]*b[^a]*$":
 
    sub b_after_a ($str) {
       $str =~ m/^[^b]*b[^a]*$/
