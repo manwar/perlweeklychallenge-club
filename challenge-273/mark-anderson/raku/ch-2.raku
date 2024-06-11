@@ -29,8 +29,9 @@ nok b-after-a-indices("aaabxyzbcade");
 nok b-after-a-indices("aaabxyzcde");
 
 # Note: I may have misunderstood the problem. I thought it was to check
-# for a 'b' and then a 'b' following the first 'b' and no 'a' following
-# the first 'b' 🤷
+# for a 'b' and then a 'b' after the first 'b' and no 'a' after the first
+# 'b' but it looks like others have checked for a 'b' and no 'a' after
+# that first 'b' 🤷
 
 sub b-after-a($str)
 {
