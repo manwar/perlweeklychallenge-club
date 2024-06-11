@@ -28,6 +28,10 @@ nok b-after-a-indices("aaabxayzbcde");
 nok b-after-a-indices("aaabxyzbcade");
 nok b-after-a-indices("aaabxyzcde");
 
+# Note: I may have misunderstood the problem. I thought it was to check
+# for a 'b' and then a 'b' following the first 'b' and no 'a' following
+# the first 'b' 🤷
+
 sub b-after-a($str)
 {
     $str ~~ / ^ <-[b]>* b <-[a]>* b <-[a]>* $ /
@@ -36,8 +40,8 @@ sub b-after-a($str)
 sub b-after-a-pos($str)
 {
     my $b         = $str ~~ m:1st          / b / || return False;
-    my $a-after-b = $str ~~ m:1st:c($b.pos)/ a /;
-    my $b-after-b = $str ~~ m:1st:c($b.pos)/ b /;
+    my $a-after-b = $str ~~ m:c($b.pos):1st/ a /;
+    my $b-after-b = $str ~~ m:c($b.pos):1st/ b /;
     $b-after-b and not $a-after-b
 }
 
@@ -45,5 +49,5 @@ sub b-after-a-indices($str)
 {
     my @a = $str.indices('a');
     my @b = $str.indices('b');
-    @b >= 2 && @b.head > all(@a)
+    @b > 1 and all(@a) < @b.head 
 }
