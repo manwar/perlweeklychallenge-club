@@ -71,9 +71,7 @@ Output is to STDOUT and will be each input followed by the corresponding output.
    # What is the percentage, to the nearest integer,
    # of a given character in a given string?
    sub pct_chr_in_str ($str, $chr) {
-      my $length = length($str);
-      my @matches = $str =~ m/$chr/g;
-      lround(100*(scalar(@matches)/$length));
+      lround(100*(scalar(@{[$str =~ m/$chr/g]})/length($str)));
    }
 
 # ------------------------------------------------------------------------------------------------------------
