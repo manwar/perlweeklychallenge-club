@@ -94,8 +94,8 @@ const BRACKETS = ['[', ']'];
 echo '@ints = ';
 $ints = json_decode(str_replace(PARENS, BRACKETS, fgets(STDIN)));
 echo '$x = ';
-$x = fgets(STDIN);
+$x = +fgets(STDIN);
 echo '$y = ';
-$y = fgets(STDIN);
+$y = +fgets(STDIN);
 
 echo solve($ints, $x, $y);
