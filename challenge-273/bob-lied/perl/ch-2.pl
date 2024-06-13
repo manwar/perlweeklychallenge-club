@@ -17,11 +17,12 @@
 use v5.40;
 
 use Getopt::Long;
-my $Verbose = 0;
-my $DoTest  = 0;
+my $DoTest  = false;
+my $Benchmark = 0;
 
-GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
+GetOptions("test" => \$DoTest, "benchmark:i" => \$Benchmark);
 exit(!runTest()) if $DoTest;
+exit( runBenchmark($Benchmark) ) if $Benchmark;
 
 say ( bAfterA($_) ? "true" : "false" ) for @ARGV;
 
@@ -29,6 +30,11 @@ sub bAfterA($str)
 {
     my $w = index($str, "b");
     return $w >= 0 && index($str, "a", $w) < 0;
+}
+
+sub bAfterA_RE($str)
+{
+    $str =~ m/^[^b]*b[^a]*$/
 }
 
 sub runTest
@@ -40,5 +46,24 @@ sub runTest
     is (bAfterA("aaa" ), false, "Example 3");
     is (bAfterA("bbb" ), true,  "Example 4");
 
+    is (bAfterA_RE("aabb"), true,  "Example 1 RE");
+    is (bAfterA_RE("abab"), false, "Example 2 RE");
+    is (bAfterA_RE("aaa" ), false, "Example 3 RE");
+    is (bAfterA_RE("bbb" ), true,  "Example 4 RE");
+
     done_testing;
+}
+
+sub runBenchmark($repeat)
+{
+    use Benchmark qw/cmpthese/;
+
+    cmpthese( $repeat, {
+    index => sub{
+        bAfterA("aabb"), bAfterA("abab"), bAfterA("aaaa"), bAfterA("bbbb"),
+    },
+    regex => sub{
+        bAfterA_RE("aabb"), bAfterA_RE("abab"), bAfterA_RE("aaaa"), bAfterA_RE("bbbb"),
+    },
+    });
 }
