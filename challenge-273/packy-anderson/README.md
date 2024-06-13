@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Defanged Addresses & String Scores](https://packy.dardan.com/b/MS)
+[Time to count B chars](https://packy.dardan.com/b/Md)
