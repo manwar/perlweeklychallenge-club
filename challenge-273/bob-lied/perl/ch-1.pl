@@ -25,22 +25,51 @@
 use v5.40;
 
 use Getopt::Long;
-my $Verbose = 0;
-my $DoTest  = 0;
+my $DoTest  = false;
+my $Benchmark = 0;
+my $Counter = 'saturn';
 
-GetOptions("test" => \$DoTest, "verbose" => \$Verbose);
-exit(!runTest()) if $DoTest;
+# Different ways to count the occurrence of a character in a string.
+# Sample benchmark run on my system:
+#                Rate splitgrep    delete   grepcmp    treval     match    saturn
+# splitgrep   44683/s        --      -26%      -39%      -84%      -94%      -96%
+# delete      60386/s       35%        --      -18%      -78%      -91%      -94%
+# grepcmp     73314/s       64%       21%        --      -73%      -89%      -93%
+# treval     274725/s      515%      355%      275%        --      -60%      -73%
+# match      694444/s     1454%     1050%      847%      153%        --      -31%
+# saturn    1000000/s     2138%     1556%     1264%      264%       44%        --
 
-say pctOfChar(@ARGV);
-
-sub pctOfChar($str, $char)
-{
-    # Solutioh 1: delete everything that isn't char, use remaining length
-    # my $occur = length( $str =~ s/[^$char]//gr );
-    
+my %CountChar = (
+    # Solution 1: delete everything that isn't char, use remaining length
+    delete => sub($str, $char) { length( $str =~ s/[^$char]//gr )  },
+ 
     # Solution 2: Global match in list context yields an array of
     # matching characters. Assigning to scalar yields length of the list.
-    my $occur = @{[ $str =~ m/$char/g ]};
+    match => sub($str, $char) { scalar( @{[ $str =~ m/$char/g ]} ) },
+
+    # Solution 3: Same array/scalar idea, but use =()= to get context
+    saturn => sub($str, $char) { my $occur =()= ( $str =~ m/$char/g ) },
+
+    # Solution 4: turn string into array and count with grep
+    splitgrep => sub($str, $char) { scalar( grep /$char/, split(//, $str) ) },
+
+    # Solution 4a: use string compare instead of RE in grep
+    grepcmp => sub($str, $char) { scalar( grep {$_ eq $char} split(//, $str) ) },
+
+    # Solution 5: count with tr///, needs eval to interpolate
+    treval => sub($str, $char) { eval "\$str =~ tr/$char//d" },
+);
+
+GetOptions("test" => \$DoTest, "benchmark:i" => \$Benchmark, "counter:s" => \$Counter);
+exit(!runTest()) if $DoTest;
+exit( runBenchmark($Benchmark) ) if $Benchmark;
+
+say pctOfChar(@ARGV, $CountChar{$Counter});
+
+
+sub pctOfChar($str, $char, $counter)
+{
+    my $occur = $counter->($str, $char);
     return int( 100*($occur / length($str)) + 0.5 );
 }
 
@@ -48,14 +77,34 @@ sub runTest
 {
     use Test2::V0;
 
-    is( pctOfChar("perl",      "e"), 25, "Example 1 perl e");
-    is( pctOfChar("java",      "a"), 50, "Example 2 java a");
-    is( pctOfChar("python",    "m"),  0, "Example 3 python m");
-    is( pctOfChar("ada",       "a"), 67, "Example 4 ada a");
-    is( pctOfChar("ballerina", "l"), 22, "Example 5 ballerina l");
-    is( pctOfChar("analitik",  "k"), 13, "Example 6 analitik k");
+    for my $countFunc ( sort keys %CountChar )
+    {
+        is( pctOfChar("perl",      "e", $CountChar{$countFunc}), 25, "Example 1 perl e $countFunc");
+        is( pctOfChar("java",      "a", $CountChar{$countFunc}), 50, "Example 2 java a $countFunc");
+        is( pctOfChar("python",    "m", $CountChar{$countFunc}),  0, "Example 3 python m $countFunc");
+        is( pctOfChar("ada",       "a", $CountChar{$countFunc}), 67, "Example 4 ada a $countFunc");
+        is( pctOfChar("ballerina", "l", $CountChar{$countFunc}), 22, "Example 5 ballerina l $countFunc");
+        is( pctOfChar("analitik",  "k", $CountChar{$countFunc}), 13, "Example 6 analitik k $countFunc");
 
-    is( pctOfChar("rrrr", "r"), 100, "100%");
+        is( pctOfChar("rrrr", "r", $CountChar{$countFunc}), 100, "100% $countFunc");
+    }
 
     done_testing;
+}
+
+sub runBenchmark($repeat)
+{
+    use Benchmark qw/cmpthese/;
+
+    my $str = 'abcdefghijklmnopqrstuvwxy' x 10;
+
+    cmpthese($repeat, {
+            "delete"    => sub { pctOfChar($str, 'n', $CountChar{delete}) },
+            "match"     => sub { pctOfChar($str, 'n', $CountChar{match}) },
+            "saturn"    => sub { pctOfChar($str, 'n', $CountChar{saturn}) },
+            "splitgrep" => sub { pctOfChar($str, 'n', $CountChar{splitgrep}) },
+            "grepcmp"    => sub { pctOfChar($str, 'n', $CountChar{grepcmp}) },
+            "treval"    => sub { pctOfChar($str, 'n', $CountChar{treval}) },
+        });
+
 }
