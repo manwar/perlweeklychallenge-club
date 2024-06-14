@@ -22,30 +22,25 @@
 # Input: $str = "bbb"
 # Output: true
 
-use strict;
-use warnings;
+def out(str):
+    offset = str.find('b')
+    if offset >= 0 and str.find('a', offset) == -1:
+        res = "true"
+    else:
+        res = "false"
+    print("%s -> %s" % 
+             ( str, res )
+    )
 
-my $str = "aabb";
-position($str);
+if __name__ == "__main__":
+    str = "aabb"
+    out(str)
 
-$str = "abab";
-position($str);
+    str = "abab"
+    out(str)
 
-$str = "aaa";
-position($str);
+    str = "aaa"
+    out(str)
 
-$str = "bbb";
-position($str);
-
-exit 0;
-
-sub position {
-    my $str = shift;
-
-    my $offset = index($str, 'b');
-    printf "%s -> %s\n",
-        $str,
-        ($offset >= 0 and index($str, 'a', $offset) == -1)
-            ? 'true'
-            : 'false';
-}
+    str = "bbb"
+    out(str)
