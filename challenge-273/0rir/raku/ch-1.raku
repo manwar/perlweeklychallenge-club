@@ -1,8 +1,6 @@
 #!/usr/bin/env raku
 # :vim ft=raku sw=4 expandtab  # 🦋 ∅∪∩∋∈∉⊆ ≡ ≢ «␤ » ∴
 use v6.d;
-INIT $*RAT-OVERFLOW = FatRat;
-use lib $?FILE.IO.cleanup.parent(2).add("lib");
 use Test;
 
 =begin comment
@@ -33,13 +31,19 @@ Output: 13
 =end comment
 
 my @Test =
-   "perl",      "e",  25,
-   "java",      "a",  50,
-   "python",    "m",   0,
-   "ada",       "a",  67,
-   "ballerina", "l",  22,
-   "analitik",  "k",  13,
-   'a',         "a", 100,
+   "perl",          "e",  25,
+   "java",          "a",  50,
+   "python",        "m",   0,
+   "ada",           "a",  67,
+   "ballerina",     "l",  22,
+   "analitik",      "k",  13,
+   'a',             "a", 100,
+   'a' x 100 ~ 'b', 'a',  99,
+   'a' x 100 ~ 'b', 'b',   1,
+   'a' x 200 ~ 'b', 'a', 100,
+   'a' x 200 ~ 'b', 'b',   0,
+   'a' x 199 ~ 'b', 'a', 100,
+   'a' x 199 ~ 'b', 'b',   1,
 ;
 plan @Test ÷ 3;
 
