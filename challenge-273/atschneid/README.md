@@ -8,33 +8,33 @@ The challenges this week seemed pretty straightforward. Both of them have pretty
 
 So it is basically impossible to find a better algorithm. But I needed to remind myself that that is *boring!* For one, I try to make my solutions in different languages as different as possible, and just transcribing the same code into different syntax would not be that. And this is supposed to be a chance to do something fun, learn something new.
 
-So let big-O be darned, I'll throw caution to the wind and solve these problems in whatever whacky way I want, and I'll try to not be such a buzzkill. Strong caveat: there is still a lot of similarity between certain pairs of solutions, because I only have a limited amount of imagination, but I'm trying, or I'm growing, or I'm trying to grow, or something.
+So let big-O be darned, I'll throw caution to the wind and solve these problems in whatever wacky way I want, and I'll try to not be such a buzzkill. Strong caveat: there is still a lot of similarity between certain pairs of solutions, because I only have a limited amount of imagination, but I'm trying, or I'm growing, or I'm trying to grow, or something.
 
 ## Challenge 1: Percentage of Character
 
-> Task 1: Percentage of Character
-> Submitted by: Mohammad Sajid Anwar
-> You are given a string, $str and a character $char.
-> 
-> Write a script to return the percentage, nearest whole, of given character in the given string.
-> 
-> Example 1
-> Input: $str = "perl", $char = "e"
-> Output: 25
-> Example 2
-> Input: $str = "java", $char = "a"
-> Output: 50
-> Example 3
-> Input: $str = "python", $char = "m"
-> Output: 0
-> Example 4
-> Input: $str = "ada", $char = "a"
-> Output: 67
-> Example 5
-> Input: $str = "ballerina", $char = "l"
-> Output: 22
-> Example 6
-> Input: $str = "analitik", $char = "k"
+> Task 1: Percentage of Character</br>
+> Submitted by: Mohammad Sajid Anwar</br>
+> You are given a string, $str and a character $char.</br>
+> </br>
+> Write a script to return the percentage, nearest whole, of given character in the given string.</br>
+> </br>
+> Example 1</br>
+> Input: $str = "perl", $char = "e"</br>
+> Output: 25</br>
+> Example 2</br>
+> Input: $str = "java", $char = "a"</br>
+> Output: 50</br>
+> Example 3</br>
+> Input: $str = "python", $char = "m"</br>
+> Output: 0</br>
+> Example 4</br>
+> Input: $str = "ada", $char = "a"</br>
+> Output: 67</br>
+> Example 5</br>
+> Input: $str = "ballerina", $char = "l"</br>
+> Output: 22</br>
+> Example 6</br>
+> Input: $str = "analitik", $char = "k"</br>
 > Output: 13
 
 To start, I think this Julia snippet best shows my idea for the *canonical* solution to this problem
@@ -59,7 +59,7 @@ function percent_char_v1(string, char)
 end
 ```
 
-We need to look at every character in the string to see if it matches. There's no way around that, so we at least need to iterate over the string one time. This algorithm iterates over the string one time. In fact, since we are already doin the iteration, we can count the number of total characters along the way, so there's no extra call to `size` or `length` or anything. I could probably do some work around the last line, we do floating point division, multiply by 100, round, then cast back to an int, not strictly necessary that last part but why not.
+We need to look at every character in the string to see if it matches. There's no way around that, so we at least need to iterate over the string one time. This algorithm iterates over the string one time. In fact, since we are already doing the iteration, we can count the number of total characters along the way, so there's no extra call to `size` or `length` or anything. I could probably do some work around the last line, we do floating point division, multiply by 100, round, then cast back to an int, not strictly necessary that last part but why not.
 
 ### Perl
 
@@ -86,9 +86,9 @@ sub percent_char_string( $char, $string ) {
 
 What's the runtime? I really don't know. `length( $string )` should be $\mathcal{O}(|\text{string}|)$ either when called or at string creation. `$string =~ s"$char""g` is the big question mark for me. Would it be cheaper to do `$string =~ s"$char"\1"g`? Does this even reliably work? I suppose `$char` could have a special regex meaning... bah. Anyway, we're not worrying about all that! we're here to have fun.
 
-Now to what I think is the craziest bit here, figuring out if we round up. Integer division, easy, it truncates. This part `($sum_chars * 100 % $length) * 2 >= $length` made me a little squeamish at first (actually I made a tiny bug in it at first). What we're asking is: is the remainder (`$sum_chars * 100 % $length`) greater than or equal to half the string length. If yes then we would round up (if we had been using floats) so we add 1. We could even do the `* 2` part as a bitshift, so really this has to be at least as convert to float and back.
+Now to what I think is the craziest bit here, figuring out if we round up. Integer division, easy, it truncates. This part `($sum_chars * 100 % $length) * 2 >= $length` made me a little squeamish at first and in my first implementation I made a subtle bug here. What we're asking is: is the remainder (`$sum_chars * 100 % $length`) greater than or equal to half the string length. If yes then we would round up if we had been using floats, so we add 1. We could even do the `* 2` part as a bitshift, so really this has to be at least as efficient as converting to float and back.
 
-The bug I mentioned, I had written `($sum_chars * 100 % $length) >= $length / 2` at first, but since we're `us`ing `integer` `$length / 2` gets truncated too, which is not what we want. It didn't affect any of the examples, but a simple case to illustrate the problem, suppose `$sum_chars` was 1 and `$length` was 3 (as if our string was "ada" and our character was 'd'). This way we get $100 \mod 3 = 1 \ge 3 // 2 = 1$ using integer division, ie, $1 \ge 1$ and we *round up* when we shouldn't. In the correct formulation this comes out to $2 \ge 3$ (work it out for yourself) and we *round down* which is correct. The trouble with integer division! Sheesh. But worth it to get to use `use integer`.
+The bug I mentioned, I had written `($sum_chars * 100 % $length) >= $length / 2` at first, but since we're doing `use integer` then `$length / 2` gets truncated, which is not what we want. It didn't affect any of the examples, but a simple case to illustrate the problem, suppose `$sum_chars` was 1 and `$length` was 3 (as if our string was "ada" and our character was 'd'). This way we get $100 \mod 3 = 1 \ge 3 // 2 = 1$ using integer division, ie, $1 \ge 1$ and we *round up* when we shouldn't. In the correct formulation this comes out to $2 \ge 3$ (work it out for yourself) and we *round down* which is correct. The trouble with integer division! Sheesh. But worth it to get to use `use integer`.
 
 ### Julia
 
@@ -135,7 +135,7 @@ std::ostream& operator<<( std::ostream& os, char_and_string const& cas ){
 }
 ```
 
-I thought about making the core function a method on `char_and_string` but I didn't get there. Next C++ comes around I'll go all-in OO Programming.
+I thought about making the core function a method on `char_and_string` but I didn't get there. Next time C++ comes around in my solutions I'll go all-in OO Programming, methods everywhere!
 
 ### Rust
 
@@ -180,7 +180,7 @@ Not much to add to my Perl commentary here. Rust implicitly returns the last val
 > Input: $str = "bbb"</br>
 > Output: true
 
-Again, there's a simple algorithm that looks at every character in the string. Well actually we can even short circuit it if we fail early by seeing an 'a' after a 'b'. Let's look at the boring algorithm, this time in C++
+Again, there's a simple algorithm that looks at every character in the string, we can even short circuit it if we fail early by seeing an 'a' after a 'b'. Let's look at the boring algorithm, this time in C++
 
 ```cpp
 int validate_a_b_string_v1( std::string s ) {
@@ -203,11 +203,11 @@ Let's just say we're in C++ section already because this is all I did for C++. O
 
 ### C++
 
-First we create a variable `first_b` to remember if we've seen any 'b' yet, because that determines how we proceed. Now for each char, if it's a 'b' `first_b` gets set to true. Next, if `first_b` is true, if we have seen a 'b' already, and the current character is 'a' then we can fail, return false. Otherwise, doesn't matter what character we see. Finally, if we make it through the string loop, if we have ever seen a 'b' then `first_b` is true, and success! otherwise `first_b` is false and failure.
+First we create a variable `first_b` to remember if we've seen any 'b' yet, because that determines how we proceed. Now for each char, if it's a 'b' `first_b` gets set to true. Next, if `first_b` is true, if we have seen a 'b' already, and the current character is 'a' then we can fail, return false. Otherwise, doesn't matter what character we see. Finally, if we make it through the string loop, if we have ever seen a 'b' then `first_b` is true, and success! otherwise `first_b` is false and failure, so we can just return `first_b`.
 
 ### Perl
 
-The algorithm I came up with here is possibly as efficient as the C++ one, but in much more idomatic Perl (I think) so it's like a win-win.
+The algorithm I came up with here is possibly as efficient as the C++ one, but in much more idomatic Perl (I think) so it's a win-win for my goals this week.
 
 ```perl
 sub check_a_b_string( $string ) {
@@ -251,7 +251,7 @@ fn good_a_b_string(string: &str) -> bool {
 }
 ```
 
-Match operates on a variable, here `c`. Each leg of the match represents a possible value, here just a simple value, and `_` is the else match. If it hasn't matched anything prior then it will match the on the `_` leg. 
+Match operates on a variable, here `c`. Each leg of the match represents a possible value, here just a simple value, and `_` is the else match, if it hasn't matched anything prior then it will match the on the `_` leg. 
 
 ### Julia
 
@@ -267,7 +267,7 @@ function validate_a_b( string )
 end
 ```
 
-`findfirst` and `findlast` each return either the index of the found match or the value `nothing` if there was no match. We combine these into a long boolean that checks, from left to right, we found a 'b' and we found no 'a' or the last 'a' is before the first 'b'. Simple!
+`findfirst` and `findlast` each return either the index of the found match or the value `nothing` if there was no match. We combine these into a long boolean expression that checks, from left to right, we found a 'b' and we found no 'a' or the last 'a' is before the first 'b'. Simple!
 
 ## Revisiting a 270 Problem
 
