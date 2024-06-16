@@ -4,7 +4,7 @@
 
 Being a stream of consciousness write up of some details of my code for [PWC 273](https://theweeklychallenge.org/blog/perl-weekly-challenge-273/)
 
-The challenges this week seemed pretty straightforward. Both of them have pretty direct solutions based on an algorithm of walking along a string, character by character, setting some flag variables or counts. In both cases it was simple to come up solutions that go through each string exactly one time (clearly in $\mathcal{O}(n)$ for $n = |\text{string}|$, for the analytically minded).
+The challenges this week seemed pretty straightforward. Both of them have pretty direct solutions based on an algorithm of walking along a string, character by character, setting some flag variables or counts. In both cases it was simple to come up solutions that go through each string exactly one time, clearly in $\mathcal{O}(n)$ for $n = |\mathtext{string}|$.
 
 So it is basically impossible to find a better algorithm. But I needed to remind myself that that is *boring!* For one, I try to make my solutions in different languages as different as possible, and just transcribing the same code into different syntax would not be that. And this is supposed to be a chance to do something fun, learn something new.
 
@@ -12,29 +12,29 @@ So let big-O be darned, I'll throw caution to the wind and solve these problems 
 
 ## Challenge 1: Percentage of Character
 
-> Task 1: Percentage of Character<\br>
-> Submitted by: Mohammad Sajid Anwar<\br>
-> You are given a string, $str and a character $char.<\br>
-> <\br>
-> Write a script to return the percentage, nearest whole, of given character in the given string.<\br>
-> <\br>
-> Example 1<\br>
-> Input: $str = "perl", $char = "e"<\br>
-> Output: 25<\br>
-> Example 2<\br>
-> Input: $str = "java", $char = "a"<\br>
-> Output: 50<\br>
-> Example 3<\br>
-> Input: $str = "python", $char = "m"<\br>
-> Output: 0<\br>
-> Example 4<\br>
-> Input: $str = "ada", $char = "a"<\br>
-> Output: 67<\br>
-> Example 5<\br>
-> Input: $str = "ballerina", $char = "l"<\br>
-> Output: 22<\br>
-> Example 6<\br>
-> Input: $str = "analitik", $char = "k"<\br>
+> Task 1: Percentage of Character
+> Submitted by: Mohammad Sajid Anwar
+> You are given a string, $str and a character $char.
+> 
+> Write a script to return the percentage, nearest whole, of given character in the given string.
+> 
+> Example 1
+> Input: $str = "perl", $char = "e"
+> Output: 25
+> Example 2
+> Input: $str = "java", $char = "a"
+> Output: 50
+> Example 3
+> Input: $str = "python", $char = "m"
+> Output: 0
+> Example 4
+> Input: $str = "ada", $char = "a"
+> Output: 67
+> Example 5
+> Input: $str = "ballerina", $char = "l"
+> Output: 22
+> Example 6
+> Input: $str = "analitik", $char = "k"
 > Output: 13
 
 To start, I think this Julia snippet best shows my idea for the *canonical* solution to this problem
@@ -271,7 +271,7 @@ end
 
 ## Revisiting a 270 Problem
 
-Mohammad linked to a great discussion about Challenge 2 from (PWC 270)[https://theweeklychallenge.org/blog/perl-weekly-challenge-270/] by (E. Choroba)[https://blogs.perl.org/users/e_choroba/2024/06/equalise-an-array.html] which expanded my mind on the problem. If you haven't read it yet you should. On reading the problem description I didn't think about the possibility of all values ending up larger than they came in, and it sounds like nobody else among the official submissions did either, but he gives a case where the optimal solution requires this.
+Mohammad linked to a great discussion about Challenge 2 from [PWC 270](https://theweeklychallenge.org/blog/perl-weekly-challenge-270/) by [E. Choroba](https://blogs.perl.org/users/e_choroba/2024/06/equalise-an-array.html) which expanded my mind on the problem. If you haven't read it yet you should. On reading the problem description I didn't think about the possibility of all values ending up larger than they came in, and it sounds like nobody else among the official submissions did either, but he gives a case where the optimal solution requires this.
 
 I have been working on my own solution to the elucidated problem and some discussion thereof, but as of press time it is still in revision. I may try to finish it up this week, but definitely check out his blog post.
 
