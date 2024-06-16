@@ -32,7 +32,7 @@
 > Output: 13<br/>
 
 We need the number of times that the `$char` character appears in the `$str` string.
-So let's count character frequencies Just like we always do:
+So let's count character frequencies. Just like we always do:
 
 ```perl
 my %freq;
@@ -52,7 +52,7 @@ I guess every Perl programmer likes Perl's 'Logical Defined-Or' operator!  :-)
 
 For rounding towards the nearest integer, there are at least these three ways to go:
 
--  `use POSIX qw( round );`
+- `use POSIX qw( round );`
 
   Loading the `POSIX` module seems like a big overhead
   for just rounding a floating point number.<br/>
