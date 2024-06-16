@@ -4,7 +4,7 @@
 
 Being a stream of consciousness write up of some details of my code for [PWC 273](https://theweeklychallenge.org/blog/perl-weekly-challenge-273/)
 
-The challenges this week seemed pretty straightforward. Both of them have pretty direct solutions based on an algorithm of walking along a string, character by character, setting some flag variables or counts. In both cases it was simple to come up solutions that go through each string exactly one time, clearly in $\mathcal{O}(n)$ for $n = |\mathtext{string}|$.
+The challenges this week seemed pretty straightforward. Both of them have pretty direct solutions based on an algorithm of walking along a string, character by character, setting some flag variables or counts. In both cases it was simple to come up solutions that go through each string exactly one time, clearly in $\mathcal{O}(n)$ for $n = |string|$.
 
 So it is basically impossible to find a better algorithm. But I needed to remind myself that that is *boring!* For one, I try to make my solutions in different languages as different as possible, and just transcribing the same code into different syntax would not be that. And this is supposed to be a chance to do something fun, learn something new.
 
