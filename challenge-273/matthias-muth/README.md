@@ -1,157 +1,142 @@
-# A Half Liner and a Full One
+# Percentages and the 'BnoA' Regex
 
-**Challenge 272 solutions in Perl by Matthias Muth**
+**Challenge 273 solutions in Perl by Matthias Muth**
 
-## Task 1: Defang IP Address
+## Task 1: Percentage of Character
 
-> You are given a valid IPv4 address.<br/>
-> Write a script to return the defanged version of the given IP address.<br/>
-> A defanged IP address replaces every period “.” with “[.]".<br/>
+> You are given a string, \$str and a character \$char.<br/>
+> Write a script to return the percentage, nearest whole, of given character in the given string.<br/>
 > <br/>
 > Example 1<br/>
-> Input: \$ip = "1.1.1.1"<br/>
-> Output: "1[.]1[.]1[.]1"<br/>
+> Input: \$str = "perl",  \$char = "e"<br/>
+> Output: 25<br/>
 > <br/>
 > Example 2<br/>
-> Input: \$ip = "255.101.1.0"<br/>
-> Output: "255[.]101[.]1[.]0"<br/>
+> Input: \$str = "java",  \$char = "a"<br/>
+> Output: 50<br/>
+> <br/>
+> Example 3<br/>
+> Input: \$str = "python", \$char = "m"<br/>
+> Output: 0<br/>
+> <br/>
+> Example 4<br/>
+> Input: \$str = "ada", \$char = "a"<br/>
+> Output: 67<br/>
+> <br/>
+> Example 5<br/>
+> Input: \$str = "ballerina", \$char = "l"<br/>
+> Output: 22<br/>
+> <br/>
+> Example 6<br/>
+> Input: \$str = "analitik", \$char = "k"<br/>
+> Output: 13<br/>
 
-This task offers a good opportunity to demonstrate the `r` flag of the `s/<PATTERN>/<REPLACEMENT>/<FLAGS>`
-regex substitution operator.
+We need the number of times that the `$char` character appears in the `$str` string.
+So let's count character frequencies Just like we always do:
 
-In fact it's the only thing we need to solve this task!
+```perl
+my %freq;
+++$freq{$_}
+    for split "", $str;
+```
 
-The `r` flag has been around since Perl version 5.14, so since 2011.<br/>
-It causes the `s///` operator to *not* change the string that is operating on, as it normally does,
-but ***r**eturn* the resulting string with the substitutions made.<br/>
-It makes things easier a lot of times.
+The percentage that we need is the number of `$char` characters
+divided by the total number of characters in `$str`.
+We need to be careful about the character not being present at all,
+in which case `$freq{ $char }` is `undef`.
+I guess every Perl programmer likes Perl's 'Logical Defined-Or' operator!  :-) 
 
-In this case, all we need to do is to replace every single dot
-(we surely won't forget to use a backslash for escaping its special meaning!)
-by the string `[.]`
-(no escaping needed in the replacement pattern).<br/>
-We also use the `g` flag to do a **g**lobal replacement of all the dots we find.
+ ```perl
+ ( $freq{ $char } // 0 ) / length( $str )
+ ```
 
-I would call this a 'half liner':
+For rounding towards the nearest integer, there are at least these three ways to go:
+
+-  `use POSIX qw( round );`
+
+  Loading the `POSIX` module seems like a big overhead
+  for just rounding a floating point number.<br/>
+  So let's look for something else.
+
+- `printf( "%.0f", <number> )`
+
+  This is the solution that is suggested by the [Perl FAQ](https://perldoc.perl.org/perlfaq4#Does-Perl-have-a-round()-function%3F-What-about-ceil()-and-floor()%3F-Trig-functions%3F).<br/>
+  Looks much better, but there's still a lot of work behind the scenes
+  for a simple operation on a number.<br/>
+  I would not use it if performance is an issue.
+
+- `int( <number> + 0.5 )`
+
+  Very simple, very basic. This is the rounding I got taught in school.<br/>
+  It's my favorite solution *but only if* it is not for any financial or banking application.
+  Check in the [Perl FAQ](https://perldoc.perl.org/perlfaq4#Does-Perl-have-a-round()-function%3F-What-about-ceil()-and-floor()%3F-Trig-functions%3F) again to see why.
+
+Putting it all together:
 
 ```perl
 use v5.36;
 
-sub defang_ip_address( $ip ) {
-    return $ip =~ s/\./[.]/gr;
+sub percentage_of_character( $str, $char ) {
+    my %freq;
+    ++$freq{$_}
+        for split "", $str;
+    return int( 100 * ( $freq{$char} // 0 ) / length( $str ) + 0.5 );
 }
 ```
 
-## Task 2: String Score
+## Task 2: B After A
 
 > You are given a string, \$str.<br/>
-> Write a script to return the score of the given string.<br/>
-> The score of a string is defined as the sum of the absolute difference between the ASCII values of adjacent characters.<br/>
+> Write a script to return true if there is at least one b, and no a appears after the first b.<br/>
 > <br/>
-
-> **Example 1**
-
-> Input: \$str = "hello"<br/>
-> Output: 13<br/>
-> ASCII values of characters:<br/>
-> h = 104<br/>
-> e = 101<br/>
-> l = 108<br/>
-> l = 108<br/>
-> o = 111<br/>
-> Score => |104 - 101| + |101 - 108| + |108 - 108| + |108 - 111|<br/>
->    => 3 + 7 + 0 + 3<br/>
->    => 13<br/>
+> Example 1<br/>
+> Input: \$str = "aabb"<br/>
+> Output: true<br/>
 > <br/>
+> Example 2<br/>
+> Input: \$str = "abab"<br/>
+> Output: false<br/>
+> <br/>
+> Example 3<br/>
+> Input: \$str = "aaa"<br/>
+> Output: false<br/>
+> <br/>
+> Example 4<br/>
+> Input: \$str = "bbb"<br/>
+> Output: true<br/>
 
-> **Example 2**
+What a great task for demonstrating how simple things can be with regular expressions!
 
-> Input: \$str = "perl"<br/>
-> Output: 30<br/>
-> ASCII values of characters:<br/>
-> p = 112<br/>
-> e = 101<br/>
-> r = 114<br/>
-> l = 108<br/>
-> Score => |112 - 101| + |101 - 114| + |114 - 108|<br/>
->    => 11 + 13 + 6<br/>
->    => 30<br/>
+We need at least one `b`:
 
-> **Example 3**
+```perl
+/b/
+```
 
-> Input: \$str = "raku"<br/>
-> Output: 37<br/>
-> ASCII values of characters:<br/>
-> r = 114<br/>
-> a = 97<br/>
-> k = 107<br/>
-> u = 117<br/>
-> Score => |114 - 97| + |97 - 107| + |107 - 117|<br/>
->    => 17 + 10 + 10<br/>
->    => 37<br/>
+But we need to make sure it's the *first* `b`.
+So there must be no other `b` before the one we are looking for.<br/>
+Let's use the `x` flag to keep it more readable:
 
-Let's split up this task into small parts of what we need to do:
+```perl
+/^ [^b]* b /x
+```
 
-* We need to split up the string into a list of characters:
+Next, we need to check that there is no `a` after that `b` until we reach the end of the string.
 
-  `my @characters = split "", $str;`
+```perl
+/^ [^b]* b [^a]* $/x
+```
 
-* We need to get the ASCII value of characters.
-
-  That's easy, there is the `ord` function for this.
-
-* We need to compute 'the absolute difference between the ASCII values of two characters'.
-
-  This will look like `abs( ord( $a ) - ord( $b ) )` if we have the two characters in `$a` and `$b`.
-
-* We need to get the differences between all *adjacent* characters.
-
-  Now we could do this in a loop.<br/>
-  We would use indexes from 0 to the second but last, or from 1 to the last,
-  because we need to compare two elements in each iteration, with indexes `i` and `i + 1` (or `i` and `i - 1`).
-
-  That could look like this:
-
-  ```perl
-  my $sum = 0;
-  for ( 0 .. $#characters - 1 ) {
-      $sum += abs( ord( $characters[$_] ) - ord( $characters[ $_ + 1 ] ) );    
-  }
-  ```
-  
-  Instead of the loop, we could also use `map` to get the values, and sum everything up using `sum`  from `List::Util`:
-  ```perl
-  my $sum = sum(
-      map abs( ord( $characters[$_] ) - ord( $characters[ $_ + 1 ] ) ),
-          0 .. $#characters - 1
-  ); 
-  ```
-  
-  But there is an even simpler solution!
-  
-  We can use the `slide` function from `List::MoreUtils`,
-  which does exactly what we need:
-  loop over adjacent elements of a list.
-  
-  This reduces our code drastically:
-  
-  ```perl
-  my $sum = sum( slide { abs( ord( $a ) - ord( $b ) ) } @characters ); 
-  ```
-
-Now that we have all the parts, and we don't need a loop,
-we can even put everything together into one single statement,
-which results in this final version:
+And putting it all together:
 
 ```perl
 use v5.36;
 
-use List::Util qw( sum );
-use List::MoreUtils qw( slide );
-
-sub string_score( $str ) {
-    return sum( slide { abs( ord( $a ) - ord( $b ) ) } split "", $str );
+sub b_after_a( $str ) {
+    return $str =~ /^ [^b]* b [^a]* $/x;
 }
 ```
+
+That's all we need!
 
 #### **Thank you for the challenge!**
