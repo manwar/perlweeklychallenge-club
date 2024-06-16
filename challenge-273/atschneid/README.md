@@ -1,281 +1,280 @@
-# Defang and Sum-Abs-Char-Diffs 
+# Trying to Be X Percent More Interesting
 
-**Challenge 272 solutions by Andrew Schneider**
+**Challenge 273 solutions by Andrew Schneider**
 
-Being a stream of consciousness write up of some details of my code for [PWC 272](https://theweeklychallenge.org/blog/perl-weekly-challenge-272/)
+Being a stream of consciousness write up of some details of my code for [PWC 273](https://theweeklychallenge.org/blog/perl-weekly-challenge-273/)
 
-Let's get right to the problems
+The challenges this week seemed pretty straightforward. Both of them have pretty direct solutions based on an algorithm of walking along a string, character by character, setting some flag variables or counts. In both cases it was simple to come up solutions that go through each string exactly one time, clearly in $\mathcal{O}(n)$ for $n = |\text{string}|$.
 
-## Task 1: Defang IP Address
-Submitted by: Mohammad Sajid Anwar
+So it is basically impossible to find a better algorithm. But I needed to remind myself that that is *boring!* For one, I try to make my solutions in different languages as different as possible, and just transcribing the same code into different syntax would not be that. And this is supposed to be a chance to do something fun, learn something new.
 
-> You are given a valid IPv4 address.<br/>
-> <br/>
-> Write a script to return the defanged version of the given IP address.<br/>
-> <br/>
-> A defanged IP address replaces every period “.” with “[.]".<br/>
-> <br/>
-> Example 1<br/>
-> Input: $ip = "1.1.1.1"<br/>
-> Output: "1[.]1[.]1[.]1"<br/>
-> Example 2<br/>
-> Input: $ip = "255.101.1.0"<br/>
-> Output: "255[.]101[.]1[.]0"<br/>
+So let big-O be darned, I'll throw caution to the wind and solve these problems in whatever wacky way I want, and I'll try to not be such a buzzkill. Strong caveat: there is still a lot of similarity between certain pairs of solutions, because I only have a limited amount of imagination, but I'm trying, or I'm growing, or I'm trying to grow, or something.
+
+## Challenge 1: Percentage of Character
+
+> Task 1: Percentage of Character</br>
+> Submitted by: Mohammad Sajid Anwar</br>
+> You are given a string, $str and a character $char.</br>
+> </br>
+> Write a script to return the percentage, nearest whole, of given character in the given string.</br>
+> </br>
+> Example 1</br>
+> Input: $str = "perl", $char = "e"</br>
+> Output: 25</br>
+> Example 2</br>
+> Input: $str = "java", $char = "a"</br>
+> Output: 50</br>
+> Example 3</br>
+> Input: $str = "python", $char = "m"</br>
+> Output: 0</br>
+> Example 4</br>
+> Input: $str = "ada", $char = "a"</br>
+> Output: 67</br>
+> Example 5</br>
+> Input: $str = "ballerina", $char = "l"</br>
+> Output: 22</br>
+> Example 6</br>
+> Input: $str = "analitik", $char = "k"</br>
+> Output: 13
+
+To start, I think this Julia snippet best shows my idea for the *canonical* solution to this problem
+
+```julia
+function percent_char_v1(string, char)
+    # the simplest and cheapest algorithm
+    # also the most boring
+    # 
+    # step through each char of the string
+    # count the matches, count all chars
+    # one pass through the string
+    #
+    # divide matches by total chars and convert to integer percent 
+    count_c = 0
+    count_all = 0
+    for c in string
+        count_c += c == char ? 1 : 0
+        count_all += 1
+    end
+    Int( round( count_c / count_all * 100 ) )
+end
+```
+
+We need to look at every character in the string to see if it matches. There's no way around that, so we at least need to iterate over the string one time. This algorithm iterates over the string one time. In fact, since we are already doing the iteration, we can count the number of total characters along the way, so there's no extra call to `size` or `length` or anything. I could probably do some work around the last line, we do floating point division, multiply by 100, round, then cast back to an int, not strictly necessary that last part but why not.
 
 ### Perl
 
-Really I think this problem wants a one-liner solution. Most of my chance to use Perl at work is writing one-liners like this guy
-
-```bash
-perl -lpe 's/\./[.]/g'
-```
-
-which converts exactly into a legal sed expression
-
-```bash
-sed 's/\./[.]/g'
-```
-
-What we're doing here is a simple regex substitution on a period literal (gotta escape special characters) replacing with `[.]`
-
-But, it didn't just feel right to get away with this one so easily. Where's the boilerplate? What am I learning? So I coded up a fully respectable Perl version.
-
-The heart of the program is this little function
+When I first read this problem description I thought, "great! a chance to use `use integer`!" Only the specification of going to the *nearest whole* threw me off that plan. So I glumly typed out a Perlish version of the above algorithm until I heard a voice whisper "buzzkill" inside my head, and I thought, there's gotta be a way to do this using `use integer`, and voila, I cooked us this gem
 
 ```perl
-sub defang {
-    shift;
-    s/\./[.]/g;
-    return $_;
+sub percent_char_string( $char, $string ) {
+    # do all arithmetic in integer domain
+    use integer;
+
+    # get the length of $string
+    my $length = length( $string );
+
+    # count how many characters match $char
+    my $sum_chars = $string =~ s"$char""g;
+
+    # find the integer division of $sum_chars / $length
+    # then figure out if we would round up or down and add 1 or 0 respectively
+	my $result = $sum_chars * 100 / $length + (($sum_chars * 100 % $length) * 2 >= $length);
+
+    return $result;
 }
 ```
 
-which is powered by much Perl magic. It expects a string variable, which gets `shift`ed into `$_`. Then substitution automagically happens on our `$_` variable by `s/\./[.]g;` (cf. `$_ =~ s/\./[.]/g;` for the same result with 90% less magic). Then pass back the substituted value in `$_`. I wondered if Perl would automagically return the special variable `$_` if the last line was simply `return;` and I learned it would not. So the final line is more sleight-of-hand than magic, but still. I often find it so much easier to use Perl's "do what I want" power on hidden magic variables that I contort my functions into horribly unnatural shapes just to get the magic to do what I need it to. Fortunately this particular function actually flows pretty naturally.
+What's the runtime? I really don't know. `length( $string )` should be $\mathcal{O}(|\text{string}|)$ either when called or at string creation. `$string =~ s"$char""g` is the big question mark for me. Would it be cheaper to do `$string =~ s"$char"\1"g`? Does this even reliably work? I suppose `$char` could have a special regex meaning... bah. Anyway, we're not worrying about all that! we're here to have fun.
 
-### C
+Now to what I think is the craziest bit here, figuring out if we round up. Integer division, easy, it truncates. This part `($sum_chars * 100 % $length) * 2 >= $length` made me a little squeamish at first and in my first implementation I made a subtle bug here. What we're asking is: is the remainder (`$sum_chars * 100 % $length`) greater than or equal to half the string length. If yes then we would round up if we had been using floats, so we add 1. We could even do the `* 2` part as a bitshift, so really this has to be at least as efficient as converting to float and back.
 
-Originally I had coded up my C implementation using `strtok_r`, but I realized it wasn't quite doing what I wanted.
+The bug I mentioned, I had written `($sum_chars * 100 % $length) >= $length / 2` at first, but since we're doing `use integer` then `$length / 2` gets truncated, which is not what we want. It didn't affect any of the examples, but a simple case to illustrate the problem, suppose `$sum_chars` was 1 and `$length` was 3 (as if our string was "ada" and our character was 'd'). This way we get $100 \mod 3 = 1 \ge 3 // 2 = 1$ using integer division, ie, $1 \ge 1$ and we *round up* when we shouldn't. In the correct formulation this comes out to $2 \ge 3$ (work it out for yourself) and we *round down* which is correct. The trouble with integer division! Sheesh. But worth it to get to use `use integer`.
 
-```c
-void defang_first_try(char * input, char * output) {
-	char * token, * next_token;
+### Julia
 
-	// blank the string contents in ouput
-	strcpy(output, "");
-	token = strtok_r(input, ".", &next_token);
-	while (token) {
-		strcat(output, token);
-		printf("  %s\n", next_token);
-		token = strtok_r(NULL, ".", &next_token);
-		if (token) {
-			// if its not the last
-			strcat(output, "[.]");
-		}
-	}
+For my *fun* version of the function in Julia I ended up leaning on mostly builtin functionality. It yields a nice one-liner plus comments
+
+```julia
+percent_char_v2(string, char) =
+    # size( findall( char, string ), 1 ) gives the count of all char in string
+    # divide by length of string, times 100 and convert to Int
+    Int( round( size( findall( char, string ), 1 ) / length( string ) * 100 ) )
+```
+
+Here I have all the inefficiencies, separately counting the matches and total characters, converting to float and back to int, but it's short! Also I got to play around with the Julia REPL help mode to find the names of functions I wanted.
+
+### C++
+
+Oh how I have resisted learning any C++ for so long. To be fair, there is a *lot* there, a lot of code, a lot of functions, a lot of directions, all kind of bolted on a core C frame. But there is some cool stuff bubbling up too. What turned me around on C++ was starting to learn some Rust and realizing a lot of the cool stuff I was learning about in Rust you can do in C++ too, like RAII. 
+
+```cpp
+int percent_string_char( std::string s, char c ) {
+  // this is the boring algorithm that walks through each char in s
+  int sum_char = 0;
+  int sum_all = 0;
+  for (char sc : s ) {
+    sum_char += (sc == c);
+    sum_all++;
+  }
+  return std::round( sum_char * 100.0 / sum_all );
 }
 ```
 
-It handles the example cases just fine, but based on a strict reading of the specification, every '.' should be replaced by '[.]', this implementation fails on basically all edge cases: leading, multiple, and trailing '.'s all get dropped. Although I'm really overthinking this here, because, again, on a strict reading of the instructions, we are given a *valid IP address* so it shouldn't really come up. Still, I thought about how to handle these cases in general, and decided 'every' means *every* (and outweighs *valid*) so if we were to get an input like "..." I'd expect the output to be "[.][.][.]". In keeping consistency across all of my implementations I decided on this one
+Well, here is the boring old algorithm after all. The compiler does seem to be letting me play fast and loose with any kind of numeric type, implicitly casting, which is convenient but also, seems like there could be some bugs from this. The most unique thing in my C++ solution is that I made a struct to hold the input data. How very object oriented of me
 
-```c
-void defang(char * input, char * output) {
-	size_t out_index = 0;
-	for (; *input != '\0'; input++) {
-		if (*input == '.') {
-			output[out_index++] = '[';
-			output[out_index++] = '.';
-			output[out_index++] = ']';
-		}
-		else {
-			output[out_index++] = *input;
-		}
-	}
-	output[out_index] = '\0';
+```cpp
+struct char_and_string {
+  // a struct to hold a char, string for inputs
+  char character;
+  std::string string;
+};
+
+std::ostream& operator<<( std::ostream& os, char_and_string const& cas ){
+  // specifies how to pipe our struct into iostream
+  return os << "{ char='" << cas.character << "', string=\"" << cas.string << "\" }";
 }
 ```
 
-Here I'm crawling along the string one character at a time. If the char is `'.'` then add the chars `'[', '.', ']'` to the output string, otherwise just add the char itself. Interesting that my crude solution here is about as long as the one using `strtok`. If this problem had been *slightly* more complicated I might have had to use a library.
+I thought about making the core function a method on `char_and_string` but I didn't get there. Next time C++ comes around in my solutions I'll go all-in OO Programming, methods everywhere!
 
-### Prolog
+### Rust
 
-Next up, Prolog. Getting anything done in Prolog is always a trip for me. It takes a little while to adjust, in particular, I always forget I have to pass the output variable to the function. With Prolog, at very high level, you're not really saying "compute this function and store the return value in X" as much as "give me an X that is a solution to this function." What's really cool is that often you can flip that to be "here is an X that is the solution to this function, give its input Y that yields X" or something like that. Besides all that, the syntax turns out to be very similar to a functional language like Haskell or Lisp. Anyway, I digress.
+If it compiles it runs. Actually I had some logic bugs I nearly missed because I get into the compilation means success mindset. Is it partly out of frustration with how many tries it takes to get it to compile...? Anyway, I know Rust ain't gonna let me go around cast numerics implicitly, because it complained about using a `usize` as a `u32`. Safety!
 
-I decided to write this in a way that could be run using GNU Prolog. I don't remember why I decided that, maybe I wanted a challenge. Because once I started running into issues and started Googling ([DuckDuckGoing](https://duckduckgo.com) really) for answers I got a lot of results telling me how to do the thing I wanted very easily in SWI Prolog, which is a much more fully-featured, batteries included Prolog implementation. Handling strings is not easy to do in Prolog in general, but SWI has added a lot of functionality around this. If my understanding is correct, in Prolog a string is just a list of chars, except that it's not. For instance, you can't pattern match on it. But if you print a string you get a list of char codes, so it's kind of a lose-lose. 
+My Rust function is most like my Perl solution. I keep it in the integer domain.
 
-The solution, or rather *a* solution, or better still *my* solution is to convert strings to atoms. Prolog loves atoms and there are functions to convert a list of chars into an atom, and by the Prolog reflexive property, vice versa. Printing an atom gives its name as you would expect, so that is what I use for output too. So in my roundabout Prolog solution, I start by converting a string to a list of chars
-
-```prolog
-str_to_chars(S, Cs) :- atom_codes(X, S), atom_chars(X, Cs).
-```
-
-If we initialize this function as `str_to_chars("hello", Cs).` it first looks for a solution to `atom_codes(X, "hello")` which is, it looks for an atom whose characters match the list of char codes (recall the string is represented as a list of char codes) of "hello" (explicitly `[104,101,108,108,111]`). This is exactly the atom `hello` which is bound to the variable `X`. Next it tries `atom_chars(X, Cs)` which is now `atom_chars(hello, Cs)` which attempts to find a list of chars (not char codes here) which make up the characters of `hello`, obviously giving `['h', 'e', 'l', 'l', 'o']` which gets bound to the variable `Cs`. Phew. There's got to be a better way to do this, but this works.
-
-Now that we have a list of chars, the rest is pretty easy. The easy part was the hard part. What we'll do is recur through the list of chars. If the list is empty, return an empty list. If the first char is `'.'` return the list `['[', '.', ']']` appended to the defanged list minus its head, and otherwise append the head to the defanged list minus its head. Like so
-
-```prolog
-defang_chars([], []).
-defang_chars(['.'|Xs], ['[', '.', ']'|Y]) :- defang_chars(Xs, Y), !.
-defang_chars([X|Xs], [X|Y]) :- defang_chars(Xs, Y).
-```
-
-You know I really abused terminology there. Prolog doesn't return anything! It just shows how hard it is to get my mind into logic programming mode. Really it's (constructive) matching. One thing to point out is the cut `!` operator in line 2. What I want here is that if we match a `'.'` then commit to it. Don't backtrack and end up on line 3, since that won't give us the correct output.
-
-### Racket
-
-I'll mention briefly my Racket solution. After struggling through my Prolog implementation, this one was a breeze. Racket, and Scheme more broadly, includes lots of batteries, like a function to convert a string to a list of chars! The heart of the logic is basically the same as for Prolog. Given a list of chars, figure out what to do with the head of the list, and append to the operation on the tail.
-
-```racket
-(define (defang-list s)
-  (let loop ([s s])
-    (if (empty? s)
-        '()
-        (let ([first (car s)] [rest (cdr s)])
-          (case first
-            [(#\.) (append '(#\[ #\. #\]) (loop rest))]
-            [else (cons first (loop rest))])))))
-```
-
-One cool thing I dug up was `raco fmt` which is a code formatter for Racket. I used to think, "I'm a freewheelin' guy, don't fence me in, I'll format my code however I feel," but now I know that guy was a jerk! Find a style and stick with it, it will make your life easier. It doesn't matter so much what format you use as that you use a format. I read that somewhere once, and now I agree.
-
-### ***
-
-Amusing side note, I had mentally converted 'defang' to 'defrang', and coded up all my solutions using 'defrang' in the function names somewhere, then had to do a substitution to get things back to normal. Maybe that's an idea for a future PWC - fix all the function names in some C code or something like that. Also, defrang ... I like that word. I'll have to remember to try to use that somewhere.
-
-
-## Task 2: String Score
-Submitted by: Mohammad Sajid Anwar
-
-> You are given a string, $str.<br/>
-> <br/>
-> Write a script to return the score of the given string.<br/>
-> <br/>
-> The score of a string is defined as the sum of the absolute difference between the ASCII values of adjacent characters.<br/>
-> <br/>
-> Example 1<br/>
-> Input: $str = "hello"<br/>
-> Output: 13<br/>
-> <br/>
-> ASCII values of characters:<br/>
-> h = 104<br/>
-> e = 101<br/>
-> l = 108<br/>
-> l = 108<br/>
-> o = 111<br/>
-> <br/>
-> Score => |104 - 101| + |101 - 108| + |108 - 108| + |108 - 111|<br/>
->       => 3 + 7 + 0 + 3<br/>
->       => 13<br/>
-> Example 2<br/>
-> Input: "perl"<br/>
-> Output: 30<br/>
-> <br/>
-> ASCII values of characters:<br/>
-> p = 112<br/>
-> e = 101<br/>
-> r = 114<br/>
-> l = 108<br/>
-> <br/>
-> Score => |112 - 101| + |101 - 114| + |114 - 108|<br/>
->       => 11 + 13 + 6<br/>
->       => 30<br/>
-> Example 3<br/>
-> Input: "raku"<br/>
-> Output: 37<br/>
-> <br/>
-> ASCII values of characters:<br/>
-> r = 114<br/>
-> a = 97<br/>
-> k = 107<br/>
-> u = 117<br/>
-> <br/>
-> Score => |114 - 97| + |97 - 107| + |107 - 117|<br/>
->       => 17 + 10 + 10<br/>
->       => 37<br/>
-
-What I like most about this challenge is it finally gives us a way to directly compare programming languages. Now if someone asks if Raku is better than Perl I can say 37 > 30 so yes!
-
-This is a cool one. I could imagine some variation of this being used to encrypt messages somehow.
-
-Let's see some code
-
-### Perl
-
-Here is the Perl function that does basically all the work.
-
-```perl
-sub sum_char_abs_diff ($s) {
-    my @slist = map { ord } split '', $s;
-    my $sum = 0;
-    for my $idx ( 1..scalar(@slist) - 1 ) {
-	$sum += abs( $slist[$idx] - $slist[$idx-1] );
+```rust
+fn percent_of_string_char_v2(string: &str, character: &char) -> usize {
+    let match_count = string.chars().filter(|c| c == character).count();
+    let string_length = string.chars().count();
+    let mc_100 = 100 * match_count;
+    let (div, remainder) = (mc_100 / string_length, mc_100 % string_length);
+    if remainder * 2 >= string_length {
+        div + 1
+    } else {
+        div
     }
-    return $sum;
 }
 ```
 
-It takes a string, splits it on `''` which gives a list of characters. Then we map each value in that list of chars to its ascii value using `ord`. Next we initialize our sum value to 0. The for loop runs from index 1 until the end of the char-int list. This has the nice effect of handling strings of size 0 and size 1, the loop will never run and the value of 0 will be returned, which is how I would define these edge cases. Within the loop we add to the sum the absolute value of the difference of the element at the index and the element before it. That's a lot of words but it should be pretty clear by looking at the code.
+Not much to add to my Perl commentary here. Rust implicitly returns the last value so it's either `div + 1` or `div`. I could have left out the third `let` line, and baked that into the first one, but I thought it was a little clearer this way.
 
-It looks like a pretty clean solution to me this time. I wonder if I could one-line it.
+## Challenge 2: B After A
 
-### C
+> Task 2: B After A</br>
+> Submitted by: Mohammad Sajid Anwar</br>
+> You are given a string, $str.</br>
+> </br>
+> Write a script to return true if there is at least one b, and no a appears after the first b.</br>
+> </br>
+> Example 1</br>
+> Input: $str = "aabb"</br>
+> Output: true</br>
+> Example 2</br>
+> Input: $str = "abab"</br>
+> Output: false</br>
+> Example 3</br>
+> Input: $str = "aaa"</br>
+> Output: false</br>
+> Example 4</br>
+> Input: $str = "bbb"</br>
+> Output: true
 
-The C code is very similar to the Perl solution
+Again, there's a simple algorithm that looks at every character in the string, we can even short circuit it if we fail early by seeing an 'a' after a 'b'. Let's look at the boring algorithm, this time in C++
 
-```c
-int sum_abs_char_diffs(const char * s) {
-	const size_t s_len = strlen(s);
-
-	int abs_diff, sum = 0;
-	for (int i=1; i < s_len; i++) {
-		abs_diff = abs(s[i] - s[i-1]);
-		sum += abs_diff;
-	}
-	return sum;
+```cpp
+int validate_a_b_string_v1( std::string s ) {
+  // this is the boring algorithm that walks through each char in s
+  bool first_b = false;
+  for ( char sc : s ) {
+    // update if we've seen a 'b' yet
+    first_b |= ( sc == 'b' );
+    if (first_b && sc == 'a') {
+      // if we see an 'a' after a 'b' then false
+      return false;
+    }
+  }
+  // if we haven't seen any 'b's then first_b is still false
+  return first_b;
 }
 ```
 
-One thing to point out here is that it plays to C's strengths, a char is basically an int! I though about trying some implicit casting in Perl, but it is too eager to do some `atoi` magic, in C we can simply do the arithmetic on the chars and the results come out right.
+Let's just say we're in C++ section already because this is all I did for C++. Oops! Like I said, next C++ time I'll go all in OO and make up for it. Also, this week I got distracted by some new insights into [PWC 270](https://theweeklychallenge.org/blog/perl-weekly-challenge-270/) which I'll mention below.
 
-### Prolog
+### C++
 
-Basically everything happens in this function
+First we create a variable `first_b` to remember if we've seen any 'b' yet, because that determines how we proceed. Now for each char, if it's a 'b' `first_b` gets set to true. Next, if `first_b` is true, if we have seen a 'b' already, and the current character is 'a' then we can fail, return false. Otherwise, doesn't matter what character we see. Finally, if we make it through the string loop, if we have ever seen a 'b' then `first_b` is true, and success! otherwise `first_b` is false and failure, so we can just return `first_b`.
 
-```prolog
-sum_char_diffs([], 0).
-sum_char_diffs([_], 0).
-sum_char_diffs([A, B|Xs], S) :-
-    A > B,
-    sum_char_diffs([B|Xs], S2), S is S2 + A - B.
-sum_char_diffs([A, B|Xs], S) :-
-    B >= A,
-    sum_char_diffs([B|Xs], S2), S is S2 + B - A.
+### Perl
+
+The algorithm I came up with here is possibly as efficient as the C++ one, but in much more idomatic Perl (I think) so it's a win-win for my goals this week.
+
+```perl
+sub check_a_b_string( $string ) {
+    # find the first 'b' index
+    # if there's none (ie returns -1) then false
+    return 0 if 0 > ( my $first_b_idx = index $string, 'b' );
+
+    # if there are any 'a's after the first 'b' then false
+    return 0 if ( substr $string, $first_b_idx ) =~ tr/a//;
+
+    # otherwise true!
+    return 1;
+}
 ```
 
-Here we match explicitly on an empty string or a string of length 1 and bind the value 0, otherwise we bind the sum of the difference of the first two elements plus the value from the same function called recursively on the list minus its head. Many words, but hopefully the code makes enough sense on its own.
+Using builtin functions there's some uncertainty about runtimes, but I'll assume index will stop searching the string once it finds the first match. If there's no match of a 'b' then we return false. Otherwise we use that index as a starting point for a substring, and check if there are any 'a's in there. Assuming that is linear in the size of the searched string, it essentially only needs to pass over the chars of the string one time. Efficient and sleek! It kind of flips the logic of the C++ version, there we check last if we ever saw a 'b', here we check that first.
 
-The trickiest bit here is that I'm not sure if there's an absolute value function so I just treat `A > B` and `B >= A` separately. 
+### Rust
 
-The fact that Prolog thinks of strings as a list of char codes works well for me here, no conversion necessary! Take that Prolog!
+In Rust for this challenge, I'm basically using the C++ algorithm, but I'm using match, and what is more idiomatic Rust than match?! Really Rust has a very powerful match operator, and you see it used often when unwrapping a function that returns a Result, which can be a value or an error, each wrapped inside of its own datatype. Here I'm just matching on the character value.
 
-### Racket
-
-Despite the looks of this one it was easy again to write.
-
-```racket
-(define (sum-abs-char-diffs s)
-  (let* ([char-list (string->list s)] [num-list (map char->integer char-list)])
-    (let loop ([num-list num-list] [diff-sum 0])
-      (if (> 2 (length num-list))
-          diff-sum
-          (loop (cdr num-list) (+ diff-sum (abs (- (car num-list) (cadr num-list)))))))))
+```rust
+fn good_a_b_string(string: &str) -> bool {
+    let mut first_b = false;
+    for c in string.chars() {
+        match c {
+            // on 'b' then set first_b to true
+            'b' => first_b |= true,
+            // on 'a', if we've seen a 'b' then false
+            'a' => {
+                if first_b {
+                    return false;
+                }
+            }
+            // otherwise no action, keep iterating
+            _ => continue,
+        }
+    }
+    // if we've seen a 'b' this is true
+    first_b
+}
 ```
 
-The logic here is basically the same as for Prolog, in a functional form (returns a value). 
+Match operates on a variable, here `c`. Each leg of the match represents a possible value, here just a simple value, and `_` is the else match, if it hasn't matched anything prior then it will match the on the `_` leg. 
 
-As far as formatting, I wasn't sure what to do about the stack of closing parens that built up at the end, but `raco fmt` just bunched them all together on the last line, so I'll accept that.
+### Julia
 
-### Conclusion
+In Julia I use a couple of builtin functions.
 
-Ok. This concludes my long, rambling notes on my various solutions to this week's challenges. I'm looking forward to seeing what comes up next week, and maybe soon I'll send in some of the challenge ideas I've been thinking up.
+```julia
+function validate_a_b( string )
+    first_b = findfirst( 'b', string )
+    last_a = findlast( 'a', string )
+    # there is a 'b' 
+    # and ( there are no 'a's or the last 'a' is before the first 'b' )
+    first_b != nothing && ( last_a == nothing || last_a < first_b )
+end
+```
 
-See you next week.
+`findfirst` and `findlast` each return either the index of the found match or the value `nothing` if there was no match. We combine these into a long boolean expression that checks, from left to right, we found a 'b' and we found no 'a' or the last 'a' is before the first 'b'. Simple!
+
+## Revisiting a 270 Problem
+
+Mohammad linked to a great discussion about Challenge 2 from [PWC 270](https://theweeklychallenge.org/blog/perl-weekly-challenge-270/) by [E. Choroba](https://blogs.perl.org/users/e_choroba/2024/06/equalise-an-array.html) which expanded my mind on the problem. If you haven't read it yet you should. On reading the problem description I didn't think about the possibility of all values ending up larger than they came in, and it sounds like nobody else among the official submissions did either, but he gives a case where the optimal solution requires this.
+
+I have been working on my own solution to the elucidated problem and some discussion thereof, but as of press time it is still in revision. I may try to finish it up this week, but definitely check out his blog post.
+
+## Conclusion
+
+Great work this week! I can't wait for the next problem set.
