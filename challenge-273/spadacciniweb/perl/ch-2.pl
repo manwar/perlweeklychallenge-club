@@ -42,14 +42,10 @@ exit 0;
 sub position {
     my $str = shift;
 
-    my $first_b = index($str, 'b');
-    my $last_a = index((scalar reverse $str), 'a');
-    $last_a = length($str) - $last_a - 1
-        if $last_a >= 0;
-
+    my $offset = index($str, 'b');
     printf "%s -> %s\n",
         $str,
-        ($last_a > $first_b)
-            ? 'false'
-            : 'true';
+        ($offset >= 0 and index($str, 'a', $offset) == -1)
+            ? 'true'
+            : 'false';
 }
