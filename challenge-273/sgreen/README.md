@@ -1,3 +1,3 @@
 # The Weekly Challenge 272
 
-Sorry, no blog this week.
+Blog: [Finding things](https://dev.to/simongreennet/finding-things-1f34)
