@@ -2,11 +2,10 @@
 use v5.36;
 use POSIX qw<lround>;
 
-# XXX challenge-273/e-choroba/perl/ch-1.pl shows \Q !!!
-
 sub task1 ($str, $char) {
 
     my $count =()= $str =~ m{$char}g;   # Google perlsecret.pod
+    # Note: e-choroba adds `\Q`, to make `m{\Q$char}g`, which is technically safer.
 
     return lround( 100 * $count / length($str) );
 }
@@ -15,8 +14,6 @@ sub task1 ($str, $char) {
 #   https://en.wikipedia.org/wiki/Rounding#Rounding_half_to_even
 #   https://pubs.opengroup.org/onlinepubs/9699919799/functions/round.html
 #   https://pubs.opengroup.org/onlinepubs/9699919799/functions/lround.html
-
-# XXX credit lround and \Q!
 
 
 my @tests = qw<

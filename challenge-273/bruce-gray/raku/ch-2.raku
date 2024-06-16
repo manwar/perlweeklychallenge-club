@@ -14,12 +14,12 @@ sub task2_index_substr_cont ( $str --> Bool ) {
 
     return ! $str.substr($pos_of_first_b).contains('a');
 }
-# XXX credit jo-37 via ~/T/d20240614/n15.pl
 sub task2_single_regex ( $str --> Bool ) {
     # return so $str ~~ / ^ <-[b]>* b <-[a]>* $ /;
     # return so $str ~~ / ^ <-[b]>*: b <-[a]>*: $ /;
     return so $str ~~ /:r ^ <-[b]>* b <-[a]>* $ /;
-    # https://docs.raku.org/language/regexes#Backtracking_control
+    # Credit jo-37 for seeing (in Perl) that controlling backtracking could improve performance.
+    # Raku Ref: https://docs.raku.org/language/regexes#Backtracking_control
 }
 
 
