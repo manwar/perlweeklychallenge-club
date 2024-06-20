@@ -21,8 +21,6 @@ def bus_routes(timetables):
     for current in range(0, 60):
         next_bus = [(r.next_bus(current), r.end_trip(current)) for r in routes]
         sorted_next_bus = sorted(next_bus)
-        # assuming if 2 buses arrive at the same time the first route
-        # will be the first bus
         if any(sorted_next_bus[0][1] > end for end in list(zip(*sorted_next_bus[1:]))[1]):
             times.append(current)
     return times
@@ -41,7 +39,7 @@ class Route:
     def next_bus(self, current):
         time = self.offset
         while current > time:
-            if time + self.interval > 59 and time + self.interval % 60 > self.offset:
+            if time + self.interval > 59:
                 time = 60 + self.offset
             else:
                 time += self.interval
