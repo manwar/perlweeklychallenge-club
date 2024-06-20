@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Time to count B chars](https://packy.dardan.com/b/Md)
+[Bus Route, Bus Goat, Under My Umbrellamaaaaaaaaaaaa](https://packy.dardan.com/b/Mq)
