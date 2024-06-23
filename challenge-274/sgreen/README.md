@@ -1,3 +1,3 @@
-# The Weekly Challenge 272
+# The Weekly Challenge 274
 
-Blog: [Finding things](https://dev.to/simongreennet/finding-things-1f34)
+Blog: [Speaking Goat Latin on the fastest bus to town](https://dev.to/simongreennet/speaking-goat-latin-on-the-fastest-bus-to-town-59b2)
