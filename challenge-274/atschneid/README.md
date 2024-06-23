@@ -1,4 +1,4 @@
-# Trying to Be X Percent More Interesting
+# Concerning Goats and Buses
 
 **Challenge 274 solutions by Andrew Schneider**
 
@@ -61,7 +61,7 @@ I first handle moving a non-vowel initial to the end of each word. Then append t
 
 ### C
 
-In C, and the others, the strategy I used is to first split the string into an alternating word, non-word list, next operate on the words in the list, and finally stitch the list back together (or ... not quite "together"). In C I really got into the weeds in character manipulations. I did't easily find existing functions to interact between chars and strings (C style) the way I needed to, so this ended up looking like an "Intro to Programming in C" homework assignment.
+In C, and the others, the strategy I used is to first split the string into an alternating word, non-word list, next operate on the words in the list, and finally stitch the list back together (or ... not quite "together"). In C I really got into the weeds in character manipulations. I didn't easily find existing functions to interact between chars and strings (C style) the way I needed to, so this ended up looking like an "Intro to Programming in C" homework assignment.
 
 As laid out above, first I split the string into an alternating word, non-word list. I make it a linked list of `word_ll` type.
 
@@ -143,11 +143,13 @@ word_ll make_to_goat_latin( char *str ) {
 }
 ```
 
-A better design would have not required `malloc`s inside the functions that are expected to get freed elsewhere. But this is a pretty small script, I opted for the mediocre solution.
+A better design would have not required `malloc`s inside the functions that are expected to get `free`d elsewhere. But this is a pretty small script, I opted for the mediocre solution.
 
 ### Haskell
 
-I had a pretty clear vision of what I wanted to do in Haskell with this, which I stayed pretty true to. It is basically the same idea as with the C solution: split into word, non-word alternating list, run the goat mod on the words in order, stitch everything back together. As I was first working on this I built a tremendous amount of supporting infrastructure, including a `mapAdjacent` operator which takes a binary function and applies to every consecutive pair of values in a list. I even further modified that into `mapAdjacentR` and `mapAdjacentL` differing in which value is the first argument. Some days after, I was continuing to read Learn You a Haskell and realized I didn't need half of what I had written. What a shame! It was a good exercise, but being a diligent student, I cut out half my code and used the existing module functions.
+I had a pretty clear vision of what I wanted to do in Haskell with this, which I stayed pretty true to. It is basically the same idea as with the C solution: split into a word, non-word alternating list, run the goat modifications on the words in order, and stitch everything back together. 
+
+As I was first working on this I built a tremendous amount of supporting infrastructure, including a `mapAdjacent` operator which takes a binary function and applies to every consecutive pair of values in a list. I even further modified that into `mapAdjacentR` and `mapAdjacentL` differing in which value is the first argument. Some days after, I was continuing to read Learn You a Haskell and realized I didn't need half of what I had written. What a shame! It was a good exercise, but being a diligent student, I cut out half my code and used the existing module functions.
 
 Here `groupBy` does the work of splitting our string into the alternating word, non-word list
 
@@ -355,7 +357,9 @@ int find_switch_minutes( const input_tuple inputs[], const int num_inputs, int o
 }
 ```
 
-Instead of filling in the depart arrival schedule in one loop, and then find the minimu depart time and arrival in a separate loop, here I do them both in one pass. I go backward from the end time. If the minute is a departure minute I can calculate the new valid depart and arrival times, otherwise I just use the previous values. Also this way I don't need to build schedule arrays for each bus schedule, since I can use the depart, arrive values right away. Also here I pre-allocate the buffer for the return value and pass it to the function so I don't have to worry about hidden `malloc`s like I mentioned above. See. I learn as I go. The value I return from this function is the number of skip bus minutes I found, so I know how far into the pre-allocated array to read to get the results.
+Instead of filling in the depart arrival schedule in one loop, and then find the minimu depart time and arrival in a separate loop, here I do them both in one pass. I go backward from the end time. If the minute is a departure minute I can calculate the new valid depart and arrival times, otherwise I just use the previous values. Also this way I don't need to build schedule arrays for each bus schedule, since I can use the depart, arrive values right away. 
+
+Also here I pre-allocate the buffer for the return value and pass it to the function so I don't have to worry about hidden `malloc`s like I mentioned above. See. I learn as I go. The value I return from this function is the number of skip bus minutes I found, so I know how far into the pre-allocated array to read to get the results.
 
 ### Haskell
 
@@ -378,7 +382,7 @@ data TimeInfo = TimeInfo
   deriving (Show)
 ```
 
-Then for a given schedule I can find is arrive, depart values for every minute 
+Then for a given schedule I can find its arrive, depart values for every minute 
 
 ```haskell
 timeToArriveDepart :: Schedule -> Int -> TimeInfo
@@ -391,7 +395,11 @@ getArriveDepartMinutes :: Schedule -> [TimeInfo]
 getArriveDepartMinutes t = map (timeToArriveDepart t) [0 ..]
 ```
 
-The logic here is that at time `t` I can figure out directly when the next bus will leave and arrive. There are two potential gotchas in this formula which I dodged without realizing, although one of them caused great confusion when I reimplemented this logic in Julia. But the formula: we can subtract the start time from the current time, then integer divide by the inter-bus-arrival time to find out when the next bus will leave. Multiply that plus one by the inter-arrival time and add back the start time. The first gotcha, that didn't come up in the test cases, is that this won't work if the start time is greater than the step time. I would have to put some different logic to handle that correctly. The second involves how integer division handles negatives. I have seen articles about this, but never thought it would affect me... See the Julia section for more.
+The logic here is that at time `t` I can figure out directly when the next bus will leave and arrive. There are two potential gotchas in this formula which I dodged without realizing, although one of them caused great confusion when I reimplemented this logic in Julia. 
+
+The formula: we can subtract the start time from the current time, then integer divide by the inter-bus-arrival time to find out when the next bus will leave. Multiply that plus one by the inter-arrival time and add back the start time. 
+
+The first gotcha, that didn't come up in the test cases, is that this won't work if the start time is greater than the step time. I would have to put some different logic to handle that correctly. The second involves how integer division handles negatives. I have seen articles about this, but never thought it would affect me... See the Julia section for more.
 
 ```haskell
 checkSkipOne :: [TimeInfo] -> Bool
@@ -409,7 +417,7 @@ skipBuses tis =
    in map (snd) $ filter (fst) indexed_bools
 ```
 
-Next we write function to check if we should skip the next bus. We find the minimum depart time, then filter on all buses leaving at that time, taking the minimum arrival time. Next we take the minimum overall arrival time for the minute. If the former is greater than the latter, we've got a skip bus. Zip that map together with an index, filter on the true skip vals, and we have our answer.
+We find the minimum depart time, then filter on all buses leaving at that time, taking the minimum arrival time. Next we take the minimum overall arrival time for the minute. If the former is greater than the latter, we've got a skip bus. Zip that map together with an index, filter on the true skip vals, and we have our answer.
 
 ### Julia
 
@@ -423,7 +431,9 @@ function find_next_bus_info( t::Int, sched::Schedule )
 end
 ```
 
-Here I basically copied over my function from Haskell, but I was getting odd results in the low index values. It took me a while to think about negative value integer division, and then I even got thrown off that track because of the way Haskell wants you to enter negative numbers (`(-1)` not just `-1`). But the bug came down to this. Haskell was doing integer division rounding down to minus infinity, while Julia by default was rounding to zero. So for example Haskell would take `div (-3) 4` and give `-1` while Julia would take `div(-3, 4)` and give `0`. Aiyahh! After much head scratching and doc reading I realized the issue, and Julia `div` takes an optional third arg telling it how to round negative values, and so I pass it the `RoundDown` arg above.
+Here I basically copied over my function from Haskell, but I was getting odd results in the low index values. It took me a while to think about negative value integer division, and then I even got thrown off that track because of the way Haskell wants you to enter negative numbers (`(-1)` not just `-1`). But the bug came down to this. Haskell was doing integer division rounding down to minus infinity, while Julia by default was rounding to zero. So for example Haskell would take `div (-3) 4` and give `-1` while Julia would take `div(-3, 4)` and give `0`. 
+
+Aiyahh! After much head scratching and doc reading I realized the issue, and Julia `div` takes an optional third arg telling it how to round negative values, and so I pass it the `RoundDown` arg above and get the desired result.
 
 ```julia
 function find_switch_times( schedules )
@@ -450,3 +460,5 @@ The rest of the code steps through the minutes and checks if it is a skip bus mi
 ## Conclusion
 
 Well, here we are again. Another great set of challenges, some lackluster coding work on my part, and some sampling of my inner monologue as I look some code samples. Also, another week where I have come close, but not actually submitted any ideas for future PWCs.
+
+See you next week!
