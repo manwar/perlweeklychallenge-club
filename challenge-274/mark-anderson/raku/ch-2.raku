@@ -6,34 +6,19 @@ is-deeply bus-route([[12,3,41],[15,9,35],[30,5,25]]), (0,1,2,3,25,26,27,40,41,42
 
 sub bus-route(@r)
 {
-    @r .= map(&schedule);
-
-    gather for ^60 [Z] [Z] @r -> ($minute, $routes) 
+    gather for ^60 -> $minute
     {
-        given $routes.sort({ abs($minute - .<depart>), .<arrive> }) -> $routes
-        {
-            my @arrivals = $routes>>.<arrive>;
+        my $arrivals := @r.map({ schedule($_, $minute) })    
+                          .sort({ .[0], .[1]  })
+                          .map({ .[1] });
 
-            if @arrivals.head >= 60
-            {
-                @arrivals = @arrivals >>mod>> 60
-            }
-
-            next if @arrivals.head == @arrivals.min;
-            
-            take $minute
-        }
+        take $minute if $arrivals[0] > any($arrivals[1..*])
     }
 }
 
-sub schedule([$interval, $depart, $duration])
+sub schedule([$interval, $depart, $duration], $minute)
 {
-    my $departures := $depart, $depart + $interval...60;
-
-    my $schedule = do for flat map { $_ xx $interval }, $departures 
-    {
-        .Map given :depart($_), :arrive($_ + $duration) 
-    }
-    
-    $schedule.rotate($interval - $depart - 1)
+    my $departures := $depart, $depart + $interval ... 1000;
+    my $next = $departures.first(* >= $minute);
+    $next, $next + $duration
 }
