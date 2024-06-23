@@ -5,7 +5,7 @@ grammar Goat-Latin
 {
     has @.words;
 
-    token TOP       { [<.vowel>  || <.consonant>]* % ' '                                                     }
+    token TOP       { [<.vowel> || <.consonant>]* % ' '                                                      }
     token vowel     { :i <[aeiou]>  <.alpha>* { @.words.push: ~$/ ~ "maa" ~ "a" x @.words                  } }
     token consonant { :i <-[aeiou]> <.alpha>* { @.words.push: ~$/.comb.rotate.join ~ "maa" ~ "a" x @.words } }
 }
