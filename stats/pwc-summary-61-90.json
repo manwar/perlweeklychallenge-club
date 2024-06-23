@@ -5,14 +5,6 @@
          "text" : ""
       }
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "series" : [
       {
          "data" : [
@@ -50,7 +42,6 @@
          "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             2,
@@ -82,10 +73,10 @@
             0,
             0,
             2
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             1,
@@ -117,15 +108,21 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-06-23 17:01:03 GMT"
-   },
    "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-06-23 20:14:06 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -160,6 +157,9 @@
          "Freddie B",
          "Garrett Goebel"
       ]
+   },
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
