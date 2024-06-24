@@ -11,7 +11,7 @@ sub replace-digits($s)
 {
     my ($head, $tail) = $s.split(/ <.alpha>+ $ /, :v);
 
-    my @result = do for $head.split(/\d+/, :v:skip-empty).batch(2)
+    my @result = do for $head.split(/ <.digit>+ /, :v:skip-empty).batch(2)
     {
         my $char  = .head ~~ / <.alpha> $ /;
         $char ~ [~] .tail.comb.map({ chr($char.ord + $_) })
