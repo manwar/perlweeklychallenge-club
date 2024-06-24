@@ -23,8 +23,8 @@ test_combo() {
 }
 
 do_it() {
-    test_combo "perl perl/1.pl" 
-    test_combo "raku raku/1.raku" 
+    test_combo "perl perl/ch-1.pl"
+    test_combo "raku raku/ch-1.raku"
 }
 
 do_it "$@"
