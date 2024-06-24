@@ -15,7 +15,7 @@ my $string = [~] gather for ^100
 # 😭 😭 😭 😭 😭
 
 b 10, { replace-digits-old($string) }, 
-      { replace-digits-new($string)   } 
+      { replace-digits-new($string) } 
 
 # Bare: 0.000041032s
 # Old:  1.344218988s
