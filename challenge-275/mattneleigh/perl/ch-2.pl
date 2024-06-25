@@ -28,6 +28,7 @@ foreach my $string (@strings){
         character_advance($string)
     );
 }
+;
 
 exit(0);
 ################################################################################
@@ -68,11 +69,11 @@ sub character_advance{
                 # the bounds of the alphabet
                 $char_value -= 26
                     unless(
-                        # Upper case
-                        (($char_value > 64) && ($char_value < 91))
-                        ||
                         # Lower case
                         (($char_value > 96) && ($char_value < 123))
+                        ||
+                        # Upper case
+                        (($char_value > 64) && ($char_value < 91))
                     );
 
                 # Store the new letter in place of
