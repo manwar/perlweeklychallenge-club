@@ -1,4 +1,11 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
    "xAxis" : {
       "categories" : [
          "Giuseppe Di Terlizzi",
@@ -34,16 +41,12 @@
       ]
    },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-06-28 22:11:12 GMT"
+      "text" : "[Champions: 30] Last updated at 2024-06-28 22:37:26 GMT"
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : ""
-      },
-      "min" : 0
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -117,6 +120,7 @@
          "name" : "Raku"
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -148,20 +152,16 @@
             46,
             0,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
    },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
       }
    }
 }
