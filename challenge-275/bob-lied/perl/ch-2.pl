@@ -29,22 +29,21 @@ use Getopt::Long;
 my $DoTest  = false;
 my $Benchmark = 0;
 
-GetOptions("test" => \$DoTest, "benchmark:i" => \$Benchmark);
+GetOptions("test" => \$DoTest);
 exit(!runTest()) if $DoTest;
-exit( runBenchmark($Benchmark) ) if $Benchmark;
 
-# Must begin not begin with a digit
+# Must not begin with a digit
 say replaceDigits($_) for map { s/^[0-9]*//ir } @ARGV;
 
 sub replaceDigits($str)
 {
     my @s = split("", $str);
-    my $prev = my $result = shift @s;
+    my $letter = my $result = shift @s;
 
     while ( defined(my $next = shift @s) )
     {
-        if ( $next =~ m/[^0-9]/i ) { $result .= ($prev = $next) }
-        else { $result .= chr(ord($prev) + $next); }
+        if ( $next =~ m/[^0-9]/i ) { $result .= ($letter = $next) }
+        else { $result .= chr(ord($letter) + $next); }
     }
     return $result;
 }
@@ -60,13 +59,4 @@ sub runTest
     is( replaceDigits("a16z"    ), "abgz"    , "Example 4");
 
     done_testing;
-}
-
-sub runBenchmark($repeat)
-{
-    use Benchmark qw/cmpthese/;
-
-    cmpthese($repeat, {
-            label => sub { },
-        });
 }

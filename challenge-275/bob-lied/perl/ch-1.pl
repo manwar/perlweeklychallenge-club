@@ -46,8 +46,8 @@ sub bk($sentence, @keys)
     # my $re = '^[^' . join("", @keys) . ']*$';
     # return scalar grep /$re/i, split(/\W+/, $sentence);
     # my $re = '[' . join("", @keys) . ']';
-    local $, = '';
-    my $re = qq([@keys]);
+    my $re;
+    { local $, = ''; $re = qq([@keys]); }
     my @s = split(/\W+/, $sentence);
     return scalar(@s) - ( grep /$re/i, @s );
 }
