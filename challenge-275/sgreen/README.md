@@ -1,3 +1,3 @@
-# The Weekly Challenge 274
+# The Weekly Challenge 275
 
-Blog: [Speaking Goat Latin on the fastest bus to town](https://dev.to/simongreennet/speaking-goat-latin-on-the-fastest-bus-to-town-59b2)
+Blog: [Broken digits](https://dev.to/simongreennet/broken-digits-e7k)
