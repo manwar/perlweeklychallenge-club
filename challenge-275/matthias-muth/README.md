@@ -1,234 +1,202 @@
-# These busses got class-maa!
+# Broken Keys and Test Driven Understanding (tm)
 
-**Challenge 274 solutions in Perl by Matthias Muth**
+**Challenge 275 solutions in Perl by Matthias Muth**
 
-## Task 1: Goat Latin
+## Task 1: Broken Keys
 
-> You are given a sentence, \$sentance [sic!].<br/>
-> Write a script to convert the given sentence to Goat Latin, a made up language similar to Pig Latin.<br/>
-> Rules for Goat Latin:<br/>
->
-> 1) If a word begins with a vowel ("a", "e", "i", "o", "u"), append<br/>
->    "ma" to the end of the word.<br/>
-> 2) If a word begins with consonant i.e. not a vowel, remove first<br/>
->    letter and append it to the end then add "ma".<br/>
-> 3) Add letter "a" to the end of first word in the sentence, "aa" to<br/>
->    the second word, etc etc.
-> 
+> You are given a sentence, $sentence and list of broken keys @keys.<br/>
+> Write a script to find out how many words can be typed fully.<br/>
+> <br/>
 > Example 1<br/>
-> Input: \$sentence = "I love Perl"<br/>
-> Output: "Imaa ovelmaaa erlPmaaaa"<br/>
+> Input: \$sentence = "Perl Weekly Challenge", @keys = ('l', 'a')<br/>
+> Output: 0<br/>
 > <br/>
 > Example 2<br/>
-> Input: \$sentence = "Perl and Raku are friends"<br/>
-> Output: "erlPmaa andmaaa akuRmaaaa aremaaaaa riendsfmaaaaaa"<br/>
+> Input: \$sentence = "Perl and Raku", @keys = ('a')<br/>
+> Output: 1<br/>
+> Only Perl since the other word two words contain 'a' and can't be typed fully.<br/>
 > <br/>
 > Example 3<br/>
-> Input: \$sentence = "The Weekly Challenge"<br/>
-> Output: "heTmaa eeklyWmaaa hallengeCmaaaa"<br/>
+> Input: \$sentence = "Well done Team PWC", @keys = ('l', 'o')<br/>
+> Output: 2<br/>
+> <br/>
+> Example 4<br/>
+> Input: \$sentence = "The joys of polyglottism", @keys = ('T')<br/>
+> Output: 2<br/>
 
-Again, Perl regular expressions come to help.<br/>
-Let's construct the result 'on the fly':
+Regular expressions make this is an easy one.
 
-* We `split` the sentence into words.
-* For each word,
-  we use a regular expression to separate the first letter from the rest,
-  and to distinguish between a vowel as the first letter or a consonant
-  (actually, anything else than a vowel).<br/>
-  We use captures for anything we need later.<br/>
-  I first tried using named captures,
-  but for the simple case that we have here,
-  I found the result more readable with just `$1`, `$2`, `$3`.
-* For the suffix, we declare a lexical variable `$suffix`  beforehand, initializing it with "ma".<br/>We will add another `"a"` within every iteration.
-* Constructing the resulting word is simple then:<br/>
-  Depending on whether we found a vowel (which means that the `$1` capture is non-empty, we use the original word or a flipped version of it (using the `$2` and `$3` captures).<br/>
-  Then we append the suffix, after having appended the additional `"a"` to it.
+First thing, we have to separate the words in the sentence to deal with them one by one.<br/>
+No problem, just a standard call of `split " ", $sentence`.
 
-The whole Goat Latin translator looks like this:
+To find out whether a word contains a 'broken' key
+we can put those keys into a 'bracketed character class',
+and then check the word against that.
+For the second example above, we would try a match like this:
+
+```perl[]  
+    ! /[lo]/i
+```
+
+The `//i` modifier makes sure that lower or upper case doesn't matter
+(needed in the third example).  
+
+So then let's combine the broken keys into a string that we can use in the regular expressions,
+and then use it for counting the matches.
+For the counting, `grep` in scalar context does the job.
 
 ```perl
-use v5.36;
-
-sub goat_latin( $sentence ) {
-    my $suffix = "ma";
-    return join " ",
-        map {
-            /^ (?: ([aeiou]) | (\w) ) (.*) /xi;
-            $suffix .= "a";
-            ( $1 ? $_ : "$3$2" ) . $suffix;
-        } split " ", $sentence;
+sub broken_keys( $sentence, $keys ) {
+    my $keys_as_string = join( "", $keys->@* );
+    return scalar grep ! /[$keys_as_string]/i, split " ", $sentence;
 }
 ```
 
-## Task 2: Bus Route
+Et voilà!
 
-> Several bus routes start from a bus stop near my home, and go to the same stop in town. They each run to a set timetable, but they take different times to get into town.<br/>
-> Write a script to find the times - if any - I should let one bus leave and catch a strictly later one in order to get into town strictly sooner.<br/>
-> An input timetable consists of the service interval, the offset within the hour, and the duration of the trip.<br/>
+## Task 2: Replace Digits
+
+> You are given an alphanumeric string, \$str, where each character is either a letter or a digit.<br/>
+> Write a script to replace each digit in the given string with the value of the previous letter plus (digit) places.<br/>
 > <br/>
 > Example 1<br/>
-> Input: [ [12, 11, 41], [15, 5, 35] ]<br/>
-> Output: [36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47]<br/>
-> Route 1 leaves every 12 minutes, starting at 11 minutes past the hour (so 11, 23, ...) and takes 41 minutes. Route 2 leaves every 15 minutes, starting at 5 minutes past (5, 20, ...) and takes 35 minutes.<br/>
-> At 45 minutes past the hour I could take the route 1 bus at 47 past the hour, arriving at 28 minutes past the following hour, but if I wait for the route 2 bus at 50 past I will get to town sooner, at 25 minutes past the next hour.<br/>
+> Input: \$str = 'a1c1e1'<br/>
+> Ouput: 'abcdef'<br/>
+> shift('a', 1) => 'b'<br/>
+> shift('c', 1) => 'd'<br/>
+> shift('e', 1) => 'f'<br/>
 > <br/>
 > Example 2<br/>
-> Input: [ [[12, 3, 41], [15, 9, 35], [30, 5, 25] ]<br/>
-> Output: [ 0, 1, 2, 3, 25, 26, 27, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 55, 56, 57, 58, 59 ]<br/>
+> Input: \$str = 'a1b2c3d4'<br/>
+> Output: 'abbdcfdh'<br/>
+> shift('a', 1) => 'b'<br/>
+> shift('b', 2) => 'd'<br/>
+> shift('c', 3) => 'f'<br/>
+> shift('d', 4) => 'h'<br/>
+> <br/>
+> Example 3<br/>
+> Input: \$str = 'b2b'<br/>
+> Output: 'bdb'<br/>
+> <br/>
+> Example 4<br/>
+> Input: \$str = 'a16z'<br/>
+> Output: 'abgz'<br/>
 
-#### Object-oriented approach, using Perl `class`
+This task is a bit more tricky. At least for me.<br/>
+Not tricky for the programming,
+but it took me an 'iterative approach' to understand the details of the specification.
+As simple (and complete and correct!) as it seems, I misunderstood it as being *too* simple.
 
-For every minute past the hour (`0..59`),
-we will need know for any bus route when is its next departure time,
-and what will be our arrival time if we take that bus.
-We need this information to decide which bus is the 'next bus',
-and then check 'later buses' for possibly to arrive earlier.
+So this is my 'test driven understanding' approach.  
 
-So what if we made every bus route an object,
-with methods like `next_departure( $now )` and `next_arrival( $now )`,
-where we can put in every minute we want to check as a parameter?
+##### First try
 
-What a great way to demonstrate Perl's quite recent new `class` feature!<br/>
-(... which has been out for over a year now, happy anniversary! Love to see it growing!)
+Maybe my first try was too naive.
+Repetitively match a letter and a digit,
+and then replace the digit by the properly shifted letter directly in the substitution.<br/>
+That means a `s///g` global substitution, and I added these additional 'tricks':
 
-The most difficult thing to compute is the next departure time.
-But it is not too difficult if we first compute the *waiting time* until the bus's next departure.
-
-When we miss a bus, the time since its previous departure is
-```perl
-        ( $now - $offset ) % $frequency
-```
-For the waiting time until the *next* departure, we simply turn things around:
-```perl
-    method waiting_time( $now ) {
-        return ( $offset - $now ) % $frequency;
-    }
-```
-The term `( $offset - $now )` can become negative
-(it regularly is after the first departure),
-but the `%` result is correct even for negative numbers.
-
-Given the `waiting_time` method, the rest of the `BusRoute` class is simple.<br/>
-The next departure will be `$now` plus the waiting time,
-and the next arrival time is the next departure time plus the travel duration.
-
-So here is the `BusRoute` class definition.<br/>
-I added a `as_string` method to get a textual self-description for `BusRoute` objects,
-to make it easy to produce tracing or debugging output.<br/>
-I also used an override for the string conversion of the object.
-This way, we can directly use object variables in a double-quoted string
-to get their self-description on output. 
+* using the `[:alpha:]` POSIX character class to capture an upper or lower case letter,
+* using an `e` modifier to call a code block to determine the replacement string with the shifted letter,
+* using an `r` modifier to return the modified result instead of changing the input string,
+* using an `x` modifier for adding some spaces to improve readability: 
 
 ```perl
-use v5.38;
-use feature 'class';
-no warnings 'experimental::class';
-
-class BusRoute {
-    field $frequency :param;
-    field $offset    :param;
-    field $duration  :param;
-
-    method waiting_time( $now ) {
-        return ( $offset - $now ) % $frequency;
-    }
-
-    method next_departure( $now ) {
-        return $now + $self->waiting_time( $now );
-    }
-
-    method next_arrival( $now ) {
-        return $self->next_departure( $now ) + $duration;
-    }
-
-    method as_string( @args ) {
-        return ref( $self ) . "($frequency,$offset,$duration)";
-    }
-    use overload '""' => \&as_string;
+sub replace_digits_1( $str ) {
+    return $str =~ s{ ([[:alpha:]]) (\d) }{ $1 . chr( ord( $1 ) + $2 ) }egr;
 }
 ```
 
-#### Solving the task
-##### Initializing the `BusRoute` objects
+Great, that works well! ...
+Except for the fourth example!<br/>
+There we have two digits in a row (`'a16'`),
+and we didn't get the second digit.
+We need kind of an 'overlapping' operation.
 
-Our  input is a list of array references,
-each one containing  *( frequency, offset, duration )* of one bus route.
-To initialize our `BusRoute` objects, we need to send the parameters as a hash,
-like `{ frequency => 12, offset => 11, duration => 41 }`.<br/>
-I find it very convenient to use `mesh` from `List::Util` to create that parameter list:
+##### Second try.
 
-```perl
-    my @bus_routes =
-        map BusRoute->new(
-            mesh( [ qw( frequency offset duration ) ], $_ )
-        ), $input->@*;
-```
-
-##### Loop over all minutes
-
-Now we are ready to do the real job.
-
-For every minute from 0 to 59, we do these four steps:
-
-- Find the **next departure time**.
-
-  No problem, it's the minimum of all `next_departure()` times of all buses.
-
-- Find the '**best next bus arrival time**'.
-
-  Actually there might be several buses leaving at the same time.
-  We surely want to choose the one that also lets us *arrive* as early as possible.<br/>
-  So it's the minimum *arrival* time of all buses
-  whose departure is equal to our 'next departure time'. 
-
-- Find the '**best later bus arrival time**'.
-
-  Very similar, this is the minimum arrival time of all buses
-  whose departure is ('strictly') *later* than our 'next departure time'.<br/>
-  There might be no 'later' bus at all,
-  if *all* buses happen to have their next departure
-  at the 'next departure time'.
-
-- Decide.
-
-  If there is a 'best later bus arrival time' at all,
-  and it is earlier than the 'best next bus arrival time',
-  we include the current minute in the result set.
-
-So here is the whole implementation.<br/>I have removed comments, because I described everything above.
-I hope it's still understandable.<br/>
-The files in GitHub contain comments, and tracing and debugging output. 
+So next, the second approach,
+where I use an explicit loop, always restarting at the beginning of the string,
+and modifying the string itself:
 
 ```perl
-use v5.36;
-
-use List::Util qw( mesh min );
-use BusRoute;
-
-sub bus_route( $input ) {
-    my @bus_routes =
-        map BusRoute->new(
-            mesh( [ qw( frequency offset duration ) ], $_ )
-        ), $input->@*;
-
-    my @results = ();
-    for my $now ( 0..59 ) {
-        my $next_departure = min( map $_->next_departure( $now ), @bus_routes );
-        my $best_next_bus_arrival = min(
-            map $_->next_arrival( $now ),
-                grep $_->next_departure( $now ) == $next_departure,
-                    @bus_routes );
-        my $best_later_bus_arrival = min(
-            map $_->next_arrival( $now ),
-                grep $_->next_departure( $now ) > $next_departure,
-                    @bus_routes );
-        push @results, $now
-            if defined $best_later_bus_arrival
-                && $best_later_bus_arrival < $best_next_bus_arrival;
+sub replace_digits_2( $str ) {
+    while ( $str =~
+        s{ ([[:alpha:]]) (\d) }{ $1 . chr( ord( $1 ) + $2 ) }xe )
+    {
+        # Everything is in the loop condiiton.
     }
-    return \@results;
+    return $str;
 }
 ```
 
-#### **Thank you for Perl 'class'!**
-#### **And thank you for the challenge!**
+Great, that's better!
+We catch the fourth example's second digit now, after replacing the first one.
+
+But the resulting letter for the second digit is off by one!
+
+My misunderstanding, again. Actually, we should not replace
+```perl
+    'a16' => ('a' shifted by 1 ) => 'ab6'
+    'b6'  => ('b' shifted by 6 ) => 'bh'
+```
+but, in one operation:
+```perl
+    'a16' => ('a' shifted by 1 ) => 'ab6'
+             ('a' shifted by 6 ) => 'abg'
+```
+
+##### So, third try:
+
+Same loop, but replacing sequences of digits from *right to left* instead of left to right.
+I capture the digits in between, and leave them for the next iterations,
+replacing the rightmost digit first:
+
+```perl
+sub replace_digits_3( $str ) {
+    while ( $str =~
+        s{ ([[:alpha:]]) (\d*) (\d) }{ "$1$2" . chr( ord( $1 ) + $3 ) }xe )
+    {
+        # Everything is in the loop condiiton.
+    }
+    return $str;
+}
+```
+
+Finally it works!
+
+Interesting that the bigger difficulty for me this time was not the programming itself,
+but to capture the task specification correctly.
+
+How good it is to have and use tests!
+
+##### 'Refacturing the understanding'
+
+I now understood that the task actually is not about replacing 'a letter and a digit',
+but more replacing 'a letter and a sequence of digits'.
+
+This lead me to yet another approach:<br/>
+Once the letter and *all following digits* are captured
+(using a `(\d+)` pattern), we build the replacement from
+
+- the letter itself,
+- the same letter, shifted by every digit's value.
+
+*Now* that sounds logical, of course! :-)
+
+I can turn back to the `s///g` style global substitution and avoid the `while` loop.
+Using `split` to split up the sequence of digits, and `map` to loop over the single digits.
+
+```perl
+sub replace_digits_4( $str ) {
+    return $str =~ s{ ([[:alpha:]]) (\d+) }{
+            join "", $1, map chr( ord( $1 ) + $_ ), split "", $2;
+        }xegr;
+}
+```
+
+Probably this is my solution that best reflects the task's specification.
+
+What a funny experience this challenge was!
+
+#### **Thank you for the challenge!**
