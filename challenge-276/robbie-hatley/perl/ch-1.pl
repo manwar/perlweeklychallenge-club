@@ -48,19 +48,18 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 =cut
 
 # ------------------------------------------------------------------------------------------------------------
-# PRAGMAS, MODULES, VARIABLES, AND SUBS:
+# PRAGMAS, MODULES, AND SUBS:
 
-use v5.38;
-$"=', ';
-sub complete_days (@times) {
-   my $cds = 0;
-   for    ( my $i =    0   ; $i <= $#times - 1 ; ++$i ) {
-      for ( my $j = $i + 1 ; $j <= $#times - 0 ; ++$j ) {
-         0 == ($times[$i]+$times[$j])%24 and ++$cds;
+   use v5.38;
+   sub complete_days (@times) {
+      my $cds = 0;
+      for    ( my $i =    0   ; $i <= $#times - 1 ; ++$i ) {
+         for ( my $j = $i + 1 ; $j <= $#times - 0 ; ++$j ) {
+            0 == ($times[$i]+$times[$j])%24 and ++$cds;
+         }
       }
+      $cds;
    }
-   $cds;
-}
 
 # ------------------------------------------------------------------------------------------------------------
 # INPUTS:
@@ -81,6 +80,7 @@ my @arrays = @ARGV ? eval($ARGV[0]) :
 
 # ------------------------------------------------------------------------------------------------------------
 # MAIN BODY OF PROGRAM:
+$"=', ';
 for my $aref (@arrays) {
    say '';
    my @times = @$aref;
