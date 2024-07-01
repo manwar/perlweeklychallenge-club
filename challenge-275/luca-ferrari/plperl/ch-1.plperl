@@ -1,0 +1,30 @@
+--
+-- Perl Weekly Challenge 275
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-275>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc275;
+
+CREATE OR REPLACE FUNCTION
+pwc275.task1_plperl( text, text[] )
+RETURNS int	     
+AS $CODE$
+
+   my ( $string, $keys ) = @_;
+   my @ok_words;
+
+   for my $word ( split /\s+/, lc $string ) {
+       my $ok = 1;
+       for my $wrong_key ( $keys->@* ) {
+       	   $ok = 0 if ( $word =~ /$wrong_key/ );
+	   last if ( ! $ok );
+       }
+
+       push @ok_words, $word if ( $ok );
+   }
+
+   return scalar( @ok_words );
+   
+$CODE$
+LANGUAGE plperl;
