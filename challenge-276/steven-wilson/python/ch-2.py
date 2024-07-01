@@ -13,8 +13,8 @@ def maximum_frequency(*integers):
     5
     '''
     counter = Counter(integers)
-    frequency = list(zip(*counter.most_common()))[1]
-    return sum(value for value in frequency if value == frequency[0])
+    frequencies = list(zip(*counter.most_common()))[1]
+    return sum(f for f in frequencies if f == frequencies[0])
 
 
 if __name__ == "__main__":
