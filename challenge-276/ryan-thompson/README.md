@@ -1,15 +1,17 @@
 # Ryan Thompson
 
-## Week 259 Solutions
+## Week 276 Solutions
 
-### Task 1 › Banking Day Offset
+### Task 1 › Complete Day
 
  * [Perl](perl/ch-1.pl)
+ * [Python](python/ch-1.py)
 
-### Task 2 › Line Parser
+### Task 2 › Maximum Frequency
 
  * [Perl](perl/ch-2.pl)
+ * [Python](python/ch-2.py)
 
 ## Blog
 
- * [Bank Holidays and Line Parser](https://ry.ca/2024/03/pwc-259-bank-holidays-and-line-parser/)
+ * [Maximum Frequency and now my Day is Complete](https://ry.ca/2024/07/pwc-276-complete-day-and-maximum-frequency/)
