@@ -1,3 +1,3 @@
-# The Weekly Challenge 275
+# The Weekly Challenge 276
 
-Blog: [Broken digits](https://dev.to/simongreennet/broken-digits-e7k)
+Blog: [Complete frequency](https://dev.to/simongreennet/complete-frequency-2fke)
