@@ -1,0 +1,24 @@
+--
+-- Perl Weekly Challenge 276
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-276>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc276;
+
+CREATE OR REPLACE FUNCTION
+pwc276.task1_plperl( int[] )
+RETURNS SETOF int[]
+AS $CODE$
+   use Algorithm::Combinatorics qw/ combinations /;
+   
+   my ( $hours ) = @_;
+   my $iterator = combinations( \ $hours->@*, 2 );
+   while( my $c = $iterator->next ) {
+   	  return_next( $c ) if ( ( $c->@[ 0 ] + $c->@[ 1 ] ) % 24 == 0 );
+   }
+
+   return undef;
+   
+$CODE$
+LANGUAGE plperlu;
