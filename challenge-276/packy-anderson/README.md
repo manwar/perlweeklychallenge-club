@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Digitally Replace Broken Keys](https://packy.dardan.com/b/NA)
+[Complete Maximum Day Frequency](https://packy.dardan.com/b/NT)
