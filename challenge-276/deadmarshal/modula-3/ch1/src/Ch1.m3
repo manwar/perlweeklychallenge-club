@@ -1,0 +1,26 @@
+MODULE Ch1 EXPORTS Main;
+
+IMPORT SIO;
+
+VAR 
+  A1:ARRAY[0..4] OF CARDINAL := ARRAY OF CARDINAL{12,12,30,24,24};
+  A2:ARRAY[0..3] OF CARDINAL := ARRAY OF CARDINAL{72,48,24,55};
+  A3:ARRAY[0..2] OF CARDINAL := ARRAY OF CARDINAL{12,18,24};
+
+PROCEDURE CompleteDay(VAR A:ARRAY OF CARDINAL):CARDINAL = 
+VAR Count:CARDINAL := 0;
+BEGIN
+  FOR I := FIRST(A) TO LAST(A)-1 DO 
+    FOR J := I+1 TO LAST(A) DO
+      IF (A[I] + A[J]) MOD 24 = 0 THEN INC(Count) END
+    END;
+  END;
+  RETURN Count
+END CompleteDay;
+
+BEGIN
+  SIO.PutInt(CompleteDay(A1)); SIO.Nl();
+  SIO.PutInt(CompleteDay(A2)); SIO.Nl();
+  SIO.PutInt(CompleteDay(A3)); SIO.Nl();
+END Ch1.
+
