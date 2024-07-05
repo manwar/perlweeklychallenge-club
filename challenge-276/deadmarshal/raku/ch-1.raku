@@ -1,4 +1,4 @@
-#!usr/bin/env perl
+#!usr/bin/env raku
 
 sub complete-day(@arr){
   my $count = 0;
