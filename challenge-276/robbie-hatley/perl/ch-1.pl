@@ -53,8 +53,8 @@ Output is to STDOUT and will be each input followed by the corresponding output.
    use v5.38;
    sub complete_days (@times) {
       my $cds = 0;
-      for    ( my $i =    0   ; $i <= $#times - 1 ; ++$i ) {
-         for ( my $j = $i + 1 ; $j <= $#times - 0 ; ++$j ) {
+      for    my $i (    0   .. $#times - 1 ) {
+         for my $j ( $i + 1 .. $#times - 0 ) {
             0 == ($times[$i]+$times[$j])%24 and ++$cds;
          }
       }
