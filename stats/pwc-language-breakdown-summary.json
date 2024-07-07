@@ -1,21 +1,40 @@
 {
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontFamily" : "Verdana, sans-serif",
-            "fontSize" : "13px"
-         }
-      }
+   "chart" : {
+      "type" : "column"
    },
    "title" : {
       "text" : "The Weekly Challenge Contributions [2019 - 2024]"
    },
+   "subtitle" : {
+      "text" : "Last updated at 2024-07-07 13:59:55 GMT"
+   },
+   "legend" : {
+      "enabled" : "false"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "enabled" : "true",
+            "rotation" : -90,
+            "y" : 10,
+            "align" : "right",
+            "style" : {
+               "fontSize" : "13px",
+               "fontFamily" : "Verdana, sans-serif"
+            },
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF"
+         },
          "data" : [
             [
                "Blog",
@@ -23,41 +42,22 @@
             ],
             [
                "Perl",
-               14304
+               14306
             ],
             [
                "Raku",
                8290
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "y" : 10,
-            "rotation" : -90,
-            "align" : "right",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "color" : "#FFFFFF",
-            "enabled" : "true"
-         },
-         "name" : "Contributions"
+         ]
       }
    ],
-   "legend" : {
-      "enabled" : "false"
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2024-07-07 13:29:17 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : null
-      }
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    }
 }
