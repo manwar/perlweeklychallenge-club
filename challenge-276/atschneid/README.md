@@ -10,33 +10,33 @@ Two Challenges this week. I thought the first one was easy, but that was because
 
 ## Task 1: Complete Day
 
-> Task 1: Complete Day<\br>
-> <\br>
-> Submitted by: Mohammad Sajid Anwar<\br>
-> <\br>
-> You are given an array of integers, @hours.<\br>
-> <\br>
-> Write a script to return the number of pairs that forms a complete day.<\br>
-> <\br>
-> A complete day is defined as a time duration that is an exact multiple of 24 hours.<\br>
-> <\br>
-> Example 1<\br>
-> Input: @hours = (12, 12, 30, 24, 24)<\br>
-> Output: 2<\br>
-> <\br>
-> Pair 1: (12, 12)<\br>
-> Pair 2: (24, 24)<\br>
-> <\br>
-> Example 2<\br>
-> Input: @hours = (72, 48, 24, 5)<\br>
-> Output: 3<\br>
-> <\br>
-> Pair 1: (72, 48)<\br>
-> Pair 2: (72, 24)<\br>
-> Pair 3: (48, 24)<\br>
-> <\br>
-> Example 3<\br>
-> Input: @hours = (12, 18, 24)<\br>
+> Task 1: Complete Day</br>
+> </br>
+> Submitted by: Mohammad Sajid Anwar</br>
+> </br>
+> You are given an array of integers, @hours.</br>
+> </br>
+> Write a script to return the number of pairs that forms a complete day.</br>
+> </br>
+> A complete day is defined as a time duration that is an exact multiple of 24 hours.</br>
+> </br>
+> Example 1</br>
+> Input: @hours = (12, 12, 30, 24, 24)</br>
+> Output: 2</br>
+> </br>
+> Pair 1: (12, 12)</br>
+> Pair 2: (24, 24)</br>
+> </br>
+> Example 2</br>
+> Input: @hours = (72, 48, 24, 5)</br>
+> Output: 3</br>
+> </br>
+> Pair 1: (72, 48)</br>
+> Pair 2: (72, 24)</br>
+> Pair 3: (48, 24)</br>
+> </br>
+> Example 3</br>
+> Input: @hours = (12, 18, 24)</br>
 > Output: 0
 
 On first reading, I thought we were looking only at adjacent items. So I hacked out a pretty quick solution looking at adjacent pairs of times to see if they summed to a multiple of 24. Easy! and not what we wanted. Oops
@@ -67,7 +67,7 @@ int count_completed_days_v1( int list[], int length ) {
 }
 ```
 
-We go through list and count how many at each value mod 24. Then ... well then we do some tricky math. There are two values we need to take special care of, 0 and 12. Let's hold off on explaining those for the moment and move on the second loop. 
+We go through the list and count how many at each value mod 24. Then ... well then we do some tricky math. There are two values we need to take special care of, 0 and 12. Let's hold off on explaining those for the moment and move on the second loop. 
 
 ```c
   for (int i=1; i < 12; i++) {
@@ -77,14 +77,14 @@ We go through list and count how many at each value mod 24. Then ... well then w
 
 Skipping 0 and 12 we run this loop from 1 through 11 inclusive. The idea here is that for all hours that modulo to a certain value, we can complete a day by adding any of the hours that modulo to the reciprococal value. So like if we have 5 instances with 1 hour (or 1 hour after modulo 24) and 2 instances with 23 hours (or eqv mod 24), then from these we can make $5 \times 2 = 10$ completed days. Also, we only go up to 11 so we don't double count, since a pair of $(t_1, t_2) = (t_2, t_1)$. Double count, actually that is why we treat 0 and 12 specially.
 
-See for 0 and 12, they are their own reciprocals. So we have to do some clever maths. Thinking back to my school days, and getting out the pencil and paper, the proper way to sum these is n choose 2, $\binom{n}2$
+See for 0 and 12, they are their own reciprocals. So we have to do some clever maths. Thinking back to my school days, and getting out the pencil and paper, the proper way to sum these is n choose 2, ie, $\binom{n}2$, in code:
 
 ```c
   int count = day_count[0] * (day_count[0] - 1) / 2;
   count += day_count[12] * (day_count[12] - 1) / 2;
 ```
 
-Boom done. Except... is there a better way to do it? This way I have two loops, plus some tricky mathy stuff. It turns out, there is better algorithm in every conceivable way: more direct and more efficient.
+Boom done. Except... is there a better way to do it? This way I have two loops, plus some tricky mathy stuff. Well ... yes! there is better algorithm in every conceivable way: more direct and more efficient.
 
 ```c
 int count_completed_days( int list[], int length ) {
@@ -124,7 +124,11 @@ sub check_completed_days( @hours ) {
 }
 ```
 
-The hashmap holds our modula and reciprocals. For my C solution, I spent some time trying to get glib.c running on macOS before deciding an array of size 24 (or 240, or 2400) really shouldn't be a problem in C, but since hashmaps are easy in Perl, do what's easy. Also I had to `no warnings 'uninitialized';` since I have `use warnings; use strict;` above, and here I want to treat unseen keys as having value 0. That surprised me a little since apparently we can increment uninitialized values without issue, but I can see some sense in it. The latter case is surely much more common, and would seem much more likely to be intended behavior rather than a bug.
+The hashmap holds our modula and reciprocals. 
+
+For my C solution, I spent some time trying to get glib.c running on macOS before deciding an array of size 24 (or 240, or 2400) really shouldn't be a problem in C, but since hashmaps are easy in Perl, do what's easy. 
+
+I had to `no warnings 'uninitialized';` since I have `use warnings; use strict;` above, and here I want to treat unseen keys as having value 0. That surprised me a little since apparently we can increment uninitialized values without issue, but I can see some sense in it. The latter case is surely much more common, and would seem much more likely to be intended behavior rather than a bug.
 
 ### Prolog 
 
@@ -157,26 +161,26 @@ Very easy Prolog implementation for this $\mathcal{O}(n^2)$ algorithm.
 
 ## Task 2: Maximum Frequency
 
-> Task 2: Maximum Frequency<\br>
-> <\br>
-> Submitted by: Mohammad Sajid Anwar<\br>
-> <\br>
-> You are given an array of positive integers, @ints.<\br>
-> <\br>
-> Write a script to return the total number of elements in the given array which have the highest frequency.<\br>
-> <\br>
-> Example 1<\br>
-> Input: @ints = (1, 2, 2, 4, 1, 5)<\br>
-> Ouput: 4<\br>
-> <\br>
-> The maximum frequency is 2.<\br>
-> The elements 1 and 2 has the maximum frequency.<\br>
-> <\br>
-> Example 2<\br>
-> Input: @ints = (1, 2, 3, 4, 5)<\br>
-> Ouput: 5<\br>
-> <\br>
-> The maximum frequency is 1.<\br>
+> Task 2: Maximum Frequency</br>
+> </br>
+> Submitted by: Mohammad Sajid Anwar</br>
+> </br>
+> You are given an array of positive integers, @ints.</br>
+> </br>
+> Write a script to return the total number of elements in the given array which have the highest frequency.</br>
+> </br>
+> Example 1</br>
+> Input: @ints = (1, 2, 2, 4, 1, 5)</br>
+> Ouput: 4</br>
+> </br>
+> The maximum frequency is 2.</br>
+> The elements 1 and 2 has the maximum frequency.</br>
+> </br>
+> Example 2</br>
+> Input: @ints = (1, 2, 3, 4, 5)</br>
+> Ouput: 5</br>
+> </br>
+> The maximum frequency is 1.</br>
 > The elements 1, 2, 3, 4 and 5 has the maximum frequency.
 
 The tricky part to this one, I found, is that we need a couple of loops. First loop over the list to get counts. Then loop over the counts to find the max values.
@@ -194,9 +198,11 @@ sub max_freq_count( @list ){
 
 Create a hashmap for counts and count the occurrence of each unique value. Then find the max of the counts, then effectively find the number of values that have the max value. The max value is the number of occurences, so we can multiply this by the number of unique values that occur this many times. Easy!
 
+And no need to `no warnings 'uninitialized';` here, since we are merely incrementing uninitialized values.
+
 ### C
 
-Ugh. This one gets a little ugly. Here it would be very useful to have an easy to use hashmap data structure. But instead I powered through, with an indecent amount of sorting.
+Ugh. This one gets a little ugly. Here it would be very useful to have an easy to use hashmap data structure. But instead I powered through, with an indecent amount of sorting. First the forest, then the trees:
 
 ```c
 int cf_func(const void* a, const void* b) {
@@ -243,7 +249,7 @@ int cf_func(const void* a, const void* b) {
 }
 ```
 
-To start we sort the array. 
+Then use this to sort the array. 
 
 ```c
   qsort( list, length, sizeof( int ), cf_func );
@@ -268,7 +274,7 @@ This will put all occurrences of the same value next to each other, to facilitat
   qsort( list, ++j, sizeof( int ), cf_func );
 ```
 
-At this point the highest count is the first element of the array (because of descending ordering). We want to find how many characters have the highest count, so we can just iterate along the array until the value decreases, summing as we go, and this is our value.
+Now the highest count is the first element of the array because of descending ordering. We want to find how many characters have the highest count, so we simply iterate along the array until the value decreases, summing as we go, and this value is our answer.
 
 ```c
   int max = list[0];
@@ -312,7 +318,7 @@ count_adjacents( _, [I|Is], [1|Os] ) :-
     count_adjacents( I, Is, Os ).
 ```
 
-The 2 arg version (`count_adjacents/2`) is what we expect to outwardly called, while the 3 arg version is intended to be the internal, recursive function. If the list is empty, we return then the number of adjacents matching values is 0, otherwise, we take the head of the list, and try matching it against the tail of the list. I start the count at 1 since I have already removed the value. As long as it matches the head, the count gets incremented, otherwise we add a new element to the array for the count of the next found value.
+The 2 arg version (`count_adjacents/2`) is what we expect to be outwardly called, while the 3 arg version is intended to be the internal, recursive function. If the list is empty, we return then the number of adjacents matching values is 0, otherwise, we take the head of the list, and try matching it against the tail of the list. I start the count at 1 since I have already removed the head from the list. As long as the value matches the head, the count gets incremented, otherwise we add a new element to the array for the count of the next found value.
 
 ```prolog
 count_top( _, [], 0 ).
@@ -324,8 +330,10 @@ count_top( H, [H|T], X ) :-
 
 To round it out, this function finds the number of consecutive elements in a list that, starting from the beginning of the list, have the value `V`. It recursively checks the first element of the list, and once it finds a value that doesn't match it stops checking.
 
-Lots of recursive functions in Prolog!
+Lots of recursive functions in Prolog this week!
 
 ## Conclusion
 
 Some sneaky tricky challenges this week. I look forward to seeing what is in store for next week, and what appropriate/inappropiate languages I'll randomly select for myself.
+
+Thanks as always!
