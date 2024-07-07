@@ -43,7 +43,7 @@ On first reading, I thought we were looking only at adjacent items. So I hacked 
 
 Double checking the examples I saw that we weren't limited to adjacent pairs. Trickier. We could of course check all possible pairs of times for a $\mathcal{O}(n^2)$, but we wouldn't be happy with that! (Actually I my *cleverer* Prolog solution had worse performance than that, due to Prologisms, so I went back to a $\mathcal{O}(n^2)$ solution.)
 
-So after some thinking and pondering, I made some observations: if $t_1 + t_2 \mod 24 = 0$ then $(t_1, t_2)$ constitutes a completed day, equivalently if $(t_1 \mod 24 + t_2 \mod 24) \mod 24 = 0$. So we could find all values modulo 24 and figure it out from there.
+So after some thinking and pondering, I made some observations: if $t_1 + t_2 \bmod 24 = 0$ then $(t_1, t_2)$ constitutes a completed day, equivalently if $(t_1 \bmod 24 + t_2 \bmod 24) \bmod 24 = 0$. So we could find all values modulo 24 and figure it out from there.
 
 Let's see come code
 
