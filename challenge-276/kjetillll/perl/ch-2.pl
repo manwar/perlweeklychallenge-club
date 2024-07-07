@@ -4,7 +4,7 @@ sub maximum_frequency {
     my %freq;
     $freq{ $_ }++ for @_;
     my $max_freq = max( values %freq );
-    sum( map $_, grep $_ == $max_freq, values %freq )
+    sum( grep $_ == $max_freq, values %freq )
 }
 
 is maximum_frequency( @{ $$_{input} } ), $$_{output}
