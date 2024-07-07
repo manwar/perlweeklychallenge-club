@@ -1,21 +1,17 @@
 {
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-07-07 20:51:27 GMT"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-07-07 20:37:16 GMT"
-   },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
    "xAxis" : {
@@ -52,10 +48,8 @@
          "Veesh Goldman"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
@@ -94,6 +88,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             264,
@@ -125,8 +120,7 @@
             0,
             0,
             2
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -163,5 +157,11 @@
             3
          ]
       }
-   ]
+   ],
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   }
 }
