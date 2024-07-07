@@ -67,7 +67,7 @@ int count_completed_days_v1( int list[], int length ) {
 }
 ```
 
-We go through the list and count how many at each value mod 24. Then ... well then we do some tricky math. There are two values we need to take special care of, 0 and 12. Let's hold off on explaining those for the moment and move on the second loop. 
+We go through the list and count how many at each value mod 24. Then ... well then we do some tricky math. There are two values we need to take special care of: 0 and 12. Let's hold off on explaining those for the moment and move on the second loop. 
 
 ```c
   for (int i=1; i < 12; i++) {
@@ -75,7 +75,7 @@ We go through the list and count how many at each value mod 24. Then ... well th
   }
 ```
 
-Skipping 0 and 12 we run this loop from 1 through 11 inclusive. The idea here is that for all hours that modulo to a certain value, we can complete a day by adding any of the hours that modulo to the reciprococal value. So like if we have 5 instances with 1 hour (or 1 hour after modulo 24) and 2 instances with 23 hours (or eqv mod 24), then from these we can make $5 \times 2 = 10$ completed days. Also, we only go up to 11 so we don't double count, since a pair of $(t_1, t_2) = (t_2, t_1)$. Double count, actually that is why we treat 0 and 12 specially.
+Skipping 0 and 12 we run this loop from 1 through 11 inclusive. The idea here is that for all hours that modulo to a certain value, we can complete a day by adding any of the hours that modulo to the reciprococal value. So like if we have 5 instances with 1 hour (or 1 hour after modulo 24) and 2 instances with 23 hours (or equivalent mod 24), then from these we can make $5 \times 2 = 10$ completed days. Also, we only go up to 11 so we don't double count, since a pair of $(t_1, t_2) = (t_2, t_1)$. Double count, actually that is why we treat 0 and 12 specially.
 
 See for 0 and 12, they are their own reciprocals. So we have to do some clever maths. Thinking back to my school days, and getting out the pencil and paper, the proper way to sum these is n choose 2, ie, $\binom{n}2$, in code:
 
@@ -84,7 +84,7 @@ See for 0 and 12, they are their own reciprocals. So we have to do some clever m
   count += day_count[12] * (day_count[12] - 1) / 2;
 ```
 
-Boom done. Except... is there a better way to do it? This way I have two loops, plus some tricky mathy stuff. Well ... yes! there is better algorithm in every conceivable way: more direct and more efficient.
+Boom done. Except... is there a better way to do it? This way I have two loops, plus some tricky mathy stuff. Well ... yes! there is a better algorithm in every conceivable way: more direct and more efficient.
 
 ```c
 int count_completed_days( int list[], int length ) {
@@ -102,7 +102,7 @@ Here, for every value, we check how many of its reciprocal we have seen so far, 
 
 With the previous algorithm we implicitly ordered (at least mentally) pairs as (lower, higher). Here we kind of order them (occurs later in list, occurs earlier). If this doesn't make any sense to you then don't think too hard about it. It is just kind of how I think about it. 
 
-That extra modulo `(24 - list[i] % 24) % 24` is there to handle the case of `list[i] % 24` which is 0.
+That extra modulo `(24 - list[i] % 24) % 24` is there to handle the case of `list[i] % 24` which is 0 and $24 - 0 = 24$ when we want it to map to 0, so do an extra mod.
 
 ### Perl
 
@@ -124,11 +124,11 @@ sub check_completed_days( @hours ) {
 }
 ```
 
-The hashmap holds our modula and reciprocals. 
+The hashmap holds our moduli and reciprocals. 
 
-For my C solution, I spent some time trying to get glib.c running on macOS before deciding an array of size 24 (or 240, or 2400) really shouldn't be a problem in C, but since hashmaps are easy in Perl, do what's easy. 
+For my C solution, I spent some time trying to get glib.c running on macOS before deciding an array of size 24 (or 240, or 2400, ...) really shouldn't be a problem in C, but since hashmaps are easy in Perl, do what's easy. 
 
-I had to `no warnings 'uninitialized';` since I have `use warnings; use strict;` above, and here I want to treat unseen keys as having value 0. That surprised me a little since apparently we can increment uninitialized values without issue, but I can see some sense in it. The latter case is surely much more common, and would seem much more likely to be intended behavior rather than a bug.
+I had to `no warnings 'uninitialized';` since I have `use warnings; use strict;` above, and here I want to treat unseen keys as having value 0. That surprised me a little since apparently we can increment uninitialized values without issue, but I can see some sense in it. The latter case is surely much more common, and would seem much more likely to be the intended behavior.
 
 ### Prolog 
 
@@ -144,7 +144,7 @@ check_completed_days_v1( [H|T], X ) :-
     X is X1 + X2.
 ```
 
-And the inner loop function checks (recursively) how many values in the list sum with the value to a multiple of 24.
+And the inner loop function checks (recursively) how many values in the list, when added to value `V`, sum to a multiple of 24.
 
 ```prolog
 check_reciprocal_count( _, [], 0 ).
@@ -196,13 +196,13 @@ sub max_freq_count( @list ){
 }
 ```
 
-Create a hashmap for counts and count the occurrence of each unique value. Then find the max of the counts, then effectively find the number of values that have the max value. The max value is the number of occurences, so we can multiply this by the number of unique values that occur this many times. Easy!
+Create a hashmap for counts and count the occurrence of each unique value. Then find the max of the counts, then effectively find the number of values that have the max value with `scalar grep`. The max value is the number of occurences, so we can multiply this by the number of unique values that occur this many times. Easy!
 
 And no need to `no warnings 'uninitialized';` here, since we are merely incrementing uninitialized values.
 
 ### C
 
-Ugh. This one gets a little ugly. Here it would be very useful to have an easy to use hashmap data structure. But instead I powered through, with an indecent amount of sorting. First the forest, then the trees:
+Ugh. This one gets a little ugly. Here it would have been very useful to have a convenient hashmap data structure. But I powered through without, relying on an indecent amount of sorting. First the forest, then the trees:
 
 ```c
 int cf_func(const void* a, const void* b) {
@@ -274,7 +274,7 @@ This will put all occurrences of the same value next to each other, to facilitat
   qsort( list, ++j, sizeof( int ), cf_func );
 ```
 
-Now the highest count is the first element of the array because of descending ordering. We want to find how many characters have the highest count, so we simply iterate along the array until the value decreases, summing as we go, and this value is our answer.
+Now the highest count is the first element of the array because of descending ordering. We want to find how many unique values have the highest count, so we iterate along the count array until the value decreases, summing as we go, and this value is our answer.
 
 ```c
   int max = list[0];
@@ -286,11 +286,13 @@ Now the highest count is the first element of the array because of descending or
       break;
     }
   }
+  
+  return sum;
 ```
 
 ### Prolog
 
-In Prolog the appraoch is basically the same as in C.
+In Prolog the approach is basically the same as in C.
 
 ```prolog
 max_freq_count( [], 0 ).
@@ -304,7 +306,7 @@ max_freq_count( L, X ) :-
 
 We take a list `L`, sort it to `L1`, count the number of adjacent elements as `L2`. Next we sort `L2` giving `L3`, then reverse that so it is descending => `L4`. Take the first value of `L4` as `H`, the count how many values in the sorted list `L4` are equal to `H`. Times that count by the value `H` and, phew..., done!
 
-To count the number of adjacent values, I do an old Prolog pattern using arity (number of args) to distinuguish two identically named functions:
+To count the number of adjacent values, I do an old Prolog pattern using arity (number of args) to distinguish two identically named functions:
 
 ```prolog
 count_adjacents( [], 0 ).
@@ -318,7 +320,9 @@ count_adjacents( _, [I|Is], [1|Os] ) :-
     count_adjacents( I, Is, Os ).
 ```
 
-The 2 arg version (`count_adjacents/2`) is what we expect to be outwardly called, while the 3 arg version is intended to be the internal, recursive function. If the list is empty, we return then the number of adjacents matching values is 0, otherwise, we take the head of the list, and try matching it against the tail of the list. I start the count at 1 since I have already removed the head from the list. As long as the value matches the head, the count gets incremented, otherwise we add a new element to the array for the count of the next found value.
+The 2 arg version (`count_adjacents/2`) is what we expect to be outwardly called, while the 3 arg version is intended to be the internal, recursive function. 
+
+If the list is empty the number of adjacent matching values is 0, otherwise, we take the head of the list, and try matching it against the tail of the list. I start the count at 1 since I have already removed the head from the list passed recursively. As long as the value matches the head, the count gets incremented, otherwise we add a new element to the array for the count of the next found value and recur.
 
 ```prolog
 count_top( _, [], 0 ).
@@ -328,12 +332,12 @@ count_top( H, [H|T], X ) :-
     count_top( H, T, X0 ), succ( X0, X ).
 ```
 
-To round it out, this function finds the number of consecutive elements in a list that, starting from the beginning of the list, have the value `V`. It recursively checks the first element of the list, and once it finds a value that doesn't match it stops checking.
+To round it out, this function finds the number of consecutive elements in a list, starting from the beginning of the list, that have the value `V`. It recursively checks the first element of the list, and once it finds a value that doesn't match it stops checking.
 
 Lots of recursive functions in Prolog this week!
 
 ## Conclusion
 
-Some sneaky tricky challenges this week. I look forward to seeing what is in store for next week, and what appropriate/inappropiate languages I'll randomly select for myself.
+Some sneaky tricky challenges this week. I look forward to seeing what's in store for next week, and what appropriate/inappropiate languages I'll randomly select for myself.
 
 Thanks as always!
