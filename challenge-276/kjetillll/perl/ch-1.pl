@@ -4,7 +4,7 @@ sub complete_day_pair_count {
     my $pairs = 0;
     "@_" =~ /
              \b(\d+)\b .+ \b(\d+)\b
-             (??{ $pairs+=($1+$2)%24==0;'^' })
+             (??{ $pairs += ($1 + $2) % 24 == 0; '^' })
 	    /x;
     $pairs
 }
