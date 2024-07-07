@@ -41,15 +41,15 @@ Two Challenges this week. I thought the first one was easy, but that was because
 
 On first reading, I thought we were looking only at adjacent items. So I hacked out a pretty quick solution looking at adjacent pairs of times to see if they summed to a multiple of 24. Easy! and not what we wanted. Oops
 
-Double checking the examples I saw that we weren't limited to adjacent pairs. Trickier. We could of course check all possible pairs of times for a $\mathcal{O}(n^2)$, but we wouldn't be happy with that! (Actually I my *cleverer* Prolog solution had worse performance than that, due to Prologisms, so I went back to a $\mathcal{O}(n^2)$ solution.)
+Double checking the examples I saw that we weren't limited to adjacent pairs. Trickier. We could of course check all possible pairs of times for a $\mathcal{O}(n^2)$, but we wouldn't be happy with that! (Actually I my *cleverer* Prolog solution had worse algorithmic runtime than that, due to Prologisms, so I went back to a $\mathcal{O}(n^2)$ solution.)
 
 So after some thinking and pondering, I made some observations: if $t_1 + t_2 \bmod 24 = 0$ then $(t_1, t_2)$ constitutes a completed day, equivalently if $(t_1 \bmod 24 + t_2 \bmod 24) \bmod 24 = 0$. So we could find all values modulo 24 and figure it out from there.
 
-Let's see come code
+Let's see some code
 
 ### C
 
-My C code has the clearest illustration of my developing thinking, plus all Perl programmers also know C, so let's look at the C solution. First, version 1:
+My C code has the clearest illustration of my developing thinking, plus all Perl programmers also know C, so let's look at the C solution(s) first. Version 1 here:
 
 ```c
 int count_completed_days_v1( int list[], int length ) {
@@ -98,11 +98,11 @@ int count_completed_days( int list[], int length ) {
 }
 ```
 
-Here, for every value, we check how many of its reciprocal we have seen so far, and add this number to our total. Then we increment the number of the value. Easy! Loop once through the input and done.
+Here, for every value, we check how many of its reciprocal we have seen so far, and add this number to our total. Then we increment the number of the value. Easy! Loop once through the input and done. And no special thought needed to avoid double counting.
 
 With the previous algorithm we implicitly ordered (at least mentally) pairs as (lower, higher). Here we kind of order them (occurs later in list, occurs earlier). If this doesn't make any sense to you then don't think too hard about it. It is just kind of how I think about it. 
 
-That extra modulo `(24 - list[i] % 24) % 24` is there to handle the case of `list[i] % 24` which is 0 and $24 - 0 = 24$ when we want it to map to 0, so do an extra mod.
+That extra modulo `(24 - list[i] % 24) % 24` is there to handle the case of `list[i] % 24` which is 0 and $24 - 0 = 24$ when we want it to map to 0, so I do an extra mod.
 
 ### Perl
 
@@ -128,11 +128,11 @@ The hashmap holds our moduli and reciprocals.
 
 For my C solution, I spent some time trying to get glib.c running on macOS before deciding an array of size 24 (or 240, or 2400, ...) really shouldn't be a problem in C, but since hashmaps are easy in Perl, do what's easy. 
 
-I had to `no warnings 'uninitialized';` since I have `use warnings; use strict;` above, and here I want to treat unseen keys as having value 0. That surprised me a little since apparently we can increment uninitialized values without issue, but I can see some sense in it. The latter case is surely much more common, and would seem much more likely to be the intended behavior.
+I had to `no warnings 'uninitialized';` since I have `use warnings; use strict;` above, and here I want to treat unseen keys as having value 0. That surprised me a little since apparently we can increment uninitialized values without issue, but I can see some sense in it. The latter case is surely much more common, and would seem more likely to be intended behavior, not a bug.
 
 ### Prolog 
 
-I spent much time hacking together a series of of helper functions to shoehorn my Perl algorithm into Prolog, but seemingly every step I had to iterate completely through a list, so there was surely no savings to be had using an *efficient* algorithm. Largely to blame is my insistence on writing for GProlog. Maybe next time around I'll target SWI-Prolog, the Rolls Royce of implementations.
+I spent much time hacking together a series of of helper functions to shoehorn my Perl algorithm into Prolog, but at seemingly every step I had to iterate completely through a list, so there was surely no savings to be had using an *efficient* algorithm. Largely to blame is my insistence on writing for GProlog. Maybe next time around I'll target SWI-Prolog, the Rolls Royce of implementations.
 
 Anyway, I decided to do the loop inside a loop approach, and coded this up in about 5 minutes. The outer loop takes the head of a list and calls the inner loop function to find how many reciprocals it has within the tail of the list
 
