@@ -23,14 +23,12 @@ use common::sense;
 
 use Test2::V0 qw(-no_srand);
 
+use List::AllUtils qw(singleton);
+
 sub countCommon {
-  my ($arW1,$arW2,%f1,%f2,%fc) = @_;
-  map { $f1{$_}++ } @$arW1;
-  map { $f2{$_}++ } @$arW2;
-  map { $fc{$_}++ } 
-    (grep { $f1{$_} == 1 } keys %f1), 
-    (grep { $f2{$_} == 1 } keys %f2);
-  scalar grep { $_ == 2 } values %fc;
+  my %f;
+  $f{$_}++ for (singleton(@{$_[0]}),singleton(@{$_[1]}));
+  grep { $_ == 2 } values %f;
 }
 
 is(countCommon([qw{Perl is my friend}],
