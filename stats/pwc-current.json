@@ -1,22 +1,53 @@
 {
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2024-07-08 14:21:33 GMT"
+   },
    "chart" : {
       "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 277"
    },
    "drilldown" : {
       "series" : [
          {
             "data" : [
                [
-                  "Raku",
+                  "Perl",
                   2
                ]
             ],
-            "id" : "Feng Chang",
-            "name" : "Feng Chang"
+            "id" : "Alexander Karelas",
+            "name" : "Alexander Karelas"
          },
          {
-            "name" : "Mark Anderson",
-            "id" : "Mark Anderson",
+            "name" : "Feng Chang",
+            "id" : "Feng Chang",
             "data" : [
                [
                   "Raku",
@@ -25,14 +56,34 @@
             ]
          },
          {
+            "name" : "Mark Anderson",
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Mark Anderson"
+         },
+         {
             "name" : "Niels van Dijke",
-            "id" : "Niels van Dijke",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ]
+            ],
+            "id" : "Niels van Dijke"
+         },
+         {
+            "name" : "Santiago Leyva",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Santiago Leyva"
          },
          {
             "name" : "Ulrich Rieke",
@@ -53,7 +104,13 @@
    "series" : [
       {
          "name" : "The Weekly Challenge - 277",
+         "colorByPoint" : 1,
          "data" : [
+            {
+               "name" : "Alexander Karelas",
+               "drilldown" : "Alexander Karelas",
+               "y" : 2
+            },
             {
                "y" : 2,
                "drilldown" : "Feng Chang",
@@ -61,52 +118,25 @@
             },
             {
                "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
-            },
-            {
-               "drilldown" : "Niels van Dijke",
                "y" : 2,
-               "name" : "Niels van Dijke"
+               "drilldown" : "Mark Anderson"
             },
             {
-               "drilldown" : "Ulrich Rieke",
+               "name" : "Niels van Dijke",
+               "y" : 2,
+               "drilldown" : "Niels van Dijke"
+            },
+            {
+               "drilldown" : "Santiago Leyva",
+               "y" : 2,
+               "name" : "Santiago Leyva"
+            },
+            {
+               "name" : "Ulrich Rieke",
                "y" : 4,
-               "name" : "Ulrich Rieke"
+               "drilldown" : "Ulrich Rieke"
             }
-         ],
-         "colorByPoint" : 1
+         ]
       }
-   ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "title" : {
-      "text" : "The Weekly Challenge - 277"
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2024-07-08 13:35:00 GMT"
-   }
+   ]
 }
