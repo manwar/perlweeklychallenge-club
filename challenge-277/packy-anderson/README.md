@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Complete Maximum Day Frequency](https://packy.dardan.com/b/NT)
+["They call me the count, because I love to count pairs! Ah, ah, ah!"](https://wp.me/p2aV3x-m0)
