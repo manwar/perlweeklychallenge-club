@@ -31,6 +31,7 @@ defmodule Multiset do
   def multiplicity(multiset, value)
   def multiplicity(%Multiset{map: map}, value), do: Map.get(map, value, 0)
 end
+
 defmodule PWC do
   def countCommon(words1, words2) do
     # make Multisets that count the words
