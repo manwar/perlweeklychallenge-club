@@ -1,343 +1,321 @@
-# Completed and Maximum Frequency Days
+# Count the Common Ones and the Strong Pairs
 
-**Challenge 276 solutions by Andrew Schneider**
+**Challenge 277 solutions by Andrew Schneider**
 
-[PWC 276](https://theweeklychallenge.org/blog/perl-weekly-challenge-276/)
+[PWC 277](https://theweeklychallenge.org/blog/perl-weekly-challenge-277/)
 
-PWC 276 Back on Track!
+PWC 277 - Erlang in the mix
 
-Two Challenges this week. I thought the first one was easy, but that was because I misread the instructions. The second one had a trick to it too, but I'd say the first one was the hard one, contrary to recent experience.
+This week again I feel like the first task had a little more challenge to it, by a slight edge.
 
 ## Task 1: Complete Day
 
-> Task 1: Complete Day</br>
-> </br>
+> Task 1: Count Common</br>
 > Submitted by: Mohammad Sajid Anwar</br>
+> You are given two array of strings, @words1 and @words2.</br>
 > </br>
-> You are given an array of integers, @hours.</br>
-> </br>
-> Write a script to return the number of pairs that forms a complete day.</br>
-> </br>
-> A complete day is defined as a time duration that is an exact multiple of 24 hours.</br>
+> Write a script to return the count of words that appears in both arrays exactly once.</br>
 > </br>
 > Example 1</br>
-> Input: @hours = (12, 12, 30, 24, 24)</br>
+> Input: @words1 = ("Perl", "is", "my", "friend")</br>
+>        @words2 = ("Perl", "and", "Raku", "are", "friend")</br>
 > Output: 2</br>
 > </br>
-> Pair 1: (12, 12)</br>
-> Pair 2: (24, 24)</br>
+> The words "Perl" and "friend" appear once in each array.</br>
 > </br>
 > Example 2</br>
-> Input: @hours = (72, 48, 24, 5)</br>
-> Output: 3</br>
-> </br>
-> Pair 1: (72, 48)</br>
-> Pair 2: (72, 24)</br>
-> Pair 3: (48, 24)</br>
-> </br>
+> Input: @words1 = ("Perl", "and", "Python", "are", "very", "similar")</br>
+>        @words2 = ("Python", "is", "top", "in", "guest", "languages")</br>
+> Output: 1</br>
 > Example 3</br>
-> Input: @hours = (12, 18, 24)</br>
-> Output: 0
+> Input: @words1 = ("Perl", "is", "imperative", "Lisp", "is", "functional")</br>
+>        @words2 = ("Crystal", "is", "similar", "to", "Ruby")</br>
+> Output: 0</br>
 
-On first reading, I thought we were looking only at adjacent items. So I hacked out a pretty quick solution looking at adjacent pairs of times to see if they summed to a multiple of 24. Easy! and not what we wanted. Oops
+Perhaps the trickiest bit was limiting the words to the ones that only occur once in the same list. That actually suggests an idea that I didn't try: filter each list to words that occur once, then concatenate the lists and filter that to words that occur twice, then count.
 
-Double checking the examples I saw that we weren't limited to adjacent pairs. Trickier. We could of course check all possible pairs of times for a $\mathcal{O}(n^2)$, but we wouldn't be happy with that! (Actually I my *cleverer* Prolog solution had worse algorithmic runtime than that, due to Prologisms, so I went back to a $\mathcal{O}(n^2)$ solution.)
-
-So after some thinking and pondering, I made some observations: if $t_1 + t_2 \bmod 24 = 0$ then $(t_1, t_2)$ constitutes a completed day, equivalently if $(t_1 \bmod 24 + t_2 \bmod 24) \bmod 24 = 0$. So we could find all values modulo 24 and figure it out from there.
-
-Let's see some code
-
-### C
-
-My C code has the clearest illustration of my developing thinking, plus all Perl programmers also know C, so let's look at the C solution(s) first. Version 1 here:
-
-```c
-int count_completed_days_v1( int list[], int length ) {
-  int day_count[24] = {0};
-  for (int i=0; i < length; i++) {
-    day_count[list[i] % 24]++;
-  }
-  
-  int count = day_count[0] * (day_count[0] - 1) / 2;
-  count += day_count[12] * (day_count[12] - 1) / 2;
-  for (int i=1; i < 12; i++) {
-    count += day_count[i] * day_count[24-i];
-  }
-  return count;
-}
-```
-
-We go through the list and count how many at each value mod 24. Then ... well then we do some tricky math. There are two values we need to take special care of: 0 and 12. Let's hold off on explaining those for the moment and move on the second loop. 
-
-```c
-  for (int i=1; i < 12; i++) {
-    count += day_count[i] * day_count[24-i];
-  }
-```
-
-Skipping 0 and 12 we run this loop from 1 through 11 inclusive. The idea here is that for all hours that modulo to a certain value, we can complete a day by adding any of the hours that modulo to the reciprococal value. So like if we have 5 instances with 1 hour (or 1 hour after modulo 24) and 2 instances with 23 hours (or equivalent mod 24), then from these we can make $5 \times 2 = 10$ completed days. Also, we only go up to 11 so we don't double count, since a pair of $(t_1, t_2) = (t_2, t_1)$. Double count, actually that is why we treat 0 and 12 specially.
-
-See for 0 and 12, they are their own reciprocals. So we have to do some clever maths. Thinking back to my school days, and getting out the pencil and paper, the proper way to sum these is n choose 2, ie, $\binom{n}2$, in code:
-
-```c
-  int count = day_count[0] * (day_count[0] - 1) / 2;
-  count += day_count[12] * (day_count[12] - 1) / 2;
-```
-
-Boom done. Except... is there a better way to do it? This way I have two loops, plus some tricky mathy stuff. Well ... yes! there is a better algorithm in every conceivable way: more direct and more efficient.
-
-```c
-int count_completed_days( int list[], int length ) {
-  int count = 0;
-  int day_count[24] = {0};
-  for (int i=0; i < length; i++) {
-    count += day_count[(24 - list[i] % 24) % 24];
-    day_count[list[i] % 24]++;
-  }
-  return count;
-}
-```
-
-Here, for every value, we check how many of its reciprocal we have seen so far, and add this number to our total. Then we increment the number of the value. Easy! Loop once through the input and done. And no special thought needed to avoid double counting.
-
-With the previous algorithm we implicitly ordered (at least mentally) pairs as (lower, higher). Here we kind of order them (occurs later in list, occurs earlier). If this doesn't make any sense to you then don't think too hard about it. It is just kind of how I think about it. 
-
-That extra modulo `(24 - list[i] % 24) % 24` is there to handle the case of `list[i] % 24` which is 0 and $24 - 0 = 24$ when we want it to map to 0, so I do an extra mod.
+One consideration that I pondered for about a minute: what is a word? Is "Perl" the same word as "perl"? Is "Apple" at the start of a sentence the same as "apple" at the end of a sentence? Probably, and it wouldn't have been too hard to handle capitalization variation, but it wasn't in any of the examples and I didn't do it (I went far enough to write a `ToUpper` macro in C for it! but I didn't use it).
 
 ### Perl
 
-This one loop solution is basically what I did in C using a hashmap instead of an array.
+Perl makes this one pretty easy. First I count the unique words in each list, then for each word in the first list, I filter to those that have count 1 in both lists.
 
 ```perl
-sub check_completed_days( @hours ) {
+sub common_count ( $r1, $r2 ){
     no warnings 'uninitialized';
-    
-    my $count;
-    my %hours_rem_count;
-    for (@hours) {
-		my $idx = $_ % 24;
-		my $inverse_idx = (24 - $idx) % 24;
-		$count += $hours_rem_count{ $inverse_idx };
-		++$hours_rem_count{ $idx };
-    }
-    return $count;
+
+    my @words1 = @$r1; my @words2 = @$r2;
+    my %word_hash1; my %word_hash2;
+    grep { ++$word_hash1{ $_ } } @words1;
+    grep { ++$word_hash2{ $_ } } @words2;
+
+    return scalar grep {
+	$word_hash1{ $_ } == 1 and
+	    $word_hash2{ $_ } == 1 } keys %word_hash1;
 }
 ```
 
-The hashmap holds our moduli and reciprocals. 
+Lots of use of `grep` here, like a real Perler. The first usage just helps to iterate through the list to get the counts. The last line filters the list where the word (key) has value 1 in both hashes. I needed to `no warnings 'uninitialized';` for the cases where the word (key) doesn't occur in the second list at all.
 
-For my C solution, I spent some time trying to get glib.c running on macOS before deciding an array of size 24 (or 240, or 2400, ...) really shouldn't be a problem in C, but since hashmaps are easy in Perl, do what's easy. 
+### C
 
-I had to `no warnings 'uninitialized';` since I have `use warnings; use strict;` above, and here I want to treat unseen keys as having value 0. That surprised me a little since apparently we can increment uninitialized values without issue, but I can see some sense in it. The latter case is surely much more common, and would seem more likely to be intended behavior, not a bug.
+This one spiraled into something. I'll spare you much of the details, but you can check the code if you are interested. The straightforward implementation using core C stuff would probably be to put a 'count-word' struct into a list or an array for each word, then do linear search every time I needed to find a word, or sort it and do binary search. 
 
-### Prolog 
+But no, not for me. I had the idea to solve this using a binary tree. Ok, not too bad. But then I thought, well if the input is big enough to have a binary tree show any efficiency savings, we'd probably want to have our operations on the tree nodes *not* be recursive. Ah yes, the old iterative binary tree search. I implemented two operations: `find_or_add_node` and `linearize_tree`. The former I was able to basically take a recursive find algorithm and wrap it in an infinite while loop. Pleasantly easy. The latter, required unearthing some knowledge I once had, but never completely made sense to me before. What I wanted this function to do was to turn a binary tree into an in-order linked list, reusing the right child pointer as the next pointer. Here I vaguely remembered an algorithm from school, and I hammered away at it until I recollected or recreated all of the details. It seems to work, I'm like 97.5% sure that it will do what it needs to.
 
-I spent much time hacking together a series of of helper functions to shoehorn my Perl algorithm into Prolog, but at seemingly every step I had to iterate completely through a list, so there was surely no savings to be had using an *efficient* algorithm. Largely to blame is my insistence on writing for GProlog. Maybe next time around I'll target SWI-Prolog, the Rolls Royce of implementations.
+Check out the code to see my binary tree functions.
 
-Anyway, I decided to do the loop inside a loop approach, and coded this up in about 5 minutes. The outer loop takes the head of a list and calls the inner loop function to find how many reciprocals it has within the tail of the list
+The task specific code follows, first the forest then the trees
 
-```prolog
-check_completed_days_v1( [], 0 ).
-check_completed_days_v1( [H|T], X ) :-
-    check_reciprocal_count( H, T, X1 ),
-    check_completed_days_v1( T, X2 ),
-    X is X1 + X2.
+```c
+int count_common( char **words1, int n1, char **words2, int n2 ) {
+  word_count_node *counts1 = find_or_add_node( NULL, words1[0] );
+  counts1->count++;
+  word_count_node *node;
+  for (int i=1; i < n1; i++) {
+    node = find_or_add_node( counts1, words1[i] );
+    node->count++;
+  }
+  counts1 = linearize_tree( counts1 );
+
+  word_count_node *counts2 = find_or_add_node( NULL, words2[0] );
+  counts2->count++;
+  for (int i=1; i < n2; i++) {
+    node = find_or_add_node( counts2, words2[i] );
+    node->count++;
+  }
+  counts2 = linearize_tree( counts2 );
+
+  int count = 0;
+  int compval;
+  while (1) {
+    for (; counts1 && counts1->count != 1; counts1 = counts1->right) {}
+    for (; counts2 && counts2->count != 1; counts2 = counts2->right) {}
+
+    if (!(counts1 && counts2))
+      return count;
+
+    if ((compval = strcmp(counts1->word, counts2->word))) {
+      if (compval < 0) {
+	counts1 = counts1->right;
+      } else {
+	counts2 = counts2->right;
+      }
+    } else {
+      count++;
+      counts1 = counts1->right;
+      counts2 = counts2->right;
+    }
+  }
+}
 ```
 
-And the inner loop function checks (recursively) how many values in the list, when added to value `V`, sum to a multiple of 24.
+The function takes two word lists and their lengths. We count the occurrence of each word per list
 
-```prolog
-check_reciprocal_count( _, [], 0 ).
-check_reciprocal_count( V, [H|T], X ) :-
-    0 =:= (V + H) mod 24,
-    check_reciprocal_count( V, T, X1 ),
-    succ(X1, X).
-check_reciprocal_count( V, [H|T], X ) :-
-    0 =\= (V + H) mod 24,
-    check_reciprocal_count( V, T, X ).
+```c
+  word_count_node *counts1 = find_or_add_node( NULL, words1[0] );
+  counts1->count++;
+  word_count_node *node;
+  for (int i=1; i < n1; i++) {
+    node = find_or_add_node( counts1, words1[i] );
+    node->count++;
+  }
+  counts1 = linearize_tree( counts1 );
 ```
 
-Very easy Prolog implementation for this $\mathcal{O}(n^2)$ algorithm.
+Create a new tree with the first word and increment its count. Find or add the rest of the words, incrementing the count for each. Then convert the tree into a sorted list.
 
-## Task 2: Maximum Frequency
+After this we have a sorted list with counts representing each input list. Next the idea is: walk through each list until the word count is exactly 1. Then compare the head of each list. If the first head is lower than the second, move to the next element of the first list. If the second head is lower than the first, move to the next element of the second list. And if they are equal, we found a common word! Increment the counter and move to the next element on both lists. If at any time, either list becomes empty, return the counter
 
-> Task 2: Maximum Frequency</br>
-> </br>
+```c
+int count = 0;
+  int compval;
+  while (1) {
+    for (; counts1 && counts1->count != 1; counts1 = counts1->right) {}
+    for (; counts2 && counts2->count != 1; counts2 = counts2->right) {}
+
+    if (!(counts1 && counts2))
+      return count;
+
+    if ((compval = strcmp(counts1->word, counts2->word))) {
+      if (compval < 0) {
+	counts1 = counts1->right;
+      } else {
+	counts2 = counts2->right;
+      }
+    } else {
+      count++;
+      counts1 = counts1->right;
+      counts2 = counts2->right;
+    }
+  }
+```
+
+As far as C code goes, I think it's pretty sleek. Once I built all the infrastructure, the solution followed easily.
+
+### Erlang
+
+This is a totally new language to me. It had been on my list of interests for a while, I have a book on my shelf about it. It's like a cross between Prolog and, ... ermm maybe a Lisp or something. The big use case for Erlang is doing distributed programming, servers and clients and that kind of thing. So I wouldn't *really* be doing Erlang if it wasn't distributed or *distributed-lite*
+
+Most of the boilerplate is based on the [tutorial](https://www.erlang.org/doc/system/conc_prog.html). I'll show the logic stuff here
+
+```erlang
+count_common_words( [WL1, WL2] ) ->
+    T1 = ets:new(t1, []),
+    T2 = ets:new(t2, []),
+    
+    [ ets:update_counter(T1, Elem, {2, 1}, {Elem, 0}) || Elem <- WL1 ],
+    [ ets:update_counter(T2, Elem, {2, 1}, {Elem, 0}) || Elem <- WL2 ],
+
+    FilterFunc = fun(X) -> element(2, X) =:= 1 end,
+    MapFunc = fun(X) -> element(1, X) end,
+    L1 = lists:map( MapFunc, 
+		    lists:filter( FilterFunc, ets:tab2list(T1) )),
+    L2 = lists:map( MapFunc, 
+		    lists:filter( FilterFunc, ets:tab2list(T2) )),
+
+    sets:size( sets:intersection( 
+		 [
+		  sets:from_list(L1),
+		  sets:from_list(L2)
+		 ] )
+	     ).
+```
+
+First we create a counter for each word list. Then we do some list comprehension to get the actual counts. 
+
+```erlang
+    T1 = ets:new(t1, []),
+    T2 = ets:new(t2, []),
+    
+    [ ets:update_counter(T1, Elem, {2, 1}, {Elem, 0}) || Elem <- WL1 ],
+```
+
+The parameters of the `ets:update_count` function are: counter object, element to operate on, a tuple which took me a bit to understand, and a default value for each element. The tuple `{2, 1}` means to update the counter for `Elem` by taking the 2 index and adding 1. So for instance if we wanted to count by 10s the tuple would be `{2, 10}`
+
+Next we convert each counter to a list, then filter on the elements with count 1
+
+```erlang
+    FilterFunc = fun(X) -> element(2, X) =:= 1 end,
+    MapFunc = fun(X) -> element(1, X) end,
+    L1 = lists:map( MapFunc, 
+		    lists:filter( FilterFunc, ets:tab2list(T1) )),
+```
+
+Finally we find the size of the intersection of the two lists
+
+```erlang
+    sets:size( sets:intersection( 
+		 [
+		  sets:from_list(L1),
+		  sets:from_list(L2)
+		 ] )
+	     ).
+```
+
+Erlang's standard library has enough core functionality for everything I have needed so far. Erlang is cool!
+
+## Task 2: Strong Pair
+
+> Task 2: Strong Pair</br>
 > Submitted by: Mohammad Sajid Anwar</br>
+> You are given an array of integers, @ints.</br>
 > </br>
-> You are given an array of positive integers, @ints.</br>
+> Write a script to return the count of all strong pairs in the given array.</br>
 > </br>
-> Write a script to return the total number of elements in the given array which have the highest frequency.</br>
+> A pair of integers x and y is called strong pair if it satisfies: 0 < |x - y| < min(x, y).</br>
 > </br>
 > Example 1</br>
-> Input: @ints = (1, 2, 2, 4, 1, 5)</br>
+> Input: @ints = (1, 2, 3, 4, 5)</br>
 > Ouput: 4</br>
 > </br>
-> The maximum frequency is 2.</br>
-> The elements 1 and 2 has the maximum frequency.</br>
+> Strong Pairs: (2, 3), (3, 4), (3, 5), (4, 5)</br>
 > </br>
 > Example 2</br>
-> Input: @ints = (1, 2, 3, 4, 5)</br>
-> Ouput: 5</br>
+> Input: @ints = (5, 7, 1, 7)</br>
+> Ouput: 1</br>
 > </br>
-> The maximum frequency is 1.</br>
-> The elements 1, 2, 3, 4 and 5 has the maximum frequency.
+> Strong Pairs: (5, 7)
 
-The tricky part to this one, I found, is that we need a couple of loops. First loop over the list to get counts. Then loop over the counts to find the max values.
+The solution I came up with here, is to first sort the list. Based on the examples, it looks like we want to eliminate duplicates, so do that. Then for index `i` in the sorted list, for `j` starting from `i+1`, while the value at `j` minus the value at `i` is less than `i`, increment the counter, otherwise we can `break`.
+
+As I write this, had some soul searching to do thinking about whether I was handling possible negative values correctly, my thinking has been updated, by I'm pretty sure they are handled correctly, subject to revision.
 
 ### Perl
 
+For Perl we can find unique values by using `grep` and a counter, then sort the filtered values.
+
 ```perl
-sub max_freq_count( @list ){
+sub count_strong_pairs ( @ints ){
     my %counts;
-    map { ++$counts{ $_ } } @list;
-    my $max_count = max values %counts;
-    return $max_count * scalar grep { $_ == $max_count } values %counts;
+    my @arr = sort grep { ++$counts{ $_ } == 1 } @ints;
+
+    my $strong_count = 0;
+    for my $i (0..$#arr) {
+	for my $j ($i+1..$#arr) {
+	    if ( $arr[$j] >= 2 * $arr[$i] ) {
+		last;
+	    }
+	    ++$strong_count;
+	}
+    }
+	       
+    return $strong_count;
 }
 ```
-
-Create a hashmap for counts and count the occurrence of each unique value. Then find the max of the counts, then effectively find the number of values that have the max value with `scalar grep`. The max value is the number of occurences, so we can multiply this by the number of unique values that occur this many times. Easy!
-
-And no need to `no warnings 'uninitialized';` here, since we are merely incrementing uninitialized values.
 
 ### C
 
-Ugh. This one gets a little ugly. Here it would have been very useful to have a convenient hashmap data structure. But I powered through without, relying on an indecent amount of sorting. First the forest, then the trees:
+In C, first I sort, then step through the sorted array keeping only the unique values, using the same array. The logic of this tripped me up a few times, but I think I finally got it.
 
 ```c
-int cf_func(const void* a, const void* b) {
-  return *(const int*)a > *(const int*)b ? -1 : 1;
-}
+int strong_count( int *nums, int len ) {
+  if (!len)
+    return 0;
 
-int max_freq_count( int list[], int length ) {
-  qsort( list, length, sizeof( int ), cf_func );
+  qsort( nums, len, sizeof( int ), cf_func );
 
+  // make unique
   int j = 0;
-  int current = list[0];
-  list[0] = 1;
+  for (int i=0; i < len; i++) {
+    if (nums[i] != nums[j]) {
+	nums[++j] = nums[i];
+    }
+  }
+  j++;
 
-  for (int i=1; i < length; i++) {
-    if (list[i] == current) {
-      list[j]++;
-    } else {
-      current = list[i];
-      list[++j] = 1;
+  int count = 0;
+  for (int i=0; i < j; i++) {
+    for (int k=i+1; k < j && nums[k] < 2 * nums[i]; k++) {
+      count++;
     }
   }
 
-  qsort( list, ++j, sizeof( int ), cf_func );
-
-  int max = list[0];
-  int sum = max;
-  for (int i=1; i <= j; i++) {
-    if (list[i] == max ) {
-      sum += max;
-    } else {
-      break;
-    }
-  }
-
-  return sum;
+  return count;
 }
 ```
 
-I define the comparison function so that we sort in descending order. This will be helpful below
+### Erlang
 
-```c
-int cf_func(const void* a, const void* b) {
-  return *(const int*)a > *(const int*)b ? -1 : 1;
-}
+In Erlang I put together a pretty typical functional set of functions. Working from the bottom up, make the list unique, sort the list, then run a function on each head and tail of the list where we check for strong pairs between the head and every value in the tail. 
+
+```erlang
+find_strong_pairs( Num, NumList ) ->
+    StrongCheck = fun( X ) -> X < (2 * Num) end,
+    length( lists:filter( StrongCheck, NumList ) ).
+
+recur_strong_pairs( [] ) -> [];
+recur_strong_pairs( [N|Rest] ) -> 
+    [find_strong_pairs( N, Rest )] ++ recur_strong_pairs( Rest ).
+
+count_strong_pairs( Nums ) ->
+    UNums = lists:sort( lists:uniq(Nums) ),
+    Counts = recur_strong_pairs(UNums),
+    lists:sum( Counts ).
 ```
 
-Then use this to sort the array. 
-
-```c
-  qsort( list, length, sizeof( int ), cf_func );
-```
-
-This will put all occurrences of the same value next to each other, to facilitate counting. We iterate through the sorted array counting the number of occurrences of each value (using the same array! to show how clever I am). Then we sort this array of counts.
-
-```c
-  int j = 0;
-  int current = list[0];
-  list[0] = 1;
-
-  for (int i=1; i < length; i++) {
-    if (list[i] == current) {
-      list[j]++;
-    } else {
-      current = list[i];
-      list[++j] = 1;
-    }
-  }
-
-  qsort( list, ++j, sizeof( int ), cf_func );
-```
-
-Now the highest count is the first element of the array because of descending ordering. We want to find how many unique values have the highest count, so we iterate along the count array until the value decreases, summing as we go, and this value is our answer.
-
-```c
-  int max = list[0];
-  int sum = max;
-  for (int i=1; i <= j; i++) {
-    if (list[i] == max ) {
-      sum += max;
-    } else {
-      break;
-    }
-  }
-  
-  return sum;
-```
-
-### Prolog
-
-In Prolog the approach is basically the same as in C.
-
-```prolog
-max_freq_count( [], 0 ).
-max_freq_count( L, X ) :-
-    msort( L, L1 ), count_adjacents( L1, L2 ),
-    msort( L2, L3 ), reverse( L3, L4 ),
-    head( L4, H ),
-    count_top( H, L4, X0 ),
-    X is X0 * H.
-```
-
-We take a list `L`, sort it to `L1`, count the number of adjacent elements as `L2`. Next we sort `L2` giving `L3`, then reverse that so it is descending => `L4`. Take the first value of `L4` as `H`, the count how many values in the sorted list `L4` are equal to `H`. Times that count by the value `H` and, phew..., done!
-
-To count the number of adjacent values, I do an old Prolog pattern using arity (number of args) to distinguish two identically named functions:
-
-```prolog
-count_adjacents( [], 0 ).
-count_adjacents( [I|T], Out ) :-
-    count_adjacents( I, T, Out ).
-	
-count_adjacents( _, [], [1] ).
-count_adjacents( I, [I|Is], [O|Os] ) :-
-    count_adjacents( I, Is, [O0|Os] ), succ( O0, O ), !.
-count_adjacents( _, [I|Is], [1|Os] ) :-
-    count_adjacents( I, Is, Os ).
-```
-
-The 2 arg version (`count_adjacents/2`) is what we expect to be outwardly called, while the 3 arg version is intended to be the internal, recursive function. 
-
-If the list is empty the number of adjacent matching values is 0, otherwise, we take the head of the list, and try matching it against the tail of the list. I start the count at 1 since I have already removed the head from the list passed recursively. As long as the value matches the head, the count gets incremented, otherwise we add a new element to the array for the count of the next found value and recur.
-
-```prolog
-count_top( _, [], 0 ).
-count_top( V, [H|_], X ) :-
-    V =\= H, X is 0, !.
-count_top( H, [H|T], X ) :-
-    count_top( H, T, X0 ), succ( X0, X ).
-```
-
-To round it out, this function finds the number of consecutive elements in a list, starting from the beginning of the list, that have the value `V`. It recursively checks the first element of the list, and once it finds a value that doesn't match it stops checking.
-
-Lots of recursive functions in Prolog this week!
+I don't actually stop early, it checks all values in the tail even though it could stop when it finds the first that doesn't make a strong pair. But I still sort the list because I assume the second value is greater than the first. I am very lazy! but I am just getting started with Erlang. I'll work harder next time, I promise.
 
 ## Conclusion
 
-Some sneaky tricky challenges this week. I look forward to seeing what's in store for next week, and what appropriate/inappropiate languages I'll randomly select for myself.
-
-Thanks as always!
+Well there it is, another PWC in the books. See you next week!
