@@ -29,8 +29,8 @@ inequalities: 0 < |x - y| and |x - y| < min(x, y).
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
 To prevent considering duplicate pairs, I make sorted, deduped copies of both arrays, then I use nested ranged
-for loops to consider each unique pair, and I use && to and-together the given inequalities to determine how
-many pairs are "strong".
+for loops to consider each unique pair, then count each pair (x,y) such that |x - y| < min(x, y).
+(No need to check that 0 < |x - y| because removing duplicates with "uniq" already ensured that.)
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
@@ -48,15 +48,17 @@ Output is to STDOUT and will be each input followed by the corresponding output.
    use v5.38;
    use List::Util 'uniq';
    sub min ($x,$y) {return($y<$x?$y:$x)}
-   sub strong ($aref) {
+   sub format_array :prototype(\@) ($a) {'('.join(', ', @$a).')'}
+   sub format_pairs :prototype(\@) ($p) {'('.join(', ', map {'['.$_->[0].','.$_->[1].']'} @$p).')'}
+   sub strong :prototype(\@) ($aref) {
       my @uniq = uniq sort {$a<=>$b} @$aref;
-      my $strong = 0;
+      my @strong = ();
       for    my $i (    0   .. $#uniq - 1 ) { my $x = $$aref[$i];
          for my $j ( $i + 1 .. $#uniq - 0 ) { my $y = $$aref[$j];
-            ++$strong if 0 < abs($y-$x) && abs($y-$x) < min($x,$y);
+            push(@strong, [$x,$y]) if abs($y-$x) < min($x,$y);
          }
       }
-      return $strong;
+      return @strong;
    }
 
 # ------------------------------------------------------------------------------------------------------------
@@ -78,6 +80,9 @@ my @arrays = @ARGV ? eval($ARGV[0]) :
 # MAIN BODY OF PROGRAM:
 for my $aref (@arrays) {
    say '';
-   say "Array = (${\join(q(, ), @$aref)})";
-   say "Number of strong pairs = ${\strong($aref)}";
+   my @array  = @$aref;
+   my @strong = strong(@array);
+   my $count  = scalar(@strong);
+   say 'Array = ' . format_array(@array);
+   say "Found $count Strong Pairs: " . format_pairs(@strong);
 }
