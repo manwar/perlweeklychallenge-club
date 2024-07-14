@@ -60,16 +60,18 @@ Output is to STDOUT and will be each input followed by the corresponding output.
    use v5.38;
    use utf8;
    no warnings 'uninitialized';
-   sub count_common ($aref1, $aref2) {
+   sub format_array :prototype(\@) ($a) {'('.join(', ', map {"\"$_\""} @$a).')'}
+   sub once_each :prototype(\@\@) ($a1, $a2) {
       my %counts;
-      ++$counts{$_}->[0] for @$aref1;
-      ++$counts{$_}->[1] for @$aref2;
-      my $count = 0;
-      for (keys %counts) {
-         ++$count if 1 == $counts{$_}->[0]
-                  && 1 == $counts{$_}->[1];
+      ++$counts{$_}->[0] for @$a1;
+      ++$counts{$_}->[1] for @$a2;
+      my @words = ();
+      for my $word (keys %counts) {
+         if (1 == $counts{$word}->[0] && 1 == $counts{$word}->[1]) {
+            push @words, $word;
+         }
       }
-      $count;
+      return @words;
    }
 
 # ------------------------------------------------------------------------------------------------------------
@@ -105,8 +107,11 @@ my @arrays = @ARGV ? eval($ARGV[0]) :
 # MAIN BODY OF PROGRAM:
 for my $aref (@arrays) {
    say '';
-   my $common = count_common($aref->[0], $aref->[1]);
-   say "Array1 = (${\join(q(, ), map {qq(\"$_\")} @{$aref->[0]})})";
-   say "Array2 = (${\join(q(, ), map {qq(\"$_\")} @{$aref->[1]})})";
-   say "$common words appear once-each in the two arrays.";
+   my @array1 = @{$aref->[0]};
+   my @array2 = @{$aref->[1]};
+   my @once  = once_each(@array1, @array2);
+   my $count = scalar(@once);
+   say 'Array1 = ' . format_array(@array1);
+   say 'Array2 = ' . format_array(@array2);
+   say "$count words appear once-each in the two arrays: " . format_array(@once);
 }
