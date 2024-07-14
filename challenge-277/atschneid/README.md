@@ -2,9 +2,7 @@
 
 **Challenge 277 solutions by Andrew Schneider**
 
-[PWC 277](https://theweeklychallenge.org/blog/perl-weekly-challenge-277/)
-
-PWC 277 - Erlang in the mix
+[PWC 277](https://theweeklychallenge.org/blog/perl-weekly-challenge-277/) - Erlang in the mix
 
 This week again I feel like the first task had a little more challenge to it, by a slight edge.
 
@@ -61,7 +59,9 @@ Lots of use of `grep` here, like a real Perler. The first usage just helps to it
 
 This one spiraled into something. I'll spare you much of the details, but you can check the code if you are interested. The straightforward implementation using core C stuff would probably be to put a 'count-word' struct into a list or an array for each word, then do linear search every time I needed to find a word, or sort it and do binary search. 
 
-But no, not for me. I had the idea to solve this using a binary tree. Ok, not too bad. But then I thought, well if the input is big enough to have a binary tree show any efficiency savings, we'd probably want to have our operations on the tree nodes *not* be recursive. Ah yes, the old iterative binary tree search. I implemented two operations: `find_or_add_node` and `linearize_tree`. The former I was able to basically take a recursive find algorithm and wrap it in an infinite while loop. Pleasantly easy. The latter, required unearthing some knowledge I once had, but never completely made sense to me before. What I wanted this function to do was to turn a binary tree into an in-order linked list, reusing the right child pointer as the next pointer. Here I vaguely remembered an algorithm from school, and I hammered away at it until I recollected or recreated all of the details. It seems to work, I'm like 97.5% sure that it will do what it needs to.
+But no, not for me. I had the idea to solve this using a binary tree. Ok, not too bad. But then I thought, well if the input is big enough to have a binary tree show any efficiency savings, we'd probably want to have our operations on the tree nodes *not* be recursive. Ah yes, the old iterative binary tree search. 
+
+I implemented two operations: `find_or_add_node` and `linearize_tree`. The former I was able to basically take a recursive find algorithm and wrap it in an infinite while loop. Pleasantly easy. The latter required unearthing some knowledge I once had, but never completely made sense to me before. What I wanted this function to do was to turn a binary tree into an in-order linked list, reusing the right child pointer as the next pointer. I vaguely remembered an algorithm from school, and I hammered away at it until I recollected or recreated all of the details. It seems to work, I'm like 97.5% sure that it will do what it needs to.
 
 Check out the code to see my binary tree functions.
 
@@ -125,7 +125,7 @@ The function takes two word lists and their lengths. We count the occurrence of 
 
 Create a new tree with the first word and increment its count. Find or add the rest of the words, incrementing the count for each. Then convert the tree into a sorted list.
 
-After this we have a sorted list with counts representing each input list. Next the idea is: walk through each list until the word count is exactly 1. Then compare the head of each list. If the first head is lower than the second, move to the next element of the first list. If the second head is lower than the first, move to the next element of the second list. And if they are equal, we found a common word! Increment the counter and move to the next element on both lists. If at any time, either list becomes empty, return the counter
+After this we have a sorted list with counts representing each input list. Next the idea is to walk through each list until the word count is exactly 1. Then compare the head of each list. If the first head is lower than the second, move to the next element of the first list. If the second head is lower than the first, move to the next element of the second list. And if they are equal, we found a common word! Increment the counter and move to the next element on both lists. If at any time, either list becomes empty, return the counter
 
 ```c
 int count = 0;
@@ -239,7 +239,7 @@ Erlang's standard library has enough core functionality for everything I have ne
 
 The solution I came up with here, is to first sort the list. Based on the examples, it looks like we want to eliminate duplicates, so do that. Then for index `i` in the sorted list, for `j` starting from `i+1`, while the value at `j` minus the value at `i` is less than `i`, increment the counter, otherwise we can `break`.
 
-As I write this, had some soul searching to do thinking about whether I was handling possible negative values correctly, my thinking has been updated, by I'm pretty sure they are handled correctly, subject to revision.
+As I write this, I had some soul searching to do thinking about whether I was handling possible negative values correctly, my thinking has been updated, and I'm pretty sure they are handled correctly, subject to revision.
 
 ### Perl
 
