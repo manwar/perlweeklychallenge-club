@@ -1,3 +1,3 @@
-# The Weekly Challenge 276
+# The Weekly Challenge 277
 
-Blog: [Complete frequency](https://dev.to/simongreennet/complete-frequency-2fke)
+Blog: [Strong counting](https://dev.to/simongreennet/strong-counting-10on)
