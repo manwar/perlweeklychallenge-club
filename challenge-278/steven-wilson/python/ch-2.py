@@ -12,6 +12,8 @@ def reverse_word(word, char):
     'agoprrmming'
     >>> reverse_word("champion", "b")
     'champion'
+    >>> reverse_word("champion", "n")
+    'achimnop'
     """
     position = word.find(char)
 
