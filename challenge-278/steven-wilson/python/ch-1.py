@@ -16,8 +16,9 @@ def sort_string(string):
     'The Weekly Challenge'
     """
     p = re.compile('^(\w+)(\d+)$')
-    words_sorted = sorted((p.search(word).groups() for word in string.split(" ")), key=itemgetter(1))
-    return " ".join(word[0] for word in words_sorted)
+    words_numbers = (p.search(word).groups() for word in string.split(" "))
+    words_numbers_sorted = sorted(((w[0], int(w[1])) for w in words_numbers), key=itemgetter(1))
+    return " ".join(word[0] for word in words_numbers_sorted)
 
 
 if __name__ == "__main__":
