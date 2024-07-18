@@ -29,28 +29,31 @@ Expected output: "The Weekly Challenge"
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
-My approach was to do this:
-1. Split the string by whitespace to array of tokens "@raw_tok".
-2. Sort "@raw_tok" to array "@srt_tok" by unicode codepoint of the last character.
-3. Join with spaces a map of "@srt_tok" with the last character of each token removed.
+My first idea was to do this:
+1. Split the string by whitespace to array of tokens "@tokens".
+2. Sort "@tokens" to array "@sorted" by numerical order of the "ordinal" part of each token.
+3. Join with spaces a map of the "word" part of each token.
 
 But then I realized, I don't need any of the intermediates, and this is best written in reverse order,
-as a purely "functional" subroutine:
+as a "functional-programming" subroutine:
    use v5.38;
    use utf8;
+   sub word    ($token) {$token =~ s/\d+$//r}
+   sub ordinal ($token) {$token =~ s/^\D+//r}
    sub sort_string ($string) {
       join ' ',
-      map {substr $_, 0, length($_) - 1}
-      sort {ord substr($a, -1, 1) <=> ord substr($b, -1, 1)}
+      map {word($_)}
+      sort {(0+ordinal($a)) <=> (0+ordinal($b))}
       split /\s+/, $string
    }
+
 
 --------------------------------------------------------------------------------------------------------------
 IO NOTES:
 Input is via either built-in variables or via @ARGV. If using @ARGV, provide one argument which must be a
 single-quoted array of double-quoted strings of space-separated tokens, with the last character of each token
 being a numerical "position" indicator, in proper Perl syntax, like so:
-./ch-1.pl '("legs4 shaved2 her3 she1", "dogw hec thel pettedg")'
+./ch-1.pl '("she10 her3 and5 chicken12 while9 petted6 she1 legs4 her7 ate11 shaved2 dog8",)'
 
 Output is to STDOUT and will be each input followed by the corresponding output.
 
@@ -61,10 +64,12 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 
    use v5.38;
    use utf8;
+   sub word    ($token) {$token =~ s/\d+$//r}
+   sub ordinal ($token) {$token =~ s/^\D+//r}
    sub sort_string ($string) {
       join ' ',
-      map {substr $_, 0, length($_) - 1}
-      sort {ord substr($a, -1, 1) <=> ord substr($b, -1, 1)}
+      map {word($_)}
+      sort {(0+ordinal($a)) <=> (0+ordinal($b))}
       split /\s+/, $string
    }
 
