@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-["They call me the count, because I love to count pairs! Ah, ah, ah!"](https://wp.me/p2aV3x-m0)
+[Perl Weekly Challenge: Word Reverse String Sort](https://packy.dardan.com/b/P9)
