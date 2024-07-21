@@ -1,321 +1,233 @@
-# Count the Common Ones and the Strong Pairs
+# Sginrt and droW
 
-**Challenge 277 solutions by Andrew Schneider**
+**Challenge 278 solutions by Andrew Schneider**
 
-[PWC 277](https://theweeklychallenge.org/blog/perl-weekly-challenge-277/) - Erlang in the mix
+[PWC 278](https://theweeklychallenge.org/blog/perl-weekly-challenge-278/) - Racket - typically
 
-This week again I feel like the first task had a little more challenge to it, by a slight edge.
+PWC 278
 
-## Task 1: Complete Day
+Two challenges this week. The first was probably the simpler, with much left open to interpretation. It could become as easy or as complicated as you wanted to make, I opted for somewaht more complicated. The second seemed more fully specified, so less room for me to go off the rails with it. The titles each challenge threw me off a few times, twice I implemented the second challenge that reversed the string up until the character, not sorted, but hey.
 
-> Task 1: Count Common</br>
-> Submitted by: Mohammad Sajid Anwar</br>
-> You are given two array of strings, @words1 and @words2.</br>
-> </br>
-> Write a script to return the count of words that appears in both arrays exactly once.</br>
-> </br>
-> Example 1</br>
-> Input: @words1 = ("Perl", "is", "my", "friend")</br>
->        @words2 = ("Perl", "and", "Raku", "are", "friend")</br>
-> Output: 2</br>
-> </br>
-> The words "Perl" and "friend" appear once in each array.</br>
-> </br>
-> Example 2</br>
-> Input: @words1 = ("Perl", "and", "Python", "are", "very", "similar")</br>
->        @words2 = ("Python", "is", "top", "in", "guest", "languages")</br>
-> Output: 1</br>
-> Example 3</br>
-> Input: @words1 = ("Perl", "is", "imperative", "Lisp", "is", "functional")</br>
->        @words2 = ("Crystal", "is", "similar", "to", "Ruby")</br>
-> Output: 0</br>
+This week I returned to Racket, but using it's typed variant. I struggled mightily getting the first challenge to run, because of type specifications, but the second one proceeded much more easily, largely due, I'm sure, to all of the hard-earned knowledge from sweating over the first one! That's how I learn I suppose, it's not easy and it's not pretty.
 
-Perhaps the trickiest bit was limiting the words to the ones that only occur once in the same list. That actually suggests an idea that I didn't try: filter each list to words that occur once, then concatenate the lists and filter that to words that occur twice, then count.
+## Task 1: Sort String
 
-One consideration that I pondered for about a minute: what is a word? Is "Perl" the same word as "perl"? Is "Apple" at the start of a sentence the same as "apple" at the end of a sentence? Probably, and it wouldn't have been too hard to handle capitalization variation, but it wasn't in any of the examples and I didn't do it (I went far enough to write a `ToUpper` macro in C for it! but I didn't use it).
+> Task 1: Sort String<\br>
+> Submitted by: Mohammad Sajid Anwar<\br>
+> You are given a shuffle string, $str.<\br>
+> <\br>
+> Write a script to return the sorted string.<\br>
+> <\br>
+> A string is shuffled by appending word position to each word.<\br>
+> <\br>
+> Example 1<\br>
+> Input: $str = "and2 Raku3 cousins5 Perl1 are4"<\br>
+> Output: "Perl and Raku are cousins"<\br>
+> <\br>
+> Example 2<\br>
+> Input: $str = "guest6 Python1 most4 the3 popular5 is2 language7"<\br>
+> Output: "Python is the most popular guest language"<\br>
+> <\br>
+> Example 3<\br>
+> Input: $str = "Challenge3 The1 Weekly2"<\br>
+> Output: "The Weekly Challenge"
 
-### Perl
+The examples given all have a single digit word position, so we could assume that all word positions are one digit and every sentence has at most 10 (9 really since we're 1 indexing again) words, but that seemed too mundane. Instead I'll interpret the encoding as: any continuous block of digits at the end of an encoded word represents a word position. This does pose a problem if we were to encode a word which ends in a digit, but ... not gonna worry about that.
 
-Perl makes this one pretty easy. First I count the unique words in each list, then for each word in the first list, I filter to those that have count 1 in both lists.
+Another aspect to think about: missing words. Let's say we have only index 1 and index 5 words, what to do here? I decided to pad the decoded string with a filler word for each space missing between 1 and the max word position.
 
-```perl
-sub common_count ( $r1, $r2 ){
-    no warnings 'uninitialized';
-
-    my @words1 = @$r1; my @words2 = @$r2;
-    my %word_hash1; my %word_hash2;
-    grep { ++$word_hash1{ $_ } } @words1;
-    grep { ++$word_hash2{ $_ } } @words2;
-
-    return scalar grep {
-	$word_hash1{ $_ } == 1 and
-	    $word_hash2{ $_ } == 1 } keys %word_hash1;
-}
-```
-
-Lots of use of `grep` here, like a real Perler. The first usage just helps to iterate through the list to get the counts. The last line filters the list where the word (key) has value 1 in both hashes. I needed to `no warnings 'uninitialized';` for the cases where the word (key) doesn't occur in the second list at all.
-
-### C
-
-This one spiraled into something. I'll spare you much of the details, but you can check the code if you are interested. The straightforward implementation using core C stuff would probably be to put a 'count-word' struct into a list or an array for each word, then do linear search every time I needed to find a word, or sort it and do binary search. 
-
-But no, not for me. I had the idea to solve this using a binary tree. Ok, not too bad. But then I thought, well if the input is big enough to have a binary tree show any efficiency savings, we'd probably want to have our operations on the tree nodes *not* be recursive. Ah yes, the old iterative binary tree search. 
-
-I implemented two operations: `find_or_add_node` and `linearize_tree`. The former I was able to basically take a recursive find algorithm and wrap it in an infinite while loop. Pleasantly easy. The latter required unearthing some knowledge I once had, but never completely made sense to me before. What I wanted this function to do was to turn a binary tree into an in-order linked list, reusing the right child pointer as the next pointer. I vaguely remembered an algorithm from school, and I hammered away at it until I recollected or recreated all of the details. It seems to work, I'm like 97.5% sure that it will do what it needs to.
-
-Check out the code to see my binary tree functions.
-
-The task specific code follows, first the forest then the trees
-
-```c
-int count_common( char **words1, int n1, char **words2, int n2 ) {
-  word_count_node *counts1 = find_or_add_node( NULL, words1[0] );
-  counts1->count++;
-  word_count_node *node;
-  for (int i=1; i < n1; i++) {
-    node = find_or_add_node( counts1, words1[i] );
-    node->count++;
-  }
-  counts1 = linearize_tree( counts1 );
-
-  word_count_node *counts2 = find_or_add_node( NULL, words2[0] );
-  counts2->count++;
-  for (int i=1; i < n2; i++) {
-    node = find_or_add_node( counts2, words2[i] );
-    node->count++;
-  }
-  counts2 = linearize_tree( counts2 );
-
-  int count = 0;
-  int compval;
-  while (1) {
-    for (; counts1 && counts1->count != 1; counts1 = counts1->right) {}
-    for (; counts2 && counts2->count != 1; counts2 = counts2->right) {}
-
-    if (!(counts1 && counts2))
-      return count;
-
-    if ((compval = strcmp(counts1->word, counts2->word))) {
-      if (compval < 0) {
-	counts1 = counts1->right;
-      } else {
-	counts2 = counts2->right;
-      }
-    } else {
-      count++;
-      counts1 = counts1->right;
-      counts2 = counts2->right;
-    }
-  }
-}
-```
-
-The function takes two word lists and their lengths. We count the occurrence of each word per list
-
-```c
-  word_count_node *counts1 = find_or_add_node( NULL, words1[0] );
-  counts1->count++;
-  word_count_node *node;
-  for (int i=1; i < n1; i++) {
-    node = find_or_add_node( counts1, words1[i] );
-    node->count++;
-  }
-  counts1 = linearize_tree( counts1 );
-```
-
-Create a new tree with the first word and increment its count. Find or add the rest of the words, incrementing the count for each. Then convert the tree into a sorted list.
-
-After this we have a sorted list with counts representing each input list. Next the idea is to walk through each list until the word count is exactly 1. Then compare the head of each list. If the first head is lower than the second, move to the next element of the first list. If the second head is lower than the first, move to the next element of the second list. And if they are equal, we found a common word! Increment the counter and move to the next element on both lists. If at any time, either list becomes empty, return the counter
-
-```c
-int count = 0;
-  int compval;
-  while (1) {
-    for (; counts1 && counts1->count != 1; counts1 = counts1->right) {}
-    for (; counts2 && counts2->count != 1; counts2 = counts2->right) {}
-
-    if (!(counts1 && counts2))
-      return count;
-
-    if ((compval = strcmp(counts1->word, counts2->word))) {
-      if (compval < 0) {
-	counts1 = counts1->right;
-      } else {
-	counts2 = counts2->right;
-      }
-    } else {
-      count++;
-      counts1 = counts1->right;
-      counts2 = counts2->right;
-    }
-  }
-```
-
-As far as C code goes, I think it's pretty sleek. Once I built all the infrastructure, the solution followed easily.
-
-### Erlang
-
-This is a totally new language to me. It had been on my list of interests for a while, I have a book on my shelf about it. It's like a cross between Prolog and, ... ermm maybe a Lisp or something. The big use case for Erlang is doing distributed programming, servers and clients and that kind of thing. So I wouldn't *really* be doing Erlang if it wasn't distributed or *distributed-lite*
-
-Most of the boilerplate is based on the [tutorial](https://www.erlang.org/doc/system/conc_prog.html). I'll show the logic stuff here
-
-```erlang
-count_common_words( [WL1, WL2] ) ->
-    T1 = ets:new(t1, []),
-    T2 = ets:new(t2, []),
-    
-    [ ets:update_counter(T1, Elem, {2, 1}, {Elem, 0}) || Elem <- WL1 ],
-    [ ets:update_counter(T2, Elem, {2, 1}, {Elem, 0}) || Elem <- WL2 ],
-
-    FilterFunc = fun(X) -> element(2, X) =:= 1 end,
-    MapFunc = fun(X) -> element(1, X) end,
-    L1 = lists:map( MapFunc, 
-		    lists:filter( FilterFunc, ets:tab2list(T1) )),
-    L2 = lists:map( MapFunc, 
-		    lists:filter( FilterFunc, ets:tab2list(T2) )),
-
-    sets:size( sets:intersection( 
-		 [
-		  sets:from_list(L1),
-		  sets:from_list(L2)
-		 ] )
-	     ).
-```
-
-First we create a counter for each word list. Then we do some list comprehension to get the actual counts. 
-
-```erlang
-    T1 = ets:new(t1, []),
-    T2 = ets:new(t2, []),
-    
-    [ ets:update_counter(T1, Elem, {2, 1}, {Elem, 0}) || Elem <- WL1 ],
-```
-
-The parameters of the `ets:update_count` function are: counter object, element to operate on, a tuple which took me a bit to understand, and a default value for each element. The tuple `{2, 1}` means to update the counter for `Elem` by taking the 2 index and adding 1. So for instance if we wanted to count by 10s the tuple would be `{2, 10}`
-
-Next we convert each counter to a list, then filter on the elements with count 1
-
-```erlang
-    FilterFunc = fun(X) -> element(2, X) =:= 1 end,
-    MapFunc = fun(X) -> element(1, X) end,
-    L1 = lists:map( MapFunc, 
-		    lists:filter( FilterFunc, ets:tab2list(T1) )),
-```
-
-Finally we find the size of the intersection of the two lists
-
-```erlang
-    sets:size( sets:intersection( 
-		 [
-		  sets:from_list(L1),
-		  sets:from_list(L2)
-		 ] )
-	     ).
-```
-
-Erlang's standard library has enough core functionality for everything I have needed so far. Erlang is cool!
-
-## Task 2: Strong Pair
-
-> Task 2: Strong Pair</br>
-> Submitted by: Mohammad Sajid Anwar</br>
-> You are given an array of integers, @ints.</br>
-> </br>
-> Write a script to return the count of all strong pairs in the given array.</br>
-> </br>
-> A pair of integers x and y is called strong pair if it satisfies: 0 < |x - y| < min(x, y).</br>
-> </br>
-> Example 1</br>
-> Input: @ints = (1, 2, 3, 4, 5)</br>
-> Ouput: 4</br>
-> </br>
-> Strong Pairs: (2, 3), (3, 4), (3, 5), (4, 5)</br>
-> </br>
-> Example 2</br>
-> Input: @ints = (5, 7, 1, 7)</br>
-> Ouput: 1</br>
-> </br>
-> Strong Pairs: (5, 7)
-
-The solution I came up with here, is to first sort the list. Based on the examples, it looks like we want to eliminate duplicates, so do that. Then for index `i` in the sorted list, for `j` starting from `i+1`, while the value at `j` minus the value at `i` is less than `i`, increment the counter, otherwise we can `break`.
-
-As I write this, I had some soul searching to do thinking about whether I was handling possible negative values correctly, my thinking has been updated, and I'm pretty sure they are handled correctly, subject to revision.
+One final consideration: bad encodings - encoded words without a trailing word position. These I ignore in the decoded string. Decisions had to be made and I made them!
 
 ### Perl
 
-For Perl we can find unique values by using `grep` and a counter, then sort the filtered values.
+Since I'm allowing arbitrary length word positions, I decided to use regex to capture the word position. What's more, this is a great opportunity to use non-greedy matching. What we want is to capture the "word" part and the "index" part, where the word part can be any length, but we want it to stop once the final index part begins, so we use non-greedy matching on the word part, and let the greediness of the index match handle this. Like so `/(\w+?)(\d+$)/`
 
 ```perl
-sub count_strong_pairs ( @ints ){
-    my %counts;
-    my @arr = sort grep { ++$counts{ $_ } == 1 } @ints;
-
-    my $strong_count = 0;
-    for my $i (0..$#arr) {
-	for my $j ($i+1..$#arr) {
-	    if ( $arr[$j] >= 2 * $arr[$i] ) {
-		last;
-	    }
-	    ++$strong_count;
+sub unshuffle_string( $s ) {
+    my %words;
+    for (split ' ', $s) {
+	my ($word, $idx) = /(\w+?)(\d+$)/;
+	# if the regex pattern matched
+	if ( $word ) {
+	    $words{ $idx } = $word;
 	}
     }
-	       
-    return $strong_count;
+
+    my @sorted_words = ();
+    for (1..max( keys %words )) {
+	my $word = exists($words{ $_ }) ? $words{ $_ } : 'REDACTED';
+	push @sorted_words, $word;
+    }
+    return join ' ', @sorted_words;
 }
 ```
 
-### C
+We split the string on whitespace, then create a hashmap indexed by the word position with a value of the word. Ah, one more decision I neglected to mention above, if we have multiple of the same word index, I use the last occurring one.
 
-In C, first I sort, then step through the sorted array keeping only the unique values, using the same array. The logic of this tripped me up a few times, but I think I finally got it.
+Once the hashmap has been created, we step through each value from 1 to the max word position found. Starting with an empty list, if the index value is in the hashmap keys, push its value onto the list, otherwise push the filler value "REDACTED". Then join our list of words and return.
 
-```c
-int strong_count( int *nums, int len ) {
-  if (!len)
-    return 0;
+### Julia
 
-  qsort( nums, len, sizeof( int ), cf_func );
+My Julia solution is very similar to my Perl solution. The Julia docs mention how Perl was an influence on Julia, and the regex capabilities show it.
 
-  // make unique
-  int j = 0;
-  for (int i=0; i < len; i++) {
-    if (nums[i] != nums[j]) {
-	nums[++j] = nums[i];
-    }
-  }
-  j++;
+```julia
+function unshuffle_string( string )
+    words = split( string )
+    keywords = Dict{Int, String}()
 
-  int count = 0;
-  for (int i=0; i < j; i++) {
-    for (int k=i+1; k < j && nums[k] < 2 * nums[i]; k++) {
-      count++;
-    }
-  }
+    re = r"(?<word>^\w+?)(?<index>\d+$)"
+    for word in words
+        m = match( re, word )
+        if ~isnothing(m)
+            keywords[ parse( Int, m["index"] ) ] = m["word"]
+        end
+    end
 
-  return count;
+    max_key = maximum( keys( keywords ); init=1 )
+    out_words = [get!( keywords, i, "REDACTED" ) for i = 1:max_key]
+    join( out_words, " " )
+end
+```
+
+One new thing here is I used named matches, calling the first portion `word` and the second `index`. Then I can access these values from the match object directly by name, `m["index"]`, `m["word"]`
+
+### Racket
+
+Yeah, typed Racket. It seemed interesting and I wanted to try it out, but I'm undecided if it is a good fit for such a list-based language. I struggled mightily passing a list, like the result of a regex match, which I knew would either have a value of `false` or be a list of strings of length 3, but I could not get the compiler to know it.
+
+```racket
+(struct word-idx ([token : String] [word : String] [idx : Integer]))
+
+(: build-word-idx (-> String String (U String Number) word-idx))
+(define (build-word-idx token word idx)
+  (if (string? idx)
+      (word-idx token word (assert (string->number idx) exact-integer?))
+      (word-idx token word (assert idx exact-integer?))))
+
+(define (good-match? (l : (U (Listof Any) False)))
+  (and l (andmap string? l) (eq? (length l) 3)))
+
+(: split-word-idx (-> String (U word-idx False)))
+(define (split-word-idx token)
+  (let ([pattern #px"^(\\w+?)(\\d+)$"])
+    (let ([capture (regexp-match pattern token)])
+      (if (good-match? capture)
+          (apply build-word-idx (cast capture (List String String String)))
+          #f))))
+
+(: unshuffle-string (-> String String))
+(define (unshuffle-string s)
+  (let* ([splitted (string-split s)]
+         [index-list (sort (filter word-idx? (map split-word-idx splitted))
+                           (lambda ([x : word-idx] [y : word-idx])
+                             (> (word-idx-idx x) (word-idx-idx y))))])
+    (if (null? index-list)
+        ""
+        (let loop ([input-list index-list]
+                   [out-list : (Listof String) '()]
+                   [current-idx (word-idx-idx (car index-list))])
+          (if (null? input-list)
+              (string-join out-list)
+              (let ([top-item (car input-list)])
+                (cond
+                  [(> current-idx (word-idx-idx top-item))
+                   (loop input-list (cons "REDACTED" out-list) (sub1 current-idx))]
+                  [else
+                   (loop (cdr input-list)
+                         (cons (word-idx-word top-item) out-list)
+                         (sub1 current-idx))])))))))
+```
+
+Specifically here
+
+```racket
+(: split-word-idx (-> String (U word-idx False)))
+(define (split-word-idx token)
+  (let ([pattern #px"^(\\w+?)(\\d+)$"])
+    (let ([capture (regexp-match pattern token)])
+      (if (good-match? capture)
+          (apply build-word-idx (cast capture (List String String String)))
+          #f))))
+```
+
+The best I could do was to `cast` the list to be a list of 3 strings, which the documantation warned me could be a performance drag.
+
+Overall the solution here is similar to the design of the others. Instead of a dictionary I sort the list of word-index objects, and I sort them in descending order so I can build the final word backwards, since appending to the beginning of a list is much preferred.
+
+## Task 2: Reverse Word
+
+> Task 2: Reverse Word<\br>
+> Submitted by: Mohammad Sajid Anwar<\br>
+> You are given a word, $word and a character, $char.<\br>
+> <\br>
+> Write a script to replace the substring up to and including $char with its characters sorted alphabetically. If the $char doesn’t exist then DON'T do anything.<\br>
+> <\br>
+> Example 1<\br>
+> Input: $str = "challenge", $char = "e"<\br>
+> Ouput: "acehllnge"<\br>
+> <\br>
+> Example 2<\br>
+> Input: $str = "programming", $char = "a"<\br>
+> Ouput: "agoprrmming"<\br>
+> <\br>
+> Example 3<\br>
+> Input: $str = "champion", $char = "b"<\br>
+> Ouput: "champion"
+
+Nary a loose end to be figured out for this, as far as I can see.
+
+### Perl
+
+```perl
+sub reverse_substring( $char, $string ) {
+    my $idx = index $string, $char;
+    my @chars = split '', $string;
+    return join '', (
+	( sort @chars[0..$idx] ),
+	@chars[$idx+1..$#chars]
+	);
 }
 ```
 
-### Erlang
+Find the first index of the character, split the list at that index, sort the first part and append back together. Easy! Plus, if the char isn't found, then the index is -1 and sorted part of the list is empty and the result is as desired.
 
-In Erlang I put together a pretty typical functional set of functions. Working from the bottom up, make the list unique, sort the list, then run a function on each head and tail of the list where we check for strong pairs between the head and every value in the tail. 
+### Julia
 
-```erlang
-find_strong_pairs( Num, NumList ) ->
-    StrongCheck = fun( X ) -> X < (2 * Num) end,
-    length( lists:filter( StrongCheck, NumList ) ).
+```julia
+function reverse_substring( char, string )
+    index = findfirst( char, string )
+    if isnothing(index)
+        return string
+    end
 
-recur_strong_pairs( [] ) -> [];
-recur_strong_pairs( [N|Rest] ) -> 
-    [find_strong_pairs( N, Rest )] ++ recur_strong_pairs( Rest ).
-
-count_strong_pairs( Nums ) ->
-    UNums = lists:sort( lists:uniq(Nums) ),
-    Counts = recur_strong_pairs(UNums),
-    lists:sum( Counts ).
+    chars = split( string, "" )
+    join( vcat( ( sort( chars[1:index] ) ), chars[index+1:end] ), "" )
+end
 ```
 
-I don't actually stop early, it checks all values in the tail even though it could stop when it finds the first that doesn't make a strong pair. But I still sort the list because I assume the second value is greater than the first. I am very lazy! but I am just getting started with Erlang. I'll work harder next time, I promise.
+Again very similar to the Perl solution. How very unlike me. I try to make the solutions unique to each language, but Julia just allows a very similar solution as Perl, on account fo the influence I'm sure. 
+
+The main difference here is that I explicitly check if the `findfirst` (find index) failed, in which case I directly return the input string
+
+### Racket
+
+After my struggle with typed Racket on the first challeng I was not looking forward to this one, but I got the type signature correct almost from the very start. So I went from deeming typed Racket a failed experiment for me, to something I may keep trying with.
+
+```racket
+(: sort-string-to-char (-> String Char String))
+(define (sort-string-to-char str c)
+  (let ([char-list (string->list str)])
+    (let loop ([prefx : (Listof Char) '()]
+               [suffix : (Listof Char) char-list])
+      (cond
+        [(null? suffix) str]
+        [(eq? (car suffix) c)
+         (list->string (append (sort (cons (car suffix) prefx) char<?) (cdr suffix)))]
+        [else (loop (cons (car suffix) prefx) (cdr suffix))]))))
+```
+
+This is a function that takes a String and a Char and returns a String, no tricky polymorphous lists to typify. 
+
+Inside the function we make a recursive let (a loop really) the builds a list of prefix chars from the input chars until it finds a char that matches the input character. Then it sorts the prefix list (we built it backwards for easiness again, and here it doesn't matter because we end up sorting it) and appends it to the remaining string characters. If we run out of string characters without seeing the match char, then we just return the input string.
 
 ## Conclusion
-
-Well there it is, another PWC in the books. See you next week!
