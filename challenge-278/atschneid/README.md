@@ -2,34 +2,36 @@
 
 **Challenge 278 solutions by Andrew Schneider**
 
-[PWC 278](https://theweeklychallenge.org/blog/perl-weekly-challenge-278/) - Racket - typically
+[PWC 278](https://theweeklychallenge.org/blog/perl-weekly-challenge-278/)
 
-PWC 278
+### Racket - typically
 
-Two challenges this week. The first was probably the simpler, with much left open to interpretation. It could become as easy or as complicated as you wanted to make, I opted for somewaht more complicated. The second seemed more fully specified, so less room for me to go off the rails with it. The titles each challenge threw me off a few times, twice I implemented the second challenge that reversed the string up until the character, not sorted, but hey.
+Two challenges this week. The first was probably the simpler, with much left open to interpretation. It could become as easy or as complicated as you wanted to make it, I think I opted for somewhat more complicated. The second seemed more fully specified, so less room for me to go off the rails with it. 
+
+The titles of the challenges threw me off a few times, twice I implemented the second challenge to reverse the string up until the character, not sort, but hey.
 
 This week I returned to Racket, but using it's typed variant. I struggled mightily getting the first challenge to run, because of type specifications, but the second one proceeded much more easily, largely due, I'm sure, to all of the hard-earned knowledge from sweating over the first one! That's how I learn I suppose, it's not easy and it's not pretty.
 
 ## Task 1: Sort String
 
-> Task 1: Sort String<\br>
-> Submitted by: Mohammad Sajid Anwar<\br>
-> You are given a shuffle string, $str.<\br>
-> <\br>
-> Write a script to return the sorted string.<\br>
-> <\br>
-> A string is shuffled by appending word position to each word.<\br>
-> <\br>
-> Example 1<\br>
-> Input: $str = "and2 Raku3 cousins5 Perl1 are4"<\br>
-> Output: "Perl and Raku are cousins"<\br>
-> <\br>
-> Example 2<\br>
-> Input: $str = "guest6 Python1 most4 the3 popular5 is2 language7"<\br>
-> Output: "Python is the most popular guest language"<\br>
-> <\br>
-> Example 3<\br>
-> Input: $str = "Challenge3 The1 Weekly2"<\br>
+> Task 1: Sort String</br>
+> Submitted by: Mohammad Sajid Anwar</br>
+> You are given a shuffle string, $str.</br>
+> </br>
+> Write a script to return the sorted string.</br>
+> </br>
+> A string is shuffled by appending word position to each word.</br>
+> </br>
+> Example 1</br>
+> Input: $str = "and2 Raku3 cousins5 Perl1 are4"</br>
+> Output: "Perl and Raku are cousins"</br>
+> </br>
+> Example 2</br>
+> Input: $str = "guest6 Python1 most4 the3 popular5 is2 language7"</br>
+> Output: "Python is the most popular guest language"</br>
+> </br>
+> Example 3</br>
+> Input: $str = "Challenge3 The1 Weekly2"</br>
 > Output: "The Weekly Challenge"
 
 The examples given all have a single digit word position, so we could assume that all word positions are one digit and every sentence has at most 10 (9 really since we're 1 indexing again) words, but that seemed too mundane. Instead I'll interpret the encoding as: any continuous block of digits at the end of an encoded word represents a word position. This does pose a problem if we were to encode a word which ends in a digit, but ... not gonna worry about that.
@@ -156,22 +158,22 @@ Overall the solution here is similar to the design of the others. Instead of a d
 
 ## Task 2: Reverse Word
 
-> Task 2: Reverse Word<\br>
-> Submitted by: Mohammad Sajid Anwar<\br>
-> You are given a word, $word and a character, $char.<\br>
-> <\br>
-> Write a script to replace the substring up to and including $char with its characters sorted alphabetically. If the $char doesn’t exist then DON'T do anything.<\br>
-> <\br>
-> Example 1<\br>
-> Input: $str = "challenge", $char = "e"<\br>
-> Ouput: "acehllnge"<\br>
-> <\br>
-> Example 2<\br>
-> Input: $str = "programming", $char = "a"<\br>
-> Ouput: "agoprrmming"<\br>
-> <\br>
-> Example 3<\br>
-> Input: $str = "champion", $char = "b"<\br>
+> Task 2: Reverse Word</br>
+> Submitted by: Mohammad Sajid Anwar</br>
+> You are given a word, $word and a character, $char.</br>
+> </br>
+> Write a script to replace the substring up to and including $char with its characters sorted alphabetically. If the $char doesn’t exist then DON'T do anything.</br>
+> </br>
+> Example 1</br>
+> Input: $str = "challenge", $char = "e"</br>
+> Ouput: "acehllnge"</br>
+> </br>
+> Example 2</br>
+> Input: $str = "programming", $char = "a"</br>
+> Ouput: "agoprrmming"</br>
+> </br>
+> Example 3</br>
+> Input: $str = "champion", $char = "b"</br>
 > Ouput: "champion"
 
 Nary a loose end to be figured out for this, as far as I can see.
@@ -211,7 +213,7 @@ The main difference here is that I explicitly check if the `findfirst` (find ind
 
 ### Racket
 
-After my struggle with typed Racket on the first challeng I was not looking forward to this one, but I got the type signature correct almost from the very start. So I went from deeming typed Racket a failed experiment for me, to something I may keep trying with.
+After my struggle with typed Racket on the first challenge I was not looking forward to this one, but I got the type signature correct almost from the very start. So I went from deeming typed Racket a failed experiment for me, to something I may keep trying with.
 
 ```racket
 (: sort-string-to-char (-> String Char String))
@@ -228,6 +230,8 @@ After my struggle with typed Racket on the first challeng I was not looking forw
 
 This is a function that takes a String and a Char and returns a String, no tricky polymorphous lists to typify. 
 
-Inside the function we make a recursive let (a loop really) the builds a list of prefix chars from the input chars until it finds a char that matches the input character. Then it sorts the prefix list (we built it backwards for easiness again, and here it doesn't matter because we end up sorting it) and appends it to the remaining string characters. If we run out of string characters without seeing the match char, then we just return the input string.
+Inside the function we make a recursive let (a loop really) that builds a list of prefix chars from the input chars until it finds a char that matches the input character. Then it sorts the prefix list (we build it backwards for easiness again, and here it doesn't matter because we end up sorting it) and appends it to the remaining string characters. If we run out of string characters without seeing the match char, then we just return the input string.
 
 ## Conclusion
+
+Good challenges again. See you next week!
