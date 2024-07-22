@@ -1,50 +1,52 @@
 {
-   "title" : {
-      "text" : "The Weekly Challenge - 279"
-   },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
-   "xAxis" : {
-      "type" : "category"
+   "chart" : {
+      "type" : "column"
    },
    "drilldown" : {
       "series" : [
          {
+            "id" : "E. Choroba",
             "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "E. Choroba"
+            ]
          },
          {
-            "name" : "Mark Anderson",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Mark Anderson"
+            "id" : "Feng Chang",
+            "name" : "Feng Chang"
          },
          {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
+            "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
+         },
+         {
+            "id" : "Matthew Neleigh",
             "name" : "Matthew Neleigh",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "id" : "Matthew Neleigh"
+            ]
          },
          {
-            "id" : "Packy Anderson",
             "name" : "Packy Anderson",
+            "id" : "Packy Anderson",
             "data" : [
                [
                   "Perl",
@@ -61,8 +63,8 @@
             ]
          },
          {
-            "id" : "Peter Meszaros",
             "name" : "Peter Meszaros",
+            "id" : "Peter Meszaros",
             "data" : [
                [
                   "Perl",
@@ -72,17 +74,36 @@
          }
       ]
    },
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : 1
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 6] Last updated at 2024-07-22 08:46:24 GMT"
+   },
    "plotOptions" : {
       "series" : {
-         "borderWidth" : 0,
          "dataLabels" : {
             "format" : "{point.y}",
             "enabled" : 1
-         }
+         },
+         "borderWidth" : 0
       }
    },
-   "subtitle" : {
-      "text" : "[Champions: 5] Last updated at 2024-07-22 08:39:51 GMT"
+   "xAxis" : {
+      "type" : "category"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge - 279"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "series" : [
       {
@@ -90,14 +111,19 @@
          "name" : "The Weekly Challenge - 279",
          "data" : [
             {
-               "name" : "E. Choroba",
+               "y" : 2,
                "drilldown" : "E. Choroba",
-               "y" : 2
+               "name" : "E. Choroba"
             },
             {
+               "y" : 2,
+               "drilldown" : "Feng Chang",
+               "name" : "Feng Chang"
+            },
+            {
+               "y" : 2,
                "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson",
-               "y" : 2
+               "name" : "Mark Anderson"
             },
             {
                "drilldown" : "Matthew Neleigh",
@@ -105,27 +131,16 @@
                "y" : 2
             },
             {
+               "y" : 5,
                "drilldown" : "Packy Anderson",
-               "name" : "Packy Anderson",
-               "y" : 5
+               "name" : "Packy Anderson"
             },
             {
-               "y" : 2,
+               "drilldown" : "Peter Meszaros",
                "name" : "Peter Meszaros",
-               "drilldown" : "Peter Meszaros"
+               "y" : 2
             }
          ]
       }
-   ],
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "legend" : {
-      "enabled" : 0
-   }
+   ]
 }
