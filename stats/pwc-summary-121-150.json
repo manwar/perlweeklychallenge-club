@@ -2,12 +2,19 @@
    "chart" : {
       "type" : "column"
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-07-23 13:47:40 GMT"
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "series" : [
       {
@@ -46,6 +53,7 @@
          ]
       },
       {
+         "name" : "Raku",
          "data" : [
             2,
             0,
@@ -77,8 +85,7 @@
             0,
             0,
             2
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "data" : [
@@ -116,16 +123,8 @@
          "name" : "Blog"
       }
    ],
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-07-23 15:26:26 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -161,7 +160,8 @@
          "Kueppo Wesley"
       ]
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    }
 }
