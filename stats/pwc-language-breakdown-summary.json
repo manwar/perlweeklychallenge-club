@@ -1,12 +1,12 @@
 {
-   "subtitle" : {
-      "text" : "Last updated at 2024-07-23 11:21:59 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2024]"
+   "xAxis" : {
+      "labels" : {
+         "style" : {
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
+         }
+      },
+      "type" : "category"
    },
    "yAxis" : {
       "title" : {
@@ -14,8 +14,18 @@
       },
       "min" : 0
    },
+   "subtitle" : {
+      "text" : "Last updated at 2024-07-23 13:47:40 GMT"
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "tooltip" : {
+      "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
    "series" : [
       {
+         "name" : "Contributions",
          "data" : [
             [
                "Blog",
@@ -23,41 +33,31 @@
             ],
             [
                "Perl",
-               14433
+               14435
             ],
             [
                "Raku",
-               8344
+               8346
             ]
          ],
          "dataLabels" : {
-            "format" : "{point.y:.0f}",
             "color" : "#FFFFFF",
+            "align" : "right",
+            "rotation" : -90,
+            "format" : "{point.y:.0f}",
+            "y" : 10,
+            "enabled" : "true",
             "style" : {
                "fontSize" : "13px",
                "fontFamily" : "Verdana, sans-serif"
-            },
-            "enabled" : "true",
-            "y" : 10,
-            "rotation" : -90,
-            "align" : "right"
-         },
-         "name" : "Contributions"
+            }
+         }
       }
    ],
    "legend" : {
       "enabled" : "false"
    },
-   "tooltip" : {
-      "pointFormat" : "<b>{point.y:.0f}</b>"
-   },
-   "xAxis" : {
-      "type" : "category",
-      "labels" : {
-         "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
-         }
-      }
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2024]"
    }
 }
