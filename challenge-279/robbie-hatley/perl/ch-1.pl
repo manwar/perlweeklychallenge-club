@@ -50,7 +50,7 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 
    use v5.36;
    use List::MoreUtils 'zip6';
-   sub sort_letters ($letters, $weights) {
+   sub sort_letters :prototype(\@\@) ($letters, $weights) {
       join '',
       map {$$_[0]}
       sort {$$a[1]<=>$$b[1]}
@@ -87,11 +87,11 @@ my @arrays = @ARGV ? eval($ARGV[0]) :
 # MAIN BODY OF PROGRAM:
 $"=', ';
 for my $aref (@arrays) {
-   my $letters = $$aref[0];
-   my $weights = $$aref[1];
-   my $word = sort_letters($letters,$weights);
+   my @letters = @{$$aref[0]};
+   my @weights = @{$$aref[1]};
+   my $word = sort_letters(@letters,@weights);
    say '';
-   say "letters = (@$letters)";
-   say "weights = (@$weights)";
+   say "letters = (@letters)";
+   say "weights = (@weights)";
    say "Sorted letters = $word";
 }
