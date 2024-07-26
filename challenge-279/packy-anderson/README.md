@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Word Reverse String Sort](https://packy.dardan.com/b/P9)
+[Perl Weekly Challenge: Split 'em away!](https://packy.dardan.com/b/PP)
