@@ -1,237 +1,144 @@
-# Sginrt and droW
+# Weighted Letters and Even Chars
 
-**Challenge 278 solutions by Andrew Schneider**
+**Challenge 279 solutions by Andrew Schneider**
 
-[PWC 278](https://theweeklychallenge.org/blog/perl-weekly-challenge-278/)
+[PWC 279](https://theweeklychallenge.org/blog/perl-weekly-challenge-279/)
 
-### Racket - typically
+### Refreshment on Rust Iterators
 
-Two challenges this week. The first was probably the simpler, with much left open to interpretation. It could become as easy or as complicated as you wanted to make it, I think I opted for somewhat more complicated. The second seemed more fully specified, so less room for me to go off the rails with it. 
+Pretty straightforward challenges this week. The first basically requires zipping two lists together, sorting on one value, and outputting the other. 
 
-The titles of the challenges threw me off a few times, twice I implemented the second challenge to reverse the string up until the character, not sort, but hey.
+The specifications for the second asks to both find a properly split string, if possible, and to output whether it was possible to find such a split. But since it is easier to find out if a proper split is possible (only need counting for this!) than to actually find the split (proof by construction as it were, easily doable but slightly less easy) I'm treating the function as a black box that outputs the correct answer, and we can ignore how it does it.
 
-This week I returned to Racket, but using it's typed variant. I struggled mightily getting the first challenge to run, because of type specifications, but the second one proceeded much more easily, largely due, I'm sure, to all of the hard-earned knowledge from sweating over the first one! That's how I learn I suppose, it's not easy and it's not pretty.
+This week my guest language is Rust. My random selector actually chose both Rust and C++ for me this week, it often seems to pair the two, but for reasons including: I expected a C++ solution to be substantially similar to my Rust solution, and -- I ran out of time, I only did Rust.
 
-## Task 1: Sort String
+I ran into some trouble handling Rust iterators and had to go back to the book to read up on the topic, for instance, what is the difference between `.iter()` and `.to_iter()` (answer: references v. values). An issue I had to work through was when to `.collect()` and when to not. I learned that `.sort_by_key()` sorts in place so I did need to `.collect()` before calling that, hiyah!
 
-> Task 1: Sort String</br>
+## Task 1: Sort Letters
+
+> Task 1: Sort Letters</br>
 > Submitted by: Mohammad Sajid Anwar</br>
-> You are given a shuffle string, $str.</br>
+> You are given two arrays, @letters and @weights.</br>
 > </br>
-> Write a script to return the sorted string.</br>
-> </br>
-> A string is shuffled by appending word position to each word.</br>
+> Write a script to sort the given array @letters based on the @weights.</br>
 > </br>
 > Example 1</br>
-> Input: $str = "and2 Raku3 cousins5 Perl1 are4"</br>
-> Output: "Perl and Raku are cousins"</br>
+> Input: @letters = ('R', 'E', 'P', 'L')</br>
+>        @weights = (3, 2, 1, 4)</br>
+> Output: PERL</br>
 > </br>
 > Example 2</br>
-> Input: $str = "guest6 Python1 most4 the3 popular5 is2 language7"</br>
-> Output: "Python is the most popular guest language"</br>
+> Input: @letters = ('A', 'U', 'R', 'K')</br>
+>        @weights = (2, 4, 1, 3)</br>
+> Output: RAKU</br>
 > </br>
 > Example 3</br>
-> Input: $str = "Challenge3 The1 Weekly2"</br>
-> Output: "The Weekly Challenge"
+> Input: @letters = ('O', 'H', 'Y', 'N', 'P', 'T')</br>
+>        @weights = (5, 4, 2, 6, 1, 3)</br>
+> Output: PYTHON</br>
 
-The examples given all have a single digit word position, so we could assume that all word positions are one digit and every sentence has at most 10 (9 really since we're 1 indexing again) words, but that seemed too mundane. Instead I'll interpret the encoding as: any continuous block of digits at the end of an encoded word represents a word position. This does pose a problem if we were to encode a word which ends in a digit, but ... not gonna worry about that.
+I might have called the second input list 'indices' instead of 'weights' although there is a reason not to, which relates to the question of: what to do if a weight is repeated? The examples give no guidance here. All example weights are unique and exhaustive, giving a complete, continuous range (once sorted). Based on my reading of the instructions, "missing" weights are no problem, such as a list of (2, 4, 1), we simply sort them in order giving (1, 2, 4). But how to handle repeated weights, such as (2, 4, 2)? My answer here is to keep both, and order them by their original order. 
 
-Another aspect to think about: missing words. Let's say we have only index 1 and index 5 words, what to do here? I decided to pad the decoded string with a filler word for each space missing between 1 and the max word position.
-
-One final consideration: bad encodings - encoded words without a trailing word position. These I ignore in the decoded string. Decisions had to be made and I made them!
+To give an example: take letters = ('Z', 'B', 'A') and weights = (2, 4, 2), I propose to return "ZAB" (and not "AZB" or "AB" or "ZB"). Sorting breaking ties by sorting on the letter would return "AZB", which I do not like for this challenge. And if we consider the second input as indices, that would suggest to take either the first or last only, give "ZB" or "AB". I think I came up with the optimal solution here and it is "ZAB". yeah!
 
 ### Perl
 
-Since I'm allowing arbitrary length word positions, I decided to use regex to capture the word position. What's more, this is a great opportunity to use non-greedy matching. What we want is to capture the "word" part and the "index" part, where the word part can be any length, but we want it to stop once the final index part begins, so we use non-greedy matching on the word part, and let the greediness of the index match handle this. Like so `/(\w+?)(\d+$)/`
 
 ```perl
-sub unshuffle_string( $s ) {
-    my %words;
-    for (split ' ', $s) {
-	my ($word, $idx) = /(\w+?)(\d+$)/;
-	# if the regex pattern matched
-	if ( $word ) {
-	    $words{ $idx } = $word;
-	}
-    }
+sub sort_letters( $letters, $weights ) {
+    my @letters = @$letters;
+    my @weights = @$weights;
 
-    my @sorted_words = ();
-    for (1..max( keys %words )) {
-	my $word = exists($words{ $_ }) ? $words{ $_ } : 'REDACTED';
-	push @sorted_words, $word;
-    }
-    return join ' ', @sorted_words;
+    die "inputs must be the same length" unless $#weights == $#letters;
+
+    my @zipped = map {[$weights[$_], $letters[$_]]} (0 .. $#weights);
+    return join '', map { $_->[1] } sort {$a->[0] <=> $b->[0]} @zipped;
 }
 ```
 
-We split the string on whitespace, then create a hashmap indexed by the word position with a value of the word. Ah, one more decision I neglected to mention above, if we have multiple of the same word index, I use the last occurring one.
+I pass the input arrays to the function as references, because, you know, Perl, so first I cast them to proper lists. I check that they are the same length because they must be then I zip them together into (weight, letter) pairs. I sort on the weight value only! (as discussed above) then map to a list of the (now sorted) letters. Join that list, and done!
 
-Once the hashmap has been created, we step through each value from 1 to the max word position found. Starting with an empty list, if the index value is in the hashmap keys, push its value onto the list, otherwise push the filler value "REDACTED". Then join our list of words and return.
+### Rust
 
-### Julia
+```rust
+fn sort_letters(letters: &[char], weights: &[u64]) -> String {
+    if letters.len() != weights.len() {
+        panic!("inputs must be same length")
+    }
 
-My Julia solution is very similar to my Perl solution. The Julia docs mention how Perl was an influence on Julia, and the regex capabilities show it.
-
-```julia
-function unshuffle_string( string )
-    words = split( string )
-    keywords = Dict{Int, String}()
-
-    re = r"(?<word>^\w+?)(?<index>\d+$)"
-    for word in words
-        m = match( re, word )
-        if ~isnothing(m)
-            keywords[ parse( Int, m["index"] ) ] = m["word"]
-        end
-    end
-
-    max_key = maximum( keys( keywords ); init=1 )
-    out_words = [get!( keywords, i, "REDACTED" ) for i = 1:max_key]
-    join( out_words, " " )
-end
+    let mut list_of_pairs: Vec<(&u64, &char)> = weights.iter().zip(letters.iter()).collect();
+    list_of_pairs.sort_by_key(|k| k.0);
+    list_of_pairs
+        .iter()
+        .map(|x| x.1.to_string())
+        .collect::<Vec<String>>()
+        .join("")
+}
 ```
 
-One new thing here is I used named matches, calling the first portion `word` and the second `index`. Then I can access these values from the match object directly by name, `m["index"]`, `m["word"]`
+Very similar logic to the Perl solution here, but where Perl is very much the "do what I mean" language, Rust is very much the "I'm not doing *anything* until you tell me exactly what you want, and even then, here are a few compilation errors I want you sort out while you're at it" language. 
 
-### Racket
+Again, I start by checking that the inputs are the same length. Then I zip the two lists together, which I `.collect()` back into vector value, which is necessary because I next `.sort_by_key()` which sorts in place and so can't operate on an iterator. Then convert back into an iterator, and map to the letter value, explicitly converting the `char` to `String`, `.collect()` again, then `.join()` from a vector of strings into a string.
 
-Yeah, typed Racket. It seemed interesting and I wanted to try it out, but I'm undecided if it is a good fit for such a list-based language. I struggled mightily passing a list, like the result of a regex match, which I knew would either have a value of `false` or be a list of strings of length 3, but I could not get the compiler to know it.
+## Task 2: Split String
 
-```racket
-(struct word-idx ([token : String] [word : String] [idx : Integer]))
-
-(: build-word-idx (-> String String (U String Number) word-idx))
-(define (build-word-idx token word idx)
-  (if (string? idx)
-      (word-idx token word (assert (string->number idx) exact-integer?))
-      (word-idx token word (assert idx exact-integer?))))
-
-(define (good-match? (l : (U (Listof Any) False)))
-  (and l (andmap string? l) (eq? (length l) 3)))
-
-(: split-word-idx (-> String (U word-idx False)))
-(define (split-word-idx token)
-  (let ([pattern #px"^(\\w+?)(\\d+)$"])
-    (let ([capture (regexp-match pattern token)])
-      (if (good-match? capture)
-          (apply build-word-idx (cast capture (List String String String)))
-          #f))))
-
-(: unshuffle-string (-> String String))
-(define (unshuffle-string s)
-  (let* ([splitted (string-split s)]
-         [index-list (sort (filter word-idx? (map split-word-idx splitted))
-                           (lambda ([x : word-idx] [y : word-idx])
-                             (> (word-idx-idx x) (word-idx-idx y))))])
-    (if (null? index-list)
-        ""
-        (let loop ([input-list index-list]
-                   [out-list : (Listof String) '()]
-                   [current-idx (word-idx-idx (car index-list))])
-          (if (null? input-list)
-              (string-join out-list)
-              (let ([top-item (car input-list)])
-                (cond
-                  [(> current-idx (word-idx-idx top-item))
-                   (loop input-list (cons "REDACTED" out-list) (sub1 current-idx))]
-                  [else
-                   (loop (cdr input-list)
-                         (cons (word-idx-word top-item) out-list)
-                         (sub1 current-idx))])))))))
-```
-
-Specifically here
-
-```racket
-(: split-word-idx (-> String (U word-idx False)))
-(define (split-word-idx token)
-  (let ([pattern #px"^(\\w+?)(\\d+)$"])
-    (let ([capture (regexp-match pattern token)])
-      (if (good-match? capture)
-          (apply build-word-idx (cast capture (List String String String)))
-          #f))))
-```
-
-The best I could do was to `cast` the list to be a list of 3 strings, which the documantation warned me could be a performance drag.
-
-Overall the solution here is similar to the design of the others. Instead of a dictionary I sort the list of word-index objects, and I sort them in descending order so I can build the final word backwards, since appending to the beginning of a list is much preferred.
-
-## Task 2: Reverse Word
-
-> Task 2: Reverse Word</br>
+> Task 2: Split String</br>
 > Submitted by: Mohammad Sajid Anwar</br>
-> You are given a word, $word and a character, $char.</br>
+> You are given a string, $str.</br>
 > </br>
-> Write a script to replace the substring up to and including $char with its characters sorted alphabetically. If the $char doesn’t exist then DON'T do anything.</br>
+> Write a script to split the given string into two containing exactly same number of vowels and return true if you can otherwise false.</br>
 > </br>
 > Example 1</br>
-> Input: $str = "challenge", $char = "e"</br>
-> Ouput: "acehllnge"</br>
+> Input: $str = "perl"</br>
+> Ouput: false</br>
 > </br>
 > Example 2</br>
-> Input: $str = "programming", $char = "a"</br>
-> Ouput: "agoprrmming"</br>
+> Input: $str = "book"</br>
+> Ouput: true</br>
+> </br>
+> Two possible strings "bo" and "ok" containing exactly one vowel each.</br>
 > </br>
 > Example 3</br>
-> Input: $str = "champion", $char = "b"</br>
-> Ouput: "champion"
+> Input: $str = "good morning"</br>
+> Ouput: true</br>
+> </br>
+> Two possible strings "good " and "morning" containing two vowels each or "good m" and "orning" containing two vowels each.</br>
+> 
 
-Nary a loose end to be figured out for this, as far as I can see.
+As I said, I don't bother to actually create the split strings, because we can just check if it would be possible by counting the vowels and checking if there are an even number of them. It reminds me of an old joke about a mathematician and a fire extinguisher... A typical mathematician joke.
 
 ### Perl
 
 ```perl
-sub reverse_substring( $char, $string ) {
-    my $idx = index $string, $char;
-    my @chars = split '', $string;
-    return join '', (
-	( sort @chars[0..$idx] ),
-	@chars[$idx+1..$#chars]
-	);
+sub splittable_string( $string ) {
+    my @count = $string =~ /[aeiou]/gi;
+    return $#count % 2;
 }
 ```
 
-Find the first index of the character, split the list at that index, sort the first part and append back together. Easy! Plus, if the char isn't found, then the index is -1 and sorted part of the list is empty and the result is as desired.
+Easy to do with Perl and regexes. Count the number of case insensitive matches of the regex group `[aeiou]`, then return if the count is 0 mod 2. Conveniently `$#` gives the max index, and since we are zero indexed, the return value is just this index mod 2.
 
-### Julia
+One question I didn't tackle was semi-vowels: 'y', and to a much less extent 'w', and much much less 'r' and 'l'. The only one I might have addressed is 'y' but how to do that? count it as a vowel *half* the time? Nah, skip it. Core vowels only!
 
-```julia
-function reverse_substring( char, string )
-    index = findfirst( char, string )
-    if isnothing(index)
-        return string
-    end
+### Rust
 
-    chars = split( string, "" )
-    join( vcat( ( sort( chars[1:index] ) ), chars[index+1:end] ), "" )
-end
+```rust
+fn splittable_string(s: &str) -> bool {
+    let mut counter: u32 = 0;
+    let vowels: Vec<char> = "AEIOUaeiou".chars().collect();
+    for c in s.chars() {
+        if vowels.contains(&c) {
+            counter = (counter + 1) % 2;
+        }
+    }
+    counter == 0
+}
 ```
 
-Again very similar to the Perl solution. How very unlike me. I try to make the solutions unique to each language, but Julia just allows a very similar solution as Perl, on account fo the influence I'm sure. 
+In Rust, I would have uses regexes again, but it is rather annoying to impossible to use additional crates (Rust's droll term for packages) in a standalone module, without going through a whole cargo setup, which I try to avoid here for simplicity. So instead I directly count the vowels in the string, one by one. I actually think this may have given a better solution, and at least a more interesting one *vis a vis* my Perl solution.
 
-The main difference here is that I explicitly check if the `findfirst` (find index) failed, in which case I directly return the input string
-
-### Racket
-
-After my struggle with typed Racket on the first challenge I was not looking forward to this one, but I got the type signature correct almost from the very start. So I went from deeming typed Racket a failed experiment for me, to something I may keep trying with.
-
-```racket
-(: sort-string-to-char (-> String Char String))
-(define (sort-string-to-char str c)
-  (let ([char-list (string->list str)])
-    (let loop ([prefx : (Listof Char) '()]
-               [suffix : (Listof Char) char-list])
-      (cond
-        [(null? suffix) str]
-        [(eq? (car suffix) c)
-         (list->string (append (sort (cons (car suffix) prefx) char<?) (cdr suffix)))]
-        [else (loop (cons (car suffix) prefx) (cdr suffix))]))))
-```
-
-This is a function that takes a String and a Char and returns a String, no tricky polymorphous lists to typify. 
-
-Inside the function we make a recursive let (a loop really) that builds a list of prefix chars from the input chars until it finds a char that matches the input character. Then it sorts the prefix list (we build it backwards for easiness again, and here it doesn't matter because we end up sorting it) and appends it to the remaining string characters. If we run out of string characters without seeing the match char, then we just return the input string.
+I create a vector of vowel chars from the string `"AEIOUaeiou"`. Then, iterating over each char in the string, I check if it's in the vowels vector. I could have used a better data structure than vector for this, but it is short and should be fast enough. If the char is a vowel (in the vector) then increment the counter mod 2. In the end, if the counter is even mod 2, ie, 0 then the string is splittable, otherwise not.
 
 ## Conclusion
 
-Good challenges again. See you next week!
+Only one guest language for me this week. I deserve to take it a little easy over the summer :-)
