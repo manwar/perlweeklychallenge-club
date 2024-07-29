@@ -22,8 +22,11 @@ def split_string(string, print_strings=False):
         return False
 
     if print_strings:
-        split_index = int(len(position_vowels)/2) - 1
-        (start, stop) = (position_vowels[split_index], position_vowels[split_index+1])
+        if len(position_vowels) < 2:
+            (start, stop) = (0, len(string)-1)
+        else:
+            split_index = int(len(position_vowels)/2) - 1
+            (start, stop) = (position_vowels[split_index], position_vowels[split_index+1])
         pprint([(string[:i+1], string[i+1:]) for i in range(start, stop)])
 
     return True
