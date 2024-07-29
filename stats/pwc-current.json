@@ -1,72 +1,61 @@
 {
-   "tooltip" : {
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
-   },
-   "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2024-07-29 10:45:05 GMT"
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
    },
    "series" : [
       {
          "name" : "The Weekly Challenge - 280",
          "data" : [
             {
-               "y" : 2,
                "drilldown" : "E. Choroba",
-               "name" : "E. Choroba"
+               "name" : "E. Choroba",
+               "y" : 2
             },
             {
-               "drilldown" : "Feng Chang",
+               "name" : "Feng Chang",
                "y" : 2,
-               "name" : "Feng Chang"
+               "drilldown" : "Feng Chang"
             },
             {
-               "y" : 2,
                "drilldown" : "Mark Anderson",
-               "name" : "Mark Anderson"
+               "name" : "Mark Anderson",
+               "y" : 2
             },
             {
+               "y" : 4,
                "name" : "Thomas Kohler",
-               "drilldown" : "Thomas Kohler",
-               "y" : 4
+               "drilldown" : "Thomas Kohler"
             }
          ],
          "colorByPoint" : 1
       }
    ],
-   "legend" : {
-      "enabled" : 0
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
+   "xAxis" : {
+      "type" : "category"
    },
    "drilldown" : {
       "series" : [
          {
             "id" : "E. Choroba",
+            "name" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
-            ],
-            "name" : "E. Choroba"
+            ]
          },
          {
-            "id" : "Feng Chang",
-            "name" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
-            ]
+            ],
+            "id" : "Feng Chang",
+            "name" : "Feng Chang"
          },
          {
             "data" : [
@@ -94,19 +83,30 @@
          }
       ]
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
+   "tooltip" : {
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "followPointer" : 1,
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "title" : {
       "text" : "The Weekly Challenge - 280"
+   },
+   "legend" : {
+      "enabled" : 0
+   },
+   "plotOptions" : {
+      "series" : {
+         "borderWidth" : 0,
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         }
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 4] Last updated at 2024-07-29 10:56:09 GMT"
    }
 }
