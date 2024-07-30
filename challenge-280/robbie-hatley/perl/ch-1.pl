@@ -55,15 +55,15 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 
    use v5.38;
    use utf8;
-   no warnings 'uninitialized';
    sub second ($x) {
       my %hash;
       my $char;
       for my $idx (0..length($x)-1) {
-         if ($hash{$char=substr($x,$idx,1)}>0){
+         $char = substr($x,$idx,1);
+         ++$hash{$char};
+         if (2 == $hash{$char}){
             return $char;
          }
-         ++$hash{$char};
       }
       return "\x{FFFD}";
    }
