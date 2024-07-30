@@ -15,7 +15,7 @@ sub split-string($str is copy)
 
     for $str.words.grep({ .contains('y') }) -> $word
     {
-        if $word.comb.contains(none(<a e i o u>))
+        if $word.contains(none(<a e i o u>))
         {
             $count += ($word ~~ m:g/y/).elems;
             next
@@ -33,7 +33,7 @@ sub split-string($str is copy)
         for @syllables
         {
             next unless .contains('y');
-            $count += (.comb.indices('y').grep(* > 0)).elems 
+            $count += (.indices('y').grep(* > 0)).elems 
         }
     }
 
