@@ -1,0 +1,155 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/c.isdigit {
+    dup 48 ge exch 57 le and
+} bind def
+
+/strconcat % (a) (b) -> (ab)  
+{
+    [
+        3 -1 roll
+        s2a aload length
+        2 add -1 roll
+        s2a aload pop
+    ] a2s
+} bind def
+
+/reverse {
+    1 dict begin
+    dup length /l exch def
+    [ exch
+      aload pop
+      2 1 l {
+          -1 roll
+      } for
+    ]
+    end
+} bind def
+
+/strsplit % (ajbjc) (j) -> [ (a) (b) (c) ]
+{
+    1 dict begin
+    /sep exch def
+    [ exch
+      {
+          dup length 0 eq {
+              pop
+              exit
+          } {
+              sep search {
+                  exch pop
+                  dup length 0 eq {
+                      pop
+                  } {
+                      exch
+                  } ifelse
+              } {
+                  ()
+              } ifelse
+          } ifelse
+      } loop
+    ]
+    end
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+
+/strjoin % [(a) (b) (c)] (j) -> (ajbjc)
+{
+    3 dict begin
+    /j exch def
+    dup 0 get /out exch def
+    /first true def
+    {
+        first {
+            pop
+            /first false def
+        } {
+            out j strconcat
+            exch strconcat
+            /out exch def
+        } ifelse
+    } forall
+    out
+    end
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/sortstring {
+    0 dict begin
+    ( ) strsplit /words exch def
+    /out words length array def
+    words {
+        s2a /ws exch def
+        /m -1 def
+        /n -1 def
+        ws reverse {
+            /c exch def
+            /n n 1 add def
+            c c.isdigit not {
+                /m ws length 1 sub n sub def
+                exit
+            } if
+        } forall
+        ws m 1 add ws length m sub 1 sub getinterval a2s cvi 1 sub /ix exch def
+        out ix ws 0 m 1 add getinterval a2s put
+    } forall
+    out ( ) strjoin
+    end
+} bind def
+
+(sortstring) test.start
+(and2 Raku3 cousins5 Perl1 are4) sortstring (Perl and Raku are cousins) eq test
+(guest6 Python1 most4 the3 popular5 is2 language7) sortstring (Python is the most popular guest language) eq test
+(Challenge3 The1 Weekly2) sortstring (The Weekly Challenge) eq test
+test.end

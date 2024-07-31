@@ -1,0 +1,5 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($str where $str.chars > 0);
+
+say $str.comb.grep( * eq any(<a e i o u>) ).elems %% 2;
