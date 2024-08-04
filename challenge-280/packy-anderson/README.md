@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Split 'em away!](https://packy.dardan.com/b/PP)
+[Perl Weekly Challenge: Appear Twice, Count Once](https://packy.dardan.com/b/P_)
