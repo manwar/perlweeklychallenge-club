@@ -1,148 +1,173 @@
-# More Weight for Examples!
+# There Is More Than One Way To Regex
 
-**Challenge 279 solutions in Perl by Matthias Muth**
+**Challenge 280 solutions in Perl by Matthias Muth**
 
-## Task 1: Sort Letters
+## Task 1: Twice Appearance
 
-> You are given two arrays, @letters and @weights.<br/>
-> Write a script to sort the given array @letters based on the @weights.<br/>
+> You are given a string, \$str, containing lowercase English letters only.<br/>
+> Write a script to print the first letter that appears twice.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @letters = ('R', 'E', 'P', 'L')<br/>
->        @weights = (3, 2, 1, 4)<br/>
-> Output: PERL<br/>
+> Input: \$str = "acbddbca"<br/>
+> Output: "d"<br/>
 > <br/>
 > Example 2<br/>
-> Input: @letters = ('A', 'U', 'R', 'K')<br/>
->        @weights = (2, 4, 1, 3)<br/>
-> Output: RAKU<br/>
+> Input: \$str = "abccd"<br/>
+> Output: "c"<br/>
 > <br/>
 > Example 3<br/>
-> Input: @letters = ('O', 'H', 'Y', 'N', 'P', 'T')<br/>
->        @weights = (5, 4, 2, 6, 1, 3)<br/>
-> Output: PYTHON<br/>
+> Input: \$str = "abcdabbb"<br/>
+> Output: "a"<br/>
 
-Probably the most efficient way to solve this task is *not* to use sort,
-but to directly assign letters to their positions in the result string.
-This works for all the examples,
-because in these examples, the `@weights` are very regular:
-
-- they can be mapped one-by-one to result positions,
-- no weight appears twice,
-- the weights cover all positions completely.
-
-Actually, at least for the examples, `@weights` should be called `@positions`
-(minding that they are one-based, not zero-based).
-
-So here's the simple version, to cover the examples.<br/>
-We need to initialize the result string to have the correct length,
-because we will assign letters to positions in random order.
+This is my no-frills-easy-reading solution:
 
 ```perl
-use v5.36;
-
-sub sort_letters_1( $letters, $weights ) {
-    my $result = " " x $letters->@*;
-    substr $result, $weights->[$_] - 1, 1, $letters->[$_]
-        for 0..$letters->$#*;
-    return $result;
-}
-```
-
-
-
-**What if the weights were not as regular as they are in the examples?**
-
-We should consider cases where weights do *not* map one-by-one to positions.<br/>
-Let's put some 'heavier weights' in, and consider this additional example:
-
-> Example 4<br/>
-> Input: @letters = ('R', 'E', 'P', 'L')<br/>
->             @weights = (3333, 2222, 1111, 3333)<br/>
-> Output: PERL<br/>
-
- Here:
-
-* the lowest weight is not 1,
-* weights are not consecutive (they contain gaps),
-* same weight values are used more than once for different letters<br/>(behavior is not defined in this case, but we should do something useful),
-
-* the weight values are not necessarily small integers<br/>(which can cause memory problems when we incautiously map weight values to string positions or array indexes).
-
-So what do we do?
-
-My ideas are these:
-
-* Use the weight values as hash keys instead of string positions or array indexes to store where any letter is going to be put.<br/>
-  This addresses both the 'not consecutive' and the 'no small integers' issues.
-  We can have a weight of 6548632 without running out of bounds as we would with a string or an array.
-* Store a *list* of letters with each 'weight' hash key.<br/>This deals with the case of multiple letters having the same weight value.
-  Every hash entry will contain an array-ref to a list of all letters having that weight.
-
-I'm also happy to highlight the `for_list` Perl feature
-that was added in Perl 5.36 for iterating over multiple values at a time.
-Especially its use together with the `mesh` function from `List::Util`
-makes some things simple and nice.<br/>
-Where normally I would have to iterate over `0..$#array`,
-I can avoid this here, as well as the use of `$_` in the loop.<br/>
-Certainly less 'perlish', but easy for the eyes!
-
-To get the result string from the hash, we sort the hash keys (numerically!)
-and concatenate all letters from their entries in order.<br/>
-Like this:
-
-```perl
-use v5.36;
-no warnings 'experimental::for_list';
-use List::Util qw( mesh );
-
-sub sort_letters( $letters, $weights ) {
-    my %buckets;
-    for my ( $letter, $weight ) ( mesh $letters, $weights ) {
-        push $buckets{$weight}->@*, $letter;
+sub twice_appearance( $str ) {
+    my %seen;
+    for ( split "", $str ) {
+        return $_
+            if $seen{$_};
+        $seen{$_} = 1;
     }
-    return join "", map $buckets{$_}->@*, sort { $a <=> $b } keys %buckets;
+    return ();
 }
 ```
 
 
 
-## Task 2: Split String
+I tried to develop a regex-based solution, but I failed!<br/>
+I started with this:
 
-> You are given a string, \$str.<br/>
-> Write a script to split the given string into two containing exactly same number of vowels and return true if you can otherwise false.<br/>
+```perl	
+sub twice_appearance_WRONG( $str ) {
+    return $str =~ /(.).*?\g1/ ? $1 : ();
+}
+```
+
+But this doesn't work, because it finds 'the first letter that is repeated later on', not 'the first letter that is a duplicate of a letter that occurred before'. In Example 1 ("acbddbca") it finds 'a', because it tries 'a' first, but it should find 'd', because that is the first 'duplicating' letter (the first 'second letter', if you will).
+
+Then I tried a solution that captures any 'second' letter, and then checks with a lookbehind that that letter appears before:
+
+```perlin the string 
+sub twice_appearance_LOOK_BEHIND_NO_GO( $str ) {
+    return $str =~ /(.)(?<!^.*\g1.*)/ ? $1 : ();
+}
+```
+
+I know that if this worked, it would be incredibly slow.<br/>
+But anyway, it aborts with an error
+'Lookbehind longer than 255 not implemented ...'.
+
+I gave up.<br/>
+If anyone has a regex-based solution for this challenge task,
+please post it in
+[The Weekly Challenge - Perl & Raku group on Facebook](https://www.facebook.com/groups/theweeklychallengegroup/) or send me an [email](mailto:matthias.muth@gmx.de)!
+
+
+
+## Task 2: Count Asterisks
+
+> You are given a string, \$str, where every two consecutive vertical bars are grouped into a pair.<br/>
+> Write a script to return the number of asterisks, \*, excluding any between each pair of vertical bars.<br/>
 > <br/>
 > Example 1<br/>
-> Input: \$str = "perl"<br/>
-> Ouput: false<br/>
+> Input: \$str = "p|\*e\*rl|w\*\*e|\*ekly|"<br/>
+> Ouput: 2<br/>
+> The characters we are looking here are "p" and "w\*\*e".<br/>
 > <br/>
 > Example 2<br/>
-> Input: \$str = "book"<br/>
-> Ouput: true<br/>
-> Two possible strings "bo" and "ok" containing exactly one vowel each.<br/>
+> Input: \$str = "perl"<br/>
+> Ouput: 0<br/>
 > <br/>
 > Example 3<br/>
-> Input: \$str = "good morning"<br/>
-> Ouput: true<br/>
-> Two possible strings "good " and "morning" containing two vowels each or "good m" and "orning" containing two vowels each.<br/>
+> Input: \$str = "th|ewe|e\*\*|k|l\*\*\*ych|alleng|e"<br/>
+> Ouput: 5<br/>
+> The characters we are looking here are "th", "e\*\*", "l\*\*\*ych" and "e".<br/>
 
-Actually the task assignment 'split the given string into two containing exactly same number of vowels' can be completely ignored. The result is never used. It's like a piece of 'dead code' that never gets executed and that can be removed.
+##### Single regex version
 
-The only information we need to return is whether *we can* split the string into two such pieces!
-
-We can do so if and only if we can split up the string's *vowels* into two equal pieces.<br/>
-Which means we need an even number of vowels.
-
-Ok, then let's count the vowels!
-And the rest is easy...
+I started with a single regex solution, which is, sorry for that, not very easy-to-read:
 
 ```perl
-use v5.36;
-
-sub split_string( $str ) {
-    my @vowels = $str =~ /[aeiou]/ig;
-    return scalar @vowels % 2 == 0;
+sub count_asterisks_single_regex( $str ) {
+    return scalar( () = $str =~ /\G(?:\|[^|]*\||[^*])*+\*/g );
 }
 ```
+
+What???
+
+Ok, here is what it does, and what it uses.<br/>Let's first add the `x` modifier to better see the pieces:
+
+```perl
+    return scalar( () = $str =~ / \G (?: \| [^|]* \| | [^*] )*+ \* /xg );
+```
+
+Aha. So we loop over the string with the `g` modifier to find all occurrences of `\*` (at the end of the regex). And we use `\G` to always continue where we left off.
+
+We skip over everything that we don't want:
+
+- pairs of vertical bars and anything that is not a vertical bar in between:<br/>`\| [^|]* \|`
+
+- anything that is not an asterisk:<br/>`[^*]`
+
+We want to skip as many of both of these as we can,
+so we group them together as alternatives, and add a `*` quantifier.
+
+Actually we use a `*+` ('possessive') quantifier
+that keeps the regex engine from backtracking
+once it finds a pair of vertical bars.
+This inhibits retrying a vertical bar using the `[^*]` part
+to find a `*` earlier (which then would also match *within* vertical bar pairs).
+
+What else?
+
+The regex delivers all matches, but we only want a count of the matches.<br/>We get the count using a not so well-known property of the list assignment operator: It returns the number of elements of the *right hand side* of the assignment in scalar context. And it does so no matter what the left hand side is. So this:
+
+```perl
+scalar( () = ( <list> ) )
+```
+
+has become a programming idiom in Perl to return the number of elements in a list *without assigning the list to an array variable first*.<br/>Good for a one-liner!<br/>
+(See also [this useful stackoverflow article](https://stackoverflow.com/questions/2225460/how-do-i-find-the-number-of-values-in-a-perl-list).)
+
+##### Two regex version: more easy-to-read
+
+My second solution uses two regexes:
+
+- one to remove all vertical bar pairs,
+- and another one to find all asterisks.
+
+I guess it's much easier to read, especially with some parentheses added to help with understanding the operator grouping:
+
+```perl
+sub count_asterisks_two_regexes( $str ) {
+    return scalar( () = ( $str =~ s/ \| [^|]* \| //xgr ) =~ / \* /xg );
+}
+```
+
+##### One regex and `tr`: my favorite (and shortest!) solution
+
+What I described so far helped me to arrive at my favorite solution.<br/>
+It is actually the shortest one, and I think it's the most readable.
+
+It uses
+
+- one regex to remove vertical bar pairs (as above),
+- the `tr` operator to count the asterisks, by replacing them by - wait a minute - *asterisks*.
+
+The `tr` operator returns the number of characters that it replaced, so what more could we want?
+
+Here we go: 
+
+```perl
+sub count_asterisks( $str ) {
+    return ( $str =~ s/ \| [^|]* \| //xgr ) =~ tr/*/*/;
+}
+```
+
+This was an exercise in evolutionary programming... :-)
+
+
 
 #### **Thank you for the challenge!**
+
