@@ -8,8 +8,10 @@ sub twice_first( $str ) {
     grep {
 	# return if the count is already 1
 	return $_ if $counts{ $_ };
+	# increment the count
 	++$counts{ $_ }
     } ( split '', $str );
+    # if there are no doubled letters return empty string
     return '';
 }
 
