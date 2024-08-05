@@ -9,8 +9,8 @@ enum Row (1=> 1, slip 2..8);
 constant @vertices = Col::.values.sort X, Row::.values.sort;
 
 sub move ( @ (Col $col, Row $row), @ ($col-diff,$row-diff) ) {
-    Col($col+$col-diff)//Nil, Row($row+$row-diff)//Nil
-    andthen  .all.defined ?? $_ !! Empty
+    try { Col($col+$col-diff), Row($row+$row-diff) }\
+    orelse Empty
 }
 
 sub knight-jump ( +@vertex (Col $, Row $) ) {
