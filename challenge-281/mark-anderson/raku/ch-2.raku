@@ -24,9 +24,9 @@ sub knights-move($start is copy, $end is copy)
         my %t = shift @queue;
         return %t<dis> if %t<xy> eqv $end;
 
-        for ^8
+        for $mv
         {
-            my $xy := %t<xy> >>+<< $mv[$_];
+            my $xy := %t<xy> >>+<< $_;
 
             if all(all($xy) ~~ ^8, not @visit[$xy[0];$xy[1]])
             {
