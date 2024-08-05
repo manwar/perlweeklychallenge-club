@@ -30,7 +30,7 @@ sub knights-move($start is copy, $end is copy)
             my $x = %t<x> + $dx[$_];
             my $y = %t<y> + $dy[$_];
 
-            if all(all($x,$y) ~~ 0..7, not @visit[$x;$y])
+            if all(all($x,$y) ~~ ^8, not @visit[$x;$y])
             {
                 @visit[$x;$y] = True;
                 @queue.push: { :$x, :$y, :dis(%t<dis> + 1) }
