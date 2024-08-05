@@ -6,9 +6,9 @@ use Test;
 is knights-move('g2', 'a8'), 4;
 is knights-move('g2', 'h2'), 3;
 
-sub knights-move($begin is copy, $end is copy)
+sub knights-move($start is copy, $end is copy)
 {
-    $begin .= &coordinates;
+    $start .= &coordinates;
     $end   .= &coordinates;
 
     my $dx := -2, -1,  1,  2, -2, -1, 1, 2;
@@ -17,8 +17,8 @@ sub knights-move($begin is copy, $end is copy)
     my @queue;
     my @visit;
 
-    @queue.push: { :x($begin[0]), :y($begin[1]), :dis(0) }
-    @visit[$begin[0];$begin[1]] = True;
+    @queue.push: { :x($start[0]), :y($start[1]), :dis(0) }
+    @visit[$start[0];$start[1]] = True;
 
     while @queue
     {
