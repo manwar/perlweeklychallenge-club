@@ -23,7 +23,6 @@ sub knights-move($begin is copy, $end is copy)
     while @queue
     {
         my %t = shift @queue;
-
         return %t<dis> if all(%t<x> == $end[0], %t<y> == $end[1]);
 
         for ^8
