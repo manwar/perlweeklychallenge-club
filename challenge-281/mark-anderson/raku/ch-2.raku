@@ -11,29 +11,27 @@ sub knights-move($start is copy, $end is copy)
     $start .= &coordinates;
     $end   .= &coordinates;
 
-    my $dx := -2, -1,  1,  2, -2, -1, 1, 2;
-    my $dy := -1, -2, -2, -1,  1,  2, 2, 1;
+    my $mv := (-2,-1),(-1,-2),(1,-2),(2,-1),(-2,1),(-1,2),(1,2),(2,1);
 
     my @queue;
     my @visit;
 
-    @queue.push: { :x($start[0]), :y($start[1]), :dis(0) }
+    @queue.push: { :xy($start), :dis(0) }
     @visit[$start[0];$start[1]] = True;
 
     while @queue
     {
         my %t = shift @queue;
-        return %t<dis> if all(%t<x> == $end[0], %t<y> == $end[1]);
+        return %t<dis> if %t<xy> eqv $end;
 
         for ^8
         {
-            my $x = %t<x> + $dx[$_];
-            my $y = %t<y> + $dy[$_];
+            my $xy := %t<xy> >>+<< $mv[$_];
 
-            if all(all($x,$y) ~~ ^8, not @visit[$x;$y])
+            if all(all($xy) ~~ ^8, not @visit[$xy[0];$xy[1]])
             {
-                @visit[$x;$y] = True;
-                @queue.push: { :$x, :$y, :dis(%t<dis> + 1) }
+                @visit[$xy[0];$xy[1]] = True;
+                @queue.push: { :$xy, :dis(%t<dis> + 1) }
             }
         }
     }
