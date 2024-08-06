@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Appear Twice, Count Once](https://packy.dardan.com/b/P_)
+[Perl Weekly Challenge: The Ultimate Test of Cerebral Fitness](https://packy.dardan.com/b/Pd)
