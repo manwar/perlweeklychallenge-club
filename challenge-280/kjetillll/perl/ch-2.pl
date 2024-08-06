@@ -2,7 +2,8 @@ use strict; use warnings; use Test::More tests=>3;
 
 sub count {
     local $_ = shift;
-    s/ \| .*? \| //x ? count($_) : y/*//
+    s/ \| .*? \| //xg;
+    y/*//
 }
 
 is count( $$_{input} ) => $$_{output}
