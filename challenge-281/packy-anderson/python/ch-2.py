@@ -65,7 +65,7 @@ def leastMoves(start, end):
 def solution(start, end):
     print(f'Input: $start = \'{start}\', $end = \'{end}\'')
     count, moves = leastMoves(start, end)
-    print(f'Output: {count}\n\n{moves}\n')
+    print(f'Output: {count}\n\n{moves}')
 
 print('Example 1:')
 solution('g2', 'a8')

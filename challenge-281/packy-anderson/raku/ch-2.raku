@@ -68,7 +68,7 @@ sub solution($start, $end) {
   say qq/Input: \$start = '$start', \$end = '$end'/;
   my ($count, $moves) = leastMoves($start, $end);
   say 'Output: ' ~ $count;
-  say "\n$moves\n";
+  say "\n$moves";
 }
 
 say "Example 1:";
