@@ -55,5 +55,5 @@ for my $coord (@coords) {
    my $parity = parity($coord);
    my $color  = $parity ? 'white' : 'black';
    my $result = $parity ? 'true'  : 'false';
-   printf("%-8s%-8d%-8s%-8s\n", $coord, $parity, $color, $result);
+   printf("%-8s%-8s%-8s%-8s\n", $coord, $parity, $color, $result);
 }
