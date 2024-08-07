@@ -1,4 +1,13 @@
 {
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   },
    "xAxis" : {
       "categories" : [
          "lacek96",
@@ -33,25 +42,8 @@
          "Matthias Muth"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-08-06 22:29:23 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             2,
             37,
@@ -83,10 +75,10 @@
             0,
             4,
             120
-         ]
+         ],
+         "name" : "Perl"
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -118,7 +110,8 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
          "data" : [
@@ -156,12 +149,19 @@
          "name" : "Blog"
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-08-07 08:56:24 GMT"
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
