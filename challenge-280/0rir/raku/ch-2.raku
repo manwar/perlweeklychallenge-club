@@ -4,8 +4,7 @@ use v6.d;
 use Test;
 
 =begin comment
-Task 2: Count Asterisks
-Submitted by: Mohammad Sajid Anwar
+280-2: Count Asterisks      Submitted by: Mohammad Sajid Anwar
         REPHASED
 Given a string, $str, where two consecutive vertical bars group the chars
 between them; a bar can only pair with one or none other bar.

@@ -4,7 +4,7 @@ use v6.d;
 use Test;
 
 =begin comment
-280 1: Twice Appearance             Submitted by: Mohammad Sajid Anwar
+280-1: Twice Appearance             Submitted by: Mohammad Sajid Anwar
 You are given a string, $str, containing lowercase English letters only.
 
 Write a script to print the first letter that appears twice.
@@ -40,12 +40,12 @@ multi task( Str:D $in, Bool:D :$case-ck! ) {
 }
 multi task( Str:D $in --> Str ) {
     my $s = ().SetHash;
-    my $e = $s.elems;
+    my $prev = $s.elems;
     for 0..$in.chars -> \i {
         my $c = $in.substr( i, 1);
         $s.set: $c;
-        return $c if $s.elems == $e;
-        ++$e ;
+        return $c if $s.elems == $prev;
+        ++$prev;
     }
     Str;
 }
