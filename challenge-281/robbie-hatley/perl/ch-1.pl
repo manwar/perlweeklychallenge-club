@@ -13,7 +13,7 @@ Task 281-1: Check Color
 Submitted by: Mohammad S Anwar
 Write a script which, given the coordinates of a square on a
 chessboard in algebraic notation, prints "true" if the square
-is white, "false" if the square is black.
+is white or "false" if the square is black.
 Example 1: Input: 'd3'  Output: 'true'
 Example 2: Input: 'g5'  Output: 'false'
 Example 3: Input: 'e6'  Output: 'true'
@@ -38,22 +38,30 @@ Output is to STDOUT and will be each input followed by the corresponding output.
 # ------------------------------------------------------------------------------------------------------------
 # PRAGMAS, MODULES, AND SUBS:
 
-use v5.36;
-sub parity ($x) {
-   return 'error' if $x !~ m/^[a-h][1-8]$/;
-   ((ord(substr($x,0,1))-97)+(ord(substr($x,1,1))-49))%2
-}
+   # Use Perl version "v5.36" or higher so we can use "signatures":
+   use v5.36;
+
+   # Is a given algebraic notation valid?
+   sub valid_alg ($x) {$x =~ m/^[a-h][1-8]$/}
+
+   # Convert algebraic notation to 0-indexed coordinate:
+   sub alg_to_coord ($x) {return [ord(substr($x,0,1))-97,ord(substr($x,1,1))-49]}
+
+   # Return parity of hops from a1 to given square:
+   sub parity ($a) {my $c=alg_to_coord($a);($c->[0]+$c->[1])%2}
 
 # ------------------------------------------------------------------------------------------------------------
 # INPUTS:
-my @coords = @ARGV ? eval($ARGV[0]) : ('d3', 'g5', 'e6');
+my @squares = @ARGV ? eval($ARGV[0]) : ('d3', 'g5', 'e6');
+#                    Expected outputs:  true  false true
 
 # ------------------------------------------------------------------------------------------------------------
 # MAIN BODY OF PROGRAM:
-say 'Coord   Parity  Color   Result  ';
-for my $coord (@coords) {
-   my $parity = parity($coord);
+say 'Square  Parity  Color   Result  ';
+for my $square (@squares) {
+   if (!valid_alg($square)) {say "Error: \"$square\" is not a valid algebraic chess location.";next}
+   my $parity = parity($square);
    my $color  = $parity ? 'white' : 'black';
    my $result = $parity ? 'true'  : 'false';
-   printf("%-8s%-8s%-8s%-8s\n", $coord, $parity, $color, $result);
+   printf("  %-6s  %-6s%-8s%-8s\n", $square, $parity, $color, $result);
 }
