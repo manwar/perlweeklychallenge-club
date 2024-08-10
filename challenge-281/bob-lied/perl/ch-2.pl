@@ -17,7 +17,7 @@
 #   g2 -> e3 -> f1 -> h2
 #=============================================================================
 #
-# Screams for a breadth-first search for shortes path algorithm. Doing
+# Screams for a breadth-first search for shortest path algorithm. Doing
 # something else here.  Build a grid that shows all the possible knight moves.
 # Put a 0 at 0,0.  Then, at all possible knight moves, put a 1.  For each 1,
 # put a 2 at all possible knight moves from there.  Repeat until the 8x8 grid
@@ -51,7 +51,7 @@ class Board
         push @board, [ (undef) x $col ] for ( 1 .. $row );
 
         # Move a knight around the board, starting at 0,0
-        $self->init();
+        $self->_init();
     }
 
     # Debugging aid
@@ -78,7 +78,7 @@ class Board
 
     # Fill the board with the number of knight moves that it takes
     # to reach each square.
-    method init()
+    method _init()
     {
         $board[0][0] = 0;
 
@@ -123,6 +123,7 @@ class Board
 
 package main;
 
+# Initializtion phase. Create singleton distance board.
 my $Board = Board->new();
 
 
@@ -137,27 +138,34 @@ sub chessToGrid($chess)
 {
     return ( substr($chess,1,1) - 1, ord(substr($chess, 0, 1)) - ord('a') )
 }
+
 sub km($start, $end)
 {
     my @start = chessToGrid($start);
     my @end   = chessToGrid($end);
 
     # If the slope is negative, reflect the line so that the slope is positive. 
+    #   .  .  .  .  .  .      .  .  .  .  .  .
+    #   .  S  .  .  .  .      .  S------->s' .
+    #   .  .  .  .  .  .      .  .  .  .  .  .
+    #   .  .  .  .  .  .  ==> .  .  .  .  .  .
+    #   .  .  .  .  E  .      .  e'<------E  .
+    #   .  .  .  .  .  .      .  .  .  .  .  .
     my $dy = $end[1] - $start[1];
     my $dx = $end[0] - $start[0];
     my $slope = ( $dx == 0 ? 0 : $dy / $dx );
     if ( $slope < 0 )
     {
-        ( $start[0], $end[0] ) = ( $end[0], $start[0] );
+        ( $start[1], $end[1] ) = ( $end[1], $start[1] );
     }
 
-    # If the end is below the start, swap ends
+    # If the end is closer to the origin, swap ends
     if ( $end[0] < $start[0] || $end[1] < $start[1] )
     {
         ( $start[0], $start[1], $end[0], $end[1] ) = ( @end, @start);
     }
 
-    # Translate the line segment so the start is at 0,0
+    # Shift the end point as if the start is at 0,0
     $end[0] -= $start[0];
     $end[1] -= $start[1];
 
@@ -173,6 +181,9 @@ sub runTest
 
     is( km("g2", "a8"), 4, "Example 1");
     is( km("g2", "h2"), 3, "Example 1");
+    is( km("a1", "h8"), 6, "Full diagonal");
+    is( km("d8", "d1"), 5, "Full vertical");
+    is( km("a3", "h3"), 5, "Full horizontal");
 
     done_testing;
 }
