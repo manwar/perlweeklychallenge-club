@@ -35,8 +35,8 @@ start which is [0,0]. I'll make a variable "$current" to keep track of "current 
 process the itinerary for so long as its not empty by doing the following:
    1. Shift left-most "@itinerary" square into "$current".
    2. Set current as "visited".
-   5. Get octopus of squares which can be visited next.
-   6. For each unvisited arm of octopus, set hops current+1 and push onto right end of "@itinerary".
+   3. Get octopus of squares which can be visited next.
+   4. For each unvisited arm of octopus, set hops current+1 and push onto right end of "@itinerary".
 After the queue empties, $squares{$end}->[1] should contain "minimum hops to get from start to end".
 
 --------------------------------------------------------------------------------------------------------------
