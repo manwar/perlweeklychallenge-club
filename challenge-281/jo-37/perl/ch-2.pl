@@ -75,18 +75,18 @@ sub knights_move {
 }
 
 sub diameter {
-    my $paths = zeroes adj(0);
+    my $walks = zeroes adj(0);
     for (0 .. N**2 - 1) {
-        $paths += adj($_);
-        return $_ if all $paths;
+        $walks += adj($_);
+        return $_ if all $walks;
     }
     'inf';
 }
 
 sub not_within ($n) {
-    my $paths = zeros adj(0);
-    $paths += adj($_) for 0 .. $n;
-    whichND !$paths->splitdim(1, N)->splitdim(0, N);
+    my $walks = zeros adj(0);
+    $walks += adj($_) for 0 .. $n;
+    whichND !$walks->splitdim(1, N)->splitdim(0, N);
 }
 
 sub analyze {
