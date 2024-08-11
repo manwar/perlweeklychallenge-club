@@ -19,13 +19,13 @@ sub build_graph{
           
   $graph->add_edge(qq/$c$r/, qq/$t$s/) if $s >= 1 && 
                                           $s <= 8 && 
-                                          $t =~ m/[a-z]/; 
+                                          $t =~ m/[a-h]/; 
 
           $t = chr(ord(qq/$c/) + 1);
           
   $graph->add_edge(qq/$c$r/, qq/$t$s/) if $s >= 1 && 
                                           $s <= 8 && 
-                                          $t =~ m/[a-z]/; 
+                                          $t =~ m/[a-h]/; 
 
           ##
           # down
@@ -35,13 +35,13 @@ sub build_graph{
           
   $graph->add_edge(qq/$c$r/, qq/$t$s/) if $s >= 1 && 
                                           $s <= 8 && 
-                                          $t =~ m/[a-z]/; 
+                                          $t =~ m/[a-h]/; 
 
           $t = chr(ord(qq/$c/) + 1);
           
   $graph->add_edge(qq/$c$r/, qq/$t$s/) if $s >= 1 && 
                                           $s <= 8 && 
-                                          $t =~ m/[a-z]/; 
+                                          $t =~ m/[a-h]/; 
 
           ##
           # left
@@ -51,13 +51,13 @@ sub build_graph{
           
   $graph->add_edge(qq/$c$r/, qq/$t$s/) if $s >= 1 && 
                                           $s <= 8 && 
-                                          $t =~ m/[a-z]/; 
+                                          $t =~ m/[a-h]/; 
 
           $s = $r + 1;
           
   $graph->add_edge(qq/$c$r/, qq/$t$s/) if $s >= 1 && 
                                           $s <= 8 && 
-                                          $t =~ m/[a-z]/; 
+                                          $t =~ m/[a-h]/; 
 
           ##
           # right
@@ -67,13 +67,13 @@ sub build_graph{
           
   $graph->add_edge(qq/$c$r/, qq/$t$s/) if $s >= 1 && 
                                           $s <= 8 && 
-                                          $t =~ m/[a-z]/; 
+                                          $t =~ m/[a-h]/; 
 
           $s = $r + 1;
           
   $graph->add_edge(qq/$c$r/, qq/$t$s/) if $s >= 1 && 
                                           $s <= 8 && 
-                                          $t =~ m/[a-z]/; 
+                                          $t =~ m/[a-h]/; 
 
       } for 1 .. 8;
   } for q/a/ .. q/h/;
