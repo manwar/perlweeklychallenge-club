@@ -1,173 +1,150 @@
-# There Is More Than One Way To Regex
+# Knights of Class
 
-**Challenge 280 solutions in Perl by Matthias Muth**
+**Challenge 281 solutions in Perl by Matthias Muth**
 
-## Task 1: Twice Appearance
+## Task 1: Check Color
 
-> You are given a string, \$str, containing lowercase English letters only.<br/>
-> Write a script to print the first letter that appears twice.<br/>
+> You are given coordinates, a string that represents the coordinates of a square of the chessboard as shown below:<br/>
+> <br/>
+> Write a script to return true if the square is light, and false if the square is dark.<br/>
 > <br/>
 > Example 1<br/>
-> Input: \$str = "acbddbca"<br/>
-> Output: "d"<br/>
+> Input: \$coordinates = "d3"<br/>
+> Output: true<br/>
 > <br/>
 > Example 2<br/>
-> Input: \$str = "abccd"<br/>
-> Output: "c"<br/>
+> Input: \$coordinates = "g5"<br/>
+> Output: false<br/>
 > <br/>
 > Example 3<br/>
-> Input: \$str = "abcdabbb"<br/>
-> Output: "a"<br/>
+> Input: \$coordinates = "e6"<br/>
+> Output: true<br/>
 
-This is my no-frills-easy-reading solution:
+Interpreting column names '`a`' to '`z`' as numbers from 1 to 8,
+the lower left square ('`a1`') has the column/row coordinates `(1,1)`.  The sum of these two coordinate values is 2, and the square is a dark one.
+
+It is easy to see that *all* dark squares have a coordinate sum that is even, because whenever you add 1 to any of the coordinates, making the sum odd, you end up on a light square, and adding (or subtracting) another 1 brings you to a dark square again.
+
+So we only have to add the row and column coordinates, and check whether the result is odd.
+
+Now I made it simple, by just summing up the *ASCII character values* of the two letters of the field coordinates (`'a'` and `'1'` for that example).
+
+`'a'` to `'h'` have ASCII values of `0x61` to `0x68`. The lower four bits contain the corresponding coordinate values from 1 to 8.
+The same is valid for the digits characters `'1'` to `'8'`, whose ASCII values are `0x31` to `0x38`.
+
+So if I sum up the ASCII values of the characters `'a'` and `'1'` and divide by 2, it is the same as if I added the numerical coordinates 1 and 1 and divided by 2.
+
+This makes my solution very short: Split the coordinate string into characters, map them to their ASCII value (using `ord` with the default `$_` parameter), add them together (using `List::Util`'s `sum` function), and use the modulo operator (`%`) to get the remainder. If it is `1`, it's a light square, so we can directly use the remainder as a truth value.
+
 
 ```perl
-sub twice_appearance( $str ) {
-    my %seen;
-    for ( split "", $str ) {
-        return $_
-            if $seen{$_};
-        $seen{$_} = 1;
+use v5.36;
+use List::Util qw( sum );
+
+sub check_color( $coordinates ) {
+    return sum( map ord, split "", $coordinates ) % 2;
+}
+```
+
+## Task 2: Knight’s Move
+
+> A Knight in chess can move from its current position to any square two rows or columns plus one column or row away. So in the diagram below, if it starts a S, it can move to any of the squares marked E.<br/>
+> Write a script which takes a starting position and an ending position and calculates the least number of moves required.<br/>
+> <br/>
+> <br/>
+> Example 1<br/>
+> Input: \$start = 'g2', \$end = 'a8'<br/>
+> Ouput: 4<br/>
+> g2 -> e3 -> d5 -> c7 -> a8<br/>
+> <br/>
+> Example 2<br/>
+> Input: \$start = 'g2', \$end = 'h2'<br/>
+> Ouput: 3<br/>
+> g2 -> e3 -> f1 -> h2<br/>
+
+I was positively surprised by this week's second task, because it requires a more complex algorithmic approach than usual. Great challenge!
+
+##### Approach
+
+My solution is based on trying to build something like a 'distance map'.
+
+The knight's initial position has distance 0 (no move needed).<br/>
+From there, there are up to eight squares that can be reached with one move. Those will be marked with distance 1.<br/>
+Next, I'll try the eight possible moves from each of those squares having distance 1, and wherever I find a square that is not yet marked with a distance, I do so with the distance of 2.<br/>And so on...
+
+Actually this is a **breadth-first-search** (BFS) algorithm.<br/>Each time a square is marked with a distance, that square's position is put on a queue for the next round. As soon as we are about to mark the end position with its distance, we can stop the process and directly return that distance as the result.
+
+##### Implementation
+
+I love to use and show off 'modern' Perl features, and I am happy that this task offers itself to be implemented using the **class** feature. 
+
+The 'modern' features in my solution include:
+
+- *class* (introduced in Perl 5.38),
+- *signatures* (available since Perl 5.20, 10 years ago, and standard since Perl 5.36),
+- *for_list* (available since Perl 5.36),
+- *chained comparisons* (available since Perl 5.32).
+
+So there is a `class Knight`, and it contains a `field $start` that has to be handed into the constructor when an object is created.
+
+Then there is a method `method n_moves( $end )` that computes the number of moves needed to reach the `$end` position.
+This method implements the BFS algorithm as described above.
+It uses a hash to store the distance map, with the square coordinates (like `'a1'`) as the leys.
+
+And there is one class method `sub knight_neighbors( $from )`
+that returns the list of positions
+that can be reached from the `$from` position in one knight's move.
+It is used as a helper for the `n_moves` BFS algorithm.
+It uses a list of column and row distances `@deltas` for the eight possible neighbor positions.
+The coordinates that are returned are in `'a1'` notation.
+The conversion to get a column number from a column letter to do the coordinate computing,
+and vice versa to get back a `'a1'` type coordinate
+is done using the ASCII character value of the column character.  
+
+This is the whole solution, which includes the `Knight` class and the function `knight_s_move( $start, $end )` that can be called with the example input.
+
+```perl
+use v5.38;
+use feature 'class';
+no warnings 'experimental::class';
+no warnings 'experimental::for_list';
+
+class Knight {
+    field $start :param;
+
+    my @deltas = qw( -2 -1 -2 +1 -1 -2 -1 +2 +1 -2 +1 +2 +2 -1 +2 +1 );
+    sub knight_neighbors( $from ) {
+        my ( $a_to_h, $row ) = split "", $from;
+        my $col = ord( $a_to_h ) - ord( 'a' ) + 1;
+        my @neighbors;
+        for my ( $dc, $dr ) ( @deltas ) {
+            if ( 1 <= $col + $dc <= 8 && 1 <= $row +$dr <= 8 ) {
+                my $square = chr( ord( $a_to_h ) + $dc ) . ( $row + $dr );
+                push @neighbors, $square;
+            }
+        }
+        return @neighbors;
     }
-    return ();
+
+    method n_moves( $end ) {
+        my %distances = ( $start => 0 );
+        my @queue = ( $start );
+        while ( my $square = shift @queue ) {
+            for my $next ( knight_neighbors( $square ) ) {
+                next
+                    if exists $distances{$next};
+                return $distances{$square} + 1
+                    if $next eq $end;
+                $distances{$next} = $distances{$square} + 1;
+                push @queue, $next;
+            }
+        }
+    }
+}
+
+sub knight_s_move( $start, $end ) {
+    return Knight->new( start => $start )->n_moves( $end );
 }
 ```
-
-
-
-I tried to develop a regex-based solution, but I failed!<br/>
-I started with this:
-
-```perl	
-sub twice_appearance_WRONG( $str ) {
-    return $str =~ /(.).*?\g1/ ? $1 : ();
-}
-```
-
-But this doesn't work, because it finds 'the first letter that is repeated later on', not 'the first letter that is a duplicate of a letter that occurred before'. In Example 1 ("acbddbca") it finds 'a', because it tries 'a' first, but it should find 'd', because that is the first 'duplicating' letter (the first 'second letter', if you will).
-
-Then I tried a solution that captures any 'second' letter, and then checks with a lookbehind that that letter appears before:
-
-```perlin the string 
-sub twice_appearance_LOOK_BEHIND_NO_GO( $str ) {
-    return $str =~ /(.)(?<!^.*\g1.*)/ ? $1 : ();
-}
-```
-
-I know that if this worked, it would be incredibly slow.<br/>
-But anyway, it aborts with an error
-'Lookbehind longer than 255 not implemented ...'.
-
-I gave up.<br/>
-If anyone has a regex-based solution for this challenge task,
-please post it in
-[The Weekly Challenge - Perl & Raku group on Facebook](https://www.facebook.com/groups/theweeklychallengegroup/) or send me an [email](mailto:matthias.muth@gmx.de)!
-
-
-
-## Task 2: Count Asterisks
-
-> You are given a string, \$str, where every two consecutive vertical bars are grouped into a pair.<br/>
-> Write a script to return the number of asterisks, \*, excluding any between each pair of vertical bars.<br/>
-> <br/>
-> Example 1<br/>
-> Input: \$str = "p|\*e\*rl|w\*\*e|\*ekly|"<br/>
-> Ouput: 2<br/>
-> The characters we are looking here are "p" and "w\*\*e".<br/>
-> <br/>
-> Example 2<br/>
-> Input: \$str = "perl"<br/>
-> Ouput: 0<br/>
-> <br/>
-> Example 3<br/>
-> Input: \$str = "th|ewe|e\*\*|k|l\*\*\*ych|alleng|e"<br/>
-> Ouput: 5<br/>
-> The characters we are looking here are "th", "e\*\*", "l\*\*\*ych" and "e".<br/>
-
-##### Single regex version
-
-I started with a single regex solution, which is, sorry for that, not very easy-to-read:
-
-```perl
-sub count_asterisks_single_regex( $str ) {
-    return scalar( () = $str =~ /\G(?:\|[^|]*\||[^*])*+\*/g );
-}
-```
-
-What???
-
-Ok, here is what it does, and what it uses.<br/>Let's first add the `x` modifier to better see the pieces:
-
-```perl
-    return scalar( () = $str =~ / \G (?: \| [^|]* \| | [^*] )*+ \* /xg );
-```
-
-Aha. So we loop over the string with the `g` modifier to find all occurrences of `\*` (at the end of the regex). And we use `\G` to always continue where we left off.
-
-We skip over everything that we don't want:
-
-- pairs of vertical bars and anything that is not a vertical bar in between:<br/>`\| [^|]* \|`
-
-- anything that is not an asterisk:<br/>`[^*]`
-
-We want to skip as many of both of these as we can,
-so we group them together as alternatives, and add a `*` quantifier.
-
-Actually we use a `*+` ('possessive') quantifier
-that keeps the regex engine from backtracking
-once it finds a pair of vertical bars.
-This inhibits retrying a vertical bar using the `[^*]` part
-to find a `*` earlier (which then would also match *within* vertical bar pairs).
-
-What else?
-
-The regex delivers all matches, but we only want a count of the matches.<br/>We get the count using a not so well-known property of the list assignment operator: It returns the number of elements of the *right hand side* of the assignment in scalar context. And it does so no matter what the left hand side is. So this:
-
-```perl
-scalar( () = ( <list> ) )
-```
-
-has become a programming idiom in Perl to return the number of elements in a list *without assigning the list to an array variable first*.<br/>Good for a one-liner!<br/>
-(See also [this useful stackoverflow article](https://stackoverflow.com/questions/2225460/how-do-i-find-the-number-of-values-in-a-perl-list).)
-
-##### Two regex version: more easy-to-read
-
-My second solution uses two regexes:
-
-- one to remove all vertical bar pairs,
-- and another one to find all asterisks.
-
-I guess it's much easier to read, especially with some parentheses added to help with understanding the operator grouping:
-
-```perl
-sub count_asterisks_two_regexes( $str ) {
-    return scalar( () = ( $str =~ s/ \| [^|]* \| //xgr ) =~ / \* /xg );
-}
-```
-
-##### One regex and `tr`: my favorite (and shortest!) solution
-
-What I described so far helped me to arrive at my favorite solution.<br/>
-It is actually the shortest one, and I think it's the most readable.
-
-It uses
-
-- one regex to remove vertical bar pairs (as above),
-- the `tr` operator to count the asterisks, by replacing them by - wait a minute - *asterisks*.
-
-The `tr` operator returns the number of characters that it replaced, so what more could we want?
-
-Here we go: 
-
-```perl
-sub count_asterisks( $str ) {
-    return ( $str =~ s/ \| [^|]* \| //xgr ) =~ tr/*/*/;
-}
-```
-
-This was an exercise in evolutionary programming... :-)
-
-
 
 #### **Thank you for the challenge!**
-
