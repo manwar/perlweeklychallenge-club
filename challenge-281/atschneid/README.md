@@ -42,7 +42,7 @@ This function works on the example input. It would also output a value for any t
 
 ## Task 2: Knight's Move
 
-> Task 2: Knight’s Move
+> Task 2: Knight’s Move</br>
 > Submitted by: Peter Campbell Smith</br>
 > A Knight in chess can move from its current position to any square two rows or columns plus one column or row away. So in the diagram below, if it starts a S, it can move to any of the squares marked E.</br>
 > </br>
@@ -64,7 +64,7 @@ The high level idea here is: to get to the start space takes zero moves. To get 
 
 So we mark the start space with value 0, then find all spaces we can reach from this one, mark them with value 1, then repeat the same for each space, and repeat, and repeat. If the space has been visited already, we skip it, since we have already found the shortest number of moves to get there. And if we land on the end space we return its value.
 
-To store the list of spaces to inspect I use a FIFO queue to ensure the search is breadth-first, which makes the algorithm more efficient -- we don't have to check if the value is the minimum and we can reliably inspect each space only once. The BFS solution for this problem is $\mathcal O (8 \times 8)$, which is, linear in the board size.
+To store the list of spaces to inspect I use a FIFO queue to ensure the search is breadth-first, which makes the algorithm more efficient -- we don't have to check if the value is the minimum and we can reliably inspect each space only once. The BFS solution for this problem is $\mathcal O (8 \times 8)$, that is, it's linear in the board size.
 
 ```perl
 sub knight_path( $start_key, $end_key ){
