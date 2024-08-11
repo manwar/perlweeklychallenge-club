@@ -4,15 +4,13 @@
 
 [PWC 281](https://theweeklychallenge.org/blog/perl-weekly-challenge-281/)
 
-Two related challenges this week, both involving the chess board. The first one has a trick regarding odds and evens. The second one I solve via breadth first search, after setting up some helper apparatus.
+Two related challenges this week, both involving the chess board. The first one has a trick regarding odds and evens. The second one I solve via Breadth First Search
 
-## Task 1: Check Color
+## TASK 1: Check Color
 
 > Task 1: Check Color</br>
 > Submitted by: Mohammad Sajid Anwar</br>
 > You are given coordinates, a string that represents the coordinates of a square of the chessboard as shown below:</br>
-> </br>
-> Week_281_Task_1</br>
 > </br>
 > Write a script to return true if the square is light, and false if the square is dark.</br>
 > </br>
@@ -28,7 +26,7 @@ Two related challenges this week, both involving the chess board. The first one 
 > Input: $coordinates = "e6"</br>
 > Output: true
 
-The trick to this one is to realize that you convert the letters to numbers, in a way such as 'a' -> 1, 'b' -> 2, etc., then you can figure out the color of the space by summing the index, and checking if it is odd or even. Which one you want for the black or white square depends on your conversion.
+The trick to this one is to realize that if you convert the letters to numbers, in a sensible way such as 'a' -> 1, 'b' -> 2, etc., you can figure out the color of the space by summing the index, and checking if it is odd or even. Which one you want for the black or white square depends on your conversion.
 
 ```perl
 sub check_square( $key ) {
@@ -50,8 +48,6 @@ This function works on the example input. It would also output a value for any t
 > </br>
 > Write a script which takes a starting position and an ending position and calculates the least number of moves required.</br>
 > </br>
-> Week_281_Task_2</br>
-> </br>
 > Example 1</br>
 > Input: $start = 'g2', $end = 'a8'</br>
 > Ouput: 4</br>
@@ -66,9 +62,9 @@ This function works on the example input. It would also output a value for any t
 
 The high level idea here is: to get to the start space takes zero moves. To get to any space takes 1 additional move, and any space from there is 1+1 moves, and so on.
 
-So we mark the start space with value 0, then find all spaces we can reach from this one, mark them with value 1, then repeat the same for each space, and repeat, and repeat. If the space has been visited already, we skip it, since we have already found the shortest number of moves to get to it. And if we land on the end space we return its value.
+So we mark the start space with value 0, then find all spaces we can reach from this one, mark them with value 1, then repeat the same for each space, and repeat, and repeat. If the space has been visited already, we skip it, since we have already found the shortest number of moves to get there. And if we land on the end space we return its value.
 
-To store the list of spaces to inspect I use a FIFO queue to ensure the search is breadth-first, which makes the algorithm more efficient -- we don't have to check if the value is the minimum and we can reliably inspect each space only once. The BFS solution for this problem is $\mathcal O (8 \times 8)$
+To store the list of spaces to inspect I use a FIFO queue to ensure the search is breadth-first, which makes the algorithm more efficient -- we don't have to check if the value is the minimum and we can reliably inspect each space only once. The BFS solution for this problem is $\mathcal O (8 \times 8)$, which is, linear in the board size.
 
 ```perl
 sub knight_path( $start_key, $end_key ){
@@ -122,7 +118,7 @@ sub get_moves( $key ) {
 }
 ```
 
-The knight can move in a 1,2 L shape from its current location. For each of the 8 possibilities, we return a list of only the legal moves, ie, not off the board.
+The knight can move in a 1,2 L shape from its current location. For each of the 8 possibilities, we return a list of only the legal moves that land within the board dimensions.
 
 That's about that. The Perl solution is pretty speedy.
 
@@ -130,11 +126,11 @@ That's about that. The Perl solution is pretty speedy.
 
 I also wrote solutions in Julia and Racket this week. Task 1 was easy in each. For task 2, in Julia I used a 8 by 8 matrix for the board, becuaes it felt intuitive, but addressing each square seemed more complicated than it should have been. In Julia you can do something like `*(1, 2)` to return the values `1` and `2`, but you can't seem to do this with a variable. Like `v = (1, 2); *v` throws an error. Also the Julia version takes longer (anecdotally) to run than the Perl version. I'm sure there are some easy changes that would speed things up.
 
-As for Racket, well, ... it's done and it give the correct answer. I used a library to get a queue data structure. For stacks, oh you want stacks? Racket can do stacks! But queues are a problem. I probably should have implemented my own using structs. Or, as i did in Julia, just use an array with a start index to simulate a queue. 
+As for Racket, well, ... it's done and it gives the correct answer. I used a library to get a queue data structure. For stacks, oh you want stacks? Racket can do stacks! But queues are a problem. I probably should have implemented my own using structs. Or, as i did in Julia, just use an array with a start index to simulate a queue. 
 
 ## Conclusion
 
-That it for this week. I did these challenges while on vacation. They helped to keep my brain from otherwise atrophying.
+That's it for this week. I did these challenges while on vacation. They helped to keep my brain from otherwise atrophying.
 
 Oh, also, thanks to Mohammad and the Perl Weekly Challenge committee for acknowledging me! Why do I do this? Surely not for the fame and notoriety, but those things help! Ha!
 
