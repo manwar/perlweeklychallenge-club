@@ -1,3 +1,3 @@
-# The Weekly Challenge 277
+# The Weekly Challenge 281
 
-Blog: [Strong counting](https://dev.to/simongreennet/strong-counting-10on)
+Blog: [The one about a chess board](https://dev.to/simongreennet/the-one-about-a-chess-board-57mh)
