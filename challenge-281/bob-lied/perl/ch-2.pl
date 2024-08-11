@@ -42,7 +42,7 @@ class Board
 {
     field $row :param //= 8;
     field $col :param //= 8;
-    field $lastRow = $row - 1;
+    field $knight :param //= 'a1';
     field $lastCol = $col - 1;
 
     field @board;
@@ -50,14 +50,14 @@ class Board
         # The board starts out as 8x8 undef values
         push @board, [ (undef) x $col ] for ( 1 .. $row );
 
-        # Move a knight around the board, starting at 0,0
-        $self->_init();
+        # Move a knight around the board, given it's start position
+        $self->_init( $self->_chessToGrid($knight) );
     }
 
     # Debugging aid
     method show()
     {
-        for my $row ( reverse 0 .. $lastRow )
+        for my $row ( reverse 0 .. ($row-1) )
         {
             print " $row: ";
             say join(" ", map { $_ // "." } $board[$row]->@*);
@@ -67,10 +67,10 @@ class Board
     }
 
     # Generate coordinate pairs that are valid moves from the given square.
-    method knightMoveFrom($r, $c)
+    method _knightMoveFrom($r, $c)
     {
         # Stay in range of the board
-        grep { 0 <= $_->[0] <= $lastRow  &&  0 <= $_->[1] <= $lastCol }
+        grep { 0 <= $_->[0] < $row  &&  0 <= $_->[1] < $col }
         # Add all possible knight moves to the given start
         map { [ $r + $_->[0], $c + $_->[1] ] }
             ( [-1, 2], [1,2], [-1,-2], [1,-2], [2,1], [2, -1], [-2, 1], [-2, -1 ] )
@@ -78,46 +78,46 @@ class Board
 
     # Fill the board with the number of knight moves that it takes
     # to reach each square.
-    method _init()
+    method _init($kr, $kc)
     {
-        $board[0][0] = 0;
+        $board[$kr][$kc] = 0;
 
         my $step = 0;
-        while ( not $self->isFull() )
+        my $touched = true;
+        while ( $touched )
         {
-            for my $r ( 0 .. $lastRow )
+            $touched = false;
+            for my $r ( 0 .. ($row-1) )
             {
-                for my $c ( 0 .. $lastCol )
+                for my $c ( 0 .. ($col-1) )
                 {
                     next unless ( defined $board[$r][$c] && $board[$r][$c] == $step );
-                    for my $mv ( $self->knightMoveFrom($r,$c) )
+                    for my $mv ( $self->_knightMoveFrom($r,$c) )
                     {
-                        $board[$mv->[0]][$mv->[1]] = $step+1
-                        unless defined $board[$mv->[0]][$mv->[1]];
+                        if ( ! defined $board[$mv->[0]][$mv->[1]] )
+                        {
+                            $board[$mv->[0]][$mv->[1]] = $step+1;
+                            $touched = true;
+                        }
                     }
                 }
             }
             $step++;
-            }
-
-        return \@board;
-    }
-
-    method isFull()
-    {
-        for my $r ( reverse 0 .. $#board )
-        {
-            for my $c ( reverse 0 .. $board[0]->$#* )
-            {
-                return false if ! defined $board[$r][$c];
-            }
         }
-        return true;
+
+        return $self;
     }
 
-    method at($r, $c)
+    method at($square)
     {
+        my ($r, $c) = $self->_chessToGrid($square);
         return $board[$r][$c];
+    }
+
+    # Convert from chess notation to grid coordinates
+    method _chessToGrid($chess)
+    {
+        return ( substr($chess,1,1) - 1, ord(substr($chess, 0, 1)) - ord('a') )
     }
 }
 
@@ -133,57 +133,24 @@ exit( runBenchmark($Benchmark) ) if $Benchmark;
 
 say km(@ARGV);
 
-# Convert from chess notation to grid coordinates
-sub chessToGrid($chess)
-{
-    return ( substr($chess,1,1) - 1, ord(substr($chess, 0, 1)) - ord('a') )
-}
-
 sub km($start, $end)
 {
-    my @start = chessToGrid($start);
-    my @end   = chessToGrid($end);
-
-    # If the slope is negative, reflect the line so that the slope is positive. 
-    #   .  .  .  .  .  .      .  .  .  .  .  .
-    #   .  S  .  .  .  .      .  S------->s' .
-    #   .  .  .  .  .  .      .  .  .  .  .  .
-    #   .  .  .  .  .  .  ==> .  .  .  .  .  .
-    #   .  .  .  .  E  .      .  e'<------E  .
-    #   .  .  .  .  .  .      .  .  .  .  .  .
-    my $dy = $end[1] - $start[1];
-    my $dx = $end[0] - $start[0];
-    my $slope = ( $dx == 0 ? 0 : $dy / $dx );
-    if ( $slope < 0 )
-    {
-        ( $start[1], $end[1] ) = ( $end[1], $start[1] );
-    }
-
-    # If the end is closer to the origin, swap ends
-    if ( $end[0] < $start[0] || $end[1] < $start[1] )
-    {
-        ( $start[0], $start[1], $end[0], $end[1] ) = ( @end, @start);
-    }
-
-    # Shift the end point as if the start is at 0,0
-    $end[0] -= $start[0];
-    $end[1] -= $start[1];
-
-    return $Board->at(@end);
+    return $Board->new(knight => $start)->at( $end );
 }
 
 sub runTest
 {
     use Test2::V0;
 
-    is( [ chessToGrid("a1") ], [0,0] );
-    is( [ chessToGrid("h8") ], [7,7] );
-
     is( km("g2", "a8"), 4, "Example 1");
     is( km("g2", "h2"), 3, "Example 1");
     is( km("a1", "h8"), 6, "Full diagonal");
     is( km("d8", "d1"), 5, "Full vertical");
     is( km("a3", "h3"), 5, "Full horizontal");
+    is( km("d4", "e5"), 2, "Nearest diagonal, middle of board");
+    is( km("a1", "b2"), 4, "Corner diagonal");
+    is( km("a1", "a2"), 3, "Corner up");
+    is( km("a1", "b1"), 3, "Corner right");
 
     done_testing;
 }
