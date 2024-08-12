@@ -58,14 +58,13 @@ func ck(str string) int {
 	var a, b byte
 	c := -1
 	for i := range len(str) {
-		if str[i] < 97 {
-			a = str[i] + 32
+		b = a
+		a = str[i]
+		if a < 97 {
+			a += 32
 		}
-		if i > 0 {
-			if a != b {
-				c++
-			}
-			b = a
+		if a != b {
+			c++
 		}
 	}
 	return c
@@ -79,6 +78,8 @@ func main() {
 		{"pPeERrLl", 3},
 		{"rRr", 0},
 		{"GoO", 1},
+		{"oOlong", 4},
+		{"ToOlong", 5},
 	} {
 		io.WriteString(os.Stdout, cmp.Diff(ck(data.input), data.output)) // blank if ok, otherwise show the differece
 	}
