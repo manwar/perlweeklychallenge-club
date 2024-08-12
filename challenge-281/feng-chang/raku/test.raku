@@ -21,3 +21,7 @@ pwc-test './ch-1.raku', 'e6', 'True',  'Check Color: e6 => true';
 # Task 2, Knight's Move
 pwc-test './ch-2.raku', <g2 a8>, 4, "Knight\'s Move: g2, a8 => 4";
 pwc-test './ch-2.raku', <g2 h2>, 3, "Knight\'s Move: g2, h2 => 3";
+pwc-test './ch-2.raku', <a1 b4>, 2, "Knight\'s Move: a1, b4 => 2";
+pwc-test './ch-2.raku', <a1 a4>, 3, "Knight\'s Move: a1, a4 => 3";
+pwc-test './ch-2.raku', <a1 a5>, 2, "Knight\'s Move: a1, a5 => 2";
+pwc-test './ch-2.raku', <a1 a6>, 3, "Knight\'s Move: a1, a6 => 3";
