@@ -11,8 +11,8 @@ die <<~"FIN" unless @ARGV;
 ARG: for(@ARGV){
     my $arg=$_;
     warn "Expected only digits: $_" unless /^\d+$/;
-    while(s/((.)\2\2(\2*))//){
-	say("$arg -> $1"), next ARG unless $3;
+    while(s/.*?((.)\2\2(\2*))//){
+        say("$arg -> $1"), next ARG if $3 eq "";
     }
     say "$arg -> -1"
 }
