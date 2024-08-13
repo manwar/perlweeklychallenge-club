@@ -12,7 +12,7 @@ PROBLEM DESCRIPTION:
 Task 282-2: Changing Keys
 Submitted by: Mohammad Sajid Anwar
 Write a scripts which, given an alphabetic string $str, returns
-the number of types a hunt-and-peck typist would have to move
+the number of times a hunt-and-peck typist would have to move
 his right forefinger to a new letter key in order to type the
 string (not counting usages of shift keys).
 Example 1:   Input: "pPeERrLl"   Output: 3
@@ -21,8 +21,8 @@ Example 3:   Input: "GoO"        Output: 1
 
 --------------------------------------------------------------------------------------------------------------
 PROBLEM NOTES:
-I'll base the solution to this (and to 282-2) on the concept of "m//g operator in scalar context".
-Specifically, in 282-2 I'll check for a two consecutive captured single-character matches (embedded in a
+I'll base my solution to this (and also to 282-1) on the concept of "m//g operator in scalar context".
+Specifically, in 282-2 I'll check for two consecutive captured single-character matches (embedded in a
 positive look-ahead to prevent the matches from over-eating), then count the number of times that $1 ne $2.
 
 --------------------------------------------------------------------------------------------------------------
