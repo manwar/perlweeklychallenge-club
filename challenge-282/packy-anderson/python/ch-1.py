@@ -1,7 +1,5 @@
 #!/usr/bin/env python
 
-#!/usr/bin/env python
-
 def goodInteger(intVal):
   chars = list(str(intVal))
   good  = chars.pop(0)
