@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: The Ultimate Test of Cerebral Fitness](https://packy.dardan.com/b/Pd)
+[Perl Weekly Challenge: Ch-ch-ch-changes!](https://packy.dardan.com/b/Q8)
