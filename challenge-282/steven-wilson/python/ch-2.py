@@ -21,7 +21,7 @@ def changing_keys(string):
     if not all(c.isalpha() for c in string):
         raise ValueError('User should type an aphabetic string')
 
-    return len([item for _, item in groupby(string.casefold())]) - 1
+    return sum(1 for _ in groupby(string.casefold())) - 1
 
 
 if __name__ == "__main__":
