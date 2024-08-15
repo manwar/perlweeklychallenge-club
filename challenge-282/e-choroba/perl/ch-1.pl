@@ -17,7 +17,7 @@ sub good_integer($int) {
 }
 
 use Test2::V0;
-plan tests => 3 + 3;
+plan tests => 3 + 5;
 
 is good_integer(12344456), '444', 'Example 1';
 is good_integer(1233334), '-1', 'Example 2';
@@ -26,3 +26,5 @@ is good_integer(10020003), '000', 'Example 3';
 is good_integer(111222), in_set('111', '222'), 'More than one group';
 is good_integer(1112), '111', 'Beginning';
 is good_integer(1222), '222', 'End';
+is good_integer(111), '111', 'Everything';
+is good_integer(11223344), -1, 'Nothing';
