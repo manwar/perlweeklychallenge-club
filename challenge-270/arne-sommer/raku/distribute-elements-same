@@ -1,0 +1,27 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (UInt :$x where $x > 0 = 2,
+               UInt :$y where $y > 0 = 3,
+	       *@ints,
+               :v(:$verbose));
+
+die "Non-negative integers only" unless all(@ints) ~~ UInt;
+
+my $target = @ints.max;
+my $cost   = 0;
+my $delta  = @ints.map( $target - * ).sum;
+
+say ": Delta: $delta" if $verbose;
+
+if $x + $x > $y
+{
+  my $operations = $delta div 2;
+
+  $cost = $operations * $y;
+
+  $delta -= $operations * 2;
+}
+
+$cost += $delta * $x if $delta;
+
+say $cost;

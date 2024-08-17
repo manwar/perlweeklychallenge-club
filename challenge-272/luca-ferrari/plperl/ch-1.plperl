@@ -1,0 +1,22 @@
+--
+-- Perl Weekly Challenge 272
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-272>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc272;
+
+CREATE OR REPLACE FUNCTION
+pwc272.task1_plperl( text )
+RETURNS text
+AS $CODE$
+
+   my ( $ip ) = @_;
+
+   die "IP not valid" if ( $ip !~ / ^ ( \d {1,3} [.] ) {3} \d {1,3} $ /x );
+
+   $ip =~ s/[.]/\[\.\]/g;
+   return $ip;
+   
+$CODE$
+LANGUAGE plperl;

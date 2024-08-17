@@ -1,3 +1,6 @@
+find . -name "*.k" -delete
+find . -name "*.pro" -delete
+find . -name "*.lhs" -delete
 find . -name "*.i3" -delete
 find . -name "*.ig" -delete
 find . -name "*.mg" -delete

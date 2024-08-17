@@ -1,0 +1,96 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/reverse {
+    1 dict begin
+    dup length /l exch def
+    [ exch
+      aload pop
+      2 1 l {
+          -1 roll
+      } for
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/s2a {
+    [ exch { } forall ]
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/a2s {
+    2 dict begin
+    /i exch def
+    i length dup string /o exch def
+    1 sub 0 exch 1 exch {
+        dup i 3 -1 roll get o 3 1 roll put
+    } for
+    o
+    end
+} bind def
+
+
+% end included library code
+
+/baftera {
+    0 dict begin
+    /a exch def
+    /firstb a (b) search {
+        3 1 roll pop pop length
+    } {
+        pop -1
+    } ifelse def
+    /lasta a s2a reverse a2s (a) search {
+        3 1 roll pop pop length a length 1 sub exch sub
+    } {
+        pop -1
+    } ifelse def
+    firstb -1 eq {
+        false
+    } {
+        lasta -1 eq {
+            true
+        } {
+            lasta firstb lt
+        } ifelse
+    } ifelse
+    end
+} bind def
+
+(baftera) test.start
+(aabb) baftera test
+(abab) baftera not test
+(aaa) baftera not test
+(bbb) baftera test
+test.end

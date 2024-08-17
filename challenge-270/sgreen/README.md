@@ -1,3 +1,3 @@
-# The Weekly Challenge 269
+# The Weekly Challenge 270
 
-Blog: [Elements or something](https://dev.to/simongreennet/elements-or-something-2bl0)
+Blog: [Equalizing positions](https://dev.to/simongreennet/equalizing-positions-2057)
