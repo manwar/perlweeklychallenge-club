@@ -6,6 +6,7 @@ use List::Util qw/reduce/;
 
 sub ck {
     my $str = $_[0];
+    return 0 if $str eq "";
     $str = lc $str;
     my @alphabets = split "", $str;
     my $abc = reduce { substr($a,-1) eq $b ? $a : $a.$b } @alphabets;
