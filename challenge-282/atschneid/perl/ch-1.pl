@@ -17,6 +17,14 @@ sub good_integer( $int ) {
     return (-1);
 }
 
+sub good_integer_v2( $int ) {
+    my @val = grep { 3 == length $_ } $int =~ /((\d)\g-1*)/g;
+    if (@val) {
+	return @val;
+    }
+    return (-1);
+}
+
 my @inputs = (
     12333,
     12333455557,
@@ -28,4 +36,5 @@ my @inputs = (
     );
 for (@inputs) {
     say $_ . ' => ' . join ', ', good_integer( $_ );
+    say $_ . ' => ' . join ', ', good_integer_v2( $_ );
 }

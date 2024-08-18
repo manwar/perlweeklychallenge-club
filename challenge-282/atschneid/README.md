@@ -4,7 +4,7 @@
 
 [PWC 282](https://theweeklychallenge.org/blog/perl-weekly-challenge-282/)
 
-Two challenges both related to repetitions this week. I solved them each using 2 languages with very different kinds of solution.
+Two challenges both related to repetitions this week. I solved them in two languages each with a very different kind of solution.
 
 ## Task 1: Good Integer
 
@@ -66,7 +66,7 @@ I capture the start of string anchor because later, when I want to find the GIs 
 
 ```((\d)\g-1{2})(?!\g-1)``` this will match a decimal followed by 2 more of the same decimal value, followed by anything except the same value (as a non-consuming, non-capturing lookahead). This makes sure that we don't match the start of a sequence of the same decimal values that is longer than 3. Combined with the first part of the regex, this is the part that will capture the GI (and the decimal value).
 
-I never really did much with lookaheads before. I was aware they existed but I never had a good use case for them. They turned out to be pretty intuitive. Originally I tried to use a lookbehind for the first part of the regex, but I couldn't get that to work (and suspect it was doomed anyway without some acrobatics). Covering the first part with a lookahead wasn't too bad once I had the idea.
+I never really did much with lookaheads before. I was aware they existed but I never had a good use case for them. They turned out to be pretty intuitive. Originally I tried to use a lookbehind for the first part of the regex, but I couldn't get that to work (and suspect it was doomed anyway, without some acrobatics). Covering the first part with a lookahead wasn't too bad once I had the idea.
 
 This whole match is global so it should capture GIs, plus some other stuff, as many times as they are found.
 
@@ -89,9 +89,23 @@ Because of all the captures we use as references within the regex, we end up wit
 
 If we didn't find any GIs then we directly return a list of `(-1)`
 
+*UPDATE:* At press time I peeked at some other solutions and realized a much simpler way to handle ... most of this. For the regex we could capture all runs of consecutive same values. Then `grep` the results for array values of length exactly 3. Of course!
+
+```perl
+sub good_integer_v2( $int ) {
+    my @val = grep { 3 == length $_ } $int =~ /((\d)\g-1*)/g;
+    if (@val) {
+        return @val;
+    }
+    return (-1);
+}
+```
+
+Very nearly a one-liner there, if not for the `-1` return ...
+
 ### Rust
 
-For Rust, for both of my solutions, I didn't use regex at all, instead iterating directly over the characters of a string. For one, it is annoying to impossible to use external crates in Rust without going through a whole `cargo` build, which I try to avoid where I can, and regexes in Rust come via an external crate. But also, for these problems, looking at each character doesn't lead to an obviously less complicated solution.
+For Rust, for both of my solutions, I didn't use regex at all, instead I iterated directly over the characters of a string. For one, it is annoying to impossible to use external crates in Rust without going through a whole `cargo` build, which I try to avoid where I can, and regexes in Rust come via an external crate. But also, for these problems, looking at each character doesn't lead to an obviously less complicated solution. Although certainly more verbose.
 
 ```rust
 fn good_integer(input: &u64) -> Vec<String> {
@@ -127,11 +141,11 @@ fn good_integer(input: &u64) -> Vec<String> {
 }
 ```
 
-To start we convert the int to a string. We need to make sure that the string is at least length 1, but while we're at it we may as well check if it's less than length 3 since in either case the result will be the same: no GIs. I think there is a neater solultion for handling an empty string than what I have here, more on that below.
+To start we convert the integer input to a string. We need to make sure that the string is at least length 1, but while we're at it we may as well check if it's less than length 3 since in either case the result will be the same: no GIs. I think there is a neater solultion for handling an empty string than what I have here, more on that below.
 
-Next I make an empty vector for storing our results and initialize a counter to 1. Then convert our string to an iterable of chars, and get the first. Currently I assume this will succeed because I have already checked the length, but instead of checking the length I could check for an error getting the first char and interpret this to mean an empty string.
+Next I make an empty vector for storing our results and initialize a counter to 1. Then convert our string to an iterable of chars, and get the first. Currently I assume this will succeed because I have already checked the length, but instead of checking the length I could check for an error getting the first char and interpret this to mean an empty string. Future work!
 
-Now the loop. While the current character matches the previous we implement the counter. Once we find a mismatch we check if the count is 3. If yes we can add a string of 3 of the previous character to the results vector. Then we reset the counter.
+Now the loop. While the current character matches the previous we increment the counter. Once we find a mismatch we check if the count is 3. If yes we can add a string of 3 of the previous character to the results vector. Then we reset the counter.
 
 We have to repeat the last bit after the loop one last time in case of a GI that falls at the end of the int.
 
@@ -166,7 +180,7 @@ Finally, if we have anything in our results vec we return it, otherwise we retur
 > Input: $str = 'GoO'</br>
 > Ouput: 1</br>
 
-Similar to the previous task, we are concerned with repetitions here. this time ignoring them.
+Similar to the previous task, we are concerned with repetitions here. This time ignoring them.
 
 ### Perl
 
@@ -183,7 +197,7 @@ sub count_change_v1( $str ) {
 
 I liked this solution, but it felt like it was one line too long. 
 
-Instead of substituting I could directly capture a char an consume all following identical chars (case insensitive of course), then count the number of captures.
+Instead of substituting I could directly capture a char and consume all following identical chars (case insensitive of course), then count the number of captures.
 
 ```perl
 sub count_change_v2( $str ) {
@@ -195,7 +209,7 @@ The trickiest bit here was getting the perlism exactly right to return the count
 
 ### Rust
 
-My Rust solution turned out much like a stripped down version of my solution for task 1
+My Rust solution turned out much like a stripped down version of my solution for Task 1
 
 ```rust
 fn count_change(s: &str) -> u32 {
