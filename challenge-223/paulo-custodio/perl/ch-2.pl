@@ -60,5 +60,3 @@ sub collect {
     $collect *= $box[$i+1] if $i+1 < @box;
     return $collect;
 }
-
-
