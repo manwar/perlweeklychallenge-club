@@ -1,3 +1,3 @@
-# The Weekly Challenge 281
+# The Weekly Challenge 282
 
-Blog: [The one about a chess board](https://dev.to/simongreennet/the-one-about-a-chess-board-57mh)
+Blog: [Good keys](https://dev.to/simongreennet/good-keys-2elk)
