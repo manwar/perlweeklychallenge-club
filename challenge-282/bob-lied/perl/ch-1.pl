@@ -42,6 +42,11 @@ sub goodInt($int)
     return -1;
 }
 
+sub gi2($int)
+{
+    ( grep {length($_) == 3 } $int =~ m/((.)\2\2+)/g )[0] // -1 ;
+}
+
 sub runTest
 {
     use Test2::V0;
@@ -53,14 +58,23 @@ sub runTest
     is( goodInt(12345666), "666", "At end");
     is( goodInt(17775666), "777", "Two possibilities");
 
+    is( gi2(12344456), "444", "gi2 Example 1");
+    is( gi2(1233334),     -1, "gi2 Example 2");
+    is( gi2(10020003), "000", "gi2 Example 3");
+    is( gi2(66612345), "666", "gi2 At front");
+    is( gi2(12345666), "666", "gi2 At end");
+    is( gi2(17775666), "777", "gi2 Two possibilities");
+
     done_testing;
 }
 
 sub runBenchmark($repeat)
 {
     use Benchmark qw/cmpthese/;
+    my @input = ( 12344456, 1233334, 10020003, 66612345, 12345666, 17775666 );
 
     cmpthese($repeat, {
-            label => sub { },
+            gi_while => sub { goodInt($_) for @input },
+            gi_re    => sub { gi2($_) for @input },
         });
 }
