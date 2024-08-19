@@ -1,0 +1,24 @@
+MODULE Ch2 EXPORTS Main;
+
+IMPORT SIO;
+
+VAR
+  A1:ARRAY[0..3] OF CARDINAL := ARRAY OF CARDINAL{1,2,1,0};
+  A2:ARRAY[0..2] OF CARDINAL := ARRAY OF CARDINAL{0,3,0};
+
+PROCEDURE DigitCountValue(VAR A:ARRAY OF CARDINAL):BOOLEAN =
+  VAR
+    Hash:ARRAY[0..9] OF CARDINAL := ARRAY[0..9] OF CARDINAL{0,..};
+  BEGIN
+    FOR I := FIRST(A) TO LAST(A) DO INC(Hash[A[I] MOD 10]) END;
+    FOR I := FIRST(A) TO LAST(A) DO
+      IF Hash[I] # A[I] THEN RETURN FALSE END
+    END;
+    RETURN TRUE
+  END DigitCountValue;
+
+BEGIN
+  SIO.PutBool(DigitCountValue(A1)); SIO.Nl();
+  SIO.PutBool(DigitCountValue(A2)); SIO.Nl()
+END Ch2.
+
