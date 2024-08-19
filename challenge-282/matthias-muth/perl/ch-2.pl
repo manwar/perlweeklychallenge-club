@@ -11,7 +11,7 @@
 use v5.36;
 
 sub changing_keys( $str ) {
-    return scalar( () = $str =~ /(.)(?=.)(?=.)(?!\g1)/ig );
+    return scalar( () = $str =~ /(.)(?=.)(?!\g1)/ig );
 }
 
 use Test2::V0 qw( -no_srand );
