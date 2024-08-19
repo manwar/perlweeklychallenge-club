@@ -2,7 +2,7 @@
 
 **Challenge 282 solutions in Perl by Matthias Muth**
 
-For this week's tasks, both of my solutions are one line of code, using **regular expressions only**!
+For both of this week's tasks, my solutions are **one line of code, using regular expressions only**!
 
 ## Task 1: Good Integer
 
@@ -22,33 +22,46 @@ For this week's tasks, both of my solutions are one line of code, using **regula
 > Input: \$int = 10020003<br/>
 > Output: "000"<br/>
 
-Let's start with a regex that finds three same digits in a row. Not so difficult, capturing the first one and using a backreference to it to match the second and third one. I am using relative references for capture groups here (like `\g{-1}`), because as we will see we will need to use more than one capture group, and knowing myself, renumbering often leads to errors.
+This is my solution:
 
 ```perl
 sub good_integer( $int ) {
-    return $int =~ / (\d)\g{-1}\g{-1} /x // -1;
+    return $int =~ / (?: ^ | (.)(?!\g{-1}) ) ( (\d)\g{-1}\g{-1} ) (?!\g{-1}) /x ? $2 : -1;
 }
 ```
 
-This works for Examples 1 and 3, but it considers Example 2 to contain a Good Integer `'333'`, while actually it isn't, because the `'3333'` does not contain 'exactly three' matching digits. 
+Now let me explain what this does: 
 
-So we need to make sure that the digit *before* our group of three is different, and also that the *next* digit *after* the three is different.
-
-Checking that the digit *after* our group is different can easily be done with a *negative lookahead*: `(?!\g{-1})`. This will work at the end of the string, too, since we surely won't find our digit there, so the negative lookahead passes.
-
-But can we do the same to check for a different digit *before* our group, using a *negative lookbehind*?<br/>Actually we cant.<br/>We would need to first capture the first digit. Then, as we are now standing *behind* the first digit, we would need to use a negative lookbehind for *two* digits, one that is *not* the one we just captured, and then the one that we  
-
-* 
-
-
-
-
+There are three parts. Let's start with the center part, a regex to find a 'group of three', three same digits in a row. Not so difficult: capture a digit and use backreferences to that capture to match the second and third one:
 
 ```perl
-sub good_integer() {
-    ...;
-}
+    return $int =~ / (\d)\g{-1}\g{-1} /x ? $& : -1;
 ```
+
+I am using relative references for capture groups here (like `\g{-1}`), because as we will see we will need to use more than one capture group, and knowing myself, renumbering often leads to errors.
+
+This already works for Examples 1 and 3. But in Example 2, it finds a 'group of three of  `'333'` which isn't actually a 'Good Integer', because the `'3333'` does not contain 'exactly three' matching digits. 
+
+So we also need to make sure that the digit *left* of our 'group of three' and any digit *right* of that group are both different.
+
+For the digit *right* of our group this can easily be done by adding a *negative lookahead*, checking that that following digit is not the one captured as the first digit of the group:
+
+```perl
+    return $int =~ / (\d)\g{-1}\g{-1} (?!\g{-1}) /x ? $& : -1;
+```
+
+This will also work at the end of the string: since we won't find any digit there at all, the negative lookahead condition will pass in that case.
+
+For anything *left* of our 'group of three', we are ok if the group is at the beginning of the string.
+We can therefore match the beginning of the string in an alternative, like `(?: ^ | ... )`.
+
+If we don't find a match using that `^` alternative, we have at least one character left of the 'group of three'. Because we need 'exactly three' same digits, we need to make sure that that character is not the same as the first digit in the group. We can use a capture and a negative lookahead again for checking that. So the whole 'left of the group of three' alternative is this:
+
+```perl
+    / (?: ^ | (.)(?!\g{-1}) ) /x
+```
+
+Note that now, for returning the 'group of three' as the result, we need to create an extra capture group for it, because the character left of the 'group' is matched and therefore part of `$&`. That's why we use `$2` in the solution, not `$&`.
 
 ## Task 2: Changing Keys
 
@@ -74,11 +87,31 @@ sub good_integer() {
 > Input: \$str = 'GoO'<br/>
 > Ouput: 1<br/>
 
-Lorem ipsum dolor sit amet...
+How can a key change be described in terms of a regular expression?
+
+A key change happens if there is one character, followed by another one, and that other one is not the same as the first one.
+
+Let's translate that:
+
+* One character (that we capture):
+
+    ```perl
+    /(.)/
+    ```
+
+* ... followed by another one, that is not the same as the first one.<br/>
+  For this, we us a combination of a positive and a negative lookahead. The positive one to make sure that there really *is* a character, and the negative one to make sure it is not the same as the first one: 
+  
+  ```perl
+  /(.)(?=.)(?!\g{-1}/
+  ```
+
+Then we add an `i` flag to ignore case.<br/>
+And we use a `g` flag to find all occurrences.<br/>And we use a list assignment in scalar context to get the number of matches returned (as described in [this useful stackoverflow article](https://stackoverflow.com/questions/2225460/how-do-i-find-the-number-of-values-in-a-perl-list)).<br/>And then we return the result.<br/>And there we are:
 
 ```perl
-sub changing_keys() {
-    ...;
+sub changing_keys( $str ) {
+    return scalar( () = $str =~ /(.)(?=.)(?!\g1)/ig );
 }
 ```
 
