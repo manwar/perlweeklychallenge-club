@@ -1,4 +1,10 @@
 {
+   "chart" : {
+      "type" : "column"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
+   },
    "xAxis" : {
       "categories" : [
          "3ter",
@@ -33,10 +39,9 @@
          "Aubrey Quarcoo"
       ]
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
    },
    "yAxis" : {
       "min" : 0,
@@ -44,21 +49,12 @@
          "text" : ""
       }
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-08-19 19:07:37 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+      "text" : "[Champions: 30] Last updated at 2024-08-19 22:02:07 GMT"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -90,10 +86,10 @@
             0,
             470,
             0
-         ],
-         "name" : "Perl"
+         ]
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -125,11 +121,9 @@
             14,
             432,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
-         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -161,7 +155,13 @@
             0,
             4,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
-   ]
+   ],
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
+   }
 }
