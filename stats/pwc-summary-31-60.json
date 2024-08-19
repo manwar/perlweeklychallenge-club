@@ -1,13 +1,17 @@
 {
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
    "title" : {
       "text" : "The Weekly Challenge [2019 - 2024]"
    },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-08-19 17:04:41 GMT"
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "xAxis" : {
       "categories" : [
@@ -45,7 +49,6 @@
    },
    "series" : [
       {
-         "name" : "Perl",
          "data" : [
             6,
             45,
@@ -77,9 +80,11 @@
             2,
             63,
             2
-         ]
+         ],
+         "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -103,16 +108,15 @@
             9,
             0,
             0,
-            16,
             2,
+            16,
             0,
             194,
             0,
             0,
             0,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
          "name" : "Blog",
@@ -150,18 +154,14 @@
          ]
       }
    ],
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-08-19 19:07:37 GMT"
+   },
    "chart" : {
       "type" : "column"
    },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
    }
 }
