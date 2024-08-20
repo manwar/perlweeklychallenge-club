@@ -1,0 +1,80 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+
+% end included library code
+
+/uniquenumber {
+    0 dict begin
+    /c 0 dict def
+    {
+        /n exch def
+        c n c n 0 dget 1 add put
+    } forall
+    -1
+    c keys {
+        /n exch def
+        c n 0 dget 1 eq {
+            pop n
+            exit
+        } if
+    } forall
+    end
+} bind def
+
+(uniquenumber) test.start
+[3 3 1] uniquenumber 1 eq test
+[3 2 4 2 4] uniquenumber 3 eq test
+[1] uniquenumber 1 eq test
+[4 3 1 1 1 4] uniquenumber 3 eq test
+test.end
