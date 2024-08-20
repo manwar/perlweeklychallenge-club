@@ -37,4 +37,3 @@ sub min_max {
     my @ret = grep {$_ != $min && $_ != $max} @n;
     return @ret ? @ret : -1;
 }
-
