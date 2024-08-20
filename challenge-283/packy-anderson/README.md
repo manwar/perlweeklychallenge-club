@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Ch-ch-ch-changes!](https://packy.dardan.com/b/Q8)
+[Perl Weekly Challenge: Bag! Bag! Bag!](https://packy.dardan.com/b/QM)
