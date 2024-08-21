@@ -41,8 +41,10 @@ SO WHAT DO YOU THINK ?
 ### solution by pokgopun@gmail.com
 
 def dcv(ints):
-    idx = range(len(ints))
-    return set((i,ints.count(i)) for i in idx) == set((i,ints[i]) for i in idx)
+    for i in range(len(ints)):
+        if ints.count(i) != ints[i]:
+            return False
+    return True
 
 import unittest
 
