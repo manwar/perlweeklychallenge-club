@@ -1,14 +1,25 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "plotOptions" : {
       "column" : {
          "stacking" : "percent"
       }
    },
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : ""
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             124,
             2,
@@ -40,11 +51,9 @@
             0,
             0,
             8
-         ],
-         "name" : "Perl"
+         ]
       },
       {
-         "name" : "Raku",
          "data" : [
             0,
             0,
@@ -76,10 +85,10 @@
             0,
             28,
             0
-         ]
+         ],
+         "name" : "Raku"
       },
       {
-         "name" : "Blog",
          "data" : [
             57,
             0,
@@ -111,11 +120,15 @@
             0,
             0,
             0
-         ]
+         ],
+         "name" : "Blog"
       }
    ],
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
+   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-08-21 22:56:12 GMT"
+      "text" : "[Champions: 30] Last updated at 2024-08-23 20:13:59 GMT"
    },
    "xAxis" : {
       "categories" : [
@@ -150,18 +163,5 @@
          "Ozzy",
          "Pablo Saavedra"
       ]
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
-   },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
-      }
-   },
-   "tooltip" : {
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
-      "shared" : 1
    }
 }

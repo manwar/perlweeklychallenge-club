@@ -1,7 +1,8 @@
 {
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
+      }
    },
    "yAxis" : {
       "title" : {
@@ -9,11 +10,16 @@
       },
       "min" : 0
    },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
+   "tooltip" : {
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>",
+      "shared" : 1
+   },
+   "chart" : {
+      "type" : "column"
    },
    "series" : [
       {
+         "name" : "Perl",
          "data" : [
             2,
             0,
@@ -30,7 +36,7 @@
             7,
             2,
             0,
-            532,
+            534,
             8,
             2,
             23,
@@ -45,8 +51,7 @@
             16,
             96,
             4
-         ],
-         "name" : "Perl"
+         ]
       },
       {
          "name" : "Raku",
@@ -101,7 +106,7 @@
             0,
             0,
             0,
-            45,
+            46,
             0,
             0,
             1,
@@ -119,6 +124,12 @@
          ]
       }
    ],
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
+   },
+   "subtitle" : {
+      "text" : "[Champions: 30] Last updated at 2024-08-23 20:13:59 GMT"
+   },
    "xAxis" : {
       "categories" : [
          "Jeff",
@@ -152,16 +163,5 @@
          "Kjetil Skotheim",
          "Konstantinos Giannakakis"
       ]
-   },
-   "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-08-21 22:56:12 GMT"
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
    }
 }
