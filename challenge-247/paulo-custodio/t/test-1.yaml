@@ -1,0 +1,19 @@
+- setup:
+  cleanup:
+  args:     '"Mr. Wall" "Mrs. Wall" "Mr. Anwar" "Mrs. Anwar" "Mr. Conway" "Mr. Cross"'
+  input:
+  output:   |
+            |Mr. Wall -> Mr. Anwar
+            |Mrs. Wall -> Mr. Conway
+            |Mr. Anwar -> Mr. Cross
+            |Mrs. Anwar -> Mr. Wall
+            |Mr. Conway -> Mrs. Anwar
+            |Mr. Cross -> Mrs. Wall
+- setup:
+  cleanup:
+  args:     '"Mr. Wall" "Mrs. Wall" "Mr. Anwar"'
+  input:
+  output:   |
+            |Mr. Wall -> Mr. Anwar
+            |Mrs. Wall -> Mr. Wall
+            |Mr. Anwar -> Mrs. Wall
