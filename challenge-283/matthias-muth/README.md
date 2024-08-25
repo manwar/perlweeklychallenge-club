@@ -1,84 +1,82 @@
-# Power to the Regex!
+# Find the function to find the numbers
 
-**Challenge 282 solutions in Perl by Matthias Muth**
+**Challenge 283 solutions in Perl by Matthias Muth**
 
-For this week's tasks, both of my solutions are one line of code, using **regular expressions only**!
+## Task 1: Unique Number
 
-## Task 1: Good Integer
-
-> You are given a positive integer, \$int, having 3 or more digits.<br/>
-> Write a script to return the Good Integer in the given integer or -1 if none found.<br/>
-> A good integer is exactly three consecutive matching digits.<br/>
+> You are given an array of integers, @ints, where every elements appears more than once except one element.<br/>
+> Write a script to find the one element that appears exactly one time.<br/>
 > <br/>
 > Example 1<br/>
-> Input: \$int = 12344456<br/>
-> Output: "444"<br/>
+> Input: @ints = (3, 3, 1)<br/>
+> Output: 1<br/>
 > <br/>
 > Example 2<br/>
-> Input: \$int = 1233334<br/>
-> Output: -1<br/>
+> Input: @ints = (3, 2, 4, 2, 4)<br/>
+> Output: 3<br/>
 > <br/>
 > Example 3<br/>
-> Input: \$int = 10020003<br/>
-> Output: "000"<br/>
+> Input: @ints = (1)<br/>
+> Output: 1<br/>
+> <br/>
+> Example 4<br/>
+> Input: @ints = (4, 3, 1, 1, 1, 4)<br/>
+> Output: 3<br/>
 
-Let's start with a regex that finds three same digits in a row. Not so difficult, capturing the first one and using a backreference to it to match the second and third one. I am using relative references for capture groups here (like `\g{-1}`), because as we will see we will need to use more than one capture group, and knowing myself, renumbering often leads to errors.
+Once again, we can let `List::MoreUtils` do the work for us.
+In this case, we use its `singleton` function, which extracts and returns those elements from a list that exist *exactly once* in that list. So if there actually is 'one element that appears exactly one time', `singleton @ints` will return it as the first (and only!) element of the return values. Perfect!
+
+The specification says we need to 'to find *the one* element that appears exactly one time'.<br/>
+If we don't find *the one* element, we won't return anything. And my interpretation of '*the one*' is that if there is *more than one* such element, we should not return anything either.
+
+So here we go:
 
 ```perl
-sub good_integer( $int ) {
-    return $int =~ / (\d)\g{-1}\g{-1} /x // -1;
+use v5.36;
+
+use List::MoreUtils qw( singleton );
+
+sub unique_number( @ints ) {
+    my @s = singleton( @ints );
+    return @s == 1 ? $s[0] : ();
 }
 ```
 
-This works for Examples 1 and 3, but it considers Example 2 to contain a Good Integer `'333'`, while actually it isn't, because the `'3333'` does not contain 'exactly three' matching digits. 
+## Task 2: Digit Count Value
 
-So we need to make sure that the digit *before* our group of three is different, and also that the *next* digit *after* the three is different.
-
-Checking that the digit *after* our group is different can easily be done with a *negative lookahead*: `(?!\g{-1})`. This will work at the end of the string, too, since we surely won't find our digit there, so the negative lookahead passes.
-
-But can we do the same to check for a different digit *before* our group, using a *negative lookbehind*?<br/>Actually we cant.<br/>We would need to first capture the first digit. Then, as we are now standing *behind* the first digit, we would need to use a negative lookbehind for *two* digits, one that is *not* the one we just captured, and then the one that we  
-
-* 
-
-
-
-
-
-```perl
-sub good_integer() {
-    ...;
-}
-```
-
-## Task 2: Changing Keys
-
-> You are given an alphabetic string, \$str, as typed by user.<br/>
-> Write a script to find the number of times user had to change the key to type the given string. Changing key is defined as using a key different from the last used key. The shift and caps lock keys won’t be counted.<br/>
+> You are given an array of positive integers, @ints.<br/>
+> Write a script to return true if for every index i in the range 0 <= i < size of array, the digit i occurs exactly the \$ints[\$i] times in the given array otherwise return false.<br/>
 > <br/>
 > Example 1<br/>
-> Input: \$str = 'pPeERrLl'<br/>
-> Ouput: 3<br/>
-> p -> P : 0 key change<br/>
-> P -> e : 1 key change<br/>
-> e -> E : 0 key change<br/>
-> E -> R : 1 key change<br/>
-> R -> r : 0 key change<br/>
-> r -> L : 1 key change<br/>
-> L -> l : 0 key change<br/>
+> Input: @ints = (1, 2, 1, 0)<br/>
+> Ouput: true<br/>
+> \$ints[0] = 1, the digit 0 occurs exactly 1 time.<br/>
+> \$ints[1] = 2, the digit 1 occurs exactly 2 times.<br/>
+> \$ints[2] = 1, the digit 2 occurs exactly 1 time.<br/>
+> \$ints[3] = 0, the digit 3 occurs 0 time.<br/>
 > <br/>
 > Example 2<br/>
-> Input: \$str = 'rRr'<br/>
-> Ouput: 0<br/>
-> <br/>
-> Example 3<br/>
-> Input: \$str = 'GoO'<br/>
-> Ouput: 1<br/>
+> Input: @ints = (0, 3, 0)<br/>
+> Ouput: false<br/>
+> \$ints[0] = 0, the digit 0 occurs 2 times rather than 0 time.<br/>
+> \$ints[1] = 3, the digit 1 occurs 0 time rather than 3 times.<br/>
+> \$ints[2] = 0, the digit 2 occurs exactly 0 time.<br/>
 
-Lorem ipsum dolor sit amet...
+We need to count how often every number appears  in the array before we can compare those frequencies to the entries in the `@ints` array. I'm making it easy  using the `frequency` function, again from `List::MoreUtils`. It returns a list of ( value, frequency ) pairs, which can directly be assigned to a hash.
+
+Once we have that frequency hash, we use `List::Util`'s `all` function to check all the needed equalities. Index values that don't appear in the `@int` array should have a frequency of zero. But as they are not seen, and therefore not counted at all, they don't even get an entry in the frequency hash.  We take care of these missing values by a 'defined-or' with a zero.
+
+`all`'s return value then is our result. Easy enough!
 
 ```perl
-sub changing_keys() {
-    ...;
+use v5.36;
+
+use List::MoreUtils qw( frequency );
+use List::Util qw( all );
+
+sub digit_count_value( @ints ) {
+    my %f = frequency @ints;
+    return all { ( $f{$_} // 0 ) == $ints[$_] } 0..$#ints;
 }
 ```
 
