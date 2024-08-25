@@ -1,4 +1,4 @@
-# Dupes and Non-Dupes
+# PWC 283
 
 **Challenge 283 solutions by Andrew Schneider**
 
