@@ -38,6 +38,15 @@ sub uniqNum(@ints)
     else                      { return "none"; }
 }
 
+sub un2(@ints)
+{
+    use List::MoreUtils qw/singleton/;
+    my @candidate = singleton(@ints);
+    if    ( @candidate  > 1 ) { return "multiple"; }
+    elsif ( @candidate == 1 ) { return $candidate[0]; }
+    else                      { return "none"; }
+}
+
 sub runTest
 {
     use Test2::V0;
@@ -46,10 +55,17 @@ sub runTest
     is( uniqNum(3, 2, 4, 2, 4), 3,    "Example 2");
     is( uniqNum(1), 1,                "Example 3");
     is( uniqNum(4, 3, 1, 1, 1, 4), 3, "Example 4");
-
     is( uniqNum(1, 2, 3), "multiple", "Multiple unique numbers");
     is( uniqNum(8, 8, 8), "none",     "No unique numbers");
     is( uniqNum(       ), "none",     "Empty list");
+
+    is( un2(3, 3, 1), 1,          "Example 1");
+    is( un2(3, 2, 4, 2, 4), 3,    "Example 2");
+    is( un2(1), 1,                "Example 3");
+    is( un2(4, 3, 1, 1, 1, 4), 3, "Example 4");
+    is( un2(1, 2, 3), "multiple", "Multiple unique numbers");
+    is( un2(8, 8, 8), "none",     "No unique numbers");
+    is( un2(       ), "none",     "Empty list");
 
     done_testing;
 }
@@ -58,7 +74,10 @@ sub runBenchmark($repeat)
 {
     use Benchmark qw/cmpthese/;
 
+    my @ints = ( (1..100), (1..99) );
+
     cmpthese($repeat, {
-            label => sub { },
+            hash => sub { uniqNum(@ints) },
+            util => sub { un2(@ints) },
         });
 }

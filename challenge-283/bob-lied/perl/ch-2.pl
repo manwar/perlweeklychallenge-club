@@ -40,8 +40,29 @@ sub digCountVal(@ints)
     my @appear = (0) x scalar(@ints);
     $appear[$_]++ for @ints;
 
-    use List::Util qw/all/;
-    return all { $appear[$_] == $ints[$_] } 0 .. $#ints;
+    my $i = 0;
+    for ( @ints )
+    {
+        return false if $appear[$i++] != $_;
+    }
+    return true;
+}
+
+use List::Util qw/all/;
+use List::MoreUtils qw/frequency/;
+sub dc2(@ints)
+{
+    my %freq;
+    %freq = frequency(@ints);
+    return all { ($freq{$_} // 0) == $ints[$_] } 0 .. $#ints;
+}
+
+sub dc3(@ints)
+{
+    my %freq;
+    %freq = frequency(@ints);
+    my $i;
+    return all { ($freq{$i++} // 0) == $_ } @ints;
 }
 
 sub runTest
@@ -49,7 +70,11 @@ sub runTest
     use Test2::V0;
 
     is( digCountVal(1,2,1,0), true,  "Example 1");
-    is( digCountVal(0,3,0  ), false, "Example 1");
+    is( digCountVal(0,3,0  ), false, "Example 2");
+    is( dc2(1,2,1,0), true,  "Example 1 dc2");
+    is( dc2(0,3,0  ), false, "Example 2 dc2");
+    is( dc3(1,2,1,0), true,  "Example 1 dc3");
+    is( dc3(0,3,0  ), false, "Example 2 dc3");
 
     done_testing;
 }
@@ -58,7 +83,11 @@ sub runBenchmark($repeat)
 {
     use Benchmark qw/cmpthese/;
 
+    my @ints = (1, 1, 3, 1, 0, 0, 0, 0 );
+
     cmpthese($repeat, {
-            label => sub { },
+            array => sub { digCountVal(@ints) },
+            util  => sub { dc2(@ints) },
+            index => sub { dc3(@ints) },
         });
 }
