@@ -1,4 +1,8 @@
 {
+   "tooltip" : {
+      "shared" : 1,
+      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
+   },
    "xAxis" : {
       "categories" : [
          "Garrett Goebel",
@@ -33,23 +37,12 @@
          "jdos22"
       ]
    },
-   "tooltip" : {
-      "shared" : 1,
-      "pointFormat" : "<span style=\"color:{series.color}\">{series.name}</span>: <b>{point.y}</b><br/>"
-   },
-   "title" : {
-      "text" : "The Weekly Challenge [2019 - 2024]"
-   },
-   "chart" : {
-      "type" : "column"
-   },
    "subtitle" : {
-      "text" : "[Champions: 30] Last updated at 2024-08-25 19:54:06 GMT"
+      "text" : "[Champions: 30] Last updated at 2024-08-25 22:36:04 GMT"
    },
-   "yAxis" : {
-      "min" : 0,
-      "title" : {
-         "text" : ""
+   "plotOptions" : {
+      "column" : {
+         "stacking" : "percent"
       }
    },
    "series" : [
@@ -89,6 +82,7 @@
          "name" : "Perl"
       },
       {
+         "name" : "Raku",
          "data" : [
             2,
             0,
@@ -120,10 +114,10 @@
             14,
             92,
             0
-         ],
-         "name" : "Raku"
+         ]
       },
       {
+         "name" : "Blog",
          "data" : [
             0,
             0,
@@ -155,13 +149,19 @@
             0,
             46,
             0
-         ],
-         "name" : "Blog"
+         ]
       }
    ],
-   "plotOptions" : {
-      "column" : {
-         "stacking" : "percent"
-      }
+   "title" : {
+      "text" : "The Weekly Challenge [2019 - 2024]"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : ""
+      },
+      "min" : 0
+   },
+   "chart" : {
+      "type" : "column"
    }
 }
