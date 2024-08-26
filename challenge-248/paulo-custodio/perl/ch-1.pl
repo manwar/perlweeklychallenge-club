@@ -7,7 +7,7 @@
 #
 # You are given a string and a character in the given string.
 #
-# Write a script to return an array of integers of size same as length of 
+# Write a script to return an array of integers of size same as length of
 # the given string such that:
 #
 # distance[i] is the distance from index i to the closest occurence of
