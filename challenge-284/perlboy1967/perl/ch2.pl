@@ -32,7 +32,7 @@ sub relativeSort :prototype(\@\@) ($arL1,$arL2) {
   my @r;
   my @l = @$arL1;
   for my $l2 (@$arL2) {
-    push(@r,splice(@l,$_,1)) for (reverse sort {$a <=> $b} indexes {$_ == $l2} @l);
+    push(@r,splice(@l,$_,1)) for (sort {$b <=> $a} indexes {$_ == $l2} @l);
   }
   push(@r,sort {$a <=> $b} @l);
   [@r];
