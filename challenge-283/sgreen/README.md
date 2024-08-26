@@ -1,3 +1,3 @@
-# The Weekly Challenge 282
+# The Weekly Challenge 283
 
-Blog: [Good keys](https://dev.to/simongreennet/good-keys-2elk)
+Blog: [Weekly Challenge 283](https://dev.to/simongreennet/weekly-challenge-283-102h)
