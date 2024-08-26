@@ -138,11 +138,11 @@ for my $aref (@arrays) {
    say "List 1: (@list1)";
    say "List 2: (@list2)";
 
-   !is_ints   @list1 and say 'Error: @list1 not array of integers. \nMoving on to next array pair.' and next;
-   !is_ints   @list2 and say 'Error: @list2 not array of integers. \nMoving on to next array pair.' and next;
-   !is_unique @list2 and say 'Error: @list2 is not unique elements.\nMoving on to next array pair.' and next;
+   !is_ints   @list1 and say "Error: \@list1 not array of integers. \nMoving on to next array pair." and next;
+   !is_ints   @list2 and say "Error: \@list2 not array of integers. \nMoving on to next array pair." and next;
+   !is_unique @list2 and say "Error: \@list2 is not unique elements.\nMoving on to next array pair." and next;
    !is_subset @list2, @list1
-                     and say 'Error: @list2 not subset of @list1.  \nMoving on to next array pair.' and next;
+                     and say "Error: \@list2 not subset of \@list1.  \nMoving on to next array pair." and next;
 
    my @list3 = relative_sort @list1, @list2;
    say "List 1 sorted relative to List 2: (@list3)";
