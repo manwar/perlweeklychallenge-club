@@ -30,8 +30,7 @@ use List::Util qw(max);
 
 sub luckyInteger (@ints) {
   my %f; $f{$_}++ for (@ints);
-  my @l = (-1,grep { $f{$_} == $_ } keys %f);
-  max(@l);
+  max(-1,grep { $f{$_} == $_ } keys %f);
 }
 
 is(luckyInteger(2,2,3,4),2,'Example 1');
