@@ -18,10 +18,7 @@ def lucky_integer(*integers):
     -1
     """
     counter = Counter(integers)
-    try:
-        return max(i for i in set(integers) if i == counter[i])
-    except ValueError:
-        return -1
+    return max((i for i, v in counter.items() if i == v), default=-1)
 
 
 if __name__ == "__main__":
