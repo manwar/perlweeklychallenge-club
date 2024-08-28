@@ -1,9 +1,9 @@
 {
-   "chart" : {
-      "type" : "column"
-   },
    "tooltip" : {
       "pointFormat" : "<b>{point.y:.0f}</b>"
+   },
+   "chart" : {
+      "type" : "column"
    },
    "legend" : {
       "enabled" : "false"
@@ -11,18 +11,43 @@
    "xAxis" : {
       "labels" : {
          "style" : {
-            "fontSize" : "13px",
-            "fontFamily" : "Verdana, sans-serif"
+            "fontFamily" : "Verdana, sans-serif",
+            "fontSize" : "13px"
          }
       },
       "type" : "category"
    },
+   "yAxis" : {
+      "min" : 0,
+      "title" : {
+         "text" : null
+      }
+   },
+   "subtitle" : {
+      "text" : "Last updated at 2024-08-28 19:30:22 GMT"
+   },
+   "title" : {
+      "text" : "The Weekly Challenge Contributions [2019 - 2024]"
+   },
    "series" : [
       {
+         "name" : "Contributions",
+         "dataLabels" : {
+            "rotation" : -90,
+            "align" : "right",
+            "y" : 10,
+            "style" : {
+               "fontFamily" : "Verdana, sans-serif",
+               "fontSize" : "13px"
+            },
+            "format" : "{point.y:.0f}",
+            "color" : "#FFFFFF",
+            "enabled" : "true"
+         },
          "data" : [
             [
                "Perl",
-               14822
+               14826
             ],
             [
                "Raku",
@@ -32,32 +57,7 @@
                "Blog",
                5223
             ]
-         ],
-         "dataLabels" : {
-            "format" : "{point.y:.0f}",
-            "align" : "right",
-            "y" : 10,
-            "enabled" : "true",
-            "style" : {
-               "fontSize" : "13px",
-               "fontFamily" : "Verdana, sans-serif"
-            },
-            "rotation" : -90,
-            "color" : "#FFFFFF"
-         },
-         "name" : "Contributions"
+         ]
       }
-   ],
-   "title" : {
-      "text" : "The Weekly Challenge Contributions [2019 - 2024]"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : null
-      },
-      "min" : 0
-   },
-   "subtitle" : {
-      "text" : "Last updated at 2024-08-28 15:23:32 GMT"
-   }
+   ]
 }
