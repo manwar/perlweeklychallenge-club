@@ -1,0 +1,23 @@
+#! /usr/bin/env raku
+
+unit sub MAIN ($list1, $list2);
+
+my @list1 = $list1.words;
+my @list2 = $list2.words;
+my $bag1  = @list1.Bag;
+my %seen;
+my @sorted;
+
+for @list2 -> $element
+{
+  @sorted.append: $element xx $bag1{$element};
+  %seen{$element} = True;
+}
+
+for @list1.sort -> $element
+{
+  next if %seen{$element};
+  @sorted.push: $element;
+}
+
+say "({ @sorted.join(", ") })";
