@@ -28,13 +28,7 @@
 
 use Modern::Perl;
 
-my @input =
-    ("P+2l!ato",
-     "1e80R\$4u",
-     "5-r]+a>/",
-     "Pxwlb3k\\",
-     "2e35R8yu",
-     "<!r^()k0");
+chomp(my @input = <>);
 
 say decode(@input);
 
