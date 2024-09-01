@@ -1,11 +1,11 @@
-# PWC 283
+# PWC 284
 
-**Challenge 283 solutions by Andrew Schneider**
+**Challenge 284 solutions by Andrew Schneider**
 
-[PWC 283](https://theweeklychallenge.org/blog/perl-weekly-challenge-283/)
+[PWC 284](https://theweeklychallenge.org/blog/perl-weekly-challenge-284/)
 
-No blog this week. I had high hopes for this week. In Perl I planned to iteratively refine solutions to each challenge. I also wanted to try solving them using OCaml. But I ran out of time for the first, and just floundered on the second idea. It was a busy week I suppose.
+I haven't had the motivation to say much here lately, but I also feel like I haven't had much to say. I suppose I've been busy with other stuff, and haven't been doing my usual programming language roulette, although, really, what's more important than the PWC?!
 
-I liked Dave Jacoby's remark a couple weeks back about not wanting to blog if he didn't have anything interesting/original to offer. Definitely nothing of that sort from me this week, ergo, no blog.
+I did see there's some tight competition between Ruby and Rust, hence my Rust contribution in support of my pick. I do have a soft spot in my heart for Ruby, so nothing personal of course.
 
-See you (maybe) next week!
+Thanks for the challenges!
