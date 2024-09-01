@@ -1,3 +1,3 @@
-# The Weekly Challenge 282
+# The Weekly Challenge 284
 
-Blog: [Good keys](https://dev.to/simongreennet/good-keys-2elk)
+Blog: [The lucky sort](https://dev.to/simongreennet/the-lucky-sort-1648)
