@@ -48,9 +48,10 @@ type routes []route
 func (rs routes) nc() string {
 	m := make(map[string]bool)
 	for _, v := range rs {
-		m[v.src] = false
-		_, ok := m[v.dst]
-		if !ok {
+		if b, ok := m[v.src]; !ok || b {
+			m[v.src] = false
+		}
+		if _, ok := m[v.dst]; !ok {
 			m[v.dst] = true
 		}
 	}

@@ -64,13 +64,7 @@ func mc(a int) int {
 	for c50 := range a/50 + 1 {
 		for c25 := range (a-50*c50)/25 + 1 {
 			for c10 := range (a-50*c50-25*c25)/10 + 1 {
-				for c5 := range (a-50*c50-25*c25-10*c10)/5 + 1 {
-					for c1 := range (a - 50*c50 - 25*c25 - 10*c10 - 5*c5) + 1 {
-						if 50*c50+25*c25+10*c10+5*c5+c1 == a {
-							c++
-						}
-					}
-				}
+				c += (a-50*c50-25*c25-10*c10)/5 + 1
 			}
 		}
 	}

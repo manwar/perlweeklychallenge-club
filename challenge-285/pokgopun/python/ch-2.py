@@ -55,10 +55,7 @@ def mc(amount: int):
     for a50 in range(0,amount+1,50):
         for a25 in range(0,amount-a50+1,25):
             for a10 in range(0,amount-a50-a25+1,10):
-                for a5 in range(0,amount-a50-a25-a10+1,5):
-                    for a1 in range(0,amount-a50-a25-a10-a5+1,1):
-                        if a50 + a25 + a10 + a5 + a1 == amount:
-                            c += 1
+                c += (amount-a50-a25-a10)//5 + 1
     return c
 
 import unittest
