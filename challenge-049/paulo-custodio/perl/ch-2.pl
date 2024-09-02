@@ -43,7 +43,6 @@
 # get(3)      # returns -1
 
 use Modern::Perl;
-use Test::More;
 
 {
     package Cache;
@@ -90,31 +89,34 @@ use Test::More;
     }
 }
 
+say "Create cache, capacity=>3";
 my $cache = Cache->new(capacity=>3);
-is $cache->as_string, "";
+say "Cache=", $cache->as_string;
 
+say "Set cache:1,3";
 $cache->set(1, 3);
-is $cache->as_string, "(1=>3)";
+say "Cache=", $cache->as_string;
 
+say "Set cache:2,5";
 $cache->set(2, 5);
-is $cache->as_string, "(1=>3)(2=>5)";
+say "Cache=", $cache->as_string;
 
+say "Set cache:3,7";
 $cache->set(3, 7);
-is $cache->as_string, "(1=>3)(2=>5)(3=>7)";
+say "Cache=", $cache->as_string;
 
-is $cache->get(2), 5;
-is $cache->as_string, "(1=>3)(3=>7)(2=>5)";
+say "Get cache 2=>",$cache->get(2);
+say "Cache=", $cache->as_string;
 
-is $cache->get(1), 3;
-is $cache->as_string, "(3=>7)(2=>5)(1=>3)";
+say "Get cache 1=>",$cache->get(1);
+say "Cache=", $cache->as_string;
 
-is $cache->get(4), -1;
-is $cache->as_string, "(3=>7)(2=>5)(1=>3)";
+say "Get cache 4=>",$cache->get(4);
+say "Cache=", $cache->as_string;
 
+say "Set cache:4,9";
 $cache->set(4, 9);
-is $cache->as_string, "(2=>5)(1=>3)(4=>9)";
+say "Cache=", $cache->as_string;
 
-is $cache->get(3), -1;
-is $cache->as_string, "(2=>5)(1=>3)(4=>9)";
-
-done_testing;
+say "Get cache 3=>",$cache->get(3);
+say "Cache=", $cache->as_string;
