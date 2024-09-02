@@ -1,24 +1,86 @@
 {
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "format" : "{point.y}",
+            "enabled" : 1
+         },
+         "borderWidth" : 0
+      }
+   },
+   "chart" : {
+      "type" : "column"
+   },
+   "yAxis" : {
+      "title" : {
+         "text" : "Total Solutions"
+      }
+   },
+   "legend" : {
+      "enabled" : 0
+   },
    "subtitle" : {
-      "text" : "[Champions: 4] Last updated at 2024-09-02 12:06:32 GMT"
+      "text" : "[Champions: 8] Last updated at 2024-09-02 21:11:31 GMT"
    },
    "xAxis" : {
       "type" : "category"
    },
-   "plotOptions" : {
-      "series" : {
-         "borderWidth" : 0,
-         "dataLabels" : {
-            "enabled" : 1,
-            "format" : "{point.y}"
-         }
+   "series" : [
+      {
+         "name" : "The Weekly Challenge - 285",
+         "colorByPoint" : 1,
+         "data" : [
+            {
+               "drilldown" : "Ali Moradi",
+               "y" : 3,
+               "name" : "Ali Moradi"
+            },
+            {
+               "name" : "David Ferrone",
+               "y" : 3,
+               "drilldown" : "David Ferrone"
+            },
+            {
+               "y" : 2,
+               "name" : "E. Choroba",
+               "drilldown" : "E. Choroba"
+            },
+            {
+               "drilldown" : "Feng Chang",
+               "name" : "Feng Chang",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Mark Anderson",
+               "name" : "Mark Anderson",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Paulo Custodio",
+               "name" : "Paulo Custodio",
+               "y" : 2
+            },
+            {
+               "drilldown" : "Ulrich Rieke",
+               "y" : 4,
+               "name" : "Ulrich Rieke"
+            },
+            {
+               "y" : 3,
+               "name" : "W. Luis Mochan",
+               "drilldown" : "W. Luis Mochan"
+            }
+         ]
       }
+   ],
+   "tooltip" : {
+      "followPointer" : 1,
+      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>",
+      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>"
    },
    "drilldown" : {
       "series" : [
          {
-            "name" : "Ali Moradi",
-            "id" : "Ali Moradi",
             "data" : [
                [
                   "Perl",
@@ -28,85 +90,95 @@
                   "Blog",
                   1
                ]
-            ]
+            ],
+            "id" : "Ali Moradi",
+            "name" : "Ali Moradi"
          },
          {
-            "name" : "E. Choroba",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "id" : "David Ferrone",
+            "name" : "David Ferrone"
+         },
+         {
+            "id" : "E. Choroba",
             "data" : [
                [
                   "Perl",
                   2
                ]
             ],
-            "id" : "E. Choroba"
+            "name" : "E. Choroba"
          },
          {
-            "name" : "Feng Chang",
             "data" : [
                [
                   "Raku",
                   2
                ]
             ],
-            "id" : "Feng Chang"
+            "id" : "Feng Chang",
+            "name" : "Feng Chang"
          },
          {
+            "data" : [
+               [
+                  "Raku",
+                  2
+               ]
+            ],
             "id" : "Mark Anderson",
+            "name" : "Mark Anderson"
+         },
+         {
+            "name" : "Paulo Custodio",
             "data" : [
+               [
+                  "Perl",
+                  2
+               ]
+            ],
+            "id" : "Paulo Custodio"
+         },
+         {
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
                [
                   "Raku",
                   2
                ]
             ],
-            "name" : "Mark Anderson"
+            "id" : "Ulrich Rieke",
+            "name" : "Ulrich Rieke"
+         },
+         {
+            "id" : "W. Luis Mochan",
+            "data" : [
+               [
+                  "Perl",
+                  2
+               ],
+               [
+                  "Blog",
+                  1
+               ]
+            ],
+            "name" : "W. Luis Mochan"
          }
       ]
    },
-   "tooltip" : {
-      "followPointer" : 1,
-      "pointFormat" : "<span style='color:{point.color}'>{point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style='font-size:11px'>{series.name}</span><br/>"
-   },
    "title" : {
       "text" : "The Weekly Challenge - 285"
-   },
-   "yAxis" : {
-      "title" : {
-         "text" : "Total Solutions"
-      }
-   },
-   "chart" : {
-      "type" : "column"
-   },
-   "legend" : {
-      "enabled" : 0
-   },
-   "series" : [
-      {
-         "data" : [
-            {
-               "name" : "Ali Moradi",
-               "drilldown" : "Ali Moradi",
-               "y" : 3
-            },
-            {
-               "y" : 2,
-               "name" : "E. Choroba",
-               "drilldown" : "E. Choroba"
-            },
-            {
-               "y" : 2,
-               "drilldown" : "Feng Chang",
-               "name" : "Feng Chang"
-            },
-            {
-               "name" : "Mark Anderson",
-               "drilldown" : "Mark Anderson",
-               "y" : 2
-            }
-         ],
-         "colorByPoint" : 1,
-         "name" : "The Weekly Challenge - 285"
-      }
-   ]
+   }
 }
