@@ -31,10 +31,14 @@ Task 2: Making Change
 ### solution by pokgopun@gmail.com
 
 def nc(routes: tuple):
-    srcs = tuple(e[0] for e in routes)
-    for src, dst in routes:
-        if dst not in srcs:
-            return dst
+    dct = dict()
+    for src,dst in routes:
+        if dct.get(src,True):
+            dct[src] = False
+        dct.setdefault(dst,True)
+    for k,v in dct.items():
+        if v:
+            return k
     return None
 
 import unittest
