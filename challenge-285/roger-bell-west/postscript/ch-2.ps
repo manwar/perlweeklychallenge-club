@@ -1,0 +1,137 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/cartesianproduct { % [ [ a b ] [ c d ] ] -> [ [ a c ] [ a d ] [ b c ] [ b d ] ]
+    5 dict begin
+    /pat exch def
+    /c [ pat length { 0 } repeat ] def
+    /cm [ pat { length 1 sub } forall ] def 
+    /ex false def
+    [
+        {
+            ex {
+                exit
+            } if
+            [
+                0 1 c length 1 sub {
+                    /i exch def
+                    pat i get c i get get
+                } for
+            ]
+            /ss c length 1 sub def
+            {
+                c ss c ss get 1 add put
+                c ss get cm ss get gt {
+                    ss 0 eq {
+                        /ex true def
+                        exit
+                    } if
+                    c ss 0 put
+                    /ss ss 1 sub def
+                } {
+                    exit
+                } ifelse
+            } loop
+        } loop
+        end
+    ]
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/enumerate.array {
+    1 dict begin
+    /a exch def
+    [
+      0 1 a length 1 sub {
+          [ exch dup a exch get ]
+      } for
+    ]
+    end
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/makingchange {
+    0 dict begin
+    /a exch def
+    /coins [ 1 5 10 25 50 ] def
+    /mx coins { a exch idiv } map def
+    /pat [
+        0 1 coins length 1 sub {
+            /i exch def
+            mx i get 0 gt {
+                [ 0 1 mx i get {} for ]
+            } {
+                exit
+            } ifelse
+        } for
+    ] def
+    0
+    pat cartesianproduct {
+        /combo exch def
+        /t 0 def
+        combo enumerate.array {
+            aload pop
+            /c exch def
+            /i exch def
+            /t c coins i get mul t add def
+            t a gt {
+                exit
+            } if
+        } forall
+        t a eq {
+            1 add
+        } if
+    } forall
+    end
+} bind def
+
+(makingchange) test.start
+9 makingchange 2 eq test
+15 makingchange 6 eq test
+% 100 makingchange 292 eq test
+test.end
+
