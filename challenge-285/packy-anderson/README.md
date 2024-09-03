@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Relatively Lucky](https://packy.dardan.com/b/QX)
+[Perl Weekly Challenge: Exact Change Only!](https://packy.dardan.com/b/Qq)
