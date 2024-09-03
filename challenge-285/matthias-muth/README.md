@@ -1,121 +1,147 @@
-# Use `frequency` frequently!
+# Connected Coins in an Unconnected World
 
-**Challenge 284 solutions in Perl by Matthias Muth**
+**Challenge 285 solutions in Perl by Matthias Muth**
 
-Making use of `frequency` from `List::MoreUtils` gives us nice and short results for both challenges!
+## Task 1: No Connection
 
-## Task 1: Lucky Integer
-
-> You are given an array of integers, @ints.<br/>
-> Write a script to find the lucky integer if found otherwise return -1. If there are more than one then return the largest.<br/>
-> A lucky integer is an integer that has a frequency in the array equal to its value.<br/>
+> You are given a list of routes, @routes.<br/>
+> Write a script to find the destination with no further outgoing connection.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @ints = (2, 2, 3, 4)<br/>
-> Output: 2<br/>
+> Input: @routes = (["B","C"], ["D","B"], ["C","A"])<br/>
+> Output: "A"<br/>
+> "D" -> "B" -> "C" -> "A".<br/>
+> "B" -> "C" -> "A".<br/>
+> "C" -> "A".<br/>
+> "A".<br/>
 > <br/>
 > Example 2<br/>
-> Input: @ints = (1, 2, 2, 3, 3, 3)<br/>
-> Output: 3<br/>
-> <br/>
-> Example 3<br/>
-> Input: @ints = (1, 1, 1, 3)<br/>
-> Output: -1<br/>
+> Input: @routes = (["A","Z"])<br/>
+> Output: "Z"<br/>
 
-For comparing the numbers in the `@ints` array to their own frequency in that array,
-we need to compute the frequencies first.
-Obviously.
-`List::MoreUtils` is our friend, once again, because its `frequency` function does exactly that.
-It returns a list of $( value, frequency )$ pairs,
-which we can simply assign to a hash, and there we are.
+At first glance, it seems like we need to construct a directed graph, for then analyzing it for finding the end nodes of that graph.
 
-Now we need to find the 'lucky integer',
-and if we happen to find more than one we are supposed to return the highest one.
-So we put together a chain:
+We don't! It's much easier!
 
-* `grep` with a 'lucky' condition
-  (the current number's frequency is the same as the number itself),
-  applied on all existing numbers.<br/>
-  We use `keys %freq` for the set of numbers, to make sure to check all numbers, but only once.
-* Get the highest number of the result.<br/>
-  Using `max` from `List::Util` for this.
-* If there is no lucky number at all, `max` will return `undef`.<br/>
-  We use the defined-or operator (`//`) to return a `-1` in that case.
+If a destination (the right side in a route) has 'no further outgoing connection', this simply means that it does not appear as a source node (on the left side) in any route.
 
-So we got our solution in two lines of code:
+So if we put all routes (source => destination) into a hash, we can use it for an existence check for all destinations.
+
+For constructing that hash from the pairs given in the `$routes` array-ref parameter,
+I use the `unpairs` function from `List::Util`. It takes the pairs and flattens them, so that we can directly assign it to a hash variable.
+
+Then, I look up the 'unconnected destination' by searching through the destinations (which happen to be the `values` of our hash) to find the one that has no route entry in the hash. Actually I use `first` (also from `List::Util`) instead of `grep`, just in case the data contain more that one unconnected destinations. 
 
 ```perl
 use v5.36;
-use List::MoreUtils qw( frequency );
-use List::Util qw( max );
+use List::Util qw( unpairs first );
 
-sub lucky_integer( @ints ) {
-    my %freq = frequency( @ints );
-    return max( grep $freq{$_} == $_, keys %freq ) // -1;
+sub no_connection( $routes ) {
+    # Store all given routes in a hash ( source => destination ).
+    my %connections = unpairs $routes->@*;
+    # Return the first destination that does not have a route going out of it.
+    return first { ! exists $connections{$_} } values %connections;
 }
 ```
 
-## Task 2: Relative Sort
+## Task 2: Making Change
 
-> You are given two list of integers, @list1 and @list2. The elements in the @list2 are distinct and also in the @list1.<br/>
-> Write a script to sort the elements in the @list1 such that the relative order of items in @list1 is same as in the @list2. Elements that is missing in @list2 should be placed at the end of @list1 in ascending order.<br/>
+> Compute the number of ways to make change for given amount in cents. By using the coins e.g. Penny, Nickel, Dime, Quarter and Half-dollar, in how many distinct ways can the total value equal to the given amount? Order of coin selection does not matter.<br/>
+> A penny (P) is equal to 1 cent.<br/>
+> A nickel (N) is equal to 5 cents.<br/>
+> A dime (D) is equal to 10 cents.<br/>
+> A quarter (Q) is equal to 25 cents.<br/>
+> A half-dollar (HD) is equal to 50 cents.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @list1 = (2, 3, 9, 3, 1, 4, 6, 7, 2, 8, 5)<br/>
->        @list2 = (2, 1, 4, 3, 5, 6)<br/>
-> Ouput: (2, 2, 1, 4, 3, 3, 5, 6, 7, 8, 9)<br/>
+> Input: \$amount = 9<br/>
+> Ouput: 2<br/>
+> 1: 9P<br/>
+> 2: N + 4P<br/>
 > <br/>
 > Example 2<br/>
-> Input: @list1 = (3, 3, 4, 6, 2, 4, 2, 1, 3)<br/>
->        @list2 = (1, 3, 2)<br/>
-> Ouput: (1, 3, 3, 3, 2, 2, 4, 4, 6)<br/>
+> Input: \$amount = 15<br/>
+> Ouput: 6<br/>
+> 1: D + 5P<br/>
+> 2: D + N<br/>
+> 3: 3N<br/>
+> 4: 2N + 5P<br/>
+> 5: N + 10P<br/>
+> 6: 15P<br/>
 > <br/>
 > Example 3<br/>
-> Input: @list1 = (3, 0, 5, 0, 2, 1, 4, 1, 1)<br/>
->        @list2 = (1, 0, 3, 2)<br/>
-> Ouput: (1, 1, 1, 0, 0, 3, 2, 4, 5)<br/>
+> Input: \$amount = 100<br/>
+> Ouput: 292<br/>
 
-Seems that our result set consists of two parts:
+I use a **recursive approach** for this task.
 
-* first, all numbers from `@list1` that also are in `@list2`, in the order that is given by `@list2`,
-* then, the numbers that are *not* in `@list2`, sorted in ascending order, from low to high.
+To get good sequences, without any permutations, all sequences are generated using higher coin values first, with only the same or lower values following. This means that whenever we add a given value to a sequence, we need to make sure that no higher values will be added to it anymore.
 
-We will put the two parts together in the end, but first we need to find a way to construct each of them.
+How do we do that?
 
-For the numbers 'in the order of `@list2`', we actually can *use* `@list2`. That already gives us each number once, and for sure they are in the correct order!<br/>
-We only need to *repeat* each number as many times as it appears in `@list1`.
+For the parameters of my recursive function, we don't only use the amount to change, but also a list of currently available coins values. This list can (and will!) vary as we descend down into the recursion, as higher values will be excluded.
 
-So we are back to counting numbers again, and again, we use the `frequency` function from `List::MoreUtils` to keep it short.<br/>The first part of our result then simply is each number from `@list2`, repeated by its frequency in `@list1`:
+A call to the function walks through those coin values, for each of them trying to add it to the sequence:
 
-```perl
-    my %freq1 = frequency( $list1->@* );
-    map( ( $_ ) x $freq1{$_}, $list2->@* )
-```
+* If this coin value is too high, no combination is possible, so nothing is counted.
+* If the coin value matches the amount exactly, we have found a combination, which we count (as 1).
+* If the coin value is lower than the amount, we use that coin and descend into a recursion,
+to find the number of possible combinations for the rest of the amount.<br/>
+For that recursive call, the coin values that we give as parameters
+are only the current coin value and all following lower ones.<br/>
+The number of combinations returned by the recursive call
+is added to the total number of combinations in the current call.
 
-For the second part, we need to use `@list1`, but exclude the numbers from `@list2`, because we already have dealt with those.
+For convenience we allow the function to be called with *only* an amount, and *no* list of coin values.
+This is for the main call. In that case, we supply the list of coin values from the task description (50, 25, 10, 5, 1) as a default value.
 
-For simplicity, I use `frequency` again to built an 'existence hash' for `@list2`. Knowing that every number there appears only once, all the frequencies will be 1, but that's exactly what I need.
-
-The second part then is `@list1`, with any element `grep`ped away that exists in `@list2`, then sorted numerically:
-
-```Perl
-    my %exists2 = frequency( $list2->@* );
-    sort { $a <=> $b } grep ! $exists2{$_}, $list1->@*
-```
-
-Which gives us a solution with a high frequency of `frequency`. :-)
+We will get around 7.500 recursive calls for Example 3.<br/>
+Perl emits a warning when it detects a certain number of recursive calls (which is not really high). I think it's safe in our case to suppress this warning.   
 
 ```perl
 use v5.36;
-use List::MoreUtils qw( frequency );
+no warnings 'recursion';
 
-sub relative_sort( $list1, $list2 ) {
-    my %freq1   = frequency( $list1->@* );
-    my %exists2 = frequency( $list2->@* );
-    return
-        map( ( $_ ) x $freq1{$_}, $list2->@* ),
-        sort { $a <=> $b } grep ! $exists2{$_}, $list1->@*;
+sub making_change( $amount, @coins ) {
+    @coins = qw( 50 25 10 5 1 )
+        unless @coins;
+    my $n = 0;
+    for ( 0..$#coins ) {
+        $n +=
+            $coins[$_] > $amount  ? 0
+            : $coins[$_] == $amount ? 1
+            : making_change( $amount - $coins[$_], @coins[$_..$#coins] );
+    }
+    return $n;
 }
+
+say making_change( 9 );
+say making_change( 15 );
+say making_change( 100 );
 ```
 
-#### **Thank you for the challenge!**
+'In reality', I use this for actually running the examples:
+
+```perl
+use Test2::V0 qw( -no_srand );
+is making_change( 9 ), 2,
+    'Example 1: making_change( 9 ) == 2';
+is making_change( 15 ), 6,
+    'Example 2: making_change( 15 ) == 6';
+is making_change( 100 ), 292,
+    'Example 3: making_change( 100 ) == 292';
+done_testing;
+```
+
+ which gives me this nice output:
+
+```
+ok 1 - Example 1: making_change( 9 ) == 2
+ok 2 - Example 2: making_change( 15 ) == 6
+ok 3 - Example 3: making_change( 100 ) == 292
+1..3
+```
+
+ 
+
+## **Thank you for the challenge!**
