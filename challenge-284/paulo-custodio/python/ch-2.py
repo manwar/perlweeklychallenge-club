@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 284
 #
@@ -29,18 +29,20 @@
 #        @list2 = (1, 0, 3, 2)
 # Ouput: (1, 1, 1, 0, 0, 3, 2, 4, 5)
 
-use Modern::Perl;
-my $input = "@ARGV";
-my($list1, $list2) = split /,/, $input;
-my @list1 = split ' ', $list1;
-my @list2 = split ' ', $list2;
+import sys
 
-my @output;
-while (@list2) {
-    my $n = shift @list2;
-    push @output, grep {$_ == $n} @list1;
-    @list1 = grep {$_ != $n} @list1;
-}
-push @output, sort {$a <=> $b} @list1;
+args = (" ".join(sys.argv[1:])).split(',')
+list1 = [int(x) for x in args[0].split()]
+list2 = [int(x) for x in args[1].split()]
 
-say join ", ", @output;
+output = []
+while len(list2) > 0:
+    n = list2[0]
+    list2 = list2[1:]
+    for x in filter(lambda x:x == n, list1):
+        output.append(x)
+    list1 = list(filter(lambda x:x != n, list1))
+for x in sorted(list1):
+    output.append(x)
+
+print(", ".join([str(x) for x in output]))
