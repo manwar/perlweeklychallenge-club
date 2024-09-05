@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 283
 #
@@ -29,12 +29,17 @@
 # Input: @ints = (4, 3, 1, 1, 1, 4)
 # Output: 3
 
-use Modern::Perl;
+import sys
 
-my @ints = @ARGV;
-my %count;
-for (@ints) {
-    $count{$_}++;
-}
-my($unique) = map {$_->[0]} grep {$count{$_->[0]}==1} map {[$_, $count{$_}]} @ints;
-say $unique;
+ints = [int(x) for x in sys.argv[1:]]
+count = {}
+for x in ints:
+    if x in count:
+        count[x] += 1
+    else:
+        count[x] = 1
+unique = list(filter(lambda x:count[x]==1, ints))
+if len(unique) == 0:
+    print(-1)
+else:
+    print(unique[0])
