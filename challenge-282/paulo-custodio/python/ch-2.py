@@ -34,10 +34,10 @@
 # Input: $str = 'GoO'
 # Ouput: 1
 
-use Modern::Perl;
+import re
+import sys
 
-@ARGV==1 or die "Usage: $0 STR\n";
+str = sys.argv[1].upper()
+str, count = re.subn(r'(.)\1*', r'\1', str)
 
-my $str = uc(shift);
-$str =~ s/(.)\1*/$1/g;
-say length($str)-1;
+print(len(str)-1)

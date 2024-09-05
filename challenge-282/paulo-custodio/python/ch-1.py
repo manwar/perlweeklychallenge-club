@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 282
 #
@@ -27,14 +27,13 @@
 # Input: $int = 10020003
 # Output: 000
 
-use Modern::Perl;
+import re
+import sys
 
-@ARGV==1 or die "Usage: $0 INT\n";
-(my $int = shift) =~ /^\d+$/ or die "Usage: $0 INT\n";
-
-if ($int =~ /((\d)\2\2+)/ && length($1) == 3) {
-    say $1;
-}
-else {
-    say -1;
-}
+found = re.search(r'((\d)\2\2+)', sys.argv[1])
+if found is None:
+    print(-1)
+elif len(found.group(1)) != 3:
+    print(-1)
+else:
+    print(found.group(1))
