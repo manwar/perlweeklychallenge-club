@@ -12,12 +12,12 @@ sub make_change_v1( $amount ) {
 	for my $idx ($coin_amount..$amount) {
 	    $dynamic_arr[ $idx ] += $dynamic_arr[ $idx - $coin_amount ];	    
 	}
-	say "coin: $coin_amount :: " . ( join ', ', @dynamic_arr );
     }
     return $dynamic_arr[ -1 ];
 }
 
 sub make_change_v2( $amount ) {
+    # uses the fact that all coins not pennies are divisible by 5 to be 5 x more efficient
     $amount = int( $amount / 5 );
     return 1 if $amount == 0;
     
@@ -27,7 +27,6 @@ sub make_change_v2( $amount ) {
 	for my $idx ($coin_amount..$amount) {
 	    $dynamic_arr[ $idx ] += $dynamic_arr[ $idx - $coin_amount ];	    
 	}
-	say "coin: $coin_amount :: " . ( join ', ', @dynamic_arr );
     }
     return $dynamic_arr[ -1 ];
 }
