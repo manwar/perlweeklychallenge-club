@@ -1,8 +1,6 @@
 use warnings;
 use strict;
 
-use List::Util qw( max );
-
 use v5.38;
 
 sub make_change_v1( $amount ) {
