@@ -2,20 +2,20 @@
    "title" : {
       "text" : "The Weekly Challenge Language"
    },
-   "subtitle" : {
-      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2024-09-08 20:28:15 GMT"
-   },
-   "tooltip" : {
-      "followPointer" : "true",
-      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
-      "headerFormat" : "<span style=\"font-size:11px\"></span>"
-   },
    "chart" : {
       "type" : "column"
+   },
+   "xAxis" : {
+      "type" : "category"
+   },
+   "legend" : {
+      "enabled" : "false"
    },
    "drilldown" : {
       "series" : [
          {
+            "name" : "2024",
+            "id" : "2024",
             "data" : [
                [
                   "Perl",
@@ -23,19 +23,17 @@
                ],
                [
                   "Raku",
-                  1066
+                  1067
                ],
                [
                   "Blog",
                   888
                ]
-            ],
-            "name" : "2024",
-            "id" : "2024"
+            ]
          },
          {
-            "id" : "2023",
             "name" : "2023",
+            "id" : "2023",
             "data" : [
                [
                   "Perl",
@@ -52,8 +50,6 @@
             ]
          },
          {
-            "id" : "2022",
-            "name" : "2022",
             "data" : [
                [
                   "Perl",
@@ -67,11 +63,13 @@
                   "Blog",
                   1010
                ]
-            ]
+            ],
+            "name" : "2022",
+            "id" : "2022"
          },
          {
-            "id" : "2021",
             "name" : "2021",
+            "id" : "2021",
             "data" : [
                [
                   "Perl",
@@ -88,8 +86,6 @@
             ]
          },
          {
-            "id" : "2020",
-            "name" : "2020",
             "data" : [
                [
                   "Perl",
@@ -103,7 +99,9 @@
                   "Blog",
                   780
                ]
-            ]
+            ],
+            "id" : "2020",
+            "name" : "2020"
          },
          {
             "id" : "2019",
@@ -130,28 +128,12 @@
          "text" : "Total Solutions"
       }
    },
-   "plotOptions" : {
-      "series" : {
-         "dataLabels" : {
-            "format" : "{point.y}",
-            "enabled" : 1
-         },
-         "borderWidth" : 0
-      }
-   },
-   "xAxis" : {
-      "type" : "category"
-   },
-   "legend" : {
-      "enabled" : "false"
-   },
    "series" : [
       {
-         "colorByPoint" : "true",
          "data" : [
             {
+               "y" : 3955,
                "drilldown" : "2024",
-               "y" : 3954,
                "name" : "2024"
             },
             {
@@ -161,26 +143,44 @@
             },
             {
                "y" : 5371,
-               "name" : "2022",
-               "drilldown" : "2022"
+               "drilldown" : "2022",
+               "name" : "2022"
             },
             {
-               "drilldown" : "2021",
                "name" : "2021",
+               "drilldown" : "2021",
                "y" : 4976
             },
             {
+               "name" : "2020",
                "drilldown" : "2020",
-               "y" : 5187,
-               "name" : "2020"
+               "y" : 5187
             },
             {
-               "drilldown" : "2019",
                "name" : "2019",
+               "drilldown" : "2019",
                "y" : 3511
             }
          ],
+         "colorByPoint" : "true",
          "name" : "The Weekly Challenge Languages"
       }
-   ]
+   ],
+   "subtitle" : {
+      "text" : "Click the columns to drilldown the language breakdown. Last updated at 2024-09-08 21:44:22 GMT"
+   },
+   "tooltip" : {
+      "headerFormat" : "<span style=\"font-size:11px\"></span>",
+      "pointFormat" : "<span style=\"color:{point.color}\">Challenge {point.name}</span>: <b>{point.y:f}</b><br/>",
+      "followPointer" : "true"
+   },
+   "plotOptions" : {
+      "series" : {
+         "dataLabels" : {
+            "enabled" : 1,
+            "format" : "{point.y}"
+         },
+         "borderWidth" : 0
+      }
+   }
 }
