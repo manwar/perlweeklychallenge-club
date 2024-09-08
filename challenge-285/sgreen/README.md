@@ -1,3 +1,3 @@
-# The Weekly Challenge 284
+# The Weekly Challenge 285
 
-Blog: [The lucky sort](https://dev.to/simongreennet/the-lucky-sort-1648)
+Blog: [Making connections](https://dev.to/simongreennet/making-connections-13p8)
