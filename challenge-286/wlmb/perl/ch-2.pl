@@ -15,7 +15,7 @@ my @next=@ARGV;
 while(@next>2){
     my @minmax;
     for my($p,$q,$r,$s)(@next){
-	push @minmax, min($p,$q),max($r,$s);
+        push @minmax, min($p,$q),max($r,$s);
     }
     @next=@minmax;
 }
