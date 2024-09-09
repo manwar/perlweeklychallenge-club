@@ -102,7 +102,7 @@ type ints []int
 func (is ints) play() int {
 	for {
 		l := len(is)
-		if l > 2 {
+		if l == 2 {
 			break
 		}
 		var j int
@@ -115,6 +115,7 @@ func (is ints) play() int {
 			j++
 		}
 		is = is[:j]
+		//fmt.Println(is)
 	}
 	return min(is[0], is[1])
 }
@@ -127,7 +128,9 @@ func main() {
 		{ints{2, 1, 4, 5, 6, 3, 0, 2}, 1},
 		{ints{0, 5, 3, 2}, 0},
 		{ints{9, 2, 1, 4, 5, 6, 0, 7, 3, 1, 3, 5, 7, 9, 0, 8}, 2},
+		{ints{22, 11, 4, 5, 6, 3, 0, 2}, 3},
 	} {
 		io.WriteString(os.Stdout, gcmp.Diff(data.input.play(), data.output)) // blank if ok, otherwise, show the difference
+		//fmt.Println("###")
 	}
 }
