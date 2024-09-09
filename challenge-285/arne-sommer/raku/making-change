@@ -1,0 +1,55 @@
+#! /usr/bin/env raku
+
+unit sub MAIN (UInt $amount, :v(:$verbose));
+
+my %value;
+
+%value<penny>       =  1;
+%value<nickel>      =  5;
+%value<dime>        = 10;
+%value<quarter>     = 25;
+%value<half-dollar> = 50;
+
+my $ok = 0;
+
+for 0 .. $amount -> $penny
+{
+  for 0 .. $amount div %value<nickel> -> $nickel
+  {
+    for 0 .. $amount div %value<dime> -> $dime
+    {
+      for 0 .. $amount div %value<quarter> -> $quarter
+      {
+        for 0 .. $amount div %value<half-dollar> -> $half-dollar
+        {
+	  if $amount ==
+	    $penny +
+	    $nickel      * %value<nickel> +
+	    $dime        * %value<dime> +
+	    $quarter     * %value<quarter> +
+	    $half-dollar * %value<half-dollar>
+	  {
+	    $ok++;
+	    say ": " ~
+	    (
+	      prettyish($penny,       'P'),
+              prettyish($nickel,      'N'),
+	      prettyish($dime,        'D'),
+	      prettyish($quarter,     'Q'),
+	      prettyish($half-dollar, 'HD')
+            ).grep( *.defined ).join(" + ") if $verbose;
+	  }
+	}
+      }
+    }
+  }
+}
+
+sub prettyish ($value, $letter)
+{
+  return unless $value;
+  return $letter if $value == 1;
+  return "$value$letter";
+}
+
+say $ok;

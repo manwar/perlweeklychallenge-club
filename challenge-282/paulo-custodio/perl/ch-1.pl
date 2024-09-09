@@ -7,7 +7,8 @@
 #
 # You are given a positive integer, $int, having 3 or more digits.
 #
-# Write a script to return the Good Integer in the given integer or -1 if none found.
+# Write a script to return the Good Integer in the given integer or -1
+# if none found.
 #
 #     A good integer is exactly three consecutive matching digits.
 #
