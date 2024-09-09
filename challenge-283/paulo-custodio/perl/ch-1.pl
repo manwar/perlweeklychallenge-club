@@ -5,7 +5,8 @@
 # Task 1: Unique Number
 # Submitted by: Mohammad Sajid Anwar
 #
-# You are given an array of integers, @ints, where every elements appears more than once except one element.
+# You are given an array of integers, @ints, where every elements appears more
+# than once except one element.
 #
 # Write a script to find the one element that appears exactly one time.
 # Example 1

@@ -43,4 +43,4 @@ while (@list2) {
 }
 push @output, sort {$a <=> $b} @list1;
 
-say "@output";
+say join ", ", @output;

@@ -1,0 +1,93 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/set.difference {
+    4 dict begin
+    /s 0 dict def
+    /b exch def
+    /a exch def
+    a keys {
+        /k exch def
+        b k known not {
+            s k true put
+        } if
+    } forall
+    s
+    end
+} bind def
+
+/keys { % dict -> array of dict keys
+    [ exch
+      {
+          pop
+      } forall
+    ]
+} bind def
+
+/map { % array proc -> array
+    2 dict begin
+    /p exch def
+    [ exch
+      {
+          p
+      } forall
+    ]
+    end
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/toset { % array -> dict of (value, true)
+    << exch
+       {
+           true
+       } forall
+    >>
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+
+% end included library code
+
+/noconnection {
+    0 dict begin
+    /a exch def
+    /os a { 0 get } map toset def
+    /is a { 1 get } map toset def
+    is os set.difference keys 0 get
+    end
+} bind def
+
+(noconnection) test.start
+[[(B) (C)] [(D) (B)] [(C) (A)]] noconnection (A) eq test
+[[(A) (Z)]] noconnection (Z) eq test
+test.end

@@ -9,15 +9,15 @@
 #
 # The string should follow the following rules:
 #
-# ‘a’ can only be followed by ‘e’ and ‘i’.
+# 'a' can only be followed by 'e' and 'i'.
 #
-# ‘e’ can only be followed by ‘i’.
+# 'e' can only be followed by 'i'.
 #
-# ‘i’ can only be followed by ‘a’, ‘e’, ‘o’, and ‘u’.
+# 'i' can only be followed by 'a', 'e', 'o', and 'u'.
 #
-# ‘o’ can only be followed by ‘a’ and ‘u’.
+# 'o' can only be followed by 'a' and 'u'.
 #
-# ‘u’ can only be followed by ‘o’ and ‘e’.
+# 'u' can only be followed by 'o' and 'e'.
 #
 # For example, if the given integer N = 2 then script should print the following
 # strings:
