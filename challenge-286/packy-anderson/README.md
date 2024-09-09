@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Exact Change Only!](https://packy.dardan.com/b/Qq)
+[Perl Weekly Challenge: Spammer Game](https://packy.dardan.com/b/R9)
