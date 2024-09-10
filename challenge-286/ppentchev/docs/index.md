@@ -5,7 +5,7 @@ SPDX-License-Identifier: BSD-2-Clause
 
 # Peter Pentchev's solutions to PWC 286
 
-\[[Home][ringlet-home] | [GitHub][github]
+\[[Home][ringlet-home] | [GitHub][github]\]
 
 ## Overview
 
@@ -56,6 +56,11 @@ the programming language.
 The `tests/` subdirectory contains a Perl test suite that outputs TAP, so that
 it can be run using `prove tests` (or, for the more adventurous, `prove -v tests`).
 
+The Python implementation has its own set of static checkers (linters).
+Those can be run from the `python/` directory using Tox 4.x - either directly
+(`tox run-parallel`) or using [the tox-stages tool][python-tox-stages]
+(`tox-stages run`).
+
 ### Task 1: Self Spammer
 
 This task does not involve any input data (except for the program source itself),
@@ -72,6 +77,12 @@ the word, but it turns out that at least GNU grep has some... idionsyncrasies re
 character sequences like `\<`, `\>`, `'')`, etc, so the output of Perl's `quotemeta`
 function was not suitable for feeding to `grep` directly.
 Eh, let's hope my solution is correct anyway :)
+
+The `tests/03-python-ch-1.t` test first looks for a suitable Python 3 interpreter.
+If the `PYTHON3` environment variable is defined, it is used as the name or path of
+the Python 3 interpreter; oterhwise, `python3` is used.
+The test tries to run the Python 3 interpreter for a `pass` command; if that fails,
+the tests are skipped.
 
 ### Task 2: Order Game
 
@@ -103,16 +114,30 @@ the index of the last supported methods, it is ignored and the program proceeds 
 The `tests/02-perl-ch-2.t` test runs these functions on the Perl implementation and
 produces TAP output suitable for the `prove` tool.
 
+The `tests/03-python-ch-2.t` test first looks for a suitable Python 3 interpreter.
+If the `PYTHON3` environment variable is defined, it is used as the name or path of
+the Python 3 interpreter; oterhwise, `python3` is used.
+The test tries to run the Python 3 interpreter for a `pass` command; if that fails,
+the tests are skipped.
+
 ## Implementation details
 
-## Task 1: Self Spammer
+### Task 1: Self Spammer
 
-### Perl
+#### Perl
 
 We use the [FindBin core module][perl-findbin] and its `$Bin` and `$Script` variables to
 figure out where the program source is.
 
-## Task 2: Order Game
+#### Python
+
+We use Python's built-in `__file__` pseudoglobal variable to find the path to our source file.
+Then we use `random.choice()` to select a random word directly without bothering with
+an index into the words array.
+
+### Task 2: Order Game
+
+#### Perl
 
 The Perl solution has three major functions:
 
@@ -124,6 +149,13 @@ The Perl solution has three major functions:
   The `PWC_METHOD` environment variable is ignored even if set.
 - `parse_stdin` - read a line of numbers from the standard input, break it down into
   a list of integers.
+
+#### Python
+
+The Python solution defines an `OrderIter` class and an `OrderIterState` enumeration.
+The class serves as an iterator, stashing a value and then performing a `min()` or
+`max()` operation on the next value fetched from the supplied input.
+The `OrderState` enumeration is used to keep track of the stash/yield state.
 
 ## Contact
 
@@ -137,3 +169,4 @@ This documentation is hosted at [Ringlet][ringlet-home].
 
 [perl-findbin]: https://perldoc.perl.org/FindBin "The FindBin Perl core module"
 [pwc-286]: https://theweeklychallenge.org/blog/perl-weekly-challenge-286/ "The 286th Perl & Raku Weekly Challenge"
+[python-tox-stages]: https://devel.ringlet.net/devel/test-stages "Run Tox tests in groups"

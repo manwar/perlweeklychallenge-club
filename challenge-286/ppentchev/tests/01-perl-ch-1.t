@@ -17,5 +17,5 @@ use constant PROG => 'perl/scripts/ch-1.pl';
 plan tests => 1;
 
 subtest self_spammer => sub {
-	test_self_spammer PROG;
+	test_self_spammer [PROG];
 };
