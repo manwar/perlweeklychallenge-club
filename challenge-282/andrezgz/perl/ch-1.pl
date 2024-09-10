@@ -38,8 +38,8 @@ sub good_integer {
         my $d = $-[2] - $-[1];
         # if the distance is N, return the sequence
         return $1 x N if $d == N;
-        # otherwise, remove these digits and try again
-        $int = substr $int, $d;
+        # otherwise, remove up to the last captured digit and try again
+        $int = substr $int, $-[2];
     }
     return -1;
 }
