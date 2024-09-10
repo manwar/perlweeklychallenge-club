@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload Text File</title>
+</head>
+<body>
+  <h1>Upload a Text File</h1>
+  <input type="file" id="fileInput" name="file" accept=".html">
+  <script>
+    function handleFileUpload(event) {
+      const file = event.target.files[0];
+      if (!file) {
+        console.error('No file selected');
+        return;
+      }
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const content = e.target.result;
+          const words = content.split(/\s+/);
+	  let num = Math.floor(Math.random()*words.length)
+          console.log(words[num]);
+      };
+      reader.readAsText(file);
+    }
+    const fileInput = document.getElementById('fileInput');
+    fileInput.addEventListener('change', handleFileUpload);
+  </script>
+</body>
+</html>
