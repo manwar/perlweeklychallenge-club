@@ -46,8 +46,8 @@ sub order_game{
 
     my @list = @ARG;
 
-    # Loop while there are more than one elements
-    # in the list
+    # Loop while there is more than one element in
+    # the list
     while(scalar(@list) > 1){
         my $step = 0;
 
