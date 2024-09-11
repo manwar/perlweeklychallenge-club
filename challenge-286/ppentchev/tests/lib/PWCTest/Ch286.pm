@@ -19,6 +19,7 @@ use Test::Command qw();
 use Test::More;
 
 our @EXPORT_OK = qw(
+	find_python3
 	test_order_game
 	test_order_game_count
 	test_order_game_default
@@ -45,8 +46,9 @@ my @TEST_ORDER_SEQUENCES = (
 my $re_single_line = qr{^ (?<word> [^\n\s]+ ) \n $}x;
 
 sub test_self_spammer($;$) {
-	my ($prog, $source) = @_;
-	$source //= $prog;
+	my ($cmd, $source) = @_;
+	$source //= $cmd->[0];
+	my $prog = "\`@{$cmd}\`";
 
 	# So... to test this, we basically have to implement it, right?
 	my @words = do {
@@ -63,7 +65,7 @@ sub test_self_spammer($;$) {
 
 	for my $run (1..NUM_TESTS) {
 		diag "About to run $prog";
-		my $cmd = Test::Command->new(cmd => [$prog]);
+		my $cmd = Test::Command->new(cmd => $cmd);
 		$cmd->exit_is_num(0, "$prog exited with code 0");
 		$cmd->stdout_isnt_eq('', "$prog output something");
 
@@ -72,7 +74,7 @@ sub test_self_spammer($;$) {
 			my $output = $cmd->stdout_value;
 			if ($output !~ $re_single_line) {
 				fail "$prog output a single line containing a single word";
-				skip 1, "no program output to look for in $source";
+				skip "no program output to look for in $source", 1;
 				return;
 			}
 			pass "$prog output a single line containing a single word";
@@ -85,13 +87,14 @@ sub test_self_spammer($;$) {
 }
 
 sub test_order_game_default($) {
-	my ($prog) = @_;
+	my ($cmd) = @_;
+	my $prog = "\`@{$cmd}\`";
 
 	plan tests => 2;
 
-	my $cmd = Test::Command->new(cmd => ['env', 'PWC_FROM_STDIN=', $prog]);
-	$cmd->exit_is_num(0, "$prog exited with code 0");
-	$cmd->stdout_is_eq("1\n0\n2\n", "$prog produced the correct output in autotest mode");
+	my $auto_cmd = Test::Command->new(cmd => ['env', 'PWC_FROM_STDIN=', @{$cmd}]);
+	$auto_cmd->exit_is_num(0, "$prog exited with code 0");
+	$auto_cmd->stdout_is_eq("1\n0\n2\n", "$prog produced the correct output in autotest mode");
 }
 
 sub test_order_game_count() {
@@ -99,7 +102,8 @@ sub test_order_game_count() {
 }
 
 sub test_order_game($ $) {
-	my ($prog, $idx) = @_;
+	my ($cmd, $idx) = @_;
+	my $prog = "\`@{$cmd}\`";
 
 	plan tests => 2;
 
@@ -121,7 +125,7 @@ sub test_order_game($ $) {
 		dup2(fileno $child_out, 1) or die "Child: could not dup2 child_out onto stdout: $!\n";
 
 		$ENV{PWC_FROM_STDIN} = '1';
-		exec { $prog } $prog;
+		exec { $cmd->[0] } @{$cmd};
 		die "Child: could not execute $prog: $!\n";
 	}
 
@@ -141,6 +145,13 @@ sub test_order_game($ $) {
 		die "Parent: waited for pid $pid, yet got status $? for pid $awaited_pid\n";
 	}
 	is $?, 0, "$prog exited with code 0";
+}
+
+sub find_python3()
+{
+	my $prog = $ENV{PYTHON3} || 'python3';
+	my $res = system { $prog } ($prog, '-c', 'pass');
+	(defined $res && $res == 0) ? $prog : undef
 }
 
 1;
