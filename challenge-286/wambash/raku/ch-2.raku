@@ -20,5 +20,5 @@ multi MAIN (Bool :test($)!) {
 }
 
 multi MAIN (+ints) {
-    say order-game +ints
+    say order-game ints
 }
