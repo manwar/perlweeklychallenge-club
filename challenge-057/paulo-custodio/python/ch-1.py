@@ -85,4 +85,3 @@ def dump_tree(tree):
 tree = parse_tree(read_input())
 invert_tree(tree)
 dump_tree(tree)
-
