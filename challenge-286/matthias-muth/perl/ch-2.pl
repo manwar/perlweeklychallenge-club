@@ -14,7 +14,7 @@ use builtin 'indexed';
 no warnings 'experimental::builtin';
 
 # Using map to avoid temporary array.
-# Enumerate pairs, use (index, pair ref) for map loop.
+# Enumerate pairs, use [ index, pair ref ] for map loop.
 sub order_game( @ints ) {
     while ( @ints > 1 ) {
         @ints = map {

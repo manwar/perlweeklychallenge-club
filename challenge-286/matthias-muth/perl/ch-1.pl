@@ -13,8 +13,7 @@ use v5.36;
 sub self_spammer() {
 
     # 'Slurp' the whole source file, and split it into words.
-    ( @ARGV, $/ ) = $0;
-    my @all_words = split " ", <>;
+    my @all_words = split " ", do { ( @ARGV, $/ ) = $0; <> };
 
     # Return a random word.
     return $all_words[ rand( @all_words ) ];
