@@ -30,7 +30,7 @@ while ($out) {
     $out = tail($out);
     push @out, $head;
 }
-say join(" -> ", @out);
+say join(" -> ", @out, "None");
 
 
 sub partition_it {
