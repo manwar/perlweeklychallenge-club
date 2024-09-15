@@ -1,247 +1,267 @@
-# Connected Coins in an Unconnected World
+# The Random Spammer Testing Game
 
-**Challenge 285 solutions in Perl by Matthias Muth**
+**Challenge 286 solutions in Perl by Matthias Muth**
 
-## Task 1: No Connection
+#### Highlights:
 
-> You are given a list of routes, @routes.<br/>
-> Write a script to find the destination with no further outgoing connection.<br/>
+* How to check probabilities of random output using `Test2::V0`.<br/>(Spoiler alert: it's more effort than implementing the solution! But it's worth it!).
+* Recent Perl's `builtin 'indexes'` comes in handy for knowing where we are when we walk through an array.
+
+## Task 1: Self Spammer
+
+> Write a program which outputs one word of its own script / source code at random. A word is anything between whitespace, including symbols.<br/>
 > <br/>
 > Example 1<br/>
-> Input: @routes = (["B","C"], ["D","B"], ["C","A"])<br/>
-> Output: "A"<br/>
-> "D" -> "B" -> "C" -> "A".<br/>
-> "B" -> "C" -> "A".<br/>
-> "C" -> "A".<br/>
-> "A".<br/>
+> If the source code contains a line such as: 'open my $fh, "<", "ch-1.pl" or die;'<br/>
+> then the program would output each of the words { open, my, $fh,, "<",, "ch-1.pl", or, die; }<br/>
+> (along with other words in the source) with some positive probability.<br/>
 > <br/>
 > Example 2<br/>
-> Input: @routes = (["A","Z"])<br/>
-> Output: "Z"<br/>
-
-At first glance, it seems like we need to construct a directed graph, for then analyzing it for finding the end nodes of that graph.
-
-We don't! It's much easier!
-
-If a destination (the right side in a route) has 'no further outgoing connection', this simply means that it does not appear as a source node (on the left side) in any route.
-
-So if we put all routes (source => destination) into a hash, we can use it for an existence check for all destinations.
-
-For constructing that hash from the pairs given in the `$routes` array-ref parameter,
-I use the `unpairs` function from `List::Util`. It takes the pairs and flattens them, so that we can directly assign it to a hash variable.
-
-Then, I look up the 'unconnected destination' by searching through the destinations (which happen to be the `values` of our hash) to find the one that has no route entry in the hash. Actually I use `first` (also from `List::Util`) instead of `grep`, just in case the data contain more that one unconnected destinations. 
-
-```perl
-use v5.36;
-use List::Util qw( unpairs first );
-
-sub no_connection( $routes ) {
-    # Store all given routes in a hash ( source => destination ).
-    my %connections = unpairs $routes->@*;
-    # Return the first destination that does not have a route going out of it.
-    return first { ! exists $connections{$_} } values %connections;
-}
-```
-
-## Task 2: Making Change
-
-> Compute the number of ways to make change for given amount in cents. By using the coins e.g. Penny, Nickel, Dime, Quarter and Half-dollar, in how many distinct ways can the total value equal to the given amount? Order of coin selection does not matter.<br/>
-> A penny (P) is equal to 1 cent.<br/>
-> A nickel (N) is equal to 5 cents.<br/>
-> A dime (D) is equal to 10 cents.<br/>
-> A quarter (Q) is equal to 25 cents.<br/>
-> A half-dollar (HD) is equal to 50 cents.<br/>
-> <br/>
-> Example 1<br/>
-> Input: \$amount = 9<br/>
-> Ouput: 2<br/>
-> 1: 9P<br/>
-> 2: N + 4P<br/>
-> <br/>
-> Example 2<br/>
-> Input: \$amount = 15<br/>
-> Ouput: 6<br/>
-> 1: D + 5P<br/>
-> 2: D + N<br/>
-> 3: 3N<br/>
-> 4: 2N + 5P<br/>
-> 5: N + 10P<br/>
-> 6: 15P<br/>
+> Technically 'print(" hello ");' is *not* an example program, because it does not<br/>
+> assign positive probability to the other two words in the script.<br/>
+> It will never display print(" or ");<br/>
 > <br/>
 > Example 3<br/>
-> Input: \$amount = 100<br/>
-> Ouput: 292<br/>
+> An empty script is one trivial solution, and here is another:<br/>
+> echo "42" > ch-1.pl && perl -p -e '' ch-1.pl<br/>
 
-#### Recursive Approach
+#### Implementation
 
-I decided to use a **recursive approach** for this task.
+My solution is based on these details:
 
-To get good sequences, without permutations (sort of 'coins flipping', pun intended), all sequences start with higher coin values, and each coin is followed only by coins of the same or lower value. This means that whenever we add a given value to a sequence, we need to make sure that *no higher values* will be added to it anymore.
+* The `$0` variable contains the file path of the Perl script that is currently running.
+* The common Perl idiom for 'slurping' a file into a single string (localizing the `@ARGV` array and the `$/` 'input record separator' variable in a `do { }` block, setting them to a file name and to `undef`, respectively, and using the magical `<>` 'diamond operator' to return the whole file content):<br/>
+        `my $text = do { local ( @ARGV, $/ ) = $file; <> };`
+* Using `split` with a string containing a single space character as the first parameter (as opposed to a PATTERN),<br/>
+        `split " ", $text;`<br/>
+    separates text into chunks using *any amount* of whitespace (not just that single space) as a separator.<br/>
+* Using `$array[ rand( @array ) ]` returns a random entry from an array with equal probability.    
 
-How do we do that?
-
-For the parameters of my recursive function, there is the amount to change, for sure, but I also add a list of currently available coins values. This list can (and will!) vary as we descend down into the recursion, as higher values will be excluded.
-
-A call to the function walks through the given coin values, adding up the number of possible sequences starting with each coin:
-
-* If this coin value is higher than the amount, no combination is possible, so nothing is counted.
-* If the coin value matches the amount exactly, we have found a combination, which we count (as 1).
-* If the coin value is lower than the amount, we use that coin and descend into a recursion,
-to find the number of possible combinations for the rest of the amount.<br/>
-For that recursive call, the coin values that we give as parameters
-are only the current coin value and all following lower ones.<br/>
-The number of combinations returned by the recursive call
-is added to the total number of combinations in the current call.
-
-For convenience, we also allow the function to be called with *only* an amount, and *no* list of coin values.
-This is for the main call. In that case, we set the list of coin values to the full (50, 25, 10, 5, 1) from the task description as a default. From then on, in the recursive calls, we always will have a non-empty set of coins as parameters.  
-
-We get around 7.500 recursive calls for Example 3.<br/>
-Perl emits a warning when it detects a certain number of recursive calls (100, which is not really high).<br/>It's safe in our case to suppress this warning.   
+Combining all this, my solution subroutine contains only two lines of real code:
 
 ```perl
 use v5.36;
-no warnings 'recursion';
 
-sub making_change( $amount, @coins ) {
-    @coins = qw( 50 25 10 5 1 )
-        unless @coins;
-    my $n = 0;
-    for ( 0..$#coins ) {
-        $n +=
-            $coins[$_] > $amount  ? 0
-            : $coins[$_] == $amount ? 1
-            : making_change( $amount - $coins[$_], @coins[$_..$#coins] );
-    }
-    return $n;
+sub self_spammer() {
+
+    # 'Slurp' the whole source file, and split it into words.
+    my @all_words = split " ", do { local ( @ARGV, $/ ) = $0; <> };
+
+    # Return a random word.
+    return $all_words[ rand( @all_words ) ];
 }
-
-say making_change( 9 );
-say making_change( 15 );
-say making_change( 100 );
 ```
 
-#### Real testing
+#### Testing
 
-`Test::V0` is a core module now, no need to install it from CPAN anymore!<br/>I love it!<br/>So 'in reality', I run the examples as tests:
+Normally, my solution source file contains the subroutine implementing the solution, and one test for each example from the task description, written using `Test2::V0` (which is a core module now! Hooray!).
+
+For this task, the tests have to look differently.<br/>As the subroutine returns a random word from the source file, we cannot just test for a given expected result.<br/>
+Instead, we should test that '*the program outputs each of the words in the source with some positive probability*'.
+
+How can we do that?
+
+With a high enough number of calls,
+each word of the source file should be returned at least once.
+So our testing can be set up like this:
+
+* Determine all the words in the source file, because in the end, we want to see them all.<br/>(This can be implemented very similarly to what is done in the solution procedure, reading the source file and splitting into words, but this time we use `uniq` to get each different word only once.)
+  
+* Repeatedly call the `self_spammer()` function to get a random word.<br/>Collect them until we have received as many different words
+  as we have determined to be contained in the file.
+  
+* Stop the repetition when we hit a reasonably chosen limit for the number of calls, so that we won't loop forever if anything goes wrong.
+  
+*  Use a `Test2::V0` comparison function (actually: the very versatile `is`) to compare the list of words that we received
+   to the list of words that we know to be in the file. In particular, we do a *set* comparison using a `bag()`  with `item()`s and `end()`.
+
+If this test succeeds, we will have received every different word at least once, which proves that there is a greater-than-zero probability for each word to be returned by our function.
+
+This is the testing section:
 
 ```perl
-use Test2::V0 qw( -no_srand );
-is making_change( 9 ), 2,
-    'Example 1: making_change( 9 ) == 2';
-is making_change( 15 ), 6,
-    'Example 2: making_change( 15 ) == 6';
-is making_change( 100 ), 292,
-    'Example 3: making_change( 100 ) == 292';
+use Test2::V0;
+use List::Util qw( uniq );
+
+# Determine all *different* words in the source file
+# (very similar to how we did before...).
+my @word_list = uniq split " ", do { local ( @ARGV, $/ ) = $0; <> };
+
+# Repeatedly call the solution function to get random words,
+# collecting them until we have as many different words as we know are
+# contained in the file,
+# or until we hit a number of calls limit
+# (so that we won't loop forever if anything goes wrong).
+my ( $n_calls, $max_n_calls ) = ( 0, 10000 );
+my %found;
+$found{ self_spammer() } = 1
+    until scalar %found == scalar @word_list
+        || ++$n_calls >= $max_n_calls;
+
+note "$n_calls calls";
+note "found ", scalar %found,
+    " of ", scalar @word_list, " different words in file";
+
+is [ keys %found ],
+    bag {
+        item( $_ )
+            for @word_list;
+        end();
+    },
+    "all words were found at least once, and no unexpected words were found";
+
 done_testing;
 ```
 
- which gives me this nice output:
+A test run might result in this output (the number of calls will vary from run to run!):
 
+```bash
+# 1461 calls
+# found 151 of 151 different words in file
+ok 1 - all words were found at least once, and no unexpected words were found
+1..1
 ```
-ok 1 - Example 1: making_change( 9 ) == 2
-ok 2 - Example 2: making_change( 15 ) == 6
-ok 3 - Example 3: making_change( 100 ) == 292
+
+As often, here the effort for testing is larger than the effort for the implementation.<br/>
+But it feels good to have a well tested challenge solution!
+
+
+
+## Task 2: Order Game
+
+> You are given an array of integers, @ints, whose length is a power of 2.<br/>
+> Write a script to play the order game (min and max) and return the last element.<br/>
+> <br/>
+> Example 1<br/>
+> Input: @ints = (2, 1, 4, 5, 6, 3, 0, 2)<br/>
+> Output: 1<br/>
+> Operation 1:<br/>
+>     min(2, 1) = 1<br/>
+>     max(4, 5) = 5<br/>
+>     min(6, 3) = 3<br/>
+>     max(0, 2) = 2<br/>
+> Operation 2:<br/>
+>     min(1, 5) = 1<br/>
+>     max(3, 2) = 3<br/>
+> Operation 3:<br/>
+>     min(1, 3) = 1<br/>
+> <br/>
+> Example 2<br/>
+> Input: @ints = (0, 5, 3, 2)<br/>
+> Output: 0<br/>
+> Operation 1:<br/>
+>     min(0, 5) = 0<br/>
+>     max(3, 2) = 3<br/>
+> Operation 2:<br/>
+>     min(0, 3) = 0<br/>
+> <br/>
+> Example 3<br/>
+> Input: @ints = (9, 2, 1, 4, 5, 6, 0, 7, 3, 1, 3, 5, 7, 9, 0, 8)<br/>
+> Output: 2<br/>
+> Operation 1:<br/>
+>     min(9, 2) = 2<br/>
+>     max(1, 4) = 4<br/>
+>     min(5, 6) = 5<br/>
+>     max(0, 7) = 7<br/>
+>     min(3, 1) = 1<br/>
+>     max(3, 5) = 5<br/>
+>     min(7, 9) = 7<br/>
+>     max(0, 8) = 8<br/>
+> Operation 2:<br/>
+>     min(2, 4) = 2<br/>
+>     max(5, 7) = 7<br/>
+>     min(1, 5) = 1<br/>
+>     max(7, 8) = 8<br/>
+> Operation 3:<br/>
+>     min(2, 7) = 2<br/>
+>     max(1, 8) = 8<br/>
+> Operation 4:<br/>
+>     min(2, 8) = 2<br/>
+
+#### Approach
+
+I follow the suggestion given by the example descriptions:
+
+* Walk through the array and take the minimums and the maximums of pairs of numbers.<br/>
+  This reduces the array to half its size.
+* Execute this operation repeatedly, until there is only one final number left.
+
+#### Implementation
+
+As we walk through pairs of numbers from the array, we need to decide whether we shall take the minimum or the maximum of each pair. If we give each pair an index number, we can use `min()` on pairs with even indexes, and `max()` on pairs with odd indexes.<br/>So let's first split the array into pairs, and enumerate the pairs.
+
+Similar to Python's nice `enumerate()` iterator, Perl now has the `indexed` 'builtin' function, which does something very similar (it has been available since Perl 5.36 as an 'experimental' feature, and 'stable' with Perl 5.40).
+
+So let's first create pairs, using the `pairs` function from `List::Util`, then enumerate them using `indexed`.<br/>For the `@ints` array from Example 1 `( 2, 1, 4, 5, 6, 3, 0, 2 )`,<br/>
+    `indexed pairs @ints`<br/>
+results in this:<br/>
+    `( 0, [ 2, 1 ], 1, [ 4, 5 ], 2, [ 6, 3 ], 3, [ 0, 2 ] )`.
+
+Now lets use `pairs` again:<br/>
+    `pairs indexed pairs @ints`<br/>
+to get this sequence:<br/>
+    `[ 0, [ 2, 1 ] ],`<br/>
+    `[ 1, [ 4, 5 ] ],`<br/>
+    `[ 2, [ 6, 3 ] ],`<br/>
+    `[ 3, [ 0, 2 ] ]`.
+
+With this, it is easy to do the 'min-max-halve-the-array' operation:
+
+```perl
+        @ints = map {
+            my ( $index, $pair ) = $_->@*;
+            $index % 2 == 0
+            ? min( $pair->@* )
+            : max( $pair->@* );
+        } pairs indexed pairs @ints;
+```
+
+Repeating it until we have reduced the array to one single element, this is my solution:
+
+```perl
+use v5.36;
+
+use List::Util qw( pairs min max );
+use builtin 'indexed';
+no warnings 'experimental::builtin';
+
+sub order_game( @ints ) {
+    while ( @ints > 1 ) {
+        @ints = map {
+            my ( $index, $pair ) = $_->@*;
+            $index % 2 == 0
+            ? min( $pair->@* )
+            : max( $pair->@* );
+        } pairs indexed pairs @ints;
+    }
+    return $ints[0];
+}
+```
+
+#### Testing 
+
+The testing section looks a bit simpler here:
+
+```perl
+use Test2::V0 qw( -no_srand );
+is order_game( 2, 1, 4, 5, 6, 3, 0, 2 ), 1,
+    'Example 1: order_game( 2, 1, 4, 5, 6, 3, 0, 2 ) == 1';
+is order_game( 0, 5, 3, 2 ), 0,
+    'Example 2: order_game( 0, 5, 3, 2 ) == 0';
+is order_game( 9, 2, 1, 4, 5, 6, 0, 7, 3, 1, 3, 5, 7, 9, 0, 8 ), 2,
+    'Example 3: order_game( 9, 2, 1, 4, 5, 6, 0, 7, 3, 1, 3, 5, 7, 9, 0, 8 ) == 2';
+done_testing;
+```
+
+Resulting in this reassuring output:
+
+```text
+ok 1 - Example 1: order_game( 2, 1, 4, 5, 6, 3, 0, 2 ) == 1
+ok 2 - Example 2: order_game( 0, 5, 3, 2 ) == 0
+ok 3 - Example 3: order_game( 9, 2, 1, 4, 5, 6, 0, 7, 3, 1, 3, 5, 7, 9, 0, 8 ) == 2
 1..3
 ```
 
-#### Using `Memoize` to reduce recursive call counts
-
-Computing the number of sequences for smaller coin values over and over again, as it happens with the recursive function, is a waste of resources. Around 7500 calls for changing the amount of 100 is still ok, but the number of calls will grow exponentially with larger amount.
-
-Two simple lines can solve that problem:
-
-```perl
-use Memoize;
-memoize( 'making_change' );
-```
-
-This reduces the number of calls drastically.
-
-I have instrumented my recursive function with a call count, that I can print out after the main call of the function has run. The call count is reset for each main call (one without coin parameters, remember):
-
-```perl
-my $call_count = 0;
-
-sub making_change( $amount, @coins ) {
-
-    $call_count = 0
-        unless @coins;
-    ++$call_count;
-
-    @coins = qw( 50 25 10 5 1 )
-        unless @coins;
-
-    my $n = 0;
-    for ( 0..$#coins ) {
-        $n +=
-            $coins[$_] > $amount    ? 0
-            : $coins[$_] == $amount ? 1
-            : making_change( $amount - $coins[$_], @coins[$_..$#coins] );
-    }
-    return $n;
-}
-
-```
-
-Then I have put the tests into a loop of two rounds, one without and one with 'memoizing':
-
-```perl
-use Test2::V0 qw( -no_srand );
-use Memoize;
-
-for my $round ( 1..2 ) {
-
-    if ( $round == 1 ) {
-        note "without Memoize:";
-    }
-    elsif ( $round == 2 ) {
-        note "using Memoize:";
-        memoize( 'making_change' );
-    }
-
-    is making_change( 9 ), 2,
-        'Example 1: making_change( 9 ) == 2';
-    note "call_count $call_count";
-    is making_change( 15 ), 6,
-        'Example 2: making_change( 15 ) == 6';
-    note "call_count $call_count";
-    is making_change( 100 ), 292,
-        'Example 3: making_change( 100 ) == 292';
-    note "call_count $call_count";
-
-    note "";
-}
-done_testing;
-```
-
-The call count is reduced *drastically*:
-
-```shell
-# without Memoize:
-ok 1 - Example 1: making_change( 9 ) == 2
-# call_count 13
-ok 2 - Example 2: making_change( 15 ) == 6
-# call_count 35
-ok 3 - Example 3: making_change( 100 ) == 292
-# call_count 7455
-# 
-# using Memoize:
-ok 4 - Example 1: making_change( 9 ) == 2
-# call_count 10
-ok 5 - Example 2: making_change( 15 ) == 6
-# call_count 10
-ok 6 - Example 3: making_change( 100 ) == 292
-# call_count 122
-# 
-1..6
-```
-
-From `7455` down to `122`!
-
-Performance tuning can be so easy!
 
 
-
-## **Thank you for the challenge!**
+#### **Thank you for the challenge!**
