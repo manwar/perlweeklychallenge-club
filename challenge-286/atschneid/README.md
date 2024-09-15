@@ -1,9 +1,9 @@
-# PWC 285
+# PWC 286
 
-**Challenge 285 solutions by Andrew Schneider**
+**Challenge 286 solutions by Andrew Schneider**
 
-[PWC 285](https://theweeklychallenge.org/blog/perl-weekly-challenge-285/)
+[PWC 286](https://theweeklychallenge.org/blog/perl-weekly-challenge-286/)
 
-Dyanmic programming for challenge 2. Whoa!
+Good stuff this week
 
 Thanks for the challenges!
