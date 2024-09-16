@@ -9,7 +9,7 @@
 #
 # Write a script to find the number of times user had to change the key to type
 # the given string. Changing key is defined as using a key different from the
-# last used key. The shift and caps lock keys won’t be counted.
+# last used key. The shift and caps lock keys won't be counted.
 #
 # Example 1
 #

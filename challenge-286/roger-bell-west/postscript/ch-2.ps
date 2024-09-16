@@ -1,0 +1,86 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/rotor {
+    5 dict begin
+    /delta exch def
+    /size exch def
+    dup length /len exch def
+    /ar exch def
+    /ix 0 def
+    [
+        {
+            ix size add len gt {
+                exit
+            } if
+            ar ix size getinterval
+            /ix ix size delta add add def
+        } loop
+    ]
+    end
+} bind def
+
+
+% end included library code
+
+/ordergame {
+    0 dict begin
+    /p exch def
+    {
+        p length 1 le {
+            exit
+        } if
+        /mm true def
+        [
+            p 2 -1 rotor {
+                aload pop
+                mm {
+                    min
+                } {
+                    max
+                } ifelse
+                /mm mm not def
+            } forall
+        ] /p exch def
+    } loop
+    p 0 get
+    end
+} bind def
+
+(ordergame) test.start
+[2 1 4 5 6 3 0 2] ordergame 1 eq test
+[0 5 3 2] ordergame 0 eq test
+[9 2 1 4 5 6 0 7 3 1 3 5 7 9 0 8] ordergame 2 eq test
+test.end

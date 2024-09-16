@@ -1,0 +1,71 @@
+%!PS
+
+% begin included library code
+% see https://codeberg.org/Firedrake/postscript-libraries/
+/test.start {
+    print (:) print
+    /test.pass 0 def
+    /test.count 0 def
+} bind def
+
+/test {
+    /test.count test.count 1 add def
+    {
+        /test.pass test.pass 1 add def
+    } {
+        ( ) print
+        test.count (....) cvs print
+        (-fail) print
+    } ifelse
+} bind def
+
+/dget {
+    3 1 roll
+    2 copy
+    known {
+        get exch pop
+    } {
+        pop pop
+    } ifelse
+} bind def
+
+/test.end {
+    ( ) print
+    test.count 0 gt {
+        (Passed ) print
+        test.pass (...) cvs print
+        (/) print
+        test.count (...) cvs print
+        ( \() print
+        test.pass 100 mul test.count idiv (...) cvs print
+        (%\)) print
+        (\r\n) print
+    } if
+} bind def
+
+
+% end included library code
+
+/digitcountvalue {
+    0 dict begin
+    /a exch def
+    /c 0 dict def
+    a {
+        /n exch def
+        c n c n 0 dget 1 add put
+    } forall
+    true
+    0 1 a length 1 sub {
+        /ix exch def
+        a ix get c ix 0 dget ne {
+            pop false
+            exit
+        } if
+    } for
+    end
+} bind def
+
+(digitcountvalue) test.start
+[1 2 1 0] digitcountvalue test
+[0 3 0] digitcountvalue not test
+test.end

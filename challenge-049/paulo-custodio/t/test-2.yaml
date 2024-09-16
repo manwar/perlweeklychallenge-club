@@ -1,0 +1,23 @@
+- setup:
+  cleanup:
+  args:
+  input:
+  output:   |
+            |Create cache, capacity=>3
+            |Cache=
+            |Set cache:1,3
+            |Cache=(1=>3)
+            |Set cache:2,5
+            |Cache=(1=>3)(2=>5)
+            |Set cache:3,7
+            |Cache=(1=>3)(2=>5)(3=>7)
+            |Get cache 2=>5
+            |Cache=(1=>3)(3=>7)(2=>5)
+            |Get cache 1=>3
+            |Cache=(3=>7)(2=>5)(1=>3)
+            |Get cache 4=>-1
+            |Cache=(3=>7)(2=>5)(1=>3)
+            |Set cache:4,9
+            |Cache=(2=>5)(1=>3)(4=>9)
+            |Get cache 3=>-1
+            |Cache=(2=>5)(1=>3)(4=>9)

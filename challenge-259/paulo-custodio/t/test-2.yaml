@@ -1,0 +1,23 @@
+- setup:
+  cleanup:
+  args:     '{%  id   field1=\"value1\"    field2=\"value2\"  field3=42 %}'
+  input:
+  output:   |
+            |{
+            |  fields => { field1 => "value1", field2 => "value2", field3 => 42 },
+            |  name   => "id",
+            |}
+- setup:
+  cleanup:
+  args:     '{%  youtube title=\"Title \\\"quoted\\\" done\" %}'
+  input:
+  output:   { fields => { title => "Title \"quoted\" done" }, name => "youtube" }
+- setup:
+  cleanup:
+  args:     '{%  youtube title=\"Title with escaped backslash \\\\\" %}'
+  input:
+  output:   |
+            |{
+            |  fields => { title => "Title with escaped backslash \\" },
+            |  name   => "youtube",
+            |}
