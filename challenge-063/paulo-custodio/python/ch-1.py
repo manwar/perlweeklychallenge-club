@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 063
 #
@@ -24,20 +24,22 @@
 # last_word("spaces in regexp won't match", qr/in re/);      #  undef
 # last_word( join(' ', 1..1e6),             qr/^(3.*?){3}/); # '399933'
 
-use Modern::Perl;
-use Test::More;
+import re
+import unittest
 
-is last_word('  hello world',                qr/[ea]l/),        'hello';
-is last_word("Don't match too much, Chet!",  qr/ch.t/i),        'Chet!';
-is last_word("spaces in regexp won't match", qr/in re/),        undef;
-is last_word( join(' ', 1..1e6),             qr/^(3.*?){3}/),   '399933';
-done_testing;
+def last_word(text, pattern):
+    words = text.split(' ')
+    for word in reversed(words):
+        if re.search(pattern, word, re.IGNORECASE):
+            return word
+    return None
 
-sub last_word {
-    my($text, $re) = @_;
-    my @words = split(' ', $text);
-    for (reverse @words) {
-        return $_ if /$re/;
-    }
-    return;
-}
+class TestLastWord(unittest.TestCase):
+    def test_last_word(self):
+        self.assertEqual(last_word('  hello world', r'[ea]l'), 'hello')
+        self.assertEqual(last_word("Don't match too much, Chet!", r'ch.t'), 'Chet!')
+        self.assertIsNone(last_word("spaces in regexp won't match", r'in re'))
+        self.assertEqual(last_word(' '.join(str(i) for i in range(1, int(1e6) + 1)), r'^(3.*?){3}'), '399933')
+
+if __name__ == '__main__':
+    unittest.main()
