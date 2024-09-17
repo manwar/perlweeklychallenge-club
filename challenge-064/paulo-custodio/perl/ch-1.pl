@@ -2,11 +2,11 @@
 
 # Challenge 064
 #
-# TASK #1 › Minimum Sum Path
+# TASK #1 > Minimum Sum Path
 # Submitted by: Mohammad S Anwar
 # Reviewed by: Ryan Thompson
 #
-# Given an m × n matrix with non-negative integers, write a script to find a
+# Given an m x n matrix with non-negative integers, write a script to find a
 # path from top left to bottom right which minimizes the sum of all numbers
 # along its path. You can only move either down or right at any point in time.
 #

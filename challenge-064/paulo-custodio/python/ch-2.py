@@ -31,25 +31,22 @@
 #
 # 0 as none matching word found.
 
-use Modern::Perl;
-use Math::Combinatorics 'permute';
-use Test::More;
+import itertools
+import unittest
 
-is word_break("perlweeklychallenge", "weekly", "challenge", "perl"),
-              "weekly challenge perl";
-is word_break("perlandraku", "python", "ruby", "haskell"),
-              "0";
-done_testing;
+def word_break(S, *W):
+    k = len(W)
+    for words in itertools.permutations(W):
+        if ''.join(words) == S:
+            return ' '.join(W)
+    return "0"
 
+class TestWordBreak(unittest.TestCase):
+    def test_word_break(self):
+        self.assertEqual(word_break("perlweeklychallenge", "weekly", "challenge", "perl"),
+                         "weekly challenge perl")
+        self.assertEqual(word_break("perlandraku", "python", "ruby", "haskell"),
+                         "0")
 
-sub word_break {
-    my($S, @W) = @_;
-    my $k = scalar(@W);
-    for (permute(@W)) {
-        my @words = @$_;
-        if (join('', @words) eq $S) {
-            return "@W";
-        }
-    }
-    return "0";
-}
+if __name__ == '__main__':
+    unittest.main()
