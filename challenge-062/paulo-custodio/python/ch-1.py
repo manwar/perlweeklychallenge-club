@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 062
 #
@@ -44,28 +44,28 @@
 # Name@example.org
 # name@example.org
 
-use Modern::Perl;
-use Getopt::Std;
+import sys
+from getopt import getopt
 
-our $opt_u;
-getopts('u');
-chomp(my @mails = <>);
+opt_u = False
+opts, args = getopt(sys.argv[1:], 'u')
+for o, a in opts:
+    if o == '-u':
+        opt_u = True
 
-my @sorted =
-    map {join '@', @$_}                     # join mailbox and domain
-    sort {lc($a->[1]) cmp lc($b->[1])}      # sort domain case insensitive
-    sort {$a->[0] cmp $b->[0]}              # sort mailbox
-    map {[split '@', $_]}                   # split mailbox and domain
-    @mails;
+mails = [line.strip() for line in sys.stdin]
 
-if ($opt_u) {
-    my %seen;
-    @sorted =
-        map {join '@', @$_}                 # join mailbox and domain
-        grep {my $key = $_->[0].'@'.lc($_->[1]);
-              !$seen{$key}++}               # filter only not seen
-        map {[split '@', $_]}               # split mailbox and domain
-        @sorted;
-}
+sorted_mails = sorted(
+    map(lambda x: [x] + x.split('@'), mails),
+    key=lambda x: (x[2].lower(), x[1])
+)
 
-say join("\n", @sorted);
+if opt_u:
+    seen = set()
+    sorted_mails = [
+        [f"{mail[0]}"]
+        for mail in sorted_mails
+        if (key := f"{mail[1]}@{mail[2].lower()}") not in seen and not seen.add(key)
+    ]
+
+print("\n".join([x[0] for x in sorted_mails]))
