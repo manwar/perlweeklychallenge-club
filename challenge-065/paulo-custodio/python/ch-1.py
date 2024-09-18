@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 065
 #
@@ -19,20 +19,16 @@
 # Output:
 #     13, 22, 31, 40
 
-use Modern::Perl;
-use List::Util 'sum';
+import sys
+from itertools import product
 
-my($N, $S) = @ARGV;
-my @out = digits_sum($N, $S);
-say join(", ", @out);
+def digits_sum(N, S):
+    out = []
+    for n in range(10**(N-1), 10**N):
+        if sum(int(d) for d in str(n)) == S:
+            out.append(n)
+    return out
 
-
-sub digits_sum {
-    my($N, $S) = @_;
-    my @out;
-    for my $n (10 ** ($N-1) .. (10 ** $N)-1) {
-        my @d = split //, $n;
-        push @out, $n if sum(@d)==$S;
-    }
-    return @out;
-}
+N, S = map(int, sys.argv[1:])
+out = digits_sum(N, S)
+print(", ".join(map(str, out)))

@@ -2,7 +2,7 @@
 
 # Challenge 065
 #
-# TASK #2 › Palindrome Partition
+# TASK #2 > Palindrome Partition
 # Submitted by: Mohammad S Anwar
 # Reviewed by: Ryan Thompson
 #
@@ -10,7 +10,7 @@
 # gives Palindrome. Return -1 if none found.
 #
 # Please make sure, partition should not overlap. For example, for given string
-# “abaab”, the partition “aba” and “baab” would not be valid, since they overlap.
+# "abaab", the partition "aba" and "baab" would not be valid, since they overlap.
 #
 # Example 1
 # Input: $S = 'aabaab'
