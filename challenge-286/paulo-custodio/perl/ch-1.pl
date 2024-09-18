@@ -30,4 +30,10 @@ use Modern::Perl;
 use Path::Tiny;
 use List::Util 'shuffle';
 
-say((shuffle(split " ", path($0)->slurp))[0]);
+if (@ARGV) {
+    my $n = shift // 0;
+    say((split " ", path($0)->slurp)[$n]);
+}
+else {
+    say((shuffle(split " ", path($0)->slurp))[0]);
+}

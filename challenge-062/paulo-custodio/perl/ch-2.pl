@@ -2,10 +2,10 @@
 
 # Challenge 062
 #
-# TASK #2 › N Queens
+# TASK #2 > N Queens
 # Submitted by: Ryan Thompson
 #
-# A standard 8×8 chessboard has 64 squares. The Queen is a chesspiece that can
+# A standard 8x8 chessboard has 64 squares. The Queen is a chesspiece that can
 # attack in 8 directions, as shown by the green shaded squares below:
 #
 #
@@ -15,15 +15,15 @@
 # overlap). In fact, there are multiple ways to do so, and this is a favourite
 # undergraduate assignment in computer science.
 #
-# But here at PWC, we’re going to take it into the next dimension!
+# But here at PWC, we're going to take it into the next dimension!
 #
 # Your job is to write a script to work with a three dimensional chess cube,
-# M×M×M in size, and find a solution that maximizes the number of queens that
+# MxMxM in size, and find a solution that maximizes the number of queens that
 # can be placed in that cube without attacking each other. Output one possible
 # solution.
 #
 # Example
-# A trivial 2×2×2 solution might look like this (1 = queen, 0 = empty):
+# A trivial 2x2x2 solution might look like this (1 = queen, 0 = empty):
 #
 # [
 #     [[1,0],     # Layer 1

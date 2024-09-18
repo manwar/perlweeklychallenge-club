@@ -1,0 +1,48 @@
+# SPDX-FileCopyrightText: Peter Pentchev <roam@ringlet.net>
+# SPDX-License-Identifier: BSD-2-Clause
+
+theme:
+  name: material
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - toc.integrate
+    - toc.follow
+    - content.code.copy
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/weather-night
+        name: Switch to light mode
+site_name: pwc-287-ppentchev
+repo_url: https://github.com/manwar/perlweeklychallenge-club/tree/master/challenge-287/ppentchev
+repo_name: perlweeklychallenge-club
+site_author: ppentchev
+site_url: https://devel.ringlet.net/misc/perlweeklychallenge-club/287/
+site_dir: site/docs
+nav:
+  - 'index.md'
+markdown_extensions:
+  - toc:
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite:
+  - pymdownx.superfences:
+plugins:
+  - mkdocstrings:
+      default_handler: python
+      handlers:
+        python:
+          paths: [python/src]
+          options:
+            heading_level: 3
+            show_root_heading: true
+  - search
+# watch:
+#   - 'src/parse_stages'

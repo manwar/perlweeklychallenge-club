@@ -2,7 +2,7 @@
 
 # Challenge 061
 #
-# TASK #1 › Product SubArray
+# TASK #1 > Product SubArray
 # Reviewed by: Ryan Thompson
 # Given a list of 4 or more numbers, write a script to find the contiguous
 # sublist that has the maximum product. The length of the sublist is irrelevant;

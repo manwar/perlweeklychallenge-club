@@ -2,7 +2,7 @@
 
 # Challenge 062
 #
-# TASK #1 › Sort Email Addresses
+# TASK #1 > Sort Email Addresses
 # Submitted by: Neil Bowers
 # Reviewed by: Ryan Thompson
 #
@@ -11,7 +11,7 @@
 # the left of the @ (known as the mailbox).
 #
 # Note that the domain is case-insensitive, while the mailbox part is case
-# sensitive. (Some email providers choose to ignore case, but that’s another
+# sensitive. (Some email providers choose to ignore case, but that's another
 # matter entirely.)
 #
 # If your script is invoked with arguments, it should treat them as file names

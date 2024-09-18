@@ -2,7 +2,7 @@
 
 # Challenge 060
 #
-# TASK #2 › Find Numbers
+# TASK #2 > Find Numbers
 # Reviewed by: Ryan Thompson
 # Write a script that accepts list of positive numbers (@L) and two positive
 # numbers $X and $Y.
