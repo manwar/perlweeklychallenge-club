@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 061
 #
@@ -24,24 +24,23 @@
 # 255.255.11.135
 # 255.255.111.35
 
-use Modern::Perl;
+import re
+import sys
 
-my $digits = shift;
-partition("", $digits);
+def partition1(prefix, digits):
+    if re.search(r'^(\d+\.){4}$', prefix):
+        if digits == "":
+            prefix = prefix[:-1]
+            print(prefix)
+    else:
+        for l in range(1, 4):
+            if l <= len(digits):
+                part = digits[:l]
+                if int(part) <= 255:
+                    partition1(prefix+part+".", digits[l:])
 
+def partition(digits):
+    partition1("", digits)
 
-sub partition {
-    my($prefix, $digits) = @_;
-    if ($prefix =~ /^(\d+\.){4}$/ && $digits eq '') {
-        $prefix =~ s/\.$//;
-        say $prefix;
-    }
-    else {
-        for my $len (1..3) {
-            next if $len > length($digits);
-            my $part = substr($digits, 0, $len);
-            next if $part > 255;
-            partition($prefix.$part.".", substr($digits, $len));
-        }
-    }
-}
+digits = sys.argv[1]
+partition(digits)

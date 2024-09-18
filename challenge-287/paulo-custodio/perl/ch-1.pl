@@ -53,24 +53,18 @@ use Modern::Perl;
 say steps_to_strong(shift // "");
 
 sub steps_to_strong {
-    my($pass) = @_;
-
-    my %avail_chars;
-    $avail_chars{$_} = 1 for ('0'..'9', 'A'..'Z', 'a'..'z');
-    delete $avail_chars{$_} for (split //, $pass);
+    my($password) = @_;
 
     my $steps = 0;
-    while (!is_strong($pass)) {
-        if ($pass =~ /(.)\1\1+/) {
+    while (!is_strong($password)) {
+        my $new_ch = next_char($password);
+
+        if ($password =~ /(.)\1\1+/) {
             my $ch = $1;
-            my $new_ch = (keys %avail_chars)[0];
-            $pass =~ s/$ch{3}/$ch$ch$new_ch$ch/;
-            delete $avail_chars{$new_ch};
+            $password =~ s/$ch{3}/$ch$ch$new_ch$ch/;
         }
         else {
-            my $new_ch = (keys %avail_chars)[0];
-            $pass .= $new_ch;
-            delete $avail_chars{$new_ch};
+            $password .= $new_ch;
         }
         $steps++;
     }
@@ -80,4 +74,26 @@ sub steps_to_strong {
 sub is_strong {
     local($_) = @_;
     return length($_)>=6 && /[a-z]/ && /[A-Z]/ && /[0-9]/ && !/(.)\1\1+/;
+}
+
+sub next_char {
+    my($password) = @_;
+
+    my $avail_chars = "";
+    if ($password !~ /[0-9]/) {
+        $avail_chars .= join "", '0'..'9';
+    }
+    if ($password !~ /[A-Z]/) {
+        $avail_chars .= join "", 'A'..'Z';
+    }
+    if ($password !~ /[a-z]/) {
+        $avail_chars .= join "", 'a'..'z';
+    }
+    $avail_chars .= join "", '0'..'9', 'A'..'Z', 'a'..'z';
+
+    for my $ch (split //, $password) {
+        $avail_chars =~ s/$ch//g;
+    }
+
+    return substr($avail_chars, 0, 1);
 }

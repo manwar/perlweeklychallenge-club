@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 286
 #
@@ -26,14 +26,19 @@
 # An empty script is one trivial solution, and here is another:
 # echo "42" > ch-1.pl && perl -p -e '' ch-1.pl
 
-use Modern::Perl;
-use Path::Tiny;
-use List::Util 'shuffle';
+import sys
+from random import shuffle
 
-if (@ARGV) {
-    my $n = shift // 0;
-    say((split " ", path($0)->slurp)[$n]);
-}
-else {
-    say((shuffle(split " ", path($0)->slurp))[0]);
-}
+n = -1
+if len(sys.argv) == 2:
+    n = int(sys.argv[1])
+
+f = open(sys.argv[0], "r")
+text = f.read()
+words = text.split()
+
+if n == -1:
+    shuffle(words)
+    print(words[0])
+else:
+    print(words[n])

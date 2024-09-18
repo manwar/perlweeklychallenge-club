@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 063
 #
@@ -31,18 +31,17 @@
 # Rotation 7: you get xyxx by moving yxx to the end which is same as the given word.
 # Output: 7
 
-use Modern::Perl;
+import sys
 
-say count_rotations(shift||"");
+def count_rotations(in_str=""):
+    count = 0
+    str_val = in_str
+    while True:
+        count += 1
+        move = count % len(str_val)
+        str_val = str_val[move:] + str_val[:move]
+        if in_str == str_val:
+            break
+    return count
 
-sub count_rotations {
-    my($in) = @_;
-    my $count = 0;
-    my $str = $in;
-    do {
-        $count++;
-        my $move = $count % length($str);
-        $str = substr($str, $move).substr($str, 0, $move);
-    } while ($in ne $str);
-    return $count;
-}
+print(count_rotations(sys.argv[1] if len(sys.argv) > 1 else ""))

@@ -2,13 +2,13 @@
 
 # Challenge 060
 #
-# TASK #1 › Excel Column
+# TASK #1 > Excel Column
 # Reviewed by: Ryan Thompson
 # Write a script that accepts a number and returns the Excel Column Name it
 # represents and vice-versa.
 #
 # Excel columns start at A and increase lexicographically using the 26 letters
-# of the English alphabet, A..Z. After Z, the columns pick up an extra “digit”,
+# of the English alphabet, A..Z. After Z, the columns pick up an extra "digit",
 # going from AA, AB, etc., which could (in theory) continue to an arbitrary
 # number of digits. In practice, Excel sheets are limited to 16,384 columns.
 #
