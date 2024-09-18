@@ -52,33 +52,27 @@ Task 2: Valid Number
 """
 ### solution by pokgopun@gmail.com
 
-def strongPassword(passwd: str):
-    cRpt = 0
-    prev,crpt = "", 0
-    hasDgt,hasUc,hasLc = False, False, False
-    for c in passwd:
-        if ord(c) >= 48 and ord(c) <= 57:
-            hasDgt = True
-        if ord(c) >= 65 and ord(c) <= 90:
-            hasUc = True
-        if ord(c) >= 97 and ord(c) <= 122:
-            hasLc = True
+def strongPassword(pwd: str):
+    requiredCharset = dict.fromkeys(("09","AZ","az"), True)
+    countConsecutiveChar = 0
+    prev = ""
+    count = 0
+    for c in pwd:
+        for charset in requiredCharset.keys():
+            if requiredCharset[charset] and c >= charset[0] and c <= charset[1]:
+                requiredCharset[charset] = False
         if prev == c:
-            crpt += 1
-            if crpt==3:
-                cRpt += 1
-                crpt = 0
+            count += 1
+            if count == 3:
+                countConsecutiveChar += 1
                 prev = ""
         else:
             prev = c
-            crpt = 1
-    cHas = 0
-    for lgc in (hasDgt,hasUc,hasLc):
-        if lgc == False:
-            cHas += 1
-    mChr = 6 - min(6,len(passwd))
-    #print(mChr,cHas,cRpt)
-    return max(mChr, cHas, cRpt)
+            count = 1
+    countRequiredCharset = sum(requiredCharset.values())
+    countRequiredAddition = 6 - min(6, len(pwd))
+    #print(countRequiredAddition, countConsecutiveChar, countRequiredCharset)
+    return max(countRequiredAddition, countConsecutiveChar, countRequiredCharset)
 
 import unittest
 
