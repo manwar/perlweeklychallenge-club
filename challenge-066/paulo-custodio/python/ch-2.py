@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 066
 #
@@ -24,21 +24,18 @@
 # Example 3:
 # For given $N = 64, it should print all or one of 8^2 or 2^6 or 4^3.
 
-use Modern::Perl;
+import sys
+from math import sqrt
 
-my $N = shift||0;
-show_powers($N);
+def show_powers(n):
+    has_solution = False
+    for b in range(2, int(sqrt(n))+1):
+        for e in range(2, n):
+            if b**e == n:
+                print(str(b)+"^"+str(e))
+                has_solution = True
+    if not has_solution:
+        print(0)
 
-sub show_powers {
-    my($n) = @_;
-    my $has_solution;
-    for my $b (2..sqrt($n)) {
-        for my $e (2..$n) {
-            if ($b ** $e == $n) {
-                say "$b^$e";
-                $has_solution=1;
-            }
-        }
-    }
-    say "0" if !$has_solution;
-}
+N = int(sys.argv[1])
+show_powers(N)

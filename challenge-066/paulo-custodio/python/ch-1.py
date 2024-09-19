@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 066
 #
@@ -21,30 +21,23 @@
 # Input: $M = -5, $N = -2
 # Output: 2
 
-use Modern::Perl;
+import sys
 
-my($M, $N) = @ARGV;
-say divide($M, $N);
+def divide1(m, n):
+    q = 0
+    while m >= n:
+        m -= n
+        q += 1
+    r = m
+    return q, r
 
-sub divide {
-    my($m, $n) = @_;
-    my($q, $r) = divide1(abs($m), abs($n));
-    if ($m>=0 && $n<0 || $m<0 && $n>=0) {
-        $q = -$q;
-        if ($r!=0) {
-            $q--;
-        }
-    }
-    return $q;
-}
+def divide(m, n):
+    q, r = divide1(abs(m), abs(n))
+    if m>=0 and n<0 or m<0 and n>=0:
+        q = -q
+        if r != 0:
+            q -= 1
+    return q
 
-sub divide1 {
-    my($m, $n) = @_;
-    my $q = 0;
-    while ($m >= $n) {
-        $m -= $n;
-        $q++;
-    }
-    my $r = $m;
-    return ($q, $r);
-}
+M, N = map(int, sys.argv[1:])
+print(divide(M, N))
