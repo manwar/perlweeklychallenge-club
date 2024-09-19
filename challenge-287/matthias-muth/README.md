@@ -234,7 +234,7 @@ sub strong_password( $str ) {
 }
 ```
 
-The [`ch-1.pl`](https:perl/ch-1.pl) file also contains switchable debugging output, and all the test cases. This is its output:
+The `ch-1.pl` file also contains switchable debugging output, and all the test cases. This is its output:
 
 ```terminal
 ok 1 - Example 1: strong_password( "a" ) == 5
