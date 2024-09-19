@@ -61,89 +61,80 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
-type myRune struct {
-	r *rune
-}
-
-func (mr *myRune) reset() {
-	mr.r = nil
-}
-
-func (mr *myRune) set(r rune) {
-	mr.r = &r
-}
-
-func (mr *myRune) equal(r rune) bool {
-	if mr.r == nil {
-		return false
+func consecutiveCharCount(str string, l int) int {
+	if len(str) < l {
+		return 0
 	}
-	return *mr.r == r
-}
-
-type runeChecker struct {
-	consecutiveCount, consecutiveLimit, countConsecutive int
-	r                                                    myRune
-}
-
-func (rc *runeChecker) check(r rune) {
-	if rc.r.equal(r) {
-		rc.consecutiveCount++
-		if rc.consecutiveCount == rc.consecutiveLimit {
-			rc.countConsecutive++
-			rc.r.reset()
+	var (
+		count, cnt int
+		prev       rune
+	)
+	for _, r := range str {
+		if cnt == 0 {
+			prev = r
+			cnt++
+			continue
 		}
-	} else {
-		rc.r.set(r)
-		rc.consecutiveCount = 1
+		if r == prev {
+			cnt++
+			if cnt == l {
+				count++
+				cnt = 0
+			}
+		} else {
+			prev = r
+			cnt = 1
+		}
 	}
+	return count
 }
 
-type runeRange struct {
+type charset struct {
 	first, last rune
-	inExist     bool
 }
 
-func (rr *runeRange) check(r rune) {
-	if !rr.inExist && r >= rr.first && r <= rr.last {
-		rr.inExist = true
+func countRequiredCharset(str string, charsets []charset) int {
+	count := len(charsets)
+	m := make(map[charset]bool, count)
+	for _, v := range charsets {
+		m[v] = true
 	}
-}
-
-type runeRanges []*runeRange
-
-func (rrs runeRanges) check(r rune) {
-	for _, rr := range rrs {
-		rr.check(r)
-	}
-}
-
-func (rrs runeRanges) countMissing() int {
-	c := 0
-	for _, rr := range rrs {
-		if !rr.inExist {
-			c++
+	//var n int
+	for _, c := range str {
+		//n++
+		for k, v := range m {
+			if v && c >= k.first && c <= k.last {
+				m[k] = false
+				count -= 1
+				break
+			}
+		}
+		if count == 0 {
+			break
 		}
 	}
-	return c
+	//fmt.Println(n, "char(s) checked for required types")
+	return count
 }
 
 func strongPassword(str string) int {
+	requiredLength := 6
 	l := len(str)
 	if l == 0 {
-		return 6
+		return requiredLength
 	}
-	rrs := runeRanges{
-		&runeRange{first: '0', last: '9'},
-		&runeRange{first: 'A', last: 'Z'},
-		&runeRange{first: 'a', last: 'z'},
-	}
-	rc := runeChecker{consecutiveLimit: 3}
-	for _, v := range str {
-		rrs.check(v)
-		rc.check(v)
-	}
-	//fmt.Println(rrs.countMissing(), rc.countConsecutive, 6-min(6, l))
-	return max(rrs.countMissing(), rc.countConsecutive, 6-min(6, l))
+	requiredCharsetCount := countRequiredCharset(
+		str,
+		[]charset{
+			charset{'0', '9'},
+			charset{'A', 'Z'},
+			charset{'a', 'z'},
+		},
+	)
+	consecutiveCharLength := 3
+	countConsecutiveChar := consecutiveCharCount(str, consecutiveCharLength)
+	//fmt.Println(requiredCharsetCount, countConsecutiveChar,requiredLength -min(requiredLength, l))
+	return max(requiredCharsetCount, countConsecutiveChar, requiredLength-min(requiredLength, l))
 }
 
 func main() {

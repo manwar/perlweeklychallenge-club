@@ -54,22 +54,33 @@ Task 2: Valid Number
 
 def strongPassword(pwd: str):
     requiredCharset = dict.fromkeys(("09","AZ","az"), True)
-    countConsecutiveChar = 0
-    prev = ""
-    count = 0
+    countRequiredCharset = len(requiredCharset)
+    #n = 0
     for c in pwd:
+        #n += 1
         for charset in requiredCharset.keys():
             if requiredCharset[charset] and c >= charset[0] and c <= charset[1]:
                 requiredCharset[charset] = False
-        if prev == c:
-            count += 1
-            if count == 3:
-                countConsecutiveChar += 1
-                prev = ""
-        else:
-            prev = c
-            count = 1
-    countRequiredCharset = sum(requiredCharset.values())
+                countRequiredCharset -= 1
+                break
+        if countRequiredCharset==0:
+                break
+    #print(n,"char(s) checked for required charsets")
+    countConsecutiveChar = 0
+    consecutiveCharLength = 3
+    if len(pwd) >= consecutiveCharLength:
+        prev = ""
+        count = 0
+        for c in pwd:
+            #print(c,"<=>",prev)
+            if prev == c:
+                count += 1
+                if count == consecutiveCharLength:
+                    countConsecutiveChar += 1
+                    prev = ""
+            else:
+                prev = c
+                count = 1
     countRequiredAddition = 6 - min(6, len(pwd))
     #print(countRequiredAddition, countConsecutiveChar, countRequiredCharset)
     return max(countRequiredAddition, countConsecutiveChar, countRequiredCharset)
