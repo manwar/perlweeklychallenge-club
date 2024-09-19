@@ -19,6 +19,7 @@ use Test::Command qw();
 use Test::More;
 
 our @EXPORT_OK = qw(
+	find_raku
 	test_strong_password
 	test_strong_password_count
 	test_strong_password_default
@@ -138,6 +139,13 @@ sub test_valid_number($ $) {
 	my ($str, $expected) = @{$TEST_NUMBERS[$idx]};
 
 	test_run_program $cmd, $str, $expected;
+}
+
+sub find_raku()
+{
+	my $prog = $ENV{RAKU} || 'raku';
+	my $res = system { $prog } ($prog, '-e', 'use strict');
+	(defined $res && $res == 0) ? $prog : undef
 }
 
 1;

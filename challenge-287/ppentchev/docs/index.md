@@ -261,6 +261,16 @@ directly as three scalar variables instead of any kind of structured data.
 Of course it would be possible to stash them into a hash or a simple object, but
 this way was a bit simpler.
 
+#### Raku
+
+The Raku solution is quite similar to the Perl one, but it encapsulates the number of
+actions taken and the current state of the password string into a `Strength` class.
+It also encapsulates the state of the parser used to find too-long runs of the same
+character into a `RunState` class.
+
+The `fix_runs()`, `fix_length()`, and `fix_missing()` functions are translated into
+the `fix-runs()`, `fix-length()`, and `fix-missing()` methods of the `Strength` class.
+
 ### Task 2: Valid Number
 
 #### Perl
@@ -272,6 +282,16 @@ The Perl solution has three major elements:
 - `valid_number` - a function that returns either the string "true" or the string "false"
   depending on whether the argument represents a valid number
 - `parse_stdin` - read a line from the standard input, return it as a string to be examined
+
+#### Raku
+
+In the Raku solution we chose the other way: write a simple grammar (`ValidNumber`) that
+will recognize a number as defined in the problem.
+The grammar is so simple that it does not even need to define any actions; returning
+a non-empty, defined result is enough to determine whether the input was recognized.
+
+Well, okay, since Raku grammars are actually regular expressions in disguise, one might
+argue that we did not go so far the other way then :)
 
 ## Contact
 
