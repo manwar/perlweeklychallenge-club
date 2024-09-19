@@ -271,6 +271,11 @@ character into a `RunState` class.
 The `fix_runs()`, `fix_length()`, and `fix_missing()` functions are translated into
 the `fix-runs()`, `fix-length()`, and `fix-missing()` methods of the `Strength` class.
 
+#### Rust
+
+Just as in the Raku solution, we encapsulate some of the functions within the `RunState` and
+`Strength` structs.
+
 ### Task 2: Valid Number
 
 #### Perl
@@ -293,6 +298,12 @@ a non-empty, defined result is enough to determine whether the input was recogni
 Well, okay, since Raku grammars are actually regular expressions in disguise, one might
 argue that we did not go so far the other way then :)
 
+#### Rust
+
+In the Rust solution we use [the nom parser combinators library][rust-nom] to build
+a parser that, once again, returns nothing (all the `_p_*()` functions return
+the `()` unit as the parsed result), but recognizes a number when it sees one.
+
 ## Contact
 
 These solutions were written by [Peter Pentchev][roam].
@@ -304,3 +315,4 @@ This documentation is hosted at [Ringlet][ringlet-home].
 [ringlet-home]: https://devel.ringlet.net/misc/perlweeklychallenge-club/287/ "This documentation at Ringlet"
 
 [pwc-287]: https://theweeklychallenge.org/blog/perl-weekly-challenge-287/ "The 287th Perl & Raku Weekly Challenge"
+[rust-nom]: https://crates.io/crates/nom "nom, eating data byte by byte"
