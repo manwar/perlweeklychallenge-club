@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 072
 #
@@ -20,24 +20,21 @@
 # Input: $N = 4
 # Output: 0 as $N! = 24 has 0 trailing zero
 
-use Modern::Perl;
+import re
+import sys
 
-my $N = shift||1;
-say trailing_zeros(fact($N));
+def fact(n):
+    if n < 2:
+        return 1
+    else:
+        return n*fact(n-1)
 
+def trailing_zeros(n):
+    s = str(n)
+    if m := re.search(r'0+$', s):
+        return len(m.group(0))
+    else:
+        return 0
 
-sub fact {
-    my($n) = @_;
-    if ($n < 2) {
-        return 1;
-    }
-    else {
-        return $n*fact($n-1);
-    }
-}
-
-sub trailing_zeros {
-    my($n) = @_;
-    $n =~ /(0*)$/;
-    return length($1);
-}
+N = int(sys.argv[1])
+print(trailing_zeros(fact(N)))
