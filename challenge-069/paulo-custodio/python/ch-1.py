@@ -16,19 +16,19 @@
 # Input: $A = 50, $B = 100
 #     Output: 69, 88, 96
 
-use Modern::Perl;
+import sys
 
-my($A, $B) = @ARGV;
-my @out;
-for my $n ($A .. $B) {
-    push @out, $n if is_strobogrammatic($n);
-}
-say join(", ", @out);
+A, B = map(int, sys.argv[1:3])
+out = []
 
-sub is_strobogrammatic {
-    my($n) = @_;
-    $n =~ /^[0689]+$/ or return 0;
-    (my $inv = $n) =~ tr/69/96/;
-    return 1 if reverse($inv)==$n;
-    return 0;
-}
+def is_strobogrammatic(n):
+    if not all(c in '0689' for c in str(n)):
+        return False
+    inv = str(n).translate(str.maketrans('69', '96'))
+    return int(inv[::-1]) == n
+
+for n in range(A, B + 1):
+    if is_strobogrammatic(n):
+        out.append(n)
+
+print(", ".join(map(str, out)))
