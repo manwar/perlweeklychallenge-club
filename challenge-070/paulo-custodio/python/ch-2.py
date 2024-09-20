@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 070
 #
@@ -38,34 +38,31 @@
 #
 # Output: [0, 1, 3, 2, 6, 7, 5, 4, 12, 13, 15, 14, 10, 11, 9, 8]
 
-use Modern::Perl;
+import sys
 
-my $N = shift||2;
-say join(", ", gray($N));
-
-
-sub gray {
-    my($n) = @_;
-    if ($n < 2) { die; }
-    elsif ($n == 2) {
-        return (0, 1, 3, 2);
-    }
-    else {
+def gray(n):
+    if n < 2:
+        raise ValueError("N must be at least 2")
+    elif n == 2:
+        return [0, 1, 3, 2]
+    else:
         # gray sequence of N-1
-        my @prev = gray($n-1);
+        prev = gray(n-1)
         # binary form to S1
-        my @s1 = map {sprintf("%0*b", $n-1, $_);} @prev;
-        # recerse to S2
-        my @s2 = reverse @s1;
-        # prexix S1 with 0
-        @s1 = map {"0".$_} @s1;
-        # prexix S2 with 1
-        @s2 = map {"1".$_} @s2;
+        s1 = [format(x, f'0{n-1}b') for x in prev]
+        # reverse to S2
+        s2 = s1[::-1]
+        # prefix S1 with 0
+        s1 = ['0' + x for x in s1]
+        # prefix S2 with 1
+        s2 = ['1' + x for x in s2]
         # concatenate
-        my @gray = (@s1, @s2);
+        gray_seq = s1 + s2
         # convert to decimal
-        @gray = map {eval "0b$_"} @gray;
+        gray_seq = [int(x, 2) for x in gray_seq]
 
-        return @gray;
-    }
-}
+        return gray_seq
+
+if __name__ == "__main__":
+    N = int(sys.argv[1]) if len(sys.argv) > 1 else 2
+    print(", ".join(map(str, gray(N))))

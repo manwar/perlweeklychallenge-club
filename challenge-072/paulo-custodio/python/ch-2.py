@@ -32,10 +32,9 @@
 #     L11
 #     L12
 
-use Modern::Perl;
-use Tie::File;
+import sys
+FILE, A, B = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
 
-my($filename, $A, $B) = @ARGV;
-tie my @lines, 'Tie::File', $filename, autochomp=>0
-    or die "open $filename: $!\n";
-print @lines[$A-1..$B-1];
+f = open(sys.argv[1], "r")
+lines = [x.rstrip("\n") for x in f.readlines()]
+print("\n".join(lines[A-1:B]))

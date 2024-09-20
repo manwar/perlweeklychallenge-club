@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 069
 #
@@ -30,25 +30,18 @@
 
 # Note: modified to S20, as S30 was taking forever
 
-use Modern::Perl;
+N = 20
 
-my $N = 20;
+def bits_switch(s):
+    return s.translate(str.maketrans('01', '10'))
 
-sub bits_switch {
-    my($s) = @_;
-    $s =~ tr/01/10/;
-    return $s;
-}
+def bits_reverse(s):
+    return ''.join(reversed(s))
 
-sub bits_reverse {
-    my($s) = @_;
-    return join('', reverse split('', $s));
-}
+prev = ""
+s = ""
+for _ in range(1, N + 1):
+    s = prev + "0" + bits_switch(bits_reverse(prev))
+    prev = s
 
-my $prev = "";
-my $s;
-for (1..$N) {
-    $s = $prev."0".bits_switch(bits_reverse($prev));
-    $prev = $s;
-}
-say $s;
+print(s)

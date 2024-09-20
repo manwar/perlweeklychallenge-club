@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 067
 #
@@ -15,13 +15,14 @@
 #
 #   Output: [ [1,2], [1,3], [1,4], [1,5], [2,3], [2,4], [2,5], [3,4], [3,5], [4,5] ]
 
-use Modern::Perl;
-use Math::Combinatorics 'combine';
+import sys
+from itertools import combinations
 
-my($m, $n) = @ARGV;
-my @m = (1..$m);
-my %out;
-for (combine($n, @m)) {
-    $out{"[".join(",", sort @$_)."]"} = 1;
-}
-say "[ ", join(", ", sort keys %out), " ]";
+m, n = map(int, sys.argv[1:3])
+m_list = list(range(1, m + 1))
+out = set()
+
+for combo in combinations(m_list, n):
+    out.add(str(sorted(combo)))
+
+print("[", ", ".join(sorted(out)), "]")

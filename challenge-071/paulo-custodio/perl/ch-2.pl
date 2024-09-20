@@ -2,7 +2,7 @@
 
 # Challenge 071
 #
-# TASK #2 › Trim Linked List
+# TASK #2 > Trim Linked List
 # Submitted by: Mohammad S Anwar
 # You are given a singly linked list and a positive integer $N (>0).
 #

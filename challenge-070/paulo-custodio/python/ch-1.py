@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 070
 #
@@ -36,24 +36,20 @@
 # Output:
 #     pndraerlaku
 
-use Modern::Perl;
+import sys
 
-my($S, $C, $O) = @ARGV;
-say swap($S, $C, $O);
+def swap(s, c, o):
+    def swap1(s, c, o):
+        s_list = list(s)
+        p1 = c % len(s_list)
+        p2 = (c + o) % len(s_list)
+        s_list[p1], s_list[p2] = s_list[p2], s_list[p1]
+        return ''.join(s_list)
 
-sub swap {
-    my($s, $c, $o) = @_;
-    for (1..$c) {
-        $s = swap1($s, $_, $o);
-    }
-    return $s;
-}
+    for _ in range(1, c+1):
+        s = swap1(s, _, o)
+    return s
 
-sub swap1 {
-    my($s, $c, $o) = @_;
-    my @s = split //, $s;
-    my $p1 = $c % length($s);
-    my $p2 = ($c+$o) % length($s);
-    ($s[$p1], $s[$p2]) = ($s[$p2], $s[$p1]);
-    return join '', @s;
-}
+
+S, C, O = sys.argv[1], int(sys.argv[2]), int(sys.argv[3])
+print(swap(S, C, O))

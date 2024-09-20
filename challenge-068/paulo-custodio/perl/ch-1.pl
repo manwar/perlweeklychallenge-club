@@ -2,7 +2,7 @@
 
 # Challenge 068
 #
-# TASK #1 › Zero Matrix
+# TASK #1 > Zero Matrix
 # Submitted by: Mohammad S Anwar
 # You are given a matrix of size M x N having only 0s and 1s.
 #
