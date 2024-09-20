@@ -22,4 +22,4 @@
 
 ## Blog Post
 
-[Perl Weekly Challenge: Spammer Game](https://packy.dardan.com/b/R9)
+[Perl Weekly Challenge: Strong but Valid](https://packy.dardan.com/b/RU)
