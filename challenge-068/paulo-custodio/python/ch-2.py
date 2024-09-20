@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 068
 #
@@ -16,24 +16,24 @@
 # Input:  1 ?  2 ?  3 ?  4
 # Output: 1 ?  4 ?  2 ?  3
 
-use Modern::Perl;
-use Test::More;
+import unittest
 
-is_deeply reorder_list([1,[2,[3,[4]]]]), [1,[4,[2,[3]]]];
-done_testing;
-
-sub reorder_list {
-    my($l) = @_;
+def reorder_list(l):
     # get second element
-    my $tail = $l->[1];
+    tail = l[1]
     # get and remove last element
-    my $p = $tail;
-    my $last;
-    while ($p->[1]) {
-        $last = $p;
-        $p = $p->[1];
-    }
-    my $eln = pop(@{$last});
+    p = tail
+    last = None
+    while len(p) > 1:
+        last = p
+        p = p[1]
+    eln = last.pop()
 
-    return [$l->[0], [$eln->[0], $tail]];
-}
+    return [l[0], [eln[0], tail]]
+
+class TestReorderList(unittest.TestCase):
+    def test_reorder_list(self):
+        self.assertEqual(reorder_list([1, [2, [3, [4]]]]), [1, [4, [2, [3]]]])
+
+if __name__ == '__main__':
+    unittest.main()
