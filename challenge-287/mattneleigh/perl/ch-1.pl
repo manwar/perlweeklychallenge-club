@@ -77,7 +77,7 @@ sub steps_to_strong_password{
     $chars_added += 6 - length($string)
         if(length($string) < 6);
 
-    # See if we have blocks of three repeated chars...
+    # See if we have a block of three repeated chars...
     if($string =~ m/(.)\1{2}/g){
         $blocks_of_three = 1;
 
