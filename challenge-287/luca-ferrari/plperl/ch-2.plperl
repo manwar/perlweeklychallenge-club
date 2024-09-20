@@ -1,0 +1,20 @@
+--
+-- Perl Weekly Challenge 287
+-- Task 2
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-287>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc287;
+
+CREATE OR REPLACE FUNCTION
+pwc287.task2_plperl( text )
+RETURNS bool
+AS $CODE$
+
+   my ( $number ) = @_;
+
+   return 1 if ( $number =~ / ^ [+-]? \d+ (.\d+)? (E[+-]?\d+)? $/x );
+   return 0;
+   
+$CODE$
+LANGUAGE plperl;

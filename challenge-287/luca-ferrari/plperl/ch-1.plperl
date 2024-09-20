@@ -1,0 +1,24 @@
+--
+-- Perl Weekly Challenge 287
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-287>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc287;
+
+CREATE OR REPLACE FUNCTION
+pwc287.task1_plperl( text )
+RETURNS bool
+AS $CODE$
+
+   my ( $password ) = @_;
+   return 0 if ( length( $password ) < 6 );
+   return 0 if ( $password !~ / [a-z] /x );
+   return 0 if ( $password !~ / [A-Z] /x );
+   return 0 if ( $password !~ / [0-9] /x );
+   return 0 if ( $password ~~ / (.)\1\1 /x );
+
+   return 1;
+   
+$CODE$
+LANGUAGE plperl;
