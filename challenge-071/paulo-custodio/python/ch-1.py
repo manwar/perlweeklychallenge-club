@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 071
 #
@@ -20,25 +20,20 @@
 # Array: [ 47, 11, 32, 8, 1, 9, 39, 14, 36, 23 ]
 # Peak: [ 47, 32, 39, 36 ]
 
-use Modern::Perl;
+import sys
 
-my @n = @ARGV;
-say join(", ", peek_elem(@n));
+def peek_elem(n):
+    out = []
+    if len(n) < 2:
+        return out
+    if n[0] > n[1]:
+        out.append(n[0])
+    for i in range(1, len(n) - 1):
+        if n[i] > n[i-1] and n[i] > n[i+1]:
+            out.append(n[i])
+    if n[-1] > n[-2]:
+        out.append(n[-1])
+    return out
 
-sub peek_elem {
-    my(@n) = @_;
-    my @out;
-    return @out if @n<2;
-    if ($n[0]>$n[1]) {
-        push @out, $n[0];
-    }
-    for my $i (1 .. @n-2) {
-        if ($n[$i]>$n[$i-1] && $n[$i]>$n[$i+1]) {
-            push @out, $n[$i];
-        }
-    }
-    if ($n[-1]>$n[-2]) {
-        push @out, $n[-1];
-    }
-    return @out;
-}
+n = list(map(int, sys.argv[1:]))
+print(", ".join(map(str, peek_elem(n))))
