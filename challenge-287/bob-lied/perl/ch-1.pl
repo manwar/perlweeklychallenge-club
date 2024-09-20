@@ -86,7 +86,7 @@ sub rmvRepeat($s, $rplc = "")
                 ?  randFromExcl( need(hasClass($s)), "$char$notThis")
                 : $rplc;
 
-        $s =~ s/$char$char$char/$char$char$use/;
+        $s =~ s/\Q$char$char$char/$char$char$use/;
         $OpCount++;
     }
     return $s;
