@@ -4,7 +4,7 @@
 
 [PWC 287](https://theweeklychallenge.org/blog/perl-weekly-challenge-287/)
 
-Try to get back to some blog words this week. There is something to say about each of this week's challenges.
+Trying to get back to some blog words this week. Fortunately there is something to say about each of this week's challenges.
 
 ## Task 1: Strong Password
 Submitted by: Mohammad Sajid Anwar
@@ -44,9 +44,15 @@ Submitted by: Mohammad Sajid Anwar
 > Input: $str = "aaaaa"</br>
 > Output: 2</br>
 
-Ok. Seems easy enough ... until you start to think about it. All of the operations makes things easier. So like, if your password isn't long enough, and you need to add some extra character types (uppercase, lowercase, numeral) then you can add those as the extra chars. Or if you have some 3-consecutive chars, you can change some of them to upper/lower case letters or numbers as needed to fill things out. So in the broadly general case, you find out how many changes you need to make, and you can count those towards the missing character types.
+Ok. Seems easy enough ... until you start to think about it. All of the operations having the same cost certainly makes things easier. 
 
-Unless ... it is easier to think about changing a character than adding a character (or deleting one), because it either doesn't make a difference or is cheaper. Like say you have five consecutives 'A's : 'AAAAA'. You could try to break it up by adding a character, say try 'AABAAA' -- but now you need another to break up the final three. Instead you can *change* the middle one: 'AABAA' and fix it in one step.
+So if your password isn't long enough, and you need to add some extra character types (uppercase, lowercase, numeral) then you can add those as the extra chars. Or if you have some 3-consecutive chars, you can change some of them to upper/lower case letters or numbers as needed to fill things out. 
+
+In the broadly general case, you find out how many changes you need to make, and you can count those towards the missing character types.
+
+Unless ... 
+
+It is easier to think about changing a character than adding a character (or deleting one), because it either doesn't make a difference or is cheaper. Like say you have five consecutives 'A's : 'AAAAA'. You could try to break it up by adding a character, say try 'AABAAA' -- but now you need another to break up the final three. Instead you can *change* the middle one: 'AABAA' and fix it in one step.
 
 The exception being when we need to satisfy the 6 character minimum. Then we'll want to add chars. But then we need to be careful that we get the right answer when we have consecutive chars.
 
@@ -58,18 +64,11 @@ But in fact, for every other case we can use a simple algorithm: count how many 
 
 If we have at least 6 chars, great! Then we look at how many triples we have. Each triple needs attention, so it doesn't matter if a triple is part of a quintuple or a nontuple (?), or whatever, we just count how many consecutive threes there are (easy to handle via regex coincidentally!). This becomes our needed value.
 
-Ok, now we have a number of changes that we need to satisfy the minimum char length and nonconsecutive 3s conditions. Finally, we check how many of the character types we have. If we already have more changes needed than missing character types, we can just use some of those changes (changes or inserts to be precise) to add in the missing character types. Otherwise, we'll need to add a the missing types. So if we have, say, 'aabbcc' we'll have zero needed to satisfy minimum and triple conditions, but 2 changes needed to get all the char types.
+Ok, now we have a number of changes that we need to satisfy the minimum char length and nonconsecutive 3s conditions. Finally, we check how many of the character types we have. If we already have more changes needed than missing character types, we can just use some of those changes (changes or inserts to be precise) to add in the missing character types. Otherwise, we'll need to add the missing types. So if we have, say, 'aabbcc' we'll have zero needed to satisfy minimum and triple conditions, but 2 changes needed to get all the char types.
 
 So there, I'm pretty sure that covers it.
 
 ```perl
-use strict;
-use warnings;
-
-use v5.38;
-
-use List::Util qw( max );
-
 sub password_distance( $password ) {
     # needed to meet length min of 6
     my $needed = max( 6 - length $password, 0 );
@@ -168,6 +167,6 @@ There it is. Much regex mumbo jumbo, but it seems to do what I want, which I fee
 
 So there you have it. No guest languages this week. I'm slacking.
 
-Each challenge this week threw me a curveball. It wasn't until I was mostly done with straightforward, simple, and wrong solution did I start to ponder the intricacate nuances of the challenge descriptions and edge cases.
+Each challenge this week threw me a curveball. It wasn't until I was mostly done with a straightforward, simple, and wrong solution did I start to ponder the intricacate nuances of the challenge descriptions and edge cases.
 
 Thanks for the challenges!
