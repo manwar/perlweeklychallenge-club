@@ -10,14 +10,15 @@
 
 use v5.36;
 
-sub valid_number( $str ) {
-    return $str =~ /^ [+-]? (?: \.\d+ | \d+(?:\.\d*)? ) (?: [Ee] [+-]? \d+ )? $/xa;
-}
-
 use Regexp::Common;
 
-sub Xvalid_number( $str ) {
+sub valid_number( $str ) {
     return $str =~ /^$RE{num}{real}$/;
+}
+
+sub valid_number_usimg_re( $str ) {
+    return
+	$str =~ /^ [+-]? (?: \.\d+ | \d+(?:\.\d*)? ) (?: [Ee] [+-]? \d+ )? $/xa;
 }
 
 use Test2::V0 qw( -no_srand );

@@ -91,7 +91,7 @@ Some more examples:
 
 These examples show that for dealing with longer sequences, *replacing* characters is more efficient than *inserting* characters.<br/>
 This leads us to some more test cases:<br/>
-    `aaa1B` => 1 (e.g. *replacing* one `a` by `b` to get `aab1B`)<br/>    `aaaa1B` => 1 (e.g. *replacing* one `a` by `b` to get `aaba1B`)<br/>    `aaaaa1B` => 1 (e.g. *replacing* one `a` by `b` to get `aabaa1B`)<br/>    `aaaaaa1B` => 2 (e.g. *replacing* 2 times `a` by `b` to get `aabaab1B`)<br/>    `aaaaaaa1B` => 2 (e.g. *replacing* 2 times `a` by `b` to get `aabaaba1B`)<br/>    `aaaaaaaa1B` => 2 (e.g. *replacing* 2 times `a` by `b` to get `aabaabaa1B`)<br/>
+    `aaa1B` => 1 (e.g. *inserting* one `b` to get `aaba1B`)<br/>    `aaaa1B` => 1 (e.g. *replacing* one `a` by `b` to get `aaba1B`)<br/>    `aaaaa1B` => 1 (e.g. *replacing* one `a` by `b` to get `aabaa1B`)<br/>    `aaaaaa1B` => 2 (e.g. *replacing* 2 times `a` by `b` to get `aabaab1B`)<br/>    `aaaaaaa1B` => 2 (e.g. *replacing* 2 times `a` by `b` to get `aabaaba1B`)<br/>    `aaaaaaaa1B` => 2 (e.g. *replacing* 2 times `a` by `b` to get `aabaabaa1B`)<br/>
     `aaaaaaaaaaaa1B` => 4 (e.g. *replacing* 4 times `a` by `b` to get `aabaabaabaab1B`)
 
 #### Up to three birds with one shot!
@@ -113,7 +113,7 @@ Similarly, we also can solve *two* problems at the same time by *replacing* one 
 * shorten a long repeating character sequence by choosing a 'third' character to be replaced, which will 'neutralize' the two characters preceding it.
 
 For example (and yet another test case):<br/>
-    `aaaabC` => `aa1aabC` => 1 change only for solving two shortcomings.
+    `aaaabC` => `aa1abC` => 1 change only for solving two shortcomings.
 
 
 #### Solution structure
@@ -237,26 +237,26 @@ sub strong_password( $str ) {
 The `ch-1.pl` file also contains switchable debugging output, and all the test cases. This is its output:
 
 ```terminal
-ok 1 - Example 1: strong_password( "a" ) == 5
-ok 2 - Example 2: strong_password( "aB2" ) == 3
-ok 3 - Example 3: strong_password( "PaaSW0rd" ) == 0
-ok 4 - Example 4: strong_password( "Paaasw0rd" ) == 1
-ok 5 - Example 5: strong_password( "aaaaa" ) == 2 (like "aa1aaB")
-ok 6 - Extra 1: strong_password( "" ) == 6 (like "1aBcde")
-ok 7 - Extra 2: strong_password( "abcABC" ) == 1 (like "a1cABC")
-ok 8 - Extra 3: strong_password( "abcdef" ) == 2 (like "a1Adef")
-ok 9 - Extra 4: strong_password( "aaa1B" ) == 1 (like "aab1B")
-ok 10 - Extra 5: strong_password( "aaaa1B" ) == 1 (like "aaba1B")
-ok 11 - Extra 6: strong_password( "aaaaa1B" ) == 1 (like "aabaa1B")
-ok 12 - Extra 7: strong_password( "aaaaaa1B" ) == 2 (like "aabaab1B")
-ok 13 - Extra 8: strong_password( "aaaaaaa1B" ) == 2 (like "aabaaba1B")
-ok 14 - Extra 9: strong_password( "aaaaaaaa1B" ) == 2 (like "aabaabaa1B")
-ok 15 - Extra 10: strong_password( "aaaaaaaaaaaa1B" ) == 4 (like "aabaabaabaab1B")
-ok 16 - Extra 11: strong_password( "aaaBc" ) == 1 (like "aa1aBc")
-ok 17 - Extra 12: strong_password( "aaaabC" ) == 1 (like "aa1aabC")
-ok 18 - Extra 13: strong_password( "aaaacccc" ) == 2 (like "aa1accBc")
-ok 19 - Extra 14: strong_password( "aaaaaabbbbbb" ) == 4 (like "aa1aaXbbYbbY")
-ok 20 - Extra 15: strong_password( "aaacc" ) == 2 (like "aa1ccX")
+ok 1 - Example 1: strong_password( 'a' ) == 5
+ok 2 - Example 2: strong_password( 'aB2' ) == 3
+ok 3 - Example 3: strong_password( 'PaaSW0rd' ) == 0
+ok 4 - Example 4: strong_password( 'Paaasw0rd' ) == 1
+ok 5 - Example 5: strong_password( 'aaaaa' ) == 2 (like 'aa1aaB')
+ok 6 - Extra 1: strong_password( '' ) == 6 (like '1aBcde')
+ok 7 - Extra 2: strong_password( 'abcABC' ) == 1 (like 'a1cABC')
+ok 8 - Extra 3: strong_password( 'abcdef' ) == 2 (like 'a1Adef')
+ok 9 - Extra 4: strong_password( 'aaa1B' ) == 1 (like 'aaba1B' using one insert)
+ok 10 - Extra 5: strong_password( 'aaaa1B' ) == 1 (like 'aaba1B' using one replace)
+ok 11 - Extra 6: strong_password( 'aaaaa1B' ) == 1 (like 'aabaa1B')
+ok 12 - Extra 7: strong_password( 'aaaaaa1B' ) == 2 (like 'aabaab1B')
+ok 13 - Extra 8: strong_password( 'aaaaaaa1B' ) == 2 (like 'aabaaba1B')
+ok 14 - Extra 9: strong_password( 'aaaaaaaa1B' ) == 2 (like 'aabaabaa1B')
+ok 15 - Extra 10: strong_password( 'aaaaaaaaaaaa1B' ) == 4 (like 'aabaabaabaab1B')
+ok 16 - Extra 11: strong_password( 'aaabC' ) == 1 (like 'aa1abC' using one insert)
+ok 17 - Extra 12: strong_password( 'aaaabC' ) == 1 (like 'aa1abC')
+ok 18 - Extra 13: strong_password( 'aaaacccc' ) == 2 (like 'aa1accBc')
+ok 19 - Extra 14: strong_password( 'aaaaaabbbbbb' ) == 4 (like 'aa1aaXbbYbbY')
+ok 20 - Extra 15: strong_password( 'aaacc' ) == 2 (like 'aa1ccX')
 1..20
 ```
 
