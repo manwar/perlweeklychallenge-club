@@ -1,3 +1,3 @@
-# The Weekly Challenge 285
+# The Weekly Challenge 287
 
-Blog: [Making connections](https://dev.to/simongreennet/making-connections-13p8)
+Blog: [Good things](https://dev.to/simongreennet/good-things-1e3a)
