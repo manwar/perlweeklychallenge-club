@@ -16,7 +16,7 @@ sub valid_number( $str ) {
     return $str =~ /^$RE{num}{real}$/;
 }
 
-sub valid_number_usimg_re( $str ) {
+sub valid_number_using_re( $str ) {
     return
 	$str =~ /^ [+-]? (?: \.\d+ | \d+(?:\.\d*)? ) (?: [Ee] [+-]? \d+ )? $/xa;
 }
