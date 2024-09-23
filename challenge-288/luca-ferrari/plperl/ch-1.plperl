@@ -1,0 +1,30 @@
+--
+-- Perl Weekly Challenge 288
+-- Task 1
+-- See <https://perlweeklychallenge.org/blog/perl-weekly-challenge-288>
+--
+
+CREATE SCHEMA IF NOT EXISTS pwc288;
+
+CREATE OR REPLACE FUNCTION
+pwc288.task1_plperl( int )
+RETURNS int
+AS $CODE$
+
+   my ( $number ) = @_;
+
+   my ( $left, $right ) = ( $number - 1, $number + 1 );
+
+   my $is_palindrome = sub {
+      return $_[ 0 ] == join '', reverse split //, $_[ 0 ];
+   };
+
+   while ( ! $is_palindrome->( $left ) )  { $left--; }
+   while ( ! $is_palindrome->( $right ) ) { $right++; }
+
+   return $number - $left < $right - $number
+          ? $left
+	  : $right;
+   
+$CODE$
+LANGUAGE plperl;
