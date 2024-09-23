@@ -11,13 +11,6 @@ class Cell {
     multi method WHICH(Cell:D:)           { "Cell|{$!row},{$!col},{$!symbol}" }
 }
 
-class Block {
-    has %.cells is SetHash;
-    has $.symbol;
-
-    multi method new(%cells, $symbol) { self.bless(:%cells, :$symbol) }
-}
-
 my @M = $f.IO.lines.map({ .comb.Array });
 my @blocks;
 
@@ -29,8 +22,8 @@ for ^+@M X ^+@M[0] -> (\row, \col) {
 
     my $i = 0;
     while $i < +@blocks {
-        if neighbours (elem) @blocks[$i].cells {
-            @blocks[$i].cells.set(cell);
+        if neighbours (elem) @blocks[$i] {
+            @blocks[$i].set(cell);
             last;
         }
         ++$i;
@@ -38,15 +31,15 @@ for ^+@M X ^+@M[0] -> (\row, \col) {
 
     my $j = $i + 1;
     while $j < +@blocks {
-        if neighbours (elem) @blocks[$j].cells {
-            @blocks[$i].cells (+)= @blocks[$j].cells;
+        if neighbours (elem) @blocks[$j] {
+            @blocks[$i] (|)= @blocks[$j];
             @blocks.splice($j, 1);
         } else {
             ++$j;
         }
     }
 
-    @blocks.push(Block.new((cell).SetHash, symbol)) if $i ≥ +@blocks;
+    @blocks.push(cell.SetHash) if $i ≥ +@blocks;
 }
 
-put @blocks.map({ .cells.elems }).max;
+put @blocks».elems.max;
