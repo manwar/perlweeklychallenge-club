@@ -16,30 +16,17 @@ my @blocks;
 
 for ^+@M X ^+@M[0] -> (\row, \col) {
     my \symbol = @M[row;col];
-    my \cell = Cell.new(row, col, symbol);
-    my \neighbours = Cell.new(row-1,col,symbol) | Cell.new(row+1,col,symbol) |
-                     Cell.new(row,col-1,symbol) | Cell.new(row,col+1,symbol);
-
-    my $i = 0;
+    @blocks.unshift(Cell.new(row, col, symbol).SetHash);
+    my $i = 1;
     while $i < +@blocks {
-        if neighbours (elem) @blocks[$i] {
-            @blocks[$i].set(cell);
-            last;
-        }
-        ++$i;
-    }
-
-    my $j = $i + 1;
-    while $j < +@blocks {
-        if neighbours (elem) @blocks[$j] {
-            @blocks[$i] (|)= @blocks[$j];
-            @blocks.splice($j, 1);
+        if Cell.new(row-1,col,symbol) | Cell.new(row+1,col,symbol) |
+           Cell.new(row,col-1,symbol) | Cell.new(row,col+1,symbol)   (elem) @blocks[$i] {
+            @blocks[0] (|)= @blocks[$i];
+            @blocks.splice($i, 1);
         } else {
-            ++$j;
+            ++$i;
         }
     }
-
-    @blocks.push(cell.SetHash) if $i ≥ +@blocks;
 }
 
 put @blocks».elems.max;
