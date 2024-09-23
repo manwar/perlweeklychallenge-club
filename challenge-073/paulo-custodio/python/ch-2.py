@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 073
 #
@@ -34,25 +34,18 @@
 # For index 2, the smallest number to the left of $A[2] as compare to 5, in
 # (4, 6) is 4, so we put 4 again.
 
-use Modern::Perl;
-use List::Util qw( min );
+import sys
 
-my @A = @ARGV;
-say join(", ", smallest_left(@A));
+def smallest_left(a):
+    smallest = [0]
+    for i in range(1, len(a)):
+        min_ = min(a[:i])
+        if min_ < a[i]:
+            smallest.append(min_)
+        else:
+            smallest.append(0)
+    return smallest
 
-
-sub smallest_left {
-    my(@a) = @_;
-    my @smallest;
-    push @smallest, 0;
-    for my $i (1 .. @a-1) {
-        my $min = min(@a[0..$i-1]);
-        if ($min < $a[$i]) {
-            push @smallest, $min;
-        }
-        else {
-            push @smallest, 0;
-        }
-    }
-    return @smallest;
-}
+A = list(map(int, sys.argv[1:]))
+smallest = smallest_left(A)
+print(", ".join([str(x) for x in smallest]))
