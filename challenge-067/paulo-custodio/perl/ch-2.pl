@@ -2,7 +2,7 @@
 
 # Challenge 067
 #
-# TASK #2 › Letter Phone
+# TASK #2 > Letter Phone
 # Submitted by: Mohammad S Anwar
 #
 # You are given a digit string $S. Write a script to print all possible letter

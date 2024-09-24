@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 073
 #
@@ -21,18 +21,16 @@
 # [1 5 0 2 9 3 (7 6 4) 8] = Min (4)
 # [1 5 0 2 9 3 7 (6 4 8)] = Min (4)
 
-use Modern::Perl;
-use List::Util qw( min );
+import sys
 
-my($S, @A) = @ARGV;
-say join(", ", min_sliding_window($S, @A));
+def min_sliding_window(s, a):
+    min_ = []
+    for i in range(0, len(a)-s+1):
+        sub_ = a[i:i+s]
+        min_.append(min(sub_))
+    return min_
 
-
-sub min_sliding_window {
-    my($s, @a) = @_;
-    my @min;
-    for my $i (0 .. @a-$s) {
-        push @min, min(@a[$i..$i+$s-1]);
-    }
-    return @min;
-}
+S = int(sys.argv[1])
+M = list(map(int, sys.argv[2:]))
+min_ = min_sliding_window(S, M)
+print(", ".join([str(x) for x in min_]))
