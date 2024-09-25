@@ -2,7 +2,7 @@
 
 # Challenge 147
 #
-# TASK #1 › Truncatable Prime
+# TASK #1 > Truncatable Prime
 # Submitted by: Mohammad S Anwar
 # Write a script to generate first 20 left-truncatable prime numbers in base 10.
 #

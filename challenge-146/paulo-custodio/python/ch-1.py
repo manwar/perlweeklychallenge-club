@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 146
 #
@@ -6,6 +6,6 @@
 # Submitted by: Mohammad S Anwar
 # Write a script to generate the 10001st prime number.
 
-use Modern::Perl;
-use ntheory qw( nth_prime );
-say nth_prime(10001);
+from sympy import prime
+
+print(prime(10001))

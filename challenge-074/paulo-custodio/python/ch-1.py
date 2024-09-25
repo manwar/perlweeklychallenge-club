@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 074
 #
@@ -19,28 +19,27 @@
 # Input: @A = (1, 3, 1, 2, 4, 5)
 # Output: -1 as none of the elements appears more than floor(6/2).
 
-use Modern::Perl;
+import sys
 
-my @A = @ARGV;
-say majority_elem(@A);
-
-sub majority_elem {
-    my(@a) = @_;
+def majority_elem(a):
     # count instances of each element, get max
-    my %count;
-    my $max_count = 0;
-    my $max_elem;
-    for (@a) {
-        $count{$_}++;
-        if ($count{$_} > $max_count) {
-            ($max_count, $max_elem) = ($count{$_}, $_);
-        }
-    }
+    count = {}
+    max_count = 0
+    max_elem = None
+    for x in a:
+        if x in count:
+            count[x] += 1
+        else:
+            count[x] = 1
+
+        if count[x] > max_count:
+            max_count, max_elem = count[x], x
+
     # check if majority
-    if ($max_count > int(@a/2)) {
-        return $max_elem;
-    }
-    else {
-        return -1;
-    }
-}
+    if max_count > int(len(a)/2):
+        return max_elem
+    else:
+        return -1
+
+a = [int(x) for x in sys.argv[1:]]
+print(majority_elem(a))

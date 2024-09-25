@@ -2,7 +2,7 @@
 
 # Challenge 075
 #
-# TASK #2 › Largest Rectangle Histogram
+# TASK #2 > Largest Rectangle Histogram
 # Submitted by: Mohammad S Anwar
 # You are given an array of positive numbers @A.
 #

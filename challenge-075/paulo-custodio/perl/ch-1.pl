@@ -2,7 +2,7 @@
 
 # Challenge 075
 #
-# TASK #1 › Coins Sum
+# TASK #1 > Coins Sum
 # Submitted by: Mohammad S Anwar
 # You are given a set of coins @C, assuming you have infinite amount of each
 # coin in the set.

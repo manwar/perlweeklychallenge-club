@@ -1,4 +1,4 @@
-#!/usr/bin/env perl
+#!/usr/bin/env python3
 
 # Challenge 074
 #
@@ -28,31 +28,27 @@
 # Pass 5: "xyzzy", the FNR character is "x"
 # Pass 6: "xyzzyx", no FNR found, hence '#'
 
-use Modern::Perl;
+import sys
 
-my $s = shift||"";
-say lnr_char($s);
+def lnr_char(s):
+    out = ""
+    seen = {}
+    for i in range(len(s)):
+        ch = s[i]
+        if ch in seen:
+            seen[ch] += 1
+        else:
+            seen[ch] = 1
+        found = False
+        for j in range(i+1)[::-1]:
+            ch = s[j]
+            if ch in seen and seen[ch] == 1:
+                out += ch
+                found = True
+                break
+        if not found:
+            out += "#"
+    return out
 
-sub lnr_char {
-    my($s) = @_;
-    my @s = split //, $s;
-    my $out = "";
-    my %seen;
-    for my $i (0 .. $#s) {
-        my $letter = $s[$i];
-        $seen{$letter}++;
-        my $found;
-        for my $j (reverse 0 .. $i) {
-            $letter = $s[$j];
-            if ($seen{$letter} == 1) {
-                $out .= $letter;
-                $found = 1;
-                last;
-            }
-        }
-        if (!$found) {
-            $out .= "#";
-        }
-    }
-    return $out;
-}
+s = sys.argv[1]
+print(lnr_char(s))
